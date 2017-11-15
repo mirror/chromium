@@ -48,13 +48,15 @@ class RendererMetricsHelperTest : public ::testing::Test {
   }
 
   void RunTask(MainThreadTaskQueue::QueueType queue_type,
+               base::Optional<TaskType> task_type,
                base::TimeTicks start,
                base::TimeDelta duration) {
     DCHECK_LE(clock_->NowTicks(), start);
     clock_->SetNowTicks(start + duration);
     scoped_refptr<MainThreadTaskQueueForTest> queue(
         new MainThreadTaskQueueForTest(queue_type));
-    metrics_helper_->RecordTaskMetrics(queue.get(), start, start + duration);
+    metrics_helper_->RecordTaskMetrics(queue.get(), task_type, start,
+                                       start + duration);
   }
 
   base::TimeTicks Microseconds(int microseconds) {
@@ -81,53 +83,53 @@ TEST_F(RendererMetricsHelperTest, Metrics) {
   // QueueType::kDefault is checking sub-millisecond task aggregation,
   // FRAME_* tasks are checking normal task aggregation and other
   // queue types have a single task.
-  RunTask(QueueType::kDefault, Milliseconds(1),
+  RunTask(QueueType::kDefault, base::nullopt, Milliseconds(1),
           base::TimeDelta::FromMicroseconds(700));
-  RunTask(QueueType::kDefault, Milliseconds(2),
+  RunTask(QueueType::kDefault, base::nullopt, Milliseconds(2),
           base::TimeDelta::FromMicroseconds(700));
-  RunTask(QueueType::kDefault, Milliseconds(3),
+  RunTask(QueueType::kDefault, base::nullopt, Milliseconds(3),
           base::TimeDelta::FromMicroseconds(700));
 
-  RunTask(QueueType::kDefaultLoading, Milliseconds(200),
+  RunTask(QueueType::kDefaultLoading, base::nullopt, Milliseconds(200),
           base::TimeDelta::FromMilliseconds(20));
-  RunTask(QueueType::kControl, Milliseconds(400),
+  RunTask(QueueType::kControl, base::nullopt, Milliseconds(400),
           base::TimeDelta::FromMilliseconds(30));
-  RunTask(QueueType::kDefaultTimer, Milliseconds(600),
+  RunTask(QueueType::kDefaultTimer, base::nullopt, Milliseconds(600),
           base::TimeDelta::FromMilliseconds(5));
-  RunTask(QueueType::kFrameLoading, Milliseconds(800),
+  RunTask(QueueType::kFrameLoading, base::nullopt, Milliseconds(800),
           base::TimeDelta::FromMilliseconds(70));
-  RunTask(QueueType::kFramePausable, Milliseconds(1000),
+  RunTask(QueueType::kFramePausable, base::nullopt, Milliseconds(1000),
           base::TimeDelta::FromMilliseconds(20));
-  RunTask(QueueType::kCompositor, Milliseconds(1200),
+  RunTask(QueueType::kCompositor, base::nullopt, Milliseconds(1200),
           base::TimeDelta::FromMilliseconds(25));
-  RunTask(QueueType::kTest, Milliseconds(1600),
+  RunTask(QueueType::kTest, base::nullopt, Milliseconds(1600),
           base::TimeDelta::FromMilliseconds(85));
 
   scheduler_->SetRendererBackgrounded(true);
 
-  RunTask(QueueType::kControl, Milliseconds(2000),
+  RunTask(QueueType::kControl, base::nullopt, Milliseconds(2000),
           base::TimeDelta::FromMilliseconds(25));
-  RunTask(QueueType::kFrameThrottleable, Milliseconds(2600),
+  RunTask(QueueType::kFrameThrottleable, base::nullopt, Milliseconds(2600),
           base::TimeDelta::FromMilliseconds(175));
-  RunTask(QueueType::kUnthrottled, Milliseconds(2800),
+  RunTask(QueueType::kUnthrottled, base::nullopt, Milliseconds(2800),
           base::TimeDelta::FromMilliseconds(25));
-  RunTask(QueueType::kFrameLoading, Milliseconds(3000),
+  RunTask(QueueType::kFrameLoading, base::nullopt, Milliseconds(3000),
           base::TimeDelta::FromMilliseconds(35));
-  RunTask(QueueType::kFrameThrottleable, Milliseconds(3200),
+  RunTask(QueueType::kFrameThrottleable, base::nullopt, Milliseconds(3200),
           base::TimeDelta::FromMilliseconds(5));
-  RunTask(QueueType::kCompositor, Milliseconds(3400),
+  RunTask(QueueType::kCompositor, base::nullopt, Milliseconds(3400),
           base::TimeDelta::FromMilliseconds(20));
-  RunTask(QueueType::kIdle, Milliseconds(3600),
+  RunTask(QueueType::kIdle, base::nullopt, Milliseconds(3600),
           base::TimeDelta::FromMilliseconds(50));
-  RunTask(QueueType::kFrameLoading_kControl, Milliseconds(4000),
+  RunTask(QueueType::kFrameLoading_kControl, base::nullopt, Milliseconds(4000),
           base::TimeDelta::FromMilliseconds(5));
-  RunTask(QueueType::kControl, Milliseconds(4200),
+  RunTask(QueueType::kControl, base::nullopt, Milliseconds(4200),
           base::TimeDelta::FromMilliseconds(20));
-  RunTask(QueueType::kFrameThrottleable, Milliseconds(4400),
+  RunTask(QueueType::kFrameThrottleable, base::nullopt, Milliseconds(4400),
           base::TimeDelta::FromMilliseconds(115));
-  RunTask(QueueType::kFramePausable, Milliseconds(4600),
+  RunTask(QueueType::kFramePausable, base::nullopt, Milliseconds(4600),
           base::TimeDelta::FromMilliseconds(175));
-  RunTask(QueueType::kIdle, Milliseconds(5000),
+  RunTask(QueueType::kIdle, base::nullopt, Milliseconds(5000),
           base::TimeDelta::FromMilliseconds(1600));
 
   std::vector<base::Bucket> expected_samples = {
@@ -269,7 +271,7 @@ TEST_F(RendererMetricsHelperTest, BackgroundedRendererTransition) {
                   Bucket(static_cast<int>(Transition::kForegrounded), 1)));
 
   // Waste 5+ minutes so that the delayed stop is triggered
-  RunTask(QueueType::kDefault, Milliseconds(1),
+  RunTask(QueueType::kDefault, base::nullopt, Milliseconds(1),
           base::TimeDelta::FromSeconds(5 * 61));
   // Firing ForceUpdatePolicy multiple times to make sure that the metric is
   // only recorded upon an actual change.
