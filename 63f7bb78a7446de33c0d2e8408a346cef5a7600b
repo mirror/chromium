@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "916846cc_a4b12936",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-15T12:41:17Z",
+      "side": 1,
+      "message": "nit: constexpr",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d46c2dec_ef3287b4",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-15T12:41:17Z",
+      "side": 1,
+      "message": "nit: /*unused*/",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d155c5f_892a88e8",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-15T12:41:17Z",
+      "side": 1,
+      "message": "nit: can you add comment to the class and the methods?",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "536a2e62_43f8af60",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-15T12:41:17Z",
+      "side": 1,
+      "message": "nit: line break",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8335f3fd_b4052e2c",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-15T12:41:17Z",
+      "side": 1,
+      "message": "nit: line break",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f98d6d3_f2fa9fad",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-15T12:41:17Z",
+      "side": 1,
+      "message": "it seems to me that we can only log one event at a time, what will happen to other event?",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f518bc9_0cb6c7f3",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-15T12:41:17Z",
+      "side": 1,
+      "message": "how about we store an unordered_map\u003cUserActivityEvent_Type, UserActivityEvent\u003e, so not just one event type can be logged at a time?",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
