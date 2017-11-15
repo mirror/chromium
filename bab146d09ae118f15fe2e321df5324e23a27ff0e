@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13758308_7bb34151",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T00:11:50Z",
+      "side": 1,
+      "message": "perhaps add \"If something wants the old behavior, it can use ElideBehavior::TRUNCATE.\"",
+      "revId": "bab146d09ae118f15fe2e321df5324e23a27ff0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dfb7d6b_18a55ab8",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T00:11:50Z",
+      "side": 1,
+      "message": "maybe a sanity check here? E.g.\n\n  // Sanity check: Title labels default to multiline and elide tail. Either of\n  // which result in the Layout system making the title and resulting dialog very narrow.\n  constexpr int kNarrow \u003d 40;\n  EXPECT_EQ(gfx::ELIDE_TAIL, ..)\n  EXPECT_TRUE(..multiline())\n  EXPECT_GT(kNarrow, title_label-\u003esize().width());\n  EXPECT_GT(kNarrow, bubble-\u003eGetClientAreaBoundsInScreen().width())",
+      "revId": "bab146d09ae118f15fe2e321df5324e23a27ff0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df978958_475db422",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T00:11:50Z",
+      "side": 1,
+      "message": "EXPECT_LT(kNarrow, title_label-\u003esize().width());\n  EXPECT_LT(kNarrow, bubble-\u003eGetClientAreaBoundsInScreen().width())",
+      "revId": "bab146d09ae118f15fe2e321df5324e23a27ff0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0023aabd_b79a96cf",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T00:11:50Z",
+      "side": 1,
+      "message": "title_label-\u003efont_list()?",
+      "revId": "bab146d09ae118f15fe2e321df5324e23a27ff0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf84c9ff_654f6b54",
+        "filename": "ui/views/controls/label_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T00:11:50Z",
+      "side": 1,
+      "message": "Perhaps\n\n  // Default should be ELIDE_TAIL.\n  EXPECT_EQ(gfx::ELIDE_TAIL, ..);",
+      "revId": "bab146d09ae118f15fe2e321df5324e23a27ff0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c40ea6f_f869f766",
+        "filename": "ui/views/controls/label_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T00:11:50Z",
+      "side": 1,
+      "message": "label()-\u003efont-list()?",
+      "revId": "bab146d09ae118f15fe2e321df5324e23a27ff0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae855a3a_579a48cb",
+        "filename": "ui/views/controls/label_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T00:11:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure it makes sense to ask for \u003eGetDisplayTextForTesting() before calling label()-\u003eSetBounds(label()-\u003eGetMinimumSize());\n\nAlso maybe check .length() instead of .size()? This way it\u0027s harder to confuse with the geometrical size. Same below.",
+      "revId": "bab146d09ae118f15fe2e321df5324e23a27ff0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
