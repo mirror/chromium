@@ -421,7 +421,6 @@ void ProfileIOData::InitializeOnUIThread(Profile* profile) {
   params->io_thread = g_browser_process->io_thread();
 
   content::mojom::NetworkContextParamsPtr main_network_context_params;
-
   ProfileNetworkContextServiceFactory::GetForContext(profile)
       ->SetUpProfileIODataMainContext(&params->main_network_context_request,
                                       &main_network_context_params);
