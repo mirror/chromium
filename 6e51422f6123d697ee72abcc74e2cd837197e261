@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2eb64aff_e7e687e2",
+        "filename": "chrome/browser/net/default_network_context_params.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-15T05:01:49Z",
+      "side": 1,
+      "message": "Removed.  I think it was part of an abortive attempt at doing what CrossThreadNetworkContextParams now does.",
+      "parentUuid": "05e00b33_098688a1",
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0d06f56_c5adc42e",
         "filename": "chrome/browser/net/profile_network_context_service.cc",
         "patchSetId": 25
@@ -33,6 +51,24 @@
       "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e53fba94_909b2206",
+        "filename": "chrome/browser/net/profile_network_context_service.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-15T05:01:49Z",
+      "side": 1,
+      "message": "While that DCHECK would check, someone\u0027s investigating restarting the network process, and I suspect that his CLs may eventually make it fail...  I\u0027m also thinking eventually we\u0027ll have app request contexts share a ProfileNetworkContextService, instead of each creating their own, so I went ahead and changed the ProxyConfigMonitor API / lifecycle to be more friendly for those use cases.",
+      "parentUuid": "a0d06f56_c5adc42e",
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "64f3418d_951e2f1c",
+        "filename": "chrome/browser/net/proxy_config_monitor.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-15T05:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10dd3421_04633894",
+      "range": {
+        "startLine": 25,
+        "startChar": 52,
+        "endLine": 25,
+        "endChar": 59
+      },
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51199ab3_8aafae69",
         "filename": "chrome/browser/net/proxy_config_monitor.h",
         "patchSetId": 25
@@ -73,6 +133,24 @@
       "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93fdc702_91826778",
+        "filename": "chrome/browser/net/proxy_config_monitor.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-15T05:01:49Z",
+      "side": 1,
+      "message": "Maybe we could also add a ProxyConfigMonitorMonitorService, for monitoring the state of the ProxyConfigMonitor!  Such a service would also need to be configured by the ProxyConfigMonitorMonitorConfigService, of course...  And since it\u0027s would use mojo, we\u0027d basically be calling into a proxy instead of the real implementation...",
+      "parentUuid": "51199ab3_8aafae69",
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "ff05f73b_000fb931",
+        "filename": "chrome/browser/net/proxy_config_monitor.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-15T05:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fb2042b_6a2f2f89",
+      "range": {
+        "startLine": 29,
+        "startChar": 5,
+        "endLine": 29,
+        "endChar": 13
+      },
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df49d437_9d6c6b61",
         "filename": "chrome/browser/net/proxy_service_factory.cc",
         "patchSetId": 25
@@ -110,6 +212,24 @@
       "writtenOn": "2017-11-15T00:24:30Z",
       "side": 1,
       "message": "I don\u0027t understand this change.\n\nProxyService::CreateSystemProxyConfigService() expects this parameter to be the io-thread, and expects the calling thread to be the UI thread.\n\nThis in turn is a dependency of other code (notably the ProxyConfigServiceLinux, and apparently ProxyConfigServiceAndroid), which will need to be adjusted.",
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce829ff_e56a6f79",
+        "filename": "chrome/browser/net/proxy_service_factory.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-15T05:01:49Z",
+      "side": 1,
+      "message": "ProxyConfigServiceLinux has no calls to any other object that lives on the IO thread, except its ProxyConfigService::Observers.  In this case, the only Observer is the ProxyConfigTrackeImpl::ProxyConfigService, which now also lives on the UI thread.  That ProxyConfigService also only has one observer, which is now ProxyConfigMonitor, which sends configurations (On the UI thread) over a mojo pipe.  The other end of that pipe is the PorxyConfigServiceMojo, which lives on the IO thread (Or out of process, if the network service is enabled).\n\nIf this parameter is the UI thread instead of the IOThread, don\u0027t all ProxyConfigServices just post tasks from the UI thread to the UI thread on proxy changes?  I think that extra hop is harmless.\n\nI can\u0027t change the classes to always expect to run on the UI thread, because that\u0027s still not always the case (This isn\u0027t the only caller).\n\nOr is there some problem with this change that I\u0027m missing?",
+      "parentUuid": "df49d437_9d6c6b61",
       "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "b1f87372_e2fa3204",
+        "filename": "components/proxy_config/pref_proxy_config_tracker_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-15T05:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43555d85_62777ecd",
+      "range": {
+        "startLine": 284,
+        "startChar": 10,
+        "endLine": 284,
+        "endChar": 13
+      },
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "327c283b_f988660c",
         "filename": "components/proxy_config/pref_proxy_config_tracker_impl.cc",
         "patchSetId": 25
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "06b2fdbd_5acd61fe",
+        "filename": "components/proxy_config/pref_proxy_config_tracker_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-15T05:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "327c283b_f988660c",
+      "range": {
+        "startLine": 286,
+        "startChar": 36,
+        "endLine": 286,
+        "endChar": 42
+      },
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b543ea75_62ae5f75",
         "filename": "components/proxy_config/pref_proxy_config_tracker_impl.h",
         "patchSetId": 25
@@ -182,6 +350,30 @@
       "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032de525_05d16dd0",
+        "filename": "components/proxy_config/pref_proxy_config_tracker_impl.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-15T05:01:49Z",
+      "side": 1,
+      "message": "Renamed, fixed typo.\n\nThis is also used on iOS, where !nullptr is passed in (I assume that\u0027s also why this is a component, rather than in Chrome).  We\u0027re a long ways away from being able to use this on iOS.  :(",
+      "parentUuid": "b543ea75_62ae5f75",
+      "range": {
+        "startLine": 83,
+        "startChar": 5,
+        "endLine": 84,
+        "endChar": 46
+      },
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
