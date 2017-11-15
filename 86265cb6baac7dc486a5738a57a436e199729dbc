@@ -33,6 +33,24 @@
       "revId": "86265cb6baac7dc486a5738a57a436e199729dbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fedf5a98_189ba9a2",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-15T19:56:36Z",
+      "side": 1,
+      "message": "I removed it because I embedded the check inside the IsKeywordEnabled(). See line 597. That should work, right?",
+      "parentUuid": "cc294067_a6d57bc7",
+      "revId": "86265cb6baac7dc486a5738a57a436e199729dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
