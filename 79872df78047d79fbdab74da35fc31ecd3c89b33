@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a5931ca_39f43ddb",
+        "filename": "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-15T18:25:09Z",
+      "side": 0,
+      "message": "This patch makes me wonder if GpuDisplayProvider has the right API.\n\nWhat we need is the caller of GpuDisplayProvider to know the real BeginFrameSource type. ATM it\u0027s hiding the type and returning it. This patch preserves the type by making an abstraction around it that can be multiple types.\n\nMy observation is that there\u0027s no strong reason that GpuDisplayProvider is making the BeginFrameSource. It only needs to share task runner with the provider, but the caller could make the BeginFrameSource and pass it in. Then it knows the type, and then the RootCompositorFrameSinkImpl could know the type without having to accept multiple types where one is null.\n\nwdyt?\n\nI\u0027m also a bit \u003e_\u003e about a Data object whose job is just to own the Display and the BeginFrameSource, but the above makes it not seem necessary to me?",
+      "revId": "79872df78047d79fbdab74da35fc31ecd3c89b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ede6c39a_f45b8b0a",
+        "filename": "components/viz/service/display_embedder/display_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-15T18:25:09Z",
+      "side": 1,
+      "message": "Is it that |display_| references the begin frame sources? Perhaps they should say that |display_| references them instead. Else over time it may become unclear why display is here, and in relation to what fields etc.",
+      "revId": "43bf809390635228fdc8826c39a78cc36f09d348",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83a3c3ee_d3fc32b0",
+        "filename": "services/viz/privileged/interfaces/compositing/display_private.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-15T18:25:09Z",
+      "side": 1,
+      "message": "Document this API method please. Who would call it, when, what for, etc",
+      "revId": "43bf809390635228fdc8826c39a78cc36f09d348",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
