@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d155f3ad_7c34d8f9",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-15T17:38:41Z",
+      "side": 1,
+      "message": "Other real-time media tasks are using kUnthrottled, I believe (see HTMLMediaElement).\n\nI\u0027m strongly in favour of introducing a small number of specific unthrottled task types instead of one general kUnthrottled — with the motivation being that it will it harder to use kUnthrottled incorrectly — there are only a handful of users of kUnthrottled now (audio and workers), it\u0027s easier to introduce specific task types for these and prevent people from using kUnthrottled because it\u0027s an easy thing to do.\n\ntl;dr: I like the idea of introducing TaskType::RealTimeMedia.",
+      "parentUuid": "1a07de66_da41a6a2",
+      "range": {
+        "startLine": 57,
+        "startChar": 56,
+        "endLine": 57,
+        "endChar": 78
+      },
+      "revId": "eca88fed578ead63d6fef9117d25003561c00dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4c121be_88648f1e",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 2
