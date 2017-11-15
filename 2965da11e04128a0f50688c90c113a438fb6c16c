@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f7ce8ae_d2bd584b",
+        "filename": "ash/wm/window_properties.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-15T18:41:50Z",
+      "side": 1,
+      "message": "I had to add ASH_EXPORT because ash/mus is currently in a different target.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 10
+      },
+      "revId": "2965da11e04128a0f50688c90c113a438fb6c16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
