@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51062e08_8075619e",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-15T14:51:27Z",
+      "side": 1,
+      "message": "I think we should declare another feature guard. We don\u0027t actually need to use it outside because we are using a default value either way, without enabling the feature guard it will return the default value.",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 46
+      },
+      "revId": "1b8355a33fca789cf70370c55d29badb5bbb3769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "525ff937_dbde9331",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-15T14:51:27Z",
+      "side": 1,
+      "message": "I think you would want to use |default_timeout.InMislliseconds()| here.",
+      "range": {
+        "startLine": 37,
+        "startChar": 40,
+        "endLine": 37,
+        "endChar": 41
+      },
+      "revId": "1b8355a33fca789cf70370c55d29badb5bbb3769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3cf5cd5_b7dbbfbc",
+        "filename": "chrome/browser/sessions/tab_loader_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-15T14:51:27Z",
+      "side": 1,
+      "message": "I think we should leave the default first timeout here, no?",
+      "range": {
+        "startLine": 36,
+        "startChar": 11,
+        "endLine": 36,
+        "endChar": 67
+      },
+      "revId": "1b8355a33fca789cf70370c55d29badb5bbb3769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
