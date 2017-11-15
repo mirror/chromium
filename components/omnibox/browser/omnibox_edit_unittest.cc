@@ -210,9 +210,10 @@ TestingOmniboxClient::CreateAutocompleteProviderClient() {
 
   std::unique_ptr<TemplateURLService> template_url_service(
       new TemplateURLService(
-          nullptr, std::unique_ptr<SearchTermsData>(new SearchTermsData),
-          nullptr, std::unique_ptr<TemplateURLServiceClient>(), nullptr,
-          nullptr, base::Closure()));
+          nullptr, nullptr,
+          std::unique_ptr<SearchTermsData>(new SearchTermsData), nullptr,
+          std::unique_ptr<TemplateURLServiceClient>(), nullptr, nullptr,
+          base::Closure()));
   provider_client->set_template_url_service(std::move(template_url_service));
 
   return std::move(provider_client);

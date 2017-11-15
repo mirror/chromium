@@ -72,6 +72,7 @@ public class BookmarkPersonalizedSigninPromoTest {
     public void setUp() throws Exception {
         AccountManagerFacade.overrideAccountManagerFacadeForTests(mAccountManagerDelegate);
         mActivityTestRule.startMainActivityFromLauncher();
+        mActivityTestRule.waitForActivityVisible();
     }
 
     @Test
