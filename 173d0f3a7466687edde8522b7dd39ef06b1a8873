@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0b3eb4a_2f8f66f6",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-15T22:16:18Z",
+      "side": 1,
+      "message": "nit: Please declare and initialize in the same statement. [1]\n\n[1] https://google.github.io/styleguide/cppguide.html#Local_Variables",
+      "range": {
+        "startLine": 486,
+        "startChar": 2,
+        "endLine": 488,
+        "endChar": 0
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb12600a_1d6b72ee",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-15T22:16:18Z",
+      "side": 1,
+      "message": "I think this is the same as LayoutUnit::ClampNegativeToZero",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 24
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb8bb35_6ba250cb",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-15T22:16:18Z",
+      "side": 1,
+      "message": "The added comments are a good start but I think it needs some more explanation.\ne.g., what is the output? how is is calculated? link to specific sections of \nscroll snap spec for each calculation.\n\n\nHere is for example a simplified version:\n\nReturns scroll offset at which the snap area and snap containers meet the  \nrequested snapping alignment on the given axis.\n\nIf scroll offset required for alignment is outside the normal scroll range \nthen it will be clamped.\n\naxis - the axis for which we consider alignment on. Should be  either horizontal or vertical.\ncontainer - container rect which should include any scroll padding\nscrollable_size - ....\narea - .....\n\n\nhttps://drafts.csswg.org/css-scroll-snap-1/#scroll-snap-align",
+      "range": {
+        "startLine": 100,
+        "startChar": 7,
+        "endLine": 100,
+        "endChar": 31
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b5cb0ea_a1380796",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-15T22:16:18Z",
+      "side": 1,
+      "message": "Should we even be able to get here if alignment is None?\nIf not then this should be UNREACHABLE()",
+      "range": {
+        "startLine": 106,
+        "startChar": 9,
+        "endLine": 106,
+        "endChar": 27
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80228378_09729d74",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-15T22:16:18Z",
+      "side": 1,
+      "message": "This logic assumes axis can only be X or Y. \nSnapAxis enum has other values. So please add a DCHECK top of the\nfunction to assert this invariant.",
+      "range": {
+        "startLine": 133,
+        "startChar": 18,
+        "endLine": 133,
+        "endChar": 28
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ebe139b_1d169732",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-15T22:16:18Z",
+      "side": 1,
+      "message": "Add link to revelvant spec section and a brief discription.",
+      "range": {
+        "startLine": 176,
+        "startChar": 7,
+        "endLine": 176,
+        "endChar": 19
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ed51fa4_c19e3f4f",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-15T22:16:18Z",
+      "side": 1,
+      "message": "Probably best to elaborate what is \"this\" referring to.\nI think you mean the fact that it is using snap_area.OffsetPoint(snap_container)\nassumes this.\n\nSo, |area| is represents the snap area rect in respect to the snap container. \nTo calculate it we use OffsetPoint method that relies on that assumption.\ndid I get it right?",
+      "range": {
+        "startLine": 223,
+        "startChar": 5,
+        "endLine": 223,
+        "endChar": 9
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaba021f_87417e83",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-15T22:16:18Z",
+      "side": 1,
+      "message": "nit: seems like a mistake.",
+      "range": {
+        "startLine": 224,
+        "startChar": 36,
+        "endLine": 224,
+        "endChar": 39
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b19f999a_6a45c1b2",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-15T22:16:18Z",
+      "side": 1,
+      "message": "Why are we using MinimumValueForLength and not just ValueForLength?\nI am not sure which is the right one to use but we should have \na reason one way or another.",
+      "range": {
+        "startLine": 232,
+        "startChar": 6,
+        "endLine": 232,
+        "endChar": 27
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24337218_bc8b02b8",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-15T22:16:18Z",
+      "side": 1,
+      "message": "nit: I fell calling these area_margin and container_padding makes it more obvious\nwhome they belong to.",
+      "range": {
+        "startLine": 238,
+        "startChar": 20,
+        "endLine": 238,
+        "endChar": 26
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90fe67f2_94cb7712",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-15T22:16:18Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be snap_area-\u003eWidth()? So that in case it is a percent we \ncalculate it correctly. Similarly for other values here.",
+      "range": {
+        "startLine": 240,
+        "startChar": 65,
+        "endLine": 240,
+        "endChar": 77
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c70df0ae_b408bc92",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-15T22:16:18Z",
+      "side": 1,
+      "message": "Switching to using Rects and Outsets makes this much more readable. Nice!",
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32b6bfd_61ad4f8d",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-15T22:16:18Z",
+      "side": 1,
+      "message": "Is this trying to enforce the visibility requirement? If so please add a comment\nwith relevant link to spec.\n\nI thought, if the area is larger than the container, then any point inside the area\nis a valid alignment. But this seems to cause aligning at \"start\" and \"end\"\nignoring the requested alignment.",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 262,
+        "endChar": 36
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

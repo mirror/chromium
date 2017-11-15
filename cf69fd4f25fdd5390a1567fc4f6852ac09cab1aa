@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "93b7f464_b0567502",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-15T22:16:18Z",
+      "side": 1,
+      "message": "Yes. I was suggesting to rename them (e.g., did_scroll_x_for_scroll_gesture_)\nto make it clear how they relate to a gesture.",
+      "parentUuid": "3aba703f_b4892924",
+      "range": {
+        "startLine": 465,
+        "startChar": 2,
+        "endLine": 465,
+        "endChar": 35
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6dcb138_77fe4070",
         "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
         "patchSetId": 4
@@ -389,6 +413,30 @@
     },
     {
       "key": {
+        "uuid": "3ca90910_ee7df6d6",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-15T22:16:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "78518753_81a176c2",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 1
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f58b4255_296feb25",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 4
@@ -659,6 +707,30 @@
       "side": 1,
       "message": "I\u0027m thinking testing FindSnapOffsetOn... is easier and clearer than testing GetSnapPosition?",
       "parentUuid": "ffc387e6_cac12758",
+      "range": {
+        "startLine": 62,
+        "startChar": 1,
+        "endLine": 65,
+        "endChar": 12
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df6d74be_82ec9bc9",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-15T22:16:18Z",
+      "side": 1,
+      "message": "I see. This makes sense also because the eventual plan is to move these to a separate utility class to be used by other scroll snapping e.g. in cc.",
+      "parentUuid": "495d4e1d_f80e6740",
       "range": {
         "startLine": 62,
         "startChar": 1,
