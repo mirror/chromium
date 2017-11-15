@@ -460,6 +460,29 @@
     },
     {
       "key": {
+        "uuid": "38f01781_aba3ddff",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-15T18:32:44Z",
+      "side": 1,
+      "message": "Nit: you can drop {} for 1-line if/for (the same in other places)",
+      "range": {
+        "startLine": 587,
+        "startChar": 13,
+        "endLine": 587,
+        "endChar": 14
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7342665b_d38e2b7b",
         "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
         "patchSetId": 1
@@ -471,6 +494,30 @@
       "writtenOn": "2017-11-14T02:57:01Z",
       "side": 1,
       "message": "Do we really need FrameClosing()? As I understand a PassAutofilAgent instance is created for every frame, Do we prepare the fame is attached latter? FYI, AutofillAgent seems fine without handling the frame close.\n\nIf we can get ride of FrameClosing(), the subframe check can be moved to InteractedFormChecker.",
+      "range": {
+        "startLine": 1209,
+        "startChar": 2,
+        "endLine": 1209,
+        "endChar": 14
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d460327_a701a922",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1209,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-15T18:32:44Z",
+      "side": 1,
+      "message": "PasswordAutofillAgent is created for every iframe, but reused for main frame. So it\u0027s needed to be sure that it\u0027s cleared correctly on navigation. I\u0027m not sure when exactly FrameDetached and FrameClosing are called (it\u0027s pretty hard to figure out from Blink code). If you can check in code that FrameClosing is always called for the main frame, we can drop this call, otherwise in order to be on safe-side it\u0027s better to leave it.",
+      "parentUuid": "7342665b_d38e2b7b",
       "range": {
         "startLine": 1209,
         "startChar": 2,
@@ -506,6 +553,30 @@
     },
     {
       "key": {
+        "uuid": "b0a8b235_953647bf",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-15T18:32:44Z",
+      "side": 1,
+      "message": "gatekeeper_.Reset(); should be called on any frame, according to you comment OnDidStartProvisionalLoad is called only on the main frame.",
+      "parentUuid": "64fac799_3ee551c3",
+      "range": {
+        "startLine": 1278,
+        "startChar": 48,
+        "endLine": 1278,
+        "endChar": 0
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2c88f38_1fbff1ce",
         "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
         "patchSetId": 1
@@ -522,6 +593,53 @@
         "startChar": 30,
         "endLine": 1300,
         "endChar": 0
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed60e671_f9488451",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1300,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-15T18:32:44Z",
+      "side": 1,
+      "message": "Different logs are ok. \nBut if this method is called only for main frame that\u0027s bad. Each PasswordAutofillAgent processes only own frame, so we would miss detection of submissions from lines 1310-1370 for iframes.",
+      "parentUuid": "f2c88f38_1fbff1ce",
+      "range": {
+        "startLine": 1300,
+        "startChar": 30,
+        "endLine": 1300,
+        "endChar": 0
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69720483_e7c5175a",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1887,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-15T18:32:44Z",
+      "side": 1,
+      "message": "Nit: you can convert SubmissionSource to PasswordForm::SubmissionIndicatorEvent (for example with ?: operator or separate helper function) and then to call  OnSameDocumentNavigationCompleted only once.",
+      "range": {
+        "startLine": 1887,
+        "startChar": 13,
+        "endLine": 1887,
+        "endChar": 65
       },
       "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
