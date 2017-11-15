@@ -14,6 +14,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/android/library_loader/anchor_functions.h"
 #include "base/files/file.h"
 #include "base/format_macros.h"
 #include "base/macros.h"
@@ -132,15 +133,25 @@ bool CollectResidency(const NativeLibraryPrefetcher::AddressRange& range,
   return true;
 }
 
-void DumpResidency(std::unique_ptr<std::vector<TimestampAndResidency>> data) {
+void DumpResidency(const NativeLibraryPrefetcher::AddressRange& range,
+                   std::unique_ptr<std::vector<TimestampAndResidency>> data) {
   auto path = base::FilePath(
       base::StringPrintf("/data/local/tmp/chrome/residency-%d.txt", getpid()));
   auto file =
       base::File(path, base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
   if (!file.IsValid()) {
-    PLOG(ERROR) << "Cannot open file to dump the residency data " << path;
+    PLOG(ERROR) << "Cannot open file to dump the residency data ";
     return;
   }
+
+  // First line: start-end of text range.
+  CheckOrderingSanity();
+  CHECK_LT(range.first, kStartOfText);
+  CHECK_LT(kEndOfText, range.second);
+  auto start_end =
+      base::StringPrintf("%" PRIuS " %" PRIuS "\n", kStartOfText - range.first,
+                         kEndOfText - range.first);
+  file.WriteAtCurrentPos(start_end.c_str(), start_end.size());
 
   for (const auto& data_point : *data) {
     auto timestamp =
@@ -290,14 +301,31 @@ void NativeLibraryPrefetcher::PeriodicallyCollectResidency() {
         return r.first <= here && here <= r.second;
       });
   CHECK_NE(it, ranges.end());
+  const auto& range = *it;
 
   auto data = std::make_unique<std::vector<TimestampAndResidency>>();
   for (int i = 0; i < 60; ++i) {
-    if (!CollectResidency(*it, data.get()))
+    if (!CollectResidency(range, data.get()))
       return;
     usleep(2e5);
   }
-  DumpResidency(std::move(data));
+  DumpResidency(range, std::move(data));
+}
+
+// static
+void NativeLibraryPrefetcher::MadviseRandomText() {
+  CheckOrderingSanity();
+  // |kStartOftext| may not be at the beginning of a page, since .plt can be
+  // |before it, yet in the same mapping for instance.
+  size_t start_page = kStartOfText - kStartOfText % kPageSize;
+  // Even if |kEndOfText| is on a page boundary, the actual code extends 2 bytes
+  // beyond that.
+  size_t end_page = kEndOfText + kPageSize - kEndOfText % kPageSize;
+  size_t size = end_page - start_page;
+  int err = madvise(reinterpret_cast<void*>(start_page), size, MADV_RANDOM);
+  if (err) {
+    PLOG(ERROR) << "madvise() failed";
+  }
 }
 
 }  // namespace android

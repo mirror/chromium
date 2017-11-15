@@ -31,15 +31,17 @@ def ParseDump(filename):
     filename: (str) dump filename.
 
   Returns:
-    {timestamp (int): data ([bool])}
+    {"start": offset, "end": offset, "data": {timestamp (int): data ([bool])}}
   """
   result = {}
   with open(filename, 'r') as f:
+    (start, end) = [int(x) for x in f.readline().strip().split(' ')]
+    result = {'start': start, 'end': end, 'data': {}}
     for line in f:
       line = line.strip()
       timestamp, data = line.split(' ')
       data_array = [x == '1' for x in data]
-      result[int(timestamp)] = data_array
+      result['data'][int(timestamp)] = data_array
   return result
 
 
@@ -50,6 +52,9 @@ def PlotResidency(data, output_filename):
     data: (dict) As returned by ParseDump().
     output_filename: (str) Output filename.
   """
+  start = data['start']
+  end = data['end']
+  data = data['data']
   fig, ax = plt.subplots(figsize=(20, 10))
   timestamps = sorted(data.keys())
   x_max = len(data.values()[0]) * 4096
@@ -65,10 +70,12 @@ def PlotResidency(data, output_filename):
       lc = mc.LineCollection(segments, colors=colors, linewidths=8)
       ax.add_collection(lc)
 
+  plt.axvline(start)
+  plt.axvline(end)
   plt.title('Code residency vs time since startup.')
   plt.xlabel('Code page offset (bytes)')
   plt.ylabel('Time since startup (ms)')
-  plt.ylim(-.5e3, ymax=(timestamps[-1] - timestamps[0]) / 1e6 + .5e3)
+  plt.ylim(0, ymax=(timestamps[-1] - timestamps[0]) / 1e6)
   plt.xlim(xmin=0, xmax=x_max)
   plt.savefig(output_filename, bbox_inches='tight', dpi=300)
 
