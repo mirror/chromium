@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5641760_39ece2dd",
+        "filename": "gin/v8_foreground_task_runner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-11-15T14:47:03Z",
+      "side": 1,
+      "message": "Can we move this logic into PerIsolateData and DCHECK that task_runner_ is always null in all the task runner constructors.",
+      "range": {
+        "startLine": 16,
+        "startChar": 19,
+        "endLine": 17,
+        "endChar": 68
+      },
+      "revId": "178927de1fe6be6593279e0cf81ddc650ae32174",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93de7216_4cf1d190",
+        "filename": "gin/v8_foreground_task_runner_with_locker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-11-15T14:47:03Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 19,
+        "startChar": 19,
+        "endLine": 20,
+        "endChar": 68
+      },
+      "revId": "178927de1fe6be6593279e0cf81ddc650ae32174",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aadfa67d_07f532be",
+        "filename": "gin/v8_foreground_task_runner_with_locker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-11-15T14:47:03Z",
+      "side": 1,
+      "message": "Instead of adding the IdleTaskWithLocker, could we just have RunIdleTaskWithLocker(v8::Isolate* isolate, v8::Task* task, double deadline_in_seconds) { ... } and here call:\n   base::Bind(RunIdleTaskWithLocker, base::Unretained(isolate_),  base::Owned(task.release()) to be consistent with the non-idle task runner. base::Bind should allow partially bound functions I believe.",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 55
+      },
+      "revId": "178927de1fe6be6593279e0cf81ddc650ae32174",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
