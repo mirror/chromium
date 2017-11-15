@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a62f54a_5300259d",
+        "filename": "base/time/time_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-15T04:22:16Z",
+      "side": 1,
+      "message": "Given this comment, and discussion on the crbug, please revert this, and check for the iOS version instead. Meaning:\n\n  TEST_F(TimeTest, TimeT) {\n  #if defined(OS_IOS)\n    if (base::ios::IsRunningOnOrLater(10, 13, 0)) {\n      LOG(WARNING) \u003c\u003c \"Skipping test on flaky iOS OS version (crbug.com/xxxxxx).\";\n      return;\n    }\n  #endif\n    ...\n\nThat way we\u0027d at least have calendar time testing for the older iOS versions as a sanity-check for our platform code.",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 34
+      },
+      "revId": "1ecc28e5f3364860508df3960924be66358b14a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
