@@ -49,6 +49,7 @@
 #include "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.h"
 #include "gpu/command_buffer/service/gles2_cmd_srgb_converter.h"
 #include "gpu/command_buffer/service/gles2_cmd_validation.h"
+#include "gpu/command_buffer/service/gpu_fence_manager.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/command_buffer/service/gpu_state_tracer.h"
 #include "gpu/command_buffer/service/gpu_tracer.h"
@@ -83,6 +84,7 @@
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/size.h"
+#include "ui/gfx/gpu_fence.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 #include "ui/gfx/ipc/color/gfx_param_traits.h"
 #include "ui/gfx/overlay_transform.h"
@@ -595,6 +597,9 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   void RestoreAllAttributes() const override;
 
   QueryManager* GetQueryManager() override { return query_manager_.get(); }
+  GpuFenceManager* GetGpuFenceManager() override {
+    return gpu_fence_manager_.get();
+  }
   FramebufferManager* GetFramebufferManager() override {
     return framebuffer_manager_.get();
   }
@@ -2265,6 +2270,11 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   void UnbindTexture(TextureRef* texture_ref,
                      bool supports_separate_framebuffer_binds);
 
+  // Wrappers for GpuFenceCHROMIUM methods
+  void DoCreateGpuFenceINTERNAL(GLuint gpu_fence_id, bool from_external);
+  void DoWaitGpuFenceCHROMIUM(GLuint gpu_fence_id);
+  void DoDestroyGpuFenceCHROMIUM(GLuint gpu_fence_id);
+
   // Generate a member function prototype for each command in an automated and
   // typesafe way.
 #define GLES2_CMD_OP(name) \
@@ -2383,6 +2393,8 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   std::unique_ptr<FramebufferManager> framebuffer_manager_;
 
   std::unique_ptr<QueryManager> query_manager_;
+
+  std::unique_ptr<GpuFenceManager> gpu_fence_manager_;
 
   std::unique_ptr<VertexArrayManager> vertex_array_manager_;
 
@@ -3347,6 +3359,8 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
   group_->texture_manager()->AddFramebufferManager(framebuffer_manager_.get());
 
   query_manager_.reset(new QueryManager(this, feature_info_.get()));
+
+  gpu_fence_manager_.reset(new GpuFenceManager());
 
   util_.set_num_compressed_texture_formats(
       validators_->compressed_texture_format.GetValues().size());
@@ -4984,6 +4998,11 @@ void GLES2DecoderImpl::Destroy(bool have_context) {
     query_manager_.reset();
   }
 
+  if (gpu_fence_manager_.get()) {
+    gpu_fence_manager_->Destroy(have_context);
+    gpu_fence_manager_.reset();
+  }
+
   if (vertex_array_manager_ .get()) {
     vertex_array_manager_->Destroy(have_context);
     vertex_array_manager_.reset();
@@ -5106,6 +5125,29 @@ void GLES2DecoderImpl::ReturnFrontBuffer(const Mailbox& mailbox, bool is_lost) {
   }
 
   DLOG(ERROR) << "Attempting to return a frontbuffer that was not saved.";
+}
+
+void GLES2DecoderImpl::DoCreateGpuFenceINTERNAL(GLuint gpu_fence_id,
+                                                bool from_external) {
+  DVLOG(3) << __FUNCTION__ << ";;; gpu_fence_id=" << gpu_fence_id;
+  if (from_external) {
+    DCHECK(GetGpuFenceManager()->IsValidGpuFence(gpu_fence_id));
+  } else {
+    GetGpuFenceManager()->CreateNewGpuFence(gpu_fence_id);
+  }
+  // DVLOG(3) << __FUNCTION__ << ";;; end";
+}
+
+void GLES2DecoderImpl::DoWaitGpuFenceCHROMIUM(GLuint gpu_fence_id) {
+  DVLOG(3) << __FUNCTION__ << ";;; gpu_fence_id=" << gpu_fence_id;
+  DCHECK(GetGpuFenceManager()->IsValidGpuFence(gpu_fence_id));
+  GetGpuFenceManager()->WaitGpuFence(gpu_fence_id);
+}
+
+void GLES2DecoderImpl::DoDestroyGpuFenceCHROMIUM(GLuint gpu_fence_id) {
+  DVLOG(3) << __FUNCTION__ << ";;; gpu_fence_id=" << gpu_fence_id;
+  DCHECK(GetGpuFenceManager()->IsValidGpuFence(gpu_fence_id));
+  GetGpuFenceManager()->RemoveGpuFence(gpu_fence_id);
 }
 
 void GLES2DecoderImpl::CreateBackTexture() {
