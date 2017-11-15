@@ -1240,8 +1240,7 @@ IN_PROC_BROWSER_TEST_P(SSLUITestTransientAndCommitted, TestOKHTTPS) {
 }
 
 // Visits a page with https error and proceed:
-IN_PROC_BROWSER_TEST_P(SSLUITestTransientAndCommitted,
-                       TestHTTPSExpiredCertAndProceed) {
+IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSExpiredCertAndProceed) {
   ASSERT_TRUE(https_server_expired_.Start());
 
   ui_test_utils::NavigateToURL(
@@ -1443,8 +1442,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSExpiredCertAndGoBackViaMenu) {
 
 // Visits a page with https error and then goes back using the DONT_PROCEED
 // interstitial command.
-IN_PROC_BROWSER_TEST_P(SSLUITestTransientAndCommitted,
-                       TestHTTPSExpiredCertGoBackUsingCommand) {
+IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSExpiredCertGoBackUsingCommand) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_expired_.Start());
 
@@ -1530,7 +1528,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSExpiredCertAndGoForward) {
 }
 
 // Visits a page with revocation checking enabled and a valid OCSP response.
-IN_PROC_BROWSER_TEST_P(SSLUITestTransientAndCommitted, TestHTTPSOCSPOk) {
+IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSOCSPOk) {
   EnableRevocationChecking();
 
   ASSERT_TRUE(https_server_ocsp_ok_.Start());
@@ -1552,7 +1550,7 @@ IN_PROC_BROWSER_TEST_P(SSLUITestTransientAndCommitted, TestHTTPSOCSPOk) {
 }
 
 // Visits a page with revocation checking enabled and a revoked OCSP response.
-IN_PROC_BROWSER_TEST_P(SSLUITestTransientAndCommitted, TestHTTPSOCSPRevoked) {
+IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSOCSPRevoked) {
   EnableRevocationChecking();
 
   ASSERT_TRUE(https_server_ocsp_revoked_.Start());
@@ -1729,7 +1727,7 @@ IN_PROC_BROWSER_TEST_P(SSLUITestTransientAndCommitted, MarkHTTPAsDangerous) {
 
 // Ensure that blob-protocol origins are marked as neutral when the
 // MarkNonSecureAs Dangerous flag is enabled.
-IN_PROC_BROWSER_TEST_P(SSLUITestTransientAndCommitted, MarkBlobAsNonSecure) {
+IN_PROC_BROWSER_TEST_F(SSLUITest, MarkBlobAsNonSecure) {
   base::test::ScopedCommandLine scoped_command_line;
   scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
       security_state::switches::kMarkHttpAs,
@@ -3777,8 +3775,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialLinksOpenInNewTab) {
 // Verifies that switching tabs, while showing interstitial page, will not
 // affect the visibility of the interstitial.
 // https://crbug.com/381439
-IN_PROC_BROWSER_TEST_P(SSLUITestTransientAndCommitted,
-                       InterstitialNotAffectedByHideShow) {
+IN_PROC_BROWSER_TEST_F(SSLUITest, InterstitialNotAffectedByHideShow) {
   ASSERT_TRUE(https_server_expired_.Start());
   ASSERT_TRUE(https_server_.Start());
 
