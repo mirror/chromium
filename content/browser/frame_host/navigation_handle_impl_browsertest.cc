@@ -38,6 +38,10 @@ namespace {
 // Text to place in an HTML body. Should not contain any markup.
 const char kBodyTextContent[] = "some plain text content";
 
+const content::NavigationThrottle::ThrottleCheckResult kCancelResult = {
+    content::NavigationThrottle::CANCEL, net::ERR_CERT_COMMON_NAME_INVALID,
+    base::StringPrintf("<html><body>%s</body><html>", kBodyTextContent)};
+
 const content::NavigationThrottle::ThrottleCheckResult kBlockResult = {
     content::NavigationThrottle::BLOCK_REQUEST, net::ERR_BLOCKED_BY_CLIENT,
     base::StringPrintf("<html><body>%s</body><html>", kBodyTextContent)};
@@ -2032,6 +2036,27 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplDownloadBrowserTest,
   EXPECT_TRUE(observer.was_redirected());
 }
 
+// TODO(crbug.com/771816): Unify this test and the following ones into a
+// parameterized test once we can use TestNavigationThrottle (from
+// content/public/test/test_navigation_throttle.h).
+IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
+                       CancelStartWithErrorPageContent) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
+
+  GURL url(embedded_test_server()->GetURL("/download-test1.lib"));
+  NavigationHandleObserver observer(shell()->web_contents(), url);
+  TestNavigationThrottleInstaller installer(
+      shell()->web_contents(), kCancelResult, NavigationThrottle::PROCEED,
+      NavigationThrottle::PROCEED, NavigationThrottle::PROCEED);
+
+  EXPECT_FALSE(NavigateToURL(shell(), url));
+  EXPECT_TRUE(observer.has_committed());
+  EXPECT_TRUE(observer.is_error());
+  ASSERT_NO_FATAL_FAILURE(
+      CheckBodyTextContent(shell()->web_contents()->GetMainFrame()));
+}
+
 IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
                        BlockStartWithErrorPageContent) {
   if (!IsBrowserSideNavigationEnabled())
@@ -2079,10 +2104,8 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
   ASSERT_TRUE(https_server.Start());
 
   GURL url(https_server.GetURL("/title1.html"));
-  NavigationHandleObserver observer(shell()->web_contents(), url);;
-  content::NavigationThrottle::ThrottleCheckResult kCancelResult = {
-      content::NavigationThrottle::CANCEL, net::ERR_CERT_COMMON_NAME_INVALID,
-      base::StringPrintf("<html><body>%s</body><html>", kBodyTextContent)}
+  NavigationHandleObserver observer(shell()->web_contents(), url);
+  ;
   TestNavigationThrottleInstaller installer(
       shell()->web_contents(), NavigationThrottle::PROCEED,
       NavigationThrottle::PROCEED, kCancelResult, NavigationThrottle::PROCEED);
