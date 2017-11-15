@@ -126,26 +126,26 @@
   return;
 }
 
-#pragma mark - Omnibox Focuser
+#pragma mark - OmniboxFocuser
 
 - (void)focusOmnibox {
-  return;
+  [self.cleanToolbarCoordinator focusOmnibox];
 }
 
 - (void)cancelOmniboxEdit {
-  return;
+  [self.cleanToolbarCoordinator cancelOmniboxEdit];
 }
 
 - (void)focusFakebox {
-  return;
+  [self.cleanToolbarCoordinator focusFakebox];
 }
 
 - (void)onFakeboxBlur {
-  return;
+  [self.cleanToolbarCoordinator onFakeboxBlur];
 }
 
 - (void)onFakeboxAnimationComplete {
-  return;
+  [self.cleanToolbarCoordinator onFakeboxAnimationComplete];
 }
 
 #pragma mark - VoiceSearchControllerDelegate
