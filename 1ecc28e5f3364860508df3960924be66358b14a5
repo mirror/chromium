@@ -70,6 +70,30 @@
       "revId": "1ecc28e5f3364860508df3960924be66358b14a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51fd5665_a570d124",
+        "filename": "base/time/time_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-15T09:27:21Z",
+      "side": 1,
+      "message": "The issue is not the version of iOS, it is the version of the host (i.e. macOS). The tests fails when run on a simulator running on High Sierra (macOS 10.13) but succeed on Sierra (10.12), independently on the version of iOS SDK used by the simulator (9.x, 10.x, 11.x).\n\nbase::ios::IsRunningOnOrLater(...) tests the version of the iOS SDK used, not the version of the host. I\u0027m not sure there is a way to test for this. Maybe this is a bug in the simulator in High Sierra that needs to be reported to Apple, but as none of the iOS developer has access to High Sierra, we cannot test and collect data to open a radar.",
+      "parentUuid": "d4779b6b_c7616532",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 34
+      },
+      "revId": "1ecc28e5f3364860508df3960924be66358b14a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
