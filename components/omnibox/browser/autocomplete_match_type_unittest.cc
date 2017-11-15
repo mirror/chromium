@@ -12,7 +12,7 @@ TEST(AutocompleteMatchTypeTest, AccessibilityLabels) {
       base::UTF8ToUTF16("https://www.chromium.org");
   EXPECT_EQ(kTestUrl, AutocompleteMatchType::ToAccessibilityLabel(
                           AutocompleteMatchType::URL_WHAT_YOU_TYPED, kTestUrl));
-  EXPECT_EQ(base::UTF8ToUTF16("URL from history: ") + kTestUrl,
+  EXPECT_EQ(kTestUrl + base::UTF8ToUTF16(" location from history: "),
             AutocompleteMatchType::ToAccessibilityLabel(
                 AutocompleteMatchType::HISTORY_URL, kTestUrl));
 }
