@@ -216,6 +216,30 @@
     },
     {
       "key": {
+        "uuid": "a9824f8a_c05c2cdd",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-15T16:35:52Z",
+      "side": 1,
+      "message": "Cronet prefix seems like a good idea.  Doesn\u0027t have to be \"Cronet\", could be \"cr_\";  I know of a couple other O/Ss that use two-character-underscore prefixes on all their APIs.",
+      "parentUuid": "ddefbbb0_41688274",
+      "range": {
+        "startLine": 177,
+        "startChar": 40,
+        "endLine": 177,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79bf3e6c_9662c14b",
         "filename": "components/cronet/native/cronet.idl_c.h",
         "patchSetId": 36
@@ -299,6 +323,30 @@
       "side": 1,
       "message": "Currently every interface gets XYZ_Create() and XYZ_CreateStub() defined for it. \nMore over, XYZ_CreateStub() implementation is also generated, but XYZ_Create() is not, so calling it will result in linker error.\n\nThe mojo IDL has a concept of attributes or somesuch that could decorate items, so maybe we should define some attributes like \u0027[Concrete]\u0027 and [Abstract] to mark interfaces that are implemented by Cronet vs consumer. WDYT?",
       "parentUuid": "4a7ab972_cd1f0767",
+      "range": {
+        "startLine": 202,
+        "startChar": 50,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e14f531_92e3b740",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-15T16:35:52Z",
+      "side": 1,
+      "message": "Attributes SGTM.  I\u0027d vote for a [Concrete] attribute that avoided generating XYZ_CreateStub() and XYZ_Foo() and XYZ_FooFunc, and an [Abstract] attribute that renamed XYZ_CreateStub() to XYZ_Create(); but, if we see value in keeping our concrete interfaces stub-able for testing or stubbed for backwards compatibility I\u0027m fine with making the [Concrete] attribute essentially a no-op.",
+      "parentUuid": "189dcee0_823d7ced",
       "range": {
         "startLine": 202,
         "startChar": 50,
