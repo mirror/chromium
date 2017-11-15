@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52784417_f6713f09",
+        "filename": "chrome/browser/notifications/notification_common.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-15T10:35:18Z",
+      "side": 1,
+      "message": "Umm... was this intentionally not updated to TRANSIENT?\nI can fix it, just making sure this isn\u0027t by design.",
+      "range": {
+        "startLine": 40,
+        "startChar": 15,
+        "endLine": 40,
+        "endChar": 23
+      },
+      "revId": "cf27dae13b5876434e1d8061596316927d89a4e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
