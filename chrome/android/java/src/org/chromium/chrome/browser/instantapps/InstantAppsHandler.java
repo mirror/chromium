@@ -25,6 +25,7 @@ import org.chromium.chrome.browser.externalnav.ExternalNavigationDelegateImpl;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.IntentUtils;
+import org.chromium.content_public.browser.WebContents;
 
 import java.util.concurrent.TimeUnit;
 
@@ -282,19 +283,23 @@ public class InstantAppsHandler {
      * @return Whether an Instant App intent was started.
      */
     public boolean handleNavigation(Context context, String url, Uri referrer, Tab tab) {
-        if (InstantAppsSettings.isInstantAppDefault(tab.getWebContents(), url)) {
+        if (shouldLaunchInstantApp(tab.getWebContents(), url, referrer)) {
             return launchInstantAppForNavigation(context, url, referrer);
         }
-        maybeShowInstantAppBanner(context, url, referrer, tab);
+        maybeShowInstantAppBanner(context, url, referrer, tab, false /* isInstantAppDefault */);
         return false;
     }
 
     /**
-     * Shows an Instant App banner if necessary for the page we're loading.
+     * Returns whether or not we should launch an instant app immediately for the given URL.
+     *
+     * @param webContents A {@link WebContents}.
+     * @param url The URL we might launch an instant app for.
+     * @param referrer The referring URL.
+     * @return Whether we should launch the instant app.
      */
-    @Deprecated
-    protected void maybeShowInstantAppBanner(Context context, String url, Uri referrer, Tab tab) {
-        maybeShowInstantAppBanner(context, url, referrer, tab, false /* isInstantAppDefault */);
+    protected boolean shouldLaunchInstantApp(WebContents webContents, String url, Uri referrer) {
+        return InstantAppsSettings.isInstantAppDefault(webContents, url);
     }
 
     /**

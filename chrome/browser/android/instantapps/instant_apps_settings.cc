@@ -88,9 +88,9 @@ static jboolean ShouldShowBanner(JNIEnv* env,
 
   std::string url(ConvertJavaStringToUTF8(env, jurl));
 
-  return AppBannerSettingsHelper::ShouldShowBanner(
-      web_contents,
-      GURL(url),
-      AppBannerSettingsHelper::kInstantAppsKey,
-      base::Time::Now()) == InstallableStatusCode::NO_ERROR_DETECTED;
+  InstallableStatusCode status = AppBannerSettingsHelper::ShouldShowBanner(
+      web_contents, GURL(url), AppBannerSettingsHelper::kInstantAppsKey,
+      base::Time::Now());
+  return status == InstallableStatusCode::NO_ERROR_DETECTED ||
+         status == InstallableStatusCode::ALREADY_INSTALLED;
 }
