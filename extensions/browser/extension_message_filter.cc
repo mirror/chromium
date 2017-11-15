@@ -407,6 +407,7 @@ void ExtensionMessageFilter::OnOpenChannelToNativeApp(
   if (!browser_context_)
     return;
 
+  LOG(WARNING) << "Opening channel to native app: " << native_app_name << ", " << port_id.port_number;
   MessageService::Get(browser_context_)
       ->OpenChannelToNativeApp(render_process_id_, routing_id, port_id,
                                native_app_name);
@@ -433,6 +434,7 @@ void ExtensionMessageFilter::OnOpenMessagePort(
   if (!browser_context_)
     return;
 
+  LOG(WARNING) << "Open message port: " << port_id.port_number;
   MessageService::Get(browser_context_)
       ->OpenPort(port_id, render_process_id_, routing_id);
 }
@@ -444,6 +446,7 @@ void ExtensionMessageFilter::OnCloseMessagePort(
   if (!browser_context_)
     return;
 
+  LOG(WARNING) << "Closing port: " << port_id.port_number;
   MessageService::Get(browser_context_)
       ->ClosePort(port_id, render_process_id_, routing_id, force_close);
 }
@@ -453,6 +456,7 @@ void ExtensionMessageFilter::OnPostMessage(const PortId& port_id,
   if (!browser_context_)
     return;
 
+  LOG(WARNING) << "Post message: " << port_id.port_number << ", " << message.data;
   MessageService::Get(browser_context_)->PostMessage(port_id, message);
 }
 
