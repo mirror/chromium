@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7f58237_13409f87",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-15T14:07:13Z",
+      "side": 1,
+      "message": "I was thinking whether to invest into returning back the production PasswordStore on tearDown.\n\nThe potential advantage of doing so is that tests like for clear browsing dialog might depend on the ability to delete a time range of passwords, which is not present in TestPasswordStore. I am not sure if those tests might be affected, but if they turn out to be, a NOTREACHED will signal the error and will be easy to fix by just adding that functionality into TestPasswordStore. None of the tests in PasswordsSettingsTestCase should mind having a TestPasswordStore.\n\nThe potential disadvantage of trying to restore the original factory -- it is not possible to find out which factory that was. Currently it is the production PasswordStore (because when I force the tests not to clear the passwords on tearDown, the passwords persists restarts of the EG app). But if I hard-code that assumption and set the production PasswordStore on tearDown, and somebody decides later that it\u0027s actually better to have TestPasswordStore in the EG app by default, they will be surprised by having the production PasswordStore created sometimes.\n\nSo I decided not to try to restore the original PasswordStore on tearDown.",
+      "range": {
+        "startLine": 359,
+        "startChar": 48,
+        "endLine": 359,
+        "endChar": 65
+      },
+      "revId": "fc390e666b58f733b50b6018ca81091ed4242277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
