@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "1caa32da_60fd06bb",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T23:29:42Z",
+      "side": 1,
+      "message": "Opps, JS, not C++, nevermind :)",
+      "parentUuid": "3c59a41c_d4e4ef85",
+      "revId": "7eb07c3d1336af7e816c7894a5ae00d96a180c93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71a02da9_01f565ee",
         "filename": "chrome/browser/resources/settings/device_page/display_layout.html",
         "patchSetId": 2
