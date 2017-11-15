@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a167b67_2500492e",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-15T16:03:38Z",
+      "side": 1,
+      "message": "Can these params be StringPiece? Otherwise, there\u0027s an extra copy happening of the string literal being passed in to a std::string which is only being used to form name_with_suffix.\n\nIf you use StringPiece for both of these, then the code to form the appended name can be:\n\nstd::string name_with_suffix;\nname.CopyToString(\u0026name_with_suffix);\nsuffix.AppendToString(\u0026name_with_suffix);",
+      "range": {
+        "startLine": 733,
+        "startChar": 61,
+        "endLine": 733,
+        "endChar": 0
+      },
+      "revId": "b019a35af6b6d03df49b5a1a293e22988aab9f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076a61e3_0ffd4380",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-15T16:03:38Z",
+      "side": 1,
+      "message": "We now have UmaHistogramMemoryLargeMB() in histogram_functions.h. Can you use that?",
+      "range": {
+        "startLine": 741,
+        "startChar": 36,
+        "endLine": 741,
+        "endChar": 0
+      },
+      "revId": "b019a35af6b6d03df49b5a1a293e22988aab9f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
