@@ -39,8 +39,12 @@ void VirtualTimeController::GrantVirtualTimeBudget(
   virtual_time_policy_ = policy;
 
   // Notify tasks of new budget request.
-  for (TaskEntry& entry : tasks_)
+  for (TaskEntry& entry : tasks_) {
+    entry.ready_to_advance = false;
+  }
+  for (TaskEntry& entry : tasks_) {
     NotifyTaskBudgetRequested(&entry, budget_ms);
+  }
 
   // If there tasks, NotifyTasksAndAdvance is called from TaskReadyToAdvance.
   if (tasks_.empty())
@@ -96,7 +100,7 @@ void VirtualTimeController::NotifyTaskIntervalElapsed(TaskEntry* entry) {
 
 void VirtualTimeController::NotifyTaskBudgetRequested(TaskEntry* entry,
                                                       int budget_ms) {
-  entry->ready_to_advance = false;
+  DCHECK(entry->ready_to_advance == false);
   entry->task->BudgetRequested(
       total_elapsed_time_, budget_ms,
       base::Bind(&VirtualTimeController::TaskReadyToAdvance,
