@@ -142,31 +142,31 @@ const suite = ({testName = undefined} = {}) => {
       }
       await promise_rejects_when_unsecured(
           testCase,
-          new SyntaxError(),
+          new TypeError(),
           testThreeSimpleOriginSessionCookiesSetSequentially(),
           '__Host- cookies only writable from secure contexts' +
             ' (testThreeSimpleOriginSessionCookiesSetSequentially)');
       await promise_rejects_when_unsecured(
           testCase,
-          new SyntaxError(),
+          new TypeError(),
           testThreeSimpleOriginSessionCookiesSetNonsequentially(),
           '__Host- cookies only writable from secure contexts' +
             ' (testThreeSimpleOriginSessionCookiesSetNonsequentially)');
       await promise_rejects_when_unsecured(
           testCase,
-          new SyntaxError(),
+          new TypeError(),
           setExpiredSecureCookieWithDomainPathAndFallbackValue(),
           'Secure cookies only writable from secure contexts' +
             ' (setExpiredSecureCookieWithDomainPathAndFallbackValue)');
       await promise_rejects_when_unsecured(
           testCase,
-          new SyntaxError(),
+          new TypeError(),
           deleteSimpleOriginCookie(),
           '__Host- cookies only writable from secure contexts' +
             ' (deleteSimpleOriginCookie)');
       await promise_rejects_when_unsecured(
           testCase,
-          new SyntaxError(),
+          new TypeError(),
           deleteSecureCookieWithDomainAndPath(),
           'Secure cookies only writable from secure contexts' +
             ' (deleteSecureCookieWithDomainAndPath)');
@@ -290,31 +290,31 @@ const testDeleteCookies = async testCase => {
     },
     async () => await promise_rejects_when_unsecured(
         testCase,
-        new SyntaxError(),
+        new TypeError(),
         cookieStore.delete('__Host-COOKIENAME')),
     async () => await promise_rejects_when_unsecured(
         testCase,
-        new SyntaxError(),
+        new TypeError(),
         cookieStore.delete('__Host-1🍪')),
     async () => await promise_rejects_when_unsecured(
         testCase,
-        new SyntaxError(),
+        new TypeError(),
         cookieStore.delete('__Host-2🌟')),
     async () => await promise_rejects_when_unsecured(
         testCase,
-        new SyntaxError(),
+        new TypeError(),
         cookieStore.delete('__Host-3🌱')),
     async () => await promise_rejects_when_unsecured(
         testCase,
-        new SyntaxError(),
+        new TypeError(),
         cookieStore.delete('__Host-unordered1🍪')),
     async () => await promise_rejects_when_unsecured(
         testCase,
-        new SyntaxError(),
+        new TypeError(),
         cookieStore.delete('__Host-unordered2🌟')),
     async () => await promise_rejects_when_unsecured(
         testCase,
-        new SyntaxError(),
+        new TypeError(),
         cookieStore.delete('__Host-unordered3🌱')),
   ]) {
     try {
@@ -1029,7 +1029,7 @@ const testGetSetGetAll = async () => {
 const testOneSimpleOriginCookie = async testCase => {
   await promise_rejects_when_unsecured(
       testCase,
-      new SyntaxError(),
+      new TypeError(),
       setOneSimpleOriginSessionCookie(),
       '__Host- prefix only writable from' +
         ' secure contexts (setOneSimpleOriginSessionCookie)');
@@ -1064,7 +1064,7 @@ const testOneSimpleOriginCookie = async testCase => {
 const testExpiration = async testCase => {
   await promise_rejects_when_unsecured(
       testCase,
-      new SyntaxError(),
+      new TypeError(),
       setOneDaySecureCookieWithDate(),
       'Secure cookies only writable' +
         ' from secure contexts (setOneDaySecureCookieWithDate)');
@@ -1080,7 +1080,7 @@ const testExpiration = async testCase => {
   await deleteUnsecuredCookieWithDomainAndPath();
   await promise_rejects_when_unsecured(
       testCase,
-      new SyntaxError(),
+      new TypeError(),
       setSecureCookieWithHttpLikeExpirationString(),
       'Secure cookies only writable from secure contexts' +
         ' (setSecureCookieWithHttpLikeExpirationString)');
