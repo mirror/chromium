@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edf6bc30_6df2866c",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-15T00:33:34Z",
+      "side": 1,
+      "message": "raw device event location",
+      "revId": "b03688aa5570c54695cdce4e6c7519e7f151be5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e20a67_44eca910",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-15T00:33:34Z",
+      "side": 1,
+      "message": "EventFactoryEvdev converts the coordinate of the even from device to the native screen coordinates by applying ... and using ...",
+      "revId": "b03688aa5570c54695cdce4e6c7519e7f151be5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f7cb7b_9e1b67ad",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-15T00:33:34Z",
+      "side": 1,
+      "message": "remove the offset",
+      "revId": "b03688aa5570c54695cdce4e6c7519e7f151be5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "615f2e96_db250039",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-15T00:33:34Z",
+      "side": 1,
+      "message": "converts the coordinate from platform window to the aura\u0027s root window coordinates.",
+      "revId": "b03688aa5570c54695cdce4e6c7519e7f151be5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
