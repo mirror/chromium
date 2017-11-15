@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45fd66f1_a0c53c27",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T16:03:49Z",
+      "side": 1,
+      "message": "IIUC, whether the URLLoader is bound or not depends on the MojoAsyncResourceHandler right? Are we sure there are not cases where the MojoAsyncResourceHandler might be destroyed while we\u0027re processing UI thread checks, e.g. CancelRequestsForContext.",
+      "revId": "5e992fd427a13560ec2ee6cff2c0760ea31e951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6058ee22_644ac213",
+        "filename": "content/browser/loader/mojo_async_resource_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T16:03:49Z",
+      "side": 1,
+      "message": "Add a request()-\u003eLogBlockedBy(\"MojoAsyncResourceHandler\");",
+      "revId": "5e992fd427a13560ec2ee6cff2c0760ea31e951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11df646d_48ae68b6",
+        "filename": "content/browser/loader/mojo_async_resource_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T16:03:49Z",
+      "side": 1,
+      "message": "Add a request()-\u003eLogUnblocked();",
+      "revId": "5e992fd427a13560ec2ee6cff2c0760ea31e951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92592a14_b65466d5",
+        "filename": "content/browser/loader/mojo_async_resource_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T16:03:49Z",
+      "side": 1,
+      "message": "I\u0027d prefer defer_on_response_started.",
+      "revId": "5e992fd427a13560ec2ee6cff2c0760ea31e951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95df99d7_4aa1baa6",
+        "filename": "content/browser/loader/mojo_async_resource_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T16:03:49Z",
+      "side": 1,
+      "message": "nit: false)); // wait_for_proceed_with_response",
+      "revId": "5e992fd427a13560ec2ee6cff2c0760ea31e951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3873a9c4_187b4b4e",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T16:03:49Z",
+      "side": 1,
+      "message": "nit: false)); // wait_for_proceed_for_response\n\nSame below.",
+      "revId": "5e992fd427a13560ec2ee6cff2c0760ea31e951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cbdc56d_60c242d4",
+        "filename": "content/public/common/url_loader.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T16:03:49Z",
+      "side": 1,
+      "message": "nit: Rephrasing of the comment:\nResumes loading the response body if the URLLoader paused the request upon receiving the final response headers.\nNote: this is a configuration option for the URLLoader. By default, the loading isn\u0027t paused.",
+      "revId": "5e992fd427a13560ec2ee6cff2c0760ea31e951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
