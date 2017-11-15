@@ -5,10 +5,10 @@
 #include "content/network/network_service_url_loader_factory.h"
 
 #include "base/logging.h"
-#include "content/network/network_context.h"
 #include "content/network/network_service_impl.h"
 #include "content/network/url_loader.h"
 #include "content/public/common/resource_request.h"
+#include "content/public/network/network_context.h"
 
 namespace content {
 

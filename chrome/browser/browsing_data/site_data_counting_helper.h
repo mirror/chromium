@@ -9,6 +9,7 @@
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "net/cookies/canonical_cookie.h"
 #include "net/ssl/channel_id_store.h"
+#include "services/network/public/interfaces/cookie_manager.mojom.h"
 #include "storage/common/quota/quota_types.h"
 
 class Profile;
@@ -43,8 +44,6 @@ class SiteDataCountingHelper {
  private:
   void GetOriginsFromHostContentSettignsMap(HostContentSettingsMap* hcsm,
                                             ContentSettingsType type);
-  void GetCookiesOnIOThread(
-      const scoped_refptr<net::URLRequestContextGetter>& rq_context);
   void GetCookiesCallback(const net::CookieList& cookies);
   void GetSessionStorageUsageInfoCallback(
       const scoped_refptr<storage::SpecialStoragePolicy>&
@@ -65,6 +64,7 @@ class SiteDataCountingHelper {
   void Done(const std::vector<GURL>& origins);
 
   Profile* profile_;
+  network::mojom::CookieManagerPtr cookie_manager_ptr_;
   base::Time begin_;
   base::Callback<void(int)> completion_callback_;
   int tasks_;

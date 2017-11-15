@@ -25,6 +25,7 @@
 #include "extensions/features/features.h"
 #include "media/media_features.h"
 #include "ppapi/features/features.h"
+#include "services/network/public/interfaces/cookie_manager.mojom.h"
 
 #if BUILDFLAG(ENABLE_PLUGINS)
 #include "chrome/browser/pepper_flash_settings_manager.h"
@@ -217,7 +218,7 @@ class ChromeBrowsingDataRemoverDelegate
 #endif
 
   // Callback for when cookies have been deleted. Invokes NotifyIfDone.
-  void OnClearedCookies();
+  void OnClearedCookies(uint32_t num_deleted);
 
 #if BUILDFLAG(ENABLE_PLUGINS)
   // Called when plugin data has been cleared. Invokes NotifyIfDone.
@@ -304,6 +305,9 @@ class ChromeBrowsingDataRemoverDelegate
   base::CancelableTaskTracker history_task_tracker_;
 
   std::unique_ptr<TemplateURLService::Subscription> template_url_sub_;
+
+  // Only non-null during the course of an SB cookie deletion.
+  network::mojom::CookieManagerPtr safe_browsing_cookie_manager_ptr_;
 
 #if defined(OS_ANDROID)
   // WebappRegistry makes calls across the JNI. In unit tests, the Java side is
