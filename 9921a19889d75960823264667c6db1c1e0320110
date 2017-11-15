@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1baefa15_3ad47819",
+        "filename": "net/cert/ct_verify_result.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-15T17:53:18Z",
+      "side": 1,
+      "message": "When I first read this, I had trouble parsing (not with-standing lines 35-37) due to context shift. It might also be due to the naming of \"cert_policy_compliance\" which was a holdover from the EV policy distinction.\n\nConceptually, we could say\nct_policy_compliance\nct_policy_compliance_required\n\nAnd express the same thing, right?\n\nAnd the \"cert_policy_required\" was meant to express symmetry with \"cert_policy_compliance\", but it trips me up because, well, cert policies are also a thing (and was what I was context shifting from a discussion about)\n\nOne option is the wholescale rename (which may not be clarifying for others, and maybe just me), another might be policy_compliance_required\n\nDoes that work/express the same thing?",
+      "revId": "9921a19889d75960823264667c6db1c1e0320110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc52a71_7e72e8e4",
+        "filename": "net/quic/chromium/crypto/proof_verifier_chromium.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-15T17:53:18Z",
+      "side": 1,
+      "message": "Alternatively: Just set it in line 436?",
+      "revId": "9921a19889d75960823264667c6db1c1e0320110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f5bf5d9_8ab54067",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1565,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-15T17:53:18Z",
+      "side": 1,
+      "message": "Ditto re: line 1546",
+      "revId": "9921a19889d75960823264667c6db1c1e0320110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b6d5589_6282df0a",
+        "filename": "net/ssl/ssl_info.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-15T17:53:18Z",
+      "side": 1,
+      "message": "Alternative: ct_cert_policy_compliance_required?\n\n(Dropping the compliance bit - or some other verb - is unclear. There is a ct policy, but it just wasn\u0027t compliant)",
+      "revId": "9921a19889d75960823264667c6db1c1e0320110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
