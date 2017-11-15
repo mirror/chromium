@@ -16,6 +16,24 @@
       "revId": "ee3ba877cfb22458958050134e663a386da6c027",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d02ee9c_627f9a9e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T01:49:11Z",
+      "side": 1,
+      "message": "Done, except I used \"API proposal\u0027s\" rather than \"spec\u0027s\" since actual spec is still TODO",
+      "parentUuid": "8eb6e58f_33fb027a",
+      "revId": "ee3ba877cfb22458958050134e663a386da6c027",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
