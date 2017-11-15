@@ -47,7 +47,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/safe_browsing/file_type_policies.h"
 #include "chrome/grit/generated_resources.h"
-#include "components/download/downloader/in_progress/in_progress_cache.h"
+#include "components/download/downloader/in_progress/in_progress_cache_impl.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_member.h"
 #include "components/prefs/pref_service.h"
@@ -223,7 +223,7 @@ ChromeDownloadManagerDelegate::ChromeDownloadManagerDelegate(Profile* profile)
   DCHECK(!profile_->GetPath().empty());
   base::FilePath metadata_cache_file =
       profile_->GetPath().Append(chrome::kDownloadMetadataStoreFilename);
-  download_metadata_cache_.reset(new download::InProgressCache(
+  download_metadata_cache_.reset(new download::InProgressCacheImpl(
       metadata_cache_file, disk_access_task_runner_));
 }
 
