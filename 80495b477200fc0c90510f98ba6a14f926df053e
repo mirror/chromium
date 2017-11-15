@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "05e76894_ff2fe232",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-15T22:09:15Z",
+      "side": 1,
+      "message": "Ok, feel free to forgo the {} then.",
+      "parentUuid": "b0f4b1ae_c4580396",
+      "range": {
+        "startLine": 138,
+        "startChar": 58,
+        "endLine": 138,
+        "endChar": 59
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f28a76a_08db0d63",
         "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
         "patchSetId": 6
