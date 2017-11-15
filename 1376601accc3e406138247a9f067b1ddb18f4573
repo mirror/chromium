@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "10454a3f_eb968e27",
+        "filename": "chrome/common/extensions/docs/examples/api/omnibox/newtab_search/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-15T21:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f23d6d9a_b57af2d0",
+      "range": {
+        "startLine": 8,
+        "startChar": 51,
+        "endLine": 8,
+        "endChar": 59
+      },
+      "revId": "1376601accc3e406138247a9f067b1ddb18f4573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "889f7f42_ff7db8f9",
+        "filename": "chrome/common/extensions/docs/examples/api/omnibox/newtab_search/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-15T21:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50dddb07_eaa56034",
+      "revId": "1376601accc3e406138247a9f067b1ddb18f4573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b52bed0_c105dbad",
         "filename": "chrome/common/extensions/docs/examples/api/omnibox/newtab_search/manifest.json",
         "patchSetId": 2
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "9b41a664_39695cc0",
+        "filename": "chrome/common/extensions/docs/examples/api/omnibox/newtab_search/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-15T21:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b52bed0_c105dbad",
+      "range": {
+        "startLine": 3,
+        "startChar": 15,
+        "endLine": 3,
+        "endChar": 16
+      },
+      "revId": "1376601accc3e406138247a9f067b1ddb18f4573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fa19052_7265b879",
         "filename": "chrome/common/extensions/docs/examples/api/omnibox/newtab_search/manifest.json",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "1376601accc3e406138247a9f067b1ddb18f4573",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e73250f_1eb635fb",
+        "filename": "chrome/common/extensions/docs/examples/api/omnibox/newtab_search/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-15T21:05:23Z",
+      "side": 1,
+      "message": "Ahh, can\u0027t believe I forgot that one!",
+      "parentUuid": "0fa19052_7265b879",
+      "revId": "1376601accc3e406138247a9f067b1ddb18f4573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -102,6 +186,30 @@
       "revId": "1376601accc3e406138247a9f067b1ddb18f4573",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e2223d_91bd376b",
+        "filename": "chrome/common/extensions/docs/examples/api/omnibox/newtab_search/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-15T21:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc17b0b0_cd6a5acf",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 11
+      },
+      "revId": "1376601accc3e406138247a9f067b1ddb18f4573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
