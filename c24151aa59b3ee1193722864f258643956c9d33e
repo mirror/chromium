@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6482553f_7aa5213f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SourcesPanel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-15T17:00:55Z",
+      "side": 1,
+      "message": "Don\u0027t we have isBinary somewhere? Andrey?",
+      "revId": "c24151aa59b3ee1193722864f258643956c9d33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c08521_6c514664",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/SearchableView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-15T17:00:55Z",
+      "side": 1,
+      "message": "From the looks of this button, I was first thinking it\u0027s a toggle for search wrap.",
+      "revId": "c24151aa59b3ee1193722864f258643956c9d33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac80b59a_2973a949",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/SearchableView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-15T17:00:55Z",
+      "side": 1,
+      "message": "Let\u0027s maybe make this button first, as it basically changes the layout of everything else.",
+      "revId": "c24151aa59b3ee1193722864f258643956c9d33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a77c3b8e_49b42990",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/SearchableView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-15T17:00:55Z",
+      "side": 1,
+      "message": "Drop these comments entirely.",
+      "revId": "c24151aa59b3ee1193722864f258643956c9d33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f898985_3b855ad5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/SearchableView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-15T17:00:55Z",
+      "side": 1,
+      "message": "If you need a tri-state, don\u0027t use undefined for it.",
+      "revId": "c24151aa59b3ee1193722864f258643956c9d33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
