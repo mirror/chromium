@@ -492,7 +492,7 @@
       status: "test",
     },
     {
-      name: "ImageAsyncAttribute",
+      name: "ImageDecodingAttribute",
       status: "test",
     },
     {
