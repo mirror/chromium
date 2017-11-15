@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "457e0e42_ad219018",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-15T00:04:36Z",
+      "side": 1,
+      "message": "s/effective connection type/Effective Connection Type (ECT)/",
+      "range": {
+        "startLine": 251,
+        "startChar": 53,
+        "endLine": 251,
+        "endChar": 78
+      },
+      "revId": "148d0030a57ee6d206e7ba0bb8201d35e9f8815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e05d2935_331df998",
         "filename": "chrome/browser/resources/interventions_internals/index.js",
         "patchSetId": 2
@@ -11,6 +34,29 @@
         "id": 1166490
       },
       "writtenOn": "2017-11-15T00:04:28Z",
+      "side": 1,
+      "message": "s/ETC/ECT/",
+      "range": {
+        "startLine": 258,
+        "startChar": 26,
+        "endLine": 258,
+        "endChar": 29
+      },
+      "revId": "148d0030a57ee6d206e7ba0bb8201d35e9f8815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7de02ce_ebc9177f",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-15T00:04:36Z",
       "side": 1,
       "message": "s/ETC/ECT/",
       "range": {
@@ -36,6 +82,29 @@
       "writtenOn": "2017-11-15T00:04:28Z",
       "side": 1,
       "message": "ECT",
+      "range": {
+        "startLine": 262,
+        "startChar": 11,
+        "endLine": 262,
+        "endChar": 14
+      },
+      "revId": "148d0030a57ee6d206e7ba0bb8201d35e9f8815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "770900c2_9d0f158a",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-15T00:04:36Z",
+      "side": 1,
+      "message": "s/ETC/ECT/",
       "range": {
         "startLine": 262,
         "startChar": 11,
