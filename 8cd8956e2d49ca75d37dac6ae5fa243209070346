@@ -96,6 +96,24 @@
     },
     {
       "key": {
+        "uuid": "45520e9a_6d7d3992",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-15T11:40:44Z",
+      "side": 1,
+      "message": "Of the \"Enrollment and Access\" section of the help article, I believe only the \"Verified Access\" section corresponds to the policies in the JSON file - it\u0027s the \"Attestation\" group there. Other sections of the article - \"Forced Re-enrollment\", \"Verified Mode\", \"Disabled device return instructions\" - indeed seem to have no corresponding policies on the client (unless I\u0027m missing something).",
+      "parentUuid": "526ebb6f_151ed4db",
+      "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "339cf6b9_af9157e7",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 3
@@ -179,6 +197,24 @@
       "side": 1,
       "message": "We actually could put both device and user policy into one group. It would generate the same result.",
       "parentUuid": "0d268f63_dcfd9e66",
+      "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ec55f1_79204897",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-15T11:40:44Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s also an option, Roman.\n\nEither way, I think Lutz said it best: we need a clear concept. I was concerned that the CL doesn\u0027t have this - that is, the grouping becomes lying somewhere between topic-based and user/device-based, with no clear direction for the future improvement.\n\nBut if you can come up with a concept now and declare it - then, as I said, it should be fine to land this intermediate step, with an expectation of the full transition to happen soon.",
+      "parentUuid": "f11379a1_dc8c478c",
       "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
