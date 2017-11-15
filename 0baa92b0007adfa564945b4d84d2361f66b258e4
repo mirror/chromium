@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "a588fb6b_b59e2287",
+        "filename": "third_party/WebKit/Source/core/html/LinkStyle.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-15T13:35:29Z",
+      "side": 1,
+      "message": "nit: setCSSStyleSheet -\u003e SetCSSStyleSheet while you\u0027re there",
+      "revId": "0baa92b0007adfa564945b4d84d2361f66b258e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1509f8b7_aabbc9f8",
+        "filename": "third_party/WebKit/Source/core/html/LinkStyle.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-15T13:35:29Z",
+      "side": 1,
+      "message": "This is not from your change, but the condition on line 339 says loading_ is true... is the comment or code wrong?",
+      "revId": "0baa92b0007adfa564945b4d84d2361f66b258e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c09261_80954f7c",
+        "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScanner.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-15T13:35:29Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "0baa92b0007adfa564945b4d84d2361f66b258e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36dfdfd5_37410ac5",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
         "patchSetId": 14
@@ -13,6 +64,24 @@
       "writtenOn": "2017-11-14T00:57:31Z",
       "side": 1,
       "message": "I don\u0027t like haven\u0027t all these friends, and I\u0027m not sure it\u0027s worth the trouble. It\u0027s just to enforce that ResourceClients aren\u0027t doing unexpected management of the Resource.\n\nResourceFetcher is the primary case (in RequestResource())\nCSSStyleSheetResource and ScriptResource are for their respective CreateForTest() functions.\nCSSFontFaceSrcValue is for its quasi-cache behavior in FontResource handling.",
+      "revId": "0baa92b0007adfa564945b4d84d2361f66b258e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e9325d0_b7ae984d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-15T13:35:29Z",
+      "side": 1,
+      "message": "Maybe write these in the comment too?",
+      "parentUuid": "36dfdfd5_37410ac5",
       "revId": "0baa92b0007adfa564945b4d84d2361f66b258e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
