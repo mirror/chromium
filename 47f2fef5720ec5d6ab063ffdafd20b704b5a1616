@@ -16,6 +16,24 @@
       "revId": "47f2fef5720ec5d6ab063ffdafd20b704b5a1616",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f91a29_b6750af7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/csp-tests.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-15T00:39:36Z",
+      "side": 1,
+      "message": "Good idea! Done. Looks simpler.",
+      "parentUuid": "0518fa80_ed0b5b6a",
+      "revId": "47f2fef5720ec5d6ab063ffdafd20b704b5a1616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
