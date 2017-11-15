@@ -960,13 +960,8 @@ void NavigationRequest::OnStartChecksComplete(
       result.action() == NavigationThrottle::BLOCK_REQUEST ||
       result.action() == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
     // TODO(clamy): distinguish between CANCEL and CANCEL_AND_IGNORE.
-    DCHECK_EQ((result.action() == NavigationThrottle::CANCEL ||
-               result.action() == NavigationThrottle::CANCEL_AND_IGNORE)
-                  ? net::ERR_ABORTED
-                  : net::ERR_BLOCKED_BY_CLIENT,
-              result.net_error_code());
-    DCHECK(!result.error_page_content().has_value() ||
-           result.net_error_code() == net::ERR_BLOCKED_BY_CLIENT);
+    DCHECK(result.net_error_code() != net::ERR_ABORTED ||
+           !result.error_page_content().has_value());
 
     // If the start checks completed synchronously, which could happen if there
     // is no onbeforeunload handler or if a NavigationThrottle cancelled it,
@@ -1072,9 +1067,10 @@ void NavigationRequest::OnRedirectChecksComplete(
   if (result.action() == NavigationThrottle::CANCEL_AND_IGNORE ||
       result.action() == NavigationThrottle::CANCEL) {
     // TODO(clamy): distinguish between CANCEL and CANCEL_AND_IGNORE if needed.
-    DCHECK_EQ(net::ERR_ABORTED, result.net_error_code());
+    DCHECK(result.net_error_code() != net::ERR_ABORTED ||
+           !result.error_page_content().has_value());
     OnRequestFailedInternal(false, result.net_error_code(), base::nullopt,
-                            false, true, base::nullopt);
+                            false, true, result.error_page_content());
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -1083,7 +1079,6 @@ void NavigationRequest::OnRedirectChecksComplete(
 
   if (result.action() == NavigationThrottle::BLOCK_REQUEST ||
       result.action() == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
-    DCHECK_EQ(net::ERR_BLOCKED_BY_CLIENT, result.net_error_code());
     OnRequestFailedInternal(false, result.net_error_code(), base::nullopt,
                             false, true, result.error_page_content());
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
