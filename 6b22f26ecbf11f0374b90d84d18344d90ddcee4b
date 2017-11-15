@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "414e3f67_b02e5ce0",
+        "filename": "components/cronet/native/generated/cronet.idl_c.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-15T18:50:52Z",
+      "side": 1,
+      "message": "This is unintentional and will be removed in next patch set.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 9
+      },
+      "revId": "6b22f26ecbf11f0374b90d84d18344d90ddcee4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

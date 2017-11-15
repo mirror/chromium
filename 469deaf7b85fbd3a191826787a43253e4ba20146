@@ -240,6 +240,30 @@
     },
     {
       "key": {
+        "uuid": "cc0d294a_85617f1f",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-15T18:50:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9824f8a_c05c2cdd",
+      "range": {
+        "startLine": 177,
+        "startChar": 40,
+        "endLine": 177,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79bf3e6c_9662c14b",
         "filename": "components/cronet/native/cronet.idl_c.h",
         "patchSetId": 36
@@ -356,6 +380,30 @@
       "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea3029ed_4cdbaa47",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-15T18:50:52Z",
+      "side": 1,
+      "message": "Done. I\u0027ve added [Abstract] attribute, which skips XYZ_Create() generation. We can add [Concrete] and / or other attributes later.",
+      "parentUuid": "1e14f531_92e3b740",
+      "range": {
+        "startLine": 202,
+        "startChar": 50,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -498,6 +546,30 @@
       "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba350478_83c8ed2b",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-15T18:50:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27defcc0_14e169a5",
+      "range": {
+        "startLine": 325,
+        "startChar": 58,
+        "endLine": 325,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
