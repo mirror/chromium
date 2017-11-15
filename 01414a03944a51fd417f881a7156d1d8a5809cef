@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "602e53cf_be69c2e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T04:27:32Z",
+      "side": 1,
+      "message": "oops - there should be a BUG\u003d - it\u0027s fine to reference the one being used in the other CL",
+      "revId": "01414a03944a51fd417f881a7156d1d8a5809cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b5665cd_c5d0c4d6",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T04:27:32Z",
+      "side": 1,
+      "message": "I think this can be strengthened to EXPECT_EQ",
+      "revId": "01414a03944a51fd417f881a7156d1d8a5809cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
