@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c34a15ee_ec4aca13",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1228051
+      },
+      "writtenOn": "2017-11-15T19:53:22Z",
+      "side": 1,
+      "message": "Can it be synthetic code (unit test for example)?",
+      "parentUuid": "ee832bbc_140c8241",
+      "revId": "8fdd906be50a31e2572bd02b023e7afb4e24cf41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1fef046_8fdfba2e",
         "filename": "base/ios/scoped_critical_action.mm",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-15T15:20:06Z",
       "side": 1,
       "message": "Why mark other tasks as expired? They may just be slower to run. We don\u0027t want to have them not complete (otherwise we would not have used ScopedCriticalAction).",
+      "revId": "8fdd906be50a31e2572bd02b023e7afb4e24cf41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6159e44_85e150af",
+        "filename": "base/ios/scoped_critical_action.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1228051
+      },
+      "writtenOn": "2017-11-15T19:53:22Z",
+      "side": 1,
+      "message": "If I correctly understand Apple\u0027s docs:\nhttps://developer.apple.com/documentation/uikit/uiapplication/1623031-beginbackgroundtaskwithexpiratio?language\u003dobjc says:\n\"Apps running background tasks have a finite amount of time in which to run them. (You can find out how much time is available using the backgroundTimeRemaining property.)\"\nbackgroundTimeRemaining is UIApplication property - https://developer.apple.com/documentation/uikit/uiapplication/1623029-backgroundtimeremaining?language\u003dobjc -\u003e backgroundTimeRemaining shared between all tasks -\u003e all background tasks have the same expiration time. When this time comes, iOS simply calls expiration handles, one by one.\n\nThis is key observation for CL. If each task has independent expiration time, we should call beginBackgroundTaskWithExpirationHandler for each task. But if all tasks have the same expiration time, we can use single system background task. And when it expires, mark all \"local\" running tasks as expired.",
+      "parentUuid": "c1fef046_8fdfba2e",
       "revId": "8fdd906be50a31e2572bd02b023e7afb4e24cf41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,30 @@
       "writtenOn": "2017-11-15T15:20:06Z",
       "side": 1,
       "message": "Since this file is not compiled with ARC, ui_application_ will become invalid if UIApplication is destroyed as this class does not call -retain when storing a pointer to an Objective-C object.\n\nA potential fix would be to use scoped_nsobject\u003c\u003e, but this is not thread-safe and will prevent the UIApplication from being de-allocated (as BackgroundTaskTracker is leaked).\n\nA potentially simpler solution is to not keep a pointer to UIApplication and instead use \"[UIApplication sharedApplication]\". Though I\u0027m not sure whether this is thread-safe or not :-/",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 22
+      },
+      "revId": "8fdd906be50a31e2572bd02b023e7afb4e24cf41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d95910_6dc3b0bf",
+        "filename": "base/ios/scoped_critical_action.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1228051
+      },
+      "writtenOn": "2017-11-15T19:53:22Z",
+      "side": 1,
+      "message": "I will use \"[UIApplication sharedApplication]\" - current version of base/ios/scoped_critical_action.mm does that",
+      "parentUuid": "ab5f4617_3909c9fd",
       "range": {
         "startLine": 88,
         "startChar": 8,
