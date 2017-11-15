@@ -2527,4 +2527,7 @@ const char kTabStatsWindowCountMax[] = "tab_stats.window_count_max";
 //  Timestamp of the last time the tab stats daily metrics have been reported.
 const char kTabStatsDailySample[] = "tab_stats.last_daily_sample";
 
+// Stores whether account consistency is required.
+const char kAccountConsistencyRequired[] = "account_consistency.required";
+
 }  // namespace prefs

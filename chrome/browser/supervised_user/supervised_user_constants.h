@@ -37,6 +37,10 @@ extern const char kChromeAvatarIndex[];
 extern const char kChromeOSAvatarIndex[];
 extern const char kChromeOSPasswordData[];
 
+// Whether account consistency is required because the logged in user is a
+// child.
+extern const char kAccountConsistencyRequired[];
+
 }  // namespace supervised_users
 
 #endif  // CHROME_BROWSER_SUPERVISED_USER_SUPERVISED_USER_CONSTANTS_H_
