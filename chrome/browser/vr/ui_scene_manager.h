@@ -132,10 +132,12 @@ class UiSceneManager {
   void SetBluetoothConnectedIndicator(bool enabled);
   void SetHistoryButtonsEnabled(bool can_go_back, bool can_go_forward);
   void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason);
+  void SetAlertDialogEnabled(bool enabled, ContentInputDelegate* delegate);
 
   bool ShouldRenderWebVr();
   void OnGlInitialized(unsigned int content_texture_id,
                        UiElementRenderer::TextureLocation content_location,
+                       unsigned int ui_texture_id,
                        SkiaSurfaceProvider* provider);
   void OnAppButtonClicked();
   void OnAppButtonGesturePerformed(
@@ -217,6 +219,7 @@ class UiSceneManager {
   UiElement* speech_recognition_prompt_backplane_ = nullptr;
   UiElement* exit_warning_ = nullptr;
   ContentElement* main_content_ = nullptr;
+  ContentElement* ui_dialog_ = nullptr;
   UiElement* audio_capture_indicator_ = nullptr;
   UiElement* bluetooth_connected_indicator_ = nullptr;
   UiElement* video_capture_indicator_ = nullptr;

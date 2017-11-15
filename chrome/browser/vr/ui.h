@@ -73,10 +73,13 @@ class Ui : public BrowserUiInterface {
   void SetSpeechRecognitionEnabled(bool enabled) override;
   void SetRecognitionResult(const base::string16& result) override;
   void OnSpeechRecognitionStateChanged(int new_state) override;
+  void SetAlertDialogEnabled(bool enabled,
+                             ContentInputDelegate* delegate) override;
 
   bool ShouldRenderWebVr();
   void OnGlInitialized(unsigned int content_texture_id,
                        UiElementRenderer::TextureLocation content_location,
+                       unsigned int ui_texture_id,
                        bool use_ganesh);
   void OnAppButtonClicked();
   void OnAppButtonGesturePerformed(

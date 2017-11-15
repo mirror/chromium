@@ -140,6 +140,23 @@ void MediaStreamDevicesController::RequestPermissions(
   Profile* profile =
       Profile::FromBrowserContext(web_contents->GetBrowserContext());
   std::vector<ContentSettingsType> content_settings_types;
+  /*=======
+    // Show a prompt if needed.
+    bool is_asking_for_audio = controller->IsAskingForAudio();
+    bool is_asking_for_video = controller->IsAskingForVideo();
+
+    if (is_asking_for_audio || is_asking_for_video) {
+      Profile* profile =
+          Profile::FromBrowserContext(web_contents->GetBrowserContext());
+      std::vector<ContentSettingsType> content_settings_types;
+
+      if (is_asking_for_audio)
+        content_settings_types.push_back(CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC);
+      if (is_asking_for_video) {
+        content_settings_types.push_back(
+            CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA);
+      }
+  >>>>>>> NOT FOR REVIEW*/
 
   if (controller->ShouldRequestAudio())
     content_settings_types.push_back(CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC);
