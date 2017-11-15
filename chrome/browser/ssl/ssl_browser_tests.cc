@@ -17,6 +17,7 @@
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/pattern.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -51,6 +52,7 @@
 #include "chrome/browser/ssl/ssl_blocking_page.h"
 #include "chrome/browser/ssl/ssl_error_assistant.pb.h"
 #include "chrome/browser/ssl/ssl_error_handler.h"
+#include "chrome/browser/ssl/ssl_error_tab_helper.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -166,19 +168,28 @@ enum ProceedDecision {
   SSL_INTERSTITIAL_DO_NOT_PROCEED
 };
 
+enum InterstitialNavType { COMMITTED, TRANSIENT };
+
 namespace AuthState {
 
 enum AuthStateFlags {
   NONE = 0,
   DISPLAYED_INSECURE_CONTENT = 1 << 0,
   RAN_INSECURE_CONTENT = 1 << 1,
+  // TODO(crbug.com/752372): Collapse SHOWING_INTERSTITIAL into SHOWING_ERROR
+  // once committed SSL interstitials are launched. For now, we automatically
+  // map SHOWING_INTERSTITIAL onto SHOWING_ERROR when committed interstitials
+  // are enabled.
   SHOWING_INTERSTITIAL = 1 << 2,
   SHOWING_ERROR = 1 << 3,
   DISPLAYED_FORM_WITH_INSECURE_ACTION = 1 << 4
 };
 
 void Check(const NavigationEntry& entry, int expected_authentication_state) {
-  if (expected_authentication_state == AuthState::SHOWING_ERROR) {
+  if (expected_authentication_state == AuthState::SHOWING_ERROR ||
+      (base::CommandLine::ForCurrentProcess()->HasSwitch(
+           switches::kCommittedInterstitials) &&
+       expected_authentication_state == AuthState::SHOWING_INTERSTITIAL)) {
     EXPECT_EQ(content::PAGE_TYPE_ERROR, entry.GetPageType());
   } else {
     EXPECT_EQ(
@@ -521,7 +532,7 @@ class SSLUITest : public InProcessBrowserTest {
     observer.Wait();
   }
 
-  void SendInterstitialCommand(WebContents* tab, std::string command) {
+  void SendInterstitialCommand(WebContents* tab, const std::string& command) {
     InterstitialPage* interstitial_page = tab->GetInterstitialPage();
     ASSERT_TRUE(interstitial_page);
     ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
@@ -774,6 +785,74 @@ class SSLUITest : public InProcessBrowserTest {
   DISALLOW_COPY_AND_ASSIGN(SSLUITest);
 };
 
+// Runs each test both *without* and *with* committed interstitials enabled.
+// The boolean parameter indicates whether interstitial in the test are
+// committed.
+class TransientAndCommittedSSLUITest
+    : public SSLUITest,
+      public testing::WithParamInterface<bool> {
+ protected:
+  void SetUp() override { SSLUITest::SetUp(); }
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    SSLUITest::SetUpCommandLine(command_line);
+    if (GetInterstitialNavType() == COMMITTED) {
+      command_line->AppendSwitch(switches::kCommittedInterstitials);
+      // Forcing PlzNavigate means we run tests with PlzNavigate on the
+      // renderer_side_navigation bots, but it prevents us from having to add an
+      // early return check to every individual test.
+      command_line->AppendSwitch(switches::kEnableBrowserSideNavigation);
+    }
+  }
+
+  // SSLUITest:
+  void ProceedThroughInterstitial(WebContents* tab) {
+    if (GetInterstitialNavType() == TRANSIENT) {
+      SSLUITest::ProceedThroughInterstitial(tab);
+      return;
+    }
+
+    content::WindowedNotificationObserver observer(
+        content::NOTIFICATION_LOAD_STOP,
+        content::Source<NavigationController>(&tab->GetController()));
+    GetControllerClientFromInterstitialPage(GetBlockingPage(tab))->Proceed();
+    observer.Wait();
+  }
+
+  // SSLUITest:
+  void SendInterstitialCommand(WebContents* tab, const std::string& command) {
+    // TODO(crbug.com/785077): Execute script inside the interstitial.
+    GetDelegate(tab)->CommandReceived(command);
+  }
+
+  InterstitialNavType GetInterstitialNavType() const {
+    return GetParam() ? COMMITTED : TRANSIENT;
+  }
+
+  content::InterstitialPageDelegate* GetDelegate(WebContents* tab) {
+    if (GetInterstitialNavType() == TRANSIENT) {
+      return (tab->GetInterstitialPage()->GetDelegateForTesting());
+    } else {
+      return (SSLErrorTabHelper::FromWebContents(tab)
+                  ->GetBlockingPageForCurrentlyCommittedNavigationForTesting());
+    }
+  }
+
+  SSLBlockingPage* GetBlockingPage(WebContents* tab) {
+    return static_cast<SSLBlockingPage*>(GetDelegate(tab));
+  }
+};
+
+// We can declare the parametrized tests using INSTANTIATE_TEST_CASE_P anywhere.
+// Since the tests are scattered throughout the file, we might as well declare
+// them here.
+INSTANTIATE_TEST_CASE_P(,
+                        TransientAndCommittedSSLUITest,
+                        ::testing::Values(false, true));
+
+using CommittedSSLUITest = TransientAndCommittedSSLUITest;
+INSTANTIATE_TEST_CASE_P(, CommittedSSLUITest, ::testing::Values(true));
+
 class SSLUITestBlock : public SSLUITest {
  public:
   SSLUITestBlock() : SSLUITest() {}
@@ -862,15 +941,8 @@ class SSLUITestHSTS : public SSLUITest {
   }
 };
 
-class SSLUITestCommittedInterstitials : public SSLUITest {
- protected:
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitch(switches::kCommittedInterstitials);
-  }
-};
-
 // Visits a regular page over http.
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTP) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest, TestHTTP) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
   ui_test_utils::NavigateToURL(
@@ -884,7 +956,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTP) {
 // be OK).
 // TODO(jcampan): test that bad HTTPS content is blocked (otherwise we'll give
 //                the secure cookies away!).
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPWithBrokenHTTPSResource) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       TestHTTPWithBrokenHTTPSResource) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_expired_.Start());
 
@@ -900,7 +973,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPWithBrokenHTTPSResource) {
       browser()->tab_strip_model()->GetActiveWebContents(), AuthState::NONE);
 }
 
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestBrokenHTTPSWithInsecureContent) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestBrokenHTTPSWithInsecureContent) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_expired_.Start());
 
@@ -926,7 +999,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestBrokenHTTPSWithInsecureContent) {
 // Tests that the NavigationEntry gets marked as active mixed content,
 // even if there is a certificate error. Regression test for
 // https://crbug.com/593950.
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestBrokenHTTPSWithActiveInsecureContent) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestBrokenHTTPSWithActiveInsecureContent) {
   ASSERT_TRUE(https_server_expired_.Start());
 
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
@@ -992,7 +1065,7 @@ class SameDocumentNavigationObserver : public content::WebContentsObserver {
 // Tests that the mixed content flags are reset when going back to an existing
 // navigation entry that had mixed content. Regression test for
 // https://crbug.com/750649.
-IN_PROC_BROWSER_TEST_F(SSLUITest, GoBackToMixedContent) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest, GoBackToMixedContent) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_.Start());
 
@@ -1024,7 +1097,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, GoBackToMixedContent) {
 }
 
 // Tests that the mixed content flags are not reset for an in-page navigation.
-IN_PROC_BROWSER_TEST_F(SSLUITest, MixedContentWithSameDocumentNavigation) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       MixedContentWithSameDocumentNavigation) {
   ASSERT_TRUE(https_server_.Start());
 
   // Navigate to a URL and dynamically load mixed content.
@@ -1054,7 +1128,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, MixedContentWithSameDocumentNavigation) {
 
 // Tests that the WebContents's flag for displaying content with cert
 // errors get cleared upon navigation.
-IN_PROC_BROWSER_TEST_F(SSLUITest,
+IN_PROC_BROWSER_TEST_P(SSLUITest,
                        DisplayedContentWithCertErrorsClearedOnNavigation) {
   ASSERT_TRUE(https_server_.Start());
   ASSERT_TRUE(https_server_expired_.Start());
@@ -1085,7 +1159,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest,
                content::SSLStatus::DISPLAYED_CONTENT_WITH_CERT_ERRORS);
 }
 
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestBrokenHTTPSMetricsReporting_Proceed) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestBrokenHTTPSMetricsReporting_Proceed) {
   ASSERT_TRUE(https_server_expired_.Start());
   base::HistogramTester histograms;
   const std::string decision_histogram =
@@ -1122,7 +1196,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestBrokenHTTPSMetricsReporting_Proceed) {
       security_interstitials::MetricsHelper::TOTAL_VISITS, 1);
 }
 
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestBrokenHTTPSMetricsReporting_DontProceed) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestBrokenHTTPSMetricsReporting_DontProceed) {
   ASSERT_TRUE(https_server_expired_.Start());
   base::HistogramTester histograms;
   const std::string decision_histogram =
@@ -1161,7 +1235,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestBrokenHTTPSMetricsReporting_DontProceed) {
 }
 
 // Visits a page over OK https:
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestOKHTTPS) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest, TestOKHTTPS) {
   ASSERT_TRUE(https_server_.Start());
 
   ui_test_utils::NavigateToURL(browser(),
@@ -1172,7 +1246,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestOKHTTPS) {
 }
 
 // Visits a page with https error and proceed:
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSExpiredCertAndProceed) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestHTTPSExpiredCertAndProceed) {
   ASSERT_TRUE(https_server_expired_.Start());
 
   ui_test_utils::NavigateToURL(
@@ -1191,7 +1265,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSExpiredCertAndProceed) {
 
 // Visits a page with https error and don't proceed (and ensure we can still
 // navigate at that point):
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialCrossSiteNavigation) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestInterstitialCrossSiteNavigation) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_.Start());
   ASSERT_TRUE(https_server_mismatched_.Start());
@@ -1262,7 +1336,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITestIgnoreLocalhostCertErrors,
   EXPECT_EQ(title, expected_title);
 }
 
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSErrorCausedByClockUsingBuildTime) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestHTTPSErrorCausedByClockUsingBuildTime) {
   ASSERT_TRUE(https_server_expired_.Start());
 
   // Set up the build and current clock times to be more than a year apart.
@@ -1286,7 +1360,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSErrorCausedByClockUsingBuildTime) {
                      AuthState::SHOWING_INTERSTITIAL);
 }
 
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSErrorCausedByClockUsingNetwork) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestHTTPSErrorCausedByClockUsingNetwork) {
   ASSERT_TRUE(https_server_expired_.Start());
 
   // Set network forward ten minutes, which is sufficient to trigger
@@ -1311,8 +1385,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSErrorCausedByClockUsingNetwork) {
 }
 
 // Visits a page with https error and then goes back using Browser::GoBack.
-IN_PROC_BROWSER_TEST_F(SSLUITest,
-                       TestHTTPSExpiredCertAndGoBackViaButton) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestHTTPSExpiredCertAndGoBackViaButton) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_expired_.Start());
 
@@ -1345,8 +1418,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest,
 }
 
 // Visits a page with https error and then goes back using GoToOffset.
-IN_PROC_BROWSER_TEST_F(SSLUITest,
-                       TestHTTPSExpiredCertAndGoBackViaMenu) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestHTTPSExpiredCertAndGoBackViaMenu) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_expired_.Start());
 
@@ -1373,7 +1445,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest,
 }
 
 // Visits a page with https error and then goes forward using GoToOffset.
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSExpiredCertAndGoForward) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestHTTPSExpiredCertAndGoForward) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_expired_.Start());
 
@@ -1425,7 +1497,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSExpiredCertAndGoForward) {
 }
 
 // Visits a page with revocation checking enabled and a valid OCSP response.
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSOCSPOk) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest, TestHTTPSOCSPOk) {
   EnableRevocationChecking();
 
   ASSERT_TRUE(https_server_ocsp_ok_.Start());
@@ -1447,7 +1519,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSOCSPOk) {
 }
 
 // Visits a page with revocation checking enabled and a revoked OCSP response.
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSOCSPRevoked) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest, TestHTTPSOCSPRevoked) {
   EnableRevocationChecking();
 
   ASSERT_TRUE(https_server_ocsp_revoked_.Start());
@@ -1463,7 +1535,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSOCSPRevoked) {
 // Visit a HTTP page which request WSS connection to a server providing invalid
 // certificate. Close the page while WSS connection waits for SSLManager's
 // response from UI thread.
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestWSSInvalidCertAndClose) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       TestWSSInvalidCertAndClose) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(wss_server_expired_.Start());
 
@@ -1509,7 +1582,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestWSSInvalidCertAndClose) {
 // Visit a HTTPS page and proceeds despite an invalid certificate. The page
 // requests WSS connection to the same origin host to check if WSS connection
 // share certificates policy with HTTPS correcly.
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestWSSInvalidCertAndGoForward) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestWSSInvalidCertAndGoForward) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(wss_server_expired_.Start());
 
@@ -1538,7 +1611,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestWSSInvalidCertAndGoForward) {
 
 // Ensure that non-standard origins are marked as neutral when the
 // MarkNonSecureAs Dangerous flag is enabled.
-IN_PROC_BROWSER_TEST_F(SSLUITest, MarkFileAsNonSecure) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest, MarkFileAsNonSecure) {
   base::test::ScopedCommandLine scoped_command_line;
   scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
       security_state::switches::kMarkHttpAs,
@@ -1560,7 +1633,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, MarkFileAsNonSecure) {
 
 // Ensure that about-protocol origins are marked as neutral when the
 // MarkNonSecureAs Dangerous flag is enabled.
-IN_PROC_BROWSER_TEST_F(SSLUITest, MarkAboutAsNonSecure) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest, MarkAboutAsNonSecure) {
   base::test::ScopedCommandLine scoped_command_line;
   scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
       security_state::switches::kMarkHttpAs,
@@ -1581,7 +1654,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, MarkAboutAsNonSecure) {
 }
 
 // Data URLs should always be marked as non-secure.
-IN_PROC_BROWSER_TEST_F(SSLUITest, MarkDataAsNonSecure) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest, MarkDataAsNonSecure) {
   content::WebContents* contents =
       browser()->tab_strip_model()->GetActiveWebContents();
   ASSERT_TRUE(contents);
@@ -1598,7 +1671,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, MarkDataAsNonSecure) {
 
 // Ensure that HTTP-protocol origins are marked as Dangerous when the
 // MarkNonSecureAs Dangerous flag is enabled.
-IN_PROC_BROWSER_TEST_F(SSLUITest, MarkHTTPAsDangerous) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest, MarkHTTPAsDangerous) {
   base::test::ScopedCommandLine scoped_command_line;
   scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
       security_state::switches::kMarkHttpAs,
@@ -1623,7 +1696,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, MarkHTTPAsDangerous) {
 
 // Ensure that blob-protocol origins are marked as neutral when the
 // MarkNonSecureAs Dangerous flag is enabled.
-IN_PROC_BROWSER_TEST_F(SSLUITest, MarkBlobAsNonSecure) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest, MarkBlobAsNonSecure) {
   base::test::ScopedCommandLine scoped_command_line;
   scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
       security_state::switches::kMarkHttpAs,
@@ -1738,7 +1811,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITestWithClientCert, TestWSSClientCert) {
 // link with a blank target).  This is to test that the lack of navigation entry
 // does not cause any problems (it was causing a crasher, see
 // http://crbug.com/19941).
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSErrorWithNoNavEntry) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestHTTPSErrorWithNoNavEntry) {
   ASSERT_TRUE(https_server_expired_.Start());
 
   const GURL url = https_server_expired_.GetURL("/ssl/google.htm");
@@ -1757,7 +1830,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSErrorWithNoNavEntry) {
                                                   ->GetTypeForTesting());
 }
 
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestBadHTTPSDownload) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestBadHTTPSDownload) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_expired_.Start());
   GURL url_non_dangerous = embedded_test_server()->GetURL("/title1.html");
@@ -1829,7 +1902,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestBadHTTPSDownload) {
 //
 
 // Visits a page that displays insecure content.
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestDisplaysInsecureContent) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       TestDisplaysInsecureContent) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_.Start());
 
@@ -1848,7 +1922,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestDisplaysInsecureContent) {
 }
 
 // Visits a page that displays an insecure form.
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestDisplaysInsecureForm) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       TestDisplaysInsecureForm) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_.Start());
 
@@ -1967,7 +2042,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITestWithExtendedReporting,
 // Visits a page that runs insecure content and tries to suppress the insecure
 // content warnings by randomizing location.hash.
 // Based on http://crbug.com/8706
-IN_PROC_BROWSER_TEST_F(SSLUITest,
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
                        TestRunsInsecuredContentRandomizeHash) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_.Start());
@@ -1985,7 +2060,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest,
 // - For the good SSL case, the iframe and images should be properly displayed.
 // - For the bad SSL case, the iframe contents shouldn't be displayed and images
 //   and scripts should be filtered out entirely.
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestUnsafeContents) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest, TestUnsafeContents) {
   ASSERT_TRUE(https_server_.Start());
   ASSERT_TRUE(https_server_expired_.Start());
   // Enable popups without user gesture.
@@ -2060,7 +2135,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestUnsafeContents) {
 #define MAYBE_TestDisplaysInsecureContentLoadedFromJS \
     TestDisplaysInsecureContentLoadedFromJS
 #endif
-IN_PROC_BROWSER_TEST_F(SSLUITest,
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
                        MAYBE_TestDisplaysInsecureContentLoadedFromJS) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_.Start());
@@ -2094,7 +2169,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest,
 // Visits two pages from the same origin: one that displays insecure content and
 // one that doesn't.  The test checks that we do not propagate the insecure
 // content state from one to the other.
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestDisplaysInsecureContentTwoTabs) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       TestDisplaysInsecureContentTwoTabs) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_.Start());
 
@@ -2135,7 +2211,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestDisplaysInsecureContentTwoTabs) {
 // Visits two pages from the same origin: one that runs insecure content and one
 // that doesn't.  The test checks that we propagate the insecure content state
 // from one to the other.
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestRunsInsecureContentTwoTabs) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       TestRunsInsecureContentTwoTabs) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_.Start());
 
@@ -2183,7 +2260,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestRunsInsecureContentTwoTabs) {
 // Visits a page with an image over http.  Visits another page over https
 // referencing that same image over http (hoping it is coming from the webcore
 // memory cache).
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestDisplaysCachedInsecureContent) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       TestDisplaysCachedInsecureContent) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_.Start());
 
@@ -2209,7 +2287,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestDisplaysCachedInsecureContent) {
 // Visits a page with script over http.  Visits another page over https
 // referencing that same script over http (hoping it is coming from the webcore
 // memory cache).
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestRunsCachedInsecureContent) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       TestRunsCachedInsecureContent) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_.Start());
 
@@ -2235,7 +2314,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestRunsCachedInsecureContent) {
 // This test ensures the CN invalid status does not 'stick' to a certificate
 // (see bug #1044942) and that it depends on the host-name.
 // Test if disabled due to flakiness http://crbug.com/368280 .
-IN_PROC_BROWSER_TEST_F(SSLUITest, DISABLED_TestCNInvalidStickiness) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       DISABLED_TestCNInvalidStickiness) {
   ASSERT_TRUE(https_server_.Start());
   ASSERT_TRUE(https_server_mismatched_.Start());
 
@@ -2270,7 +2350,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, DISABLED_TestCNInvalidStickiness) {
 }
 
 // Test that navigating to a #ref does not change a bad security state.
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestRefNavigation) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestRefNavigation) {
   ASSERT_TRUE(https_server_expired_.Start());
 
   ui_test_utils::NavigateToURL(
@@ -2295,7 +2375,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestRefNavigation) {
 
 // Tests that closing a page that opened a pop-up with an interstitial does not
 // crash the browser (crbug.com/1966).
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestCloseTabWithUnsafePopup) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestCloseTabWithUnsafePopup) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_expired_.Start());
 
@@ -2350,7 +2430,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestCloseTabWithUnsafePopup) {
 }
 
 // Visit a page over bad https that is a redirect to a page with good https.
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestRedirectBadToGoodHTTPS) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestRedirectBadToGoodHTTPS) {
   ASSERT_TRUE(https_server_.Start());
   ASSERT_TRUE(https_server_expired_.Start());
 
@@ -2371,7 +2451,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestRedirectBadToGoodHTTPS) {
 }
 
 // Visit a page over good https that is a redirect to a page with bad https.
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestRedirectGoodToBadHTTPS) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestRedirectGoodToBadHTTPS) {
   ASSERT_TRUE(https_server_.Start());
   ASSERT_TRUE(https_server_expired_.Start());
 
@@ -2391,7 +2471,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestRedirectGoodToBadHTTPS) {
 }
 
 // Visit a page over http that is a redirect to a page with good HTTPS.
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestRedirectHTTPToGoodHTTPS) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       TestRedirectHTTPToGoodHTTPS) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_.Start());
 
@@ -2407,7 +2488,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestRedirectHTTPToGoodHTTPS) {
 }
 
 // Visit a page over http that is a redirect to a page with bad HTTPS.
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestRedirectHTTPToBadHTTPS) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestRedirectHTTPToBadHTTPS) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_expired_.Start());
 
@@ -2429,7 +2510,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestRedirectHTTPToBadHTTPS) {
 
 // Visit a page over https that is a redirect to a page with http (to make sure
 // we don't keep the secure state).
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestRedirectHTTPSToHTTP) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       TestRedirectHTTPSToHTTP) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_.Start());
 
@@ -2541,7 +2623,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITestWaitForDOMNotification,
 
 // Visits a page to which we could not connect (bad port) over http and https
 // and make sure the security style is correct.
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestConnectToBadPort) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest, TestConnectToBadPort) {
   ui_test_utils::NavigateToURL(browser(), GURL("http://localhost:17"));
   CheckUnauthenticatedState(
       browser()->tab_strip_model()->GetActiveWebContents(),
@@ -2563,7 +2645,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestConnectToBadPort) {
 // - navigate to a bad HTTPS (expect unsafe content and filtered frame), then
 //   back
 // - navigate to HTTP (expect insecure content), then back
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestGoodFrameNavigation) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       TestGoodFrameNavigation) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_.Start());
   ASSERT_TRUE(https_server_expired_.Start());
@@ -2675,7 +2758,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestGoodFrameNavigation) {
 
 // From a bad HTTPS top frame:
 // - navigate to an OK HTTPS frame (expected to be still authentication broken).
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestBadFrameNavigation) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestBadFrameNavigation) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_.Start());
   ASSERT_TRUE(https_server_expired_.Start());
@@ -2711,7 +2794,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestBadFrameNavigation) {
 
 // From an HTTP top frame, navigate to good and bad HTTPS (security state should
 // stay unauthenticated).
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestUnauthenticatedFrameNavigation) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       TestUnauthenticatedFrameNavigation) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_.Start());
   ASSERT_TRUE(https_server_expired_.Start());
@@ -3232,7 +3316,7 @@ INSTANTIATE_TEST_CASE_P(
 // Visits a page with unsafe content and makes sure that if a user exception
 // to the certificate error is present, the image is loaded and script
 // executes.
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestUnsafeContentsWithUserException) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestUnsafeContentsWithUserException) {
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   ASSERT_NO_FATAL_FAILURE(SetUpUnsafeContentsWithUserException(
       "/ssl/page_with_unsafe_contents.html"));
@@ -3283,7 +3367,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestUnsafeContentsWithUserException) {
 }
 
 // Like the test above, but only displaying inactive content (an image).
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestUnsafeImageWithUserException) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestUnsafeImageWithUserException) {
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   ASSERT_NO_FATAL_FAILURE(
       SetUpUnsafeContentsWithUserException("/ssl/page_with_unsafe_image.html"));
@@ -3453,7 +3537,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITestIgnoreCertErrorsBySPKIHTTPS,
 
 // Verifies that the interstitial can proceed, even if JavaScript is disabled.
 // http://crbug.com/322948
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialJavaScriptProceeds) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestInterstitialJavaScriptProceeds) {
   HostContentSettingsMapFactory::GetForProfile(browser()->profile())
       ->SetDefaultContentSetting(CONTENT_SETTINGS_TYPE_JAVASCRIPT,
                                  CONTENT_SETTING_BLOCK);
@@ -3488,7 +3572,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialJavaScriptProceeds) {
 
 // Verifies that the interstitial can go back, even if JavaScript is disabled.
 // http://crbug.com/322948
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialJavaScriptGoesBack) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestInterstitialJavaScriptGoesBack) {
   HostContentSettingsMapFactory::GetForProfile(browser()->profile())
       ->SetDefaultContentSetting(CONTENT_SETTINGS_TYPE_JAVASCRIPT,
                                  CONTENT_SETTING_BLOCK);
@@ -3521,7 +3605,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialJavaScriptGoesBack) {
 }
 
 // Verifies that an overridable interstitial has a proceed link.
-IN_PROC_BROWSER_TEST_F(SSLUITest, ProceedLinkOverridable) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, ProceedLinkOverridable) {
   ASSERT_TRUE(https_server_expired_.Start());
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   ui_test_utils::NavigateToURL(
@@ -3543,8 +3627,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, ProceedLinkOverridable) {
 }
 
 // Verifies that an overridable committed interstitial has a proceed link.
-IN_PROC_BROWSER_TEST_F(SSLUITestCommittedInterstitials,
-                       ProceedLinkOverridable) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, ProceedLinkOverridable) {
   if (!content::IsBrowserSideNavigationEnabled())
     return;
 
@@ -3603,7 +3686,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITestHSTS, TestInterstitialOptionsNonOverridable) {
 
 // Verifies that links in the interstitial open in a new tab.
 // https://crbug.com/717616
-IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialLinksOpenInNewTab) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestInterstitialLinksOpenInNewTab) {
   ASSERT_TRUE(https_server_.Start());
   ASSERT_TRUE(https_server_expired_.Start());
 
@@ -3661,7 +3744,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialLinksOpenInNewTab) {
 // Verifies that switching tabs, while showing interstitial page, will not
 // affect the visibility of the interstitial.
 // https://crbug.com/381439
-IN_PROC_BROWSER_TEST_F(SSLUITest, InterstitialNotAffectedByHideShow) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       InterstitialNotAffectedByHideShow) {
   ASSERT_TRUE(https_server_expired_.Start());
   ASSERT_TRUE(https_server_.Start());
 
@@ -3688,7 +3772,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, InterstitialNotAffectedByHideShow) {
 // through the interstitial, the decision to proceed is initially remembered.
 // However, if this is followed by another visit, and a good certificate
 // is seen for the same host, the original exception is forgotten.
-IN_PROC_BROWSER_TEST_F(SSLUITest, BadCertFollowedByGoodCert) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, BadCertFollowedByGoodCert) {
   // It is necessary to use |https_server_expired_| rather than
   // |https_server_mismatched| because the former shares a host with
   // |https_server_| and cert exceptions are per host.
@@ -3723,7 +3807,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, BadCertFollowedByGoodCert) {
 // Tests that the SSLStatus of a navigation entry for an SSL
 // interstitial matches the navigation entry once the interstitial is
 // clicked through. https://crbug.com/529456
-IN_PROC_BROWSER_TEST_F(SSLUITest,
+IN_PROC_BROWSER_TEST_P(SSLUITest,
                        SSLStatusMatchesOnInterstitialAndAfterProceed) {
   ASSERT_TRUE(https_server_expired_.Start());
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
@@ -3751,7 +3835,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest,
 // As above, but for a bad clock interstitial. Tests that a clock
 // interstitial's SSLStatus matches the SSLStatus of the HTTPS page
 // after proceeding through a normal SSL interstitial.
-IN_PROC_BROWSER_TEST_F(SSLUITest,
+IN_PROC_BROWSER_TEST_P(SSLUITest,
                        SSLStatusMatchesonClockInterstitialAndAfterProceed) {
   ASSERT_TRUE(https_server_expired_.Start());
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
@@ -4792,7 +4876,7 @@ IN_PROC_BROWSER_TEST_F(CertVerifierBrowserTest, MockCertVerifierSmokeTest) {
                      AuthState::SHOWING_INTERSTITIAL);
 }
 
-IN_PROC_BROWSER_TEST_F(SSLUITest, RestoreHasSSLState) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest, RestoreHasSSLState) {
   ASSERT_TRUE(https_server_.Start());
   GURL url(https_server_.GetURL("/ssl/google.html"));
   ui_test_utils::NavigateToURL(browser(), url);
@@ -4858,7 +4942,7 @@ void SetupRestoredTabWithNavigation(
 
 // Simulate a browser-initiated in-page navigation in a restored tab.
 // https://crbug.com/662267
-IN_PROC_BROWSER_TEST_F(SSLUITest,
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
                        BrowserInitiatedExistingPageAfterRestoreHasSSLState) {
   SetupRestoredTabWithNavigation(&https_server_, browser());
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
@@ -4870,7 +4954,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest,
 }
 
 // Simulate a renderer-initiated in-page navigation in a restored tab.
-IN_PROC_BROWSER_TEST_F(SSLUITest,
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
                        RendererInitiatedExistingPageAfterRestoreHasSSLState) {
   SetupRestoredTabWithNavigation(&https_server_, browser());
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
@@ -4887,7 +4971,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest,
 // Checks that a restore followed immediately by a history navigation doesn't
 // lose SSL state.
 // Disabled since this is a test for bug 738177.
-IN_PROC_BROWSER_TEST_F(SSLUITest, DISABLED_RestoreThenNavigateHasSSLState) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       DISABLED_RestoreThenNavigateHasSSLState) {
   // This race condition only happens with PlzNavigate.
   if (!content::IsBrowserSideNavigationEnabled())
     return;
@@ -4917,7 +5002,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, DISABLED_RestoreThenNavigateHasSSLState) {
 // could happen when the user's login is expired and the server redirects them
 // to a login page. This will be considered a same document navigation but we
 // do want to update the SSL state.
-IN_PROC_BROWSER_TEST_F(SSLUITest, SameDocumentHasSSLState) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       SameDocumentHasSSLState) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_.Start());
 
@@ -4956,7 +5042,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, SameDocumentHasSSLState) {
 
 // Checks that if a redirect occurs while the page is loading, the SSL state
 // reflects the final URL.
-IN_PROC_BROWSER_TEST_F(SSLUITest, ClientRedirectSSLState) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest, ClientRedirectSSLState) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_.Start());
 
@@ -4971,7 +5057,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, ClientRedirectSSLState) {
 
 // Checks that if a redirect occurs while the page is loading from a mixed
 // content to a valid HTTPS page, the SSL state reflects the final URL.
-IN_PROC_BROWSER_TEST_F(SSLUITest, ClientRedirectFromMixedContentSSLState) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       ClientRedirectFromMixedContentSSLState) {
   ASSERT_TRUE(https_server_.Start());
 
   GURL url =
@@ -4987,7 +5074,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, ClientRedirectFromMixedContentSSLState) {
 
 // Checks that if a redirect occurs while the page is loading from a valid HTTPS
 // page to a mixed content page, the SSL state reflects the final URL.
-IN_PROC_BROWSER_TEST_F(SSLUITest, ClientRedirectToMixedContentSSLState) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       ClientRedirectToMixedContentSSLState) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_.Start());
 
@@ -5003,7 +5091,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, ClientRedirectToMixedContentSSLState) {
 }
 
 // Checks that same-document navigations during page load preserve SSL state.
-IN_PROC_BROWSER_TEST_F(SSLUITest, SameDocumentNavigationDuringLoadSSLState) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       SameDocumentNavigationDuringLoadSSLState) {
   ASSERT_TRUE(https_server_.Start());
 
   ui_test_utils::NavigateToURL(
@@ -5015,7 +5104,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, SameDocumentNavigationDuringLoadSSLState) {
 
 // Checks that same-document navigations after the page load preserve SSL
 // state.
-IN_PROC_BROWSER_TEST_F(SSLUITest, SameDocumentNavigationAfterLoadSSLState) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest,
+                       SameDocumentNavigationAfterLoadSSLState) {
   ASSERT_TRUE(https_server_.Start());
 
   ui_test_utils::NavigateToURL(browser(),
@@ -5026,7 +5116,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, SameDocumentNavigationAfterLoadSSLState) {
 }
 
 // Checks that navigations after pushState maintain the SSL status.
-IN_PROC_BROWSER_TEST_F(SSLUITest, PushStateSSLState) {
+IN_PROC_BROWSER_TEST_P(TransientAndCommittedSSLUITest, PushStateSSLState) {
   ASSERT_TRUE(https_server_.Start());
 
   ui_test_utils::NavigateToURL(browser(),
@@ -5157,7 +5247,7 @@ IN_PROC_BROWSER_TEST_F(SSLUICaptivePortalListTest, Enabled_FromProto) {
 
 // Tests the scenario where the OS reports a captive portal. A captive portal
 // interstitial should be displayed.
-IN_PROC_BROWSER_TEST_F(SSLUITest, OSReportsCaptivePortal) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, OSReportsCaptivePortal) {
   ASSERT_TRUE(https_server_mismatched_.Start());
   base::HistogramTester histograms;
 
@@ -5189,7 +5279,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, OSReportsCaptivePortal) {
 // Tests the scenario where the OS reports a captive portal but captive portal
 // interstitial feature is disabled. A captive portal interstitial should not be
 // displayed.
-IN_PROC_BROWSER_TEST_F(SSLUITest, OSReportsCaptivePortal_FeatureDisabled) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, OSReportsCaptivePortal_FeatureDisabled) {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitWithFeatures(
       {} /* enabled */, {kCaptivePortalInterstitial} /* disabled */);
@@ -5227,7 +5317,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, OSReportsCaptivePortal_FeatureDisabled) {
 
 // Tests that the committed interstitial flag triggers the code path to show an
 // error PageType instead of an interstitial PageType.
-IN_PROC_BROWSER_TEST_F(SSLUITestCommittedInterstitials, ErrorPage) {
+IN_PROC_BROWSER_TEST_P(CommittedSSLUITest, ErrorPage) {
   if (!content::IsBrowserSideNavigationEnabled())
     return;
 
