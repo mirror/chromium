@@ -156,6 +156,7 @@ class SystemTrayNotifier;
 class ToplevelWindowEventHandler;
 class ToastManager;
 class TouchDevicesController;
+class TouchHudController;
 class TrayAction;
 class TrayBluetoothHelper;
 class VirtualKeyboardController;
@@ -443,6 +444,9 @@ class ASH_EXPORT Shell : public SessionObserver,
   TouchDevicesController* touch_devices_controller() {
     return touch_devices_controller_.get();
   }
+  TouchHudController* touch_hud_controller() {
+    return touch_hud_controller_.get();
+  }
   AshTouchTransformController* touch_transformer_controller() {
     return touch_transformer_controller_.get();
   }
@@ -497,12 +501,6 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   // Starts the animation that occurs on first login.
   void DoInitialWorkspaceAnimation();
-
-  void SetTouchHudProjectionEnabled(bool enabled);
-
-  bool is_touch_hud_projection_enabled() const {
-    return is_touch_hud_projection_enabled_;
-  }
 
   // NOTE: Prefer ScopedRootWindowForNewWindows when setting temporarily.
   void set_root_window_for_new_windows(aura::Window* root) {
@@ -675,6 +673,8 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<SystemTrayNotifier> system_tray_notifier_;
   std::unique_ptr<ToastManager> toast_manager_;
   std::unique_ptr<TouchDevicesController> touch_devices_controller_;
+  // Depends on SessionController.
+  std::unique_ptr<TouchHudController> touch_hud_controller_;
   std::unique_ptr<TrayAction> tray_action_;
   std::unique_ptr<VoiceInteractionController> voice_interaction_controller_;
   std::unique_ptr<VpnList> vpn_list_;
@@ -783,8 +783,6 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   // For testing only: simulate that a modal window is open
   bool simulate_modal_window_open_for_testing_;
-
-  bool is_touch_hud_projection_enabled_;
 
   // See comment for GetRootWindowForNewWindows().
   aura::Window* root_window_for_new_windows_ = nullptr;
