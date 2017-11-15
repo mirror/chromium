@@ -34,6 +34,7 @@
 #include "platform/blob/BlobData.h"
 #include "platform/network/HTTPHeaderMap.h"
 #include "platform/weborigin/KURL.h"
+#include "platform/weborigin/KURLHash.h"
 #include "platform/wtf/Deque.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/Vector.h"
@@ -224,6 +225,7 @@ class NetworkResourcesData final
   void MaybeDecodeDataToContent(const String& request_id);
   void AddResource(const String& request_id, Resource*);
   ResourceData const* Data(const String& request_id);
+  ResourceData const* Data(const KURL&);
   void Clear(const String& preserved_loader_id = String());
 
   void SetResourcesDataSizeLimits(size_t maximum_resources_content_size,
@@ -257,6 +259,8 @@ class NetworkResourcesData final
   ReusedRequestIds reused_xhr_replay_data_request_ids_;
   typedef HeapHashMap<String, Member<ResourceData>> ResourceDataMap;
   ResourceDataMap request_id_to_resource_data_map_;
+  typedef HeapHashMap<KURL, Member<ResourceData>> URLResourceDataMap;
+  URLResourceDataMap request_url_to_resource_data_map_;
   size_t content_size_;
   size_t maximum_resources_content_size_;
   size_t maximum_single_resource_content_size_;
