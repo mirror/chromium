@@ -15,9 +15,11 @@ using content::BrowserThread;
 namespace media_router {
 
 DialMediaSinkServiceImpl::DialMediaSinkServiceImpl(
+    std::unique_ptr<service_manager::Connector> connector,
     const OnSinksDiscoveredCallback& callback,
     net::URLRequestContextGetter* request_context)
     : MediaSinkServiceBase(callback),
+      connector_(std::move(connector)),
       observer_(nullptr),
       request_context_(request_context) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -71,11 +73,12 @@ void DialMediaSinkServiceImpl::OnUserGesture() {
 DeviceDescriptionService* DialMediaSinkServiceImpl::GetDescriptionService() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!description_service_.get()) {
-    description_service_.reset(new DeviceDescriptionService(
+    description_service_ = std::make_unique<DeviceDescriptionService>(
+        connector_.get(),
         base::Bind(&DialMediaSinkServiceImpl::OnDeviceDescriptionAvailable,
                    base::Unretained(this)),
         base::Bind(&DialMediaSinkServiceImpl::OnDeviceDescriptionError,
-                   base::Unretained(this))));
+                   base::Unretained(this)));
   }
   return description_service_.get();
 }

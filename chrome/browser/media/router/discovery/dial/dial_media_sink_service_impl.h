@@ -13,6 +13,11 @@
 #include "chrome/browser/media/router/discovery/dial/dial_registry.h"
 #include "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h"
 #include "chrome/browser/media/router/discovery/media_sink_service_base.h"
+#include "services/service_manager/public/cpp/connector.h"
+
+namespace service_manager {
+class Connector;
+}
 
 namespace media_router {
 
@@ -38,8 +43,12 @@ class DialMediaSinkServiceImpl
       public DialRegistry::Observer,
       public base::SupportsWeakPtr<DialMediaSinkServiceImpl> {
  public:
-  DialMediaSinkServiceImpl(const OnSinksDiscoveredCallback& callback,
-                           net::URLRequestContextGetter* request_context);
+  // |connector| should be a fresh connector to the ServiceManager that is not
+  // bound to any thread yet.
+  DialMediaSinkServiceImpl(
+      std::unique_ptr<service_manager::Connector> connector,
+      const OnSinksDiscoveredCallback& callback,
+      net::URLRequestContextGetter* request_context);
   ~DialMediaSinkServiceImpl() override;
 
   // Does not take ownership of |observer|. Caller should make sure |observer|
@@ -91,6 +100,8 @@ class DialMediaSinkServiceImpl
 
   // MediaSinkServiceBase implementation.
   void RecordDeviceCounts() override;
+
+  std::unique_ptr<service_manager::Connector> connector_;
 
   std::unique_ptr<DeviceDescriptionService> description_service_;
 
