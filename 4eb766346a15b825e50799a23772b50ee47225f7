@@ -34,6 +34,97 @@
       "revId": "4eb766346a15b825e50799a23772b50ee47225f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8238b8_8cbc547a",
+        "filename": "third_party/gvr-android-keyboard/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-15T23:14:51Z",
+      "side": 1,
+      "message": "Should this match the directory name?",
+      "revId": "4eb766346a15b825e50799a23772b50ee47225f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5863d654_9cddcc57",
+        "filename": "third_party/gvr-android-keyboard/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-15T23:14:51Z",
+      "side": 1,
+      "message": "\"GVR keyboard\"?",
+      "range": {
+        "startLine": 13,
+        "startChar": 61,
+        "endLine": 13,
+        "endChar": 73
+      },
+      "revId": "4eb766346a15b825e50799a23772b50ee47225f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1adbb969_1471de4c",
+        "filename": "third_party/gvr-android-keyboard/src/libraries/headers/gvr_keyboard.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-15T23:14:51Z",
+      "side": 1,
+      "message": "This is incorrect, right?",
+      "revId": "4eb766346a15b825e50799a23772b50ee47225f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f910b6b_e9bc118d",
+        "filename": "third_party/gvr-android-keyboard/src/libraries/headers/gvr_keyboard.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-15T23:14:51Z",
+      "side": 1,
+      "message": "These lines are modifications but the README.chromium says there are \"None.\" Please copy both files from the original source again.",
+      "revId": "4eb766346a15b825e50799a23772b50ee47225f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e640903_3dff23aa",
+        "filename": "third_party/gvr-android-keyboard/src/libraries/headers/gvr_keyboard.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-15T23:14:51Z",
+      "side": 1,
+      "message": "Modification",
+      "revId": "4eb766346a15b825e50799a23772b50ee47225f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
