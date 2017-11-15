@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "97723dee_b0ed77c9",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-15T20:09:27Z",
+      "side": 1,
+      "message": "We\u0027re not supposed to -- the previous version actually used presence of callback as an indication that the job is being intercepted, but this is no longer so when we added response interception. Basically, if you stopped interception but still invoke client callbacks, this is likely to result in stalled requests (since no-one is listening), so it\u0027s an additional measure to assert correctness.",
+      "parentUuid": "c4957adf_dbebed43",
+      "revId": "b9a819137afeff1acccdb55def0598896a677116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0027434_12c0fdc1",
         "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "b9a819137afeff1acccdb55def0598896a677116",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef6ba00_f43cb488",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-15T20:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0027434_12c0fdc1",
+      "revId": "b9a819137afeff1acccdb55def0598896a677116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "1d89ff40_64661bdb",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-15T20:09:27Z",
+      "side": 1,
+      "message": "Because we want to emphasize the id semantics of it -- basically, the only valid thing to do with this is to compare to another id, and the Job class just keeps the token and doesn\u0027t care what it is. Could still be void*, but intptr_t is the new void* (this actually should be intptr_t instead of int64_t)",
+      "parentUuid": "3237079c_a1ca46a9",
+      "range": {
+        "startLine": 185,
+        "startChar": 46,
+        "endLine": 185,
+        "endChar": 53
+      },
+      "revId": "b9a819137afeff1acccdb55def0598896a677116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ad051c4_33f6e0fb",
         "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
         "patchSetId": 5
@@ -70,6 +130,24 @@
       "writtenOn": "2017-11-14T14:26:50Z",
       "side": 1,
       "message": "Can you just inline this?",
+      "revId": "b9a819137afeff1acccdb55def0598896a677116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a4deb6_c20aaa6a",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-15T20:09:27Z",
+      "side": 1,
+      "message": "Well, we post this as a task that is weak-bound to the interceptor, so that if the interceptor owning a certain entry is gone, we don\u0027t access it. Technically, it still could be a lambda, but I find the cumbersome.",
+      "parentUuid": "9ad051c4_33f6e0fb",
       "revId": "b9a819137afeff1acccdb55def0598896a677116",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
