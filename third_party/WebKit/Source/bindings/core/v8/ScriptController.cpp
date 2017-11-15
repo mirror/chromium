@@ -252,8 +252,9 @@ bool ScriptController::ExecuteScriptIfJavaScriptURL(const KURL& url,
   // source, settings, base URL, and the default classic script fetch options."
   // [spec text]
   v8::Local<v8::Value> result = EvaluateScriptInMainWorld(
-      ScriptSourceCode(script_source), ScriptFetchOptions(),
-      kNotSharableCrossOrigin, kDoNotExecuteScriptWhenScriptsDisabled);
+      ScriptSourceCode(script_source, ScriptSourceOrigin::kJavascriptUrl),
+      ScriptFetchOptions(), kNotSharableCrossOrigin,
+      kDoNotExecuteScriptWhenScriptsDisabled);
 
   // If executing script caused this frame to be removed from the page, we
   // don't want to try to replace its document!
@@ -281,7 +282,16 @@ bool ScriptController::ExecuteScriptIfJavaScriptURL(const KURL& url,
 void ScriptController::ExecuteScriptInMainWorld(const String& script,
                                                 ExecuteScriptPolicy policy) {
   v8::HandleScope handle_scope(GetIsolate());
-  EvaluateScriptInMainWorld(ScriptSourceCode(script), ScriptFetchOptions(),
+  EvaluateScriptInMainWorld(
+      ScriptSourceCode(script, ScriptSourceOrigin::kUnknown),
+      ScriptFetchOptions(), kNotSharableCrossOrigin, policy);
+}
+
+void ScriptController::ExecuteScriptInMainWorld(
+    const ScriptSourceCode& source_code,
+    ExecuteScriptPolicy policy) {
+  v8::HandleScope handle_scope(GetIsolate());
+  EvaluateScriptInMainWorld(source_code, ScriptFetchOptions(),
                             kNotSharableCrossOrigin, policy);
 }
 

@@ -14,10 +14,23 @@ ScriptSourceCode::ScriptSourceCode(const String& source,
                                    const TextPosition& start_position)
     : source_(source),
       url_(url),
-      start_position_(start_position) {
+      start_position_(start_position),
+      source_origin_(ScriptSourceOrigin::kUnknown) {
   TreatNullSourceAsEmpty();
-  if (!url_.IsEmpty())
+  if (!url_.IsEmpty()) {
     url_.RemoveFragmentIdentifier();
+    source_origin_ = ScriptSourceOrigin::kExternalFile;
+  }
+}
+
+ScriptSourceCode::ScriptSourceCode(const String& source,
+                                   const ScriptSourceOrigin& source_origin,
+                                   const TextPosition& start_position)
+    : source_(source),
+      url_(KURL()),
+      start_position_(start_position),
+      source_origin_(source_origin) {
+  TreatNullSourceAsEmpty();
 }
 
 ScriptSourceCode::ScriptSourceCode(ScriptResource* resource)
@@ -28,7 +41,8 @@ ScriptSourceCode::ScriptSourceCode(ScriptStreamer* streamer,
     : source_(resource->SourceText()),
       resource_(resource),
       streamer_(streamer),
-      start_position_(TextPosition::MinimumPosition()) {
+      start_position_(TextPosition::MinimumPosition()),
+      source_origin_(ScriptSourceOrigin::kExternalFile) {
   TreatNullSourceAsEmpty();
 }
 
