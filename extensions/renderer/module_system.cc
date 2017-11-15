@@ -585,6 +585,7 @@ v8::Local<v8::Value> ModuleSystem::RunString(v8::Local<v8::String> code,
       name, code,
       base::Bind(&ExceptionHandler::HandleUncaughtException,
                  base::Unretained(exception_handler_.get())),
+      v8::ScriptCompiler::kNoCompileOptions,
       v8::ScriptCompiler::NoCacheReason::kNoCacheBecauseExtensionModule);
 }
 

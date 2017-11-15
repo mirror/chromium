@@ -460,6 +460,7 @@ v8::Local<v8::Value> ScriptContext::RunScript(
     v8::Local<v8::String> name,
     v8::Local<v8::String> code,
     const RunScriptExceptionHandler& exception_handler,
+    v8::ScriptCompiler::CompileOptions options,
     v8::ScriptCompiler::NoCacheReason no_cache_reason) {
   DCHECK(thread_checker_.CalledOnValidThread());
   v8::EscapableHandleScope handle_scope(isolate());
@@ -483,8 +484,7 @@ v8::Local<v8::Value> ScriptContext::RunScript(
       v8_helpers::ToV8StringUnsafe(isolate(), internal_name.c_str()));
   v8::ScriptCompiler::Source script_source(code, origin);
   v8::Local<v8::Script> script;
-  if (!v8::ScriptCompiler::Compile(v8_context(), &script_source,
-                                   v8::ScriptCompiler::kNoCompileOptions,
+  if (!v8::ScriptCompiler::Compile(v8_context(), &script_source, options,
                                    no_cache_reason)
            .ToLocal(&script)) {
     exception_handler.Run(try_catch);
