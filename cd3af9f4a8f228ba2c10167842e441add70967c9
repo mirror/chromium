@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2ffc4bf7_1ba5216c",
+        "filename": "android_webview/browser/aw_permission_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-11-15T05:38:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41ee826b_16f1d8dd",
+      "revId": "cd3af9f4a8f228ba2c10167842e441add70967c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b469a5a_5c240c58",
         "filename": "android_webview/browser/aw_permission_manager.cc",
         "patchSetId": 13
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "590c0370_6cb3c444",
+        "filename": "chrome/browser/permissions/permission_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-11-15T05:38:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "172ff243_0ddb0051",
+      "revId": "cd3af9f4a8f228ba2c10167842e441add70967c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8521e08_7a007ccf",
         "filename": "chrome/browser/permissions/permission_request.h",
         "patchSetId": 13
@@ -67,6 +103,24 @@
       "revId": "cd3af9f4a8f228ba2c10167842e441add70967c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcd38ece_1f34d2b7",
+        "filename": "chrome/browser/permissions/permission_request.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-11-15T05:38:34Z",
+      "side": 1,
+      "message": "This is done as per @Peter review comments.",
+      "parentUuid": "c8521e08_7a007ccf",
+      "revId": "cd3af9f4a8f228ba2c10167842e441add70967c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "89b45f02_4b8faf00",
+        "filename": "content/browser/permissions/permission_service_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-11-15T05:38:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "566134d7_49d3b3d7",
+      "revId": "cd3af9f4a8f228ba2c10167842e441add70967c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff1ef734_b6a65c5a",
         "filename": "content/public/browser/permission_type.h",
         "patchSetId": 13
@@ -101,6 +173,24 @@
       "revId": "cd3af9f4a8f228ba2c10167842e441add70967c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d7c230_2242945e",
+        "filename": "content/public/browser/permission_type.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-11-15T05:38:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff1ef734_b6a65c5a",
+      "revId": "cd3af9f4a8f228ba2c10167842e441add70967c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
