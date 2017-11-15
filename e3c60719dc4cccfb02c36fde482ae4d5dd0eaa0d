@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "5f313073_c35dd55d",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-15T17:16:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9c60a46_6abd1c54",
+      "range": {
+        "startLine": 195,
+        "startChar": 14,
+        "endLine": 195,
+        "endChar": 35
+      },
+      "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df4078f9_8f9a6553",
         "filename": "ios/net/crn_http_protocol_handler.mm",
         "patchSetId": 4
@@ -398,6 +422,30 @@
       "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f56095a5_f51947b5",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-15T17:16:27Z",
+      "side": 1,
+      "message": "I created an NSOperationQueue in CronetMetricsDelegateAdapter, and have that post the callback.  I think that makes it okay that this runs on the network thread, since it just calls out to that, which immediately posts to the operation queue.",
+      "parentUuid": "df4078f9_8f9a6553",
+      "range": {
+        "startLine": 736,
+        "startChar": 6,
+        "endLine": 736,
+        "endChar": 24
+      },
+      "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
