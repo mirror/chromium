@@ -43,7 +43,7 @@ void InputDeviceObserverAndroid::RemoveObserver(
   Java_InputDeviceObserver_removeObserver(env);
 }
 
-static void InputConfigurationChanged(JNIEnv* env,
+static void InputDeviceObserver__InputConfigurationChanged(JNIEnv* env,
                                       const JavaParamRef<jobject>& obj) {
   InputDeviceObserverAndroid::GetInstance()
       ->NotifyObserversTouchpadDeviceConfigurationChanged();

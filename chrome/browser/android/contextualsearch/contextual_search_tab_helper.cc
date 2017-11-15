@@ -43,7 +43,7 @@ void ContextualSearchTabHelper::Destroy(JNIEnv* env,
   delete this;
 }
 
-static jlong Init(JNIEnv* env,
+static jlong ContextualSearchTabHelper__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
                   const JavaParamRef<jobject>& java_profile) {
   Profile* profile = ProfileAndroid::FromProfileAndroid(java_profile);

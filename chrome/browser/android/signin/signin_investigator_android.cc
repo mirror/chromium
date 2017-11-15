@@ -16,7 +16,7 @@ using base::android::ConvertJavaStringToUTF8;
 using base::android::JavaParamRef;
 
 // static
-jint Investigate(JNIEnv* env,
+jint SigninInvestigator__Investigate(JNIEnv* env,
                  const JavaParamRef<jclass>& jcaller,
                  const JavaParamRef<jstring>& current_email) {
   Profile* profile = ProfileManager::GetActiveUserProfile();

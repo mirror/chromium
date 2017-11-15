@@ -11,7 +11,7 @@
 
 using base::android::JavaParamRef;
 
-int GetCertificateFailure(JNIEnv* env,
+int PolicyAuditor__GetCertificateFailure(JNIEnv* env,
                           const JavaParamRef<jclass>& obj,
                           const JavaParamRef<jobject>& java_web_contents) {
   // This function is similar to

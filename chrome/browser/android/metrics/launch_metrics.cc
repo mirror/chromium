@@ -24,7 +24,7 @@ namespace metrics {
 
 enum class HomeScreenLaunchType { STANDALONE = 0, SHORTCUT = 1, COUNT = 2 };
 
-static void RecordLaunch(JNIEnv* env,
+static void LaunchMetrics__RecordLaunch(JNIEnv* env,
                          const JavaParamRef<jclass>& caller,
                          jboolean is_shortcut,
                          const JavaParamRef<jstring>& jurl,
@@ -117,7 +117,7 @@ static void RecordLaunch(JNIEnv* env,
                                           rappor_metric_action, url);
 }
 
-static void RecordHomePageLaunchMetrics(
+static void LaunchMetrics__RecordHomePageLaunchMetrics(
     JNIEnv* env,
     const JavaParamRef<jclass>& caller,
     jboolean show_home_button,

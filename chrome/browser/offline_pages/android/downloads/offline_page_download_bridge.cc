@@ -267,7 +267,7 @@ void OfflinePageDownloadBridge::Destroy(JNIEnv* env,
   delete this;
 }
 
-void StartDownload(JNIEnv* env,
+void OfflinePageDownloadBridge__StartDownload(JNIEnv* env,
                    const JavaParamRef<jclass>& clazz,
                    const JavaParamRef<jobject>& j_tab,
                    const JavaParamRef<jstring>& j_origin) {
@@ -306,7 +306,7 @@ void StartDownload(JNIEnv* env,
       base::Bind(&DuplicateCheckDone, url, original_url, j_tab_ref, origin));
 }
 
-static jlong Init(JNIEnv* env,
+static jlong OfflinePageDownloadBridge__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
                   const JavaParamRef<jobject>& j_profile) {
   content::BrowserContext* browser_context =

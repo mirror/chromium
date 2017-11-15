@@ -107,7 +107,7 @@ jboolean ProfileAndroid::IsChild(
 }
 
 // static
-ScopedJavaLocalRef<jobject> GetLastUsedProfile(
+ScopedJavaLocalRef<jobject> Profile__GetLastUsedProfile(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz) {
   return ProfileAndroid::GetLastUsedProfile(env, clazz);

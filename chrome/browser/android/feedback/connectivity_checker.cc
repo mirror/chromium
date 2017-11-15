@@ -47,7 +47,7 @@ void ExecuteCallback(const base::android::JavaRef<jobject>& callback,
                                            callback, result);
 }
 
-void PostCallback(JNIEnv* env,
+void ConnectivityChecker__PostCallback(JNIEnv* env,
                   const base::android::JavaRef<jobject>& j_callback,
                   ConnectivityCheckResult result) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
@@ -161,7 +161,7 @@ void ConnectivityChecker::OnTimeout() {
 
 }  // namespace
 
-void CheckConnectivity(JNIEnv* env,
+void ConnectivityChecker__CheckConnectivity(JNIEnv* env,
                        const JavaParamRef<jclass>& clazz,
                        const JavaParamRef<jobject>& j_profile,
                        const JavaParamRef<jstring>& j_url,
@@ -169,12 +169,12 @@ void CheckConnectivity(JNIEnv* env,
                        const JavaParamRef<jobject>& j_callback) {
   Profile* profile = ProfileAndroid::FromProfileAndroid(j_profile);
   if (!profile) {
-    PostCallback(env, j_callback, CONNECTIVITY_CHECK_RESULT_ERROR);
+    ConnectivityChecker__PostCallback(env, j_callback, CONNECTIVITY_CHECK_RESULT_ERROR);
     return;
   }
   GURL url(base::android::ConvertJavaStringToUTF8(env, j_url));
   if (!url.is_valid()) {
-    PostCallback(env, j_callback, CONNECTIVITY_CHECK_RESULT_ERROR);
+    ConnectivityChecker__PostCallback(env, j_callback, CONNECTIVITY_CHECK_RESULT_ERROR);
     return;
   }
 
@@ -185,7 +185,7 @@ void CheckConnectivity(JNIEnv* env,
   connectivity_checker->StartAsyncCheck();
 }
 
-jboolean IsUrlValid(JNIEnv* env,
+jboolean ConnectivityChecker__IsUrlValid(JNIEnv* env,
                     const JavaParamRef<jclass>& clazz,
                     const JavaParamRef<jstring>& j_url) {
   GURL url(base::android::ConvertJavaStringToUTF8(env, j_url));

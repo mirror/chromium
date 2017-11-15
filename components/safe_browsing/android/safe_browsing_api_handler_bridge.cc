@@ -77,7 +77,7 @@ ScopedJavaLocalRef<jintArray> SBThreatTypeSetToJavaArray(
 //                 that will be called and then deleted here.
 //   |result_status| is one of those from SafeBrowsingApiHandler.java
 //   |metadata| is a JSON string classifying the threat if there is one.
-void OnUrlCheckDone(JNIEnv* env,
+void SafeBrowsingApiBridge__OnUrlCheckDone(JNIEnv* env,
                     const JavaParamRef<jclass>& context,
                     jlong callback_id,
                     jint result_status,

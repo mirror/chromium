@@ -126,7 +126,7 @@ LayerTitleCache::~LayerTitleCache() {
 // Native JNI methods
 // ----------------------------------------------------------------------------
 
-jlong Init(JNIEnv* env,
+jlong LayerTitleCache__Init(JNIEnv* env,
            const JavaParamRef<jobject>& obj,
            jint fade_width,
            jint favicon_start_padding,

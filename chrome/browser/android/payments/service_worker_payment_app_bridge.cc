@@ -227,7 +227,7 @@ std::vector<PaymentMethodDataPtr> ConvertPaymentMethodDataFromJavaToNative(
 
 }  // namespace
 
-static void GetAllPaymentApps(JNIEnv* env,
+static void ServiceWorkerPaymentAppBridge__GetAllPaymentApps(JNIEnv* env,
                               const JavaParamRef<jclass>& jcaller,
                               const JavaParamRef<jobject>& jweb_contents,
                               const JavaParamRef<jobjectArray>& jmethod_data,
@@ -246,7 +246,7 @@ static void GetAllPaymentApps(JNIEnv* env,
                          ScopedJavaGlobalRef<jobject>(env, jcallback)));
 }
 
-static void CanMakePayment(JNIEnv* env,
+static void ServiceWorkerPaymentAppBridge__CanMakePayment(JNIEnv* env,
                            const JavaParamRef<jclass>& jcaller,
                            const JavaParamRef<jobject>& jweb_contents,
                            jlong registration_id,
@@ -315,7 +315,7 @@ static void CanMakePayment(JNIEnv* env,
                      ScopedJavaGlobalRef<jobject>(env, jcallback)));
 }
 
-static void InvokePaymentApp(
+static void ServiceWorkerPaymentAppBridge__InvokePaymentApp(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller,
     const JavaParamRef<jobject>& jweb_contents,
@@ -400,7 +400,7 @@ static void InvokePaymentApp(
                      ScopedJavaGlobalRef<jobject>(env, jcallback)));
 }
 
-static void AbortPaymentApp(JNIEnv* env,
+static void ServiceWorkerPaymentAppBridge__AbortPaymentApp(JNIEnv* env,
                             const JavaParamRef<jclass>& jcaller,
                             const JavaParamRef<jobject>& jweb_contents,
                             jlong registration_id,

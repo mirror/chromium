@@ -47,7 +47,7 @@ std::string GetProxy(const net::HttpResponseInfo& info) {
 
 }  // namespace
 
-static jlong CreateRequestAdapter(JNIEnv* env,
+static jlong CronetUrlRequest__CreateRequestAdapter(JNIEnv* env,
                                   const JavaParamRef<jobject>& jurl_request,
                                   jlong jurl_request_context_adapter,
                                   const JavaParamRef<jstring>& jurl_string,
@@ -137,7 +137,7 @@ void CronetURLRequestAdapter::SetUpload(
   upload_ = std::move(upload);
 }
 
-void CronetURLRequestAdapter::Start(JNIEnv* env,
+void CronetUrlRequest__CronetURLRequestAdapter::Start(JNIEnv* env,
                                     const JavaParamRef<jobject>& jcaller) {
   DCHECK(!context_->IsOnNetworkThread());
   context_->PostTaskToNetworkThread(
@@ -191,7 +191,7 @@ jboolean CronetURLRequestAdapter::ReadData(
   return JNI_TRUE;
 }
 
-void CronetURLRequestAdapter::Destroy(JNIEnv* env,
+void CronetUrlRequest__CronetURLRequestAdapter::Destroy(JNIEnv* env,
                                       const JavaParamRef<jobject>& jcaller,
                                       jboolean jsend_on_canceled) {
   // Destroy could be called from any thread, including network thread (if

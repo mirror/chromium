@@ -94,7 +94,7 @@ bool InstantAppsInfoBarDelegate::ShouldExpire(
          ConfirmInfoBarDelegate::ShouldExpire(details);
 }
 
-void Launch(JNIEnv* env,
+void InstantAppsInfoBarDelegate__Launch(JNIEnv* env,
             const base::android::JavaParamRef<jclass>& clazz,
             const base::android::JavaParamRef<jobject>& jweb_contents,
             const base::android::JavaParamRef<jobject>& jdata,

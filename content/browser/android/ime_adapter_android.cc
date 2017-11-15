@@ -62,7 +62,7 @@ NativeWebKeyboardEvent NativeWebKeyboardEventFromKeyEvent(
 
 }  // anonymous namespace
 
-jlong Init(JNIEnv* env,
+jlong ImeAdapter__Init(JNIEnv* env,
            const JavaParamRef<jobject>& obj,
            const JavaParamRef<jobject>& jweb_contents) {
   WebContents* web_contents = WebContents::FromJavaWebContents(jweb_contents);
@@ -74,7 +74,7 @@ jlong Init(JNIEnv* env,
 
 // Callback from Java to convert BackgroundColorSpan data to a
 // ui::ImeTextSpan instance, and append it to |ime_text_spans_ptr|.
-void AppendBackgroundColorSpan(JNIEnv*,
+void ImeAdapter__AppendBackgroundColorSpan(JNIEnv*,
                                const JavaParamRef<jclass>&,
                                jlong ime_text_spans_ptr,
                                jint start,
@@ -94,7 +94,7 @@ void AppendBackgroundColorSpan(JNIEnv*,
 
 // Callback from Java to convert SuggestionSpan data to a
 // ui::ImeTextSpan instance, and append it to |ime_text_spans_ptr|.
-void AppendSuggestionSpan(JNIEnv* env,
+void ImeAdapter__AppendSuggestionSpan(JNIEnv* env,
                           const JavaParamRef<jclass>&,
                           jlong ime_text_spans_ptr,
                           jint start,
@@ -122,7 +122,7 @@ void AppendSuggestionSpan(JNIEnv* env,
 
 // Callback from Java to convert UnderlineSpan data to a
 // ui::ImeTextSpan instance, and append it to |ime_text_spans_ptr|.
-void AppendUnderlineSpan(JNIEnv*,
+void ImeAdapter__AppendUnderlineSpan(JNIEnv*,
                          const JavaParamRef<jclass>&,
                          jlong ime_text_spans_ptr,
                          jint start,

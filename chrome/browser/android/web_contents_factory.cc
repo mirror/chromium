@@ -12,7 +12,7 @@
 using base::android::JavaParamRef;
 using base::android::ScopedJavaLocalRef;
 
-static ScopedJavaLocalRef<jobject> CreateWebContents(
+static ScopedJavaLocalRef<jobject> WebContentsFactory__CreateWebContents(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     jboolean incognito,
