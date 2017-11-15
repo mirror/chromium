@@ -1,0 +1,248 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6386229f_66638271",
+        "filename": "components/leveldb/leveldb_database_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-15T01:17:39Z",
+      "side": 1,
+      "message": "Does this do what is expected when COPY_PREFIXED_KEY is not the first operation? I.e. some puts followed by a copy should probably copy those puts as well? Although that seems like it could get very complicated very quickly, especially if multiple COPY_PREFIXED_KEY operations are allowed in a single batch.\n\n(hmm, DELETE_PREFIXED_KEY has the same problem... should probably add some kind of checks for those two always be the first operation in a batch?)\n\nDifference between DELETE_PREFIXED_KEY and COPY_PREFIXED_KEY is that at least in the delete case we\u0027re only using it in the way that actually is supported (it more or less being the first operation in a batch), while for COPY_PREFIXED_KEY you do seem to actually expect it to copy  data written earlier in the batch (and not copy data deleted earlier in the batch). So definitely seems like you have a bug there (and no tests for the way leveldb_wrapper_impl actually uses COPY_PREFIXED_KEY)",
+      "revId": "13d5f15e915a696b201eac67d4d81b8c76611409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c33eaad0_29df69a5",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-15T01:17:39Z",
+      "side": 1,
+      "message": "nit: no {} for single-line loop body",
+      "revId": "13d5f15e915a696b201eac67d4d81b8c76611409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e168a7a4_5c00da68",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-15T01:17:39Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "revId": "13d5f15e915a696b201eac67d4d81b8c76611409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aaf66d7_814b6840",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-15T01:17:39Z",
+      "side": 1,
+      "message": "unfinished comment?",
+      "revId": "13d5f15e915a696b201eac67d4d81b8c76611409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ebc5040_1d75a048",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-15T01:17:39Z",
+      "side": 1,
+      "message": "DCHECK_NE (at least I think that should work with enums?)",
+      "revId": "13d5f15e915a696b201eac67d4d81b8c76611409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca7b4ef_681c59c3",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-15T01:17:39Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "revId": "13d5f15e915a696b201eac67d4d81b8c76611409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ca65dd_82bc700b",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-15T01:17:39Z",
+      "side": 1,
+      "message": "you\u0027ll have to move this to be above CommitChange, otherwise the delegates PrepareToCommit method would access incorrect storage used numbers.",
+      "revId": "13d5f15e915a696b201eac67d4d81b8c76611409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c71eae2_20b25d67",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-15T01:17:39Z",
+      "side": 1,
+      "message": "Maybe add a comment explaining why this check, and why inserting at the back is indeed the correct thing to do?",
+      "revId": "13d5f15e915a696b201eac67d4d81b8c76611409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8601754_02375d82",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-15T01:17:39Z",
+      "side": 1,
+      "message": "(in an earlier version of the LocalStorage code I had it delete the LevelDBWrapperImpl instance from the OnNoBindings callback, but that code fortunately is no more, so this re-ordering is in fact safe, as long as no future use will try to do the same either...)",
+      "revId": "13d5f15e915a696b201eac67d4d81b8c76611409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97ee68eb_da5a55c6",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-15T01:17:39Z",
+      "side": 1,
+      "message": "DCHECK changed_values.empty() to try to catch bugs where commit_batch and map_state_ get out of sync?",
+      "revId": "13d5f15e915a696b201eac67d4d81b8c76611409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58bb7bf6_b9c96682",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-15T01:17:39Z",
+      "side": 1,
+      "message": "DCHECK changed_keys.empty() to try to catch bugs where commit_batch and map_state_ get out of sync?",
+      "range": {
+        "startLine": 714,
+        "startChar": 53,
+        "endLine": 714,
+        "endChar": 0
+      },
+      "revId": "13d5f15e915a696b201eac67d4d81b8c76611409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "528df6ce_259ef66f",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-15T01:17:39Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "revId": "13d5f15e915a696b201eac67d4d81b8c76611409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404c576a_98e17b5f",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-15T01:17:39Z",
+      "side": 1,
+      "message": "does this work? You\u0027ve moved out all the keys from keys_values_map_ right above, so I wouldn\u0027t expect keys_values_map_ to be in any usable state at this point.",
+      "revId": "13d5f15e915a696b201eac67d4d81b8c76611409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35bdbe2_29bf95cc",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-15T01:17:39Z",
+      "side": 1,
+      "message": "I think it might be nice to either consistently use desired_cache_mode as name, or consistently use cache_mode as name (for getter, setter, field, etc). Having getter/setter using a name different than the field (and then in the implementation inconsistently using either the getter or the field directly) makes the code much harder to read, because I keep having to remind myself that they are actually the same.",
+      "revId": "13d5f15e915a696b201eac67d4d81b8c76611409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

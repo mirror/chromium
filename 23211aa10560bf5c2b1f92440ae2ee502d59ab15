@@ -318,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "12fec253_6e754f19",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-15T01:17:39Z",
+      "side": 1,
+      "message": "FWIW I like the new code with the memory calculation all in one place",
+      "parentUuid": "94751f61_6412a35e",
+      "range": {
+        "startLine": 533,
+        "startChar": 2,
+        "endLine": 533,
+        "endChar": 31
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e4a8eb2_6f5255fa",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 15
