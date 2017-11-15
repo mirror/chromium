@@ -309,6 +309,9 @@ class Extension : public base::RefCountedThreadSafe<Extension> {
   // True if this is a platform app, hosted app, or legacy packaged app.
   bool is_app() const;
 
+  // True if this app was created based on an installable website.
+  bool is_for_installable_website() const;
+
   void AddWebExtentPattern(const URLPattern& pattern);
   const URLPatternSet& web_extent() const { return extent_; }
 

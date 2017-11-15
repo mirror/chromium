@@ -444,6 +444,14 @@ bool Extension::is_theme() const {
   return manifest()->is_theme();
 }
 
+bool Extension::is_for_installable_website() const {
+  // An app is for an installable website iff is a Bookmark App and has URL
+  // Handlers.
+  // TODO(crbug.com/774918): Replace once there is a more explicit indicator
+  // of an app for an installable website.
+  return from_bookmark() && GetManifestData(keys::kUrlHandlers);
+}
+
 void Extension::AddWebExtentPattern(const URLPattern& pattern) {
   // Bookmark apps are permissionless.
   if (from_bookmark())
