@@ -151,21 +151,45 @@ bool PrefetchStoreSchema::CreateOrUpgradeIfNeeded(sql::Connection* db) {
     return false;
 
   // Schema upgrade code starts here.
-  // Note: A series of if-else blocks was chosen to allow for more flexibility
-  // in the upgrade logic than a single switch-case block would.
+  // Note #1: A series of if-else blocks was chosen to allow for more
+  // flexibility in the upgrade logic than a single switch-case block would.
+  // Note #2: Be very mindful when referring any constants from inside upgrade
+  // code as they might change as the schema evolve whereas the upgrade code
+  // should not. For instance, one should never refer to kCurrentVersion or
+  // kCompatibleVersion when setting values for the current and compatible
+  // versions as these are definitely going to change with each schema change.
 
+  // Upgrade from version 1 (legacy) to 2.
   if (current_version == 1) {
     sql::Transaction transaction(db);
     if (!transaction.Begin())
       return false;
 
-    if (!db->Execute("ALTER TABLE prefetch_items RENAME TO prefetch_items_old"))
-      return false;
-
-    if (!CreatePrefetchItemsTable(db))
-      return false;
-
-    const char kMigrateItemsSql[] =
+    const char kVersion1ToVersion2MigrationSql[] =
+        // Rename the existing items table.
+        "ALTER TABLE prefetch_items RENAME TO prefetch_items_old; "
+        // Creates the new items table.
+        "CREATE TABLE prefetch_items "
+        "(offline_id INTEGER PRIMARY KEY NOT NULL,"
+        " state INTEGER NOT NULL DEFAULT 0,"
+        " generate_bundle_attempts INTEGER NOT NULL DEFAULT 0,"
+        " get_operation_attempts INTEGER NOT NULL DEFAULT 0,"
+        " download_initiation_attempts INTEGER NOT NULL DEFAULT 0,"
+        " archive_body_length INTEGER_NOT_NULL DEFAULT -1,"
+        " creation_time INTEGER NOT NULL,"
+        " freshness_time INTEGER NOT NULL,"
+        " error_code INTEGER NOT NULL DEFAULT 0,"
+        " file_size INTEGER NOT NULL DEFAULT -1,"
+        " guid VARCHAR NOT NULL DEFAULT '',"
+        " client_namespace VARCHAR NOT NULL DEFAULT '',"
+        " client_id VARCHAR NOT NULL DEFAULT '',"
+        " requested_url VARCHAR NOT NULL DEFAULT '',"
+        " final_archived_url VARCHAR NOT NULL DEFAULT '',"
+        " operation_name VARCHAR NOT NULL DEFAULT '',"
+        " archive_body_name VARCHAR NOT NULL DEFAULT '',"
+        " title VARCHAR NOT NULL DEFAULT '',"
+        " file_path VARCHAR NOT NULL DEFAULT ''); "
+        // Copy existing rows to the new items table.
         "INSERT INTO prefetch_items "
         " (offline_id, state, generate_bundle_attempts, get_operation_attempts,"
         "  download_initiation_attempts, archive_body_length, creation_time,"
@@ -178,15 +202,14 @@ bool PrefetchStoreSchema::CreateOrUpgradeIfNeeded(sql::Connection* db) {
         "  freshness_time, error_code, file_size, guid, client_namespace,"
         "  client_id, requested_url, final_archived_url, operation_name,"
         "  archive_body_name, title, file_path"
-        " FROM prefetch_items_old";
-    if (!db->Execute(kMigrateItemsSql))
+        " FROM prefetch_items_old; "
+        // Drops the old items table.
+        "DROP TABLE prefetch_items_old; ";
+    if (!db->Execute(kVersion1ToVersion2MigrationSql))
       return false;
 
-    if (!db->Execute("DROP TABLE prefetch_items_old"))
-      return false;
-
-    if (!SetVersionNumber(&meta_table, kCurrentVersion) ||
-        !SetCompatibleVersionNumber(&meta_table, kCompatibleVersion)) {
+    if (!SetVersionNumber(&meta_table, 2) ||
+        !SetCompatibleVersionNumber(&meta_table, 1)) {
       return false;
     }
 
