@@ -22,6 +22,11 @@ void PageTestBase::SetUp() {
   dummy_page_holder_ = DummyPageHolder::Create(IntSize(800, 600));
 }
 
+void PageTestBase::SetUp(IntSize size) {
+  DCHECK(!dummy_page_holder_) << "Page should be set up only once";
+  dummy_page_holder_ = DummyPageHolder::Create(size);
+}
+
 void PageTestBase::SetupPageWithClients(
     Page::PageClients* clients,
     LocalFrameClient* local_frame_client,
