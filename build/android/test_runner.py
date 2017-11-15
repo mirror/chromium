@@ -529,6 +529,10 @@ def AddJUnitTestOptions(parser):
       '-s', '--test-suite',
       dest='test_suite', required=True,
       help='JUnit test suite to run.')
+  parser.add_argument(
+      '-w', '--wait-for-java-debugger', dest='debug_socket',
+      help='Wait for java debugger to attach before running any application '
+           'code. Also disables test timeouts and sets retries=0.')
 
   # These arguments are for Android Robolectric tests.
   parser.add_argument(
@@ -1003,8 +1007,10 @@ def main():
     parser.error('--replace-system-package and --enable-concurrent-adb cannot '
                  'be used together')
 
-  if hasattr(args, 'wait_for_java_debugger') and args.wait_for_java_debugger:
+  if hasattr(args, 'debug_socket') or \
+      hasattr(args, 'wait_for_java_debugger') and args.wait_for_java_debugger:
     args.num_retries = 0
+
 
   try:
     return RunTestsCommand(args)

@@ -19,6 +19,7 @@ class JunitTestInstance(test_instance.TestInstance):
     self._runner_filter = args.runner_filter
     self._test_filter = args.test_filter
     self._test_suite = args.test_suite
+    self._debug_socket = args.debug_socket
 
   #override
   def TestType(self):
@@ -47,6 +48,10 @@ class JunitTestInstance(test_instance.TestInstance):
   @property
   def package_name(self):
     return self._package_name
+
+  @property
+  def debug_socket(self):
+    return self._debug_socket
 
   @property
   def resource_zips(self):
