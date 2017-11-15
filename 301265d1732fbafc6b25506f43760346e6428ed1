@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bf7c521_a02cee48",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-15T21:56:31Z",
+      "side": 1,
+      "message": "Move above where used.",
+      "revId": "301265d1732fbafc6b25506f43760346e6428ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ffecb13_6d001264",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-15T21:56:31Z",
+      "side": 1,
+      "message": "I think the first time this is used in the function (if not the providers life) should make sure the model is loaded. The remainder can use |model_|.",
+      "revId": "301265d1732fbafc6b25506f43760346e6428ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952df0a0_2f537862",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-15T21:56:31Z",
+      "side": 1,
+      "message": "This may be redundant but prevents having to add to call locations, or in case others begin calling it.",
+      "revId": "301265d1732fbafc6b25506f43760346e6428ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ec0517_32213ed9",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-15T21:56:31Z",
+      "side": 1,
+      "message": "Prevents having to constantly check below.",
+      "revId": "301265d1732fbafc6b25506f43760346e6428ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
