@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7965beb9_3fbb6521",
+        "filename": "third_party/WebKit/Source/core/workers/MainThreadWorkletTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-15T08:58:00Z",
+      "side": 1,
+      "message": "nit: allows -\u003e allow",
+      "revId": "90bfd26be5029b8f82c8ffdee55ce8b1a5d7c044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd0cc921_cbd44f62",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedWorkletTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-15T08:58:00Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "90bfd26be5029b8f82c8ffdee55ce8b1a5d7c044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
