@@ -202,6 +202,12 @@ bool FeatureSwitch::ComputeValue() const {
   return default_value_;
 }
 
+bool FeatureSwitch::HasSwitch() const {
+  return command_line_->HasSwitch(switch_name_) ||
+         command_line_->HasSwitch(GetLegacyEnableFlag()) ||
+         command_line_->HasSwitch(GetLegacyDisableFlag());
+}
+
 std::string FeatureSwitch::GetLegacyEnableFlag() const {
   DCHECK(switch_name_);
   return std::string("enable-") + switch_name_;
