@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e716f05e_3d4cc73f",
+        "filename": "chrome/browser/extensions/dev_mode_bubble_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-15T20:34:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d0da358_6cac861a",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0aad2a4_c7fd58b3",
         "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
         "patchSetId": 6
@@ -36,6 +54,42 @@
     },
     {
       "key": {
+        "uuid": "63350902_8c2d94c4",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-15T20:34:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0aad2a4_c7fd58b3",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90cf2b4f_8ffa2737",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-15T20:34:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0aad2a4_c7fd58b3",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c96284a_6c43090b",
         "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
         "patchSetId": 6
@@ -47,6 +101,24 @@
       "writtenOn": "2017-11-14T21:45:13Z",
       "side": 1,
       "message": "Why is this change needed?",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "909eb601_17d5e7bc",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-15T20:34:15Z",
+      "side": 1,
+      "message": "Say the bubble was shown and closed. Then later the extension is uninstalled or unloaded, this method will try to run the close_bubble_callback_, but the bubble is not active, so there is no need to close the bubble. W/o this check, some of the extension bubble tests fail.",
+      "parentUuid": "1c96284a_6c43090b",
       "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8d8cf3f9_e5ab08a1",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-15T20:34:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e65174e_f6d4440c",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8050ae36_70e4e650",
         "filename": "chrome/browser/extensions/extension_message_bubble_controller.h",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102647ce_c71c8bd0",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-15T20:34:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8050ae36_70e4e650",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "9de69e75_f0cedd74",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-15T20:34:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cc2fe69_cbd751b9",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d81a052_63b4f72a",
         "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
         "patchSetId": 6
@@ -135,6 +261,24 @@
       "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea07e9a4_78e7756f",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1125,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-15T20:34:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d81a052_63b4f72a",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "cbc1a94d_a99142bd",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1376,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-15T20:34:15Z",
+      "side": 1,
+      "message": "Just cleanup. In the case of ntp, the ShouldShow() method relies on having 1 NTP extension installed, so those checks should come first.",
+      "parentUuid": "c1f527ee_a4f51053",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "081570ae_227466a7",
         "filename": "chrome/browser/extensions/proxy_overridden_bubble_delegate.cc",
         "patchSetId": 6
@@ -169,6 +331,24 @@
       "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11d2035c_12279ebb",
+        "filename": "chrome/browser/extensions/proxy_overridden_bubble_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-15T20:34:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "081570ae_227466a7",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
