@@ -815,6 +815,16 @@ Sources.SourcesPanel = class extends UI.Panel {
       contextMenu.revealSection().appendItem(
           Common.UIString('Reveal in navigator'), this._handleContextMenuReveal.bind(this, uiSourceCode));
     }
+    var isSearchableSource = uiSourceCode.contentType() !== Common.resourceTypes.Image &&
+        uiSourceCode.contentType() !== Common.resourceTypes.Font;
+    if (isSearchableSource) {
+      contextMenu.viewSection().appendItem(
+          Common.UIString('Search in file'), () => this.searchableView().showSearchField(false));
+      if (this.searchableView().isReplaceable()) {
+        contextMenu.viewSection().appendItem(
+            Common.UIString('Replace in file'), () => this.searchableView().showSearchField(true));
+      }
+    }
     this._appendUISourceCodeMappingItems(contextMenu, uiSourceCode);
   }
 
