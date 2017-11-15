@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fafa35cf_acff4a49",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-15T01:46:06Z",
+      "side": 1,
+      "message": "\u003e I can rename a method, but I don\u0027t think it\u0027s necessary. By definition NativeLibraryPreloader. loadLibrary(Context) only depends on Context, so it can\u0027t possibly care about Chrome-specific stuff, like command line.\n\nHmm? base can have its own switches: https://cs.chromium.org/chromium/src/base/base_switches.h\n\nI think it was a mistake right now that we can\u0027t easily tell which java code needs to run safely without native library. Occasionally we change this java code and introduce a bug, and only realize later with the problem. So I\u0027m hoping we don\u0027t make that mistake again, and actually pay the cost of maintenance upfront.",
+      "parentUuid": "ecfe4a39_ddf670a0",
+      "revId": "c3ce5d815a9f9247d09ce572c56b6892249517f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a2433a0_21a5973c",
         "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessServiceImpl.java",
         "patchSetId": 5
