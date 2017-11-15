@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a54d5f8_d0316d20",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-15T00:16:25Z",
+      "side": 1,
+      "message": "This is impossible until https://crbug.com/779782 is fixed. :-(",
+      "parentUuid": "1baba3ad_86015fee",
+      "range": {
+        "startLine": 874,
+        "startChar": 7,
+        "endLine": 874,
+        "endChar": 30
+      },
+      "revId": "60c336deee7bd4bdc292cb40bd4eb68fd6470092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6698d0d_657d566b",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "60c336deee7bd4bdc292cb40bd4eb68fd6470092",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13fe110f_4d876106",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-15T00:16:25Z",
+      "side": 1,
+      "message": "Done.\n\n(Note: I followed the example of other tests in the file, and computed the expected URL from scratch instead of sharing the computation with the argument to NavigateToURL().)",
+      "parentUuid": "c6698d0d_657d566b",
+      "revId": "60c336deee7bd4bdc292cb40bd4eb68fd6470092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
