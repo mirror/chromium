@@ -90,6 +90,9 @@ class MediaSinkInternal {
   }
   void set_domain(const std::string& domain) { sink_.set_domain(domain); }
   void set_icon_type(SinkIconType icon_type) { sink_.set_icon_type(icon_type); }
+  void set_provider_id(MediaRouteProviderId provider_id) {
+    sink_.set_provider_id(provider_id);
+  }
 
   void set_sink(const MediaSink& sink);
   const MediaSink& sink() const { return sink_; }
