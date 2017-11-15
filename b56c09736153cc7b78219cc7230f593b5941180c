@@ -46,6 +46,30 @@
       "revId": "b56c09736153cc7b78219cc7230f593b5941180c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c012c7d6_1b5ed790",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-15T14:32:35Z",
+      "side": 1,
+      "message": "I think there is are guarantees on the state of the UI when we\u0027re presenting the SignedInAccountsViewController\u0027s view (this view was initially implemented as an alert view, not sure when it got changes to a full-screen view controller).",
+      "parentUuid": "e849e4e9_5d4e9dde",
+      "range": {
+        "startLine": 2028,
+        "startChar": 2,
+        "endLine": 2036,
+        "endChar": 3
+      },
+      "revId": "b56c09736153cc7b78219cc7230f593b5941180c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
