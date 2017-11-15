@@ -135,11 +135,13 @@ class PLATFORM_EXPORT LayoutSize {
                               AspectRatioFit fit) const {
     float height_scale = Height().ToFloat() / aspect_ratio.Height().ToFloat();
     float width_scale = Width().ToFloat() / aspect_ratio.Width().ToFloat();
-    if ((width_scale > height_scale) != (fit == kAspectRatioFitGrow))
-      return LayoutSize(Height() * aspect_ratio.Width() / aspect_ratio.Height(),
-                        Height());
-    return LayoutSize(Width(),
-                      Width() * aspect_ratio.Height() / aspect_ratio.Width());
+    if ((width_scale > height_scale) != (fit == kAspectRatioFitGrow)) {
+      return LayoutSize(
+          Height().ToFloat() * aspect_ratio.Width() / aspect_ratio.Height(),
+          Height());
+    }
+    return LayoutSize(Width(), Width().ToFloat() * aspect_ratio.Height() /
+                                   aspect_ratio.Width());
   }
 
   LayoutSize Fraction() const {
