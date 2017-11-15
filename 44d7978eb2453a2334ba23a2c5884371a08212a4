@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ba6e383_dad4f6e5",
+        "filename": "services/ui/ws/threaded_image_cursors.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-11-15T20:17:27Z",
+      "side": 1,
+      "message": "The funny thing is, this CursorFactoryOzone which belongs to WS thread, can only be used on the browser UI thread (i.e. the \"resource thread\"). This is the \"real\" cursor factory, so we need to use it when we perform cursor manipulations. And because cursor manipulation involves loading resources, we need to do it on the browser UI thread. Prior to this CL, CursorFactoryOzone was already used on the browser UI thread: it is used by CursorLoader, which is used by ImageCursors, which is used here for non-custom cursors in SetCursorOnResourceThread.\n\nSo, since CursorFactoryOzone is already used on the browser UI thread, and because it is not thread-safe, we can only use it on the browser UI thread. This CL fixes the case when CursorFactoryOzone was used on the WS thread.\n\nThis is obviously pretty convoluted. I\u0027ve spent some time trying to think of an easy-ish way to make this flow easier to follow, but I couldn\u0027t come up with anything I like. (Let me know if you have any ideas.) I have added a comment.",
+      "parentUuid": "35fc535c_7763d7d8",
+      "range": {
+        "startLine": 177,
+        "startChar": 3,
+        "endLine": 178,
+        "endChar": 46
+      },
+      "revId": "44d7978eb2453a2334ba23a2c5884371a08212a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2af1665_9ae21c67",
         "filename": "services/ui/ws/threaded_image_cursors.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-14T21:17:04Z",
       "side": 1,
       "message": "Would a better name for these be FooOnUiServiceThread (or OnUiServiceTaskRunner), which matches the member (ui_service_task_runner_)?",
+      "range": {
+        "startLine": 181,
+        "startChar": 20,
+        "endLine": 181,
+        "endChar": 51
+      },
+      "revId": "44d7978eb2453a2334ba23a2c5884371a08212a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5bf5885_b37187ff",
+        "filename": "services/ui/ws/threaded_image_cursors.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-11-15T20:17:27Z",
+      "side": 1,
+      "message": "Resource thread is the browser UI thread - it\u0027s the thread that can load resources. ui_service_task_runner_ is the task runner for the UI Service thread. It is passed to SetCustomCursorOnResourceThread so that it can post a task to execute SetCursorOnPlatformWindow() back to the UI Service thread.",
+      "parentUuid": "c2af1665_9ae21c67",
       "range": {
         "startLine": 181,
         "startChar": 20,
