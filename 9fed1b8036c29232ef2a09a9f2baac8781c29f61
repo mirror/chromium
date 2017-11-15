@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "777b3680_ece0082b",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-15T23:12:41Z",
+      "side": 1,
+      "message": "Blank line between C and C++ system headers.",
+      "revId": "9fed1b8036c29232ef2a09a9f2baac8781c29f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e1148f_f1837e79",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-15T23:12:41Z",
+      "side": 1,
+      "message": "Can you provide a comment about what this is doing?",
+      "revId": "9fed1b8036c29232ef2a09a9f2baac8781c29f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3864b453_2fec735f",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-15T23:12:41Z",
+      "side": 1,
+      "message": "wfprintf(stderr, …) is better. Lines 330 and 336 (fprintf) too.",
+      "revId": "9fed1b8036c29232ef2a09a9f2baac8781c29f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3a4c1c3_f83c0b37",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-15T23:12:41Z",
+      "side": 1,
+      "message": "Maybe just L\"%s(%d): invalid p…\" in a single wfprintf, unless you’re intentionally remaining faithful to the default invalid parameter handler.",
+      "revId": "9fed1b8036c29232ef2a09a9f2baac8781c29f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733bb900_a45bdaf8",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-15T23:12:41Z",
+      "side": 1,
+      "message": "Any reason to not fprintf something here also?",
+      "revId": "9fed1b8036c29232ef2a09a9f2baac8781c29f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f99c6e_811d395f",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-15T23:12:41Z",
+      "side": 1,
+      "message": "You didn’t use \u0026 for the other two function pointers. It’s nice to be consistent.",
+      "revId": "9fed1b8036c29232ef2a09a9f2baac8781c29f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
