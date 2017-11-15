@@ -46,6 +46,30 @@
       "revId": "1ecc28e5f3364860508df3960924be66358b14a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb75d30_3b34cbe5",
+        "filename": "base/time/time_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-15T09:25:04Z",
+      "side": 1,
+      "message": "base::ios::IsRunningOnOrLater(10, 13, 0)\nThere is no iOS10.13\nAre you testing mac version?",
+      "parentUuid": "d4779b6b_c7616532",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 34
+      },
+      "revId": "1ecc28e5f3364860508df3960924be66358b14a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
