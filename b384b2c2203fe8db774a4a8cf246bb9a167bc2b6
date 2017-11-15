@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11b4f9d7_00d8088c",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3239,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-15T18:07:24Z",
+      "side": 1,
+      "message": "Can you add a short comment summarizing these expectations? Here and in the others :)",
+      "range": {
+        "startLine": 3230,
+        "startChar": 4,
+        "endLine": 3239,
+        "endChar": 63
+      },
+      "revId": "b384b2c2203fe8db774a4a8cf246bb9a167bc2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b1eb0f5_a125e69d",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3670,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-15T18:07:24Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this not be filled?",
+      "range": {
+        "startLine": 3670,
+        "startChar": 28,
+        "endLine": 3670,
+        "endChar": 38
+      },
+      "revId": "b384b2c2203fe8db774a4a8cf246bb9a167bc2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a64f9fe_baba2f23",
+        "filename": "components/autofill/core/browser/rationalization_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-15T18:07:24Z",
+      "side": 1,
+      "message": "nit: Empty line between the namespace and the method.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 4
+      },
+      "revId": "b384b2c2203fe8db774a4a8cf246bb9a167bc2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "483ae9c5_8482b62f",
+        "filename": "components/autofill/core/browser/rationalization_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-15T18:07:24Z",
+      "side": 1,
+      "message": "Nit: empty line between the namespace and the comment.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 1
+      },
+      "revId": "b384b2c2203fe8db774a4a8cf246bb9a167bc2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
