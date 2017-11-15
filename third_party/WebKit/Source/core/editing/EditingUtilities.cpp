@@ -1570,7 +1570,7 @@ HTMLElement* CreateHTMLElement(Document& document, const QualifiedName& name) {
 }
 
 bool IsTabHTMLSpanElement(const Node* node) {
-  if (!IsHTMLSpanElement(node))
+  if (!IsHTMLSpanElement(node) || !node->GetLayoutObject())
     return false;
   const Node* const first_child = NodeTraversal::FirstChild(*node);
   if (!first_child || !first_child->IsTextNode())
