@@ -667,14 +667,15 @@ TEST(HttpStreamParser, AsyncSingleChunkAndAsyncSocket) {
   std::unique_ptr<ClientSocketHandle> socket_handle =
       CreateConnectedSocketHandle(&data);
 
-  HttpRequestInfo request_info;
-  request_info.method = "GET";
-  request_info.url = GURL("http://localhost");
-  request_info.upload_data_stream = &upload_stream;
+  std::unique_ptr<HttpRequestInfo> request_info =
+      std::make_unique<HttpRequestInfo>();
+  request_info->method = "GET";
+  request_info->url = GURL("http://localhost");
+  request_info->upload_data_stream = &upload_stream;
 
   scoped_refptr<GrowableIOBuffer> read_buffer(new GrowableIOBuffer);
-  HttpStreamParser parser(socket_handle.get(), &request_info, read_buffer.get(),
-                          NetLogWithSource());
+  HttpStreamParser parser(socket_handle.get(), request_info.get(),
+                          read_buffer.get(), NetLogWithSource());
 
   HttpRequestHeaders request_headers;
   request_headers.SetHeader("Transfer-Encoding", "chunked");
@@ -699,6 +700,9 @@ TEST(HttpStreamParser, AsyncSingleChunkAndAsyncSocket) {
   ASSERT_THAT(parser.ReadResponseHeaders(callback.callback()),
               IsError(ERR_IO_PENDING));
   ASSERT_THAT(callback.WaitForResult(), IsOk());
+
+  // Request info can be destroyed before reading the response body.
+  request_info.reset();
 
   // Finally, attempt to read the response body.
   scoped_refptr<IOBuffer> body_buffer(new IOBuffer(kBodySize));

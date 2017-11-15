@@ -21,6 +21,7 @@
 #include "net/base/net_export.h"
 #include "net/log/net_log_with_source.h"
 #include "net/ssl/token_binding.h"
+#include "url/gurl.h"
 
 namespace net {
 
@@ -200,8 +201,11 @@ class NET_EXPORT_PRIVATE HttpStreamParser {
   // Next state of the request, when the current one completes.
   State io_state_;
 
-  // Null when read state machine is invoked.
+  // Set to nullptr when headers are complete.
   const HttpRequestInfo* request_;
+
+  GURL url_;
+  std::string request_method_;
 
   // The request header data.  May include a merged request body.
   scoped_refptr<DrainableIOBuffer> request_headers_;
