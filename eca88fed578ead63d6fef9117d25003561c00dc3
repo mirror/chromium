@@ -193,6 +193,30 @@
     },
     {
       "key": {
+        "uuid": "8a5c9fc0_71a12c36",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-15T23:31:09Z",
+      "side": 1,
+      "message": "I thought all these task types are internal - the WebAudio spec does not say anything about the task type. Does it require a spec change on WebAudio side?",
+      "parentUuid": "35cdcd9c_9bcc12fa",
+      "range": {
+        "startLine": 57,
+        "startChar": 56,
+        "endLine": 57,
+        "endChar": 78
+      },
+      "revId": "eca88fed578ead63d6fef9117d25003561c00dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4c121be_88648f1e",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 2
