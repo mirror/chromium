@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b138043_b7e7b9fe",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2551,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-11-15T05:06:09Z",
+      "side": 1,
+      "message": "Change from 30 to 15 to shorten the time of scrollToBottom.",
+      "revId": "3253ec36342e2b5332d70b133e2c6b86d2fba203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
