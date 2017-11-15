@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "76cba134_cf11980f",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintDefinition.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-15T21:37:46Z",
+      "side": 1,
+      "message": "Ah ok. I think you are right.\n\nIf --use-zoom-for-dsf is false, the compositor will apply DSF to the root layer.",
+      "parentUuid": "dbc4891d_5af7a7de",
+      "revId": "32e5081f792017b24e5f245fe896a63ddc409261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce7ab8ad_0b13e310",
         "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintDefinition.cpp",
         "patchSetId": 9
