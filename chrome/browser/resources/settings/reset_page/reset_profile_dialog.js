@@ -120,6 +120,9 @@ Polymer({
 
   /** @private */
   onResetTap_: function() {
+    if (this.clearingInProgress_) {
+      return;
+    }
     this.clearingInProgress_ = true;
     this.browserProxy_
         .performResetProfileSettings(
