@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6f76067_8aa65b21",
+        "filename": "third_party/WebKit/LayoutTests/media/track/opera/interfaces/TextTrackList/onremovetrack.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-15T06:10:15Z",
+      "side": 0,
+      "message": "There is no flakiness as per the bug report and it is already resolved. So i think we can safely remove this.",
+      "range": {
+        "startLine": 9,
+        "startChar": 32,
+        "endLine": 9,
+        "endChar": 56
+      },
+      "revId": "a06cdd8debb95c60fb9dc5cd531b9be7d8d215b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
