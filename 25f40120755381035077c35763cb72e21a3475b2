@@ -46,6 +46,30 @@
       "revId": "25f40120755381035077c35763cb72e21a3475b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "110004ca_ff36abd2",
+        "filename": "ui/base/x/x11_pointer_grab.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-15T08:27:37Z",
+      "side": 1,
+      "message": "I meant that gerrit showed it as a new one for some reason",
+      "parentUuid": "47faea9c_4be10a80",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "25f40120755381035077c35763cb72e21a3475b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
