@@ -110,15 +110,6 @@ class PrintRenderFrameHelper
     // Returns true if printing is overridden and the default behavior should be
     // skipped for |frame|.
     virtual bool OverridePrint(blink::WebLocalFrame* frame) = 0;
-
-#if defined(OS_MACOSX)
-    // If true, all the printed pages are returned in the first
-    // PrintHostMsg_DidPrintPage metafile, like on Linux and Windows.
-    // NOTE: PrintHostMsg_DidPrintPage messages for all pages contain the same
-    // page and content area, which may lead to bug when these two parameters
-    // are different per page.
-    virtual bool UseSingleMetafile();
-#endif
   };
 
   PrintRenderFrameHelper(content::RenderFrame* render_frame,

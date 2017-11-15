@@ -16,26 +16,30 @@ namespace printing {
 void PrintedDocument::RenderPrintedPage(
     const PrintedPage& page,
     printing::NativeDrawingContext context) const {
-#ifndef NDEBUG
-  {
-    // Make sure the page is from our list.
-    base::AutoLock lock(lock_);
-    DCHECK(&page == mutable_.pages_.find(page.page_number() - 1)->second.get());
-  }
-#endif
-
   DCHECK(context);
 
-  const PageSetup& page_setup(immutable_.settings_.page_setup_device_units());
+  base::AutoLock lock(lock_);
+#ifndef NDEBUG
+  // Make sure the page is from our list.
+  DCHECK(&page == mutable_.pages_.find(page.page_number() - 1)->second.get());
+
+  // Make sure the first page exists.
+  DCHECK_GE(mutable_.first_page, 0);
+  DCHECK_NE(mutable_.first_page, INT_MAX);
+  DCHECK(mutable_.pages_.find(mutable_.first_page)->second.get());
+#endif
+
+  const PageSetup& page_setup = immutable_.settings_.page_setup_device_units();
   gfx::Rect content_area =
       page.GetCenteredPageContentRect(page_setup.physical_size());
 
-  const MetafilePlayer* metafile = page.metafile();
-  // Each Metafile is a one-page PDF, and pages use 1-based indexing.
-  const int page_number = 1;
+  // Always use the metafile from the first page.
+  const MetafilePlayer* metafile =
+      mutable_.pages_.find(mutable_.first_page)->second->metafile();
   struct Metafile::MacRenderPageParams params;
   params.autorotate = true;
-  metafile->RenderPage(page_number, context, content_area.ToCGRect(), params);
+  metafile->RenderPage(page.page_number(), context, content_area.ToCGRect(),
+                       params);
 }
 
 }  // namespace printing
