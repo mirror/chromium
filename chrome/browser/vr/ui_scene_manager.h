@@ -115,7 +115,6 @@ class UiSceneManager {
   // BrowserUiInterface support methods.
   void SetFullscreen(bool fullscreen);
   void SetIncognito(bool incognito);
-  void SetToolbarState(const ToolbarState& state);
   void SetWebVrMode(bool web_vr, bool show_toast);
   void SetIsExiting();
   void SetVideoCapturingIndicator(bool enabled);
@@ -167,7 +166,7 @@ class UiSceneManager {
   void CreateViewportAwareRoot();
   void CreateUrlBar(Model* model);
   void CreateSuggestionList(Model* model);
-  void CreateWebVrUrlToast();
+  void CreateWebVrUrlToast(Model* model);
   void CreateCloseButton();
   void CreateExitPrompt();
   void CreateToasts(Model* model);

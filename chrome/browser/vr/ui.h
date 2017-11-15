@@ -71,6 +71,8 @@ class Ui : public BrowserUiInterface {
   void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) override;
   void SetSpeechRecognitionEnabled(bool enabled) override;
   void OnSpeechRecognitionStateChanged(int new_state) override;
+  void SetOmniboxSuggestions(
+      std::unique_ptr<OmniboxSuggestions> suggestions) override;
 
   bool ShouldRenderWebVr();
   void OnGlInitialized(unsigned int content_texture_id,
@@ -89,8 +91,6 @@ class Ui : public BrowserUiInterface {
   void OnSwapContents(int new_content_id);
   void OnContentBoundsChanged(int width, int height);
   void OnPlatformControllerInitialized(PlatformController* controller);
-
-  void SetOmniboxSuggestions(std::unique_ptr<OmniboxSuggestions> suggestions);
 
  private:
   // This state may be further abstracted into a SkiaUi object.

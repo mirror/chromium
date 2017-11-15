@@ -8,6 +8,7 @@
 #include "chrome/browser/vr/model/controller_model.h"
 #include "chrome/browser/vr/model/omnibox_suggestions.h"
 #include "chrome/browser/vr/model/reticle_model.h"
+#include "chrome/browser/vr/model/toolbar_state.h"
 #include "chrome/browser/vr/model/web_vr_timeout_state.h"
 
 namespace vr {
@@ -32,6 +33,7 @@ struct Model {
   bool experimental_features_enabled = false;
   bool incognito = false;
 
+  ToolbarState toolbar_state;
   std::vector<OmniboxSuggestion> omnibox_suggestions;
 };
 
