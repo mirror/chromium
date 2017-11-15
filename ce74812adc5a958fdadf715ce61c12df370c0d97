@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdf2196a_e40e28f3",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-15T01:25:10Z",
+      "side": 1,
+      "message": "Not widely recognized abbreviations are not allowed per Chromium style guide. How about rename to GetProviderService?\n\nhttps://google.github.io/styleguide/cppguide.html#General_Naming_Rules\n\n\"SMB\" is OK as it\u0027s widely used.",
+      "range": {
+        "startLine": 41,
+        "startChar": 21,
+        "endLine": 41,
+        "endChar": 34
+      },
+      "revId": "ce74812adc5a958fdadf715ce61c12df370c0d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bae703d2_fd3dd532",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-15T01:25:10Z",
+      "side": 1,
+      "message": "Not used?",
+      "range": {
+        "startLine": 13,
+        "startChar": 55,
+        "endLine": 13,
+        "endChar": 71
+      },
+      "revId": "ce74812adc5a958fdadf715ce61c12df370c0d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
