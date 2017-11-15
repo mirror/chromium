@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67357f13_a0afe99a",
+        "filename": "ui/gl/generate_bindings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2874,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-15T19:56:18Z",
+      "side": 1,
+      "message": "Forgot to change this here and below.\n\nThis seems better though a single #define like NO_SANITIZE_CFI_ICALL would be better IMO since it would be easier to find in code search.",
+      "range": {
+        "startLine": 2874,
+        "startChar": 16,
+        "endLine": 2874,
+        "endChar": 29
+      },
+      "revId": "7f6b574db28bf2b8dda60cd9b7436c76be564c5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
