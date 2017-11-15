@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "35cdcd9c_9bcc12fa",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-15T23:20:57Z",
+      "side": 1,
+      "message": "I\u0027m not really happy about introducing unspeced task types though... If your worry is about people may misuse Uthrottled, can we rename it to ReallyNeedsToBeUnthrottled? I\u0027d object to the idea to introduce multiple task runners for unthrottled tasks (Unthrottled, RealMediaTask, etc).\n\nIs the webaudio task in question a speced one? Or is it an internal task?",
+      "parentUuid": "48f467bf_6ffabc12",
+      "range": {
+        "startLine": 57,
+        "startChar": 56,
+        "endLine": 57,
+        "endChar": 78
+      },
+      "revId": "eca88fed578ead63d6fef9117d25003561c00dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4c121be_88648f1e",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 2
