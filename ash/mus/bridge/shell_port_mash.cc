@@ -26,7 +26,6 @@
 #include "ui/views/mus/pointer_watcher_event_router.h"
 
 namespace ash {
-namespace mus {
 
 ShellPortMash::ShellPortMash(
     WindowManager* window_manager,
@@ -97,7 +96,7 @@ void ShellPortMash::OnCursorTouchVisibleChanged(bool enabled) {
 std::unique_ptr<WindowResizer> ShellPortMash::CreateDragWindowResizer(
     std::unique_ptr<WindowResizer> next_window_resizer,
     wm::WindowState* window_state) {
-  return std::make_unique<ash::mus::DragWindowResizer>(
+  return std::make_unique<ash::DragWindowResizer>(
       std::move(next_window_resizer), window_state);
 }
 
@@ -172,5 +171,4 @@ ShellPortMash::CreateAcceleratorController() {
       accelerator_controller_registrar_.get());
 }
 
-}  // namespace mus
 }  // namespace ash
