@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f27e35af_17202680",
+        "filename": "chrome/android/javatests/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T17:04:28Z",
+      "side": 1,
+      "message": "not worried about this addition - I see we temporarily allowed it on L29 but the  native version lives in content/public (i.e real content/public not the fake java one). So it\u0027s just a matter of moving that switch out which is orthogonal to this change",
+      "range": {
+        "startLine": 42,
+        "startChar": 34,
+        "endLine": 42,
+        "endChar": 37
+      },
+      "revId": "7e400051580e591ba9331f8413325835673785c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d11b4965_9742f08d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappNavigationTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T17:04:28Z",
+      "side": 1,
+      "message": "tricksie",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 23
+      },
+      "revId": "7e400051580e591ba9331f8413325835673785c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
