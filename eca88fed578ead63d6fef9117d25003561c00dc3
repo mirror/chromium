@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "d8b580a2_be120d59",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-15T17:54:52Z",
+      "side": 1,
+      "message": "WebAudio is an option, but I\u0027d want something that could be used in HTMLMediaElement instead of kUnthrottled (we also have MediaElementEvent and it will be strange to use WebAudio together with it. RealTimeMedia, however, makes it clearer that there are expectations of this thing being unthrottled.",
+      "parentUuid": "b4d9f3b9_60ae7616",
+      "range": {
+        "startLine": 57,
+        "startChar": 56,
+        "endLine": 57,
+        "endChar": 78
+      },
+      "revId": "eca88fed578ead63d6fef9117d25003561c00dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4c121be_88648f1e",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 2
