@@ -34,6 +34,24 @@
       "revId": "79979202712f27b65b1692c738ee868288e55cea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd88877d_f98b8d7b",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-15T23:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc5f7b7b_1b314345",
+      "revId": "79979202712f27b65b1692c738ee868288e55cea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
