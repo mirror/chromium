@@ -4222,7 +4222,8 @@ class ClearScrollStateOnCommitWebFrameClient
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidCommitProvisionalLoad(const WebHistoryItem&,
-                                WebHistoryCommitType) override {
+                                WebHistoryCommitType,
+                                WebGlobalObjectReusePolicy) override {
     Frame()->View()->ResetScrollAndScaleState();
   }
 };
@@ -6507,13 +6508,15 @@ class TestSubstituteDataWebFrameClient
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidFailProvisionalLoad(const WebURLError& error,
-                              WebHistoryCommitType) override {
+                              WebHistoryCommitType,
+                              WebGlobalObjectReusePolicy) override {
     Frame()->LoadHTMLString("This should appear",
                             ToKURL("chrome-error://chromewebdata/"),
                             error.url(), true);
   }
   void DidCommitProvisionalLoad(const WebHistoryItem&,
-                                WebHistoryCommitType) override {
+                                WebHistoryCommitType,
+                                WebGlobalObjectReusePolicy) override {
     if (Frame()->GetDocumentLoader()->GetResponse().Url() !=
         WebURL(URLTestHelpers::ToKURL("about:blank")))
       commit_called_ = true;
@@ -6567,7 +6570,8 @@ class TestWillInsertBodyWebFrameClient
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidCommitProvisionalLoad(const WebHistoryItem&,
-                                WebHistoryCommitType) override {
+                                WebHistoryCommitType,
+                                WebGlobalObjectReusePolicy) override {
     num_bodies_ = 0;
     did_load_ = true;
   }
@@ -10550,7 +10554,8 @@ class CallbackOrderingWebFrameClient
     EXPECT_EQ(1, callback_count_++);
   }
   void DidCommitProvisionalLoad(const WebHistoryItem&,
-                                WebHistoryCommitType) override {
+                                WebHistoryCommitType,
+                                WebGlobalObjectReusePolicy) override {
     EXPECT_EQ(2, callback_count_++);
   }
   void DidFinishDocumentLoad() override { EXPECT_EQ(3, callback_count_++); }
@@ -11386,7 +11391,8 @@ TEST_P(ParameterizedWebFrameTest, NoLoadingCompletionCallbacksInDetach) {
     }
 
     void DidFailProvisionalLoad(const WebURLError&,
-                                WebHistoryCommitType) override {
+                                WebHistoryCommitType,
+                                WebGlobalObjectReusePolicy) override {
       EXPECT_TRUE(false) << "The load should not have failed.";
     }
 
