@@ -11,8 +11,9 @@
 
 // A particular type of content to care about.  We give the user various types
 // of controls over each of these.
-// When adding/removing values from this enum, be sure to update the
-// kHistogramValue array in content_settings.cc as well.
+// When adding/removing values from this enum, be sure to update
+// ContentSettingsTypeHistogram and ContentSettingTypeToHistogramValue in
+// content_settings.cc as well.
 // A Java counterpart will be generated for this enum.
 // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.chrome.browser
 enum ContentSettingsType {
@@ -103,8 +104,8 @@ enum ContentSettingsType {
   // clipboard.
   CONTENT_SETTINGS_TYPE_CLIPBOARD_READ,
 
-  // This is special-cased in the permissions layer to always allow, and as
-  // such doesn't have associated prefs data.
+  // Content setting which stores whether or not the user has granted the site
+  // write (with a gesture) permission to access the system clipboard.
   CONTENT_SETTINGS_TYPE_CLIPBOARD_WRITE,
 
   CONTENT_SETTINGS_NUM_TYPES,

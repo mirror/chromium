@@ -15,10 +15,6 @@ class ClipboardWritePermissionContext : public PermissionContextBase {
 
  private:
   // PermissionContextBase:
-  ContentSetting GetPermissionStatusInternal(
-      content::RenderFrameHost* render_frame_host,
-      const GURL& requesting_origin,
-      const GURL& embedding_origin) const override;
   bool IsRestrictedToSecureOrigins() const override;
 
   DISALLOW_COPY_AND_ASSIGN(ClipboardWritePermissionContext);

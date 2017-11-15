@@ -9,15 +9,8 @@ ClipboardWritePermissionContext::ClipboardWritePermissionContext(
     : PermissionContextBase(profile,
                             CONTENT_SETTINGS_TYPE_CLIPBOARD_WRITE,
                             blink::FeaturePolicyFeature::kNotFound) {}
-
 ClipboardWritePermissionContext::~ClipboardWritePermissionContext() = default;
 
-ContentSetting ClipboardWritePermissionContext::GetPermissionStatusInternal(
-    content::RenderFrameHost* render_frame_host,
-    const GURL& requesting_origin,
-    const GURL& embedding_origin) const {
-  return CONTENT_SETTING_ALLOW;
-}
 bool ClipboardWritePermissionContext::IsRestrictedToSecureOrigins() const {
   return true;
 }
