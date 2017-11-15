@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "afe4b328_550a7226",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-15T03:11:31Z",
+      "side": 1,
+      "message": "N/A, deleted.",
+      "parentUuid": "11f00977_d4c9d581",
+      "range": {
+        "startLine": 425,
+        "startChar": 2,
+        "endLine": 425,
+        "endChar": 8
+      },
+      "revId": "74585c1d57516fd0a3277a0a1bd58b621c8f6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29cb9d30_969b5c08",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "74585c1d57516fd0a3277a0a1bd58b621c8f6c09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a763ff_ba38105f",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-15T03:11:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29cb9d30_969b5c08",
+      "revId": "74585c1d57516fd0a3277a0a1bd58b621c8f6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "e5f03ae9_3ebc334d",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-15T03:11:31Z",
+      "side": 1,
+      "message": "As discussed offline, I have a separate patch (https://chromium-review.googlesource.com/c/chromium/src/+/768519) to fix the NO_ELIDE behaviour for views::Label and won\u0027t land this until that one lands.\n\nThanks for the help!",
+      "parentUuid": "e440669f_2959a53e",
+      "revId": "74585c1d57516fd0a3277a0a1bd58b621c8f6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c49a2d77_78713d26",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "74585c1d57516fd0a3277a0a1bd58b621c8f6c09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24230e06_5df78b2b",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-15T03:11:31Z",
+      "side": 1,
+      "message": "I had a look at other places using kViewSourceScheme / kExtensionScheme as well as in the GURL class - I don\u0027t think we can avoid the concatenation :( I did find url::kStandardSchemeSeparator though.",
+      "parentUuid": "c49a2d77_78713d26",
+      "revId": "74585c1d57516fd0a3277a0a1bd58b621c8f6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -96,6 +174,30 @@
       "revId": "74585c1d57516fd0a3277a0a1bd58b621c8f6c09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b22264aa_b03d559f",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-15T03:11:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "760926cf_789917a7",
+      "range": {
+        "startLine": 198,
+        "startChar": 29,
+        "endLine": 198,
+        "endChar": 34
+      },
+      "revId": "74585c1d57516fd0a3277a0a1bd58b621c8f6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
