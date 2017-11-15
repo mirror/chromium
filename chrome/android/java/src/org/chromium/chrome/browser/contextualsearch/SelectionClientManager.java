@@ -26,7 +26,7 @@ import org.chromium.content_public.browser.WebContents;
  * This client may be removed later using {@link #removeContextualSearchSelectionClient()}.
  */
 public class SelectionClientManager {
-    // Whether Smart Select is allowed to be enabled in Chrome.
+    // Whether Smart Selection is allowed to be enabled in Chrome.
     private final boolean mIsSmartSelectionEnabledInChrome;
 
     /**
