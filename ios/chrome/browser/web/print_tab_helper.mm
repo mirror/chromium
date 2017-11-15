@@ -54,7 +54,7 @@ void PrintTabHelper::WebStateDestroyed(web::WebState* web_state) {
 bool PrintTabHelper::OnPrintCommand(web::WebState* web_state,
                                     const base::DictionaryValue& command,
                                     const GURL& page_url,
-                                    bool user_initiated) {
+                                    bool user_interaction) {
   DCHECK(web_state);
   [printer_ printWebState:web_state];
   return true;
