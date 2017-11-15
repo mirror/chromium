@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "72027938_3083ed8e",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-15T19:29:31Z",
+      "side": 1,
+      "message": "Ok, I changed this to |preserve_native_aspect_ratio|.",
+      "parentUuid": "522fdc47_bb2973e6",
+      "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b18f41f_8a532438",
         "filename": "ui/display/manager/chromeos/display_configurator.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b78a7830_8be42f03",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-15T19:29:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b18f41f_8a532438",
+      "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "235043a3_ce5d71fe",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-15T19:29:31Z",
+      "side": 1,
+      "message": "The old code also checks whether the display has native mode:\nhttps://cs.chromium.org/chromium/src/ui/display/manager/chromeos/display_configurator.cc?q\u003ddisplay_configurator.cc\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d377",
+      "parentUuid": "0d9033d3_ecfbf35a",
+      "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b2873bc_2d29f94d",
         "filename": "ui/display/manager/chromeos/display_configurator.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bdd5b8a_1eb0e5c6",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-15T19:29:31Z",
+      "side": 1,
+      "message": "I changed the name to HasSameAspectRatioAsNativeMode. The function is intended to check whether the mode matches the native mode.",
+      "parentUuid": "4b2873bc_2d29f94d",
+      "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "b42d0b2c_8b5b3cde",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-15T19:29:31Z",
+      "side": 1,
+      "message": "We only preserve native aspect ratio for external displays (the same behavior as the old code does). I changed the code to check whether its type is Internal to be more clear.",
+      "parentUuid": "aa1ccccf_ddd3945e",
+      "range": {
+        "startLine": 425,
+        "startChar": 31,
+        "endLine": 425,
+        "endChar": 48
+      },
+      "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66964f33_7e68fb7c",
         "filename": "ui/display/manager/chromeos/display_configurator.cc",
         "patchSetId": 5
@@ -107,6 +203,24 @@
       "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9d4b47_79d58f6e",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-15T19:29:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66964f33_7e68fb7c",
+      "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
