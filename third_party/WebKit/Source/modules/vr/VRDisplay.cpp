@@ -40,6 +40,31 @@
 #include <array>
 #include "core/dom/ExecutionContext.h"
 
+#include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
+
+// WARNING: error checking has a huge performance cost. Only
+// enable this when actively debugging problems.
+#define EXPENSIVE_GL_ERROR_CHECKING 0
+
+#if EXPENSIVE_GL_ERROR_CHECKING
+#define CHECK_ERR                                            \
+  do {                                                       \
+    GLint err;                                               \
+    while ((err = context_gl_->GetError()) != GL_NO_ERROR) { \
+      LOG(INFO) << __FUNCTION__ << ";;; GL ERROR " << err;   \
+    }                                                        \
+  } while (0)
+#else
+#define CHECK_ERR \
+  do {            \
+  } while (0)
+#endif
+
+#if 0
+#undef DVLOG
+#define DVLOG(x) LOG(INFO)
+#endif
+
 namespace blink {
 
 namespace {
@@ -133,6 +158,10 @@ void VRDisplay::Update(const device::mojom::blink::VRDisplayInfoPtr& display) {
   is_valid_device_for_presenting_ = is_valid;
   eye_parameters_left_->Update(display->leftEye);
   eye_parameters_right_->Update(display->rightEye);
+  if (!source_width_) {
+    source_width_ = display->leftEye->renderWidth * 2;
+    source_height_ = display->leftEye->renderHeight;
+  }
 
   if (!display->stageParameters.is_null()) {
     if (!stage_parameters_)
@@ -388,6 +417,16 @@ ScriptPromise VRDisplay::requestPresent(ScriptState* script_state,
   // Save the WebGL script and underlying GL contexts for use by submitFrame().
   rendering_context_ = ToWebGLRenderingContextBase(rendering_context);
   context_gl_ = rendering_context_->ContextGL();
+
+  Nullable<WebGLContextAttributes> attrs;
+  rendering_context_->getContextAttributes(attrs);
+  if (attrs.Get().antialias()) {
+    ahb_sample_count_ = 4;
+  } else {
+    ahb_sample_count_ = 0;
+  }
+  LOG(INFO) << __FUNCTION__ << ";;; attrs.antialias=" << attrs.Get().antialias()
+            << " ahb_sample_count_=" << ahb_sample_count_;
 
   if ((layer_.leftBounds().size() != 0 && layer_.leftBounds().size() != 4) ||
       (layer_.rightBounds().size() != 0 && layer_.rightBounds().size() != 4)) {
@@ -676,7 +715,7 @@ void VRDisplay::submitFrame() {
   //   and the image object must remain alive during this time.
   //   We keep a reference to the image so that we can defer this
   //   wait. Here, we wait for the previous transfer to complete.
-  {
+  if (!gvr_zero_copy_) {
     TRACE_EVENT0("gpu", "VRDisplay::waitForPreviousTransferToFinish");
     while (pending_submit_frame_) {
       if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
@@ -686,15 +725,19 @@ void VRDisplay::submitFrame() {
     }
   }
 
-  TRACE_EVENT_BEGIN0("gpu", "VRDisplay::GetStaticBitmapImage");
-  scoped_refptr<Image> image_ref = rendering_context_->GetStaticBitmapImage();
-  TRACE_EVENT_END0("gpu", "VRDisplay::GetStaticBitmapImage");
+  TRACE_EVENT_FLOW_STEP0("gpu", "vrframe", vr_frame_id_, "submitFrame");
+  RefPtr<Image> image_ref = nullptr;
+  if (!gvr_zero_copy_) {
+    TRACE_EVENT_BEGIN0("gpu", "VRDisplay::GetStaticBitmapImage");
+    image_ref = rendering_context_->GetStaticBitmapImage();
+    TRACE_EVENT_END0("gpu", "VRDisplay::GetStaticBitmapImage");
+  }
 
   // Hardware-accelerated rendering should always be texture backed,
   // as implemented by AcceleratedStaticBitmapImage. Ensure this is
   // the case, don't attempt to render if using an unexpected drawing
   // path.
-  if (!image_ref.get() || !image_ref->IsTextureBacked()) {
+  if (!gvr_zero_copy_ && (!image_ref.get() || !image_ref->IsTextureBacked())) {
     TRACE_EVENT0("gpu", "VRDisplay::GetImage_SlowFallback");
     // We get a non-texture-backed image when running layout tests
     // on desktop builds. Add a slow fallback so that these continue
@@ -712,29 +755,122 @@ void VRDisplay::submitFrame() {
   // mailbox is used via createAndConsumeTextureCHROMIUM, the mailbox
   // itself does not keep it alive. We must keep a reference to the
   // image until the mailbox was consumed.
-  StaticBitmapImage* static_image =
-      static_cast<StaticBitmapImage*>(image_ref.get());
-  TRACE_EVENT_BEGIN0("gpu", "VRDisplay::EnsureMailbox");
-  static_image->EnsureMailbox(kVerifiedSyncToken);
-  TRACE_EVENT_END0("gpu", "VRDisplay::EnsureMailbox");
+  gpu::Mailbox mailbox;
+  gpu::SyncToken sync_token;
+  if (!gvr_zero_copy_) {
+    StaticBitmapImage* static_image =
+        static_cast<StaticBitmapImage*>(image_ref.get());
+    TRACE_EVENT_BEGIN0("gpu", "VRDisplay::EnsureMailbox");
+    static_image->EnsureMailbox(kVerifiedSyncToken);
+    TRACE_EVENT_END0("gpu", "VRDisplay::EnsureMailbox");
 
-  // Save a reference to the image to keep it alive until next frame,
-  // where we'll wait for the transfer to finish before overwriting
-  // it.
-  previous_image_ = std::move(image_ref);
+    // Save a reference to the image to keep it alive until next frame,
+    // where we'll wait for the transfer to finish before overwriting
+    // it.
+    previous_image_ = std::move(image_ref);
 
-  // Create mailbox and sync token for transfer.
-  TRACE_EVENT_BEGIN0("gpu", "VRDisplay::GetMailbox");
-  auto mailbox = static_image->GetMailbox();
-  TRACE_EVENT_END0("gpu", "VRDisplay::GetMailbox");
-  auto sync_token = static_image->GetSyncToken();
+    // Create mailbox and sync token for transfer.
+    TRACE_EVENT_BEGIN0("gpu", "VRDisplay::GetMailbox");
+    mailbox = static_image->GetMailbox();
+    TRACE_EVENT_END0("gpu", "VRDisplay::GetMailbox");
+    sync_token = static_image->GetSyncToken();
+  }
 
   // Wait for the previous render to finish, to avoid losing frames in the
   // Android Surface / GLConsumer pair. TODO(klausw): make this tunable?
   // Other devices may have different preferences. Do this step as late
   // as possible before SubmitFrame to ensure we can do as much work as
   // possible in parallel with the previous frame's rendering.
-  {
+  if (wait_for_previous_render_ == WaitPrevStrategy::BEFORE_SUBMIT) {
+    TRACE_EVENT0("gpu", "waitForPreviousRenderToFinish");
+    while (pending_previous_frame_render_) {
+      if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
+        DLOG(ERROR) << "Failed to receive SubmitFrame response";
+        break;
+      }
+    }
+  }
+
+  pending_submit_frame_ = true;
+
+  if (gvr_zero_copy_) {
+    TRACE_EVENT0("gpu", "VRDisplay::SubmitZeroCopy");
+    // Avoid overstuffed buffers. FIXME!
+    // context_gl_->Finish();
+
+    // Unbind the framebuffer before submitting, to ensure everything is
+    // flushed by the time we get the native fence sync?
+    //
+    // According to
+    // https://www.khronos.org/registry/OpenGL/extensions/QCOM/QCOM_tiled_rendering.txt,
+    // changing FBO or drawing surface implies EndTilingQCOM and is a hint to
+    // the driver to start resolving, and we must make sure that these commands
+    // are flushed to the driver.
+
+    context_gl_->BindFramebuffer(GL_FRAMEBUFFER, ahb_fbo_);
+    // Discard attachments to tell GL we're done with them.
+    // Not sure if we can discard COLOR_ATTACHMENT0, the content is still
+    // needed.
+    const GLenum kAttachments[] = {// GL_COLOR_ATTACHMENT0,
+                                   GL_DEPTH_ATTACHMENT, GL_STENCIL_ATTACHMENT};
+    context_gl_->DiscardFramebufferEXT(
+        GL_FRAMEBUFFER, sizeof(kAttachments) / sizeof(kAttachments[0]),
+        kAttachments);
+    CHECK_ERR;
+
+    if (ahb_recycle_buffers_) {
+// TODO(klausw): release resources when done presenting
+#if 1
+      // Unbind the offscreen framebuffer to encourage the GPU to start working.
+      rendering_context_->SetCustomBackbufferFBO(0);
+      CHECK_ERR;
+#endif
+    } else {
+      rendering_context_->SetCustomBackbufferFBO(0);
+      CHECK_ERR;
+      // Lazy destroying image later
+    }
+
+    gpu::SyncToken sync_token;
+
+    // uint64_t fence = rendering_context_->CreateNativeSyncPoint();
+    uint64_t fence = context_gl_->InsertFenceSyncCHROMIUM();
+    CHECK_ERR;
+
+    // Shallow flush is insufficient? "fence sync must be flushed before
+    // generating sync token" error. TODO(klausw): that error is likely a red
+    // herring caused by GPU context being lost due to a different previous
+    // problem.
+    {
+      TRACE_EVENT0("gpu", "Flush_3");
+      context_gl_->ShallowFlushCHROMIUM();
+      // context_gl_->OrderingBarrierCHROMIUM();
+      // context_gl_->Flush();
+      CHECK_ERR;
+    }
+
+    {
+      TRACE_EVENT0("gpu", "GenSyncTokenCHROMIUM");
+      // TODO(klausw): is GenUnverifiedSyncTokenCHROMIUM possible here? Breaks
+      // rendering.
+      context_gl_->GenSyncTokenCHROMIUM(fence, sync_token.GetData());
+      // context_gl_->GenUnverifiedSyncTokenCHROMIUM(fence,
+      // sync_token.GetData());
+      CHECK_ERR;
+    }
+    // LOG(INFO) << __FUNCTION__ << ";;; frame=" << vr_frame_id_;
+    vr_presentation_provider_->SubmitFrameZeroCopy3(vr_frame_id_, sync_token);
+    CHECK_ERR;
+  } else {
+    TRACE_EVENT_BEGIN0("gpu", "VRDisplay::SubmitFrame");
+    vr_presentation_provider_->SubmitFrame(
+        vr_frame_id_, gpu::MailboxHolder(mailbox, sync_token, GL_TEXTURE_2D));
+    TRACE_EVENT_END0("gpu", "VRDisplay::SubmitFrame");
+  }
+
+  if (wait_for_previous_render_ == WaitPrevStrategy::AFTER_SUBMIT) {
+    // Wait until previous render finishes before requesting a fresh vsync,
+    // to avoid buffer stuffing.
     TRACE_EVENT0("gpu", "waitForPreviousRenderToFinish");
     while (pending_previous_frame_render_) {
       if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
@@ -745,24 +881,23 @@ void VRDisplay::submitFrame() {
   }
 
   pending_previous_frame_render_ = true;
-  pending_submit_frame_ = true;
-
-  TRACE_EVENT_BEGIN0("gpu", "VRDisplay::SubmitFrame");
-  vr_presentation_provider_->SubmitFrame(
-      vr_frame_id_, gpu::MailboxHolder(mailbox, sync_token, GL_TEXTURE_2D));
-  TRACE_EVENT_END0("gpu", "VRDisplay::SubmitFrame");
-
   did_submit_this_frame_ = true;
   // Reset our frame id, since anything we'd want to do (resizing/etc) can
   // no-longer happen to this frame.
   vr_frame_id_ = -1;
+
   // If we were deferring a rAF-triggered vsync request, do this now.
+  // TODO(klausw): does doing this just before submitting reduce downtime
+  // between frames?
   RequestVSync();
 
   // If preserveDrawingBuffer is false, must clear now. Normally this
   // happens as part of compositing, but that's not active while
   // presenting, so run the responsible code directly.
-  rendering_context_->MarkCompositedAndClearBackbufferIfNeeded();
+  if (!gvr_zero_copy_) {
+    // TODO(klausw): do this in zero copy mode also. Getting errors?
+    rendering_context_->MarkCompositedAndClearBackbufferIfNeeded();
+  }
 }
 
 void VRDisplay::OnSubmitFrameTransferred() {
@@ -926,11 +1061,149 @@ void VRDisplay::ProcessScheduledAnimations(double timestamp) {
   DCHECK(!pending_vrdisplay_raf_ || pending_vsync_);
 }
 
+void VRDisplay::CreateAHBStorage() {
+  CHECK_ERR;
+
+  // Use textures in rotation. Rebinding an existing texture blocks for
+  // rendering to complete on Texture::SetLevelInfo's "info.image = 0" in
+  // texture_manager.cc.
+  ahb_width_ = -1;
+  ahb_height_ = -1;
+
+  ahb_fbo_ = 0;
+  ahb_depthbuffer_ = 0;
+  context_gl_->GenFramebuffers(1, &ahb_fbo_);
+  context_gl_->GenRenderbuffers(1, &ahb_depthbuffer_);
+}
+
+void VRDisplay::SetupAHBRenderbuffer(int width, int height) {
+  context_gl_->BindFramebuffer(GL_FRAMEBUFFER, ahb_fbo_);
+  context_gl_->BindRenderbuffer(GL_RENDERBUFFER, ahb_depthbuffer_);
+  CHECK_ERR;
+
+  context_gl_->RenderbufferStorageMultisampleEXT(
+      GL_RENDERBUFFER, ahb_sample_count_, GL_DEPTH24_STENCIL8_OES, width,
+      height);
+  CHECK_ERR;
+
+  context_gl_->FramebufferRenderbuffer(GL_FRAMEBUFFER,
+                                       GL_DEPTH_STENCIL_ATTACHMENT,
+                                       GL_RENDERBUFFER, ahb_depthbuffer_);
+
+  CHECK_ERR;
+
+  ahb_width_ = width;
+  ahb_height_ = height;
+}
+
+void VRDisplay::CreateAndBindAHBImage(
+    const base::Optional<gpu::MailboxHolder>& buffer_holder) {
+  TRACE_EVENT_BEGIN0("gpu", "VRDisplay::WaitSyncToken");
+  context_gl_->WaitSyncTokenCHROMIUM(buffer_holder->sync_token.GetConstData());
+  TRACE_EVENT_END0("gpu", "VRDisplay::WaitSyncToken");
+
+  TRACE_EVENT_BEGIN0("gpu", "VRDisplay::BindTexImage");
+  GLuint texture = context_gl_->CreateAndConsumeTextureCHROMIUM(
+      GL_TEXTURE_2D, buffer_holder->mailbox.name);
+  LOG(INFO) << __FUNCTION__ << ";;; texture=" << texture;
+  CHECK_ERR;
+  context_gl_->BindTexture(GL_TEXTURE_2D, texture);
+  context_gl_->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                             GL_NEAREST);
+  context_gl_->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+                             GL_NEAREST);
+  context_gl_->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
+                             GL_CLAMP_TO_EDGE);
+  context_gl_->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
+                             GL_CLAMP_TO_EDGE);
+  CHECK_ERR;
+  TRACE_EVENT_END0("gpu", "VRDisplay::BindTexImage");
+
+  context_gl_->FramebufferTexture2DMultisampleEXT(
+      GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0,
+      ahb_sample_count_);
+  CHECK_ERR;
+#if EXPENSIVE_GL_ERROR_CHECKING
+  auto fbstatus = context_gl_->CheckFramebufferStatus(GL_FRAMEBUFFER);
+  if (fbstatus != GL_FRAMEBUFFER_COMPLETE) {
+    LOG(ERROR) << __FUNCTION__
+               << ";;; FRAMEBUFFER NOT COMPLETE, fbstatus=0x" << std::hex << fbstatus;
+    context_gl_->BindFramebuffer(GL_FRAMEBUFFER, 0);
+  }
+  CHECK_ERR;
+#endif
+}
+
+void VRDisplay::BindAHBAndResizeIfNeeded(
+    int width,
+    int height,
+    const base::Optional<gpu::MailboxHolder>& buffer_holder) {
+  CHECK_ERR;
+
+  if (width != ahb_width_ || height != ahb_height_) {
+    LOG(INFO) << __FUNCTION__ << ";;; width=" << width << " height=" << height;
+    SetupAHBRenderbuffer(width, height);
+  }
+
+  // Common code: bind framebuffer.
+  context_gl_->BindFramebuffer(GL_FRAMEBUFFER, ahb_fbo_);
+  CHECK_ERR;
+
+  // Invalidate all attachments, we're drawing fresh content. Redundant?
+  const GLenum kAttachments[] = {GL_COLOR_ATTACHMENT0, GL_DEPTH_ATTACHMENT,
+                                 GL_STENCIL_ATTACHMENT};
+  context_gl_->DiscardFramebufferEXT(
+      GL_FRAMEBUFFER, sizeof(kAttachments) / sizeof(kAttachments[0]),
+      kAttachments);
+  CHECK_ERR;
+
+  CreateAndBindAHBImage(buffer_holder);
+}
+
+void VRDisplay::BindAHBToBufferHolder(
+    const base::Optional<gpu::MailboxHolder>& buffer_holder) {
+  if (!ahb_storage_initialized_) {
+    CreateAHBStorage();
+    ahb_storage_initialized_ = true;
+  }
+
+  // source_width / height aren't set yet?
+  int current_width = source_width_;
+  int current_height = source_height_;
+
+  BindAHBAndResizeIfNeeded(current_width, current_height, buffer_holder);
+
+#if 0
+  context_gl_->ClearColor((vr_frame_id_ & 255) / 255.0f,
+                          42 / 255.0f,
+                          142 / 255.0f, 1.0f);
+  context_gl_->Clear(GL_COLOR_BUFFER_BIT);
+  CHECK_ERR;
+#endif
+
+  // TODO(klausw): unbind, deallocate, delete image?
+
+  // TODO(klausw): Restore BindFramebuffer to whatever the application
+  // may have been using. Currently SetCustomBackbufferFBO does some of
+  // this.
+  rendering_context_->SetCustomBackbufferFBO(ahb_fbo_);
+  // Do *not* flush here, we intentionally want to avoid emitting the
+  // underlying commands as long as possible. We create the backing
+  // buffer asynchronously, the GPU process will block once it's actually
+  // needed if it's not there yet.
+
+  // TODO(klausw): can we reduce per-frame work for the DrawingBuffer's
+  // original backing FBO that we're not using?
+
+  // TODO(klausw): handle preserveBuffer=true
+}
+
 void VRDisplay::OnPresentingVSync(
     device::mojom::blink::VRPosePtr pose,
     WTF::TimeDelta time_delta,
     int16_t frame_id,
-    device::mojom::blink::VRPresentationProvider::VSyncStatus status) {
+    device::mojom::blink::VRPresentationProvider::VSyncStatus status,
+    const base::Optional<gpu::MailboxHolder>& buffer_holder) {
   DVLOG(2) << __FUNCTION__;
   switch (status) {
     case device::mojom::blink::VRPresentationProvider::VSyncStatus::SUCCESS:
@@ -942,6 +1215,21 @@ void VRDisplay::OnPresentingVSync(
 
   frame_pose_ = std::move(pose);
   vr_frame_id_ = frame_id;
+
+  TRACE_EVENT_FLOW_STEP0("gpu", "vrframe", vr_frame_id_, "PresentingVSync");
+
+  DVLOG(3) << __FUNCTION__ << ";;; have buffer=" << !!buffer_holder;
+  if (buffer_holder) {
+    TRACE_EVENT0("gpu", "VRDisplay::BufferSetup");
+
+    BindAHBToBufferHolder(buffer_holder);
+    gvr_zero_copy_ = true;
+    wait_for_previous_render_ = WaitPrevStrategy::BEFORE_SUBMIT;
+    // wait_for_previous_render_ = WaitPrevStrategy::AFTER_SUBMIT;
+    // wait_for_previous_render_ = WaitPrevStrategy::NEVER;
+  } else {
+    // LOG(INFO) << __FUNCTION__ << ";;; buffer=nullopt";
+  }
 
   // Post a task to handle scheduled animations after the current
   // execution context finishes, so that we yield to non-mojo tasks in

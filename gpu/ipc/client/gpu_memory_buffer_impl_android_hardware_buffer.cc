@@ -25,6 +25,7 @@ AHardwareBuffer_Desc GetBufferDescription(const gfx::Size& size,
   // On create, all elements must be initialized, including setting the
   // "reserved for future use" (rfu) fields to zero.
   AHardwareBuffer_Desc desc = {};
+  LOG(INFO) << __FUNCTION__ << ";;; width=" << size.width() << " height=" << size.height();
   desc.width = size.width();
   desc.height = size.height();
   desc.layers = 1;  // number of images

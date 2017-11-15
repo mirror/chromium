@@ -16,6 +16,7 @@
 #include "platform/Timer.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebGraphicsContext3DProvider.h"
 
@@ -147,7 +148,8 @@ class VRDisplay final : public EventTargetWithInlineData,
       device::mojom::blink::VRPosePtr,
       WTF::TimeDelta,
       int16_t frame_id,
-      device::mojom::blink::VRPresentationProvider::VSyncStatus);
+      device::mojom::blink::VRPresentationProvider::VSyncStatus,
+      const WTF::Optional<gpu::MailboxHolder>& buffer);
   void OnPresentationProviderConnectionError();
 
   void OnMagicWindowPose(device::mojom::blink::VRPosePtr);
@@ -199,6 +201,39 @@ class VRDisplay final : public EventTargetWithInlineData,
   // Used to keep the image alive until the next frame if using
   // waitForPreviousTransferToFinish.
   scoped_refptr<Image> previous_image_;
+
+  bool gvr_zero_copy_ = false;
+
+  // Using late wait seems to trigger slow/fast pattern
+  // in traditional render path. Unsure about effect on
+  // new path.
+  enum class WaitPrevStrategy {
+    BEFORE_SUBMIT,
+    AFTER_SUBMIT,
+    NEVER,
+  };
+  WaitPrevStrategy wait_for_previous_render_ = WaitPrevStrategy::BEFORE_SUBMIT;
+
+  void CreateAHBStorage();
+  void SetupAHBRenderbuffer(int width, int height);
+  void CreateAndBindAHBImage(
+      const base::Optional<gpu::MailboxHolder>& buffer_holder);
+  void BindAHBAndResizeIfNeeded(
+      int width,
+      int height,
+      const base::Optional<gpu::MailboxHolder>& buffer_holder);
+  void BindAHBToBufferHolder(
+      const base::Optional<gpu::MailboxHolder>& buffer_holder);
+
+  int ahb_sample_count_ = 4;
+  static constexpr int AHB_TEXTURE_COUNT = 4;
+  bool ahb_storage_initialized_ = false;
+  bool ahb_recycle_buffers_ = false;
+  int ahb_width_;
+  int ahb_height_;
+  GLuint ahb_fbo_;
+  GLuint ahb_current_fbo_ = 0;
+  GLuint ahb_depthbuffer_;
 
   TraceWrapperMember<ScriptedAnimationController>
       scripted_animation_controller_;
