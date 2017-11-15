@@ -32,6 +32,7 @@
 #include "content/browser/renderer_host/render_widget_host_view_android.h"
 #include "content/browser/web_contents/web_contents_android.h"
 #include "content/browser/web_contents/web_contents_view_android.h"
+#include "content/common/content_switches_internal.h"
 #include "content/common/frame_messages.h"
 #include "content/common/input_messages.h"
 #include "content/common/view_messages.h"
@@ -360,8 +361,12 @@ void ContentViewCore::UpdateFrameInfo(
   if (obj.is_null() || !GetWindowAndroid())
     return;
 
+  float content_offset_in_css = content_offset;
+  if (IsUseZoomForDSFEnabled())
+    content_offset_in_css /= dpi_scale_;
+
   GetViewAndroid()->UpdateFrameInfo({
-      viewport_size, page_scale_factor, content_offset,
+      viewport_size, page_scale_factor, content_offset_in_css,
   });
 
   // Current viewport size in css.
@@ -434,7 +439,10 @@ void ContentViewCore::ShowSelectPopupMenu(RenderFrameHost* frame,
   const ScopedJavaLocalRef<jobject> popup_view = select_popup_.view();
   if (popup_view.is_null())
     return;
-  view->SetAnchorRect(popup_view, gfx::RectF(bounds));
+  gfx::RectF bounds_in_css = gfx::RectF(bounds);
+  if (IsUseZoomForDSFEnabled())
+    bounds_in_css.Scale(1 / dpi_scale_);
+  view->SetAnchorRect(popup_view, bounds_in_css);
   Java_ContentViewCore_showSelectPopup(
       env, j_obj, popup_view, reinterpret_cast<intptr_t>(frame), items_array,
       enabled_array, multiple, selected_array, right_aligned);
