@@ -78,6 +78,8 @@ class SearchPermissionsService : public KeyedService {
   // configured for the DSE for that given origin.
   bool ArePermissionsControlledByDSE(const url::Origin& requesting_origin);
 
+  void ResetDSEPermissions();
+
   // KeyedService:
   void Shutdown() override;
 

@@ -218,6 +218,14 @@ void SetSettingForOrigin(JNIEnv* env,
         origin_url, content_type);
   }
 
+  SearchPermissionsService* search_helper =
+      SearchPermissionsService::Factory::GetForBrowserContext(
+          GetActiveUserProfile(is_incognito));
+  if (search_helper->ArePermissionsControlledByDSE(
+          url::Origin::Create(origin_url))) {
+    search_helper->ResetDSEPermissions();
+  }
+
   PermissionUtil::ScopedRevocationReporter scoped_revocation_reporter(
       profile, origin_url, embedder_url, content_type,
       PermissionSourceUI::SITE_SETTINGS);

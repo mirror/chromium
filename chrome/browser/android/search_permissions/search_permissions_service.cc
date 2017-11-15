@@ -170,6 +170,16 @@ bool SearchPermissionsService::ArePermissionsControlledByDSE(
   return true;
 }
 
+void SearchPermissionsService::ResetDSEPermissions() {
+  GURL dse_origin = delegate_->GetDSEOrigin().GetURL();
+  SetContentSetting(dse_origin, CONTENT_SETTINGS_TYPE_GEOLOCATION,
+                    CONTENT_SETTING_ALLOW);
+  if (base::FeatureList::IsEnabled(features::kGrantNotificationsToDSE)) {
+    SetContentSetting(dse_origin, CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
+                      CONTENT_SETTING_ALLOW);
+  }
+}
+
 void SearchPermissionsService::Shutdown() {
   delegate_.reset();
 }
