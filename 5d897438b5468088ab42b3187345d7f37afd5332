@@ -202,6 +202,24 @@
     },
     {
       "key": {
+        "uuid": "0abe5c22_6a54000c",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar_unittest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T22:09:32Z",
+      "side": 1,
+      "message": "I\u0027d still prefer the class be defined in an anonymous namespace in the .cc file. :)",
+      "parentUuid": "fd1ab252_a3654e33",
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fdc5f3f_320f1264",
         "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar_unittest.h",
         "patchSetId": 2
@@ -336,6 +354,24 @@
       "side": 1,
       "message": "The reason is related to my response to https://chromium-review.googlesource.com/c/chromium/src/+/765193/2/chrome/browser/ui/toolbar/toolbar_actions_model.cc#76.\n\nThe Init() call needs to be made first. \n\nIf the ToolbarActionsModel becomes an ExtensionErrorReporter::Observer, the observer member needs to be setup and registered: \n\nScopedObserver\u003cExtensionErrorReporter, ExtensionErrorReporter::Observer\u003e extension_error_reporter_observer_\n\nHowever, ScopedObserver\u0027s can only be instantiated explicitly in the ToolbarActionsModel constructor\u0027s initialization list and this would be *before* the Init() call can be made.",
       "parentUuid": "a20181de_191fa7af",
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d4084b_76e8ce50",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T22:09:32Z",
+      "side": 1,
+      "message": "The scoped observer can be instantiated without adding the observee.  e.g.,\n\nToolbarActionsModel::ToolbarActionsModel()\n    : ....\n      error_reporter_observer_(this) {\n  ...\n}\n\nAnd then in the OnReady() function, we can add the source:\nToolbarActionsModel::OnReady() {\n  error_reporter_observer_.Add(ExtensionErrorReporter::GetInstance());\n}\n\nWould that work?  (It seems like this should both let the model be an observer directly and solve the need for the Init() call in the constructor)",
+      "parentUuid": "86c3d7b1_3d2c67ff",
       "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

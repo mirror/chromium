@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2c66740_4891f189",
+        "filename": "chrome/browser/extensions/extension_error_reporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T22:09:32Z",
+      "side": 1,
+      "message": "unnecessary",
+      "revId": "3f0da34f5dec6a262eb7624f7dc5f67892bab49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20a148f8_f6f2b3f6",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T22:09:32Z",
+      "side": 1,
+      "message": "nit: re-upload sounds like uploading to the webstore or similar.  Prefer \"reload\"",
+      "revId": "3f0da34f5dec6a262eb7624f7dc5f67892bab49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "107b685b_44aac240",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar_unittest.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T22:09:32Z",
+      "side": 1,
+      "message": "Couldn\u0027t this implementation be in the ToolbarActionErrorTestObserver, rather than needing a separate class?",
+      "revId": "3f0da34f5dec6a262eb7624f7dc5f67892bab49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
