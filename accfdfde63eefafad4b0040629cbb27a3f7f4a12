@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bfcaa3c9_078acb47",
+        "filename": "chrome/browser/clipboard/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-15T22:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26f5ba66_f5c2e1e1",
+      "revId": "accfdfde63eefafad4b0040629cbb27a3f7f4a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "773c14b1_fd37c5e7",
         "filename": "chrome/browser/clipboard/clipboard_read_permission_context.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "accfdfde63eefafad4b0040629cbb27a3f7f4a12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db2132c2_a804aff0",
+        "filename": "chrome/browser/clipboard/clipboard_read_permission_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-15T22:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "773c14b1_fd37c5e7",
+      "revId": "accfdfde63eefafad4b0040629cbb27a3f7f4a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7133f167_086deca2",
+        "filename": "chrome/browser/clipboard/clipboard_write_permission_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-15T22:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de552e98_e1ec8443",
+      "revId": "accfdfde63eefafad4b0040629cbb27a3f7f4a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49026e52_63cfeba5",
         "filename": "chrome/browser/clipboard/clipboard_write_permission_context.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "accfdfde63eefafad4b0040629cbb27a3f7f4a12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcbc702c_04066032",
+        "filename": "chrome/browser/clipboard/clipboard_write_permission_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-15T22:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49026e52_63cfeba5",
+      "revId": "accfdfde63eefafad4b0040629cbb27a3f7f4a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5daeafa6_97061e69",
+        "filename": "chrome/browser/permissions/permission_request.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-15T22:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fdfd0a9_fa057d63",
+      "revId": "accfdfde63eefafad4b0040629cbb27a3f7f4a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26c3ff33_791a2144",
         "filename": "components/content_settings/core/common/content_settings_types.h",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "accfdfde63eefafad4b0040629cbb27a3f7f4a12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaca3df1_f242c51e",
+        "filename": "components/content_settings/core/common/content_settings_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-15T22:43:58Z",
+      "side": 1,
+      "message": "I copied the comment from MIDI. I tried to group them, but there\u0027s a static_assert in ContentSettingTypeToHistogramValue that ensures the kHistogramValue entries are all in the same order as this enum.\n\nWe could group them by renumbering them here, but that should be done as a separate CL.",
+      "parentUuid": "26c3ff33_791a2144",
+      "revId": "accfdfde63eefafad4b0040629cbb27a3f7f4a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
