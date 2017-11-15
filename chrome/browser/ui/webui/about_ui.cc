@@ -43,7 +43,6 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/resource_coordinator/tab_manager.h"
-#include "chrome/browser/resource_coordinator/tab_stats.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/url_constants.h"
@@ -378,10 +377,11 @@ std::string BuildAboutDiscardsRunPage() {
 }
 
 std::vector<std::string> GetHtmlTabDescriptorsForDiscardPage() {
-  resource_coordinator::TabManager* tab_manager =
-      g_browser_process->GetTabManager();
-  resource_coordinator::TabStatsList stats = tab_manager->GetTabStats();
+  /* resource_coordinator::TabManager* tab_manager =
+       g_browser_process->GetTabManager();*/
+  // resource_coordinator::TabStatsList stats = tab_manager->GetTabStats();
   std::vector<std::string> titles;
+  /*
   titles.reserve(stats.size());
   for (resource_coordinator::TabStatsList::iterator it = stats.begin();
        it != stats.end(); ++it) {
@@ -416,6 +416,7 @@ std::vector<std::string> GetHtmlTabDescriptorsForDiscardPage() {
     }
     titles.push_back(str);
   }
+  */
   return titles;
 }
 
@@ -438,7 +439,7 @@ std::string AboutDiscards(const std::string& path) {
         url_split[0], "/", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
     if (path_split.size() == 2 && path_split[0] == kAboutDiscardsRunCommand &&
         base::StringToInt64(path_split[1], &web_content_id)) {
-      tab_manager->DiscardTabById(web_content_id, condition);
+      // tab_manager->DiscardTabById(web_content_id, condition);
       return BuildAboutDiscardsRunPage();
     } else if (path_split.size() == 1 &&
                path_split[0] == kAboutDiscardsRunCommand) {

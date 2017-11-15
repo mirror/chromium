@@ -16,7 +16,7 @@
 
 using content::WebContents;
 using content::WebContentsTester;
-
+/*
 namespace resource_coordinator {
 namespace {
 
@@ -242,3 +242,4 @@ TEST_F(TabManagerWebContentsDataTest, IsTabRestoredInForeground) {
 }
 
 }  // namespace resource_coordinator
+*/

@@ -6,6 +6,8 @@
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/resource_coordinator/tab_lifetime_observer.h"
+#include "chrome/browser/resource_coordinator/tab_lifetime_unit.h"
+#include "chrome/browser/resource_coordinator/tab_lifetime_unit_source.h"
 #include "chrome/browser/resource_coordinator/tab_manager.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
 #include "chrome/browser/ui/browser.h"
@@ -23,28 +25,7 @@ using content::WebContents;
 
 namespace resource_coordinator {
 
-class TabLifetimeObserverTest : public InProcessBrowserTest {
- public:
-  TabLifetimeObserverTest() {}
-
-  // Helper functions.
-  void set_tab_strip_model(TabStripModel* tsm) { tab_strip_model_ = tsm; }
-
-  int GetIndex(WebContents* contents) {
-    return tab_strip_model_->GetIndexOfWebContents(contents);
-  }
-
-  WebContents* GetContents(int index) {
-    return tab_strip_model_->GetWebContentsAt(index);
-  }
-
-  int64_t ContentsId(WebContents* contents) {
-    return TabManager::IdFromWebContents(contents);
-  }
-
- private:
-  TabStripModel* tab_strip_model_;
-};
+using TabLifetimeObserverTest = InProcessBrowserTest;
 
 class MockTabLifetimeObserver : public TabLifetimeObserver {
  public:
@@ -86,75 +67,71 @@ class MockTabLifetimeObserver : public TabLifetimeObserver {
 IN_PROC_BROWSER_TEST_F(TabLifetimeObserverTest, OnDiscardStateChange) {
   TabManager* tab_manager = g_browser_process->GetTabManager();
   auto* tsm = browser()->tab_strip_model();
-  set_tab_strip_model(tsm);
 
   // Open two tabs.
   OpenURLParams open1(GURL(chrome::kChromeUIAboutURL), content::Referrer(),
-                      WindowOpenDisposition::NEW_BACKGROUND_TAB,
+                      WindowOpenDisposition::CURRENT_TAB,
                       ui::PAGE_TRANSITION_TYPED, false);
-  int index_1 = GetIndex(browser()->OpenURL(open1));
+  browser()->OpenURL(open1);
 
   OpenURLParams open2(GURL(chrome::kChromeUICreditsURL), content::Referrer(),
                       WindowOpenDisposition::NEW_BACKGROUND_TAB,
                       ui::PAGE_TRANSITION_TYPED, false);
-  int index_2 = GetIndex(browser()->OpenURL(open2));
+  browser()->OpenURL(open2);
+
+  ASSERT_EQ(2, tsm->count());
 
   // Subscribe observer to TabManager's observer list.
-  MockTabLifetimeObserver tabmanager_observer;
-  tab_manager->AddObserver(&tabmanager_observer);
+  MockTabLifetimeObserver observer;
+  tab_manager->AddObserver(&observer);
 
   // Discards both tabs and make sure the events were observed properly.
-  EXPECT_TRUE(tab_manager->DiscardTabById(ContentsId(GetContents(index_1)),
-                                          DiscardCondition::PROACTIVE));
-  EXPECT_EQ(1, tabmanager_observer.nb_events());
-  EXPECT_EQ(ContentsId(GetContents(index_1)),
-            ContentsId(tabmanager_observer.content()));
-  EXPECT_TRUE(tabmanager_observer.is_discarded());
+  TabLifetimeUnit::FromWebContents(tsm->GetWebContentsAt(0))
+      ->Discard(MemoryCondition::NORMAL);
+  EXPECT_EQ(1, observer.nb_events());
+  EXPECT_EQ(tsm->GetWebContentsAt(0), observer.content());
+  EXPECT_TRUE(observer.is_discarded());
 
-  EXPECT_TRUE(tab_manager->DiscardTabById(ContentsId(GetContents(index_2)),
-                                          DiscardCondition::PROACTIVE));
-  EXPECT_EQ(2, tabmanager_observer.nb_events());
-  EXPECT_EQ(ContentsId(GetContents(index_2)),
-            ContentsId(tabmanager_observer.content()));
-  EXPECT_TRUE(tabmanager_observer.is_discarded());
+  TabLifetimeUnit::FromWebContents(tsm->GetWebContentsAt(1))
+      ->Discard(MemoryCondition::NORMAL);
+  EXPECT_EQ(2, observer.nb_events());
+  EXPECT_EQ(tsm->GetWebContentsAt(1), observer.content());
+  EXPECT_TRUE(observer.is_discarded());
 
   // Discarding an already discarded tab shouldn't fire the observers.
-  EXPECT_FALSE(tab_manager->DiscardTabById(ContentsId(GetContents(index_1)),
-                                           DiscardCondition::PROACTIVE));
-  EXPECT_EQ(2, tabmanager_observer.nb_events());
-
-  // Reload tab 1.
-  tsm->ActivateTabAt(index_1, false);
-  EXPECT_EQ(index_1, tsm->active_index());
-  EXPECT_EQ(3, tabmanager_observer.nb_events());
-  EXPECT_EQ(ContentsId(GetContents(index_1)),
-            ContentsId(tabmanager_observer.content()));
-  EXPECT_FALSE(tabmanager_observer.is_discarded());
-
-  // Reloading a tab that's not discarded shouldn't fire the observers.
-  tsm->ActivateTabAt(index_1, false);
-  EXPECT_EQ(3, tabmanager_observer.nb_events());
+  TabLifetimeUnit::FromWebContents(tsm->GetWebContentsAt(0))
+      ->Discard(MemoryCondition::NORMAL);
+  EXPECT_EQ(2, observer.nb_events());
 
   // Reload tab 2.
-  tsm->ActivateTabAt(index_2, false);
-  EXPECT_EQ(index_2, tsm->active_index());
-  EXPECT_EQ(4, tabmanager_observer.nb_events());
-  EXPECT_EQ(ContentsId(GetContents(index_2)),
-            ContentsId(tabmanager_observer.content()));
-  EXPECT_FALSE(tabmanager_observer.is_discarded());
+  tsm->ActivateTabAt(1, false);
+  EXPECT_EQ(1, tsm->active_index());
+  EXPECT_EQ(3, observer.nb_events());
+  EXPECT_EQ(tsm->GetWebContentsAt(1), observer.content());
+  EXPECT_FALSE(observer.is_discarded());
+
+  // Reloading a tab that's not discarded shouldn't fire the observers.
+  tsm->ActivateTabAt(1, false);
+  EXPECT_EQ(3, observer.nb_events());
+
+  // Reload tab 1.
+  tsm->ActivateTabAt(0, false);
+  EXPECT_EQ(0, tsm->active_index());
+  EXPECT_EQ(4, observer.nb_events());
+  EXPECT_EQ(tsm->GetWebContentsAt(0), observer.content());
+  EXPECT_FALSE(observer.is_discarded());
 
   // After removing the observer from the TabManager's list, it shouldn't
   // receive events anymore.
-  tab_manager->RemoveObserver(&tabmanager_observer);
-  EXPECT_TRUE(tab_manager->DiscardTabById(ContentsId(GetContents(index_1)),
-                                          DiscardCondition::PROACTIVE));
-  EXPECT_EQ(4, tabmanager_observer.nb_events());
+  tab_manager->RemoveObserver(&observer);
+  TabLifetimeUnit::FromWebContents(tsm->GetWebContentsAt(1))
+      ->Discard(MemoryCondition::NORMAL);
+  EXPECT_EQ(4, observer.nb_events());
 }
 
 IN_PROC_BROWSER_TEST_F(TabLifetimeObserverTest, OnAutoDiscardableStateChange) {
   TabManager* tab_manager = g_browser_process->GetTabManager();
   auto* tsm = browser()->tab_strip_model();
-  set_tab_strip_model(tsm);
 
   // Open two tabs.
   OpenURLParams open(GURL(chrome::kChromeUIAboutURL), content::Referrer(),
@@ -170,24 +147,28 @@ IN_PROC_BROWSER_TEST_F(TabLifetimeObserverTest, OnAutoDiscardableStateChange) {
   EXPECT_EQ(0, observer.nb_events());
 
   // Should maintain at zero since the default value of the state is true.
-  tab_manager->SetTabAutoDiscardableState(contents, true);
+  TabLifetimeUnit::FromWebContents(tsm->GetWebContentsAt(1))
+      ->SetAutoDiscardable(true);
   EXPECT_EQ(0, observer.nb_events());
 
   // Now it has to change.
-  tab_manager->SetTabAutoDiscardableState(contents, false);
+  TabLifetimeUnit::FromWebContents(tsm->GetWebContentsAt(1))
+      ->SetAutoDiscardable(false);
   EXPECT_EQ(1, observer.nb_events());
   EXPECT_FALSE(observer.is_auto_discardable());
-  EXPECT_EQ(ContentsId(contents), ContentsId(observer.content()));
+  EXPECT_EQ(contents, observer.content());
 
   // No changes since it's not a new state.
-  tab_manager->SetTabAutoDiscardableState(contents, false);
+  TabLifetimeUnit::FromWebContents(tsm->GetWebContentsAt(1))
+      ->SetAutoDiscardable(false);
   EXPECT_EQ(1, observer.nb_events());
 
   // Change it back and we should have another event.
-  tab_manager->SetTabAutoDiscardableState(contents, true);
+  TabLifetimeUnit::FromWebContents(tsm->GetWebContentsAt(1))
+      ->SetAutoDiscardable(true);
   EXPECT_EQ(2, observer.nb_events());
   EXPECT_TRUE(observer.is_auto_discardable());
-  EXPECT_EQ(ContentsId(contents), ContentsId(observer.content()));
+  EXPECT_EQ(contents, observer.content());
 }
 
 }  // namespace resource_coordinator
