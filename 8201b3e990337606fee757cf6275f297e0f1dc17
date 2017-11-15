@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e861eee1_6684d93f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-11-15T21:36:32Z",
+      "side": 1,
+      "message": "Please add a bug reference.",
+      "revId": "8201b3e990337606fee757cf6275f297e0f1dc17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fae1d5b_1803abfd",
+        "filename": "tools/clang/scripts/download_objdump.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-11-15T21:36:32Z",
+      "side": 1,
+      "message": "Can you just not pass path_prefix here, since it matches the default argument value?",
+      "revId": "8201b3e990337606fee757cf6275f297e0f1dc17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
