@@ -1020,6 +1020,30 @@
     },
     {
       "key": {
+        "uuid": "c58d333d_4a7f7c37",
+        "filename": "chrome_elf/whitelist/whitelist_component.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-15T09:55:04Z",
+      "side": 1,
+      "message": "guaranteed: C++-11 7.2 paragraph 2: \"If the first enumerator has no initializer, the value of the corresponding constant is zero.\"\n\nthat aside, do you care what the values are? if so, why? uma? if so, forget what i said and follow the advice here: https://cs.chromium.org/chromium/src/base/metrics/histogram_macros.h?q\u003dfile:histogram_macros%5C.h+Enumeration%5C+histograms\u0026l\u003d29",
+      "parentUuid": "1af30ccb_fbb60fd6",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1984d708_7a94c78f",
         "filename": "chrome_elf/whitelist/whitelist_component.h",
         "patchSetId": 5

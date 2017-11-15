@@ -189,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "dc32f461_c658cf59",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-15T09:55:04Z",
+      "side": 1,
+      "message": "without the \u0027\u0026\u0027, |file_path| is a copy of the global. this means that the changes below only affect the local copy -- not the global.",
+      "parentUuid": "c1a4e036_b58d6a77",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 14
+      },
+      "revId": "dbe87eb920dfe9e3929edac95fba737b0004bd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bec06b1_bcd5a29e",
         "filename": "chrome_elf/whitelist/whitelist_component.cc",
         "patchSetId": 6
@@ -265,6 +289,24 @@
       "side": 1,
       "message": "Done.  OH!  what regex does the presubmit look for?  Any \"*test*\" in a public function name?\n\nTIL.  I was worried about that.",
       "parentUuid": "27024a50_e7ee1569",
+      "revId": "dbe87eb920dfe9e3929edac95fba737b0004bd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42bc3d2d_e07579b9",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-15T09:55:04Z",
+      "side": 1,
+      "message": "check the regexp here:\n\nhttps://cs.chromium.org/chromium/src/PRESUBMIT.py?type\u003dcs\u0026q\u003dfile:src/presubmit%5C.py+def%5C+_CheckNoProductionCodeUsingTestOnlyFunctions\u0026sq\u003dpackage:chromium\u0026l\u003d496",
+      "parentUuid": "e989ea0a_6531d824",
       "revId": "dbe87eb920dfe9e3929edac95fba737b0004bd8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
