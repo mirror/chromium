@@ -93,6 +93,30 @@
       "revId": "80ec30e1dca3f093b8cb3341e05038b0419b32f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70d297e_8f34db98",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-15T23:04:32Z",
+      "side": 1,
+      "message": "Yes, document that passing nullptr is acceptable.\n\nThe way it\u0027s used is:\n\n command_line-\u003eHasSwitch(kEnableGpuBenchmarking)\n\nHasSwitch() creates a StringPiece out of the passed value. Looks like StringPiece does end up checking for null input and creating an empty StringPiece.\n\nSo then we\u0027re checking command_line-\u003eHasSwitch(\"\").\n\nThere are two things wrong with this picture:\n  1. HasSwitch(\"\") behavior is not documented. If it returns true, it will actually be incorrect behavior here. If it returns false currently, it\u0027s not guaranteed that won\u0027t change, since it\u0027s undocumented.\n  2. VariationsFieldTrialCreator::SetupFieldTrials() does not document that it accepts nullptr. Just because it works right now, doesn\u0027t mean that it\u0027s guaranteed to continue working. And there\u0027s obviously no test case for this - since it was not designed to be called with NULL.\n\nSo I suggest either documenting that NULL is supported for the variations API and adding a check before calling HasSwitch() - or you can, for example, pass in kEnableBenchmarking from variations_switches.h - since it wouldn\u0027t affect behavior. If you do the latter, please document the reason at the call site with a comment.",
+      "parentUuid": "59056c0a_2814ecf2",
+      "range": {
+        "startLine": 228,
+        "startChar": 35,
+        "endLine": 228,
+        "endChar": 42
+      },
+      "revId": "80ec30e1dca3f093b8cb3341e05038b0419b32f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
