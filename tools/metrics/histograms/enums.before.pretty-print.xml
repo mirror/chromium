@@ -39195,7 +39195,9 @@ would be helpful to identify which type is being sent.
 </enum>
 
 <enum name="SyncRequestType">
-  <summary>Maps to values in sync_pb::ClientToServerMessage_Contents.</summary>
+  <summary>
+    Maps to values in sync_pb::ClientToServerMessage_Contents.
+  </summary>
   <int value="1" label="COMMIT"/>
   <int value="2" label="GET_UPDATES"/>
   <int value="3" label="AUTHENTICATE"/>
