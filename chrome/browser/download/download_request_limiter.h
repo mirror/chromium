@@ -50,6 +50,10 @@ class WebContents;
 //   choice stays until the user navigates to a different host. For example, if
 //   the user allowed the download, multiple downloads are allowed without any
 //   user intervention until the user navigates to a different host.
+//
+// The DownloadUiStatus indicates whether omnibox UI should be shown for the
+// current download status. We do not show UI if there has not yet been
+// a download attempt on the page regardless of the internal download status.
 class DownloadRequestLimiter
     : public base::RefCountedThreadSafe<DownloadRequestLimiter> {
  public:
@@ -59,6 +63,13 @@ class DownloadRequestLimiter
     PROMPT_BEFORE_DOWNLOAD,
     ALLOW_ALL_DOWNLOADS,
     DOWNLOADS_NOT_ALLOWED
+  };
+
+  // Download UI state given the current download status for a page.
+  enum DownloadUiStatus {
+    DOWNLOAD_UI_DEFAULT,
+    DOWNLOAD_UI_ALLOWED,
+    DOWNLOAD_UI_BLOCKED
   };
 
   // Max number of downloads before a "Prompt Before Download" Dialog is shown.
@@ -95,12 +106,22 @@ class DownloadRequestLimiter
     // Status of the download.
     DownloadStatus download_status() const { return status_; }
 
+    // The omnibox UI to be showing (or none if we shouldn't show any).
+    DownloadUiStatus download_ui_status() const { return ui_status_; }
+
     // Number of "ALLOWED" downloads.
     void increment_download_count() {
       download_count_++;
     }
     size_t download_count() const {
       return download_count_;
+    }
+
+    bool download_seen_on_page_load() const {
+      return download_seen_on_page_load_;
+    }
+    void set_download_seen_on_page_load(bool seen) {
+      download_seen_on_page_load_ = seen;
     }
 
     // content::WebContentsObserver overrides.
@@ -162,8 +183,12 @@ class DownloadRequestLimiter
     std::string initial_page_host_;
 
     DownloadStatus status_;
+    DownloadUiStatus ui_status_;
 
     size_t download_count_;
+
+    // True if a download has been seen on the current page load.
+    bool download_seen_on_page_load_;
 
     // Callbacks we need to notify. This is only non-empty if we're showing a
     // dialog.
@@ -187,7 +212,11 @@ class DownloadRequestLimiter
 
   // Returns the download status for a page. This does not change the state in
   // anyway.
-  DownloadStatus GetDownloadStatus(content::WebContents* tab);
+  DownloadStatus GetDownloadStatus(content::WebContents* web_contents);
+
+  // Returns the download UI status for a page for the purposes of showing an
+  // omnibox decoration.
+  DownloadUiStatus GetDownloadUiStatus(content::WebContents* web_contents);
 
   // Check if download can proceed and notifies the callback on UI thread.
   void CanDownload(const content::ResourceRequestInfo::WebContentsGetter&
