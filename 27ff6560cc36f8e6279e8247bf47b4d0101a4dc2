@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "58213d2a_c4db272b",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-15T18:45:29Z",
+      "side": 1,
+      "message": "That\u0027s a concern for the next CL.\nA simple way would be to have GenerateStream pass a reference to a renderer-side mojo object and keep track of that mojo reference instead of the requester.\nThat object would be similar to MSD except that it doesn\u0027t need to be exposed as MSD currently is and will only have the OnDeviceStopped method.",
+      "parentUuid": "078bd95e_97694880",
+      "revId": "27ff6560cc36f8e6279e8247bf47b4d0101a4dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7050b6c_2cc7e01c",
         "filename": "content/renderer/media/media_stream_label_map.cc",
         "patchSetId": 5
