@@ -73,6 +73,7 @@
 #include "components/exo/pointer.h"
 #include "components/exo/pointer_delegate.h"
 #include "components/exo/pointer_gesture_pinch_delegate.h"
+#include "components/exo/seat.h"
 #include "components/exo/shared_memory.h"
 #include "components/exo/shell_surface.h"
 #include "components/exo/sub_surface.h"
