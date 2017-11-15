@@ -21,6 +21,7 @@
 #include "chrome/browser/signin/signin_error_controller_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/signin/signin_promo_util.h"
+#include "chrome/browser/signin/signin_util.h"
 #include "chrome/browser/ui/webui/theme_source.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/pref_names.h"
@@ -85,10 +86,14 @@ bool HasUserSkippedPromo(Profile* profile) {
 // |auto_close| whether to close the sign in promo automatically when done.
 // |is_constrained| whether to load the URL in a constrained window, false
 // by default.
+// |is_enterrpise| whether the sign in flow is for enterprise user which does
+// not contain custom Chrome text.
+
 GURL GetPromoURL(signin_metrics::AccessPoint access_point,
                  signin_metrics::Reason reason,
                  bool auto_close,
-                 bool is_constrained) {
+                 bool is_constrained,
+                 bool is_enterprise) {
   CHECK_LT(static_cast<int>(access_point),
            static_cast<int>(signin_metrics::AccessPoint::ACCESS_POINT_MAX));
   CHECK_NE(static_cast<int>(access_point),
@@ -98,16 +103,26 @@ GURL GetPromoURL(signin_metrics::AccessPoint access_point,
   CHECK_NE(static_cast<int>(reason),
            static_cast<int>(signin_metrics::Reason::REASON_UNKNOWN_REASON));
 
-  std::string url(chrome::kChromeUIChromeSigninURL);
-  base::StringAppendF(&url, "?%s=%d", signin::kSignInPromoQueryKeyAccessPoint,
-                      static_cast<int>(access_point));
-  base::StringAppendF(&url, "&%s=%d", signin::kSignInPromoQueryKeyReason,
-                      static_cast<int>(reason));
-  if (auto_close)
-    base::StringAppendF(&url, "&%s=1", signin::kSignInPromoQueryKeyAutoClose);
-  if (is_constrained)
-    base::StringAppendF(&url, "&%s=1", signin::kSignInPromoQueryKeyConstrained);
-  return GURL(url);
+  GURL url(chrome::kChromeUIChromeSigninURL);
+  url = net::AppendQueryParameter(
+      url, signin::kSignInPromoQueryKeyAccessPoint,
+      base::IntToString(static_cast<int>(access_point)));
+  url = net::AppendQueryParameter(url, signin::kSignInPromoQueryKeyReason,
+                                  base::IntToString(static_cast<int>(reason)));
+  if (auto_close) {
+    url = net::AppendQueryParameter(url, signin::kSignInPromoQueryKeyAutoClose,
+                                    "1");
+  }
+  if (is_constrained) {
+    url = net::AppendQueryParameter(
+        url, signin::kSignInPromoQueryKeyConstrained, "1");
+  }
+  if (is_enterprise) {
+    url = net::AppendQueryParameter(url, signin::kSignInPromoQueryKeyFlow,
+                                    signin::kSignInPromoQueryEnterpriseFlow);
+  }
+
+  return url;
 }
 
 GURL GetReauthURL(signin_metrics::AccessPoint access_point,
@@ -115,7 +130,8 @@ GURL GetReauthURL(signin_metrics::AccessPoint access_point,
                   const std::string& email,
                   bool auto_close,
                   bool is_constrained) {
-  GURL url = GetPromoURL(access_point, reason, auto_close, is_constrained);
+  GURL url =
+      GetPromoURL(access_point, reason, auto_close, is_constrained, false);
   url = net::AppendQueryParameter(url, "email", email);
   url = net::AppendQueryParameter(url, "validateEmail", "1");
   return net::AppendQueryParameter(url, "readOnlyEmail", "1");
@@ -218,18 +234,19 @@ GURL GetPromoURLForTab(signin_metrics::AccessPoint access_point,
     // The full-tab sign-in endpoint is deprecated. Use the constrained page for
     // the full-tab URL as well.
     return GetPromoURL(access_point, reason, auto_close,
-                       true /* is_constrained */);
+                       true /* is_constrained */, false);
   }
 
   return GetPromoURL(access_point, reason, auto_close,
-                     false /* is_constrained */);
+                     false /* is_constrained */, false);
 }
 
 GURL GetPromoURLForDialog(signin_metrics::AccessPoint access_point,
                           signin_metrics::Reason reason,
                           bool auto_close) {
   return GetPromoURL(access_point, reason, auto_close,
-                     true /* is_constrained */);
+                     true /* is_constrained */,
+                     signin_util::IsForceSigninEnabled());
 }
 
 GURL GetReauthURLForDialog(signin_metrics::AccessPoint access_point,
