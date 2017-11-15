@@ -358,6 +358,7 @@ Still reading?
     <ignore regexp="clank/java/src/com/google/android/apps/chrome/feedback/PlayServicesFeedbackReporter.java"/>
     <ignore regexp="clank/java/src/com/google/android/apps/chrome/help/FeedbackCategoryChooserActivity.java"/>
     <ignore regexp="clank/java/src/com/google/android/apps/chrome/help/HelpAndFeedbackInternal.java"/>
+    <ignore regexp="clank/javatests/src/org/chromium/chrome/browser/customtabs/ChromeCustomTabsConnectionTest.java"/>
   </issue>
   <issue id="WrongCall" severity="ignore"/>
   <issue id="WrongConstant">
