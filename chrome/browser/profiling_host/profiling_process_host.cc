@@ -617,6 +617,12 @@ bool ProfilingProcessHost::ShouldProfileProcessType(int process_type) {
 
 bool ProfilingProcessHost::ShouldProfileNewRenderer(
     content::RenderProcessHost* renderer) const {
+  // Never profile incognito processes.
+  if (Profile::FromBrowserContext(renderer->GetBrowserContext())
+          ->GetProfileType() == Profile::INCOGNITO_PROFILE) {
+    return false;
+  }
+
   if (mode() == Mode::kAll) {
     return true;
   } else if (mode() == Mode::kRendererSampling && !profiled_renderer_) {
