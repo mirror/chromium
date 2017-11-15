@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6c0646af_6251a734",
+        "filename": "content/public/common/resource_request.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-15T08:32:38Z",
+      "side": 1,
+      "message": "Actually having this here might feel slightly weird, in my understanding //net layer might have better knowledge about the client\u0027s address space, right?  (It\u0027s fine to start with this, but wondered if we need some TODO or comment)",
+      "revId": "483c599d97e18ba9f52d2fe7aa3d2c0080fff552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "091af5c5_2761e7e8",
         "filename": "services/network/public/interfaces/cors.mojom",
         "patchSetId": 2
