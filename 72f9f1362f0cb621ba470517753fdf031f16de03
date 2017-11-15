@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "f4d5fa7e_fb0988c5",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-15T04:13:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71a3f3cb_1e61e756",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8186bf6b_35b1ae37",
         "filename": "content/browser/frame_host/navigation_controller_impl.cc",
         "patchSetId": 22
@@ -83,6 +101,24 @@
       "writtenOn": "2017-11-13T15:26:43Z",
       "side": 1,
       "message": "This and the call below correspond to history navigations. You should not have a navigation_ui_data in that case. Can you make the calls with nullptr, and DCHECK(!navigation_ui_data) before?",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c650ad3_cb5fc8aa",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 2057,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-15T04:13:38Z",
+      "side": 1,
+      "message": "hmm IIUC, the following is also a possible call order:\n\nBrowserNavigator::LoadURLInContents;\nNavigationControllerImpl::LoadURLWithParams;\nNavigationControllerImpl::LoadEntry;\nNavigationControllerImpl::NavigateToPendingEntry;\nNavigationControllerImpl::NavigateToPendingEntryInternal;\n\nThis means that when NavigatateToPendingEntryInternal gets called it will have a NavigationUIData. What am I missing? (note that we do pass nullptr for navigation_ui_data in LoadIfNecessary() which seems to be called for history navigations.)",
+      "parentUuid": "8186bf6b_35b1ae37",
       "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -124,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "2af1803b_dbb8cefb",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-15T04:13:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae60caf0_abc15a77",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "198f950f_5c86267e",
         "filename": "content/browser/frame_host/navigation_handle_impl.cc",
         "patchSetId": 22
@@ -138,6 +192,24 @@
       "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20dadb58_10743ad1",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-15T04:13:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "198f950f_5c86267e",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -158,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "841527ae_7a402d0f",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-15T04:13:38Z",
+      "side": 1,
+      "message": "Done. Thanks for the suggestion!",
+      "parentUuid": "14a40b06_32fd8c50",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e89d6ab7_75bee29c",
         "filename": "content/browser/frame_host/navigator_impl.cc",
         "patchSetId": 22
@@ -172,6 +262,24 @@
       "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c9068f_2bdee31e",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-15T04:13:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e89d6ab7_75bee29c",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -192,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "e7ad463b_d5a86a06",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-15T04:13:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c392ec3_a9c83847",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb73fc1d_9c03d2a4",
         "filename": "extensions/browser/extension_navigation_ui_data.cc",
         "patchSetId": 22
@@ -203,6 +329,24 @@
       "writtenOn": "2017-11-13T07:54:40Z",
       "side": 1,
       "message": "Curious as to what you think of this. The other constructor for this class took a NavigationHandle which meant we had access to the RenderFrameHost for that navigation. I couldn\u0027t find a way to get a RendererFrameHost from LoadURLInContents except passing the frame_node_id and then using ExtensionApiFrameIdMap::GetRenderFrameHostById which uses an unsafe method.\n\nAn alternative could be to keep ExtensionNavigationUIData null at the start and then update it when the NavigationHandle retrieves the NavigationUIData from its delegate. So in navigation_handle_impl.cc instead of checking if there is a NavigationUIData before retrieving one from the delegate we would pass one to the delegate for it to update. WDYT?",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28c4ca13_2f3b559d",
+        "filename": "extensions/browser/extension_navigation_ui_data.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-15T04:13:38Z",
+      "side": 1,
+      "message": "any thoughts on this?",
+      "parentUuid": "bb73fc1d_9c03d2a4",
       "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
