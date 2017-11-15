@@ -569,12 +569,22 @@ Console.ConsoleView = class extends UI.VBox {
 
     var lastMessage = this._visibleViewMessages.peekLast();
     if (viewMessage.consoleMessage().type === ConsoleModel.ConsoleMessage.MessageType.EndGroup) {
-      if (lastMessage && !this._currentGroup.messagesHidden())
-        lastMessage.incrementCloseGroupDecorationCount();
-      this._currentGroup = this._currentGroup.parentGroup() || this._currentGroup;
+      if (lastMessage) {
+        if (!this._currentGroup.childMessageCount) {
+          if (this._currentGroup.titleMessage === lastMessage && this._filter.hasTextInput())
+            this._visibleViewMessages.pop();
+          if (this._currentGroup.parentGroup && this._currentGroup.parentGroup.childMessageCount)
+            this._currentGroup.parentGroup.childMessageCount--;
+        } else if (!this._currentGroup.messagesHidden) {
+          lastMessage.incrementCloseGroupDecorationCount();
+        }
+      }
+      this._currentGroup = this._currentGroup.parentGroup || this._currentGroup;
       return;
     }
-    if (!this._currentGroup.messagesHidden()) {
+
+    this._currentGroup.childMessageCount++;
+    if (!this._currentGroup.messagesHidden) {
       var originatingMessage = viewMessage.consoleMessage().originatingMessage();
       if (lastMessage && originatingMessage && lastMessage.consoleMessage() === originatingMessage)
         lastMessage.toMessageElement().classList.add('console-adjacent-user-command-result');
@@ -598,7 +608,7 @@ Console.ConsoleView = class extends UI.VBox {
    * @return {!Console.ConsoleViewMessage}
    */
   _createViewMessage(message) {
-    var nestingLevel = this._currentGroup.nestingLevel();
+    var nestingLevel = this._currentGroup.nestingLevel;
     switch (message.type) {
       case ConsoleModel.ConsoleMessage.MessageType.Command:
         return new Console.ConsoleCommand(message, this._linkifier, this._badgePool, nestingLevel);
@@ -755,6 +765,7 @@ Console.ConsoleView = class extends UI.VBox {
   _updateMessageList() {
     this._topGroup = Console.ConsoleGroup.createTopGroup();
     this._currentGroup = this._topGroup;
+    this._currentGroup.childMessageCount = 0;
     this._regexMatchRanges = [];
     this._hiddenByFilterCount = 0;
     for (var i = 0; i < this._visibleViewMessages.length; ++i) {
@@ -1228,6 +1239,13 @@ Console.ConsoleViewFilter = class {
     return Common.settings.createSetting('messageLevelFilters', Console.ConsoleFilter.defaultLevelsFilterValue());
   }
 
+  /**
+   * @return {boolean}
+   */
+  hasTextInput() {
+    return this._textFilterUI.value().length > 0;
+  }
+
   _updateCurrentFilter() {
     var parsedFilters = this._filterParser.parse(this._textFilterUI.value());
 
@@ -1454,10 +1472,12 @@ Console.ConsoleGroup = class {
    * @param {?Console.ConsoleViewMessage} groupMessage
    */
   constructor(parentGroup, groupMessage) {
-    this._parentGroup = parentGroup;
-    this._nestingLevel = parentGroup ? parentGroup.nestingLevel() + 1 : 0;
-    this._messagesHidden =
-        groupMessage && groupMessage.collapsed() || this._parentGroup && this._parentGroup.messagesHidden();
+    this.parentGroup = parentGroup;
+    this.nestingLevel = parentGroup ? parentGroup.nestingLevel + 1 : 0;
+    this.messagesHidden =
+        groupMessage && groupMessage.collapsed() || this.parentGroup && this.parentGroup.messagesHidden;
+    this.titleMessage = groupMessage;
+    this.childMessageCount = 0;
   }
 
   /**
@@ -1465,27 +1485,6 @@ Console.ConsoleGroup = class {
    */
   static createTopGroup() {
     return new Console.ConsoleGroup(null, null);
-  }
-
-  /**
-   * @return {boolean}
-   */
-  messagesHidden() {
-    return this._messagesHidden;
-  }
-
-  /**
-   * @return {number}
-   */
-  nestingLevel() {
-    return this._nestingLevel;
-  }
-
-  /**
-   * @return {?Console.ConsoleGroup}
-   */
-  parentGroup() {
-    return this._parentGroup;
   }
 };
 
