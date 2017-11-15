@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "8c8e48ec_081b68d5",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-15T06:45:02Z",
+      "side": 1,
+      "message": "Should this be uint64? side_data_blob_size seems to be uint64. Hm, actually should the same be done for space_required..?",
+      "revId": "9df8f4097cca236df02bec94522c94b40816b61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc0be8e_20585b21",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-15T06:45:02Z",
+      "side": 1,
+      "message": "Could we use base/numbers helpers to check overflow?",
+      "revId": "9df8f4097cca236df02bec94522c94b40816b61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3cae282_82fe1d3b",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-15T06:45:02Z",
+      "side": 1,
+      "message": "Please check overflow here too.",
+      "revId": "9df8f4097cca236df02bec94522c94b40816b61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d7a80f_d7811c39",
+        "filename": "content/common/service_worker/service_worker_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-15T06:45:02Z",
+      "side": 1,
+      "message": "Can you add a brief comment about these fields? (E.g. when they\u0027re used for what)",
+      "revId": "9df8f4097cca236df02bec94522c94b40816b61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "127aeaf6_3a2afc8a",
         "filename": "content/common/service_worker/service_worker_types.h",
         "patchSetId": 2
