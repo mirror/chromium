@@ -247,6 +247,12 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   }
   void SetPreAutoManageWindowBounds(const gfx::Rect& bounds);
 
+  // Gets/Sets the property that is used on window added to workspace event.
+  const gfx::Rect* pre_added_to_workspace_window_bounds() const {
+    return pre_added_to_workspace_window_bounds_.get();
+  }
+  void SetPreAddedToWorkspaceWindowBounds(const gfx::Rect& bounds);
+
   // Layout related properties
 
   void AddObserver(WindowStateObserver* observer);
@@ -401,6 +407,12 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   // auto window position manager changed the window bounds, so that it can get
   // restored when only this one window gets shown.
   std::unique_ptr<gfx::Rect> pre_auto_manage_window_bounds_;
+
+  // A property which resets when bounds is changed by user and sets when it is
+  // nullptr and window is added to the workspace. It is used for window moved
+  // between displays could restore its bounds if it hasn't been explicitly
+  // changed by user.
+  std::unique_ptr<gfx::Rect> pre_added_to_workspace_window_bounds_;
 
   base::ObserverList<WindowStateObserver> observer_list_;
 
