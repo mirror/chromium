@@ -16,6 +16,24 @@
       "revId": "99fe8a07570e5078fa75992137dbae542556ffa8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e2032e_6a35d420",
+        "filename": "ash/mus/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-15T22:11:23Z",
+      "side": 1,
+      "message": "Agreed. I plan on getting rid of ash/mus entirely next.",
+      "parentUuid": "906443f6_fa47549c",
+      "revId": "99fe8a07570e5078fa75992137dbae542556ffa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
