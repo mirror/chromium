@@ -10,6 +10,8 @@
 #include <string>
 #include <vector>
 
+#include "base/files/file.h"
+#include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "build/build_config.h"
@@ -50,10 +52,18 @@ class CONTENT_EXPORT ResourceRequestBody
 #endif
 
   void AppendBytes(const char* bytes, int bytes_len);
+  // TODO(mmenke): Remove this in favor of AppendFile.
   void AppendFileRange(const base::FilePath& file_path,
                        uint64_t offset,
                        uint64_t length,
                        const base::Time& expected_modification_time);
+  // Appends the specified part of |file|. Provided range must be valid, and may
+  // not extend beyond the end of the file.
+  void AppendRawFileRange(base::File file,
+                          const base::FilePath& file_path,
+                          uint64_t offset,
+                          uint64_t length,
+                          const base::Time& expected_modification_time);
 
   void AppendBlob(const std::string& uuid);
   void AppendFileSystemFileRange(const GURL& url,
