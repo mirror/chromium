@@ -38,6 +38,8 @@ source_set("filters") {
     "decrypting_video_decoder.h",
     "file_data_source.cc",
     "file_data_source.h",
+    "frame_buffer_pool.cc",
+    "frame_buffer_pool.h",
     "frame_processor.cc",
     "frame_processor.h",
     "gpu_video_decoder.cc",
