@@ -163,6 +163,24 @@
     },
     {
       "key": {
+        "uuid": "19ee25cb_c70c5911",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-15T00:30:34Z",
+      "side": 1,
+      "message": "SetDisplayForcedOff(false) doesn\u0027t cover the case of user-inactivity screen turned off. So I suspect your issue will still happen after this change for user-inactivity screen turned off and then stylus ejected.\n\nHow about:\npowerd\u0027s SetDisplayForcedOff has another parameter (bool stylus_removed). If powerd saw this parameter is true, do not set display off within 1500 ms (same for stylus removed user activity for resuming brightness). Then probably powerd provides another API for note taking code to turn on display (either through SetDisplayForcedOff or resume brightness).",
+      "parentUuid": "a73471bc_0a97f9ec",
+      "revId": "42a9100e2fa3d0be5ad67c2eeb36c9d89859448c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97b516bc_91ad8bb6",
         "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
         "patchSetId": 5
