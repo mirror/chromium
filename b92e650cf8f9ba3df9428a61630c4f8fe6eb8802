@@ -1,0 +1,220 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2acc2af_21db1fe5",
+        "filename": "chrome/browser/resources/print_preview/new/compiled_resources2.gyp",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T02:39:58Z",
+      "side": 1,
+      "message": "Indent off.",
+      "revId": "b92e650cf8f9ba3df9428a61630c4f8fe6eb8802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8868f488_73d35ee6",
+        "filename": "chrome/browser/resources/print_preview/new/compiled_resources2.gyp",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T02:39:58Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "b92e650cf8f9ba3df9428a61630c4f8fe6eb8802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce58f76b_c29e146f",
+        "filename": "chrome/browser/resources/print_preview/new/input_css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T02:39:58Z",
+      "side": 1,
+      "message": "Nit\n\ninput:invalid,\n:host .input-settings-section input.invalid {\n   @apply --invalid-input-style;\n}",
+      "revId": "b92e650cf8f9ba3df9428a61630c4f8fe6eb8802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9004c4_1e54c3c1",
+        "filename": "chrome/browser/resources/print_preview/new/number_settings_section.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T02:39:58Z",
+      "side": 1,
+      "message": "Can these be private now?",
+      "revId": "b92e650cf8f9ba3df9428a61630c4f8fe6eb8802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c3d554_2f30be00",
+        "filename": "chrome/browser/resources/print_preview/new/number_settings_section.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T02:39:58Z",
+      "side": 1,
+      "message": "I don\u0027t think using this.set() helper is necessary for top-level properties (as opposed to modifying this.foo.bar.baz). Can you try directly assigning as follows (here and elsewhere in this file)\nthis.inputString \u003d this.defaultValue;\n\nand see if the bindings are still triggered?",
+      "revId": "b92e650cf8f9ba3df9428a61630c4f8fe6eb8802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3836da73_834980df",
+        "filename": "chrome/browser/resources/print_preview/new/other_options_settings.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T02:39:58Z",
+      "side": 1,
+      "message": "Is this needed in addition to line 14 with the same class? (here and elsewhere in this file)",
+      "range": {
+        "startLine": 17,
+        "startChar": 19,
+        "endLine": 17,
+        "endChar": 34
+      },
+      "revId": "b92e650cf8f9ba3df9428a61630c4f8fe6eb8802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd78af9_5f2260ce",
+        "filename": "chrome/browser/resources/print_preview/new/other_options_settings.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T02:39:58Z",
+      "side": 1,
+      "message": "Indent off by 4.",
+      "revId": "b92e650cf8f9ba3df9428a61630c4f8fe6eb8802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac992f0_fa7345dc",
+        "filename": "chrome/browser/resources/print_preview/new/pages_settings.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T02:39:58Z",
+      "side": 1,
+      "message": "Are these useful only within this file? If so, can we introduce a wrapper scope (cr.define and/or cr.exportPath) to avoid making these global?",
+      "revId": "b92e650cf8f9ba3df9428a61630c4f8fe6eb8802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab44010_2aee5885",
+        "filename": "chrome/browser/resources/print_preview/new/pages_settings.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T02:39:58Z",
+      "side": 1,
+      "message": "Nit: Let\u0027s reverse the order of these conditions to avoid an unnecessary call to trim() if allSelected_ is already true.",
+      "range": {
+        "startLine": 66,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 59
+      },
+      "revId": "b92e650cf8f9ba3df9428a61630c4f8fe6eb8802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07177802_1bd01a80",
+        "filename": "chrome/browser/resources/print_preview/new/pages_settings.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T02:39:58Z",
+      "side": 1,
+      "message": "Nothing to do here: Just mentioning, I am a bit  skeptical on whether this works AND it is compliant with the spec, or just accidentally.\n\nI would expect that the 2nd parameter to Array would be treated same as when one calls Array#map/forEach(), but apparently it does not.\n\nnew Array(3).map(function() {...}); // callback never called even though the array has length of 3, because the array is considered empty.",
+      "revId": "b92e650cf8f9ba3df9428a61630c4f8fe6eb8802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb83a356_9fc4dc9f",
+        "filename": "chrome/browser/resources/print_preview/new/pages_settings.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T02:39:58Z",
+      "side": 1,
+      "message": "Instead of having computePagesToPrint_ both return the value that gets assigned to |pagesToPrint_| and directly assign a value to |errorState_|, can we update |errorState_| separately when pagesToPrint_ changes (maybe by making errorState_ a computed property)?",
+      "revId": "b92e650cf8f9ba3df9428a61630c4f8fe6eb8802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d90b3da1_ef70cd84",
+        "filename": "chrome/browser/resources/print_preview/new/pages_settings.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T02:39:58Z",
+      "side": 1,
+      "message": "Nit(optional): Use for..of for more concise syntax?\n\nfor (let range of ranges) {...}",
+      "revId": "b92e650cf8f9ba3df9428a61630c4f8fe6eb8802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

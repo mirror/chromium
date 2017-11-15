@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e68de95_11e55a3c",
+        "filename": "chrome/browser/resources/print_preview/new/number_settings_section.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T02:39:58Z",
+      "side": 0,
+      "message": "Can we remove this behavior now, or is it still being used?",
+      "range": {
+        "startLine": 8,
+        "startChar": 32,
+        "endLine": 8,
+        "endChar": 53
+      },
+      "revId": "8b55433a11a64884d40ddc8947fd93045a7aa457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
