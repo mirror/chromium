@@ -193,7 +193,7 @@ deps = {
   },
 
   'src/ios/third_party/material_components_ios/src': {
-      'url': Var('chromium_git') + '/external/github.com/material-components/material-components-ios.git' + '@' + '857c3016cdf4f765263af84f41f027f51091bbc8',
+      'url': Var('chromium_git') + '/external/github.com/material-components/material-components-ios.git' + '@' + '1be91e3c20f9817c99fe3043e95966eb0fad3148',
       'condition': 'checkout_ios',
   },
 
@@ -219,6 +219,16 @@ deps = {
 
   'src/ios/third_party/material_text_accessibility_ios/src': {
       'url': Var('chromium_git') + '/external/github.com/material-foundation/material-text-accessibility-ios.git' + '@' + '7340b22cc589101ba0b11516afe4f3a733041951',
+      'condition': 'checkout_ios',
+  },
+
+  'src/ios/third_party/motion_animator_objc/src': {
+      'url': Var('chromium_git') + '/external/github.com/material-components/motion-animator-objc.git' + '@' + '213bfb3a75018c49a223bf1269f6a48fbbfc3a12',
+      'condition': 'checkout_ios',
+  },
+
+  'src/ios/third_party/motion_interchange_objc/src': {
+      'url': Var('chromium_git') + '/external/github.com/material-components/motion-interchange-objc.git' + '@' + '02e2308e1c68cd966a91807b17bcdf57f92af401',
       'condition': 'checkout_ios',
   },
 
