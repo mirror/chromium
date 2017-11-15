@@ -94,6 +94,30 @@
       "revId": "935eb7f1e3a2df00226f7a9bd8267cbf35bda025",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4647b88e_148a022f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/BindingManagerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-15T22:04:29Z",
+      "side": 1,
+      "message": "\u003e Agreed, I saw that the first thing it does is check there\u0027s not an existing strong binding.\n\u003e \n\u003e So what exactly is this CL supposed to do? It\u0027s not clear to me that it\u0027s actually fixing anything and there are legitimate cases where it could help:\n\u003e 1. tab A launches tab B which is just a download and closes itself but tab A has a chance to stay important rather than get killed\n\u003e 2. quick back\u003c-\u003eforward not having to reload the page\n\u003e \n\u003e In other words: I\u0027m not sure it was always motivated by lack of importance but maybe it was - are you sure?\n\nAhh, archaeology. This was added in https://chromium.googlesource.com/chromium/src/+/273c0de41030ddf3def46e824edd79f3eff21c3d\n\nThe CL description ostensibly says it is for some of these cases you mention. (The only case that the CL description explicitly mentions is the open tab animation. But I think some of these things you say sound valid too.) But if you look at the bug that motivated the change, it\u0027s more like speculation at the time, and eventually it was determined test team wasn\u0027t using production samsung s3s which had a lot higher ram.\n\nHowever, a month later, the delay was removed for low end because that animation doesn\u0027t exist on low end devices, with no mention of these other cases you listed here: https://chromium.googlesource.com/chromium/src/+/206a5f3ed884fd480fde01abca12c40d7886cf58\n\nWhich means the current situation doesn\u0027t make much sense then. The only place where any of this actually matters should be low ram devices, but this is disabled there. Also non-low-end has moderate binding management which largely covers all of these cases already too, more or less. So I dunno.. I think this doesn\u0027t do much right now and should be just be removed, but I\u0027ve got no data to back that up.",
+      "parentUuid": "73424a15_a0539cc8",
+      "range": {
+        "startLine": 201,
+        "startChar": 16,
+        "endLine": 201,
+        "endChar": 50
+      },
+      "revId": "935eb7f1e3a2df00226f7a9bd8267cbf35bda025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
