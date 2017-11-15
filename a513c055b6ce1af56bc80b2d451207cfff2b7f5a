@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "01ea27f3_3ccd7767",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/delete-temp-file.cgi",
+        "patchSetId": 66
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T23:26:37Z",
+      "side": 1,
+      "message": "Were and still are. Apologies for tense confusions. Added explanation to the comment.",
+      "parentUuid": "d245f5aa_f4fd74fb",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ac0ee0c_b3a9a2bd",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 66
@@ -532,6 +550,24 @@
     },
     {
       "key": {
+        "uuid": "981b1495_20984e25",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 66
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T23:26:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73197765_b9f20ee1",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57a54573_e09ece4b",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
         "patchSetId": 66
@@ -579,6 +615,24 @@
       "side": 1,
       "message": "It seems to me that you can have the same check in here.\n\nI don\u0027t understand the last sentence in the comment above -- if ACP is switched to UTF8, doesn\u0027t that mean that the two lines will be identical?",
       "parentUuid": "be165f8b_5050eda7",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f59e5491_f0a5149b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 66
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T23:26:37Z",
+      "side": 1,
+      "message": "The problem is that the very last step (encoding of output of Perl script itself, specifically on Windows where the web server didn\u0027t inherit POSIX-style locale environment variables from the caller) can\u0027t be verified here, and that\u0027s the part that broke before.\n\nSwitching ACP to UTF-8 for our tests unconditionally is not viable because regular users never use this setting and it may break other things. AFAIK it also can\u0027t be done for only a particular process ID, so we can\u0027t realistically do it for some tests but not the rest of them.",
+      "parentUuid": "cc31af29_09bf9028",
       "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -635,6 +689,24 @@
       "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f17ff13_5bd11165",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 66
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T23:26:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "617068f4_0a669633",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
