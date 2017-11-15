@@ -1,0 +1,54 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+{% from 'templates/macros.tmpl' import source_files_for_generated_file %}
+{{source_files_for_generated_file(template_file, input_files)}}
+// clang-format off
+
+#ifndef CSSPropertyInline_h
+#define CSSPropertyInline_h
+
+#include "core/css/properties/CSSProperty.h"
+
+#include "core/css/properties/longhands/ApplyAtRule.h"
+#include "core/css/properties/longhands/Variable.h"
+{% for property_class in longhand_property_classnames %}
+  {% if property_class != "Longhand" %}
+#include "core/css/properties/longhands/{{property_class}}.h"
+  {% endif %}
+{% endfor %}
+{% for property_class in shorthand_property_classnames %}
+#include "core/css/properties/shorthands/{{property_class}}.h"
+{% endfor %}
+
+namespace blink {
+namespace {
+
+static constexpr ApplyAtRule property_csspropertyapplyatrule(CSSPropertyApplyAtRule);
+static constexpr Variable property_csspropertyvariable(CSSPropertyVariable);
+{% for _, property_id, classname, superclass in property_classes_by_property_id %}
+  {% if superclass != None %}
+static constexpr CSS{{superclass}}::{{classname}} property_{{property_id.lower()}}({{property_id}});
+  {% else %}
+static constexpr {{classname}} property_{{property_id.lower()}}({{property_id}});
+  {% endif %}
+{% endfor %}
+
+} // namespace
+
+constexpr const CSSProperty& GetInlineCSSPropertyApplyAtRule() {
+  return property_csspropertyapplyatrule;
+}
+constexpr const CSSProperty& GetInlineCSSPropertyVariable() {
+  return property_csspropertyvariable;
+}
+{% for property_class_data in property_classes_by_property_id %}
+constexpr const CSSProperty& GetInline{{property_class_data.property_id}}() {
+  return property_{{property_class_data.property_id.lower()}};
+}
+{% endfor %}
+
+}  // namespace blink
+
+#endif  // CSSPropertyInline_h

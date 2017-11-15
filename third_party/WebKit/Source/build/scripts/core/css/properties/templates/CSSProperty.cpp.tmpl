@@ -7,30 +7,11 @@
 // clang-format off
 
 #include "core/css/properties/CSSProperty.h"
-
-#include "core/css/properties/longhands/ApplyAtRule.h"
-#include "core/css/properties/longhands/Variable.h"
-{% for property_class in longhand_property_classnames %}
-  {% if property_class != "Longhand" %}
-#include "core/css/properties/longhands/{{property_class}}.h"
-  {% endif %}
-{% endfor %}
-{% for property_class in shorthand_property_classnames %}
-#include "core/css/properties/shorthands/{{property_class}}.h"
-{% endfor %}
+#include "core/css/properties/CSSPropertyInline.h"
 
 namespace blink {
-namespace {
 
-static constexpr ApplyAtRule property_csspropertyapplyatrule(CSSPropertyApplyAtRule);
-static constexpr Variable property_csspropertyvariable(CSSPropertyVariable);
-{% for _, property_id, classname, superclass in property_classes_by_property_id %}
-  {% if superclass != None %}
-static constexpr CSS{{superclass}}::{{classname}} property_{{property_id.lower()}}({{property_id}});
-  {% else %}
-static constexpr {{classname}} property_{{property_id.lower()}}({{property_id}});
-  {% endif %}
-{% endfor %}
+namespace {
 
 const CSSProperty& GetProperty(CSSPropertyID id) {
   static constexpr const CSSProperty* const property_classes[] = {

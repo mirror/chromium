@@ -26,6 +26,7 @@ class CSSPropertyWriter(json5_generator.Writer):
         self._outputs = {
             'CSSProperty.h': self.generate_property_header,
             'CSSProperty.cpp': self.generate_property_implementation,
+            'CSSPropertyInline.h': self.generate_property_inline,
         }
 
         self._css_properties = css_properties.CSSProperties(json5_file_paths)
@@ -94,10 +95,18 @@ class CSSPropertyWriter(json5_generator.Writer):
     def generate_property_implementation(self):
         return {
             'input_files': self._input_files,
+            'property_classes_by_property_id': self._property_classes_by_id,
+            'last_property_id': self._css_properties.last_property_id
+        }
+
+    @template_expander.use_jinja(
+        'core/css/properties/templates/CSSPropertyInline.h.tmpl')
+    def generate_property_inline(self):
+        return {
+            'input_files': self._input_files,
             'longhand_property_classnames': self._longhand_property_classes,
             'shorthand_property_classnames': self._shorthand_property_classes,
             'property_classes_by_property_id': self._property_classes_by_id,
-            'last_property_id': self._css_properties.last_property_id
         }
 
 
