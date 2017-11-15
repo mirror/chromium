@@ -26,12 +26,12 @@
 #include "ui/views/accessibility/ax_aura_obj_wrapper.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
+#include "ui/wm/core/window_util.h"
 
 #if defined(OS_CHROMEOS)
-#include "ash/shell.h"           // nogncheck
-#include "ash/wm/window_util.h"  // nogncheck
+#include "ash/shell.h"  // nogncheck
 #include "components/session_manager/core/session_manager.h"
-#endif
+#endif  // OS_CHROMEOS
 
 using content::BrowserContext;
 using extensions::AutomationEventRouter;
@@ -66,7 +66,7 @@ BrowserContext* GetDefaultEventContext() {
           profiles::GetDefaultProfileDir(profile_manager->user_data_dir());
       return profile_manager->GetProfileByPath(defult_profile_dir);
   }
-#endif
+#endif  // OS_CHROMEOS
 
   return ProfileManager::GetLastUsedProfile();
 }
@@ -85,14 +85,14 @@ void AutomationManagerAura::Enable(BrowserContext* context) {
   SendEvent(context, current_tree_->GetRoot(), ui::AX_EVENT_LOAD_COMPLETE);
   views::AXAuraObjCache::GetInstance()->SetDelegate(this);
 
-#if defined(OS_CHROMEOS)
-  aura::Window* active_window = ash::wm::GetActiveWindow();
-  if (active_window) {
-    views::AXAuraObjWrapper* focus =
-        views::AXAuraObjCache::GetInstance()->GetOrCreate(active_window);
-    SendEvent(context, focus, ui::AX_EVENT_CHILDREN_CHANGED);
-  }
-#endif
+  if (!widget_ || widget_->IsClosed())
+    return;
+  aura::Window* window = widget_->GetNativeView();
+  if (!window || !wm::IsActiveWindow(window))
+    return;
+  views::AXAuraObjWrapper* focus =
+      views::AXAuraObjCache::GetInstance()->GetOrCreate(window);
+  SendEvent(context, focus, ui::AX_EVENT_CHILDREN_CHANGED);
 }
 
 void AutomationManagerAura::Disable() {
@@ -103,6 +103,7 @@ void AutomationManagerAura::Disable() {
 void AutomationManagerAura::HandleEvent(BrowserContext* context,
                                         views::View* view,
                                         ui::AXEvent event_type) {
+  widget_ = view->GetWidget();
   if (!enabled_)
     return;
 
@@ -271,5 +272,5 @@ void AutomationManagerAura::PerformHitTest(
       views::AXAuraObjCache::GetInstance()->GetOrCreate(window);
   if (window_wrapper)
     SendEvent(nullptr, window_wrapper, action.hit_test_event_to_fire);
-#endif
+#endif  // OS_CHROMEOS
 }

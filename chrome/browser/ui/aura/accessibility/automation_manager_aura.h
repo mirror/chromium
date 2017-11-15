@@ -30,6 +30,7 @@ class BrowserContext;
 namespace views {
 class AXAuraObjWrapper;
 class View;
+class Widget;
 }  // namespace views
 
 using AuraAXTreeSerializer =
@@ -99,6 +100,9 @@ class AutomationManagerAura : public ui::AXHostDelegate,
   bool processing_events_;
 
   std::vector<std::pair<views::AXAuraObjWrapper*, ui::AXEvent>> pending_events_;
+
+  // Caches the widget that handles the AX event.
+  views::Widget* widget_;  // Not owned.
 
   DISALLOW_COPY_AND_ASSIGN(AutomationManagerAura);
 };
