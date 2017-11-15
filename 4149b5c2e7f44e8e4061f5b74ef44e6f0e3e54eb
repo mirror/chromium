@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e61010d_041d9cdc",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-15T21:04:24Z",
+      "side": 0,
+      "message": "I think this was supposed to be !\u003d here: reset the stream if it is active (not if it is not).",
+      "range": {
+        "startLine": 869,
+        "startChar": 38,
+        "endLine": 869,
+        "endChar": 40
+      },
+      "revId": "4149b5c2e7f44e8e4061f5b74ef44e6f0e3e54eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "364d07e0_5a52d05a",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-15T21:04:24Z",
+      "side": 0,
+      "message": "This call should be unnecessary: ResetStream() calls ResetStreamIterator(), which calls ResetStreamIterator(), which calls unclaimed_pushed_streams_.erase().  In fact, the DCHECK in erase fails if I do not remove this line.",
+      "range": {
+        "startLine": 872,
+        "startChar": 0,
+        "endLine": 872,
+        "endChar": 48
+      },
+      "revId": "4149b5c2e7f44e8e4061f5b74ef44e6f0e3e54eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
