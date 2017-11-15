@@ -51,6 +51,7 @@
 #include "chrome/browser/ssl/ssl_blocking_page.h"
 #include "chrome/browser/ssl/ssl_error_assistant.pb.h"
 #include "chrome/browser/ssl/ssl_error_handler.h"
+#include "chrome/browser/ssl/ssl_error_tab_helper.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -865,7 +866,33 @@ class SSLUITestHSTS : public SSLUITest {
 class SSLUITestCommittedInterstitials : public SSLUITest {
  protected:
   void SetUpCommandLine(base::CommandLine* command_line) override {
+    SSLUITest::SetUpCommandLine(command_line);
     command_line->AppendSwitch(switches::kCommittedInterstitials);
+  }
+
+  // SSLUITest:
+  void SendInterstitialCommand(WebContents* tab, std::string command) {
+    security_interstitials::SecurityInterstitialPage* delegate =
+        SSLErrorTabHelper::FromWebContents(tab)
+            ->GetBlockingPageForCurrentlyCommittedNavigationForTesting();
+    delegate->CommandReceived(command);
+  }
+
+  // SSLUITest:
+  void ProceedThroughInterstitial(WebContents* tab) {
+    SSLErrorTabHelper* helper = SSLErrorTabHelper::FromWebContents(tab);
+    ASSERT_TRUE(helper);
+    security_interstitials::SecurityInterstitialPage* delegate =
+        helper->GetBlockingPageForCurrentlyCommittedNavigationForTesting();
+    ASSERT_TRUE(delegate);
+    security_interstitials::SecurityInterstitialControllerClient* client =
+        GetControllerClientFromInterstitialPage(
+            static_cast<SSLBlockingPage*>(delegate));
+    content::WindowedNotificationObserver observer(
+        content::NOTIFICATION_LOAD_STOP,
+        content::Source<NavigationController>(&tab->GetController()));
+    client->Proceed();
+    observer.Wait();
   }
 };
 
@@ -1189,6 +1216,29 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSExpiredCertAndProceed) {
       tab, net::CERT_STATUS_DATE_INVALID, AuthState::NONE);
 }
 
+// Visit a page with https error and proceed:
+// TODO(crbug.com/752372): Unify this test with the non-committed version.
+IN_PROC_BROWSER_TEST_F(SSLUITestCommittedInterstitials,
+                       TestHTTPSExpiredCertAndProceed) {
+  if (!content::IsBrowserSideNavigationEnabled())
+    return;
+
+  ASSERT_TRUE(https_server_expired_.Start());
+
+  ui_test_utils::NavigateToURL(
+      browser(), https_server_expired_.GetURL("/ssl/google.html"));
+
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  CheckAuthenticationBrokenState(tab, net::CERT_STATUS_DATE_INVALID,
+                                 AuthState::SHOWING_ERROR);
+
+  ProceedThroughInterstitial(tab);
+  CheckAuthenticationBrokenState(tab, net::CERT_STATUS_DATE_INVALID,
+                                 AuthState::NONE);
+  EXPECT_EQ(https_server_expired_.GetURL("/ssl/google.html"),
+            tab->GetVisibleURL());
+}
+
 // Visits a page with https error and don't proceed (and ensure we can still
 // navigate at that point):
 IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialCrossSiteNavigation) {
@@ -1369,6 +1419,40 @@ IN_PROC_BROWSER_TEST_F(SSLUITest,
   // We should be back at the original good page.
   EXPECT_FALSE(browser()->tab_strip_model()->GetActiveWebContents()->
                    GetInterstitialPage());
+  CheckUnauthenticatedState(tab, AuthState::NONE);
+}
+
+// Visits a page with https error and then goes back using the DONT_PROCEED
+// interstitial command.
+IN_PROC_BROWSER_TEST_F(SSLUITestCommittedInterstitials,
+                       TestHTTPSExpiredCertGoBackUsingCommand) {
+  if (!content::IsBrowserSideNavigationEnabled())
+    return;
+
+  ASSERT_TRUE(embedded_test_server()->Start());
+  ASSERT_TRUE(https_server_expired_.Start());
+
+  // First navigate to an HTTP page.
+  ui_test_utils::NavigateToURL(
+      browser(), embedded_test_server()->GetURL("/ssl/google.html"));
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  NavigationEntry* entry = tab->GetController().GetActiveEntry();
+  ASSERT_TRUE(entry);
+
+  // Now go to a bad HTTPS page that shows an interstitial.
+  ui_test_utils::NavigateToURL(
+      browser(), https_server_expired_.GetURL("/ssl/google.html"));
+  CheckAuthenticationBrokenState(tab, net::CERT_STATUS_DATE_INVALID,
+                                 AuthState::SHOWING_ERROR);
+
+  content::WindowedNotificationObserver observer(
+      content::NOTIFICATION_LOAD_STOP,
+      content::Source<NavigationController>(&tab->GetController()));
+  SendInterstitialCommand(
+      tab, base::IntToString(security_interstitials::CMD_DONT_PROCEED));
+  observer.Wait();
+
+  // We should be back at the original good page.
   CheckUnauthenticatedState(tab, AuthState::NONE);
 }
 
