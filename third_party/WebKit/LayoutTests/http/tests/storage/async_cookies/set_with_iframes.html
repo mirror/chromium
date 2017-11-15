@@ -1,0 +1,55 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Async Cookies: set from multiple frames</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<body>
+<script>
+'use strict';
+
+// Adds an iframe to the document and returns a promise that resolves to the
+// iframe when it finishes loading. The caller is responsible for removing the
+// iframe later if needed.
+function with_iframe(url) {
+  return new Promise(function(resolve) {
+      var frame = document.createElement('iframe');
+      frame.className = 'test-iframe';
+      frame.src = url;
+      frame.onload = function() { resolve(frame); };
+      document.body.appendChild(frame);
+    });
+}
+
+// Workaround because add_cleanup doesn't support async functions yet.
+// See https://github.com/w3c/web-platform-tests/issues/6075
+async function async_cleanup(cleanup_function) {
+  try {
+    await cleanup_function();
+  } catch (e) {
+    // Errors in cleanup functions shouldn't result in test failures.
+  }
+}
+
+const frame_src = 'resources/blank.html';
+const frame_count = 2;
+
+promise_test(async t => {
+  let frames = [];
+  for (let i = 0; i < frame_count; ++i)
+    frames.push(await with_iframe(frame_src));
+
+  let set_promises = [];
+  for (let i = frame_count-1; i >= 0; --i) {
+    set_promises.push(frames[i].contentWindow.cookieStore.set('cookie-name', 'old-value-' + i));
+  }
+  for (let i = 0; i < frame_count; ++i) {
+    set_promises.push(frames[i].contentWindow.cookieStore.set('cookie-name', 'value-' + i));
+  }
+  await Promise.all(set_promises);
+
+  const cookie = await cookieStore.get('cookie-name');
+  assert_equals(cookie.value, 'value-' + (frame_count - 1));
+
+  await async_cleanup(() => frames[0].contentWindow.cookieStore.delete('cookie-name'));
+}, 'last set wins');
+</script>
