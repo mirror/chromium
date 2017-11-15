@@ -52,6 +52,24 @@
       "revId": "3633209e1d0e1e725d48f549512592c76c27276d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa8f135b_69f9c40e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T17:05:12Z",
+      "side": 1,
+      "message": "Moved to WPT, added .tentative.",
+      "parentUuid": "c9af925e_2553a382",
+      "revId": "3633209e1d0e1e725d48f549512592c76c27276d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
