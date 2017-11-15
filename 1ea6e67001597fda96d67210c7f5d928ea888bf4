@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80b8d85c_99a1ddf4",
+        "filename": "chrome/browser/devtools/devtools_file_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-15T19:53:01Z",
+      "side": 1,
+      "message": "missing ref",
+      "revId": "1ea6e67001597fda96d67210c7f5d928ea888bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cc5dc80_557fa2f9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/PersistenceActions.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-15T19:53:01Z",
+      "side": 1,
+      "message": "No capitalization.",
+      "revId": "1ea6e67001597fda96d67210c7f5d928ea888bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a8e6386_92cb0434",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-15T19:53:01Z",
+      "side": 1,
+      "message": "FileSystemWorkspaceBinding.completeURL(project, path), and then it most certainly starts with file:///",
+      "revId": "1ea6e67001597fda96d67210c7f5d928ea888bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1640587e_1cb7a8de",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-15T19:53:01Z",
+      "side": 1,
+      "message": "I think we should do window-style slash converting along the way somewhere, shouldn\u0027t we?",
+      "revId": "1ea6e67001597fda96d67210c7f5d928ea888bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
