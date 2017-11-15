@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "fed4ff62_921176ca",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-15T18:30:14Z",
+      "side": 1,
+      "message": "Can you do that in caller side? I don\u0027t think this actually verify anything on this side. (you can call this method from arbitrary place, using\nActivateWnidow(window_drag_controller_-\u003eitem())",
+      "parentUuid": "833d765c_a2cae09d",
+      "revId": "df890b938197e5e4af26205a59fdab97504a8dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "653a45f7_7619120d",
         "filename": "ash/wm/overview/window_selector.cc",
         "patchSetId": 3
