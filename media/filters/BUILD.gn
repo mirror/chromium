@@ -189,7 +189,7 @@ source_set("filters") {
     deps += [ "//media/base/android" ]
   }
 
-  if (current_cpu != "arm" && is_chromeos) {
+  if (current_cpu != "arm" && is_linux) {
     sources += [
       "h264_bitstream_buffer.cc",
       "h264_bitstream_buffer.h",
