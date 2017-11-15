@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "82f90fd9_e1a2888d",
+        "filename": "components/omnibox/browser/autocomplete_result.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-15T02:04:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fd8dae1_3362a8ad",
+      "revId": "85cd8294de19498ddf0fc75b6a457476af39d68d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "906a5b45_a78201e0",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_mediator.mm",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-14T23:50:12Z",
       "side": 1,
       "message": "I don\u0027t understand what\u0027s going on in this function at all.  Why do we have to copy result to result_copy before using it below?",
+      "revId": "85cd8294de19498ddf0fc75b6a457476af39d68d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15ce55a2_1a92e43b",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_mediator.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-15T02:04:55Z",
+      "side": 1,
+      "message": "I only ran into this function after uploading and attempting a dry run. I guess they\u0027re just saying, \"_currentResult \u003d result;\" except that CopyOldMatches() likes to set \u0027from_previous\u0027 when copying.\n\nSince CopyOldMatches() now swaps in results when the destination is empty, we have to pass in a non-const copy. So we make a copy of |result|, so that it can be swapped into |_currentResult|.\n\nIt should be the same speed as before, since it\u0027s still just making a copy. Would a comment help explain the apparently \"unnecessary\" copy? (not that the previous version was terribly lucid)",
+      "parentUuid": "906a5b45_a78201e0",
       "revId": "85cd8294de19498ddf0fc75b6a457476af39d68d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
