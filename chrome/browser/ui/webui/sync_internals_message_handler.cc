@@ -31,6 +31,10 @@
 #include "components/sync/user_events/user_event_service.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_ui.h"
+#include "content/public/common/service_manager_connection.h"
+#include "services/identity/public/interfaces/account.mojom.h"
+#include "services/identity/public/interfaces/constants.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 using base::DictionaryValue;
 using base::ListValue;
@@ -58,11 +62,12 @@ int64_t StringAtIndexToInt64(const base::ListValue* list, int index) {
 
 SyncInternalsMessageHandler::SyncInternalsMessageHandler()
     : SyncInternalsMessageHandler(base::BindRepeating(
-          &syncer::sync_ui_util::ConstructAboutInformation_DEPRECATED)) {}
+          &syncer::sync_ui_util::ConstructAboutInformation)) {}
 
 SyncInternalsMessageHandler::SyncInternalsMessageHandler(
     AboutSyncDataDelegate about_sync_data_delegate)
     : about_sync_data_delegate_(std::move(about_sync_data_delegate)),
+      waiting_for_account_info_(false),
       weak_ptr_factory_(this) {}
 
 SyncInternalsMessageHandler::~SyncInternalsMessageHandler() {
@@ -290,8 +295,35 @@ void SyncInternalsMessageHandler::HandleJsEvent(
 }
 
 void SyncInternalsMessageHandler::SendAboutInfo() {
-  std::unique_ptr<DictionaryValue> value =
-      about_sync_data_delegate_.Run(GetSyncService(), chrome::GetChannel());
+  if (!GetIdentityManager()) {
+    CompleteSendAboutInfo(AccountInfo());
+    return;
+  }
+
+  waiting_for_account_info_ = true;
+  GetIdentityManager()->GetPrimaryAccountInfo(
+      base::BindOnce(&SyncInternalsMessageHandler::ReceivedPrimaryAccountInfo,
+                     base::Unretained(this)));
+}
+
+void SyncInternalsMessageHandler::ReceivedPrimaryAccountInfo(
+    const base::Optional<AccountInfo>& account_info,
+    const identity::AccountState& account_state) {
+  waiting_for_account_info_ = false;
+  CompleteSendAboutInfo(account_info.value_or(AccountInfo()));
+}
+
+void SyncInternalsMessageHandler::OnIdentityManagerError() {
+  if (!waiting_for_account_info_)
+    return;
+  waiting_for_account_info_ = false;
+  CompleteSendAboutInfo(AccountInfo());
+}
+
+void SyncInternalsMessageHandler::CompleteSendAboutInfo(
+    const AccountInfo& account_info) {
+  std::unique_ptr<DictionaryValue> value = about_sync_data_delegate_.Run(
+      GetSyncService(), account_info, chrome::GetChannel());
   DispatchEvent(syncer::sync_ui_util::kOnAboutInfoUpdated, *value);
 }
 
@@ -326,4 +358,23 @@ void SyncInternalsMessageHandler::UnregisterModelNotifications() {
     service->RemoveTypeDebugInfoObserver(this);
     is_registered_for_counters_ = false;
   }
+}
+
+identity::mojom::IdentityManager*
+SyncInternalsMessageHandler::GetIdentityManager() {
+  if (identity_manager_.encountered_error())
+    return nullptr;
+
+  if (!identity_manager_.is_bound()) {
+    service_manager::Connector* connector =
+        content::BrowserContext::GetConnectorFor(
+            Profile::FromWebUI(web_ui())->GetOriginalProfile());
+    connector->BindInterface(::identity::mojom::kServiceName,
+                             mojo::MakeRequest(&identity_manager_));
+    identity_manager_.set_connection_error_handler(
+        base::Bind(&SyncInternalsMessageHandler::OnIdentityManagerError,
+                   base::Unretained(this)));
+  }
+
+  return identity_manager_.get();
 }
