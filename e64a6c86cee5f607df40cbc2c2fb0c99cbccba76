@@ -46,6 +46,30 @@
       "revId": "e64a6c86cee5f607df40cbc2c2fb0c99cbccba76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c435687c_82ce1324",
+        "filename": "build/android/lint/suppressions.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-15T01:38:30Z",
+      "side": 1,
+      "message": "Yeah. I\u0027m surprised that you are the first one bit by this. Guess there are few tests in downstream.",
+      "parentUuid": "1e064880_19985b6b",
+      "range": {
+        "startLine": 361,
+        "startChar": 4,
+        "endLine": 361,
+        "endChar": 117
+      },
+      "revId": "e64a6c86cee5f607df40cbc2c2fb0c99cbccba76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
