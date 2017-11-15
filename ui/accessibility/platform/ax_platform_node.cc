@@ -16,6 +16,24 @@ namespace ui {
 base::LazyInstance<base::ObserverList<AXModeObserver>>::Leaky
     AXPlatformNode::ax_mode_observers_ = LAZY_INSTANCE_INITIALIZER;
 
+// static
+base::LazyInstance<AXPlatformNode::NativeWindowHandlerCallback>::Leaky
+    AXPlatformNode::native_window_handler_ = LAZY_INSTANCE_INITIALIZER;
+
+// static
+AXPlatformNode* AXPlatformNode::FromNativeWindow(
+    gfx::NativeWindow native_window) {
+  if (native_window_handler_.Get())
+    return native_window_handler_.Get().Run(native_window);
+  return nullptr;
+}
+
+// static
+void AXPlatformNode::RegisterNativeWindowHandler(
+    AXPlatformNode::NativeWindowHandlerCallback handler) {
+  native_window_handler_.Get() = handler;
+}
+
 AXPlatformNode::AXPlatformNode() {}
 
 AXPlatformNode::~AXPlatformNode() {
