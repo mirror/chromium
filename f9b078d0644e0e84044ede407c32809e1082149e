@@ -22,6 +22,30 @@
       "revId": "f9b078d0644e0e84044ede407c32809e1082149e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde532cd_cf0cc9ab",
+        "filename": "chrome/browser/android/chrome_backup_agent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-11-15T04:07:54Z",
+      "side": 0,
+      "message": "@Bauerb, Ted Choc,\nDo I need to remove android namespace or rename GetBackupPrefNames to Get[Android]BackupPrefNames and submit?\n\nPlz do confirm\nThanks in advance.",
+      "parentUuid": "d1c98d70_afb2b936",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 17
+      },
+      "revId": "f9b078d0644e0e84044ede407c32809e1082149e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
