@@ -52,6 +52,8 @@ viz_component("service") {
     "display/overlay_processor.h",
     "display/overlay_strategy_fullscreen.cc",
     "display/overlay_strategy_fullscreen.h",
+    "display/overlay_strategy_fullscreen_background_color.cc",
+    "display/overlay_strategy_fullscreen_background_color.h",
     "display/overlay_strategy_single_on_top.cc",
     "display/overlay_strategy_single_on_top.h",
     "display/overlay_strategy_underlay.cc",

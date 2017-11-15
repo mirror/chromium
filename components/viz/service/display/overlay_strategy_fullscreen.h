@@ -27,6 +27,13 @@ class VIZ_SERVICE_EXPORT OverlayStrategyFullscreen
                cc::OverlayCandidateList* candidate_list,
                std::vector<gfx::Rect>* content_bounds) override;
 
+ protected:
+  using QuadListCheckerCallback =
+      base::Callback<bool(QuadList::ConstIterator, QuadList::ConstIterator)>;
+  void SetQuadListCheckerCallback(const QuadListCheckerCallback& callback);
+
+  QuadListCheckerCallback checker_callback_;
+
  private:
   OverlayCandidateValidator* capability_checker_;  // Weak.
 

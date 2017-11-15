@@ -12,6 +12,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_split.h"
 #include "components/viz/service/display/overlay_strategy_fullscreen.h"
+#include "components/viz/service/display/overlay_strategy_fullscreen_background_color.h"
 #include "components/viz/service/display/overlay_strategy_single_on_top.h"
 #include "components/viz/service/display/overlay_strategy_underlay.h"
 #include "components/viz/service/display/overlay_strategy_underlay_cast.h"
@@ -51,6 +52,9 @@ CompositorOverlayCandidateValidatorOzone::
     if (strategy_name == "single-fullscreen") {
       strategies_instantiators_.push_back(
           base::Bind(MakeOverlayStrategy<OverlayStrategyFullscreen>));
+    } else if (strategy_name == "single-fullscreen-background-color") {
+      strategies_instantiators_.push_back(base::Bind(
+          MakeOverlayStrategy<OverlayStrategyFullscreenBackgroundColor>));
     } else if (strategy_name == "single-on-top") {
       strategies_instantiators_.push_back(
           base::Bind(MakeOverlayStrategy<OverlayStrategySingleOnTop>));

@@ -4,6 +4,7 @@
 
 #include "components/viz/service/display/overlay_strategy_fullscreen.h"
 
+#include "base/bind.h"
 #include "components/viz/common/quads/draw_quad.h"
 #include "components/viz/common/quads/solid_color_draw_quad.h"
 #include "components/viz/service/display/overlay_candidate_validator.h"
@@ -16,6 +17,10 @@ OverlayStrategyFullscreen::OverlayStrategyFullscreen(
     OverlayCandidateValidator* capability_checker)
     : capability_checker_(capability_checker) {
   DCHECK(capability_checker);
+
+  checker_callback_ =
+      base::Bind([](QuadList::ConstIterator quad_list_begin,
+                    QuadList::ConstIterator quad_list_end) { return false; });
 }
 
 OverlayStrategyFullscreen::~OverlayStrategyFullscreen() {}
@@ -50,7 +55,8 @@ bool OverlayStrategyFullscreen::Attempt(
   if (!candidate.display_rect.origin().IsOrigin() ||
       gfx::ToRoundedSize(candidate.display_rect.size()) !=
           render_pass->output_rect.size()) {
-    return false;
+    if (!checker_callback_.Run(++front, quad_list->end()))
+      return false;
   }
 
   candidate.plane_z_order = 0;
@@ -64,6 +70,11 @@ bool OverlayStrategyFullscreen::Attempt(
 
   render_pass->quad_list = QuadList();  // Remove all the quads
   return true;
+}
+
+void OverlayStrategyFullscreen::SetQuadListCheckerCallback(
+    const QuadListCheckerCallback& callback) {
+  checker_callback_ = std::move(callback);
 }
 
 }  // namespace viz

@@ -32,6 +32,7 @@
 #include "components/viz/service/display/overlay_candidate_validator.h"
 #include "components/viz/service/display/overlay_processor.h"
 #include "components/viz/service/display/overlay_strategy_fullscreen.h"
+#include "components/viz/service/display/overlay_strategy_fullscreen_background_color.h"
 #include "components/viz/service/display/overlay_strategy_single_on_top.h"
 #include "components/viz/service/display/overlay_strategy_underlay.h"
 #include "components/viz/service/display/overlay_strategy_underlay_cast.h"
@@ -74,6 +75,20 @@ class FullscreenOverlayValidator : public OverlayCandidateValidator {
  public:
   void GetStrategies(OverlayProcessor::StrategyList* strategies) override {
     strategies->push_back(std::make_unique<OverlayStrategyFullscreen>(this));
+  }
+  bool AllowCALayerOverlays() override { return false; }
+  bool AllowDCLayerOverlays() override { return false; }
+  void CheckOverlaySupport(cc::OverlayCandidateList* surfaces) override {
+    surfaces->back().overlay_handled = true;
+  }
+};
+
+class FullscreenBackgroundColorOverlayValidator
+    : public OverlayCandidateValidator {
+ public:
+  void GetStrategies(OverlayProcessor::StrategyList* strategies) override {
+    strategies->push_back(
+        std::make_unique<OverlayStrategyFullscreenBackgroundColor>(this));
   }
   bool AllowCALayerOverlays() override { return false; }
   bool AllowDCLayerOverlays() override { return false; }
@@ -521,6 +536,8 @@ class OverlayTest : public testing::Test {
 };
 
 using FullscreenOverlayTest = OverlayTest<FullscreenOverlayValidator>;
+using FullscreenBackgroundColorOverlayTest =
+    OverlayTest<FullscreenBackgroundColorOverlayValidator>;
 using SingleOverlayOnTopTest = OverlayTest<SingleOnTopOverlayValidator>;
 using UnderlayTest = OverlayTest<UnderlayOverlayValidator>;
 using UnderlayCastTest = OverlayTest<UnderlayCastOverlayValidator>;
@@ -730,6 +747,33 @@ TEST_F(FullscreenOverlayTest, RemoveFullscreenQuadFromQuadList) {
   for (const DrawQuad* quad : main_pass->quad_list) {
     EXPECT_NE(main_pass->output_rect, quad->rect);
   }
+}
+
+// FullscreenBackgroundColorOverlayTest is same to FullscreenOverlayTest,
+// except for NotCoveringFullscreenFail test.
+TEST_F(FullscreenBackgroundColorOverlayTest, SuccessfulNotCoveringFullscreen) {
+  std::unique_ptr<RenderPass> pass = CreateRenderPass();
+  gfx::Rect inset_rect = pass->output_rect;
+  inset_rect.Inset(0, 1, 0, 1);
+  CreateCandidateQuadAt(
+      resource_provider_.get(), child_resource_provider_.get(),
+      pass->shared_quad_state_list.back(), pass.get(), inset_rect);
+
+  // Check for potential candidates.
+  cc::OverlayCandidateList candidate_list;
+  OverlayProcessor::FilterOperationsMap render_pass_filters;
+  OverlayProcessor::FilterOperationsMap render_pass_background_filters;
+  RenderPassList pass_list;
+  RenderPass* main_pass = pass.get();
+  pass_list.push_back(std::move(pass));
+  overlay_processor_->ProcessForOverlays(
+      resource_provider_.get(), &pass_list, render_pass_filters,
+      render_pass_background_filters, &candidate_list, nullptr, nullptr,
+      &damage_rect_, &content_bounds_);
+  ASSERT_EQ(1U, candidate_list.size());
+
+  // Check that the quad is gone.
+  EXPECT_EQ(0U, main_pass->quad_list.size());
 }
 
 TEST_F(SingleOverlayOnTopTest, SuccessfulOverlay) {
