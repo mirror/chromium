@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08c11ddf_11b123ed",
+        "filename": "extensions/renderer/resource_bundle_source_map.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T02:02:37Z",
+      "side": 1,
+      "message": "optional: could just use info.cached here instead of uncompressed_storage?",
+      "revId": "13170cee2c65ec227dbc7c294aa1b809e087743a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7cf3c77_c8ae8b12",
+        "filename": "extensions/renderer/resource_bundle_source_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T02:02:37Z",
+      "side": 1,
+      "message": "Could we move the mutable to |cached| above?  Having a lazily-populated/computed field is pretty common practice, and minimizing the changeable surface is desirable.",
+      "revId": "13170cee2c65ec227dbc7c294aa1b809e087743a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
