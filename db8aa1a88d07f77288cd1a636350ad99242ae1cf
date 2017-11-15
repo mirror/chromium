@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09e81e0c_ea8392ba",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_attributes.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-15T09:20:23Z",
+      "side": 1,
+      "message": "\u0027on_xxx\u0027 should be supported not only for attributes but also for operations and constants.  It should be supported for all \"interface member\"s, including special members.\n\nI\u0027m afraid that this will conflict with other members such as operations in future.  I\u0027d like to have a TODO comment on this concern.\n\nBy the way, is this actually used?",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "db8aa1a88d07f77288cd1a636350ad99242ae1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a905969c_9cebafb7",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-15T09:20:23Z",
+      "side": 1,
+      "message": "|interfaceTemplate| shouldn\u0027t be empty.  It\u0027s dangerous that interfaceTemplate could be silently empty because it\u0027s used for v8::Signature.",
+      "revId": "db8aa1a88d07f77288cd1a636350ad99242ae1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ec96314_bba3b581",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-15T09:20:23Z",
+      "side": 1,
+      "message": "nit: V8CallBoolean is now obsolete.",
+      "range": {
+        "startLine": 960,
+        "startChar": 8,
+        "endLine": 960,
+        "endChar": 21
+      },
+      "revId": "db8aa1a88d07f77288cd1a636350ad99242ae1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5b8521_994ecc57",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-15T09:20:23Z",
+      "side": 1,
+      "message": "Only |install_conditional_attributes| takes the targets while install_conditional_methods nor install_conditional_interface_objects_on_global does not.  I\u0027m okay, though, it\u0027s not ideal.",
+      "revId": "db8aa1a88d07f77288cd1a636350ad99242ae1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebca7182_6e638cae",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-15T09:20:23Z",
+      "side": 1,
+      "message": "Do we really need \"| length \u003e 0\" here?  Empty list is evaluated to False, I guess?  I\u0027m wondering if we need \"| list\" part, too.",
+      "range": {
+        "startLine": 1012,
+        "startChar": 81,
+        "endLine": 1012,
+        "endChar": 93
+      },
+      "revId": "db8aa1a88d07f77288cd1a636350ad99242ae1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
