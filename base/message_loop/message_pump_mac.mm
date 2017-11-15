@@ -662,19 +662,21 @@ MessagePumpCFRunLoop::~MessagePumpCFRunLoop() {}
 // the same number of CFRunLoopRun loops must be running for the outermost call
 // to Run.  Run/DoRun are reentrant after that point.
 void MessagePumpCFRunLoop::DoRun(Delegate* delegate) {
+  int result;
   // This is completely identical to calling CFRunLoopRun(), except autorelease
   // pool management is introduced.
-  int result;
   do {
     MessagePumpScopedAutoreleasePool autorelease_pool(this);
     result = CFRunLoopRunInMode(kCFRunLoopDefaultMode,
                                 kCFTimeIntervalMax,
                                 false);
   } while (result != kCFRunLoopRunStopped && result != kCFRunLoopRunFinished);
+  LOG(INFO) << "Finished MessagePumpCFRunLoop::DoRun() with " << result;
 }
 
 // Must be called on the run loop thread.
 void MessagePumpCFRunLoop::Quit() {
+  LOG(INFO) << "MessagePumpCFRunLoop::Quit()";
   // Stop the innermost run loop managed by this MessagePumpCFRunLoop object.
   if (nesting_level() == run_nesting_level()) {
     // This object is running the innermost loop, just stop it.
