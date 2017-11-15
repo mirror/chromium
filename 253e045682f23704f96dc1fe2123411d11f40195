@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5dc605f_84120dde",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/elements-panel-rewrite-href.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-15T00:48:11Z",
+      "side": 1,
+      "message": "Looks like this is flaky:\nhttps://storage.googleapis.com/chromium-layout-test-archives/win7_chromium_rel_ng/43558/layout-test-results/virtual/mojo-loading/http/tests/devtools/elements/elements-panel-rewrite-href-pretty-diff.html\n\nCan rewrite this as:\nTestRunner.addIframe(\u0027resources/elements-panel-rewrite-href-iframe.html\u0027);",
+      "revId": "253e045682f23704f96dc1fe2123411d11f40195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
