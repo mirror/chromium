@@ -69,6 +69,24 @@
       "revId": "8bcdd2a17c7d4c31dfd35f43eca33a4e9ff71fd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "639cc915_ceaaea60",
+        "filename": "tools/perf/page_sets/wasm_realworld_perf.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1131655
+      },
+      "writtenOn": "2017-11-15T02:14:47Z",
+      "side": 1,
+      "message": "Changed to wait till the fullscreen button becomes visible.",
+      "parentUuid": "4e73598e_f30534e6",
+      "revId": "8bcdd2a17c7d4c31dfd35f43eca33a4e9ff71fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
