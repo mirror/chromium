@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "052695ec_7a975476",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SourcesPanel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-15T22:10:17Z",
+      "side": 1,
+      "message": "Neat, thanks!  Done.",
+      "parentUuid": "28c39cfc_f309eb50",
+      "revId": "c24151aa59b3ee1193722864f258643956c9d33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0c08521_6c514664",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/SearchableView.js",
         "patchSetId": 2
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "9ff3fc30_1cb38920",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/SearchableView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-15T22:10:17Z",
+      "side": 1,
+      "message": "I\u0027ve created a new replace icon, instead of using the rotate one.",
+      "parentUuid": "b0c08521_6c514664",
+      "revId": "c24151aa59b3ee1193722864f258643956c9d33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac80b59a_2973a949",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/SearchableView.js",
         "patchSetId": 2
@@ -86,6 +122,24 @@
       "revId": "c24151aa59b3ee1193722864f258643956c9d33e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10a3e2dc_7eb9e19d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/SearchableView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-15T22:10:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac80b59a_2973a949",
+      "revId": "c24151aa59b3ee1193722864f258643956c9d33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "00ec7273_06019837",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/SearchableView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-15T22:10:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a77c3b8e_49b42990",
+      "revId": "c24151aa59b3ee1193722864f258643956c9d33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f898985_3b855ad5",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/SearchableView.js",
         "patchSetId": 2
@@ -117,6 +189,24 @@
       "writtenOn": "2017-11-15T17:00:55Z",
       "side": 1,
       "message": "If you need a tri-state, don\u0027t use undefined for it.",
+      "revId": "c24151aa59b3ee1193722864f258643956c9d33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0692da90_b78f1d4e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/SearchableView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-15T22:10:17Z",
+      "side": 1,
+      "message": "Got it.  I\u0027d rather not use tri-state, and just have Cmd-F hide the replace input.",
+      "parentUuid": "5f898985_3b855ad5",
       "revId": "c24151aa59b3ee1193722864f258643956c9d33e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
