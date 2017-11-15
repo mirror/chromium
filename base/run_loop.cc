@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/callback.h"
+#include "base/debug/stack_trace.h"
 #include "base/lazy_instance.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_local.h"
@@ -129,6 +130,8 @@ void RunLoop::RunUntilIdle() {
 
 void RunLoop::Quit() {
   // Thread-safe.
+  base::debug::StackTrace stack_trace;
+  LOG(INFO) << "RunLoop::Quit()" << stack_trace.ToString();
 
   // This can only be hit if run_loop->Quit() is called directly (QuitClosure()
   // proxies through ProxyToTaskRunner() as it can only deref its WeakPtr on
@@ -148,6 +151,8 @@ void RunLoop::Quit() {
 
 void RunLoop::QuitWhenIdle() {
   // Thread-safe.
+  base::debug::StackTrace stack_trace;
+  LOG(INFO) << "RunLoop::QuitWhenIdle()" << stack_trace.ToString();
 
   // This can only be hit if run_loop->QuitWhenIdle() is called directly
   // (QuitWhenIdleClosure() proxies through ProxyToTaskRunner() as it can only

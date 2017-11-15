@@ -123,6 +123,7 @@ void BookmarkNode::Initialize(int64_t id) {
 }
 
 void BookmarkNode::InvalidateFavicon() {
+  LOG(INFO) << "InvalidateFavicon() " << this;
   icon_url_.reset();
   favicon_ = gfx::Image();
   favicon_type_ = favicon_base::IconType::kInvalid;
