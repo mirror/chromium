@@ -36,6 +36,7 @@
 #include "core/inspector/InspectedFrames.h"
 #include "core/inspector/InspectorBaseAgent.h"
 #include "core/inspector/InspectorPageAgent.h"
+#include "core/inspector/NetworkResourcesData.h"
 #include "core/inspector/protocol/Network.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/Resource.h"
@@ -51,7 +52,6 @@ struct FetchInitiatorInfo;
 class LocalFrame;
 class HTTPHeaderMap;
 class KURL;
-class NetworkResourcesData;
 class Resource;
 class ResourceError;
 class ResourceResponse;
@@ -227,6 +227,10 @@ class CORE_EXPORT InspectorNetworkAgent final
   protocol::Response GetResponseBody(const String& request_id,
                                      String* content,
                                      bool* base64_encoded);
+  protocol::Response GetResponseBody(const KURL&,
+                                     String* content,
+                                     bool* base64_encoded);
+
   bool FetchResourceContent(Document*,
                             const KURL&,
                             String* content,
@@ -242,6 +246,11 @@ class CORE_EXPORT InspectorNetworkAgent final
                                const ResourceResponse& redirect_response,
                                const FetchInitiatorInfo&,
                                InspectorPageAgent::ResourceType);
+  protocol::Response GetResponseBody(
+      blink::NetworkResourcesData::ResourceData const*,
+      String* content,
+      bool* base64_encoded);
+
   void DelayedRemoveReplayXHR(XMLHttpRequest*);
   void RemoveFinishedReplayXHRFired(TimerBase*);
   void DidFinishXHRInternal(ExecutionContext*,

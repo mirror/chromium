@@ -355,8 +355,8 @@ InspectorSession* WebDevToolsAgentImpl::InitializeSession(int session_id,
       new InspectorDOMDebuggerAgent(isolate, dom_agent, session->V8Session()));
 
   InspectorPageAgent* page_agent = InspectorPageAgent::Create(
-      inspected_frames_.Get(), this, resource_content_loader_.Get(),
-      session->V8Session());
+      network_agent, inspected_frames_.Get(), this,
+      resource_content_loader_.Get(), session->V8Session());
   page_agents_.Set(session_id, page_agent);
   session->Append(page_agent);
 

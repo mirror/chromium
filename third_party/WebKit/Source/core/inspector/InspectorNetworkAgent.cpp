@@ -46,7 +46,6 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/IdentifiersFactory.h"
 #include "core/inspector/InspectedFrames.h"
-#include "core/inspector/NetworkResourcesData.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
 #include "core/loader/MixedContentChecker.h"
@@ -1510,7 +1509,24 @@ Response InspectorNetworkAgent::GetResponseBody(const String& request_id,
   if (!resource_data) {
     return Response::Error("No resource with given identifier found");
   }
+  return GetResponseBody(resource_data, content, base64_encoded);
+}
 
+Response InspectorNetworkAgent::GetResponseBody(const KURL& url,
+                                                String* content,
+                                                bool* base64_encoded) {
+  NetworkResourcesData::ResourceData const* resource_data =
+      resources_data_->Data(url);
+  if (!resource_data) {
+    return Response::Error("No resource with given identifier found");
+  }
+  return GetResponseBody(resource_data, content, base64_encoded);
+}
+
+Response InspectorNetworkAgent::GetResponseBody(
+    NetworkResourcesData::ResourceData const* resource_data,
+    String* content,
+    bool* base64_encoded) {
   if (resource_data->HasContent()) {
     *content = resource_data->Content();
     *base64_encoded = resource_data->Base64Encoded();
