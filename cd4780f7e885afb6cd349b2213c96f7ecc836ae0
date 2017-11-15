@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e39fc3b_f8232bd0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-15T03:57:08Z",
+      "side": 1,
+      "message": "Sorry I overlooked this in the last iteration.\nnumber-only-bug-id means crbug.com. So, b/ or b: prefix is needed, IIUC.",
+      "revId": "cd4780f7e885afb6cd349b2213c96f7ecc836ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae35881_534df58c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-15T03:57:08Z",
+      "side": 1,
+      "message": "Could you check both OOBE and assistance cases, too?\nIt\u0027s nice to mention it here, too.",
+      "range": {
+        "startLine": 16,
+        "startChar": 51,
+        "endLine": 16,
+        "endChar": 65
+      },
+      "revId": "cd4780f7e885afb6cd349b2213c96f7ecc836ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
