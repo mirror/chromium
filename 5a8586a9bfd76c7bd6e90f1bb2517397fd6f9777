@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "048349d8_d5343ae1",
+        "filename": "tools/binary_size/libsupersize/linker_map_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-11-15T15:51:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2022b39_c1a50ecf",
+      "revId": "5a8586a9bfd76c7bd6e90f1bb2517397fd6f9777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "260aafe4_2077b725",
         "filename": "tools/binary_size/libsupersize/path_util.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "5a8586a9bfd76c7bd6e90f1bb2517397fd6f9777",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f64bbf6b_6d542e51",
+        "filename": "tools/binary_size/libsupersize/path_util.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-11-15T15:51:56Z",
+      "side": 1,
+      "message": "Done. Per discussion, changing SRC_ROOT calculation to allow override via $CHECKOUT_SOURCE_ROOT.  Note that there\u0027s also some code reshuffling needed here.",
+      "parentUuid": "260aafe4_2077b725",
+      "revId": "5a8586a9bfd76c7bd6e90f1bb2517397fd6f9777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
