@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+FAIL getAll with domain shadowing assert_equals: expected "K2=V2D:web-platform.test; K1=V1D*web-platform.test; K3=V3D*web-platform.test; K2=V2D:web-platform.test" but got "K1=V1D*web-platform.test; K3=V3D*web-platform.test; K2=V2D:web-platform.test"
+FAIL getAll with domain and implicit path shadowing assert_equals: expected "K2=V2D:web-platform.testP*/; K2=V2D:web-platform.testP:/cookie-store/; K1=V1D*web-platform.testP*/; K3=V3D*web-platform.testP*/; K2=V2D:web-platform.testP*/" but got "K2=V2D:web-platform.testP:/cookie-store/; K1=V1D*web-platform.testP*/; K3=V3D*web-platform.testP*/; K2=V2D:web-platform.testP*/"
+FAIL getAll with domain and explicit path shadowing assert_equals: expected "K2=V2D:web-platform.testP:/; K2=V2D:web-platform.testP:/cookie-store/; K1=V1D*web-platform.testP:/; K3=V3D*web-platform.testP:/; K2=V2D:web-platform.testP:/" but got "K2=V2D:web-platform.testP:/cookie-store/; K1=V1D*web-platform.testP:/; K3=V3D*web-platform.testP:/; K2=V2D:web-platform.testP:/"
+PASS getAll with implicit path shadowing
+PASS getAll with explicit path shadowing
+Harness: the test ran to completion.
+
