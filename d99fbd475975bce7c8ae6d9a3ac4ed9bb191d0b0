@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d23b380_8997fc86",
+        "filename": "third_party/WebKit/common/sandbox_flags.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-15T20:23:27Z",
+      "side": 1,
+      "message": "nit: since the underlying type is int (and all of those bits are used), it might be most honest to say std::bitset\u003csizeof(int) * 8\u003e. 16 is a slightly odd middleground between the number of bits with assigned meanings and the number of bits in the actual representation.",
+      "revId": "d99fbd475975bce7c8ae6d9a3ac4ed9bb191d0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
