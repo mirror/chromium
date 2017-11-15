@@ -16,6 +16,24 @@
       "revId": "cecf20c2ac7cbed1215f53319665c37a790ea903",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310d6b46_22710d11",
+        "filename": "components/invalidation/impl/android/java/src/org/chromium/components/invalidation/InvalidationClientService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-15T21:01:02Z",
+      "side": 1,
+      "message": "You\u0027re right. Reverted.",
+      "parentUuid": "555aa9a8_db9e090e",
+      "revId": "cecf20c2ac7cbed1215f53319665c37a790ea903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
