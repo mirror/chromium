@@ -46,6 +46,30 @@
       "revId": "c32db39d10b87ed5a6570b34802d3b3636fa0dab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0856e00e_15d50c1c",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-15T10:10:48Z",
+      "side": 1,
+      "message": "\u003e \u003e I guess it is unclear why there are multiple calls to the client now for left mouse down. Will that cause more work?\n\u003e \u003e \n\u003e \u003e ie; left down is called here...\n\u003e \u003e https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/input/EventHandler.cpp?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d717\n\u003e \u003e \n\u003e \u003e Would it make sense to change this to fire it always even without the left modifier?\n\u003e oh, true. Do you mean to keep only kMouseDown and remove kMouseUp? \n\u003e \n\u003e As I tested, there will be always only one even for either left and right clicks.\nNow I understand better what you meant. AutofillClient receives two notifications: about mouse click and focus change. They are triggered by different sets of cases. Not sure whether we can merge them into one.\n\nI\u0027ll add autofill folk. \n\nRoger: is it possible to replace WebAutofillClient::DidCompleteFocusChangeInFrame and WebAutofillClient::DidReceiveLeftMouseDownOrGestureTapInNode with one method? Seems either methods are about focus changes.",
+      "parentUuid": "600b2b45_46204574",
+      "range": {
+        "startLine": 398,
+        "startChar": 19,
+        "endLine": 398,
+        "endChar": 26
+      },
+      "revId": "c32db39d10b87ed5a6570b34802d3b3636fa0dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
