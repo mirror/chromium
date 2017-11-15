@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "608352f4_8c2db326",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-15T21:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4716569_d7eec335",
+      "range": {
+        "startLine": 172,
+        "startChar": 23,
+        "endLine": 172,
+        "endChar": 72
+      },
+      "revId": "e29804e75494efedb267fbe933713bcae3bcc194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcdeb486_aa4fd536",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "e29804e75494efedb267fbe933713bcae3bcc194",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1444573c_b0af32f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-15T21:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcdeb486_aa4fd536",
+      "range": {
+        "startLine": 191,
+        "startChar": 23,
+        "endLine": 191,
+        "endChar": 67
+      },
+      "revId": "e29804e75494efedb267fbe933713bcae3bcc194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b434b347_5108695f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/AndroidPermissionRequester.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-15T21:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d39d8d70_02211973",
+      "range": {
+        "startLine": 102,
+        "startChar": 16,
+        "endLine": 102,
+        "endChar": 25
+      },
+      "revId": "e29804e75494efedb267fbe933713bcae3bcc194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e2cf0d3_3e2bac89",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/AndroidPermissionRequester.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "e29804e75494efedb267fbe933713bcae3bcc194",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b237e57_7cb24381",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/AndroidPermissionRequester.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-15T21:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e2cf0d3_3e2bac89",
+      "range": {
+        "startLine": 117,
+        "startChar": 16,
+        "endLine": 117,
+        "endChar": 18
+      },
+      "revId": "e29804e75494efedb267fbe933713bcae3bcc194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b974ccfc_50ff678b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 92323,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-15T21:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b40be41_090cfc4f",
+      "range": {
+        "startLine": 92323,
+        "startChar": 24,
+        "endLine": 92323,
+        "endChar": 34
+      },
+      "revId": "e29804e75494efedb267fbe933713bcae3bcc194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e9c71e7_aff4a9c8",
         "filename": "ui/android/java/src/org/chromium/ui/base/ActivityWindowAndroid.java",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "e29804e75494efedb267fbe933713bcae3bcc194",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3d4893_e5290130",
+        "filename": "ui/android/java/src/org/chromium/ui/base/ActivityWindowAndroid.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-15T21:28:22Z",
+      "side": 1,
+      "message": "Makes sense to me. We want to see the effect of moving webapk permission outside, so we mostly care about the case that Chrome permission is explicitly revoked.",
+      "parentUuid": "1e9c71e7_aff4a9c8",
+      "range": {
+        "startLine": 281,
+        "startChar": 16,
+        "endLine": 281,
+        "endChar": 47
+      },
+      "revId": "e29804e75494efedb267fbe933713bcae3bcc194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
