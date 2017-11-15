@@ -3,9 +3,19 @@
 // found in the LICENSE file.
 
 #include "media/gpu/vaapi/vaapi_picture.h"
+
+#include "build/build_config.h"
 #include "media/gpu/vaapi_wrapper.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_implementation.h"
+
+#if defined(OS_LINUX)
+#include "media/gpu/vaapi/vaapi_drm_picture.h"
+#endif
+
+#if defined(USE_X11)
+#include "media/gpu/vaapi/vaapi_tfp_picture.h"
+#endif
 
 namespace media {
 
@@ -31,6 +41,48 @@ VaapiPicture::~VaapiPicture() {
 
 bool VaapiPicture::AllowOverlay() const {
   return false;
+}
+
+// static
+linked_ptr<VaapiPicture> VaapiPicture::CreatePicture(
+    const scoped_refptr<VaapiWrapper>& vaapi_wrapper,
+    const MakeGLContextCurrentCallback& make_context_current_cb,
+    const BindGLImageCallback& bind_image_cb,
+    int32_t picture_buffer_id,
+    const gfx::Size& size,
+    uint32_t texture_id,
+    uint32_t client_texture_id) {
+  linked_ptr<VaapiPicture> picture;
+
+  switch (gl::GetGLImplementation()) {
+    case gl::kGLImplementationEGLGLES2:
+      picture.reset(new VaapiDrmPicture(vaapi_wrapper, make_context_current_cb,
+                                        bind_image_cb, picture_buffer_id, size,
+                                        texture_id, client_texture_id));
+      break;
+#if defined(USE_X11)
+    case gl::kGLImplementationDesktopGL:
+      picture.reset(new VaapiTFPPicture(vaapi_wrapper, make_context_current_cb,
+                                        bind_image_cb, picture_buffer_id, size,
+                                        texture_id, client_texture_id));
+      break;
+#endif  // USE_X11
+    default:
+      NOTIMPLEMENTED();
+  }
+
+  return picture;
+}
+
+// static
+uint32_t VaapiPicture::GetGLTextureTarget() {
+#if defined(USE_OZONE)
+  // VaapiDrmPicture.
+  return GL_TEXTURE_EXTERNAL_OES;
+#else
+  // VaapiDrmPicture and VaapiTFPPicture.
+  return GL_TEXTURE_2D;
+#endif
 }
 
 }  // namespace media
