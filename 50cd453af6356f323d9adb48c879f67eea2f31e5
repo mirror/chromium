@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71c20d3b_cf32d1c6",
+        "filename": "chromeos/cryptohome/homedir_methods.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-15T17:58:28Z",
+      "side": 1,
+      "message": "(off topic): If this was a only caller, how about moving empty auth proto creation into GetKeyDataEx, instead of passing empty instance always from callers?",
+      "revId": "50cd453af6356f323d9adb48c879f67eea2f31e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
