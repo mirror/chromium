@@ -7,7 +7,9 @@
 #include <string>
 
 #include "base/logging.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/stringprintf.h"
+#include "components/crx_file/id_util.h"
 #include "extensions/common/api/messaging/message.h"
 #include "extensions/common/extension.h"
 #include "extensions/renderer/script_context.h"
@@ -24,6 +26,8 @@ constexpr char kExtensionIdRequiredErrorTemplate[] =
     "chrome.%s() called from a webpage must specify an "
     "Extension ID (string) for its first argument.";
 
+constexpr char kErrorCouldNotSerialize[] = "Could not serialize message.";
+
 }  // namespace
 
 const char kSendMessageChannel[] = "chrome.runtime.sendMessage";
@@ -39,7 +43,8 @@ const char kOnConnectExternalEvent[] = "runtime.onConnectExternal";
 const int kNoFrameId = -1;
 
 std::unique_ptr<Message> MessageFromV8(v8::Local<v8::Context> context,
-                                       v8::Local<v8::Value> value) {
+                                       v8::Local<v8::Value> value,
+                                       std::string* error_out) {
   DCHECK(!value.IsEmpty());
   v8::Isolate* isolate = context->GetIsolate();
   v8::Context::Scope context_scope(context);
@@ -63,20 +68,46 @@ std::unique_ptr<Message> MessageFromV8(v8::Local<v8::Context> context,
     success = v8::JSON::Stringify(context, value).ToLocal(&stringified);
   }
 
-  std::string message;
-  if (success) {
-    message = gin::V8ToString(stringified);
-    // JSON.stringify can fail to produce a string value in one of two ways: it
-    // can throw an exception (as with unserializable objects), or it can return
-    // `undefined` (as with e.g. passing a function). If JSON.stringify returns
-    // `undefined`, the v8 API then coerces it to the string value "undefined".
-    // Check for this, and consider it a failure (since we didn't properly
-    // serialize a value).
-    success = message != "undefined";
+  if (!success) {
+    *error_out = kErrorCouldNotSerialize;
+    return nullptr;
   }
 
-  if (!success)
+  return MessageFromJSONString(stringified, error_out);
+}
+
+std::unique_ptr<Message> MessageFromJSONString(v8::Local<v8::String> json,
+                                               std::string* error_out) {
+  std::string message;
+  message = gin::V8ToString(json);
+  // JSON.stringify can fail to produce a string value in one of two ways: it
+  // can throw an exception (as with unserializable objects), or it can return
+  // `undefined` (as with e.g. passing a function). If JSON.stringify returns
+  // `undefined`, the v8 API then coerces it to the string value "undefined".
+  // Check for this, and consider it a failure (since we didn't properly
+  // serialize a value).
+  if (message == "undefined") {
+    *error_out = kErrorCouldNotSerialize;
     return nullptr;
+  }
+
+  size_t message_length = message.length();
+
+  // Max bucket at 512 MB - anything over that, and we don't care.
+  static constexpr int kMaxUmaLength = 1024 * 1024 * 512;
+  static constexpr int kMinUmaLength = 1;
+  static constexpr int kBucketCount = 50;
+  UMA_HISTOGRAM_CUSTOM_COUNTS("Extensions.Messaging.MessageSize",
+                              message_length, kMinUmaLength, kMaxUmaLength,
+                              kBucketCount);
+
+  // IPC messages will fail at > 128 MB. Restrict extension messages to 64 MB.
+  // A 64 MB JSON-ifiable object is scary enough as is.
+  static constexpr size_t kMaxMessageLength = 1024 * 1024 * 64;
+  if (message_length > kMaxMessageLength) {
+    *error_out = "Message length exceeded maximum allowed length.";
+    return nullptr;
+  }
 
   return std::make_unique<Message>(
       message, blink::WebUserGestureIndicator::IsProcessingUserGesture());
@@ -187,12 +218,20 @@ bool GetTargetExtensionId(ScriptContext* script_context,
       return false;
     }
 
-    *target_out = script_context->extension()->id();
+    target_id = script_context->extension()->id();
+    // An extension should never have an invalid id.
+    DCHECK(crx_file::id_util::IdIsValid(target_id));
   } else {
     DCHECK(v8_target_id->IsString());
-    *target_out = gin::V8ToString(v8_target_id);
+    target_id = gin::V8ToString(v8_target_id);
+    if (!crx_file::id_util::IdIsValid(target_id)) {
+      *error_out =
+          base::StringPrintf("Invalid extension id: '%s'", target_id.c_str());
+      return false;
+    }
   }
 
+  *target_out = std::move(target_id);
   return true;
 }
 

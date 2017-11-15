@@ -63,9 +63,11 @@ NativeMessageProcessHost::NativeMessageProcessHost(
 }
 
 NativeMessageProcessHost::~NativeMessageProcessHost() {
+  LOG(WARNING) << "Ntaive process closed";
   DCHECK(task_runner_->BelongsToCurrentThread());
 
   if (process_.IsValid()) {
+    LOG(WARNING) << "terminating";
     // Kill the host process if necessary to make sure we don't leave zombies.
     // On OSX and Fuchsia base::EnsureProcessTerminated() may block, so we have
     // to post a task on the blocking pool.
@@ -77,6 +79,7 @@ NativeMessageProcessHost::~NativeMessageProcessHost() {
     base::EnsureProcessTerminated(std::move(process_));
 #endif
   }
+  LOG(WARNING) << "Terminated";
 }
 
 // static
@@ -119,6 +122,7 @@ void NativeMessageProcessHost::OnHostProcessLaunched(
     base::Process process,
     base::File read_file,
     base::File write_file) {
+  LOG(WARNING) << "Host process launched!!";
   DCHECK(task_runner_->BelongsToCurrentThread());
 
   switch (result) {
