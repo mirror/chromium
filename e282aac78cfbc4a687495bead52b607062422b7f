@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "bf276c1e_5e8036f0",
+        "filename": "base/files/memory_mapped_file_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T02:34:05Z",
+      "side": 1,
+      "message": "Yeah sorry, to be clear, a separate CL is better for this one: I just highlighted it since it happened to be in the changed lines and I was confused. THanks for the clarifications.",
+      "parentUuid": "88461370_30389252",
+      "revId": "e282aac78cfbc4a687495bead52b607062422b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7839778f_bfe282b4",
         "filename": "base/process/process_iterator_mac.cc",
         "patchSetId": 8
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "It\u0027s used on the next line to size the vector to exactly the right size. The variable then falls out of scope.\n\nI decided that reuse was appropriate here because the semantics/usage are identical - they really *are* the same variable.",
       "parentUuid": "7839778f_bfe282b4",
+      "revId": "e282aac78cfbc4a687495bead52b607062422b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd0ab0a7_5e859263",
+        "filename": "base/process/process_iterator_mac.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T02:34:05Z",
+      "side": 1,
+      "message": "I guess what I meant is that the calculation could be inlined directly on line 61 though. Reassigning to the variable doesn\u0027t really have any meaning (since as you pointed out, it falls out of scope, and there are no other reads)",
+      "parentUuid": "c6356e3b_62c0589e",
       "revId": "e282aac78cfbc4a687495bead52b607062422b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -157,6 +193,24 @@
       "revId": "e282aac78cfbc4a687495bead52b607062422b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4739e263_7dd327b1",
+        "filename": "base/threading/sequenced_worker_pool.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T02:34:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "915eaebb_32ebceb8",
+      "revId": "e282aac78cfbc4a687495bead52b607062422b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
