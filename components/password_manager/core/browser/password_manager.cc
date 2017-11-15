@@ -819,7 +819,6 @@ void PasswordManager::OnLoginSuccessful() {
     }
   }
 
-  if (base::FeatureList::IsEnabled(features::kDropSyncCredential)) {
     DCHECK(provisional_save_manager_->submitted_form());
     if (!client_->GetStoreResultFilter()->ShouldSave(
             *provisional_save_manager_->submitted_form())) {
@@ -853,7 +852,6 @@ void PasswordManager::OnLoginSuccessful() {
       provisional_save_manager_.reset();
       return;
     }
-  }
 
   provisional_save_manager_->LogSubmitPassed();
 
