@@ -141,6 +141,30 @@
       "revId": "caeae257b87839c8e2aa9058c40031be2a3e232a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68b117ee_520ea32b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 63500,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T00:16:29Z",
+      "side": 1,
+      "message": "yeah. :-/ we actually already have existing metrics reported outside of chrome that try to capture much more subtle concepts and are pretty much unintelligible as a result (e.g. Power.IdleTimeAfterScreenOffOnBattery).",
+      "parentUuid": "858fab6d_131cd4bf",
+      "range": {
+        "startLine": 63499,
+        "startChar": 0,
+        "endLine": 63500,
+        "endChar": 47
+      },
+      "revId": "caeae257b87839c8e2aa9058c40031be2a3e232a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
