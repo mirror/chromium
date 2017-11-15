@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "b4e73ade_e3bc9d24",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T15:18:13Z",
+      "side": 1,
+      "message": "i think i don\u0027t understand the calls to MaybeSetEventType. why do you call it in PowerChanged (which will be called fairly arbitrarily every 30 seconds or so) but not here, for example?",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d46c2dec_ef3287b4",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
         "patchSetId": 3
@@ -30,6 +47,108 @@
       "writtenOn": "2017-11-15T12:41:17Z",
       "side": 1,
       "message": "nit: /*unused*/",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f756f7_5042043e",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T15:18:13Z",
+      "side": 1,
+      "message": "please make sure you\u0027re testing this on a real system. this method is called periodically and isn\u0027t necessarily an indication of user activity. from the header:\n\n    // Called when updated information about the power supply is available.\n    // The status is automatically updated periodically, but\n    // RequestStatusUpdate() can be used to trigger an immediate update.\n    virtual void PowerChanged(\n        const power_manager::PowerSupplyProperties\u0026 proto) {}\n\nif you just want to know when a charger is connected or disconnected, you\u0027ll need to check that explicitly within |proto|.",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c3cfc29_518f3313",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T15:18:13Z",
+      "side": 1,
+      "message": "all of these should be DCHECK instead, or maybe just covered by tests instead. it\u0027s not appropriate to crash users\u0027 browsers if there\u0027s a bug here or if you receive notifications from powerd in a different order than expected.",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba673795_7f2c2dff",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T15:18:13Z",
+      "side": 1,
+      "message": "if you want to lump all non-idle types together, consider just putting them in a default section",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d735e82f_e8ec01cc",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T15:18:13Z",
+      "side": 1,
+      "message": "if this member just exists to track whether event_type_ is set, please remove it and make event_type_ be a base::Optional instead.",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf9b917_df3a811f",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T15:18:13Z",
+      "side": 1,
+      "message": "i think you can just call Start() unconditionally here:\n\n  // Start the timer to run at the given |delay| from now. If the timer is\n  // already running, it will be replaced to call a task formed from\n  // |reviewer-\u003e*method|.\n  template \u003cclass Receiver\u003e\n  void Start(const Location\u0026 posted_from,\n             TimeDelta delay,\n             Receiver* receiver,\n             void (Receiver::*method)()) {",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cea5eefb_f185befa",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T15:18:13Z",
+      "side": 1,
+      "message": "add base/macros.h",
       "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +189,64 @@
     },
     {
       "key": {
+        "uuid": "3b211c91_647d9bfa",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T15:18:13Z",
+      "side": 1,
+      "message": "i think the chrome convention is to omit newlines between all overridden methods from a single interface, so this should instead be:\n\n  // PowerManagerClient::Observer:\n  void LidEventReceived(...) override;\n  void PowerChanged(...) override;\n  void ScreenIdleStateChanged(...) override;\n  etc.",
+      "parentUuid": "536a2e62_43f8af60",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27d89b0_516893d1",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T15:18:13Z",
+      "side": 1,
+      "message": "nit: |event_type_|, |event_type_found_|, |logging_in_progress_|, |model_start_timer| below, etc.",
+      "range": {
+        "startLine": 33,
+        "startChar": 10,
+        "endLine": 33,
+        "endChar": 21
+      },
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f09d4c_722eb902",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T15:18:13Z",
+      "side": 1,
+      "message": "remove these if you aren\u0027t ready to implement them yet and move the TODOs to the calling site",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8335f3fd_b4052e2c",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
         "patchSetId": 3
@@ -98,6 +275,23 @@
       "writtenOn": "2017-11-15T12:41:17Z",
       "side": 1,
       "message": "it seems to me that we can only log one event at a time, what will happen to other event?",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d43ea58_f45a72df",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T15:18:13Z",
+      "side": 1,
+      "message": "initialize bools and enums in the header:\n\n  // ...\n  bool logging_in_progress_ \u003d false;\n\n  // ...\n  bool event_type_found_ \u003d false;\n\nplease also add a comment above each member describing what it is.",
       "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
