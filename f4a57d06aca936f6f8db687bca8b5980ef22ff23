@@ -22,6 +22,30 @@
       "revId": "f4a57d06aca936f6f8db687bca8b5980ef22ff23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05caadf5_55587a6b",
+        "filename": "services/data_decoder/xml_parser_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-15T21:18:04Z",
+      "side": 1,
+      "message": "I did not add support for attributes as I did not need it initially (for the SafeDialDeviceDescriptionParser which I am changing to use this).\nI documented in the mojom what is not supported (namespace, comments, attributes).\nI guess the goal is to provide some minimal XML parsing capabilities for our current needs and expand as needed.\nTurns out I actually need attribute support for something else, so I am working on adding support for it in a different CL.",
+      "parentUuid": "32183e77_721769e0",
+      "range": {
+        "startLine": 113,
+        "startChar": 14,
+        "endLine": 113,
+        "endChar": 26
+      },
+      "revId": "f4a57d06aca936f6f8db687bca8b5980ef22ff23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
