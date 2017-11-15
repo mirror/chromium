@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "b3042780_424c09a3",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1103764
+      },
+      "writtenOn": "2017-11-15T03:03:28Z",
+      "side": 1,
+      "message": "Ok, I will follow you, fixed. Thanks.",
+      "parentUuid": "eea0236b_e0c350c6",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 59
+      },
+      "revId": "05230e7eaa522cb4454d51fb3a90bd9938f23d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ec0e05f_1a4cd692",
         "filename": "components/omnibox/browser/break_iterator_adapter.h",
         "patchSetId": 9
@@ -651,6 +675,30 @@
       "side": 1,
       "message": "I don\u0027t think I understand your suggestion.\n\nCan you try it and see how it looks?\n\nThe only thing I want to be clear about is that I don\u0027t think we should have code like:\nCalculateWordStartsOffsets(\n      const String16Vector\u0026 terms,\n      WordStarts* terms_to_word_starts_offsets) {\n  CalculateWordStartsOffsetsForTest(terms, true, terms_to_word_starts_offsets);\n}\n\nI.e., we shouldn\u0027t have a real function calling a \"ForTest\" function.  I\u0027m not sure if that\u0027s what you were suggesting.",
       "parentUuid": "866c40eb_c707adf2",
+      "range": {
+        "startLine": 136,
+        "startChar": 9,
+        "endLine": 136,
+        "endChar": 31
+      },
+      "revId": "05230e7eaa522cb4454d51fb3a90bd9938f23d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48def4e8_3064056e",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1103764
+      },
+      "writtenOn": "2017-11-15T03:03:28Z",
+      "side": 1,
+      "message": "How about those versions?\n \n  // Fills in |terms_to_word_starts_offsets| according to where the word starts\n  // in each term.  For example, in the term \"-foo\" the word starts at offset 1.\n  static void CalculateWordStartsOffsets(\n      const String16Vector\u0026 terms,\n      WordStarts* terms_to_word_starts_offsets);\n\n  // Used only for unit test which tests TailoredWordBreakIterator.\n  static void CalculateWordStartsOffsets(\n      const String16Vector\u0026 terms,\n      bool force_break_on_underscore,\n      WordStarts* terms_to_word_starts_offsets);",
+      "parentUuid": "4aa16603_4232d5e2",
       "range": {
         "startLine": 136,
         "startChar": 9,
