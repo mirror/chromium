@@ -43,6 +43,7 @@ public class ExampleUiCaptureTest {
     @Before
     public void setUp() throws InterruptedException {
         mActivityTestRule.startMainActivityFromLauncher();
+        mActivityTestRule.waitForActivityVisible();
     }
 
     /**

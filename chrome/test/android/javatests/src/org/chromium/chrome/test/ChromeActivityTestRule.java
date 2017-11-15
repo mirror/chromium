@@ -408,6 +408,16 @@ public class ChromeActivityTestRule<T extends ChromeActivity> extends ActivityTe
     }
 
     /**
+     * Waits for the activity to become visible.
+     */
+    public void waitForActivityVisible() {
+        CriteriaHelper.pollUiThread(() -> {
+            return getActivity().getActivityTab() != null
+                    && !getActivity().getActivityTab().isHidden();
+        }, "Activity never became visible finished");
+    }
+
+    /**
      * Waits for the activity to fully finish it's native initialization.
      */
     public void waitForActivityNativeInitializationComplete() {
