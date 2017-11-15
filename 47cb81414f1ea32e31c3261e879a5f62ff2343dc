@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfb94224_76342978",
+        "filename": "chrome/browser/ui/views/permission_bubble/permission_prompt_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-15T05:08:49Z",
+      "side": 1,
+      "message": "I still find this language a bit confusing if the reader is not thinking about localization; the fact that you\u0027re using an English example may not allow the reader to understand that you\u0027re talking about localization here. Especially since you\u0027re talking about a string substitution that happens within the GetWindowTitle method, not right here. Also it\u0027s an origin, not a URL.\n\nHow about:\n\n// Elide from head in order to keep the most significant part of th origin and avoid origin spoofing. Note that in English, GetWindowTitle() returns a string \"$ORIGIN wants to\", so the \"wants to\" will not be elided. In other languages, the non-origin part may appear fully or partly before the origin (e.g., in Filipino, \"Gusto ng $ORIGIN na\"), which means it may be elided. This is not optimal, but it is necessary to avoid origin spoofing. See crbug.\n\nAlso move the comment down one line (so it is immediately above SetElideBehavior).",
+      "range": {
+        "startLine": 175,
+        "startChar": 36,
+        "endLine": 175,
+        "endChar": 47
+      },
+      "revId": "47cb81414f1ea32e31c3261e879a5f62ff2343dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4644c20_836291fc",
+        "filename": "chrome/browser/ui/views/permission_bubble/permission_prompt_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-15T05:08:49Z",
+      "side": 1,
+      "message": "// Multiline breaks elision, which would mean a very long origin gets truncated on the right-hand side.",
+      "revId": "47cb81414f1ea32e31c3261e879a5f62ff2343dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
