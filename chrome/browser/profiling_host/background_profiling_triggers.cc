@@ -112,7 +112,7 @@ void BackgroundProfilingTriggers::OnReceivedMemoryDump(
     memory_instrumentation::mojom::GlobalMemoryDumpPtr dump) {
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
 
-  if (success) {
+  if (!success) {
     return;
   }
 
