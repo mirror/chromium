@@ -256,41 +256,43 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
         return LaunchIntentDispatcher.Action.CONTINUE;
     }
 
+    /**
+     * Whether onCreate() should continue creating/starting the activity in the case when
+     * finish() called by abortLaunch() fails (i.e. isFinishing() is not true). If the
+     * method returns true onCreate() continues, otherwise onCreate() early returns as if
+     * finish() has succeeded.
+     */
+    protected boolean shouldStartOnAbortLaunchFailure() {
+        return false;
+    }
+
     private final void onCreateInternal(Bundle savedInstanceState) {
         setIntent(validateIntent(getIntent()));
 
-        @LaunchIntentDispatcher.Action
-        int dispatchAction = maybeDispatchLaunchIntent(getIntent());
-        if (dispatchAction != LaunchIntentDispatcher.Action.CONTINUE) {
-            abortLaunch();
-            return;
+        boolean callSuperOnCreate = true;
+        if (maybeAbortLaunch()) {
+            if (isFinishing()) {
+                return;
+            }
+            // Surprise! abortLaunch() called finish(), but isFinishing() is false. Apparently
+            // this happens in the wild, see crbug.com/781396. Ask the activity if it wants
+            // to start anyway.
+            if (!shouldStartOnAbortLaunchFailure()) {
+                return;
+            }
+            // Activity wants to start anyway. abortLaunch() has already called super.onCreate()
+            // with null state, so make sure we don't call it again.
+            callSuperOnCreate = false;
+            savedInstanceState = null;
+            // Make sure the activity is started in the default state.
+            Intent defaultIntent = new Intent();
+            defaultIntent.setComponent(getIntent().getComponent());
+            setIntent(defaultIntent);
         }
 
-        if (DocumentModeAssassin.getInstance().isMigrationNecessary()) {
-            super.onCreate(null);
-
-            // Kick the user to the MigrationActivity.
-            UpgradeActivity.launchInstance(this, getIntent());
-
-            // Don't remove this task -- it may be a DocumentActivity that exists only in Recents.
-            finish();
-            return;
+        if (callSuperOnCreate) {
+            super.onCreate(transformSavedInstanceStateForOnCreate(savedInstanceState));
         }
-
-        Intent intent = getIntent();
-        if (!isStartedUpCorrectly(intent)) {
-            abortLaunch();
-            return;
-        }
-
-        if (requiresFirstRunToBeCompleted(intent)
-                && FirstRunFlowSequencer.launch(this, intent, false /* requiresBroadcast */,
-                           shouldPreferLightweightFre(intent))) {
-            abortLaunch();
-            return;
-        }
-
-        super.onCreate(transformSavedInstanceStateForOnCreate(savedInstanceState));
         mOnCreateTimestampMs = SystemClock.elapsedRealtime();
         mOnCreateTimestampUptimeMs = SystemClock.uptimeMillis();
         mSavedInstanceState = savedInstanceState;
@@ -302,6 +304,41 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
 
         mStartupDelayed = shouldDelayBrowserStartup();
         ChromeBrowserInitializer.getInstance(this).handlePreNativeStartup(this);
+    }
+
+    private boolean maybeAbortLaunch() {
+        @LaunchIntentDispatcher.Action
+        int dispatchAction = maybeDispatchLaunchIntent(getIntent());
+        if (dispatchAction != LaunchIntentDispatcher.Action.CONTINUE) {
+            abortLaunch();
+            return true;
+        }
+
+        if (DocumentModeAssassin.getInstance().isMigrationNecessary()) {
+            super.onCreate(null);
+
+            // Kick the user to the MigrationActivity.
+            UpgradeActivity.launchInstance(this, getIntent());
+
+            // Don't remove this task -- it may be a DocumentActivity that exists only in Recents.
+            finish();
+            return true;
+        }
+
+        Intent intent = getIntent();
+        if (!isStartedUpCorrectly(intent)) {
+            abortLaunch();
+            return true;
+        }
+
+        if (requiresFirstRunToBeCompleted(intent)
+                && FirstRunFlowSequencer.launch(this, intent, false /* requiresBroadcast */,
+                           shouldPreferLightweightFre(intent))) {
+            abortLaunch();
+            return true;
+        }
+
+        return false;
     }
 
     private void abortLaunch() {
