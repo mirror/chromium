@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e257dfd_beac585e",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontMetrics.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-15T10:13:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64cdbb7d_fcb49e23",
+      "revId": "ce103e3bd28f23ccfbd88f6910f8768507afd46d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c10ca60_c867f260",
         "filename": "third_party/WebKit/Source/platform/fonts/FontMetrics.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-14T17:36:07Z",
       "side": 1,
       "message": "A name like this screams out for a TODO or at least a comment.",
+      "revId": "ce103e3bd28f23ccfbd88f6910f8768507afd46d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a28892f5_cda5dd93",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontMetrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-15T10:13:56Z",
+      "side": 1,
+      "message": "Added a comment and some links to existing bugs.",
+      "parentUuid": "0c10ca60_c867f260",
       "revId": "ce103e3bd28f23ccfbd88f6910f8768507afd46d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
