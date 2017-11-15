@@ -34,6 +34,24 @@
       "revId": "bda9cabbd1bd3e6698b807cea0805c1b23a8a201",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dcbe8aa_1f31bea1",
+        "filename": "content/renderer/input/frame_input_handler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-15T15:24:21Z",
+      "side": 1,
+      "message": "Thanks!  Should have been called something like ScopedUpdateState or RenderFrameUpdateStateAutoReset but it was not added in this CL.  So nm :)",
+      "parentUuid": "3cfccc72_d44034c6",
+      "revId": "bda9cabbd1bd3e6698b807cea0805c1b23a8a201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
