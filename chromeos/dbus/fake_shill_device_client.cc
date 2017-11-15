@@ -521,21 +521,18 @@ FakeShillDeviceClient::SimLockStatus FakeShillDeviceClient::GetSimLockStatus(
 
 void FakeShillDeviceClient::SetSimLockStatus(const std::string& device_path,
                                              const SimLockStatus& status) {
-  base::DictionaryValue* device_properties = NULL;
-  if (!stub_devices_.GetDictionaryWithoutPathExpansion(device_path,
-                                                       &device_properties)) {
+  base::Value* device_properties =
+      stub_devices_.FindKeyOfType(device_path, base::Value::Type::DICTIONARY);
+
+  if (!device_properties) {
     NOTREACHED() << "Device not found: " << device_path;
     return;
   }
 
-  base::DictionaryValue* simlock_dict = nullptr;
-  if (!device_properties->GetDictionaryWithoutPathExpansion(
-          shill::kSIMLockStatusProperty, &simlock_dict)) {
-    simlock_dict = device_properties->SetDictionaryWithoutPathExpansion(
-        shill::kSIMLockStatusProperty,
-        std::make_unique<base::DictionaryValue>());
-  }
-  simlock_dict->Clear();
+  base::Value* simlock_dict =
+      device_properties->SetKey(shill::kSIMLockStatusProperty,
+                                base::Value(base::Value::Type::DICTIONARY));
+
   simlock_dict->SetKey(shill::kSIMLockTypeProperty, base::Value(status.type));
   simlock_dict->SetKey(shill::kSIMLockRetriesLeftProperty,
                        base::Value(status.retries_left));
@@ -642,13 +639,14 @@ void FakeShillDeviceClient::NotifyObserversPropertyChanged(
     observer.OnPropertyChanged(property, *value);
 }
 
-base::DictionaryValue* FakeShillDeviceClient::GetDeviceProperties(
+base::Value* FakeShillDeviceClient::GetDeviceProperties(
     const std::string& device_path) {
-  base::DictionaryValue* properties = NULL;
-  if (!stub_devices_.GetDictionaryWithoutPathExpansion(
-      device_path, &properties)) {
-    properties = stub_devices_.SetDictionaryWithoutPathExpansion(
-        device_path, std::make_unique<base::DictionaryValue>());
+  base::Value* properties =
+      stub_devices_.FindKeyOfType(device_path, base::Value::Type::DICTIONARY);
+
+  if (!properties) {
+    properties = stub_devices_.SetKey(
+        device_path, base::Value(base::Value::Type::DICTIONARY));
   }
   return properties;
 }

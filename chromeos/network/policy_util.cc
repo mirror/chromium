@@ -161,22 +161,23 @@ bool IsAutoConnectEnabledInPolicy(const base::DictionaryValue& policy) {
   return autoconnect;
 }
 
-base::DictionaryValue* GetOrCreateDictionary(const std::string& key,
-                                             base::DictionaryValue* dict) {
-  base::DictionaryValue* inner_dict = NULL;
-  if (!dict->GetDictionaryWithoutPathExpansion(key, &inner_dict)) {
-    inner_dict = dict->SetDictionaryWithoutPathExpansion(
-        key, std::make_unique<base::DictionaryValue>());
-  }
+base::Value* GetOrCreateDictionary(const std::string& key, base::Value* dict) {
+  auto* inner_dict = dict->FindKeyOfType(key, base::Value::Type::DICTIONARY);
+  if (!inner_dict)
+    inner_dict = dict->SetKey(key, base::Value(base::Value::Type::DICTIONARY));
   return inner_dict;
 }
 
-base::DictionaryValue* GetOrCreateNestedDictionary(
-    const std::string& key1,
-    const std::string& key2,
-    base::DictionaryValue* dict) {
-  base::DictionaryValue* inner_dict = GetOrCreateDictionary(key1, dict);
-  return GetOrCreateDictionary(key2, inner_dict);
+base::Value* GetOrCreateNestedDictionary(const std::string& key1,
+                                         const std::string& key2,
+                                         base::Value* dict) {
+  auto* inner_dict =
+      dict->FindPathOfType({key1, key2}, base::Value::Type::DICTIONARY);
+  if (!inner_dict) {
+    inner_dict =
+        dict->SetPath({key1, key2}, base::Value(base::Value::Type::DICTIONARY));
+  }
+  return inner_dict;
 }
 
 void ApplyGlobalAutoconnectPolicy(
