@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f44b91b3_4ad4dd52",
+        "filename": "components/payments/content/payment_request_converter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-15T18:29:31Z",
+      "side": 0,
+      "message": "Do you think we should remove all mojo-to-struct converters and use mojo everywhere?",
+      "range": {
+        "startLine": 29,
+        "startChar": 12,
+        "endLine": 29,
+        "endChar": 30
+      },
+      "revId": "c707b16dad45ffd88af49154410a0a25cc1a600d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

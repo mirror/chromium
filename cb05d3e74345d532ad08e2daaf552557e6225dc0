@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38498b80_2af9dbb8",
+        "filename": "components/payments/content/payment_response_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-15T18:29:31Z",
+      "side": 1,
+      "message": "Do you think the code that used to call PaymentResponseHelper.GetMojomPaymentaddressFromAutofillprofile() can be changed to call data_util::GetPaymentAddressFromAutofillProfile() directly? If we can do that, then there\u0027s no need for this static method here.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 64
+      },
+      "revId": "cb05d3e74345d532ad08e2daaf552557e6225dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0fa8547_c668622d",
+        "filename": "components/payments/core/payment_details_modifier.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-15T18:29:31Z",
+      "side": 1,
+      "message": "Should probably be item.Clone() to avoid unexpected failures.",
+      "range": {
+        "startLine": 41,
+        "startChar": 39,
+        "endLine": 41,
+        "endChar": 55
+      },
+      "revId": "cb05d3e74345d532ad08e2daaf552557e6225dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "623c35e8_2e9797c1",
+        "filename": "components/payments/core/payment_item.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-15T18:29:31Z",
+      "side": 1,
+      "message": "Can we use payments::mojom::PaymentItem everywhere instead of this struct?",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 17
+      },
+      "revId": "cb05d3e74345d532ad08e2daaf552557e6225dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc06b48d_e3e3ebe0",
+        "filename": "components/payments/core/payment_response.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-15T18:29:31Z",
+      "side": 1,
+      "message": "Can we use payments::mojom::PaymentResponse everywhere instead of this struct?",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 21
+      },
+      "revId": "cb05d3e74345d532ad08e2daaf552557e6225dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7108805_4ad1901e",
+        "filename": "components/payments/core/payment_shipping_option.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-15T18:29:31Z",
+      "side": 1,
+      "message": "Can we use payments::mojom::PaymentShippingOption everywhere instead of this struct?",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "cb05d3e74345d532ad08e2daaf552557e6225dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d3d059_d95c3f05",
+        "filename": "components/payments/mojom/payment_request_data.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-15T18:29:31Z",
+      "side": 1,
+      "message": "Can we move all of the data structures from payment_request.mojom into here?",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 3
+      },
+      "revId": "cb05d3e74345d532ad08e2daaf552557e6225dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
