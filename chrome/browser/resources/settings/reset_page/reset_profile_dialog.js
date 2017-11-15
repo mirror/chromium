@@ -41,7 +41,7 @@ Polymer({
     },
   },
 
-  /** @private {!settings.ResetBrowserProxy} */
+  /** @private {?settings.ResetBrowserProxy} */
   browserProxy_: null,
 
   /**
@@ -85,8 +85,7 @@ Polymer({
     });
   },
 
-  /** @private */
-  showDialog_: function() {
+  show: function() {
     this.$.dialog.showModal();
     this.browserProxy_.onShowResetProfileDialog();
   },
@@ -99,7 +98,6 @@ Polymer({
       this.browserProxy_.getTriggeredResetToolName().then(name => {
         this.resetRequestOrigin_ = 'triggeredreset';
         this.triggeredResetToolName_ = name;
-        this.showDialog_();
       });
     } else {
       // For the non-triggered reset dialog, a '#cct' hash indicates that the
@@ -109,7 +107,6 @@ Polymer({
           'cct' :
           settings.getQueryParameters().get('origin');
       this.resetRequestOrigin_ = origin || '';
-      this.showDialog_();
     }
   },
 
