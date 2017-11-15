@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f1066a0_c7a8f658",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-15T14:07:00Z",
+      "side": 1,
+      "message": "And I assume it\u0027s safe because no release branch exists currently (or M64)?\n(mindful of the developers\u0027 complains regarding the changes backmerging process)",
+      "revId": "7c661264a40a2696c0d24c0dfe2b14368ccf8b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
