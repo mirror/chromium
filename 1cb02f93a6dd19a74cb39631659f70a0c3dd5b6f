@@ -25,6 +25,172 @@
     },
     {
       "key": {
+        "uuid": "8ec802e1_d1037dbc",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T19:23:57Z",
+      "side": 1,
+      "message": "No. Custom elements need both an opening and a closing tag.",
+      "parentUuid": "c5c7e289_fb824bab",
+      "range": {
+        "startLine": 15,
+        "startChar": 13,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0df9d5a_011c2624",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T19:23:57Z",
+      "side": 1,
+      "message": "Should this element be named \u003cwelcome-app\u003e? Essentially it is the top-level element that contains the entire app, no?",
+      "range": {
+        "startLine": 8,
+        "startChar": 16,
+        "endLine": 8,
+        "endChar": 31
+      },
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b6a1166_026e1079",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T19:23:57Z",
+      "side": 1,
+      "message": "Is this being used anywhere?",
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84fa4644_04b35113",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T19:23:57Z",
+      "side": 1,
+      "message": "Are those styles copied from somewhere? Does it make a noticeable difference if the percentage values are simplified to 0, 7, 11, 15 ... etc?",
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc37efb_b09a8fb5",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T19:23:57Z",
+      "side": 1,
+      "message": "Is this wrapper necessary? Can we remove and just add display: block height: 100% on host?",
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3cbc42b_1d95d999",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T19:23:57Z",
+      "side": 1,
+      "message": "Nit (optional): How about tweaking the names as follows?\nlogo -\u003e logoWrapper\nlogoIcon -\u003e logo",
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f03f3e42_cf7f2758",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T19:23:57Z",
+      "side": 1,
+      "message": "Can you add JS compilation targets for the new files?",
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb150d09_3e395e35",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T19:23:57Z",
+      "side": 1,
+      "message": "@override",
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaa436b5_7adcef8e",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T19:23:57Z",
+      "side": 1,
+      "message": "@private (here and elsewhere).",
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2f5b3f3_e41ec2e6",
         "filename": "chrome/browser/ui/webui/welcome_ui.cc",
         "patchSetId": 8
