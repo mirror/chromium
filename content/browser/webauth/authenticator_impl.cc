@@ -71,7 +71,7 @@ AuthenticatorImpl::AuthenticatorImpl(RenderFrameHost* render_frame_host)
 
 // mojom:Authenticator
 void AuthenticatorImpl::MakeCredential(
-    webauth::mojom::MakeCredentialOptionsPtr options,
+    webauth::mojom::MakePublicKeyCredentialOptionsPtr options,
     MakeCredentialCallback callback) {
   std::string effective_domain;
   std::string relying_party_id;
@@ -99,14 +99,15 @@ void AuthenticatorImpl::MakeCredential(
 
   // Check that at least one of the cryptographic parameters is supported.
   // Only ES256 is currently supported by U2F_V2.
-  if (!HasValidAlgorithm(options->crypto_parameters)) {
+  if (!HasValidAlgorithm(options->public_key_parameters)) {
     std::move(callback).Run(
         webauth::mojom::AuthenticatorStatus::NOT_SUPPORTED_ERROR, nullptr);
     return;
   }
 
   std::unique_ptr<CollectedClientData> client_data =
-      CollectedClientData::Create(caller_origin_.Serialize(),
+      CollectedClientData::Create(authenticator_utils::kCreateType,
+                                  caller_origin_.Serialize(),
                                   std::move(options->challenge));
 
   // SHA-256 hash of the JSON data structure

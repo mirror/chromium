@@ -15,7 +15,7 @@
 
 namespace content {
 
-class AttestationData;
+class AttestedCredentialData;
 
 namespace {
 // Flag values
@@ -32,14 +32,14 @@ class CONTENT_EXPORT AuthenticatorData {
   AuthenticatorData(std::string relying_party_id,
                     uint8_t flags,
                     std::vector<uint8_t> counter,
-                    std::unique_ptr<AttestationData> data);
+                    std::unique_ptr<AttestedCredentialData> data);
   virtual ~AuthenticatorData();
 
   static std::unique_ptr<AuthenticatorData> Create(
       std::string client_data_json,
       uint8_t flags,
       std::vector<uint8_t> counter,
-      std::unique_ptr<AttestationData> data);
+      std::unique_ptr<AttestedCredentialData> data);
 
   // Produces a byte array consisting of:
   // * hash(relying_party_id)
@@ -64,7 +64,7 @@ class CONTENT_EXPORT AuthenticatorData {
 
   // Signature counter, 32-bit unsigned big-endian integer.
   const std::vector<uint8_t> counter_;
-  const std::unique_ptr<AttestationData> attestation_data_;
+  const std::unique_ptr<AttestedCredentialData> attested_data_;
 
   DISALLOW_COPY_AND_ASSIGN(AuthenticatorData);
 };

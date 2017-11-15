@@ -39,7 +39,7 @@ class CONTENT_EXPORT AuthenticatorImpl : public webauth::mojom::Authenticator {
 
  private:
   // mojom:Authenticator
-  void MakeCredential(webauth::mojom::MakeCredentialOptionsPtr options,
+  void MakeCredential(webauth::mojom::MakePublicKeyCredentialOptionsPtr options,
                       MakeCredentialCallback callback) override;
 
   // Callback to handle the async response from a U2fDevice.
