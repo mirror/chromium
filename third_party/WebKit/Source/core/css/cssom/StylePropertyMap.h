@@ -5,6 +5,7 @@
 #ifndef StylePropertyMap_h
 #define StylePropertyMap_h
 
+#include "bindings/core/v8/v8_update_function.h"
 #include "core/css/cssom/StylePropertyMapReadonly.h"
 
 namespace blink {
@@ -23,6 +24,7 @@ class CORE_EXPORT StylePropertyMap : public StylePropertyMapReadonly {
               CSSStyleValueOrCSSStyleValueSequenceOrString& item,
               ExceptionState&);
   void remove(const String& property_name, ExceptionState&);
+  void update(const String&, const V8UpdateFunction*) {}
 
   virtual void set(CSSPropertyID,
                    CSSStyleValueOrCSSStyleValueSequenceOrString& item,
