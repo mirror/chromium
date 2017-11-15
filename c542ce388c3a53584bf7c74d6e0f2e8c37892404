@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "758f0339_9dd174fd",
+        "filename": "components/offline_pages/core/model/clear_legacy_temporary_pages_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-15T00:53:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fa60644_6fc807da",
+      "range": {
+        "startLine": 44,
+        "startChar": 29,
+        "endLine": 44,
+        "endChar": 44
+      },
+      "revId": "c542ce388c3a53584bf7c74d6e0f2e8c37892404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd6a1aad_1c55fe5e",
         "filename": "components/offline_pages/core/model/clear_legacy_temporary_pages_task.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "c542ce388c3a53584bf7c74d6e0f2e8c37892404",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc90713_a684cf29",
+        "filename": "components/offline_pages/core/model/clear_legacy_temporary_pages_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-15T00:53:35Z",
+      "side": 1,
+      "message": "I think it makes sense to have a retry mechanism for consistency checks. And I think it also should cover consistency check of persistent pages and legacy pages. I\u0027ve opened a bug for it crbug.com/785084 in order to track it.",
+      "parentUuid": "dd6a1aad_1c55fe5e",
+      "range": {
+        "startLine": 77,
+        "startChar": 5,
+        "endLine": 77,
+        "endChar": 30
+      },
+      "revId": "c542ce388c3a53584bf7c74d6e0f2e8c37892404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
