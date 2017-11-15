@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e27d64ae_c206da24",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-15T08:49:52Z",
+      "side": 1,
+      "message": "By the way, I suspect we can get rid of this static_cast, by fixing up the definition of \n  template \u003ctypename Interface\u003e class mojo::StrongBinding\nto become\n  template \u003ctypename Interface, typename Impl\u003e class mojo::StrongBinding\nthen changing line\n  Interface* impl()\nto become\n  Impl* impl()\n\nI.e. here https://cs.chromium.org/chromium/src/mojo/public/cpp/bindings/strong_binding.h?type\u003dcs\u0026q\u003dmojo::MakeStrongBinding\u0026sq\u003dpackage:chromium\u0026l\u003d44\nand on line 78 there too.\n\nI didn\u0027t get a chance to look into it properly, something for later probably.",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 41
+      },
+      "revId": "75fd141170d0cf3183c2ab9b7d481ca187859ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d18126_a1cac65d",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-15T08:49:52Z",
+      "side": 1,
+      "message": "Let\u0027s add:\n\n// This object will unbind and destroy itself if |notifier| is destroyed.",
+      "revId": "75fd141170d0cf3183c2ab9b7d481ca187859ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39229d97_ba71d79d",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-15T08:49:52Z",
+      "side": 1,
+      "message": "No point in this \"const\" in the .h file, only has meaning in the .cc file",
+      "range": {
+        "startLine": 28,
+        "startChar": 54,
+        "endLine": 28,
+        "endChar": 59
+      },
+      "revId": "75fd141170d0cf3183c2ab9b7d481ca187859ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67711793_ca57f82c",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-15T08:49:52Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 32,
+        "startChar": 39,
+        "endLine": 32,
+        "endChar": 44
+      },
+      "revId": "75fd141170d0cf3183c2ab9b7d481ca187859ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa03e37_d6bd7a62",
+        "filename": "services/device/geolocation/public_ip_address_geolocator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-15T08:49:52Z",
+      "side": 1,
+      "message": "Just noticed this comment I forgot to update when I removed the dependency on Provider.\n\nSo it shoudl be more like:\n\n// Basic test of a client invoking QueryNextPosition.",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 69
+      },
+      "revId": "75fd141170d0cf3183c2ab9b7d481ca187859ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
