@@ -24,8 +24,8 @@ namespace blink {
 class ActiveStyleSheetsTest : public PageTestBase {
  protected:
   static CSSStyleSheet* CreateSheet(const String& css_text = String()) {
-    StyleSheetContents* contents =
-        StyleSheetContents::Create(CSSParserContext::Create(kHTMLStandardMode));
+    StyleSheetContents* contents = StyleSheetContents::Create(
+        CSSParserContext::Create(kHTMLStandardMode, kInsecureContext));
     contents->ParseString(css_text);
     contents->EnsureRuleSet(MediaQueryEvaluator(),
                             kRuleHasDocumentSecurityOrigin);

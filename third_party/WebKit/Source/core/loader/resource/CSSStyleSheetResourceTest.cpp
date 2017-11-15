@@ -94,7 +94,7 @@ TEST_F(CSSStyleSheetResourceTest, DuplicateResourceNotCached) {
   css_resource->FinishForTest();
 
   CSSParserContext* parser_context =
-      CSSParserContext::Create(kHTMLStandardMode);
+      CSSParserContext::Create(kHTMLStandardMode, kInsecureContext);
   StyleSheetContents* contents = StyleSheetContents::Create(parser_context);
   CSSStyleSheet* sheet = CSSStyleSheet::Create(contents, GetDocument());
   EXPECT_TRUE(sheet);
@@ -115,7 +115,7 @@ TEST_F(CSSStyleSheetResourceTest, CreateFromCacheRestoresOriginalSheet) {
   CSSStyleSheetResource* css_resource = CreateAndSaveTestStyleSheetResource();
 
   CSSParserContext* parser_context =
-      CSSParserContext::Create(kHTMLStandardMode);
+      CSSParserContext::Create(kHTMLStandardMode, kInsecureContext);
   StyleSheetContents* contents = StyleSheetContents::Create(parser_context);
   CSSStyleSheet* sheet = CSSStyleSheet::Create(contents, GetDocument());
   ASSERT_TRUE(sheet);
@@ -139,7 +139,7 @@ TEST_F(CSSStyleSheetResourceTest,
   CSSStyleSheetResource* css_resource = CreateAndSaveTestStyleSheetResource();
 
   CSSParserContext* parser_context =
-      CSSParserContext::Create(kHTMLStandardMode);
+      CSSParserContext::Create(kHTMLStandardMode, kInsecureContext);
   StyleSheetContents* contents = StyleSheetContents::Create(parser_context);
   CSSStyleSheet* sheet = CSSStyleSheet::Create(contents, GetDocument());
   ASSERT_TRUE(sheet);
