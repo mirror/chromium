@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "226f7117_08e5e767",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ToolbarProgressBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-15T20:07:00Z",
+      "side": 0,
+      "message": "these checks still seem good to me...why remove them?",
+      "range": {
+        "startLine": 472,
+        "startChar": 27,
+        "endLine": 472,
+        "endChar": 42
+      },
+      "revId": "6bb7b9d594fbee03e28e0a0b36b82f6b50c2f14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
