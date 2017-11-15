@@ -15,7 +15,7 @@ CrashRestoreComplexTest.*
 CrashRestoreSimpleTest.*
 DriveIntegrationServiceBrowserTest.*
 EnterpriseEnrollmentTest.*
-# Works, but flaky CHECK in TransportIdForWindow(). http://crbug.com/781391
+# Flaky timeouts.
 # EulaTest.*
 KioskAppManagerTest.*
 KioskAppUpdateServiceTest.*
@@ -32,8 +32,7 @@ ShutdownPolicyLockerTest.*
 UpdateScreenTest.*
 UserImageManagerTest.*
 UserSelectionScreenTest.*
-# Works, but flaky CHECK in TransportIdForWindow(). http://crbug.com/781391
-# WebviewLoginTest.*
+WebviewLoginTest.*
 
 # Tests from //chrome/browser/ui/ash.
 AcceleratorCommandsFullscreenBrowserTest.*
