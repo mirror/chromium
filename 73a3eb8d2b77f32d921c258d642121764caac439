@@ -16,6 +16,24 @@
       "revId": "73a3eb8d2b77f32d921c258d642121764caac439",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0883d2c1_5dfa39bf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/csp-tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-15T01:24:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b0edd2c_b37f5394",
+      "revId": "73a3eb8d2b77f32d921c258d642121764caac439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
