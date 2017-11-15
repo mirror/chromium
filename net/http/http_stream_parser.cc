@@ -188,6 +188,8 @@ HttpStreamParser::HttpStreamParser(ClientSocketHandle* connection,
                                    const NetLogWithSource& net_log)
     : io_state_(STATE_NONE),
       request_(request),
+      url_(request->url),
+      request_method_(request->method),
       request_headers_(nullptr),
       request_headers_length_(0),
       http_09_on_non_default_ports_enabled_(false),
@@ -360,12 +362,6 @@ int HttpStreamParser::ReadResponseBody(IOBuffer* buf, int buf_len,
   user_read_buf_ = buf;
   user_read_buf_len_ = buf_len;
   io_state_ = STATE_READ_BODY;
-
-  // Invalidate HttpRequestInfo pointer. This is to allow the stream to be
-  // shared across multiple consumers.
-  // It is safe to reset it at this point since request_->upload_data_stream
-  // is also not needed anymore.
-  request_ = nullptr;
 
   int result = DoLoop(OK);
   if (result == ERR_IO_PENDING)
@@ -609,6 +605,12 @@ int HttpStreamParser::DoReadHeadersComplete(int result) {
 
   result = HandleReadHeaderResult(result);
 
+  // Invalidate HttpRequestInfo pointer. This is to allow |this| to be
+  // shared across multiple consumers.
+  // It is safe to reset it at this point since request_->upload_data_stream
+  // is also not needed anymore.
+  request_ = nullptr;
+
   // TODO(mmenke):  The code below is ugly and hacky.  A much better and more
   // flexible long term solution would be to separate out the read and write
   // loops, though this would involve significant changes, both here and
@@ -825,7 +827,7 @@ int HttpStreamParser::HandleReadHeaderResult(int result) {
     // looks like an HTTP/0.9 response is weird.  Should either come up with
     // another error code, or, better, disable HTTP/0.9 over HTTPS (and give
     // that a new error code).
-    if (request_->url.SchemeIsCryptographic()) {
+    if (url_.SchemeIsCryptographic()) {
       io_state_ = STATE_DONE;
       return ERR_RESPONSE_HEADERS_TRUNCATED;
     }
@@ -962,10 +964,10 @@ int HttpStreamParser::ParseResponseHeaders(int end_offset) {
 
     // If the port is not the default for the scheme, assume it's not a real
     // HTTP/0.9 response, and fail the request.
-    base::StringPiece scheme = request_->url.scheme_piece();
+    base::StringPiece scheme = url_.scheme_piece();
     if (!http_09_on_non_default_ports_enabled_ &&
         url::DefaultPortForScheme(scheme.data(), scheme.length()) !=
-            request_->url.EffectiveIntPort()) {
+            url_.EffectiveIntPort()) {
       // Allow Shoutcast responses over HTTP, as it's somewhat common and relies
       // on HTTP/0.9 on weird ports to work.
       // See
@@ -1045,7 +1047,7 @@ void HttpStreamParser::CalculateResponseBodySize() {
         break;
     }
   }
-  if (request_->method == "HEAD")
+  if (request_method_ == "HEAD")
     response_body_length_ = 0;
 
   if (response_body_length_ == -1) {
@@ -1108,7 +1110,7 @@ bool HttpStreamParser::CanReuseConnection() const {
 }
 
 void HttpStreamParser::GetSSLInfo(SSLInfo* ssl_info) {
-  if (request_->url.SchemeIsCryptographic() && connection_->socket()) {
+  if (url_.SchemeIsCryptographic() && connection_->socket()) {
     SSLClientSocket* ssl_socket =
         static_cast<SSLClientSocket*>(connection_->socket());
     ssl_socket->GetSSLInfo(ssl_info);
@@ -1117,7 +1119,7 @@ void HttpStreamParser::GetSSLInfo(SSLInfo* ssl_info) {
 
 void HttpStreamParser::GetSSLCertRequestInfo(
     SSLCertRequestInfo* cert_request_info) {
-  if (request_->url.SchemeIsCryptographic() && connection_->socket()) {
+  if (url_.SchemeIsCryptographic() && connection_->socket()) {
     SSLClientSocket* ssl_socket =
         static_cast<SSLClientSocket*>(connection_->socket());
     ssl_socket->GetSSLCertRequestInfo(cert_request_info);
@@ -1127,7 +1129,7 @@ void HttpStreamParser::GetSSLCertRequestInfo(
 Error HttpStreamParser::GetTokenBindingSignature(crypto::ECPrivateKey* key,
                                                  TokenBindingType tb_type,
                                                  std::vector<uint8_t>* out) {
-  if (!request_->url.SchemeIsCryptographic() || !connection_->socket()) {
+  if (!url_.SchemeIsCryptographic() || !connection_->socket()) {
     NOTREACHED();
     return ERR_FAILED;
   }
