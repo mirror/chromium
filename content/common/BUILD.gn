@@ -268,7 +268,6 @@ source_set("common") {
     "quarantine/quarantine_mac.mm",
     "quarantine/quarantine_win.cc",
     "quota_messages.h",
-    "render_process_messages.h",
     "render_widget_surface_properties.cc",
     "render_widget_surface_properties.h",
     "resize_params.cc",
