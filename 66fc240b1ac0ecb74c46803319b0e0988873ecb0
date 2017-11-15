@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f593d123_2b15a990",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-11-15T12:45:04Z",
+      "side": 1,
+      "message": "maybe you can remove dependency on some of these in toolbar target?",
+      "range": {
+        "startLine": 31,
+        "startChar": 29,
+        "endLine": 31,
+        "endChar": 53
+      },
+      "revId": "66fc240b1ac0ecb74c46803319b0e0988873ecb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94743ab_eeebcd45",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-11-15T12:45:04Z",
+      "side": 1,
+      "message": "I think both of these should be weak.",
+      "range": {
+        "startLine": 39,
+        "startChar": 21,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "66fc240b1ac0ecb74c46803319b0e0988873ecb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
