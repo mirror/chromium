@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6f86158_23a8b513",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-15T08:58:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5cc8d54_78c06f9d",
+      "revId": "a35f0a0dc43956808fab7415377095819968a139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c470550_c571ac22",
         "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "55047d67_14ffc260",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-15T08:58:27Z",
+      "side": 1,
+      "message": "In tests, this function might be called separately. I have repeated here to make it more robust to errors.",
+      "parentUuid": "6c470550_c571ac22",
+      "revId": "a35f0a0dc43956808fab7415377095819968a139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df2ccba3_4140e919",
         "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
         "patchSetId": 9
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-14T17:11:09Z",
       "side": 1,
       "message": "Isn\u0027t features guaranteed to have size 4 in the current code?",
+      "revId": "a35f0a0dc43956808fab7415377095819968a139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e2e8dc6_deb30826",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-15T08:58:27Z",
+      "side": 1,
+      "message": "Yes, these tests are to ensure that if feature extraction code is changed, Classifier codes are also updated. But if the external tests are sufficient, I can remove both.",
+      "parentUuid": "df2ccba3_4140e919",
       "revId": "a35f0a0dc43956808fab7415377095819968a139",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
