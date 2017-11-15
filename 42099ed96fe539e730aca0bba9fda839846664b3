@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "12d16b90_104ca6d2",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-15T01:20:53Z",
+      "side": 1,
+      "message": "I still can\u0027t tell what kinds of properties to which this refers. Seems like they all relate to progress of the task, so specifying that could help clarify.",
+      "parentUuid": "5f2aa798_4024f2f3",
+      "range": {
+        "startLine": 71,
+        "startChar": 37,
+        "endLine": 72,
+        "endChar": 40
+      },
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a916be7c_1dc06cfe",
         "filename": "ios/web/download/download_task_impl.mm",
         "patchSetId": 11
@@ -230,6 +254,24 @@
       "side": 1,
       "message": "Updated the comment. Not answering here to validate that the comment actually answers your question.",
       "parentUuid": "3ef653f3_203f1e31",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79f8c65d_62448a41",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-15T01:20:53Z",
+      "side": 1,
+      "message": "LG",
+      "parentUuid": "f19adec9_7cf60759",
       "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -385,6 +427,24 @@
       "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d0fdf9_ed6859fe",
+        "filename": "ios/web/download/download_task_impl_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-15T01:20:53Z",
+      "side": 1,
+      "message": "I think the alternative would be to separate the verification of each state into separate test cases, and get rid of duplication if testing same thing.\n\nBut, I won\u0027t push on this.",
+      "parentUuid": "9e377cba_8edb444c",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
