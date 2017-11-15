@@ -16,6 +16,24 @@
       "revId": "d14c6b3057d922ff660cbe8394f01575157e9634",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aae06565_51850623",
+        "filename": "content/browser/accessibility/browser_accessibility_atk_hyperlink.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-11-15T10:13:08Z",
+      "side": 0,
+      "message": "Ah, right.  Sorry about that.  If you CC me to your fix, I can make a test jumbo build before it lands.",
+      "parentUuid": "bff7b26c_402a3813",
+      "revId": "d14c6b3057d922ff660cbe8394f01575157e9634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
