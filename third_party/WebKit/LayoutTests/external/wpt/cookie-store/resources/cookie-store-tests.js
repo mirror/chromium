@@ -142,31 +142,31 @@ const suite = ({testName = undefined} = {}) => {
       }
       await promise_rejects_when_unsecured(
           testCase,
-          new SyntaxError(),
+          new TypeError(),
           testThreeSimpleOriginSessionCookiesSetSequentially(),
           '__Host- cookies only writable from secure contexts' +
             ' (testThreeSimpleOriginSessionCookiesSetSequentially)');
       await promise_rejects_when_unsecured(
           testCase,
-          new SyntaxError(),
+          new TypeError(),
           testThreeSimpleOriginSessionCookiesSetNonsequentially(),
           '__Host- cookies only writable from secure contexts' +
             ' (testThreeSimpleOriginSessionCookiesSetNonsequentially)');
       await promise_rejects_when_unsecured(
           testCase,
-          new SyntaxError(),
+          new TypeError(),
           setExpiredSecureCookieWithDomainPathAndFallbackValue(),
           'Secure cookies only writable from secure contexts' +
             ' (setExpiredSecureCookieWithDomainPathAndFallbackValue)');
       await promise_rejects_when_unsecured(
           testCase,
-          new SyntaxError(),
+          new TypeError(),
           deleteSimpleOriginCookie(),
           '__Host- cookies only writable from secure contexts' +
             ' (deleteSimpleOriginCookie)');
       await promise_rejects_when_unsecured(
           testCase,
-          new SyntaxError(),
+          new TypeError(),
           deleteSecureCookieWithDomainAndPath(),
           'Secure cookies only writable from secure contexts' +
             ' (deleteSecureCookieWithDomainAndPath)');
@@ -290,31 +290,31 @@ const testDeleteCookies = async testCase => {
     },
     async () => await promise_rejects_when_unsecured(
         testCase,
-        new SyntaxError(),
+        new TypeError(),
         cookieStore.delete('__Host-COOKIENAME')),
     async () => await promise_rejects_when_unsecured(
         testCase,
-        new SyntaxError(),
+        new TypeError(),
         cookieStore.delete('__Host-1🍪')),
     async () => await promise_rejects_when_unsecured(
         testCase,
-        new SyntaxError(),
+        new TypeError(),
         cookieStore.delete('__Host-2🌟')),
     async () => await promise_rejects_when_unsecured(
         testCase,
-        new SyntaxError(),
+        new TypeError(),
         cookieStore.delete('__Host-3🌱')),
     async () => await promise_rejects_when_unsecured(
         testCase,
-        new SyntaxError(),
+        new TypeError(),
         cookieStore.delete('__Host-unordered1🍪')),
     async () => await promise_rejects_when_unsecured(
         testCase,
-        new SyntaxError(),
+        new TypeError(),
         cookieStore.delete('__Host-unordered2🌟')),
     async () => await promise_rejects_when_unsecured(
         testCase,
-        new SyntaxError(),
+        new TypeError(),
         cookieStore.delete('__Host-unordered3🌱')),
   ]) {
     try {
@@ -430,7 +430,7 @@ let testThreeSimpleOriginSessionCookiesSetSequentially = async () => {
       async suffix => (await cookieStore.get('__Host-' + suffix)).value));
   let actual = matchingValues.join(';');
   let expected = '🔵cookie-value1🔴;🌠cookie-value2🌠;🔶cookie-value3🔷';
-  if (actual !== expected) throw new Error(
+  if (actual !== expected) throw new TypeError(
       'Expected ' + JSON.stringify(expected) +
         ' but got ' + JSON.stringify(actual));
 };
@@ -455,7 +455,7 @@ let testThreeSimpleOriginSessionCookiesSetNonsequentially = async () => {
       '🔵unordered-cookie-value1🔴;' +
       '🌠unordered-cookie-value2🌠;' +
       '🔶unordered-cookie-value3🔷';
-  if (actual !== expected) throw new Error(
+  if (actual !== expected) throw new TypeError(
       'Expected ' + JSON.stringify(expected) +
         ' but got ' + JSON.stringify(actual));
 };
@@ -641,14 +641,14 @@ let testNoNameAndNoValue = async () => {
   let actual1 =
       (await cookieStore.getAll('')).map(({ value }) => value).join(';');
   let expected1 = 'first-value';
-  if (actual1 !== expected1) throw new Error(
+  if (actual1 !== expected1) throw new TypeError(
       'Expected ' + JSON.stringify(expected1) +
         ' but got ' + JSON.stringify(actual1));
   await cookieStore.set('', '');
   let actual2 =
       (await cookieStore.getAll('')).map(({ value }) => value).join(';');
   let expected2 = '';
-  if (actual2 !== expected2) throw new Error(
+  if (actual2 !== expected2) throw new TypeError(
       'Expected ' + JSON.stringify(expected) +
         ' but got ' + JSON.stringify(actual));
   await cookieStore.delete('');
@@ -676,14 +676,14 @@ let testNoNameMultipleValues = async () => {
   let actual1 =
       (await cookieStore.getAll('')).map(({ value }) => value).join(';');
   let expected1 = 'first-value';
-  if (actual1 !== expected1) throw new Error(
+  if (actual1 !== expected1) throw new TypeError(
       'Expected ' + JSON.stringify(expected1) +
         ' but got ' + JSON.stringify(actual1));
   await cookieStore.set('', 'second-value');
   let actual2 =
       (await cookieStore.getAll('')).map(({ value }) => value).join(';');
   let expected2 = 'second-value';
-  if (actual2 !== expected2) throw new Error(
+  if (actual2 !== expected2) throw new TypeError(
       'Expected ' + JSON.stringify(expected2) +
         ' but got ' + JSON.stringify(actual2));
   await cookieStore.delete('');
@@ -708,7 +708,7 @@ let testNoNameEqualsInValue = async () => {
   let actual1 =
       (await cookieStore.getAll('')).map(({ value }) => value).join(';');
   let expected1 = 'first-value';
-  if (actual1 !== expected1) throw new Error(
+  if (actual1 !== expected1) throw new TypeError(
       'Expected ' + JSON.stringify(expected1) +
         ' but got ' + JSON.stringify(actual1));
   try {
@@ -717,7 +717,7 @@ let testNoNameEqualsInValue = async () => {
     let actual2 =
         (await cookieStore.getAll('')).map(({ value }) => value).join(';');
     let expected2 = 'first-value';
-    if (actual2 !== expected2) throw new Error(
+    if (actual2 !== expected2) throw new TypeError(
         'Expected ' + JSON.stringify(expected2) +
           ' but got ' + JSON.stringify(actual2));
     assert_equals(
@@ -739,7 +739,7 @@ let testNoNameEqualsInValue = async () => {
         'Empty observed cookie jar after cleanup in testNoNameEqualsInValue');
     return;
   }
-  throw new Error(
+  throw new TypeError(
       'Expected promise rejection' +
         ' when setting a cookie with no name and "=" in value');
 };
@@ -1029,7 +1029,7 @@ const testGetSetGetAll = async () => {
 const testOneSimpleOriginCookie = async testCase => {
   await promise_rejects_when_unsecured(
       testCase,
-      new SyntaxError(),
+      new TypeError(),
       setOneSimpleOriginSessionCookie(),
       '__Host- prefix only writable from' +
         ' secure contexts (setOneSimpleOriginSessionCookie)');
@@ -1064,7 +1064,7 @@ const testOneSimpleOriginCookie = async testCase => {
 const testExpiration = async testCase => {
   await promise_rejects_when_unsecured(
       testCase,
-      new SyntaxError(),
+      new TypeError(),
       setOneDaySecureCookieWithDate(),
       'Secure cookies only writable' +
         ' from secure contexts (setOneDaySecureCookieWithDate)');
@@ -1080,7 +1080,7 @@ const testExpiration = async testCase => {
   await deleteUnsecuredCookieWithDomainAndPath();
   await promise_rejects_when_unsecured(
       testCase,
-      new SyntaxError(),
+      new TypeError(),
       setSecureCookieWithHttpLikeExpirationString(),
       'Secure cookies only writable from secure contexts' +
         ' (setSecureCookieWithHttpLikeExpirationString)');
