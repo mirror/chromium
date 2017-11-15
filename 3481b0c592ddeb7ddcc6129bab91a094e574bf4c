@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2c036d8_10e1176c",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-15T09:38:48Z",
+      "side": 1,
+      "message": "nit: maybe batch this and the other check below together?\n\n base::CheckedNumeric\u003cuint64_t\u003e safe_space_required \u003d space_required;\n base::CheckedNumeric\u003cuint64_t\u003e safe_space_required_with_side_data \u003d space_required;\n safe_space_required +\u003d usage;\n safe_space_required_with_side_data \u003d safe_space_required + side_data_size;\n if (!safe_space_required.IsValid() || !safe_space_required_with_side_data.IsValid()) {\n    ...\n }",
+      "revId": "3481b0c592ddeb7ddcc6129bab91a094e574bf4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
