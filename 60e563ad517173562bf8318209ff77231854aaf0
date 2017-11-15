@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65a91996_69d805da",
+        "filename": "services/device/generic_sensor/android/java/src/org/chromium/device/sensors/PlatformSensor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T18:41:58Z",
+      "side": 1,
+      "message": "I can understand that SensorManager.unregisterListener() may throw an exception sometimes but I don\u0027t understand why our own SensorProvider class would do so since it isn\u0027t calling into Android APIs.",
+      "revId": "60e563ad517173562bf8318209ff77231854aaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
