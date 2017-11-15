@@ -51,6 +51,7 @@ class Resource;
 class Document;
 class DocumentLoader;
 class InspectedFrames;
+class InspectorNetworkAgent;
 class InspectorResourceContentLoader;
 class LocalFrame;
 class ScheduledNavigation;
@@ -86,7 +87,8 @@ class CORE_EXPORT InspectorPageAgent final
     kOtherResource
   };
 
-  static InspectorPageAgent* Create(InspectedFrames*,
+  static InspectorPageAgent* Create(InspectorNetworkAgent*,
+                                    InspectedFrames*,
                                     Client*,
                                     InspectorResourceContentLoader*,
                                     v8_inspector::V8InspectorSession*);
@@ -196,7 +198,8 @@ class CORE_EXPORT InspectorPageAgent final
   void Trace(blink::Visitor*) override;
 
  private:
-  InspectorPageAgent(InspectedFrames*,
+  InspectorPageAgent(InspectorNetworkAgent*,
+                     InspectedFrames*,
                      Client*,
                      InspectorResourceContentLoader*,
                      v8_inspector::V8InspectorSession*);
@@ -227,6 +230,8 @@ class CORE_EXPORT InspectorPageAgent final
       LocalFrame*);
   std::unique_ptr<protocol::Page::FrameResourceTree> BuildObjectForResourceTree(
       LocalFrame*);
+
+  Member<InspectorNetworkAgent> network_agent_;
   Member<InspectedFrames> inspected_frames_;
   v8_inspector::V8InspectorSession* v8_session_;
   Client* client_;

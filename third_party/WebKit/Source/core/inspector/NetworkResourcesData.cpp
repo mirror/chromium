@@ -192,14 +192,17 @@ NetworkResourcesData::~NetworkResourcesData() {}
 
 void NetworkResourcesData::Trace(blink::Visitor* visitor) {
   visitor->Trace(request_id_to_resource_data_map_);
+  visitor->Trace(request_url_to_resource_data_map_);
 }
 
 void NetworkResourcesData::ResourceCreated(const String& request_id,
                                            const String& loader_id,
                                            const KURL& requested_url) {
   EnsureNoDataForRequestId(request_id);
-  request_id_to_resource_data_map_.Set(
-      request_id, new ResourceData(this, request_id, loader_id, requested_url));
+  ResourceData* data =
+      new ResourceData(this, request_id, loader_id, requested_url);
+  request_id_to_resource_data_map_.Set(request_id, data);
+  request_url_to_resource_data_map_.Set(requested_url, data);
 }
 
 void NetworkResourcesData::ResponseReceived(const String& request_id,
@@ -341,6 +344,11 @@ NetworkResourcesData::ResourceData const* NetworkResourcesData::Data(
   return ResourceDataForRequestId(request_id);
 }
 
+NetworkResourcesData::ResourceData const* NetworkResourcesData::Data(
+    const KURL& url) {
+  return request_url_to_resource_data_map_.at(url);
+}
+
 XHRReplayData* NetworkResourcesData::XhrReplayData(const String& request_id) {
   if (reused_xhr_replay_data_request_ids_.Contains(request_id))
     return XhrReplayData(reused_xhr_replay_data_request_ids_.at(request_id));
@@ -411,14 +419,18 @@ void NetworkResourcesData::Clear(const String& preserved_loader_id) {
   content_size_ = 0;
 
   ResourceDataMap preserved_map;
+  URLResourceDataMap preserved_url_map;
 
   for (auto& resource : request_id_to_resource_data_map_) {
     ResourceData* resource_data = resource.value;
     if (!preserved_loader_id.IsNull() &&
-        resource_data->LoaderId() == preserved_loader_id)
+        resource_data->LoaderId() == preserved_loader_id) {
       preserved_map.Set(resource.key, resource.value);
+      preserved_url_map.Set(resource_data->RequestedURL(), resource_data);
+    }
   }
   request_id_to_resource_data_map_.swap(preserved_map);
+  request_url_to_resource_data_map_.swap(preserved_url_map);
 
   reused_xhr_replay_data_request_ids_.clear();
 }
@@ -445,6 +457,7 @@ void NetworkResourcesData::EnsureNoDataForRequestId(const String& request_id) {
   if (resource_data->HasContent() || resource_data->HasData())
     content_size_ -= resource_data->EvictContent();
   request_id_to_resource_data_map_.erase(request_id);
+  request_url_to_resource_data_map_.erase(resource_data->RequestedURL());
 }
 
 bool NetworkResourcesData::EnsureFreeSpace(size_t size) {
