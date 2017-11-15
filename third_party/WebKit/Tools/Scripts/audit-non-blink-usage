@@ -200,6 +200,9 @@ def check(path, contents):
     Returns:
         A list of line number, disallowed identifier tuples.
     """
+    _, ext = os.path.splitext(path)
+    if ext not in ('.cc', '.cpp', '.h', '.mm'):
+        return
     results = []
     entries = _find_matching_entries(path)
     if not entries:
