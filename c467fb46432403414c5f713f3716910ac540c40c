@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d6a7f44_c8b91b5f",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-15T15:16:45Z",
+      "side": 1,
+      "message": "Right, I added a HasLayerThatIsHitByPointInTouchHandleRegion in LayerTreeImpl class.",
+      "parentUuid": "625901db_1eea7e37",
+      "range": {
+        "startLine": 647,
+        "startChar": 2,
+        "endLine": 647,
+        "endChar": 42
+      },
+      "revId": "c467fb46432403414c5f713f3716910ac540c40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5939864c_dd2f5c51",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b7055cd6_2138ec47",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-15T15:16:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5939864c_dd2f5c51",
+      "range": {
+        "startLine": 652,
+        "startChar": 8,
+        "endLine": 652,
+        "endChar": 24
+      },
+      "revId": "c467fb46432403414c5f713f3716910ac540c40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e869f914_d133c0f0",
         "filename": "cc/trees/layer_tree_impl.cc",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "c467fb46432403414c5f713f3716910ac540c40c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2392baec_8d61b174",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1795,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-15T15:16:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e869f914_d133c0f0",
+      "revId": "c467fb46432403414c5f713f3716910ac540c40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "41aab190_edec5a1d",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1956,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-15T15:16:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b57346ca_6ec3746c",
+      "range": {
+        "startLine": 1956,
+        "startChar": 43,
+        "endLine": 1956,
+        "endChar": 49
+      },
+      "revId": "c467fb46432403414c5f713f3716910ac540c40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d25f918_baefc5fe",
         "filename": "cc/trees/layer_tree_impl.cc",
         "patchSetId": 3
@@ -99,6 +189,24 @@
       "writtenOn": "2017-11-14T17:41:13Z",
       "side": 1,
       "message": "Leave a comment here, please. Also, here I think here tests can pass nullptr right? If not then this if might not be needed either.",
+      "revId": "c467fb46432403414c5f713f3716910ac540c40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09475ace_81c62951",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1969,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-15T15:16:45Z",
+      "side": 1,
+      "message": "Yes, the test can pass nullptr, so the check is necessary.",
+      "parentUuid": "6d25f918_baefc5fe",
       "revId": "c467fb46432403414c5f713f3716910ac540c40c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -119,6 +227,24 @@
       "revId": "c467fb46432403414c5f713f3716910ac540c40c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176c3a45_c2c60d5e",
+        "filename": "cc/trees/layer_tree_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-15T15:16:45Z",
+      "side": 1,
+      "message": "I put a comment here.\nYes, it has a default value because this function is called in the test ~40 times, I was just thinking that it is easier to give a default value.",
+      "parentUuid": "f344e0d4_0d9f4d02",
+      "revId": "c467fb46432403414c5f713f3716910ac540c40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
