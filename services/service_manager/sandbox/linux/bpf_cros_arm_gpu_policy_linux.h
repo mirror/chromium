@@ -21,26 +21,11 @@ class SERVICE_MANAGER_SANDBOX_EXPORT CrosArmGpuProcessPolicy
   sandbox::bpf_dsl::ResultExpr EvaluateSyscall(
       int system_call_number) const override;
 
-  std::unique_ptr<BPFBasePolicy> GetBrokerSandboxPolicy() override;
-
  private:
 #if defined(__arm__) || defined(__aarch64__)
   const bool allow_shmat_;  // Allow shmat(2).
 #endif
   DISALLOW_COPY_AND_ASSIGN(CrosArmGpuProcessPolicy);
-};
-
-class SERVICE_MANAGER_SANDBOX_EXPORT CrosArmGpuBrokerProcessPolicy
-    : public CrosArmGpuProcessPolicy {
- public:
-  CrosArmGpuBrokerProcessPolicy();
-  ~CrosArmGpuBrokerProcessPolicy() override;
-
-  sandbox::bpf_dsl::ResultExpr EvaluateSyscall(
-      int system_call_number) const override;
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(CrosArmGpuBrokerProcessPolicy);
 };
 
 }  // namespace service_manager

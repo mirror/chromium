@@ -99,30 +99,4 @@ ResultExpr NetworkProcessPolicy::EvaluateSyscall(int sysno) const {
   }
 }
 
-std::unique_ptr<BPFBasePolicy> NetworkProcessPolicy::GetBrokerSandboxPolicy() {
-  return std::make_unique<NetworkBrokerProcessPolicy>();
-}
-
-NetworkBrokerProcessPolicy::NetworkBrokerProcessPolicy() {}
-
-NetworkBrokerProcessPolicy::~NetworkBrokerProcessPolicy() {}
-
-ResultExpr NetworkBrokerProcessPolicy::EvaluateSyscall(int sysno) const {
-  switch (sysno) {
-#if !defined(__aarch64__)
-    case __NR_access:
-    case __NR_open:
-#endif  // !defined(__aarch64__)
-    case __NR_faccessat:
-    case __NR_openat:
-#if !defined(OS_CHROMEOS) && !defined(__aarch64__)
-    // The broker process needs to able to unlink temporary files it creates.
-    case __NR_unlink:
-#endif
-      return Allow();
-    default:
-      return NetworkProcessPolicy::EvaluateSyscall(sysno);
-  }
-}
-
 }  // namespace service_manager

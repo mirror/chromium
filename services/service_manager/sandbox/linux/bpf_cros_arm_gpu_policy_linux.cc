@@ -74,30 +74,4 @@ ResultExpr CrosArmGpuProcessPolicy::EvaluateSyscall(int sysno) const {
   }
 }
 
-std::unique_ptr<BPFBasePolicy>
-CrosArmGpuProcessPolicy::GetBrokerSandboxPolicy() {
-  return std::make_unique<CrosArmGpuBrokerProcessPolicy>();
-}
-
-CrosArmGpuBrokerProcessPolicy::CrosArmGpuBrokerProcessPolicy()
-    : CrosArmGpuProcessPolicy(false) {}
-
-CrosArmGpuBrokerProcessPolicy::~CrosArmGpuBrokerProcessPolicy() {}
-
-// A GPU broker policy is the same as a GPU policy with open and
-// openat allowed.
-ResultExpr CrosArmGpuBrokerProcessPolicy::EvaluateSyscall(int sysno) const {
-  switch (sysno) {
-#if !defined(__aarch64__)
-    case __NR_access:
-    case __NR_open:
-#endif  // !defined(__aarch64__)
-    case __NR_faccessat:
-    case __NR_openat:
-      return Allow();
-    default:
-      return CrosArmGpuProcessPolicy::EvaluateSyscall(sysno);
-  }
-}
-
 }  // namespace service_manager

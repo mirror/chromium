@@ -63,34 +63,4 @@ ResultExpr CrosAmdGpuProcessPolicy::EvaluateSyscall(int sysno) const {
   }
 }
 
-std::unique_ptr<BPFBasePolicy>
-CrosAmdGpuProcessPolicy::GetBrokerSandboxPolicy() {
-  return std::make_unique<CrosAmdGpuBrokerProcessPolicy>();
-}
-
-CrosAmdGpuBrokerProcessPolicy::CrosAmdGpuBrokerProcessPolicy() {}
-
-CrosAmdGpuBrokerProcessPolicy::~CrosAmdGpuBrokerProcessPolicy() {}
-
-// A GPU broker policy is the same as a GPU policy with access, open,
-// openat and in the non-Chrome OS case unlink allowed.
-ResultExpr CrosAmdGpuBrokerProcessPolicy::EvaluateSyscall(int sysno) const {
-  switch (sysno) {
-    case __NR_faccessat:
-    case __NR_openat:
-#if !defined(__aarch64__)
-    case __NR_access:
-    case __NR_open:
-#if !defined(OS_CHROMEOS)
-    // The broker process needs to able to unlink the temporary
-    // files that it may create. This is used by DRI3.
-    case __NR_unlink:
-#endif  // !defined(OS_CHROMEOS)
-#endif  // !define(__aarch64__)
-      return Allow();
-    default:
-      return CrosAmdGpuProcessPolicy::EvaluateSyscall(sysno);
-  }
-}
-
 }  // namespace service_manager

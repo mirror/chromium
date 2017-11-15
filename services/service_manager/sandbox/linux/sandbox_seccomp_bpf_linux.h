@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "sandbox/linux/bpf_dsl/policy.h"
+#include "sandbox/linux/bpf_dsl/trap_registry.h"
 #include "services/service_manager/sandbox/export.h"
 #include "services/service_manager/sandbox/linux/bpf_base_policy_linux.h"
 #include "services/service_manager/sandbox/sandbox_type.h"

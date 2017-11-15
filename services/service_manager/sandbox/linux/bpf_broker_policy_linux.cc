@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "services/service_manager/sandbox/linux/bpf_gpu_policy_linux.h"
+#include "services/service_manager/sandbox/linux/bpf_broker_policy_linux.h"
 
 #include <dlfcn.h>
 #include <errno.h>
@@ -31,7 +31,6 @@
 #include "sandbox/linux/syscall_broker/broker_process.h"
 #include "sandbox/linux/system_headers/linux_syscalls.h"
 #include "services/service_manager/sandbox/linux/bpf_base_policy_linux.h"
-#include "services/service_manager/sandbox/linux/bpf_broker_policy_linux.h"
 #include "services/service_manager/sandbox/linux/sandbox_linux.h"
 #include "services/service_manager/sandbox/linux/sandbox_seccomp_bpf_linux.h"
 
@@ -45,50 +44,26 @@ using sandbox::SyscallSets;
 
 namespace service_manager {
 
-GpuProcessPolicy::GpuProcessPolicy() {}
+BrokerProcessPolicy::BrokerProcessPolicy() {}
 
-GpuProcessPolicy::~GpuProcessPolicy() {}
+BrokerProcessPolicy::~BrokerProcessPolicy() {}
 
-// Main policy for x86_64/i386. Extended by CrosArmGpuProcessPolicy.
-ResultExpr GpuProcessPolicy::EvaluateSyscall(int sysno) const {
+ResultExpr BrokerProcessPolicy::EvaluateSyscall(int sysno) const {
   switch (sysno) {
-#if !defined(OS_CHROMEOS)
-    case __NR_ftruncate:
-#endif
-    case __NR_ioctl:
-      return Allow();
-#if defined(__i386__) || defined(__x86_64__) || defined(__mips__)
-    // The Nvidia driver uses flags not in the baseline policy
-    // (MAP_LOCKED | MAP_EXECUTABLE | MAP_32BIT)
-    case __NR_mmap:
-#endif
-    // We also hit this on the linux_chromeos bot but don't yet know what
-    // weird flags were involved.
-    case __NR_mprotect:
-    // TODO(jln): restrict prctl.
-    case __NR_prctl:
-    case __NR_sysinfo:
-      return Allow();
 #if !defined(__aarch64__)
     case __NR_access:
     case __NR_open:
 #endif  // !defined(__aarch64__)
     case __NR_faccessat:
-    case __NR_openat: {
-      auto* broker_process = SandboxLinux::GetInstance()->broker_process();
-      DCHECK(broker_process);
-      return Trap(sandbox::syscall_broker::BrokerProcess::SIGSYS_Handler,
-                  broker_process);
-    }
-    case __NR_sched_getaffinity:
-    case __NR_sched_setaffinity:
-      return sandbox::RestrictSchedTarget(GetPolicyPid(), sysno);
+    case __NR_openat:
+#if !defined(OS_CHROMEOS) && !defined(__aarch64__)
+    // The broker process needs to able to unlink the temporary
+    // files that it may create.
+    case __NR_unlink:
+#endif
+      return Allow();
     default:
-      if (SyscallSets::IsEventFd(sysno))
-        return Allow();
-
-      // Default on the baseline policy.
-      return BPFBasePolicy::EvaluateSyscall(sysno);
+      return GpuProcessPolicy::EvaluateSyscall(sysno);
   }
 }
 

@@ -24,16 +24,10 @@ class SERVICE_MANAGER_SANDBOX_EXPORT NetworkProcessPolicy
   sandbox::bpf_dsl::ResultExpr EvaluateSyscall(
       int system_call_number) const override;
 
-  std::unique_ptr<BPFBasePolicy> GetBrokerSandboxPolicy() override;
-
  private:
   DISALLOW_COPY_AND_ASSIGN(NetworkProcessPolicy);
 };
 
-// A network-broker policy is the same as a network policy with access, open,
-// openat and in the non-Chrome OS case unlink allowed.
-// TODO(tsepez): probably should not inherit from NetworkProceesPolicy,
-// since that may include socket syscalls that this does not need.
 class SERVICE_MANAGER_SANDBOX_EXPORT NetworkBrokerProcessPolicy
     : public NetworkProcessPolicy {
  public:
