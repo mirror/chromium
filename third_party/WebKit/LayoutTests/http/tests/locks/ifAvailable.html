@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<title>Web Locks API: ifAvailable option</title>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+promise_test(async t => {
+  let callback_called = false;
+  await navigator.locks.acquire('s', async lock => {
+    callback_called = true;
+    assert_not_equals(lock, null, 'lock should be granted');
+  }, {ifAvailable: true});
+  assert_true(callback_called, 'callback should be called');
+}, 'Lock request with ifAvailable - lock available');
+
+promise_test(async t => {
+  let callback_called = false;
+  await navigator.locks.acquire('s', async lock => {
+    // Request would time out if |ifAvailable| was not specified.
+    const result = await navigator.locks.acquire('s', async lock => {
+      callback_called = true;
+      assert_equals(lock, null, 'lock should not be granted');
+      return 123;
+    }, {ifAvailable: true});
+    assert_equals(result, 123, 'result should be value returned by callback');
+  });
+  assert_true(callback_called, 'callback should be called');
+}, 'Lock request with ifAvailable - lock not available');
+
+promise_test(async t => {
+  let callback_called = false;
+  await navigator.locks.acquire('s', async lock => {
+    try {
+      // Request would time out if |ifAvailable| was not specified.
+      await navigator.locks.acquire('s', async lock => {
+        callback_called = true;
+        assert_equals(lock, null, 'lock should not be granted');
+        throw 123;
+      }, {ifAvailable: true});
+      assert_unreached('call should throw');
+    } catch (ex) {
+      assert_equals(ex, 123, 'ex should be value thrown by callback');
+    }
+  });
+  assert_true(callback_called, 'callback should be called');
+}, 'Lock request with ifAvailable - lock not available, throws');
+
+
+promise_test(async t => {
+  let callback_called = false;
+  await navigator.locks.acquire('s', async lock => {
+    // Request with a different scope - should be grantable.
+    await navigator.locks.acquire('x', async lock => {
+      callback_called = true;
+      assert_not_equals(lock, null, 'lock should be granted');
+    }, {ifAvailable: true});
+  });
+  assert_true(callback_called, 'callback should be called');
+}, 'Lock request with ifAvailable - unrelated lock held');
+
+promise_test(async t => {
+  let callback_called = false;
+  await navigator.locks.acquire('s', async lock => {
+    await navigator.locks.acquire('s', async lock => {
+      callback_called = true;
+      assert_not_equals(lock, null, 'lock should be granted');
+    }, {mode: 'shared', ifAvailable: true});
+  }, {mode: 'shared'});
+  assert_true(callback_called, 'callback should be called');
+}, 'Shared lock request with ifAvailable - shared lock held');
+
+promise_test(async t => {
+  let callback_called = false;
+  await navigator.locks.acquire('s', async lock => {
+    // Request would time out if |ifAvailable| was not specified.
+    await navigator.locks.acquire('s', async lock => {
+      callback_called = true;
+      assert_equals(lock, null, 'lock should not be granted');
+    }, {ifAvailable: true});
+  }, {mode: 'shared'});
+  assert_true(callback_called, 'callback should be called');
+}, 'Exclusive lock request with ifAvailable - shared lock held');
+
+promise_test(async t => {
+  let callback_called = false;
+  await navigator.locks.acquire('s', async lock => {
+    // Request would time out if |ifAvailable| was not specified.
+    await navigator.locks.acquire('s', async lock => {
+      callback_called = true;
+      assert_equals(lock, null, 'lock should not be granted');
+    }, {mode: 'shared', ifAvailable: true});
+  });
+  assert_true(callback_called, 'callback should be called');
+}, 'Shared lock request with ifAvailable - exclusive lock held');
+
+</script>
