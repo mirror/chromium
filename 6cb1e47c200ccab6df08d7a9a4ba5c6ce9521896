@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "40d0d1c3_3117e2a9",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-html-crash-nonvisible-layouttext.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-15T01:49:48Z",
+      "side": 1,
+      "message": "nit: s/selection\u003d\u003e/selection \u003d\u003e/",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 15
+      },
+      "revId": "6cb1e47c200ccab6df08d7a9a4ba5c6ce9521896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc017f80_ed7530f6",
         "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-html-crash-nonvisible-layouttext.html",
         "patchSetId": 1
@@ -47,6 +70,29 @@
       "writtenOn": "2017-11-14T19:11:04Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "6cb1e47c200ccab6df08d7a9a4ba5c6ce9521896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40c1b074_729db84b",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-html-crash-nonvisible-layouttext.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-15T01:49:48Z",
+      "side": 1,
+      "message": "nit: s/selection\u003d\u003e/selection \u003d\u003e/",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 15
+      },
       "revId": "6cb1e47c200ccab6df08d7a9a4ba5c6ce9521896",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
