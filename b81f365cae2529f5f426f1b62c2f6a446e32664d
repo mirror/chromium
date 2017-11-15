@@ -140,6 +140,30 @@
       "revId": "b81f365cae2529f5f426f1b62c2f6a446e32664d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5b905a6_45253b6e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 32283,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-15T23:17:23Z",
+      "side": 1,
+      "message": "Hmm, it\u0027s definitely odd that the presubmit script didn\u0027t complain.  In any case, thank you for fixing the formatting! \u003d)",
+      "parentUuid": "1a995024_dd9fad16",
+      "range": {
+        "startLine": 32274,
+        "startChar": 0,
+        "endLine": 32283,
+        "endChar": 92
+      },
+      "revId": "b81f365cae2529f5f426f1b62c2f6a446e32664d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
