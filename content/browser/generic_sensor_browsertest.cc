@@ -10,6 +10,7 @@
 #include "build/build_config.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
 #include "content/public/test/test_navigation_observer.h"
@@ -20,6 +21,7 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/buffer.h"
+#include "net/dns/mock_host_resolver.h"
 #include "services/device/public/cpp/device_features.h"
 #include "services/device/public/cpp/generic_sensor/platform_sensor_configuration.h"
 #include "services/device/public/cpp/generic_sensor/sensor_reading.h"
@@ -184,6 +186,11 @@ class GenericSensorBrowserTest : public ContentBrowserTest {
   ~GenericSensorBrowserTest() override {}
 
   void SetUpOnMainThread() override {
+    // Serve both a.com and b.com (and any other domain).
+    host_resolver()->AddRule("*", "127.0.0.1");
+    SetupCrossSiteRedirector(embedded_test_server());
+    ASSERT_TRUE(embedded_test_server()->Start());
+
     fake_sensor_provider_ = std::make_unique<FakeSensorProvider>();
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
@@ -219,6 +226,22 @@ IN_PROC_BROWSER_TEST_F(GenericSensorBrowserTest, AmbientLightSensorTest) {
   GURL test_url =
       GetTestUrl("generic_sensor", "ambient_light_sensor_test.html");
   NavigateToURLBlockUntilNavigationsComplete(shell(), test_url, 2);
+  EXPECT_EQ("pass", shell()->web_contents()->GetLastCommittedURL().ref());
+}
+
+IN_PROC_BROWSER_TEST_F(GenericSensorBrowserTest,
+                       AmbientLightSensorCrossOriginIframeTest) {
+  // Main frame is on a.com, iframe is on b.com.
+  GURL main_frame_url = embedded_test_server()->GetURL(
+      "a.com", "/generic_sensor/cross_origin_iframe.html");
+
+  NavigateToURLBlockUntilNavigationsComplete(shell(), main_frame_url, 1);
+
+  GURL iframe_url = embedded_test_server()->GetURL(
+      "b.com",
+      "/generic_sensor/ambient_light_sensor_cross_origin_iframe_test.html");
+
+  NavigateToURLBlockUntilNavigationsComplete(shell(), iframe_url, 1);
   EXPECT_EQ("pass", shell()->web_contents()->GetLastCommittedURL().ref());
 }
 
