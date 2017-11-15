@@ -70,6 +70,29 @@
     },
     {
       "key": {
+        "uuid": "dbad712f_0532ffa3",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-15T04:31:48Z",
+      "side": 1,
+      "message": "Do we no longer need to use base::IDMap for this?\nstd::map would be better since the id looks provided from outside.",
+      "range": {
+        "startLine": 198,
+        "startChar": 2,
+        "endLine": 198,
+        "endChar": 29
+      },
+      "revId": "9b999cbfb8daf9d6ac7d6c391164391122db5815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4d94287_f6162d0a",
         "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
         "patchSetId": 4
