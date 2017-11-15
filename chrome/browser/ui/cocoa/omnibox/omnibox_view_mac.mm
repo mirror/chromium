@@ -1085,12 +1085,9 @@ bool OmniboxViewMac::IsCaretAtEnd() const {
 
 void OmniboxViewMac::AnnounceAutocompleteForScreenReader(
     const base::string16& display_text) {
-  NSString* announcement =
-      l10n_util::GetNSStringF(IDS_ANNOUNCEMENT_COMPLETION_AVAILABLE_MAC,
-                              display_text);
   NSDictionary* notification_info = @{
-      NSAccessibilityAnnouncementKey : announcement,
-      NSAccessibilityPriorityKey :     @(NSAccessibilityPriorityHigh)
+    NSAccessibilityAnnouncementKey : base::SysUTF16ToNSString(display_text),
+    NSAccessibilityPriorityKey : @(NSAccessibilityPriorityHigh)
   };
   NSAccessibilityPostNotificationWithUserInfo(
       [field_ window],
