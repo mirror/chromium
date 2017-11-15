@@ -30,7 +30,7 @@ public class BrowserActionsCustomContextMenuItem implements ContextMenuItem {
     BrowserActionsCustomContextMenuItem(@IdRes int id, BrowserActionItem item) {
         mMenuId = id;
         mTitle = item.getTitle();
-        mIcon = item.getIcon();
+        mIcon = null;
     }
 
     @Override

@@ -23,7 +23,7 @@
 #include "base/synchronization/lock.h"
 #include "build/build_config.h"
 #include "components/download/downloader/in_progress/download_entry.h"
-#include "components/download/downloader/in_progress/in_progress_cache.h"
+#include "components/download/downloader/in_progress/in_progress_cache_impl.h"
 #include "content/browser/byte_stream.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/download/download_create_info.h"
@@ -294,15 +294,25 @@ class InProgressDownloadObserver : public DownloadItem::Observer {
   void OnDownloadUpdated(DownloadItem* download) override;
   void OnDownloadRemoved(DownloadItem* download) override;
 
+  // Handle tasks that have been queued during cache initialization.
+  void OnCacheInitialized();
+
   // The persistent cache to store in-progress metadata.
   download::InProgressCache* in_progress_cache_;
+
+  // Variables related to initiliaization of the cache.
+  bool cache_initialized_;
+  base::circular_deque<base::Closure> pending_actions_;
 
   DISALLOW_COPY_AND_ASSIGN(InProgressDownloadObserver);
 };
 
 InProgressDownloadObserver::InProgressDownloadObserver(
     download::InProgressCache* in_progress_cache)
-    : in_progress_cache_(in_progress_cache) {}
+    : in_progress_cache_(in_progress_cache), cache_initialized_(false) {
+  in_progress_cache_->Initialize(base::Bind(
+      &InProgressDownloadObserver::OnCacheInitialized, base::Unretained(this)));
+}
 
 InProgressDownloadObserver::~InProgressDownloadObserver() = default;
 
@@ -312,8 +322,15 @@ void InProgressDownloadObserver::OnDownloadUpdated(DownloadItem* download) {
   switch (download->GetState()) {
     case DownloadItem::DownloadState::COMPLETE:
     case DownloadItem::DownloadState::CANCELLED:
-      if (in_progress_cache_)
-        in_progress_cache_->RemoveEntry(download->GetGuid());
+      if (in_progress_cache_) {
+        if (cache_initialized_) {
+          in_progress_cache_->RemoveEntry(download->GetGuid());
+        } else {
+          pending_actions_.push_back(base::Bind(
+              &download::InProgressCache::RemoveEntry,
+              base::Unretained(in_progress_cache_), download->GetGuid()));
+        }
+      }
       break;
     case DownloadItem::DownloadState::IN_PROGRESS:
       // TODO(crbug.com/778425): After RetrieveEntry has been implemented, do a
@@ -325,7 +342,25 @@ void InProgressDownloadObserver::OnDownloadUpdated(DownloadItem* download) {
 }
 
 void InProgressDownloadObserver::OnDownloadRemoved(DownloadItem* download) {
-  in_progress_cache_->RemoveEntry(download->GetGuid());
+  if (in_progress_cache_) {
+    if (cache_initialized_) {
+      in_progress_cache_->RemoveEntry(download->GetGuid());
+    } else {
+      pending_actions_.push_back(base::Bind(
+          &download::InProgressCache::RemoveEntry,
+          base::Unretained(in_progress_cache_), download->GetGuid()));
+    }
+  }
+}
+
+void InProgressDownloadObserver::OnCacheInitialized() {
+  while (!pending_actions_.empty()) {
+    auto callback = pending_actions_.front();
+    callback.Run();
+    pending_actions_.pop_front();
+  }
+
+  cache_initialized_ = true;
 }
 
 DownloadManagerImpl::DownloadManagerImpl(BrowserContext* browser_context)
@@ -682,7 +717,6 @@ DownloadInterruptReason DownloadManagerImpl::BeginDownloadRequest(
     int render_view_route_id,
     int render_frame_route_id,
     bool do_not_prompt_for_login) {
-  LOG(ERROR) << "BeginDownloadRequest";
   if (ResourceDispatcherHostImpl::Get()->is_shutdown())
     return DOWNLOAD_INTERRUPT_REASON_USER_SHUTDOWN;
 
@@ -923,8 +957,11 @@ void DownloadManagerImpl::BeginDownloadInternal(
   download::InProgressCache* in_progress_cache =
       GetBrowserContext()->GetDownloadManagerDelegate()->GetInProgressCache();
   if (in_progress_cache) {
-    in_progress_cache->AddOrReplaceEntry(download::DownloadEntry(
-        params.get()->guid(), params.get()->request_origin()));
+    in_progress_cache->Initialize(
+        base::Bind(&download::InProgressCache::AddOrReplaceEntry,
+                   base::Unretained(in_progress_cache),
+                   download::DownloadEntry(params.get()->guid(),
+                                           params.get()->request_origin())));
   }
 
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
