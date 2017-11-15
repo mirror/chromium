@@ -185,6 +185,10 @@ SecurityLevel GetSecurityLevelForRequest(
     return NONE;
   }
 
+  if (visible_security_state.is_view_source) {
+    return NONE;
+  }
+
   if ((visible_security_state.cert_status & net::CERT_STATUS_IS_EV) &&
       visible_security_state.certificate) {
     return EV_SECURE;

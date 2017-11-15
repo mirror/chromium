@@ -20,6 +20,7 @@
 #include "content/public/browser/security_style_explanations.h"
 #include "content/public/browser/ssl_status.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/url_constants.h"
 #include "net/base/net_errors.h"
 #include "net/cert/x509_certificate.h"
 #include "net/ssl/ssl_cipher_suite_names.h"
@@ -367,6 +368,8 @@ std::unique_ptr<security_state::VisibleSecurityState> GetVisibleSecurityState(
   if (!entry || !entry->GetSSL().initialized)
     return state;
 
+  state->is_view_source =
+      entry->GetVirtualURL().SchemeIs(content::kViewSourceScheme);
   state->connection_info_initialized = true;
   state->url = entry->GetURL();
   const content::SSLStatus& ssl = entry->GetSSL();
