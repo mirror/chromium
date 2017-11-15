@@ -417,7 +417,6 @@ void RegisterLocalState(PrefRegistrySimple* registry) {
   chromeos::TimeZoneResolver::RegisterPrefs(registry);
   chromeos::UserImageManager::RegisterPrefs(registry);
   chromeos::UserSessionManager::RegisterPrefs(registry);
-  chromeos::WallpaperManager::RegisterPrefs(registry);
   chromeos::echo_offer::RegisterPrefs(registry);
   extensions::ExtensionAssetsManagerChromeOS::RegisterPrefs(registry);
   extensions::lock_screen_data::LockScreenItemStorage::RegisterLocalState(

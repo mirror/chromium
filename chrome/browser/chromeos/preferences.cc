@@ -160,8 +160,10 @@ void Preferences::RegisterPrefs(PrefRegistrySimple* registry) {
       prefs::kSystemTimezoneAutomaticDetectionPolicy,
       enterprise_management::SystemTimezoneProto::USERS_DECIDE);
 
-  registry->RegisterDictionaryPref(ash::prefs::kWallpaperColors,
-                                   PrefRegistry::PUBLIC);
+  //   registry->RegisterDictionaryPref(ash::prefs::kUserWallpaperInfo,
+  //                                    PrefRegistry::PUBLIC);
+  //   registry->RegisterDictionaryPref(ash::prefs::kWallpaperColors,
+  //                                    PrefRegistry::PUBLIC);
   registry->RegisterStringPref(prefs::kMinimumAllowedChromeVersion, "");
 }
 

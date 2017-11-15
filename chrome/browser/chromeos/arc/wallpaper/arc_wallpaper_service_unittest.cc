@@ -12,6 +12,7 @@
 #include "ash/shell.h"
 #include "ash/shell_test_api.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/wallpaper/wallpaper_controller.h"
 #include "base/macros.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
@@ -72,8 +73,7 @@ class ArcWallpaperServiceTest : public ash::AshTestBase {
     TestingBrowserProcess::GetGlobal()->SetLocalState(&pref_service_);
     pref_service_.registry()->RegisterDictionaryPref(
         ash::prefs::kWallpaperColors);
-    pref_service_.registry()->RegisterDictionaryPref(
-        chromeos::kUsersWallpaperInfo);
+    pref_service_.registry()->RegisterDictionaryPref(ash::kUsersWallpaperInfo);
 
     // Ash prefs
     auto pref_service = std::make_unique<TestingPrefServiceSimple>();

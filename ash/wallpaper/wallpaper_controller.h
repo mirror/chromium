@@ -41,6 +41,12 @@ namespace ash {
 
 class WallpaperControllerObserver;
 
+// The |CustomWallpaperElement| contains |first| the path of the image which
+// is currently being loaded and or in progress of being loaded and |second|
+// the image itself.
+typedef std::pair<base::FilePath, gfx::ImageSkia> CustomWallpaperElement;
+typedef std::map<AccountId, CustomWallpaperElement> CustomWallpaperMap;
+
 // Controls the desktop background wallpaper:
 //   - Sets a wallpaper image and layout;
 //   - Handles display change (add/remove display, configuration change etc);
@@ -136,6 +142,18 @@ class ASH_EXPORT WallpaperController
 
   // Returns whether the current wallpaper is blurred.
   bool IsWallpaperBlurred() const { return is_wallpaper_blurred_; }
+
+  void SetUserWallpaperInfo(const AccountId& account_id,
+                            const wallpaper::WallpaperInfo& info,
+                            bool is_persistent);
+
+  bool GetUserWallpaperInfo(const AccountId& account_id,
+                            wallpaper::WallpaperInfo* info,
+                            bool is_persistent);
+
+  wallpaper::WallpaperInfo* GetCachedWallpaperInfo();
+
+  CustomWallpaperMap* GetWallpaperCacheMap();
 
   // mojom::WallpaperController overrides:
   void SetClient(mojom::WallpaperControllerClientPtr client) override;
@@ -254,6 +272,12 @@ class ASH_EXPORT WallpaperController
   // Caches the color profiles that need to do wallpaper color extracting.
   const std::vector<color_utils::ColorProfile> color_profiles_;
 
+  // Cached logged-in user wallpaper info.
+  wallpaper::WallpaperInfo current_user_wallpaper_info_;
+
+  // Cached wallpapers of users.
+  CustomWallpaperMap wallpaper_cache_map_;
+
   // Location (see WallpaperInfo::location) used by the current wallpaper.
   // Used as a key for storing |prominent_colors_| in the
   // wallpaper::kWallpaperColors pref. An empty string disables color caching.
@@ -272,6 +296,8 @@ class ASH_EXPORT WallpaperController
   ScopedSessionObserver scoped_session_observer_;
 
   std::unique_ptr<ui::CompositorLock> compositor_lock_;
+
+  int wallpaper_count_for_testing_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(WallpaperController);
 };

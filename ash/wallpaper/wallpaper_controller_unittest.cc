@@ -32,6 +32,7 @@
 #include "ui/gfx/canvas.h"
 #include "ui/views/widget/widget.h"
 
+using wallpaper::WallpaperLayout;
 using wallpaper::WALLPAPER_LAYOUT_CENTER;
 using wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED;
 using wallpaper::WALLPAPER_LAYOUT_STRETCH;
@@ -71,6 +72,19 @@ void RunAnimationForWidget(views::Widget* widget) {
     layer->GetAnimator()->Step(step_time +
                                base::TimeDelta::FromMilliseconds(1000));
   }
+}
+
+// Helper function to create a new |mojom::WallpaperUserInfoPtr| instance with
+// default values.
+mojom::WallpaperUserInfoPtr CreateWallpaperUserInfo(const std::string& email) {
+  mojom::WallpaperUserInfoPtr wallpaper_user_info =
+      mojom::WallpaperUserInfo::New();
+  wallpaper_user_info->account_id = AccountId::FromUserEmail(email);
+  wallpaper_user_info->type = user_manager::USER_TYPE_REGULAR;
+  wallpaper_user_info->is_ephemeral = false;
+  wallpaper_user_info->has_gaia_account = true;
+
+  return wallpaper_user_info;
 }
 
 // Monitors if any task is processed by the message loop.
@@ -240,14 +254,17 @@ class WallpaperControllerTest : public AshTestBase {
 
   // Helper function to create a |WallpaperInfo| struct with dummy values
   // given the desired layout.
-  wallpaper::WallpaperInfo CreateWallpaperInfo(
-      wallpaper::WallpaperLayout layout) {
+  wallpaper::WallpaperInfo CreateWallpaperInfo(WallpaperLayout layout) {
     return wallpaper::WallpaperInfo("", layout, wallpaper::DEFAULT,
                                     base::Time::Now().LocalMidnight());
   }
 
   // Wrapper for private ShouldCalculateColors()
   bool ShouldCalculateColors() { return controller_->ShouldCalculateColors(); }
+
+  int GetWallpaperCount() { return controller_->wallpaper_count_for_testing_; }
+
+  void ClearWallpaperCount() { controller_->wallpaper_count_for_testing_ = 0; }
 
   WallpaperController* controller_;  // Not owned.
 
@@ -588,6 +605,56 @@ TEST_F(WallpaperControllerTest, MojoWallpaperObserverTest) {
   EnableShelfColoring();
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(2, observer.wallpaper_colors_changed_count());
+}
+
+TEST_F(WallpaperControllerTest, SetOnlineWallpaper) {
+  gfx::ImageSkia image = CreateImage(640, 480, kCustomWallpaperColor);
+  const std::string url = "dummy_url";
+  const std::string user_email = "user@test.com";
+  WallpaperLayout layout = WALLPAPER_LAYOUT_CENTER;
+  mojom::WallpaperUserInfoPtr wallpaper_user_info =
+      CreateWallpaperUserInfo(user_email);
+
+  // SetSessionState(session_manager::SessionState::LOGIN_PRIMARY);
+  // ClearWallpaperCount();
+  // controller_->SetOnlineWallpaper(std::move(wallpaper_user_info),
+  // *image.bitmap(),
+  //                                       url,
+  //                                       layout, true /* show_wallpaper */);
+  // RunAllTasksUntilIdle();
+  // EXPECT_EQ(0, GetWallpaperCount());
+
+  SimulateUserLogin(user_email);
+  wallpaper_user_info = CreateWallpaperUserInfo(user_email);
+  ClearWallpaperCount();
+  controller_->SetOnlineWallpaper(std::move(wallpaper_user_info),
+                                  *image.bitmap(), url, layout,
+                                  true /* show_wallpaper */);
+  RunAllTasksUntilIdle();
+  EXPECT_EQ(1, GetWallpaperCount());
+  wallpaper::WallpaperInfo expected_wallpaper_info = wallpaper::WallpaperInfo(
+      url, layout, wallpaper::ONLINE, base::Time::Now().LocalMidnight());
+  wallpaper::WallpaperInfo wallpaper_info;
+  controller_->GetUserWallpaperInfo(AccountId::FromUserEmail(user_email),
+                                    &wallpaper_info, true /* is_persistent */);
+  EXPECT_TRUE(expected_wallpaper_info == wallpaper_info);
+
+  wallpaper_user_info = CreateWallpaperUserInfo(user_email);
+  wallpaper_user_info->type = user_manager::USER_TYPE_KIOSK_APP;
+  ClearWallpaperCount();
+  controller_->SetOnlineWallpaper(std::move(wallpaper_user_info),
+                                  *image.bitmap(), url, layout,
+                                  true /* show_wallpaper */);
+  RunAllTasksUntilIdle();
+  EXPECT_EQ(0, GetWallpaperCount());
+
+  wallpaper_user_info = CreateWallpaperUserInfo(user_email);
+  ClearWallpaperCount();
+  controller_->SetOnlineWallpaper(std::move(wallpaper_user_info),
+                                  *image.bitmap(), url, layout,
+                                  false /* show_wallpaper */);
+  RunAllTasksUntilIdle();
+  EXPECT_EQ(0, GetWallpaperCount());
 }
 
 }  // namespace ash

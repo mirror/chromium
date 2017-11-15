@@ -22,6 +22,7 @@
 #include "base/values.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager_test_utils.h"
 #include "chrome/browser/ui/ash/session_controller_client.h"
+#include "chrome/browser/ui/ash/wallpaper_controller_client.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/testing_browser_process.h"
@@ -579,16 +580,19 @@ IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTestCacheUpdate,
   EXPECT_EQ(original_path, path);
 
   gfx::ImageSkia red_wallpaper = CreateTestImage(SK_ColorRED);
-  wallpaper_manager->SetOnlineWallpaper(test_account_id1_, red_wallpaper,
-                                        "dummy" /* dummy url */,
-                                        WALLPAPER_LAYOUT_CENTER, true);
-  wallpaper_manager_test_utils::WaitAsyncWallpaperLoadFinished();
-  // SetOnlineWallpaper should update wallpaper cache when multi-profile is
-  // turned on.
-  EXPECT_TRUE(
-      test_api->GetWallpaperFromCache(test_account_id1_, &cached_wallpaper));
-  EXPECT_TRUE(test_api->GetPathFromCache(test_account_id1_, &path));
-  EXPECT_TRUE(cached_wallpaper.BackedBySameObjectAs(red_wallpaper));
+  // TODO(crbug.com/776464): Move this to |WallpaperControllerTest|.
+  //   WallpaperControllerClient::Get()->SetOnlineWallpaper(test_account_id1_,
+  //   red_wallpaper,
+  //                                         "dummy" /* dummy url */,
+  //                                         WALLPAPER_LAYOUT_CENTER, true);
+  //   wallpaper_manager_test_utils::WaitAsyncWallpaperLoadFinished();
+  //   // SetOnlineWallpaper should update wallpaper cache when multi-profile is
+  //   // turned on.
+  //   EXPECT_TRUE(
+  //       test_api->GetWallpaperFromCache(test_account_id1_,
+  //       &cached_wallpaper));
+  //   EXPECT_TRUE(test_api->GetPathFromCache(test_account_id1_, &path));
+  //   EXPECT_TRUE(cached_wallpaper.BackedBySameObjectAs(red_wallpaper));
 
   gfx::ImageSkia green_wallpaper = CreateTestImage(SK_ColorGREEN);
   wallpaper_manager->SetCustomWallpaper(
