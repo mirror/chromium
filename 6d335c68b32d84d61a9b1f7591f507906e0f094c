@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e38e911_e72df4f6",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1775,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-15T15:36:11Z",
+      "side": 1,
+      "message": "nit: This part is only true #if defined (OS_ANDROID) :)\n\nI think a cleaner way to write this is to clarify right behind this comment that search engines might or might not be in scope.\n\nexpect_geolocation_dse_origin \u003d false;\nexpect_notifications_dse_origin \u003d false;\n\n#if defined(OS_ANDROID)\nexpect_geolocation_dse_origin \u003d true;\nexpect_notifications_dse_origin \u003d base::FeatureList::IsEnabled();\n#endif\n\nASSERT_EQ(expect_geolocation_dse_origin ? 2 : 1, host_settings.size());\nif (expect_geolocation_dse_origin) {\n  EXPECT(...)\n}\nEXPECT_EQ(...).\n\nThen similarly for notifications as you do below.",
+      "range": {
+        "startLine": 1775,
+        "startChar": 44,
+        "endLine": 1775,
+        "endChar": 73
+      },
+      "revId": "6d335c68b32d84d61a9b1f7591f507906e0f094c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f3ed5b6_b0d5c116",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1836,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-15T15:36:11Z",
+      "side": 1,
+      "message": "Suggested expansion:\n\nsearch_engine_delegate()-\u003eSetDSEOriginForTesting(\"https://something-else.com\");\nsearch_engine_delegate()-\u003eUpdateDSEOrigin();\nBlockUntilBrowsingDataRemoved();\n// Now the DSE exceptions have been removed too.",
+      "range": {
+        "startLine": 1836,
+        "startChar": 0,
+        "endLine": 1836,
+        "endChar": 1
+      },
+      "revId": "6d335c68b32d84d61a9b1f7591f507906e0f094c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
