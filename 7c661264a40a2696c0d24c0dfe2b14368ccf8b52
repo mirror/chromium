@@ -16,6 +16,24 @@
       "revId": "7c661264a40a2696c0d24c0dfe2b14368ccf8b52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9d32a2d_1da4e48a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-15T15:17:47Z",
+      "side": 1,
+      "message": "Yes, the renamed fields don\u0027t exist on the M-63 branch yet and we don\u0027t have a M-64 branch yet.\n\nThanks for reminding me to check :-)",
+      "parentUuid": "3f1066a0_c7a8f658",
+      "revId": "7c661264a40a2696c0d24c0dfe2b14368ccf8b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
