@@ -49,6 +49,7 @@ void ProfilingClient::BindToInterface(mojom::ProfilingClientRequest request) {
 }
 
 void ProfilingClient::StartProfiling(mojo::ScopedHandle memlog_sender_pipe) {
+  LOG(ERROR) << "ProfilingClient::StartProfiling " << getpid();
   base::PlatformFile platform_file;
   CHECK_EQ(MOJO_RESULT_OK, mojo::UnwrapPlatformFile(
                                std::move(memlog_sender_pipe), &platform_file));
@@ -71,6 +72,7 @@ void ProfilingClient::StartProfiling(mojo::ScopedHandle memlog_sender_pipe) {
 }
 
 void ProfilingClient::FlushMemlogPipe(uint32_t barrier_id) {
+  LOG(ERROR) << "ProfilingClient::FlushMemlogPipe";
   AllocatorShimFlushPipe(barrier_id);
 }
 
