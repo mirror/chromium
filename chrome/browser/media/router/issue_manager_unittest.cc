@@ -21,7 +21,7 @@ namespace {
 
 IssueInfo CreateTestIssue(IssueInfo::Severity severity) {
   IssueInfo issue("title", IssueInfo::Action::DISMISS, severity);
-  issue.message = "message";
+  issue.message = std::string("message");
   issue.help_page_id = 12345;
   return issue;
 }
@@ -31,7 +31,7 @@ IssueInfo CreateTestIssue(IssueInfo::Severity severity) {
 class IssueManagerTest : public ::testing::Test {
  protected:
   IssueManagerTest()
-      : task_runner_(new base::TestMockTimeTaskRunner()),
+      : task_runner_(base::MakeRefCounted<base::TestMockTimeTaskRunner>()),
         runner_handler_(task_runner_) {
     manager_.set_task_runner_for_test(task_runner_);
   }
