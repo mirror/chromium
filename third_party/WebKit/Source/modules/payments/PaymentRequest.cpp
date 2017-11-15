@@ -811,12 +811,13 @@ ScriptPromise PaymentRequest::show(ScriptState* script_state) {
 
   // VR mode uses popup suppression setting to disable html select element,
   // date pickers, etc.
-  if (GetFrame()->GetDocument()->GetSettings()->GetPagePopupsSuppressed()) {
-    return ScriptPromise::RejectWithDOMException(
-        script_state,
-        DOMException::Create(kInvalidStateError, "Page popups are suppressed"));
-  }
-
+  /*  if (GetFrame()->GetDocument()->GetSettings()->GetPagePopupsSuppressed()) {
+      return ScriptPromise::RejectWithDOMException(
+          script_state,
+          DOMException::Create(kInvalidStateError, "Page popups are
+    suppressed"));
+    }
+  */
   payment_provider_->Show();
 
   show_resolver_ = ScriptPromiseResolver::Create(script_state);
