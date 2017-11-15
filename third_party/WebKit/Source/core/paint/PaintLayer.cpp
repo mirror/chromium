@@ -70,6 +70,7 @@
 #include "core/page/scrolling/ScrollingCoordinator.h"
 #include "core/page/scrolling/StickyPositionScrollingConstraints.h"
 #include "core/paint/BoxReflectionUtils.h"
+#include "core/paint/ClipPathClipper.h"
 #include "core/paint/FilterEffectBuilder.h"
 #include "core/paint/ObjectPaintInvalidator.h"
 #include "core/paint/compositing/CompositedLayerMapping.h"
@@ -2485,7 +2486,8 @@ bool PaintLayer::HitTestClippedOutByClipPath(
   DCHECK(IsSelfPaintingLayer());
   DCHECK(root_layer);
 
-  LayoutRect reference_box(GetLayoutObject().LocalReferenceBoxForClipPath());
+  LayoutRect reference_box(
+      ClipPathClipper::LocalReferenceBox(GetLayoutObject()));
   if (EnclosingPaginationLayer())
     ConvertFromFlowThreadToVisualBoundingBoxInAncestor(root_layer,
                                                        reference_box);
@@ -2500,7 +2502,7 @@ bool PaintLayer::HitTestClippedOutByClipPath(
   if (clip_path_operation->GetType() == ClipPathOperation::SHAPE) {
     ShapeClipPathOperation* clip_path =
         ToShapeClipPathOperation(clip_path_operation);
-    return !clip_path->GetPath(FloatRect(reference_box)).Contains(point);
+    return !clip_path->GetPath(FloatRect(reference_box))->Contains(point);
   }
   DCHECK_EQ(clip_path_operation->GetType(), ClipPathOperation::REFERENCE);
   Node* target_node = GetLayoutObject().GetNode();

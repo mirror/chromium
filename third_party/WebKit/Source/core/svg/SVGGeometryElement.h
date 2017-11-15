@@ -47,8 +47,6 @@ class SVGGeometryElement : public SVGGraphicsElement {
   bool isPointInFill(SVGPointTearOff*) const;
   bool isPointInStroke(SVGPointTearOff*) const;
 
-  void ToClipPath(Path&) const;
-
   SVGAnimatedNumber* pathLength() const { return path_length_.Get(); }
   LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
   virtual float getTotalLength();
