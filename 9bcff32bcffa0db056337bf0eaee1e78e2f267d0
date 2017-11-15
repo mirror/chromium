@@ -1,0 +1,198 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "167016ab_fbc79e18",
+        "filename": "chrome/browser/first_run/first_run_internal_posix.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-15T14:05:30Z",
+      "side": 1,
+      "message": "i\u0027m a little surprised that the compiler doesn\u0027t complain about all of the dead code below this. should this be #else, with #endif at the bottom of the function?",
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b6df5a_8a5faced",
+        "filename": "chrome/browser/first_run/first_run_internal_posix.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-15T14:05:30Z",
+      "side": 1,
+      "message": "nit: omit \"internal::\" since this unnamed namespace is within the internal namespace.",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 17
+      },
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca9dd4d_7c232eea",
+        "filename": "chrome/browser/first_run/first_run_internal_posix.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-15T14:05:30Z",
+      "side": 1,
+      "message": "nit: mention this side effect in the fn\u0027s doc comment?",
+      "range": {
+        "startLine": 70,
+        "startChar": 11,
+        "endLine": 70,
+        "endChar": 45
+      },
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a4aa07_a5725cca",
+        "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-15T14:05:30Z",
+      "side": 1,
+      "message": "protected:",
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9935abd0_52c308a2",
+        "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-15T14:05:30Z",
+      "side": 1,
+      "message": "nit: \"{}\" -\u003e \" \u003d default;\"",
+      "range": {
+        "startLine": 18,
+        "startChar": 30,
+        "endLine": 18,
+        "endChar": 32
+      },
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4043cef1_887571c1",
+        "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-15T14:05:30Z",
+      "side": 1,
+      "message": "it was my understanding that browser test should hook into the various virtual methods provided by BrowserTestBase and InProcessBrowserTest where possible. can everything here before InProcessBrowserTest::SetUp() go into a SetUpInProcessBrowserTestFixture override, and the final expectation in a TearDownInProcessBrowserTestFixture override?",
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b178569f_d7d2f757",
+        "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-15T14:05:30Z",
+      "side": 1,
+      "message": "maybe this can all go into TearDownInProcessBrowserTestFixture as well?",
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d961ab21_96dc21e9",
+        "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-15T14:05:30Z",
+      "side": 1,
+      "message": "nit:\n  // A task run immediately before showing the first-run dialog.\nor something like that.",
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31b240ae_8a1924db",
+        "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-15T14:05:30Z",
+      "side": 1,
+      "message": "q: can you use SequencedTaskRunnerHandle here? it was my understanding that it\u0027s preferred over Thread* in all cases where it\u0027s possible to use it.",
+      "range": {
+        "startLine": 52,
+        "startChar": 22,
+        "endLine": 52,
+        "endChar": 28
+      },
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e11d5558_2f28370e",
+        "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-15T14:05:30Z",
+      "side": 1,
+      "message": "nit:\n  // A task run once the first-run dialog starts pumping messages.\nor something like that.",
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

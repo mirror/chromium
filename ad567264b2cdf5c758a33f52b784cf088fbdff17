@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a402089_cb31d4c4",
+        "filename": "chrome/browser/ui/cocoa/first_run_dialog.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-15T14:05:30Z",
+      "side": 0,
+      "message": "yay!",
+      "range": {
+        "startLine": 57,
+        "startChar": 17,
+        "endLine": 57,
+        "endChar": 38
+      },
+      "revId": "ad567264b2cdf5c758a33f52b784cf088fbdff17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
