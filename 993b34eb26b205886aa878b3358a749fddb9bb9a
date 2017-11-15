@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "95eeaa09_24c3d3f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-15T18:52:01Z",
+      "side": 1,
+      "message": "It might be worth looking into, you\u0027re talking about storing the lowest expiry time so that we know if we even need to touch this right?",
+      "parentUuid": "ac556e13_a7710c68",
+      "range": {
+        "startLine": 40,
+        "startChar": 37,
+        "endLine": 40,
+        "endChar": 57
+      },
+      "revId": "993b34eb26b205886aa878b3358a749fddb9bb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfa6a0d7_87eec137",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "993b34eb26b205886aa878b3358a749fddb9bb9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9624e089_939f0e8e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-15T18:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfa6a0d7_87eec137",
+      "range": {
+        "startLine": 52,
+        "startChar": 16,
+        "endLine": 52,
+        "endChar": 20
+      },
+      "revId": "993b34eb26b205886aa878b3358a749fddb9bb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1c8842fb_da079122",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-15T18:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b935bef1_7502bcab",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 21
+      },
+      "revId": "993b34eb26b205886aa878b3358a749fddb9bb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3df42242_b5f1e6a0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "993b34eb26b205886aa878b3358a749fddb9bb9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ac9c26_f8d73bb6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-15T18:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3df42242_b5f1e6a0",
+      "range": {
+        "startLine": 61,
+        "startChar": 16,
+        "endLine": 61,
+        "endChar": 22
+      },
+      "revId": "993b34eb26b205886aa878b3358a749fddb9bb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "82a3f98f_42713436",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-15T18:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9840ed7_45005e78",
+      "range": {
+        "startLine": 107,
+        "startChar": 65,
+        "endLine": 107,
+        "endChar": 71
+      },
+      "revId": "993b34eb26b205886aa878b3358a749fddb9bb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1bd3650_1a2f7721",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCacheTest.java",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "b77c117f_ecbeeb18",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCacheTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-15T18:52:01Z",
+      "side": 1,
+      "message": "Agreed, I made it testCacheServerErrorFailures which is hopefully more descriptive.",
+      "parentUuid": "d1bd3650_1a2f7721",
+      "range": {
+        "startLine": 46,
+        "startChar": 20,
+        "endLine": 46,
+        "endChar": 29
+      },
+      "revId": "993b34eb26b205886aa878b3358a749fddb9bb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4d59caf_778fbd72",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCacheTest.java",
         "patchSetId": 2
@@ -160,6 +304,30 @@
       "revId": "993b34eb26b205886aa878b3358a749fddb9bb9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d047f6_e99bdf76",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCacheTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-15T18:52:01Z",
+      "side": 1,
+      "message": "That\u0027s what I tried, it didn\u0027t seem to do anything.",
+      "parentUuid": "b4d59caf_778fbd72",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 11
+      },
+      "revId": "993b34eb26b205886aa878b3358a749fddb9bb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
