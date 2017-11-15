@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e82a332b_6c30cff5",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T19:38:58Z",
+      "side": 1,
+      "message": "The order defined by CTAP is different from the order defined by RFC 7049: https://github.com/fido-alliance/fido-2-specs/issues/389. :( You\u0027ve implemented the RFC7049 version, which is probably good, but the comments shouldn\u0027t claim the two orders are the same.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 51
+      },
+      "revId": "68672fdcad280a8ff69b91927d38d0eabf2c87f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df04e613_522aabf4",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T19:38:58Z",
+      "side": 1,
+      "message": "Eek, lots of copies. Having the main comparison take base::StringPiece would fix that, and the remaining wasted strlen()s are probably less important. \n\nThe point of the is_transparent marker is to help std::map\u003c\u003e avoid making copies of const char*s on every comparison down the tree if it could have the caller make a single copy in the .find() call.",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 38
+      },
+      "revId": "68672fdcad280a8ff69b91927d38d0eabf2c87f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
