@@ -258,6 +258,8 @@ void InputInjectorMac::Core::InjectTextEvent(const TextEvent& event) {
 void InputInjectorMac::Core::InjectMouseEvent(const MouseEvent& event) {
   WakeUpDisplay();
 
+  CGEventType event_type = kCGEventNull;
+
   if (event.has_x() && event.has_y()) {
     // On multi-monitor systems (0,0) refers to the top-left of the "main"
     // display, whereas our coordinate scheme places (0,0) at the top-left of
@@ -292,9 +294,26 @@ void InputInjectorMac::Core::InjectMouseEvent(const MouseEvent& event) {
     mouse_pos_.set(mouse_pos_.x() / desktop_config.dip_to_pixel_scale,
                    mouse_pos_.y() / desktop_config.dip_to_pixel_scale);
 
+    event_type = kCGEventMouseMoved;
     VLOG(3) << "Moving mouse to " << mouse_pos_.x() << "," << mouse_pos_.y();
   }
+  //  CGPoint position = CGPointMake(last_x_, last_y_);
+  CGMouseButton mouse_button = kCGMouseButtonLeft;
   if (event.has_button() && event.has_button_down()) {
+    event_type =
+        event.button_down() ? kCGEventOtherMouseDown : kCGEventOtherMouseUp;
+    if (MouseEvent::BUTTON_LEFT == event.button()) {
+      event_type =
+          event.button_down() ? kCGEventLeftMouseDown : kCGEventLeftMouseUp;
+      mouse_button = kCGMouseButtonLeft;  // not strictly necessary
+    } else if (MouseEvent::BUTTON_RIGHT == event.button()) {
+      event_type =
+          event.button_down() ? kCGEventRightMouseDown : kCGEventRightMouseUp;
+      mouse_button = kCGMouseButtonRight;  // not strictly necessary
+    } else if (MouseEvent::BUTTON_MIDDLE == event.button()) {
+      mouse_button = kCGMouseButtonCenter;
+    }
+
     if (event.button() >= 1 && event.button() <= 3) {
       VLOG(2) << "Button " << event.button()
               << (event.button_down() ? " down" : " up");
@@ -321,15 +340,21 @@ void InputInjectorMac::Core::InjectMouseEvent(const MouseEvent& event) {
     MiddleBit = 1 << (MouseEvent::BUTTON_MIDDLE - 1),
     RightBit = 1 << (MouseEvent::BUTTON_RIGHT - 1)
   };
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  CGError error = CGPostMouseEvent(position, true, 3,
-                                   (mouse_button_state_ & LeftBit) != 0,
-                                   (mouse_button_state_ & RightBit) != 0,
-                                   (mouse_button_state_ & MiddleBit) != 0);
-#pragma clang diagnostic pop
-  if (error != kCGErrorSuccess)
-    LOG(WARNING) << "CGPostMouseEvent error " << error;
+  if (event_type != kCGEventNull) {
+    base::ScopedCFTypeRef<CGEventRef> mouse_event(
+        CGEventCreateMouseEvent(NULL, event_type, position, mouse_button));
+    CGEventSetFlags(mouse_event, left_modifiers_ | right_modifiers_);
+    CGEventPost(kCGSessionEventTap, mouse_event);
+  }
+  //#pragma clang diagnostic push
+  //#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  //  CGError error = CGPostMouseEvent(position, true, 3,
+  //                                   (mouse_button_state_ & LeftBit) != 0,
+  //                                   (mouse_button_state_ & RightBit) != 0,
+  //                                   (mouse_button_state_ & MiddleBit) != 0);
+  //#pragma clang diagnostic pop
+  //  if (error != kCGErrorSuccess)
+  //    LOG(WARNING) << "CGPostMouseEvent error " << error;
 
   if (event.has_wheel_delta_x() && event.has_wheel_delta_y()) {
     int delta_x = static_cast<int>(event.wheel_delta_x());
