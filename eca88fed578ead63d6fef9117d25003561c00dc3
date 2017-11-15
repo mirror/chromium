@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1a07de66_da41a6a2",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-15T17:22:01Z",
+      "side": 1,
+      "message": "In general, WebAudio tasks are timing-sensitive, so I have been using kUnthrottled.",
+      "parentUuid": "ca8aa74f_73a2e1e9",
+      "range": {
+        "startLine": 57,
+        "startChar": 56,
+        "endLine": 57,
+        "endChar": 78
+      },
+      "revId": "eca88fed578ead63d6fef9117d25003561c00dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4c121be_88648f1e",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 2
@@ -102,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "2186115a_5e52b115",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-15T17:22:01Z",
+      "side": 1,
+      "message": "Great idea!",
+      "parentUuid": "5cbce042_378b03ee",
+      "revId": "eca88fed578ead63d6fef9117d25003561c00dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a2b3964_30722b0a",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 2
@@ -136,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "5529748c_bd86fb69",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-15T17:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "343ef7e0_f6c09fb9",
+      "revId": "eca88fed578ead63d6fef9117d25003561c00dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b3e8616_97da16b7",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
         "patchSetId": 2
@@ -150,6 +210,24 @@
       "revId": "eca88fed578ead63d6fef9117d25003561c00dc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "528950b2_cace7fc4",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-15T17:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b3e8616_97da16b7",
+      "revId": "eca88fed578ead63d6fef9117d25003561c00dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
