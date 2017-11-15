@@ -38,9 +38,16 @@ inline EncodedFormData::EncodedFormData()
 
 inline EncodedFormData::EncodedFormData(const EncodedFormData& data)
     : RefCounted<EncodedFormData>(),
-      elements_(data.elements_),
+      elements_(data.elements_.size()),
       identifier_(data.identifier_),
-      contains_password_data_(data.contains_password_data_) {}
+      contains_password_data_(data.contains_password_data_) {
+  // XXX: Copy all elements except for data pipe.
+  for (auto iter = data.elements_.begin(); iter != data.elements_.end();
+       ++iter) {
+    if (iter->type_ != FormDataElement::kDataPipe)
+      elements_.emplace_back(*iter);
+  }
+}
 
 EncodedFormData::~EncodedFormData() {}
 
@@ -96,6 +103,9 @@ scoped_refptr<EncodedFormData> EncodedFormData::DeepCopy() const {
         form_data->elements_.UncheckedAppend(FormDataElement(
             e.blob_uuid_.IsolatedCopy(), e.optional_blob_data_handle_));
         break;
+      case FormDataElement::kDataPipe:
+        CHECK(false) << "Can't clone a data pipe.";
+        break;
     }
   }
   return form_data;
@@ -129,8 +139,13 @@ void EncodedFormData::AppendBlob(
   elements_.push_back(FormDataElement(uuid, std::move(optional_handle)));
 }
 
+void EncodedFormData::AppendDataPipe(
+    mojo::ScopedDataPipeConsumerHandle handle) {
+  elements_.emplace_back(std::move(handle));
+}
+
 void EncodedFormData::Flatten(Vector<char>& data) const {
-  // Concatenate all the byte arrays, but omit any files.
+  // Concatenate all the byte arrays, but omit everything else.
   data.clear();
   size_t n = elements_.size();
   for (size_t i = 0; i < n; ++i) {
@@ -162,6 +177,9 @@ unsigned long long EncodedFormData::SizeInBytes() const {
       case FormDataElement::kEncodedBlob:
         if (e.optional_blob_data_handle_)
           size += e.optional_blob_data_handle_->size();
+        break;
+      case FormDataElement::kDataPipe:
+        // XXX: what we do?
         break;
     }
   }

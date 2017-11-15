@@ -7,6 +7,7 @@
 #include "core/typed_arrays/DOMArrayBuffer.h"
 #include "core/typed_arrays/DOMArrayBufferView.h"
 #include "modules/fetch/BlobBytesConsumer.h"
+#include "modules/fetch/BytesConsumerForMojoDataPipe.h"
 #include "platform/blob/BlobData.h"
 #include "platform/network/EncodedFormData.h"
 #include "platform/wtf/Vector.h"
@@ -18,12 +19,23 @@ namespace blink {
 
 namespace {
 
-bool IsSimple(const EncodedFormData* form_data) {
+enum class FormDataType { kSimple, kComplex, kDataPipeAndStringOnly };
+
+FormDataType GetType(const EncodedFormData* form_data) {
+  FormDataType type = FormDataType::kSimple;
   for (const auto& element : form_data->Elements()) {
-    if (element.type_ != FormDataElement::kData)
-      return false;
+    if (element.type_ != FormDataElement::kData &&
+        element.type_ != FormDataElement::kDataPipe) {
+      DCHECK(type != FormDataType::kDataPipeAndStringOnly);
+      type = FormDataType::kComplex;
+    }
+    if (element.type_ == FormDataElement::kDataPipe) {
+      DCHECK(type != FormDataType::kDataPipeAndStringOnly);
+      type = FormDataType::kDataPipeAndStringOnly;
+    }
   }
-  return true;
+  LOG(ERROR) << "Chose Type: " << static_cast<int>(type);
+  return type;
 }
 
 class SimpleFormDataBytesConsumer : public BytesConsumer {
@@ -100,15 +112,197 @@ class SimpleFormDataBytesConsumer : public BytesConsumer {
   PublicState state_ = PublicState::kReadableOrWaiting;
 };
 
+class DataPipeAndStringBytesConsumer final : public BytesConsumer {
+ public:
+  DataPipeAndStringBytesConsumer(ExecutionContext* execution_context,
+                                 scoped_refptr<EncodedFormData> form_data)
+      : execution_context_(execution_context),
+        form_data_(std::move(form_data)),
+        iter_(form_data_->MutableElements().begin()) {
+    // XXX: What if form_data mutates?
+  }
+
+  Result BeginRead(const char** buffer, size_t* available) override {
+    if (state_ == InternalState::kClosed)
+      return Result::kDone;
+    if (state_ == InternalState::kErrored)
+      return Result::kError;
+
+    if (iter_ == form_data_->MutableElements().end()) {
+      *buffer = nullptr;
+      *available = 0;
+      Close();
+      return Result::kDone;
+    }
+
+    if (iter_->type_ == FormDataElement::kData) {
+      if (!simple_consumer_) {
+        scoped_refptr<EncodedFormData> simple_data =
+            EncodedFormData::Create(iter_->data_);
+        simple_consumer_ =
+            new SimpleFormDataBytesConsumer(std::move(simple_data));
+        if (client_)
+          simple_consumer_->SetClient(client_);
+        LOG(ERROR) << "BeginRead: created new simple consumer";
+      }
+      Result result = simple_consumer_->BeginRead(buffer, available);
+      if (result == Result::kError) {
+        SetError();
+        return Result::kError;
+      }
+      if (result == Result::kDone) {
+        simple_consumer_ = nullptr;
+        ++iter_;
+        return BeginRead(buffer, available);
+      }
+      LOG(ERROR) << "BeginRead: simple consumer returned: "
+                 << static_cast<int>(result);
+      return result;
+    }
+
+    if (iter_->type_ == FormDataElement::kDataPipe) {
+      if (!data_pipe_consumer_) {
+        data_pipe_consumer_ = new BytesConsumerForMojoDataPipe(
+            execution_context_, std::move(iter_->consumer_handle_));
+        if (client_)
+          data_pipe_consumer_->SetClient(client_);
+        LOG(ERROR) << "BeginRead: created new datapipe consumer";
+      }
+      Result result = data_pipe_consumer_->BeginRead(buffer, available);
+      if (result == Result::kError) {
+        SetError();
+        return Result::kError;
+      }
+      if (result == Result::kDone) {
+        data_pipe_consumer_ = nullptr;
+        ++iter_;
+        return BeginRead(buffer, available);
+      }
+      LOG(ERROR) << "BeginRead: datapipe consumer returned: "
+                 << static_cast<int>(result);
+      return result;
+    }
+
+    NOTREACHED() << "Invalid type: " << iter_->type_;
+    return Result::kError;
+  }
+
+  Result EndRead(size_t read_size) override {
+    if (state_ == InternalState::kClosed)
+      return Result::kDone;
+    if (state_ == InternalState::kErrored)
+      return Result::kError;
+
+    if (simple_consumer_) {
+      Result result = simple_consumer_->EndRead(read_size);
+      if (result == Result::kError) {
+        SetError();
+        return Result::kError;
+      }
+      // Even if this consumer is done, there may still be more elements.
+      return Result::kOk;
+    }
+    if (data_pipe_consumer_) {
+      Result result = data_pipe_consumer_->EndRead(read_size);
+      LOG(ERROR) << "EndRead: datapipe consumer returned:  "
+                 << static_cast<int>(result);
+      if (result == Result::kError) {
+        SetError();
+        return Result::kError;
+      }
+      // Even if this consumer is done, there may still be more elements.
+      return Result::kOk;
+    }
+
+    NOTREACHED() << "No consumer. BeginRead() was not called?";
+    return Result::kError;
+  }
+
+  void SetClient(Client* client) override {
+    DCHECK(!client_);
+    DCHECK(client);
+    client_ = client;
+    if (simple_consumer_)
+      simple_consumer_->SetClient(client_);
+    else if (data_pipe_consumer_)
+      data_pipe_consumer_->SetClient(client_);
+  }
+
+  void ClearClient() override {
+    client_ = nullptr;
+    if (simple_consumer_)
+      simple_consumer_->ClearClient();
+    else if (data_pipe_consumer_)
+      data_pipe_consumer_->ClearClient();
+  }
+
+  void Cancel() override {
+    if (state_ == InternalState::kClosed || state_ == InternalState::kErrored)
+      return;
+    if (simple_consumer_)
+      simple_consumer_->Cancel();
+    else if (data_pipe_consumer_)
+      data_pipe_consumer_->Cancel();
+    Close();
+  }
+
+  PublicState GetPublicState() const override {
+    return GetPublicStateFromInternalState(state_);
+  }
+
+  Error GetError() const override {
+    DCHECK(state_ == InternalState::kErrored);
+    return error_;
+  }
+
+  String DebugName() const override { return "DataPipeAndStringBytesConsumer"; }
+
+  void Trace(blink::Visitor* visitor) override {
+    visitor->Trace(execution_context_);
+    visitor->Trace(client_);
+    visitor->Trace(simple_consumer_);
+    visitor->Trace(data_pipe_consumer_);
+    BytesConsumer::Trace(visitor);
+  }
+
+ private:
+  void Close() {
+    if (state_ == InternalState::kClosed)
+      return;
+    DCHECK(state_ == InternalState::kReadable ||
+           state_ == InternalState::kWaiting);
+    state_ = InternalState::kClosed;
+    ClearClient();
+  }
+
+  void SetError() {
+    if (state_ == InternalState::kErrored)
+      return;
+    DCHECK(state_ == InternalState::kReadable ||
+           state_ == InternalState::kWaiting);
+    state_ = InternalState::kErrored;
+    error_ = Error("error");
+    ClearClient();
+  }
+
+  Member<ExecutionContext> execution_context_;
+  InternalState state_ = InternalState::kWaiting;
+  scoped_refptr<EncodedFormData> form_data_;
+  Vector<FormDataElement>::iterator iter_;
+  Error error_;
+  Member<BytesConsumer::Client> client_;
+  Member<SimpleFormDataBytesConsumer> simple_consumer_ = nullptr;
+  Member<BytesConsumerForMojoDataPipe> data_pipe_consumer_ = nullptr;
+};
+
 class ComplexFormDataBytesConsumer final : public BytesConsumer {
  public:
   ComplexFormDataBytesConsumer(ExecutionContext* execution_context,
                                scoped_refptr<EncodedFormData> form_data,
-                               BytesConsumer* consumer)
+                               BytesConsumer* consumer_for_testing)
       : form_data_(std::move(form_data)) {
-    if (consumer) {
-      // For testing.
-      blob_bytes_consumer_ = consumer;
+    if (consumer_for_testing) {
+      blob_bytes_consumer_ = consumer_for_testing;
       return;
     }
 
@@ -138,6 +332,9 @@ class ComplexFormDataBytesConsumer final : public BytesConsumer {
             blob_data->AppendBlob(element.optional_blob_data_handle_, 0,
                                   element.optional_blob_data_handle_->size());
           }
+          break;
+        case FormDataElement::kDataPipe:
+          NOTREACHED() << "This consumer can't handle data pipes.";
           break;
       }
     }
@@ -223,13 +420,31 @@ FormDataBytesConsumer::FormDataBytesConsumer(
 FormDataBytesConsumer::FormDataBytesConsumer(
     ExecutionContext* execution_context,
     scoped_refptr<EncodedFormData> form_data,
-    BytesConsumer* consumer)
-    : impl_(IsSimple(form_data.get())
-                ? static_cast<BytesConsumer*>(
-                      new SimpleFormDataBytesConsumer(std::move(form_data)))
-                : static_cast<BytesConsumer*>(
-                      new ComplexFormDataBytesConsumer(execution_context,
-                                                       std::move(form_data),
-                                                       consumer))) {}
+    BytesConsumer* consumer_for_testing)
+    : impl_(GetImpl(execution_context,
+                    std::move(form_data),
+                    consumer_for_testing)) {}
+
+// static
+BytesConsumer* FormDataBytesConsumer::GetImpl(
+    ExecutionContext* execution_context,
+    scoped_refptr<EncodedFormData> form_data,
+    BytesConsumer* consumer_for_testing) {
+  DCHECK(form_data) << "form data caNNOT BE null";
+  LOG(ERROR) << "GetImpl: " << form_data.get();
+  switch (GetType(form_data.get())) {
+    case FormDataType::kSimple:
+      return new SimpleFormDataBytesConsumer(std::move(form_data));
+    case FormDataType::kComplex:
+      return new ComplexFormDataBytesConsumer(
+          execution_context, std::move(form_data), consumer_for_testing);
+    case FormDataType::kDataPipeAndStringOnly:
+      LOG(ERROR) << "Creating a DPASBC";
+      return new DataPipeAndStringBytesConsumer(execution_context,
+                                                std::move(form_data));
+  }
+  NOTREACHED() << "BAD";
+  return nullptr;
+}
 
 }  // namespace blink

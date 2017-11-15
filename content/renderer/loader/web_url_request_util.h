@@ -38,6 +38,7 @@ std::string GetWebURLRequestHeadersAsString(
 int GetLoadFlagsForWebURLRequest(const blink::WebURLRequest& request);
 
 // Takes a ResourceRequestBody and converts into WebHTTPBody.
+// This is a destructive operation.
 blink::WebHTTPBody GetWebHTTPBodyForRequestBody(
     const scoped_refptr<ResourceRequestBody>& input);
 

@@ -34,6 +34,7 @@ FetchRequestData* FetchRequestData::Create(
        it != web_request.Headers().end(); ++it)
     request->header_list_->Append(it->key, it->value);
   if (scoped_refptr<EncodedFormData> body = web_request.Body()) {
+    LOG(ERROR) << "creating FDBC: " << body.get();
     request->SetBuffer(new BodyStreamBuffer(
         script_state,
         new FormDataBytesConsumer(ExecutionContext::From(script_state),

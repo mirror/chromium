@@ -123,6 +123,12 @@ void WebHTTPBody::AppendBlob(const WebString& uuid) {
   private_->AppendBlob(uuid, nullptr);
 }
 
+void WebHTTPBody::AppendDataPipe(mojo::ScopedDataPipeConsumerHandle data_pipe) {
+  LOG(ERROR) << "let's do this data_pipe";
+  EnsureMutable();
+  private_->AppendDataPipe(std::move(data_pipe));
+}
+
 long long WebHTTPBody::Identifier() const {
   DCHECK(!IsNull());
   return private_->Identifier();

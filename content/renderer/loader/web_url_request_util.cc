@@ -364,7 +364,7 @@ WebHTTPBody GetWebHTTPBodyForRequestBody(
   http_body.Initialize();
   http_body.SetIdentifier(input->identifier());
   http_body.SetContainsPasswordData(input->contains_sensitive_info());
-  for (const auto& element : *input->elements()) {
+  for (auto& element : *input->elements_mutable()) {
     switch (element.type()) {
       case ResourceRequestBody::Element::TYPE_BYTES:
         http_body.AppendData(WebData(element.bytes(), element.length()));
@@ -381,8 +381,7 @@ WebHTTPBody GetWebHTTPBodyForRequestBody(
         http_body.AppendBlob(WebString::FromASCII(element.blob_uuid()));
         break;
       case ResourceRequestBody::Element::TYPE_DATA_PIPE:
-        // TODO(falken): Implement this.
-        NOTIMPLEMENTED() << "data pipe";
+        http_body.AppendDataPipe(element.ReleaseDataPipe(nullptr));
         break;
       case ResourceRequestBody::Element::TYPE_BYTES_DESCRIPTION:
       case ResourceRequestBody::Element::TYPE_DISK_CACHE_ENTRY:

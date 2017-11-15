@@ -1,61 +1,58 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef BytesConsumerForDataConsumerHandle_h
-#define BytesConsumerForDataConsumerHandle_h
+#ifndef BytesConsumerForMojoDataPipe_h
+#define BytesConsumerForMojoDataPipe_h
 
 #include "modules/ModulesExport.h"
 #include "modules/fetch/BytesConsumer.h"
+#include "mojo/public/cpp/system/data_pipe.h"
+#include "mojo/public/cpp/system/simple_watcher.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/text/WTFString.h"
-#include "public/platform/WebDataConsumerHandle.h"
 
 #include <memory>
 
 namespace blink {
 
-class ExecutionContext;
-
-class MODULES_EXPORT BytesConsumerForDataConsumerHandle final
-    : public BytesConsumer,
-      public WebDataConsumerHandle::Client {
+// This is very similar to BytesConsumerForDataConsumerHandle but it uses the
+// native Mojo data pipe directly.
+class MODULES_EXPORT BytesConsumerForMojoDataPipe final : public BytesConsumer {
   EAGERLY_FINALIZE();
   DECLARE_EAGER_FINALIZATION_OPERATOR_NEW();
 
  public:
-  BytesConsumerForDataConsumerHandle(ExecutionContext*,
-                                     std::unique_ptr<WebDataConsumerHandle>);
-  ~BytesConsumerForDataConsumerHandle() override;
+  BytesConsumerForMojoDataPipe(ExecutionContext*,
+                               mojo::ScopedDataPipeConsumerHandle);
+  ~BytesConsumerForMojoDataPipe() override;
 
+  // BytesConsumer implementation:
   Result BeginRead(const char** buffer, size_t* available) override;
   Result EndRead(size_t read_size) override;
   void SetClient(BytesConsumer::Client*) override;
   void ClearClient() override;
-
   void Cancel() override;
   PublicState GetPublicState() const override;
   Error GetError() const override {
     DCHECK(state_ == InternalState::kErrored);
     return error_;
   }
-  String DebugName() const override {
-    return "BytesConsumerForDataConsumerHandle";
-  }
+  String DebugName() const override { return "BytesConsumerForMojoDataPipe"; }
 
-  // WebDataConsumerHandle::Client
-  void DidGetReadable() override;
-
+  // GarbageCollectedFinalized implementation:
   void Trace(blink::Visitor*) override;
 
  private:
+  void OnHandleGotReadable(MojoResult);
   void Close();
   void SetError();
   void Notify();
 
   Member<ExecutionContext> execution_context_;
-  std::unique_ptr<WebDataConsumerHandle::Reader> reader_;
+  mojo::ScopedDataPipeConsumerHandle consumer_handle_;
+  mojo::SimpleWatcher handle_watcher_;
   Member<BytesConsumer::Client> client_;
   InternalState state_ = InternalState::kWaiting;
   Error error_;
@@ -65,4 +62,4 @@ class MODULES_EXPORT BytesConsumerForDataConsumerHandle final
 
 }  // namespace blink
 
-#endif  // BytesConsumerForDataConsumerHandle_h
+#endif  // BytesConsumerForMojoDataPipe_h

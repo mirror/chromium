@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "modules/fetch/BytesConsumerForDataConsumerHandle.h"
+#include "modules/fetch/BytesConsumerForMojoDataPipe.h"
 
 #include "core/dom/ExecutionContext.h"
 #include "platform/WebTaskRunner.h"
@@ -10,20 +10,27 @@
 #include "public/platform/TaskType.h"
 #include "public/platform/WebTraceLocation.h"
 
-#include <algorithm>
 #include <string.h>
+#include <algorithm>
 
 namespace blink {
 
-BytesConsumerForDataConsumerHandle::BytesConsumerForDataConsumerHandle(
+BytesConsumerForMojoDataPipe::BytesConsumerForMojoDataPipe(
     ExecutionContext* execution_context,
-    std::unique_ptr<WebDataConsumerHandle> handle)
+    mojo::ScopedDataPipeConsumerHandle consumer_handle)
     : execution_context_(execution_context),
-      reader_(handle->ObtainReader(this)) {}
+      consumer_handle_(std::move(consumer_handle)),
+      handle_watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL) {
+  handle_watcher_.Watch(
+      consumer_handle_.get(), MOJO_HANDLE_SIGNAL_READABLE,
+      base::Bind(&BytesConsumerForMojoDataPipe::OnHandleGotReadable,
+                 base::Unretained(this)));
+  handle_watcher_.ArmOrNotify();
+}
 
-BytesConsumerForDataConsumerHandle::~BytesConsumerForDataConsumerHandle() {}
+BytesConsumerForMojoDataPipe::~BytesConsumerForMojoDataPipe() {}
 
-BytesConsumer::Result BytesConsumerForDataConsumerHandle::BeginRead(
+BytesConsumer::Result BytesConsumerForMojoDataPipe::BeginRead(
     const char** buffer,
     size_t* available) {
   DCHECK(!is_in_two_phase_read_);
@@ -34,62 +41,62 @@ BytesConsumer::Result BytesConsumerForDataConsumerHandle::BeginRead(
   if (state_ == InternalState::kErrored)
     return Result::kError;
 
-  WebDataConsumerHandle::Result r =
-      reader_->BeginRead(reinterpret_cast<const void**>(buffer),
-                         WebDataConsumerHandle::kFlagNone, available);
-  switch (r) {
-    case WebDataConsumerHandle::kOk:
+  uint32_t size_to_pass = 0;
+  MojoReadDataFlags flags_to_pass = MOJO_READ_DATA_FLAG_NONE;
+  MojoResult rv = consumer_handle_->BeginReadData(
+      reinterpret_cast<const void**>(buffer), &size_to_pass, flags_to_pass);
+  switch (rv) {
+    case MOJO_RESULT_OK:
+      *available = size_to_pass;
       is_in_two_phase_read_ = true;
       return Result::kOk;
-    case WebDataConsumerHandle::kShouldWait:
-      return Result::kShouldWait;
-    case WebDataConsumerHandle::kDone:
+    case MOJO_RESULT_FAILED_PRECONDITION:
       Close();
       return Result::kDone;
-    case WebDataConsumerHandle::kBusy:
-    case WebDataConsumerHandle::kResourceExhausted:
-    case WebDataConsumerHandle::kUnexpectedError:
-      SetError();
-      return Result::kError;
+    case MOJO_RESULT_SHOULD_WAIT:
+      return Result::kShouldWait;
+    default:
+      break;
   }
-  NOTREACHED();
+  SetError();
   return Result::kError;
 }
 
-BytesConsumer::Result BytesConsumerForDataConsumerHandle::EndRead(size_t read) {
+BytesConsumer::Result BytesConsumerForMojoDataPipe::EndRead(size_t read_size) {
   DCHECK(is_in_two_phase_read_);
   is_in_two_phase_read_ = false;
   DCHECK(state_ == InternalState::kReadable ||
          state_ == InternalState::kWaiting);
-  WebDataConsumerHandle::Result r = reader_->EndRead(read);
-  if (r != WebDataConsumerHandle::kOk) {
+  MojoResult rv = consumer_handle_->EndReadData(read_size);
+  if (rv != MOJO_RESULT_OK) {
     has_pending_notification_ = false;
     SetError();
     return Result::kError;
   }
+
+  handle_watcher_.ArmOrNotify();
   if (has_pending_notification_) {
     has_pending_notification_ = false;
     execution_context_->GetTaskRunner(TaskType::kNetworking)
         ->PostTask(BLINK_FROM_HERE,
-                   WTF::Bind(&BytesConsumerForDataConsumerHandle::Notify,
+                   WTF::Bind(&BytesConsumerForMojoDataPipe::Notify,
                              WrapPersistent(this)));
   }
   return Result::kOk;
 }
 
-void BytesConsumerForDataConsumerHandle::SetClient(
-    BytesConsumer::Client* client) {
+void BytesConsumerForMojoDataPipe::SetClient(BytesConsumer::Client* client) {
   DCHECK(!client_);
   DCHECK(client);
   if (state_ == InternalState::kReadable || state_ == InternalState::kWaiting)
     client_ = client;
 }
 
-void BytesConsumerForDataConsumerHandle::ClearClient() {
+void BytesConsumerForMojoDataPipe::ClearClient() {
   client_ = nullptr;
 }
 
-void BytesConsumerForDataConsumerHandle::Cancel() {
+void BytesConsumerForMojoDataPipe::Cancel() {
   DCHECK(!is_in_two_phase_read_);
   if (state_ == InternalState::kReadable || state_ == InternalState::kWaiting) {
     // We don't want the client to be notified in this case.
@@ -100,78 +107,59 @@ void BytesConsumerForDataConsumerHandle::Cancel() {
   }
 }
 
-BytesConsumer::PublicState BytesConsumerForDataConsumerHandle::GetPublicState()
+BytesConsumer::PublicState BytesConsumerForMojoDataPipe::GetPublicState()
     const {
   return GetPublicStateFromInternalState(state_);
 }
 
-void BytesConsumerForDataConsumerHandle::DidGetReadable() {
-  DCHECK(state_ == InternalState::kReadable ||
-         state_ == InternalState::kWaiting);
+void BytesConsumerForMojoDataPipe::OnHandleGotReadable(MojoResult) {
+  DCHECK(state_ == InternalState::kWaiting ||
+         state_ == InternalState::kReadable);
   if (is_in_two_phase_read_) {
     has_pending_notification_ = true;
     return;
   }
-  // Perform zero-length read to call check handle's status.
-  size_t read_size;
-  WebDataConsumerHandle::Result result =
-      reader_->Read(nullptr, 0, WebDataConsumerHandle::kFlagNone, &read_size);
-  BytesConsumer::Client* client = client_;
-  switch (result) {
-    case WebDataConsumerHandle::kOk:
-    case WebDataConsumerHandle::kShouldWait:
-      if (client)
-        client->OnStateChange();
-      return;
-    case WebDataConsumerHandle::kDone:
-      Close();
-      if (client)
-        client->OnStateChange();
-      return;
-    case WebDataConsumerHandle::kBusy:
-    case WebDataConsumerHandle::kResourceExhausted:
-    case WebDataConsumerHandle::kUnexpectedError:
-      SetError();
-      if (client)
-        client->OnStateChange();
-      return;
-  }
-  return;
+
+  mojo::HandleSignalsState state = consumer_handle_->QuerySignalsState();
+  if (state.never_readable())
+    Close();
+  if (client_)
+    client_->OnStateChange();
 }
 
-void BytesConsumerForDataConsumerHandle::Trace(blink::Visitor* visitor) {
+void BytesConsumerForMojoDataPipe::Trace(blink::Visitor* visitor) {
   visitor->Trace(execution_context_);
   visitor->Trace(client_);
   BytesConsumer::Trace(visitor);
 }
 
-void BytesConsumerForDataConsumerHandle::Close() {
+void BytesConsumerForMojoDataPipe::Close() {
   DCHECK(!is_in_two_phase_read_);
   if (state_ == InternalState::kClosed)
     return;
   DCHECK(state_ == InternalState::kReadable ||
          state_ == InternalState::kWaiting);
   state_ = InternalState::kClosed;
-  reader_ = nullptr;
+  handle_watcher_.Cancel();
   ClearClient();
 }
 
-void BytesConsumerForDataConsumerHandle::SetError() {
+void BytesConsumerForMojoDataPipe::SetError() {
   DCHECK(!is_in_two_phase_read_);
   if (state_ == InternalState::kErrored)
     return;
   DCHECK(state_ == InternalState::kReadable ||
          state_ == InternalState::kWaiting);
   state_ = InternalState::kErrored;
-  reader_ = nullptr;
+  handle_watcher_.Cancel();
   error_ = Error("error");
   ClearClient();
 }
 
-void BytesConsumerForDataConsumerHandle::Notify() {
+void BytesConsumerForMojoDataPipe::Notify() {
   if (state_ == InternalState::kClosed || state_ == InternalState::kErrored)
     return;
-  DidGetReadable();
+  OnHandleGotReadable(MOJO_RESULT_OK);
 }
 
 }  // namespace blink
