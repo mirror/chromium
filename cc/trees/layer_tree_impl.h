@@ -468,8 +468,15 @@ class CC_EXPORT LayerTreeImpl {
 
   LayerImpl* FindLayerThatIsHitByPoint(const gfx::PointF& screen_space_point);
 
+  // The |screen_space_point| is the input and |out_touch_action| the output.
   LayerImpl* FindLayerThatIsHitByPointInTouchHandlerRegion(
-      const gfx::PointF& screen_space_point);
+      const gfx::PointF& screen_space_point,
+      TouchAction* out_touch_action = nullptr);
+
+  // The |screen_space_point| is the input and |out_touch_action| the output.
+  bool HasLayerThatIsHitByPointInTouchHandlerRegion(
+      const gfx::PointF& screen_space_point,
+      TouchAction* out_touch_action);
 
   void RegisterSelection(const LayerSelection& selection);
 

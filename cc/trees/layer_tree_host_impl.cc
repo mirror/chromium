@@ -643,23 +643,13 @@ LayerTreeHostImpl::EventListenerTypeForTouchStartOrMoveAt(
   gfx::PointF device_viewport_point = gfx::ScalePoint(
       gfx::PointF(viewport_point), active_tree_->device_scale_factor());
 
-  // Now determine if there are actually any handlers at that point.
-  // TODO(rbyers): Consider also honoring touch-action (crbug.com/347272).
-  LayerImpl* layer_impl_with_touch_handler =
-      active_tree_->FindLayerThatIsHitByPointInTouchHandlerRegion(
-          device_viewport_point);
+  *out_touch_action = kTouchActionAuto;
+  bool has_layer_with_touch_handler =
+      active_tree_->HasLayerThatIsHitByPointInTouchHandlerRegion(
+          device_viewport_point, out_touch_action);
 
-  if (layer_impl_with_touch_handler == nullptr) {
-    if (out_touch_action)
-      *out_touch_action = kTouchActionAuto;
+  if (!has_layer_with_touch_handler)
     return InputHandler::TouchStartOrMoveEventListenerType::NO_HANDLER;
-  }
-
-  if (out_touch_action) {
-    const auto& region = layer_impl_with_touch_handler->touch_action_region();
-    gfx::Point point = gfx::ToRoundedPoint(device_viewport_point);
-    *out_touch_action = region.GetWhiteListedTouchAction(point);
-  }
 
   if (!CurrentlyScrollingNode())
     return InputHandler::TouchStartOrMoveEventListenerType::HANDLER;
