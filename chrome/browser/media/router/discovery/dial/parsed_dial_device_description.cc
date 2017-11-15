@@ -26,6 +26,7 @@ ParsedDialDeviceDescription& ParsedDialDeviceDescription::operator=(
   this->unique_id = other.unique_id;
   this->friendly_name = other.friendly_name;
   this->model_name = other.model_name;
+  this->device_type = other.device_type;
   this->app_url = other.app_url;
 
   return *this;
@@ -34,7 +35,8 @@ ParsedDialDeviceDescription& ParsedDialDeviceDescription::operator=(
 bool ParsedDialDeviceDescription::operator==(
     const ParsedDialDeviceDescription& other) const {
   return unique_id == other.unique_id && friendly_name == other.friendly_name &&
-         model_name == other.model_name && app_url == other.app_url;
+         model_name == other.model_name && device_type == other.device_type &&
+         app_url == other.app_url;
 }
 
 }  // namespace media_router
