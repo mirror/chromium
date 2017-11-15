@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbe55e94_1b6350c0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/delete-temp-file.cgi",
+        "patchSetId": 66
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T17:45:02Z",
+      "side": 1,
+      "message": "Wow, is this still a thing on NTFS?",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b27b8f_64406226",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T17:45:02Z",
+      "side": 1,
+      "message": "You seem to be using \"split(/[\\/\\\\]/).pop()\" quite a bit -- pull into a path_base_name function?",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "849cacfd_e0c4e48c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T17:45:02Z",
+      "side": 1,
+      "message": "/[^ -~]/g is not very clear -- I think you can pull the replace/substr combo into a function whose name explains what it accomplishes",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e0646eb_1330d569",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T17:45:02Z",
+      "side": 1,
+      "message": "Move inside the if where it\u0027s used",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a12b7896_4cdcdebd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T17:45:02Z",
+      "side": 1,
+      "message": "Add a comment stating this is only relevant on Windows.\n\nAlternatively, is it valid to always check against the Acp version? If you make the script only output the Acp version and use it everywhere, there are fewer ifs \u003d\u003d\u003e fewer alternatives to consider if something goes wrong.",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec41cf7_fac7c36a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T17:45:02Z",
+      "side": 1,
+      "message": "Is the 2nd check necessary? It seems like either it\u0027s redundant, or there\u0027s more complexity here than meets the eye.",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323853a8_dbe58a43",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T17:45:02Z",
+      "side": 1,
+      "message": "Is this finally block needed? I think you can remove it and the try/catch",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73197765_b9f20ee1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 66
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T17:45:02Z",
+      "side": 1,
+      "message": "While your argument about pathname is valid, I still think file_path is a better choice. It\u0027s used more often in Chromium, so I\u0027m probably more used to it.",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57a54573_e09ece4b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 66
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T17:45:02Z",
+      "side": 1,
+      "message": "I get the sense that the latter is only output for debugging. (so the dev can check that the basename here matches the desired filename)\n\nPlease consider removing it and relying on checks inside the script.",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fcd022f_85e9fa61",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 66
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T17:45:02Z",
+      "side": 1,
+      "message": "nit: \"LayoutTests_\" instead of \"cgi\" so the user knows where these are coming from.",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b1839a_1ba938f3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 66
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T17:45:02Z",
+      "side": 1,
+      "message": "nit: _acp_utf8?",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
