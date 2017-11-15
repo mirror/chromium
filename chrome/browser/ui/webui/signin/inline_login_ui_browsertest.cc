@@ -167,10 +167,9 @@ class MockInlineSigninHelper : public InlineSigninHelper {
 
   MOCK_METHOD1(OnClientOAuthSuccess, void(const ClientOAuthResult& result));
   MOCK_METHOD1(OnClientOAuthFailure, void(const GoogleServiceAuthError& error));
-  MOCK_METHOD8(CreateSyncStarter,
+  MOCK_METHOD7(CreateSyncStarter,
                void(Browser*,
                     content::WebContents*,
-                    const GURL&,
                     const GURL&,
                     const std::string&,
                     OneClickSigninSyncStarter::ProfileMode,
@@ -228,10 +227,9 @@ class MockSyncStarterInlineSigninHelper : public InlineSigninHelper {
       bool confirm_untrusted_signin,
       bool is_force_sign_in_with_usermanager);
 
-  MOCK_METHOD8(CreateSyncStarter,
+  MOCK_METHOD7(CreateSyncStarter,
                void(Browser*,
                     content::WebContents*,
-                    const GURL&,
                     const GURL&,
                     const std::string&,
                     OneClickSigninSyncStarter::ProfileMode,
@@ -607,7 +605,7 @@ IN_PROC_BROWSER_TEST_F(InlineLoginHelperBrowserTest,
           false);
   EXPECT_CALL(
       *helper,
-      CreateSyncStarter(_, _, _, _, "refresh_token",
+      CreateSyncStarter(_, _, _, "refresh_token",
                         OneClickSigninSyncStarter::CURRENT_PROFILE,
                         OneClickSigninSyncStarter::CONFIRM_SYNC_SETTINGS_FIRST,
                         OneClickSigninSyncStarter::CONFIRM_AFTER_SIGNIN));
@@ -651,7 +649,7 @@ IN_PROC_BROWSER_TEST_F(InlineLoginHelperBrowserTest,
           false,  // confirm untrusted signin
           false);
   EXPECT_CALL(*helper, CreateSyncStarter(
-                           _, _, _, _, "refresh_token",
+                           _, _, _, "refresh_token",
                            OneClickSigninSyncStarter::CURRENT_PROFILE,
                            OneClickSigninSyncStarter::CONFIGURE_SYNC_FIRST,
                            OneClickSigninSyncStarter::CONFIRM_AFTER_SIGNIN));
@@ -684,7 +682,7 @@ IN_PROC_BROWSER_TEST_F(InlineLoginHelperBrowserTest,
           false);
   EXPECT_CALL(
       *helper,
-      CreateSyncStarter(_, _, _, _, "refresh_token",
+      CreateSyncStarter(_, _, _, "refresh_token",
                         OneClickSigninSyncStarter::CURRENT_PROFILE,
                         OneClickSigninSyncStarter::CONFIRM_SYNC_SETTINGS_FIRST,
                         OneClickSigninSyncStarter::CONFIRM_UNTRUSTED_SIGNIN));
@@ -719,7 +717,7 @@ IN_PROC_BROWSER_TEST_F(InlineLoginHelperBrowserTest,
   // Even though "choose what to sync" is false, the source of the URL is
   // settings, which means the user wants to CONFIGURE_SYNC_FIRST.
   EXPECT_CALL(*helper, CreateSyncStarter(
-                           _, _, _, _, "refresh_token",
+                           _, _, _, "refresh_token",
                            OneClickSigninSyncStarter::CURRENT_PROFILE,
                            OneClickSigninSyncStarter::CONFIGURE_SYNC_FIRST,
                            OneClickSigninSyncStarter::CONFIRM_AFTER_SIGNIN));
@@ -791,7 +789,7 @@ IN_PROC_BROWSER_TEST_F(InlineLoginHelperBrowserTest,
           "password", "", "auth_code", std::string(), false, false, true);
   EXPECT_CALL(
       *helper,
-      CreateSyncStarter(_, _, _, _, "refresh_token",
+      CreateSyncStarter(_, _, _, "refresh_token",
                         OneClickSigninSyncStarter::CURRENT_PROFILE,
                         OneClickSigninSyncStarter::CONFIRM_SYNC_SETTINGS_FIRST,
                         OneClickSigninSyncStarter::CONFIRM_AFTER_SIGNIN));
