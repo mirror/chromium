@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f70d778_746810df",
+        "filename": "components/feature_engagement/internal/feature_config_condition_validator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-11-15T23:54:54Z",
+      "side": 1,
+      "message": "Events with same names have different storage duration. I\u0027d expect the greater duration will be effective (in this case 100); but is this true?",
+      "range": {
+        "startLine": 736,
+        "startChar": 60,
+        "endLine": 736,
+        "endChar": 63
+      },
+      "revId": "8edbd07b4ed48d2a0c7af04d7f7c1855266038c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e58303fe_122feb9f",
+        "filename": "components/feature_engagement/internal/feature_config_condition_validator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-11-15T23:54:54Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we trigger again on day 100 and after that? Maybe we should add other assertions for that, for instance:\nEXPECT_TRUE(validator_.MeetsConditions(kTestFeatureFoo, config, event_model_, availability_model_, 100u).NoErrors());",
+      "range": {
+        "startLine": 766,
+        "startChar": 42,
+        "endLine": 766,
+        "endChar": 77
+      },
+      "revId": "8edbd07b4ed48d2a0c7af04d7f7c1855266038c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57dbb64b_b023dcf8",
+        "filename": "components/feature_engagement/internal/feature_config_condition_validator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-11-15T23:54:54Z",
+      "side": 1,
+      "message": "Window is greater than storage. Though the test passes, is it OK?",
+      "range": {
+        "startLine": 797,
+        "startChar": 55,
+        "endLine": 797,
+        "endChar": 64
+      },
+      "revId": "8edbd07b4ed48d2a0c7af04d7f7c1855266038c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08e06a9_534bdbaa",
+        "filename": "components/feature_engagement/internal/feature_config_condition_validator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-11-15T23:54:54Z",
+      "side": 1,
+      "message": "Same as the previous test, we should trigger again on day 30 (because the storage is 30, even though the window is 100 days).",
+      "range": {
+        "startLine": 827,
+        "startChar": 44,
+        "endLine": 827,
+        "endChar": 79
+      },
+      "revId": "8edbd07b4ed48d2a0c7af04d7f7c1855266038c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
