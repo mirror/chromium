@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "411f832e_587a8864",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-15T21:36:19Z",
+      "side": 1,
+      "message": "I think you need it here because you shouldn\u0027t tell an extension to delete the suggestion unless it was an extension keyword that returned the suggestion.  I don\u0027t see any restriction in this function that limits it just to extension keywords.",
+      "parentUuid": "282b3dae_89a4da8f",
+      "revId": "86265cb6baac7dc486a5738a57a436e199729dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc294067_a6d57bc7",
         "filename": "components/omnibox/browser/keyword_provider.cc",
         "patchSetId": 7
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "I removed it because I embedded the check inside the IsKeywordEnabled(). See line 597. That should work, right?",
       "parentUuid": "cc294067_a6d57bc7",
+      "revId": "86265cb6baac7dc486a5738a57a436e199729dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf2dc46_23cbabc0",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-15T21:36:19Z",
+      "side": 1,
+      "message": "That should work, you\u0027re right.  Mostly.  Sorry I missed that.\n\nThere is one subtle behavioral change here however.  I\u0027m not sure if you care:\nPreviously, this block here erases matches for keywords for which we know they are not enabled.  (I.e., extensions_delegate is valid and says the keyword is not enabled)\nThe new code will erase matches for keywords for which we know they are not enabled AND also erase matches for keywords for which we cannot check.  That is, if extensions_delegate is false, we erase the match.  Previously we didn\u0027t.\n\nOff the top of my head, I\u0027m not sure which behavior is correct.  (I don\u0027t know what it means that extension_delegate is false.)  Can you decide?",
+      "parentUuid": "fedf5a98_189ba9a2",
       "revId": "86265cb6baac7dc486a5738a57a436e199729dbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
