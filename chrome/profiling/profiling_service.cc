@@ -19,6 +19,7 @@ std::unique_ptr<service_manager::Service> ProfilingService::CreateService() {
 }
 
 void ProfilingService::OnStart() {
+LOG(ERROR) << "ProfilingProcessHost::ProfilingService::OnStart";
   ref_factory_.reset(new service_manager::ServiceContextRefFactory(base::Bind(
       &ProfilingService::MaybeRequestQuitDelayed, base::Unretained(this))));
   registry_.AddInterface(
@@ -30,6 +31,7 @@ void ProfilingService::OnBindInterface(
     const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
+LOG(ERROR) << "ProfilingProcessHost::ProfilingService::OnBindInterface";
   registry_.BindInterface(interface_name, std::move(interface_pipe));
 
   // TODO(ajwong): Maybe signal shutdown when all interfaces are closed?  What
@@ -64,6 +66,7 @@ void ProfilingService::AddProfilingClient(
     mojo::ScopedHandle memlog_pipe_sender,
     mojo::ScopedHandle memlog_pipe_receiver,
     mojom::ProcessType process_type) {
+LOG(ERROR) << "ProfilingProcessHost::ProfilingService::AddProfilingClient";
   connection_manager_.OnNewConnection(
       pid, std::move(client), std::move(memlog_pipe_sender),
       std::move(memlog_pipe_receiver), process_type);
@@ -74,6 +77,7 @@ void ProfilingService::DumpProcess(
     mojo::ScopedHandle output_file,
     std::unique_ptr<base::DictionaryValue> metadata,
     DumpProcessCallback callback) {
+LOG(ERROR) << "ProfilingProcessHost::ProfilingService::DumpProcess";
   base::PlatformFile platform_file;
   MojoResult result =
       UnwrapPlatformFile(std::move(output_file), &platform_file);
@@ -96,6 +100,7 @@ void ProfilingService::DumpProcess(
 
 void ProfilingService::DumpProcessesForTracing(
     DumpProcessesForTracingCallback callback) {
+LOG(ERROR) << "ProfilingProcessHost::ProfilingService::DumpProcessesForTracing";
   // Need a memory map to make sense of the dump. The dump will be triggered
   // in the memory map global dump callback.
   // TODO(brettw) this should be a OnceCallback to avoid base::Passed.

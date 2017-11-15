@@ -155,9 +155,11 @@ MessageLoop* MessageLoop::current() {
 
 // static
 bool MessageLoop::InitMessagePumpForUIFactory(MessagePumpFactory* factory) {
+  LOG(ERROR) << "ProfilingProcessHost::MessageLoop::InitMessagePumpForUIFactory1";
   if (message_pump_for_ui_factory_)
     return false;
 
+  LOG(ERROR) << "ProfilingProcessHost::MessageLoop::InitMessagePumpForUIFactory2";
   message_pump_for_ui_factory_ = factory;
   return true;
 }
@@ -193,8 +195,12 @@ std::unique_ptr<MessagePump> MessageLoop::CreateMessagePumpForType(Type type) {
 #endif
 
   if (type == MessageLoop::TYPE_UI) {
-    if (message_pump_for_ui_factory_)
+    LOG(ERROR) << "ProfilingProcessHost::MessageLoop::TypeUI1";
+    if (message_pump_for_ui_factory_) {
+      LOG(ERROR) << "ProfilingProcessHost::MessageLoop::TypeUI2";
       return message_pump_for_ui_factory_();
+    }
+    LOG(ERROR) << "ProfilingProcessHost::MessageLoop::TypeUI3";
     return MESSAGE_PUMP_UI;
   }
   if (type == MessageLoop::TYPE_IO)

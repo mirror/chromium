@@ -181,8 +181,11 @@ void InitAndroidTestPaths(const FilePath& test_data_dir) {
 }
 
 void InitAndroidTestMessageLoop() {
-  if (!MessageLoop::InitMessagePumpForUIFactory(&CreateMessagePumpForUIStub))
+  LOG(ERROR) << "ProfilingProcessHost::InitAndroidTestMessageLoop";
+  if (!MessageLoop::InitMessagePumpForUIFactory(&CreateMessagePumpForUIStub)) {
+    LOG(ERROR) << "ProfilingProcessHost::InitAndroidTestMessageLoop::Failed";
     LOG(INFO) << "MessagePumpForUIFactory already set, unable to override.";
+  }
 }
 
 }  // namespace base

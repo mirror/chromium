@@ -273,6 +273,7 @@ void ProfilingProcessHost::Observe(
 bool ProfilingProcessHost::OnMemoryDump(
     const base::trace_event::MemoryDumpArgs& args,
     base::trace_event::ProcessMemoryDump* pmd) {
+LOG(ERROR) << "ProfilingProcessHost::ProfilingProcessHost::OnMemoryDump";
   profiling_service_->DumpProcessesForTracing(
       base::BindOnce(&ProfilingProcessHost::OnDumpProcessesForTracingCallback,
                      base::Unretained(this), args.dump_guid));
@@ -282,19 +283,23 @@ bool ProfilingProcessHost::OnMemoryDump(
 void ProfilingProcessHost::OnDumpProcessesForTracingCallback(
     uint64_t guid,
     std::vector<profiling::mojom::SharedBufferWithSizePtr> buffers) {
+LOG(ERROR) << "ProfilingProcessHost::OnDumpProcessesForTracingCallback1";
   for (auto& buffer_ptr : buffers) {
+  LOG(ERROR) << "ProfilingProcessHost::OnDumpProcessesForTracingCallback2";
     mojo::ScopedSharedBufferHandle& buffer = buffer_ptr->buffer;
     uint32_t size = buffer_ptr->size;
 
     if (!buffer->is_valid())
       return;
 
+  LOG(ERROR) << "ProfilingProcessHost::OnDumpProcessesForTracingCallback3";
     mojo::ScopedSharedBufferMapping mapping = buffer->Map(size);
     if (!mapping) {
       DLOG(ERROR) << "Failed to map buffer";
       return;
     }
 
+  LOG(ERROR) << "ProfilingProcessHost::OnDumpProcessesForTracingCallback4";
     const char* char_buffer = static_cast<const char*>(mapping.get());
     std::string json(char_buffer, char_buffer + size);
 
@@ -367,19 +372,7 @@ ProfilingProcessHost::Mode ProfilingProcessHost::GetCurrentMode() {
           kOOPHeapProfilingFeature, kOOPHeapProfilingFeatureMode);
     }
 
-    if (mode == switches::kMemlogModeAll)
-      return Mode::kAll;
-    if (mode == switches::kMemlogModeMinimal)
-      return Mode::kMinimal;
-    if (mode == switches::kMemlogModeBrowser)
-      return Mode::kBrowser;
-    if (mode == switches::kMemlogModeGpu)
-      return Mode::kGpu;
-    if (mode == switches::kMemlogModeRendererSampling)
-      return Mode::kRendererSampling;
-
-    DLOG(ERROR) << "Unsupported value: \"" << mode << "\" passed to --"
-                << switches::kMemlog;
+    return ConvertStringToMode(mode);
   }
   return Mode::kNone;
 #else
@@ -389,6 +382,23 @@ ProfilingProcessHost::Mode ProfilingProcessHost::GetCurrentMode() {
       << "is not available in this build.";
   return Mode::kNone;
 #endif
+}
+
+// static
+ProfilingProcessHost::Mode ProfilingProcessHost::ConvertStringToMode(const std::string& mode) {
+   if (mode == switches::kMemlogModeAll)
+     return Mode::kAll;
+   if (mode == switches::kMemlogModeMinimal)
+     return Mode::kMinimal
+   if (mode == switches::kMemlogModeBrowser)
+     return Mode::kBrowser;
+   if (mode == switches::kMemlogModeGpu)
+     return Mode::kGpu;
+   if (mode == switches::kMemlogModeRendererSampling)
+     return Mode::kRendererSampling;
+  DLOG(ERROR) << "Unsupported value: \"" << mode << "\" passed to --"
+              << switches::kMemlog;
+   return Mode::kNone;
 }
 
 // static

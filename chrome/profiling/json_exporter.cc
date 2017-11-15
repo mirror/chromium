@@ -503,6 +503,12 @@ void ExportMemoryMapsAndV2StackTraceToJSON(const ExportParams& params,
       }
     }
   }
+  for (uint32_t i = 0; i < kAllocatorCount; i++) {
+  LOG(ERROR) << "ProfilingProcessHost::JSONExporter " << filtered_allocations[i].size();
+  for (auto& alloc : filtered_allocations[i]) {
+    LOG(ERROR) << " size: " << alloc.second.size << " " << alloc.second.count;
+  }
+  }
 
   WriteAllocatorsSummary(total_size, total_count, out);
   WriteHeapsV2Header(out);
