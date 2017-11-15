@@ -416,7 +416,7 @@ bool SVGLayoutSupport::PointInClippingArea(const LayoutObject& object,
   if (clip_path_operation->GetType() == ClipPathOperation::SHAPE) {
     ShapeClipPathOperation& clip_path =
         ToShapeClipPathOperation(*clip_path_operation);
-    return clip_path.GetPath(object.ObjectBoundingBox()).Contains(point);
+    return clip_path.GetPath(object.ObjectBoundingBox())->Contains(point);
   }
   DCHECK_EQ(clip_path_operation->GetType(), ClipPathOperation::REFERENCE);
   SVGResources* resources =
