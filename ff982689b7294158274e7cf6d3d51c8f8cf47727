@@ -163,6 +163,69 @@
     },
     {
       "key": {
+        "uuid": "19618679_35dc440f",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-15T14:32:32Z",
+      "side": 1,
+      "message": "Can you DCHECK that the type is NOTIFICATION_PROFILE_DESTROYED?",
+      "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "634b3955_7f16c2b4",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-15T14:32:32Z",
+      "side": 1,
+      "message": "Why don\u0027t you just register that profile as the source?",
+      "range": {
+        "startLine": 207,
+        "startChar": 6,
+        "endLine": 207,
+        "endChar": 72
+      },
+      "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adcf601d_03631e3e",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-15T14:32:32Z",
+      "side": 1,
+      "message": "I feel like this comment says too much and too little at the same time :)\n\nThe fact that some keyed services are shared between the regular and incognito profile is more of an implementation detail – |presentation_web_contents_| depends on |profile_|, |profile_| depends on the original profile, so if the latter is going away, the former two also have to go away.",
+      "range": {
+        "startLine": 208,
+        "startChar": 7,
+        "endLine": 212,
+        "endChar": 40
+      },
+      "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ecb97d2_b3d79639",
         "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
         "patchSetId": 7
@@ -294,6 +357,29 @@
         "startChar": 0,
         "endLine": 111,
         "endChar": 2
+      },
+      "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f92ac96_31a69eb2",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-15T14:32:32Z",
+      "side": 1,
+      "message": "Remove this?",
+      "range": {
+        "startLine": 109,
+        "startChar": 1,
+        "endLine": 109,
+        "endChar": 11
       },
       "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
