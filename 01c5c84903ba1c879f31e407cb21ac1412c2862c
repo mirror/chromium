@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0873da01_5e42a279",
+        "filename": "chrome/browser/android/offline_pages/downloads/resource_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-11-15T23:43:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b332b6eb_73c83f57",
+      "revId": "01c5c84903ba1c879f31e407cb21ac1412c2862c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8975a32e_a29f0c0b",
         "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-20T23:48:13Z",
       "side": 1,
       "message": "BTW, can we convert the string to a C++ struct so that it can be handled easily everywhere? Or otherwise, the downstream code have to do the deserialization by themselves. You can use json_value_converter.cc to do this",
+      "revId": "01c5c84903ba1c879f31e407cb21ac1412c2862c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51cbad14_50b69fc7",
+        "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-11-15T23:43:29Z",
+      "side": 1,
+      "message": "The serialization and deserialization is done on Android-specific Java code.  For the most part, this field is intended to be a non-evaluated property on the download.  We can either have Android pass down the C++ version of the class that exists on Java side and add maintenance to something that makes makes sense in Android, or we can simply pass a serialized version and leave deserialization to where it\u0027s used.\n\nI like the flexibility of the latter - if we add iOS later on, we can still pass a string, but interpret it differently rather than trying to hack the information into an existing struct.\n\nIn relation to storing the fields separately in Download DB",
+      "parentUuid": "8975a32e_a29f0c0b",
       "revId": "01c5c84903ba1c879f31e407cb21ac1412c2862c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "01c5c84903ba1c879f31e407cb21ac1412c2862c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e796574_645e95cf",
+        "filename": "components/offline_pages/core/downloads/offline_page_download_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-11-15T23:43:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d2342c1_41dfde6d",
+      "revId": "01c5c84903ba1c879f31e407cb21ac1412c2862c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -84,6 +138,24 @@
       "revId": "01c5c84903ba1c879f31e407cb21ac1412c2862c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcce8b8f_cf7b3c4f",
+        "filename": "components/offline_pages/core/downloads/offline_page_download_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-11-15T23:43:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cc166c8_283cc441",
+      "revId": "01c5c84903ba1c879f31e407cb21ac1412c2862c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
