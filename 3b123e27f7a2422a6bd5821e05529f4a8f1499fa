@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36b5a09a_9d553a90",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-15T16:20:15Z",
+      "side": 1,
+      "message": "maybe try MoveMouseToCenterOf",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 45
+      },
+      "revId": "3b123e27f7a2422a6bd5821e05529f4a8f1499fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e10e941_f69f6c18",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-15T16:20:15Z",
+      "side": 1,
+      "message": "I believe click encompasses press and release",
+      "range": {
+        "startLine": 156,
+        "startChar": 14,
+        "endLine": 156,
+        "endChar": 36
+      },
+      "revId": "3b123e27f7a2422a6bd5821e05529f4a8f1499fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
