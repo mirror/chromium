@@ -224,6 +224,30 @@
       "revId": "57fcc2874a06f65b1d5ede99704b9638bb618ab7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e24dd7_7dac7f20",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-15T18:21:13Z",
+      "side": 1,
+      "message": "\u003e \u003e 2. Ultimately ChromeContentBrowserClientExtensionsPart::CanCommitURL helps catch issues in extensions-related process allocation decisions, but to reject invalid DidCommitProvisionalLoad IPC in general, we need mojofication of NavigationRequest as proposed by Camille.  I guess I am trying to say that tightening of CanCommitURL is like a DCHECK - it is not an end in itself / it might be okay to sacrifice it for other goals.\n\u003e \n\u003e I don\u0027t understand this point about CanCommitURL being like a DCHECK.  I thought a CanCommitURL failure would make us kill the renderer with RFH_CAN_COMMIT_URL_BLOCKED, so we wouldn\u0027t care about the Mojo work for this.\n\nI was missing that even without Mojo work we can make CanCommitURL consult IsSuitableHost and get generic commit IPC validation this way (generic \u003d not just specific to extensions).  If we have a generic protection (either via IsSuitableHost or via Mojo work), then we don\u0027t really need tightening of CanCommitURL by consulting extensions::ProcessMap (like in the reverted https://crrev.com/c/683312) - such extra checks would be like a DCHECK - they would only make sure that the other CanCommitURL checks and process decisions are shadowed consistently by extensions::ProcessMap.",
+      "parentUuid": "26c01caa_dc7bcc01",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 13
+      },
+      "revId": "57fcc2874a06f65b1d5ede99704b9638bb618ab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
