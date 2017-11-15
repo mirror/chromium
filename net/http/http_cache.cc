@@ -1062,15 +1062,21 @@ void HttpCache::ProcessAddToEntryQueue(ActiveEntry* entry) {
   transaction->io_callback().Run(OK);
 }
 
+bool HttpCache::CanTransactionJoinExistingWriters(Transaction* transaction) {
+  return (transaction->method() == "GET" && !transaction->partial());
+}
+
 void HttpCache::ProcessDoneHeadersQueue(ActiveEntry* entry) {
   DCHECK(!entry->writers || entry->writers->CanAddWriters());
   DCHECK(!entry->done_headers_queue.empty());
 
   Transaction* transaction = entry->done_headers_queue.front();
-  bool is_partial = transaction->partial() != nullptr;
+  bool can_join_existing_writers =
+      CanTransactionJoinExistingWriters(transaction);
 
   if (IsWritingInProgress(entry)) {
-    if (is_partial || transaction->mode() == Transaction::READ) {
+    if (!can_join_existing_writers ||
+        transaction->mode() == Transaction::READ) {
       // TODO(shivanisha): Returning from here instead of checking the next
       // transaction in the queue because the FIFO order is maintained
       // throughout, until it becomes a reader or writer. May be at this point
@@ -1082,7 +1088,7 @@ void HttpCache::ProcessDoneHeadersQueue(ActiveEntry* entry) {
     AddTransactionToWriters(entry, transaction);
   } else {  // no writing in progress
     if (transaction->mode() & Transaction::WRITE) {
-      if (is_partial) {
+      if (transaction->partial()) {
         AddTransactionToWriters(entry, transaction);
       } else {
         // Add the transaction to readers since the response body should have
@@ -1119,9 +1125,10 @@ void HttpCache::AddTransactionToWriters(ActiveEntry* entry,
   Writers::TransactionInfo info(transaction->partial(),
                                 transaction->is_truncated(),
                                 *(transaction->GetResponseInfo()));
-  entry->writers->AddTransaction(transaction,
-                                 transaction->partial() /* is_exclusive */,
-                                 transaction->priority(), info);
+  entry->writers->AddTransaction(
+      transaction,
+      !CanTransactionJoinExistingWriters(transaction) /* is_exclusive */,
+      transaction->priority(), info);
 }
 
 bool HttpCache::CanTransactionWriteResponseHeaders(ActiveEntry* entry,
