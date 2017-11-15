@@ -33,6 +33,24 @@
       "revId": "483c599d97e18ba9f52d2fe7aa3d2c0080fff552",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b782cb_3ff6afd6",
+        "filename": "third_party/WebKit/public/web/WebAssociatedURLLoaderOptions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-15T00:39:22Z",
+      "side": 1,
+      "message": "This is in public and it\u0027s used outside Blink too. (We\u0027re aiming for moving this code out of Blink / renderer eventually)",
+      "parentUuid": "e98fc0ad_dda4f999",
+      "revId": "483c599d97e18ba9f52d2fe7aa3d2c0080fff552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
