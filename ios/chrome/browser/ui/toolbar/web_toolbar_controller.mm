@@ -892,7 +892,7 @@ using ios::material::TimingFunction;
 }
 
 - (void)locationBarHasBecomeFirstResponder {
-  [self.delegate locationBarDidBecomeFirstResponder:self];
+  [self.delegate locationBarDidBecomeFirstResponder];
   if (@available(iOS 10, *)) {
     if (base::FeatureList::IsEnabled(kPropertyAnimationsToolbar)) {
       [self expandOmnibox];
@@ -923,7 +923,7 @@ using ios::material::TimingFunction;
 }
 
 - (void)locationBarHasResignedFirstResponder {
-  [self.delegate locationBarDidResignFirstResponder:self];
+  [self.delegate locationBarDidResignFirstResponder];
   if (@available(iOS 10, *)) {
     if (base::FeatureList::IsEnabled(kPropertyAnimationsToolbar)) {
       [self contractOmnibox];
@@ -936,7 +936,7 @@ using ios::material::TimingFunction;
 }
 
 - (void)locationBarBeganEdit {
-  [self.delegate locationBarBeganEdit:self];
+  [self.delegate locationBarBeganEdit];
 }
 
 - (web::WebState*)getWebState {

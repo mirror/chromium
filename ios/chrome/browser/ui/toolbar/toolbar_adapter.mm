@@ -11,10 +11,12 @@
 @end
 
 @implementation ToolbarAdapter
+@synthesize audience = _audience;
 @synthesize backgroundView = _backgroundView;
 @synthesize cleanToolbarCoordinator = _cleanToolbarCoordinator;
 @synthesize delegate = _delegate;
 @synthesize toolsPopupController = _toolsPopupController;
+@synthesize URLLoader = _URLLoader;
 @synthesize viewController = _viewController;
 
 - (instancetype)initWithDispatcher:
@@ -29,6 +31,18 @@
     _cleanToolbarCoordinator.chromeBrowserState = browserState;
   }
   return self;
+}
+
+#pragma mark - Properties
+
+- (void)setAudience:(id<ToolbarCoordinatorAudience>)audience {
+  _audience = audience;
+  self.cleanToolbarCoordinator.audience = audience;
+}
+
+- (void)setURLLoader:(id<UrlLoader>)URLLoader {
+  _URLLoader = URLLoader;
+  self.cleanToolbarCoordinator.URLLoader = URLLoader;
 }
 
 #pragma mark - Abstract WebToolbar
