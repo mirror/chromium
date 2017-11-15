@@ -81,6 +81,30 @@
       "revId": "62f6018dc8b5f798eab8e7e5e72fc6a8654412f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a4c2e5_e0bc2b5b",
+        "filename": "chrome/browser/chromeos/file_system_provider/fake_registry.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-15T01:15:57Z",
+      "side": 1,
+      "message": "Ah, yeah, my idea won\u0027t work. Indirect includes don\u0027t count.\n\nHere we should include:\n\nbase/macros.h for DISALLOW_COPY_AND_ASSIGN\nchrome/browser/chromeos/file_system_provider/registry_interface.h for RegistryInterface and RestoredFileSystems\nchrome/browser/chromeos/file_system_provider/provided_file_system_info.h for ProvidedFileSystemInfo\nchrome/browser/chromeos/file_system_provider/watcher.h for Watchers\n\nhttps://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes\n\nIf you can use forwards skip include here and add it in .cc file.\n\nIf you have an include in .h file, don\u0027t add it again in .cc.",
+      "parentUuid": "e6a1b520_81e68f86",
+      "range": {
+        "startLine": 8,
+        "startChar": 1,
+        "endLine": 8,
+        "endChar": 8
+      },
+      "revId": "62f6018dc8b5f798eab8e7e5e72fc6a8654412f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
