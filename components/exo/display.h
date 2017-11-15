@@ -21,6 +21,7 @@
 #endif
 
 namespace exo {
+class ClientControlledShellSurface;
 class DataDevice;
 class DataDeviceDelegate;
 class FileHelper;
@@ -68,7 +69,7 @@ class Display {
 
   // Creates a remote shell surface for an existing surface using |container|.
   // The surface is scaled by 1 / |default_device_scale_factor|.
-  std::unique_ptr<ShellSurface> CreateRemoteShellSurface(
+  std::unique_ptr<ClientControlledShellSurface> CreateRemoteShellSurface(
       Surface* surface,
       int container,
       double default_device_scale_factor);

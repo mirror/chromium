@@ -5,6 +5,7 @@
 #include "components/exo/display.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "components/exo/buffer.h"
+#include "components/exo/client_controlled_shell_surface.h"
 #include "components/exo/data_device.h"
 #include "components/exo/data_device_delegate.h"
 #include "components/exo/file_helper.h"
