@@ -18,6 +18,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Debug;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.os.SystemClock;
@@ -420,9 +421,9 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      */
     @Override
     protected final void setContentView() {
+
         final long begin = SystemClock.elapsedRealtime();
         TraceEvent.begin("onCreate->setContentView()");
-
         enableHardwareAcceleration();
         setLowEndTheme();
         int controlContainerLayoutId = getControlContainerLayoutId();
@@ -458,19 +459,20 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
                 // Inflate the correct toolbar layout for the device.
                 int toolbarLayoutId = getToolbarLayoutId();
                 if (toolbarLayoutId != NO_TOOLBAR_LAYOUT && controlContainer != null) {
-                    controlContainer.initWithToolbar(toolbarLayoutId);
+//                    controlContainer.initWithToolbar(toolbarLayoutId);
                 }
 
                 // Get a handle to the bottom sheet if using the bottom control container.
                 if (controlContainerLayoutId == R.layout.bottom_control_container) {
-                    View coordinator = findViewById(R.id.coordinator);
-                    mBottomSheet = (BottomSheet) findViewById(R.id.bottom_sheet);
-                    mBottomSheet.init(coordinator, controlContainer.getView(), this);
+//                    View coordinator = findViewById(R.id.coordinator);
+//                    mBottomSheet = (BottomSheet) findViewById(R.id.bottom_sheet);
+//                    mBottomSheet.init(coordinator, controlContainer.getView(), this);
                 }
             } finally {
                 StrictMode.setThreadPolicy(oldPolicy);
             }
         }
+
         TraceEvent.end("onCreate->setContentView()");
         mInflateInitialLayoutDurationMs = SystemClock.elapsedRealtime() - begin;
 
@@ -510,20 +512,20 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         mAppMenuHandler = sAppMenuHandlerFactory.get(this, mAppMenuPropertiesDelegate,
                 getAppMenuLayoutId());
         Callback<Boolean> urlFocusChangedCallback = hasFocus -> onOmniboxFocusChanged(hasFocus);
-        mToolbarManager = new ToolbarManager(this, toolbarContainer, mAppMenuHandler,
-                mAppMenuPropertiesDelegate, getCompositorViewHolder().getInvalidator(),
-                urlFocusChangedCallback);
-        mFindToolbarManager = new FindToolbarManager(
-                this, mToolbarManager.getActionModeController().getActionModeCallback());
+//        mToolbarManager = new ToolbarManager(this, toolbarContainer, mAppMenuHandler,
+//                mAppMenuPropertiesDelegate, getCompositorViewHolder().getInvalidator(),
+//                urlFocusChangedCallback);
+//        mFindToolbarManager = new FindToolbarManager(
+//                this, mToolbarManager.getActionModeController().getActionModeCallback());
         mAppMenuHandler.addObserver(new AppMenuObserver() {
             @Override
             public void onMenuVisibilityChanged(boolean isVisible) {
                 if (isVisible && !isInOverviewMode()) {
                     // The app menu badge should be removed the first time the menu is opened.
-                    if (mToolbarManager.getToolbar().isShowingAppMenuUpdateBadge()) {
-                        mToolbarManager.getToolbar().removeAppMenuUpdateBadge(true);
-                        mCompositorViewHolder.requestRender();
-                    }
+//                    if (mToolbarManager.getToolbar().isShowingAppMenuUpdateBadge()) {
+//                        mToolbarManager.getToolbar().removeAppMenuUpdateBadge(true);
+//                        mCompositorViewHolder.requestRender();
+//                    }
                 }
                 if (!isVisible) {
                     mAppMenuPropertiesDelegate.onMenuDismissed();
@@ -630,9 +632,9 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
                 if (getToolbarManager() == null) return;
                 getToolbarManager().updatePrimaryColor(color, true);
 
-                ControlContainer controlContainer =
-                        (ControlContainer) findViewById(R.id.control_container);
-                controlContainer.getToolbarResourceAdapter().invalidate(null);
+//                ControlContainer controlContainer =
+//                        (ControlContainer) findViewById(R.id.control_container);
+//                controlContainer.getToolbarResourceAdapter().invalidate(null);
             }
 
             @Override
@@ -836,7 +838,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     protected void setStatusBarColor(Tab tab, int color) {
         int statusBarColor = (tab != null && tab.isDefaultThemeColor())
                 ? Color.BLACK : ColorUtils.getDarkenedColorForStatusBar(color);
-        ApiCompatibilityUtils.setStatusBarColor(getWindow(), statusBarColor);
+//        ApiCompatibilityUtils.setStatusBarColor(getWindow(), statusBarColor);
     }
 
     private void createContextReporterIfNeeded() {
@@ -998,7 +1000,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
                 RecordHistogram.recordTimesHistogram(
                         "MobileStartup.ToolbarInflationTime." + simpleName,
                         mInflateInitialLayoutDurationMs, TimeUnit.MILLISECONDS);
-                mToolbarManager.onDeferredStartup(getOnCreateTimestampMs(), simpleName);
+//                mToolbarManager.onDeferredStartup(getOnCreateTimestampMs(), simpleName);
             }
 
             if (MultiWindowUtils.getInstance().isInMultiWindowMode(ChromeActivity.this)) {
@@ -1449,10 +1451,10 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         }
 
         // Defense in depth against the UI being erroneously enabled.
-        if (!mToolbarManager.getBookmarkBridge().isEditBookmarksEnabled()) {
-            assert false;
-            return;
-        }
+//        if (!mToolbarManager.getBookmarkBridge().isEditBookmarksEnabled()) {
+//            assert false;
+//            return;
+//        }
 
         // Note the use of getUserBookmarkId() over getBookmarkId() here: Managed bookmarks can't be
         // edited. If the current URL is only bookmarked by managed bookmarks, this will return
@@ -1880,10 +1882,10 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      */
     public void onCheckForUpdate(boolean updateAvailable) {
         if (UpdateMenuItemHelper.getInstance().shouldShowToolbarBadge(this)) {
-            mToolbarManager.getToolbar().showAppMenuUpdateBadge();
+//            mToolbarManager.getToolbar().showAppMenuUpdateBadge();
             mCompositorViewHolder.requestRender();
         } else {
-            mToolbarManager.getToolbar().removeAppMenuUpdateBadge(false);
+//            mToolbarManager.getToolbar().removeAppMenuUpdateBadge(false);
         }
     }
 
@@ -2275,7 +2277,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     }
 
     private void clearToolbarResourceCache() {
-        ControlContainer controlContainer = (ControlContainer) findViewById(R.id.control_container);
-        controlContainer.getToolbarResourceAdapter().dropCachedBitmap();
+//        ControlContainer controlContainer = (ControlContainer) findViewById(R.id.control_container);
+//        controlContainer.getToolbarResourceAdapter().dropCachedBitmap();
     }
 }

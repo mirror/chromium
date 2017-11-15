@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 
+import org.chromium.base.TraceEvent;
 import org.chromium.chrome.browser.init.ProcessInitializationHandler;
 
 /**
@@ -36,6 +37,8 @@ public class ChromeBrowserSyncAdapterService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        return getOrCreateSyncAdapter(getApplicationContext()).getSyncAdapterBinder();
+        try (TraceEvent e = TraceEvent.scoped("ChromeBrowserSyncAdapaterService");) {
+            return getOrCreateSyncAdapter(getApplicationContext()).getSyncAdapterBinder();
+        }
     }
 }

@@ -17,6 +17,7 @@ import android.content.pm.ShortcutManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.SystemClock;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
@@ -427,14 +428,14 @@ public class ChromeTabbedActivity
             Intent intent, BooleanHistogramSample dispatchedHistogram) {
         // The first check ensures that this is .Main activity alias (we can't check exactly, but
         // this gets us sufficiently close).
-        if (getClass().equals(ChromeTabbedActivity.class)
-                && Intent.ACTION_VIEW.equals(intent.getAction()) && intent.getComponent() != null
-                && MAIN_LAUNCHER_ACTIVITY_NAME.equals(intent.getComponent().getClassName())) {
-            @LaunchIntentDispatcher.Action
-            int action = LaunchIntentDispatcher.dispatchToCustomTabActivity(this, intent);
-            dispatchedHistogram.record(action != LaunchIntentDispatcher.Action.CONTINUE);
-            return action;
-        }
+//        if (getClass().equals(ChromeTabbedActivity.class)
+//                && Intent.ACTION_VIEW.equals(intent.getAction()) && intent.getComponent() != null
+//                && MAIN_LAUNCHER_ACTIVITY_NAME.equals(intent.getComponent().getClassName())) {
+//            @LaunchIntentDispatcher.Action
+//            int action = LaunchIntentDispatcher.dispatchToCustomTabActivity(this, intent);
+//            dispatchedHistogram.record(action != LaunchIntentDispatcher.Action.CONTINUE);
+//            return action;
+//        }
         return LaunchIntentDispatcher.Action.CONTINUE;
     }
 
@@ -524,7 +525,9 @@ public class ChromeTabbedActivity
     @Override
     public void finishNativeInitialization() {
         try {
+
             TraceEvent.begin("ChromeTabbedActivity.finishNativeInitialization");
+//            Debug.startMethodTracing("finishNativeInitiailizaton");
 
             refreshSignIn();
 
@@ -582,6 +585,7 @@ public class ChromeTabbedActivity
 
             super.finishNativeInitialization();
         } finally {
+//            Debug.stopMethodTracing();
             TraceEvent.end("ChromeTabbedActivity.finishNativeInitialization");
         }
     }
@@ -786,6 +790,7 @@ public class ChromeTabbedActivity
     private void initializeUI() {
         try {
             TraceEvent.begin("ChromeTabbedActivity.initializeUI");
+//            Debug.startMethodTracing("intiialzieUi");
 
             CompositorViewHolder compositorViewHolder = getCompositorViewHolder();
             if (DeviceFormFactor.isTablet()) {
@@ -829,10 +834,10 @@ public class ChromeTabbedActivity
             };
             OnClickListener bookmarkClickHandler = v -> addOrEditBookmark(getActivityTab());
 
-            getToolbarManager().initializeWithNative(mTabModelSelectorImpl,
-                    getFullscreenManager().getBrowserVisibilityDelegate(), getFindToolbarManager(),
-                    mLayoutManager, mLayoutManager, tabSwitcherClickHandler, newTabClickHandler,
-                    bookmarkClickHandler, null);
+//            getToolbarManager().initializeWithNative(mTabModelSelectorImpl,
+//                    getFullscreenManager().getBrowserVisibilityDelegate(), getFindToolbarManager(),
+//                    mLayoutManager, mLayoutManager, tabSwitcherClickHandler, newTabClickHandler,
+//                    bookmarkClickHandler, null);
 
             if (isTablet()) {
                 EmptyBackgroundViewWrapper bgViewWrapper = new EmptyBackgroundViewWrapper(
@@ -852,6 +857,7 @@ public class ChromeTabbedActivity
 
             mUIInitialized = true;
         } finally {
+//            Debug.stopMethodTracing();
             TraceEvent.end("ChromeTabbedActivity.initializeUI");
         }
     }
@@ -902,7 +908,8 @@ public class ChromeTabbedActivity
                     ? mControlContainer.findViewById(R.id.expand_sheet_button)
                     : mControlContainer.findViewById(R.id.toolbar_handle);
         } else {
-            return getToolbarManager().getMenuButton();
+            return null;
+//            return getToolbarManager().getMenuButton();
         }
     }
 
@@ -1388,7 +1395,7 @@ public class ChromeTabbedActivity
                     assert false : "Unknown TabOpenType: " + tabOpenType;
                     break;
             }
-            getToolbarManager().setUrlBarFocus(false);
+//            getToolbarManager().setUrlBarFocus(false);
         }
 
         @Override
@@ -1527,7 +1534,7 @@ public class ChromeTabbedActivity
     protected void initializeToolbar() {
         super.initializeToolbar();
         if (DeviceFormFactor.isTablet()) {
-            getToolbarManager().setShouldUpdateToolbarPrimaryColor(false);
+//            getToolbarManager().setShouldUpdateToolbarPrimaryColor(false);
         }
     }
 
@@ -1905,10 +1912,10 @@ public class ChromeTabbedActivity
             return true;
         }
 
-        if (getToolbarManager().back()) {
-            recordBackPressedUma("Navigating backward", BACK_PRESSED_NAVIGATED_BACK);
-            return true;
-        }
+//        if (getToolbarManager().back()) {
+//            recordBackPressedUma("Navigating backward", BACK_PRESSED_NAVIGATED_BACK);
+//            return true;
+//        }
 
         // If the current tab url is HELP_URL, then the back button should close the tab to
         // get back to the previous state. The reason for startsWith check is that the
@@ -2009,7 +2016,7 @@ public class ChromeTabbedActivity
             String externalAppId, boolean forceNewTab, Intent intent) {
         if (mUIInitialized && (getBottomSheet() == null || !NewTabPage.isNTPUrl(url))) {
             mLayoutManager.hideOverview(false);
-            getToolbarManager().finishAnimations();
+//            getToolbarManager().finishAnimations();
         }
         if (TextUtils.equals(externalAppId, getPackageName())) {
             // If the intent was launched by chrome, open the new tab in the appropriate model.
@@ -2412,8 +2419,8 @@ public class ChromeTabbedActivity
         ThreadUtils.postOnUiThread(new Runnable() {
             @Override
             public void run() {
-                getToolbarManager().showDownloadPageTextBubble(
-                        getActivityTab(), FeatureConstants.DOWNLOAD_PAGE_SCREENSHOT_FEATURE);
+//                getToolbarManager().showDownloadPageTextBubble(
+//                        getActivityTab(), FeatureConstants.DOWNLOAD_PAGE_SCREENSHOT_FEATURE);
             }
         });
     }

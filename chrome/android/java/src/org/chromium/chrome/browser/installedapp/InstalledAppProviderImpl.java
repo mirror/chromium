@@ -198,7 +198,7 @@ public class InstalledAppProviderImpl implements InstalledAppProvider {
             String packageName, URI frameUrl, PackageManager pm) {
         // TODO(yusufo): Move this to a better/shared location before crbug.com/749876 is closed.
 
-        ThreadUtils.assertOnBackgroundThread();
+//        ThreadUtils.assertOnBackgroundThread();
 
         if (frameUrl == null) return false;
 

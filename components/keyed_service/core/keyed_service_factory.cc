@@ -59,7 +59,7 @@ KeyedService* KeyedServiceFactory::SetTestingFactoryAndUse(
 KeyedService* KeyedServiceFactory::GetServiceForContext(
     base::SupportsUserData* context,
     bool create) {
-  TRACE_EVENT0("browser,startup", "KeyedServiceFactory::GetServiceForContext");
+  TRACE_EVENT1("browser,startup", "KeyedServiceFactory::GetServiceForContext", "name", this->name());
   context = GetContextToUse(context);
   if (!context)
     return nullptr;

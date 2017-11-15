@@ -109,7 +109,7 @@ import java.util.concurrent.Callable;
  * continuous build &amp; test in the open source SDK-based tree).
  */
 @JNINamespace("android_webview")
-public class AwContents implements SmartClipProvider {
+public class reAwContents implements SmartClipProvider {
     private static final String TAG = "AwContents";
     private static final boolean TRACE = false;
     private static final int NO_WARN = 0;

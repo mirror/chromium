@@ -410,13 +410,16 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
     @CallSuper
     @Override
     public void onStart() {
+        TraceEvent.begin("AsyncInitializationActivity.onStart()");
         super.onStart();
         mNativeInitializationController.onStart();
+        TraceEvent.end("AsyncInitializationActivity.onStart()");
     }
 
     @CallSuper
     @Override
     public void onResume() {
+        TraceEvent.begin("AsyncInitializationActivity.onResume()");
         super.onResume();
 
         // Start by setting the launch as cold or warm. It will be used in some resume handlers.
@@ -425,6 +428,7 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
 
         mNativeInitializationController.onResume();
         if (mLaunchBehindWorkaround != null) mLaunchBehindWorkaround.onResume();
+        TraceEvent.end("AsyncInitializationActivity.onResume()");
     }
 
     @CallSuper
@@ -460,11 +464,13 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
     @CallSuper
     @Override
     public final void onCreateWithNative() {
+        TraceEvent.begin("AsyncInitializationActivity.onCreateWithNative()");
         try {
             ChromeBrowserInitializer.getInstance(this).handlePostNativeStartup(true, this);
         } catch (ProcessInitException e) {
             ChromeApplication.reportStartupErrorAndExit(e);
         }
+        TraceEvent.end("AsyncInitializationActivity.onCreateWithNative()");
     }
 
     @Override

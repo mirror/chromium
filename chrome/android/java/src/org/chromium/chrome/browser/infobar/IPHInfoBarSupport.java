@@ -30,7 +30,7 @@ import org.chromium.components.feature_engagement.Tracker;
 class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAnimationListener,
                                    InfoBarContainerObserver {
     private final Activity mActivity;
-    private final Tracker mTracker;
+    //private final Tracker mTracker;
 
     /** Helper class to hold all relevant display parameters for an in-product help window. */
     private static class TrackerParameters {
@@ -70,7 +70,7 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
     IPHInfoBarSupport(Activity activity) {
         mActivity = activity;
         Profile profile = Profile.getLastUsedProfile();
-        mTracker = TrackerFactory.getTrackerForProfile(profile);
+//        mTracker = TrackerFactory.getTrackerForProfile(profile);
     }
 
     // InfoBarContainer.InfoBarAnimationListener implementation.
@@ -106,7 +106,7 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
         TrackerParameters params = getTrackerParameters(frontInfoBar);
         if (params == null) return;
 
-        if (!mTracker.shouldTriggerHelpUI(params.feature)) return;
+//        if (!mTracker.shouldTriggerHelpUI(params.feature)) return;
 
         mCurrentState = new PopupState();
         mCurrentState.view = view;
@@ -148,13 +148,13 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
         assert mCurrentState != null;
         String feature = mCurrentState.feature;
         mCurrentState = null;
-        mTracker.dismissed(feature);
+//        mTracker.dismissed(feature);
     }
 
     private void logEvent(Item infoBar) {
         switch (infoBar.getInfoBarIdentifier()) {
             case InfoBarIdentifier.DATA_REDUCTION_PROXY_PREVIEW_INFOBAR_DELEGATE:
-                mTracker.notifyEvent(EventConstants.DATA_SAVER_PREVIEW_INFOBAR_SHOWN);
+//                mTracker.notifyEvent(EventConstants.DATA_SAVER_PREVIEW_INFOBAR_SHOWN);
                 break;
             default:
                 break;

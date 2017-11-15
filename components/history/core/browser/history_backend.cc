@@ -200,6 +200,7 @@ void HistoryBackend::Init(
   // base::SupportsUserData on the DB thread since it is not thread-safe.
   supports_user_data_helper_.reset(new HistoryBackendHelper);
 
+  force_fail = true;
   if (!force_fail)
     InitImpl(history_database_params);
   delegate_->DBLoaded();

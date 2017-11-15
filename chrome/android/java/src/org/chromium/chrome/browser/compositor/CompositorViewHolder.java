@@ -289,8 +289,8 @@ public class CompositorViewHolder extends FrameLayout
         }
         mControlContainer = controlContainer;
         if (loader != null && mControlContainer != null) {
-            loader.registerResource(
-                    R.id.control_container, mControlContainer.getToolbarResourceAdapter());
+//            loader.registerResource(
+//                    R.id.control_container, mControlContainer.getToolbarResourceAdapter());
         }
     }
 
@@ -323,8 +323,8 @@ public class CompositorViewHolder extends FrameLayout
         }
 
         if (mControlContainer != null) {
-            mCompositorView.getResourceManager().getDynamicResourceLoader().registerResource(
-                    R.id.control_container, mControlContainer.getToolbarResourceAdapter());
+//            mCompositorView.getResourceManager().getDynamicResourceLoader().registerResource(
+//                    R.id.control_container, mControlContainer.getToolbarResourceAdapter());
         }
     }
 
@@ -559,7 +559,7 @@ public class CompositorViewHolder extends FrameLayout
 
             if (!DeviceFormFactor.isTablet() && mControlContainer != null) {
                 if (mProgressBarDrawingInfo == null) mProgressBarDrawingInfo = new DrawingInfo();
-                mControlContainer.getProgressBarDrawingInfo(mProgressBarDrawingInfo);
+//                mControlContainer.getProgressBarDrawingInfo(mProgressBarDrawingInfo);
             } else {
                 assert mProgressBarDrawingInfo == null;
             }

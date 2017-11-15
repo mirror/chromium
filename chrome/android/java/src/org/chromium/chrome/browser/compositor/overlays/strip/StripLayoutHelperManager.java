@@ -60,8 +60,8 @@ public class StripLayoutHelperManager implements SceneOverlay {
 
     // Internal state
     private boolean mIsIncognito;
-    private final StripLayoutHelper mNormalHelper;
-    private final StripLayoutHelper mIncognitoHelper;
+//    private final StripLayoutHelper mNormalHelper;
+//    private final StripLayoutHelper mIncognitoHelper;
 
     // UI State
     private float mWidth;  // in dp units
@@ -77,24 +77,24 @@ public class StripLayoutHelperManager implements SceneOverlay {
         @Override
         public void onDown(float x, float y, boolean fromMouse, int buttons) {
             if (mModelSelectorButton.onDown(x, y)) return;
-            getActiveStripLayoutHelper().onDown(time(), x, y, fromMouse, buttons);
+//            getActiveStripLayoutHelper().onDown(time(), x, y, fromMouse, buttons);
         }
 
         @Override
         public void onUpOrCancel() {
             if (mModelSelectorButton.onUpOrCancel() && mTabModelSelector != null) {
-                getActiveStripLayoutHelper().finishAnimation();
+//                getActiveStripLayoutHelper().finishAnimation();
                 if (!mModelSelectorButton.isVisible()) return;
                 mTabModelSelector.selectModel(!mTabModelSelector.isIncognitoSelected());
                 return;
             }
-            getActiveStripLayoutHelper().onUpOrCancel(time());
+//            getActiveStripLayoutHelper().onUpOrCancel(time());
         }
 
         @Override
         public void drag(float x, float y, float dx, float dy, float tx, float ty) {
             mModelSelectorButton.drag(x, y);
-            getActiveStripLayoutHelper().drag(time(), x, y, dx, dy, tx, ty);
+//            getActiveStripLayoutHelper().drag(time(), x, y, dx, dy, tx, ty);
         }
 
         @Override
@@ -104,17 +104,17 @@ public class StripLayoutHelperManager implements SceneOverlay {
                 mModelSelectorButton.handleClick(time);
                 return;
             }
-            getActiveStripLayoutHelper().click(time(), x, y, fromMouse, buttons);
+//            getActiveStripLayoutHelper().click(time(), x, y, fromMouse, buttons);
         }
 
         @Override
         public void fling(float x, float y, float velocityX, float velocityY) {
-            getActiveStripLayoutHelper().fling(time(), x, y, velocityX, velocityY);
+//            getActiveStripLayoutHelper().fling(time(), x, y, velocityX, velocityY);
         }
 
         @Override
         public void onLongPress(float x, float y) {
-            getActiveStripLayoutHelper().onLongPress(time(), x, y);
+//            getActiveStripLayoutHelper().onLongPress(time(), x, y);
         }
 
         @Override
@@ -141,8 +141,8 @@ public class StripLayoutHelperManager implements SceneOverlay {
         mEventFilter =
                 new AreaGestureEventFilter(context, mTabStripEventHandler, null, false, false);
 
-        mNormalHelper = new StripLayoutHelper(context, updateHost, renderHost, false);
-        mIncognitoHelper = new StripLayoutHelper(context, updateHost, renderHost, true);
+//        mNormalHelper = new StripLayoutHelper(context, updateHost, renderHost, false);
+//        mIncognitoHelper = new StripLayoutHelper(context, updateHost, renderHost, true);
 
         CompositorOnClickHandler selectorClickHandler = new CompositorOnClickHandler() {
             @Override
@@ -175,13 +175,13 @@ public class StripLayoutHelperManager implements SceneOverlay {
     public void destroy() {
         mTabStripTreeProvider.destroy();
         mTabStripTreeProvider = null;
-        mIncognitoHelper.destroy();
-        mNormalHelper.destroy();
+//        mIncognitoHelper.destroy();
+//        mNormalHelper.destroy();
     }
 
     private void handleModelSelectorButtonClick() {
         if (mTabModelSelector == null) return;
-        getActiveStripLayoutHelper().finishAnimation();
+//        getActiveStripLayoutHelper().finishAnimation();
         if (!mModelSelectorButton.isVisible()) return;
         mTabModelSelector.selectModel(!mTabModelSelector.isIncognitoSelected());
     }
@@ -204,9 +204,9 @@ public class StripLayoutHelperManager implements SceneOverlay {
         Tab selectedTab = mTabModelSelector.getCurrentModel().getTabAt(
                 mTabModelSelector.getCurrentModel().index());
         int selectedTabId = selectedTab == null ? TabModel.INVALID_TAB_INDEX : selectedTab.getId();
-        mTabStripTreeProvider.pushAndUpdateStrip(this, layerTitleCache, resourceManager,
-                getActiveStripLayoutHelper().getStripLayoutTabsToRender(), yOffset,
-                selectedTabId);
+//        mTabStripTreeProvider.pushAndUpdateStrip(this, layerTitleCache, resourceManager,
+//                getActiveStripLayoutHelper().getStripLayoutTabsToRender(), yOffset,
+//                selectedTabId);
         return mTabStripTreeProvider;
     }
 
@@ -234,15 +234,15 @@ public class StripLayoutHelperManager implements SceneOverlay {
             mModelSelectorButton.setX(MODEL_SELECTOR_BUTTON_END_PADDING_DP);
         }
 
-        mNormalHelper.onSizeChanged(mWidth, mHeight);
-        mIncognitoHelper.onSizeChanged(mWidth, mHeight);
+//        mNormalHelper.onSizeChanged(mWidth, mHeight);
+//        mIncognitoHelper.onSizeChanged(mWidth, mHeight);
 
         mStripFilterArea.set(0, 0, mWidth, Math.min(getHeight(), visibleViewportOffsetY));
         mEventFilter.setEventArea(mStripFilterArea);
     }
 
     public CompositorButton getNewTabButton() {
-        return getActiveStripLayoutHelper().getNewTabButton();
+        return null;//return getActiveStripLayoutHelper().getNewTabButton();
     }
 
     public CompositorButton getModelSelectorButton() {
@@ -252,7 +252,7 @@ public class StripLayoutHelperManager implements SceneOverlay {
     @Override
     public void getVirtualViews(List<VirtualView> views) {
         if (mModelSelectorButton.isVisible()) views.add(mModelSelectorButton);
-        getActiveStripLayoutHelper().getVirtualViews(views);
+//        getActiveStripLayoutHelper().getVirtualViews(views);
     }
 
     @Override
@@ -264,28 +264,32 @@ public class StripLayoutHelperManager implements SceneOverlay {
      * @return The opacity to use for the fade on the left side of the tab strip.
      */
     public float getLeftFadeOpacity() {
-        return getActiveStripLayoutHelper().getLeftFadeOpacity();
+        return 1;
+//        return getActiveStripLayoutHelper().getLeftFadeOpacity();
     }
 
     /**
      * @return The opacity to use for the fade on the right side of the tab strip.
      */
     public float getRightFadeOpacity() {
-        return getActiveStripLayoutHelper().getRightFadeOpacity();
+        return 1;
+//        return getActiveStripLayoutHelper().getRightFadeOpacity();
     }
 
     /**
      * @return The brightness of background tabs in the tabstrip.
      */
     public float getBackgroundTabBrightness() {
-        return getActiveStripLayoutHelper().getBackgroundTabBrightness();
+        return 1;
+//        return getActiveStripLayoutHelper().getBackgroundTabBrightness();
     }
 
     /**
      * @return The brightness of the entire tabstrip.
      */
     public float getBrightness() {
-        return getActiveStripLayoutHelper().getBrightness();
+        return 1;
+//        return getActiveStripLayoutHelper().getBrightness();
     }
 
     /**
@@ -299,16 +303,16 @@ public class StripLayoutHelperManager implements SceneOverlay {
         if (mTabModelSelector == modelSelector) return;
 
         mTabModelSelector = modelSelector;
-        mNormalHelper.setTabModel(mTabModelSelector.getModel(false),
-                tabCreatorManager.getTabCreator(false));
-        mIncognitoHelper.setTabModel(mTabModelSelector.getModel(true),
-                tabCreatorManager.getTabCreator(true));
+//        mNormalHelper.setTabModel(mTabModelSelector.getModel(false),
+//                tabCreatorManager.getTabCreator(false));
+//        mIncognitoHelper.setTabModel(mTabModelSelector.getModel(true),
+//                tabCreatorManager.getTabCreator(true));
         tabModelSwitched(mTabModelSelector.isIncognitoSelected());
     }
 
     @Override
     public void tabTitleChanged(int tabId, String title) {
-        getActiveStripLayoutHelper().tabTitleChanged(tabId, title);
+//        getActiveStripLayoutHelper().tabTitleChanged(tabId, title);
     }
 
     public float getHeight() {
@@ -332,14 +336,14 @@ public class StripLayoutHelperManager implements SceneOverlay {
      * @param context The current Android {@link Context}.
      */
     public void onContextChanged(Context context) {
-        mNormalHelper.onContextChanged(context);
-        mIncognitoHelper.onContextChanged(context);
+//        mNormalHelper.onContextChanged(context);
+//        mIncognitoHelper.onContextChanged(context);
     }
 
     @Override
     public boolean updateOverlay(long time, long dt) {
-        getInactiveStripLayoutHelper().finishAnimation();
-        return getActiveStripLayoutHelper().updateLayout(time, dt);
+//        getInactiveStripLayoutHelper().finishAnimation();
+        return true;
     }
 
     @Override
@@ -365,8 +369,8 @@ public class StripLayoutHelperManager implements SceneOverlay {
         if (incognito == mIsIncognito) return;
         mIsIncognito = incognito;
 
-        mIncognitoHelper.tabModelSelected(mIsIncognito);
-        mNormalHelper.tabModelSelected(!mIsIncognito);
+//        mIncognitoHelper.tabModelSelected(mIsIncognito);
+//        mNormalHelper.tabModelSelected(!mIsIncognito);
 
         updateModelSwitcherButton();
 
@@ -384,56 +388,56 @@ public class StripLayoutHelperManager implements SceneOverlay {
                             + MODEL_SELECTOR_BUTTON_START_PADDING_DP
                     : 0.0f;
 
-            mNormalHelper.setEndMargin(endMargin);
-            mIncognitoHelper.setEndMargin(endMargin);
+//            mNormalHelper.setEndMargin(endMargin);
+//            mIncognitoHelper.setEndMargin(endMargin);
         }
     }
 
     @Override
     public void tabSelected(long time, boolean incognito, int id, int prevId) {
-        getStripLayoutHelper(incognito).tabSelected(time, id, prevId);
+//        getStripLayoutHelper(incognito).tabSelected(time, id, prevId);
     }
 
     @Override
     public void tabMoved(long time, boolean incognito, int id, int oldIndex, int newIndex) {
-        getStripLayoutHelper(incognito).tabMoved(time, id, oldIndex, newIndex);
+//        getStripLayoutHelper(incognito).tabMoved(time, id, oldIndex, newIndex);
     }
 
     @Override
     public void tabClosed(long time, boolean incognito, int id) {
-        getStripLayoutHelper(incognito).tabClosed(time, id);
+//        getStripLayoutHelper(incognito).tabClosed(time, id);
         updateModelSwitcherButton();
     }
 
     @Override
     public void tabClosureCancelled(long time, boolean incognito, int id) {
-        getStripLayoutHelper(incognito).tabClosureCancelled(time, id);
+//        getStripLayoutHelper(incognito).tabClosureCancelled(time, id);
         updateModelSwitcherButton();
     }
 
     @Override
     public void tabCreated(long time, boolean incognito, int id, int prevId, boolean selected) {
-        getStripLayoutHelper(incognito).tabCreated(time, id, prevId, selected);
+//        getStripLayoutHelper(incognito).tabCreated(time, id, prevId, selected);
     }
 
     @Override
     public void tabPageLoadStarted(int id, boolean incognito) {
-        getStripLayoutHelper(incognito).tabPageLoadStarted(id);
+//        getStripLayoutHelper(incognito).tabPageLoadStarted(id);
     }
 
     @Override
     public void tabPageLoadFinished(int id, boolean incognito) {
-        getStripLayoutHelper(incognito).tabPageLoadFinished(id);
+//        getStripLayoutHelper(incognito).tabPageLoadFinished(id);
     }
 
     @Override
     public void tabLoadStarted(int id, boolean incognito) {
-        getStripLayoutHelper(incognito).tabLoadStarted(id);
+//        getStripLayoutHelper(incognito).tabLoadStarted(id);
     }
 
     @Override
     public void tabLoadFinished(int id, boolean incognito) {
-        getStripLayoutHelper(incognito).tabLoadFinished(id);
+//        getStripLayoutHelper(incognito).tabLoadFinished(id);
     }
 
     /**
@@ -442,7 +446,9 @@ public class StripLayoutHelperManager implements SceneOverlay {
      */
     @VisibleForTesting
     public StripLayoutHelper getStripLayoutHelper(boolean incognito) {
-        return incognito ? mIncognitoHelper : mNormalHelper;
+//        return incognito ? mIncognitoHelper : mNormalHelper;
+//        return mIncognitoHelper;
+        return null;
     }
 
     /**
@@ -450,10 +456,12 @@ public class StripLayoutHelperManager implements SceneOverlay {
      */
     @VisibleForTesting
     public StripLayoutHelper getActiveStripLayoutHelper() {
-        return getStripLayoutHelper(mIsIncognito);
+        return null;
+//        return getStripLayoutHelper(mIsIncognito);
     }
 
     private StripLayoutHelper getInactiveStripLayoutHelper() {
-        return mIsIncognito ? mNormalHelper : mIncognitoHelper;
+        return null;
+//        return mIsIncognito ? mNormalHelper : mIncognitoHelper;
     }
 }

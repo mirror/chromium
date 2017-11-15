@@ -34,7 +34,7 @@ public class LayoutManagerChromePhone extends LayoutManagerChrome {
      * @param host            A {@link LayoutManagerHost} instance.
      */
     public LayoutManagerChromePhone(LayoutManagerHost host) {
-        super(host, true);
+        super(host, false);
         Context context = host.getContext();
         LayoutRenderHost renderHost = host.getLayoutRenderHost();
 

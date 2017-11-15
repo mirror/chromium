@@ -551,9 +551,10 @@ public class NotificationPlatformBridge {
             return;
         }
 
+
         displayNotificationInternal(notificationId, origin, scopeUrl, profileId, incognito, tag,
                 title, body, image, icon, badge, vibrationPattern, timestamp, renotify, silent,
-                actions, "");
+                actions, "com.sampletwa.sampletwaapp");
     }
 
     /** Called after querying whether the browser backs the given WebAPK. */
@@ -561,6 +562,7 @@ public class NotificationPlatformBridge {
             String profileId, boolean incognito, String tag, String title, String body,
             Bitmap image, Bitmap icon, Bitmap badge, int[] vibrationPattern, long timestamp,
             boolean renotify, boolean silent, ActionInfo[] actions, String webApkPackage) {
+        webApkPackage = "com.sampletwa.sampletwaapp";
         nativeStoreCachedWebApkPackageForNotificationId(
                 mNativeNotificationPlatformBridge, notificationId, webApkPackage);
 

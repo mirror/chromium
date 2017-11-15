@@ -1251,6 +1251,7 @@ void ProfileManager::DoFinalInitForServices(Profile* profile,
   // DoFinalInitForServices.
   profiles::UpdateIsProfileLockEnabledIfNeeded(profile);
 #endif
+#if !defined(OS_ANDROID)
   // Start the deferred task runners once the profile is loaded.
   StartupTaskRunnerServiceFactory::GetForProfile(profile)->
       StartDeferredTaskRunners();
@@ -1272,7 +1273,6 @@ void ProfileManager::DoFinalInitForServices(Profile* profile,
       ->SetupInvalidationsOnProfileLoad(invalidation_service);
   AccountReconcilorFactory::GetForProfile(profile);
 
-#if defined(OS_ANDROID)
   // TODO(b/678590): create services during profile startup.
   // Service is responsible for fetching content snippets for the NTP.
   ContentSuggestionsServiceFactory::GetForProfile(profile);
@@ -1365,7 +1365,7 @@ bool ProfileManager::AddProfile(Profile* profile) {
 
   RegisterProfile(profile, true);
   InitProfileUserPrefs(profile);
-  DoFinalInit(profile, ShouldGoOffTheRecord(profile));
+  //DoFinalInit(profile, ShouldGoOffTheRecord(profile));
   return true;
 }
 

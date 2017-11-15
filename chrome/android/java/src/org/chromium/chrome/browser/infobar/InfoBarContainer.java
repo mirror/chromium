@@ -202,16 +202,16 @@ public class InfoBarContainer extends SwipableOverlayView {
         // Workaround for http://crbug.com/407149. See explanation in onMeasure() below.
         setVerticalScrollBarEnabled(false);
 
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-                LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, Gravity.BOTTOM);
-        int topMarginDp = DeviceFormFactor.isTablet() ? TOP_MARGIN_TABLET_DP : TOP_MARGIN_PHONE_DP;
-        lp.topMargin = Math.round(topMarginDp * getResources().getDisplayMetrics().density);
-        setLayoutParams(lp);
+//        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+//                LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, Gravity.BOTTOM);
+//        int topMarginDp = DeviceFormFactor.isTablet() ? TOP_MARGIN_TABLET_DP : TOP_MARGIN_PHONE_DP;
+//        lp.topMargin = Math.round(topMarginDp * getResources().getDisplayMetrics().density);
+//        setLayoutParams(lp);
 
         mParentView = parentView;
         mLayout = new InfoBarContainerLayout(context);
-        addView(mLayout, new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+//        addView(mLayout, new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+//                LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
 
         mIPHSupport = new IPHInfoBarSupport(mTab.getActivity());
         mLayout.addAnimationListener(mIPHSupport);

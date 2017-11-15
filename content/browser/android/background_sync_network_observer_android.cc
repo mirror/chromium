@@ -17,8 +17,8 @@ BackgroundSyncNetworkObserverAndroid::Observer::Create(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   scoped_refptr<BackgroundSyncNetworkObserverAndroid::Observer> observer(
       new BackgroundSyncNetworkObserverAndroid::Observer(callback));
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
+  BrowserThread::PostAfterStartupTask(
+      FROM_HERE, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
       base::Bind(&BackgroundSyncNetworkObserverAndroid::Observer::Init,
                  observer));
   return observer;

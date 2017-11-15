@@ -67,8 +67,8 @@ public class ToolbarControlContainer extends FrameLayout implements ControlConta
     @Override
     public void getProgressBarDrawingInfo(DrawingInfo drawingInfoOut) {
         // TODO(yusufo): Avoid casting to the layout without making the interface bigger.
-        ToolbarProgressBar progressBar = ((ToolbarLayout) mToolbar).getProgressBar();
-        if (progressBar != null) progressBar.getDrawingInfo(drawingInfoOut);
+//        ToolbarProgressBar progressBar = ((ToolbarLayout) mToolbar).getProgressBar();
+//        if (progressBar != null) progressBar.getDrawingInfo(drawingInfoOut);
     }
 
     @Override
@@ -84,9 +84,9 @@ public class ToolbarControlContainer extends FrameLayout implements ControlConta
 
     @Override
     public void initWithToolbar(int toolbarLayoutId) {
-        ViewStub toolbarStub = (ViewStub) findViewById(R.id.toolbar_stub);
-        toolbarStub.setLayoutResource(toolbarLayoutId);
-        toolbarStub.inflate();
+//        ViewStub toolbarStub = (ViewStub) findViewById(R.id.toolbar_stub);
+//        toolbarStub.setLayoutResource(toolbarLayoutId);
+//        toolbarStub.inflate();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbarContainer = (ToolbarViewResourceFrameLayout) findViewById(R.id.toolbar_container);
@@ -122,7 +122,7 @@ public class ToolbarControlContainer extends FrameLayout implements ControlConta
      * Invalidate the entire capturing bitmap region.
      */
     public void invalidateBitmap() {
-        ((ToolbarViewResourceAdapter) getToolbarResourceAdapter()).forceInvalidate();
+//        ((ToolbarViewResourceAdapter) getToolbarResourceAdapter()).forceInvalidate();
     }
 
     /**

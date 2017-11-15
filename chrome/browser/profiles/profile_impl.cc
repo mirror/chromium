@@ -656,12 +656,15 @@ void ProfileImpl::DoFinalInit() {
 #endif
 
   TRACE_EVENT0("browser", "ProfileImpl::SetSaveSessionStorageOnDisk");
-  content::BrowserContext::GetDefaultStoragePartition(this)->
-      GetDOMStorageContext()->SetSaveSessionStorageOnDisk();
+  //content::BrowserContext::GetDefaultStoragePartition(this)->
+  //    GetDOMStorageContext()->SetSaveSessionStorageOnDisk();
 
   // The DomDistillerViewerSource is not a normal WebUI so it must be registered
   // as a URLDataSource early.
-  dom_distiller::RegisterViewerSource(this);
+  {
+  TRACE_EVENT0("browser", "ProfileImpl::dom");
+  //dom_distiller::RegisterViewerSource(this);
+  }
 
 #if defined(OS_CHROMEOS)
   // Finished profile initialization - let the UserManager know so it can
@@ -687,6 +690,7 @@ void ProfileImpl::DoFinalInit() {
   }
 
   {
+    TRACE_EVENT0("browser", "ProfileImpl::profilecreatednot")
     SCOPED_UMA_HISTOGRAM_TIMER("Profile.NotifyProfileCreatedTime");
     content::NotificationService::current()->Notify(
         chrome::NOTIFICATION_PROFILE_CREATED,
@@ -696,17 +700,26 @@ void ProfileImpl::DoFinalInit() {
 #if !defined(OS_CHROMEOS)
   // Listen for bookmark model load, to bootstrap the sync service.
   // On CrOS sync service will be initialized after sign in.
-  BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(this);
-  model->AddObserver(new BookmarkModelLoadedObserver(this));
+  {
+    TRACE_EVENT0("browser", "ProfileImpl::bookmarkmodel")
+        BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(this);
+    model->AddObserver(new BookmarkModelLoadedObserver(this));
+  }
 #endif
 
+  {
+    TRACE_EVENT0("browser", "ProfileImpl::push")
   PushMessagingServiceImpl::InitializeForProfile(this);
+  }
 
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
   signin_ui_util::InitializePrefsForProfile(this);
 #endif
 
+  {
+    TRACE_EVENT0("browser", "prefsinternal")
   content::URLDataSource::Add(this, new PrefsInternalsSource(this));
+  }
 }
 
 base::FilePath ProfileImpl::last_selected_directory() {

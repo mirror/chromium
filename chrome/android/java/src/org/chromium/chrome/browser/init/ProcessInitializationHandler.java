@@ -265,31 +265,33 @@ public class ProcessInitializationHandler {
         deferredStartupHandler.addDeferredTask(new Runnable() {
             @Override
             public void run() {
-                // Punt all tasks that may block on disk off onto a background thread.
-                initAsyncDiskTask(application);
+                try (TraceEvent f = TraceEvent.scoped("handledeferred::AfterStartup")) {
+                    // Punt all tasks that may block on disk off onto a background thread.
+                    initAsyncDiskTask(application);
 
-                DefaultBrowserInfo.initBrowserFetcher();
+                    DefaultBrowserInfo.initBrowserFetcher();
 
-                AfterStartupTaskUtils.setStartupComplete();
+                    AfterStartupTaskUtils.setStartupComplete();
 
-                PartnerBrowserCustomizations.setOnInitializeAsyncFinished(new Runnable() {
-                    @Override
-                    public void run() {
-                        String homepageUrl = HomepageManager.getHomepageUri(application);
-                        LaunchMetrics.recordHomePageLaunchMetrics(
-                                HomepageManager.isHomepageEnabled(application),
-                                NewTabPage.isNTPUrl(homepageUrl), homepageUrl);
+                    PartnerBrowserCustomizations.setOnInitializeAsyncFinished(new Runnable() {
+                        @Override
+                        public void run() {
+                            String homepageUrl = HomepageManager.getHomepageUri(application);
+                            LaunchMetrics.recordHomePageLaunchMetrics(
+                                    HomepageManager.isHomepageEnabled(application),
+                                    NewTabPage.isNTPUrl(homepageUrl), homepageUrl);
+                        }
+                    });
+
+                    PowerMonitor.create();
+
+                    ShareHelper.clearSharedImages();
+
+                    SelectFileDialog.clearCapturedCameraFiles();
+
+                    if (ChannelsUpdater.getInstance().shouldUpdateChannels()) {
+                        initChannelsAsync();
                     }
-                });
-
-                PowerMonitor.create();
-
-                ShareHelper.clearSharedImages();
-
-                SelectFileDialog.clearCapturedCameraFiles();
-
-                if (ChannelsUpdater.getInstance().shouldUpdateChannels()) {
-                    initChannelsAsync();
                 }
             }
         });

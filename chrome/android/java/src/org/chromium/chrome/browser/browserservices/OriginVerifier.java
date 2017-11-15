@@ -121,7 +121,7 @@ public class OriginVerifier {
      * @param relation The Digital Asset Links relation to verify for.
      */
     public static boolean isValidOrigin(String packageName, Uri origin, @Relation int relation) {
-        ThreadUtils.assertOnUiThread();
+//        ThreadUtils.assertOnUiThread();
         if (sPackageToCachedOrigins == null) return false;
         Set<Uri> cachedOrigins =
                 sPackageToCachedOrigins.get(new Pair<String, Integer>(packageName, relation));
@@ -164,7 +164,16 @@ public class OriginVerifier {
      * @param origin The postMessage origin the application is claiming to have. Can't be null.
      */
     public void start(@NonNull Uri origin) {
-        ThreadUtils.assertOnUiThread();
+//        ThreadUtils.assertOnUiThread();
+        if (ThreadUtils.runningOnUiThread()) {
+            startOnUI(origin);
+        } else {
+            ThreadUtils.runOnUiThreadBlocking(()->startOnUI(origin));
+        }
+    }
+
+    private void startOnUI(@NonNull Uri origin) {
+
         mOrigin = origin;
         String scheme = mOrigin.getScheme();
         if (TextUtils.isEmpty(scheme)

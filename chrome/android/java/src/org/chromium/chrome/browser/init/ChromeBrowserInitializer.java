@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Debug;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Process;
@@ -154,6 +155,8 @@ public class ChromeBrowserInitializer {
      *              initialization tasks.
      */
     public void handlePreNativeStartup(final BrowserParts parts) {
+
+
         ThreadUtils.checkUiThread();
 
         ProcessInitializationHandler.getInstance().initializePreNative();
@@ -165,6 +168,8 @@ public class ChromeBrowserInitializer {
         parts.setContentViewAndLoadLibrary();
         postInflationStartup();
         parts.postInflationStartup();
+
+
     }
 
     /**

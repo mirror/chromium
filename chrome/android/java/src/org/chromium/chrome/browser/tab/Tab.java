@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Debug;
 import android.provider.Browser;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
@@ -1155,6 +1156,7 @@ public class Tab
         try {
             TraceEvent.begin("Tab.show");
             if (!isHidden()) return;
+//            Debug.startMethodTracing("Tab.show");
             // Keep unsetting mIsHidden above loadIfNeeded(), so that we pass correct visibility
             // when spawning WebContents in loadIfNeeded().
             mIsHidden = false;
@@ -1187,8 +1189,9 @@ public class Tab
             // may use it for logging.
             mTimestampMillis = System.currentTimeMillis();
 
-            for (TabObserver observer : mObservers) observer.onShown(this);
+//            for (TabObserver observer : mObservers) observer.onShown(this);
         } finally {
+//            Debug.stopMethodTracing();
             TraceEvent.end("Tab.show");
         }
     }
@@ -1701,6 +1704,7 @@ public class Tab
     private void setContentViewCore(ContentViewCore cvc) {
         try {
             TraceEvent.begin("ChromeTab.setContentViewCore");
+//            Debug.startMethodTracing("setConventViewCore");
             NativePage previousNativePage = mNativePage;
             mNativePage = null;
             destroyNativePageInternal(previousNativePage);
@@ -1742,11 +1746,11 @@ public class Tab
                         this);
             }
             mInfoBarContainer.setContentViewCore(mContentViewCore);
-
-            mSwipeRefreshHandler = new SwipeRefreshHandler(mThemedApplicationContext, this);
+//
+//            mSwipeRefreshHandler = new SwipeRefreshHandler(mThemedApplicationContext, this);
 
             updateThemeColorIfNeeded(false);
-            notifyContentChanged();
+//            notifyContentChanged();
 
             // For browser tabs, we want to set accessibility focus to the page
             // when it loads. This is not the default behavior for embedded
@@ -1779,6 +1783,7 @@ public class Tab
             }
             cvc.addGestureStateListener(mGestureStateListener);
         } finally {
+//            Debug.stopMethodTracing();
             TraceEvent.end("ChromeTab.setContentViewCore");
         }
     }
@@ -2035,7 +2040,7 @@ public class Tab
      * @param progress The current percentage of progress.
      */
     protected void notifyLoadProgress(int progress) {
-        for (TabObserver observer : mObservers) observer.onLoadProgressChanged(Tab.this, progress);
+//        for (TabObserver observer : mObservers) observer.onLoadProgressChanged(Tab.this, progress);
     }
 
     private void notifyFaviconChanged() {

@@ -78,67 +78,67 @@ public class ChromeContextMenuPopulator implements ContextMenuPopulator {
     public static final int WEB_APP_MODE = 2;
 
     // Items that are included in all context menus.
-    private static final Set<? extends ContextMenuItem> BASE_WHITELIST =
-            Collections.unmodifiableSet(CollectionUtil.newHashSet(
-                    ChromeContextMenuItem.COPY_LINK_ADDRESS, ChromeContextMenuItem.CALL,
-                    ChromeContextMenuItem.SEND_MESSAGE, ChromeContextMenuItem.ADD_TO_CONTACTS,
-                    ChromeContextMenuItem.COPY, ChromeContextMenuItem.COPY_LINK_TEXT,
-                    ChromeContextMenuItem.LOAD_ORIGINAL_IMAGE, ChromeContextMenuItem.SAVE_LINK_AS,
-                    ChromeContextMenuItem.SAVE_IMAGE, SHARE_IMAGE, ChromeContextMenuItem.SAVE_VIDEO,
-                    SHARE_LINK));
+//    private static final Set<? extends ContextMenuItem> BASE_WHITELIST =
+//            Collections.unmodifiableSet(CollectionUtil.newHashSet(
+//                    ChromeContextMenuItem.COPY_LINK_ADDRESS, ChromeContextMenuItem.CALL,
+//                    ChromeContextMenuItem.SEND_MESSAGE, ChromeContextMenuItem.ADD_TO_CONTACTS,
+//                    ChromeContextMenuItem.COPY, ChromeContextMenuItem.COPY_LINK_TEXT,
+//                    ChromeContextMenuItem.LOAD_ORIGINAL_IMAGE, ChromeContextMenuItem.SAVE_LINK_AS,
+//                    ChromeContextMenuItem.SAVE_IMAGE, SHARE_IMAGE, ChromeContextMenuItem.SAVE_VIDEO,
+//                    SHARE_LINK));
+//
+//    // Items that are included for normal Chrome browser mode.
+//    private static final Set<? extends ContextMenuItem> NORMAL_MODE_WHITELIST =
+//            Collections.unmodifiableSet(CollectionUtil.newHashSet(
+//                    ChromeContextMenuItem.OPEN_IN_NEW_TAB,
+//                    ChromeContextMenuItem.OPEN_IN_OTHER_WINDOW,
+//                    ChromeContextMenuItem.OPEN_IN_INCOGNITO_TAB, ChromeContextMenuItem.SAVE_LINK_AS,
+//                    ChromeContextMenuItem.OPEN_IMAGE_IN_NEW_TAB,
+//                    ChromeContextMenuItem.SEARCH_BY_IMAGE));
+//
+//    // Additional items for custom tabs mode.
+//    private static final Set<? extends ContextMenuItem> CUSTOM_TAB_MODE_WHITELIST =
+//            Collections.unmodifiableSet(CollectionUtil.newHashSet(ChromeContextMenuItem.OPEN_IMAGE,
+//                    ChromeContextMenuItem.SEARCH_BY_IMAGE,
+//                    ChromeContextMenuItem.OPEN_IN_NEW_CHROME_TAB,
+//                    ChromeContextMenuItem.OPEN_IN_CHROME_INCOGNITO_TAB,
+//                    ChromeContextMenuItem.OPEN_IN_BROWSER_ID));
+//
+//    // Additional items for fullscreen tabs mode.
+//    private static final Set<? extends ContextMenuItem> WEB_APP_MODE_WHITELIST =
+//            Collections.unmodifiableSet(
+//                    CollectionUtil.newHashSet(ChromeContextMenuItem.OPEN_IN_CHROME));
 
-    // Items that are included for normal Chrome browser mode.
-    private static final Set<? extends ContextMenuItem> NORMAL_MODE_WHITELIST =
-            Collections.unmodifiableSet(CollectionUtil.newHashSet(
-                    ChromeContextMenuItem.OPEN_IN_NEW_TAB,
-                    ChromeContextMenuItem.OPEN_IN_OTHER_WINDOW,
-                    ChromeContextMenuItem.OPEN_IN_INCOGNITO_TAB, ChromeContextMenuItem.SAVE_LINK_AS,
-                    ChromeContextMenuItem.OPEN_IMAGE_IN_NEW_TAB,
-                    ChromeContextMenuItem.SEARCH_BY_IMAGE));
+//    // The order of the items within each lists determines the order of the context menu.
+//    private static final List<? extends ContextMenuItem> CUSTOM_TAB_GROUP =
+//            Collections.unmodifiableList(
+//                    CollectionUtil.newArrayList(ChromeContextMenuItem.OPEN_IN_NEW_CHROME_TAB,
+//                            ChromeContextMenuItem.OPEN_IN_CHROME_INCOGNITO_TAB,
+//                            ChromeContextMenuItem.OPEN_IN_BROWSER_ID));
+//
+//    private static final List<? extends ContextMenuItem> LINK_GROUP = Collections.unmodifiableList(
+//            CollectionUtil.newArrayList(ChromeContextMenuItem.OPEN_IN_OTHER_WINDOW,
+//                    ChromeContextMenuItem.OPEN_IN_NEW_TAB,
+//                    ChromeContextMenuItem.OPEN_IN_INCOGNITO_TAB,
+//                    ChromeContextMenuItem.COPY_LINK_ADDRESS, ChromeContextMenuItem.COPY_LINK_TEXT,
+//                    ChromeContextMenuItem.SAVE_LINK_AS, SHARE_LINK));
+//
+//    private static final List<? extends ContextMenuItem> IMAGE_GROUP =
+//            Collections.unmodifiableList(CollectionUtil.newArrayList(
+//                    ChromeContextMenuItem.LOAD_ORIGINAL_IMAGE, ChromeContextMenuItem.OPEN_IMAGE,
+//                    ChromeContextMenuItem.OPEN_IMAGE_IN_NEW_TAB, ChromeContextMenuItem.SAVE_IMAGE,
+//                    ChromeContextMenuItem.SEARCH_BY_IMAGE, SHARE_IMAGE));
+//
+//    private static final List<? extends ContextMenuItem> MESSAGE_GROUP =
+//            Collections.unmodifiableList(CollectionUtil.newArrayList(ChromeContextMenuItem.CALL,
+//                    ChromeContextMenuItem.SEND_MESSAGE, ChromeContextMenuItem.ADD_TO_CONTACTS,
+//                    ChromeContextMenuItem.COPY));
+//
+//    private static final List<? extends ContextMenuItem> VIDEO_GROUP = Collections.unmodifiableList(
+//            CollectionUtil.newArrayList(ChromeContextMenuItem.SAVE_VIDEO));
 
-    // Additional items for custom tabs mode.
-    private static final Set<? extends ContextMenuItem> CUSTOM_TAB_MODE_WHITELIST =
-            Collections.unmodifiableSet(CollectionUtil.newHashSet(ChromeContextMenuItem.OPEN_IMAGE,
-                    ChromeContextMenuItem.SEARCH_BY_IMAGE,
-                    ChromeContextMenuItem.OPEN_IN_NEW_CHROME_TAB,
-                    ChromeContextMenuItem.OPEN_IN_CHROME_INCOGNITO_TAB,
-                    ChromeContextMenuItem.OPEN_IN_BROWSER_ID));
-
-    // Additional items for fullscreen tabs mode.
-    private static final Set<? extends ContextMenuItem> WEB_APP_MODE_WHITELIST =
-            Collections.unmodifiableSet(
-                    CollectionUtil.newHashSet(ChromeContextMenuItem.OPEN_IN_CHROME));
-
-    // The order of the items within each lists determines the order of the context menu.
-    private static final List<? extends ContextMenuItem> CUSTOM_TAB_GROUP =
-            Collections.unmodifiableList(
-                    CollectionUtil.newArrayList(ChromeContextMenuItem.OPEN_IN_NEW_CHROME_TAB,
-                            ChromeContextMenuItem.OPEN_IN_CHROME_INCOGNITO_TAB,
-                            ChromeContextMenuItem.OPEN_IN_BROWSER_ID));
-
-    private static final List<? extends ContextMenuItem> LINK_GROUP = Collections.unmodifiableList(
-            CollectionUtil.newArrayList(ChromeContextMenuItem.OPEN_IN_OTHER_WINDOW,
-                    ChromeContextMenuItem.OPEN_IN_NEW_TAB,
-                    ChromeContextMenuItem.OPEN_IN_INCOGNITO_TAB,
-                    ChromeContextMenuItem.COPY_LINK_ADDRESS, ChromeContextMenuItem.COPY_LINK_TEXT,
-                    ChromeContextMenuItem.SAVE_LINK_AS, SHARE_LINK));
-
-    private static final List<? extends ContextMenuItem> IMAGE_GROUP =
-            Collections.unmodifiableList(CollectionUtil.newArrayList(
-                    ChromeContextMenuItem.LOAD_ORIGINAL_IMAGE, ChromeContextMenuItem.OPEN_IMAGE,
-                    ChromeContextMenuItem.OPEN_IMAGE_IN_NEW_TAB, ChromeContextMenuItem.SAVE_IMAGE,
-                    ChromeContextMenuItem.SEARCH_BY_IMAGE, SHARE_IMAGE));
-
-    private static final List<? extends ContextMenuItem> MESSAGE_GROUP =
-            Collections.unmodifiableList(CollectionUtil.newArrayList(ChromeContextMenuItem.CALL,
-                    ChromeContextMenuItem.SEND_MESSAGE, ChromeContextMenuItem.ADD_TO_CONTACTS,
-                    ChromeContextMenuItem.COPY));
-
-    private static final List<? extends ContextMenuItem> VIDEO_GROUP = Collections.unmodifiableList(
-            CollectionUtil.newArrayList(ChromeContextMenuItem.SAVE_VIDEO));
-
-    private static final List<? extends ContextMenuItem> OTHER_GROUP = Collections.unmodifiableList(
-            CollectionUtil.newArrayList(ChromeContextMenuItem.OPEN_IN_CHROME));
+//    private static final List<? extends ContextMenuItem> OTHER_GROUP = Collections.unmodifiableList(
+//            CollectionUtil.newArrayList(ChromeContextMenuItem.OPEN_IN_CHROME));
 
     private final ContextMenuItemDelegate mDelegate;
     private final int mMode;
@@ -287,20 +287,20 @@ public class ChromeContextMenuPopulator implements ContextMenuPopulator {
             ContextMenu menu, Context context, ContextMenuParams params) {
         // Add all items in a group
         Set<ContextMenuItem> supportedOptions = new HashSet<>();
-        if (FirstRunStatus.getFirstRunFlowComplete()) {
-            supportedOptions.addAll(BASE_WHITELIST);
-            if (mMode == WEB_APP_MODE) {
-                supportedOptions.addAll(WEB_APP_MODE_WHITELIST);
-            } else if (mMode == CUSTOM_TAB_MODE) {
-                supportedOptions.addAll(CUSTOM_TAB_MODE_WHITELIST);
-            } else {
-                supportedOptions.addAll(NORMAL_MODE_WHITELIST);
-            }
-        } else {
-            supportedOptions.add(ChromeContextMenuItem.COPY_LINK_ADDRESS);
-            supportedOptions.add(ChromeContextMenuItem.COPY_LINK_TEXT);
-            supportedOptions.add(ChromeContextMenuItem.COPY);
-        }
+//        if (FirstRunStatustus.getFirstRunFlowComplete()) {
+//            supportedOptions.addAll(BASE_WHITELIST);
+//            if (mMode == WEB_APP_MODE) {
+//                supportedOptions.addAll(WEB_APP_MODE_WHITELIST);
+//            } else if (mMode == CUSTOM_TAB_MODE) {
+//                supportedOptions.addAll(CUSTOM_TAB_MODE_WHITELIST);
+//            } else {
+//                supportedOptions.addAll(NORMAL_MODE_WHITELIST);
+//            }
+//        } else {
+//            supportedOptions.add(ChromeContextMenuItem.COPY_LINK_ADDRESS);
+//            supportedOptions.add(ChromeContextMenuItem.COPY_LINK_TEXT);
+//            supportedOptions.add(ChromeContextMenuItem.COPY);
+//        }
 
         Set<ContextMenuItem> disabledOptions = getDisabledOptions(params);
         // Split the items into their respective groups.
@@ -343,11 +343,11 @@ public class ChromeContextMenuPopulator implements ContextMenuPopulator {
         int index = ChromeFeatureList.isEnabled(ChromeFeatureList.CUSTOM_CONTEXT_MENU)
                 ? groupedItems.size() - 1
                 : 0;
-        addValidItems(groupedItems.get(groupedItems.size() - 1 - index).second, OTHER_GROUP,
-                supportedOptions, disabledOptions);
+//        addValidItems(groupedItems.get(groupedItems.size() - 1 - index).second, OTHER_GROUP,
+//                supportedOptions, disabledOptions);
         if (mMode == CUSTOM_TAB_MODE) {
-            addValidItemsToFront(groupedItems.get(index).second, CUSTOM_TAB_GROUP, supportedOptions,
-                    disabledOptions);
+//            addValidItemsToFront(groupedItems.get(index).second, CUSTOM_TAB_GROUP, supportedOptions,
+//                    disabledOptions);
         }
 
         // If there are no items from the extra items within OTHER_GROUP and CUSTOM_TAB_GROUP, then
@@ -389,14 +389,14 @@ public class ChromeContextMenuPopulator implements ContextMenuPopulator {
         List<ContextMenuItem> items = new ArrayList<>();
         switch (contextMenuType) {
             case LINK:
-                addValidItems(items, LINK_GROUP, supportedOptions, disabledOptions);
-                addValidItems(items, MESSAGE_GROUP, supportedOptions, disabledOptions);
+//                addValidItems(items, LINK_GROUP, supportedOptions, disabledOptions);
+//                addValidItems(items, MESSAGE_GROUP, supportedOptions, disabledOptions);
                 break;
             case IMAGE:
-                addValidItems(items, IMAGE_GROUP, supportedOptions, disabledOptions);
+//                addValidItems(items, IMAGE_GROUP, supportedOptions, disabledOptions);
                 break;
             case VIDEO:
-                addValidItems(items, VIDEO_GROUP, supportedOptions, disabledOptions);
+//                addValidItems(items, VIDEO_GROUP, supportedOptions, disabledOptions);
                 break;
             default:
                 return;
@@ -444,17 +444,17 @@ public class ChromeContextMenuPopulator implements ContextMenuPopulator {
     private Set<ContextMenuItem> getDisabledOptions(ContextMenuParams params) {
         Set<ContextMenuItem> disabledOptions = new HashSet<>();
         if (!params.isAnchor()) {
-            disabledOptions.addAll(LINK_GROUP);
+//            disabledOptions.addAll(LINK_GROUP);
         }
         if (!params.isImage()) {
-            disabledOptions.addAll(IMAGE_GROUP);
+//            disabledOptions.addAll(IMAGE_GROUP);
         }
         if (!params.isVideo()) {
-            disabledOptions.addAll(VIDEO_GROUP);
+//            disabledOptions.addAll(VIDEO_GROUP);
         }
         if (!MailTo.isMailTo(params.getLinkUrl())
                 && !UrlUtilities.isTelScheme(params.getLinkUrl())) {
-            disabledOptions.addAll(MESSAGE_GROUP);
+//            disabledOptions.addAll(MESSAGE_GROUP);
         }
 
         if (params.isAnchor() && !mDelegate.isOpenInOtherWindowSupported()) {

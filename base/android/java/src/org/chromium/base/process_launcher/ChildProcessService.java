@@ -8,6 +8,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+import org.chromium.base.TraceEvent;
+
 /**
  * This is the base class for child services; the embedding application should contain
  * ProcessService0, 1.. etc subclasses that provide the concrete service entry points, so it can
@@ -33,8 +35,10 @@ public abstract class ChildProcessService extends Service {
 
     @Override
     public void onCreate() {
-        super.onCreate();
-        mChildProcessServiceImpl.create(getApplicationContext(), getApplicationContext());
+        try (TraceEvent e = TraceEvent.scoped("ChildProcessService.onCreate")) {
+            super.onCreate();
+            mChildProcessServiceImpl.create(getApplicationContext(), getApplicationContext());
+        }
     }
 
     @Override
@@ -45,11 +49,13 @@ public abstract class ChildProcessService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        // We call stopSelf() to request that this service be stopped as soon as the client
-        // unbinds. Otherwise the system may keep it around and available for a reconnect. The
-        // child processes do not currently support reconnect; they must be initialized from
-        // scratch every time.
-        stopSelf();
-        return mChildProcessServiceImpl.bind(intent, -1);
+        try (TraceEvent e = TraceEvent.scoped("ChildProcessService.onBind")) {
+            // We call stopSelf() to request that this service be stopped as soon as the client
+            // unbinds. Otherwise the system may keep it around and available for a reconnect. The
+            // child processes do not currently support reconnect; they must be initialized from
+            // scratch every time.
+            stopSelf();
+            return mChildProcessServiceImpl.bind(intent, -1);
+        }
     }
 }

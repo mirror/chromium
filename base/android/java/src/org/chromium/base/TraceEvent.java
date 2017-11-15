@@ -4,6 +4,7 @@
 
 package org.chromium.base;
 
+import android.os.Debug;
 import android.os.Looper;
 import android.os.MessageQueue;
 import android.os.SystemClock;

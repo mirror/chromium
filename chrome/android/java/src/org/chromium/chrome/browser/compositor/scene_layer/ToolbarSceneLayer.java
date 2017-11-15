@@ -81,7 +81,7 @@ public class ToolbarSceneLayer extends SceneOverlayLayer implements SceneOverlay
         if (!isTablet && toolbarContainer != null
                 && !fullscreenManager.areBrowserControlsAtBottom()) {
             if (mProgressBarDrawingInfo == null) mProgressBarDrawingInfo = new DrawingInfo();
-            toolbarContainer.getProgressBarDrawingInfo(mProgressBarDrawingInfo);
+//            toolbarContainer.getProgressBarDrawingInfo(mProgressBarDrawingInfo);
         } else {
             assert mProgressBarDrawingInfo == null;
         }
