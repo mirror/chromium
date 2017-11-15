@@ -111,6 +111,13 @@ OriginTrialContext* OriginTrialContext::From(ExecutionContext* context,
 }
 
 // static
+const OriginTrialContext* OriginTrialContext::From(
+    const ExecutionContext* context) {
+  return static_cast<const OriginTrialContext*>(
+      Supplement<ExecutionContext>::From(context, SupplementName()));
+}
+
+// static
 std::unique_ptr<Vector<String>> OriginTrialContext::ParseHeaderValue(
     const String& header_value) {
   std::unique_ptr<Vector<String>> tokens(new Vector<String>);
@@ -211,7 +218,7 @@ void OriginTrialContext::AddFeature(const String& feature) {
   InitializePendingFeatures();
 }
 
-bool OriginTrialContext::IsTrialEnabled(const String& trial_name) {
+bool OriginTrialContext::IsTrialEnabled(const String& trial_name) const {
   if (!RuntimeEnabledFeatures::OriginTrialsEnabled())
     return false;
 
