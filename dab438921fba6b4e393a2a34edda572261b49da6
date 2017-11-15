@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4902edb_6456e31f",
+        "filename": "third_party/WebKit/Source/core/exported/WebSettingsImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-15T16:20:27Z",
+      "side": 1,
+      "message": "Please keep this file as-is.",
+      "revId": "dab438921fba6b4e393a2a34edda572261b49da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9d7ee1_596fbdca",
+        "filename": "third_party/WebKit/Source/core/exported/WebSettingsImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-15T16:20:27Z",
+      "side": 1,
+      "message": "Please keep this file as-is, because we will make MockScrollbars a real per-page setting.",
+      "revId": "dab438921fba6b4e393a2a34edda572261b49da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c98209_e705871f",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilderTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-15T16:20:27Z",
+      "side": 1,
+      "message": "Please remove the whole method.",
+      "revId": "dab438921fba6b4e393a2a34edda572261b49da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f570851_93e78a29",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreePrinterTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-15T16:20:27Z",
+      "side": 1,
+      "message": "Please remove the whole method.",
+      "revId": "dab438921fba6b4e393a2a34edda572261b49da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2951a64_52c5828d",
+        "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalkTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-15T16:20:27Z",
+      "side": 1,
+      "message": "Please remove the whole method.",
+      "revId": "dab438921fba6b4e393a2a34edda572261b49da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf8c489f_e5cc0500",
+        "filename": "third_party/WebKit/Source/core/testing/InternalSettings.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-15T16:20:27Z",
+      "side": 1,
+      "message": "Don\u0027t use UseMockScrollbarSettings.h which is for unit testing only from this file. Please keep this file as-is.",
+      "revId": "dab438921fba6b4e393a2a34edda572261b49da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea2e6b76_982868d8",
+        "filename": "third_party/WebKit/Source/platform/testing/UseMockScrollbarSettings.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-15T16:20:27Z",
+      "side": 1,
+      "message": "Remove this methods.",
+      "revId": "dab438921fba6b4e393a2a34edda572261b49da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
