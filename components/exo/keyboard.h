@@ -12,6 +12,7 @@
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "components/exo/keyboard_observer.h"
+#include "components/exo/seat.h"
 #include "components/exo/surface_observer.h"
 #include "ui/aura/client/focus_change_observer.h"
 #include "ui/events/devices/input_device_event_observer.h"
@@ -36,7 +37,7 @@ class Keyboard : public ui::EventHandler,
                  public ash::TabletModeObserver,
                  public SurfaceObserver {
  public:
-  explicit Keyboard(KeyboardDelegate* delegate);
+  Keyboard(KeyboardDelegate* delegate, Seat* seat);
   ~Keyboard() override;
 
   bool HasDeviceConfigurationDelegate() const;
@@ -93,6 +94,9 @@ class Keyboard : public ui::EventHandler,
   // The delegate instance that all events except for events about device
   // configuration are dispatched to.
   KeyboardDelegate* const delegate_;
+
+  // Refcount for parent seat object so that Seat can outlive wl_seat.
+  scoped_refptr<Seat> const seat_;
 
   // The delegate instance that events about device configuration are dispatched
   // to.
