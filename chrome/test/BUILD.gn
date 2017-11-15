@@ -1947,6 +1947,8 @@ test("browser_tests") {
       sources += [ "../browser/extensions/api/bluetooth_low_energy/bluetooth_low_energy_apitest.cc" ]
     }
   }
+
+  sources = []
 }
 
 group("telemetry_perf_unittests") {

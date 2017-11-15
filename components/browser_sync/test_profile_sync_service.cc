@@ -28,6 +28,7 @@ TestProfileSyncService::~TestProfileSyncService() {}
 void TestProfileSyncService::OnConfigureDone(
     const syncer::DataTypeManager::ConfigureResult& result) {
   ProfileSyncService::OnConfigureDone(result);
+  LOG(INFO) << "QuitCurrent() due to TestProfileSyncService";
   base::RunLoop::QuitCurrentWhenIdleDeprecated();
 }
 

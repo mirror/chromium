@@ -129,6 +129,7 @@ void RunLoop::RunUntilIdle() {
 
 void RunLoop::Quit() {
   // Thread-safe.
+  LOG(INFO) << "RunLoop::Quit()";
 
   // This can only be hit if run_loop->Quit() is called directly (QuitClosure()
   // proxies through ProxyToTaskRunner() as it can only deref its WeakPtr on
@@ -148,6 +149,7 @@ void RunLoop::Quit() {
 
 void RunLoop::QuitWhenIdle() {
   // Thread-safe.
+  LOG(INFO) << "RunLoop::QuitWhenIdle()";
 
   // This can only be hit if run_loop->QuitWhenIdle() is called directly
   // (QuitWhenIdleClosure() proxies through ProxyToTaskRunner() as it can only
