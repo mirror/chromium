@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e238a015_64c7433b",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-15T19:57:37Z",
+      "side": 1,
+      "message": "That sounds familiar! https://chromium-review.googlesource.com/c/chromium/src/+/710058#message-9dd43f8b3ec9c941ba7094ffb1c70dee83a93879 :)\n\nI actually started doing that when I made this change, but it didn\u0027t seem a ton better. (But I guess it\u0027d avoid one set of duplicated arguments, at the expense of having it anyway in an __init__ function.)",
+      "parentUuid": "35a14128_e55c2d68",
+      "revId": "a480ec9409399d3f4f8c9db0fabc7a1baf886e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9cdd3b55_70370e49",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "a480ec9409399d3f4f8c9db0fabc7a1baf886e25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9514d204_631ad793",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-15T19:57:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cdd3b55_70370e49",
+      "revId": "a480ec9409399d3f4f8c9db0fabc7a1baf886e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4bd3ea4d_29176c9e",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-15T19:57:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0161b0a_b108dca0",
+      "revId": "a480ec9409399d3f4f8c9db0fabc7a1baf886e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4208c0f4_e88cebc4",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-15T17:57:01Z",
       "side": 1,
       "message": "Add a comment for what you\u0027re doing from lines 335-339",
+      "revId": "a480ec9409399d3f4f8c9db0fabc7a1baf886e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab235d90_692b13ea",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-15T19:57:37Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "4208c0f4_e88cebc4",
       "revId": "a480ec9409399d3f4f8c9db0fabc7a1baf886e25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c4ed069a_875f9400",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-15T19:57:37Z",
+      "side": 1,
+      "message": "Much better!",
+      "parentUuid": "40774692_e11a3ec7",
+      "revId": "a480ec9409399d3f4f8c9db0fabc7a1baf886e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5853a52_fff181eb",
         "filename": "build/fuchsia/tar_builder.py",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "a480ec9409399d3f4f8c9db0fabc7a1baf886e25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccc831fe_2eac8f9e",
+        "filename": "build/fuchsia/tar_builder.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-15T19:57:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5853a52_fff181eb",
+      "revId": "a480ec9409399d3f4f8c9db0fabc7a1baf886e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -124,6 +232,30 @@
       "revId": "a480ec9409399d3f4f8c9db0fabc7a1baf886e25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c87a10d_912c450f",
+        "filename": "build/fuchsia/tar_builder.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-15T19:57:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1669b45f_c4353846",
+      "range": {
+        "startLine": 7,
+        "startChar": 32,
+        "endLine": 7,
+        "endChar": 38
+      },
+      "revId": "a480ec9409399d3f4f8c9db0fabc7a1baf886e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

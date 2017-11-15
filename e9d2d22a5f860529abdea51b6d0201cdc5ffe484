@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41260779_a6c252af",
+        "filename": "build/fuchsia/archive_builder.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-15T19:57:37Z",
+      "side": 1,
+      "message": "(I\u0027m going to move the common command line args to a common place too, but this CL already has too much non-type-checked moving stuff around, so I\u0027ll do that in a follow up.)",
+      "revId": "e9d2d22a5f860529abdea51b6d0201cdc5ffe484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
