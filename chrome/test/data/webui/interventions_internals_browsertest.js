@@ -194,6 +194,28 @@ TEST_F('InterventionsInternalsUITest', 'LogNewMessage', function() {
   mocha.run();
 });
 
+TEST_F('InterventionsInternalsUITest', 'LogNewMessageWithLongUrl', function() {
+  test('LogMessageIsPostedCorrectly', () => {
+    let pageImpl = new InterventionsInternalPageImpl(null);
+    let log = {
+      type: 'Some type',
+      url: {url: ''},
+      description: 'Some description',
+      time: 758675653000,  // Jan 15 1994 23:14:13 UTC
+    };
+    for (let i = 0; i <= 2 * URL_THRESHOLD; i++) {
+      log.url.url += 'a';
+    }
+    let expectedUrl = log.url.url.substring(0, URL_THRESHOLD - 3) + '...';
+
+    pageImpl.logNewMessage(log);
+    expectEquals(
+        expectedUrl, document.querySelector('div.log-url').textContent);
+  });
+
+  mocha.run();
+});
+
 TEST_F('InterventionsInternalsUITest', 'AddNewBlacklistedHost', function() {
   test('AddNewBlacklistedHost', () => {
     let pageImpl = new InterventionsInternalPageImpl(null);
