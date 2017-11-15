@@ -69,6 +69,24 @@
       "revId": "85cd8294de19498ddf0fc75b6a457476af39d68d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cc5ca8a_7df8743a",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_mediator.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-15T02:08:01Z",
+      "side": 1,
+      "message": "Why were we using CopyOldMatches() before?  I don\u0027t even understand what this function is trying to do or where it\u0027s called.  Why can\u0027t we just copy result into _currentResult directly?  Yes, you said it sets |from_previous|, but why does that matter?",
+      "parentUuid": "15ce55a2_1a92e43b",
+      "revId": "85cd8294de19498ddf0fc75b6a457476af39d68d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
