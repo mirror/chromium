@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7d8ebb1_54f41f34",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-15T19:51:15Z",
+      "side": 1,
+      "message": "It\u0027s a bit late, but I feel it\u0027s easy to confuse this cache with the favicon cache storing the image. This cache is essentially a temporary blacklist, so PartnerBookmarksThrottler or PartnerBookmarksBlacklist might work. Any better names?",
+      "range": {
+        "startLine": 23,
+        "startChar": 29,
+        "endLine": 23,
+        "endChar": 34
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed2fe5e5_c84abd36",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-15T19:51:15Z",
+      "side": 1,
+      "message": "nit: The cache size should never exceed 19 (20 is the max number of entries) in Sole. For traditional package-based bookmarks, there\u0027s no limit, but 99 %ile is \u003c20. recordCount100Histogram() should be closer to what we want.",
+      "range": {
+        "startLine": 57,
+        "startChar": 24,
+        "endLine": 57,
+        "endChar": 44
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe98a52_2dd42f94",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-15T19:51:15Z",
+      "side": 1,
+      "message": "Does \"mCurrentCache.equals(mNewCache)\" work?",
+      "range": {
+        "startLine": 70,
+        "startChar": 12,
+        "endLine": 71,
+        "endChar": 77
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b3ae28_cbcfc83b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-15T19:51:15Z",
+      "side": 1,
+      "message": "What if the key is there, but the timestamp is expired? In that case, we don\u0027t have to keep that entry anymore, right?",
+      "range": {
+        "startLine": 96,
+        "startChar": 73,
+        "endLine": 96,
+        "endChar": 84
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101af8be_a032bc11",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCacheTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-15T19:51:15Z",
+      "side": 1,
+      "message": "We can add a test about changed partner bookmarks.\n\n- partner bookmarks only have url1\n- url1 doesn\u0027t have favicon, so store in cache\n- partner bookmarks changed. now it only has url2\n- url1 should be cleared.",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 38
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3af7c22_5f064332",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCacheTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-15T19:51:15Z",
+      "side": 1,
+      "message": "nit: FAILURE_NOT_IN_CACHE is only possible if shouldFetchFromServerIfNecessary is false, so it looks a bit strange here. FAILURE_CONNECTION_ERROR might be more consistent.",
+      "range": {
+        "startLine": 51,
+        "startChar": 59,
+        "endLine": 51,
+        "endChar": 79
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdbec803_2fcd7444",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 57387,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-15T19:51:15Z",
+      "side": 1,
+      "message": "PartnerBookmark.FaviconFetchResult. I\u0027m not sure whether it would cause any issues if the names of histogram and enum are the same though.",
+      "range": {
+        "startLine": 57387,
+        "startChar": 59,
+        "endLine": 57387,
+        "endChar": 73
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f3ac4db_addac7f4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 57391,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-15T19:51:15Z",
+      "side": 1,
+      "message": "once per URL per cold start",
+      "range": {
+        "startLine": 57391,
+        "startChar": 26,
+        "endLine": 57391,
+        "endChar": 45
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db51eeb_024998f6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 57413,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-15T19:51:15Z",
+      "side": 1,
+      "message": "nit: We can add units\u003d\"entries\" here.",
+      "range": {
+        "startLine": 57413,
+        "startChar": 48,
+        "endLine": 57413,
+        "endChar": 50
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a285bff5_5a271910",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 57416,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-15T19:51:15Z",
+      "side": 1,
+      "message": "Also mention when it would be recorded (when using the bookmark, and at most once per cold start.)",
+      "range": {
+        "startLine": 57416,
+        "startChar": 4,
+        "endLine": 57416,
+        "endChar": 69
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
