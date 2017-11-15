@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b1de291_8c62119d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 60
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T05:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0571617d_9adede3e",
+      "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed98d9fc_427242db",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/reset-temp-file.cgi",
         "patchSetId": 60
@@ -33,6 +51,24 @@
       "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95accea9_2eea4ec7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/reset-temp-file.cgi",
+        "patchSetId": 60
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T05:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed98d9fc_427242db",
+      "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9de09191_bc394ad8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/reset-temp-file.cgi",
+        "patchSetId": 60
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T05:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe5c768e_9400842f",
+      "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45ce56f0_1ca73813",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/reset-temp-file.cgi",
         "patchSetId": 60
@@ -67,6 +121,24 @@
       "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779f2a19_417c74f1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/reset-temp-file.cgi",
+        "patchSetId": 60
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T05:25:51Z",
+      "side": 1,
+      "message": "Changed to $win32_ansi_codepage",
+      "parentUuid": "45ce56f0_1ca73813",
+      "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0f6b2a3d_1f6975b2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/reset-temp-file.cgi",
+        "patchSetId": 60
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T05:25:51Z",
+      "side": 1,
+      "message": "This is a security check to verify that the temporary file\u0027s location is actually inside a subdirectory of the system temporary directory. Added some additional explanatory comments.",
+      "parentUuid": "b0806f4a_a58c2d22",
+      "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4d5a691_46ef875c",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/reset-temp-file.cgi",
         "patchSetId": 60
@@ -101,6 +191,24 @@
       "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a175ecfa_2b2d5248",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/reset-temp-file.cgi",
+        "patchSetId": 60
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T05:25:51Z",
+      "side": 1,
+      "message": "Deletion is hard because the directory being deleted is a random-named subdirectory of /tmp, named like /tmp/cgiXXXX (actual random characters used in place of X\u0027s). We don\u0027t delete /tmp itself :)\n\nDocumented a bit better in comments. Actually this script cleans up files with test-chosen names (not varying across test runs) inside subdirectories (with randomly-varying names) of the system temporary directory. So it\u0027s explicitly supporting the parallel test execution model.\n\nI suspect it\u0027s causing very rare occasional flakes in the tests using the PHP scripts I was using earlier, since those do not seem to vary the filename or pathname across test runs, and both create and delete their files during test execution.",
+      "parentUuid": "d4d5a691_46ef875c",
+      "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "51a51137_077fe9e1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 60
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T05:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20e15128_7f2f378d",
+      "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7257fc2_2dc1054a",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
         "patchSetId": 60
@@ -135,6 +261,24 @@
       "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "595335af_a651632d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 60
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T05:25:51Z",
+      "side": 1,
+      "message": "No, but I see now that tmpdir vs tempdir was quite confusing and I have renamed them all. PTAL.",
+      "parentUuid": "e7257fc2_2dc1054a",
+      "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "2989fca1_42ff31ce",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 60
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T05:25:51Z",
+      "side": 1,
+      "message": "The problem is exactly that: when run as a Win32 service (as on the bots) the normally-used environment variables are not present, and (due to tainting) tmpdir() is also not usable. Added a comment or two to explain the situation and the approach.",
+      "parentUuid": "0c87dceb_154320b0",
+      "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "962a6cd8_992054ee",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
         "patchSetId": 60
@@ -169,6 +331,24 @@
       "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41a46bfe_5a5175d5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 60
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T05:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "962a6cd8_992054ee",
+      "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "792f94cb_8e74fb6d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 60
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T05:25:51Z",
+      "side": 1,
+      "message": "Explained (I hope?) with better variable names and additional comments. PTAL.",
+      "parentUuid": "fc034a79_c4b12412",
+      "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f621cac6_7e39c873",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
         "patchSetId": 60
@@ -203,6 +401,24 @@
       "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db8eb68_c6d6440b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 60
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T05:25:51Z",
+      "side": 1,
+      "message": "Used $pathname instead, it seems to be standard at least in manpages.",
+      "parentUuid": "f621cac6_7e39c873",
+      "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "0a418d5a_7f4deeb2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 60
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T05:25:51Z",
+      "side": 1,
+      "message": "Used $tempfile_contents_write_handle for $fh and $tempfile_verification_read_handle for $fh2.",
+      "parentUuid": "2ded69cd_c55932e4",
+      "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bf4b1b1_3c56dfaa",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
         "patchSetId": 60
@@ -237,6 +471,24 @@
       "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d45f89_bc798a17",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 60
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T05:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bf4b1b1_3c56dfaa",
+      "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "86af92ef_e5c0f44c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 60
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T05:25:51Z",
+      "side": 1,
+      "message": "This block just verifies that the resulting file in fact exists with the expected name and the expected contents. This is actually slightly nontrivial since e.g. Mac OS X and Windows both do some character normalization in the filesystem which could go wrong, and it\u0027s much simpler to detect any naming failures here than with a mysterious \"nothing was actually uploaded\" later on in the JS test. Likewise it\u0027s much easier to detect file contents problems (e.g. due to unexpected interplay between Perl \"utf-8\" native strings and the CGI layer) here than later on in the \"multipart data is somehow wrong\" stage.\n\nAdded a comment.",
+      "parentUuid": "a969ac7c_993cd490",
+      "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4309a45_ca171d5f",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form-iso-2022-jp.html",
         "patchSetId": 60
@@ -271,6 +541,24 @@
       "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a38a51f_41a13903",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form-iso-2022-jp.html",
+        "patchSetId": 60
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T05:25:51Z",
+      "side": 1,
+      "message": "fileNameSource is purely explanatory and gives a clue about which character encoding is the source for the non-ASCII parts of the fileBaseName. Added a comment over in send-dragged-file-form-helper.js where formPostFileUploadTest is defined documenting the meaning of each parameter. And yes, expectedEncodedBaseName is seen through \"UTF-8 goggles\" due to the form upload POST handler echoing bytes with charset\u003dUTF-8, which is also now explained there.",
+      "parentUuid": "a4309a45_ca171d5f",
+      "revId": "8757ea9e18b0dfbee159ac921c5442cc4024e7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
