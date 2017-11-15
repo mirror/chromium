@@ -101,6 +101,10 @@ arc::mojom::WiFiPtr TranslateONCWifi(const base::DictionaryValue* dict) {
   // Optional; defaults to 0.
   dict->GetInteger(onc::wifi::kSignalStrength, &wifi->signal_strength);
 
+  std::string tethering_state;
+  dict->GetString(onc::wifi::kTetheringState, &tethering_state);
+  wifi->is_tethered =
+      (tethering_state == onc::tethering_state::kTetheringConfirmedState);
   return wifi;
 }
 
