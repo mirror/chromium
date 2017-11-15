@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "051dc2e0_e33b58cf",
+        "filename": "components/password_manager/core/browser/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-15T13:40:20Z",
+      "side": 1,
+      "message": "The analyse step suggests a trailing comma.",
+      "range": {
+        "startLine": 52,
+        "startChar": 26,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "945715e2d46358b1383ca089469baa9762d14237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ced187_50ffb101",
+        "filename": "components/password_manager/core/browser/export/destination.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-15T13:40:20Z",
+      "side": 1,
+      "message": "nit: This might need some explanation. Can this be called multiple times? Should this be called (or not called) on a particular thread or task runner (in other words -- do the implementing classes need to make sure to post it to some non-UI-blocking task runner, or is that expected from the caller)? What is the meaning of the return type (unless void)? Is anything expected about |data|? Is this guaranteed to be a synchronous operation or can it spawn a background task?",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "945715e2d46358b1383ca089469baa9762d14237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84996911_31ac1228",
+        "filename": "components/password_manager/core/browser/export/destination.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-15T13:40:20Z",
+      "side": 1,
+      "message": "Are you passing string by value, because Destination might need to keep it beyond the point of return from Write (e.g., for posting the write task on a different thread)? If so, I agree that it\u0027s better than a const ref.\n\nOn the other hand, there is still the danger that someone forgets to use std::move if passing a named string to Write, resulting in a copy of potentially megabytes of data. We cannot use an rvalue reference to prevent that, because the style guide only allows that for constructors, assignment operators and perfect forwarding. If we were sure that Write is always synchronous, we could prevent that by switching to a const reference.",
+      "range": {
+        "startLine": 14,
+        "startChar": 16,
+        "endLine": 14,
+        "endChar": 27
+      },
+      "revId": "945715e2d46358b1383ca089469baa9762d14237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a9e3c24_4055c3ca",
+        "filename": "components/password_manager/core/browser/export/destination.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-15T13:40:20Z",
+      "side": 1,
+      "message": "This is also missing a return type.",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "945715e2d46358b1383ca089469baa9762d14237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fc55cc3_f8feb9f5",
+        "filename": "components/password_manager/core/browser/export/destination.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-15T13:40:20Z",
+      "side": 1,
+      "message": "This would need an #include \"base/macros.h\", but I would actually argue to drop the macro from the interface completely.\n\nThe macro is meant to control copy-ability of concrete types. This interface should not impose that on the implementations, it should only care about the provided interface. It is conceivable that there might be a copyable implementation of this, although it is not likely.",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 26
+      },
+      "revId": "945715e2d46358b1383ca089469baa9762d14237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
