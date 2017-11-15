@@ -10,6 +10,7 @@
 #import "ios/chrome/browser/ui/toolbar/public/abstract_toolbar.h"
 
 @class Tab;
+@class ToolbarButtonsUpdater;
 @protocol WebToolbarDelegate;
 
 // WebToolbarController public interface.
@@ -40,6 +41,8 @@
 - (void)resetToolbarAfterSideSwipeSnapshot;
 // WebToolbarDelegate delegate.
 @property(nonatomic, weak) id<WebToolbarDelegate> delegate;
+// Object handling the updates of the buttons.
+@property(nonatomic, strong) ToolbarButtonsUpdater* buttonUpdater;
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_TOOLBAR_PUBLIC_ABSTRACT_WEB_TOOLBAR_H_

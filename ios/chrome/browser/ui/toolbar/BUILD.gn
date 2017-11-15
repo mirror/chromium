@@ -10,6 +10,8 @@ source_set("toolbar") {
     "omnibox_focuser.h",
     "toolbar_button_tints.h",
     "toolbar_button_tints.mm",
+    "toolbar_buttons_updater.h",
+    "toolbar_buttons_updater.mm",
     "toolbar_controller+protected.h",
     "toolbar_controller.h",
     "toolbar_controller.mm",
