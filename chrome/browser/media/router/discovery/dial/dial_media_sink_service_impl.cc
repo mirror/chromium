@@ -72,6 +72,7 @@ DeviceDescriptionService* DialMediaSinkServiceImpl::GetDescriptionService() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!description_service_.get()) {
     description_service_.reset(new DeviceDescriptionService(
+        nullptr,
         base::Bind(&DialMediaSinkServiceImpl::OnDeviceDescriptionAvailable,
                    base::Unretained(this)),
         base::Bind(&DialMediaSinkServiceImpl::OnDeviceDescriptionError,
