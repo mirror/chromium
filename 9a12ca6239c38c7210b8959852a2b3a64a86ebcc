@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "88185ed5_1ae77ef5",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-15T13:29:51Z",
+      "side": 1,
+      "message": "Drive-by optional nit:\nreturn (request_-\u003emethod \u003d\u003d \"GET\" \u0026\u0026 !partial_);",
+      "range": {
+        "startLine": 666,
+        "startChar": 0,
+        "endLine": 666,
+        "endChar": 45
+      },
+      "revId": "9a12ca6239c38c7210b8959852a2b3a64a86ebcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ef40082_b0dc8dc7",
         "filename": "net/http/http_cache_transaction.h",
         "patchSetId": 5
