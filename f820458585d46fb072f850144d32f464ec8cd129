@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ee99f39_03703530",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-11-15T09:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0f53c24_cc2f96ad",
+      "range": {
+        "startLine": 18,
+        "startChar": 37,
+        "endLine": 18,
+        "endChar": 46
+      },
+      "revId": "f820458585d46fb072f850144d32f464ec8cd129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99ec7f7b_48eddf8b",
         "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-15T08:56:54Z",
       "side": 1,
       "message": "This is common code for all Linux distributions but the CL description specifically mentions Chrome OS. Could this change adversely affect standard Linux distributions? Do some of these dlopen() calls need to be made Chrome OS-specific?",
+      "range": {
+        "startLine": 259,
+        "startChar": 15,
+        "endLine": 259,
+        "endChar": 16
+      },
+      "revId": "f820458585d46fb072f850144d32f464ec8cd129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc7ad03_5267aee5",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-11-15T09:15:02Z",
+      "side": 1,
+      "message": "At the moment libva is only used on Chrome OS. I seem to remember this was expressed more explicitly in this file, maybe this has changed recently?\n\nSupporting regular Linux would add the challenge that /usr/lib64/va/drivers/i965_drv_video.so is distribution-specific (and we want to control the libva version ChromeOS is compiled against since it requires extra patching and regularly breaks ABI compatibility). So for the moment we definitely don\u0027t want to enable this and access to these libraries should indeed only be enabled on Chrome OS.",
+      "parentUuid": "99ec7f7b_48eddf8b",
       "range": {
         "startLine": 259,
         "startChar": 15,
