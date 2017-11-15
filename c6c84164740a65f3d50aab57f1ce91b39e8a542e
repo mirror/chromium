@@ -22,6 +22,30 @@
       "revId": "c6c84164740a65f3d50aab57f1ce91b39e8a542e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98c95fe2_9ce05b53",
+        "filename": "chrome/browser/signin/chrome_signin_client_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-15T12:43:38Z",
+      "side": 1,
+      "message": "We can\u0027t use features::kSignInProcessIsolation from the signin component, because it is defined in content.\nNote that even if we could, we would still need to enable site isolation in all the tests, so I think it would only address your first problem, but not the second.\n\nI went with callback rather than boolean because it seemed less risky: the callback can be set extremely early in the app, but the boolean can only be set after the feature list is initialized. I\u0027m pretty sure setting the boolean here in the factory constructor would work though, so I can change that.\n\nI thought here was a good location (it is called before any profile is created). What do you think would be a better location to call this?",
+      "parentUuid": "54f99ea1_55619bcb",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 39
+      },
+      "revId": "c6c84164740a65f3d50aab57f1ce91b39e8a542e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
