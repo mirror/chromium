@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "269647f0_fc93ba6b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-15T19:49:33Z",
+      "side": 1,
+      "message": "nit: can you expand the description, and is there a bug you could link?",
+      "revId": "7f7116fd60163c4e57b6691f0bc174e3aa7861c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
