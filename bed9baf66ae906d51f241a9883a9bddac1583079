@@ -326,6 +326,24 @@
       "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8efc02c_22a40ea1",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-11-15T23:40:51Z",
+      "side": 1,
+      "message": "self.mock(test_runner.os.path, \u0027abspath\u0027: lambda path: \u0027/abs/path/to/%s\u0027 % path)\nself.mock(test_runner.os.path, \u0027exists\u0027, lambda path: path.endswith(\u0027fake-app\u0027))\nwith self.assertRaises(test_runner.SimulatorNotFoundError):\n  test_runner.SimulatorTestRunner(\n    \u0027fake-app\u0027,\n    \u0027fake-iossim\u0027,\n    ...\n  )\n\nSeems fine to me. I see no reason why a mock can\u0027t check the arguments it receives as input.",
+      "parentUuid": "49f3a2e6_c032168b",
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
