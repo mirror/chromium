@@ -16,6 +16,24 @@
       "revId": "4af931c7f9a64042d54f2f3fbb5ac4c7dfff7e69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ba2c41_be85fb41",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-15T21:58:04Z",
+      "side": 1,
+      "message": "It\u0027s a side effect of amalgamating the gl_thread_, ui_ pointer and users of the UI pointer into a contiguous set (helping support Biao\u0027s original comment).",
+      "parentUuid": "c52f9809_4c9208e6",
+      "revId": "4af931c7f9a64042d54f2f3fbb5ac4c7dfff7e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
