@@ -115,8 +115,6 @@ PermissionRequestType PermissionUtil::GetRequestType(ContentSettingsType type) {
       return PermissionRequestType::PERMISSION_ACCESSIBILITY_EVENTS;
     case CONTENT_SETTINGS_TYPE_CLIPBOARD_READ:
       return PermissionRequestType::PERMISSION_CLIPBOARD_READ;
-    case CONTENT_SETTINGS_TYPE_CLIPBOARD_WRITE:
-      return PermissionRequestType::PERMISSION_CLIPBOARD_WRITE;
     default:
       NOTREACHED();
       return PermissionRequestType::UNKNOWN;

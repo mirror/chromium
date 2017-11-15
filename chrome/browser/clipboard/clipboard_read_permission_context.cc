@@ -8,6 +8,7 @@ ClipboardReadPermissionContext::ClipboardReadPermissionContext(Profile* profile)
     : PermissionContextBase(profile,
                             CONTENT_SETTINGS_TYPE_CLIPBOARD_READ,
                             blink::FeaturePolicyFeature::kNotFound) {}
+
 ClipboardReadPermissionContext::~ClipboardReadPermissionContext() = default;
 
 bool ClipboardReadPermissionContext::IsRestrictedToSecureOrigins() const {
