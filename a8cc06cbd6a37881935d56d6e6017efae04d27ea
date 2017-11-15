@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6593baa0_0838dec8",
+        "filename": "components/offline_pages/core/model/clear_legacy_temporary_pages_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-15T04:15:05Z",
+      "side": 1,
+      "message": "FromDatabaseFilePath(...)",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 36
+      },
+      "revId": "a8cc06cbd6a37881935d56d6e6017efae04d27ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffba128a_d55feb28",
+        "filename": "components/offline_pages/core/model/clear_legacy_temporary_pages_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-15T04:15:05Z",
+      "side": 1,
+      "message": "would it work if:\n\nreturn {\n  statement-\u003eColumnInt64(0),\n  FromDBFilePath(...)\n};\n\nOr in 2 lines:\nPageInfo p {  statement-\u003eColumnInt64(0),\n  FromDBFilePath(...)\n};\nreturn p;\n\nOR simply follow comment in line 53",
+      "revId": "a8cc06cbd6a37881935d56d6e6017efae04d27ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b18c8ec_d64f8107",
+        "filename": "components/offline_pages/core/model/clear_legacy_temporary_pages_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-15T04:15:05Z",
+      "side": 1,
+      "message": "Actually you can inline this one, like in:\nhttps://cs.chromium.org/chromium/src/components/offline_pages/core/prefetch/download_cleanup_task.cc?l\u003d40",
+      "revId": "a8cc06cbd6a37881935d56d6e6017efae04d27ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40b38dd_01eebee9",
+        "filename": "components/offline_pages/core/model/clear_legacy_temporary_pages_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-15T04:15:05Z",
+      "side": 1,
+      "message": "this line makes no sense, because if you return false, the transaction will be canceled.\nThis mean you can return as soon as first failure occurs, i.e.\nif (!statement.Run()) return false;\n\nresult variable is not necessary.",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 10
+      },
+      "revId": "a8cc06cbd6a37881935d56d6e6017efae04d27ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a19715ba_39e5ae75",
+        "filename": "components/offline_pages/core/model/clear_legacy_temporary_pages_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-15T04:15:05Z",
+      "side": 1,
+      "message": "declare these above the for loop.",
+      "range": {
+        "startLine": 86,
+        "startChar": 7,
+        "endLine": 86,
+        "endChar": 13
+      },
+      "revId": "a8cc06cbd6a37881935d56d6e6017efae04d27ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79623ceb_52f552d5",
+        "filename": "components/offline_pages/core/model/clear_legacy_temporary_pages_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-15T04:15:05Z",
+      "side": 1,
+      "message": "get",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 12
+      },
+      "revId": "a8cc06cbd6a37881935d56d6e6017efae04d27ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6938fe5b_52db1638",
+        "filename": "components/offline_pages/core/model/clear_legacy_temporary_pages_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-15T04:15:05Z",
+      "side": 1,
+      "message": "nit: add an empty line below",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 3
+      },
+      "revId": "a8cc06cbd6a37881935d56d6e6017efae04d27ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2cc4c97_6efb8321",
+        "filename": "components/offline_pages/core/model/clear_legacy_temporary_pages_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-15T04:15:05Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/search/?q\u003dgetfilecountindir+file:%5Esrc/components/offline_pages/core/model/+package:%5Echromium$\u0026type\u003dcs\n\nNow is the time to fix this.",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "a8cc06cbd6a37881935d56d6e6017efae04d27ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2320996c_c0f8ddc9",
+        "filename": "components/offline_pages/core/model/clear_legacy_temporary_pages_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-15T04:15:05Z",
+      "side": 1,
+      "message": "Why is this needed?",
+      "range": {
+        "startLine": 91,
+        "startChar": 16,
+        "endLine": 91,
+        "endChar": 28
+      },
+      "revId": "a8cc06cbd6a37881935d56d6e6017efae04d27ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
