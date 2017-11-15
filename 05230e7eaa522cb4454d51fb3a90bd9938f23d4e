@@ -711,6 +711,30 @@
     },
     {
       "key": {
+        "uuid": "770cf6e6_ea93261a",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-15T04:27:00Z",
+      "side": 1,
+      "message": "Looks good to me.",
+      "parentUuid": "48def4e8_3064056e",
+      "range": {
+        "startLine": 136,
+        "startChar": 9,
+        "endLine": 136,
+        "endChar": 31
+      },
+      "revId": "05230e7eaa522cb4454d51fb3a90bd9938f23d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aebf424e_b5fec804",
         "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
         "patchSetId": 9
