@@ -281,8 +281,7 @@ TabStripImpl::TabStripImpl(std::unique_ptr<TabStripController> controller)
       animation_container_(new gfx::AnimationContainer()),
       bounds_animator_(this) {
   Init();
-  SetEventTargeter(
-      std::unique_ptr<views::ViewTargeter>(new views::ViewTargeter(this)));
+  SetEventTargeter(std::make_unique<views::ViewTargeter>(this));
 }
 
 TabStripImpl::~TabStripImpl() {
@@ -1325,8 +1324,8 @@ void TabStripImpl::Init() {
       l10n_util::GetStringUTF16(IDS_ACCNAME_NEWTAB));
   new_tab_button_->SetImageAlignment(views::ImageButton::ALIGN_LEFT,
                                      views::ImageButton::ALIGN_BOTTOM);
-  new_tab_button_->SetEventTargeter(std::unique_ptr<views::ViewTargeter>(
-      new views::ViewTargeter(new_tab_button_)));
+  new_tab_button_->SetEventTargeter(
+      std::make_unique<views::ViewTargeter>(new_tab_button_));
   AddChildView(new_tab_button_);
 
   if (drop_indicator_width == 0) {
@@ -1346,17 +1345,19 @@ void TabStripImpl::StartInsertTabAnimation(int model_index) {
 
   GenerateIdealBounds();
 
+  // Set the current bounds to be the correct place but 0 width.
   Tab* tab = tab_at(model_index);
   if (model_index == 0) {
     tab->SetBounds(0, ideal_bounds(model_index).y(), 0,
                    ideal_bounds(model_index).height());
   } else {
-    Tab* last_tab = tab_at(model_index - 1);
-    tab->SetBounds(last_tab->bounds().right() - Tab::GetOverlap(),
+    Tab* prev_tab = tab_at(model_index - 1);
+    tab->SetBounds(prev_tab->bounds().right() - Tab::GetOverlap(),
                    ideal_bounds(model_index).y(), 0,
                    ideal_bounds(model_index).height());
   }
 
+  // Animate in to the full width.
   AnimateToIdealBounds();
 }
 
@@ -1387,9 +1388,8 @@ void TabStripImpl::ScheduleRemoveTabAnimation(Tab* tab) {
   gfx::Rect tab_bounds = tab->bounds();
   tab_bounds.set_width(0);
   bounds_animator_.AnimateViewTo(tab, tab_bounds);
-  bounds_animator_.SetAnimationDelegate(tab,
-                                        std::unique_ptr<gfx::AnimationDelegate>(
-                                            new RemoveTabDelegate(this, tab)));
+  bounds_animator_.SetAnimationDelegate(
+      tab, std::make_unique<RemoveTabDelegate>(this, tab));
 
   // Don't animate the new tab button when dragging tabs. Otherwise it looks
   // like the new tab button magically appears from beyond the end of the tab
@@ -1406,8 +1406,7 @@ void TabStripImpl::AnimateToIdealBounds() {
     if (!tab->dragging()) {
       bounds_animator_.AnimateViewTo(tab, ideal_bounds(i));
       bounds_animator_.SetAnimationDelegate(
-          tab, std::unique_ptr<gfx::AnimationDelegate>(
-                   new TabAnimationDelegate(this, tab)));
+          tab, std::make_unique<TabAnimationDelegate>(this, tab));
     }
   }
 
@@ -1756,8 +1755,7 @@ void TabStripImpl::StoppedDraggingTab(Tab* tab, bool* is_first_tab) {
   // Install a delegate to reset the dragging state when done. We have to leave
   // dragging true for the tab otherwise it'll draw beneath the new tab button.
   bounds_animator_.SetAnimationDelegate(
-      tab, std::unique_ptr<gfx::AnimationDelegate>(
-               new ResetDraggingStateDelegate(this, tab)));
+      tab, std::make_unique<ResetDraggingStateDelegate>(this, tab));
 }
 
 void TabStripImpl::OwnDragController(TabDragController* controller) {
@@ -2182,6 +2180,9 @@ void TabStripImpl::StartMouseInitiatedRemoveTabAnimation(int model_index) {
   if (tab_closing->data().pinned && !tab_at(model_index + 1)->data().pinned)
     delta += kPinnedToNonPinnedOffset;
 
+  // Set the ideal bounds of everything to be moved over to cover for the
+  // removed tab. This does not recompute the ideal bounds so every tab slides
+  // over without expansion until the user moves the mouse away.
   for (int i = model_index + 1; i < tab_count(); ++i) {
     gfx::Rect bounds = ideal_bounds(i);
     bounds.set_x(bounds.x() - delta);
@@ -2210,11 +2211,9 @@ void TabStripImpl::StartMouseInitiatedRemoveTabAnimation(int model_index) {
   tab_bounds.set_width(0);
   bounds_animator_.AnimateViewTo(tab_closing, tab_bounds);
 
-  // Register delegate to do cleanup when done, BoundsAnimator takes
-  // ownership of RemoveTabDelegate.
+  // Register delegate to do cleanup when done.
   bounds_animator_.SetAnimationDelegate(
-      tab_closing, std::unique_ptr<gfx::AnimationDelegate>(
-                       new RemoveTabDelegate(this, tab_closing)));
+      tab_closing, std::make_unique<RemoveTabDelegate>(this, tab_closing));
 }
 
 bool TabStripImpl::IsPointInTab(Tab* tab,
