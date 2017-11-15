@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c9704e19_531b1f7b",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-15T00:20:32Z",
+      "side": 1,
+      "message": "Ah, okay :) Mind adding a TODO with that bug?",
+      "parentUuid": "5a54d5f8_d0316d20",
+      "range": {
+        "startLine": 874,
+        "startChar": 7,
+        "endLine": 874,
+        "endChar": 30
+      },
+      "revId": "60c336deee7bd4bdc292cb40bd4eb68fd6470092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6698d0d_657d566b",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 4
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "Done.\n\n(Note: I followed the example of other tests in the file, and computed the expected URL from scratch instead of sharing the computation with the argument to NavigateToURL().)",
       "parentUuid": "c6698d0d_657d566b",
+      "revId": "60c336deee7bd4bdc292cb40bd4eb68fd6470092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0e756aa_41506283",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-15T00:20:32Z",
+      "side": 1,
+      "message": "Yup, this looks good.",
+      "parentUuid": "13fe110f_4d876106",
       "revId": "60c336deee7bd4bdc292cb40bd4eb68fd6470092",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
