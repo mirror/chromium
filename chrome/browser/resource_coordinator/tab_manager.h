@@ -150,10 +150,6 @@ class TabManager : public TabStripModelObserver,
   void AddObserver(TabLifetimeObserver* observer);
   void RemoveObserver(TabLifetimeObserver* observer);
 
-  // Used in tests to change the protection time of the tabs.
-  void set_minimum_protection_time_for_tests(
-      base::TimeDelta minimum_protection_time);
-
   // Returns the auto-discardable state of the tab. When true, the tab is
   // eligible to be automatically discarded when critical memory pressure hits,
   // otherwise the tab is ignored and will never be automatically discarded.
@@ -225,6 +221,13 @@ class TabManager : public TabStripModelObserver,
 
   // Returns the number of tabs open in all browser instances.
   int GetTabCount() const;
+
+#if !defined(OS_CHROMEOS)
+  // Duration during which a tab cannot be automatically discarded after having
+  // been active.
+  static constexpr base::TimeDelta kDiscardProtectionTime =
+      base::TimeDelta::FromMinutes(10);
+#endif  // !defined(OS_CHROMEOS)
 
  private:
   friend class TabManagerStatsCollectorTest;
@@ -490,10 +493,6 @@ class TabManager : public TabStripModelObserver,
 
   // Number of times a tab has been discarded, for statistics.
   int discard_count_;
-
-  // This allows protecting tabs for a certain amount of time after being
-  // backgrounded.
-  base::TimeDelta minimum_protection_time_;
 
   // A backgrounded renderer will be purged between min_time_to_purge_ and
   // max_time_to_purge_.
