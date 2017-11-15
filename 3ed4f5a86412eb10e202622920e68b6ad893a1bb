@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13c3b70d_43a9559a",
+        "filename": "components/arc/common/net.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T21:16:40Z",
+      "side": 1,
+      "message": "Are we confident that we will only ever care about the confirmed state and not the suspected state here?",
+      "revId": "3ed4f5a86412eb10e202622920e68b6ad893a1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
