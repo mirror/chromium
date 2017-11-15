@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73e79497_235304a1",
+        "filename": "chrome/browser/android/chrome_feature_list.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-15T01:33:10Z",
+      "side": 1,
+      "message": "This should be guarded by #if BUILDFLAG(ENABLE_VR) as well.",
+      "range": {
+        "startLine": 51,
+        "startChar": 15,
+        "endLine": 51,
+        "endChar": 26
+      },
+      "revId": "307a16244fb1f049a7a5d6ede37c0fc6866a3511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
