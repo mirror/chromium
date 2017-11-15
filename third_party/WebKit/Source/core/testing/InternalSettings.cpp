@@ -32,6 +32,7 @@
 #include "core/page/Page.h"
 #include "platform/Supplementable.h"
 #include "platform/runtime_enabled_features.h"
+#include "platform/testing/UseMockScrollbarSettings.h"
 #include "platform/text/LocaleToScriptMapping.h"
 
 #define InternalSettingsGuardForSettingsReturn(returnValue)             \
@@ -70,7 +71,8 @@ InternalSettings::Backup::Backup(Settings* settings)
           settings->GetAccessibilityFontScaleFactor()),
       original_media_type_override_(settings->GetMediaTypeOverride()),
       original_display_mode_override_(settings->GetDisplayModeOverride()),
-      original_mock_scrollbars_enabled_(settings->MockScrollbarsEnabled()),
+      original_mock_scrollbars_enabled_(
+          UseMockScrollbarSettings::mock_scrollbars_enabled()),
       original_mock_gesture_tap_highlights_enabled_(
           settings->GetMockGestureTapHighlightsEnabled()),
       lang_attribute_aware_form_control_ui_enabled_(
@@ -96,7 +98,8 @@ void InternalSettings::Backup::RestoreTo(Settings* settings) {
       original_accessibility_font_scale_factor_);
   settings->SetMediaTypeOverride(original_media_type_override_);
   settings->SetDisplayModeOverride(original_display_mode_override_);
-  settings->SetMockScrollbarsEnabled(original_mock_scrollbars_enabled_);
+  UseMockScrollbarSettings::set_mock_scrollbars_enabled(
+      original_mock_scrollbars_enabled_);
   settings->SetMockGestureTapHighlightsEnabled(
       original_mock_gesture_tap_highlights_enabled_);
   RuntimeEnabledFeatures::SetLangAttributeAwareFormControlUIEnabled(
@@ -146,7 +149,7 @@ void InternalSettings::setMockScrollbarsEnabled(
     bool enabled,
     ExceptionState& exception_state) {
   InternalSettingsGuardForSettings();
-  GetSettings()->SetMockScrollbarsEnabled(enabled);
+  UseMockScrollbarSettings::set_mock_scrollbars_enabled(enabled);
 }
 
 void InternalSettings::setHideScrollbars(bool enabled,
