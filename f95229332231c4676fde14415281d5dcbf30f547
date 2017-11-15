@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22fa3ab6_1dacf19d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/isolatedWorld/document-open-01.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-11-15T04:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cf4c4b2_aff1708d",
+      "range": {
+        "startLine": 11,
+        "startChar": 58,
+        "endLine": 11,
+        "endChar": 111
+      },
+      "revId": "f95229332231c4676fde14415281d5dcbf30f547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdffcbdf_aeaee305",
         "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8DocumentCustom.cpp",
         "patchSetId": 10
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-14T10:13:28Z",
       "side": 1,
       "message": "Do we really need the custom bindings?\n\nIf we implement a method like:\n\n  Document::open(String url, AtomicString frame_name, AtomicString window_feature) {\n    if (frame_name.IsEmpty())\n      frame_name \u003d \"_blank\";\n    ...;\n  }\n\nthen can we probably remove the custom bindings at all?\n\nYou can work on it in a follow-up CL.",
+      "revId": "f95229332231c4676fde14415281d5dcbf30f547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e32702b_f3144f84",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8DocumentCustom.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-11-15T04:32:44Z",
+      "side": 1,
+      "message": "Thanks for the review, will try to check next.",
+      "parentUuid": "cdffcbdf_aeaee305",
       "revId": "f95229332231c4676fde14415281d5dcbf30f547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
