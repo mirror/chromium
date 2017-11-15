@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1f001ba4_68c0a420",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T22:19:19Z",
+      "side": 1,
+      "message": "I see. You have exactly 3 non-POD and 1 integral data type which is apparently just enough to trip that error, haha.\n\nYou can default the constructor out-of-line like you did for the copy constructor. I\u0027d still prefer to see this \"\u003d false\" in the class definition so we can default this constructor too. IMO the advantage is fewer LOC and easier to use the struct (don\u0027t have to check the .cc file to see what the default value is for the field), but it\u0027s up to you.",
+      "parentUuid": "b9e43fa1_b21b587a",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 27
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b022b20_250f1cf0",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 3
@@ -568,6 +592,30 @@
       "side": 1,
       "message": "Check this search:\nhttps://cs.chromium.org/search/?q\u003dusing%5Cs::testing\u0026p\u003d6\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
       "parentUuid": "1066c1f7_34ace851",
+      "range": {
+        "startLine": 25,
+        "startChar": 43,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4291373d_4185a16f",
+        "filename": "components/translate/core/browser/translate_prefs_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T22:19:19Z",
+      "side": 1,
+      "message": "it shouldn\u0027t be necessary in the global namespace though, only if you were already in a named namespace like translate. i think.\n\nBTW, I think we prefer putting using declarations in the anonymous namespace, but I\u0027m not sure why it would matter.",
+      "parentUuid": "338c5211_d8026ce3",
       "range": {
         "startLine": 25,
         "startChar": 43,
