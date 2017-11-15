@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "28c39cfc_f309eb50",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SourcesPanel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-15T20:51:32Z",
+      "side": 1,
+      "message": "We can use isTextType: \n\nuiSourceCode.contentType().isTextType()",
+      "parentUuid": "6482553f_7aa5213f",
+      "revId": "c24151aa59b3ee1193722864f258643956c9d33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0c08521_6c514664",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/SearchableView.js",
         "patchSetId": 2
