@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9c465c3_2089875a",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommandTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-15T07:25:45Z",
+      "side": 1,
+      "message": "Please utilize EditingTestBase::SetSelectioNTextToBody() and  GetSelectionTextFromBody().\n\nThen you can write as selection_test()\n\nExample:\n\n  Selection().SetSelection(\n      SetSelectionTextToBody(\"\u003cdiv contenteditable\u003e^\u003ch1\u003eH1\u003c/h1\u003eello|\u003c/div\u003e\"));\n\n  // This call shouldn\u0027t crash.\n  TypingCommand::InsertText(\n      GetDocument(), \" \", 0,\n      TypingCommand::TextCompositionType::kTextCompositionUpdate, true);\n  EXPECT_EQ(\"\u003cdiv contenteditable\u003e^\u003ch1\u003e\u003c/h1\u003e|\u003c/div\u003e\",\n            GetSelectionTextFromBody(Selection().GetSelectionInDOMTree()));",
+      "revId": "2f14470ebe864df98d2680c61b78396b4b002bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
