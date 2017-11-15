@@ -283,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "0fe0c1cd_2d56d815",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-15T13:18:37Z",
+      "side": 1,
+      "message": "Done. I added comments now and renamed icon to profile_photo to make it more obvious what it is. You can take a look to see if there\u0027s anything missing.\n\nThe RTL positioning was a good point. I didn\u0027t consider it. Now I position the badge in the bottom-left corner in the RTL case. After considering similar features this seems the most natural.",
+      "parentUuid": "7004b82e_30a5a9c2",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fcbf8ea_9e624a52",
         "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.h",
         "patchSetId": 22

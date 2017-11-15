@@ -16,6 +16,24 @@
       "revId": "cbabd5216ffec9f5a585692cba752ffd6aaa0265",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c0ac23f_fe6da177",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-15T13:18:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b178483_88ed5b1c",
+      "revId": "cbabd5216ffec9f5a585692cba752ffd6aaa0265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
