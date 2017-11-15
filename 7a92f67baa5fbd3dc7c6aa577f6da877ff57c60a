@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0d50772c_d576e856",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-15T18:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5768db0_48446ad5",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 7
+      },
+      "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8d2c43d_de67ab3f",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62343ef8_cdcf0b56",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-15T18:15:13Z",
+      "side": 1,
+      "message": "sounds good! Looks like this will be a major change in Python 3.0.",
+      "parentUuid": "e8d2c43d_de67ab3f",
+      "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "3c50895f_801487fd",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-15T18:15:13Z",
+      "side": 1,
+      "message": "Is there any benefits making the paths shorter?",
+      "parentUuid": "b721255b_7115d1c0",
+      "range": {
+        "startLine": 135,
+        "startChar": 32,
+        "endLine": 135,
+        "endChar": 36
+      },
+      "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05014100_15e2a9f3",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 2
@@ -76,6 +142,30 @@
       "writtenOn": "2017-11-13T22:25:30Z",
       "side": 1,
       "message": "What\u0027s the benefit or building targets via the script? IMHO it would be better to just run the specified targets (those can be located in different directories or even outside of Chromium checkout), but maybe I\u0027m missing something important?",
+      "range": {
+        "startLine": 179,
+        "startChar": 4,
+        "endLine": 179,
+        "endChar": 17
+      },
+      "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf17ae1_c9285f42",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-15T18:15:13Z",
+      "side": 1,
+      "message": "I thought about making the script accepting a binary, but I didn\u0027t go with that for the following 2 reasons:\n\n1. Based on the feedback from iOS team regarding using the iOS code coverage script, people are busy and lazy, and they prefer \"one click\" end to end experience, even if it\u0027s just one extra step to build the targets, many people will just move away from it.\n\n2. I understand it\u0027s always nice to support more features (run binaries outside of Chromium checkout), but is it really needed now? I don\u0027t think we have enough data to confirm or deny it, so how about keeping things simple for now, and once it proves to be something needed, we\u0027ll implement it in the future.\n\nWDYT?",
+      "parentUuid": "05014100_15e2a9f3",
       "range": {
         "startLine": 179,
         "startChar": 4,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "c9cc427d_89a67c6b",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-15T18:15:13Z",
+      "side": 1,
+      "message": "My intention was to check use_clang_coverage flag is added to args.gn, if an user forgot to add the flag and he/she won\u0027t be able to find out until the tests finish running, and with tests running in single-process mode, it may take a long time, and it would be frustrating for the users to have to re-run all tests because of this \"obvious\" mistake.\n\nBut, in any case, there is no need to validate the combination, only validating use_clang_coverage is used should be enough, I\u0027ll make the change and see if it lgty.",
+      "parentUuid": "a8b7c349_22e1aac0",
+      "range": {
+        "startLine": 294,
+        "startChar": 4,
+        "endLine": 294,
+        "endChar": 22
+      },
+      "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cbefedc_ee4bc10f",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 2
@@ -122,6 +236,30 @@
       "writtenOn": "2017-11-13T22:25:30Z",
       "side": 1,
       "message": "I\u0027m not sure that\u0027s the best way to handle multiple targets and specific options. For example, I tried to run two fuzz targets that need two different cmdline arguments:\n\n  $ tools/code_coverage/coverage.py zlib_uncompress_fuzzer h264_bitstream_parser_fuzzer -b out/coverage -o yuke2 -c\u003d\"-runs\u003d0 ~/fuzzing/zlib_uncompress_fuzzer\" -c\u003d\"-runs\u003d0 ~/fuzzing/h264_bitstream_parser_fuzzer\"\n\nThat ended up with the following:\n\n  Running zlib_uncompress_fuzzer with command: out/coverage/zlib_uncompress_fuzzer --test-launcher-jobs\u003d1 -runs\u003d0 ~/fuzzing/h264_bitstream_parser_fuzzer\n  Running h264_bitstream_parser_fuzzer with command: out/coverage/h264_bitstream_parser_fuzzer --test-launcher-jobs\u003d1 -runs\u003d0 ~/fuzzing/h264_bitstream_parser_fuzzer\n\nWhich is wrong, as libFuzzer ignores arguments with \"--\" and everything after that. Also note that it used the same argument for two different targets.\n\n\nI believe that a better solution would be to specify a full commands like:\n\n  $ tools/code_coverage/coverage.py -c \"zlib_uncompress_fuzzer -runs\u003d0 ~/fuzzing/zlib_uncompress_fuzzer\" \"h264_bitstream_parser_fuzzer -runs\u003d0 ~/fuzzing/h264_bitstream_parser_fuzzer\"\n\nFirst element of each command can be extracted and used as a value of |target| argument.\n\nWhat do you think about that?",
+      "range": {
+        "startLine": 366,
+        "startChar": 27,
+        "endLine": 366,
+        "endChar": 34
+      },
+      "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd71dc72_8e9b0ed9",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-15T18:15:13Z",
+      "side": 1,
+      "message": "Yup, that\u0027s incorrect, I didn\u0027t realize running a fuzzer target requires target specific commands, I agree specifying a full command makes more sense.\n\nAs mentioned in another comment, so far, I still think building is necessary, so I\u0027ll make the command looks like:\n\n$ tools/code_coverage/coverage.py zlib_uncompress_fuzzer h264_bitstream_parser_fuzzer -b out/Coverag -c \"zlib_uncompress_fuzzer -runs\u003d0 ~/fuzzing/zlib_uncompress_fuzzer\" \"h264_bitstream_parser_fuzzer -runs\u003d0 ~/fuzzing/h264_bitstream_parser_fuzzer\"\n\nregarding \"First element of each command can be extracted and used as a value of |target| argument.\", this won\u0027t work for mobile platforms, for example, iOS generates a \".app\" artifact, and it uses iossim to run tests, so the first element will always be iossim, but we can have an extra logic to determine the target/binary name.\n\nOne thing I\u0027m not sure is that, does fuzzer target requires \"--test-launcher-jobs\u003d1\" argument or alike? I think we should still append this argument to the user specified command, my reason is that, it\u0027s not obvious that \"--test-launcher-jobs\u003d1\" is required to run tests to generate code coverage data, and it\u0027s not easy to debug when the \"merge\" step fails, so I think it\u0027s unfair to ask the users to remember pass this argument to run tests.",
+      "parentUuid": "4cbefedc_ee4bc10f",
       "range": {
         "startLine": 366,
         "startChar": 27,
@@ -154,6 +292,30 @@
       "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "140f9440_9dd6feca",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-15T18:15:13Z",
+      "side": 1,
+      "message": "Good point!",
+      "parentUuid": "83454fe8_9688b3bb",
+      "range": {
+        "startLine": 398,
+        "startChar": 2,
+        "endLine": 398,
+        "endChar": 39
+      },
+      "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
