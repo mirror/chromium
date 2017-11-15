@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4afe9f26_90cfdf19",
+        "filename": "third_party/WebKit/LayoutTests/virtual/spv175/paint/invalidation/background/viewport-gradient-background-html-resize-overflow-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-15T21:08:29Z",
+      "side": 1,
+      "message": "SPv175 raster invalidation is based on painting result. After the border width of HTML is set to 0, HTML no longer paints anything, so SPv175 raster invalidation sees that HTML\u0027s painting disappeared.",
+      "parentUuid": "a7f44908_c587e2a1",
+      "revId": "f4a7e19387b78136e6d3344067fdc705f2bcfa87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "508d594e_07c7b9e9",
         "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
         "patchSetId": 7
