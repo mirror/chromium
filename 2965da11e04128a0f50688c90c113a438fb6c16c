@@ -22,6 +22,30 @@
       "revId": "2965da11e04128a0f50688c90c113a438fb6c16c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3817f59a_76153633",
+        "filename": "ash/wm/window_properties.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-15T22:00:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3f7ce8ae_d2bd584b",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 10
+      },
+      "revId": "2965da11e04128a0f50688c90c113a438fb6c16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
