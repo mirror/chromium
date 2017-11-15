@@ -22,6 +22,30 @@
       "revId": "9cc2fb1068b2e339b2f81ffa5ecdf752f94963fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72885915_481d351b",
+        "filename": "printing/pdf_metafile_cg_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-15T19:39:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0c9e463_6c76a0f8",
+      "range": {
+        "startLine": 145,
+        "startChar": 79,
+        "endLine": 145,
+        "endChar": 80
+      },
+      "revId": "9cc2fb1068b2e339b2f81ffa5ecdf752f94963fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
