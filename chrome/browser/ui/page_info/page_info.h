@@ -127,6 +127,7 @@ class PageInfo : public TabSpecificContentSettings::SiteDataObserver,
     int blocked_icon_id;
     int allowed_icon_id;
     int label_string_id;
+    int label_tooltip_string_id;
     int delete_tooltip_string_id;
     const char* ui_name_key;
   };
