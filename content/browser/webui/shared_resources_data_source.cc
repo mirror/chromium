@@ -200,7 +200,10 @@ SharedResourcesDataSource::GetAccessControlAllowOriginForOrigin(
 }
 
 bool SharedResourcesDataSource::IsGzipped(const std::string& path) const {
-  return path == "js/mojo_bindings.js";
+  return base::EndsWith(path, ".css", base::CompareCase::SENSITIVE) ||
+         base::EndsWith(path, ".html", base::CompareCase::SENSITIVE) ||
+         base::EndsWith(path, ".js", base::CompareCase::SENSITIVE) ||
+         base::EndsWith(path, ".svg", base::CompareCase::SENSITIVE);
 }
 
 }  // namespace content
