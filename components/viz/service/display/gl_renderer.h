@@ -201,7 +201,8 @@ class VIZ_SERVICE_EXPORT GLRenderer : public DirectRenderer {
       const gfx::Rect& rect,
       const gfx::Rect& unclipped_rect);
 
-  const TileDrawQuad* CanPassBeDrawnDirectly(const RenderPass* pass) override;
+  base::Optional<std::vector<TileDrawQuad>> CanPassBeDrawnDirectly(
+      const RenderPass* pass) override;
 
   void DrawRenderPassQuad(const RenderPassDrawQuad* quadi,
                           const gfx::QuadF* clip_region);
