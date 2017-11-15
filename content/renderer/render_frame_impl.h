@@ -1247,8 +1247,6 @@ class CONTENT_EXPORT RenderFrameImpl
   void ReportPeakMemoryStats();
   void BindWidget(mojom::WidgetRequest request);
 
-  void ShowDeferredContextMenu(const ContextMenuParams& params);
-
   // Whether or not a navigation in this frame consumes user gestures.
   bool ConsumeGestureOnNavigation() const;
 
