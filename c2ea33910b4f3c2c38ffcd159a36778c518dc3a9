@@ -1,0 +1,625 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e0b2b09_ff11be81",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "For safety reasons, I\u0027d expect all of Chrome to want no output when there\u0027s an error. What\u0027s the use case for returning possibly-hostile data?",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 60
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f1bdab4_955633c7",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "This parameter is never used, so remove it.",
+      "range": {
+        "startLine": 69,
+        "startChar": 49,
+        "endLine": 69,
+        "endChar": 68
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cea80930_f94800f7",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "Please write this in two separate statements. Using the result of an assignment is more subtle than I like.",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 41
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88064f10_9fd8c8d6",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "Please check that integers are encoded with the minimum length, per https://tools.ietf.org/html/rfc7049#section-3.9. Otherwise we\u0027ll allow an ecosystem that doesn\u0027t actually use canonical cbor encoding.",
+      "range": {
+        "startLine": 131,
+        "startChar": 12,
+        "endLine": 131,
+        "endChar": 20
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bafd29d7_2cd38ce2",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "Huh. Did `std::string cbor_string(it_, it_+num_bytes)` not work due to sign-conversion warnings?",
+      "range": {
+        "startLine": 140,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 71
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43426606_c7a32818",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "If you use `!comparator(map-\u003erbegin()-\u003efirst, new_key)`, this will subsume the duplicate-key check.",
+      "range": {
+        "startLine": 222,
+        "startChar": 23,
+        "endLine": 222,
+        "endChar": 64
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a504ce03_4bdb83e0",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "If you move this after the switch(), the compiler will warn if you ever forget to list an enumerator.",
+      "range": {
+        "startLine": 253,
+        "startChar": 0,
+        "endLine": 255,
+        "endChar": 27
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef1106a_1b475cd2",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "Do you have a use case for non-canonical deserialization? I see maybe a need to configure the required map order, but not one to allow non-smallest encodings or indefinite-length items.",
+      "range": {
+        "startLine": 17,
+        "startChar": 59,
+        "endLine": 18,
+        "endChar": 30
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf4fd344_4344a44a",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "This isn\u0027t exactly the ordering criterion from https://tools.ietf.org/html/rfc7049#section-3.9: shorter key encodings are always sorted before longer ones, even if they\u0027d be later lexicographically.",
+      "range": {
+        "startLine": 32,
+        "startChar": 37,
+        "endLine": 32,
+        "endChar": 60
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e027f735_1bdbd97f",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "Trailing data isn\u0027t mentioned by RFC7049, and the depth restrictions are described by https://tools.ietf.org/html/rfc7049#section-8 outside the Canonical CBOR section. Both make sense as restrictions on non-canonical CBOR too. I certainly don\u0027t mind enforcing them, but they should probably be in a different section of the comment.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 63
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7baad2_0b5f0151",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "You\u0027re actually checking UTF-8-ness for type 2. Since that\u0027s required by https://tools.ietf.org/html/rfc7049#section-3.10, you probably don\u0027t need to mention it here.",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 36
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c612149_a088b592",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "This isn\u0027t true. Trailing data is an error.",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 68
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc5a43f0_83e06a33",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "Do you mean \"unknown major types\"? Or are unknown tags errors too?",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 21
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faec339f_e26e56c0",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "Duplicate keys are rejected, which is good.",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 50
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a67e9597_91d3e71e",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "Don\u0027t use anonymous namespaces in headers. If an inline function in a header refers to something from an anonymous namespace, and then is used in two different .cc files, it winds up violating the One Definition Rule.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 11
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94d07153_e899a964",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "Try to avoid boolean parameters to functions, especially when most calls will pass a literal \u0027true\u0027 or \u0027false\u0027. That makes it difficult to tell what the call means except by looking up the callee. Instead, use an enum.\n\nHowever, I suspect you should just remove this parameter: the only thing it affects is something I think you should do unconditionally.",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 95,
+        "endChar": 10
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10a5147e_5884ad96",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "When passing string parameters to functions, use either a `const std::string\u0026` or a `base::StringPiece`.",
+      "range": {
+        "startLine": 114,
+        "startChar": 25,
+        "endLine": 114,
+        "endChar": 36
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e911da49_c6b5cf33",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "This can probably be const.",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 44
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e991c9c_068fd591",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "I\u0027d stream in the test_case.cbor_data so that a failure points out which case failed. Or use SCOPED_TRACE(): https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#adding-traces-to-assertions",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "596c8398_1322eab3",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "Put a newline between test cases.",
+      "range": {
+        "startLine": 47,
+        "startChar": 19,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "638b3280_433ee67c",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "It\u0027s probably worth mentioning in this test that the key is valid CBOR; it\u0027s just not supported by this decoder.",
+      "range": {
+        "startLine": 250,
+        "startChar": 21,
+        "endLine": 250,
+        "endChar": 48
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54aaf746_249054a5",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "Section 2.3.4 is `f4 8f bf bf`, not `7f`.",
+      "range": {
+        "startLine": 408,
+        "startChar": 5,
+        "endLine": 408,
+        "endChar": 71
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df4a788_71369c9b",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "This is an odd way to phrase it. I\u0027d say \"1 extra byte after a 2-byte unsigned int.\"",
+      "range": {
+        "startLine": 427,
+        "startChar": 9,
+        "endLine": 427,
+        "endChar": 79
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e628ade_ce40e3c9",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "I don\u0027t see a new use of stddef.h.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 19
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ddfc04c_d34e555a",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "Is this used in the header or just in the .cc? If only the .cc, #include it from there.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 53
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d25f0b1_dd62fb5b",
+        "filename": "content/test/fuzzer/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "Why such a short maximum length? If you\u0027re missing a max_nexting_level-- somewhere, I\u0027m not sure 1024 stack frames will always catch it.",
+      "range": {
+        "startLine": 111,
+        "startChar": 25,
+        "endLine": 111,
+        "endChar": 37
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c3ec79e_31a6a5bb",
+        "filename": "content/test/fuzzer/cbor_reader_fuzzer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-15T21:50:42Z",
+      "side": 1,
+      "message": "Check all reasonable options for all the arguments.\n\nAlso, when this successfully parses some canonical CBOR, it\u0027d be nice to check that the serializer produces the same bytes.",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 34
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
