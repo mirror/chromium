@@ -22,6 +22,30 @@
       "revId": "a90a2dc880289873f463c6544692719e748f66d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2979e48_c685e8f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T20:01:37Z",
+      "side": 1,
+      "message": "I don\u0027t think it necessarily is - both ways work with crrev.com, and the hash works with git (whereas the revision number does not, AFAIK).  I\u0027d prefer sticking to the hash as the source-of-truth.",
+      "parentUuid": "ea857178_b8df6ec9",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 40
+      },
+      "revId": "a90a2dc880289873f463c6544692719e748f66d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
