@@ -87,6 +87,10 @@ class LocalMachineJunitTestRun(test_run.TestRun):
       if logging.getLogger().isEnabledFor(logging.INFO):
         jvm_args += ['-Drobolectric.logging=stdout']
 
+      if self._test_instance.wait_for_java_debugger:
+        jvm_args += ['-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=%s' %
+                     self._test_instance.wait_for_java_debugger]
+
       if self._test_instance.coverage_dir:
         if not os.path.exists(self._test_instance.coverage_dir):
           os.makedirs(self._test_instance.coverage_dir)

@@ -19,6 +19,7 @@ class JunitTestInstance(test_instance.TestInstance):
     self._runner_filter = args.runner_filter
     self._test_filter = args.test_filter
     self._test_suite = args.test_suite
+    self._wait_for_java_debugger = args.wait_for_java_debugger
 
   #override
   def TestType(self):
@@ -47,6 +48,10 @@ class JunitTestInstance(test_instance.TestInstance):
   @property
   def package_name(self):
     return self._package_name
+
+  @property
+  def wait_for_java_debugger(self):
+    return self._wait_for_java_debugger
 
   @property
   def resource_zips(self):

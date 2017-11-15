@@ -529,6 +529,10 @@ def AddJUnitTestOptions(parser):
       '-s', '--test-suite',
       dest='test_suite', required=True,
       help='JUnit test suite to run.')
+  parser.add_argument(
+      '-w', '--wait-for-java-debugger', dest='wait_for_java_debugger',
+      help='Wait for java debugger to attach before running any application '
+           'code. Also disables test timeouts and sets retries=0.')
 
   # These arguments are for Android Robolectric tests.
   parser.add_argument(
