@@ -40,7 +40,14 @@ void VirtualTimeController::GrantVirtualTimeBudget(
 
   // Notify tasks of new budget request.
   for (TaskEntry& entry : tasks_)
+    entry.ready_to_advance = false;
+
+  iterating_over_tasks_ = true;
+  for (TaskEntry& entry : tasks_)
     NotifyTaskBudgetRequested(&entry, budget_ms);
+  iterating_over_tasks_ = false;
+
+  DeleteTasksIfRequested();
 
   // If there tasks, NotifyTasksAndAdvance is called from TaskReadyToAdvance.
   if (tasks_.empty())
@@ -58,15 +65,21 @@ void VirtualTimeController::NotifyTasksAndAdvance() {
 
   // Give at most as much virtual time as available until the next callback.
   bool ready_to_advance = true;
+  iterating_over_tasks_ = true;
   TimeDelta next_budget = requested_budget_ - accumulated_time_;
   for (TaskEntry& entry : tasks_) {
     if (entry.next_execution_time <= total_elapsed_time_)
       NotifyTaskIntervalElapsed(&entry);
 
-    ready_to_advance &= entry.ready_to_advance;
-    next_budget =
-        std::min(next_budget, entry.next_execution_time - total_elapsed_time_);
+    if (tasks_to_delete_.find(entry.task) == tasks_to_delete_.end()) {
+      ready_to_advance &= entry.ready_to_advance;
+      next_budget = std::min(next_budget,
+                             entry.next_execution_time - total_elapsed_time_);
+    }
   }
+  iterating_over_tasks_ = false;
+
+  DeleteTasksIfRequested();
 
   if (!ready_to_advance)
     return;
@@ -82,6 +95,16 @@ void VirtualTimeController::NotifyTasksAndAdvance() {
   }
 
   SetVirtualTimePolicy(next_budget);
+}
+
+void VirtualTimeController::DeleteTasksIfRequested() {
+  DCHECK(!iterating_over_tasks_);
+
+  // It's not safe to delete tasks while iterating over |tasks_| so do it now.
+  while (!tasks_to_delete_.empty()) {
+    CancelRepeatingTask(*tasks_to_delete_.begin());
+    tasks_to_delete_.erase(tasks_to_delete_.begin());
+  }
 }
 
 void VirtualTimeController::NotifyTaskIntervalElapsed(TaskEntry* entry) {
@@ -158,6 +181,10 @@ void VirtualTimeController::ScheduleRepeatingTask(RepeatingTask* task,
 }
 
 void VirtualTimeController::CancelRepeatingTask(RepeatingTask* task) {
+  if (iterating_over_tasks_) {
+    tasks_to_delete_.insert(task);
+    return;
+  }
   tasks_.remove_if(
       [task](const TaskEntry& entry) { return entry.task == task; });
 }
