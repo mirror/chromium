@@ -22,6 +22,30 @@
       "revId": "8c3c0a80fd65ef92492e84b6f14a1639386a4d98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1755b561_41f90e1a",
+        "filename": "content/common/render_process_messages.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-11-15T22:15:34Z",
+      "side": 1,
+      "message": "Thanks.  I\u0027ve got a follow-up CL that removes this file entirely, so, I\u0027ll leave it as-is for now.",
+      "parentUuid": "f232abbb_59db3507",
+      "range": {
+        "startLine": 21,
+        "startChar": 1,
+        "endLine": 21,
+        "endChar": 22
+      },
+      "revId": "8c3c0a80fd65ef92492e84b6f14a1639386a4d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
