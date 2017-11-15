@@ -16,6 +16,29 @@
       "revId": "15f711366a414acf3636b57dbf35c5bd25c4a9e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2144e23c_90e4d528",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-15T18:18:27Z",
+      "side": 1,
+      "message": "Move this initialization to the *.h file.",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 24
+      },
+      "revId": "15f711366a414acf3636b57dbf35c5bd25c4a9e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
