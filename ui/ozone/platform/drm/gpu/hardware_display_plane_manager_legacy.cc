@@ -109,6 +109,10 @@ bool HardwareDisplayPlaneManagerLegacy::DisableOverlayPlanes(
   return true;
 }
 
+bool HardwareDisplayPlaneManagerLegacy::IsAtomic() const {
+  return false;
+}
+
 bool HardwareDisplayPlaneManagerLegacy::SetPlaneData(
     HardwareDisplayPlaneList* plane_list,
     HardwareDisplayPlane* hw_plane,

@@ -93,6 +93,8 @@ class HardwareDisplayPlaneManager {
   // plane_list->old_plane_list.
   virtual bool DisableOverlayPlanes(HardwareDisplayPlaneList* plane_list) = 0;
 
+  virtual bool IsAtomic() const = 0;
+
   const std::vector<std::unique_ptr<HardwareDisplayPlane>>& planes() {
     return planes_;
   }

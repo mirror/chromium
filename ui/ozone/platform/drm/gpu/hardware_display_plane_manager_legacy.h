@@ -21,6 +21,7 @@ class HardwareDisplayPlaneManagerLegacy : public HardwareDisplayPlaneManager {
   bool Commit(HardwareDisplayPlaneList* plane_list,
               bool test_only) override;
   bool DisableOverlayPlanes(HardwareDisplayPlaneList* plane_list) override;
+  bool IsAtomic() const override;
 
  protected:
   bool SetPlaneData(HardwareDisplayPlaneList* plane_list,

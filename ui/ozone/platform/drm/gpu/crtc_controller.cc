@@ -80,11 +80,11 @@ bool CrtcController::SchedulePageFlip(
     scoped_refptr<PageFlipRequest> page_flip_request) {
   DCHECK(!page_flip_request_.get() || test_only);
   DCHECK(!is_disabled_);
+
   const OverlayPlane* primary = OverlayPlane::GetPrimaryPlane(overlays);
-  if (primary) {
+  // Legacy page flip doesn't support scaler.
+  if (!drm_->plane_manager()->IsAtomic() && primary) {
     DCHECK(primary->buffer.get());
-    // TODO(dcastagna): Get rid of this. Scaling on the primary plane is
-    // supported on all the devices.
     if (primary->buffer->GetSize() !=
         gfx::Size(mode_.hdisplay, mode_.vdisplay)) {
       VLOG(2) << "Trying to pageflip a buffer with the wrong size. Expected "
