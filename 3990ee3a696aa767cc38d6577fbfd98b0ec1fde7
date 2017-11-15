@@ -16,6 +16,24 @@
       "revId": "3990ee3a696aa767cc38d6577fbfd98b0ec1fde7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "750a8f6f_0a2a80de",
+        "filename": "ui/gl/gl_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-11-15T00:12:29Z",
+      "side": 1,
+      "message": "If they can call SetGLGetProcAddressProc() they can call any other function so CFI is already defeated.",
+      "parentUuid": "464dc7aa_63aefd57",
+      "revId": "3990ee3a696aa767cc38d6577fbfd98b0ec1fde7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
