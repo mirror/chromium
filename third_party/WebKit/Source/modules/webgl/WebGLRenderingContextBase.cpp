@@ -1405,7 +1405,19 @@ WebGLRenderingContextBase::ClearIfComposited(GLbitfield mask) {
   ContextGL()->ColorMask(
       true, true, true,
       !GetDrawingBuffer()->DefaultBufferRequiresAlphaChannelToBePreserved());
-  GetDrawingBuffer()->ClearFramebuffers(clear_mask);
+  if (custom_backbuffer_fbo_) {
+    if (framebuffer_binding_) {
+      // Temporarily bind to the backbuffer, clear, then restore
+      ContextGL()->BindFramebuffer(GL_FRAMEBUFFER, custom_backbuffer_fbo_);
+      ContextGL()->Clear(clear_mask);
+      RestoreCurrentFramebuffer();
+    } else {
+      // Simple case: just clear
+      ContextGL()->Clear(clear_mask);
+    }
+  } else {
+    GetDrawingBuffer()->ClearFramebuffers(clear_mask);
+  }
 
   // Call the DrawingBufferClient method to restore scissor test, mask, and
   // clear values, because we dirtied them above.
@@ -7719,13 +7731,22 @@ void WebGLRenderingContextBase::SetFramebuffer(GLenum target,
   if (buffer)
     buffer->SetHasEverBeenBound();
 
+  // LOG(INFO) << __FUNCTION__ << ";;; target=" << target << " buffer=" <<
+  // buffer << " custom_backbuffer_fbo_=" << custom_backbuffer_fbo_;
+
   if (target == GL_FRAMEBUFFER || target == GL_DRAW_FRAMEBUFFER) {
     framebuffer_binding_ = buffer;
     ApplyStencilTest();
   }
   if (!buffer) {
-    // Instead of binding fb 0, bind the drawing buffer.
-    GetDrawingBuffer()->Bind(target);
+    // Instead of binding fb 0, bind the appropriate drawing buffer.
+    if (custom_backbuffer_fbo_) {
+      // Use the custom backbuffer FBO.
+      ContextGL()->BindFramebuffer(target, custom_backbuffer_fbo_);
+    } else {
+      // Use the offscreen drawing buffer.
+      GetDrawingBuffer()->Bind(target);
+    }
   } else {
     ContextGL()->BindFramebuffer(target, buffer->Object());
   }
@@ -7847,6 +7868,24 @@ void WebGLRenderingContextBase::getHTMLOrOffscreenCanvas(
   } else {
     result.SetOffscreenCanvas(static_cast<OffscreenCanvas*>(Host()));
   }
+}
+
+void WebGLRenderingContextBase::SetCustomBackbufferFBO(GLuint fbo) {
+  // LOG(INFO) << __FUNCTION__ << ";;;";
+  if (isContextLost())
+    return;
+
+  if (!GetDrawingBuffer()) {
+    LOG(INFO) << __FUNCTION__ << ";;; No DrawingBuffer";
+    return;
+  }
+
+  custom_backbuffer_fbo_ = fbo;
+
+  RestoreCurrentFramebuffer();
+  RestoreCurrentTexture2D();
+  // Anything else to restore? Currently this cleans up modifications from
+  // VRDisplay::OnVSync, FIXME.
 }
 
 }  // namespace blink
