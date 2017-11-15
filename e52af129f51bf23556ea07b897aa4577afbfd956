@@ -1,0 +1,365 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1137d6e4_ea521278",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T21:19:09Z",
+      "side": 1,
+      "message": "Please define a constant for this.",
+      "range": {
+        "startLine": 29,
+        "startChar": 40,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "104c9572_f8533b7d",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T21:19:09Z",
+      "side": 1,
+      "message": "auto",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 44
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab78976c_e1725e16",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T21:19:09Z",
+      "side": 1,
+      "message": "auto",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 42
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b7f0c8_ac10d6b2",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T21:19:09Z",
+      "side": 1,
+      "message": "if (connection_error_handler_)",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 43
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42ddcd96_a164a564",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T21:19:09Z",
+      "side": 1,
+      "message": "This is never actually set up as a connection error handler on a Mojo pipe.",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 74
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b9e91e8_011f0a1d",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T21:19:09Z",
+      "side": 1,
+      "message": "mojom::Authenticator",
+      "range": {
+        "startLine": 72,
+        "startChar": 3,
+        "endLine": 72,
+        "endChar": 22
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f45476cb_f9790d4f",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T21:19:09Z",
+      "side": 1,
+      "message": "Declare these variables on lines 88 and 90 where they are actually about to be used.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 31
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c54d95_3f3e28e1",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T21:19:09Z",
+      "side": 1,
+      "message": "base::Passed(\u0026client_data)",
+      "range": {
+        "startLine": 143,
+        "startChar": 25,
+        "endLine": 143,
+        "endChar": 61
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "938adaa3_6caeb76f",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T21:19:09Z",
+      "side": 1,
+      "message": "What happens if MakeCredential() is called again before the device responds?",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 14
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b6f7de_c27d795f",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T21:19:09Z",
+      "side": 1,
+      "message": "#include \"base/callback_forward.h\"",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 30
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b294730_786d7cc0",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T21:19:09Z",
+      "side": 1,
+      "message": "stray semicolon?",
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e671fe79_c8d32047",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T21:19:09Z",
+      "side": 1,
+      "message": "const std::vector\u003cuint8_t\u003e\u0026 GetTestECPublicKeyCBOR() {\n  static const std::vector\u003cuint8_t\u003e data(std::begin(kTestECPublicKeyCBOR),\n                                         std::end(kTestECPublicKeyCBOR));\n  return data;\n}",
+      "range": {
+        "startLine": 321,
+        "startChar": 0,
+        "endLine": 324,
+        "endChar": 1
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "868e09c4_af26a0b6",
+        "filename": "content/browser/webauth/authenticator_utils.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T21:19:09Z",
+      "side": 1,
+      "message": "CHECKs should not be used as guards. They are appropriate if they assert on properties of the system that are *always* true but for which an inconsistency introduced by a bug would have security implications and should cause the entire browser (since this is not code running in the renderer) to crash instead.",
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bf0a18f_9efa16c2",
+        "filename": "content/browser/webauth/ec_public_key.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T21:19:09Z",
+      "side": 1,
+      "message": "Since the input here appears to be trusted can this be a DCHECK?",
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb0b1f8a_588d7989",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T21:19:09Z",
+      "side": 1,
+      "message": "Do we trust u2f_data.size() to be correct? I don\u0027t like how much parsing we are doing in the browser process. This is just a layer on top of the parsing that happens in //device/u2f and should happen either there (where we will eventually have it happen in a separate process) or in the renderer. We should also add fuzzers for this code.",
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713ecdc1_e5ff2ba3",
+        "filename": "content/browser/webauth/register_response_data.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T21:19:09Z",
+      "side": 1,
+      "message": "Since we know JSON is a string is there any benefit to converting it to an std::vector\u003cuint8_t\u003e?",
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9340b664_3954eeac",
+        "filename": "content/browser/webauth/register_response_data.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T21:19:09Z",
+      "side": 1,
+      "message": "const std::vector\u003cuint8_t\u003e\u0026",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 22
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
