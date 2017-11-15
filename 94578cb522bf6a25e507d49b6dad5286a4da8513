@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "442f31b3_a4654d9b",
+        "filename": "tools/perf/benchmarks/wasm.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1131655
+      },
+      "writtenOn": "2017-11-15T21:37:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bb04e56_00e936c9",
+      "revId": "94578cb522bf6a25e507d49b6dad5286a4da8513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71633119_45b2853a",
         "filename": "tools/perf/benchmarks/wasm.py",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fb618025_9b9526a3",
+        "filename": "tools/perf/benchmarks/wasm.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1131655
+      },
+      "writtenOn": "2017-11-15T21:37:17Z",
+      "side": 1,
+      "message": "Copied from v8 benchmark. Enabled for all now.",
+      "parentUuid": "71633119_45b2853a",
+      "revId": "94578cb522bf6a25e507d49b6dad5286a4da8513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39d55ddb_e19b0277",
         "filename": "tools/perf/page_sets/wasm_realworld_perf.py",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "94578cb522bf6a25e507d49b6dad5286a4da8513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e999339_5ea8f593",
+        "filename": "tools/perf/page_sets/wasm_realworld_perf.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1131655
+      },
+      "writtenOn": "2017-11-15T21:37:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39d55ddb_e19b0277",
+      "revId": "94578cb522bf6a25e507d49b6dad5286a4da8513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
