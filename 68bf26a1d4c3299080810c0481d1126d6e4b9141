@@ -1,0 +1,226 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1b30687_3fb2b7e5",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptController.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-15T17:31:44Z",
+      "side": 1,
+      "message": "Can we merge Lines 86--89 into a single function, e.g.\n  void ExecuteScriptInMainWorld(\n      const String\u0026,\n      ExecuteScriptPolicy \u003d kDoNotExecuteScriptWhenScriptsDisabled,\n      ScriptSourceOrigin \u003d kUnknown);\n\nI\u0027d like to avoid a kind of duplicated interfaces here.",
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a64fbc8_5e5405e1",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceCode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-15T17:31:44Z",
+      "side": 1,
+      "message": "I expect source_origin_ here is always inline.\nNot external, even if url_ is not empty. url_ here is the URL of the document that contains the inline script. see:\nhttps://codesearch.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp?dr\u003dCSs\u0026l\u003d231",
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af9225f_e02bdabe",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceCode.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-15T17:31:44Z",
+      "side": 1,
+      "message": "How about having a single ctor (instead of two in Lines 53--60)?\n\n\u003e   ScriptSourceCode(\n\u003e       const String\u0026 source,\n\u003e       const KURL\u0026 \u003d KURL(),\n\u003e       const TextPosition\u0026 start_position \u003d TextPosition::MinimumPosition(),\n\u003e       ScriptSourceOrigin \u003d ScriptSourceOrigin::kUnknown);\n\nI\u0027d like to avoid the increased number of ctors here.",
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe307e7_3a52800a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceOrigin.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-15T17:31:44Z",
+      "side": 1,
+      "message": "Please use the new header format:\n// Copyright 2017 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#file-headers",
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db455483_f7b42cd3",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceOrigin.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-15T17:31:44Z",
+      "side": 1,
+      "message": "I\u0027d like to have a different name, because the word \"Origin\" looks like blink::SecurityOrigin or v8::ScriptOrigin.\n(Haven\u0027t come up with a specific name though)",
+      "range": {
+        "startLine": 36,
+        "startChar": 11,
+        "endLine": 36,
+        "endChar": 29
+      },
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95045d79_0b174f26",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceOrigin.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-15T17:31:44Z",
+      "side": 1,
+      "message": "Could you add a class comment about the purpose of this enum?\nI think this should be used only for stats/performance purposes (i.e. shouldn\u0027t cause differences in observable functional behaviors).",
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99cee09c_75747b74",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceOrigin.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-15T17:31:44Z",
+      "side": 1,
+      "message": "IIUC these can be organized like this:\n\n- kExternalFile (always has a corresponding ScriptResource / created by a ClassicScript)\n- kInline.* (always no ScriptResource / created by ClassicScript)\n- Others (always no ScriptResource / ScriptSourceCode is directly created outside ClassicScript)\n\nCould you reorder the enums and add comments about these categories/invariants?",
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e3f8a3_21ff2adb",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunnerTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-15T17:31:44Z",
+      "side": 1,
+      "message": "Probably this should be kExternalFile, because this has a ScriptResource (this is a test though).",
+      "range": {
+        "startLine": 65,
+        "startChar": 36,
+        "endLine": 65,
+        "endChar": 46
+      },
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c879ae_1adb0048",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-15T17:31:44Z",
+      "side": 1,
+      "message": "This DCHECK() fails (because document_url is the Document\u0027s URL, which is expected to be non-empty).\n\nhttps://build.chromium.org/p/tryserver.chromium.mac/builders/mac_chromium_rel_ng/builds/589977",
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dad2a10_cb53139c",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-15T17:31:44Z",
+      "side": 1,
+      "message": "This should be always false when called from Line 479.\nI think it\u0027s better to inline the Lines 675--679 into Line 478, to make it clear that the ScriptSourceOrigin here is always kInline*.",
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b44b2cb9_c1ae7b54",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-15T17:31:44Z",
+      "side": 1,
+      "message": "I prefer a name that corresponds to the HTML spec, if any.\nkouhei@, any idea?",
+      "range": {
+        "startLine": 676,
+        "startChar": 44,
+        "endLine": 676,
+        "endChar": 60
+      },
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d635fb63_7c3ca039",
+        "filename": "third_party/WebKit/Source/core/xml/DocumentXMLTreeViewer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-15T17:31:44Z",
+      "side": 1,
+      "message": "Probably this should be kInternal.\nIt\u0027s better to have an invariant that \"kExternalFile if and only if it has ScriptResource\".",
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
