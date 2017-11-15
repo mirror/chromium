@@ -411,6 +411,24 @@
     },
     {
       "key": {
+        "uuid": "3e4f2108_5b8e0530",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-15T21:15:23Z",
+      "side": 1,
+      "message": "Ah, right.",
+      "parentUuid": "0a3a77c6_9ccbfbbe",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72dd3bb0_252c7c3c",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 14
@@ -610,6 +628,30 @@
     },
     {
       "key": {
+        "uuid": "78563464_694fadb6",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-15T21:15:23Z",
+      "side": 1,
+      "message": "Yep.",
+      "parentUuid": "998f80ae_15ae168b",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 3
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8791b080_be33b0cb",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 14
@@ -698,6 +740,24 @@
     },
     {
       "key": {
+        "uuid": "e4eae785_101bed51",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-15T21:15:23Z",
+      "side": 1,
+      "message": "Yep, that\u0027s okay.",
+      "parentUuid": "7daf759b_6c430563",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2a7bd31_735724c4",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 14
@@ -733,6 +793,30 @@
       "side": 1,
       "message": "I believe you\u0027re right. I\u0027ve chosen to remove it entirely at the moment. Should I leave it in and add a comment to that effect?",
       "parentUuid": "d2a7bd31_735724c4",
+      "range": {
+        "startLine": 104,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 46
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d20d65f_7574c5b5",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-15T21:15:23Z",
+      "side": 1,
+      "message": "If the tests still pass without it, I\u0027d just go for less code.",
+      "parentUuid": "5fc3fbfb_f3b0da48",
       "range": {
         "startLine": 104,
         "startChar": 7,
@@ -812,6 +896,24 @@
       "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f12ade9_98dd913d",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-15T21:15:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7c3c9090_9445ee7f",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1347,6 +1449,24 @@
       "side": 1,
       "message": "Done. Out of curiosity, why is it better to do it that way?",
       "parentUuid": "843049f8_d2e5c7b5",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33604b72_6077319b",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-15T21:15:23Z",
+      "side": 1,
+      "message": "I believe there is no other way, i.e. assigning would not work because there is no templated constructor of std::vector that would take a `uint8_t(\u0026a)[N]` to avoid array decay and be able to figure out the length of the array.",
+      "parentUuid": "9ae4450e_60d6aa48",
       "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -2193,6 +2313,30 @@
       "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae11f1ec_956f8100",
+        "filename": "content/browser/webauth/register_response_data.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-15T21:15:23Z",
+      "side": 1,
+      "message": "You just need to use enough force:\n\nenum class Flag : uint8_t {\n  TEST_OF_USER_PRESENCE \u003d 1u \u003c\u003c ??,\n  ATTESTATION \u003d 1u \u003c\u003c ???\n};\n\nFlags flags \u003d static_cast\u003cFlags\u003e(Flag::TEST_OF_USER_PRESENCE) | static_cast\u003cFlags\u003e(Flag::ATTESTATION);\n\n---\n\nAlternatively, you can use even more force, and provide overloads for operator| et al for the enum type itself. I think that\u0027s pretty uncommon in Chromium code, though.\n\n---\n\nAlternatively, use a good-old unscoped enum, with an explicit underlying type of uint8_t, and a typedef for Flags \u003d uint8_t. Whichever you prefer.",
+      "parentUuid": "f811c856_28b8b12f",
+      "range": {
+        "startLine": 36,
+        "startChar": 64,
+        "endLine": 36,
+        "endChar": 68
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
