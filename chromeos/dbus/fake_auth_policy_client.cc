@@ -19,6 +19,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "chromeos/chromeos_paths.h"
 #include "chromeos/cryptohome/cryptohome_parameters.h"
+#include "chromeos/cryptohome/cryptohome_util.h"
 #include "chromeos/dbus/cryptohome_client.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/session_manager_client.h"
@@ -33,12 +34,24 @@ namespace em = enterprise_management;
 
 namespace {
 
-const size_t kMaxMachineNameLength = 15;
-const char kInvalidMachineNameCharacters[] = "\\/:*?\"<>|";
+constexpr size_t kMaxMachineNameLength = 15;
+constexpr char kInvalidMachineNameCharacters[] = "\\/:*?\"<>|";
+
+constexpr char kAttrMode[] = "enterprise.mode";
+constexpr char kDeviceModeEnterpriseAD[] = "enterprise_ad";
+
+// Checks if device is locked for Active Directory management.
+bool IsAdLocked() {
+  std::string mode;
+  return chromeos::cryptohome_util::InstallAttributesGet(kAttrMode, &mode) &&
+         mode == kDeviceModeEnterpriseAD;
+}
 
 void OnStorePolicy(chromeos::AuthPolicyClient::RefreshPolicyCallback callback,
                    bool success) {
-  std::move(callback).Run(success);
+  const authpolicy::ErrorType error =
+      success ? authpolicy::ERROR_NONE : authpolicy::ERROR_STORE_POLICY_FAILED;
+  std::move(callback).Run(error);
 }
 
 // Posts |closure| on the ThreadTaskRunner with |delay|.
@@ -173,7 +186,13 @@ void FakeAuthPolicyClient::GetUserKerberosFiles(
 void FakeAuthPolicyClient::RefreshDevicePolicy(RefreshPolicyCallback callback) {
   if (!started_) {
     LOG(ERROR) << "authpolicyd not started";
-    std::move(callback).Run(false);
+    std::move(callback).Run(authpolicy::ERROR_DBUS_FAILURE);
+    return;
+  }
+
+  if (!IsAdLocked()) {
+    // Pretend that policy was fetched and cached inside authpolicyd.
+    std::move(callback).Run(authpolicy::ERROR_CACHE_DEVICE_POLICY);
     return;
   }
 
@@ -194,11 +213,13 @@ void FakeAuthPolicyClient::RefreshDevicePolicy(RefreshPolicyCallback callback) {
 
 void FakeAuthPolicyClient::RefreshUserPolicy(const AccountId& account_id,
                                              RefreshPolicyCallback callback) {
+  DCHECK(IsAdLocked());
   if (!started_) {
     LOG(ERROR) << "authpolicyd not started";
-    std::move(callback).Run(false);
+    std::move(callback).Run(authpolicy::ERROR_DBUS_FAILURE);
     return;
   }
+
   SessionManagerClient* session_manager_client =
       DBusThreadManager::Get()->GetSessionManagerClient();
 
@@ -237,7 +258,7 @@ void FakeAuthPolicyClient::OnDevicePolicyRetrieved(
     const std::string& protobuf) {
   if (response_type !=
       SessionManagerClient::RetrievePolicyResponseType::SUCCESS) {
-    std::move(callback).Run(false);
+    std::move(callback).Run(authpolicy::ERROR_DBUS_FAILURE);
     return;
   }
   em::PolicyFetchResponse response;

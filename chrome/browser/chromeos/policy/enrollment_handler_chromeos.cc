@@ -28,7 +28,6 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chromeos/attestation/attestation_flow.h"
 #include "chromeos/chromeos_switches.h"
-#include "chromeos/dbus/auth_policy_client.h"
 #include "chromeos/dbus/cryptohome/rpc.pb.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/upstart_client.h"
@@ -546,8 +545,12 @@ void EnrollmentHandlerChromeOS::OnAdDomainJoined(const std::string& realm) {
   DCHECK_EQ(STEP_AD_DOMAIN_JOIN, enrollment_step_);
   CHECK(!realm.empty());
   realm_ = realm;
-  SetStep(STEP_SET_FWMP_DATA);
-  SetFirmwareManagementParametersData();
+  SetStep(STEP_AD_FETCH_POLICIES);
+  chromeos::DBusThreadManager::Get()
+      ->GetAuthPolicyClient()
+      ->RefreshDevicePolicy(base::BindOnce(
+          &EnrollmentHandlerChromeOS::HandleActiveDirectoryPolicyRefreshed,
+          weak_ptr_factory_.GetWeakPtr()));
 }
 
 void EnrollmentHandlerChromeOS::StartLockDevice() {
@@ -667,18 +670,29 @@ void EnrollmentHandlerChromeOS::HandleStoreRobotAuthTokenResult(bool result) {
 }
 
 void EnrollmentHandlerChromeOS::HandleActiveDirectoryPolicyRefreshed(
-    bool success) {
-  DCHECK_EQ(STEP_STORE_POLICY, enrollment_step_);
-
-  if (!success) {
-    LOG(ERROR) << "Failed to load Active Directory policy.";
-    ReportResult(EnrollmentStatus::ForStatus(
-        EnrollmentStatus::ACTIVE_DIRECTORY_POLICY_FETCH_FAILED));
-    return;
+    authpolicy::ErrorType error) {
+  switch (enrollment_step_) {
+    case STEP_AD_FETCH_POLICIES:
+      if (error == authpolicy::ERROR_CACHE_DEVICE_POLICY) {
+        SetStep(STEP_SET_FWMP_DATA);
+        SetFirmwareManagementParametersData();
+        return;
+      }
+      break;
+    case STEP_STORE_POLICY:
+      if (error == authpolicy::ERROR_NONE) {
+        // After that, the enrollment flow continues in one of the OnStore*
+        // observers.
+        store_->Load();
+        return;
+      }
+      break;
+    default:
+      NOTREACHED();
   }
-
-  // After that, the enrollment flow continues in one of the OnStore* observers.
-  store_->Load();
+  LOG(ERROR) << "Failed to load Active Directory policy.";
+  ReportResult(EnrollmentStatus::ForStatus(
+      EnrollmentStatus::ACTIVE_DIRECTORY_POLICY_FETCH_FAILED));
 }
 
 void EnrollmentHandlerChromeOS::Stop() {

@@ -17,6 +17,7 @@
 #include "chrome/browser/chromeos/policy/device_cloud_policy_validator.h"
 #include "chrome/browser/chromeos/policy/enrollment_config.h"
 #include "chrome/browser/chromeos/settings/install_attributes.h"
+#include "chromeos/dbus/auth_policy_client.h"
 #include "components/policy/core/common/cloud/cloud_policy_client.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
 #include "components/policy/core/common/cloud/cloud_policy_store.h"
@@ -127,13 +128,14 @@ class EnrollmentHandlerChromeOS : public CloudPolicyClient::Observer,
     STEP_ROBOT_AUTH_FETCH = 6,    // Fetching device API auth code.
     STEP_ROBOT_AUTH_REFRESH = 7,  // Fetching device API refresh token.
     STEP_AD_DOMAIN_JOIN = 8,      // Joining Active Directory domain.
-    STEP_SET_FWMP_DATA = 9,       // Setting the firmware management parameters.
-    STEP_LOCK_DEVICE = 10,        // Writing installation-time attributes.
-    STEP_STORE_TOKEN = 11,        // Encrypting and storing DM token.
-    STEP_STORE_ROBOT_AUTH = 12,   // Encrypting & writing robot refresh token.
-    STEP_STORE_POLICY = 13,       // Storing policy and API refresh token. For
+    STEP_AD_FETCH_POLICIES = 9,   // Fetching Active Directory device policy.
+    STEP_SET_FWMP_DATA = 10,      // Setting the firmware management parameters.
+    STEP_LOCK_DEVICE = 11,        // Writing installation-time attributes.
+    STEP_STORE_TOKEN = 12,        // Encrypting and storing DM token.
+    STEP_STORE_ROBOT_AUTH = 13,   // Encrypting & writing robot refresh token.
+    STEP_STORE_POLICY = 14,       // Storing policy and API refresh token. For
                                   // AD, includes policy fetch via authpolicyd.
-    STEP_FINISHED = 14,           // Enrollment process done, no further action.
+    STEP_FINISHED = 15,           // Enrollment process done, no further action.
   };
 
   // Handles the response to a request for server-backed state keys.
@@ -197,7 +199,7 @@ class EnrollmentHandlerChromeOS : public CloudPolicyClient::Observer,
   void HandleStoreRobotAuthTokenResult(bool result);
 
   // Handles result from device policy refresh via authpolicyd.
-  void HandleActiveDirectoryPolicyRefreshed(bool success);
+  void HandleActiveDirectoryPolicyRefreshed(authpolicy::ErrorType error);
 
   // Drops any ongoing actions.
   void Stop();
