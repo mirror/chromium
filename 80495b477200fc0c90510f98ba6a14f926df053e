@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42f0019a_5b2921c5",
+        "filename": "chrome/browser/ui/tabs/tab_data_experimental.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-15T19:18:47Z",
+      "side": 1,
+      "message": "NACK",
+      "parentUuid": "9bb3c099_d2ed4c1b",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 8
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3c9d723_e9a1ba55",
         "filename": "chrome/browser/ui/tabs/tab_data_experimental.h",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "00273689_b0a32ca3",
+        "filename": "chrome/browser/ui/tabs/tab_data_experimental.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-15T19:18:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3c9d723_e9a1ba55",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 2
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64d20113_672c54bb",
         "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-14T23:26:24Z",
       "side": 1,
       "message": "{} ?",
+      "range": {
+        "startLine": 138,
+        "startChar": 58,
+        "endLine": 138,
+        "endChar": 59
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f4b1ae_c4580396",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-15T19:18:47Z",
+      "side": 1,
+      "message": "Sure but when the inside is only one line I skip that.",
+      "parentUuid": "64d20113_672c54bb",
       "range": {
         "startLine": 138,
         "startChar": 58,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "070d754f_f61afced",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-15T19:18:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f28a76a_08db0d63",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 50
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ba616d5_d84f4f37",
         "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
         "patchSetId": 6
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "553c6773_03bc27cd",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-15T19:18:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ba616d5_d84f4f37",
+      "range": {
+        "startLine": 242,
+        "startChar": 6,
+        "endLine": 242,
+        "endChar": 12
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93c0a1ae_88c51493",
         "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
         "patchSetId": 6
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-14T23:26:24Z",
       "side": 1,
       "message": "How come you don\u0027t use the view iterator here?",
+      "range": {
+        "startLine": 571,
+        "startChar": 2,
+        "endLine": 576,
+        "endChar": 3
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "740ff67f_55cf1e04",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-15T19:18:47Z",
+      "side": 1,
+      "message": "Good catch, I wrote this before the view iterator.",
+      "parentUuid": "93c0a1ae_88c51493",
       "range": {
         "startLine": 571,
         "startChar": 2,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "d2e8a870_9892bf9c",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-15T19:18:47Z",
+      "side": 1,
+      "message": "I *believe* all indices should be view indices. Non-view indices don\u0027t make sense since there\u0027s a multilevel tree.",
+      "parentUuid": "a3c0e343_3d6ff0b6",
+      "range": {
+        "startLine": 768,
+        "startChar": 6,
+        "endLine": 768,
+        "endChar": 26
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c05127d_9aae838f",
         "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.h",
         "patchSetId": 6
@@ -174,6 +342,30 @@
       "writtenOn": "2017-11-14T23:26:24Z",
       "side": 1,
       "message": "Do you need to declare a virtual destructor for the non-const version?",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 21
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d97b717_cb3d50bb",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-15T19:18:47Z",
+      "side": 1,
+      "message": "No, the virtual destructor is only when you want deleting the base class to call the derived class\u0027 destructor. This derived class\u0027 destructor does nothing so I don\u0027t need that.",
+      "parentUuid": "1c05127d_9aae838f",
       "range": {
         "startLine": 35,
         "startChar": 4,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "aec9ea0d_c0df0819",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-15T19:18:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fe3ba3d_9fc4d8a5",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 25
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99bd953e_22429420",
         "filename": "chrome/browser/ui/views/tabs/tab_strip_impl.cc",
         "patchSetId": 6
@@ -229,6 +445,30 @@
       "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d4a15e_06987dca",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2184,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-15T19:18:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99bd953e_22429420",
+      "range": {
+        "startLine": 2184,
+        "startChar": 68,
+        "endLine": 2184,
+        "endChar": 74
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
