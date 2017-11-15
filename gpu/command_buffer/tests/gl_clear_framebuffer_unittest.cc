@@ -174,6 +174,16 @@ TEST_P(GLClearFramebufferTest, ClearDepthStencil) {
     return;
   }
 
+  // This is a driver bug on windows Intel. When rendering with viewport size
+  // larger than 1024 and sencil buffer enabled, the output color is incorrect.
+  // See https://crbug.com/782317
+  std::string rendererString(
+      reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
+  if (rendererString.find("Intel") != std::string::npos &&
+      (rendererString.find("Direct3D11 vs_5_0") != std::string::npos)) {
+    return;
+  }
+
   const GLuint kStencilRef = 1 << 2;
   InitDraw();
   SetDrawColor(1.0f, 0.0f, 0.0f, 1.0f);
