@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d5b0b61f_76fd0684",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-15T08:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7073903f_73a84b70",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "214265c8_5c6c6927",
         "filename": "chrome/renderer/DEPS",
         "patchSetId": 5
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "214265c8_5c6c6927",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6508acf_65a95b2f",
+        "filename": "chrome/renderer/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-15T08:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed5859d9_802932ec",
       "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "f3cb1f0e_08d503a9",
+        "filename": "components/plugins/renderer/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-15T08:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73d0dfea_ae9b4d32",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c1d3809_544fe518",
         "filename": "components/plugins/renderer/DEPS",
         "patchSetId": 5
@@ -136,6 +190,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "6c1d3809_544fe518",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11fe86f0_9d108052",
+        "filename": "components/plugins/renderer/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-15T08:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3533d3a_a3784759",
       "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -177,6 +249,24 @@
     },
     {
       "key": {
+        "uuid": "cdb65e9c_18452960",
+        "filename": "content/browser/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-15T08:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e77fe986_61d67e64",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1df4db77_7d53410b",
         "filename": "content/browser/loader/async_resource_handler_unittest.cc",
         "patchSetId": 5
@@ -212,6 +302,24 @@
     },
     {
       "key": {
+        "uuid": "2a7ca1ec_7d45d8da",
+        "filename": "content/browser/loader/async_resource_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-15T08:33:11Z",
+      "side": 1,
+      "message": "Align with previous line will exceed 80 characters, and if I align with line 190, the \"git cl format\" will change it to current.",
+      "parentUuid": "4c470033_806cbdb3",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aedcbc9_94e3687d",
         "filename": "content/browser/loader/resource_request_info_impl.cc",
         "patchSetId": 5
@@ -223,6 +331,24 @@
       "writtenOn": "2017-11-14T06:11:32Z",
       "side": 1,
       "message": "did git-cl format do this? Seems should be aligned with the previous line as the original code has",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907a4fce_231d8e08",
+        "filename": "content/browser/loader/resource_request_info_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-15T08:33:11Z",
+      "side": 1,
+      "message": "I did the \"git cl format\", aligne with previous line will exceed 80 chars, and if aligne with line 82, git cl format will change it to current.",
+      "parentUuid": "8aedcbc9_94e3687d",
       "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -281,6 +407,24 @@
     },
     {
       "key": {
+        "uuid": "5e8e6049_e32e44ae",
+        "filename": "content/public/common/url_request.typemap",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-15T08:33:11Z",
+      "side": 1,
+      "message": "Done. It seems we don\u0027t need this line after move the mojom to WebKit/common.",
+      "parentUuid": "d8cba0dc_60523a9f",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "750d0b5f_5a95796f",
         "filename": "extensions/renderer/DEPS",
         "patchSetId": 5
@@ -310,6 +454,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "750d0b5f_5a95796f",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7a3f2a1_cb3b6f2c",
+        "filename": "extensions/renderer/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-15T08:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4235420_9394512a",
       "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -387,6 +549,24 @@
     },
     {
       "key": {
+        "uuid": "42931e03_a7291e74",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3871,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-15T08:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "516c53ce_d709847f",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50ed4b00_0bf19dcc",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 5
@@ -416,6 +596,24 @@
       "side": 1,
       "message": "Ohh, sorry, I missed that.",
       "parentUuid": "50ed4b00_0bf19dcc",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65e22565_8fd828ef",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3875,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-15T08:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d80e9a34_62b76237",
       "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -486,6 +684,24 @@
       "side": 1,
       "message": "Ack, thank a lot.",
       "parentUuid": "b55039c9_03733072",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39b813b1_54e90c5b",
+        "filename": "third_party/WebKit/common/page_visibility_state.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-15T08:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3187caf9_1cda9202",
       "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
