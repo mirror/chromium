@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f436cb81_93088cb5",
+        "filename": "ios/chrome/browser/ui/contextual_search/contextual_search_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-15T15:37:41Z",
+      "side": 1,
+      "message": "Optional nit: std::make_unique\n\nFrom my understanding we killing CS, so may not worth the effort",
+      "range": {
+        "startLine": 356,
+        "startChar": 32,
+        "endLine": 356,
+        "endChar": 35
+      },
+      "revId": "8b1300e82c04fbfe1bbb3228c48513c09cd17545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
