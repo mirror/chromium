@@ -115,8 +115,6 @@ class OfflinePageModelImpl : public OfflinePageModel, public KeyedService {
 
   OfflinePageStorageManager* GetStorageManager();
 
-  bool is_loaded() const override;
-
   OfflineEventLogger* GetLogger() override;
 
   void set_skip_clearing_original_url_for_testing() {
