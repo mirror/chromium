@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "50740ec8_3b1686ab",
+        "filename": "third_party/WebKit/LayoutTests/webauth/idl.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T20:53:53Z",
+      "side": 1,
+      "message": ":( Spec was changing on me again, for this and your other comments. The API surface is stable now, fortunately.",
+      "parentUuid": "17aca544_06a4fc73",
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a371ca7b_3139d73b",
         "filename": "third_party/WebKit/LayoutTests/webauth/idl.html",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "72d076b1281b4628792484eda484c513aece63dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07804aed_10e58e6b",
+        "filename": "third_party/WebKit/LayoutTests/webauth/idl.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T20:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a371ca7b_3139d73b",
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "c785b8b0_9c34e2f0",
+        "filename": "third_party/WebKit/LayoutTests/webauth/idl.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T20:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ba21cf0_3f812b9c",
+      "range": {
+        "startLine": 90,
+        "startChar": 33,
+        "endLine": 90,
+        "endChar": 40
+      },
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "080ec009_b88f5c35",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.h",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "72d076b1281b4628792484eda484c513aece63dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a6b4439_4faf9f9a",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T20:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "080ec009_b88f5c35",
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "7bf4c2dc_80adb8cd",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/PublicKeyCredentialEntity.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T20:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "504b0322_e620da11",
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84d71135_3c78927b",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/PublicKeyCredentialUserEntity.idl",
         "patchSetId": 3
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "f39ea08d_936940da",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/PublicKeyCredentialUserEntity.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T20:53:53Z",
+      "side": 1,
+      "message": "Yep. Seems like there\u0027s no longer a need for hasRequiredEntityParameters.",
+      "parentUuid": "84d71135_3c78927b",
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec9c7890_8b62520c",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
         "patchSetId": 3
@@ -121,6 +235,24 @@
       "writtenOn": "2017-11-08T17:11:32Z",
       "side": 1,
       "message": "nit: Isn\u0027t |id| optional?",
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c9ad90c_856d55f6",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T20:53:53Z",
+      "side": 1,
+      "message": "Yep. So this would set it to null. The mojom impl handles if it\u0027s absent, since it\u0027ll be instead using the effective domain.",
+      "parentUuid": "ec9c7890_8b62520c",
       "revId": "72d076b1281b4628792484eda484c513aece63dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -180,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "356aece5_0de62429",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T20:53:53Z",
+      "side": 1,
+      "message": "Good reason not to make it url.mojom.Origin :)",
+      "parentUuid": "bf9443eb_420459eb",
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ae5e1d2_7c928671",
         "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
         "patchSetId": 3
@@ -203,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "8a7872c7_00a1ad49",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T20:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ae5e1d2_7c928671",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 9
+      },
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7795ce6_96d4e641",
         "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
         "patchSetId": 3
@@ -217,6 +391,24 @@
       "revId": "72d076b1281b4628792484eda484c513aece63dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "976c37ae_a6f21330",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T20:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7795ce6_96d4e641",
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
