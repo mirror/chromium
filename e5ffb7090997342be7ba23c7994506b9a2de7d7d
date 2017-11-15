@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8114ff5_8c537376",
+        "filename": "tools/perf/page_sets/wasm_realworld_pages.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000804
+      },
+      "writtenOn": "2017-11-15T23:30:07Z",
+      "side": 1,
+      "message": "Comment stale?",
+      "revId": "e5ffb7090997342be7ba23c7994506b9a2de7d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
