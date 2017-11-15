@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90b7e0cc_78eb01a1",
+        "filename": "net/spdy/chromium/spdy_http_stream.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-15T17:25:34Z",
+      "side": 1,
+      "message": "Does \"stream\" refer to SpdyHttpStream instance (|this|), or SpdyStream instance, which is the same as the HTTP/2 concept of stream (collection of frames with given Stream ID on a connection)?",
+      "range": {
+        "startLine": 332,
+        "startChar": 62,
+        "endLine": 332,
+        "endChar": 68
+      },
+      "revId": "84ebc537dd4c679f17008c2f3f17ee16502785c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ffdb32_dfb71e0c",
+        "filename": "net/spdy/chromium/spdy_http_stream.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-15T17:25:34Z",
+      "side": 1,
+      "message": "Does it actually happen that it is shared across multiple transactions?  I thought a new transaction would create a new stream.",
+      "range": {
+        "startLine": 333,
+        "startChar": 5,
+        "endLine": 333,
+        "endChar": 40
+      },
+      "revId": "84ebc537dd4c679f17008c2f3f17ee16502785c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f9e9dd3_feaad072",
+        "filename": "net/spdy/chromium/spdy_http_stream_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-15T17:25:34Z",
+      "side": 1,
+      "message": "Optional: Since there is only one of each local variable in this test, consider using req, resp, body, request, response, headers, http_stream, callback, buf instead of req1, resp1, body1, etc. as variable names.",
+      "range": {
+        "startLine": 236,
+        "startChar": 22,
+        "endLine": 236,
+        "endChar": 26
+      },
+      "revId": "84ebc537dd4c679f17008c2f3f17ee16502785c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
