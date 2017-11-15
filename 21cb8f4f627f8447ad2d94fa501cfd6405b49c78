@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a2527ae6_de63710e",
+        "filename": "media/mojo/clients/mojo_video_decoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-15T07:16:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "94e791a4_8849ca1d",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e60a3635_20deb8a7",
         "filename": "media/mojo/clients/mojo_video_decoder.h",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e060f42_3f31af4a",
+        "filename": "media/mojo/clients/mojo_video_decoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-15T07:16:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "19febbbd_542929b1",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -218,6 +254,24 @@
       "side": 1,
       "message": "I switched to just Release(), but that conflicted with RefCounted.\n\nLet me know what you think now that the whole interface has been renamed.",
       "parentUuid": "aabd014b_b01b3bfd",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90c9b34f_9b341c91",
+        "filename": "media/mojo/interfaces/video_decoder.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-15T07:16:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "55f3d811_c3a25067",
       "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -447,6 +501,24 @@
     },
     {
       "key": {
+        "uuid": "0b1dd3c7_68646d0c",
+        "filename": "media/mojo/services/mojo_video_decoder_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-15T07:16:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4224fa77_d039cdbb",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "133792b0_377f2e4c",
         "filename": "media/mojo/services/mojo_video_decoder_service.h",
         "patchSetId": 1
@@ -538,6 +610,30 @@
       "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c636ff51_48f7acfc",
+        "filename": "media/mojo/services/mojo_video_decoder_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-15T07:16:32Z",
+      "side": 1,
+      "message": "Yeah, I don\u0027t expect less code, but I hope it\u0027ll be more readable, e.g. all the tricky logic is in MVFRSDeleter. But this is up to you :)",
+      "parentUuid": "6bec7021_eaf037d3",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 78
+      },
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7d192b6_7eebae83",
+        "filename": "media/mojo/clients/mojo_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-15T07:16:32Z",
+      "side": 1,
+      "message": "oh my, I didn\u0027t expect the name to be so long :)",
+      "revId": "e9e68d856600b422aba8b15dbbc69ef08571e137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70c92cc_aa84f984",
+        "filename": "media/mojo/clients/mojo_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-15T07:16:32Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN?",
+      "revId": "e9e68d856600b422aba8b15dbbc69ef08571e137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "659cfe64_4bf441bc",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-15T07:16:32Z",
+      "side": 1,
+      "message": "optional naming nit: I am trying to see whether we can make this class name shorter.\n\n- Given this is only used by here (so we are in \"mojo\" context), can we drop \"Mojo\"?\n- \"Service\" suffix as a mojom interface implementation is not recommended anymore. There\u0027s a lot of discussion on this previous, and one suggestion is just use \"Impl\" suffix, e.g. PlatformVerificationImpl.\n\nWith that, this can be VideoFrameHandleReleaserImpl, which seems to fix since it is really the only impl of mojom::VideoFrameHandleReleaser. WDYT?",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 41
+      },
+      "revId": "e9e68d856600b422aba8b15dbbc69ef08571e137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a05f7d3a_e9915d23",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-15T07:16:32Z",
+      "side": 1,
+      "message": "nit: ditto, DISALLOW_COPY_AND_ASSIGN?",
+      "revId": "e9e68d856600b422aba8b15dbbc69ef08571e137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
