@@ -631,3 +631,8 @@ void InProcessBrowserTest::QuitBrowsers() {
   autorelease_pool_ = NULL;
 #endif
 }
+
+bool InProcessBrowserTest::ShouldResetFieldTrialParamsBeforeBrowserStart()
+    const {
+  return true;
+}
