@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07ebd962_5b367cb3",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-15T21:11:53Z",
+      "side": 1,
+      "message": "You probably do not need this include any more.  (Using https://chromium-review.googlesource.com/c/chromium/src/+/760488/7/net/spdy/chromium/spdy_session_fuzzer.cc as my cheat sheet here.)",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 36
+      },
+      "revId": "a6118ffc41cb7850429ea6997d0f58a76e81fa85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a24e93_ff1dd0fa",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-15T21:11:53Z",
+      "side": 1,
+      "message": "And you probably do not need this include either.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 41
+      },
+      "revId": "a6118ffc41cb7850429ea6997d0f58a76e81fa85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cdf16b7_500b2197",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-15T21:11:53Z",
+      "side": 1,
+      "message": "#include \"net/cert/x509_certificate.h\" for X509Certificate::CreateFromBytes().",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 40
+      },
+      "revId": "a6118ffc41cb7850429ea6997d0f58a76e81fa85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
