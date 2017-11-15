@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb6a4bb8_4bb628e7",
+        "filename": "chrome/browser/active_use_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-15T08:40:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76ae54d8_1535a5b9",
+      "range": {
+        "startLine": 22,
+        "startChar": 32,
+        "endLine": 22,
+        "endChar": 53
+      },
+      "revId": "f49972356a334390fbfb7d5d7879efc84b0d78e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00bb0713_6407cf7d",
         "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-14T19:10:05Z",
       "side": 1,
       "message": "Side question, why do we use CommandLine::ForCurrentProcess() here and |command_line_| on line 344 below?",
+      "revId": "f49972356a334390fbfb7d5d7879efc84b0d78e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04d3cd53_8c6d78fb",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-15T08:40:41Z",
+      "side": 1,
+      "message": "|command_line_| is what should be interpreted by the StartupBrowserCreator to discover URLs to launch and the like. it may differ from the true process command line, which is what is required here.",
+      "parentUuid": "00bb0713_6407cf7d",
       "revId": "f49972356a334390fbfb7d5d7879efc84b0d78e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
