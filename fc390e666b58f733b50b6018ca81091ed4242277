@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d13b59f1_6f73eb63",
+        "filename": "components/password_manager/core/browser/test_password_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-15T16:32:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b790d03b_85fdb47b",
+      "range": {
+        "startLine": 144,
+        "startChar": 9,
+        "endLine": 144,
+        "endChar": 63
+      },
+      "revId": "fc390e666b58f733b50b6018ca81091ed4242277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7f58237_13409f87",
         "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
         "patchSetId": 2
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "It is unsafe to call SetTestingFactory on IOSChromePasswordStoreFactory as other factories depends on it, for example IOSChromeProfileSyncServiceFactory.\n\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/sync/ios_chrome_profile_sync_service_factory.cc\n\nIf there is a couple of test, one running before this one and one running after this one do access IOSChromeProfileSyncServiceFactory in a way that touch the IOSChromePasswordStoreFactory, then they will access unreferenced memory. In general, using SetTestingFactory should only be used in unit tests (and even then I would argue that the correct dependencies should be injected).\n\nRegarding your question, to return the default factory is to call SetTestingFactory with a null factory, but this won\u0027t solve the question of IOSChromeProfileSyncServiceFactory having a pointer to destroyed object.",
       "parentUuid": "d7f58237_13409f87",
+      "range": {
+        "startLine": 359,
+        "startChar": 48,
+        "endLine": 359,
+        "endChar": 65
+      },
+      "revId": "fc390e666b58f733b50b6018ca81091ed4242277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c528a54a_601d006c",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-15T16:32:09Z",
+      "side": 1,
+      "message": "Thanks a lot for catching this and for the helpful explanation.\n\nI will drop this from the CL completely and just land the non-iOS TestPasswordStore clean-up.\n\nIf I realise I really do need the in-memory speed-up, I will try to find a way to boot the EG app with a TestPasswordStore, without the need to change it in-flight.",
+      "parentUuid": "ade00f29_6bef1f0e",
       "range": {
         "startLine": 359,
         "startChar": 48,
