@@ -20,6 +20,14 @@ namespace net {
 class CanonicalCookie;
 }
 
+namespace network {
+
+namespace mojom {
+class CookieDeletionFilter;
+}
+
+}  // namespace network
+
 namespace url {
 class Origin;
 }
@@ -73,6 +81,8 @@ class CONTENT_EXPORT BrowsingDataFilterBuilder {
   // or aren't in the blacklist.
   virtual base::RepeatingCallback<bool(const net::CanonicalCookie& pattern)>
       BuildCookieFilter() const = 0;
+  virtual void BuildCookieManagerFilter(
+      network::mojom::CookieDeletionFilter* filter) const = 0;
 
   // Builds a filter that matches channel IDs whose server identifiers are in
   // the whitelist, or aren't in the blacklist.

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_NETWORK_NETWORK_CONTEXT_H_
-#define CONTENT_NETWORK_NETWORK_CONTEXT_H_
+#ifndef CONTENT_PUBLIC_NETWORK_NETWORK_CONTEXT_H_
+#define CONTENT_PUBLIC_NETWORK_NETWORK_CONTEXT_H_
 
 #include <stdint.h>
 
@@ -26,8 +26,7 @@ class PrefService;
 namespace net {
 class URLRequestContext;
 class URLRequestContextBuilder;
-class HttpServerPropertiesManager;
-}
+}  // namespace net
 
 namespace content {
 class NetworkServiceImpl;
@@ -167,4 +166,4 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
 
 }  // namespace content
 
-#endif  // CONTENT_NETWORK_NETWORK_CONTEXT_H_
+#endif  // CONTENT_PUBLIC_NETWORK_NETWORK_CONTEXT_H_

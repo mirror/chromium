@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/network/network_context.h"
+#include "content/public/network/network_context.h"
 
 #include "base/command_line.h"
 #include "base/files/file_util.h"

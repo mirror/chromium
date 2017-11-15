@@ -11,6 +11,7 @@
 
 #include "base/callback.h"
 #include "net/cookies/canonical_cookie.h"
+#include "services/network/public/interfaces/cookie_manager.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 #include "url/origin.h"
@@ -303,6 +304,46 @@ TEST(BrowsingDataFilterBuilderImplTest,
 
   for (TestCase test_case : test_cases)
     RunTestCase(test_case, filter);
+}
+
+// Confirm the filter is built as expected; the correct semantics for filters
+// are tested in the unit test for CookieManagerImpl.
+TEST(BrowsingDataFilterBuilderImpl, CookieFilter) {
+  for (int m = BrowsingDataFilterBuilderImpl::WHITELIST;
+       m <= BrowsingDataFilterBuilderImpl::BLACKLIST; ++m) {
+    BrowsingDataFilterBuilderImpl builder(
+        static_cast<BrowsingDataFilterBuilder::Mode>(m));
+    std::vector<std::string> control_domains;
+
+    control_domains.push_back(std::string(kGoogleDomain));
+    control_domains.push_back(std::string(kLongETLDDomain));
+    control_domains.push_back(std::string(kIPAddress));
+    control_domains.push_back(std::string(kUnknownRegistryDomain));
+    control_domains.push_back(std::string(kInternalHostname));
+    for (int i = 0; i < static_cast<int>(control_domains.size()); ++i)
+      builder.AddRegisterableDomain(control_domains[i]);
+
+    network::mojom::CookieDeletionFilter deletion_filter;
+    builder.BuildCookieManagerFilter(&deletion_filter);
+    EXPECT_FALSE(deletion_filter.created_after_time);
+    EXPECT_FALSE(deletion_filter.created_before_time);
+    EXPECT_EQ(m == BrowsingDataFilterBuilderImpl::BLACKLIST,
+              deletion_filter.excluding_domains.has_value());
+    EXPECT_EQ(m == BrowsingDataFilterBuilderImpl::WHITELIST,
+              deletion_filter.including_domains.has_value());
+    EXPECT_EQ(network::mojom::CookieDeletionSessionControl::IGNORE_CONTROL,
+              deletion_filter.session_control);
+
+    std::vector<std::string> filter_domains(
+        *(m == BrowsingDataFilterBuilder::WHITELIST
+              ? deletion_filter.including_domains
+              : deletion_filter.excluding_domains));
+    std::sort(filter_domains.begin(), filter_domains.end());
+    std::sort(control_domains.begin(), control_domains.end());
+    ASSERT_EQ(control_domains.size(), filter_domains.size());
+    for (int i = 0; i < static_cast<int>(control_domains.size()); ++i)
+      EXPECT_EQ(control_domains[i], filter_domains[i]);
+  }
 }
 
 TEST(BrowsingDataFilterBuilderImplTest,

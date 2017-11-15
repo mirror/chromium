@@ -84,6 +84,7 @@
 #include "net/reporting/reporting_service.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "services/network/public/interfaces/cookie_manager.mojom.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/gfx/favicon_size.h"
 
@@ -212,9 +213,10 @@ class RemoveCookieTester {
   bool ContainsCookie() {
     scoped_refptr<content::MessageLoopRunner> message_loop_runner =
         new content::MessageLoopRunner;
+    // TODO: Shift to RunLoop?
     quit_closure_ = message_loop_runner->QuitClosure();
     get_cookie_success_ = false;
-    cookie_store_->GetCookiesWithOptionsAsync(
+    cookie_manager_->GetCookieList(
         kOrigin1, net::CookieOptions(),
         base::BindOnce(&RemoveCookieTester::GetCookieCallback,
                        base::Unretained(this)));
@@ -226,25 +228,34 @@ class RemoveCookieTester {
     scoped_refptr<content::MessageLoopRunner> message_loop_runner =
         new content::MessageLoopRunner;
     quit_closure_ = message_loop_runner->QuitClosure();
-    cookie_store_->SetCookieWithOptionsAsync(
-        kOrigin1, "A=1", net::CookieOptions(),
+    // To maintain consistency with secure_source, below.
+    EXPECT_EQ("http", kOrigin1.scheme());
+    cookie_manager_->SetCanonicalCookie(
+        net::CanonicalCookie("A", "1", kOrigin1.host(), "/", base::Time(),
+                             base::Time(), base::Time(), false, false,
+                             net::CookieSameSite::NO_RESTRICTION,
+                             net::COOKIE_PRIORITY_MEDIUM),
+        false /* secure_source */, false /* modify_http_only */,
         base::BindOnce(&RemoveCookieTester::SetCookieCallback,
                        base::Unretained(this)));
     message_loop_runner->Run();
   }
 
  protected:
-  void SetCookieStore(net::CookieStore* cookie_store) {
-    cookie_store_ = cookie_store;
+  // The passed CookieManager must outlive |this|.
+  void SetCookieManager(network::mojom::CookieManager* cookie_manager) {
+    cookie_manager_ = cookie_manager;
   }
 
  private:
-  void GetCookieCallback(const std::string& cookies) {
-    if (cookies == "A=1") {
-      get_cookie_success_ = true;
-    } else {
-      EXPECT_EQ("", cookies);
+  void GetCookieCallback(const std::vector<net::CanonicalCookie>& cookies) {
+    if (0u == cookies.size()) {
       get_cookie_success_ = false;
+    } else {
+      EXPECT_EQ(1u, cookies.size());
+      EXPECT_EQ("A", cookies[0].Name());
+      EXPECT_EQ("1", cookies[0].Value());
+      get_cookie_success_ = true;
     }
     quit_closure_.Run();
   }
@@ -254,11 +265,10 @@ class RemoveCookieTester {
     quit_closure_.Run();
   }
 
+  network::mojom::CookieManager* cookie_manager_;
+
   bool get_cookie_success_ = false;
   base::Closure quit_closure_;
-
-  // CookieStore must out live |this|.
-  net::CookieStore* cookie_store_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(RemoveCookieTester);
 };
@@ -278,16 +288,20 @@ class RemoveSafeBrowsingCookieTester : public RemoveCookieTester {
     sb_service->Initialize();
     base::RunLoop().RunUntilIdle();
 
+    sb_service->GetNetworkContext()->GetCookieManager(
+        mojo::MakeRequest(&cookie_manager_ptr_));
+
     // Make sure the safe browsing cookie store has no cookies.
     // TODO(mmenke): Is this really needed?
     base::RunLoop run_loop;
-    net::URLRequestContext* request_context =
-        sb_service->url_request_context()->GetURLRequestContext();
-    request_context->cookie_store()->DeleteAllAsync(
+    network::mojom::CookieDeletionFilterPtr filter_ptr(
+        network::mojom::CookieDeletionFilter::New());
+    cookie_manager_ptr_->DeleteCookies(
+        std::move(filter_ptr),
         base::BindOnce(&RunClosureAfterCookiesCleared, run_loop.QuitClosure()));
     run_loop.Run();
 
-    SetCookieStore(request_context->cookie_store());
+    SetCookieManager(cookie_manager_ptr_.get());
   }
 
   virtual ~RemoveSafeBrowsingCookieTester() {
@@ -298,6 +312,7 @@ class RemoveSafeBrowsingCookieTester : public RemoveCookieTester {
 
  private:
   TestingBrowserProcess* browser_process_;
+  network::mojom::CookieManagerPtr cookie_manager_ptr_;
 
   DISALLOW_COPY_AND_ASSIGN(RemoveSafeBrowsingCookieTester);
 };
