@@ -217,6 +217,24 @@
     },
     {
       "key": {
+        "uuid": "1ebe6151_37ba43a1",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T02:30:45Z",
+      "side": 1,
+      "message": "hmm. do you recall if this only happened when the system was resuming from suspend, or did it happen whenever you tapped the power button to force the display off and then tapped it again shortly afterward? i\u0027m pretty surprised that the delay would be user-visible in the latter case -- did you look at timestamp differences between when you saw the eject event, when powerd turned the backlights on, and when the layer was hidden? i would\u0027ve expected it to only take 16-17 ms to draw the next frame without the layer, which shouldn\u0027t be user-perceptible.",
+      "parentUuid": "417306af_0a3e146b",
+      "revId": "42a9100e2fa3d0be5ad67c2eeb36c9d89859448c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97b516bc_91ad8bb6",
         "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
         "patchSetId": 5
