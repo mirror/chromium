@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb6f7885_c2260543",
+        "filename": "AUTHORS",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-15T09:13:54Z",
+      "side": 1,
+      "message": "Thanks for signing the CLA!",
+      "revId": "e994f0e921da63cb6c676152f6cc44cd3edb420b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b974e8c5_c489af07",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SchemeRegistry.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-15T09:13:54Z",
+      "side": 1,
+      "message": "Please add a comment noting that this is unused in Chromium, but left in place intentionally to allow other embedders of Blink to poke at the list of CORS-enabled schemes.",
+      "revId": "e994f0e921da63cb6c676152f6cc44cd3edb420b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
