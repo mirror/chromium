@@ -43,7 +43,7 @@
 // Animates the toolbar so the omnibox is shrinking to its standard state.
 - (void)contractOmnibox;
 // Animates the toolbar so the omnibox is expanding to its expanded state.
-- (void)expandOmnibox;
+- (void)expandOmniboxAnimated:(BOOL)animated;
 
 @end
 
