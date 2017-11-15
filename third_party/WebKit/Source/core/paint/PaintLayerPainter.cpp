@@ -377,20 +377,8 @@ PaintResult PaintLayerPainter::PaintLayerContents(
                        kPaintLayerPaintingAncestorClippingMaskPhase)))) {
     painting_info.ancestor_has_clip_path_clipping = true;
 
-    LayoutRect reference_box(
-        paint_layer_.GetLayoutObject().LocalReferenceBoxForClipPath());
-    // Note that this isn't going to work correctly if crossing a column
-    // boundary. The reference box should be determined per-fragment, and hence
-    // this ought to be performed after fragmentation.
-    if (paint_layer_.EnclosingPaginationLayer())
-      paint_layer_.ConvertFromFlowThreadToVisualBoundingBoxInAncestor(
-          painting_info.root_layer, reference_box);
-    else
-      reference_box.MoveBy(offset_from_root);
-    clip_path_clipper.emplace(
-        context, *paint_layer_.GetLayoutObject().StyleRef().ClipPath(),
-        paint_layer_.GetLayoutObject(), FloatRect(reference_box),
-        FloatPoint(reference_box.Location()));
+    clip_path_clipper.emplace(context, paint_layer_.GetLayoutObject(),
+                              offset_from_root);
   }
 
   Optional<CompositingRecorder> compositing_recorder;
