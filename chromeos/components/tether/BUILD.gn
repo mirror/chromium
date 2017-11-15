@@ -205,6 +205,7 @@ static_library("test_support") {
     "//chromeos/components/tether/proto",
     "//components/cryptauth",
     "//components/cryptauth:test_support",
+    "//components/cryptauth/ble:test_support",
     "//device/bluetooth",
     "//testing/gmock",
     "//testing/gtest",
