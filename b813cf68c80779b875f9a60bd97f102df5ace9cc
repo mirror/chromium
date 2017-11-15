@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cacbaa83_ffc4b5e9",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-15T16:27:57Z",
+      "side": 1,
+      "message": "nit: Let\u0027s use a similar naming scheme and comment as OverrideRequestContextForURL() above.",
+      "revId": "b813cf68c80779b875f9a60bd97f102df5ace9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a75c1841_85694936",
+        "filename": "device/geolocation/geolocation_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-15T16:27:57Z",
+      "side": 1,
+      "message": "Why not just std::move(g_custom_location_provider.Get())?",
+      "range": {
+        "startLine": 214,
+        "startChar": 56,
+        "endLine": 214,
+        "endChar": 63
+      },
+      "revId": "b813cf68c80779b875f9a60bd97f102df5ace9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92fab50d_26a51121",
+        "filename": "device/geolocation/geolocation_provider_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-15T16:27:57Z",
+      "side": 1,
+      "message": "nit: where is this used?",
+      "revId": "b813cf68c80779b875f9a60bd97f102df5ace9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bffb0dc_5c127ec0",
+        "filename": "device/geolocation/location_arbitrator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-15T16:27:57Z",
+      "side": 1,
+      "message": "nit: Add a comment that passing nullptr results in using the default system location provider.",
+      "revId": "b813cf68c80779b875f9a60bd97f102df5ace9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c29b9a_92f2ae7a",
+        "filename": "device/geolocation/location_arbitrator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-15T16:27:57Z",
+      "side": 1,
+      "message": "nit: just declare this as a FakeLocationProvider*? then you don\u0027t need the casts below",
+      "revId": "b813cf68c80779b875f9a60bd97f102df5ace9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b5e075a_00e97dfc",
+        "filename": "device/geolocation/public/cpp/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-15T16:27:57Z",
+      "side": 1,
+      "message": "can we just remove GEOLOCATION_EXPORT from location_provider.h? This is a source_set, not a component, so I don\u0027t think that it has any effect here.",
+      "range": {
+        "startLine": 10,
+        "startChar": 26,
+        "endLine": 10,
+        "endChar": 44
+      },
+      "revId": "b813cf68c80779b875f9a60bd97f102df5ace9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3548b58c_3f69cd44",
+        "filename": "services/device/device_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-15T16:27:57Z",
+      "side": 1,
+      "message": "nit: given that this just runs immediately in the constructor, could we just pass in the custom location provider itself instead?",
+      "revId": "b813cf68c80779b875f9a60bd97f102df5ace9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
