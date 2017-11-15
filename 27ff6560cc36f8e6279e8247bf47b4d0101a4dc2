@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "aa5e96fa_94c95ce6",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-15T18:49:36Z",
+      "side": 1,
+      "message": "If you want to make it even simpler for the next CL, you can keep MSD (we should rename it since it\u0027s no longer a dispatcher, but more of a device monitor) and you can look up that object here in MSM since you already track render_process_id and render_frame_id in the request.\nWe can refine it in further follow-up CLs.",
+      "parentUuid": "58213d2a_c4db272b",
+      "revId": "27ff6560cc36f8e6279e8247bf47b4d0101a4dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7050b6c_2cc7e01c",
         "filename": "content/renderer/media/media_stream_label_map.cc",
         "patchSetId": 5
