@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2d62a4a0_d4f9b13e",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_change_picture.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-15T01:57:22Z",
+      "side": 1,
+      "message": "Done. Good call. I guess I must have added switch-mode-label here by mistake when introducing video mode.",
+      "parentUuid": "ec784a34_a9abd796",
+      "revId": "559e84c4b801454ee00120e2e2e552a5f27ec873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ce30883_961d2aca",
         "filename": "chrome/browser/resources/settings/people_page/change_picture.html",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d9dba501_a8595d14",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-15T01:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ce30883_961d2aca",
+      "revId": "559e84c4b801454ee00120e2e2e552a5f27ec873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3984793_380137c3",
         "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_list.js",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "559e84c4b801454ee00120e2e2e552a5f27ec873",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1adc092_67023aed",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_list.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-15T01:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3984793_380137c3",
+      "revId": "559e84c4b801454ee00120e2e2e552a5f27ec873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
