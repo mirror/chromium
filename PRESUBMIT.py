@@ -2479,6 +2479,11 @@ def _CommonChecks(input_api, output_api):
   results.extend(input_api.RunTests(
     input_api.canned_checks.CheckVPythonSpec(input_api, output_api)))
 
+  # TODO(crbug.com/785114): This is checking for changed *LUCI* configs;
+  # we need to change the name of this hook to be clearer.
+  results.extend(input_api.canned_checks.CheckChangedConfigs(input_api,
+                                                             output_api))
+
   if any('PRESUBMIT.py' == f.LocalPath() for f in input_api.AffectedFiles()):
     results.extend(input_api.canned_checks.RunUnitTestsInDirectory(
         input_api, output_api,
