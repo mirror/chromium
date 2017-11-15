@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c32bc6f6_8e3f31a7",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-11-15T16:54:35Z",
+      "side": 1,
+      "message": "I did this previously https://chromium-review.googlesource.com/c/chromium/src/+/685237/26/chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittests.cc\n\nSuggestion was that using eventGenerator is cleaner.",
+      "parentUuid": "887638ab_d0bdd9b7",
+      "revId": "3b123e27f7a2422a6bd5821e05529f4a8f1499fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36b5a09a_9d553a90",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittest.cc",
         "patchSetId": 29
@@ -100,6 +118,30 @@
       "writtenOn": "2017-11-15T16:20:15Z",
       "side": 1,
       "message": "maybe try MoveMouseToCenterOf",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 45
+      },
+      "revId": "3b123e27f7a2422a6bd5821e05529f4a8f1499fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b39fec_1cc518a5",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-11-15T16:54:35Z",
+      "side": 1,
+      "message": "Haven\u0027t done the trick, will continue debugging",
+      "parentUuid": "36b5a09a_9d553a90",
       "range": {
         "startLine": 154,
         "startChar": 4,
