@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6b0b90f_ebbd2f00",
+        "filename": "chrome/browser/extensions/error_console/error_console.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T23:07:37Z",
+      "side": 1,
+      "message": "these two are unnecessary since included in the header",
+      "revId": "74ac4faffe3144f52df5442876970e76d1ffd373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034f56ff_d9f3e4d1",
+        "filename": "chrome/browser/extensions/error_console/error_console_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T23:07:37Z",
+      "side": 1,
+      "message": "... because the user is not in developer mode.",
+      "range": {
+        "startLine": 67,
+        "startChar": 55,
+        "endLine": 67,
+        "endChar": 56
+      },
+      "revId": "74ac4faffe3144f52df5442876970e76d1ffd373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b8d7446_28493c2a",
+        "filename": "chrome/browser/extensions/error_console/error_console_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T23:07:37Z",
+      "side": 1,
+      "message": "This is a bit unintuitive since the FeatureSwitch is explicitly enabled, which is intended to force-enable a feature (similar to a commandline flag).  See also comment in FeatureSwitch.",
+      "revId": "74ac4faffe3144f52df5442876970e76d1ffd373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c34383_d4b21fe2",
+        "filename": "extensions/common/feature_switch.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T23:07:37Z",
+      "side": 1,
+      "message": "I wonder if this could be something like HasValue() instead of HasSwitch, and include checking override_value_ here?  That would help in the unittests.",
+      "revId": "74ac4faffe3144f52df5442876970e76d1ffd373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
