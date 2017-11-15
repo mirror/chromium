@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e578409_dcd28cc4",
+        "filename": "third_party/WebKit/Source/platform/text/SegmentedString.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-11-15T22:40:59Z",
+      "side": 1,
+      "message": "I had accidentally removed this on my last patch, just re-adding it.",
+      "revId": "2cf7151fc21974ed90b8aece848aa292b08d41a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

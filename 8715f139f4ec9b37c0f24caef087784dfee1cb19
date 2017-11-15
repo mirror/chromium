@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d671a413_248d99c0",
+        "filename": "third_party/WebKit/Source/platform/text/SegmentedString.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-11-15T22:40:59Z",
+      "side": 0,
+      "message": "This is dead code.",
+      "revId": "8715f139f4ec9b37c0f24caef087784dfee1cb19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
