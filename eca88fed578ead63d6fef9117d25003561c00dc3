@@ -217,6 +217,30 @@
     },
     {
       "key": {
+        "uuid": "0cb9c86e_3ea891c3",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-15T23:43:40Z",
+      "side": 1,
+      "message": "Since this is a task to dispatch events, I think it should be a speced task.\n\nFor example, the HTMLMediaElement is speced as follows:\n\n  \"Except where otherwise explicitly specified, the task source for all the tasks queued in this section and its subsections is the media element event task source of the media element in question.\"\n\n  https://html.spec.whatwg.org/multipage/media.html#media-element\n\nI think that a better solution would be:\n\n- The WebAudio spec specifies the task source. Just use the \"media element task source\" or introduce a new \"audio task source\".\n\n- Blink maps TaskType::MediaElement and TaskType::WebAudio to an unthrottled task queue.\n\n- To mitigate Alexander\u0027s concern, rename Unthrottled to ReallyNeedsToBeUnthrottled.\n\nEither way, I don\u0027t think this needs block this CL.\n\nLGTM if Alexander is fine with making the changes incrementally.",
+      "parentUuid": "8a5c9fc0_71a12c36",
+      "range": {
+        "startLine": 57,
+        "startChar": 56,
+        "endLine": 57,
+        "endChar": 78
+      },
+      "revId": "eca88fed578ead63d6fef9117d25003561c00dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4c121be_88648f1e",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 2
