@@ -32,10 +32,24 @@ class ExtensionHooksDelegate : public APIBindingHooksDelegate {
   void InitializeTemplate(v8::Isolate* isolate,
                           v8::Local<v8::ObjectTemplate> object_template,
                           const APITypeReferenceMap& type_refs) override;
+  void InitializeInstance(v8::Local<v8::Context> context,
+                          v8::Local<v8::Object> instance) override;
 
  private:
   // Request handlers for the corresponding API methods.
   APIBindingHooks::RequestResult HandleSendRequest(
+      ScriptContext* script_context,
+      const std::vector<v8::Local<v8::Value>>& arguments);
+  APIBindingHooks::RequestResult HandleGetURL(
+      ScriptContext* script_context,
+      const std::vector<v8::Local<v8::Value>>& arguments);
+  APIBindingHooks::RequestResult HandleGetViews(
+      ScriptContext* script_context,
+      const std::vector<v8::Local<v8::Value>>& arguments);
+  APIBindingHooks::RequestResult HandleGetExtensionTabs(
+      ScriptContext* script_context,
+      const std::vector<v8::Local<v8::Value>>& arguments);
+  APIBindingHooks::RequestResult HandleGetBackgroundPage(
       ScriptContext* script_context,
       const std::vector<v8::Local<v8::Value>>& arguments);
 
