@@ -53,6 +53,15 @@ Sources.CSSPlugin = class {
     this._textEditor.element.addEventListener('keydown', this._boundHandleKeyDown, false);
   }
 
+  /**
+   * @override
+   * @param {!Workspace.UISourceCode} uiSourceCode
+   * @return {boolean}
+   */
+  static accepts(uiSourceCode) {
+    return uiSourceCode.contentType().isStyleSheet();
+  }
+
   _registerShortcuts() {
     var shortcutKeys = UI.ShortcutsScreen.SourcesPanelShortcuts;
     for (var descriptor of shortcutKeys.IncreaseCSSUnitByOne)
@@ -367,6 +376,14 @@ Sources.CSSPlugin = class {
       tokenPosition = token.startColumn - 1;
     }
     return null;
+  }
+
+  /**
+   * @override
+   * @return {!Array<!UI.ToolbarItem>}
+   */
+  syncToolbarItems() {
+    return [];
   }
 
   /**

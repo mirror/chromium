@@ -78,6 +78,7 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
 
     this._errorPopoverHelper.setTimeout(100, 100);
 
+    /** @type {!Array<!Sources.UISourceCodeFrame.Plugin>} */
     this._plugins = [];
 
     /**
@@ -251,8 +252,17 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
 
   _refreshPlugins() {
     this._disposePlugins();
-    if (this._uiSourceCode.contentType().isStyleSheet())
+    var binding = Persistence.persistence.binding(this._uiSourceCode);
+    var pluginUISourceCode = binding ? binding.network : this._uiSourceCode;
+
+    if (Sources.CSSPlugin.accepts(pluginUISourceCode))
       this._plugins.push(new Sources.CSSPlugin(this.textEditor));
+    if (Sources.JavaScriptCompilerPlugin.accepts(pluginUISourceCode))
+      this._plugins.push(new Sources.JavaScriptCompilerPlugin(this.textEditor, pluginUISourceCode));
+    if (Sources.SnippetsPlugin.accepts(pluginUISourceCode))
+      this._plugins.push(new Sources.SnippetsPlugin(this.textEditor, pluginUISourceCode));
+
+    this.dispatchEventToListeners(Sources.UISourceCodeFrame.Events.ToolbarItemsChanged);
   }
 
   _disposePlugins() {
@@ -491,6 +501,17 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
         this._decorateTypeThrottled(type);
     }
   }
+
+  /**
+   * @override
+   * @return {!Array<!UI.ToolbarItem>}
+   */
+  syncToolbarItems() {
+    var result = super.syncToolbarItems();
+    for (var plugin of this._plugins)
+      result.pushAll(plugin.syncToolbarItems());
+    return result;
+  }
 };
 
 Sources.UISourceCodeFrame._iconClassPerLevel = {};
@@ -724,6 +745,24 @@ Workspace.UISourceCode.Message.messageLevelComparator = function(a, b) {
  * @interface
  */
 Sources.UISourceCodeFrame.Plugin = class {
+  /**
+   * @param {!Workspace.UISourceCode} uiSourceCode
+   * @return {boolean}
+   */
+  static accepts(uiSourceCode) {
+  }
+
+  /**
+   * @return {!Array<!UI.ToolbarItem>}
+   */
+  syncToolbarItems() {
+  }
+
   dispose() {
   }
+};
+
+/** @enum {symbol} */
+Sources.UISourceCodeFrame.Events = {
+  ToolbarItemsChanged: Symbol('ToolbarItemsChanged')
 };

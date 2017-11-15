@@ -111,13 +111,6 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
         result.push(new UI.ToolbarText(Common.UIString('(source mapped from %s)', parsedURL.displayName)));
     }
 
-    if (this.uiSourceCode().project().type() === Workspace.projectTypes.Snippets) {
-      result.push(new UI.ToolbarSeparator(true));
-      var runSnippet = UI.Toolbar.createActionButtonForId('debugger.run-snippet');
-      runSnippet.setText(Host.isMac() ? Common.UIString('\u2318+Enter') : Common.UIString('Ctrl+Enter'));
-      result.push(runSnippet);
-    }
-
     return result;
   }
 
@@ -206,8 +199,6 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
   onTextChanged(oldRange, newRange) {
     this._scriptsPanel.updateLastModificationTime();
     super.onTextChanged(oldRange, newRange);
-    if (this._compiler)
-      this._compiler.scheduleCompile();
   }
 
   /**
@@ -1333,13 +1324,6 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
     this._updateDebuggerSourceCode();
     this._updateScriptFiles();
     this._refreshBreakpoints();
-
-    var canLiveCompileJavascript = this._scriptFileForDebuggerModel.size ||
-        this._debuggerSourceCode.extension() === 'js' ||
-        this._debuggerSourceCode.project().type() === Workspace.projectTypes.Snippets;
-    if (!!canLiveCompileJavascript !== !!this._compiler)
-      this._compiler = canLiveCompileJavascript ? new Sources.JavaScriptCompiler(this) : null;
-
     this._showBlackboxInfobarIfNeeded();
     this._updateLinesWithoutMappingHighlight();
   }

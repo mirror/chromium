@@ -670,7 +670,8 @@
         "SourcesPanel.js",
         "WorkspaceMappingTip.js",
         "XHRBreakpointsSidebarPane.js",
-        "JavaScriptCompiler.js",
+        "JavaScriptCompilerPlugin.js",
+        "SnippetsPlugin.js",
         "ObjectEventListenersSidebarPane.js"
     ],
     "resources": [
