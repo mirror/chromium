@@ -120,6 +120,7 @@ source_set("unit_tests") {
     ":wayland",
     "//base",
     "//components/exo",
+    "//skia",
     "//testing/gtest",
     "//third_party/wayland:wayland_client",
   ]
