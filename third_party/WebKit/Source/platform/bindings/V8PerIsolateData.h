@@ -200,6 +200,9 @@ class PLATFORM_EXPORT V8PerIsolateData {
   void SetThreadDebugger(std::unique_ptr<Data>);
   Data* ThreadDebugger();
 
+  void SetPreemptionManager(std::unique_ptr<Data>);
+  Data* PreemptionManager();
+
   using ActiveScriptWrappableSet =
       HeapHashSet<WeakMember<ActiveScriptWrappableBase>>;
   void AddActiveScriptWrappable(ActiveScriptWrappableBase*);
@@ -311,6 +314,7 @@ class PLATFORM_EXPORT V8PerIsolateData {
 
   Vector<std::unique_ptr<EndOfScopeTask>> end_of_scope_tasks_;
   std::unique_ptr<Data> thread_debugger_;
+  std::unique_ptr<Data> preemption_manager_;
 
   Persistent<ActiveScriptWrappableSet> active_script_wrappables_;
   std::unique_ptr<ScriptWrappableVisitor> script_wrappable_visitor_;

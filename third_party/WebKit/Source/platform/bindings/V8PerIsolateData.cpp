@@ -360,6 +360,16 @@ V8PerIsolateData::Data* V8PerIsolateData::ThreadDebugger() {
   return thread_debugger_.get();
 }
 
+void V8PerIsolateData::SetPreemptionManager(
+    std::unique_ptr<V8PerIsolateData::Data> preemption_manager) {
+  DCHECK(!preemption_manager_);
+  preemption_manager_ = std::move(preemption_manager);
+}
+
+V8PerIsolateData::Data* V8PerIsolateData::PreemptionManager() {
+  return preemption_manager_.get();
+}
+
 void V8PerIsolateData::AddActiveScriptWrappable(
     ActiveScriptWrappableBase* wrappable) {
   if (!active_script_wrappables_)

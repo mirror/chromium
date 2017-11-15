@@ -19,6 +19,7 @@
 #include "bindings/core/v8/V8TestInterfaceGarbageCollected.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalDOMWindow.h"
+#include "core/preemption/PreemptionCheckpointScope.h"
 #include "platform/bindings/RuntimeCallStats.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8ObjectConstructor.h"
@@ -71,6 +72,8 @@ static_assert(
 namespace TestInterfaceGarbageCollectedV8Internal {
 
 static void attr1AttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceGarbageCollected* impl = V8TestInterfaceGarbageCollected::ToImpl(holder);
@@ -80,7 +83,7 @@ static void attr1AttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info
 
 static void attr1AttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -102,6 +105,8 @@ static void attr1AttributeSetter(v8::Local<v8::Value> v8Value, const v8::Functio
 }
 
 static void sizeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceGarbageCollected* impl = V8TestInterfaceGarbageCollected::ToImpl(holder);
@@ -325,54 +330,63 @@ void V8TestInterfaceGarbageCollected::sizeAttributeGetterCallback(const v8::Func
 }
 
 void V8TestInterfaceGarbageCollected::funcMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceGarbageCollected_func");
 
   TestInterfaceGarbageCollectedV8Internal::funcMethod(info);
 }
 
 void V8TestInterfaceGarbageCollected::keysMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceGarbageCollected_keys");
 
   TestInterfaceGarbageCollectedV8Internal::keysMethod(info);
 }
 
 void V8TestInterfaceGarbageCollected::entriesMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceGarbageCollected_entries");
 
   TestInterfaceGarbageCollectedV8Internal::entriesMethod(info);
 }
 
 void V8TestInterfaceGarbageCollected::forEachMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceGarbageCollected_forEach");
 
   TestInterfaceGarbageCollectedV8Internal::forEachMethod(info);
 }
 
 void V8TestInterfaceGarbageCollected::hasMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceGarbageCollected_has");
 
   TestInterfaceGarbageCollectedV8Internal::hasMethod(info);
 }
 
 void V8TestInterfaceGarbageCollected::addMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceGarbageCollected_add");
 
   TestInterfaceGarbageCollectedV8Internal::addMethod(info);
 }
 
 void V8TestInterfaceGarbageCollected::clearMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceGarbageCollected_clear");
 
   TestInterfaceGarbageCollectedV8Internal::clearMethod(info);
 }
 
 void V8TestInterfaceGarbageCollected::deleteMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceGarbageCollected_delete");
 
   TestInterfaceGarbageCollectedV8Internal::deleteMethod(info);
 }
 
 void V8TestInterfaceGarbageCollected::iteratorMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceGarbageCollected_iterator");
 
   TestInterfaceGarbageCollectedV8Internal::iteratorMethod(info);

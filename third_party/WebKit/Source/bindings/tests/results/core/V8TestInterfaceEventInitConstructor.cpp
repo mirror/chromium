@@ -17,6 +17,7 @@
 #include "bindings/core/v8/V8TestInterfaceEventInit.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalDOMWindow.h"
+#include "core/preemption/PreemptionCheckpointScope.h"
 #include "platform/bindings/RuntimeCallStats.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/wtf/GetPtr.h"
@@ -68,6 +69,8 @@ static_assert(
 namespace TestInterfaceEventInitConstructorV8Internal {
 
 static void readonlyStringAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceEventInitConstructor* impl = V8TestInterfaceEventInitConstructor::ToImpl(holder);
@@ -76,6 +79,8 @@ static void readonlyStringAttributeAttributeGetter(const v8::FunctionCallbackInf
 }
 
 static void isTrustedAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceEventInitConstructor* impl = V8TestInterfaceEventInitConstructor::ToImpl(holder);

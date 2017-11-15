@@ -16,6 +16,7 @@
 #include "core/animation/DocumentAnimation.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/fullscreen/DocumentFullscreen.h"
+#include "core/preemption/PreemptionCheckpointScope.h"
 #include "core/svg/SVGDocumentExtensions.h"
 #include "core/xml/DocumentXPathEvaluator.h"
 #include "platform/bindings/RuntimeCallStats.h"
@@ -69,6 +70,8 @@ static_assert(
 namespace TestInterfaceDocumentV8Internal {
 
 static void locationAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceDocument* impl = V8TestInterfaceDocument::ToImpl(holder);
@@ -78,7 +81,7 @@ static void locationAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& i
 
 static void locationAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);

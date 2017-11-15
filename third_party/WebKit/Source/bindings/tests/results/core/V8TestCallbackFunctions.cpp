@@ -19,6 +19,7 @@
 #include "bindings/core/v8/v8_void_callback_function.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/html/custom/V0CustomElementProcessingStack.h"
+#include "core/preemption/PreemptionCheckpointScope.h"
 #include "platform/bindings/RuntimeCallStats.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/wtf/GetPtr.h"
@@ -70,6 +71,8 @@ static_assert(
 namespace TestCallbackFunctionsV8Internal {
 
 static void customElementsCallbacksReadonlyAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestCallbackFunctions* impl = V8TestCallbackFunctions::ToImpl(holder);
@@ -210,48 +213,56 @@ void V8TestCallbackFunctions::customElementsCallbacksReadonlyAttributeAttributeG
 }
 
 void V8TestCallbackFunctions::returnCallbackFunctionMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestCallbackFunctions_returnCallbackFunctionMethod");
 
   TestCallbackFunctionsV8Internal::returnCallbackFunctionMethodMethod(info);
 }
 
 void V8TestCallbackFunctions::returnCallbackFunctionMethod2MethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestCallbackFunctions_returnCallbackFunctionMethod2");
 
   TestCallbackFunctionsV8Internal::returnCallbackFunctionMethod2Method(info);
 }
 
 void V8TestCallbackFunctions::voidMethodCallbackFunctionInArgMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestCallbackFunctions_voidMethodCallbackFunctionInArg");
 
   TestCallbackFunctionsV8Internal::voidMethodCallbackFunctionInArgMethod(info);
 }
 
 void V8TestCallbackFunctions::voidMethodCallbackFunctionInArg2MethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestCallbackFunctions_voidMethodCallbackFunctionInArg2");
 
   TestCallbackFunctionsV8Internal::voidMethodCallbackFunctionInArg2Method(info);
 }
 
 void V8TestCallbackFunctions::voidMethodCallbackFunctionWithReturnValueInArgMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestCallbackFunctions_voidMethodCallbackFunctionWithReturnValueInArg");
 
   TestCallbackFunctionsV8Internal::voidMethodCallbackFunctionWithReturnValueInArgMethod(info);
 }
 
 void V8TestCallbackFunctions::voidMethodOptionalCallbackFunctionInArgMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestCallbackFunctions_voidMethodOptionalCallbackFunctionInArg");
 
   TestCallbackFunctionsV8Internal::voidMethodOptionalCallbackFunctionInArgMethod(info);
 }
 
 void V8TestCallbackFunctions::voidMethodNullableCallbackFunctionInArgMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestCallbackFunctions_voidMethodNullableCallbackFunctionInArg");
 
   TestCallbackFunctionsV8Internal::voidMethodNullableCallbackFunctionInArgMethod(info);
 }
 
 void V8TestCallbackFunctions::customElementCallbacksMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestCallbackFunctions_customElementCallbacksMethod");
 
   TestCallbackFunctionsV8Internal::customElementCallbacksMethodMethod(info);
