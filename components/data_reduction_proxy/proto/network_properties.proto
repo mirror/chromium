@@ -17,6 +17,8 @@ message ProxyFlags {
 message NetworkProperties {
   optional bool secure_proxy_disallowed_by_carrier = 1;
   optional bool has_captive_portal = 2;
-  optional ProxyFlags secure_proxy_flags = 3;
-  optional ProxyFlags insecure_proxy_flags = 4;
+  optional ProxyFlags secure_core_proxy_flags = 3;
+  optional ProxyFlags insecure_core_proxy_flags = 4;
+  optional ProxyFlags secure_non_core_proxy_flags = 5;
+  optional ProxyFlags insecure_non_core_proxy_flags = 6;
 }
