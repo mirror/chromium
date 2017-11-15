@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "906443f6_fa47549c",
+        "filename": "ash/mus/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-15T22:07:05Z",
+      "side": 1,
+      "message": "I think we should get rid of the \"bridge\" directory. Do you want to do that now, since 4 of 6 files are renaming anyway?",
+      "revId": "99fe8a07570e5078fa75992137dbae542556ffa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
