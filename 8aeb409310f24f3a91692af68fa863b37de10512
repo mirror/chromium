@@ -22,6 +22,30 @@
       "revId": "8aeb409310f24f3a91692af68fa863b37de10512",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7584ece1_4f8ac31b",
+        "filename": "chrome/browser/ui/views/apps/app_info_dialog/app_info_dialog_views_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-15T07:03:43Z",
+      "side": 1,
+      "message": "Why do you ask? I\u0027d assume the answer is no because the test is passing, but I didn\u0027t think to look into the matter because this is essentially just moving code around. (I actually have no idea why DestroyProfile was repurposed in this way.)",
+      "parentUuid": "85e8b959_a7d9199b",
+      "range": {
+        "startLine": 205,
+        "startChar": 2,
+        "endLine": 205,
+        "endChar": 11
+      },
+      "revId": "8aeb409310f24f3a91692af68fa863b37de10512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

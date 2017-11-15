@@ -22,6 +22,30 @@
       "revId": "2465a5493d38ca9b3376240bcefd6325e112bf3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02afe2c_08357e94",
+        "filename": "chrome/browser/ui/browser_command_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-15T07:03:43Z",
+      "side": 0,
+      "message": "this test made more sense before this change[1] because the enabled state flipped back and forth based on the number of profiles. Now it\u0027s always on for !cros and always off for cros. I don\u0027t think the profile shutdown order is important to the test, I interpreted it as just caring about the number of profiles.\n\n[1] https://codereview.chromium.org/264303006",
+      "parentUuid": "17a4ad9e_d4fb9938",
+      "range": {
+        "startLine": 217,
+        "startChar": 26,
+        "endLine": 217,
+        "endChar": 46
+      },
+      "revId": "2465a5493d38ca9b3376240bcefd6325e112bf3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
