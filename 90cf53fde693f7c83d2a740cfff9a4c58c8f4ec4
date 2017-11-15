@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7353f09_626a7e7e",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-15T22:27:06Z",
+      "side": 1,
+      "message": "\u003e Does it need to be same-origin? Named window lookup used to work same or cross origin.\n\nIf |relative_to_frame| is an extension frame, then there should be no cross-origin frames in the same process because of --isolate-extensions.  The only exception I am aware of is when another extension shares the same process because of hitting the process limit - in this case we also want to ignore frames from the other extension - AFAIR this was the intention of the CanAccess check.\n\nThat said, maybe the CanAccess check was a very indirect way of accomplishing the above.  I\u0027ve changed the code to directly compare the GetExtensionForFrame results and I\u0027ve added a comment covering my explanation above.",
+      "parentUuid": "45983225_969552a4",
+      "revId": "90cf53fde693f7c83d2a740cfff9a4c58c8f4ec4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5295cdec_84eceaec",
         "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "90cf53fde693f7c83d2a740cfff9a4c58c8f4ec4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "673c798f_d989f664",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-15T22:27:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5295cdec_84eceaec",
+      "range": {
+        "startLine": 1136,
+        "startChar": 0,
+        "endLine": 1138,
+        "endChar": 19
+      },
+      "revId": "90cf53fde693f7c83d2a740cfff9a4c58c8f4ec4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "46780d1b_d28f1a84",
+        "filename": "third_party/WebKit/Source/core/frame/FrameTestHelpers.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-15T22:27:06Z",
+      "side": 1,
+      "message": "\u003e Nit: no \u0027class\u0027 in C++\n\nWebView is a name of a class and a name of an accessor method.  Can I land the current CL as-is and we can discuss and fix this in a follow-up CL?  Renaming WebView-\u003eGetWebView looks like a pretty massive change: https://chromium-review.googlesource.com/#/c/chromium/src/+/773103",
+      "parentUuid": "72f7d066_56eb092b",
+      "range": {
+        "startLine": 358,
+        "startChar": 38,
+        "endLine": 358,
+        "endChar": 43
+      },
+      "revId": "90cf53fde693f7c83d2a740cfff9a4c58c8f4ec4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82eb3771_f3826e82",
         "filename": "third_party/WebKit/Source/core/page/Page.h",
         "patchSetId": 5
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "9bedae2f_ebd96018",
+        "filename": "third_party/WebKit/Source/core/page/Page.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-15T22:27:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82eb3771_f3826e82",
+      "range": {
+        "startLine": 406,
+        "startChar": 5,
+        "endLine": 406,
+        "endChar": 28
+      },
+      "revId": "90cf53fde693f7c83d2a740cfff9a4c58c8f4ec4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4adeefa_95f0152a",
         "filename": "third_party/WebKit/public/web/WebView.h",
         "patchSetId": 5
@@ -102,6 +192,24 @@
       "revId": "90cf53fde693f7c83d2a740cfff9a4c58c8f4ec4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa1b614_e9d749ce",
+        "filename": "third_party/WebKit/public/web/WebView.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-15T22:27:06Z",
+      "side": 1,
+      "message": "\u003e Nit: if we can avoid adding default args, that would be nice (it looks like there\u0027s not too many places that call this directly, so hopefully it won\u0027t be too bad)\n\nDone.\n\n\u003e Another (possibly better) alternative is to keep Create() and add CreateWithOpener(), with the former forwarding to the latter.\n\nI have a slight preference toward just keeping Create - some callers don\u0027t know if they have or don\u0027t have an opener and it would seem a bit weird to call Create*With*Opener and pass a null opener.",
+      "parentUuid": "a4adeefa_95f0152a",
+      "revId": "90cf53fde693f7c83d2a740cfff9a4c58c8f4ec4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
