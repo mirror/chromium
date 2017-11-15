@@ -792,6 +792,7 @@ all_devtools_files = [
   "front_end/ui/TabbedPane.js",
   "front_end/ui/textButton.css",
   "front_end/ui/TextEditor.js",
+  "front_end/ui/Template.js",
   "front_end/ui/textPrompt.css",
   "front_end/ui/TextPrompt.js",
   "front_end/ui/ThrottledWidget.js",

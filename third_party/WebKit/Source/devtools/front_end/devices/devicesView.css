@@ -4,79 +4,9 @@
  * found in the LICENSE file.
  */
 
-.devices-container {
-    overflow: hidden;
-    flex: auto;
-}
-
-.devices-sidebar {
-    flex: 0 0 150px;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    padding-top: 15px;
-}
-
-.devices-sidebar-list {
-    flex: none;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-}
-
-.devices-sidebar-item {
-    color: #222 !important;
-    padding: 6px 6px 6px 16px;
-    flex: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-size: 14px;
-}
-
-.devices-sidebar-item.selected {
-    border-left: 6px solid #666 !important;
-    padding-left: 10px;
-}
-
-.devices-sidebar-item-status:before {
-    content: "\25cf";
-    font-size: 16px;
-    color: red;
-    position: relative;
-    top: 1px;
-    margin-right: 2px;
-}
-
-.devices-sidebar-item.device-connected .devices-sidebar-item-status:before {
-    color: green;
-}
-
-.devices-sidebar-spacer {
-    flex: none;
-}
-
-.devices-view-title {
-    font-size: 16px;
-    margin: 0 0 15px 15px;
-    padding-top: 1px;
-}
-
 .view-title {
     font-size: 16px;
     flex: none;
-}
-
-.devices-footer {
-    border-top: 1px solid #cdcdcd;
-    background-color: #f3f3f3;
-    flex: none;
-    padding: 3px 10px;
-    overflow: hidden;
-}
-
-.devices-footer > span {
-    white-space: pre;
 }
 
 .discovery-view {

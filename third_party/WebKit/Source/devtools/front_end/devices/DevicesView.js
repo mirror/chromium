@@ -8,18 +8,133 @@ Devices.DevicesView = class extends UI.VBox {
     this.registerRequiredCSS('devices/devicesView.css');
     this.contentElement.classList.add('devices-view');
 
-    var hbox = this.contentElement.createChild('div', 'hbox devices-container');
-    var sidebar = hbox.createChild('div', 'devices-sidebar');
-    sidebar.createChild('div', 'devices-view-title').createTextChild(Common.UIString('Devices'));
-    this._sidebarList = sidebar.createChild('div', 'devices-sidebar-list');
+    this._template = UI.html`
+      <hbox flex=auto style='overflow: hidden;'>
+        <vbox-stretch flex='0 0 150px' style='padding-top: 15px;'>
+          <div style='margin: 0 0 15px 15px; padding-top: 1px; font-size: 16px;'>${s`Devices`}</div>
+          <vbox-stretch flex=none>
+            <div bind=sidebarListSpacer flex=none></div>
+          </vbox-stretch>
+        </vbox-stretch>
+        <vbox bind=viewContainer flex=auto></vbox>
+      </hbox>
+      <div flex=none style='overflow: hidden; border-top: 1px solid #cdcdcd; background-color: #f3f3f3; padding: 3px 10px;'>
+        <span bind=deviceCount></span>
+        <span style='white-space: pre;'>${s` Read `}${
+          UI.createExternalLink('https://developers.google.com/chrome-developer-tools/docs/remote-debugging',
+          s`remote debugging documentation`)}${s` for more information`}</span>
+      </div>
+    `;
+
+
+    this._template = UI.html('devices/devicesView.css')`
+      <hbox class=devices-container>
+        <vbox-stretch class=devices-sidebar>
+          <div class=devices-view-title>${s`Devices`}</div>
+          <vbox-stretch class=devices-sidebar-list>
+            <div class=devices-sidebar-spacer bind=sidebarListSpacer></div>
+          </vbox-stretch>
+        </vbox-stretch>
+        <vbox class=flex-auto bind=viewContainer></vbox>
+      </hbox>
+      <div class=devices-footer>
+        <span bind=deviceCount></span>
+        <span>${s` Read `}${
+          UI.createExternalLink('https://developers.google.com/chrome-developer-tools/docs/remote-debugging',
+          s`remote debugging documentation`)}${s` for more information`}</span>
+      </div>
+    `;
+
+
+    this._template = UI.html('devices/devicesView.css')`
+      <devices-container class=hbox>
+        <devices-sidebar class=vbox-stretch>
+          <devices-view-title>${s`Devices`}</devices-view-title>
+          <devices-sidebar-list class=vbox-stretch>
+            <devices-sidebar-spacer bind=sidebarListSpacer></devices-sidebar-spacer>
+          </devices-sidebar-list>
+        </devices-sidebar>
+        <div class='vbox flex-auto' bind=viewContainer></div>
+      </devices-container>
+      <devices-footer>
+        <span bind=deviceCount></span>
+        <span>${s` Read `}${
+          UI.createExternalLink('https://developers.google.com/chrome-developer-tools/docs/remote-debugging',
+          s`remote debugging documentation`)}${s` for more information`}</span>
+      </devices-footer>
+    `;
+
+
+    this._template = UI.html('devices/devicesView.css')`
+      hbox.devices-container {
+        vbox-stretch.devices-sidebar {
+          div.devices-view-title(text='Devices')
+          vbox-stretch.devices-sidebar-list {
+            div.devices-sidebar-spacer(bind=sidebarListSpacer)
+          }
+        }
+        vbox.flex-auto(bind=viewContainer)
+      }
+      div.devices-footer {
+        span(bind=deviceCount)
+        span(text=' Read ')
+        ${UI.createExternalLink('https://developers.google.com/chrome-developer-tools/docs/remote-debugging', s`remote debugging documentation`)}
+        span(text=' for more information ')
+      }
+    `;
+
+
+    this._template = UI.html`
+      <hbox ${css`
+        flex: auto;
+        overflow: hidden;
+      `}>
+        <vbox-stretch ${css`
+          flex: 0 0 150px;
+          padding-top: 15px;
+        `}>
+          <div ${css`
+            margin: 0 0 15px 15px;
+            padding-top: 1px;
+            font-size: 16px;
+          `}>${s`Devices`}
+          </div>
+          <vbox-stretch ${css`
+            flex: none;
+          `}>
+            <div ${bind`sidebarListSpacer`}>
+            </div>
+          </vbox-stretch>
+        </vbox-stretch>
+        <vbox ${bind`viewContainer`} ${css`
+          flex: auto;
+        `}>
+        </vbox>
+      </hbox>
+      <div ${css`
+        flex:none;
+        overflow: hidden;
+        border-top: 1px solid #cdcdcd;
+        background-color: #f3f3f3;
+        padding: 3px 10px;
+        white-space: pre;
+      `}>
+        <span ${bind`deviceCount`}></span>
+        <span>${s` Read `}</span>
+        ${UI.createExternalLink('https://developers.google.com/chrome-developer-tools/docs/remote-debugging', s`remote debugging documentation`)}
+        <span>${s` for more information`}</span>
+      </div>
+    `;
+
+
+    this.contentElement.appendChild(this._template);
 
     this._discoveryView = new Devices.DevicesView.DiscoveryView();
-    this._sidebarListSpacer = this._sidebarList.createChild('div', 'devices-sidebar-spacer');
-    this._discoveryListItem = this._sidebarList.createChild('div', 'devices-sidebar-item');
-    this._discoveryListItem.textContent = Common.UIString('Settings');
-    this._discoveryListItem.addEventListener(
-        'click', this._selectSidebarListItem.bind(this, this._discoveryListItem, this._discoveryView));
-
+    this._discoveryListItem = this._createSidebarListItem(this._discoveryView);
+    this._discoveryListItem.itemTitle.textContent = s`Settings`;
+    this._discoveryListItem.itemStatus.parentNode.remove();
+    this._template.sidebarListSpacer.parentNode.appendChild(this._discoveryListItem);
+    
     /** @type {!Map<string, !Devices.DevicesView.DeviceView>} */
     this._viewById = new Map();
     /** @type {!Array<!Adb.Device>} */
@@ -31,15 +146,6 @@ Devices.DevicesView = class extends UI.VBox {
     /** @type {?UI.Widget} */
     this._visibleView = null;
 
-    this._viewContainer = hbox.createChild('div', 'flex-auto vbox');
-
-    var discoveryFooter = this.contentElement.createChild('div', 'devices-footer');
-    this._deviceCountSpan = discoveryFooter.createChild('span');
-    discoveryFooter.createChild('span').textContent = Common.UIString(' Read ');
-    discoveryFooter.appendChild(UI.createExternalLink(
-        'https://developers.google.com/chrome-developer-tools/docs/remote-debugging',
-        Common.UIString('remote debugging documentation')));
-    discoveryFooter.createChild('span').textContent = Common.UIString(' for more information.');
     this._updateFooter();
     this._selectSidebarListItem(this._discoveryListItem, this._discoveryView);
 
@@ -73,14 +179,14 @@ Devices.DevicesView = class extends UI.VBox {
       return;
 
     if (this._selectedListItem) {
-      this._selectedListItem.classList.remove('selected');
+      this._selectedListItem.selected = false;
       this._visibleView.detach();
     }
 
     this._visibleView = view;
     this._selectedListItem = listItem;
-    this._visibleView.show(this._viewContainer);
-    this._selectedListItem.classList.add('selected');
+    this._visibleView.show(this._template.viewContainer);
+    this._selectedListItem.selected = true;
   }
 
   /**
@@ -121,13 +227,12 @@ Devices.DevicesView = class extends UI.VBox {
         this._viewById.set(device.id, view);
         listItem = this._createSidebarListItem(view);
         this._listItemById.set(device.id, listItem);
-        this._sidebarList.insertBefore(listItem, this._sidebarListSpacer);
+        this._template.sidebarListSpacer.parentNode.insertBefore(listItem, this._template.sidebarListSpacer);
       }
 
-      listItem._title.textContent = device.adbModel;
-      listItem._status.textContent =
-          device.adbConnected ? Common.UIString('Connected') : Common.UIString('Pending Authorization');
-      listItem.classList.toggle('device-connected', device.adbConnected);
+      listItem.itemTitle.textContent = device.adbModel;
+      listItem.itemStatus.textContent = device.adbConnected ? s`Connected` : s`Pending Authorization`;
+      listItem.connected = device.adbConnected;
       view.update(device);
     }
 
@@ -142,11 +247,20 @@ Devices.DevicesView = class extends UI.VBox {
    * @return {!Element}
    */
   _createSidebarListItem(view) {
-    var listItem = createElementWithClass('div', 'devices-sidebar-item');
-    listItem.addEventListener('click', this._selectSidebarListItem.bind(this, listItem, view));
-    listItem._title = listItem.createChild('div', 'devices-sidebar-item-title');
-    listItem._status = listItem.createChild('div', 'devices-sidebar-item-status');
-    return listItem;
+    var item = UI.cachedHtml`
+      <vbox class=devices-sidebar-item flex=auto
+          style='color: #222 !important; padding: 6px 6px 6px 16px; font-size: 14px;'
+          toggle-selected='border-left: 6px solid #666 !important; padding-left: 10px;'>
+        <div bind=itemTitle></div>
+        <div>
+          <span style='color: red; font-size: 16px; margin: 0 2px 0 -10px;'
+              toggle-connected='color: green;'>\u25cf</span>
+          <span bind=itemStatus style='font-size: 12px;'></span>
+        </div>
+      </vbox>
+    `;
+    item.addEventListener('click', () => this._selectSidebarListItem(item, view), false);
+    return item;
   }
 
   /**
@@ -175,10 +289,9 @@ Devices.DevicesView = class extends UI.VBox {
   }
 
   _updateFooter() {
-    this._deviceCountSpan.textContent = !this._devices.length ?
-        Common.UIString('No devices detected.') :
-        this._devices.length === 1 ? Common.UIString('1 device detected.') :
-                                     Common.UIString('%d devices detected.', this._devices.length);
+    this._template.deviceCount.textContent = !this._devices.length ?
+        s`No devices detected.` :
+        this._devices.length === 1 ? s`1 device detected.` : s`${this._devices.length} devices detected.`;
   }
 
   /**
