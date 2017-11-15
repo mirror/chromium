@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3bd2b4f0_33ba14e5",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-15T23:42:46Z",
+      "side": 1,
+      "message": "Good point. Refactored a bit to do this.",
+      "parentUuid": "82d0b81b_56ebda7b",
+      "revId": "f0dac78a0a07bada08049fad12acb6479db13762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc24205b_0b244c1c",
         "filename": "cc/tiles/gpu_image_decode_cache.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-14T22:37:06Z",
       "side": 1,
       "message": "As far as I remember, the decode function would do a color conversion as well. Is that not something we want to do here?",
+      "revId": "f0dac78a0a07bada08049fad12acb6479db13762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1929d6d_cf0a79bc",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-15T23:42:46Z",
+      "side": 1,
+      "message": "Expanded the comment. Basically we need to scale in N32 colortype (step 2), so we can\u0027t go directly to target colortype if a scale is needed.",
+      "parentUuid": "cc24205b_0b244c1c",
       "revId": "f0dac78a0a07bada08049fad12acb6479db13762",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
