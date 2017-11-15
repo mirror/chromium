@@ -242,6 +242,25 @@ TEST_F(AutofillProfileValidationUtilTest,
   EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(ADDRESS_HOME_ZIP));
 }
 
+TEST_F(AutofillProfileValidationUtilTest, ValidateAddress_AdminAreaNonDefault) {
+  const std::string admin_area = "Nouveau-Brunswick";
+  const std::string postal_code = "E1A 8R5";  // A valid postal code for NB.
+  AutofillProfile profile(autofill::test::GetFullValidProfileForCanada());
+  profile.SetRawInfo(ADDRESS_HOME_STATE, base::UTF8ToUTF16(admin_area));
+  profile.SetRawInfo(ADDRESS_HOME_ZIP, base::UTF8ToUTF16(postal_code));
+
+  ValidateAddressTest(&profile);
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_COUNTRY));
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_STATE));
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_CITY));
+  EXPECT_EQ(AutofillProfile::EMPTY,
+            profile.GetValidityState(ADDRESS_HOME_DEPENDENT_LOCALITY));
+  EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(ADDRESS_HOME_ZIP));
+}
+
 TEST_F(AutofillProfileValidationUtilTest, ValidateAddress_ValidZipNoSpace) {
   const std::string postal_code = "H3C6S3";
   AutofillProfile profile(autofill::test::GetFullValidProfileForCanada());
@@ -409,19 +428,21 @@ TEST_F(AutofillProfileValidationUtilTest,
 
 TEST_F(AutofillProfileValidationUtilTest,
        ValidateFullValidProfile_LatinNameForCity) {
-  // TODO(crbug/782331): Latin version of fields should be considered as VALID.
-  // Now, they are considered as INVALID.
-
+  const std::string admin_area = "Guizhou Sheng";
   const std::string city = "Bijie Diqu";
+  const std::string district = "Weining Xian";
   AutofillProfile profile(autofill::test::GetFullValidProfileForChina());
+  profile.SetRawInfo(ADDRESS_HOME_STATE, base::UTF8ToUTF16(admin_area));
   profile.SetRawInfo(ADDRESS_HOME_CITY, base::UTF8ToUTF16(city));
+  profile.SetRawInfo(ADDRESS_HOME_DEPENDENT_LOCALITY,
+                     base::UTF8ToUTF16(district));
 
   ValidateAddressTest(&profile);
   EXPECT_EQ(AutofillProfile::VALID,
             profile.GetValidityState(ADDRESS_HOME_COUNTRY));
   EXPECT_EQ(AutofillProfile::VALID,
             profile.GetValidityState(ADDRESS_HOME_STATE));
-  EXPECT_EQ(AutofillProfile::INVALID,
+  EXPECT_EQ(AutofillProfile::VALID,
             profile.GetValidityState(ADDRESS_HOME_CITY));
   EXPECT_EQ(AutofillProfile::VALID,
             profile.GetValidityState(ADDRESS_HOME_DEPENDENT_LOCALITY));
@@ -727,8 +748,5 @@ TEST_F(AutofillProfileValidationUtilTest,
             profile.GetValidityState(PHONE_HOME_WHOLE_NUMBER));
   EXPECT_EQ(AutofillProfile::INVALID, profile.GetValidityState(EMAIL_ADDRESS));
 }
-
-// TODO(crbug/754727): add tests for a non-default language.
-// Ex: Nouveau-Brunswick for Canada.
 
 }  // namespace autofill
