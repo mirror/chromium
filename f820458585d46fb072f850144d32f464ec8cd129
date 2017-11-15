@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0f53c24_cc2f96ad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-15T08:56:54Z",
+      "side": 1,
+      "message": "Incomplete sentence.",
+      "range": {
+        "startLine": 18,
+        "startChar": 37,
+        "endLine": 18,
+        "endChar": 46
+      },
+      "revId": "f820458585d46fb072f850144d32f464ec8cd129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ec7f7b_48eddf8b",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-15T08:56:54Z",
+      "side": 1,
+      "message": "This is common code for all Linux distributions but the CL description specifically mentions Chrome OS. Could this change adversely affect standard Linux distributions? Do some of these dlopen() calls need to be made Chrome OS-specific?",
+      "range": {
+        "startLine": 259,
+        "startChar": 15,
+        "endLine": 259,
+        "endChar": 16
+      },
+      "revId": "f820458585d46fb072f850144d32f464ec8cd129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
