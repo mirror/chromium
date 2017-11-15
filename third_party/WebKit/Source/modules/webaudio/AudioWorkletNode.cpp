@@ -4,6 +4,7 @@
 
 #include "modules/webaudio/AudioWorkletNode.h"
 
+#include "modules/EventModules.h"
 #include "modules/webaudio/AudioBuffer.h"
 #include "modules/webaudio/AudioNodeInput.h"
 #include "modules/webaudio/AudioNodeOutput.h"
@@ -13,6 +14,7 @@
 #include "modules/webaudio/AudioWorkletProcessor.h"
 #include "modules/webaudio/AudioWorkletProcessorDefinition.h"
 #include "modules/webaudio/CrossThreadAudioWorkletProcessorInfo.h"
+#include "platform/CrossThreadFunctional.h"
 #include "platform/audio/AudioBus.h"
 #include "platform/audio/AudioUtilities.h"
 #include "platform/heap/Persistent.h"
@@ -48,6 +50,11 @@ AudioWorkletHandler::AudioWorkletHandler(
         ? options.outputChannelCount()[i]
         : 1;
     AddOutput(channel_count);
+  }
+
+  if (Context()->GetExecutionContext()) {
+    task_runner_ =
+        Context()->GetExecutionContext()->GetTaskRunner(TaskType::kUnthrottled);
   }
 
   Initialize();
@@ -139,6 +146,11 @@ void AudioWorkletHandler::SetProcessorOnRenderThread(
   // is different from |Context()->IsAudiothread()|.
   DCHECK(!IsMainThread());
   processor_ = processor;
+  task_runner_->PostTask(
+      BLINK_FROM_HERE,
+      CrossThreadBind(&AudioWorkletHandler::NotifyProcessorStateChange,
+                      WrapRefCounted(this),
+                      AudioWorkletProcessorState::kRunning));
 }
 
 void AudioWorkletHandler::FinishProcessorOnRenderThread() {
@@ -148,6 +160,19 @@ void AudioWorkletHandler::FinishProcessorOnRenderThread() {
   Context()->NotifySourceNodeFinishedProcessing(this);
   processor_.Clear();
   tail_time_ = 0;
+  task_runner_->PostTask(
+      BLINK_FROM_HERE,
+      CrossThreadBind(&AudioWorkletHandler::NotifyProcessorStateChange,
+                      WrapRefCounted(this),
+                      AudioWorkletProcessorState::kStopped));
+}
+
+void AudioWorkletHandler::NotifyProcessorStateChange(
+    AudioWorkletProcessorState state) {
+  DCHECK(IsMainThread());
+  if (!Context() || !Context()->GetExecutionContext() || !GetNode())
+    return;
+  static_cast<AudioWorkletNode*>(GetNode())->SetProcessorState(state);
 }
 
 // ----------------------------------------------------------------
@@ -157,7 +182,8 @@ AudioWorkletNode::AudioWorkletNode(
     const String& name,
     const AudioWorkletNodeOptions& options,
     const Vector<CrossThreadAudioParamInfo> param_info_list)
-    : AudioNode(context) {
+    : AudioNode(context),
+      processor_state_(AudioWorkletProcessorState::kPending) {
   HeapHashMap<String, Member<AudioParam>> audio_param_map;
   HashMap<String, scoped_refptr<AudioParamHandler>> param_handler_map;
   for (const auto& param_info : param_info_list) {
@@ -279,8 +305,44 @@ bool AudioWorkletNode::HasPendingActivity() const {
   return !context()->IsContextClosed();
 }
 
+void AudioWorkletNode::SetProcessorState(AudioWorkletProcessorState new_state) {
+  DCHECK(IsMainThread());
+  switch (processor_state_) {
+    case AudioWorkletProcessorState::kPending:
+      DCHECK(new_state == AudioWorkletProcessorState::kRunning ||
+             new_state == AudioWorkletProcessorState::kError);
+      break;
+    case AudioWorkletProcessorState::kRunning:
+      DCHECK(new_state == AudioWorkletProcessorState::kStopped ||
+             new_state == AudioWorkletProcessorState::kError);
+      break;
+    case AudioWorkletProcessorState::kStopped:
+    case AudioWorkletProcessorState::kError:
+      NOTREACHED()
+          << "The state never changes once it reaches kStopped or kError.";
+      return;
+  }
+  processor_state_ = new_state;
+  DispatchEvent(Event::Create(EventTypeNames::processorstatechange));
+}
+
 AudioParamMap* AudioWorkletNode::parameters() const {
   return parameter_map_;
+}
+
+String AudioWorkletNode::processorState() const {
+  switch (processor_state_) {
+    case AudioWorkletProcessorState::kPending:
+      return "pending";
+    case AudioWorkletProcessorState::kRunning:
+      return "running";
+    case AudioWorkletProcessorState::kStopped:
+      return "stopped";
+    case AudioWorkletProcessorState::kError:
+      return "error";
+  }
+  NOTREACHED();
+  return g_empty_string;
 }
 
 AudioWorkletHandler& AudioWorkletNode::GetWorkletHandler() const {
