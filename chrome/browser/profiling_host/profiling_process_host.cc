@@ -367,19 +367,7 @@ ProfilingProcessHost::Mode ProfilingProcessHost::GetCurrentMode() {
           kOOPHeapProfilingFeature, kOOPHeapProfilingFeatureMode);
     }
 
-    if (mode == switches::kMemlogModeAll)
-      return Mode::kAll;
-    if (mode == switches::kMemlogModeMinimal)
-      return Mode::kMinimal;
-    if (mode == switches::kMemlogModeBrowser)
-      return Mode::kBrowser;
-    if (mode == switches::kMemlogModeGpu)
-      return Mode::kGpu;
-    if (mode == switches::kMemlogModeRendererSampling)
-      return Mode::kRendererSampling;
-
-    DLOG(ERROR) << "Unsupported value: \"" << mode << "\" passed to --"
-                << switches::kMemlog;
+    return ConvertStringToMode(mode);
   }
   return Mode::kNone;
 #else
@@ -389,6 +377,24 @@ ProfilingProcessHost::Mode ProfilingProcessHost::GetCurrentMode() {
       << "is not available in this build.";
   return Mode::kNone;
 #endif
+}
+
+// static
+ProfilingProcessHost::Mode ProfilingProcessHost::ConvertStringToMode(
+    const std::string& mode) {
+  if (mode == switches::kMemlogModeAll)
+    return Mode::kAll;
+  if (mode == switches::kMemlogModeMinimal)
+    return Mode::kMinimal;
+  if (mode == switches::kMemlogModeBrowser)
+    return Mode::kBrowser;
+  if (mode == switches::kMemlogModeGpu)
+    return Mode::kGpu;
+  if (mode == switches::kMemlogModeRendererSampling)
+    return Mode::kRendererSampling;
+  DLOG(ERROR) << "Unsupported value: \"" << mode << "\" passed to --"
+              << switches::kMemlog;
+  return Mode::kNone;
 }
 
 // static
