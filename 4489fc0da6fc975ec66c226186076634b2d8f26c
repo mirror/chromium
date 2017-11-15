@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5431c5a1_e17dc325",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-15T13:40:50Z",
+      "side": 1,
+      "message": "`DCHECK(injected_clock_);`?",
+      "revId": "4489fc0da6fc975ec66c226186076634b2d8f26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "349a13fa_888d3f6a",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-15T13:40:50Z",
+      "side": 1,
+      "message": "Given that the function _always_ stash audible players, I would drop the \"Maybe\".",
+      "range": {
+        "startLine": 173,
+        "startChar": 38,
+        "endLine": 173,
+        "endChar": 43
+      },
+      "revId": "4489fc0da6fc975ec66c226186076634b2d8f26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0bc5f1_83099cb8",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-15T13:40:50Z",
+      "side": 1,
+      "message": "Should we only ignore playbacks that reached end of stream? Otherwise, we might ignore playback that were stopped quickly by the user?\n\nCan you add a test for this?",
+      "revId": "4489fc0da6fc975ec66c226186076634b2d8f26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6adbcdbd_9da5bdad",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-15T13:40:50Z",
+      "side": 1,
+      "message": "`DCHECK(audible_players_.empty());`\n\nAlternatively, some would do:\n`DCHECK(trigger !\u003d kVisitEnd || audible_players_.empty());`\n\nI find the latter harder to read more maybe be better in this case as we have an `if` just for the `DCHECK`.",
+      "revId": "4489fc0da6fc975ec66c226186076634b2d8f26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f3dd5d4_cd9db30e",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-15T13:40:50Z",
+      "side": 1,
+      "message": "FWIW, I think you are making these three calls together, always. Maybe it could be factored into something? Just a suggestion to improve readability.",
+      "revId": "4489fc0da6fc975ec66c226186076634b2d8f26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df91e34_6e28f846",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-15T13:40:50Z",
+      "side": 1,
+      "message": "Can you add a test for this:\n- player plays for 8 seconds\n- player paused\n- player plays for 2 seconds and reach end of strem\n\n\u003d\u003e player is recorded as significant because the 2 seconds are not used to define its length.",
+      "revId": "4489fc0da6fc975ec66c226186076634b2d8f26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eacee838_b66fed27",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-15T13:40:50Z",
+      "side": 1,
+      "message": "style: Chromium style guide requires you to name the parameter\n\nAlso, could this be `const`?",
+      "revId": "4489fc0da6fc975ec66c226186076634b2d8f26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf3e82c_76f26b09",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-15T13:40:50Z",
+      "side": 1,
+      "message": "Maybe `Media.Engagement.ShortPlaybackIgnored`? or is the idea to use the event for other type of ignore?",
+      "revId": "4489fc0da6fc975ec66c226186076634b2d8f26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e90af3d0_8f426b8b",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-15T13:40:50Z",
+      "side": 1,
+      "message": "... and allow us to tweak the length considered \"short\".",
+      "revId": "4489fc0da6fc975ec66c226186076634b2d8f26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
