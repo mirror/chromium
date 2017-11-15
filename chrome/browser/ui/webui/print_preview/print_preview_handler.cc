@@ -818,7 +818,7 @@ void PrintPreviewHandler::HandleCancelPendingPrintRequest(
   WebContents* initiator = GetInitiator();
   if (initiator)
     ClearInitiatorDetails();
-  chrome::ShowPrintErrorDialog();
+  ShowPrintErrorDialog();
 }
 
 void PrintPreviewHandler::HandleSaveAppState(const base::ListValue* args) {
