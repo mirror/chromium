@@ -249,20 +249,20 @@ void LoadStandardLibraries(
     // inside the sandbox, so preload them now.
     if (options.vaapi_accelerated_video_encode_enabled ||
         options.accelerated_video_decode_enabled) {
-      const char* I965DrvVideoPath = nullptr;
-      const char* I965HybridDrvVideoPath = nullptr;
       if (IsArchitectureX86_64()) {
-        I965DrvVideoPath = "/usr/lib64/va/drivers/i965_drv_video.so";
-        I965HybridDrvVideoPath = "/usr/lib64/va/drivers/hybrid_drv_video.so";
+        dlopen("/usr/lib64/va1/drivers/i965_drv_video.so", dlopen_flag);
+        dlopen("/usr/lib64/va1/drivers/hybrid_drv_video.so", dlopen_flag);
+        dlopen("/usr/lib64/va/drivers/i965_drv_video.so", dlopen_flag);
+        dlopen("/usr/lib64/va/drivers/hybrid_drv_video.so", dlopen_flag);
       } else if (IsArchitectureI386()) {
-        I965DrvVideoPath = "/usr/lib/va/drivers/i965_drv_video.so";
+        dlopen("/usr/lib/va1/drivers/i965_drv_video.so", dlopen_flag);
+        dlopen("/usr/lib/va/drivers/i965_drv_video.so", dlopen_flag);
       }
-      dlopen(I965DrvVideoPath, dlopen_flag);
-      if (I965HybridDrvVideoPath)
-        dlopen(I965HybridDrvVideoPath, dlopen_flag);
       dlopen("libva.so.1", dlopen_flag);
+      dlopen("libva.so.2", dlopen_flag);
 #if defined(USE_OZONE)
       dlopen("libva-drm.so.1", dlopen_flag);
+      dlopen("libva-drm.so.2", dlopen_flag);
 #elif defined(USE_X11)
       dlopen("libva-x11.so.1", dlopen_flag);
 #endif
