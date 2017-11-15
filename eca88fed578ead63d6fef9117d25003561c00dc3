@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca8aa74f_73a2e1e9",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-15T04:37:28Z",
+      "side": 1,
+      "message": "What task types do other audio tasks use?",
+      "parentUuid": "a1186d33_d621c028",
+      "range": {
+        "startLine": 57,
+        "startChar": 56,
+        "endLine": 57,
+        "endChar": 78
+      },
+      "revId": "eca88fed578ead63d6fef9117d25003561c00dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4c121be_88648f1e",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 2
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "5cbce042_378b03ee",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-15T04:37:28Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "a4925486_30462f14",
+      "revId": "eca88fed578ead63d6fef9117d25003561c00dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a2b3964_30722b0a",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 2
@@ -71,6 +113,23 @@
       "writtenOn": "2017-11-15T01:15:06Z",
       "side": 1,
       "message": "\u0027default\u0027 is not necessary because all cases are handled. We might want to move NOTREACHED() to line 328.",
+      "revId": "eca88fed578ead63d6fef9117d25003561c00dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "343ef7e0_f6c09fb9",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-15T04:37:28Z",
+      "side": 1,
+      "message": "Use an enum class.",
       "revId": "eca88fed578ead63d6fef9117d25003561c00dc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
