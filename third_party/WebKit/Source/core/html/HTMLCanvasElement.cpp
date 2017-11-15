@@ -1020,6 +1020,20 @@ HTMLCanvasElement::CreateAcceleratedImageBufferSurface(int* msaa_sample_count) {
 }
 
 std::unique_ptr<ImageBufferSurface>
+HTMLCanvasElement::CreateLowLatencyImageBufferSurface() {
+  auto surface = WTF::MakeUnique<Canvas2DLayerBridge>(
+      Size(), 0, Canvas2DLayerBridge::kLowLatency, ColorParams());
+  if (!surface->IsValid()) {
+    CanvasMetrics::CountCanvasContextUsage(
+        CanvasMetrics::kLowLatency2DCanvasImageBufferCreationFailed);
+    return nullptr;
+  }
+  CanvasMetrics::CountCanvasContextUsage(
+      CanvasMetrics::kLowLatency2DCanvasImageBufferCreated);
+  return std::move(surface);
+}
+
+std::unique_ptr<ImageBufferSurface>
 HTMLCanvasElement::CreateUnacceleratedImageBufferSurface() {
   if (ShouldUseDisplayList()) {
     auto surface = std::make_unique<RecordingImageBufferSurface>(
@@ -1069,13 +1083,12 @@ void HTMLCanvasElement::CreateImageBufferInternal(
       surface = std::move(external_surface);
   } else if (Is3d()) {
     surface = CreateWebGLImageBufferSurface();
+  } else if (context_->CreationAttributes().lowLatency()) {
+    surface = CreateLowLatencyImageBufferSurface();
+  } else if (ShouldAccelerate(kNormalAccelerationCriteria)) {
+    surface = CreateAcceleratedImageBufferSurface(&msaa_sample_count);
   } else {
-    if (ShouldAccelerate(kNormalAccelerationCriteria)) {
-      surface = CreateAcceleratedImageBufferSurface(&msaa_sample_count);
-    }
-    if (!surface) {
-      surface = CreateUnacceleratedImageBufferSurface();
-    }
+    surface = CreateUnacceleratedImageBufferSurface();
   }
   if (!surface)
     return;

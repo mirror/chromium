@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<style>
+canvas {
+  border: solid 1px;
+  cursor: crosshair;
+}
+</style>
+<p>While hovering the pointer over the canvases, the marker follows the position of the pointer.  The "low latency" canvas should be less laggy.</p>
+<p>Normal canvas</p>
+<canvas id="normal" width="800" height="600"></canvas>
+<p>Low latency canvas</p>
+<canvas id="low" width="800" height="600"></canvas>
+<p>Offscreen canvas</p>
+<canvas id="oc" width="800" height="600"></canvas>
+
+<script>
+let ll_canvas = document.getElementById("low");
+let ll_ctx = ll_canvas.getContext("2d", {alpha: false, lowLatency: true});
+
+followPointer(ll_canvas, ll_ctx);
+
+let n_canvas = document.getElementById("normal");
+let n_ctx = n_canvas.getContext("2d");
+
+followPointer(n_canvas, n_ctx);
+
+let o_canvas = document.getElementById("oc");
+let o_ctx = o_canvas.transferControlToOffscreen().getContext("2d");
+
+followPointer(o_canvas, o_ctx);
+
+function followPointer(canvas, ctx) {
+  ctx.fillStyle='white';
+  ctx.fillRect(0, 0, ll_canvas.width, ll_canvas.height);
+  let x = 0;
+  let y = 0;
+  ctx.strokeStyle = 'red';
+  ctx.lineWidth = 3;
+  ctx.fillStyle = 'white';
+  canvas.addEventListener('mousemove', e => {
+    // clear previous marker
+    ctx.fillRect(x - 22, y - 22, 44, 44);
+
+    let client_rect = canvas.getBoundingClientRect();
+
+    let oldX = x;
+    let oldY = y;
+    x = e.clientX - client_rect.x;
+    y = e.clientY - client_rect.y;
+
+    // paint new marker
+    ctx.beginPath();
+    ctx.moveTo(x - 20, y - 20);
+    ctx.lineTo(x + 20, y + 20);
+    ctx.moveTo(x + 20, y - 20);
+    ctx.lineTo(x - 20, y + 20);
+    ctx.stroke();
+    if (ctx.commit)
+      ctx.commit();
+  });
+
+}
+
+
+</script>

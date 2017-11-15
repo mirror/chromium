@@ -56,6 +56,7 @@ class PLATFORM_EXPORT AcceleratedImageBufferSurface
   PaintCanvas* Canvas() override { return canvas_.get(); }
   bool IsValid() const override;
   bool IsAccelerated() const override { return true; }
+  bool IsComposited() const override { return true; }
   scoped_refptr<StaticBitmapImage> NewImageSnapshot(AccelerationHint,
                                                     SnapshotReason) override;
   GLuint GetBackingTextureHandleForOverwrite() override;
