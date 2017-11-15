@@ -144,7 +144,7 @@ class PLATFORM_EXPORT RendererMetricsHelper {
       TaskDurationMetricReporter<MainThreadTaskQueue::QueueType>;
 
   TaskDurationPerQueueTypeMetricReporter task_duration_reporter;
-  TaskDurationPerQueueTypeMetricReporter foreground_task_duration_reporter;
+  /*TaskDurationPerQueueTypeMetricReporter foreground_task_duration_reporter;
   TaskDurationPerQueueTypeMetricReporter
       foreground_first_minute_task_duration_reporter;
   TaskDurationPerQueueTypeMetricReporter
@@ -168,7 +168,7 @@ class PLATFORM_EXPORT RendererMetricsHelper {
       background_after_fifth_minute_task_duration_reporter;
   TaskDurationPerQueueTypeMetricReporter hidden_task_duration_reporter;
   TaskDurationPerQueueTypeMetricReporter visible_task_duration_reporter;
-  TaskDurationPerQueueTypeMetricReporter hidden_music_task_duration_reporter;
+  TaskDurationPerQueueTypeMetricReporter hidden_music_task_duration_reporter;*/
 
   TaskDurationMetricReporter<FrameType> frame_type_duration_reporter;
   MainThreadTaskLoadState main_thread_task_load_state;

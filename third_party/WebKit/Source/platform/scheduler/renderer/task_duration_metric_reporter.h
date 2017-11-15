@@ -30,16 +30,17 @@ template <class TaskClass>
 class PLATFORM_EXPORT TaskDurationMetricReporter {
  public:
   explicit TaskDurationMetricReporter(const char* metric_name)
-      : TaskDurationMetricReporter(base::Histogram::FactoryGet(
-            metric_name,
-            1,
-            static_cast<int>(TaskClass::kCount),
-            static_cast<int>(TaskClass::kCount) + 1,
-            base::HistogramBase::kUmaTargetedHistogramFlag)) {}
+      : metric_name_(metric_name) {}
 
   ~TaskDurationMetricReporter() {}
 
   void RecordTask(TaskClass task_class, base::TimeDelta duration) {
+    RecordTaskWithPostfix(task_class, "", duration);
+  }
+
+  void RecordTaskWithPostfix(TaskClass task_class,
+                             const char* postfix,
+                             base::TimeDelta duration) {
     DCHECK_LT(static_cast<int>(task_class),
               static_cast<int>(TaskClass::kCount));
     // Report only whole milliseconds to avoid overflow.
@@ -49,20 +50,37 @@ class PLATFORM_EXPORT TaskDurationMetricReporter {
     int64_t milliseconds = unreported_duration.InMilliseconds();
     if (milliseconds > 0) {
       unreported_duration -= base::TimeDelta::FromMilliseconds(milliseconds);
-      task_duration_per_queue_type_histogram_->AddCount(
-          static_cast<int>(task_class), static_cast<int>(milliseconds));
+      GetHistogram(postfix)->AddCount(static_cast<int>(task_class),
+                                      static_cast<int>(milliseconds));
     }
   }
 
  private:
   FRIEND_TEST_ALL_PREFIXES(TaskDurationMetricReporterTest, Test);
 
-  TaskDurationMetricReporter(base::HistogramBase* histogram)
-      : task_duration_per_queue_type_histogram_(histogram) {}
+  base::HistogramBase* GetHistogram(const char* postfix) {
+    auto pair = histograms_.find(postfix);
+    if (pair != histograms_.end())
+      return pair->second;
+
+    base::HistogramBase* histogram = base::Histogram::FactoryGet(
+        metric_name_ + postfix, 1, static_cast<int>(TaskClass::kCount),
+        static_cast<int>(TaskClass::kCount) + 1,
+        base::HistogramBase::kUmaTargetedHistogramFlag);
+    histograms_[postfix] = histogram;
+    return histogram;
+  }
+
+  void SetHistogramForTesting(const char* postfix,
+                              base::HistogramBase* histogram) {
+    histograms_[postfix] = histogram;
+  }
 
   std::array<base::TimeDelta, static_cast<size_t>(TaskClass::kCount)>
       unreported_task_duration_;
-  base::HistogramBase* task_duration_per_queue_type_histogram_;
+
+  std::string metric_name_;
+  std::map<std::string, base::HistogramBase*> histograms_;
 
   DISALLOW_COPY_AND_ASSIGN(TaskDurationMetricReporter);
 };

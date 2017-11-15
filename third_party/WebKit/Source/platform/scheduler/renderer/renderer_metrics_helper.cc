@@ -127,34 +127,6 @@ RendererMetricsHelper::RendererMetricsHelper(
                      base::Unretained(this)),
           kThreadLoadTrackerReportingInterval),
       task_duration_reporter(TASK_DURATION_METRIC_NAME),
-      foreground_task_duration_reporter(TASK_DURATION_METRIC_NAME
-                                        ".Foreground"),
-      foreground_first_minute_task_duration_reporter(TASK_DURATION_METRIC_NAME
-                                                     ".Foreground.FirstMinute"),
-      foreground_second_minute_task_duration_reporter(
-          TASK_DURATION_METRIC_NAME ".Foreground.SecondMinute"),
-      foreground_third_minute_task_duration_reporter(TASK_DURATION_METRIC_NAME
-                                                     ".Foreground.ThirdMinute"),
-      foreground_after_third_minute_task_duration_reporter(
-          TASK_DURATION_METRIC_NAME ".Foreground.AfterThirdMinute"),
-      background_task_duration_reporter(TASK_DURATION_METRIC_NAME
-                                        ".Background"),
-      background_first_minute_task_duration_reporter(TASK_DURATION_METRIC_NAME
-                                                     ".Background.FirstMinute"),
-      background_second_minute_task_duration_reporter(
-          TASK_DURATION_METRIC_NAME ".Background.SecondMinute"),
-      background_third_minute_task_duration_reporter(TASK_DURATION_METRIC_NAME
-                                                     ".Background.ThirdMinute"),
-      background_fourth_minute_task_duration_reporter(
-          TASK_DURATION_METRIC_NAME ".Background.FourthMinute"),
-      background_fifth_minute_task_duration_reporter(TASK_DURATION_METRIC_NAME
-                                                     ".Background.FifthMinute"),
-      background_after_fifth_minute_task_duration_reporter(
-          TASK_DURATION_METRIC_NAME ".Background.AfterFifthMinute"),
-      hidden_task_duration_reporter(TASK_DURATION_METRIC_NAME ".Hidden"),
-      visible_task_duration_reporter(TASK_DURATION_METRIC_NAME ".Visible"),
-      hidden_music_task_duration_reporter(TASK_DURATION_METRIC_NAME
-                                          ".HiddenMusic"),
       frame_type_duration_reporter(PER_FRAME_TYPE_METRIC_NAME),
       main_thread_task_load_state(MainThreadTaskLoadState::kUnknown) {
   main_thread_load_tracker.Resume(now);
@@ -263,76 +235,86 @@ void RendererMetricsHelper::RecordTaskMetrics(MainThreadTaskQueue* queue,
   task_duration_reporter.RecordTask(queue_type, duration);
 
   if (renderer_scheduler_->main_thread_only().renderer_backgrounded) {
-    background_task_duration_reporter.RecordTask(queue_type, duration);
+    task_duration_reporter.RecordTaskWithPostfix(queue_type, ".Background",
+                                                 duration);
 
     // Collect detailed breakdown for first five minutes given that we stop
     // timers on mobile after five minutes.
     base::TimeTicks backgrounded_at =
         renderer_scheduler_->main_thread_only().background_status_changed_at;
 
-    background_first_minute_task_duration_reporter.RecordTask(
-        queue_type, DurationOfIntervalOverlap(
-                        start_time, end_time, backgrounded_at,
-                        backgrounded_at + base::TimeDelta::FromMinutes(1)));
+    task_duration_reporter.RecordTaskWithPostfix(
+        queue_type, ".Background.FirstMinute",
+        DurationOfIntervalOverlap(
+            start_time, end_time, backgrounded_at,
+            backgrounded_at + base::TimeDelta::FromMinutes(1)));
 
-    background_second_minute_task_duration_reporter.RecordTask(
-        queue_type, DurationOfIntervalOverlap(
-                        start_time, end_time,
-                        backgrounded_at + base::TimeDelta::FromMinutes(1),
-                        backgrounded_at + base::TimeDelta::FromMinutes(2)));
+    task_duration_reporter.RecordTaskWithPostfix(
+        queue_type, ".Background.SecondMinute",
+        DurationOfIntervalOverlap(
+            start_time, end_time,
+            backgrounded_at + base::TimeDelta::FromMinutes(1),
+            backgrounded_at + base::TimeDelta::FromMinutes(2)));
 
-    background_third_minute_task_duration_reporter.RecordTask(
-        queue_type, DurationOfIntervalOverlap(
-                        start_time, end_time,
-                        backgrounded_at + base::TimeDelta::FromMinutes(2),
-                        backgrounded_at + base::TimeDelta::FromMinutes(3)));
+    task_duration_reporter.RecordTaskWithPostfix(
+        queue_type, ".Background.ThirdMinute",
+        DurationOfIntervalOverlap(
+            start_time, end_time,
+            backgrounded_at + base::TimeDelta::FromMinutes(2),
+            backgrounded_at + base::TimeDelta::FromMinutes(3)));
 
-    background_fourth_minute_task_duration_reporter.RecordTask(
-        queue_type, DurationOfIntervalOverlap(
-                        start_time, end_time,
-                        backgrounded_at + base::TimeDelta::FromMinutes(3),
-                        backgrounded_at + base::TimeDelta::FromMinutes(4)));
+    task_duration_reporter.RecordTaskWithPostfix(
+        queue_type, ".Background.FourthMinute",
+        DurationOfIntervalOverlap(
+            start_time, end_time,
+            backgrounded_at + base::TimeDelta::FromMinutes(3),
+            backgrounded_at + base::TimeDelta::FromMinutes(4)));
 
-    background_fifth_minute_task_duration_reporter.RecordTask(
-        queue_type, DurationOfIntervalOverlap(
-                        start_time, end_time,
-                        backgrounded_at + base::TimeDelta::FromMinutes(4),
-                        backgrounded_at + base::TimeDelta::FromMinutes(5)));
+    task_duration_reporter.RecordTaskWithPostfix(
+        queue_type, ".Background.FifthMinute",
+        DurationOfIntervalOverlap(
+            start_time, end_time,
+            backgrounded_at + base::TimeDelta::FromMinutes(4),
+            backgrounded_at + base::TimeDelta::FromMinutes(5)));
 
-    background_after_fifth_minute_task_duration_reporter.RecordTask(
-        queue_type,
+    task_duration_reporter.RecordTaskWithPostfix(
+        queue_type, ".Background.AfterFifthMinute",
         DurationOfIntervalOverlap(
             start_time, end_time,
             backgrounded_at + base::TimeDelta::FromMinutes(5),
             std::max(backgrounded_at + base::TimeDelta::FromMinutes(5),
                      end_time)));
   } else {
-    foreground_task_duration_reporter.RecordTask(queue_type, duration);
+    task_duration_reporter.RecordTaskWithPostfix(queue_type, ".Foreground",
+                                                 duration);
 
     // For foreground tabs we do not expect such a notable difference as it is
     // the case with background tabs, so we limit breakdown to three minutes.
     base::TimeTicks foregrounded_at =
         renderer_scheduler_->main_thread_only().background_status_changed_at;
 
-    foreground_first_minute_task_duration_reporter.RecordTask(
-        queue_type, DurationOfIntervalOverlap(
-                        start_time, end_time, foregrounded_at,
-                        foregrounded_at + base::TimeDelta::FromMinutes(1)));
+    task_duration_reporter.RecordTaskWithPostfix(
+        queue_type, ".Foreground.FirstMinute",
+        DurationOfIntervalOverlap(
+            start_time, end_time, foregrounded_at,
+            foregrounded_at + base::TimeDelta::FromMinutes(1)));
 
-    foreground_second_minute_task_duration_reporter.RecordTask(
-        queue_type, DurationOfIntervalOverlap(
-                        start_time, end_time,
-                        foregrounded_at + base::TimeDelta::FromMinutes(1),
-                        foregrounded_at + base::TimeDelta::FromMinutes(2)));
+    task_duration_reporter.RecordTaskWithPostfix(
+        queue_type, ".Foreground.SecondMinute",
+        DurationOfIntervalOverlap(
+            start_time, end_time,
+            foregrounded_at + base::TimeDelta::FromMinutes(1),
+            foregrounded_at + base::TimeDelta::FromMinutes(2)));
 
-    foreground_third_minute_task_duration_reporter.RecordTask(
-        queue_type, DurationOfIntervalOverlap(
-                        start_time, end_time,
-                        foregrounded_at + base::TimeDelta::FromMinutes(2),
-                        foregrounded_at + base::TimeDelta::FromMinutes(3)));
+    task_duration_reporter.RecordTaskWithPostfix(
+        queue_type, ".Foreground.ThirdMinute",
+        DurationOfIntervalOverlap(
+            start_time, end_time,
+            foregrounded_at + base::TimeDelta::FromMinutes(2),
+            foregrounded_at + base::TimeDelta::FromMinutes(3)));
 
-    foreground_after_third_minute_task_duration_reporter.RecordTask(
-        queue_type,
+    task_duration_reporter.RecordTaskWithPostfix(
+        queue_type, ".Foreground.AfterThirdMinute",
         DurationOfIntervalOverlap(
             start_time, end_time,
             foregrounded_at + base::TimeDelta::FromMinutes(3),
@@ -341,14 +323,17 @@ void RendererMetricsHelper::RecordTaskMetrics(MainThreadTaskQueue* queue,
   }
 
   if (renderer_scheduler_->main_thread_only().renderer_hidden) {
-    hidden_task_duration_reporter.RecordTask(queue_type, duration);
+    task_duration_reporter.RecordTaskWithPostfix(queue_type, ".Hidden",
+                                                 duration);
 
     if (renderer_scheduler_->ShouldDisableThrottlingBecauseOfAudio(
             start_time)) {
-      hidden_music_task_duration_reporter.RecordTask(queue_type, duration);
+      task_duration_reporter.RecordTaskWithPostfix(queue_type, ".HiddenMusic",
+                                                   duration);
     }
   } else {
-    visible_task_duration_reporter.RecordTask(queue_type, duration);
+    task_duration_reporter.RecordTaskWithPostfix(queue_type, ".Visible",
+                                                 duration);
   }
 
   frame_type_duration_reporter.RecordTask(

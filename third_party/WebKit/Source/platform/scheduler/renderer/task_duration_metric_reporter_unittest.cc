@@ -55,7 +55,8 @@ TEST(TaskDurationMetricReporterTest, Test) {
   FakeHistogram histogram;
 
   TaskDurationMetricReporter<MainThreadTaskQueue::QueueType> metric_reporter(
-      &histogram);
+      "");
+  metric_reporter.SetHistogramForTesting("", &histogram);
 
   EXPECT_CALL(histogram, AddCount(2, 3));
   metric_reporter.RecordTask(static_cast<MainThreadTaskQueue::QueueType>(2),
