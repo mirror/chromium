@@ -9,17 +9,12 @@
         {
           "object": "LayoutView #document",
           "rect": [0, 0, 800, 600],
-          "reason": "background"
+          "reason": "style change"
         },
         {
-          "object": "LayoutBlockFlow DIV class='item1'",
-          "rect": [0, 52, 150, 300],
-          "reason": "geometry"
-        },
-        {
-          "object": "LayoutBlockFlow DIV class='item1'",
-          "rect": [-50, 52, 150, 300],
-          "reason": "geometry"
+          "object": "LayoutBlockFlow HTML",
+          "rect": [0, 0, 800, 170],
+          "reason": "style change"
         }
       ]
     }
@@ -27,14 +22,14 @@
   "objectPaintInvalidations": [
     {
       "object": "LayoutView #document",
-      "reason": "background"
+      "reason": "style change"
     },
     {
-      "object": "LayoutBlockFlow DIV class='item1'",
-      "reason": "geometry"
+      "object": "LayoutBlockFlow HTML",
+      "reason": "style change"
     },
     {
-      "object": "LayoutBlockFlow DIV",
+      "object": "LayoutBlockFlow DIV id='div'",
       "reason": "geometry"
     }
   ]
