@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c26221da_45668214",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-15T16:35:17Z",
+      "side": 1,
+      "message": "BUG:  With the above change, this is now nullptr.\n\nWe\u0027ll probably have to move creating and setting the ct_tree_tracker to some point after the system_network_context is created in this method.\n\nThe fact that no test caught this seems like a problem.  Add a test?",
+      "range": {
+        "startLine": 826,
+        "startChar": 15,
+        "endLine": 826,
+        "endChar": 26
+      },
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4d682bc_ffe36154",
         "filename": "components/certificate_transparency/single_tree_tracker.cc",
         "patchSetId": 5
@@ -13,6 +36,30 @@
       "writtenOn": "2017-11-15T11:52:40Z",
       "side": 1,
       "message": "FYI, this code assumes that the cache entries will have address_family \u003d\u003d ADDRESS_FAMILY_UNSPECIFIED and host_resolver_flags \u003d\u003d 0. I\u0027m not sure for what proportion of users that assumption doesn\u0027t hold. Any idea? I could work around this by adding a Lookup(hostname) method to HostCache that ignores the address family and flags, if necessary.",
+      "range": {
+        "startLine": 280,
+        "startChar": 2,
+        "endLine": 281,
+        "endChar": 45
+      },
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1067a153_23146e00",
+        "filename": "components/certificate_transparency/single_tree_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-15T16:35:17Z",
+      "side": 1,
+      "message": "If you\u0027re using a SOCKS4 proxy, always, but in general, I\u0027m not sure.\n\nIf you look are our resolution time histograms (https://uma.googleplex.com/timeline_v2?sid\u003d36fa4a17db310431882a6a4f73b3f163)...It actually looks like 75% are IPv4, but that can\u0027t be right...Can it?  It does ignore \"speculative requests\", so I suppose that could be it.",
+      "parentUuid": "e4d682bc_ffe36154",
       "range": {
         "startLine": 280,
         "startChar": 2,
