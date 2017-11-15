@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faf3ffc6_6edc66d7",
+        "filename": "chrome/android/java/res/layout/main.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-15T00:08:36Z",
+      "side": 1,
+      "message": "I think we should use a ViewStub here and lazily inflate this when the first dialog is shown.",
+      "range": {
+        "startLine": 57,
+        "startChar": 13,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b0574cb_65727ddf",
+        "filename": "chrome/android/java/res/layout/modal_dialog_view.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-15T00:08:36Z",
+      "side": 1,
+      "message": "Is it the intent to use this long term?\n\nShould this be renamed to dialog_bg?\n\nI know our menu asset used to be biased with the shadow towards the bottom, but I\u0027m not sure that is still the case.",
+      "range": {
+        "startLine": 13,
+        "startChar": 34,
+        "endLine": 13,
+        "endChar": 41
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a115d4b0_f2b097c4",
+        "filename": "chrome/android/java/res/layout/modal_dialog_view.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-15T00:08:36Z",
+      "side": 1,
+      "message": "same general comment, should we rename this value?",
+      "range": {
+        "startLine": 14,
+        "startChar": 28,
+        "endLine": 14,
+        "endChar": 50
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc945175_898ffc9b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-15T00:08:36Z",
+      "side": 1,
+      "message": "why have this in CTA?  I think we want the concept of TabModal in other activities.  For example, CustomTabs would allow access the custom tab toolbar while only obscuring the page.\n\nWe might need to add the concept of \"supportsTabModalDialogs\" at the activity level, but I think we should start with supporting it on other activity types.",
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575e216e_eecea826",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2181,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-15T00:08:36Z",
+      "side": 1,
+      "message": "nit, align with \"The {...\" above",
+      "range": {
+        "startLine": 2181,
+        "startChar": 7,
+        "endLine": 2181,
+        "endChar": 17
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a7af166_76bed7c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-15T00:08:36Z",
+      "side": 1,
+      "message": "any reason these protected?  I\u0027d rather expose getters where needed instead of providing this access.\n\nShould these be final?",
+      "range": {
+        "startLine": 52,
+        "startChar": 14,
+        "endLine": 52,
+        "endChar": 22
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79a9d75e_9818c84e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-15T00:08:36Z",
+      "side": 1,
+      "message": "need javadoc for isTabModal",
+      "range": {
+        "startLine": 74,
+        "startChar": 85,
+        "endLine": 74,
+        "endChar": 95
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e31d9de_90a2ea0a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-15T00:08:36Z",
+      "side": 1,
+      "message": "Hmm...this seems kind of odd to me (for this class to be accessing the manager).\n\nAs a client, I think it might be better to do:\n\nModalDialog dialog \u003d new ModalDialog(\n    new Controller() { onUserDidStuff() {}});\nDialogManager.getForContext(context).show(dialog);\n\nThat would change ModalDialog\u0027s interface slightly as the activity wouldn\u0027t necessarily be passed in the constructor.  Maybe prepareBeforeShow would now take the context.  But I think it would be nice for the manager to be in charge of determining what container the dialog should be in.\n\nThe DialogManager.getForContext(...) could be a longer term strategy (definitely not in this CL) for when this lives outside of chrome/ and we\u0027d want to be able for dialogs in content/ ui/ to use this logic w/o the complexity to live anywhere but chrome.\n\nMy broad thinking is that it would be nice if ModalDialogs didn\u0027t care whether they were going to be plopped into the tab modal world or app modal world.  The manager would handle wrapping the view\u0027s in the correct container based on what is requested.\n\nI suspect this is quite long winded for a comment and potentially unclear.  We should sync on the design doc and see what makes sense here.",
+      "range": {
+        "startLine": 149,
+        "startChar": 21,
+        "endLine": 149,
+        "endChar": 31
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6041d5c9_c9b73f30",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-15T00:08:36Z",
+      "side": 1,
+      "message": "This has to be called before show right?\n\nShould we have any checks to prevent this from being called at an incorrect time?",
+      "range": {
+        "startLine": 195,
+        "startChar": 16,
+        "endLine": 195,
+        "endChar": 29
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "403bfaf9_821511ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-15T00:08:36Z",
+      "side": 1,
+      "message": "looks like this is the only reason you need to keep an mCustomLayout variable.  I think we should pull out mScrollView in the constructor and not have to keep the custom layout reference",
+      "range": {
+        "startLine": 45,
+        "startChar": 13,
+        "endLine": 45,
+        "endChar": 23
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd9bc06_8c2a4ec4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-15T00:08:36Z",
+      "side": 1,
+      "message": "Seems like the message, promptText, and suppresscheckbox visibility could all be passed in via the constructor.  Do these ever change after the dialog has been shown/set initially?  It would be nice to just have to expose the getters.",
+      "range": {
+        "startLine": 62,
+        "startChar": 16,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "305eeca6_6a0de7b9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-15T00:08:36Z",
+      "side": 1,
+      "message": "should we have this here:\nassert isTabModal();",
+      "range": {
+        "startLine": 91,
+        "startChar": 8,
+        "endLine": 91,
+        "endChar": 25
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
