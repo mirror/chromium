@@ -173,8 +173,22 @@ public class PlatformSensor implements SensorEventListener {
      */
     @CalledByNative
     protected void stopSensor() {
-        unregisterListener();
-        mProvider.sensorStopped(this);
+        try {
+            unregisterListener();
+        } catch (NullPointerException e) {
+            // The NullPointerException are occasionally thrown on some old Android devices,
+            // see crbug.com/780220.
+            Log.w(TAG, "Failed to unregister sensor: " + mSensor.getName());
+        }
+
+        try {
+            mProvider.sensorStopped(this);
+        } catch (NullPointerException e) {
+            // The NullPointerException are occasionally thrown on some old Android devices,
+            // see crbug.com/780220.
+            Log.w(TAG, "Failed to notify sensor stopped: " + mSensor.getName());
+        }
+
         mCurrentPollingFrequency = 0;
     }
 
