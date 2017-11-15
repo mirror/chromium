@@ -16,6 +16,24 @@
       "revId": "60f844ee094ef1a203b66b13409f1e8426277fae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c66fcdf_a7e621f1",
+        "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-15T06:45:42Z",
+      "side": 1,
+      "message": "Hm, that\u0027s essentially moved from the move ctor of the previous impl. And it looks wrong to me.\n\nWithout this, some tests seem to fail as http://crrev.com/c/742824/5.\n\nyutak: Could you rebase this CL onto http://crrev.com/c/770922, and remove the DETACH_FROM_SEQUENCE? Or, remove it later as a follow up?",
+      "parentUuid": "b4fc517a_77e1f14f",
+      "revId": "60f844ee094ef1a203b66b13409f1e8426277fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
