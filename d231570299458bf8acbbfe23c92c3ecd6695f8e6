@@ -1,0 +1,512 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf23c0ad_6c2473d4",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "DVLOGF?",
+      "range": {
+        "startLine": 19,
+        "startChar": 22,
+        "endLine": 19,
+        "endChar": 26
+      },
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "312d98d0_0929a701",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "Preferably a DCHECK(), but personally I\u0027d remove this and let the while() loop check this as it does now.",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2560356b_60632b05",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "Do we need \"\u0026\u0026\"s ? I think that (from callback documentation, https://chromium.googlesource.com/chromium/src/+/master/docs/callback.md), when a method consumes a callback, it should take it by value?",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebeab9ba_27d6e1ce",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "Should this be if (callback) ?",
+      "range": {
+        "startLine": 250,
+        "startChar": 9,
+        "endLine": 250,
+        "endChar": 17
+      },
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac737fdd_6fccc388",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "Here as well?",
+      "range": {
+        "startLine": 257,
+        "startChar": 9,
+        "endLine": 257,
+        "endChar": 17
+      },
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e7fb1c9_9bdac10e",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "Should we be setting error_state_ when we client_-\u003eNotifyError (just like this-\u003eNotifyError() does), here and in other locations?",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629395bf_d666a236",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "The alignment is now being done in the PBM in the current version.",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bdbad48_e4ca2847",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "We used to limit the allowed number of input buffers. I think we should perhaps do the same here. I think we might also prefer to avoid having a set indexed by unique_ptr.\n\nPerhaps we could have a vector instead, and don\u0027t allow it to grow more than a predefined limit.",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b813efd_d219bc21",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "Do we need to client-\u003eNotifyError() ?",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82cf56fc_40177a76",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "If for any reason the bitstream buffer does not end up being passed to the vda (if the request is cancelled, or we are destroyed), we need to close the handle duplicated in l.402 above.\n\nPerhaps it would be simpler to have a class that would do this for us automatically, as in the current implementation?",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554c4969_9fced08a",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "Should this be if (!base::IsValueInRangeForNumericType\u003cint32_t\u003e(count) || count \u003e kMaxBufferCount) ?",
+      "range": {
+        "startLine": 434,
+        "startChar": 6,
+        "endLine": 435,
+        "endChar": 29
+      },
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b991cc_264043bc",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "I think we should drop the existing output protected buffer handles here. We keep the handles in GAVDA on behalf of the client to keep the mappings from client handle to protected buffer while the client still uses them. The VDAs themselves don\u0027t need the mappings, as they only keep a ref to the underlying protected buffer, so it should be fine to drop them without VDA dismissing them.\n\nAs a side note, the VDA API technically allows assigning more buffers, in addition to the existing ones, but GAVDA simplifies this case and, in the old API, SetNumberOfOutputBuffers() was dropping the old ones. If the new client does not assume otherwise, it should be enough to continue doing this here as well.",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bda8b41_083bd3ee",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "picture_buffer_id",
+      "range": {
+        "startLine": 463,
+        "startChar": 25,
+        "endLine": 463,
+        "endChar": 38
+      },
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6712c61d_aecfa33b",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "Probably not needed.",
+      "range": {
+        "startLine": 464,
+        "startChar": 13,
+        "endLine": 464,
+        "endChar": 63
+      },
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70d84a7_02c38715",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "HANDLE_EINTR()",
+      "range": {
+        "startLine": 478,
+        "startChar": 33,
+        "endLine": 478,
+        "endChar": 36
+      },
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc10ae7_68bbfa66",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "If ImportBufferForPicture() is called more than once for given picture_buffer_id, we should be dropping the old protected buffer handle. So we may need to keep a map of picture_buffer_id to ProtectedBufferHandle and release the old one here.\n\nHowever, if so, and if we only allow [0; count - 1] picture_buffer_id range (please see also comment at l.447), perhaps we should just have a std::vector [0; count - 1] for output buffers, use picture_buffer_id to index into it, clear() it when we re-AssignPictureBuffers(), and use it here to look up any existing handles/create new ones?",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffdc14e9_b6bd9a56",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "picture_buffer_id",
+      "range": {
+        "startLine": 484,
+        "startChar": 20,
+        "endLine": 484,
+        "endChar": 25
+      },
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a20618f_925499c3",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "We should surround code using ozone-only members with #if defined(USE_OZONE) (please see l.510). Looks like this might\u0027ve been missed from the current implementation.",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436442e0_ec21890d",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "I wonder if we could perhaps make the request a base::OnceCallback\u003cvoid\u003e(media::VideoDecodeAccelerator* ) to avoid binding a raw pointer and any potential vda_ lifetime issues?",
+      "range": {
+        "startLine": 543,
+        "startChar": 49,
+        "endLine": 543,
+        "endChar": 60
+      },
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e5fdde_3564bb10",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "pending_callback_",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 22
+      },
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8543d65c_4f8026cb",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "Please document.",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db472630_ecc4cbf2",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "error_state_",
+      "range": {
+        "startLine": 114,
+        "startChar": 6,
+        "endLine": 114,
+        "endChar": 19
+      },
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8b58d0d_be40a94a",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "Please document.",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c38d8198_bc546927",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "Please document.",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a6eadd8_76e4256c",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "Perhaps size_t output_buffer_count_ ?",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5047e37a_44a68a6c",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "I think the current implementation actually only checks if we have an existing protected buffer for handle_fd, and does not check if we already allocated for this picture_buffer_id.\n\nBut I think we should lookup/allocate by picture_buffer_id, as I suggested in the implementation, so after that this would be correct.",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

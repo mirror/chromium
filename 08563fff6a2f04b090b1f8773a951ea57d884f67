@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "140cdf35_283317fc",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "I meant that there is no more size alignment being done in GAVDA in the current version, so this should be removed during rebase.",
+      "parentUuid": "7e524868_2930cf55",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5f7014f_faca7e7d",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 14
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "This is needed.",
       "parentUuid": "e5f7014f_faca7e7d",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f062c290_73713ee8",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T07:34:38Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "8358ad53_f792edeb",
       "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
