@@ -27,6 +27,8 @@ class MEDIA_MOJO_EXPORT MojoAudioInputStream
   using CreateDelegateCallback =
       base::OnceCallback<std::unique_ptr<AudioInputDelegate>(
           AudioInputDelegate::EventHandler*)>;
+  using DeleterCallback =
+      base::OnceCallback<void(media::mojom::AudioInputStream*)>;
 
   // |create_delegate_callback| is used to obtain an AudioInputDelegate for the
   // stream in the constructor. |stream_created_callback| is called when the
@@ -37,7 +39,7 @@ class MEDIA_MOJO_EXPORT MojoAudioInputStream
                        mojom::AudioInputStreamClientPtr client,
                        CreateDelegateCallback create_delegate_callback,
                        StreamCreatedCallback stream_created_callback,
-                       base::OnceClosure deleter_callback);
+                       DeleterCallback deleter_callback);
 
   ~MojoAudioInputStream() override;
 
@@ -61,7 +63,7 @@ class MEDIA_MOJO_EXPORT MojoAudioInputStream
   SEQUENCE_CHECKER(sequence_checker_);
 
   StreamCreatedCallback stream_created_callback_;
-  base::OnceClosure deleter_callback_;
+  DeleterCallback deleter_callback_;
   mojo::Binding<AudioInputStream> binding_;
   mojom::AudioInputStreamClientPtr client_;
   std::unique_ptr<AudioInputDelegate> delegate_;

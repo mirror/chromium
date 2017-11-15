@@ -19,7 +19,7 @@ MojoAudioInputStream::MojoAudioInputStream(
     mojom::AudioInputStreamClientPtr client,
     CreateDelegateCallback create_delegate_callback,
     StreamCreatedCallback stream_created_callback,
-    base::OnceClosure deleter_callback)
+    DeleterCallback deleter_callback)
     : stream_created_callback_(std::move(stream_created_callback)),
       deleter_callback_(std::move(deleter_callback)),
       binding_(this, std::move(request)),
@@ -108,7 +108,7 @@ void MojoAudioInputStream::OnStreamError(int stream_id) {
 void MojoAudioInputStream::OnError() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(deleter_callback_);
-  std::move(deleter_callback_).Run();  // Deletes |this|.
+  std::move(deleter_callback_).Run(this);  // Deletes |this|.
 }
 
 }  // namespace media
