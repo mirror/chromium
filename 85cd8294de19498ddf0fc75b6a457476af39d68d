@@ -105,6 +105,24 @@
       "revId": "85cd8294de19498ddf0fc75b6a457476af39d68d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b253d0cd_5b9ab44d",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_mediator.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-15T02:31:56Z",
+      "side": 1,
+      "message": "Yeah, but if this can just be:\n\n_currentResult.CopyFrom(result);\n\n...then it\u0027s a lot simpler.\n\nI wonder if CopyOldMatches() before was just a hack around the fact that CopyFrom() wasn\u0027t public.",
+      "parentUuid": "da01b3fc_c6e379cb",
+      "revId": "85cd8294de19498ddf0fc75b6a457476af39d68d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
