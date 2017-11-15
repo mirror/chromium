@@ -41,7 +41,7 @@ class PLATFORM_EXPORT FELighting : public FilterEffect {
  protected:
   enum LightingType { kDiffuseLighting, kSpecularLighting };
 
-  sk_sp<SkImageFilter> CreateImageFilter() override;
+  sk_sp<PaintFilter> CreateImageFilter() override;
 
   bool AffectsTransparentPixels() const override { return true; }
 

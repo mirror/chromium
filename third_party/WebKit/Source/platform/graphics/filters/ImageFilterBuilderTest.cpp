@@ -22,12 +22,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "SkImageFilter.h"
 #include "platform/graphics/filters/FEBlend.h"
 #include "platform/graphics/filters/FEGaussianBlur.h"
 #include "platform/graphics/filters/FEMerge.h"
 #include "platform/graphics/filters/Filter.h"
-#include "platform/graphics/filters/SkiaImageFilterBuilder.h"
+#include "platform/graphics/filters/PaintFilterBuilder.h"
 #include "platform/graphics/filters/SourceGraphic.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -69,8 +68,8 @@ class ImageFilterBuilderTest : public Test {
     merge_inputs.push_back(blend_effect);
     reference_filter->SetLastEffect(merge_effect);
 
-    // Get SkImageFilter resulting tree
-    sk_sp<SkImageFilter> filter = SkiaImageFilterBuilder::Build(
+    // Get PaintFilter resulting tree
+    sk_sp<PaintFilter> filter = PaintFilterBuilder::Build(
         reference_filter->LastEffect(), kInterpolationSpaceSRGB);
 
     // Let's check that the resulting tree looks like this :
@@ -90,25 +89,40 @@ class ImageFilterBuilderTest : public Test {
     //                   \       |
     //                 Source Graphic (D)
 
-    EXPECT_EQ(filter->countInputs(), 1);         // Should be CS (L->D)
-    SkImageFilter* child = filter->getInput(0);  // Should be Merge
-    EXPECT_EQ(child->asColorFilter(nullptr), false);
-    EXPECT_EQ(child->countInputs(), 2);
-    child = child->getInput(1);  // Should be CS (D->L)
-    EXPECT_EQ(child->asColorFilter(nullptr), true);
-    EXPECT_EQ(child->countInputs(), 1);
-    child = child->getInput(0);  // Should be Blend
-    EXPECT_EQ(child->asColorFilter(nullptr), false);
-    EXPECT_EQ(child->countInputs(), 2);
-    child = child->getInput(0);  // Should be CS (L->D)
-    EXPECT_EQ(child->asColorFilter(nullptr), true);
-    EXPECT_EQ(child->countInputs(), 1);
-    child = child->getInput(0);  // Should be Blur
-    EXPECT_EQ(child->asColorFilter(nullptr), false);
-    EXPECT_EQ(child->countInputs(), 1);
-    child = child->getInput(0);  // Should be CS (D->L)
-    EXPECT_EQ(child->asColorFilter(nullptr), true);
-    EXPECT_EQ(child->countInputs(), 1);
+    // Should be CS : InterpolationSpace (Linear->Device)
+    EXPECT_EQ(filter->type(), PaintFilter::Type::kSkColorFilter);
+
+    // Should be Merge.
+    const auto* child =
+        SkColorFilterPaintFilter::From(filter.get())->input().get();
+    ASSERT_EQ(child->type(), PaintFilter::Type::kMerge);
+    const auto* merge = MergePaintFilter::From(child);
+    EXPECT_EQ(merge->input_count(), 2u);
+
+    // Should be CS (D->L)
+    child = merge->input_at(1u);
+    ASSERT_EQ(child->type(), PaintFilter::Type::kSkColorFilter);
+
+    // Should be Blend
+    child = SkColorFilterPaintFilter::From(child)->input().get();
+    ASSERT_TRUE(child);
+    EXPECT_EQ(child->type(), PaintFilter::Type::kXfermode);
+    const auto* xfermode = XfermodePaintFilter::From(child);
+    ASSERT_TRUE(xfermode->background());
+
+    // Should be CS (L->D)
+    child = xfermode->background().get();
+    ASSERT_EQ(child->type(), PaintFilter::Type::kSkColorFilter);
+
+    // Should be Blur
+    child = SkColorFilterPaintFilter::From(child)->input().get();
+    ASSERT_TRUE(child);
+    EXPECT_EQ(child->type(), PaintFilter::Type::kBlur);
+
+    // Should be CS (D->L)
+    child = BlurPaintFilter::From(child)->input().get();
+    ASSERT_TRUE(child);
+    EXPECT_EQ(child->type(), PaintFilter::Type::kSkColorFilter);
   }
 };
 

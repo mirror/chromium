@@ -4,6 +4,7 @@
 
 #include "cc/paint/paint_flags.h"
 
+#include "cc/paint/paint_filter.h"
 #include "cc/paint/paint_op_buffer.h"
 
 namespace {
@@ -33,6 +34,10 @@ PaintFlags::PaintFlags() {
 PaintFlags::PaintFlags(const PaintFlags& flags) = default;
 
 PaintFlags::~PaintFlags() = default;
+
+void PaintFlags::setImageFilter(sk_sp<PaintFilter> filter) {
+  image_filter_ = std::move(filter);
+}
 
 bool PaintFlags::nothingToDraw() const {
   // Duplicated from SkPaint to avoid having to construct an SkPaint to
@@ -108,7 +113,8 @@ SkPaint PaintFlags::ToSkPaint() const {
   paint.setMaskFilter(mask_filter_);
   paint.setColorFilter(color_filter_);
   paint.setDrawLooper(draw_looper_);
-  paint.setImageFilter(image_filter_);
+  if (image_filter_)
+    paint.setImageFilter(image_filter_->cached_sk_filter_);
   paint.setTextSize(text_size_);
   paint.setColor(color_);
   paint.setStrokeWidth(width_);
