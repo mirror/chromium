@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "71586e9d_aa260691",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1767,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-15T02:04:56Z",
+      "side": 1,
+      "message": "Just FYI and an idea of future.\n\nHolding |VisibileSelection| in |Editor| is wrong. |mark_| can be\ndisconnected and non-canonicalized due by DOM/style changes.\n\nBecause of usages of |mark_| are:\n- ToNormalizedEphemeralRange()\n- AsSelection() \n- IsNone()\nIt seems we can use Range + is_base_first for |mark_|.\n\nUsing |SelectionInDOMTree| requires relocation of |SelectionInDOMTree|.",
+      "revId": "36a361be1c1eeeff60a43d721b364bd99796359f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "232e66e8_ccbd7ceb",
         "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
         "patchSetId": 3
