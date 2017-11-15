@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "092b03b9_d60bf3cb",
+        "filename": "content/renderer/input/frame_input_handler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-15T15:10:58Z",
+      "side": 1,
+      "message": "The change makes sense but I am confused about the need for the |HandlingState| constructor: all its callers seem to create an /unused/ |handling_state| which only stores a weak pointer.  Can\u0027t we do a shortcut, e.g. just calling:\n  render_frame_-\u003eset_handling_select_range(true)\nhere instead?",
+      "revId": "bda9cabbd1bd3e6698b807cea0805c1b23a8a201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
