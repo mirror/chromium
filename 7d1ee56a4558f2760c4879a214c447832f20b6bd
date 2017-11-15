@@ -57,6 +57,30 @@
       "revId": "7d1ee56a4558f2760c4879a214c447832f20b6bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527293aa_c505a2f0",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1444,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-11-15T17:20:06Z",
+      "side": 1,
+      "message": "I submitted \u0026 reverted that has all the cases: https://codereview.chromium.org/2931833004/#ps60001 (see first patch).",
+      "parentUuid": "a07e3a80_8be9262e",
+      "range": {
+        "startLine": 1444,
+        "startChar": 42,
+        "endLine": 1444,
+        "endChar": 48
+      },
+      "revId": "7d1ee56a4558f2760c4879a214c447832f20b6bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
