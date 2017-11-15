@@ -840,11 +840,6 @@ void DevToolsURLInterceptorRequestJob::OnInterceptedRequestResponseReady(
     const net::IOBuffer& buf,
     int result) {
   DCHECK(sub_request_);
-  if (waiting_for_user_response_ == WaitingForUserResponse::NOT_WAITING) {
-    // If we are not waiting for the request ack we need to begin reading
-    // from subrequest. There may be body requests to fulfill too.
-    NotifyHeadersComplete();
-  }
   if (result < 0) {
     sub_request_->Cancel();
     BrowserThread::PostTask(
@@ -855,14 +850,18 @@ void DevToolsURLInterceptorRequestJob::OnInterceptedRequestResponseReady(
             protocol::Response::Error(base::StringPrintf(
                 "Could not get response body because of error code: %d",
                 result))));
-    return;
+  } else {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&SendPendingBodyRequestsOnUiThread, network_handler_,
+                       base::Passed(std::move(pending_body_requests_)),
+                       std::string(buf.data(), result)));
   }
-
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&SendPendingBodyRequestsOnUiThread, network_handler_,
-                     base::Passed(std::move(pending_body_requests_)),
-                     std::string(buf.data(), result)));
+  if (waiting_for_user_response_ == WaitingForUserResponse::NOT_WAITING) {
+    // If we are not waiting for the request ack we need to begin reading
+    // from subrequest. This call may release |buf| data.
+    NotifyHeadersComplete();
+  }
 }
 
 void DevToolsURLInterceptorRequestJob::StopIntercepting() {
