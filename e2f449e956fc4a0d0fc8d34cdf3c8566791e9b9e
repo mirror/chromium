@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e82cb8eb_9dff26d9",
+        "filename": "net/nqe/network_quality_observation_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-15T00:10:50Z",
+      "side": 1,
+      "message": "enum class?",
+      "revId": "e2f449e956fc4a0d0fc8d34cdf3c8566791e9b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
