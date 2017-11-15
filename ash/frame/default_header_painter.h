@@ -18,6 +18,7 @@
 
 namespace gfx {
 class Rect;
+class FontList;
 class SlideAnimation;
 }
 namespace views {
@@ -73,6 +74,18 @@ class ASH_EXPORT DefaultHeaderPainter : public HeaderPainter,
   // background of the frame is dark.
   bool ShouldUseLightImages() const;
 
+ protected:
+  // Returns the FontList to use for the title.
+  static const gfx::FontList& GetTitleFontList();
+
+  // Paints the title bar, primarily the title string.
+  virtual void PaintTitleBar(gfx::Canvas* canvas);
+
+  // Returns the bounds for the title.
+  gfx::Rect GetTitleBounds() const;
+
+  views::View* view() { return view_; }
+
  private:
   FRIEND_TEST_ALL_PREFIXES(DefaultHeaderPainterTest, BackButtonAlignment);
   FRIEND_TEST_ALL_PREFIXES(DefaultHeaderPainterTest, TitleIconAlignment);
@@ -84,9 +97,6 @@ class ASH_EXPORT DefaultHeaderPainter : public HeaderPainter,
   // Paints highlight around the edge of the header for inactive restored
   // windows.
   void PaintHighlightForInactiveRestoredWindow(gfx::Canvas* canvas);
-
-  // Paints the title bar, primarily the title string.
-  void PaintTitleBar(gfx::Canvas* canvas);
 
   // Paints the header/content separator.
   void PaintHeaderContentSeparator(gfx::Canvas* canvas);
@@ -101,9 +111,6 @@ class ASH_EXPORT DefaultHeaderPainter : public HeaderPainter,
   // assumed to be positioned at the top left corner of |view_| and to have the
   // same width as |view_|.
   gfx::Rect GetLocalBounds() const;
-
-  // Returns the bounds for the title.
-  gfx::Rect GetTitleBounds() const;
 
   // Returns whether the frame uses custom frame coloring.
   bool UsesCustomFrameColors() const;
