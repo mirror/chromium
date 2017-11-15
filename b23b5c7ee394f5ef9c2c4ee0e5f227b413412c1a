@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d24db399_486c8a6a",
+        "filename": "cc/layers/video_layer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-15T15:38:36Z",
+      "side": 1,
+      "message": "nit: in code we\u0027d write this as x \u003e Invalid or x !\u003d Invalid. Can you order it the same way here.",
+      "revId": "b23b5c7ee394f5ef9c2c4ee0e5f227b413412c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab231c6_a7e74209",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-15T15:38:36Z",
+      "side": 1,
+      "message": "If adding this, I\u0027d suggest putting it where plane_resource is assigned?",
+      "revId": "b23b5c7ee394f5ef9c2c4ee0e5f227b413412c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
