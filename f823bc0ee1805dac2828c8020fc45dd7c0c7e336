@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "20755e0a_aa47c89c",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2465,
+      "author": {
+        "id": 1243462
+      },
+      "writtenOn": "2017-11-15T07:16:19Z",
+      "side": 1,
+      "message": "OnWindowClosing() can be called twice on browser close:\n1) chrome::CloseWindow() causes the first OnWindowClosing() call. Call stack is following:\n(chrome::CloseWindow --\u003e views::Widget::Close --\u003e views::NonClientView::CanClose --\u003e BrowserView::CanClose --\u003e Browser::OnWindowClosing)\n2) Second call is done from chrome::UnloadController::ProcessPendingTabs(). ProcessPendingTabs() is scheduled by UnloadController when processing notification NOTIFICATION_WEB_CONTENTS_DISCONNECTED. The call stack:\n(content::WebContentsImpl::RenderViewTerminated --\u003e content::WebContentsImpl::NotifyDisconnected --\u003e chrome::UnloadController::Observe --\u003e chrome::UnloadController::ClearUnloadState)",
+      "parentUuid": "7a42e66c_69ce4be5",
+      "range": {
+        "startLine": 2465,
+        "startChar": 14,
+        "endLine": 2465,
+        "endChar": 33
+      },
+      "revId": "f823bc0ee1805dac2828c8020fc45dd7c0c7e336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "101706fa_29b5b082",
         "filename": "chrome/browser/ui/browser.cc",
         "patchSetId": 4
@@ -62,6 +86,30 @@
       "revId": "f823bc0ee1805dac2828c8020fc45dd7c0c7e336",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7848c03a_02e7db21",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2471,
+      "author": {
+        "id": 1243462
+      },
+      "writtenOn": "2017-11-15T07:16:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2466e916_a5c651e3",
+      "range": {
+        "startLine": 2466,
+        "startChar": 2,
+        "endLine": 2471,
+        "endChar": 80
+      },
+      "revId": "f823bc0ee1805dac2828c8020fc45dd7c0c7e336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
