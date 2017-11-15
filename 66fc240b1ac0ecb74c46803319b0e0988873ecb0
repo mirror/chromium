@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e33b6780_5e267ccc",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-15T14:29:37Z",
+      "side": 1,
+      "message": "The toolbar target is creating the LocationBar, which is in omnibox_internal.",
+      "parentUuid": "f593d123_2b15a990",
+      "range": {
+        "startLine": 31,
+        "startChar": 29,
+        "endLine": 31,
+        "endChar": 53
+      },
+      "revId": "66fc240b1ac0ecb74c46803319b0e0988873ecb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d94743ab_eeebcd45",
         "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_delegate.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "66fc240b1ac0ecb74c46803319b0e0988873ecb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6782a2_1bbb459f",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-15T14:29:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d94743ab_eeebcd45",
+      "range": {
+        "startLine": 39,
+        "startChar": 21,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "66fc240b1ac0ecb74c46803319b0e0988873ecb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
