@@ -2510,12 +2510,29 @@ static bool IsElementEditable(const Element* element) {
 
 bool WebViewImpl::ScrollFocusedEditableElementIntoRect(
     const WebRect& rect_in_viewport) {
-  LocalFrame* frame =
-      GetPage()->MainFrame() && GetPage()->MainFrame()->IsLocalFrame()
-          ? GetPage()->DeprecatedLocalMainFrame()
-          : nullptr;
+  Frame* frame = GetPage()->MainFrame();
+  if (!frame)
+    return false;
+
   Element* element = FocusedElement();
-  if (!frame || !frame->View() || !element)
+  if (!element || !IsElementEditable(element))
+    return false;
+
+  if (frame->IsRemoteFrame()) {
+    // The rest of the logic here is not implemented for OOPIFs. For now instead
+    // of implementing the logic below (which involves finding the scale and
+    // scrolling point), editable elements inside OOPIFs are scrolled into view
+    // instead. However, a common logic should be implemented for both OOPIFs
+    // and in-process frames to assure a consistent behavior across all frame
+    // types (https://crbug.com/784982).
+    LayoutObject* layout_object = element->GetLayoutObject();
+    if (!layout_object)
+      return false;
+    layout_object->ScrollRectToVisible(element->BoundingBox());
+    return true;
+  }
+
+  if (!frame->View())
     return false;
 
   if (!IsElementEditable(element))
@@ -2528,9 +2545,10 @@ bool WebViewImpl::ScrollFocusedEditableElementIntoRect(
       !GetPage()->GetVisualViewport().ShouldDisableDesktopWorkarounds();
 
   if (zoom_in_to_legible_scale) {
-    // When deciding whether to zoom in on a focused text box, we should decide
-    // not to zoom in if the user won't be able to zoom out. e.g if the textbox
-    // is within a touch-action: none container the user can't zoom back out.
+    // When deciding whether to zoom in on a focused text box, we should
+    // decide not to zoom in if the user won't be able to zoom out. e.g if the
+    // textbox is within a touch-action: none container the user can't zoom
+    // back out.
     TouchAction action = TouchActionUtil::ComputeEffectiveTouchAction(*element);
     if (!(action & TouchAction::kTouchActionPinchZoom))
       zoom_in_to_legible_scale = false;
