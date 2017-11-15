@@ -378,6 +378,7 @@ class BrowserView : public BrowserWindow,
           callback) override;
   std::string GetWorkspace() const override;
   bool IsVisibleOnAllWorkspaces() const override;
+  void UpdateCustomFrameButtons() const override;
 
   BookmarkBarView* GetBookmarkBarView() const;
   LocationBarView* GetLocationBarView() const;

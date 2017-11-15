@@ -2015,6 +2015,8 @@ void Browser::Observe(int type,
         LocationBar* location_bar = window()->GetLocationBar();
         if (location_bar)
           location_bar->UpdateContentSettingsIcons();
+
+        window()->UpdateCustomFrameButtons();
       }
       break;
     }
