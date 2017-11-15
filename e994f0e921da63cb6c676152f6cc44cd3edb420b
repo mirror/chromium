@@ -33,6 +33,24 @@
       "revId": "e994f0e921da63cb6c676152f6cc44cd3edb420b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49993723_71804dbd",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SchemeRegistry.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1149523
+      },
+      "writtenOn": "2017-11-15T13:47:54Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "b974e8c5_c489af07",
+      "revId": "e994f0e921da63cb6c676152f6cc44cd3edb420b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
