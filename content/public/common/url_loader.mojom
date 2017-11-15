@@ -36,6 +36,10 @@ interface URLLoader {
   // |FollowRedirect| may be called to load the URL indicated by the redirect.
   FollowRedirect();
 
+  // If the URLLoader is configured to stop loading after the headers are
+  // received, |ProceedWithResponse| may be used to resume the loading.
+  ProceedWithResponse();
+
   // Sets the request priority.
   // |intra_priority_value| is a lesser priority which is used to prioritize
   // requests within a given priority level.

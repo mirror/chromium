@@ -97,10 +97,12 @@ MojoAsyncResourceHandler::MojoAsyncResourceHandler(
     ResourceDispatcherHostImpl* rdh,
     mojom::URLLoaderRequest mojo_request,
     mojom::URLLoaderClientPtr url_loader_client,
-    ResourceType resource_type)
+    ResourceType resource_type,
+    bool wait_for_proceed_with_response)
     : ResourceHandler(request),
       rdh_(rdh),
       binding_(this, std::move(mojo_request)),
+      wait_for_proceed_with_response_(wait_for_proceed_with_response),
       handle_watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL),
       url_loader_client_(std::move(url_loader_client)),
       weak_factory_(this) {
@@ -198,6 +200,13 @@ void MojoAsyncResourceHandler::OnResponseStarted(
 
     url_loader_client_->OnReceiveCachedMetadata(
         std::vector<uint8_t>(data, data + metadata->size()));
+  }
+
+  if (wait_for_proceed_with_response_) {
+    did_defer_on_response_started_ = true;
+    DCHECK(!has_controller());
+    HoldController(std::move(controller));
+    return;
   }
 
   controller->Resume();
@@ -370,6 +379,11 @@ void MojoAsyncResourceHandler::FollowRedirect() {
   DCHECK(!did_defer_on_writing_);
   did_defer_on_redirect_ = false;
   request()->LogUnblocked();
+  Resume();
+}
+
+void MojoAsyncResourceHandler::ProceedWithResponse() {
+  DCHECK(did_defer_on_response_started_);
   Resume();
 }
 
