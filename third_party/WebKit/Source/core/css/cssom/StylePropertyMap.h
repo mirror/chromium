@@ -27,17 +27,12 @@ class CORE_EXPORT StylePropertyMap : public StylePropertyMapReadonly {
   void remove(const String& property_name, ExceptionState&);
   void update(const String&, const V8UpdateFunction*) {}
 
-  virtual void set(CSSPropertyID,
-                   HeapVector<CSSStyleValueOrString>& values,
-                   ExceptionState&) = 0;
-  virtual void append(CSSPropertyID,
-                      HeapVector<CSSStyleValueOrString>& values,
-                      ExceptionState&) = 0;
   virtual void remove(CSSPropertyID, ExceptionState&) = 0;
 
  protected:
-  StylePropertyMap() {}
+  virtual void SetProperty(CSSPropertyID, const CSSValue*) = 0;
 
+  StylePropertyMap() {}
 };
 
 }  // namespace blink

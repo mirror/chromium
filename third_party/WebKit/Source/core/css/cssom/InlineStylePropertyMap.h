@@ -19,12 +19,6 @@ class CORE_EXPORT InlineStylePropertyMap final : public StylePropertyMap {
 
   Vector<String> getProperties() override;
 
-  void set(CSSPropertyID,
-           HeapVector<CSSStyleValueOrString>&,
-           ExceptionState&) override;
-  void append(CSSPropertyID,
-              HeapVector<CSSStyleValueOrString>&,
-              ExceptionState&) override;
   void remove(CSSPropertyID, ExceptionState&) override;
 
   virtual void Trace(blink::Visitor* visitor) {
@@ -35,6 +29,7 @@ class CORE_EXPORT InlineStylePropertyMap final : public StylePropertyMap {
  protected:
   const CSSValue* GetProperty(CSSPropertyID) override;
   const CSSValue* GetCustomProperty(AtomicString) override;
+  void SetProperty(CSSPropertyID, const CSSValue*) override;
 
   HeapVector<StylePropertyMapEntry> GetIterationEntries() override;
 
