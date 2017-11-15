@@ -250,6 +250,7 @@ TEST_F(ExtensionMediaRouteProviderProxyTest, ProvideSinks) {
   const std::string provider_name = "provider name";
   MediaSinkInternal sink;
   sink.set_sink_id(kSinkId);
+  sink.set_provider_id(MediaRouteProviderId::EXTENSION);
   const std::vector<media_router::MediaSinkInternal> sinks = {sink};
 
   EXPECT_CALL(mock_provider_, ProvideSinks(provider_name, ElementsAre(sink)));
