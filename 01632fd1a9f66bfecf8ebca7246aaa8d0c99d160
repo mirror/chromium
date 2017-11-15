@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af8afbcd_9b57c65a",
+        "filename": "content/browser/cross_site_transfer_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T15:31:13Z",
+      "side": 1,
+      "message": "Is this still used?",
+      "revId": "01632fd1a9f66bfecf8ebca7246aaa8d0c99d160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f76b38_8d4df0b6",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T15:31:13Z",
+      "side": 1,
+      "message": "nit: update the comment.",
+      "revId": "01632fd1a9f66bfecf8ebca7246aaa8d0c99d160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7697a622_4777200c",
+        "filename": "content/browser/loader/mojo_async_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T15:31:13Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t seem related to this CL, where you\u0027re not touching this file. Remove it?",
+      "revId": "01632fd1a9f66bfecf8ebca7246aaa8d0c99d160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a00c4d0_82a4d897",
+        "filename": "content/browser/loader/mojo_async_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T15:31:13Z",
+      "side": 1,
+      "message": "nit: s/Navigationdata/NavigationData",
+      "revId": "01632fd1a9f66bfecf8ebca7246aaa8d0c99d160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78c6bb68_48d70ce3",
+        "filename": "content/browser/loader/mojo_async_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T15:31:13Z",
+      "side": 1,
+      "message": "nit: remove ;",
+      "revId": "01632fd1a9f66bfecf8ebca7246aaa8d0c99d160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d48fd39e_61847230",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T15:31:13Z",
+      "side": 1,
+      "message": "nit: use NavigationMojoResponse in the condition so that it\u0027s if(enabled) instead of if(!enabled)?",
+      "revId": "01632fd1a9f66bfecf8ebca7246aaa8d0c99d160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f3eb1d_fa40e9f0",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T15:31:13Z",
+      "side": 1,
+      "message": "Add a TODO: The network service version of navigation should also unbind its URLLoader and URLLoaderClient to pass them to a renderer process.",
+      "revId": "01632fd1a9f66bfecf8ebca7246aaa8d0c99d160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d91311_e5b21a55",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T15:31:13Z",
+      "side": 1,
+      "message": "Nit: add a TODO: The network service version should also call NavigationURLLoaderDelegate from here once it passes a URLLoader and a URLloaderclient instead of the ScopedDataPipeConsumerHandle.",
+      "revId": "01632fd1a9f66bfecf8ebca7246aaa8d0c99d160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bab86f6_fa0091b9",
+        "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T15:31:13Z",
+      "side": 1,
+      "message": "Is this happening only when running with NavigationMojoResponse? As I explained in the other CL, these tests are not applicable to NavigationMojoResponse anyway, so we should just skip them (and replace them with browser tests).",
+      "revId": "01632fd1a9f66bfecf8ebca7246aaa8d0c99d160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
