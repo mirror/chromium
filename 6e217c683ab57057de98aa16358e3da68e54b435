@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58e8b5fe_905dcf03",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T12:47:13Z",
+      "side": 1,
+      "message": "Nit: ValueOrDie() is more common, since both values have been validated.",
+      "revId": "6e217c683ab57057de98aa16358e3da68e54b435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2e0b11_178550e0",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T12:47:13Z",
+      "side": 1,
+      "message": "Ditto here and below for using ValueOrDie()",
+      "revId": "6e217c683ab57057de98aa16358e3da68e54b435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62bd95ca_3b9a4282",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/CacheStorageError.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T12:47:13Z",
+      "side": 1,
+      "message": "Hmm... it\u0027s a bit odd to have to handle this in the renderer, since we always kill the renderer in this case. Is it possible to avoid adding this as an enum value so this case statement isn\u0027t needed?",
+      "revId": "6e217c683ab57057de98aa16358e3da68e54b435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
