@@ -48,7 +48,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &features::kSiteNotificationChannels,
     &features::kSimplifiedFullscreenUI,
     &features::kSoundContentSetting,
-    &features::kVrShell,
     &features::kWebPayments,
     &features::kTabsInCbd,
     &kAllowReaderForAccessibility,
@@ -108,14 +107,9 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kTabReparenting,
     &kTrustedWebActivity,
     &kVideoPersistence,
-    &kVrBrowsingFeedback,
-    &kVrCustomTabBrowsing,
-    &kVrLaunchIntent,
     &payments::features::kWebPaymentsMethodSectionOrderV2,
     &payments::features::kWebPaymentsModifiers,
     &kWebPaymentsSingleAppUiSkip,
-    &kWebVrAutopresent,
-    &kWebVRCardboardSupport,
     &ntp_snippets::kIncreasedVisibility,
     &ntp_snippets::kForeignSessionsSuggestionsFeature,
     &ntp_snippets::kNotificationsFeature,
@@ -129,6 +123,14 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &omnibox::kAndroidChromeHomePersonalizedSuggestions,
     &password_manager::features::kViewPasswords,
     &subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI,
+#if BUILDFLAG(ENABLE_VR)
+    &features::kVrBrowsing,
+    &kVrBrowsingFeedback,
+    &kVrBrowsingInCustomTab,
+    &kVrLaunchIntents,
+    &kWebVrAutopresentFromIntent,
+    &kWebVRCardboardSupport,
+#endif
 };
 
 const base::Feature* FindFeatureExposedToJava(const std::string& feature_name) {
@@ -323,23 +325,25 @@ const base::Feature kUserMediaScreenCapturing{
 const base::Feature kVideoPersistence{"VideoPersistence",
                                       base::FEATURE_ENABLED_BY_DEFAULT};
 
-const base::Feature kVrBrowsingFeedback{"VrBrowsingFeedback",
-                                        base::FEATURE_ENABLED_BY_DEFAULT};
-
-const base::Feature kVrCustomTabBrowsing{"VrCustomTabBrowsing",
-                                         base::FEATURE_DISABLED_BY_DEFAULT};
-
-const base::Feature kVrLaunchIntent{"VrLaunchIntent",
-                                    base::FEATURE_DISABLED_BY_DEFAULT};
-
 const base::Feature kWebPaymentsSingleAppUiSkip{
     "WebPaymentsSingleAppUiSkip", base::FEATURE_ENABLED_BY_DEFAULT};
 
-const base::Feature kWebVrAutopresent{"WebVrAutopresent",
-                                      base::FEATURE_ENABLED_BY_DEFAULT};
+#if BUILDFLAG(ENABLE_VR)
+const base::Feature kVrBrowsingFeedback{"VrBrowsingFeedback",
+                                        base::FEATURE_ENABLED_BY_DEFAULT};
+
+const base::Feature kVrBrowsingInCustomTab{"VrBrowsingInCustomTab",
+                                           base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kVrLaunchIntents{"VrLaunchIntents",
+                                     base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kWebVrAutopresentFromIntent{
+    "WebVrAutopresentFromIntent", base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kWebVRCardboardSupport{"WebVRCardboardSupport",
                                            base::FEATURE_ENABLED_BY_DEFAULT};
+#endif  // BUILDFLAG(ENABLE_VR)
 
 static jboolean IsInitialized(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
   return !!base::FeatureList::GetInstance();
