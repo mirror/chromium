@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac2f056_720a53ca",
+        "filename": "chrome/browser/extensions/api/web_request/web_request_api_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T16:57:28Z",
+      "side": 1,
+      "message": "nit: prefer using a valid extension id; let\u0027s make one with crx_file::id_util::GenerateId(\"random\").",
+      "revId": "4d3206cd620e54596af7cc4541dc303cf917fba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
