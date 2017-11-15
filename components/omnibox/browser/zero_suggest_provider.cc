@@ -106,6 +106,7 @@ void ZeroSuggestProvider::RegisterProfilePrefs(
 void ZeroSuggestProvider::Start(const AutocompleteInput& input,
                                 bool minimal_changes) {
   TRACE_EVENT0("omnibox", "ZeroSuggestProvider::Start");
+  LOG(ERROR) << "Entering ZeroSuggestProvider::Start";
   matches_.clear();
   if (!input.from_omnibox_focus() || client()->IsOffTheRecord() ||
       input.type() == metrics::OmniboxInputType::INVALID)
@@ -198,8 +199,12 @@ void ZeroSuggestProvider::Start(const AutocompleteInput& input,
 
 void ZeroSuggestProvider::Stop(bool clear_cached_results,
                                bool due_to_user_inactivity) {
-  if (fetcher_)
+  LOG(ERROR) << "Entering ZeroSuggestProvider::Stop";
+  if (fetcher_) {
+    LOG(ERROR)
+        << "A fetching process was running when in ZeroSuggestProvider::Stop";
     LogOmniboxZeroSuggestRequest(ZERO_SUGGEST_REQUEST_INVALIDATED);
+  }
   fetcher_.reset();
   waiting_for_most_visited_urls_request_ = false;
   auto* contextual_suggestions_service =
@@ -415,6 +420,8 @@ void ZeroSuggestProvider::OnMostVisitedUrlsAvailable(
 void ZeroSuggestProvider::OnContextualSuggestionsFetcherAvailable(
     std::unique_ptr<net::URLFetcher> fetcher) {
   fetcher_ = std::move(fetcher);
+  LOG(ERROR) << "Fetcher is started in "
+                "ZeroSuggestProvider::OnContextualSuggestionsFetcherAvailable";
   fetcher_->Start();
   LogOmniboxZeroSuggestRequest(ZERO_SUGGEST_REQUEST_SENT);
 }

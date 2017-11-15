@@ -190,6 +190,7 @@ void OmniboxViewViews::SaveStateToTab(content::WebContents* tab) {
 }
 
 void OmniboxViewViews::OnTabChanged(const content::WebContents* web_contents) {
+  LOG(ERROR) << "Entering OmniboxViewViews::OnTabChanged";
   UpdateSecurityLevel();
   const OmniboxState* state = static_cast<OmniboxState*>(
       web_contents->GetUserData(&OmniboxState::kKey));
@@ -765,6 +766,7 @@ bool OmniboxViewViews::HandleAccessibleAction(
 }
 
 void OmniboxViewViews::OnFocus() {
+  LOG(ERROR) << "Entering OmniboxViewViews::OnFocus";
   views::Textfield::OnFocus();
   // TODO(oshima): Get control key state.
   model()->OnSetFocus(false);
