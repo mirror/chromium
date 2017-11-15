@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6a8b1be_a94eafe5",
+        "filename": "ios/build/bots/scripts/run.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-11-15T20:53:51Z",
+      "side": 1,
+      "message": "Can you make this --xcode-build-version or --xcode-build-id? --xcode-build isn\u0027t clear to me (especially because the ObjC compiler that comes with Xcode is called xcodebuild).",
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7899580_6fe8dfcd",
+        "filename": "ios/build/bots/scripts/run.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-11-15T20:53:51Z",
+      "side": 1,
+      "message": "Make it an error to specify both at once rather than silently ignoring -x if -b is specified.",
+      "range": {
+        "startLine": 150,
+        "startChar": 37,
+        "endLine": 150,
+        "endChar": 63
+      },
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bfaed59_52966957",
+        "filename": "ios/build/bots/scripts/run.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-11-15T20:53:51Z",
+      "side": 1,
+      "message": "You\u0027re making this required? It wasn\u0027t before. In any case, the check should be \"at most one\" or \"exactly one\", not \"at least one\" if -b overrides -x.",
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88832071_f5ef9331",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-11-15T20:53:51Z",
+      "side": 1,
+      "message": "Right now this test runner works locally, with a hard-coded path to the mac_toolchain command it won\u0027t. Can you pass this in to run.py instead?",
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c153a3_ec335240",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-11-15T20:53:51Z",
+      "side": 1,
+      "message": "Add Args section, Returns section.",
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a7a2653_0d728e2f",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-11-15T20:53:51Z",
+      "side": 1,
+      "message": "What is this? From the docstring it makes me think it\u0027s a cache that already exists, but in install_xcode it\u0027s used as an out dir to install Xcode into. Do you really need a function for one string substitution?",
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "518f5bba_78723c57",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-11-15T20:53:51Z",
+      "side": 1,
+      "message": "find_xcode already does this, maybe you could refactor it so xcode_select is exposed by that module?\n\nhttps://chromium.googlesource.com/chromium/src/+/master/ios/build/bots/scripts/find_xcode.py",
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3177ec7d_1908af1f",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-11-15T20:53:51Z",
+      "side": 1,
+      "message": "Two blank lines between module-level definitions.",
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "382f4cff_1c30ca10",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-11-15T20:53:51Z",
+      "side": 1,
+      "message": "These functions are both the same (i.e. could just be abspath instead of find_app/find_iossim), and they\u0027re just wrappers around already mockable functions. How about just installing a mock for os.path.* in the tests?\nself.mock(test_runner.os.path, \u0027abspath\u0027, lambda path: \u0027/absolute/path/to/%s\u0027 % path)\nself.mock(test_runner.os.path, \u0027exists\u0027, lambda _: True)",
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
