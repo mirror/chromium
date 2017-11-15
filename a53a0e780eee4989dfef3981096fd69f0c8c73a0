@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b46981a8_7d345c2d",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-15T22:59:18Z",
+      "side": 1,
+      "message": "Since we always need this value, put it to a bool? Otherwise there could be 2 calls to IsWindowTrustedPinned in line 697 and 701 below.",
+      "range": {
+        "startLine": 692,
+        "startChar": 7,
+        "endLine": 692,
+        "endChar": 28
+      },
+      "revId": "a53a0e780eee4989dfef3981096fd69f0c8c73a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e475849d_9b81bfac",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-15T22:59:18Z",
+      "side": 1,
+      "message": "quick clarification: this means no state was explicitly supplied from JS and we wan\u0027t to preserve pinned-ness of the window, right?",
+      "range": {
+        "startLine": 699,
+        "startChar": 6,
+        "endLine": 699,
+        "endChar": 61
+      },
+      "revId": "a53a0e780eee4989dfef3981096fd69f0c8c73a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
