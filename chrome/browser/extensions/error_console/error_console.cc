@@ -4,6 +4,8 @@
 
 #include "chrome/browser/extensions/error_console/error_console.h"
 
+#include <set>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -59,11 +61,11 @@ void ErrorConsole::Observer::OnErrorConsoleDestroyed() {
 }
 
 ErrorConsole::ErrorConsole(Profile* profile)
-     : enabled_(false),
-       default_mask_(kDefaultMask),
-       profile_(profile),
-       prefs_(NULL),
-       registry_observer_(this) {
+    : enabled_(false),
+      default_mask_(kDefaultMask),
+      profile_(profile),
+      prefs_(nullptr),
+      registry_observer_(this) {
   pref_registrar_.Init(profile_->GetPrefs());
   pref_registrar_.Add(prefs::kExtensionsUIDeveloperMode,
                       base::Bind(&ErrorConsole::OnPrefChanged,
@@ -174,11 +176,10 @@ void ErrorConsole::RemoveObserver(Observer* observer) {
 bool ErrorConsole::IsEnabledForChromeExtensionsPage() const {
   if (!profile_->GetPrefs()->GetBoolean(prefs::kExtensionsUIDeveloperMode))
     return false;  // Only enabled in developer mode.
-  if (GetCurrentChannel() > version_info::Channel::DEV &&
-      !FeatureSwitch::error_console()->IsEnabled())
-    return false;  // Restricted to dev channel or opt-in.
+  if (GetCurrentChannel() > version_info::Channel::DEV)
+    return false;  // Restricted to dev channel.
 
-  return true;
+  return FeatureSwitch::error_console()->IsEnabled();
 }
 
 bool ErrorConsole::IsEnabledForAppsDeveloperTools() const {
@@ -199,7 +200,7 @@ void ErrorConsole::Enable() {
   enabled_ = true;
 
   // We postpone the initialization of |prefs_| until now because they can be
-  // NULL in unit_tests. Any unit tests that enable the error console should
+  // nullptr in unit_tests. Any unit tests that enable the error console should
   // also create an ExtensionPrefs object.
   prefs_ = ExtensionPrefs::Get(profile_);
 

@@ -9,6 +9,8 @@
 #include <stdint.h>
 
 #include <memory>
+#include <set>
+#include <string>
 
 #include "base/macros.h"
 #include "base/observer_list.h"
@@ -166,10 +168,10 @@ class ErrorConsole : public KeyedService,
   int GetMaskForExtension(const std::string& extension_id) const;
 
   // Whether or not the error console should record errors. This is true if
-  // the user is in developer mode, and at least one of the following is true:
+  // the user is in developer mode on a Dev Channel release, and at least one of
+  // the following is true:
   // - The Chrome Apps Developer Tools are installed.
   // - FeatureSwitch::error_console() is enabled.
-  // - This is a Dev Channel release.
   bool enabled_;
 
   // Needed because base::ObserverList is not thread-safe.
