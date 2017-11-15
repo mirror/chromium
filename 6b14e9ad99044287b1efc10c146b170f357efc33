@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6321bcc4_9a6f58ad",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1403,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-15T22:20:08Z",
+      "side": 1,
+      "message": "Should this just be the phone number fields or all of the fields?\n\nI\u0027m wondering if rationalization should be done at the time suggestions are generated?",
+      "revId": "6b14e9ad99044287b1efc10c146b170f357efc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb9a82d0_f675d6e1",
+        "filename": "components/autofill/core/browser/rationalization_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-15T22:20:08Z",
+      "side": 1,
+      "message": "...Fields(",
+      "revId": "6b14e9ad99044287b1efc10c146b170f357efc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
