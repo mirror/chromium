@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "build/build_config.h"
+#include "components/viz/common/quads/shared_bitmap.h"
 #include "components/viz/common/resources/resource_format.h"
 #include "components/viz/common/resources/resource_id.h"
 #include "components/viz/common/viz_common_export.h"
@@ -31,6 +32,44 @@ struct VIZ_COMMON_EXPORT TransferableResource {
   static std::vector<ReturnedResource> ReturnResources(
       const std::vector<TransferableResource>& input);
 
+  static TransferableResource MakeSoftware(const SharedBitmapId& id,
+                                           uint32_t sequence_number,
+                                           const gfx::Size& size) {
+    TransferableResource r;
+    r.is_software = true;
+    r.mailbox_holder.mailbox = id;
+    r.shared_bitmap_sequence_number = sequence_number;
+    r.size = size;
+    return r;
+  }
+
+  static TransferableResource MakeGL(const gpu::Mailbox& mailbox,
+                                     uint32_t filter,
+                                     uint32_t texture_target,
+                                     const gpu::SyncToken& sync_token) {
+    TransferableResource r;
+    r.is_software = false;
+    r.filter = filter;
+    r.mailbox_holder.mailbox = mailbox;
+    r.mailbox_holder.texture_target = texture_target;
+    r.mailbox_holder.sync_token = sync_token;
+    r.size = gfx::Size();
+    return r;
+  }
+
+  static TransferableResource MakeGLOverlay(const gpu::Mailbox& mailbox,
+                                            uint32_t filter,
+                                            uint32_t texture_target,
+                                            const gpu::SyncToken& sync_token,
+                                            const gfx::Size& size,
+                                            bool is_overlay_candidate) {
+    TransferableResource r =
+        MakeGL(mailbox, filter, texture_target, sync_token);
+    r.size = size;
+    r.is_overlay_candidate = is_overlay_candidate;
+    return r;
+  }
+
   ResourceId id;
   // Refer to ResourceProvider::Resource for the meaning of the following data.
   ResourceFormat format;
@@ -47,6 +86,24 @@ struct VIZ_COMMON_EXPORT TransferableResource {
 #endif
   bool is_overlay_candidate;
   gfx::ColorSpace color_space;
+
+  bool Equals(const TransferableResource& o) const {
+    return id == o.id && format == o.format &&
+           buffer_format == o.buffer_format && filter == o.filter &&
+           size == o.size &&
+           mailbox_holder.mailbox == o.mailbox_holder.mailbox &&
+           mailbox_holder.sync_token == o.mailbox_holder.sync_token &&
+           mailbox_holder.texture_target == o.mailbox_holder.texture_target &&
+           read_lock_fences_enabled == o.read_lock_fences_enabled &&
+           is_software == o.is_software &&
+           shared_bitmap_sequence_number == o.shared_bitmap_sequence_number &&
+#if defined(OS_ANDROID)
+           is_backed_by_surface_texture == o.is_backed_by_surface_texture &&
+           wants_promotion_hint == o.wants_promotion_hint &&
+#endif
+           is_overlay_candidate == o.is_overlay_candidate &&
+           color_space == o.color_space;
+  }
 };
 
 }  // namespace viz

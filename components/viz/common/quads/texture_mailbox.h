@@ -19,7 +19,7 @@
 #include "ui/gfx/geometry/size.h"
 
 namespace viz {
-
+struct TransferableResource;
 namespace mojom {
 class TextureMailboxDataView;
 }
@@ -96,6 +96,8 @@ class VIZ_COMMON_EXPORT TextureMailbox {
 
   void set_wants_promotion_hint(bool value) { wants_promotion_hint_ = value; }
 #endif
+
+  TransferableResource ToTransferableResource() const;
 
  private:
   friend struct mojo::StructTraits<mojom::TextureMailboxDataView,
