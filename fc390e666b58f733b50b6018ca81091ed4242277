@@ -117,6 +117,30 @@
       "revId": "fc390e666b58f733b50b6018ca81091ed4242277",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "006976e4_bf34b071",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-15T16:39:12Z",
+      "side": 1,
+      "message": "One option is to add a test hook (see ios/chrome/app/tests_hook.h). They can be overridden by the EG tests (the same value is used by all EG tests) vs the production app. Then in the factory, check the hook and construct in memory or production instance.",
+      "parentUuid": "c528a54a_601d006c",
+      "range": {
+        "startLine": 359,
+        "startChar": 48,
+        "endLine": 359,
+        "endChar": 65
+      },
+      "revId": "fc390e666b58f733b50b6018ca81091ed4242277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
