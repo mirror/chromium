@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b294562b_5ea5bf71",
+        "filename": "third_party/WebKit/Source/platform/fonts/opentype/OpenTypeVerticalData.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-15T11:13:56Z",
+      "side": 1,
+      "message": "Could you clarify your suggestion? The way I understand the Vector backing storage to work is that it allocates the char* buffer storage on the heap, while the Vector object providing the access interface is on the stack. I\u0027ve now rephrased the CopyOpenTypeTable function to accept a Vector\u003cchar\u003e reference so that the Vector\u003cchar\u003e object can be reused, and only its internal backing store is resized according to the respective table size. Is that in the direction of what you meant?",
+      "parentUuid": "5b3aa318_869f5e76",
+      "revId": "9d243dcaa9409883629f54848b24e8e81fa7dfad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0751288_24dbb4e8",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzFontCache.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-14T17:27:58Z",
       "side": 1,
       "message": "This only appears to be called from HarfBuzzFace::GetScaledFont. How about changing the signature to also take a SkPaint argument and have it set paint_? That way paint_ can be marked private and this method won\u0027y need the scary comment above.",
+      "revId": "9d243dcaa9409883629f54848b24e8e81fa7dfad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ede9416_d97e783a",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzFontCache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-15T11:13:56Z",
+      "side": 1,
+      "message": "Moved the paint_ update to the UpdateFallbackMetricsAndScale function and removed the scary comment. Kept visibility for now since paint_ and other members are access directly from the HarfBuzzFace callback functions, which this HarfBuzzFontData object is intended for.",
+      "parentUuid": "b0751288_24dbb4e8",
       "revId": "9d243dcaa9409883629f54848b24e8e81fa7dfad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
