@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "0119a299_ff8572b6",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T09:56:49Z",
+      "side": 1,
+      "message": "It\u0027s pretty unusual to have an external binding like this. RenderFrameHostImpl already has a FrameHost binding (https://cs.chromium.org/chromium/src/content/browser/frame_host/render_frame_host_impl.h?rcl\u003d0659d6933f81d7388047f3d5c6cb3e3ebc4a61a5\u0026l\u003d1276): is it possible to just use that?",
+      "revId": "cd0357dfcd9fdc6ef2c5821b463aee469eda8335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd24a3a0_7035944c",
         "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
         "patchSetId": 8
