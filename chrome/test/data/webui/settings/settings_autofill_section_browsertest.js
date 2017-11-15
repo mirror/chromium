@@ -198,7 +198,7 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'CreditCardTests', function() {
     test('verifyCreditCardCount', function() {
       var section = self.createAutofillSection_([], []);
 
-      var creditCardList = section.$.creditCardList;
+      var creditCardList = section.$$('#creditCardList');
       assertTrue(!!creditCardList);
       assertEquals(0, creditCardList.querySelectorAll('.list-item').length);
 
@@ -218,7 +218,7 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'CreditCardTests', function() {
 
       var section = self.createAutofillSection_([], creditCards);
 
-      var creditCardList = section.$.creditCardList;
+      var creditCardList = section.$$('#creditCardList');
       assertTrue(!!creditCardList);
       assertEquals(creditCards.length,
           creditCardList.querySelectorAll('.list-item').length);
@@ -230,7 +230,7 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'CreditCardTests', function() {
     test('verifyCreditCardFields', function() {
       var creditCard = FakeDataMaker.creditCardEntry();
       var section = self.createAutofillSection_([], [creditCard]);
-      var creditCardList = section.$.creditCardList;
+      var creditCardList = section.$$('#creditCardList');
       var row = creditCardList.children[0];
       assertTrue(!!row);
 
@@ -244,7 +244,7 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'CreditCardTests', function() {
       var creditCard = FakeDataMaker.creditCardEntry();
       creditCard.metadata.isLocal = true;
       var section = self.createAutofillSection_([], [creditCard]);
-      var creditCardList = section.$.creditCardList;
+      var creditCardList = section.$$('#creditCardList');
       var row = creditCardList.children[0];
       assertTrue(!!row);
       var menuButton = row.querySelector('#creditCardMenu');
@@ -257,7 +257,7 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'CreditCardTests', function() {
       var creditCard = FakeDataMaker.creditCardEntry();
       creditCard.metadata.isLocal = false;
       var section = self.createAutofillSection_([], [creditCard]);
-      var creditCardList = section.$.creditCardList;
+      var creditCardList = section.$$('#creditCardList');
       var row = creditCardList.children[0];
       assertTrue(!!row);
       var menuButton = row.querySelector('#creditCardMenu');
@@ -432,7 +432,7 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'CreditCardTests', function() {
       creditCard.metadata.isCached = undefined;
 
       var section = self.createAutofillSection_([], [creditCard]);
-      var creditCardList = section.$.creditCardList;
+      var creditCardList = section.$$('#creditCardList');
       assertTrue(!!creditCardList);
       assertEquals(1, creditCardList.querySelectorAll('.list-item').length);
       var row = creditCardList.children[0];
@@ -463,7 +463,7 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'CreditCardTests', function() {
       creditCard.metadata.isCached = true;
 
       var section = self.createAutofillSection_([], [creditCard]);
-      var creditCardList = section.$.creditCardList;
+      var creditCardList = section.$$('#creditCardList');
       assertTrue(!!creditCardList);
       assertEquals(1, creditCardList.querySelectorAll('.list-item').length);
       var row = creditCardList.children[0];
@@ -494,7 +494,7 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'CreditCardTests', function() {
       creditCard.metadata.isCached = false;
 
       var section = self.createAutofillSection_([], [creditCard]);
-      var creditCardList = section.$.creditCardList;
+      var creditCardList = section.$$('#creditCardList');
       assertTrue(!!creditCardList);
       assertEquals(1, creditCardList.querySelectorAll('.list-item').length);
       var row = creditCardList.children[0];
