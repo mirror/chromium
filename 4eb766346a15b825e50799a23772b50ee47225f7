@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d101d522_5d221e59",
+        "filename": "third_party/gvr-android-keyboard/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-15T20:12:48Z",
+      "side": 1,
+      "message": "it is not obvious why do you need this rule here?",
+      "revId": "4eb766346a15b825e50799a23772b50ee47225f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
