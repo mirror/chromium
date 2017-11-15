@@ -104,6 +104,7 @@ class ChromeBrowserStateImplIOData : public ChromeBrowserStateIOData {
     base::FilePath cookie_path;
     base::FilePath channel_id_path;
     base::FilePath cache_path;
+    API_AVAILABLE(ios(11.0)) WKHTTPCookieStore* wk_cookie_store;
     int cache_max_size;
   };
 

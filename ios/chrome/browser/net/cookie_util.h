@@ -18,6 +18,7 @@ class ChromeBrowserState;
 namespace net {
 class CookieCryptoDelegate;
 class CookieStore;
+class SystemCookieStore;
 }
 
 namespace cookie_util {
@@ -68,6 +69,9 @@ struct CookieStoreConfig {
   // CookieCryptoDelegate must outlive any cookie store created with this
   // config.
   net::CookieCryptoDelegate* crypto_delegate;
+
+  // Used to create net::CookieStoreIOS as backup cookie store.
+  std::unique_ptr<SystemCookieStore> system_cookie_store;
 };
 
 // Creates a cookie store which is internally either a CookieMonster or a
