@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "616429d5_e620d147",
+        "filename": "third_party/WebKit/Source/core/paint/ClipPathClipper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-15T23:49:34Z",
+      "side": 1,
+      "message": "Oops, already_isolated_ is unused, will remove from next patchset.",
+      "revId": "bb7efe85969eeb34837177db08f3e67e21ec8d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "587e1539_60050261",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-15T23:49:34Z",
+      "side": 1,
+      "message": "(Insert no_idea_dog meme here.) chrishtr@ could you help me check the multicol math looks legit?",
+      "revId": "bb7efe85969eeb34837177db08f3e67e21ec8d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e410c34_b05b14c7",
+        "filename": "third_party/WebKit/Source/core/style/ClipPathOperation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-15T23:49:34Z",
+      "side": 1,
+      "message": "This change is drive-by. The anti-pattern was eye hurting.",
+      "revId": "bb7efe85969eeb34837177db08f3e67e21ec8d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

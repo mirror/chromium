@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9d397ca_e15bfdb4",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-15T23:49:34Z",
+      "side": 0,
+      "message": "Moved to ClipPathClipper, because these are clip-path specific, and also allows to de-dupe some code.",
+      "revId": "e54e6b8639f00160e5083cda75205e378e1c577d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
