@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "db7e6e19_0a26d628",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T22:23:27Z",
+      "side": 1,
+      "message": "When the bubble is closed, in practice it should be deleted.  If possible, can make the unittests more closely match reality?  I\u0027m less worried for this change than the one below in OnClose().\n\nWe could also solve this specific instance by stopping the observation of the registry in OnClose(), which would probably be good to do.",
+      "parentUuid": "909eb601_17d5e7bc",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e78910d_659cb205",
         "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
         "patchSetId": 6
