@@ -34,6 +34,7 @@
 #include "core/layout/LayoutView.h"
 #include "core/layout/api/LineLayoutBoxModel.h"
 #include "core/layout/line/InlineTextBox.h"
+#include "core/layout/ng/inline/ng_inline_fragment_iterator.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/paint/BoxPainter.h"
 #include "core/paint/InlinePainter.h"
@@ -953,12 +954,33 @@ class LinesBoundingBoxGeneratorContext {
 }  // unnamed namespace
 
 LayoutRect LayoutInline::LinesBoundingBox() const {
+  if (LayoutBlockFlow* block_flow = EnclosingNGBlockFlow()) {
+    const NGPhysicalBoxFragment* box_fragment = block_flow->CurrentFragment();
+    DCHECK(box_fragment) << "|block_flow| should have a fragment of this node.";
+    DVLOG(0) << box_fragment->DumpFragmentTree(NGPhysicalBoxFragment::DumpAll);
+    LayoutRect result;
+    NGInlineFragmentIterator children(*box_fragment, this);
+    for (const auto& child : children) {
+      NGPhysicalOffset left_top =
+          child.fragment->Offset() + child.offset_to_container_box;
+      DVLOG(0) << "NG  " << child.fragment->Offset() << '+'
+               << child.fragment->Size();
+      result.Unite(LayoutRect(LayoutPoint(left_top.left, left_top.top),
+                              child.fragment->Size().ToLayoutSize()));
+    }
+    DVLOG(0) << "NG " << result.ToString()
+             << ToHTMLElement(GetNode())->OuterHTMLAsString();
+    return result;
+  }
+
   if (!AlwaysCreateLineBoxes()) {
     DCHECK(!FirstLineBox());
     FloatRect float_result;
     LinesBoundingBoxGeneratorContext context(float_result);
     GenerateCulledLineBoxRects(context, this);
-    return EnclosingLayoutRect(float_result);
+    LayoutRect result = EnclosingLayoutRect(float_result);
+    DVLOG(0) << "legacy " << result.ToString();
+    return result;
   }
 
   LayoutRect result;
@@ -994,6 +1016,7 @@ LayoutRect LayoutInline::LinesBoundingBox() const {
     result = LayoutRect(x, y, width, height);
   }
 
+  DVLOG(0) << "always " << result.ToString();
   return result;
 }
 
