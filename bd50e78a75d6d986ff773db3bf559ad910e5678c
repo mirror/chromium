@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3116cc1_44d4aa71",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-15T17:22:31Z",
+      "side": 1,
+      "message": "In case this happens, I think we should delete the file and get things going. Otherwise, user will not be able to download properly.\nYou can do this in a follow up CL though.",
+      "revId": "bd50e78a75d6d986ff773db3bf559ad910e5678c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
