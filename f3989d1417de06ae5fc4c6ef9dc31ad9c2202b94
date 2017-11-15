@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d97d92_81baea84",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-15T17:26:22Z",
+      "side": 1,
+      "message": "can you update the comment?",
+      "revId": "f3989d1417de06ae5fc4c6ef9dc31ad9c2202b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
