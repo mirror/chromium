@@ -45,6 +45,9 @@ class StorageMonitorCros : public StorageMonitor,
       device::MediaTransferProtocolManager* test_manager);
 
   // chromeos::disks::DiskMountManager::Observer implementation.
+  void OnAutoMountableDiskEvent(
+      chromeos::disks::DiskMountManager::DiskEvent event,
+      const chromeos::disks::DiskMountManager::Disk* disk) override;
   void OnDiskEvent(
       chromeos::disks::DiskMountManager::DiskEvent event,
       const chromeos::disks::DiskMountManager::Disk* disk) override;

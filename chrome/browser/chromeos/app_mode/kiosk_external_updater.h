@@ -57,6 +57,9 @@ class KioskExternalUpdater : public disks::DiskMountManager::Observer,
   };
 
   // disks::DiskMountManager::Observer overrides.
+  void OnAutoMountableDiskEvent(
+      disks::DiskMountManager::DiskEvent event,
+      const disks::DiskMountManager::Disk* disk) override;
   void OnDiskEvent(disks::DiskMountManager::DiskEvent event,
                    const disks::DiskMountManager::Disk* disk) override;
   void OnDeviceEvent(disks::DiskMountManager::DeviceEvent event,
