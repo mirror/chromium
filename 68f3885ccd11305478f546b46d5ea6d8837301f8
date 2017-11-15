@@ -16,6 +16,24 @@
       "revId": "68f3885ccd11305478f546b46d5ea6d8837301f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51e3e94e_b570fef4",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-15T18:06:37Z",
+      "side": 1,
+      "message": "Sort-of, there\u0027s the plan to have here a VaapiPictureFactory\nthat can be overriden by tests, see the TODO() in l.232 and \nthe crrev.com/c/767375 CL.",
+      "parentUuid": "21f0133d_dffd8396",
+      "revId": "68f3885ccd11305478f546b46d5ea6d8837301f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
