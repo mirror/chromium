@@ -35,7 +35,7 @@
 #include "net/base/network_change_notifier.h"
 #include "net/nqe/network_quality_estimator.h"
 
-class PrefProxyConfigTracker;
+class CrossThreadNetworkContextParams;
 class PrefService;
 class PrefRegistrySimple;
 class SystemNetworkContextManager;
@@ -78,7 +78,6 @@ class HostResolver;
 class HttpAuthHandlerFactory;
 class HttpAuthPreferences;
 class NetworkQualityEstimator;
-class ProxyConfigService;
 class RTTAndThroughputEstimatesObserver;
 class SSLConfigService;
 class URLRequestContext;
@@ -214,12 +213,9 @@ class IOThread : public content::BrowserThreadDelegate {
   bool WpadQuickCheckEnabled() const;
   bool PacHttpsUrlStrippingEnabled() const;
 
-  // Configures |builder|'s ProxyService to use the specified
-  // |proxy_config_service| and sets a number of proxy-related options based on
-  // prefs, policies, and the command line.
-  void SetUpProxyConfigService(
-      content::URLRequestContextBuilderMojo* builder,
-      std::unique_ptr<net::ProxyConfigService> proxy_config_service) const;
+  // Configures |builder|'s ProxyService based on prefs, policies, and the
+  // command line.
+  void SetUpProxyService(content::URLRequestContextBuilderMojo* builder) const;
 
   // Gets a pointer to the NetworkService. Can only be called on the UI thread.
   // When out-of-process NetworkService is enabled, this is a reference to the
@@ -321,18 +317,12 @@ class IOThread : public content::BrowserThreadDelegate {
   // These are set on the UI thread, and then consumed during initialization on
   // the IO thread.
   content::mojom::NetworkContextRequest network_context_request_;
-  content::mojom::NetworkContextParamsPtr network_context_params_;
+  std::unique_ptr<CrossThreadNetworkContextParams> network_context_params_;
 
   // This is an instance of the default SSLConfigServiceManager for the current
   // platform and it gets SSL preferences from local_state object.
   std::unique_ptr<ssl_config::SSLConfigServiceManager>
       ssl_config_service_manager_;
-
-  // These member variables are initialized by a task posted to the IO thread,
-  // which gets posted by calling certain member functions of IOThread.
-  std::unique_ptr<net::ProxyConfigService> system_proxy_config_service_;
-
-  std::unique_ptr<PrefProxyConfigTracker> pref_proxy_config_tracker_;
 
   scoped_refptr<net::URLRequestContextGetter>
       system_url_request_context_getter_;
