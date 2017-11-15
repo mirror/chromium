@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "base/command_line.h"
 #include "build/build_config.h"
 #include "content/browser/media/audible_metrics.h"
 #include "content/browser/media/audio_stream_monitor.h"
@@ -14,6 +15,7 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "ipc/ipc_message_macros.h"
+#include "media/base/media_switches.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "services/device/public/interfaces/wake_lock_context.mojom.h"
 #include "ui/gfx/geometry/size.h"
@@ -40,13 +42,25 @@ void CheckFullscreenDetectionEnabled(WebContents* web_contents) {
 #endif  // defined(OS_ANDROID)
 }
 
+bool IsMediaSessionEnabled() {
+// Media session is enabled on Android and Chrome OS to allow control of media
+// players as needed.
+#if defined(OS_ANDROID) || defined(OS_CHROMEOS)
+  return true;
+#else
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  return command_line->HasSwitch(switches::kEnableInternalMediaSession) ||
+         command_line->HasSwitch(switches::kEnableAudioFocus);
+#endif
+}
+
 }  // anonymous namespace
 
 MediaWebContentsObserver::MediaWebContentsObserver(WebContents* web_contents)
     : WebContentsObserver(web_contents),
       has_audio_wake_lock_for_testing_(false),
       has_video_wake_lock_for_testing_(false),
-      session_controllers_manager_(this) {}
+      session_controllers_manager_(this, IsMediaSessionEnabled()) {}
 
 MediaWebContentsObserver::~MediaWebContentsObserver() = default;
 
