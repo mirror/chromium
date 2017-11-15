@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "499a43aa_44ce26f0",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-15T17:57:11Z",
+      "side": 1,
+      "message": "If we use this class to do this, please rewrite this comment something like:\n\n// Implements workarounds for bugs between iOS and MDC.",
+      "range": {
+        "startLine": 43,
+        "startChar": 73,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "9dea21ada062a37a952566b36b18f981ef7fb1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8ea59e_e279edef",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-15T17:57:11Z",
+      "side": 1,
+      "message": "Can you add a TODO comment with a bug assigned to me to investigate if this can be fixed in MDC?",
+      "range": {
+        "startLine": 62,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 29
+      },
+      "revId": "9dea21ada062a37a952566b36b18f981ef7fb1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f5857c2_1b9a5857",
         "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
         "patchSetId": 2
@@ -37,6 +83,30 @@
       "side": 1,
       "message": "Why?  I don\u0027t know the history of this crazy stuff but it seems we want to lay out the contentViewController beneath the SettingsAppBarContainerViewController appBarHeight, regardless of safeArea, no?",
       "parentUuid": "9f5857c2_1b9a5857",
+      "range": {
+        "startLine": 72,
+        "startChar": 32,
+        "endLine": 72,
+        "endChar": 64
+      },
+      "revId": "9dea21ada062a37a952566b36b18f981ef7fb1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0941951_789dff46",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-15T17:57:11Z",
+      "side": 1,
+      "message": "Well, actually, can\u0027t we just add a constraint with the bottom of self.appBar.headerViewController.headerView?",
+      "parentUuid": "857de3cb_adc0f055",
       "range": {
         "startLine": 72,
         "startChar": 32,
@@ -96,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4e93503c_4c685a45",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-15T17:57:11Z",
+      "side": 1,
+      "message": "Right, we\u0027d need something like SafeAreaLayoutGuideForView above, that provides compat for all configs.\n\nAs per previous comment, this might not be necessary.",
+      "parentUuid": "facd914e_e9f75764",
+      "range": {
+        "startLine": 73,
+        "startChar": 47,
+        "endLine": 73,
+        "endChar": 73
+      },
+      "revId": "9dea21ada062a37a952566b36b18f981ef7fb1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32509216_96cc4b6e",
         "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
         "patchSetId": 2
@@ -143,6 +237,24 @@
       "side": 1,
       "message": "Because otherwise you will see black bars for safeAreaLayoutGuide.leading, trailing, bottom.",
       "parentUuid": "7b234f98_36ff6e7d",
+      "revId": "9dea21ada062a37a952566b36b18f981ef7fb1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6506edf_67c5fb55",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-15T17:57:11Z",
+      "side": 1,
+      "message": "I see. Feel free to add a TODO comment with the same bug as above, assigned to me.",
+      "parentUuid": "1a006775_5f5182da",
       "revId": "9dea21ada062a37a952566b36b18f981ef7fb1ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
