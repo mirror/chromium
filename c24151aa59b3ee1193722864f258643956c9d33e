@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ed7350c3_64ed868b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/SearchableView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-11-15T21:30:20Z",
+      "side": 1,
+      "message": "For comparison:\nVSCode uses a drop down triangle\nSublime text has no button, and seperate keyboard shortcuts\nEclipse and Atom always show replace\nFirefox doesn\u0027t show replace.",
+      "parentUuid": "b0c08521_6c514664",
+      "revId": "c24151aa59b3ee1193722864f258643956c9d33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac80b59a_2973a949",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/SearchableView.js",
         "patchSetId": 2
