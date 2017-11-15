@@ -1044,6 +1044,30 @@
     },
     {
       "key": {
+        "uuid": "02dd81a3_bda3b23a",
+        "filename": "chrome_elf/whitelist/whitelist_component.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-15T22:10:01Z",
+      "side": 1,
+      "message": "I\u0027ll definitely need to know what failed for UMA.  I\u0027ll probably have to pass the value through to main chrome to have it shipped back for UMA.\n\nI\u0027ve adjusted the enum for now.  We can revisit later on a CL that sets up UMA for failures in whitelist.",
+      "parentUuid": "c58d333d_4a7f7c37",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1984d708_7a94c78f",
         "filename": "chrome_elf/whitelist/whitelist_component.h",
         "patchSetId": 5

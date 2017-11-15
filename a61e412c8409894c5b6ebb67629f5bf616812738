@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3d07d8d1_3c36fbcf",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-15T22:10:01Z",
+      "side": 1,
+      "message": "Done.  TIL.",
+      "parentUuid": "77a097f1_5a41af36",
+      "range": {
+        "startLine": 96,
+        "startChar": 28,
+        "endLine": 96,
+        "endChar": 36
+      },
+      "revId": "a61e412c8409894c5b6ebb67629f5bf616812738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d43076c4_fd53011d",
         "filename": "chrome_elf/whitelist/whitelist_file.cc",
         "patchSetId": 9
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "8fcbf52d_bce9411d",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-15T22:10:01Z",
+      "side": 1,
+      "message": "Done.  Think it\u0027s better down at 207.  That\u0027s where the UMA decisions will be made.",
+      "parentUuid": "d43076c4_fd53011d",
+      "revId": "a61e412c8409894c5b6ebb67629f5bf616812738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aab2d5b9_fc45d5e2",
         "filename": "chrome_elf/whitelist/whitelist_file.cc",
         "patchSetId": 9
@@ -56,6 +98,24 @@
       "revId": "a61e412c8409894c5b6ebb67629f5bf616812738",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca737e1_eb7e2f0d",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-15T22:10:01Z",
+      "side": 1,
+      "message": "That\u0027s exactly what might change.  And it\u0027ll change down at line ~208.  I\u0027d rather leave this check in here.  It\u0027s not a failure case if size \u003d\u003d 0, it just returns \"no, the module is not whitelisted\".",
+      "parentUuid": "aab2d5b9_fc45d5e2",
+      "revId": "a61e412c8409894c5b6ebb67629f5bf616812738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "840848dd_ced55fba",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-15T22:10:01Z",
+      "side": 1,
+      "message": "Ack.  See other comments - I moved my TODO down to here.\n\nIt\u0027s always valid to call IsModuleWhitelisted(), regardless of array size, but I\u0027ll need to decide in next CLs whether it\u0027s \"valid\" to have a size 0 array in the packed whitelist file.  Would we ever do this, or are there cases it may happen, etc.  For now I\u0027ll leave it as a \"failure\" status.",
+      "parentUuid": "9e0a8a58_22aab520",
+      "range": {
+        "startLine": 208,
+        "startChar": 28,
+        "endLine": 208,
+        "endChar": 36
+      },
+      "revId": "a61e412c8409894c5b6ebb67629f5bf616812738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fce8ccf_fd6ac5ea",
         "filename": "chrome_elf/whitelist/whitelist_file.h",
         "patchSetId": 9
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "ef054fd0_5f8fa20c",
+        "filename": "chrome_elf/whitelist/whitelist_file.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-15T22:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fce8ccf_fd6ac5ea",
+      "revId": "a61e412c8409894c5b6ebb67629f5bf616812738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6db5ddc_f670e768",
         "filename": "chrome_elf/whitelist/whitelist_file_format.h",
         "patchSetId": 9
@@ -113,6 +215,24 @@
       "revId": "a61e412c8409894c5b6ebb67629f5bf616812738",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f295366_38f4d67f",
+        "filename": "chrome_elf/whitelist/whitelist_file_format.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-15T22:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6db5ddc_f670e768",
+      "revId": "a61e412c8409894c5b6ebb67629f5bf616812738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -136,6 +256,30 @@
       "revId": "a61e412c8409894c5b6ebb67629f5bf616812738",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7df3464_24a5f521",
+        "filename": "chrome_elf/whitelist/whitelist_file_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-15T22:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7654029b_cf2a2080",
+      "range": {
+        "startLine": 118,
+        "startChar": 53,
+        "endLine": 118,
+        "endChar": 75
+      },
+      "revId": "a61e412c8409894c5b6ebb67629f5bf616812738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

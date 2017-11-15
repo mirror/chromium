@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2c2fb611_495d1701",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-15T22:10:01Z",
+      "side": 1,
+      "message": "Oh, good to know.  I would have thought the compiler would handle a passed ref better - with hand-wavy c++ black magic.  Thanks!",
+      "parentUuid": "dc32f461_c658cf59",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 14
+      },
+      "revId": "dbe87eb920dfe9e3929edac95fba737b0004bd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bec06b1_bcd5a29e",
         "filename": "chrome_elf/whitelist/whitelist_component.cc",
         "patchSetId": 6
@@ -307,6 +331,24 @@
       "side": 1,
       "message": "check the regexp here:\n\nhttps://cs.chromium.org/chromium/src/PRESUBMIT.py?type\u003dcs\u0026q\u003dfile:src/presubmit%5C.py+def%5C+_CheckNoProductionCodeUsingTestOnlyFunctions\u0026sq\u003dpackage:chromium\u0026l\u003d496",
       "parentUuid": "e989ea0a_6531d824",
+      "revId": "dbe87eb920dfe9e3929edac95fba737b0004bd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08cca328_06e7a713",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-15T22:10:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "42bc3d2d_e07579b9",
       "revId": "dbe87eb920dfe9e3929edac95fba737b0004bd8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
