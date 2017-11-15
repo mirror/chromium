@@ -7,6 +7,7 @@
 #include "core/css/CSSColorValue.h"
 #include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSValueList.h"
+#include "core/css/parser/CSSParser.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -116,6 +117,38 @@ TEST(CSSParserFastPathsTest, ParseColorWithLargeAlpha) {
   EXPECT_NE(nullptr, value);
   EXPECT_TRUE(value->IsColorValue());
   EXPECT_EQ(Color::kBlack, ToCSSColorValue(*value).Value());
+}
+
+TEST(CSSParserFastPathsTest, ParseColor) {
+  Color dummy;
+  for (int i = 0; i < 100000; ++i) {
+    bool res = CSSParser::ParseColor(dummy, "green");
+    DCHECK(res);
+  }
+}
+
+TEST(CSSParserFastPathsTest, RGBAColor) {
+  Color dummy;
+  for (int i = 0; i < 100000; ++i) {
+    bool res = CSSParser::ParseColor(dummy, "rgba(255, 0, 0, 0.3)");
+    DCHECK(res);
+  }
+}
+
+TEST(CSSParserFastPathsTest, HslaColor) {
+  Color dummy;
+  for (int i = 0; i < 100000; ++i) {
+    bool res = CSSParser::ParseColor(dummy, "hsla(120, 100%, 100%, 0.3)");
+    DCHECK(res);
+  }
+}
+
+TEST(CSSParserFastPathsTest, HexColor) {
+  Color dummy;
+  for (int i = 0; i < 100000; ++i) {
+    bool res = CSSParser::ParseColor(dummy, "#00FF00");
+    DCHECK(res);
+  }
 }
 
 }  // namespace blink
