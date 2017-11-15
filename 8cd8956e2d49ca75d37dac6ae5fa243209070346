@@ -78,6 +78,24 @@
     },
     {
       "key": {
+        "uuid": "526ebb6f_151ed4db",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-15T10:24:46Z",
+      "side": 1,
+      "message": "Oh, I thought policies from \"Enrollment and Access\" are not even in the policy_templates.json.\nWhat \"Attestation\" match to?",
+      "parentUuid": "cb94fde4_3fbe8dbe",
+      "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "339cf6b9_af9157e7",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 3
@@ -149,6 +167,24 @@
     },
     {
       "key": {
+        "uuid": "f11379a1_dc8c478c",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-15T10:24:46Z",
+      "side": 1,
+      "message": "We actually could put both device and user policy into one group. It would generate the same result.",
+      "parentUuid": "0d268f63_dcfd9e66",
+      "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad684de6_e4e8221f",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 3
@@ -213,6 +249,24 @@
       "writtenOn": "2017-11-14T21:08:32Z",
       "side": 1,
       "message": "I think you have a very valid point that we have to think about. If I understand correctly, your concern is that you\u0027d end up with different group hierarchies for device and corresponding user policies?\n\nThis wouldn\u0027t be a problem for ADMX templates, where user and device policies are separated, anyway. Even if user and device policies are in the same group, they show up in different locations in the GPO editor. Then there\u0027s the doc file, i.e. chrome_policy_list.html, where the policies would show up in different groups. I\u0027m not sure how bad this is. Given that the two types apply to very different areas (e.g. sign-in accessibility vs in-session accessibility), it seems OK to me. Are groups used anywhere else?\n\nI was hoping that the help center would touch most policies and the rest could just be grouped  in a similar fashion however it makes sense. TBH with 400 policies I don\u0027t see all implications, though.",
+      "parentUuid": "0e440e56_25341e0c",
+      "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e64ae1_8a9d2c59",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-15T10:24:46Z",
+      "side": 1,
+      "message": "Let\u0027s discuss that offline when Lutz is back.",
       "parentUuid": "0e440e56_25341e0c",
       "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
