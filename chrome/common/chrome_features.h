@@ -243,11 +243,6 @@ extern const base::Feature kNativeSamba;
 
 extern const base::Feature kSoundContentSetting;
 
-#if !defined(OS_ANDROID)
-extern const base::Feature kStaggeredBackgroundTabOpening;
-extern const base::Feature kStaggeredBackgroundTabOpeningExperiment;
-#endif
-
 extern const base::Feature kSupervisedUserCreation;
 
 #if defined(OS_CHROMEOS)
