@@ -306,7 +306,13 @@ void DefaultState::HandleWorkspaceEvents(WindowState* window_state,
       }
 
       aura::Window* window = window_state->window();
-      gfx::Rect bounds = window->bounds();
+      gfx::Rect bounds;
+      if (window_state->pre_added_to_workspace_window_bounds()) {
+        bounds = *window_state->pre_added_to_workspace_window_bounds();
+      } else {
+        bounds = window->bounds();
+        window_state->SetPreAddedToWorkspaceWindowBounds(bounds);
+      }
 
       // Don't adjust window bounds if the bounds are empty as this
       // happens when a new views::Widget is created.
