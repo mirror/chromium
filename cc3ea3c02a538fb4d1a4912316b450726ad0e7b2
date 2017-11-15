@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cbbf016_69a0386b",
+        "filename": "mojo/public/cpp/bindings/interface_ptr_info.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T03:30:56Z",
+      "side": 1,
+      "message": "Slightly more common to just write std::nullptr_t and #include \u003ccstddef\u003e now that we have library support.",
+      "range": {
+        "startLine": 22,
+        "startChar": 19,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "cc3ea3c02a538fb4d1a4912316b450726ad0e7b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
