@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b0edd2c_b37f5394",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/csp-tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-15T01:20:27Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "73a3eb8d2b77f32d921c258d642121764caac439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
