@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e42ce1b_0b58c8ef",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-filter-groups.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-15T19:28:44Z",
+      "side": 1,
+      "message": "Wrong text.",
+      "revId": "4d27f7e644f199fee47fca2affecc7bbc5ca4b12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1174b6a_c1c00435",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1473,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-15T19:28:44Z",
+      "side": 1,
+      "message": "Either add a getter/setter for this one, or remove other getters.",
+      "revId": "4d27f7e644f199fee47fca2affecc7bbc5ca4b12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
