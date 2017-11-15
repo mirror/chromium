@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "ae035c4d_daeb3f3f",
+        "filename": "extensions/renderer/resource_bundle_source_map.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-15T01:03:54Z",
+      "side": 1,
+      "message": "A minor correction for my previous comment: it is a Z620, not a Z840. But I see your point. :)\n\nDone.\nNow the number becomes 2.80112e+06 GetSource() per second.",
+      "parentUuid": "0ebe7934_94988aa4",
+      "revId": "172967dd9bc231e53071af954126274ae7fbe310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac5acd55_9de5260d",
         "filename": "extensions/renderer/resource_bundle_source_map.h",
         "patchSetId": 1
