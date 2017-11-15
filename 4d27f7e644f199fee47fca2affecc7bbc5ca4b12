@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8fba5fed_cb62636c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-filter-groups.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-15T23:02:06Z",
+      "side": 1,
+      "message": "Whoops, corrected.",
+      "parentUuid": "2e42ce1b_0b58c8ef",
+      "revId": "4d27f7e644f199fee47fca2affecc7bbc5ca4b12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1174b6a_c1c00435",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "4d27f7e644f199fee47fca2affecc7bbc5ca4b12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed71cdb_9f9d30c3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1473,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-15T23:02:06Z",
+      "side": 1,
+      "message": "Done, removed other getters.",
+      "parentUuid": "d1174b6a_c1c00435",
+      "revId": "4d27f7e644f199fee47fca2affecc7bbc5ca4b12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
