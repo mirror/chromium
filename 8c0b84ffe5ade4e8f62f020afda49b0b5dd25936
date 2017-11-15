@@ -16,6 +16,24 @@
       "revId": "8c0b84ffe5ade4e8f62f020afda49b0b5dd25936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b16f52_4e67f7c2",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-15T14:13:01Z",
+      "side": 1,
+      "message": "This became obsolete.",
+      "parentUuid": "7c929bab_2c32479f",
+      "revId": "8c0b84ffe5ade4e8f62f020afda49b0b5dd25936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
