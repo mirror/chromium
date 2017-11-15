@@ -112,6 +112,11 @@ String16Vector String16VectorFromString16(
     bool break_on_space,
     WordStarts* word_starts);
 
+// Used only for unit test which tests TailoredWordBreakIterator.
+String16Vector String16VectorFromString16(
+    const base::string16& cleaned_uni_string,
+    WordStarts* word_starts);
+
 // Breaks the |uni_word| string down into its individual characters.
 // Note that this is temporarily intended to work on a single word, but
 // _will_ work on a string of words, perhaps with unexpected results.
