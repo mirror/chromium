@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dd757c6_f449844e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-15T03:20:37Z",
+      "side": 1,
+      "message": "I found testing::WaitUntilConditionOrTimeout() ios/testing/wait_util.h instead. Is that what you are referring to? If so, please correct the CL description here.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 25
+      },
+      "revId": "33d5f530304005817052e89b854fbec32608bd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac07682f_e96d754f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-15T03:20:37Z",
+      "side": 1,
+      "message": "s/suppose/supposed/",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "33d5f530304005817052e89b854fbec32608bd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
