@@ -646,6 +646,7 @@ test("browser_tests") {
       "../browser/safe_browsing/test_safe_browsing_database_helper.cc",
       "../browser/safe_browsing/test_safe_browsing_database_helper.h",
       "../browser/safe_json_parser_browsertest.cc",
+      "../browser/safe_xml_parser_browsertest.cc",
       "../browser/search/hotword_installer_browsertest.cc",
       "../browser/search/suggestions/image_fetcher_impl_browsertest.cc",
       "../browser/search_engines/template_url_scraper_browsertest.cc",
@@ -657,6 +658,8 @@ test("browser_tests") {
       "../browser/sessions/session_restore_observer_browsertest.cc",
       "../browser/sessions/tab_restore_browsertest.cc",
       "../browser/site_details_browsertest.cc",
+      "../browser/test_service_manager_listener.cc",
+      "../browser/test_service_manager_listener.h",
       "../browser/thumbnails/thumbnail_browsertest.cc",
       "../browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
 
