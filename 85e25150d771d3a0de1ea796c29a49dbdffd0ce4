@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2762810_79e758a7",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-15T14:03:57Z",
+      "side": 1,
+      "message": "Note: this is for FROM_HERE.",
+      "revId": "85e25150d771d3a0de1ea796c29a49dbdffd0ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e59dcc2_273b8de0",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-15T14:03:57Z",
+      "side": 1,
+      "message": "Note: L38-L109 is exact copy from L45-L116 in arc_session.cc.",
+      "revId": "85e25150d771d3a0de1ea796c29a49dbdffd0ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d6f08e_66a87039",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-15T14:03:57Z",
+      "side": 1,
+      "message": "Note: L111-L141 is exact copy from L328-L358 in arc_session.cc",
+      "revId": "85e25150d771d3a0de1ea796c29a49dbdffd0ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad998a2_c9c7c464",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-15T14:03:57Z",
+      "side": 1,
+      "message": "Note: L143-L239 is exact copy from L366-L462 in arc_session.cc",
+      "revId": "85e25150d771d3a0de1ea796c29a49dbdffd0ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcef72a7_2211798e",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-15T14:03:57Z",
+      "side": 1,
+      "message": "Note: This function is exact copy from the one in arc_session.cc",
+      "revId": "85e25150d771d3a0de1ea796c29a49dbdffd0ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40ba8a5_2637a297",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-15T14:03:57Z",
+      "side": 1,
+      "message": "Note: L249-L614 is exact copy from L464-L829 in arc_session.cc",
+      "revId": "85e25150d771d3a0de1ea796c29a49dbdffd0ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed78271a_7a85b772",
+        "filename": "components/arc/arc_session_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-15T14:03:57Z",
+      "side": 1,
+      "message": "Note: L27-L233 is the exact copy from L120-L326 in arc_session.cc.",
+      "revId": "85e25150d771d3a0de1ea796c29a49dbdffd0ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
