@@ -24,6 +24,10 @@ class GraphProcessor {
 
   static void RemoveWeakNodesFromGraph(GlobalDumpGraph* global_graph);
 
+  static void AddOverheadsToGraph(GlobalDumpGraph* global_graph);
+
+  static void CalculateSizesForGraph(GlobalDumpGraph* global_graph);
+
   static std::map<base::ProcessId, uint64_t> ComputeSharedFootprintFromGraph(
       const GlobalDumpGraph& global_graph);
 
@@ -58,6 +62,18 @@ class GraphProcessor {
 
   static void PropagateNumericsAndDiagnosticsRecursively(
       GlobalDumpGraph::Node* node);
+
+  static base::Optional<uint64_t> AggregateSizeForDescendantNode(
+      GlobalDumpGraph::Node* root,
+      GlobalDumpGraph::Node* descendant);
+
+  static void CalculateSizeForNode(GlobalDumpGraph::Node* node);
+
+  static void VisitInDepthFirstPostOrder(
+      GlobalDumpGraph::Node* node,
+      std::set<const GlobalDumpGraph::Node*>* visited,
+      std::set<const GlobalDumpGraph::Node*>* path,
+      const base::RepeatingCallback<void(GlobalDumpGraph::Node*)>& callback);
 };
 
 }  // namespace memory_instrumentation
