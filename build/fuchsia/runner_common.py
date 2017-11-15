@@ -16,6 +16,7 @@ import shutil
 import signal
 import subprocess
 import sys
+import tempfile
 import time
 import uuid
 
@@ -265,9 +266,10 @@ def WriteAutorun(bin_name, child_args, summary_output, shutdown_machine,
   file_mapping['autorun'] = autorun_file.name
   file_mapping[os.path.basename(bin_name)] = bin_name
 
-def BuildBootfs(output_directory, runtime_deps, bin_name, child_args, dry_run,
-                bootdata, summary_output, shutdown_machine, target_cpu,
-                use_device, wait_for_network, use_autorun):
+
+def _BuildBootfsManifest(output_directory, runtime_deps, bin_name, child_args,
+                         dry_run, summary_output, shutdown_machine,
+                         target_cpu, use_device, wait_for_network, use_autorun):
   # |runtime_deps| already contains (target, source) pairs for the runtime deps,
   # so we can initialize |file_mapping| from it directly.
   file_mapping = dict(runtime_deps)
@@ -289,6 +291,16 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args, dry_run,
   _WriteManifest(manifest_file, file_mapping)
   manifest_file.flush()
   _DumpFile(dry_run, manifest_file.name, 'manifest')
+  return manifest_file.name, symbols_mapping
+
+
+def BuildBootfs(output_directory, runtime_deps, bin_name, child_args, dry_run,
+                bootdata, summary_output, shutdown_machine, target_cpu,
+                use_device, wait_for_network, use_autorun):
+  manifest_file_name, symbols_mapping = _BuildBootfsManifest(
+      output_directory, runtime_deps, bin_name, child_args, dry_run,
+      summary_output, shutdown_machine, target_cpu, use_device,
+      wait_for_network, use_autorun)
 
   # Run mkbootfs with the manifest to copy the necessary files into the bootfs.
   mkbootfs_path = os.path.join(SDK_ROOT, 'tools', 'mkbootfs')
@@ -297,11 +309,41 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args, dry_run,
     bootdata = os.path.join(_TargetCpuToSdkBinPath(target_cpu), 'bootdata.bin')
   args = [mkbootfs_path, '-o', bootfs_name,
           '--target=boot', bootdata,
-          '--target=system', manifest_file.name]
+          '--target=system', manifest_file_name]
   if _RunAndCheck(dry_run, args) != 0:
     return None
 
   return BootfsData(bootfs_name, symbols_mapping, target_cpu)
+
+
+def BuildTarImage(output_directory, runtime_deps, bin_name, child_args, dry_run,
+                  bootdata, summary_output, shutdown_machine, target_cpu,
+                  use_device, wait_for_network, use_autorun):
+  manifest_file_name, symbols_mapping = _BuildBootfsManifest(
+      output_directory, runtime_deps, bin_name, child_args, dry_run,
+      summary_output, shutdown_machine, target_cpu, use_device,
+      wait_for_network, use_autorun)
+
+  try:
+    tempdir = tempfile.mkdtemp()
+    root = os.path.join(tempdir, 'system')
+    os.makedirs(root)
+    with open(manifest_file_name) as f:
+      for line in f.readlines():
+        target, _, source = line.strip().partition('=')
+        assert os.path.isfile(source)
+        dirname = os.path.dirname(target)
+        if dirname:
+          dirname_in_tempdir = os.path.join(root, dirname)
+          if not os.path.exists(dirname_in_tempdir):
+            os.makedirs(dirname_in_tempdir)
+        shutil.copy(source, os.path.join(root, target))
+
+    print 'Archiving', tempdir, 'to', bin_name + '.tar.gz'
+    shutil.make_archive(bin_name, 'gztar', tempdir)
+  finally:
+    if tempdir:
+      shutil.rmtree(tempdir)
 
 
 def _SymbolizeEntries(entries):
