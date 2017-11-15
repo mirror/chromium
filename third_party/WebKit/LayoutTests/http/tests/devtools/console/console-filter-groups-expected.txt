@@ -1,0 +1,164 @@
+Tests that console can filter console.group() messages correctly.
+
+
+Filter set to: /message-a1/
+>console-filter-groups.js:11 Outer group-A
+  console-filter-groups.js:12 message-a1
+
+Filter set to: /message-b1/
+>console-filter-groups.js:11 Outer group-A
+  >console-filter-groups.js:15 Inner group-B
+    console-filter-groups.js:16 message-b1
+
+Filter set to: /message-d1/
+>console-filter-groups.js:11 Outer group-A
+  >console-filter-groups.js:25 Collapsed inner group-D
+
+Filter set to: /message-e1/
+>console-filter-groups.js:11 Outer group-A
+  >console-filter-groups.js:25 Collapsed inner group-D
+
+Filter set to: /message-f1/
+>console-filter-groups.js:37 Collapsed outer group-F
+
+Filter set to: /message-z1/
+console-filter-groups.js:45 message-z1
+
+Filter set to: /message-a1|message-b1/
+>console-filter-groups.js:11 Outer group-A
+  console-filter-groups.js:12 message-a1
+  >console-filter-groups.js:15 Inner group-B
+    console-filter-groups.js:16 message-b1
+
+Filter set to: /message-a1|message-d1/
+>console-filter-groups.js:11 Outer group-A
+  console-filter-groups.js:12 message-a1
+  >console-filter-groups.js:25 Collapsed inner group-D
+
+Filter set to: /message-a1|message-e1/
+>console-filter-groups.js:11 Outer group-A
+  console-filter-groups.js:12 message-a1
+  >console-filter-groups.js:25 Collapsed inner group-D
+
+Filter set to: /message-a1|message-z1/
+>console-filter-groups.js:11 Outer group-A
+  console-filter-groups.js:12 message-a1
+console-filter-groups.js:45 message-z1
+
+Filter set to: /message-b1|message-c1/
+>console-filter-groups.js:11 Outer group-A
+  >console-filter-groups.js:15 Inner group-B
+    console-filter-groups.js:16 message-b1
+  >console-filter-groups.js:20 Inner group-C
+    console-filter-groups.js:21 message-c1
+
+Filter set to: /message-b1|message-d1/
+>console-filter-groups.js:11 Outer group-A
+  >console-filter-groups.js:15 Inner group-B
+    console-filter-groups.js:16 message-b1
+  >console-filter-groups.js:25 Collapsed inner group-D
+
+Filter set to: /message-b1|message-z1/
+>console-filter-groups.js:11 Outer group-A
+  >console-filter-groups.js:15 Inner group-B
+    console-filter-groups.js:16 message-b1
+console-filter-groups.js:45 message-z1
+
+Filter set to: /message-d1|message-e1/
+>console-filter-groups.js:11 Outer group-A
+  >console-filter-groups.js:25 Collapsed inner group-D
+
+Filter set to: /group-A/
+No messages to show.
+
+Filter set to: /group-B/
+No messages to show.
+
+Filter set to: /group-D/
+No messages to show.
+
+Filter set to: /group-E/
+No messages to show.
+
+Filter set to: /group-F/
+No messages to show.
+
+Filter set to: /group-A|group-B/
+No messages to show.
+
+Filter set to: /group-A|group-E/
+No messages to show.
+
+Filter set to: /group-B|group-C/
+No messages to show.
+
+Filter set to: /group-B|group-E/
+No messages to show.
+
+Filter set to: /group-D|group-E/
+No messages to show.
+
+Filter set to: /group-A|message-b1/
+>console-filter-groups.js:11 Outer group-A
+  >console-filter-groups.js:15 Inner group-B
+    console-filter-groups.js:16 message-b1
+
+Filter set to: /group-A|message-d1/
+>console-filter-groups.js:11 Outer group-A
+  >console-filter-groups.js:25 Collapsed inner group-D
+
+Filter set to: /group-A|message-e1/
+>console-filter-groups.js:11 Outer group-A
+  >console-filter-groups.js:25 Collapsed inner group-D
+
+Filter set to: /group-A|message-z1/
+console-filter-groups.js:45 message-z1
+
+Filter set to: /group-B|message-c1/
+>console-filter-groups.js:11 Outer group-A
+  >console-filter-groups.js:20 Inner group-C
+    console-filter-groups.js:21 message-c1
+
+Filter set to: /group-B|message-d1/
+>console-filter-groups.js:11 Outer group-A
+  >console-filter-groups.js:25 Collapsed inner group-D
+
+Filter set to: /group-B|message-z1/
+console-filter-groups.js:45 message-z1
+
+Filter set to: /group-D|message-e1/
+>console-filter-groups.js:11 Outer group-A
+  >console-filter-groups.js:25 Collapsed inner group-D
+
+Filter set to: /message-a1|group-B/
+>console-filter-groups.js:11 Outer group-A
+  console-filter-groups.js:12 message-a1
+
+Filter set to: /message-b1|group-C/
+>console-filter-groups.js:11 Outer group-A
+  >console-filter-groups.js:15 Inner group-B
+    console-filter-groups.js:16 message-b1
+
+Filter set to: /message-d1|group-E/
+>console-filter-groups.js:11 Outer group-A
+  >console-filter-groups.js:25 Collapsed inner group-D
+
+Filter set to: queryWithoutMatches
+No messages to show.
+
+Filter cleared
+>console-filter-groups.js:11 Outer group-A
+  console-filter-groups.js:12 message-a1
+  console-filter-groups.js:13 message-a2
+  >console-filter-groups.js:15 Inner group-B
+    console-filter-groups.js:16 message-b1
+    console-filter-groups.js:17 message-b2
+  >console-filter-groups.js:20 Inner group-C
+    console-filter-groups.js:21 message-c1
+    console-filter-groups.js:22 message-c2
+  >console-filter-groups.js:25 Collapsed inner group-D
+>console-filter-groups.js:37 Collapsed outer group-F
+>console-filter-groups.js:42 Empty outer group-G
+console-filter-groups.js:45 message-z1
+console-filter-groups.js:46 message-z2
+
