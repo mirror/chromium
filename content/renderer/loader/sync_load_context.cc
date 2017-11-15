@@ -34,6 +34,7 @@ void SyncLoadContext::StartAsyncWithWaitableEvent(
       true /* is_sync */, base::WrapUnique(context),
       blink::WebURLRequest::LoadingIPCType::kMojo,
       context->url_loader_factory_.get(), std::move(throttles),
+      mojom::URLLoaderPtr(), mojom::URLLoaderClientRequest(),
       mojo::ScopedDataPipeConsumerHandle());
 }
 
