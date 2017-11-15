@@ -1393,12 +1393,12 @@ bool ChromeContentRendererClient::IsExternalPepperPlugin(
 }
 
 #if BUILDFLAG(ENABLE_PLUGINS) && BUILDFLAG(ENABLE_EXTENSIONS)
-bool ChromeContentRendererClient::IsExtensionOrSharedModuleWhitelisted(
-    const GURL& url, const std::set<std::string>& whitelist) {
+bool ChromeContentRendererClient::CheckIsExtensionOrSharedModuleWhitelisted(
+    const GURL& url,
+    const std::set<std::string>& whitelist) {
   const extensions::ExtensionSet* extension_set =
       extensions::RendererExtensionRegistry::Get()->GetMainThreadExtensionSet();
-  return chrome::IsExtensionOrSharedModuleWhitelisted(url, extension_set,
-      whitelist);
+  return IsExtensionOrSharedModuleWhitelisted(url, extension_set, whitelist);
 }
 #endif
 
@@ -1491,7 +1491,8 @@ bool ChromeContentRendererClient::IsPluginAllowedToUseCameraDeviceAPI(
           switches::kEnablePepperTesting))
     return true;
 
-  if (IsExtensionOrSharedModuleWhitelisted(url, allowed_camera_device_origins_))
+  if (CheckIsExtensionOrSharedModuleWhitelisted(url,
+                                                allowed_camera_device_origins_))
     return true;
 #endif
 
@@ -1504,7 +1505,8 @@ bool ChromeContentRendererClient::IsPluginAllowedToUseCompositorAPI(
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnablePepperTesting))
     return true;
-  if (IsExtensionOrSharedModuleWhitelisted(url, allowed_compositor_origins_))
+  if (CheckIsExtensionOrSharedModuleWhitelisted(url,
+                                                allowed_compositor_origins_))
     return true;
 
   version_info::Channel channel = chrome::GetChannel();

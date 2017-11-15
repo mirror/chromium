@@ -109,7 +109,7 @@ int32_t PepperUMAHost::OnResourceMessageReceived(
 
 bool PepperUMAHost::IsPluginWhitelisted() {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
-  return ChromeContentRendererClient::IsExtensionOrSharedModuleWhitelisted(
+  return ChromeContentRendererClient::CheckIsExtensionOrSharedModuleWhitelisted(
       document_url_, allowed_origins_);
 #else
   return false;
