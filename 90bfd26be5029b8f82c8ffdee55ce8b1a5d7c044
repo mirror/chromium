@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2cf69973_fcc310bf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-15T08:58:07Z",
+      "side": 1,
+      "message": "What about `eval()` (controlled via `CSP: script-src \u0027unsafe-eval\u0027`)? It seems like you should be able to write a test for that which verifies that the policy has been pushed down from the parent document to the child worklet.",
+      "revId": "90bfd26be5029b8f82c8ffdee55ce8b1a5d7c044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7965beb9_3fbb6521",
         "filename": "third_party/WebKit/Source/core/workers/MainThreadWorkletTest.cpp",
         "patchSetId": 5
