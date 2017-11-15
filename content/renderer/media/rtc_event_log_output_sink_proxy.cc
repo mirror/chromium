@@ -20,7 +20,7 @@ bool RtcEventLogOutputSinkProxy::IsActive() const {
 }
 
 bool RtcEventLogOutputSinkProxy::Write(const std::string& output) {
-  sink_->OnRtcEventLogWrite(output);
+  sink_->OnWebRtcEventLogWrite(output);
   return true;
 }
 
