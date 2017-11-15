@@ -77,20 +77,27 @@ class OutputDirectoryFinder(_PathFinder):
 
 
 class ToolPrefixFinder(_PathFinder):
-  def __init__(self, value=None, output_directory_finder=None):
+  def __init__(self, value=None, output_directory_finder=None,
+               linker_name=None):
     super(ToolPrefixFinder, self).__init__(
         name='tool-prefix', value=value)
     self._output_directory_finder = output_directory_finder
+    self._linker_name = linker_name;
 
   def Detect(self):
     output_directory = self._output_directory_finder.Tentative()
     if output_directory:
-      # Auto-detect from build_vars.txt
-      build_vars_path = os.path.join(output_directory, 'build_vars.txt')
-      if os.path.exists(build_vars_path):
-        with open(build_vars_path) as f:
-          build_vars = dict(l.rstrip().split('=', 1) for l in f if '=' in l)
-        tool_prefix = build_vars['android_tool_prefix']
+      tool_prefix = None
+      if self._linker_name == 'lld':
+        tool_prefix = '../../third_party/llvm-build/Release+Asserts/bin/llvm-'
+      else:
+        # Auto-detect from build_vars.txt
+        build_vars_path = os.path.join(output_directory, 'build_vars.txt')
+        if os.path.exists(build_vars_path):
+          with open(build_vars_path) as f:
+            build_vars = dict(l.rstrip().split('=', 1) for l in f if '=' in l)
+          tool_prefix = build_vars['android_tool_prefix']
+      if tool_prefix:
         ret = os.path.normpath(os.path.join(output_directory, tool_prefix))
         # Need to maintain a trailing /.
         if tool_prefix.endswith(os.path.sep):
