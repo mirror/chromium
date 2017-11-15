@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dbcbefe1_4cc9ea5e",
+        "filename": "chrome/browser/ui/aura/accessibility/automation_manager_aura.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-15T01:49:12Z",
+      "side": 1,
+      "message": "yes, changed to that, thanks",
+      "parentUuid": "2bab9809_e1656325",
+      "revId": "b2e76c24ef850ae5a2028e26107b20bfd327b597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9261a5f_8d13ec93",
         "filename": "chrome/browser/ui/aura/accessibility/automation_manager_aura.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-15T01:30:18Z",
       "side": 1,
       "message": "This makes me nervous. What if the window is destroyed? I don\u0027t know this class at all, so I\u0027m not sure if this is the best approach. Is there some other way to go from the BrowserContext to a Browser/BaseWindow where you can call BaseWindow::IsActive()? Or use BrowserList::GetLastActive()?  Or does this class work with arbitrary aura Windows (like the shelf or system tray) that are not associated with a browser?",
+      "revId": "b2e76c24ef850ae5a2028e26107b20bfd327b597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb379bd_9c26587d",
+        "filename": "chrome/browser/ui/aura/accessibility/automation_manager_aura.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-15T01:49:12Z",
+      "side": 1,
+      "message": "you are right, I should consider this. I think it should be any windows. It will be called on system tray. And from the old CL. It doesn\u0027t imply browser window either. David, could you help confirm on this?\n\nI cached widget instead and using IsClosed() to check whether widget is in the process of closing.",
+      "parentUuid": "f9261a5f_8d13ec93",
       "revId": "b2e76c24ef850ae5a2028e26107b20bfd327b597",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
