@@ -15,16 +15,17 @@
 #include "base/strings/stringprintf.h"
 #include "base/time/time.h"
 #include "base/values.h"
+#include "content/public/common/resource_request.h"
+#include "content/public/common/simple_url_loader.h"
+#include "content/public/common/url_loader_factory.mojom.h"
 #include "google_apis/google_api_keys.h"
 #include "net/base/escape.h"
 #include "net/base/load_flags.h"
 #include "net/http/http_status_code.h"
-#include "net/url_request/url_request_context_getter.h"
 #include "net/url_request/url_request_status.h"
 
 namespace chromeos {
 
-namespace {
 
 const char kDefaultTimezoneProviderUrl[] =
     "https://maps.googleapis.com/maps/api/timezone/json?";
@@ -306,11 +307,11 @@ GURL DefaultTimezoneProviderURL() {
 }
 
 TimeZoneRequest::TimeZoneRequest(
-    net::URLRequestContextGetter* url_context_getter,
+    content::mojom::URLLoaderFactory* url_loader_factory,
     const GURL& service_url,
     const Geoposition& geoposition,
     base::TimeDelta retry_timeout)
-    : url_context_getter_(url_context_getter),
+    : url_loader_factory_(url_loader_factory),
       service_url_(service_url),
       geoposition_(geoposition),
       retry_timeout_abs_(base::Time::Now() + retry_timeout),
@@ -337,15 +338,38 @@ void TimeZoneRequest::StartRequest() {
   request_started_at_ = base::Time::Now();
   ++retries_;
 
-  url_fetcher_ =
-      net::URLFetcher::Create(request_url_, net::URLFetcher::GET, this);
-  url_fetcher_->SetRequestContext(url_context_getter_.get());
-  url_fetcher_->SetLoadFlags(net::LOAD_BYPASS_CACHE |
-                             net::LOAD_DISABLE_CACHE |
-                             net::LOAD_DO_NOT_SAVE_COOKIES |
-                             net::LOAD_DO_NOT_SEND_COOKIES |
-                             net::LOAD_DO_NOT_SEND_AUTH_DATA);
-  url_fetcher_->Start();
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("timezone_request", R"(
+          semantics {
+            sender: "Chrome OS"
+            description:
+              "TODO"
+            trigger:
+              "TODO"
+            data:
+              "TODO"
+            destination: WEBSITE
+          }
+          policy {
+            cookies_allowed: NO
+            setting: "Unconditionally enabled on Chrome OS"
+            policy_exception_justification:
+              "Not implemented, considered not useful."
+          })");
+    
+  url_loader_ = content::SimpleURLLoader::Create();
+  url_loader_->SetAllowHttpErrorResults(true);
+  content::ResourceRequest resource_request;
+  resource_request.url = request_url_;
+  resource_request.load_flags = net::LOAD_BYPASS_CACHE |
+      net::LOAD_DISABLE_CACHE |
+      net::LOAD_DO_NOT_SAVE_COOKIES |
+      net::LOAD_DO_NOT_SEND_COOKIES |
+      net::LOAD_DO_NOT_SEND_AUTH_DATA;
+  url_loader_->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
+      resource_request, url_loader_factory_, traffic_annotation,
+      base::BindOnce(&TimeZoneRequest::OnCompleteCallback,
+          base::Unretained(this)));
 }
 
 void TimeZoneRequest::MakeRequest(TimeZoneResponseCallback callback) {
@@ -362,20 +386,21 @@ void TimeZoneRequest::Retry(bool server_error) {
       FROM_HERE, delay, this, &TimeZoneRequest::StartRequest);
 }
 
-void TimeZoneRequest::OnURLFetchComplete(const net::URLFetcher* source) {
-  DCHECK_EQ(url_fetcher_.get(), source);
-
-  net::URLRequestStatus status = source->GetStatus();
-  int response_code = source->GetResponseCode();
+void TimeZoneRequest::OnCompleteCallback(std::unique_ptr<std::string> response_body) {
+  std::string data;
+  if (*response_body)
+      data = std::move(response_body);
+  bool is_success = url_loader_->net_error() == net::OK;
+  int response_code = -1;
+  if (url_loader_->ResponseInfo() && url_loader_->ResponseInfo()->headers)
+      response_code = url_loader_->ResponseInfo()->headers->response_code();
   RecordUmaResponseCode(response_code);
 
-  std::string data;
-  source->GetResponseAsString(&data);
   std::unique_ptr<TimeZoneResponseData> timezone = GetTimeZoneFromResponse(
-      status.is_success(), response_code, data, source->GetURL());
+      is_success, response_code, response_body, url_loader_->ResponseInfo()->final_url);
   const bool server_error =
-      !status.is_success() || (response_code >= 500 && response_code < 600);
-  url_fetcher_.reset();
+      !is_success || (response_code >= 500 && response_code < 600);
+  url_loader_.reset();
 
   DVLOG(1) << "TimeZoneRequest::OnURLFetchComplete(): timezone={"
            << timezone->ToStringForDebug() << "}";
