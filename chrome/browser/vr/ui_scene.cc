@@ -32,8 +32,10 @@ UiScene::Elements GetVisibleElements(UiElement* root,
   for (auto& element : *root) {
     if (element.IsVisible() && predicate(&element)) {
       elements.push_back(&element);
-      if (target && target->id() == element.id())
+      if (target && target->id() == element.id()) {
         elements.push_back(reticle);
+        reticle->set_draw_phase(element.draw_phase());
+      }
     }
   }
   return elements;

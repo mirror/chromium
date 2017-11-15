@@ -67,6 +67,8 @@ static_library("vr_common") {
     "elements/render_text_wrapper.h",
     "elements/reticle.cc",
     "elements/reticle.h",
+    "elements/shadow.cc",
+    "elements/shadow.h",
     "elements/simple_textured_element.h",
     "elements/spinner.cc",
     "elements/spinner.h",

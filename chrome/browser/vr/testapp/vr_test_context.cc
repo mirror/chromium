@@ -260,7 +260,8 @@ void VrTestContext::OnGlInitialized(const gfx::Size& window_size) {
 unsigned int VrTestContext::CreateFakeContentTexture() {
   sk_sp<SkSurface> surface = SkSurface::MakeRasterN32Premul(1, 1);
   SkCanvas* canvas = surface->getCanvas();
-  canvas->clear(0xFF000080);
+  // canvas->clear(0xFF000080);
+  canvas->clear(0xFFFFFFFF);
 
   SkPixmap pixmap;
   CHECK(surface->peekPixels(&pixmap));
