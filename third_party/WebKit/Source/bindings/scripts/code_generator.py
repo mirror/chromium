@@ -16,11 +16,12 @@ from v8_globals import includes
 from v8_interface import constant_filters
 from v8_types import set_component_dirs
 from v8_methods import method_filters
-import v8_utilities
 from v8_utilities import capitalize
 from utilities import (idl_filename_to_component, is_valid_component_dependency,
                        format_remove_duplicates, format_blink_cpp_source_code,
                        to_snake_case)
+import v8_attributes
+import v8_utilities
 
 # Path handling for libraries and templates
 # Paths have to be normalized because Jinja uses the exact template path to
@@ -94,6 +95,7 @@ def initialize_jinja_env(cache_dir):
         'secure_context': secure_context_if})
     jinja_env.filters.update(constant_filters())
     jinja_env.filters.update(method_filters())
+    jinja_env.tests.update(v8_attributes.attribute_tests())
     return jinja_env
 
 

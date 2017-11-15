@@ -46,6 +46,15 @@ from v8_utilities import (cpp_name_or_partial, capitalize, cpp_name, has_extende
                           is_legacy_interface_type_checking)
 
 
+def test_on_prototype_or_interface(attribute):
+    return attribute['on_prototype'] or attribute['on_interface']
+
+
+def attribute_tests():
+    return {
+        'on_prototype_or_interface': test_on_prototype_or_interface,
+    }
+
 def attribute_context(interface, attribute, interfaces):
     """Creates a Jinja template context for an attribute of an interface.
 
