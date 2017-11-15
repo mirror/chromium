@@ -15,7 +15,9 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "build/build_config.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
+#include "chrome/browser/ui/blocked_content/framebust_block_tab_helper.h"
 #include "chrome/common/custom_handlers/protocol_handler.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
@@ -52,6 +54,7 @@ class RapporServiceImpl;
 //       ContentSettingPopupBubbleModel              - popups
 //   ContentSettingSubresourceFilterBubbleModel  - filtered subresources
 //   ContentSettingDownloadsBubbleModel          - automatic downloads
+//   ContentSettingFramebustBlockBubbleModel     - blocked framebusts
 
 // Forward declaration necessary for downcasts.
 class ContentSettingMediaStreamBubbleModel;
@@ -442,5 +445,35 @@ class ContentSettingDownloadsBubbleModel : public ContentSettingBubbleModel {
 
   DISALLOW_COPY_AND_ASSIGN(ContentSettingDownloadsBubbleModel);
 };
+
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
+// The model for the blocked Framebust bubble.
+class ContentSettingFramebustBlockBubbleModel
+    : public ContentSettingBubbleModel,
+      public FramebustBlockTabHelper::Observer {
+ public:
+  ContentSettingFramebustBlockBubbleModel(Delegate* delegate,
+                                          content::WebContents* web_contents,
+                                          Profile* profile);
+
+  ~ContentSettingFramebustBlockBubbleModel() override;
+
+  // content::NotificationObserver:
+  void Observe(int type,
+               const content::NotificationSource& source,
+               const content::NotificationDetails& details) override;
+
+  // ContentSettingBubbleModel:
+  void OnListItemClicked(int index, int event_flags) override;
+
+  // FramebustBlockTabHelper::Observer:
+  void OnBlockedUrlAdded(const GURL& blocked_url) override;
+
+ private:
+  ListItem CreateListItem(const GURL& url);
+
+  DISALLOW_COPY_AND_ASSIGN(ContentSettingFramebustBlockBubbleModel);
+};
+#endif  // defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
 
 #endif  // CHROME_BROWSER_UI_CONTENT_SETTINGS_CONTENT_SETTING_BUBBLE_MODEL_H_

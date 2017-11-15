@@ -53,6 +53,10 @@
 #include "net/cookies/canonical_cookie.h"
 #include "storage/common/fileapi/file_system_types.h"
 
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
+#include "chrome/browser/ui/blocked_content/framebust_block_tab_helper.h"
+#endif
+
 using content::BrowserThread;
 using content::NavigationController;
 using content::NavigationEntry;
@@ -696,6 +700,21 @@ void TabSpecificContentSettings::SetPopupsBlocked(bool blocked) {
 
 void TabSpecificContentSettings::OnAudioBlocked() {
   OnContentBlocked(CONTENT_SETTINGS_TYPE_SOUND);
+}
+
+void TabSpecificContentSettings::OnFramebustBlocked(const GURL& blocked_url) {
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
+  FramebustBlockTabHelper* framebust_block_tab_helper =
+      FramebustBlockTabHelper::FromWebContents(web_contents());
+  if (!framebust_block_tab_helper)
+    return;
+
+  framebust_block_tab_helper->AddBlockedUrl(blocked_url);
+  content::NotificationService::current()->Notify(
+      chrome::NOTIFICATION_WEB_CONTENT_SETTINGS_CHANGED,
+      content::Source<WebContents>(web_contents()),
+      content::NotificationService::NoDetails());
+#endif
 }
 
 void TabSpecificContentSettings::SetPepperBrokerAllowed(bool allowed) {
