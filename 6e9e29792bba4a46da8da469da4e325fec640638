@@ -16,6 +16,23 @@
       "revId": "6e9e29792bba4a46da8da469da4e325fec640638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48770c55_127e7117",
+        "filename": "chrome/browser/ui/webui/settings/reset_settings_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T19:51:58Z",
+      "side": 1,
+      "message": "Also by returning early here the crash is prevented, but the UI is never notified about the finish of the async operation, and it will keep displaying the dialog with a spinner. We need to store all pending callback_ids and resolve them properly when OnResetProfileSettingsDone is triggered (with ResolveJavascriptCallback(...)).\n\nHaving said that, I think there is an easier way to fix this from the UI side, which is to preserve the \"clearInProgress\" across dialog invocations. I would be happy to help doing this, since I implemented the UI dialog to begin with.",
+      "revId": "6e9e29792bba4a46da8da469da4e325fec640638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
