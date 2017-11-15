@@ -13,10 +13,13 @@
 #include "chrome/browser/media/router/discovery/dial/device_description_fetcher.h"
 #include "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.h"
 #include "chrome/browser/media/router/media_router_metrics.h"
+#include "content/public/common/service_manager_connection.h"
 #include "net/base/ip_address.h"
 #include "url/gurl.h"
 
-using ErrorType = chrome::mojom::DialParsingError;
+namespace media_router {
+
+using ErrorType = SafeDialDeviceDescriptionParser::ParsingError;
 
 namespace {
 
@@ -73,34 +76,33 @@ bool IsValidAppUrl(const GURL& app_url, const std::string& ip_address) {
   return app_url.SchemeIs(url::kHttpScheme) && app_url.host() == ip_address;
 }
 
-// Checks mandatory fields. Returns ErrorType::NONE if device description is
+// Checks mandatory fields. Returns ErrorType::kNone if device description is
 // valid; Otherwise returns specific error type.
 ErrorType ValidateParsedDeviceDescription(
     const std::string& expected_ip_address,
     const media_router::ParsedDialDeviceDescription& description_data) {
   if (description_data.unique_id.empty()) {
-    return ErrorType::MISSING_UNIQUE_ID;
+    return ErrorType::kMissingUniqueId;
   }
   if (description_data.friendly_name.empty()) {
-    return ErrorType::MISSING_FRIENDLY_NAME;
+    return ErrorType::kMissingFriendlyName;
   }
   if (!description_data.app_url.is_valid()) {
-    return ErrorType::MISSING_APP_URL;
+    return ErrorType::kMissingAppUrl;
   }
   if (!IsValidAppUrl(description_data.app_url, expected_ip_address)) {
-    return ErrorType::INVALID_APP_URL;
+    return ErrorType::kInvalidAppUrl;
   }
-  return ErrorType::NONE;
+  return ErrorType::kNone;
 }
 
 }  // namespace
 
-namespace media_router {
-
 DeviceDescriptionService::DeviceDescriptionService(
+    service_manager::Connector* connector,
     const DeviceDescriptionParseSuccessCallback& success_cb,
     const DeviceDescriptionParseErrorCallback& error_cb)
-    : success_cb_(success_cb), error_cb_(error_cb) {}
+    : connector_(connector), success_cb_(success_cb), error_cb_(error_cb) {}
 
 DeviceDescriptionService::~DeviceDescriptionService() {
   if (!pending_device_labels_.empty()) {
@@ -220,8 +222,8 @@ DeviceDescriptionService::CheckAndUpdateCache(
 void DeviceDescriptionService::OnParsedDeviceDescription(
     const DialDeviceData& device_data,
     const GURL& app_url,
-    chrome::mojom::DialDeviceDescriptionPtr parsed_device_description,
-    chrome::mojom::DialParsingError parsing_error) {
+    ParsedDialDeviceDescription device_description,
+    SafeDialDeviceDescriptionParser::ParsingError parsing_error) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   // Last callback for current utility process. Release |parser_| and
@@ -232,32 +234,28 @@ void DeviceDescriptionService::OnParsedDeviceDescription(
     parser_.reset();
   }
 
-  if (!parsed_device_description) {
+  if (parsing_error != ErrorType::kNone) {
     MediaRouterMetrics::RecordDialParsingError(parsing_error);
     error_cb_.Run(device_data, "Failed to parse device description XML");
     return;
   }
 
-  ParsedDialDeviceDescription description_data;
-  description_data.unique_id = parsed_device_description->unique_id;
-  description_data.friendly_name = parsed_device_description->friendly_name;
-  description_data.model_name = parsed_device_description->model_name;
-  description_data.app_url = app_url;
+  device_description.app_url = app_url;
 
   ErrorType error = ValidateParsedDeviceDescription(
-      device_data.device_description_url().host(), description_data);
+      device_data.device_description_url().host(), device_description);
 
-  if (error != ErrorType::NONE) {
+  if (error != ErrorType::kNone) {
     DLOG(WARNING) << "Device description failed to validate. "
                      "MediaRouterDialParsingError code: "
-                  << error;
+                  << static_cast<int>(error);
     MediaRouterMetrics::RecordDialParsingError(error);
     error_cb_.Run(device_data, "Failed to process fetch result");
     return;
   }
 
   if (description_cache_.size() >= kCacheMaxEntries) {
-    success_cb_.Run(device_data, description_data);
+    success_cb_.Run(device_data, device_description);
     return;
   }
 
@@ -265,7 +263,7 @@ void DeviceDescriptionService::OnParsedDeviceDescription(
   cached_description_data.expire_time =
       GetNow() + base::TimeDelta::FromHours(kDeviceDescriptionCacheTimeHours);
   cached_description_data.config_id = device_data.config_id();
-  cached_description_data.description_data = description_data;
+  cached_description_data.description_data = device_description;
 
 #if DCHECK_IS_ON()
   DVLOG(2) << "Got device description for " << device_data.label()
@@ -277,7 +275,7 @@ void DeviceDescriptionService::OnParsedDeviceDescription(
   description_cache_.insert(
       std::make_pair(device_data.label(), cached_description_data));
 
-  success_cb_.Run(device_data, description_data);
+  success_cb_.Run(device_data, device_description);
 }
 
 void DeviceDescriptionService::OnDeviceDescriptionFetchComplete(
@@ -286,13 +284,13 @@ void DeviceDescriptionService::OnDeviceDescriptionFetchComplete(
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (!parser_)
-    parser_ = base::MakeUnique<SafeDialDeviceDescriptionParser>();
+    parser_ = std::make_unique<SafeDialDeviceDescriptionParser>();
 
   parser_->Start(
-      description_data.device_description,
-      base::Bind(&DeviceDescriptionService::OnParsedDeviceDescription,
-                 base::Unretained(this), device_data,
-                 description_data.app_url));
+      connector_, description_data.device_description,
+      base::BindOnce(&DeviceDescriptionService::OnParsedDeviceDescription,
+                     base::Unretained(this), device_data,
+                     description_data.app_url));
 
 #if DCHECK_IS_ON()
   DVLOG(2) << "Device description: "
