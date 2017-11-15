@@ -612,8 +612,15 @@ void NavigationRequest::OnRequestRedirected(
   // destination could change.
   dest_site_instance_ = nullptr;
 
+  // TODO(caseq) This is a temp fix to allow devtools to get headers. In the
+  // long run we will be sending the full data to devtools from the browser
+  // process. See crbug.com/766715
+  bool can_read_raw_cookies =
+      source_site_instance() &&
+      ChildProcessSecurityPolicyImpl::GetInstance()->CanReadRawCookies(
+          source_site_instance()->GetProcess()->GetID());
   // If the navigation is no longer a POST, the POST data should be reset.
-  if (redirect_info.new_method != "POST")
+  if (redirect_info.new_method != "POST" && !can_read_raw_cookies)
     common_params_.post_data = nullptr;
 
   // Mark time for the Navigation Timing API.
