@@ -93,6 +93,30 @@
       "revId": "f820458585d46fb072f850144d32f464ec8cd129",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "928a6517_0776a918",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-15T23:32:29Z",
+      "side": 1,
+      "message": "OK, as long as this code is invoked only on Chrome OS and there\u0027s no risk of breaking Chrome\u0027s normal Linux distribution, sounds fine.",
+      "parentUuid": "fbc7ad03_5267aee5",
+      "range": {
+        "startLine": 259,
+        "startChar": 15,
+        "endLine": 259,
+        "endChar": 16
+      },
+      "revId": "f820458585d46fb072f850144d32f464ec8cd129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
