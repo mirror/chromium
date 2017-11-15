@@ -269,7 +269,7 @@ class DiskMountManagerImpl : public DiskMountManager {
     refresh_callbacks_.push_back(callback);
     if (refresh_callbacks_.size() == 1) {
       // If there's no in-flight refreshing task, start it.
-      cros_disks_client_->EnumerateAutoMountableDevices(
+      cros_disks_client_->EnumerateDevices(
           base::Bind(&DiskMountManagerImpl::RefreshAfterEnumerateDevices,
                      weak_ptr_factory_.GetWeakPtr()),
           base::Bind(&DiskMountManagerImpl::RefreshCompleted,
@@ -627,10 +627,7 @@ class DiskMountManagerImpl : public DiskMountManager {
 
   // Callback for GetDeviceProperties.
   void OnGetDeviceProperties(const DiskInfo& disk_info) {
-    // TODO(zelidrag): Find a better way to filter these out before we
-    // fetch the properties:
-    // Ignore disks coming from the device we booted the system from.
-    if (disk_info.on_boot_device())
+    if (disk_info.is_virtual())
       return;
 
     LOG(WARNING) << "Found disk " << disk_info.device_path();
@@ -661,7 +658,8 @@ class DiskMountManagerImpl : public DiskMountManager {
         disk_info.total_size_in_bytes(), disk_info.is_drive(),
         disk_info.is_read_only(), disk_info.has_media(),
         disk_info.on_boot_device(), disk_info.on_removable_device(),
-        disk_info.is_hidden(), disk_info.file_system_type(), base_mount_path);
+        disk_info.is_hidden(), disk_info.is_virtual(),
+        disk_info.file_system_type(), base_mount_path);
     disks_.insert(
         std::make_pair(disk_info.device_path(), base::WrapUnique(disk)));
     NotifyDiskStatusUpdate(is_new ? DISK_ADDED : DISK_CHANGED, disk);
@@ -773,7 +771,9 @@ class DiskMountManagerImpl : public DiskMountManager {
   void NotifyDiskStatusUpdate(DiskEvent event,
                               const Disk* disk) {
     for (auto& observer : observers_)
-      observer.OnDiskEvent(event, disk);
+      (!disk->on_boot_device() && !disk->is_virtual())
+          ? observer.OnAutoMountableDiskEvent(event, disk)
+          : observer.OnDiskEvent(event, disk);
   }
 
   // Notifies all observers about device status update.
@@ -870,6 +870,7 @@ DiskMountManager::Disk::Disk(const std::string& device_path,
                              bool on_boot_device,
                              bool on_removable_device,
                              bool is_hidden,
+                             bool is_virtual,
                              const std::string& file_system_type,
                              const std::string& base_mount_path)
     : device_path_(device_path),
@@ -893,6 +894,7 @@ DiskMountManager::Disk::Disk(const std::string& device_path,
       on_boot_device_(on_boot_device),
       on_removable_device_(on_removable_device),
       is_hidden_(is_hidden),
+      is_virtual_(is_virtual),
       file_system_type_(file_system_type),
       base_mount_path_(base_mount_path) {}
 
