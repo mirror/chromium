@@ -249,6 +249,7 @@ ONC_EXPORT extern const char kWEP_8021X[];
 ONC_EXPORT extern const char kWPA_PSK[];
 ONC_EXPORT extern const char kWPA2_PSK[];
 ONC_EXPORT extern const char kWPA_EAP[];
+ONC_EXPORT extern const char kTetheringState[];
 }  // namespace wifi
 
 namespace wimax {
@@ -468,6 +469,12 @@ ONC_EXPORT extern const char kDisabled[];
 ONC_EXPORT extern const char kEnabling[];
 ONC_EXPORT extern const char kEnabled[];
 }  // device_state
+
+namespace tethering_state {
+ONC_EXPORT extern const char kTetheringNotDetectedState[];
+ONC_EXPORT extern const char kTetheringSuspectedState[];
+ONC_EXPORT extern const char kTetheringConfirmedState[];
+}  // namespace tethering_state
 
 }  // namespace onc
 
