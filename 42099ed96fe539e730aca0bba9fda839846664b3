@@ -313,6 +313,24 @@
     },
     {
       "key": {
+        "uuid": "65386f5c_9113652d",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-15T14:38:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f45d60de_39a0d864",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c19c71e_54391d45",
         "filename": "ios/web/download/download_task_impl.mm",
         "patchSetId": 11
@@ -348,6 +366,30 @@
       "side": 1,
       "message": "At this point I think that we should not use SEQUENCE_CHECKER. In practice I can\u0027t think of any scenario where DownloadTask and DownloadController are used on a background thread, simply because BrowserState is UI thread only. Also DownloadTask and DownloadController API contract tells that objects can only be used on UI thread (because of BrowserState restrictions). I don\u0027t think there is much value in allowing DownloadTaskImpl or DownloadControllerImpl to run on any thread. Making Impl objects UI thread only will force existing API contracts and will make the implementation simpler. \n\nIt would be possible to use SEQUENCE_CHECKER, but it will make the implementation much more complex without clear benefits. If you disagree, then could you please schedule a VC meeting. It will be easier to find a common ground via VC and avoid longer code review.",
       "parentUuid": "3c19c71e_54391d45",
+      "range": {
+        "startLine": 289,
+        "startChar": 15,
+        "endLine": 289,
+        "endChar": 75
+      },
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "642cb8f0_4f076087",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-15T14:38:37Z",
+      "side": 1,
+      "message": "BrowserState does not check it is called from the correct thread, however, GetUserData (which is used to implement WKCookieStoreForBrowserState) does use sequence checker. If you want to use named thread, I won\u0027t block you on this though, but IMO, reasoning about thread vs sequence is not that much harder.\n\nEven if you implement DownloadTaskImpl using named thread though, this call is incorrect, you should not call WKCookieStoreForBrowserState on IO thread.\n\nTL;DR: I\u0027m okay if you are using thread instead of sequence, if the code is correct.",
+      "parentUuid": "aa5d2ef4_30f2c71f",
       "range": {
         "startLine": 289,
         "startChar": 15,

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "322e504d_d5a198d3",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-15T14:38:37Z",
+      "side": 1,
+      "message": "This is incorrect, WKCookieStoreForBrowserState must *not* be called on IO thread.",
+      "range": {
+        "startLine": 292,
+        "startChar": 15,
+        "endLine": 292,
+        "endChar": 43
+      },
+      "revId": "05920f149f800359a09615ba18ec7b07cf26e3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
