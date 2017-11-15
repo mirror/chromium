@@ -199,6 +199,24 @@
     },
     {
       "key": {
+        "uuid": "417306af_0a3e146b",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-15T01:23:50Z",
+      "side": 1,
+      "message": "I tried this too, though using a full screen window rather than a view in lock screen UI - this would indeed fix the issue with launching app on stylus eject, but would negatively affect experience in case a lock screen app does not have to be launched (which I\u0027d like to avoid), as the user would occasionally see completely black lock screen UI for few moments (and UX was not too happy with that) - this was with the window being hidden from power_button_display_controller directly (when cancelling force-display-off), I imagine the delay would be bigger if we waited for screen brightness on notification from power manager.",
+      "parentUuid": "fb02f8b9_a2990a48",
+      "revId": "42a9100e2fa3d0be5ad67c2eeb36c9d89859448c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97b516bc_91ad8bb6",
         "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
         "patchSetId": 5
