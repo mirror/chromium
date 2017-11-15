@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c39320ee_4661d913",
+        "filename": "headless/public/util/virtual_time_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-11-15T07:22:03Z",
+      "side": 1,
+      "message": "Nit: no need for braces around single-line loops.",
+      "revId": "273cd53ff99ad33ab14977b02075b3785e908f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b634853_330e1b15",
+        "filename": "headless/public/util/virtual_time_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-11-15T07:22:03Z",
+      "side": 1,
+      "message": "Nit: DCHECK(!entry-\u003eready_to_advance)",
+      "revId": "273cd53ff99ad33ab14977b02075b3785e908f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
