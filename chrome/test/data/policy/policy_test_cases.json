@@ -873,6 +873,11 @@
     ]
   },
 
+  "DefaultDownloadDirectory": {
+    "os": ["win", "linux", "mac", "chbromeos"],
+    "test_policy": { "DefaultDownloadDirectory": "${user_home}/test-downloads" }
+  },
+
   "ExtensionInstallBlacklist": {
     "os": ["win", "linux", "mac", "chromeos"],
     "test_policy": { "ExtensionInstallBlacklist": ["*"] },
