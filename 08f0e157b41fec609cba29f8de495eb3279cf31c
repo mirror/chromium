@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab0ba662_92905d2d",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T20:11:55Z",
+      "side": 1,
+      "message": "there\u0027s only one of them. :-P but sure, renamed to \"state\"",
+      "parentUuid": "1a950836_c8a93800",
+      "range": {
+        "startLine": 89,
+        "startChar": 42,
+        "endLine": 89,
+        "endChar": 47
+      },
+      "revId": "08f0e157b41fec609cba29f8de495eb3279cf31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "656bd92e_6df9922d",
         "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-15T20:03:51Z",
       "side": 1,
       "message": "don\u0027t we have devices in the wild whose system clocks are reset on every power-down (no CMOS battery iirc)? I guess we\u0027d only get metrics for each full day those are kept on.",
+      "range": {
+        "startLine": 110,
+        "startChar": 37,
+        "endLine": 110,
+        "endChar": 63
+      },
+      "revId": "08f0e157b41fec609cba29f8de495eb3279cf31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b4b8cfe_db47d864",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T20:11:55Z",
+      "side": 1,
+      "message": "yeah, not sure that we can do any better for those.",
+      "parentUuid": "656bd92e_6df9922d",
       "range": {
         "startLine": 110,
         "startChar": 37,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "d9c2356f_968a970b",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T20:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef72f998_541d4bcb",
+      "revId": "08f0e157b41fec609cba29f8de495eb3279cf31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e419969_971e6c48",
         "filename": "chrome/browser/chromeos/power/power_metrics_reporter.h",
         "patchSetId": 4
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "facd938f_ced6ac7b",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T20:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e419969_971e6c48",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 17
+      },
+      "revId": "08f0e157b41fec609cba29f8de495eb3279cf31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf7c85be_a9fc2788",
         "filename": "chrome/browser/chromeos/power/power_metrics_reporter_unittest.cc",
         "patchSetId": 4
@@ -108,6 +198,30 @@
       "revId": "08f0e157b41fec609cba29f8de495eb3279cf31c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4135fae7_67c128a9",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T20:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf7c85be_a9fc2788",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "08f0e157b41fec609cba29f8de495eb3279cf31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
