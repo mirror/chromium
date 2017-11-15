@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b0619f6_a5fbd7c1",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-15T14:29:09Z",
+      "side": 1,
+      "message": "This is only used in one place and isn\u0027t more descriptive than the method name is. Let\u0027s remove the bool.",
+      "range": {
+        "startLine": 1074,
+        "startChar": 7,
+        "endLine": 1074,
+        "endChar": 32
+      },
+      "revId": "5abb684bf5d82e87c7c0dd2f2dde7dddc09470d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b62f99b_c9891583",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-15T14:29:09Z",
+      "side": 1,
+      "message": "This should be an anonymous namespace function.",
+      "range": {
+        "startLine": 478,
+        "startChar": 0,
+        "endLine": 482,
+        "endChar": 0
+      },
+      "revId": "5abb684bf5d82e87c7c0dd2f2dde7dddc09470d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baec75b5_464d5442",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2794,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-15T14:29:09Z",
+      "side": 1,
+      "message": "We don\u0027t use ostringstream except in logging. Instead I suggest using StringPrintf: https://cs.chromium.org/chromium/src/base/strings/stringprintf.h?q\u003dbase::stringprintf\u0026sq\u003dpackage:chromium\u0026l\u003d19",
+      "range": {
+        "startLine": 2794,
+        "startChar": 2,
+        "endLine": 2794,
+        "endChar": 25
+      },
+      "revId": "5abb684bf5d82e87c7c0dd2f2dde7dddc09470d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
