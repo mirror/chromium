@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24323aa2_96566209",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-15T00:16:16Z",
+      "side": 1,
+      "message": "In this case it\u0027s probably easier to read if you just put the function in the if()",
+      "revId": "0684863fe9415b6cb926790104a1454b34828531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

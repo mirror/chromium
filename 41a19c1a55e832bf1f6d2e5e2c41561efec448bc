@@ -87,6 +87,24 @@
       "revId": "41a19c1a55e832bf1f6d2e5e2c41561efec448bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef99dc75_49c184ba",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-15T00:16:16Z",
+      "side": 1,
+      "message": "Seems like if it\u0027s valid for the extension to not be found, we should just ignore it. So this seems ok. In the other case you are trying to mount an explicit extension which is meaningless if the extension doesn\u0027t exist.",
+      "parentUuid": "4e8265e3_c4aa1209",
+      "revId": "41a19c1a55e832bf1f6d2e5e2c41561efec448bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
