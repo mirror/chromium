@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3679b3c6_0db2b5fd",
+        "filename": "content/test/data/generic_sensor/ambient_light_sensor_cross_origin_iframe_test.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-11-15T09:33:03Z",
+      "side": 1,
+      "message": "this check passes as the page is loaded in an insecure context - not because of iframes. Instead it should be smth. like\n\ntry {\n let sensor \u003d new AmbientLightSensor();\n fail();\n} catch(e) {\n pass();\n}\n\npls. see https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/sensor/resources/generic-sensor-tests.js?l\u003d360",
+      "revId": "431cd05465745a5b97c0382be1539bfadd51d68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f503a66_d1314bd7",
+        "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-11-15T09:33:03Z",
+      "side": 1,
+      "message": "is it needed? since we have in the constructor:\n  // Check top-level browsing context.\n  if (!ToDocument(execution_context)-\u003edomWindow()-\u003eGetFrame() ||\n      !ToDocument(execution_context)-\u003eGetFrame()-\u003eIsMainFrame()) {\n    exception_state.ThrowSecurityError(\n        \"Must be in a top-level browsing context\");\n    return;\n  }",
+      "revId": "431cd05465745a5b97c0382be1539bfadd51d68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
