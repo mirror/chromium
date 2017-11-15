@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "8123958f_44036cf0",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T23:50:37Z",
+      "side": 1,
+      "message": "Ah, I see where the confusion came from. When you have an InterfacePtr or Binding then you want to call set_connection_error_handler() to configure a function to be called when the pipe closes. In this class you\u0027re using a StrongBinding and so it is a lot simpler, the destructor will be called when the pipe closes. Remove the callback stuff here and just put the body of OnConnectionTerminated() into the destructor. However at that point you will just be resetting |u2f_request_| which is done on destruction anyways so you can really just remove all this entirely.",
+      "parentUuid": "7a229f6a_8b256064",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 74
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b9e91e8_011f0a1d",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 20
@@ -653,6 +677,24 @@
       "side": 1,
       "message": "I\u0027m hesitant to push it to //device/u2f because of the eventual //device/ctap implementation, for which authenticator_impl is currently the common dispatcher. (Although, I was imagining there could eventually be a separate service that is the common dispatcher for the two device protocols, and I could move most of the parsing into there.)\n\nBut I could certainly send the U2F data as a blob back to the renderer and do all of this parsing there. Should I proceed with that?",
       "parentUuid": "cb0b1f8a_588d7989",
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "546f1649_317fa3c8",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T23:50:37Z",
+      "side": 1,
+      "message": "If we can send the data back to the renderer that sounds good to me.",
+      "parentUuid": "f01ac9bc_52308248",
       "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
