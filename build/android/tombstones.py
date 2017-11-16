@@ -127,10 +127,14 @@ def _ResolveTombstones(jobs, tombstones, tombstone_symbolizer):
   if len(tombstones) == 1:
     data = [_ResolveTombstone([tombstones[0], tombstone_symbolizer])]
   else:
-    pool = ThreadPool(jobs)
-    data = pool.map(
-        _ResolveTombstone,
-        [[tombstone, tombstone_symbolizer] for tombstone in tombstones])
+    # pool = ThreadPool(jobs)
+    # data = pool.map(
+    #     _ResolveTombstone,
+    #     [[tombstone, tombstone_symbolizer] for tombstone in tombstones])
+    data = []
+    for tombstone in tombstones:
+      data.append(_ResolveTombstone([tombstone, tombstone_symbolizer]))
+
   resolved_tombstones = []
   for tombstone in data:
     resolved_tombstones.extend(tombstone)
