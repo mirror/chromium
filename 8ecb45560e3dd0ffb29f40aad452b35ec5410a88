@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95e55972_3f6419f7",
+        "filename": "components/autofill/content/browser/risk/fingerprint_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-16T00:14:29Z",
+      "side": 1,
+      "message": "The FakeGeolocationProvider will be finally moved to device/geolocation/public/cpp, then all the clients can reuse it to get rid of the GeolocationProvider::OverrideLocationForTesting()",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "8ecb45560e3dd0ffb29f40aad452b35ec5410a88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
