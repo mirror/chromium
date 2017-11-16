@@ -16,6 +16,24 @@
       "revId": "7d9d04dbc2d607edc4db7aff228d0ae5575baea3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c561683c_c1dbcdd5",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PlatformServiceBridge.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-11-16T01:00:00Z",
+      "side": 1,
+      "message": "I think weird things happen if we actually invoke the callback (previously we didn\u0027t invoke it for this case). I agree it\u0027s best to call the callback with something semi-meaningful, but this is probably a fault with the Safe Browsing code. I would be fine with filing a TODO and/or bug against me to properly fix this.",
+      "parentUuid": "dd882fe3_b938ab48",
+      "revId": "7d9d04dbc2d607edc4db7aff228d0ae5575baea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
