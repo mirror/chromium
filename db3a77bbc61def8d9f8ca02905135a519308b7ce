@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "7d2f4de2_c030d2f7",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-16T15:23:38Z",
+      "side": 1,
+      "message": "More of a placeholder, or a strong signal that this is not hand written code, but also to make it easy for me to change it to something else if we decide what is better.\n\nI think my favourite right now is JNI_ClassName_FunctionName().",
+      "parentUuid": "950f6345_d12e2d90",
+      "range": {
+        "startLine": 983,
+        "startChar": 29,
+        "endLine": 983,
+        "endChar": 33
+      },
+      "revId": "db3a77bbc61def8d9f8ca02905135a519308b7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b2ed277_10f7bf2e",
         "filename": "base/android/jni_generator/jni_generator.py",
         "patchSetId": 9
