@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c9ae3cc6_8038a3ed",
+        "filename": "services/video_capture/device_factory_media_to_mojo_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-11-16T17:40:27Z",
+      "side": 1,
+      "message": "Hmm, looking at the video capture service code, we been using std::make_unique pretty much everywhere, base::MakeUnique is only used in couple places. And according to https://chromium-cpp.appspot.com/, std::make_unique is currently allowed.\n\nSo it probably make more sense to switch the couple instances of base::MakeUnique to std::make_unique. Will update.",
+      "parentUuid": "49590e3b_fc7ee084",
+      "revId": "20921a7f0e4c8e8c4a52d4b0114379ed20c2d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8242e6d8_3ae3da6d",
         "filename": "services/video_capture/public/interfaces/virtual_device.mojom",
         "patchSetId": 5
