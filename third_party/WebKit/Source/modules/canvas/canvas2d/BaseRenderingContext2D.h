@@ -367,6 +367,9 @@ class MODULES_EXPORT BaseRenderingContext2D : public GarbageCollectedMixin,
   // Canvas is device independent
   static const double kCDeviceScaleFactor;
 
+  virtual void DisableAcceleration() {}
+  virtual void DidInvokeGPUReadbackInCurrentFrame() {}
+
  private:
   void RealizeSaves();
 
