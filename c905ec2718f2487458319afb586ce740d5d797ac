@@ -156,6 +156,24 @@
     },
     {
       "key": {
+        "uuid": "54cdec10_ed4e2ba3",
+        "filename": "content/public/browser/interstitial_page.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-16T23:43:48Z",
+      "side": 1,
+      "message": "\u003e WebContentsView call this across GetInterstitialPage() from web_contents_, so using \"static_cast\" possible, but i think it would be a bad style.\n\nThe rule is:\ncontent implementation code should use other implementations directly and not go through the interface (i.e. code in content/renderer should use RenderViewImpl instead of content::RenderView)\n\nSource: https://www.chromium.org/developers/content-module/content-api\n\nLess bad style would be adding a getter to WebContentsImpl that returns InterstitialPageImpl, to avoid static_casts",
+      "parentUuid": "fbd859d1_22bbf4a2",
+      "revId": "c905ec2718f2487458319afb586ce740d5d797ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78afbbab_696dae80",
         "filename": "content/public/browser/web_contents_view_delegate.h",
         "patchSetId": 4
