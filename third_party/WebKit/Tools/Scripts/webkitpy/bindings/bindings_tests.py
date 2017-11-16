@@ -276,6 +276,8 @@ def bindings_tests(output_directory, verbose, suppress_diff):
         excess_files = []
         for path in list_files(REFERENCE_DIRECTORY):
             relpath = os.path.relpath(path, REFERENCE_DIRECTORY)
+            if os.path.splitext(relpath)[1] == '.orig':
+                continue
             if relpath not in generated_files:
                 excess_files.append(relpath)
         if excess_files:
