@@ -100,6 +100,14 @@ Sources.JavaScriptCompilerPlugin = class {
 
   /**
    * @override
+   * @return {!Array<!UI.ToolbarItem>}
+   */
+  syncToolbarItems() {
+    return [];
+  }
+
+  /**
+   * @override
    */
   dispose() {
     this._textEditor.removeEventListener(UI.TextEditor.Events.TextChanged, this._scheduleCompile, this);

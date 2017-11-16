@@ -259,6 +259,10 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
       this._plugins.push(new Sources.CSSPlugin(this.textEditor));
     if (Sources.JavaScriptCompilerPlugin.accepts(pluginUISourceCode))
       this._plugins.push(new Sources.JavaScriptCompilerPlugin(this.textEditor, pluginUISourceCode));
+    if (Sources.SnippetsPlugin.accepts(pluginUISourceCode))
+      this._plugins.push(new Sources.SnippetsPlugin(this.textEditor, pluginUISourceCode));
+
+    this.dispatchEventToListeners(Sources.UISourceCodeFrame.Events.ToolbarItemsChanged);
   }
 
   _disposePlugins() {
@@ -496,6 +500,17 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
       if (this._uiSourceCode.decorationsForType(type))
         this._decorateTypeThrottled(type);
     }
+  }
+
+  /**
+   * @override
+   * @return {!Array<!UI.ToolbarItem>}
+   */
+  syncToolbarItems() {
+    var result = super.syncToolbarItems();
+    for (var plugin of this._plugins)
+      result.pushAll(plugin.syncToolbarItems());
+    return result;
   }
 };
 
@@ -737,6 +752,17 @@ Sources.UISourceCodeFrame.Plugin = class {
   static accepts(uiSourceCode) {
   }
 
+  /**
+   * @return {!Array<!UI.ToolbarItem>}
+   */
+  syncToolbarItems() {
+  }
+
   dispose() {
   }
+};
+
+/** @enum {symbol} */
+Sources.UISourceCodeFrame.Events = {
+  ToolbarItemsChanged: Symbol('ToolbarItemsChanged')
 };
