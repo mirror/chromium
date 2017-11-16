@@ -4,11 +4,15 @@
 
 #include "services/shape_detection/face_detection_impl_win.h"
 
+#include "base/test/scoped_task_environment.h"
 #include "base/win/scoped_com_initializer.h"
+#include "face_detection_provider_win.h"
+#include "services/shape_detection/public/interfaces/facedetection_provider.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace shape_detection {
 
+base::OnceCallback<void(bool)> FaceDetectionImplWin::callback_for_testing_;
 class FaceDetectionImplWinTest : public testing::Test {
  protected:
   void SetUp() override {
@@ -17,12 +21,47 @@ class FaceDetectionImplWinTest : public testing::Test {
     ASSERT_TRUE(scoped_com_initializer_->Succeeded());
   }
 
+ public:
+  void CreateFaceDetectorCallback(bool succeeded) { EXPECT_TRUE(succeeded); }
+
+  void DetectCallback(base::Closure quit_closure,
+                      std::vector<mojom::FaceDetectionResultPtr> results) {
+    quit_closure.Run();
+  }
+
  private:
   std::unique_ptr<base::win::ScopedCOMInitializer> scoped_com_initializer_;
+
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
 };
 
-TEST_F(FaceDetectionImplWinTest, CreateAndDestroy) {
-  auto impl = FaceDetectionImplWin::Create();
+TEST_F(FaceDetectionImplWinTest, CreateFaceDetector) {
+  mojom::FaceDetectionProviderPtr provider;
+  mojom::FaceDetectionPtr face_service;
+
+  auto request = mojo::MakeRequest(&provider);
+  auto providerWin = base::MakeUnique<FaceDetectionProviderWin>();
+  auto* provider_ptr = providerWin.get();
+  provider_ptr->binding_ =
+      mojo::MakeStrongBinding(std::move(providerWin), std::move(request));
+
+  auto options = shape_detection::mojom::FaceDetectorOptions::New();
+  provider->CreateFaceDetection(mojo::MakeRequest(&face_service),
+                                std::move(options));
+
+  SkBitmap bitmap;
+  bitmap.allocN32Pixels(100, 100);
+  bitmap.eraseColor(SK_ColorBLUE);
+
+  base::RunLoop run_loop;
+  FaceDetectionImplWin::callback_for_testing_ =
+      base::BindOnce(&FaceDetectionImplWinTest::CreateFaceDetectorCallback,
+                     base::Unretained(this));
+
+  face_service->Detect(
+      bitmap, base::BindOnce(&FaceDetectionImplWinTest::DetectCallback,
+                             base::Unretained(this), run_loop.QuitClosure()));
+  run_loop.Run();
 }
 
 }  // namespace shape_detection
