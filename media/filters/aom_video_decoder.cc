@@ -224,7 +224,8 @@ void AomVideoDecoder::Initialize(const VideoDecoderConfig& config,
   DCHECK(config.IsValidConfig());
 
   InitCB bound_init_cb = BindToCurrentLoop(init_cb);
-  if (config.is_encrypted() || config.codec() != kCodecAV1) {
+  if (!base::FeatureList::IsEnabled(kAv1Decoder) || config.is_encrypted() ||
+      config.codec() != kCodecAV1) {
     bound_init_cb.Run(false);
     return;
   }
