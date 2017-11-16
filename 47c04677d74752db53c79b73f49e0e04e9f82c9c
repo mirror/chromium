@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a86d64dc_0e0e5a47",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-16T20:52:52Z",
+      "side": 1,
+      "message": "you need to check if this window is a transient child, and if so, move the transient root.",
+      "revId": "47c04677d74752db53c79b73f49e0e04e9f82c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
