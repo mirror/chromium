@@ -47,6 +47,7 @@ class CONTENT_EXPORT DevToolsAgent : public RenderFrameObserver,
 
   bool IsAttached();
   void DetachAllSessions();
+  void ContinueProgram();
 
  private:
   friend class DevToolsAgentTest;
