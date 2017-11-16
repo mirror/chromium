@@ -26,6 +26,9 @@
 #include "chromeos/dbus/cryptohome/rpc.pb.h"
 #include "components/policy/proto/install_attributes.pb.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
+#include "third_party/protobuf/src/google/protobuf/io/coded_stream.h"
+#include "third_party/protobuf/src/google/protobuf/io/zero_copy_stream.h"
+#include "third_party/protobuf/src/google/protobuf/io/zero_copy_stream_impl_lite.h"
 
 namespace chromeos {
 
@@ -281,19 +284,20 @@ bool FakeCryptohomeClient::InstallAttributesFinalize(bool* successful) {
   // Persist the install attributes so that they can be reloaded if the
   // browser is restarted. This is used for ease of development when device
   // enrollment is required.
+  // The cryptohome::SerializedInstallAttributes protobuf lives in
+  // chrome/browser/chromeos, so it can't be used directly here; use the
+  // low-level protobuf API instead to just write the name-value pairs.
+  // The cache file is read by InstallAttributes::Init.
   base::FilePath cache_path;
   if (!PathService::Get(chromeos::FILE_INSTALL_ATTRIBUTES, &cache_path))
     return false;
 
   cryptohome::SerializedInstallAttributes install_attrs_proto;
   for (const auto& it : install_attrs_) {
-    const std::string& name = it.first;
-    const std::vector<uint8_t>& value = it.second;
-    cryptohome::SerializedInstallAttributes::Attribute* attr_entry =
-        install_attrs_proto.add_attributes();
-    attr_entry->set_name(name);
-    attr_entry->mutable_value()->assign(value.data(),
-                                        value.data() + value.size());
+    auto* entry = install_attrs_proto.add_attributes();
+    entry->set_name(it.first);
+    entry->mutable_value()->assign(it.second.data(),
+                                   it.second.data() + it.second.size());
   }
 
   std::string result;
@@ -779,19 +783,18 @@ void FakeCryptohomeClient::NotifyDircryptoMigrationProgress(
 
 bool FakeCryptohomeClient::LoadInstallAttributes() {
   base::FilePath cache_file;
-  if (!PathService::Get(FILE_INSTALL_ATTRIBUTES, &cache_file) ||
-      !base::PathExists(cache_file)) {
-    return false;
-  }
+  PathService::Get(chromeos::FILE_INSTALL_ATTRIBUTES, &cache_file) &&
+      base::PathExists(cache_file);
   // Mostly copied from chrome/browser/chromeos/settings/install_attributes.cc.
-  std::string file_blob;
-  if (!base::ReadFileToStringWithMaxSize(cache_file, &file_blob, 16384)) {
+  char buf[16384];
+  int len = base::ReadFile(cache_file, buf, sizeof(buf));
+  if (len == -1 || len >= static_cast<int>(sizeof(buf))) {
     PLOG(ERROR) << "Failed to read " << cache_file.value();
     return false;
   }
 
   cryptohome::SerializedInstallAttributes install_attrs_proto;
-  if (!install_attrs_proto.ParseFromString(file_blob)) {
+  if (!install_attrs_proto.ParseFromArray(buf, len)) {
     LOG(ERROR) << "Failed to parse install attributes cache.";
     return false;
   }
