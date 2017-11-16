@@ -38,6 +38,18 @@ namespace {
 // Text to place in an HTML body. Should not contain any markup.
 const char kBodyTextContent[] = "some plain text content";
 
+std::string TestHTML() {
+  return base::StringPrintf("<html><body>%s</body><html>", kBodyTextContent);
+}
+
+void CheckBodyTextContent(content::RenderFrameHost* rfh) {
+  std::string result;
+  const std::string javascript =
+      "domAutomationController.send(document.body.textContent)";
+  ASSERT_TRUE(content::ExecuteScriptAndExtractString(rfh, javascript, &result));
+  EXPECT_EQ(kBodyTextContent, result);
+}
+
 }  // namespace
 
 namespace content {
@@ -2020,36 +2032,95 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplDownloadBrowserTest,
   EXPECT_TRUE(observer.was_redirected());
 }
 
+class NavigationHandleImplBrowserTestWithAction
+    : public NavigationHandleImplBrowserTest,
+      public testing::WithParamInterface<NavigationThrottle::ThrottleAction> {};
+
+INSTANTIATE_TEST_CASE_P(,
+                        NavigationHandleImplBrowserTestWithAction,
+                        ::testing::Values(NavigationThrottle::CANCEL,
+                                          NavigationThrottle::BLOCK_REQUEST));
+
+// TODO(crbug.com/771816): Unify this test and the following ones into a
+// parameterized test once we can use TestNavigationThrottle (from
+// content/public/test/test_navigation_throttle.h).
+IN_PROC_BROWSER_TEST_P(NavigationHandleImplBrowserTestWithAction,
+                       WillStartResultWithErrorPageContent) {
+  GURL url(embedded_test_server()->GetURL("/download-test1.lib"));
+  NavigationHandleObserver observer(shell()->web_contents(), url);
+  NavigationThrottle::ThrottleCheckResult result(
+      GetParam(), net::ERR_BLOCKED_BY_CLIENT, TestHTML());
+  TestNavigationThrottleInstaller installer(
+      shell()->web_contents(), result, NavigationThrottle::PROCEED,
+      NavigationThrottle::PROCEED, NavigationThrottle::PROCEED);
+
+  EXPECT_FALSE(NavigateToURL(shell(), url));
+  EXPECT_TRUE(observer.has_committed());
+  EXPECT_TRUE(observer.is_error());
+  ASSERT_NO_FATAL_FAILURE(
+      CheckBodyTextContent(shell()->web_contents()->GetMainFrame()));
+}
+
+IN_PROC_BROWSER_TEST_P(NavigationHandleImplBrowserTestWithAction,
+                       WillRedirectResultWithErrorPageContent) {
+  GURL redirect_url(
+      embedded_test_server()->GetURL("/cross-site/bar.com/download-test1.lib"));
+  NavigationHandleObserver observer(shell()->web_contents(), redirect_url);
+  NavigationThrottle::ThrottleCheckResult result(
+      GetParam(), net::ERR_BLOCKED_BY_CLIENT, TestHTML());
+  TestNavigationThrottleInstaller installer(
+      shell()->web_contents(), NavigationThrottle::PROCEED, result,
+      NavigationThrottle::PROCEED, NavigationThrottle::PROCEED);
+
+  EXPECT_FALSE(NavigateToURL(shell(), redirect_url));
+  EXPECT_TRUE(observer.has_committed());
+  EXPECT_TRUE(observer.is_error());
+  ASSERT_NO_FATAL_FAILURE(
+      CheckBodyTextContent(shell()->web_contents()->GetMainFrame()));
+}
+
 IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
-                       ThrottleFailureWithErrorPageContent) {
+                       WillFailResultWithErrorPageContent) {
   if (!IsBrowserSideNavigationEnabled())
     return;
 
   net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
   https_server.SetSSLConfig(net::EmbeddedTestServer::CERT_MISMATCHED_NAME);
   ASSERT_TRUE(https_server.Start());
+
   GURL url(https_server.GetURL("/title1.html"));
-
-  NavigationThrottle::ThrottleCheckResult cancel_result = {
-      NavigationThrottle::CANCEL, net::ERR_CERT_COMMON_NAME_INVALID,
-      base::StringPrintf("<html><body>%s</body><html>", kBodyTextContent)};
-
   NavigationHandleObserver observer(shell()->web_contents(), url);
+  NavigationThrottle::ThrottleCheckResult result(
+      NavigationThrottle::CANCEL, net::ERR_CERT_COMMON_NAME_INVALID,
+      TestHTML());
   TestNavigationThrottleInstaller installer(
       shell()->web_contents(), NavigationThrottle::PROCEED,
-      NavigationThrottle::PROCEED, cancel_result, NavigationThrottle::PROCEED);
+      NavigationThrottle::PROCEED, result, NavigationThrottle::PROCEED);
 
   EXPECT_FALSE(NavigateToURL(shell(), url));
-
   EXPECT_TRUE(observer.has_committed());
   EXPECT_TRUE(observer.is_error());
+  ASSERT_NO_FATAL_FAILURE(
+      CheckBodyTextContent(shell()->web_contents()->GetMainFrame()));
+}
 
-  std::string result;
-  const std::string javascript =
-      "domAutomationController.send(document.body.textContent)";
-  content::RenderFrameHost* rfh = shell()->web_contents()->GetMainFrame();
-  ASSERT_TRUE(content::ExecuteScriptAndExtractString(rfh, javascript, &result));
-  EXPECT_EQ(kBodyTextContent, result);
+IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
+                       WillProcessResultWithErrorPageContent) {
+  GURL redirect_url(
+      embedded_test_server()->GetURL("/cross-site/bar.com/download-test1.lib"));
+  NavigationHandleObserver observer(shell()->web_contents(), redirect_url);
+  NavigationThrottle::ThrottleCheckResult result(
+      NavigationThrottle::BLOCK_RESPONSE, net::ERR_BLOCKED_BY_RESPONSE,
+      TestHTML());
+  TestNavigationThrottleInstaller installer(
+      shell()->web_contents(), NavigationThrottle::PROCEED,
+      NavigationThrottle::PROCEED, NavigationThrottle::PROCEED, result);
+
+  EXPECT_FALSE(NavigateToURL(shell(), redirect_url));
+  EXPECT_TRUE(observer.has_committed());
+  EXPECT_TRUE(observer.is_error());
+  ASSERT_NO_FATAL_FAILURE(
+      CheckBodyTextContent(shell()->web_contents()->GetMainFrame()));
 }
 
 }  // namespace content
