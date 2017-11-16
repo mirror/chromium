@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c65d3b1f_12ef85a0",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-16T13:04:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b46981a8_7d345c2d",
+      "range": {
+        "startLine": 692,
+        "startChar": 7,
+        "endLine": 692,
+        "endChar": 28
+      },
+      "revId": "a53a0e780eee4989dfef3981096fd69f0c8c73a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e475849d_9b81bfac",
         "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a53a0e780eee4989dfef3981096fd69f0c8c73a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d3d2748_c5533f35",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-16T13:04:24Z",
+      "side": 1,
+      "message": "Correct, I\u0027ve added a comment to clarify this.",
+      "parentUuid": "e475849d_9b81bfac",
+      "range": {
+        "startLine": 699,
+        "startChar": 6,
+        "endLine": 699,
+        "endChar": 61
+      },
+      "revId": "a53a0e780eee4989dfef3981096fd69f0c8c73a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
