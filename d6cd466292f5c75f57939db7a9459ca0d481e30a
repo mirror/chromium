@@ -16,6 +16,24 @@
       "revId": "d6cd466292f5c75f57939db7a9459ca0d481e30a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f363849_535534eb",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-11-16T23:52:50Z",
+      "side": 0,
+      "message": "mHasSelection is now set to true at onSelectionEvent for SELECTION_HANDLES_SHOWN/MOVED.",
+      "parentUuid": "341f351f_9d34f623",
+      "revId": "d6cd466292f5c75f57939db7a9459ca0d481e30a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
