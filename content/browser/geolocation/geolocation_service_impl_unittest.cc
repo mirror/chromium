@@ -146,7 +146,11 @@ TEST_F(GeolocationServiceTest, PermissionGrantedPolicyViolation) {
         ADD_FAILURE() << "Permissions checked unexpectedly.";
       }));
   GeolocationPtr geolocation;
-  service()->CreateGeolocation(mojo::MakeRequest(&geolocation), true);
+  service()->CreateGeolocation(
+      mojo::MakeRequest(&geolocation), true,
+      base::Bind([](blink::mojom::PermissionStatus status) {
+        EXPECT_EQ(blink::mojom::PermissionStatus::DENIED, status);
+      }));
 
   base::RunLoop loop;
   geolocation.set_connection_error_handler(loop.QuitClosure());
@@ -173,7 +177,11 @@ TEST_F(GeolocationServiceTest, PermissionGrantedNoPolicyViolation) {
         callback.Run(PermissionStatus::GRANTED);
       }));
   GeolocationPtr geolocation;
-  service()->CreateGeolocation(mojo::MakeRequest(&geolocation), true);
+  service()->CreateGeolocation(
+      mojo::MakeRequest(&geolocation), true,
+      base::Bind([](blink::mojom::PermissionStatus status) {
+        EXPECT_EQ(blink::mojom::PermissionStatus::GRANTED, status);
+      }));
 
   base::RunLoop loop;
   geolocation.set_connection_error_handler(base::BindOnce(
@@ -200,7 +208,11 @@ TEST_F(GeolocationServiceTest, PermissionGrantedSync) {
         callback.Run(PermissionStatus::GRANTED);
       }));
   GeolocationPtr geolocation;
-  service()->CreateGeolocation(mojo::MakeRequest(&geolocation), true);
+  service()->CreateGeolocation(
+      mojo::MakeRequest(&geolocation), true,
+      base::Bind([](blink::mojom::PermissionStatus status) {
+        EXPECT_EQ(blink::mojom::PermissionStatus::GRANTED, status);
+      }));
 
   base::RunLoop loop;
   geolocation.set_connection_error_handler(base::BindOnce(
@@ -227,7 +239,11 @@ TEST_F(GeolocationServiceTest, PermissionDeniedSync) {
         callback.Run(PermissionStatus::DENIED);
       }));
   GeolocationPtr geolocation;
-  service()->CreateGeolocation(mojo::MakeRequest(&geolocation), true);
+  service()->CreateGeolocation(
+      mojo::MakeRequest(&geolocation), true,
+      base::Bind([](blink::mojom::PermissionStatus status) {
+        EXPECT_EQ(blink::mojom::PermissionStatus::DENIED, status);
+      }));
 
   base::RunLoop loop;
   geolocation.set_connection_error_handler(loop.QuitClosure());
@@ -255,7 +271,11 @@ TEST_F(GeolocationServiceTest, PermissionGrantedAsync) {
                            permission_callback));
       }));
   GeolocationPtr geolocation;
-  service()->CreateGeolocation(mojo::MakeRequest(&geolocation), true);
+  service()->CreateGeolocation(
+      mojo::MakeRequest(&geolocation), true,
+      base::Bind([](blink::mojom::PermissionStatus status) {
+        EXPECT_EQ(blink::mojom::PermissionStatus::GRANTED, status);
+      }));
 
   base::RunLoop loop;
   geolocation.set_connection_error_handler(base::BindOnce(
@@ -288,7 +308,11 @@ TEST_F(GeolocationServiceTest, PermissionDeniedAsync) {
                            permission_callback));
       }));
   GeolocationPtr geolocation;
-  service()->CreateGeolocation(mojo::MakeRequest(&geolocation), true);
+  service()->CreateGeolocation(
+      mojo::MakeRequest(&geolocation), true,
+      base::Bind([](blink::mojom::PermissionStatus status) {
+        EXPECT_EQ(blink::mojom::PermissionStatus::DENIED, status);
+      }));
 
   base::RunLoop loop;
   geolocation.set_connection_error_handler(loop.QuitClosure());
@@ -307,7 +331,11 @@ TEST_F(GeolocationServiceTest, ServiceClosedBeforePermissionResponse) {
   CreateEmbeddedFrameAndGeolocationService(/*allow_via_feature_policy=*/true);
   permission_manager()->SetRequestId(42);
   GeolocationPtr geolocation;
-  service()->CreateGeolocation(mojo::MakeRequest(&geolocation), true);
+  service()->CreateGeolocation(mojo::MakeRequest(&geolocation), true,
+                               base::Bind([](blink::mojom::PermissionStatus) {
+                                 ADD_FAILURE()
+                                     << "PositionStatus received unexpectedly.";
+                               }));
   // Don't immediately respond to the request.
   permission_manager()->SetRequestCallback(
       base::Bind([](const PermissionCallback& callback) {}));

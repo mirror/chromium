@@ -45,6 +45,10 @@
 
 namespace blink {
 
+namespace mojom {
+enum class PermissionStatus;
+}
+
 class Document;
 class LocalFrame;
 class ExecutionContext;
@@ -146,7 +150,7 @@ class MODULES_EXPORT Geolocation final : public ScriptWrappable,
 
   void StopUpdating();
 
-  void UpdateGeolocationConnection();
+  void UpdateGeolocationConnection(GeoNotifier*);
   void QueryNextPosition();
 
   // Attempts to obtain a position for the given notifier, either by using
@@ -165,6 +169,9 @@ class MODULES_EXPORT Geolocation final : public ScriptWrappable,
   void OnPositionUpdated(device::mojom::blink::GeopositionPtr);
 
   void OnGeolocationConnectionError();
+
+  void OnGeolocationPermissionStatusUpdated(GeoNotifier*,
+                                            mojom::PermissionStatus);
 
   GeoNotifierSet one_shots_;
   GeolocationWatchers watchers_;
