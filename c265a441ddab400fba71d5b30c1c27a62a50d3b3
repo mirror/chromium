@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "886ac6cf_0a292fd8",
+        "filename": "components/webcrypto/webcrypto_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-16T21:22:09Z",
+      "side": 1,
+      "message": "How are these visualized on the timeline? Does it associate XXX with XXXReply, or are they displayed as individual events?",
+      "revId": "c265a441ddab400fba71d5b30c1c27a62a50d3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
