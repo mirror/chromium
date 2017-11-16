@@ -1,0 +1,221 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea62d964_4420e1d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-16T15:53:50Z",
+      "side": 1,
+      "message": "TabModelListObserver",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 32
+      },
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92bbcf48_78772224",
+        "filename": "ios/chrome/browser/browser_state/test_chrome_browser_state_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-16T15:53:50Z",
+      "side": 1,
+      "message": "browser_state_ is left uninitialized after this constructor is called, making GetLoadedBrowserStates() implementation invoke undefined behaviour (by reading uninitialized memory).\n\nCan you add a test that GetLoadedBrowserStates() is empty after this constructor is invoked?",
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c961a0aa_6f7cd868",
+        "filename": "ios/chrome/browser/browser_state/test_chrome_browser_state_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-16T15:53:50Z",
+      "side": 1,
+      "message": "Can you add a constructor taking both a path and a BrowserState and implementing the two others constructor by calling the new one?",
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b114665_0f54901b",
+        "filename": "ios/chrome/browser/browser_state/test_chrome_browser_state_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-16T15:53:50Z",
+      "side": 1,
+      "message": "nit: no blank line",
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac97a0a_482a79b6",
+        "filename": "ios/chrome/browser/browser_state/test_chrome_browser_state_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-16T15:53:50Z",
+      "side": 1,
+      "message": "Since the regular manager owns the browser state, I think it would make sense to have the test manager also own the sole instance. Can you change this and the constructor to use std::unique_ptr\u003c\u003e?",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 42
+      },
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b325180_4938ecc8",
+        "filename": "ios/chrome/browser/tabs/tab_model_list.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-16T15:53:50Z",
+      "side": 1,
+      "message": "I don\u0027t think we should export the fact that TabModelList is a base::SupportsUserData. This is internal to the implementation of how the TabModels are attached to BrowserState.\n\nI understand that we want the new observer API attached to the TabModelList class though, so I propose that we rename the TabModelList class that was in the implementation file to TabModelListUserData, and have a public class with just static method:\n\n  class TabModelList {\n   public:\n    // Adds |observer| to the list of observers.\n    static void AddObserver(TabModelListObserver* observer);\n\n    // Removes |observer| from the list of observers.\n    static void RemoveObserver(TabModelListObserver* observer);\n\n    // Registers |tab_model| as associated to |browser_state|. The object will\n    // be retained until |UnregisterTabModelFromChromeBrowserState| is called.\n    // It is an error if |tab_model is already registered as associated to\n    // |browser_state|.\n    static void RegisterTabModelWithChromeBrowserState(\n        ios::ChromeBrowserState* browser_state,\n        TabModel* tab_model);\n\n    // Unregisters the association between |tab_model| and |browser_state|.\n    // It is an error if no such association exists.\n    static void UnregisterTabModelFromChromeBrowserState(\n        ios::ChromeBrowserState* browser_state,\n        TabModel* tab_model);\n\n    // Returns the list of all TabModels associated with |browser_state|.\n    static NSArray\u003cTabModel*\u003e* GetTabModelsForChromeBrowserState(\n        ios::ChromeBrowserState* browser_state);\n\n    // Returns the last active TabModel associated with |browser_state|.\n    static TabModel* GetLastActiveTabModelForChromeBrowserState(\n        ios::ChromeBrowserState* browser_state);\n\n    // Returns true if a incognito session is currently active (i.e. at least\n    // one incognito tab is open).\n    static bool IsOffTheRecordSessionActive();\n\n   private:\n    DISALLOW_IMPLICIT_CONSTRUCTORS(TabModelList);\n  };\n\nThen in the implementation file, have a TabModelListUserData private class:\n\n  namespace {\n  // Wrapper around a NSMutableArray\u003cTabModel\u003e allowing to bind it to a\n  // base::SupportsUserData. Any base::SupportsUserData that owns this\n  // wrapper will owns the reference to the TabModels.\n  class TabModelListUserData : public base::SupportsUserData::Data {\n   public:\n    static TabModelListUserData* GetForBrowserState(\n        ios::ChromeBrowserState* browser_state,\n        bool create);\n\n    // Returns the list of TabModels owned by this instance.\n    NSMutableSet\u003cTabModel*\u003e* tab_models() const { return tab_models_; }\n\n   private:\n    NSMutableSet\u003cTabModel*\u003e* tab_models_;\n\n    DISALLOW_COPY_AND_ASSIGN(TabModelListUserData);\n  };\n  }  // namespace\n\n  ...\n\n  // static\n  NSArray\u003cTabModel*\u003e* TabModelList::GetTabModelsForChromeBrowserState(\n      ios::ChromeBrowserState* browser_state) {\n    TabModelListUserData* user_data \u003d TabModelListUserData::GetForBrowserState(\n        browser_state, /*create\u003d*/false);\n    return user_data ? [user_data-\u003etab_models() copy] : nullptr;\n  }\n\n  ...",
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72493152_ca99aafe",
+        "filename": "ios/chrome/browser/tabs/tab_model_list.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-16T15:53:50Z",
+      "side": 1,
+      "message": "I think this would be much simpler if you have a LazyInstance\u003cObserverList\u003cTabModelListObserver\u003e\u003e:\n\n  namespace {\n  base::LazyInstance\u003cbase::ObserverList\u003cTabModelListObserver\u003e\u003e::Leaky gObserverList;\n  }  // namespace\n\n  // static\n  void TabModelList::AddObserver(TabModelListObserver* observer) {\n    gObserverList.Get().AddObserver(observer);\n  }\n\n  ...\n\n  // static\n  void TabModelList::RegisterTabModelWithChromeBrowserState(\n      ios::ChromeBrowserState* browser_state,\n      TabModel* tab_model) {\n    NSMutableSet\u003cTabModel*\u003e* tab_models \u003d\n        TabModelList::GetForBrowserState(browser_state, true)-\u003etab_models();\n    DCHECK(![tab_models containsObject:tab_model]);\n    [tab_models addObject:tab_model];\n\n    for (auto\u0026 observer : gObserverList.Get())\n      observer.TabModelRegisteredWithBrowserState(tab_model, browser_state);\n  }\n\n  ...",
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c0ec8b0_1c297d3d",
+        "filename": "ios/chrome/browser/tabs/tab_model_list_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-16T15:53:50Z",
+      "side": 1,
+      "message": "nit: \u003d default;",
+      "range": {
+        "startLine": 20,
+        "startChar": 25,
+        "endLine": 20,
+        "endChar": 27
+      },
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e1fcb2_62268f29",
+        "filename": "ios/chrome/browser/tabs/tab_model_list_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-16T15:53:50Z",
+      "side": 1,
+      "message": "nit: \u003d default;",
+      "range": {
+        "startLine": 21,
+        "startChar": 34,
+        "endLine": 21,
+        "endChar": 36
+      },
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b900c3b5_93ed90b6",
+        "filename": "ios/chrome/browser/tabs/tab_model_list_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-16T15:53:50Z",
+      "side": 1,
+      "message": "Remove trailing semi-colon. But given the recommendation to make the list a leaky lazy instance, I think we can just remove this method.",
+      "range": {
+        "startLine": 35,
+        "startChar": 40,
+        "endLine": 35,
+        "endChar": 41
+      },
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de086d85_5209c524",
+        "filename": "ios/chrome/browser/tabs/tab_model_list_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-16T15:53:50Z",
+      "side": 1,
+      "message": "nit: private:",
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
