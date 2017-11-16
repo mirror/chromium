@@ -32,9 +32,8 @@ TEST_F(DefaultFrameHeaderTest, TitleIconAlignment) {
   w->SetBounds(gfx::Rect(0, 0, 500, 500));
   w->Show();
 
-  DefaultFrameHeader frame_header;
-  frame_header.Init(w.get(), w->non_client_view()->frame_view(), &container,
-                    nullptr);
+  DefaultFrameHeader frame_header(w.get(), w->non_client_view()->frame_view(),
+                                  &container, nullptr);
   frame_header.UpdateLeftHeaderView(&window_icon);
   frame_header.LayoutHeader();
   gfx::Rect title_bounds = frame_header.GetTitleBounds();
@@ -48,9 +47,8 @@ TEST_F(DefaultFrameHeaderTest, BackButtonAlignment) {
   ash::FrameCaptionButtonContainerView container(w.get());
   ash::FrameBackButton back;
 
-  DefaultFrameHeader frame_header;
-  frame_header.Init(w.get(), w->non_client_view()->frame_view(), &container,
-                    nullptr);
+  DefaultFrameHeader frame_header(w.get(), w->non_client_view()->frame_view(),
+                                  &container, nullptr);
   frame_header.UpdateBackButton(&back);
   frame_header.LayoutHeader();
   gfx::Rect title_bounds = frame_header.GetTitleBounds();
@@ -70,9 +68,8 @@ TEST_F(DefaultFrameHeaderTest, LightIcons) {
   w->SetBounds(gfx::Rect(0, 0, 500, 500));
   w->Show();
 
-  DefaultFrameHeader frame_header;
-  frame_header.Init(w.get(), w->non_client_view()->frame_view(), &container,
-                    nullptr);
+  DefaultFrameHeader frame_header(w.get(), w->non_client_view()->frame_view(),
+                                  &container, nullptr);
 
   // Check by default light icons are not used.
   frame_header.mode_ = FrameHeader::MODE_ACTIVE;
