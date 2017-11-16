@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "341f351f_9d34f623",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-16T20:02:37Z",
+      "side": 0,
+      "message": "why is this removed?",
+      "revId": "d6cd466292f5c75f57939db7a9459ca0d481e30a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

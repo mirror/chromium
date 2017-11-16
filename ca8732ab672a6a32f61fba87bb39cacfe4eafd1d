@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15b9d1c8_a591a2c2",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/SelectionPopupControllerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-16T20:02:37Z",
+      "side": 1,
+      "message": "this event doesn\u0027t actually set mSelectionRect, so this is just for show that \"this is what actually happens\"?",
+      "range": {
+        "startLine": 136,
+        "startChar": 56,
+        "endLine": 136,
+        "endChar": 79
+      },
+      "revId": "ca8732ab672a6a32f61fba87bb39cacfe4eafd1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af958652_9ecf7ce7",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4492,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-16T20:02:37Z",
+      "side": 1,
+      "message": "anonymous namespace",
+      "revId": "ca8732ab672a6a32f61fba87bb39cacfe4eafd1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b02de08f_7a986d29",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4499,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-16T20:02:37Z",
+      "side": 1,
+      "message": "std::move might be slightly cheaper",
+      "revId": "ca8732ab672a6a32f61fba87bb39cacfe4eafd1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ba21b4_7e3a912f",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4517,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-16T20:02:37Z",
+      "side": 1,
+      "message": "interestingly this one has a default no-op implementation, so don\u0027t need to override this",
+      "revId": "ca8732ab672a6a32f61fba87bb39cacfe4eafd1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cd18a45_f34ef660",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4524,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-16T20:02:37Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "ca8732ab672a6a32f61fba87bb39cacfe4eafd1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54823224_3fa64d33",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4551,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-16T20:02:37Z",
+      "side": 1,
+      "message": "need a null check for compositor",
+      "revId": "ca8732ab672a6a32f61fba87bb39cacfe4eafd1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
