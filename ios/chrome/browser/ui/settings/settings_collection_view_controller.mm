@@ -188,7 +188,6 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
                                                SettingsMainPageCommands,
                                                SigninPresenter,
                                                SigninPromoViewConsumer,
-                                               SigninPromoViewDelegate,
                                                SyncObserverModelBridge> {
   // The current browser state that hold the settings. Never off the record.
   ios::ChromeBrowserState* _browserState;  // weak
@@ -694,7 +693,6 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
     case ItemTypeSigninPromo: {
       SigninPromoCell* signinPromoCell =
           base::mac::ObjCCast<SigninPromoCell>(cell);
-      signinPromoCell.signinPromoView.delegate = self;
       __weak SettingsCollectionViewController* weakSelf = self;
       signinPromoCell.signinPromoView.closeButtonAction = ^() {
         [weakSelf signinPromoCloseButtonAction];
@@ -766,7 +764,8 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
     case ItemTypeSignInButton:
       [self showSignInWithIdentity:nil
                        promoAction:signin_metrics::PromoAction::
-                                       PROMO_ACTION_NO_SIGNIN_PROMO];
+                                       PROMO_ACTION_NO_SIGNIN_PROMO
+                        completion:nil];
       break;
     case ItemTypeAccount:
       controller = [[AccountsCollectionViewController alloc]
@@ -1012,7 +1011,8 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 #pragma mark Sign in
 
 - (void)showSignInWithIdentity:(ChromeIdentity*)identity
-                   promoAction:(signin_metrics::PromoAction)promoAction {
+                   promoAction:(signin_metrics::PromoAction)promoAction
+                    completion:(ShowSigninCommandCompletionCallback)completion {
   base::RecordAction(base::UserMetricsAction("Signin_Signin_FromSettings"));
   DCHECK(!self.signinInteractionCoordinator.isActive);
   if (!self.signinInteractionCoordinator) {
@@ -1029,6 +1029,8 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
                    promoAction:promoAction
       presentingViewController:self.navigationController
                     completion:^(BOOL success) {
+                      if (completion)
+                        completion(success);
                       [weakSelf didFinishSignin:success];
                     }];
 }
@@ -1220,40 +1222,14 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   }
 }
 
-#pragma mark - SigninPromoViewDelegate
-
-- (void)signinPromoViewDidTapSigninWithNewAccount:
-    (SigninPromoView*)signinPromoView {
-  [self sendImpressionsTilSigninButtonsHistogram];
-  DCHECK(!_signinPromoViewMediator.defaultIdentity);
-  base::RecordAction(
-      base::UserMetricsAction("Signin_SigninNewAccount_FromSettings"));
-  [self showSignInWithIdentity:nil
-                   promoAction:signin_metrics::PromoAction::
-                                   PROMO_ACTION_NEW_ACCOUNT];
-}
-
-- (void)signinPromoViewDidTapSigninWithDefaultAccount:
-    (SigninPromoView*)signinPromoView {
-  [self sendImpressionsTilSigninButtonsHistogram];
-  ChromeIdentity* identity = _signinPromoViewMediator.defaultIdentity;
-  DCHECK(identity);
-  base::RecordAction(
-      base::UserMetricsAction("Signin_SigninWithDefault_FromSettings"));
+- (void)signinPromoViewMediator:(SigninPromoViewMediator*)mediator
+    shouldOpenSigninWithIdentity:(ChromeIdentity*)identity
+                     promoAction:(signin_metrics::PromoAction)promoAction
+                      completion:
+                          (ShowSigninCommandCompletionCallback)completion {
   [self showSignInWithIdentity:identity
-                   promoAction:signin_metrics::PromoAction::
-                                   PROMO_ACTION_WITH_DEFAULT];
-}
-
-- (void)signinPromoViewDidTapSigninWithOtherAccount:
-    (SigninPromoView*)signinPromoView {
-  [self sendImpressionsTilSigninButtonsHistogram];
-  DCHECK(_signinPromoViewMediator.defaultIdentity);
-  base::RecordAction(
-      base::UserMetricsAction("Signin_SigninNotDefault_FromSettings"));
-  [self showSignInWithIdentity:nil
-                   promoAction:signin_metrics::PromoAction::
-                                   PROMO_ACTION_NOT_DEFAULT];
+                   promoAction:promoAction
+                    completion:completion];
 }
 
 #pragma mark - Metrics

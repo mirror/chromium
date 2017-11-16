@@ -465,15 +465,26 @@ const char* AlreadySeenSigninViewPreferenceKey(
   RecordSigninUserActionForAccessPoint(_accessPoint);
   RecordSigninNewAccountUserActionForAccessPoint(_accessPoint);
   __weak SigninPromoViewMediator* weakSelf = self;
-  ShowSigninCommand* command = [[ShowSigninCommand alloc]
-      initWithOperation:AUTHENTICATION_OPERATION_SIGNIN
-               identity:nil
-            accessPoint:_accessPoint
-            promoAction:signin_metrics::PromoAction::PROMO_ACTION_NEW_ACCOUNT
-               callback:^(BOOL succeeded) {
-                 [weakSelf signinCallback];
-               }];
-  [self.presenter showSignin:command];
+  ShowSigninCommandCompletionCallback completion = ^(BOOL succeeded) {
+    [weakSelf signinCallback];
+  };
+  if ([self.consumer respondsToSelector:@selector
+                     (signinPromoViewMediator:shouldOpenSigninWithIdentity
+                                                :promoAction:completion:)]) {
+    [self.consumer signinPromoViewMediator:self
+              shouldOpenSigninWithIdentity:nil
+                               promoAction:signin_metrics::PromoAction::
+                                               PROMO_ACTION_NEW_ACCOUNT
+                                completion:completion];
+  } else {
+    ShowSigninCommand* command = [[ShowSigninCommand alloc]
+        initWithOperation:AUTHENTICATION_OPERATION_SIGNIN
+                 identity:nil
+              accessPoint:_accessPoint
+              promoAction:signin_metrics::PromoAction::PROMO_ACTION_NEW_ACCOUNT
+                 callback:completion];
+    [self.presenter showSignin:command];
+  }
 }
 
 - (void)signinPromoViewDidTapSigninWithDefaultAccount:
@@ -483,15 +494,26 @@ const char* AlreadySeenSigninViewPreferenceKey(
   RecordSigninUserActionForAccessPoint(_accessPoint);
   RecordSigninDefaultUserActionForAccessPoint(_accessPoint);
   __weak SigninPromoViewMediator* weakSelf = self;
-  ShowSigninCommand* command = [[ShowSigninCommand alloc]
-      initWithOperation:AUTHENTICATION_OPERATION_SIGNIN
-               identity:_defaultIdentity
-            accessPoint:_accessPoint
-            promoAction:signin_metrics::PromoAction::PROMO_ACTION_WITH_DEFAULT
-               callback:^(BOOL succeeded) {
-                 [weakSelf signinCallback];
-               }];
-  [self.presenter showSignin:command];
+  ShowSigninCommandCompletionCallback completion = ^(BOOL succeeded) {
+    [weakSelf signinCallback];
+  };
+  if ([self.consumer respondsToSelector:@selector
+                     (signinPromoViewMediator:shouldOpenSigninWithIdentity
+                                                :promoAction:completion:)]) {
+    [self.consumer signinPromoViewMediator:self
+              shouldOpenSigninWithIdentity:_defaultIdentity
+                               promoAction:signin_metrics::PromoAction::
+                                               PROMO_ACTION_WITH_DEFAULT
+                                completion:completion];
+  } else {
+    ShowSigninCommand* command = [[ShowSigninCommand alloc]
+        initWithOperation:AUTHENTICATION_OPERATION_SIGNIN
+                 identity:_defaultIdentity
+              accessPoint:_accessPoint
+              promoAction:signin_metrics::PromoAction::PROMO_ACTION_WITH_DEFAULT
+                 callback:completion];
+    [self.presenter showSignin:command];
+  }
 }
 
 - (void)signinPromoViewDidTapSigninWithOtherAccount:
@@ -501,15 +523,28 @@ const char* AlreadySeenSigninViewPreferenceKey(
   RecordSigninNotDefaultUserActionForAccessPoint(_accessPoint);
   RecordSigninUserActionForAccessPoint(_accessPoint);
   __weak SigninPromoViewMediator* weakSelf = self;
-  ShowSigninCommand* command = [[ShowSigninCommand alloc]
-      initWithOperation:AUTHENTICATION_OPERATION_SIGNIN
-               identity:nil
-            accessPoint:_accessPoint
-            promoAction:signin_metrics::PromoAction::PROMO_ACTION_NOT_DEFAULT
-               callback:^(BOOL succeeded) {
-                 [weakSelf signinCallback];
-               }];
-  [self.presenter showSignin:command];
+  ShowSigninCommandCompletionCallback completion = ^(BOOL succeeded) {
+    [weakSelf signinCallback];
+  };
+  if ([self.consumer respondsToSelector:@selector
+                     (signinPromoViewMediator:shouldOpenSigninWithIdentity
+                                                :promoAction:completion:)]) {
+    [self.consumer signinPromoViewMediator:self
+              shouldOpenSigninWithIdentity:nil
+                               promoAction:signin_metrics::PromoAction::
+                                               PROMO_ACTION_NOT_DEFAULT
+                                completion:completion];
+  } else {
+    ShowSigninCommand* command = [[ShowSigninCommand alloc]
+        initWithOperation:AUTHENTICATION_OPERATION_SIGNIN
+                 identity:nil
+              accessPoint:_accessPoint
+              promoAction:signin_metrics::PromoAction::PROMO_ACTION_NOT_DEFAULT
+                 callback:^(BOOL succeeded) {
+                   [weakSelf signinCallback];
+                 }];
+    [self.presenter showSignin:command];
+  }
 }
 
 @end
