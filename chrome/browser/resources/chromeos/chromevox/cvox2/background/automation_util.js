@@ -341,4 +341,42 @@ AutomationUtil.getEditableRoot = function(node) {
   return rootEditable;
 };
 
+/**
+ * Gets the last (DFS) ordered node matched by a predicate assuming a preference
+ * for ancestors.
+ * @param {!AutomationNode} root Tree to search.
+ * @param {AutomationPredicate.Unary} pred A predicate to apply
+ * @return {AutomationNode}
+ */
+AutomationUtil.getLastNode = function(root, pred) {
+  var node = root;
+  while (node.lastChild)
+    node = node.lastChild;
+
+  do {
+    if (AutomationPredicate.shouldIgnoreNode(node))
+      continue;
+
+    // Get the shallowest node matching the predicate.
+    var walker = node;
+    var shallowest = null;
+    while (walker) {
+      if (pred(walker) && !AutomationPredicate.shouldIgnoreNode(walker)) {
+        shallowest = walker;
+        break;
+      }
+
+      if (walker == root)
+        break;
+
+      walker = walker.parent;
+    }
+
+    if (shallowest)
+      return shallowest;
+  } while (node = AutomationUtil.findNextNode(node, Dir.BACKWARD, pred));
+
+  return null;
+};
+
 });  // goog.scope
