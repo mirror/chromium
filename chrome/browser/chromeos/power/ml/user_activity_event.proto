@@ -6,6 +6,8 @@ syntax = "proto2";
 
 package chromeos.power.ml;
 
+option optimize_for = LITE_RUNTIME;
+
 // Proto buffer for events used in predicting user activity. This proto will
 // represent one training example and will contain both features and labels. At
 // inference time, the only missing fields will be the labels.

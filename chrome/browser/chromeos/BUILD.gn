@@ -1360,6 +1360,8 @@ source_set("chromeos") {
     "power/idle_action_warning_dialog_view.h",
     "power/idle_action_warning_observer.cc",
     "power/idle_action_warning_observer.h",
+    "power/ml/user_activity_event_logger.cc",
+    "power/ml/user_activity_event_logger.h",
     "power/power_data_collector.cc",
     "power/power_data_collector.h",
     "power/power_prefs.cc",
