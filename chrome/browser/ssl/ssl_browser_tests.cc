@@ -1630,6 +1630,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestWSSInvalidCertAndGoForward) {
   ui_test_utils::NavigateToURL(browser(),
                                wss_server_expired_.GetURL("connect_check.html")
                                    .ReplaceComponents(replacements));
+  WaitForInterstitialAttach(tab);
   CheckAuthenticationBrokenState(
       tab, net::CERT_STATUS_DATE_INVALID, AuthState::SHOWING_INTERSTITIAL);
 
