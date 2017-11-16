@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e46416d2_9979c533",
+        "filename": "ash/system/web_notification/login_state_notification_blocker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-16T21:50:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e371506c_f4ac41e3",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 12
+      },
+      "revId": "78cd3ea9d43f7466bc7e43664b726a7577b5c14a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b16a2e77_dcd1cacf",
         "filename": "ash/system/web_notification/login_state_notification_blocker.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e0f12b60_1c5b90cd",
+        "filename": "ash/system/web_notification/login_state_notification_blocker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-16T21:50:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b16a2e77_dcd1cacf",
+      "range": {
+        "startLine": 30,
+        "startChar": 9,
+        "endLine": 30,
+        "endChar": 27
+      },
+      "revId": "78cd3ea9d43f7466bc7e43664b726a7577b5c14a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f0e8359_5264af48",
         "filename": "ash/system/web_notification/login_state_notification_blocker.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-16T05:07:32Z",
       "side": 1,
       "message": "this is a behavioral change. intentional?",
+      "range": {
+        "startLine": 48,
+        "startChar": 9,
+        "endLine": 48,
+        "endChar": 34
+      },
+      "revId": "78cd3ea9d43f7466bc7e43664b726a7577b5c14a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c610e83d_7905eb78",
+        "filename": "ash/system/web_notification/login_state_notification_blocker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-16T21:50:55Z",
+      "side": 1,
+      "message": "To be on the safe side, restored old behavior.",
+      "parentUuid": "2f0e8359_5264af48",
       "range": {
         "startLine": 48,
         "startChar": 9,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5bb2d734_eede01de",
+        "filename": "ui/message_center/notification_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-16T21:50:55Z",
+      "side": 1,
+      "message": "Makes sense. Move this check outside.\n\nTo make it more efficient checking IsRead(), changed |blocked_ids| to a list of Notification*.",
+      "parentUuid": "e5c95116_83479e34",
+      "range": {
+        "startLine": 197,
+        "startChar": 25,
+        "endLine": 197,
+        "endChar": 47
+      },
+      "revId": "78cd3ea9d43f7466bc7e43664b726a7577b5c14a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f357045_dbea11ae",
         "filename": "ui/message_center/notification_list.cc",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-16T05:07:32Z",
       "side": 1,
       "message": "the names of these two functions...",
+      "range": {
+        "startLine": 215,
+        "startChar": 23,
+        "endLine": 215,
+        "endChar": 45
+      },
+      "revId": "78cd3ea9d43f7466bc7e43664b726a7577b5c14a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13293ef1_ec90f1b3",
+        "filename": "ui/message_center/notification_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-16T21:50:55Z",
+      "side": 1,
+      "message": "Agree.",
+      "parentUuid": "6f357045_dbea11ae",
       "range": {
         "startLine": 215,
         "startChar": 23,
