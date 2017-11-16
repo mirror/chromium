@@ -554,6 +554,30 @@
     },
     {
       "key": {
+        "uuid": "2739a9c7_2007b81c",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-16T19:45:53Z",
+      "side": 1,
+      "message": "Don\u0027t we need it for `size_t`?",
+      "parentUuid": "0e628ade_ce40e3c9",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 19
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ddfc04c_d34e555a",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 8
