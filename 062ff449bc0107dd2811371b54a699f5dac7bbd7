@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcf73183_266a289c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SourcesView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-16T02:35:20Z",
+      "side": 1,
+      "message": "Neat",
+      "range": {
+        "startLine": 513,
+        "startChar": 25,
+        "endLine": 513,
+        "endChar": 45
+      },
+      "revId": "062ff449bc0107dd2811371b54a699f5dac7bbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c39bd90d_a6f4ea12",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SourcesView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-16T02:35:20Z",
+      "side": 1,
+      "message": "this.currentSourceFrame()?",
+      "range": {
+        "startLine": 519,
+        "startChar": 27,
+        "endLine": 519,
+        "endChar": 38
+      },
+      "revId": "062ff449bc0107dd2811371b54a699f5dac7bbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40e40b5_c95bb4d4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/UISourceCodeFrame.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-16T02:35:20Z",
+      "side": 1,
+      "message": "Can we add a comment saying that order of plugins matters?  If some new plugin wants to add a Spacer-separator toolbar item, it might not be obvious it could interfere.",
+      "range": {
+        "startLine": 262,
+        "startChar": 4,
+        "endLine": 262,
+        "endChar": 6
+      },
+      "revId": "062ff449bc0107dd2811371b54a699f5dac7bbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
