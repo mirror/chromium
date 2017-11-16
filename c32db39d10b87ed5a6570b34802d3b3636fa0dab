@@ -94,6 +94,30 @@
       "revId": "c32db39d10b87ed5a6570b34802d3b3636fa0dab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414aa1c8_5fa0244b",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-16T21:25:39Z",
+      "side": 1,
+      "message": "Or were you asking whether to only trigger on one event and not the other?\n\nThat would be reasonable to do, if the event you trigger on is a superset of the other. For example, don\u0027t trigger on mousedown and not on focus change, since you can tab into the window to give it focus without generating mousedown.",
+      "parentUuid": "c0c98c43_84e13bd8",
+      "range": {
+        "startLine": 398,
+        "startChar": 19,
+        "endLine": 398,
+        "endChar": 26
+      },
+      "revId": "c32db39d10b87ed5a6570b34802d3b3636fa0dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
