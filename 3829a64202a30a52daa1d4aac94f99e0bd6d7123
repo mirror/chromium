@@ -16,6 +16,24 @@
       "revId": "3829a64202a30a52daa1d4aac94f99e0bd6d7123",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4684212_94211350",
+        "filename": "testing/scripts/upload_test_result_artifacts_unittest.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-16T22:28:30Z",
+      "side": 1,
+      "message": "I ended up writing a few more tests.",
+      "parentUuid": "8f3f1ee8_ad3c1e18",
+      "revId": "3829a64202a30a52daa1d4aac94f99e0bd6d7123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
