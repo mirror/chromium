@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f882bd5_03ba9252",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksFaviconThrottle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-16T22:13:43Z",
+      "side": 1,
+      "message": "onFaviconFetched",
+      "range": {
+        "startLine": 57,
+        "startChar": 77,
+        "endLine": 57,
+        "endChar": 91
+      },
+      "revId": "ccb21d3590d54ac82396d1252bce1fbf13f78c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf6f5f3f_d065ba7e",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksFaviconThrottleTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-16T22:13:43Z",
+      "side": 1,
+      "message": "nit: this can change as well.",
+      "range": {
+        "startLine": 25,
+        "startChar": 83,
+        "endLine": 25,
+        "endChar": 88
+      },
+      "revId": "ccb21d3590d54ac82396d1252bce1fbf13f78c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
