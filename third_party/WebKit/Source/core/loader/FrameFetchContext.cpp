@@ -69,6 +69,7 @@
 #include "platform/WebFrameScheduler.h"
 #include "platform/bindings/V8DOMActivityLogger.h"
 #include "platform/exported/WrappedResourceRequest.h"
+#include "platform/http_names.h"
 #include "platform/instrumentation/tracing/TracedValue.h"
 #include "platform/loader/fetch/ClientHintsPreferences.h"
 #include "platform/loader/fetch/Resource.h"
@@ -374,8 +375,8 @@ mojom::FetchCacheMode FrameFetchContext::ResourceRequestCachePolicy(
   DCHECK(GetFrame());
   if (type == Resource::kMainResource) {
     const auto cache_mode = DetermineCacheMode(
-        request.HttpMethod() == "POST" ? RequestMethod::kIsPost
-                                       : RequestMethod::kIsNotPost,
+        request.HttpMethod() == HTTPNames::POST ? RequestMethod::kIsPost
+                                                : RequestMethod::kIsNotPost,
         request.IsConditional() ? RequestType::kIsConditional
                                 : RequestType::kIsNotConditional,
         ResourceType::kIsMainResource, MasterDocumentLoader()->LoadType());
