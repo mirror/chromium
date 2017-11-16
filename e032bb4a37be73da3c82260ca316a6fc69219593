@@ -2,6 +2,159 @@
   "comments": [
     {
       "key": {
+        "uuid": "6d807543_bd014dbe",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T18:31:49Z",
+      "side": 1,
+      "message": "This seems odd. The method name \"PlayEarcon\" and the header docs don\u0027t say anything about spoken feedback. See comment in mojom.",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d107262f_b53ed736",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T18:31:49Z",
+      "side": 1,
+      "message": "if (client_) is enough (operator bool() is the same as is_bound()).",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b25fe5d2_17b8d4ea",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T18:31:49Z",
+      "side": 1,
+      "message": "I don\u0027t think weak pointers are needed here. When |client_| is destroyed there won\u0027t be any more callbacks for mojo return values, so it\u0027s safe to use Unretained.\n\nThis behavior is not well documented, I had to ask yzshen@. There are some mojo docs here but they don\u0027t specifically address this issue. https://chromium.googlesource.com/chromium/src/+/master/mojo/public/cpp/bindings#Connection-Errors",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "223c10da_a6347d04",
+        "filename": "ash/public/interfaces/accessibility_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T18:31:49Z",
+      "side": 1,
+      "message": "nit: I would also mention here that the method exists because the browser owns all media playback.",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2451da06_4ff47259",
+        "filename": "ash/public/interfaces/accessibility_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T18:31:49Z",
+      "side": 1,
+      "message": "Passing PlaySoundOption here seems strange and confusing. I understand that media has to be owned by chrome, and ash can\u0027t play system sounds without large refactors. However, it seems like ash should only request a sound to be played when it actually needs to play. Is that dependent on ash learning whether spoken feedback is enabled?\n\nIdeas:\n1. Teach ash about spoken feedback first, before this CL, or\n2. Always tag sounds from ash, at the chrome layer, as being caused by spoken feedback, or\n3. Use the sound id to decide whether or not to always play the sound. It seems like PlaySoundOption::ALWAYS is used for SOUND_START, SOUND_SPOKEN_FEEDBACK_(ENABLED|DISABLED), and those sounds always use option ALWAYS. I suspect there\u0027s some other way that SOUND_START is skipped.\n\ndmazzoni, thoughts?",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62133b9_0cfc96ec",
+        "filename": "ash/public/interfaces/accessibility_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T18:31:49Z",
+      "side": 1,
+      "message": "super-nit: For mojoms you can just say \"Returns sound duration.\" since everything is returned by callback.",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c41ad35_2e0c99aa",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T18:31:49Z",
+      "side": 1,
+      "message": "nit: How about renaming to MaybePlayShutdownSound(), since it doesn\u0027t actually start timers anymore?",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d8f5358_6d670160",
+        "filename": "ash/wm/lock_state_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T18:31:49Z",
+      "side": 1,
+      "message": "nit: 0 ms looks a little odd. Can this be a non-zero number?",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a49f73f8_bdf57397",
+        "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T18:31:49Z",
+      "side": 1,
+      "message": "Is there any particular reason to move this function here instead of keeping it in AccessibilityManager?",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "083153b4_05a2f166",
         "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h",
         "patchSetId": 3
@@ -13,6 +166,24 @@
       "writtenOn": "2017-11-16T06:42:24Z",
       "side": 1,
       "message": "For these test coverages, I am not pretty clear how to test them. It sounds pretty trivial to me.\n\nHow about creating a DelegateForTests in this class?",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a47e36e_1c73e2fe",
+        "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T18:31:49Z",
+      "side": 1,
+      "message": "Anything is fine. I\u0027m also OK with doing last_sound_key_for_test_ like you did with last_a11y_alert.",
+      "parentUuid": "083153b4_05a2f166",
       "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
