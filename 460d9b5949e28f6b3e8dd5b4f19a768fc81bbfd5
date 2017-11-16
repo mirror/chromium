@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ab1f6fcf_f7c78861",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-16T22:52:58Z",
+      "side": 1,
+      "message": "nit: these DCHECKs are not necessary since it\u0027s implied on L208-9 that we depend on a layer existing.",
+      "range": {
+        "startLine": 206,
+        "startChar": 3,
+        "endLine": 207,
+        "endChar": 13
+      },
+      "revId": "460d9b5949e28f6b3e8dd5b4f19a768fc81bbfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50a91af5_f38d2f8f",
         "filename": "ash/message_center/message_center_button_bar.cc",
         "patchSetId": 4
@@ -36,6 +59,29 @@
     },
     {
       "key": {
+        "uuid": "83c93fe6_e66cd529",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-16T22:52:58Z",
+      "side": 1,
+      "message": "When I saw you were adding layers, I assumed you\u0027d be using them to animate. It seems like that will be simpler. What I mean is using a ScopedLayerAnimationSettings and then just setting the opacity on the appropriate layer and letting the animator handle the rest.",
+      "range": {
+        "startLine": 528,
+        "startChar": 24,
+        "endLine": 528,
+        "endChar": 43
+      },
+      "revId": "460d9b5949e28f6b3e8dd5b4f19a768fc81bbfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cfe6f801_ffaae54c",
         "filename": "ash/message_center/message_center_view.cc",
         "patchSetId": 4
@@ -47,6 +93,29 @@
       "writtenOn": "2017-11-16T20:09:13Z",
       "side": 1,
       "message": "It seems like we are putting too much awareness of the implementation of |button_bar_| in MessageCenterView. I think we might be better off just passing |progress| and |mode_| to button_bar_ so that it can handle any visibility / opacity changes.",
+      "revId": "460d9b5949e28f6b3e8dd5b4f19a768fc81bbfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac8a3fcd_201bb881",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-16T22:52:58Z",
+      "side": 1,
+      "message": "are both of these really necessary?",
+      "range": {
+        "startLine": 537,
+        "startChar": 0,
+        "endLine": 538,
+        "endChar": 11
+      },
       "revId": "460d9b5949e28f6b3e8dd5b4f19a768fc81bbfd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
