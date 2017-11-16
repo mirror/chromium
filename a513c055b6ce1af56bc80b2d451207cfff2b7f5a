@@ -480,6 +480,24 @@
     },
     {
       "key": {
+        "uuid": "f21745d2_b6c289fe",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-16T01:59:27Z",
+      "side": 1,
+      "message": "ACP is gone from JS now and I\u0027m expecting it may actually Just Work. Please take a look and see what you think.",
+      "parentUuid": "401c7ccc_b311583b",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "323853a8_dbe58a43",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 66
