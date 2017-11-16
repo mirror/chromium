@@ -433,6 +433,27 @@ ServiceWorkerProviderHost::MatchRegistration() const {
   return nullptr;
 }
 
+void ServiceWorkerProviderHost::AddServiceWorkerRegistrationObjectHost(
+    std::unique_ptr<ServiceWorkerRegistrationObjectHost> host) {
+  int64_t registration_id = host->registration()->id();
+  DCHECK(!base::ContainsKey(registration_object_hosts_, registration_id));
+  registration_object_hosts_[registration_id] = std::move(host);
+}
+
+void ServiceWorkerProviderHost::RemoveServiceWorkerRegistrationObjectHost(
+    ServiceWorkerRegistrationObjectHost* host) {
+  int64_t registration_id = host->registration()->id();
+  DCHECK(base::ContainsKey(registration_object_hosts_, registration_id));
+  registration_object_hosts_.erase(registration_id);
+}
+
+bool ServiceWorkerProviderHost::AllowServiceWorker(const GURL& scope) {
+  return GetContentClient()->browser()->AllowServiceWorker(
+      scope, topmost_frame_url(), dispatcher_host_->resource_context(),
+      base::Bind(&WebContentsImpl::FromRenderFrameHostID, render_process_id_,
+                 frame_id()));
+}
+
 void ServiceWorkerProviderHost::NotifyControllerLost() {
   SetControllerVersionAttribute(nullptr, true /* notify_controllerchange */);
 }
@@ -481,23 +502,6 @@ ServiceWorkerProviderHost::CreateRequestHandler(
         request_context_type, frame_type, body);
   }
   return std::unique_ptr<ServiceWorkerRequestHandler>();
-}
-
-blink::mojom::ServiceWorkerRegistrationObjectInfoPtr
-ServiceWorkerProviderHost::CreateServiceWorkerRegistrationObjectInfo(
-    ServiceWorkerRegistration* registration) {
-  DCHECK(dispatcher_host_);
-  ServiceWorkerRegistrationObjectHost* existing_host =
-      dispatcher_host_->FindServiceWorkerRegistrationObjectHost(
-          provider_id(), registration->id());
-  if (existing_host) {
-    return existing_host->CreateObjectInfo();
-  }
-  // ServiceWorkerRegistrationObjectHost ctor will register itself into
-  // |dispatcher_host_->registration_object_hosts_|.
-  auto* new_host = new ServiceWorkerRegistrationObjectHost(
-      context_, dispatcher_host_.get(), AsWeakPtr(), registration);
-  return new_host->CreateObjectInfo();
 }
 
 blink::mojom::ServiceWorkerObjectInfoPtr
@@ -1207,6 +1211,20 @@ void ServiceWorkerProviderHost::GetInterface(
           running_hosted_version_->script_origin(), render_process_id_));
 }
 
+blink::mojom::ServiceWorkerRegistrationObjectInfoPtr
+ServiceWorkerProviderHost::CreateServiceWorkerRegistrationObjectInfo(
+    ServiceWorkerRegistration* registration) {
+  auto existing_host = registration_object_hosts_.find(registration->id());
+  if (existing_host != registration_object_hosts_.end()) {
+    return existing_host->second->CreateObjectInfo();
+  }
+  // ServiceWorkerRegistrationObjectHost ctor will add itself into
+  // |registration_object_hosts_|.
+  auto* new_host = new ServiceWorkerRegistrationObjectHost(
+      context_, this, scoped_refptr<ServiceWorkerRegistration>(registration));
+  return new_host->CreateObjectInfo();
+}
+
 template <typename CallbackType, typename... Args>
 bool ServiceWorkerProviderHost::CanServeContainerHostMethods(
     CallbackType* callback,
@@ -1233,10 +1251,7 @@ bool ServiceWorkerProviderHost::CanServeContainerHostMethods(
     return false;
   }
 
-  if (!GetContentClient()->browser()->AllowServiceWorker(
-          scope, topmost_frame_url(), dispatcher_host_->resource_context(),
-          base::Bind(&WebContentsImpl::FromRenderFrameHostID,
-                     render_process_id_, frame_id()))) {
+  if (!AllowServiceWorker(scope)) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kDisabled,
         std::string(error_prefix) +
