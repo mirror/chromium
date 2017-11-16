@@ -60,6 +60,8 @@ const char MediaRouterMetrics::kHistogramUiFirstAction[] =
     "MediaRouter.Ui.FirstAction";
 const char MediaRouterMetrics::kHistogramPresentationUrlType[] =
     "MediaRouter.PresentationRequest.AvailabilityUrlType";
+const char MediaRouterMetrics::kHistogramWiredDisplaySinkCount[] =
+    "MediaRouter.WiredDisplay.SinkCount";
 
 // static
 void MediaRouterMetrics::RecordMediaRouterDialogOrigin(
@@ -108,12 +110,14 @@ void MediaRouterMetrics::RecordMediaRouterCastingSource(MediaCastMode source) {
   UMA_HISTOGRAM_SPARSE_SLOWLY(kHistogramMediaRouterCastingSource, source);
 }
 
+// static
 void MediaRouterMetrics::RecordMediaRouterFileFormat(
     const media::container_names::MediaContainerName format) {
   UMA_HISTOGRAM_ENUMERATION(kHistogramMediaRouterFileFormat, format,
                             media::container_names::CONTAINER_MAX);
 }
 
+// static
 void MediaRouterMetrics::RecordMediaRouterFileSize(int64_t size) {
   UMA_HISTOGRAM_MEMORY_LARGE_MB(kHistogramMediaRouterFileSize, size);
 }
@@ -133,6 +137,11 @@ void MediaRouterMetrics::RecordPresentationUrlType(const GURL& url) {
   PresentationUrlType type = GetPresentationUrlType(url);
   UMA_HISTOGRAM_ENUMERATION(kHistogramPresentationUrlType, type,
                             PresentationUrlType::kPresentationUrlTypeCount);
+}
+
+// static
+void MediaRouterMetrics::RecordWiredDisplaySinkCount(int count) {
+  UMA_HISTOGRAM_COUNTS_100(kHistogramWiredDisplaySinkCount, count);
 }
 
 }  // namespace media_router

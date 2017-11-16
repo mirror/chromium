@@ -89,6 +89,7 @@ class MediaRouterMetrics {
   static const char kHistogramUiDialogLoadedWithData[];
   static const char kHistogramUiFirstAction[];
   static const char kHistogramPresentationUrlType[];
+  static const char kHistogramWiredDisplaySinkCount[];
 
   // Records where the user clicked to open the Media Router dialog.
   static void RecordMediaRouterDialogOrigin(
@@ -129,6 +130,9 @@ class MediaRouterMetrics {
 
   // Records the type of Presentation URL used by a web page.
   static void RecordPresentationUrlType(const GURL& url);
+
+  // Records the number of local displays available as sinks.
+  static void RecordWiredDisplaySinkCount(int count);
 };
 
 }  // namespace media_router
