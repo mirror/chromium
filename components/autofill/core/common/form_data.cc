@@ -18,7 +18,7 @@ namespace autofill {
 
 namespace {
 
-const int kPickleVersion = 5;
+const int kPickleVersion = 6;
 
 bool ReadGURL(base::PickleIterator* iter, GURL* url) {
   std::string spec;
@@ -66,6 +66,7 @@ FormData::FormData(const FormData& data)
     : name(data.name),
       origin(data.origin),
       action(data.action),
+      root_origin(data.root_origin),
       is_form_tag(data.is_form_tag),
       is_formless_checkout(data.is_formless_checkout),
       fields(data.fields) {}
@@ -111,15 +112,16 @@ bool FormData::operator!=(const FormData& form) const {
 }
 
 bool FormData::operator<(const FormData& form) const {
-  return std::tie(name, origin, action, is_form_tag, is_formless_checkout,
-                  fields) < std::tie(form.name, form.origin, form.action,
-                                     form.is_form_tag,
-                                     form.is_formless_checkout, form.fields);
+  return std::tie(name, origin, action, root_origin, is_form_tag,
+                  is_formless_checkout, fields) <
+         std::tie(form.name, form.origin, form.action, form.root_origin,
+                  form.is_form_tag, form.is_formless_checkout, form.fields);
 }
 
 std::ostream& operator<<(std::ostream& os, const FormData& form) {
   os << base::UTF16ToUTF8(form.name) << " " << form.origin << " " << form.action
-     << " " << form.is_form_tag << " " << form.is_formless_checkout << " "
+     << " " << form.root_origin << " " << form.is_form_tag << " "
+     << form.is_formless_checkout << " "
      << "Fields:";
   for (size_t i = 0; i < form.fields.size(); ++i) {
     os << form.fields[i] << ",";
@@ -135,6 +137,7 @@ void SerializeFormData(const FormData& form_data, base::Pickle* pickle) {
   SerializeFormFieldDataVector(form_data.fields, pickle);
   pickle->WriteBool(form_data.is_form_tag);
   pickle->WriteBool(form_data.is_formless_checkout);
+  pickle->WriteString(form_data.root_origin.spec());
 }
 
 void SerializeFormDataToBase64String(const FormData& form_data,
@@ -193,6 +196,13 @@ bool DeserializeFormData(base::PickleIterator* iter, FormData* form_data) {
 
   if (version >= 5) {
     if (!iter->ReadBool(&temp_form_data.is_formless_checkout)) {
+      LogDeserializationError(version);
+      return false;
+    }
+  }
+
+  if (version >= 6) {
+    if (!ReadGURL(iter, &temp_form_data.root_origin)) {
       LogDeserializationError(version);
       return false;
     }
