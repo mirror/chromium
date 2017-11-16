@@ -16,6 +16,23 @@
       "revId": "b9ba0b6267dbd27da4e3c294a43838f43ea0a9f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ef927d_6a0d381d",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-16T01:03:20Z",
+      "side": 0,
+      "message": "I didn\u0027t split this to ShellSurface and ShellSurface base for now, but I can split this to ShellSurface, which only implements shell_surface, and ShellSurfaceBase, which provides common code for both Xdg and ClientControlled, if you prefer that way. LMK.",
+      "revId": "b9ba0b6267dbd27da4e3c294a43838f43ea0a9f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
