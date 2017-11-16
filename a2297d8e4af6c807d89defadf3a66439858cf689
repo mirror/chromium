@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6bc168a_745b5647",
+        "filename": "chrome/common/chrome_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-16T08:18:09Z",
+      "side": 1,
+      "message": "Optional nit: perhaps something clearer is making the flag --deny-permission-prompts? A lot of the other \"Disable\" flags explicitly turn something off, whereas this automatically denies any prompts which appear. I don\u0027t have strong feelings. :)",
+      "range": {
+        "startLine": 248,
+        "startChar": 42,
+        "endLine": 248,
+        "endChar": 49
+      },
+      "revId": "a2297d8e4af6c807d89defadf3a66439858cf689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
