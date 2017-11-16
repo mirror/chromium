@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b36f0b83_19b4e46a",
+        "filename": "ui/accessibility/ax_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-16T23:01:40Z",
+      "side": 1,
+      "message": "I think this helped in an intermediate version of this change, but don\u0027t make a difference now. Removing.",
+      "parentUuid": "ac1a5f0e_212ad2d1",
+      "revId": "7a2a41d8985a9eb68c2dcc8069bebd41ac46cb3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "948ad994_7d979d2f",
         "filename": "ui/accessibility/ax_tree.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-16T17:44:18Z",
       "side": 1,
       "message": "Do we only want to do this if clipped is empty?\n\nShouldn\u0027t we also do this if clipped is small and the\nelement is completely outside of its visible bounds?",
+      "revId": "7a2a41d8985a9eb68c2dcc8069bebd41ac46cb3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c4065bd_75a9e108",
+        "filename": "ui/accessibility/ax_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-16T23:01:40Z",
+      "side": 1,
+      "message": "I might be mis-understanding, but I think clipped is already the intersection of the element\u0027s bounds and its container. If clipped is small, the intersection is non-empty, the element is only partially offscreen. If that intersection is empty, the element is fully offscreen.",
+      "parentUuid": "948ad994_7d979d2f",
       "revId": "7a2a41d8985a9eb68c2dcc8069bebd41ac46cb3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
