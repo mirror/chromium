@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2404f1be_6d4e1b61",
+        "filename": "gin/isolate_holder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-16T07:03:08Z",
+      "side": 1,
+      "message": "I\u0027m proposing stopping passing nullptr to V8PerIsolateData\u0027s constructor (of course, it means that we need to look at the call site of V8PerIsolateData\u0027s constructor). Would it be hard?\n\nIn the first place it\u0027s not clear when it can be null.\n\nIf you want to land this CL shortly, you can address it in a follow-up CL.",
+      "parentUuid": "aee7093d_cc0ff9ba",
+      "revId": "e24f79e931850b9c61055dfa66489d48ec2e62bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35d46843_1c8245e3",
         "filename": "gin/isolate_holder.cc",
         "patchSetId": 5
