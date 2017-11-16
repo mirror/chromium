@@ -46,6 +46,30 @@
       "revId": "d0dc257d05cb10cea49c3446e97ba77316824b82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d04341f_9d33823c",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-16T19:20:20Z",
+      "side": 1,
+      "message": "What actually matters is the value the frame has when used outside of the decoder. It looks like the code paths that call the accelerator do not distinguish |coded_size| from |visible_rect|, and so they are almost certainly incorrect if the overall size is not a multiple of 8x8.\n\nIt\u0027s possible that the actual JPEG decoder still handles this correctly, automatically cropping before copying into the output buffer. This seems pretty inefficient though.",
+      "parentUuid": "14f67ee4_dc81ac1f",
+      "range": {
+        "startLine": 148,
+        "startChar": 16,
+        "endLine": 148,
+        "endChar": 26
+      },
+      "revId": "d0dc257d05cb10cea49c3446e97ba77316824b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
