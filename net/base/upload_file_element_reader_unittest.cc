@@ -12,23 +12,26 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/run_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "build/build_config.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
 #include "net/base/test_completion_callback.h"
 #include "net/test/gtest_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "testing/platform_test.h"
+
+#if defined(OS_MACOSX)
+#include "base/mac/scoped_nsautorelease_pool.h"
+#endif
 
 using net::test::IsError;
 using net::test::IsOk;
 
 namespace net {
 
-class UploadFileElementReaderTest : public PlatformTest {
+class UploadFileElementReaderTest : public testing::TestWithParam<bool> {
  protected:
   void SetUp() override {
-    PlatformTest::SetUp();
     // Some tests (*.ReadPartially) rely on bytes_.size() being even.
     const char kData[] = "123456789abcdefghi";
     bytes_.assign(kData, kData + arraysize(kData) - 1);
@@ -41,9 +44,9 @@ class UploadFileElementReaderTest : public PlatformTest {
         static_cast<int>(bytes_.size()),
         base::WriteFile(temp_file_path_, &bytes_[0], bytes_.size()));
 
-    reader_.reset(new UploadFileElementReader(
-        base::ThreadTaskRunnerHandle::Get().get(), temp_file_path_, 0,
-        std::numeric_limits<uint64_t>::max(), base::Time()));
+    reader_ =
+        CreateReader(0, std::numeric_limits<uint64_t>::max(), base::Time());
+
     TestCompletionCallback callback;
     ASSERT_THAT(reader_->Init(callback.callback()), IsError(ERR_IO_PENDING));
     EXPECT_THAT(callback.WaitForResult(), IsOk());
@@ -57,13 +60,46 @@ class UploadFileElementReaderTest : public PlatformTest {
     base::RunLoop().RunUntilIdle();
   }
 
+  std::unique_ptr<UploadFileElementReader> CreateReader(
+      int64_t offset,
+      int64_t length,
+      base::Time expected_modification_time) {
+    if (GetParam()) {
+      return std::make_unique<UploadFileElementReader>(
+          base::ThreadTaskRunnerHandle::Get().get(), temp_file_path_, offset,
+          length, expected_modification_time);
+    }
+
+    // The base::File::FLAG_SHARE_DELETE lets the file be deleted without the
+    // test fixture waiting on it to be closed.
+    int open_flags = base::File::FLAG_OPEN | base::File::FLAG_READ |
+                     base::File::FLAG_SHARE_DELETE;
+#if defined(OS_WIN)
+    // On Windows, file must be opened for asynchronous operation.
+    open_flags |= base::File::FLAG_ASYNC;
+#endif  // defined(OS_WIN)
+
+    base::File file(temp_file_path_, open_flags);
+    EXPECT_TRUE(file.IsValid());
+    return std::make_unique<UploadFileElementReader>(
+        base::ThreadTaskRunnerHandle::Get().get(), std::move(file),
+        // Use an incorrect path, to make sure that the file is never re-opened.
+        base::FilePath(FILE_PATH_LITERAL("this_should_be_ignored")), offset,
+        length, expected_modification_time);
+  }
+
+#if defined(OS_MACOSX)
+  // May be needed to avoid leaks on OSX.
+  base::mac::ScopedNSAutoreleasePool scoped_pool_;
+#endif
+
   std::vector<char> bytes_;
   std::unique_ptr<UploadElementReader> reader_;
   base::ScopedTempDir temp_dir_;
   base::FilePath temp_file_path_;
 };
 
-TEST_F(UploadFileElementReaderTest, ReadPartially) {
+TEST_P(UploadFileElementReaderTest, ReadPartially) {
   const size_t kHalfSize = bytes_.size() / 2;
   ASSERT_EQ(bytes_.size(), kHalfSize * 2);
   std::vector<char> buf(kHalfSize);
@@ -85,7 +121,7 @@ TEST_F(UploadFileElementReaderTest, ReadPartially) {
   EXPECT_EQ(std::vector<char>(bytes_.begin() + kHalfSize, bytes_.end()), buf);
 }
 
-TEST_F(UploadFileElementReaderTest, ReadAll) {
+TEST_P(UploadFileElementReaderTest, ReadAll) {
   std::vector<char> buf(bytes_.size());
   scoped_refptr<IOBuffer> wrapped_buffer = new WrappedIOBuffer(&buf[0]);
   TestCompletionCallback read_callback;
@@ -101,7 +137,7 @@ TEST_F(UploadFileElementReaderTest, ReadAll) {
                 wrapped_buffer.get(), buf.size(), read_callback.callback()));
 }
 
-TEST_F(UploadFileElementReaderTest, ReadTooMuch) {
+TEST_P(UploadFileElementReaderTest, ReadTooMuch) {
   const size_t kTooLargeSize = bytes_.size() * 2;
   std::vector<char> buf(kTooLargeSize);
   scoped_refptr<IOBuffer> wrapped_buffer = new WrappedIOBuffer(&buf[0]);
@@ -115,7 +151,7 @@ TEST_F(UploadFileElementReaderTest, ReadTooMuch) {
   EXPECT_EQ(bytes_, buf);
 }
 
-TEST_F(UploadFileElementReaderTest, MultipleInit) {
+TEST_P(UploadFileElementReaderTest, MultipleInit) {
   std::vector<char> buf(bytes_.size());
   scoped_refptr<IOBuffer> wrapped_buffer = new WrappedIOBuffer(&buf[0]);
 
@@ -145,7 +181,7 @@ TEST_F(UploadFileElementReaderTest, MultipleInit) {
   EXPECT_EQ(bytes_, buf);
 }
 
-TEST_F(UploadFileElementReaderTest, InitDuringAsyncOperation) {
+TEST_P(UploadFileElementReaderTest, InitDuringAsyncOperation) {
   std::vector<char> buf(bytes_.size());
   scoped_refptr<IOBuffer> wrapped_buffer = new WrappedIOBuffer(&buf[0]);
 
@@ -185,12 +221,10 @@ TEST_F(UploadFileElementReaderTest, InitDuringAsyncOperation) {
   EXPECT_FALSE(init_callback1.have_result());
 }
 
-TEST_F(UploadFileElementReaderTest, Range) {
+TEST_P(UploadFileElementReaderTest, Range) {
   const uint64_t kOffset = 2;
   const uint64_t kLength = bytes_.size() - kOffset * 3;
-  reader_.reset(new UploadFileElementReader(
-      base::ThreadTaskRunnerHandle::Get().get(), temp_file_path_, kOffset,
-      kLength, base::Time()));
+  reader_ = CreateReader(kOffset, kLength, base::Time());
   TestCompletionCallback init_callback;
   ASSERT_THAT(reader_->Init(init_callback.callback()), IsError(ERR_IO_PENDING));
   EXPECT_THAT(init_callback.WaitForResult(), IsOk());
@@ -208,43 +242,45 @@ TEST_F(UploadFileElementReaderTest, Range) {
   EXPECT_EQ(expected, buf);
 }
 
-TEST_F(UploadFileElementReaderTest, FileChanged) {
+TEST_P(UploadFileElementReaderTest, FileChanged) {
   base::File::Info info;
   ASSERT_TRUE(base::GetFileInfo(temp_file_path_, &info));
 
   // Expect one second before the actual modification time to simulate change.
   const base::Time expected_modification_time =
       info.last_modified - base::TimeDelta::FromSeconds(1);
-  reader_.reset(new UploadFileElementReader(
-      base::ThreadTaskRunnerHandle::Get().get(), temp_file_path_, 0,
-      std::numeric_limits<uint64_t>::max(), expected_modification_time));
+  reader_ = CreateReader(0, std::numeric_limits<uint64_t>::max(),
+                         expected_modification_time);
   TestCompletionCallback init_callback;
   ASSERT_THAT(reader_->Init(init_callback.callback()), IsError(ERR_IO_PENDING));
   EXPECT_THAT(init_callback.WaitForResult(), IsError(ERR_UPLOAD_FILE_CHANGED));
 }
 
-TEST_F(UploadFileElementReaderTest, InexactExpectedTimeStamp) {
+TEST_P(UploadFileElementReaderTest, InexactExpectedTimeStamp) {
   base::File::Info info;
   ASSERT_TRUE(base::GetFileInfo(temp_file_path_, &info));
 
   const base::Time expected_modification_time =
       info.last_modified - base::TimeDelta::FromMilliseconds(900);
-  reader_.reset(new UploadFileElementReader(
-      base::ThreadTaskRunnerHandle::Get().get(), temp_file_path_, 0,
-      std::numeric_limits<uint64_t>::max(), expected_modification_time));
+  reader_ = CreateReader(0, std::numeric_limits<uint64_t>::max(),
+                         expected_modification_time);
   TestCompletionCallback init_callback;
   ASSERT_THAT(reader_->Init(init_callback.callback()), IsError(ERR_IO_PENDING));
   EXPECT_THAT(init_callback.WaitForResult(), IsOk());
 }
 
-TEST_F(UploadFileElementReaderTest, WrongPath) {
+TEST_P(UploadFileElementReaderTest, WrongPath) {
   const base::FilePath wrong_path(FILE_PATH_LITERAL("wrong_path"));
-  reader_.reset(new UploadFileElementReader(
+  reader_ = std::make_unique<UploadFileElementReader>(
       base::ThreadTaskRunnerHandle::Get().get(), wrong_path, 0,
-      std::numeric_limits<uint64_t>::max(), base::Time()));
+      std::numeric_limits<uint64_t>::max(), base::Time());
   TestCompletionCallback init_callback;
   ASSERT_THAT(reader_->Init(init_callback.callback()), IsError(ERR_IO_PENDING));
   EXPECT_THAT(init_callback.WaitForResult(), IsError(ERR_FILE_NOT_FOUND));
 }
+
+INSTANTIATE_TEST_CASE_P(,
+                        UploadFileElementReaderTest,
+                        testing::ValuesIn({false, true}));
 
 }  // namespace net
