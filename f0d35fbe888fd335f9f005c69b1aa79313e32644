@@ -148,6 +148,30 @@
     },
     {
       "key": {
+        "uuid": "9320b9e6_6bc8928f",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-16T19:53:38Z",
+      "side": 1,
+      "message": "it ends up populating a set that\u0027s used here: https://cs.chromium.org/chromium/src/cc/resources/display_resource_provider.cc?rcl\u003d052b26853559e3e89e82fbc8184eb54e51159bea\u0026l\u003d41\n\nit goes through the overlay processer, if i remember, to fill in the set.\n\nAVDACodecImage::NotifyPromotionHint gets called as a result.",
+      "parentUuid": "5f49c416_53b122b6",
+      "range": {
+        "startLine": 316,
+        "startChar": 18,
+        "endLine": 316,
+        "endChar": 60
+      },
+      "revId": "f0d35fbe888fd335f9f005c69b1aa79313e32644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46b29612_861f28c8",
         "filename": "cc/resources/video_resource_updater.cc",
         "patchSetId": 6
