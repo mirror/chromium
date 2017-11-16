@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2e058830_b366b949",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7257,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-16T23:05:17Z",
+      "side": 1,
+      "message": "\u003e \u003e This is cool-- I didn\u0027t expect it to work, but it makes sense if we\u0027re calling RemoveChild for these frames as we navigate away.\n\u003e \n\u003e Same here :-)\n\u003e \n\u003e \u003e I suppose we do that for main frames as well?  Is it easy to add a test that FNEs for dynamic subframes go away on a main frame navigation?\n\u003e \n\u003e 1. We don\u0027t want to delete main frame\u0027s FNEs because main frame always gets an empty unique name (i.e. never gets a random unique name like dynamically created frames do).\n\u003e \n\u003e 2. I don\u0027t know what it would mean to delete FNE of a main frame.  Note that here we delete TreeNode and it seems weird (or impossible?) to delete the *root* TreeNode.\n\nSorry, I wasn\u0027t clear.  You\u0027re currently testing a case where a child frame navigates, and we remove all of the dynamic grandchildren.  I\u0027m curious about testing a case where the main frame navigates, and we remove all the dynamic children.",
+      "parentUuid": "15ea70f0_ebade0b6",
+      "revId": "53eae77c4077dcbcd63bfc8428933502de0d4d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4449474_56c4e267",
         "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
         "patchSetId": 8
