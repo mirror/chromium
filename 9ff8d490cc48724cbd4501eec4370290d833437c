@@ -262,6 +262,24 @@
       "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cbae725_a9abf351",
+        "filename": "content/renderer/pepper/pepper_plugin_instance_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-16T21:00:51Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m a little torn for 2 reasons:\n1. I\u0027ve seen simple data classes get helpers then get methods then eventually they are complicated with things that maybe belong elsewhere.\n2. I\u0027m not sure if the style guide says this is okay or not. \"but lack any functionality other than access/setting the data members\" maybe includes helpers that access data members, if you read it right. Regardless, I don\u0027t feel bad with a const helper here and can read that rule in the friendly way, except for #1..",
+      "parentUuid": "80e6e2e7_4cbb7d01",
+      "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
