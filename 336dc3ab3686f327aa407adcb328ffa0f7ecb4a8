@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2617e955_b0085a3a",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-16T20:05:35Z",
+      "side": 1,
+      "message": "nit: Rename to GetInsterstitial or GetInterstitialDelegate?\n\nGetDelegate sounds a bit too generic. GetInterstitial isn\u0027t exactly correct either, but is more descriptive.",
+      "revId": "336dc3ab3686f327aa407adcb328ffa0f7ecb4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d0de1d_f9eda8d2",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-16T20:05:35Z",
+      "side": 1,
+      "message": "EXPECT_TRUE instead? I think all callers are assuming this will be non-null anyways.",
+      "revId": "336dc3ab3686f327aa407adcb328ffa0f7ecb4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00c6caf0_16f56884",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-16T20:05:35Z",
+      "side": 1,
+      "message": "This isn\u0027t needed is it? There is a WebContents::IsShowingInterstitialPage already. Or is the idea to make this work with committed interstitials?",
+      "range": {
+        "startLine": 449,
+        "startChar": 37,
+        "endLine": 449,
+        "endChar": 0
+      },
+      "revId": "336dc3ab3686f327aa407adcb328ffa0f7ecb4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
