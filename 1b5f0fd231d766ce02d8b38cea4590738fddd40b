@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fdcf46fe_7efe8249",
+        "filename": "components/viz/service/display/output_surface.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-16T00:29:41Z",
+      "side": 1,
+      "message": "The intent was to prevent callers from accidentally passing by value since the struct is only used to temporarily cache latency infos. Maybe it was against style before or I\u0027m not looking for the right keywords, but I do not see where it is disallowed.\n\nAlthough not proof that it\u0027s okay, there are places in Chrome that take vectors as rvalue references: https://cs.chromium.org/search/?q\u003dstd::vector%3C.*%3E%26%26\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "2880c9d0_68e0cb5b",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4f175b7_a15d3f3d",
         "filename": "components/viz/service/display/output_surface.h",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d4794e8_181816b4",
+        "filename": "components/viz/service/display/output_surface.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-16T00:29:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d4f175b7_a15d3f3d",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "d226680c_060b7cac",
+        "filename": "components/viz/service/display_embedder/display_output_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-16T00:29:41Z",
+      "side": 1,
+      "message": "Good idea.",
+      "parentUuid": "b2929edd_726f492a",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a6bad71_1fc392b5",
         "filename": "components/viz/service/display_embedder/display_output_surface.h",
         "patchSetId": 11
@@ -81,6 +135,24 @@
       "writtenOn": "2017-11-15T23:39:53Z",
       "side": 1,
       "message": "Mac doesn\u0027t use PassThroughImageTransportSurface (ImageTransportSurfaceOverlayMac instead), I think it needs to handle the swap_id_ logic there too",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ba88e4_24535e8d",
+        "filename": "components/viz/service/display_embedder/display_output_surface.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-16T00:29:41Z",
+      "side": 1,
+      "message": "I totally missed that. You may have saved me hours of debugging. Wonder if this fixes the mac failures in the latest patch set.",
+      "parentUuid": "8a6bad71_1fc392b5",
       "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -149,6 +221,24 @@
       "writtenOn": "2017-11-15T23:39:53Z",
       "side": 1,
       "message": "Because this and l.1034 run on different threads without synchronization, this would be a data race. I think you want to pass a bool to this function, the same way you would have passed the LatencyInfo before.",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e53ebc88_273112cc",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-16T00:29:41Z",
+      "side": 1,
+      "message": "More hours of debugging saved. Will change to match how LatencyInfo was passed before.",
+      "parentUuid": "8cabe47b_77f75c62",
       "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
