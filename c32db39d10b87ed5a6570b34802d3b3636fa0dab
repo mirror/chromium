@@ -70,6 +70,30 @@
       "revId": "c32db39d10b87ed5a6570b34802d3b3636fa0dab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0c98c43_84e13bd8",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-16T19:05:00Z",
+      "side": 1,
+      "message": "I would suggest having the two different triggers each call their own method, but then having both of those methods call a common event handler. Or is that not what you\u0027re asking?",
+      "parentUuid": "0856e00e_15d50c1c",
+      "range": {
+        "startLine": 398,
+        "startChar": 19,
+        "endLine": 398,
+        "endChar": 26
+      },
+      "revId": "c32db39d10b87ed5a6570b34802d3b3636fa0dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
