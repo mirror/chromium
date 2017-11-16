@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f679265_da878ad9",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-16T02:05:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03534913_08c8b154",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "e7bfe982f2ea0ce0f73d3b1cdebef304c5c6f935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74c74b36_b61d51ae",
         "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "991aea5c_5f840430",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-16T02:05:19Z",
+      "side": 1,
+      "message": "No, it\u0027s a web-animations spec concept: https://w3c.github.io/web-animations/#dictdef-basecomputedkeyframe",
+      "parentUuid": "74c74b36_b61d51ae",
+      "range": {
+        "startLine": 370,
+        "startChar": 29,
+        "endLine": 370,
+        "endChar": 49
+      },
+      "revId": "e7bfe982f2ea0ce0f73d3b1cdebef304c5c6f935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "199260d6_2faa65f6",
         "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
         "patchSetId": 9
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "3eb9427c_6ff6d3eb",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-16T02:05:19Z",
+      "side": 1,
+      "message": "Sure, done. I wasn\u0027t initially sure if Keyframe had the necessary information (e.g. for including composite or not in the future) but I think it should.\n\nHappy to bikeshed on the name.",
+      "parentUuid": "199260d6_2faa65f6",
+      "revId": "e7bfe982f2ea0ce0f73d3b1cdebef304c5c6f935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e8209d7_e7ca758d",
         "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
         "patchSetId": 9
@@ -79,6 +145,24 @@
       "revId": "e7bfe982f2ea0ce0f73d3b1cdebef304c5c6f935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "966364da_1798e47b",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-16T02:05:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e8209d7_e7ca758d",
+      "revId": "e7bfe982f2ea0ce0f73d3b1cdebef304c5c6f935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
