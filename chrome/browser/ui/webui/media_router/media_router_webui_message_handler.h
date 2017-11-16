@@ -125,6 +125,7 @@ class MediaRouterWebUIMessageHandler : public content::WebUIMessageHandler {
   void OnSetCurrentMediaMute(const base::ListValue* args);
   void OnSetCurrentMediaVolume(const base::ListValue* args);
   void OnSetHangoutsLocalPresent(const base::ListValue* args);
+  void OnSetMediaRemotingEnabled(const base::ListValue* args);
 
   // Performs an action for an Issue of |type|.
   // |args| contains additional parameter that varies based on |type|.

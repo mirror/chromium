@@ -407,6 +407,11 @@ TEST_F(MediaRouterWebUIMessageHandlerTest, SetCastModesList) {
 }
 
 TEST_F(MediaRouterWebUIMessageHandlerTest, UpdateMediaRouteStatus) {
+  auto controller =
+      base::MakeRefCounted<MockMediaRouteController>("routeId", profile());
+  EXPECT_CALL(*mock_media_router_ui_, GetMediaRouteController())
+      .WillRepeatedly(Return(controller.get()));
+
   MediaStatus status;
   status.title = "test title";
   status.description = "test description";

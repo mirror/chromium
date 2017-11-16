@@ -10,6 +10,8 @@
 #include "chrome/browser/media/router/event_page_request_manager_factory.h"
 #include "chrome/browser/media/router/media_router.h"
 #include "chrome/browser/media/router/media_router_factory.h"
+#include "chrome/common/pref_names.h"
+#include "components/prefs/pref_service.h"
 
 namespace media_router {
 
@@ -200,6 +202,39 @@ void HangoutsMediaRouteController::OnMojoConnectionError() {
 
 void HangoutsMediaRouteController::InvalidateInternal() {
   mojo_hangouts_controller_.reset();
+}
+
+// static
+MirroringMediaRouteController* MirroringMediaRouteController::From(
+    MediaRouteController* controller) {
+  if (!controller || controller->GetType() != RouteControllerType::kMirroring)
+    return nullptr;
+
+  return static_cast<MirroringMediaRouteController*>(controller);
+}
+
+MirroringMediaRouteController::MirroringMediaRouteController(
+    const MediaRoute::Id& route_id,
+    content::BrowserContext* context)
+    : MediaRouteController(route_id, context) {}
+
+MirroringMediaRouteController::~MirroringMediaRouteController() {}
+
+RouteControllerType MirroringMediaRouteController::GetType() const {
+  return RouteControllerType::kMirroring;
+}
+
+bool MirroringMediaRouteController::GetMediaRemotingEnabled(
+    PrefService* pref_service) {
+  DCHECK(pref_service);
+  return pref_service->GetBoolean(prefs::kMediaRouterMediaRemotingEnabled);
+}
+
+void MirroringMediaRouteController::SetMediaRemotingEnabled(
+    bool enabled,
+    PrefService* pref_service) {
+  DCHECK(pref_service);
+  pref_service->SetBoolean(prefs::kMediaRouterMediaRemotingEnabled, enabled);
 }
 
 }  // namespace media_router

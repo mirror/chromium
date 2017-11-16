@@ -12,6 +12,9 @@
 #include "chrome/browser/media/router/media_router_factory.h"
 #include "chrome/browser/media/router/mock_media_router.h"
 #include "chrome/browser/media/router/mojo/media_router_mojo_test.h"
+#include "chrome/common/pref_names.h"
+#include "components/prefs/pref_registry_simple.h"
+#include "components/prefs/testing_pref_service.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -99,6 +102,16 @@ class HangoutsMediaRouteControllerTest : public MediaRouteControllerTest {
   scoped_refptr<MediaRouteController> CreateMediaRouteController() override {
     return base::MakeRefCounted<HangoutsMediaRouteController>(kRouteId,
                                                               &profile_);
+  }
+};
+
+class MirroringMediaRouteControllerTest : public MediaRouteControllerTest {
+ public:
+  ~MirroringMediaRouteControllerTest() override {}
+
+  scoped_refptr<MediaRouteController> CreateMediaRouteController() override {
+    return base::MakeRefCounted<MirroringMediaRouteController>(kRouteId,
+                                                               &profile_);
   }
 };
 
@@ -215,6 +228,19 @@ TEST_F(HangoutsMediaRouteControllerTest, HangoutsCommands) {
   hangouts_controller->SetLocalPresent(true);
 
   base::RunLoop().RunUntilIdle();
+}
+
+TEST_F(MirroringMediaRouteControllerTest, MirroringCommands) {
+  auto controller = GetController();
+  auto* mirroring_controller =
+      MirroringMediaRouteController::From(controller.get());
+
+  TestingPrefServiceSimple pref_service;
+  pref_service.registry()->RegisterBooleanPref(
+      prefs::kMediaRouterMediaRemotingEnabled, true);
+
+  mirroring_controller->SetMediaRemotingEnabled(false, &pref_service);
+  EXPECT_FALSE(mirroring_controller->GetMediaRemotingEnabled(&pref_service));
 }
 
 }  // namespace media_router
