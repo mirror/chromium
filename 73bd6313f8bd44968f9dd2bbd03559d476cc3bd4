@@ -16,6 +16,24 @@
       "revId": "73bd6313f8bd44968f9dd2bbd03559d476cc3bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1d19e76_5d942331",
+        "filename": "chrome/browser/resources/settings/site_settings/protocol_handlers.js",
+        "patchSetId": 20
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-16T00:22:58Z",
+      "side": 1,
+      "message": "TIL, thanks Steven, proposing fix here crrev.com/c/773479",
+      "parentUuid": "1f9a71ba_6b8e03a3",
+      "revId": "73bd6313f8bd44968f9dd2bbd03559d476cc3bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
