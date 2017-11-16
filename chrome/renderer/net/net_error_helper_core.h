@@ -109,7 +109,6 @@ class NetErrorHelperCore {
 
     // Inform that download button is being shown in the error page.
     virtual void SetIsShowingDownloadButton(bool show) = 0;
-
    protected:
     virtual ~Delegate() {}
   };
@@ -204,6 +203,8 @@ class NetErrorHelperCore {
   // have links with tracking IDs.  Duplicate requests from the same page with
   // the same tracking ID are ignored.
   void TrackClick(int tracking_id);
+
+  void LoadSettingsPage();
 
  private:
   struct ErrorPageInfo;

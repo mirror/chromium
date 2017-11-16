@@ -32,6 +32,9 @@ class NetErrorPageController : public gin::Wrappable<NetErrorPageController> {
     // Called when a link with the given tracking ID is pressed.
     virtual void TrackClick(int tracking_id) = 0;
 
+    // Load the settings page.
+    virtual void LoadSettingsPage() = 0;
+
    protected:
     Delegate();
     virtual ~Delegate();
@@ -77,6 +80,9 @@ class NetErrorPageController : public gin::Wrappable<NetErrorPageController> {
 
   // Used internally by other button click methods.
   bool ButtonClick(NetErrorHelperCore::Button button);
+
+  // Execute a "Load settings page" link click.
+  bool LoadSettingsPage();
 
   // gin::WrappableBase
   gin::ObjectTemplateBuilder GetObjectTemplateBuilder(

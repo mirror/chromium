@@ -149,6 +149,10 @@ void NetErrorHelper::TrackClick(int tracking_id) {
   core_->TrackClick(tracking_id);
 }
 
+void NetErrorHelper::LoadSettingsPage() {
+  core_->LoadSettingsPage();
+}
+
 void NetErrorHelper::DidStartProvisionalLoad(
     blink::WebDocumentLoader* document_loader) {
   core_->OnStartLoad(GetFrameType(render_frame()),

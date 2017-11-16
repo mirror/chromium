@@ -27,6 +27,8 @@
 #include "base/strings/string_util.h"
 #include "base/values.h"
 #include "build/build_config.h"
+// #include "chrome/browser/profiles/profile_manager.h"
+// #include "chrome/browser/ui/chrome_pages.h"
 #include "components/error_page/common/error_page_params.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/url_formatter/url_formatter.h"
@@ -46,6 +48,8 @@ const int kWebSearchQueryUMAId = 100;
 
 // Number of URL correction suggestions to display.
 const int kMaxUrlCorrectionsToDisplay = 1;
+
+const char kNetworkSettingsPage[] = "storage";
 
 struct CorrectionTypeToResourceTable {
   int resource_id;
@@ -404,7 +408,6 @@ void TrackClickUMA(std::string type_id) {
     }
   }
 }
-
 }  // namespace
 
 struct NetErrorHelperCore::ErrorPageInfo {
@@ -1034,3 +1037,10 @@ void NetErrorHelperCore::TrackClick(int tracking_id) {
       committed_error_page_info_->navigation_correction_params->url,
       request_body);
 }
+
+void NetErrorHelperCore::LoadSettingsPage() {
+  chrome::ShowSettingsSubPageForProfile(ProfileManager::GetActiveUserProfile(),
+      kNetworkSettingsPage);
+}
+
+

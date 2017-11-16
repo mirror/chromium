@@ -56,6 +56,7 @@ class NetErrorHelper
   // NetErrorPageController::Delegate implementation
   void ButtonPressed(NetErrorHelperCore::Button button) override;
   void TrackClick(int tracking_id) override;
+  void LoadSettingsPage() override;
 
   // RenderFrameObserver implementation.
   void DidStartProvisionalLoad(blink::WebDocumentLoader* loader) override;

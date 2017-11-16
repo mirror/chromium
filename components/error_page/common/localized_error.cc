@@ -733,6 +733,11 @@ void GetSuggestionsSummaryList(int error_code,
     AddSingleEntryDictionaryToList(suggestions_summary_list, "summary",
         IDS_ERRORPAGES_SUGGESTION_CHECK_WIFI_SUMMARY, false);
 #endif
+
+#if defined(OS_CHROMEOS) || defined(OS_LINUX)
+    AddSingleEntryDictionaryToList(suggestions_summary_list, "summary",
+        IDS_ERRORPAGES_SUGGESTION_CONNECTING_MOBILE_DATA_SUMMARY, false);
+#endif
   }
 
 // If the current platform has a directly accesible network diagnostics tool and

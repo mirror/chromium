@@ -83,6 +83,12 @@ bool NetErrorPageController::ButtonClick(NetErrorHelperCore::Button button) {
   return true;
 }
 
+bool NetErrorPageController::LoadSettingsPage() {
+  if (delegate_)
+    delegate_->LoadSettingsPage();
+  return false;
+}
+
 NetErrorPageController::NetErrorPageController(base::WeakPtr<Delegate> delegate)
     : delegate_(delegate) {
 }
@@ -106,5 +112,6 @@ gin::ObjectTemplateBuilder NetErrorPageController::GetObjectTemplateBuilder(
       .SetMethod("trackClick", &NetErrorPageController::TrackClick)
       .SetMethod("trackEasterEgg", &NetErrorPageController::TrackEasterEgg)
       .SetMethod("trackCachedCopyButtonClick",
-                 &NetErrorPageController::TrackCachedCopyButtonClick);
+                 &NetErrorPageController::TrackCachedCopyButtonClick)
+      .SetMethod("loadSettingsPage", &NetErrorPageController::LoadSettingsPage);
 }

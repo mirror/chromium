@@ -310,8 +310,11 @@
   <message name="IDS_ERRORPAGES_SUGGESTION_CHECK_WIFI_SUMMARY" desc="The message displayed in a list of suggestions following a network error suggesting to the user to reconnect to Wi-Fi. The suggestions list is prefixed with 'Try:'.">
     Reconnecting to Wi-Fi
   </message>
+  <message name="IDS_ERRORPAGES_SUGGESTION_CONNECTING_MOBILE_DATA_SUMMARY" desc="The message displayed in a list of suggestions following a network error suggesting to the user to get their connection via a mobile device. The suggestions list is prefixed with 'Try:'.">
+    <ph name="BEGIN_LINK">&lt;a href="#" onclick="javascript:loadSettingsPage()" &gt;</ph>Connecting to mobile data through your phone<ph name="END_LINK">&lt;/a&gt;<ex>&lt;/a&gt;</ex></ph>
+  </message>
   <message name="IDS_ERRORPAGES_SUGGESTION_DIAGNOSE_CONNECTION_SUMMARY" desc="The message displayed asking the user to check their network connection using the diagnostics tool.">
-    Fix your connection using the <ph name="BEGIN_LINK">&lt;a  href="#buttons" onclick="javascript:diagnoseErrors()"&gt;</ph>diagnostics app<ph name="END_LINK">&lt;/a&gt;<ex>&lt;/a&gt;</ex></ph>
+    Fix your connection using the <ph name="BEGIN_LINK">&lt;a href="#buttons" onclick="javascript:diagnoseErrors()"&gt;</ph>diagnostics app<ph name="END_LINK">&lt;/a&gt;<ex>&lt;/a&gt;</ex></ph>
   </message>
   <message name="IDS_ERRORPAGES_SUGGESTION_COMPLETE_SETUP_SUMMARY" desc="The message displayed asking the user to sign out and complete their device setup.">
     Sign out and complete setup

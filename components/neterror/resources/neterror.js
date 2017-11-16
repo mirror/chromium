@@ -114,6 +114,12 @@ function showSavedCopyButtonClick() {
   }
 }
 
+function loadSettingsPage() {
+  if (window.errorPageController) {
+    errorPageController.loadSettingsPage();
+  }
+}
+
 function downloadButtonClick() {
   if (window.errorPageController) {
     errorPageController.downloadButtonClick();
