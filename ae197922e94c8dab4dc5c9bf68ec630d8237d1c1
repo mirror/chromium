@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d68c323d_e2252f55",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-16T21:48:34Z",
+      "side": 1,
+      "message": "Rather than call this from Writers, it seems like we could just remove the InWriters() check in WriteModeTransactionAboutToBecomeReader(). WDYT?",
+      "range": {
+        "startLine": 559,
+        "startChar": 6,
+        "endLine": 559,
+        "endChar": 62
+      },
+      "revId": "ae197922e94c8dab4dc5c9bf68ec630d8237d1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
