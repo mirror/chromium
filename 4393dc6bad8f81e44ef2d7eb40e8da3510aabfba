@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79e7d65d_e27d81f2",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-16T19:57:39Z",
+      "side": 1,
+      "message": "missing desc and wrong variable name",
+      "range": {
+        "startLine": 75,
+        "startChar": 34,
+        "endLine": 75,
+        "endChar": 54
+      },
+      "revId": "4393dc6bad8f81e44ef2d7eb40e8da3510aabfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89aa6544_a02b9d73",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-16T19:57:39Z",
+      "side": 1,
+      "message": "I\u0027d name this and everything else related (enum class, etc.) \"worker environment type\" because it\u0027s not the environment per se (that comes later), it\u0027s the requested environment type",
+      "range": {
+        "startLine": 245,
+        "startChar": 20,
+        "endLine": 245,
+        "endChar": 39
+      },
+      "revId": "4393dc6bad8f81e44ef2d7eb40e8da3510aabfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c47bbb0d_bf896df0",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-16T19:57:39Z",
+      "side": 1,
+      "message": "Why override if only calling parent impl? SetUp/TearDown() should be in the public section",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 0
+      },
+      "revId": "4393dc6bad8f81e44ef2d7eb40e8da3510aabfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
