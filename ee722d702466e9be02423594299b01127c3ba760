@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4685c3b5_ca4a51d7",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-16T21:23:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29d6c272_aa64dad7",
+      "range": {
+        "startLine": 77,
+        "startChar": 19,
+        "endLine": 77,
+        "endChar": 20
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f804e862_5abb1d16",
         "filename": "net/base/upload_file_element_reader.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "ee722d702466e9be02423594299b01127c3ba760",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2362777_71789d67",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-16T21:23:28Z",
+      "side": 1,
+      "message": "These aren\u0027t mutually exclusive - the body of the previous if affects the value this one checks. I\u0027ve added a blank line to try to make that clearer.",
+      "parentUuid": "f804e862_5abb1d16",
+      "range": {
+        "startLine": 119,
+        "startChar": 4,
+        "endLine": 119,
+        "endChar": 21
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d7d1acdb_54376af4",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-16T21:23:28Z",
+      "side": 1,
+      "message": "Done.  I\u0027m not convinced this really improves anything, but may be missing something (And don\u0027t have a strong preference for the old approach).",
+      "parentUuid": "5f254c26_02d3200d",
+      "range": {
+        "startLine": 131,
+        "startChar": 28,
+        "endLine": 131,
+        "endChar": 41
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65d58c0c_1dd87ab0",
         "filename": "net/base/upload_file_element_reader.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-16T19:32:26Z",
       "side": 1,
       "message": "Not resetting the file stream on re-Init() strikes me as a pretty large change in behavior from the old path, though it\u0027s clearly more inline with the expected sandboxed usage.  Do you have a sense as to how many consumers take the re-initialization path?  What exploration did you do to conclude that rewinding is as good for those consumers?",
+      "range": {
+        "startLine": 189,
+        "startChar": 17,
+        "endLine": 189,
+        "endChar": 19
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c720ed0c_63fdae04",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-16T21:23:28Z",
+      "side": 1,
+      "message": "So this changes relevant things, I believe:\n\n1)  When passed a File, we do a seek instead of an open (But the consumer still had to call open at some point).  So the new path has an extra seek.  I\u0027m not too concerned with this, though we we are concerned about perf, we can combine seek + get info into a single post task, which would still theoretically be more expensive than the old behavior.  We could also get rid of the first seek, I suppose, and rely on it already being at the start of the file.  That makes me nervous - not concerned about attackers so much as bugs.  If we did that, though, we\u0027d have the same number of operations in the non-re-Init case.\n\n2)  When interrupted with an open file, we wait for the previous operation to complete.  This only happens on network errors when reusing sockets.  I think this is sufficiently obscure that we don\u0027t care.\n\n3)  When we complete and re-send a request (due to redirects), we do a seek instead of a close + open.  I think this is almost certainly a perf improvement, though I\u0027m not really too concerned about perf on sites that want us to upload the same data multiple times.\n\nThere may be some more minor things, like we keep the FileContext around on completion and destroy it later, but I consider those not really worth thinking about.\n\nSo, in summary, I\u0027m fine with any perf changes, even ignoring consumers.  If 1) is a problem, we can work around it, and 3) is likely an improvement, or at least neutral.  2) is the only perf regression we have no choice about.  We could also make perf more competitive in 2) and 3) by reusing the file info between retries.\n\n\n\nThat having been said, let\u0027s look at consumers.  This class itself is only used for HttpNetworkTransaction.  To the extent of my knowledge, that only leaves us Cronet and Chrome.\n\nWith Chrome, we\u0027re sandboxed on desktop, so there\u0027s really no choice, unless we want to push back on the sandbox.\n\nI don\u0027t think we want to have different usage patterns on Chrome for Android, since the consumer code is the same, and the changes would need to affect blob code as well.\n\nCronet on Android uses its own magic (Due to the file behavior, it reads the files in Java), so doesn\u0027t use this file.\n\nSo that leaves only iOS (Cronet and Chrome).  We could keep the old logic in an iOS specific class, but even if there were a benefit, I think the cases where it may make a difference are just too obscure to warrant iOS-only code.\n\nI suppose there may also be consumers of the C++ API on Android.",
+      "parentUuid": "65d58c0c_1dd87ab0",
       "range": {
         "startLine": 189,
         "startChar": 17,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "5fa9c042_8504cb47",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-16T21:23:28Z",
+      "side": 1,
+      "message": "Done.  I don\u0027t have a strong opinion.  The old behavior was mostly because it made Init() simpler (Which set the next_tate_ to OPEN in two paces)",
+      "parentUuid": "29898e7d_dfc2dc33",
+      "range": {
+        "startLine": 191,
+        "startChar": 6,
+        "endLine": 191,
+        "endChar": 18
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ed88d1f_4d54d73b",
         "filename": "net/base/upload_file_element_reader.cc",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-16T19:32:26Z",
       "side": 1,
       "message": "Huh.  No state representing the fact that the object is in error and the only valid thing to do with it is reset?  Doesn\u0027t this mean that Read() will think it should succeed and fall over when it tries to use the file stream?  (Because the default set in the DoLoop() is the IDLE state.)",
+      "range": {
+        "startLine": 209,
+        "startChar": 15,
+        "endLine": 209,
+        "endChar": 16
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "814bdda6_6c6025b8",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-16T21:23:28Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment.  file_stream_ is reset here (So Read() will crash with a null deref) and we return an error to the caller.  The old code also had no DCHECK if the consumer called Read unexpectedly.  I added a DCHECK(file_stream_) in Read, but I consider it more a comment-DCHECK, since we\u0027ll crash on the file_stream_-\u003eRead call, anyways.\n\nOr did you have something else in mind?",
+      "parentUuid": "5ed88d1f_4d54d73b",
       "range": {
         "startLine": 209,
         "startChar": 15,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "64c9e405_ee5552c2",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-16T21:23:28Z",
+      "side": 1,
+      "message": "They\u0027re allowed and quite heavily used.  If you look at https://chromium-cpp.appspot.com/, it\u0027s only capturing lambdas that shouldn\u0027t be bound for use beyond the lifetime of the current stack frame.\n\nThis is mostly a lambda because I don\u0027t like having DoFoo and OnFooComplete methods that don\u0027t quite match.  I didn\u0027t do that for OnGetFileInfoCompleted because it\u0027s more complicated.\n\nI\u0027m keeping as-is, since the question was about if it\u0027s allowed, however, if you feel adding a method makes for cleaner code, I\u0027ll switch.",
+      "parentUuid": "1b8ecc73_327e6340",
+      "range": {
+        "startLine": 229,
+        "startChar": 27,
+        "endLine": 229,
+        "endChar": 50
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5ba1b0c_f65459d5",
         "filename": "net/base/upload_file_element_reader.cc",
         "patchSetId": 3
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "0964bffa_acaa11d7",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-16T21:23:28Z",
+      "side": 1,
+      "message": "Done.  Wow.  Thanks!  I though Reset() was public.  UploadDataStream\u0027s Reset() method is, but it turns out UploadDataStream releases its weak ptrs, rather than calling into the objects it owns.",
+      "parentUuid": "f5ba1b0c_f65459d5",
+      "range": {
+        "startLine": 274,
+        "startChar": 9,
+        "endLine": 274,
+        "endChar": 10
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba444d92_48bce3dc",
         "filename": "net/base/upload_file_element_reader.cc",
         "patchSetId": 3
@@ -197,6 +389,30 @@
       "writtenOn": "2017-11-16T19:32:26Z",
       "side": 1,
       "message": "My preference would be to store file_info in a member data variable and do all of this state management in DoGetFileInfoComplete; I think it keeps the process of understanding the state diagram cleaner.  If the states been unilaterally set to OPEN by a Reset/Init, there might be problems, but I think everything just works because all the information is dropped on the floor?  (Up to you--I think it\u0027s quite possible reading this CL that you and I have different aesthetics around the DoLoop() idiom, possibly due to my extensive reviewing of the cache CLs :-}.)",
+      "range": {
+        "startLine": 279,
+        "startChar": 30,
+        "endLine": 279,
+        "endChar": 52
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f011407_70f94863",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-16T21:23:28Z",
+      "side": 1,
+      "message": "I don\u0027t think that works.\n\nThe UploadFileElementReader can be deleted at any time - including while the FileStream::Context is getting metadata off thread.\n\nI decided it was simpler just to keep the current ownership model here as before this CL.  The only other reasonable option that occurs to me would be to make the FileStream take a different callback type.  The works, but requires reworking FileStream::Context (Or using the same pattering in FileStream::Context::GetFileInfo), since OnAsyncComplete requires a CompletionCallback.",
+      "parentUuid": "ba444d92_48bce3dc",
       "range": {
         "startLine": 279,
         "startChar": 30,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "6b743334_27557753",
+        "filename": "net/base/upload_file_element_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-16T21:23:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb6dab62_f3ad5986",
+      "range": {
+        "startLine": 34,
+        "startChar": 30,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4d1838e_c0b9f1ad",
         "filename": "net/base/upload_file_element_reader.h",
         "patchSetId": 3
@@ -252,6 +492,30 @@
       "revId": "ee722d702466e9be02423594299b01127c3ba760",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df60bf68_82e1eb8c",
+        "filename": "net/base/upload_file_element_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-16T21:23:28Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e4d1838e_c0b9f1ad",
+      "range": {
+        "startLine": 38,
+        "startChar": 13,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "1c86a9d3_a29293bf",
+        "filename": "net/base/upload_file_element_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-16T21:23:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c0e9dca_a2d24c66",
+      "range": {
+        "startLine": 94,
+        "startChar": 51,
+        "endLine": 94,
+        "endChar": 55
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4efa8dee_11f64a3b",
         "filename": "net/base/upload_file_element_reader.h",
         "patchSetId": 3
@@ -298,6 +586,30 @@
       "revId": "ee722d702466e9be02423594299b01127c3ba760",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a87784_ad5bf7d4",
+        "filename": "net/base/upload_file_element_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-16T21:23:28Z",
+      "side": 1,
+      "message": "Removed.  It\u0027s also incorrect.  :)",
+      "parentUuid": "4efa8dee_11f64a3b",
+      "range": {
+        "startLine": 115,
+        "startChar": 19,
+        "endLine": 115,
+        "endChar": 22
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
