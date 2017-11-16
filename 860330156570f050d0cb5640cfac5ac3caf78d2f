@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "21478243_7405cebd",
+        "filename": "chrome/browser/resources/discards/discards.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T22:15:37Z",
+      "side": 1,
+      "message": "See https://cs.chromium.org/chromium/src/ui/webui/resources/js/action_link.js?l\u003d26,36.",
+      "parentUuid": "909cd541_6dee9976",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e16f5681_b48a6157",
         "filename": "chrome/browser/resources/discards/discards.html",
         "patchSetId": 5
@@ -148,6 +166,24 @@
       "side": 1,
       "message": "I\u0027m planning on adding other tables to this UX, so the compound selectors would be less obvious.\n\nI also find it counter-intuitive that there\u0027s a preference for navigating to the element, as this creates an implicit dependency between the document structure and the code. Don\u0027t ids decouple this?",
       "parentUuid": "e16f5681_b48a6157",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4880acd1_e49ebbb5",
+        "filename": "chrome/browser/resources/discards/discards.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T22:15:37Z",
+      "side": 1,
+      "message": "There are two extreme approaches defining the spectrum:\n1) Use IDs for everything.\n2) Use as few IDs as possible and use compound selectors, no matter how deep/complicated they get.\n\nAs said these are extremes. The styleguide does not mandate one way or the other, so it is up to your discretion to choose where to lie in this spectrum. From my own experience, 1 leads to cluttered HTML code, 2 leads to more burden on the future reader, and somewhere in between there is a good trade-off.",
+      "parentUuid": "9c5fb7dd_bc99f9fd",
       "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,254 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb506f5e_566d0156",
+        "filename": "chrome/browser/resources/discards/discards.css",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T22:15:37Z",
+      "side": 1,
+      "message": "Nit: Unify identical styles as follows:\n\ntable td.boolean-cell,\ntable td.discard-count-cell {\n  text-align: center;\n}\n\ntable td div.is-auto-discardable-link,\ntable td.discard-links-cell {\n  font-size: 0.6rem;\n}",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6409c6e2_13bc2a8f",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T22:15:37Z",
+      "side": 1,
+      "message": "Semicolon missing. This should already be caught by a PRESUBMIT script, so a bit surprised if it did not.",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa86e62_b94ac70e",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T22:15:37Z",
+      "side": 1,
+      "message": "Per styleguide this should be UPDATE_INTERVAL_MS, see https://google.github.io/styleguide/jsguide.html#naming-constant-names. (note that not all const variables need to follow this naming, but some do).",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd0e8f3b_f0a7294e",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T22:15:37Z",
+      "side": 1,
+      "message": "Current naming is a bit reverse, no? I would expect\nSECONDS_IN_MINUTE \u003d 60;\nMINUTES_IN_HOUR \u003d 60;   \nSECONDS_IN_HOUR \u003d ...;\nSECONDS_IN_DAY \u003d ...\n\nand in general X_IN_Y denoting how many X units in 1 Y unit.\n\nNit(optional): Perhaps move consts to the outer scope, so that they don\u0027t have to be re-declared every time this function is called.",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75829efe_e2ab1c4a",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T22:15:37Z",
+      "side": 1,
+      "message": "toFixed() returns a string. So here we are comparing a string to a number. I don\u0027t think this produces the correct result, does it? Here and elsewhere.\n\nIf you just want to drop the decimal part of a number, you can do either Math.round() or Math.trunc().",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22501df6_25f2c4db",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T22:15:37Z",
+      "side": 1,
+      "message": "parseInt(foo, 10). It is good practice to always provide the 2nd parameter, per suggestion at https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt#Parameters.",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea2b166b_63e7d99b",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T22:15:37Z",
+      "side": 1,
+      "message": "Re-using the |row| variable for three different objects is a bit confusing. Can you modify as follows?\n\nlet template \u003d $(\u0027tab-discard-info-row\u0027);\nlet content \u003d document.importNode(row.content, true);\nlet row \u003d content.querySelector(\u0027tr\u0027);",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03bff8a4_b224a81b",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T22:15:37Z",
+      "side": 1,
+      "message": "See question at line 419 about this.",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a482391_e52f6026",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T22:15:37Z",
+      "side": 1,
+      "message": "|response| not used. You can simply do the following:\n\nuiHandler.setAutoDiscardable(info.id,!info.isAutoDiscardable)\n  .then(stableUpdateTabDiscardsInfoTable).",
+      "range": {
+        "startLine": 216,
+        "startChar": 17,
+        "endLine": 216,
+        "endChar": 25
+      },
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35aefb10_4df05046",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T22:15:37Z",
+      "side": 1,
+      "message": "See question at line 419 about this.",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3a42ac_b66e72a3",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T22:15:37Z",
+      "side": 1,
+      "message": "Semicolon missing.",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29a91053_948525a5",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T22:15:37Z",
+      "side": 1,
+      "message": "Nit: In some cases for..of can be used, which is easier (no need to manipulate the counter).\nfor (let header of headers) {\n..\n}",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5518303b_a235a072",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T22:15:37Z",
+      "side": 1,
+      "message": "Why is this necessary? It should not be possible to invoke this listener when disabled, because of this line https://cs.chromium.org/chromium/src/ui/webui/resources/css/action_link.css?q\u003daction_link.css\u0026dr\u0026l\u003d23. Are you sure that action-link\u0027s style rules are applied properly to those elements?",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16138f90_5e8a495d",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T22:15:37Z",
+      "side": 1,
+      "message": "|response| is not being used, can omit.",
+      "range": {
+        "startLine": 423,
+        "startChar": 38,
+        "endLine": 423,
+        "endChar": 46
+      },
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
