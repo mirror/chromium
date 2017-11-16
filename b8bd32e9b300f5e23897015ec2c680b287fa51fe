@@ -1,0 +1,310 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21b3ebc7_0bf0edc0",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T21:26:56Z",
+      "side": 1,
+      "message": "What happens to old logs, especially between browser sessions?\n\nWill the size of files grow indefinitely, increasing the disk footprint of chrome by the number of webrtc sessions?\nDo we need to add cleanup logic outside of WebRtc logging to take care of this? This is what we had to do for certificate caching. Code which I happily removed when we removed the caching.",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e14b990_42bf9814",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T21:26:56Z",
+      "side": 1,
+      "message": "Since by design the destructor should never run, only the singleton should be used, these should not be public.\n\nIf they are public and usable, using these would expose a race between destructor and tasks in-flight, most easily avoided by making this class ref-counted, as PostTask would then protect it from destruction. Not needed if these are made private/protected.",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86eeed68_66e43329",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T21:26:56Z",
+      "side": 1,
+      "message": "nit: Prefer explicit constructor to {}. Up to you since it\u0027s private.",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085beba2_a0124959",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T21:26:56Z",
+      "side": 1,
+      "message": "nit: I suggest calling these \"...OnFileThread\". Up to you.",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c78176a_3728fcac",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T21:26:56Z",
+      "side": 1,
+      "message": "nit: base::MakeUnique",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f5e1ddc_9038daec",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T21:26:56Z",
+      "side": 1,
+      "message": "Prefer constants in unittests to make them more deterministic and to avoid bugs leading to every test run producing new files, unless we are SURE they are deleted because of \"temp directory\".",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccc8974a_5e7e4685",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T21:26:56Z",
+      "side": 1,
+      "message": "Is this really needed when when CreateNewTempDirectory is used? (I\u0027ve never used temporary files so I\u0027m asking.)\n\nIf there is a risk of files not being deleted - including due to test crash and this never running - subsequent tests would fail, i.e. the ones checking that the directory is empty at the end of the test.\n\nDo we need to delete the directory at the beginning of each test or is clearing it handled for us by CreateNewTempDirectory?",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94cd8aa_1f12bfd5",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T21:26:56Z",
+      "side": 1,
+      "message": "nit: Does a name for what this is used for like WaitForCallback or WaitForReply make more sense?",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e9e651_443ab51c",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T21:26:56Z",
+      "side": 1,
+      "message": "nit: ... and if so, OnCallback / OnReply?",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fbaf963_115a5efd",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T21:26:56Z",
+      "side": 1,
+      "message": ":D",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6ce912b_67e806ef",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T21:26:56Z",
+      "side": 1,
+      "message": "Edge cases are usually more useful due to common \"off by one\" bugs, how about making file_size_limit \u003d log.length() - 1?",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433199c3_748d1b92",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T21:26:56Z",
+      "side": 1,
+      "message": "I don\u0027t think a test is needed for \"writing a lot\" and slows down the bots, I think it is enough to make sure that you can create with unlimited size argument and that write works like in the LocalLogCreateAndWriteToFile case.",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c1aaf55_d3015d85",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T21:26:56Z",
+      "side": 1,
+      "message": "nit: Keep it if you wish, but I\u0027d be fine with deleting it.",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd03aef_d7a666db",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T21:26:56Z",
+      "side": 1,
+      "message": "If the operation reports success true/false, I would shorten the test to start/stop being successful and not care about writing to it.",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0e689d_bd2dd14b",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T21:26:56Z",
+      "side": 1,
+      "message": "nit: Prefer std::vector to arraysize (initializer list still works).",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9ca6b0_2f70edf7",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T21:26:56Z",
+      "side": 1,
+      "message": "Can we add test(s) that make sure it chooses the file paths we expect?\n\nCan we add test(s) that make sure we can start logging without ever stop logging? If only to make sure we don\u0027t crash or create problems for subsequent runs of the tests (another reason to have deterministic clock so that same file names are used in the future).",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c389c3b_ca2d9011",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T21:26:56Z",
+      "side": 1,
+      "message": "Don\u0027t worry about it :) with LocalLogIllegalPath and this you have multiple tests for \"what does the manager do if we cannot start logging due to file error\". More specific reasons as to what the file error was should already be covered by file I/O related unittests outside the scope of the manager.",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0289012d_6e2126a4",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T21:26:56Z",
+      "side": 1,
+      "message": "I defer what sizes make sense for logging to Björn.",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
