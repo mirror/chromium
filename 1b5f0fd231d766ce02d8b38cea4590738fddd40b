@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d0d1fca7_9d568646",
+        "filename": "components/viz/service/display/output_surface.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-16T00:32:12Z",
+      "side": 1,
+      "message": "See https://chromium-cpp.appspot.com/ under \"Rvalue references\"",
+      "parentUuid": "fdcf46fe_7efe8249",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4f175b7_a15d3f3d",
         "filename": "components/viz/service/display/output_surface.h",
         "patchSetId": 11
