@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a87d195_44a9b510",
+        "filename": "components/arc/instance_holder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T21:07:24Z",
+      "side": 1,
+      "message": "nit: elide the braces",
+      "range": {
+        "startLine": 97,
+        "startChar": 18,
+        "endLine": 97,
+        "endChar": 20
+      },
+      "revId": "42c45ecc89770867120b32fde6b7cb9e39625c7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a500f27_efacb873",
+        "filename": "components/arc/mojo_connection_notifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T21:07:24Z",
+      "side": 1,
+      "message": "Maybe just call it \"ConnectionNotifier\". We don\u0027t need to specify that it\u0027s connecting via Mojo.",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 10
+      },
+      "revId": "42c45ecc89770867120b32fde6b7cb9e39625c7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
