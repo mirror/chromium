@@ -34,6 +34,24 @@
       "revId": "671d9d7e6ed8214c0638fda57ad141114ec1a0f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6b3e22_b5b66424",
+        "filename": "build/linux/sysroot_scripts/sysroot-creator-stretch.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T23:40:09Z",
+      "side": 1,
+      "message": "As seen almost anywhere there is a list... sorting is hard.",
+      "parentUuid": "d9ce7fa5_2bb7dc7a",
+      "revId": "671d9d7e6ed8214c0638fda57ad141114ec1a0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
