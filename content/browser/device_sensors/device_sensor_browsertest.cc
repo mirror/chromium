@@ -17,6 +17,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
 #include "content/public/test/test_navigation_observer.h"
@@ -26,6 +27,7 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/buffer.h"
+#include "net/dns/mock_host_resolver.h"
 #include "services/device/public/cpp/generic_sensor/platform_sensor_configuration.h"
 #include "services/device/public/cpp/generic_sensor/sensor_reading.h"
 #include "services/device/public/interfaces/constants.mojom.h"
@@ -266,6 +268,15 @@ class DeviceSensorBrowserTest : public ContentBrowserTest {
             base::WaitableEvent::InitialState::NOT_SIGNALED) {}
 
   void SetUpOnMainThread() override {
+    https_embedded_test_server_.reset(
+        new net::EmbeddedTestServer(net::EmbeddedTestServer::TYPE_HTTPS));
+    host_resolver()->AddRule("*", "127.0.0.1");
+    ASSERT_TRUE(https_embedded_test_server_->InitializeAndListen());
+    content::SetupCrossSiteRedirector(https_embedded_test_server_.get());
+    https_embedded_test_server_->ServeFilesFromSourceDirectory(
+        "content/test/data/device_sensors");
+    https_embedded_test_server_->StartAcceptingConnections();
+
     sensor_provider_ = std::make_unique<FakeSensorProvider>();
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
@@ -303,6 +314,7 @@ class DeviceSensorBrowserTest : public ContentBrowserTest {
     runner->Run();
   }
 
+  std::unique_ptr<net::EmbeddedTestServer> https_embedded_test_server_;
   std::unique_ptr<FakeSensorProvider> sensor_provider_;
 
  private:
@@ -438,6 +450,33 @@ IN_PROC_BROWSER_TEST_F(DeviceSensorBrowserTest, NullTestWithAlert) {
 
   same_tab_observer.Wait();
   EXPECT_EQ("pass", shell()->web_contents()->GetLastCommittedURL().ref());
+}
+
+IN_PROC_BROWSER_TEST_F(
+    DeviceSensorBrowserTest,
+    DeviceMotionCrossOriginIframeTest_HTTPS_No_Console_Output) {
+  GURL main_frame_url =
+      https_embedded_test_server_->GetURL("a.com", "/cross_origin_iframe.html");
+  NavigateToURL(shell(), main_frame_url);
+}
+
+IN_PROC_BROWSER_TEST_F(
+    DeviceSensorBrowserTest,
+    DeviceMotionCrossOriginIframeTest_HTTPS_With_Console_Output) {
+  GURL main_frame_url =
+      https_embedded_test_server_->GetURL("/cross_origin_iframe.html");
+  NavigateToURL(shell(), main_frame_url);
+}
+
+IN_PROC_BROWSER_TEST_F(
+    DeviceSensorBrowserTest,
+    DeviceMotionCrossOriginIframeTest_HTTP_With_Console_Output) {
+  embedded_test_server()->ServeFilesFromSourceDirectory(
+      "content/test/data/device_sensors");
+  ASSERT_TRUE(embedded_test_server()->Start());
+  GURL main_frame_url =
+      embedded_test_server()->GetURL("a.com", "/cross_origin_iframe.html");
+  NavigateToURL(shell(), main_frame_url);
 }
 
 }  //  namespace
