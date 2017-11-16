@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "2129e69d_d519dd88",
+        "filename": "chrome/browser/ui/content_settings/framebust_block_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-16T18:36:17Z",
+      "side": 1,
+      "message": "Oh sorry, I missed where this ended up. I was thinking of including this in ui/blocked/content as a general browser test suite for the framebust tab helper. That way we could add more coverage for things other than the bubble model stuff.\n\nI also don\u0027t have a strong preference though.",
+      "parentUuid": "a0751a67_ea2c132d",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 49
+      },
+      "revId": "0b7b5e3c10c65543986725a1f786ebaa3cdfcafc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4c8b39f_52c8ca42",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 6
