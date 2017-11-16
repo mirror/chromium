@@ -9,7 +9,7 @@
 
 #include "base/feature_list.h"
 #include "build/build_config.h"
-#include "media/midi/midi_export.h"
+#include "components/midi/midi_export.h"
 
 namespace midi {
 namespace features {

@@ -15,7 +15,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/synchronization/lock.h"
 #include "base/time/time.h"
-#include "media/midi/midi_export.h"
+#include "components/midi/midi_export.h"
 #include "media/midi/midi_port_info.h"
 #include "media/midi/midi_service.mojom.h"
 

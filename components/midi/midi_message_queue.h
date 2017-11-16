@@ -2,17 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_MIDI_MIDI_MESSAGE_QUEUE_H_
-#define MEDIA_MIDI_MIDI_MESSAGE_QUEUE_H_
+#ifndef COMPONENTS_MIDI_MIDI_MESSAGE_QUEUE_H_
+#define COMPONENTS_MIDI_MIDI_MESSAGE_QUEUE_H_
 
 #include <stddef.h>
 #include <stdint.h>
 
+#include <deque>
 #include <vector>
 
-#include "base/containers/circular_deque.h"
 #include "base/macros.h"
-#include "media/midi/midi_export.h"
+#include "components/midi/midi_export.h"
 
 namespace midi {
 
@@ -64,7 +64,7 @@ class MIDI_EXPORT MidiMessageQueue {
   void Get(std::vector<uint8_t>* message);
 
  private:
-  base::circular_deque<uint8_t> queue_;
+  std::deque<uint8_t> queue_;
   std::vector<uint8_t> next_message_;
   const bool allow_running_status_;
   DISALLOW_COPY_AND_ASSIGN(MidiMessageQueue);
@@ -72,4 +72,4 @@ class MIDI_EXPORT MidiMessageQueue {
 
 }  // namespace midi
 
-#endif  // MEDIA_MIDI_MIDI_MESSAGE_QUEUE_H_
+#endif  // COMPONENTS_MIDI_MIDI_MESSAGE_QUEUE_H_
