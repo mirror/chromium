@@ -265,10 +265,13 @@ void V8ContextSnapshot::InstallRuntimeEnabledFeatures(
 }
 
 void V8ContextSnapshot::EnsureInterfaceTemplates(v8::Isolate* isolate) {
+  LOG(ERROR) << "------------------------EnsureInterfaceTemplates 0";
   if (V8PerIsolateData::From(isolate)->GetV8ContextSnapshotMode() !=
       V8PerIsolateData::V8ContextSnapshotMode::kUseSnapshot) {
+  LOG(ERROR) << "------------------------EnsureInterfaceTemplates 2";
     return;
   }
+  LOG(ERROR) << "------------------------EnsureInterfaceTemplates 1";
 
   v8::HandleScope handle_scope(isolate);
   SnapshotInterface& snapshot_window = g_snapshot_interfaces[0];

@@ -83,6 +83,7 @@ V8PerIsolateData::V8PerIsolateData(
   // TODO(peria): Remove this fallback routine.
   if (v8_context_snapshot_mode_ == V8ContextSnapshotMode::kUseSnapshot &&
       !startup_data_.data) {
+    LOG(ERROR) << "!!!!!!!!!!!!!!!!!!In V8PerIsolateData constructor the fallback path";
     v8_context_snapshot_mode_ = V8ContextSnapshotMode::kDontUseSnapshot;
   }
 
@@ -122,6 +123,7 @@ v8::Isolate* V8PerIsolateData::MainThreadIsolate() {
 v8::Isolate* V8PerIsolateData::Initialize(WebTaskRunner* task_runner,
                                           const intptr_t* reference_table,
                                           V8ContextSnapshotMode context_mode) {
+  LOG(ERROR) << "!!!!!!!!!!!!!!!!V8PerIsolateData::Initialize context_mode " << int(context_mode);
   DCHECK(context_mode == V8ContextSnapshotMode::kDontUseSnapshot ||
          reference_table);
 

@@ -34,6 +34,7 @@
 #include "extensions/renderer/test_v8_extension_configuration.h"
 #include "extensions/renderer/utils_native_handler.h"
 #include "gin/converter.h"
+#include "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.h"
 #include "ui/base/resource/resource_bundle.h"
 
 namespace extensions {
@@ -145,6 +146,11 @@ ModuleSystemTestEnvironment::ModuleSystemTestEnvironment(
     context_ = context.get();
     context_set_->AddForTesting(std::move(context));
   }
+/*
+  script_state_ = blink::ScriptState::Create(
+      context_holder_->context(), blink::DOMWrapperWorld::Create(isolate_, blink::DOMWrapperWorld::WorldType::kMain));
+*/
+
 
   context_->v8_context()->Enter();
   assert_natives_ = new AssertNatives(context_);

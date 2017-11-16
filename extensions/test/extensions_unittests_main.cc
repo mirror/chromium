@@ -10,6 +10,7 @@
 #include "base/path_service.h"
 #include "base/test/launcher/unit_test_launcher.h"
 #include "base/test/test_io_thread.h"
+#include "blink/platform/runtime_enabled_features.h"
 #include "content/public/common/content_client.h"
 #include "content/public/test/content_test_suite_base.h"
 #include "content/public/test/unittest_test_suite.h"
@@ -58,7 +59,8 @@ class ExtensionsTestSuite : public content::ContentTestSuiteBase {
 };
 
 ExtensionsTestSuite::ExtensionsTestSuite(int argc, char** argv)
-    : content::ContentTestSuiteBase(argc, argv) {}
+    : content::ContentTestSuiteBase(argc, argv) {
+}
 
 ExtensionsTestSuite::~ExtensionsTestSuite() {}
 
@@ -98,6 +100,9 @@ void ExtensionsTestSuite::Shutdown() {
 }  // namespace
 
 int main(int argc, char** argv) {
+  blink::RuntimeEnabledFeatures::SetV8ContextSnapshotEnabled(true);
+  blink::RuntimeEnabledFeatures::SetMojoJSEnabled(true);
+  blink::RuntimeEnabledFeatures::SetMojoJSTestEnabled(true);
   content::UnitTestTestSuite test_suite(new ExtensionsTestSuite(argc, argv));
   return base::LaunchUnitTests(argc,
                                argv,
