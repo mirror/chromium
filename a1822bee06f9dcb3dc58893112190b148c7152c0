@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d31c71f_af7125cd",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-16T09:14:13Z",
+      "side": 1,
+      "message": "you haven\u0027t actually implemented destroying itself if the notifier goes away. Presumably that means that this case also needs a test to be added ;) ?",
+      "revId": "a1822bee06f9dcb3dc58893112190b148c7152c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5e1ef75_5433c508",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-16T09:14:13Z",
+      "side": 1,
+      "message": "nit: PublicIpAddressGeolocator",
+      "revId": "a1822bee06f9dcb3dc58893112190b148c7152c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d85a946_68bfd358",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-16T09:14:13Z",
+      "side": 1,
+      "message": "I would make this weakly bound instead and have it listen for connection error. That way (IMO) it\u0027s more clear that the object controls its own lifetime and destroys itself when either the client goes away for the notifier goes away. That\u0027s also how we generally structure this pattern.",
+      "range": {
+        "startLine": 24,
+        "startChar": 40,
+        "endLine": 24,
+        "endChar": 48
+      },
+      "revId": "a1822bee06f9dcb3dc58893112190b148c7152c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d15e6670_f5b63102",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-16T09:14:13Z",
+      "side": 1,
+      "message": "this should be able to just be a mojo::Binding with my comment above",
+      "revId": "a1822bee06f9dcb3dc58893112190b148c7152c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
