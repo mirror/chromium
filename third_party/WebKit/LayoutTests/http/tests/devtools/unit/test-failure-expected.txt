@@ -1,3 +1,4 @@
 Tests that a test will properly exit if it has an asynchronous error.
 TEST ENDED IN ERROR: This error is expected
+=== DO NOT COMMIT THIS INTO -EXPECTED.TXT ===
 
