@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f2e96a7f_b871dba7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-16T22:22:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21bb4418_78cf8dbe",
+      "range": {
+        "startLine": 490,
+        "startChar": 13,
+        "endLine": 490,
+        "endChar": 22
+      },
+      "revId": "cb0a0361a5442db3c21b2db25e4935814129ff95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ba6fef1_7ee106b4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "cb0a0361a5442db3c21b2db25e4935814129ff95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c37a6e_8418cdec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-16T22:22:30Z",
+      "side": 1,
+      "message": "It\u0027s easy enough to add the extra histogram here. I added \"Android.ChromeHome.OpenSwipeVelocity.NoNavigation\".",
+      "parentUuid": "6ba6fef1_7ee106b4",
+      "revId": "cb0a0361a5442db3c21b2db25e4935814129ff95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
