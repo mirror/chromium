@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1b4e539_98c7c91c",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-16T20:04:03Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like this was done previously. Do we expect any behavioral changes due to this call?",
+      "range": {
+        "startLine": 1176,
+        "startChar": 4,
+        "endLine": 1176,
+        "endChar": 41
+      },
+      "revId": "7f9a897b815ad2c32552a927ca8a023001b1bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
