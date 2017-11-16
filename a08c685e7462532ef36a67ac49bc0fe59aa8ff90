@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d97491a0_f53c4ec5",
+        "filename": "chrome/browser/signin/dice_response_handler_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T15:12:04Z",
+      "side": 1,
+      "message": "To make it more readable:\ns/std::unique_ptr\u003csignin::DiceAccountReconcilorDelegate\u003e/auto",
+      "range": {
+        "startLine": 133,
+        "startChar": 19,
+        "endLine": 133,
+        "endChar": 20
+      },
+      "revId": "a08c685e7462532ef36a67ac49bc0fe59aa8ff90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3919e3ef_168a4ba0",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T15:12:04Z",
+      "side": 1,
+      "message": "As discussed, let\u0027s move registering with the services to EnableReconcile and call it from here.",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 36
+      },
+      "revId": "a08c685e7462532ef36a67ac49bc0fe59aa8ff90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2051b58_4e074cc9",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T15:12:04Z",
+      "side": 1,
+      "message": "DCHECK(delegate_-\u003eIsReconcileEnabled());",
+      "range": {
+        "startLine": 126,
+        "startChar": 24,
+        "endLine": 126,
+        "endChar": 39
+      },
+      "revId": "a08c685e7462532ef36a67ac49bc0fe59aa8ff90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "970b8b5e_acfee7e8",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T15:12:04Z",
+      "side": 1,
+      "message": "Let\u0027s keep this above the if to make sure we do not add some crazy unexpected bug in this code that is already very complicated.",
+      "range": {
+        "startLine": 318,
+        "startChar": 2,
+        "endLine": 318,
+        "endChar": 16
+      },
+      "revId": "a08c685e7462532ef36a67ac49bc0fe59aa8ff90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
