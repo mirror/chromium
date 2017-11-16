@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d86d8059_86f2bbc3",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-16T05:33:31Z",
+      "side": 1,
+      "message": "yeah fixed.",
+      "parentUuid": "71483786_2c9be9df",
+      "range": {
+        "startLine": 193,
+        "startChar": 27,
+        "endLine": 193,
+        "endChar": 29
+      },
+      "revId": "a5229dc7853948b8bd2b3660b10c2096df43b58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b8c0b77_a34a22fb",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-14T18:42:45Z",
       "side": 1,
       "message": "maybe add a comment somewhere explaining that if client_old_value isn\u0027t provided, or doesn\u0027t match keys_only_map_ we\u0027ll still let the change go through, but just won\u0027t have an old value in the notification send back to the renderers?\n\nIt would still be nice to figure out when this is happening though, because this means that now we\u0027re having web-exposed changes in behavior (and specifically no longer have consistent storage events). Any theories as to what circumstances we could end up in this situation? Fixing the crash is nice, but it doesn\u0027t necessarily also solve the bug.",
+      "revId": "a5229dc7853948b8bd2b3660b10c2096df43b58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "999894de_2474148d",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-16T05:33:31Z",
+      "side": 1,
+      "message": "I looked into the code multiple times and couldn\u0027t find any reason why the databases will get inconsistent. My only theories are for some reason the size calculation is higher in browser and set fails, or commit fails and we lose the data when reloading. I have tried to add code that might resolve both these issues..",
+      "parentUuid": "2b8c0b77_a34a22fb",
       "revId": "a5229dc7853948b8bd2b3660b10c2096df43b58f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -62,6 +104,30 @@
       "revId": "a5229dc7853948b8bd2b3660b10c2096df43b58f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d98c3c_c9e8f280",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-16T05:33:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ca5245a_d2089c92",
+      "range": {
+        "startLine": 287,
+        "startChar": 25,
+        "endLine": 287,
+        "endChar": 27
+      },
+      "revId": "a5229dc7853948b8bd2b3660b10c2096df43b58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
