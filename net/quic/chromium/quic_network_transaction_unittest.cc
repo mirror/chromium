@@ -4775,20 +4775,32 @@ TEST_P(QuicNetworkTransactionTest, RetryAgainAfterAsyncNoBufferSpace) {
 
   MockQuicData socket_data;
   QuicStreamOffset offset = 0;
+  const int kMaxWrites = 13;  // 12 retries then one final failure.
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);  // No more data to read
   socket_data.AddWrite(ConstructInitialSettingsPacket(1, &offset));
-  for (int i = 0; i < 21; ++i) {
+  for (int i = 0; i < kMaxWrites; ++i) {
     socket_data.AddWrite(ASYNC, ERR_NO_BUFFER_SPACE);
   }
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   CreateSession();
+  // Use a TestTaskRunner to avoid waiting in real time for timeouts.
+  scoped_refptr<TestTaskRunner> quic_task_runner_(new TestTaskRunner(&clock_));
+  QuicStreamFactoryPeer::SetTaskRunner(session_->quic_stream_factory(),
+                                       quic_task_runner_.get());
 
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session_.get());
   TestCompletionCallback callback;
   int rv = trans.Start(&request_, callback.callback(), net_log_.bound());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
+  while (!callback.have_result()) {
+    base::RunLoop().RunUntilIdle();
+    quic_task_runner_->RunUntilIdle();
+  }
+  ASSERT_TRUE(callback.have_result());
   EXPECT_THAT(callback.WaitForResult(), IsError(ERR_QUIC_PROTOCOL_ERROR));
+  EXPECT_TRUE(socket_data.AllReadDataConsumed());
+  EXPECT_TRUE(socket_data.AllWriteDataConsumed());
 }
 
 TEST_P(QuicNetworkTransactionTest, RetryOnceAfterSynchronousNoBufferSpace) {
