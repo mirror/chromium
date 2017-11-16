@@ -244,6 +244,24 @@
       "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80e6e2e7_4cbb7d01",
+        "filename": "content/renderer/pepper/pepper_plugin_instance_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-16T20:56:43Z",
+      "side": 1,
+      "message": "Ok. FTR, I think it\u0027s perfectly ok to have helper methods on structs/value types. But otherwise free functions are fine too.",
+      "parentUuid": "07298dd9_bddf16d3",
+      "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
