@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ed7cf4f_8ea72285",
+        "filename": "third_party/WebKit/Source/core/timing/Performance.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-16T15:51:51Z",
+      "side": 1,
+      "message": "CountObjectAsSecondParameterWithUseCounter\n\nAlternatively, we could have an abstract method returning an ExecutionContext, just called GetExecutionContext, and then we could use that to record the use counter.",
+      "range": {
+        "startLine": 95,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 27
+      },
+      "revId": "1bc3af09bf03796684389e5bbc5e1bab524f9fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f59e0f8_4c0f1446",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-16T15:51:51Z",
+      "side": 1,
+      "message": "Can we have a second use counter, which records any usage of timestamps from Navigation Timing?\n\ni.e., not kObjectObject, and not kOther?",
+      "revId": "1bc3af09bf03796684389e5bbc5e1bab524f9fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aef95249_adcac15d",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-16T15:51:51Z",
+      "side": 1,
+      "message": "Nit: need .",
+      "range": {
+        "startLine": 165,
+        "startChar": 78,
+        "endLine": 165,
+        "endChar": 79
+      },
+      "revId": "1bc3af09bf03796684389e5bbc5e1bab524f9fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ba9aef_15945f87",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-16T15:51:51Z",
+      "side": 1,
+      "message": "Should this be abstract? (\u003d 0)?",
+      "range": {
+        "startLine": 209,
+        "startChar": 37,
+        "endLine": 209,
+        "endChar": 40
+      },
+      "revId": "1bc3af09bf03796684389e5bbc5e1bab524f9fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
