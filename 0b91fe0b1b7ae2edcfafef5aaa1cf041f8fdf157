@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16a933ce_4e963029",
+        "filename": "components/omnibox/browser/omnibox_edit_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-16T00:58:38Z",
+      "side": 0,
+      "message": "I noticed this neither made into OmniboxPopupModel unittest nor OmniboxEditModel unittest.  Is it entirely unnecessary, or does it matter for something like flakiness?",
+      "range": {
+        "startLine": 236,
+        "startChar": 34,
+        "endLine": 236,
+        "endChar": 0
+      },
+      "revId": "0b91fe0b1b7ae2edcfafef5aaa1cf041f8fdf157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

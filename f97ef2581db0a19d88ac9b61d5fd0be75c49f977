@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b13ff936_f2a93ca8",
+        "filename": "components/omnibox/browser/omnibox_edit_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-16T00:58:38Z",
+      "side": 1,
+      "message": "Idle question: I see the original code just used regular member variables (and then used \u0026s), not unique_ptrs.  Any particular reason for the change?",
+      "revId": "f97ef2581db0a19d88ac9b61d5fd0be75c49f977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f039c7b3_2ce8f216",
+        "filename": "components/omnibox/browser/omnibox_edit_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-16T00:58:38Z",
+      "side": 1,
+      "message": "What\u0027s with this formatting, different than those below?",
+      "revId": "f97ef2581db0a19d88ac9b61d5fd0be75c49f977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c26612e8_8043f33d",
+        "filename": "components/omnibox/browser/test_omnibox_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-16T00:58:38Z",
+      "side": 1,
+      "message": "A lot of the below includes are not needed.  Please remove from here and the .cc",
+      "revId": "f97ef2581db0a19d88ac9b61d5fd0be75c49f977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
