@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95b4d537_48f86ae3",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1580,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-16T21:56:51Z",
+      "side": 1,
+      "message": "searchInResponseBody",
+      "range": {
+        "startLine": 1580,
+        "startChar": 25,
+        "endLine": 1580,
+        "endChar": 41
+      },
+      "revId": "61fb53f2019d1e83de3e1a4ec60f020c326a5bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4ba3c1_4cead582",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-16T21:56:51Z",
+      "side": 1,
+      "message": "Not an override?",
+      "revId": "61fb53f2019d1e83de3e1a4ec60f020c326a5bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
