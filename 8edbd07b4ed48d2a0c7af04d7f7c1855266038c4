@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9b5e22a_4e495dcb",
+        "filename": "components/feature_engagement/internal/feature_config_condition_validator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-16T22:25:36Z",
+      "side": 1,
+      "message": "Yes, that is true.\n\nThis is documented here:\nhttps://chromium.googlesource.com/chromium/src/+/master/components/feature_engagement/README.md#EventConfig\n\nAnd implemented here:\nhttps://cs.chromium.org/chromium/src/components/feature_engagement/internal/feature_config_event_storage_validator.cc?l\u003d75\n\nAnyway, changed to 100u both places to ensure there\u0027s no confusion :-)",
+      "parentUuid": "4f70d778_746810df",
+      "range": {
+        "startLine": 736,
+        "startChar": 60,
+        "endLine": 736,
+        "endChar": 63
+      },
+      "revId": "8edbd07b4ed48d2a0c7af04d7f7c1855266038c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e58303fe_122feb9f",
         "filename": "components/feature_engagement/internal/feature_config_condition_validator_unittest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "8edbd07b4ed48d2a0c7af04d7f7c1855266038c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bbc1398_50268067",
+        "filename": "components/feature_engagement/internal/feature_config_condition_validator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-16T22:25:36Z",
+      "side": 1,
+      "message": "True! I\u0027ve updated the comment to reflect that, and also added tests for day 99 and 100 to verify. Same below.",
+      "parentUuid": "e58303fe_122feb9f",
+      "range": {
+        "startLine": 766,
+        "startChar": 42,
+        "endLine": 766,
+        "endChar": 77
+      },
+      "revId": "8edbd07b4ed48d2a0c7af04d7f7c1855266038c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0bcaecd5_9107cd9f",
+        "filename": "components/feature_engagement/internal/feature_config_condition_validator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-16T22:25:36Z",
+      "side": 1,
+      "message": "Ah, yeah. It\u0027s nonsensical, but not technically wrong. I\u0027ve updated it to be more consistent with real life.",
+      "parentUuid": "57dbb64b_b023dcf8",
+      "range": {
+        "startLine": 797,
+        "startChar": 55,
+        "endLine": 797,
+        "endChar": 64
+      },
+      "revId": "8edbd07b4ed48d2a0c7af04d7f7c1855266038c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e08e06a9_534bdbaa",
         "filename": "components/feature_engagement/internal/feature_config_condition_validator_unittest.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "8edbd07b4ed48d2a0c7af04d7f7c1855266038c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cea47f6_50bf8c95",
+        "filename": "components/feature_engagement/internal/feature_config_condition_validator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-16T22:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e08e06a9_534bdbaa",
+      "range": {
+        "startLine": 827,
+        "startChar": 44,
+        "endLine": 827,
+        "endChar": 79
+      },
+      "revId": "8edbd07b4ed48d2a0c7af04d7f7c1855266038c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
