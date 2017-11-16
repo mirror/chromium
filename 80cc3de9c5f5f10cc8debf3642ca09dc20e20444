@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41b243a3_6bc948d8",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-16T21:29:57Z",
+      "side": 1,
+      "message": "nativePeriodicallyCollectResidency() performs sleeps, so you should run this on a dedicated background thread rather than the threadpool, since the threadpool has only a limited number of threads until it starts queuing tasks.",
+      "revId": "80cc3de9c5f5f10cc8debf3642ca09dc20e20444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c20eee7_708e3165",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-16T21:29:57Z",
+      "side": 1,
+      "message": "nit: can you add a comment here saying why it makes sense to trigger this in asyncPrefetchLibrariesToMemory()?",
+      "revId": "80cc3de9c5f5f10cc8debf3642ca09dc20e20444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
