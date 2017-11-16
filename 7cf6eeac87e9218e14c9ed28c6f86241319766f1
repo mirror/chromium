@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7432c64_4a44fd22",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-16T01:19:13Z",
+      "side": 1,
+      "message": "nit: Consider an enum class, just because the argument lists involving this are getting pretty ridiculously long.",
+      "revId": "7cf6eeac87e9218e14c9ed28c6f86241319766f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
