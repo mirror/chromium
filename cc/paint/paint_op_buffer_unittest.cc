@@ -114,8 +114,6 @@ class PaintOpSerializationTestUtils {
                            actual.getColorFilter().get());
     ExpectFlattenableEqual(expected.getLooper().get(),
                            actual.getLooper().get());
-    ExpectFlattenableEqual(expected.getImageFilter().get(),
-                           actual.getImageFilter().get());
 
     ExpectPaintShadersEqual(expected.getShader(), actual.getShader());
   }
@@ -1143,8 +1141,6 @@ std::vector<PaintFlags> test_flags = {
       layer_info.fOffset.set(-1.f, 5.2f);
       looper_builder.addLayer(layer_info);
       flags.setLooper(looper_builder.detach());
-
-      flags.setImageFilter(SkOffsetImageFilter::Make(10, 11, nullptr));
 
       sk_sp<PaintShader> shader = PaintShader::MakeColor(SK_ColorTRANSPARENT);
       PaintOpSerializationTestUtils::FillArbitraryShaderValues(shader.get(),
