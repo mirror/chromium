@@ -465,7 +465,7 @@ void NavigationRequest::BeginNavigation() {
     // it by OnRequestFailed().
     CreateNavigationHandle();
     OnRequestFailedInternal(false, net::ERR_BLOCKED_BY_CLIENT, base::nullopt,
-                            false, false);
+                            false, false, base::nullopt);
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -480,7 +480,7 @@ void NavigationRequest::BeginNavigation() {
     // it by OnRequestFailed().
     CreateNavigationHandle();
     OnRequestFailedInternal(false, net::ERR_ABORTED, base::nullopt, false,
-                            false);
+                            false, base::nullopt);
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -848,9 +848,9 @@ void NavigationRequest::OnRequestFailed(
     int net_error,
     const base::Optional<net::SSLInfo>& ssl_info,
     bool should_ssl_errors_be_fatal) {
-  NavigationRequest::OnRequestFailedInternal(has_stale_copy_in_cache, net_error,
-                                             ssl_info,
-                                             should_ssl_errors_be_fatal, false);
+  NavigationRequest::OnRequestFailedInternal(
+      has_stale_copy_in_cache, net_error, ssl_info, should_ssl_errors_be_fatal,
+      false, base::nullopt);
 }
 
 void NavigationRequest::OnRequestFailedInternal(
@@ -858,8 +858,11 @@ void NavigationRequest::OnRequestFailedInternal(
     int net_error,
     const base::Optional<net::SSLInfo>& ssl_info,
     bool should_ssl_errors_be_fatal,
-    bool skip_throttles) {
+    bool skip_throttles,
+    const base::Optional<std::string>& error_page_content) {
   DCHECK(state_ == STARTED || state_ == RESPONSE_STARTED);
+  if (net_error == net::ERR_ABORTED)
+    DCHECK(!error_page_content.has_value());
   // TODO(https://crbug.com/757633): Check that ssl_info.has_value() if
   // net_error is a certificate error.
   TRACE_EVENT_ASYNC_STEP_INTO1("navigation", "NavigationRequest", this,
@@ -920,7 +923,9 @@ void NavigationRequest::OnRequestFailedInternal(
   has_stale_copy_in_cache_ = has_stale_copy_in_cache;
   net_error_ = net_error;
 
-  if (skip_throttles || IsRendererDebugURL(common_params_.url)) {
+  if (skip_throttles) {
+    CommitErrorPage(render_frame_host, error_page_content);
+  } else if (IsRendererDebugURL(common_params_.url)) {
     // The NavigationHandle shouldn't be notified about renderer-debug URLs.
     // They will be handled by the renderer process.
     CommitErrorPage(render_frame_host, base::nullopt);
@@ -957,11 +962,11 @@ void NavigationRequest::OnStartChecksComplete(
       result.action() == NavigationThrottle::BLOCK_REQUEST ||
       result.action() == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
     // TODO(clamy): distinguish between CANCEL and CANCEL_AND_IGNORE.
-    DCHECK_EQ((result.action() == NavigationThrottle::CANCEL ||
-               result.action() == NavigationThrottle::CANCEL_AND_IGNORE)
-                  ? net::ERR_ABORTED
-                  : net::ERR_BLOCKED_BY_CLIENT,
-              result.net_error_code());
+    DCHECK(result.net_error_code() == net::ERR_ABORTED ||
+           result.net_error_code() == net::ERR_BLOCKED_BY_CLIENT);
+    if (result.action() == NavigationThrottle::BLOCK_REQUEST ||
+        result.action() == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE)
+      DCHECK_EQ(net::ERR_BLOCKED_BY_CLIENT, result.net_error_code());
 
     // If the start checks completed synchronously, which could happen if there
     // is no onbeforeunload handler or if a NavigationThrottle cancelled it,
@@ -971,7 +976,8 @@ void NavigationRequest::OnStartChecksComplete(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(&NavigationRequest::OnRequestFailedInternal,
                        weak_factory_.GetWeakPtr(), false,
-                       result.net_error_code(), base::nullopt, false, true));
+                       result.net_error_code(), base::nullopt, false, true,
+                       result.error_page_content()));
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -1066,9 +1072,8 @@ void NavigationRequest::OnRedirectChecksComplete(
   if (result.action() == NavigationThrottle::CANCEL_AND_IGNORE ||
       result.action() == NavigationThrottle::CANCEL) {
     // TODO(clamy): distinguish between CANCEL and CANCEL_AND_IGNORE if needed.
-    DCHECK_EQ(net::ERR_ABORTED, result.net_error_code());
     OnRequestFailedInternal(false, result.net_error_code(), base::nullopt,
-                            false, true);
+                            false, true, result.error_page_content());
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -1079,7 +1084,7 @@ void NavigationRequest::OnRedirectChecksComplete(
       result.action() == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
     DCHECK_EQ(net::ERR_BLOCKED_BY_CLIENT, result.net_error_code());
     OnRequestFailedInternal(false, result.net_error_code(), base::nullopt,
-                            false, true);
+                            false, true, result.error_page_content());
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
     return;
@@ -1126,7 +1131,8 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
           download_manager->GetNavigationInterceptionCB(
               response_, std::move(handle_), ssl_status_,
               frame_tree_node_->frame_tree_node_id()));
-      OnRequestFailed(false, net::ERR_ABORTED, base::nullopt, false);
+      OnRequestFailedInternal(false, net::ERR_ABORTED, base::nullopt, false,
+                              true, base::nullopt);
       return;
     }
     loader_->ProceedWithResponse();
@@ -1138,12 +1144,14 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
   if (result.action() == NavigationThrottle::CANCEL_AND_IGNORE ||
       result.action() == NavigationThrottle::CANCEL ||
       !response_should_be_rendered_) {
-    int net_error = result.net_error_code();
-    if (!response_should_be_rendered_)
-      net_error = net::ERR_ABORTED;
     // TODO(clamy): distinguish between CANCEL and CANCEL_AND_IGNORE.
-    DCHECK_EQ(net::ERR_ABORTED, net_error);
-    OnRequestFailedInternal(false, net_error, base::nullopt, false, true);
+    if (!response_should_be_rendered_) {
+      OnRequestFailedInternal(false, net::ERR_ABORTED, base::nullopt, false,
+                              true, base::nullopt);
+    } else {
+      OnRequestFailedInternal(false, result.net_error_code(), base::nullopt,
+                              false, true, result.error_page_content());
+    }
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -1153,7 +1161,7 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
   if (result.action() == NavigationThrottle::BLOCK_RESPONSE) {
     DCHECK_EQ(net::ERR_BLOCKED_BY_RESPONSE, result.net_error_code());
     OnRequestFailedInternal(false, result.net_error_code(), base::nullopt,
-                            false, true);
+                            false, true, result.error_page_content());
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
     return;
