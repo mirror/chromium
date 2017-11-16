@@ -144,6 +144,16 @@ PrefService* ChromePaymentRequestDelegate::GetPrefService() {
       ->GetPrefs();
 }
 
+void ChromePaymentRequestDelegate::ShowWebPaymentHandlerFlow(
+    std::string payment_method,
+    GURL flow_override_url,
+    GURL success_url,
+    GURL failure_url,
+    InstrumentDetailsReadyCallback callback) {
+  dialog_->ShowWebPaymentHandlerFlow(payment_method, flow_override_url,
+                                     success_url, failure_url, callback);
+}
+
 bool ChromePaymentRequestDelegate::IsBrowserWindowActive() const {
   Browser* browser = chrome::FindBrowserWithWebContents(web_contents_);
   return browser && browser->window() && browser->window()->IsActive();

@@ -32,6 +32,10 @@ class PaymentRequest;
 
 class PaymentRequestBaseDelegate {
  public:
+  using InstrumentDetailsReadyCallback =
+      base::Callback<void(const std::string& /* method_name */,
+                          const std::string& /* stringified_details */)>;
+
   virtual ~PaymentRequestBaseDelegate() {}
 
   // Gets the PersonalDataManager associated with this PaymentRequest flow.
@@ -73,6 +77,12 @@ class PaymentRequestBaseDelegate {
   // Gets the pref service for the browser context associated with this
   // PaymentRequest.
   virtual PrefService* GetPrefService() = 0;
+
+  virtual void ShowWebPaymentHandlerFlow(std::string payment_method,
+                                         GURL flow_override_url,
+                                         GURL success_url,
+                                         GURL failure_url,
+                                         InstrumentDetailsReadyCallback) = 0;
 };
 
 }  // namespace payments

@@ -16,6 +16,7 @@
 #include "chrome/browser/ui/views/payments/cvc_unmask_view_controller.h"
 #include "chrome/browser/ui/views/payments/error_message_view_controller.h"
 #include "chrome/browser/ui/views/payments/order_summary_view_controller.h"
+#include "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.h"
 #include "chrome/browser/ui/views/payments/payment_method_view_controller.h"
 #include "chrome/browser/ui/views/payments/payment_request_views_util.h"
 #include "chrome/browser/ui/views/payments/payment_sheet_view_controller.h"
@@ -157,6 +158,24 @@ void PaymentRequestDialogView::ShowErrorMessage() {
 
   if (observer_for_testing_)
     observer_for_testing_->OnErrorMessageShown();
+}
+
+void PaymentRequestDialogView::ShowWebPaymentHandlerFlow(
+    std::string payment_method,
+    GURL flow_override_url,
+    GURL success_url,
+    GURL failure_url,
+    PaymentRequestBaseDelegate::InstrumentDetailsReadyCallback callback) {
+  std::set<std::string> method_data_set =
+      request_->spec()->stringified_method_data().at(payment_method);
+  std::string method_data = *(method_data_set.begin());
+  view_stack_->Push(CreateViewAndInstallController(
+                        base::MakeUnique<PaymentHandlerWebFlowViewController>(
+                            request_->spec(), request_->state(), this,
+                            GetProfile(), payment_method, flow_override_url,
+                            success_url, failure_url, method_data, callback),
+                        &controller_map_),
+                    /* animate = */ true);
 }
 
 void PaymentRequestDialogView::OnStartUpdating(

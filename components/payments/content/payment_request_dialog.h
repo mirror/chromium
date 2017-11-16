@@ -7,6 +7,7 @@
 
 #include "base/memory/weak_ptr.h"
 #include "components/autofill/core/browser/payments/full_card_request.h"
+#include "components/payments/core/payment_request_base_delegate.h"
 
 namespace content {
 class WebContents;
@@ -32,6 +33,13 @@ class PaymentRequestDialog {
       base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
           result_delegate,
       content::WebContents* web_contents) = 0;
+
+  virtual void ShowWebPaymentHandlerFlow(
+      std::string payment_method,
+      GURL flow_override_url,
+      GURL success_url,
+      GURL failure_url,
+      PaymentRequestBaseDelegate::InstrumentDetailsReadyCallback) = 0;
 };
 
 }  // namespace payments

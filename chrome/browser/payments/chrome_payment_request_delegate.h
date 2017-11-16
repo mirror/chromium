@@ -42,6 +42,12 @@ class ChromePaymentRequestDelegate : public ContentPaymentRequestDelegate {
   ukm::UkmRecorder* GetUkmRecorder() override;
   std::string GetAuthenticatedEmail() const override;
   PrefService* GetPrefService() override;
+  void ShowWebPaymentHandlerFlow(
+      std::string payment_method,
+      GURL flow_override_url,
+      GURL success_url,
+      GURL failure_url,
+      InstrumentDetailsReadyCallback callback) override;
   bool IsBrowserWindowActive() const override;
   scoped_refptr<PaymentManifestWebDataService>
   GetPaymentManifestWebDataService() const override;

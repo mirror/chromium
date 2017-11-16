@@ -94,6 +94,7 @@ class PaymentMethodListItem : public PaymentRequestItemList::Item {
         return;
       case PaymentInstrument::Type::NATIVE_MOBILE_APP:
       case PaymentInstrument::Type::SERVICE_WORKER_APP:
+      case PaymentInstrument::Type::GOOGLE:
         // We cannot edit a native mobile app instrument and service worker
         // based payment instrument.
         return;

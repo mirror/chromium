@@ -23,6 +23,7 @@
 #include "components/payments/content/utility/payment_manifest_parser.h"
 #include "components/payments/core/autofill_payment_instrument.h"
 #include "components/payments/core/journey_logger.h"
+#include "components/payments/core/pay_with_google_payment_instrument.h"
 #include "components/payments/core/payment_instrument.h"
 #include "components/payments/core/payment_manifest_downloader.h"
 #include "components/payments/core/payment_request_data_util.h"
@@ -421,6 +422,16 @@ void PaymentRequestState::PopulateProfileCache() {
       personal_data_manager_->GetCreditCardsToSuggest();
   for (autofill::CreditCard* card : cards)
     AddAutofillPaymentInstrument(/*selected=*/false, *card);
+
+  if (std::find(
+          spec_->url_payment_method_identifiers().begin(),
+          spec_->url_payment_method_identifiers().end(),
+          GURL("https://anthonyvd.github.io/pr/handlers/custom-handler")) !=
+      spec_->url_payment_method_identifiers().end()) {
+    available_instruments_.push_back(
+        base::MakeUnique<PayWithGooglePaymentInstrument>(
+            payment_request_delegate_));
+  }
 }
 
 void PaymentRequestState::SetDefaultProfileSelections() {

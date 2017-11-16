@@ -16,6 +16,8 @@ static_library("core") {
     "features.h",
     "journey_logger.cc",
     "journey_logger.h",
+    "pay_with_google_payment_instrument.cc",
+    "pay_with_google_payment_instrument.h",
     "payment_address.cc",
     "payment_address.h",
     "payment_currency_amount.cc",

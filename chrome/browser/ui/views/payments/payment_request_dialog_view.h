@@ -104,6 +104,13 @@ class PaymentRequestDialogView : public views::DialogDelegateView,
   void ShowDialog() override;
   void CloseDialog() override;
   void ShowErrorMessage() override;
+  void ShowWebPaymentHandlerFlow(
+      std::string payment_method,
+      GURL flow_override_url,
+      GURL success_url,
+      GURL failure_url,
+      PaymentRequestBaseDelegate::InstrumentDetailsReadyCallback callback)
+      override;
 
   // PaymentRequestSpec::Observer:
   void OnStartUpdating(PaymentRequestSpec::UpdateReason reason) override;
