@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1f8445ab_e4f1ce3d",
+        "filename": "ash/public/cpp/ash_pref_names.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T21:10:56Z",
+      "side": 1,
+      "message": "Discussed offline. Also talked to abodenha who is going to look into simplifying this feature, see crbug.com/786115 - keeping profile pref for now.",
+      "parentUuid": "86c629cc_27769f81",
+      "revId": "3e13adaa8cf996c04a565565dd360f28f9879e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f542eba_a4b82ba2",
         "filename": "ash/root_window_controller.cc",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "75950f9d_c346faaf",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T21:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f542eba_a4b82ba2",
+      "range": {
+        "startLine": 357,
+        "startChar": 2,
+        "endLine": 357,
+        "endChar": 26
+      },
+      "revId": "3e13adaa8cf996c04a565565dd360f28f9879e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79d046ae_eba7196b",
         "filename": "ash/root_window_controller.cc",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "3e13adaa8cf996c04a565565dd360f28f9879e3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f44c4b_f1f41ae3",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T21:10:56Z",
+      "side": 1,
+      "message": "It doesn\u0027t need to observe pref changes. The feature doesn\u0027t work at the login screen (unclear to me if that\u0027s intended or not). The RWC state is set after prefs are loaded after login. This function is only useful on secondary monitor attach. Added comment.",
+      "parentUuid": "79d046ae_eba7196b",
+      "revId": "3e13adaa8cf996c04a565565dd360f28f9879e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "902a0ee2_0b0245f1",
+        "filename": "ash/root_window_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T21:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75a5a99b_0420472a",
+      "revId": "3e13adaa8cf996c04a565565dd360f28f9879e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42898487_5de43350",
         "filename": "ash/shell.h",
         "patchSetId": 3
@@ -90,6 +168,24 @@
       "revId": "3e13adaa8cf996c04a565565dd360f28f9879e3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b4cfd90_b08931ba",
+        "filename": "ash/shell.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T21:10:56Z",
+      "side": 1,
+      "message": "Member removed.",
+      "parentUuid": "42898487_5de43350",
+      "revId": "3e13adaa8cf996c04a565565dd360f28f9879e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "514b8a9a_dd15e16b",
+        "filename": "ash/touch/touch_hud_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T21:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dcee5ef_5893d7fe",
+      "revId": "3e13adaa8cf996c04a565565dd360f28f9879e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "687af9cb_35fde061",
         "filename": "ash/touch/touch_hud_controller.h",
         "patchSetId": 3
@@ -121,6 +235,24 @@
       "writtenOn": "2017-11-16T01:05:28Z",
       "side": 1,
       "message": "Could this be folded into TouchDevicesController (also a Shell member and a SessionObserver)?",
+      "revId": "3e13adaa8cf996c04a565565dd360f28f9879e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec5b300_098fc800",
+        "filename": "ash/touch/touch_hud_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T21:10:56Z",
+      "side": 1,
+      "message": "Good idea! This dramatically shrinks the code and now this CL is net-negative lines.",
+      "parentUuid": "687af9cb_35fde061",
       "revId": "3e13adaa8cf996c04a565565dd360f28f9879e3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

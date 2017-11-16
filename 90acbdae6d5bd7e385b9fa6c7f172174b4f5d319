@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "765ff462_7352648f",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T21:10:56Z",
+      "side": 0,
+      "message": "I think it\u0027s mostly copy/pasta of other code. It called Shell::SetTouchHudProjectionEnabled for REASON_INITIALIZATION (useful, runs on login). But it also tries to watch for pref changes (which never happen for this pref, outside of calls from ash, which already knows the feature was turned on.).",
+      "parentUuid": "28075699_a10f0b25",
+      "revId": "90acbdae6d5bd7e385b9fa6c7f172174b4f5d319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77247c30_36817297",
         "filename": "chrome/browser/chromeos/preferences.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "90acbdae6d5bd7e385b9fa6c7f172174b4f5d319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2ea5a7_159f5c46",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T21:10:56Z",
+      "side": 0,
+      "message": "Yes, it\u0027s weird.",
+      "parentUuid": "77247c30_36817297",
+      "revId": "90acbdae6d5bd7e385b9fa6c7f172174b4f5d319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
