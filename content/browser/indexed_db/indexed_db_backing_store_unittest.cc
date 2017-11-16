@@ -109,9 +109,10 @@ class TestableIndexedDBBackingStore : public IndexedDBBackingStore {
       return scoped_refptr<TestableIndexedDBBackingStore>();
 
     scoped_refptr<TestableIndexedDBBackingStore> backing_store(
-        new TestableIndexedDBBackingStore(indexed_db_factory, origin, blob_path,
-                                          request_context_getter, std::move(db),
-                                          std::move(comparator), task_runner));
+        new TestableIndexedDBBackingStore(
+            indexed_db_factory, false /* in_memory */, origin, blob_path,
+            request_context_getter, std::move(db), std::move(comparator),
+            task_runner));
 
     *status = backing_store->SetUpMetadata();
     if (!status->ok())
@@ -166,6 +167,7 @@ class TestableIndexedDBBackingStore : public IndexedDBBackingStore {
  private:
   TestableIndexedDBBackingStore(
       IndexedDBFactory* indexed_db_factory,
+      bool in_memory,
       const Origin& origin,
       const base::FilePath& blob_path,
       scoped_refptr<net::URLRequestContextGetter> request_context_getter,
@@ -173,6 +175,7 @@ class TestableIndexedDBBackingStore : public IndexedDBBackingStore {
       std::unique_ptr<LevelDBComparator> comparator,
       base::SequencedTaskRunner* task_runner)
       : IndexedDBBackingStore(indexed_db_factory,
+                              in_memory,
                               origin,
                               blob_path,
                               request_context_getter,

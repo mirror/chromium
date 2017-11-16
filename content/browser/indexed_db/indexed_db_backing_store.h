@@ -394,6 +394,7 @@ class CONTENT_EXPORT IndexedDBBackingStore
   IndexedDBActiveBlobRegistry* active_blob_registry() {
     return &active_blob_registry_;
   }
+  bool in_memory() { return in_memory_; }
 
   static scoped_refptr<IndexedDBBackingStore> Open(
       IndexedDBFactory* indexed_db_factory,
@@ -583,6 +584,7 @@ class CONTENT_EXPORT IndexedDBBackingStore
 
   IndexedDBBackingStore(
       IndexedDBFactory* indexed_db_factory,
+      bool in_memory,
       const url::Origin& origin,
       const base::FilePath& blob_path,
       scoped_refptr<net::URLRequestContextGetter> request_context_getter,
@@ -623,6 +625,7 @@ class CONTENT_EXPORT IndexedDBBackingStore
 
   static scoped_refptr<IndexedDBBackingStore> Create(
       IndexedDBFactory* indexed_db_factory,
+      bool in_memory,
       const url::Origin& origin,
       const base::FilePath& blob_path,
       scoped_refptr<net::URLRequestContextGetter> request_context_getter,
@@ -664,6 +667,7 @@ class CONTENT_EXPORT IndexedDBBackingStore
   void DidCommitTransaction();
 
   IndexedDBFactory* indexed_db_factory_;
+  bool in_memory_;
   const url::Origin origin_;
   base::FilePath blob_path_;
 

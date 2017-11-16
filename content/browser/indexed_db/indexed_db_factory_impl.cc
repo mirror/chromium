@@ -189,6 +189,10 @@ void IndexedDBFactoryImpl::MaybeStartPreCloseTasks(const Origin& origin) {
 
   scoped_refptr<IndexedDBBackingStore> store = backing_store_map_[origin];
 
+  // Don't bother with in-memory databases.
+  if (store->in_memory())
+    return;
+
   base::Time origin_earliest_sweep;
   leveldb::Status s =
       indexed_db::GetEarliestSweepTime(store->db(), &origin_earliest_sweep);

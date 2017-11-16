@@ -576,6 +576,7 @@ class DefaultLevelDBFactory : public LevelDBFactory {
 
 IndexedDBBackingStore::IndexedDBBackingStore(
     IndexedDBFactory* indexed_db_factory,
+    bool in_memory,
     const Origin& origin,
     const FilePath& blob_path,
     scoped_refptr<net::URLRequestContextGetter> request_context_getter,
@@ -583,6 +584,7 @@ IndexedDBBackingStore::IndexedDBBackingStore(
     std::unique_ptr<LevelDBComparator> comparator,
     base::SequencedTaskRunner* task_runner)
     : indexed_db_factory_(indexed_db_factory),
+      in_memory_(in_memory),
       origin_(origin),
       blob_path_(blob_path),
       origin_identifier_(ComputeOriginIdentifier(origin)),
@@ -987,8 +989,9 @@ scoped_refptr<IndexedDBBackingStore> IndexedDBBackingStore::Open(
           base::trace_event::MemoryDumpProvider::Options());
 
   scoped_refptr<IndexedDBBackingStore> backing_store =
-      Create(indexed_db_factory, origin, blob_path, request_context_getter,
-             std::move(db), std::move(comparator), task_runner, status);
+      Create(indexed_db_factory, false /* in_memory */, origin, blob_path,
+             request_context_getter, std::move(db), std::move(comparator),
+             task_runner, status);
 
   if (clean_journal && backing_store.get()) {
     *status = backing_store->CleanUpBlobJournal(LiveBlobJournalKey::Encode());
@@ -1037,14 +1040,15 @@ scoped_refptr<IndexedDBBackingStore> IndexedDBBackingStore::OpenInMemory(
           db.get(), "IndexedDBBackingStore", task_runner,
           base::trace_event::MemoryDumpProvider::Options());
 
-  return Create(nullptr /* indexed_db_factory */, origin, FilePath(),
-                nullptr /* request_context */, std::move(db),
+  return Create(nullptr /* indexed_db_factory */, true /* in_memory */, origin,
+                FilePath(), nullptr /* request_context */, std::move(db),
                 std::move(comparator), task_runner, status);
 }
 
 // static
 scoped_refptr<IndexedDBBackingStore> IndexedDBBackingStore::Create(
     IndexedDBFactory* indexed_db_factory,
+    bool in_memory,
     const Origin& origin,
     const FilePath& blob_path,
     scoped_refptr<net::URLRequestContextGetter> request_context,
@@ -1054,8 +1058,8 @@ scoped_refptr<IndexedDBBackingStore> IndexedDBBackingStore::Create(
     Status* status) {
   // TODO(jsbell): Handle comparator name changes.
   scoped_refptr<IndexedDBBackingStore> backing_store(new IndexedDBBackingStore(
-      indexed_db_factory, origin, blob_path, request_context, std::move(db),
-      std::move(comparator), task_runner));
+      indexed_db_factory, in_memory, origin, blob_path, request_context,
+      std::move(db), std::move(comparator), task_runner));
   *status = backing_store->SetUpMetadata();
   if (!status->ok())
     return scoped_refptr<IndexedDBBackingStore>();
