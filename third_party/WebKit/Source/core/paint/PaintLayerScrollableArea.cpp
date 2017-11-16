@@ -1967,8 +1967,8 @@ static bool LayerNodeMayNeedCompositedScrolling(const PaintLayer* layer) {
 }
 
 bool PaintLayerScrollableArea::ComputeNeedsCompositedScrolling(
-    const bool layer_has_been_composited,
-    const PaintLayer* layer) {
+    const bool layer_has_been_composited) {
+  const PaintLayer* layer = Layer();
   non_composited_main_thread_scrolling_reasons_ = 0;
 
   // The root scroller needs composited scrolling layers even if it doesn't
@@ -1976,10 +1976,24 @@ bool PaintLayerScrollableArea::ComputeNeedsCompositedScrolling(
   // viewport. If we're in non-RootLayerScrolling mode, the root layer will be
   // the global root scroller (by default) but it doesn't actually handle
   // scrolls itself so we don't need composited scrolling for it.
-  if (RootScrollerUtil::IsGlobal(*layer) && !Layer()->IsScrolledByFrameView())
+  if (RootScrollerUtil::IsGlobal(*layer) && !layer->IsScrolledByFrameView())
     return true;
 
-  if (!layer->ScrollsOverflow())
+  if (!Box().HasOverflowClip())
+    return false;
+
+  if (!HasHorizontalOverflow() && !HasVerticalOverflow())
+    return false;
+
+  // For overflow:hidden (scrollable by script but not input), don't force
+  // promotion, but use composited scrolling if already promoted.
+  if (!layer->ScrollsOverflow() && !layer_has_been_composited)
+    return false;
+
+  // TODO(skobes): allow composited scrolling for pointer-events: none?  Seems
+  // comparable to overflow: hidden, but PLSA::UserInputScrollable would need to
+  // check for this and return false.
+  if (!Box().Style()->VisibleToHitTesting())
     return false;
 
   if (layer->Size().IsEmpty())
@@ -2048,7 +2062,7 @@ bool PaintLayerScrollableArea::ComputeNeedsCompositedScrolling(
 void PaintLayerScrollableArea::UpdateNeedsCompositedScrolling(
     bool layer_has_been_composited) {
   const bool needs_composited_scrolling =
-      ComputeNeedsCompositedScrolling(layer_has_been_composited, Layer());
+      ComputeNeedsCompositedScrolling(layer_has_been_composited);
 
   if (static_cast<bool>(needs_composited_scrolling_) !=
       needs_composited_scrolling) {
