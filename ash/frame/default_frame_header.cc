@@ -64,14 +64,6 @@ void TileRoundRect(gfx::Canvas* canvas,
   canvas->DrawPath(path, flags);
 }
 
-// Returns the FontList to use for the title.
-const gfx::FontList& GetTitleFontList() {
-  static const gfx::FontList* title_font_list =
-      new gfx::FontList(views::NativeWidgetAura::GetWindowTitleFontList());
-  ANNOTATE_LEAKING_OBJECT_PTR(title_font_list);
-  return *title_font_list;
-}
-
 }  // namespace
 
 namespace ash {
@@ -251,6 +243,14 @@ SkColor DefaultFrameHeader::GetTitleColor() const {
 bool DefaultFrameHeader::ShouldUseLightImages() const {
   return color_utils::IsDark(mode_ == MODE_INACTIVE ? inactive_frame_color_
                                                     : active_frame_color_);
+}
+
+// static
+const gfx::FontList& DefaultFrameHeader::GetTitleFontList() {
+  static const gfx::FontList* title_font_list =
+      new gfx::FontList(views::NativeWidgetAura::GetWindowTitleFontList());
+  ANNOTATE_LEAKING_OBJECT_PTR(title_font_list);
+  return *title_font_list;
 }
 
 void DefaultFrameHeader::UpdateLeftHeaderView(views::View* left_header_view) {
