@@ -402,7 +402,7 @@ void WindowState::SetBoundsInScreen(const gfx::Rect& bounds_in_screen) {
   window_->SetBounds(bounds_in_parent);
 }
 
-void WindowState::AdjustSnappedBounds(gfx::Rect* bounds) {
+void WindowState::AdjustSnappedBounds(gfx::Rect* bounds, const WMEvent* event) {
   if (is_dragged() || !IsSnapped())
     return;
   gfx::Rect maximized_bounds =
@@ -413,6 +413,9 @@ void WindowState::AdjustSnappedBounds(gfx::Rect* bounds) {
     bounds->set_x(maximized_bounds.right() - bounds->width());
   bounds->set_y(maximized_bounds.y());
   bounds->set_height(maximized_bounds.height());
+  DCHECK(event);
+  if (event->type() != WM_EVENT_SET_BOUNDS)
+    bounds->set_width(maximized_bounds.width() / 2);
 }
 
 void WindowState::UpdateWindowPropertiesFromStateType() {
