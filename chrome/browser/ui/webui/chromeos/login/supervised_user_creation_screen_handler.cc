@@ -17,6 +17,7 @@
 #include "chrome/browser/chromeos/login/users/supervised_user_manager.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
+#include "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
 #include "chrome/grit/generated_resources.h"
@@ -422,13 +423,14 @@ void SupervisedUserCreationScreenHandler::HandlePhotoTaken
 }
 
 void SupervisedUserCreationScreenHandler::HandleTakePhoto() {
-  AccessibilityManager::Get()->PlayEarcon(
-      SOUND_CAMERA_SNAP, PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
+  AccessibilityControllerClient::Get()->PlayEarcon(
+      SOUND_CAMERA_SNAP, ash::mojom::PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
 }
 
 void SupervisedUserCreationScreenHandler::HandleDiscardPhoto() {
-  AccessibilityManager::Get()->PlayEarcon(
-      SOUND_OBJECT_DELETE, PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
+  AccessibilityControllerClient::Get()->PlayEarcon(
+      SOUND_OBJECT_DELETE,
+      ash::mojom::PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
 }
 
 void SupervisedUserCreationScreenHandler::HandleSelectImage(

@@ -59,6 +59,7 @@
 #include "chrome/browser/chromeos/system/timezone_resolver_manager.h"
 #include "chrome/browser/chromeos/system/timezone_util.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h"
 #include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/browser/ui/webui/chromeos/internet_detail_dialog.h"
 #include "chrome/browser/ui/webui/chromeos/login/oobe_ui.h"
@@ -1294,8 +1295,8 @@ void LoginDisplayHostWebUI::TryToPlayStartupSound() {
     return;
   }
 
-  AccessibilityManager::Get()->PlayEarcon(SOUND_STARTUP,
-                                          PlaySoundOption::ALWAYS);
+  AccessibilityControllerClient::Get()->PlayEarcon(
+      SOUND_STARTUP, ash::mojom::PlaySoundOption::ALWAYS);
 }
 
 void LoginDisplayHostWebUI::OnLoginPromptVisible() {
