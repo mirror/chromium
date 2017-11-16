@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "08047924_e1870b3f",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-16T13:39:12Z",
+      "side": 1,
+      "message": "Yeah the latter.",
+      "parentUuid": "d0caab88_b7b715ae",
+      "revId": "25eac8e1e4cecc69785bc4724712895c51fa85db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "725c738f_a43b259f",
         "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
         "patchSetId": 7
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9a4c9be8_a989b69e",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-16T13:39:12Z",
+      "side": 1,
+      "message": "Yes, a drive-by fix.",
+      "parentUuid": "725c738f_a43b259f",
+      "range": {
+        "startLine": 1282,
+        "startChar": 9,
+        "endLine": 1282,
+        "endChar": 16
+      },
+      "revId": "25eac8e1e4cecc69785bc4724712895c51fa85db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bed60dc_49592d69",
         "filename": "content/browser/renderer_host/media/media_stream_manager.h",
         "patchSetId": 7
@@ -53,6 +95,30 @@
       "writtenOn": "2017-11-16T13:28:52Z",
       "side": 1,
       "message": "why pass the requester? \nIf it\u0027s to notify MSD about DeviceStopped it\u0027s OK. We\u0027ll fix that later.\n\nwhy default to nullptr?",
+      "range": {
+        "startLine": 186,
+        "startChar": 32,
+        "endLine": 186,
+        "endChar": 52
+      },
+      "revId": "25eac8e1e4cecc69785bc4724712895c51fa85db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c21151_824ad743",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-16T13:39:12Z",
+      "side": 1,
+      "message": "\u003e why pass the requester? \n\u003e If it\u0027s to notify MSD about DeviceStopped it\u0027s OK. We\u0027ll fix that later.\n\nYeah that was the intention.\n\n\u003e why default to nullptr?\n\nOne of the tests uses this method. To avoid creating MediaStreamRequester, I default requester to nullptr. The test doesn\u0027t require to be notified about DeviceStopped.",
+      "parentUuid": "9bed60dc_49592d69",
       "range": {
         "startLine": 186,
         "startChar": 32,
