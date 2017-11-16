@@ -44,30 +44,20 @@ UI.SearchableView = class extends UI.VBox {
 
     this._searchProvider = searchable;
     this._setting = settingName ? Common.settings.createSetting(settingName, {}) : null;
+    this._replaceable = false;
 
     this.contentElement.createChild('content');
     this._footerElementContainer = this.contentElement.createChild('div', 'search-bar hidden');
     this._footerElementContainer.style.order = 100;
 
-    var toolbar = new UI.Toolbar('', this._footerElementContainer);
-
-    if (this._searchProvider.supportsCaseSensitiveSearch()) {
-      this._caseSensitiveButton = new UI.ToolbarToggle(Common.UIString('Case sensitive'), '');
-      this._caseSensitiveButton.setText('Aa');
-      this._caseSensitiveButton.addEventListener(UI.ToolbarButton.Events.Click, this._toggleCaseSensitiveSearch, this);
-      toolbar.appendToolbarItem(this._caseSensitiveButton);
-    }
-
-    if (this._searchProvider.supportsRegexSearch()) {
-      this._regexButton = new UI.ToolbarToggle(Common.UIString('Regex'), '');
-      this._regexButton.setText('.*');
-      this._regexButton.addEventListener(UI.ToolbarButton.Events.Click, this._toggleRegexSearch, this);
-      toolbar.appendToolbarItem(this._regexButton);
-    }
+    this._toggleReplaceToolbar = new UI.Toolbar('toggle-replace-toolbar', this._footerElementContainer);
+    this._replaceToggleButton = new UI.ToolbarToggle(
+        Common.UIString('Toggle replace mode'), 'smallicon-triangle-right', 'smallicon-triangle-down');
+    this._replaceToggleButton.addEventListener(UI.ToolbarButton.Events.Click, this._toggleReplace, this);
+    this._toggleReplaceToolbar.appendToolbarItem(this._replaceToggleButton);
 
     this._footerElement = this._footerElementContainer.createChild('div', 'toolbar-search');
 
-    // Build the text input elements.
     var searchInputElements = this._footerElement.createChild('div', 'toolbar-search-inputs');
     var searchControlElement = searchInputElements.createChild('div', 'toolbar-search-control');
 
@@ -100,44 +90,37 @@ UI.SearchableView = class extends UI.VBox {
     this._replaceInputElement.addEventListener('keydown', this._onReplaceKeyDown.bind(this), true);
     this._replaceInputElement.placeholder = Common.UIString('Replace');
 
-    // Build the buttons (Find, Previous, Replace, Replace All).
-    this._buttonsContainer = this._footerElement.createChild('div', 'toolbar-search-buttons hidden');
+    var buttonsContainer = this._footerElement.createChild('div');
+    var firstRowToolbar = new UI.Toolbar('', buttonsContainer);
 
-    var findButtonElement =
-        UI.createTextButton(Common.UIString('Find'), this._onFindClick.bind(this), 'search-action-button');
-    findButtonElement.tabIndex = -1;
-    this._buttonsContainer.appendChild(findButtonElement);
+    if (this._searchProvider.supportsCaseSensitiveSearch()) {
+      this._caseSensitiveButton = new UI.ToolbarToggle(Common.UIString('Case sensitive'));
+      this._caseSensitiveButton.setText('Aa');
+      this._caseSensitiveButton.addEventListener(UI.ToolbarButton.Events.Click, this._toggleCaseSensitiveSearch, this);
+      firstRowToolbar.appendToolbarItem(this._caseSensitiveButton);
+    }
 
-    var prevButtonElement =
-        UI.createTextButton(Common.UIString('Previous'), this._onPreviousClick.bind(this), 'search-action-button');
-    prevButtonElement.tabIndex = -1;
-    this._buttonsContainer.appendChild(prevButtonElement);
+    if (this._searchProvider.supportsRegexSearch()) {
+      this._regexButton = new UI.ToolbarToggle(Common.UIString('Regex'));
+      this._regexButton.setText('.*');
+      this._regexButton.addEventListener(UI.ToolbarButton.Events.Click, this._toggleRegexSearch, this);
+      firstRowToolbar.appendToolbarItem(this._regexButton);
+    }
 
-    this._replaceButtonElement =
-        UI.createTextButton(Common.UIString('Replace'), this._replace.bind(this), 'search-action-button');
-    this._replaceButtonElement.disabled = true;
-    this._replaceButtonElement.tabIndex = -1;
-    this._buttonsContainer.appendChild(this._replaceButtonElement);
+    var cancelButtonElement = new UI.ToolbarButton(Common.UIString('Cancel'), 'largeicon-delete');
+    cancelButtonElement.addEventListener(UI.ToolbarButton.Events.Click, this.closeSearch, this);
+    firstRowToolbar.appendToolbarItem(cancelButtonElement);
 
-    var replaceAllButtonElement =
-        UI.createTextButton(Common.UIString('Replace all'), this._replaceAll.bind(this), 'search-action-button');
-    this._buttonsContainer.appendChild(replaceAllButtonElement);
+    this._secondRowToolbar = new UI.Toolbar('', buttonsContainer);
+    var replaceButtonElement = new UI.ToolbarToggle(Common.UIString('Replace'), 'mediumicon-replace');
+    replaceButtonElement.addEventListener(UI.ToolbarButton.Events.Click, this._replace, this);
+    this._secondRowToolbar.appendToolbarItem(replaceButtonElement);
 
-    // Build the replace checkbox and cancel button.
-    this._replaceElement = this._footerElement.createChild('div').createChild('span', 'toolbar-replace-checkbox');
+    var replaceAllButtonElement = new UI.ToolbarToggle(Common.UIString('Replace all'), 'mediumicon-replace-all');
+    replaceAllButtonElement.addEventListener(UI.ToolbarButton.Events.Click, this._replaceAll, this);
+    this._secondRowToolbar.appendToolbarItem(replaceAllButtonElement);
 
-    var replaceLabelElement = UI.CheckboxLabel.create(Common.UIString('Replace'));
-    this._replaceCheckboxElement = replaceLabelElement.checkboxElement;
-    this._replaceCheckboxElement.addEventListener('change', this._updateSecondRowVisibility.bind(this), false);
-
-    this._replaceElement.appendChild(replaceLabelElement);
-
-    var cancelButtonElement =
-        UI.createTextButton(Common.UIString('Cancel'), this.closeSearch.bind(this), 'search-action-button');
-    cancelButtonElement.tabIndex = -1;
     this._minimalSearchQuerySize = 3;
-    this._footerElement.createChild('div').appendChild(cancelButtonElement);
-
     this._loadSetting();
   }
 
@@ -164,6 +147,11 @@ UI.SearchableView = class extends UI.VBox {
     this._regexButton.setToggled(!this._regexButton.toggled());
     this._saveSetting();
     this._performSearch(false, true);
+  }
+
+  _toggleReplace() {
+    this._replaceToggleButton.setToggled(!this._replaceToggleButton.toggled());
+    this._updateSecondRowVisibility();
   }
 
   _saveSetting() {
@@ -202,6 +190,13 @@ UI.SearchableView = class extends UI.VBox {
    */
   setReplaceable(replaceable) {
     this._replaceable = replaceable;
+  }
+
+  /**
+   * @return {boolean}
+   */
+  isReplaceable() {
+    return this._replaceable;
   }
 
   /**
@@ -302,7 +297,7 @@ UI.SearchableView = class extends UI.VBox {
    * @param {boolean} enabled
    */
   _updateSearchNavigationButtonState(enabled) {
-    this._replaceButtonElement.disabled = !enabled;
+    this._secondRowToolbar.setEnabled(enabled);
     if (enabled) {
       this._searchNavigationPrevElement.classList.add('enabled');
       this._searchNavigationNextElement.classList.add('enabled');
@@ -328,7 +323,10 @@ UI.SearchableView = class extends UI.VBox {
     this._updateSearchNavigationButtonState(matches > 0);
   }
 
-  showSearchField() {
+  /**
+   * @param {boolean=} showReplace
+   */
+  showSearchField(showReplace) {
     if (this._searchIsVisible)
       this.cancelSearch();
 
@@ -341,6 +339,8 @@ UI.SearchableView = class extends UI.VBox {
 
     this._toggleSearchBar(true);
     this._updateReplaceVisibility();
+    this._replaceToggleButton.setToggled(!!showReplace && this._replaceable);
+    this._updateSecondRowVisibility();
     if (queryCandidate)
       this._searchInputElement.value = queryCandidate;
     this._performSearch(false, false);
@@ -350,9 +350,9 @@ UI.SearchableView = class extends UI.VBox {
   }
 
   _updateReplaceVisibility() {
-    this._replaceElement.classList.toggle('hidden', !this._replaceable);
+    this._toggleReplaceToolbar.element.classList.toggle('hidden', !this._replaceable);
     if (!this._replaceable) {
-      this._replaceCheckboxElement.checked = false;
+      this._replaceToggleButton.setToggled(false);
       this._updateSecondRowVisibility();
     }
   }
@@ -465,11 +465,10 @@ UI.SearchableView = class extends UI.VBox {
   }
 
   _updateSecondRowVisibility() {
-    var secondRowVisible = this._replaceCheckboxElement.checked;
+    var secondRowVisible = this._replaceToggleButton.toggled();
     this._footerElementContainer.classList.toggle('replaceable', secondRowVisible);
-    this._buttonsContainer.classList.toggle('hidden', !secondRowVisible);
+    this._secondRowToolbar.element.classList.toggle('hidden', !secondRowVisible);
     this._replaceInputElement.classList.toggle('hidden', !secondRowVisible);
-    this._replaceCheckboxElement.tabIndex = secondRowVisible ? -1 : 0;
 
     if (secondRowVisible)
       this._replaceInputElement.focus();
