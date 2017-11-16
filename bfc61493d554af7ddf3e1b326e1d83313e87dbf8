@@ -106,6 +106,24 @@
       "revId": "bfc61493d554af7ddf3e1b326e1d83313e87dbf8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "769a349d_148220fe",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-16T14:36:44Z",
+      "side": 1,
+      "message": "That comment predates your change and that\u0027s what I had in mind, but you\u0027re right and I take it back: I don\u0027t think your change influences this issue because the number of entries in the navigation controller stays the same (I got confused and though that, prior to your change, meta refresh tags would end up having a dedicated index). And what happens in History is orthogonal to sync.\n\nThere\u0027s something else I\u0027m confused about: I thought your change would cause some page transition types be LINK when it used to be something else (like TYPED, prior to being replaced). I exercised my browser tests from https://chromium-review.googlesource.com/c/chromium/src/+/721019 hoping that your change would already make them pass, but that\u0027s not the case and hence your change influenced behavior less than I thought. Do you know of cases that fall in this bucket?",
+      "parentUuid": "5cc76dfc_49c2c68c",
+      "revId": "bfc61493d554af7ddf3e1b326e1d83313e87dbf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
