@@ -1,0 +1,379 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19d0d6ee_9ce7f1e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "Can we use a different name, like content_id? \"uid\" already means \"user id\" in my head.",
+      "range": {
+        "startLine": 13,
+        "startChar": 31,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b1c2f81_896fe896",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "Is |status| really |is_ready| ?",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "612c3fdb_23759f98",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "Is |page_num| 0-indexed, or 1-indexed?",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b7e462_7fd2a003",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "const ref?",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf4ac6b_b77a6c68",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "Should we DCHECK this is not overwriting an existing entry?",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb00c12_0aed44ac",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "There are several places that do the same uid_to_id_map_ + frame_info_map_ find() check. Maybe add a helper function?",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1579fa_381e285a",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "This is just iter-\u003esecond",
+      "range": {
+        "startLine": 45,
+        "startChar": 29,
+        "endLine": 45,
+        "endChar": 48
+      },
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5235447d_ba39d03a",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "|kRequestTimeoutSec| can be constexpr base::TimeDelta, so no need to call base::TimeDelta::FromSeconds() every time.",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b20dafb2_dcc3801f",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "std::make_pair(frame_id, page_num) is shorter. If you don\u0027t care about saving the iterator, you can use base::ContainsKey().\n\nDCHECK(!base::ContainsKey(pending_requests_, std::make_pair(frame_id, page_num)));",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "255e99ac_6929f34f",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "Can we skip this?",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab213f59_6abe4b31",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ece73c8_f77b3c1f",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "You can save the find() result, and use that instead of frame_info_map_[frame_id] below. e.g.\n\nauto it \u003d frame_info_map_.find(frame_id);\nif (it \u003d\u003d frame_info_map_.end())\n  return nullptr;\n\nFrameInfo* frame_info \u003d it-\u003esecond.get();\nframe_info-\u003ecomposited \u003d true;",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f633017c_ec6a8707",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "braces",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb6183a_e50eac61",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "sk_sp doesn\u0027t need explicit initialization.",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10559130_49eee786",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "Move to anonymous namespace in .cc file",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89eb9a2f_957ab335",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "More pass by reference.",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03478fb5_8ac0d39e",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "Is having the reverse map really necessary?",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea64d3c4_741870fe",
+        "filename": "components/printing/service/pdf_compositor_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86079ee5_8b600d7f",
+        "filename": "components/printing/service/public/cpp/pdf_compositor_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "Just \"status\" here?",
+      "range": {
+        "startLine": 34,
+        "startChar": 53,
+        "endLine": 34,
+        "endChar": 74
+      },
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44dc15e6_09269c4d",
+        "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "Is the reason for having the content unique id because webpages can contain multiple subframes from the same RFH?",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d75b7355_6d015f65",
+        "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:08:50Z",
+      "side": 1,
+      "message": "There is no gfx::Rect here. Does that mean frames can potentially draw outside of their bounds?",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
