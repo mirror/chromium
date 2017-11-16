@@ -16,6 +16,24 @@
       "revId": "24ffbedf9edae4bf68a2e192a922cbdc79cbbedd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc06b29d_82c12af9",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-16T23:15:13Z",
+      "side": 0,
+      "message": "Ok, I removed |mirrored| from DisplayLayout. Thanks.",
+      "parentUuid": "583bdef8_c0ba8d8f",
+      "revId": "24ffbedf9edae4bf68a2e192a922cbdc79cbbedd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
