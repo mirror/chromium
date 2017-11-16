@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3de734e0_d12b2e98",
+        "filename": "chrome/browser/vr/elements/exit_prompt_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-16T19:40:09Z",
+      "side": 1,
+      "message": "Sanity check:  OOC, why do this rather than defaulting to IDS_VR_SHELL_EXIT_PROMPT_DESCRIPTION, as SetExitVrPromptEnabled() does?",
+      "revId": "9cc1eef45c55e82cbf7942184ccea2f9c7bb4c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
