@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51e7e4d5_0a4bdd98",
+        "filename": "cc/layers/texture_layer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-16T18:48:33Z",
+      "side": 0,
+      "message": "Oh, right, we fixed pepper and don\u0027t need this any more.",
+      "revId": "b921ab4076b02ec2cfa7993ec94ed4e5094ee0a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

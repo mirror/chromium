@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83adfa36_b6942ae2",
+        "filename": "build/sanitizers/tsan_suppressions.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-16T18:48:33Z",
+      "side": 1,
+      "message": "Bug is closed, I wonder if we still need the suppression...",
+      "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9e1a2a_697cd95a",
+        "filename": "cc/layers/texture_layer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-16T18:48:33Z",
+      "side": 1,
+      "message": "nit: do we want to use TransferableResource::MakeGL and friends throughout this file?",
+      "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcaba6a3_a1e1eed5",
+        "filename": "cc/trees/layer_tree_host_unittest_context.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-16T18:48:33Z",
+      "side": 1,
+      "message": "nit: ditto MakeGL",
+      "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a3c78e7_b12cc91e",
+        "filename": "components/viz/common/quads/texture_mailbox.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-16T18:48:33Z",
+      "side": 1,
+      "message": "These are gone in your previous patch",
+      "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f73e339_6073a7d6",
+        "filename": "components/viz/common/resources/transferable_resource.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-16T18:48:33Z",
+      "side": 1,
+      "message": "nit: should this be operator\u003d ? Since this is a value type, might make interaction with STL algos easier.",
+      "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81123420_14c0db49",
+        "filename": "content/renderer/pepper/pepper_compositor_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-16T18:48:33Z",
+      "side": 1,
+      "message": "nit: TransferableResource is not movable... should it?\nSetTransferableResource takes a const TR\u0026 anyway.",
+      "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c36462_299b86cb",
+        "filename": "content/renderer/pepper/pepper_plugin_instance_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-16T18:48:33Z",
+      "side": 1,
+      "message": "nit: there might be value in adding a bool TransferableResource::IsEmpty() const or sth.",
+      "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
