@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ca836bc_2fda7233",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTTokenizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-16T09:59:27Z",
+      "side": 1,
+      "message": "This should be done during tree construction (VTTTreeBuilder::ConstructTreeFromToken) instead.",
+      "range": {
+        "startLine": 253,
+        "startChar": 8,
+        "endLine": 254,
+        "endChar": 16
+      },
+      "revId": "f76a535528b35d7ca595e33aaea15046cd255546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
