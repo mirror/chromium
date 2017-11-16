@@ -67,6 +67,17 @@ Polymer({
   },
 
   /**
+   * Handle forcing zoom to fit-to-width via scripting.
+   */
+  forceFitToWidth: function() {
+    this.fire('fit-to-width');
+
+    // Set the button state since there was no mouse click. Since the zoom is
+    // set to fit-to-width, the button should do fit-to-page on the next click.
+    this.$['fit-button'].activeIndex = FIT_TO_PAGE;
+  },
+
+  /**
    * Handle clicks of the zoom-in-button.
    */
   zoomIn: function() {
