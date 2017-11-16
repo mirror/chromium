@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "62a5607b_7b51a267",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-16T16:52:40Z",
+      "side": 1,
+      "message": "Oops. Should\u0027ve thought twice before copying the code. Thanks!",
+      "parentUuid": "12a2cdbb_6e27f6aa",
+      "range": {
+        "startLine": 177,
+        "startChar": 8,
+        "endLine": 177,
+        "endChar": 63
+      },
+      "revId": "8d6ce9374ccf72c2f8b7397bd27cddac263e6c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b44f029_44924401",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline.py",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-16T04:38:31Z",
       "side": 1,
       "message": "Side note: It\u0027s not any shorter, but I think this should be the same as:\n\n    tests.update(self._port.tests([test_prefix]))",
+      "revId": "8d6ce9374ccf72c2f8b7397bd27cddac263e6c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd8babba_3873fba6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-16T16:52:40Z",
+      "side": 1,
+      "message": "Yeah it\u0027s the same. Changed to update() to be a little more consistent with the rest of this file.",
+      "parentUuid": "2b44f029_44924401",
       "revId": "8d6ce9374ccf72c2f8b7397bd27cddac263e6c78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -56,6 +98,24 @@
       "revId": "8d6ce9374ccf72c2f8b7397bd27cddac263e6c78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2186283_4a319efa",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-16T16:52:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "061bc96a_2d70bd01",
+      "revId": "8d6ce9374ccf72c2f8b7397bd27cddac263e6c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
