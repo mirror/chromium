@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fffb04a8_bd9a6f13",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-16T05:01:55Z",
+      "side": 1,
+      "message": "I\u0027m not sure if it makes any difference, but probably it\u0027s safer to set the label only when auth_key_.label() is not empty to do the same thing as FillAuthorizationProtobuf().\nEven when auth_key_ is empty this code changes the state of the proto to return true for has_label().\n(see https://developers.google.com/protocol-buffers/docs/reference/cpp-generated#string)\n\nThe same goes for extended_authenticator_impl.cc.",
+      "revId": "39405e3f8b9a76250495f78de8a308bbfefbc627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
