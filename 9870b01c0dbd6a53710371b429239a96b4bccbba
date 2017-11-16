@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "180bdcb6_5e3bf2e1",
+        "filename": "ash/frame/default_frame_header_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T17:17:11Z",
+      "side": 1,
+      "message": "nit: not needed",
+      "revId": "9870b01c0dbd6a53710371b429239a96b4bccbba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc929ff_d14c26ce",
+        "filename": "ash/frame/default_frame_header_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T17:17:11Z",
+      "side": 1,
+      "message": "nit: ash:: not needed through the rest of the file",
+      "revId": "9870b01c0dbd6a53710371b429239a96b4bccbba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
