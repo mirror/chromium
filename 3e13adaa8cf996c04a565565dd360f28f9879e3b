@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86c629cc_27769f81",
+        "filename": "ash/public/cpp/ash_pref_names.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-16T01:05:28Z",
+      "side": 1,
+      "message": "I think it\u0027s slightly odd that we persist a pref for this, is it possible this could just be a per-session state? (I\u0027d image it\u0027s okay to either keep the current state or reset to default when switching users or logging out)",
+      "revId": "3e13adaa8cf996c04a565565dd360f28f9879e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f542eba_a4b82ba2",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-16T01:05:28Z",
+      "side": 1,
+      "message": "optional nit: just assign directly to the member.",
+      "range": {
+        "startLine": 357,
+        "startChar": 2,
+        "endLine": 357,
+        "endChar": 26
+      },
+      "revId": "3e13adaa8cf996c04a565565dd360f28f9879e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d046ae_eba7196b",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-16T01:05:28Z",
+      "side": 1,
+      "message": "Should TouchHudController be observing the pref changes? It seems possible that the synced/stored pref value isn\u0027t ready when the startup root window controllers are being initialized. (perhaps this function is only useful when initializing rwcs during a session, ie. attaching a monitor, etc.)",
+      "revId": "3e13adaa8cf996c04a565565dd360f28f9879e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a5a99b_0420472a",
+        "filename": "ash/root_window_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-16T01:05:28Z",
+      "side": 1,
+      "message": "optional nit: combine functions to SetTouchHudProjectionEnabled(bool enabled), or maybe just combine comments and remove the whitespace between",
+      "revId": "3e13adaa8cf996c04a565565dd360f28f9879e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42898487_5de43350",
+        "filename": "ash/shell.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-16T01:05:28Z",
+      "side": 1,
+      "message": "aside: This comment seems out of place among numerous other controller members that have untold dependencies. Perhaps this belongs in the class comment?",
+      "revId": "3e13adaa8cf996c04a565565dd360f28f9879e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dcee5ef_5893d7fe",
+        "filename": "ash/touch/touch_hud_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-16T01:05:28Z",
+      "side": 1,
+      "message": "optional nit: consider this comment/code here and for the matching comment below.\n  // Touch HUD isn\u0027t used before login, when |prefs| would be null.\n  return prefs \u0026\u0026 prefs-\u003eGetBoolean(prefs::kTouchHudProjectionEnabled);",
+      "revId": "3e13adaa8cf996c04a565565dd360f28f9879e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687af9cb_35fde061",
+        "filename": "ash/touch/touch_hud_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-16T01:05:28Z",
+      "side": 1,
+      "message": "Could this be folded into TouchDevicesController (also a Shell member and a SessionObserver)?",
+      "revId": "3e13adaa8cf996c04a565565dd360f28f9879e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

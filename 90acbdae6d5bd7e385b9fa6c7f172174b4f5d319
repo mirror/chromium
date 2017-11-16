@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28075699_a10f0b25",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-16T01:05:28Z",
+      "side": 0,
+      "message": "What exactly was this doing?",
+      "revId": "90acbdae6d5bd7e385b9fa6c7f172174b4f5d319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77247c30_36817297",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-16T01:05:28Z",
+      "side": 0,
+      "message": "wow, I\u0027ve never seen a pref managed like this...",
+      "revId": "90acbdae6d5bd7e385b9fa6c7f172174b4f5d319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
