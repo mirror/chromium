@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "195a028e_40d05f27",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 3210,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-16T04:37:50Z",
+      "side": 1,
+      "message": "You can have multiple experiments with different params, e.g.\n\n{\n name: \"save-resources-until-dcl\",\n enable_features: [ \"save-previous-document-resources\" ],\n params: { \"until\": \"dcl\" },\n},\n{\n name: \"save-resources-until-onload\",\n enable_features: [ \"save-previous-document-resources\" ],\n params: { \"until\": \"onload\" },\n},\n\nbool result \u003d base::GetFieldTrialParams(kSavePreviousDocumentResources, \u0026trial_params);\nif (!result) { /* use default params */ }\nconst auto\u0026 found \u003d trial_params.find(\u0027until\u0027);\nif (found-\u003esecond \u003d\u003d \"onload\") { ... }",
+      "revId": "ae1391c29dcb0183ead69d74e744f786377d4290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
