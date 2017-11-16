@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1292ef0b_e60ec805",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-16T04:51:41Z",
+      "side": 1,
+      "message": "I think you can move try-catch outside of eval.",
+      "revId": "43534d454e1540e46636b69043d289f228eb01ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
