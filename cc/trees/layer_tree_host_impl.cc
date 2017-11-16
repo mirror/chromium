@@ -1524,7 +1524,7 @@ void LayerTreeHostImpl::SetMemoryPolicy(const ManagedMemoryPolicy& policy) {
   if (!policy.bytes_limit_when_visible && resource_pool_ &&
       settings_.using_synchronous_renderer_compositor) {
     ReleaseTileResources();
-    CleanUpTileManagerAndUIResources();
+    CleanUpTileManagerResources();
 
     // Force a call to NotifyAllTileTasks completed - otherwise this logic may
     // be skipped if no work was enqueued at the time the tile manager was
@@ -2031,7 +2031,7 @@ void LayerTreeHostImpl::UpdateTreeResourcesForGpuRasterizationIfNeeded() {
   // one.
   ReleaseTileResources();
   if (resource_pool_) {
-    CleanUpTileManagerAndUIResources();
+    CleanUpTileManagerResources();
     CreateTileManagerResources();
   }
   RecreateTileResources();
@@ -2592,8 +2592,7 @@ void LayerTreeHostImpl::DidChangeScrollbarVisibility() {
   client_->SetNeedsCommitOnImplThread();
 }
 
-void LayerTreeHostImpl::CleanUpTileManagerAndUIResources() {
-  ClearUIResources();
+void LayerTreeHostImpl::CleanUpTileManagerResources() {
   tile_manager_.FinishTasksAndCleanUp();
   resource_pool_ = nullptr;
   single_thread_synchronous_task_graph_runner_ = nullptr;
@@ -2629,7 +2628,8 @@ void LayerTreeHostImpl::ReleaseLayerTreeFrameSink() {
   ReleaseTreeResources();
 
   // Note: ui resource cleanup uses the |resource_provider_|.
-  CleanUpTileManagerAndUIResources();
+  CleanUpTileManagerResources();
+  ClearUIResources();
   resource_provider_ = nullptr;
 
   // Release any context visibility before we destroy the LayerTreeFrameSink.
