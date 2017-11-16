@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08982c24_5def0092",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-16T22:16:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed6da6f2_667018a5",
+      "range": {
+        "startLine": 1367,
+        "startChar": 17,
+        "endLine": 1367,
+        "endChar": 20
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98867820_003b6381",
         "filename": "content/browser/download/download_item_impl.cc",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-10T07:02:33Z",
       "side": 1,
       "message": "parallizable doesn\u0027t mean we are using 2 streams, parallel download could use more than 2 streams. And I don\u0027t think you can get the number of streams on start, as there could be delays and some streams are actually not working if server doesn\u0027t support parallel download.",
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6aa7fa5_b07f2f95",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1382,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-16T22:16:06Z",
+      "side": 1,
+      "message": "How do we calculate streams / are we tracking it anywhere? Would it make sense then to put this metric on the Download.Ended call instead?",
+      "parentUuid": "98867820_003b6381",
       "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a35655e5_5cad305c",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1741,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-16T22:16:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "708e449d_ce7200c7",
+      "range": {
+        "startLine": 1741,
+        "startChar": 49,
+        "endLine": 1741,
+        "endChar": 62
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddb92be9_3e070d8f",
         "filename": "content/browser/download/download_item_impl.cc",
         "patchSetId": 6
@@ -85,6 +151,30 @@
       "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60193659_e6eaba62",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1766,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-16T22:16:06Z",
+      "side": 1,
+      "message": "The goal is to track when the actual call is made, so I\u0027m counting it as the beginning of the function rather than the point at which the information is actually recorded to the UKM, which is later in the function.",
+      "parentUuid": "ddb92be9_3e070d8f",
+      "range": {
+        "startLine": 1766,
+        "startChar": 2,
+        "endLine": 1766,
+        "endChar": 60
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "5313872d_c8a5694c",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2154,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-16T22:16:06Z",
+      "side": 1,
+      "message": "Same!",
+      "parentUuid": "3e3933c8_ed8be19f",
+      "range": {
+        "startLine": 2154,
+        "startChar": 2,
+        "endLine": 2154,
+        "endChar": 60
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69063866_88f78a57",
         "filename": "content/browser/download/download_stats.cc",
         "patchSetId": 6
@@ -131,6 +245,30 @@
       "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d0c950_d2ccbb23",
+        "filename": "content/browser/download/download_stats.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-16T22:16:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69063866_88f78a57",
+      "range": {
+        "startLine": 725,
+        "startChar": 9,
+        "endLine": 725,
+        "endChar": 12
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "32e8a7b5_cc509633",
+        "filename": "content/browser/download/download_ukm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-16T22:16:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a3a2a26_ebdac28f",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 26
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5104024d_971a2e55",
         "filename": "content/browser/download/download_ukm.cc",
         "patchSetId": 6
@@ -177,6 +339,30 @@
       "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ae36e9_7f3115db",
+        "filename": "content/browser/download/download_ukm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-16T22:16:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5104024d_971a2e55",
+      "range": {
+        "startLine": 77,
+        "startChar": 45,
+        "endLine": 77,
+        "endChar": 49
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "12524b5f_d553d7ee",
+        "filename": "content/browser/download/download_ukm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-16T22:16:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15ff48a5_e651900a",
+      "range": {
+        "startLine": 80,
+        "startChar": 32,
+        "endLine": 80,
+        "endChar": 33
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be84bc78_1156e499",
         "filename": "content/browser/download/download_ukm.h",
         "patchSetId": 6
@@ -223,6 +433,30 @@
       "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "044d4e64_d0d104e7",
+        "filename": "content/browser/download/download_ukm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-16T22:16:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be84bc78_1156e499",
+      "range": {
+        "startLine": 36,
+        "startChar": 15,
+        "endLine": 36,
+        "endChar": 16
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
