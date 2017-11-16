@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a67ad52_90209f10",
+        "filename": "media/midi/midi_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-16T06:52:56Z",
+      "side": 0,
+      "message": "Is this intentional? I think having an empty line here is chromium-style compatible.",
+      "revId": "8e1966b926d5aa94ae21a22c9c026d9fc7449292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

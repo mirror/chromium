@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d02a35cf_cabb2836",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-16T06:52:56Z",
+      "side": 1,
+      "message": "Can you add 785689 too?\nEventually, I\u0027d move everything to //components/midi. I actually had such change months ago, but didn\u0027t submit it just because we didn\u0027t have much reason to do so. But, now we have a reason.",
+      "revId": "1f4e1cd2f6d2b94ce603afa38ee7788c0ad362ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ea2c42_975c9080",
+        "filename": "components/midi/OwNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-16T06:52:56Z",
+      "side": 1,
+      "message": "We can just remove \"per-file *.*\u003d\". Following one liner should just work.\n\nfile://media/midi/OWNERS\n\nAlso, please fix the filename, s/OwNER/OWNER/.",
+      "revId": "1f4e1cd2f6d2b94ce603afa38ee7788c0ad362ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968c4500_045a656e",
+        "filename": "media/midi/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-16T06:52:56Z",
+      "side": 1,
+      "message": "Is these header lines really needed? I expect just having deps to midi_utils works fine, but I may be wrong.\n\nAnother choice is make the midi_utils source_set rather than static library. It makes build more flexible.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 45
+      },
+      "revId": "1f4e1cd2f6d2b94ce603afa38ee7788c0ad362ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
