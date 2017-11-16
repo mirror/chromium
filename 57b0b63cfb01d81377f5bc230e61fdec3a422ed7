@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcc94634_eb3acfd1",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2017-11-16T15:56:26Z",
+      "side": 1,
+      "message": "Shouldn\u0027t it be \"MediaCapabilities\" with a \"s\"?",
+      "revId": "57b0b63cfb01d81377f5bc230e61fdec3a422ed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
