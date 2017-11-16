@@ -33,6 +33,11 @@ class GIN_EXPORT V8Initializer {
                                         const char** snapshot_data_out,
                                         int* snapshot_size_out);
 
+  // Get address and size information for currently loaded V8 context snapshot.
+  // If no snapshot is loaded, the return values are nullptr and 0.
+  static IsolateHolder::SnapshotType GetV8ContextSnapshotData(
+      v8::StartupData* snapshot);
+
 #if defined(V8_USE_EXTERNAL_STARTUP_DATA)
 
   // Load V8 snapshot from user provided platform file descriptors.
@@ -42,6 +47,11 @@ class GIN_EXPORT V8Initializer {
   static void LoadV8SnapshotFromFD(base::PlatformFile snapshot_fd,
                                    int64_t snapshot_offset,
                                    int64_t snapshot_size);
+  // Load V8 context snapshot from user provided platform file descriptors.
+  // Other details are same with LoadV8SnapshotFromFD.
+  static void LoadV8ContextSnapshotFromFD(base::PlatformFile snapshot_fd,
+                                          int64_t snapshot_offset,
+                                          int64_t snapshot_size);
   // Similar to LoadV8SnapshotFromFD, but for the source of the natives.
   // Without the natives we cannot continue, so this function contains
   // release mode asserts and won't return if it fails.
@@ -51,6 +61,9 @@ class GIN_EXPORT V8Initializer {
 
   // Load V8 snapshot from default resources, if they are available.
   static void LoadV8Snapshot();
+
+  // Load V8 context snapshot from default resources, if they are available.
+  static void LoadV8ContextSnapshot();
 
   // Load V8 natives source from default resources. Contains asserts
   // so that it will not return if natives cannot be loaded.
@@ -62,19 +75,6 @@ class GIN_EXPORT V8Initializer {
 #endif
 
 #endif  // V8_USE_EXTERNAL_STARTUP_DATA
-
-  // Load V8 context snapshot from user provided platform file descriptors.
-  // Other details are same with LoadV8SnapshotFromFD.
-  static void LoadV8ContextSnapshotFromFD(base::PlatformFile snapshot_fd,
-                                          int64_t snapshot_offset,
-                                          int64_t snapshot_size);
-
-  // Load V8 context snapshot from default resources, if they are available.
-  static void LoadV8ContextSnapshot();
-
-  // Get address and size information for currently loaded V8 context snapshot.
-  // If no snapshot is loaded, the return values are nullptr and 0.
-  static void GetV8ContextSnapshotData(v8::StartupData* snapshot);
 };
 
 }  // namespace gin
