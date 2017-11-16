@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1fb7840_9b96c2ce",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptController.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2017-11-16T11:04:51Z",
+      "side": 1,
+      "message": "Done, though it\u0027s inconsistent with the other helpers below, all of which take a ScriptSourceCode.",
+      "parentUuid": "c1b30687_3fb2b7e5",
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a64fbc8_5e5405e1",
         "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceCode.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed35699_eabb75b9",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceCode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2017-11-16T11:04:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5a64fbc8_5e5405e1",
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2965cf0a_01086d51",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceCode.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2017-11-16T11:04:51Z",
+      "side": 1,
+      "message": "This was because of a misunderstanding of how URLs work, thanks.",
+      "parentUuid": "7af9225f_e02bdabe",
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffe307e7_3a52800a",
         "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceOrigin.h",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0209628a_b730aca1",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceOrigin.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2017-11-16T11:04:51Z",
+      "side": 1,
+      "message": "Done -- I was following the pattern in e.g. third_party/WebKit/Source/bindings/core/v8/V8BindingForCore.cpp",
+      "parentUuid": "ffe307e7_3a52800a",
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +182,48 @@
     },
     {
       "key": {
+        "uuid": "debaab7c_30cb2526",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceOrigin.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2017-11-16T11:04:51Z",
+      "side": 1,
+      "message": "I don\u0027t love this name either, but I also can\u0027t think of a better name. I\u0027ll keep thinking, let me know if you come up with one.",
+      "parentUuid": "db455483_f7b42cd3",
+      "range": {
+        "startLine": 36,
+        "startChar": 11,
+        "endLine": 36,
+        "endChar": 29
+      },
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e999cb_827a6994",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceOrigin.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2017-11-16T11:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95045d79_0b174f26",
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99cee09c_75747b74",
         "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceOrigin.h",
         "patchSetId": 3
@@ -124,6 +238,24 @@
       "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5dc0edd_aae1c70c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceOrigin.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2017-11-16T11:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99cee09c_75747b74",
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +282,30 @@
     },
     {
       "key": {
+        "uuid": "7c2b3268_80119f11",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunnerTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2017-11-16T11:04:51Z",
+      "side": 1,
+      "message": "kExternalFile matches our invariants best, so done. I\u0027ve also added a DCHECK to V8ScriptRunner::CompileScript that this must be ExternalFile as long as there is a ScriptResource.",
+      "parentUuid": "b7e3f8a3_21ff2adb",
+      "range": {
+        "startLine": 65,
+        "startChar": 36,
+        "endLine": 65,
+        "endChar": 46
+      },
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99c879ae_1adb0048",
         "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
         "patchSetId": 3
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "39542720_f9a998a3",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2017-11-16T11:04:51Z",
+      "side": 1,
+      "message": "Done, replaced with a DCHECK that the source origin is not kExternalFile.",
+      "parentUuid": "99c879ae_1adb0048",
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dad2a10_cb53139c",
         "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
         "patchSetId": 3
@@ -181,6 +355,24 @@
       "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e996a4_5d09b374",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2017-11-16T11:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dad2a10_cb53139c",
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +399,30 @@
     },
     {
       "key": {
+        "uuid": "10cd4eb6_803e2b9b",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2017-11-16T11:04:51Z",
+      "side": 1,
+      "message": "I originally had \"InlineNotParserInserted\" but I felt it was too obscure for someone unfamiliar with the details of \u003cscript\u003e parsing (i.e. for me in 2 months\u0027 time)",
+      "parentUuid": "b44b2cb9_c1ae7b54",
+      "range": {
+        "startLine": 676,
+        "startChar": 44,
+        "endLine": 676,
+        "endChar": 60
+      },
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d635fb63_7c3ca039",
         "filename": "third_party/WebKit/Source/core/xml/DocumentXMLTreeViewer.cpp",
         "patchSetId": 3
@@ -221,6 +437,24 @@
       "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ebd080_d08e983e",
+        "filename": "third_party/WebKit/Source/core/xml/DocumentXMLTreeViewer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2017-11-16T11:04:51Z",
+      "side": 1,
+      "message": "I agree, done.",
+      "parentUuid": "d635fb63_7c3ca039",
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
