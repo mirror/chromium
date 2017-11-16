@@ -22,6 +22,30 @@
       "revId": "74a793579200ebbdbf7d520d8459787b65c644ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe040cfa_9453834d",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T14:18:51Z",
+      "side": 1,
+      "message": "This is partly why I suggested a regular singleton. You may find more of these cases.\n\nOne thing you could do is include the profile in the base::Bind() call on line 188 and hope it\u0027s safe.",
+      "parentUuid": "9defa3ff_4b1b61f5",
+      "range": {
+        "startLine": 441,
+        "startChar": 0,
+        "endLine": 441,
+        "endChar": 28
+      },
+      "revId": "74a793579200ebbdbf7d520d8459787b65c644ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
