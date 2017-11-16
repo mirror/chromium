@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "5668235c_fe5a76ac",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-16T19:34:16Z",
+      "side": 1,
+      "message": "Ack :-(",
+      "parentUuid": "243c86cc_1650171d",
+      "revId": "e1bc289482e27c66da5624270921155b857cee8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "121a6a2a_216c5156",
         "filename": "content/browser/frame_host/frame_tree_node.cc",
         "patchSetId": 5
@@ -202,6 +220,24 @@
       "side": 1,
       "message": "\u003e I don\u0027t think so.  There are differences:\n\u003e 1. NEI::RemoveTreeNode(tree_node) *unconditionally* removes tree node\n\u003e 2. FTN::RemoveChild(child) looks up tree node with unique name matching |child| and unconditionally removes the tree node\n\u003e 3. ClearStaleFrameEntriesForNewFrame(ftn) looks up tree node with unique name matching |ftn| and only removes such tree node is it is NOT in the same tree position as |ftn|.\n\u003e \n\u003e I guess the \"looks up tree node with unique name matching |ftn|\" is shared across 2 and 3.  I\u0027ll tweak 3 so that it calls GetTreeNode instead of reimplementing the lookup.\n\nHmm, I\u0027d like to try again since I\u0027m not thrilled about losing the DCHECK_LE(count, 1) in that method, and since these still feel very similar to me.  (Good point about InSameTreePosition, though.)\n\nWhat if we rename ClearStaleFrameEntriesForNewFrame to RemoveFrameEntryForFrame(FrameTreeNode* frame_tree_node, bool only_if_stale), and then removed it if !only_if_stale || !InSameTreePosition?\n\nI think that would let us keep the method largely as is (including the at most once check), and share it between both cases.",
       "parentUuid": "0e02e84d_442068c6",
+      "revId": "e1bc289482e27c66da5624270921155b857cee8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26a4c085_6b45272f",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-16T19:34:16Z",
+      "side": 1,
+      "message": "Done (as suggested - I\u0027ll try moving the DCHECK into the GetTreeNode method in a follow-up CL - https://crrev.com/c/775493).",
+      "parentUuid": "fde2cb32_ccc55a5a",
       "revId": "e1bc289482e27c66da5624270921155b857cee8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
