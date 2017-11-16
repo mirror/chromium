@@ -321,6 +321,8 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
     return software_mirroring_display_list_;
   }
 
+  bool request_mirror_mode_on() const { return request_mirror_mode_on_; }
+
   // Remove mirroring source and destination displays, so that they will be
   // updated when UpdateDisplaysWith() is called.
   void ClearMirroringSourceAndDestination();
@@ -573,6 +575,13 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // |mirroring_source_id_| and treat the rest of mirroring displays as
   // destination and store their ids in this list.
   DisplayIdList hardware_mirroring_display_id_list_;
+
+  // True if the user turns on mirror mode. This stays true until the user turns
+  // mirror mode off or reboot. This is used to make mirror mode stay on when a
+  // display is removed or added as long as there are more than 2 remaining
+  // displays. This is also used to restore mirror mode when the second display
+  // is reconnected.
+  bool request_mirror_mode_on_ = false;
 
   // Cached mirror mode for metrics changed notification.
   bool mirror_mode_for_metrics_ = false;
