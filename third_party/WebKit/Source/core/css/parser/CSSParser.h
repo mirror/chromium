@@ -10,6 +10,7 @@
 #include "core/CoreExport.h"
 #include "core/css/CSSPropertyValueSet.h"
 #include "core/css/parser/CSSParserContext.h"
+#include "core/dom/SecureContextMode.h"
 
 namespace blink {
 
@@ -50,12 +51,14 @@ class CORE_EXPORT CSSParser {
       MutableCSSPropertyValueSet*,
       CSSPropertyID unresolved_property,
       const String&,
-      bool important);
+      bool important,
+      SecureContextMode);
   static MutableCSSPropertyValueSet::SetResult ParseValue(
       MutableCSSPropertyValueSet*,
       CSSPropertyID unresolved_property,
       const String&,
       bool important,
+      SecureContextMode,
       StyleSheetContents*);
 
   static MutableCSSPropertyValueSet::SetResult ParseValueForCustomProperty(
@@ -64,14 +67,14 @@ class CORE_EXPORT CSSParser {
       const PropertyRegistry*,
       const String& value,
       bool important,
+      SecureContextMode,
       StyleSheetContents*,
       bool is_animation_tainted);
 
   // This is for non-shorthands only
-  static const CSSValue* ParseSingleValue(
-      CSSPropertyID,
-      const String&,
-      const CSSParserContext* = StrictCSSParserContext());
+  static const CSSValue* ParseSingleValue(CSSPropertyID,
+                                          const String&,
+                                          const CSSParserContext*);
 
   static const CSSValue* ParseFontFaceDescriptor(CSSPropertyID,
                                                  const String&,
@@ -85,7 +88,7 @@ class CORE_EXPORT CSSParser {
   static StyleRuleKeyframe* ParseKeyframeRule(const CSSParserContext*,
                                               const String&);
 
-  static bool ParseSupportsCondition(const String&);
+  static bool ParseSupportsCondition(const String&, SecureContextMode);
 
   // The color will only be changed when string contains a valid CSS color, so
   // callers can set it to a default color and ignore the boolean result.

@@ -44,6 +44,8 @@ bool AddCSSPaintArgument(
     Vector<scoped_refptr<CSSVariableData>>* const variable_data) {
   CSSParserTokenRange token_range(tokens);
   if (!token_range.AtEnd()) {
+    // NOTE: As we are within a paint() function we must be within a secure
+    // context.
     scoped_refptr<CSSVariableData> unparsed_css_variable_data =
         CSSVariableData::Create(token_range, false, false);
     if (unparsed_css_variable_data.get()) {
