@@ -462,6 +462,24 @@
     },
     {
       "key": {
+        "uuid": "401c7ccc_b311583b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-16T01:20:27Z",
+      "side": 1,
+      "message": "Against my expectations, that actually worked this time! I guess I still had some encoding or filename-handling bugs the last few times I tried, but this time it actually worked uploading the non-ACP version!\n\nI will delete the ACP and shortname support from the JS and reupload and run tests one more time to verify, but if this works reliably it means a lot of complexity can evaporate outside of Pel (which still needs ACP for its own using-the-narrow-syscalls reasons)",
+      "parentUuid": "22de7c80_8522d5f1",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "323853a8_dbe58a43",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 66
