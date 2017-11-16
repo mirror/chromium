@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bd832f8_b1ca2dd0",
+        "filename": "chrome/browser/printing/cloud_print/privet_notifications.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T23:26:03Z",
+      "side": 1,
+      "message": "This can probably be removed, since all the |g_browser_process| usage is gone.",
+      "revId": "06380e3cbdb67d5aaae3a063ff8400574798d283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d18be6b_54d59eaa",
+        "filename": "chrome/browser/printing/cloud_print/privet_notifications.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T23:26:03Z",
+      "side": 1,
+      "message": "How about base::ContainsKey(*displayed_notifications, kPrivetNotificationID); ?\n\nI wasn\u0027t expecting this to work on Windows, as std::set::count() returns size_type. size_type is usually size_t, and MSVC does not like the narrowing from size_t to bool, but somehow this worked.",
+      "revId": "06380e3cbdb67d5aaae3a063ff8400574798d283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
