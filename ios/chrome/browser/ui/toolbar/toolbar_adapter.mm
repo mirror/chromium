@@ -185,7 +185,8 @@
 
 - (void)receiveQRScannerResult:(NSString*)qrScannerResult
                loadImmediately:(BOOL)load {
-  return;
+  [self.cleanToolbarCoordinator receiveQRScannerResult:qrScannerResult
+                                       loadImmediately:load];
 }
 
 #pragma mark - BubbleViewAnchorPointProvider
