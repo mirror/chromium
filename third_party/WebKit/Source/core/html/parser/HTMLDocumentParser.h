@@ -65,7 +65,6 @@ class HTMLParserScriptRunner;
 class HTMLPreloadScanner;
 class HTMLResourcePreloader;
 class HTMLTreeBuilder;
-class SegmentedString;
 class TokenizedChunkQueue;
 
 class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
@@ -139,7 +138,7 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
   void SetDecoder(std::unique_ptr<TextResourceDecoder>) final;
 
  protected:
-  void insert(const SegmentedString&) final;
+  void insert(const String&) final;
   void Append(const String&) override;
   void Finish() final;
 
@@ -181,7 +180,11 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
 
   // HTMLParserScriptRunnerHost
   void NotifyScriptLoaded(PendingScript*) final;
-  HTMLInputStream& InputStream() final { return input_; }
+  HTMLInputStreamBase* InputStream() final {
+    if (Is8Bit())
+      return &input_8_bit_;
+    return &input_16_bit_;
+  }
   bool HasPreloadScanner() const final {
     return preload_scanner_.get() && !ShouldUseThreading();
   }
@@ -222,6 +225,8 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
            IsExecutingScript();
   }
 
+  bool Is8Bit() const { return input_16_bit_.Current().IsEmpty(); }
+
   std::unique_ptr<HTMLPreloadScanner> CreatePreloadScanner(
       TokenPreloadScanner::ScannerType);
 
@@ -233,7 +238,8 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
   HTMLToken& Token() { return *token_; }
 
   HTMLParserOptions options_;
-  HTMLInputStream input_;
+  HTMLInputStream<false> input_8_bit_;
+  HTMLInputStream<true> input_16_bit_;
   scoped_refptr<HTMLParserReentryPermit> reentry_permit_;
 
   std::unique_ptr<HTMLToken> token_;

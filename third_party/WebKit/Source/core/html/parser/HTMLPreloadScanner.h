@@ -45,7 +45,6 @@ typedef size_t TokenPreloadScannerCheckpoint;
 
 class HTMLParserOptions;
 class HTMLTokenizer;
-class SegmentedString;
 
 struct ViewportDescriptionWrapper {
   ViewportDescription description;

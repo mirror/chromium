@@ -348,12 +348,19 @@ void HTMLParserScriptRunner::ExecuteParsingBlockingScripts() {
     DCHECK(document_->IsScriptExecutionReady());
 
     // 6. "Let the insertion point be just before the next input character."
-    InsertionPointRecord insertion_point_record(host_->InputStream());
+    if (host_->InputStream()->Is8Bit()) {
+      InsertionPointRecord<false> insertion_point_record(host_->InputStream());
 
-    // 1., 7.--9.
-    ExecutePendingScriptAndDispatchEvent(parser_blocking_script_,
-                                         ScriptStreamer::kParsingBlocking);
+      // 1., 7.--9.
+      ExecutePendingScriptAndDispatchEvent(parser_blocking_script_,
+                                           ScriptStreamer::kParsingBlocking);
+    } else {
+      InsertionPointRecord<true> insertion_point_record(host_->InputStream());
 
+      // 1., 7.--9.
+      ExecutePendingScriptAndDispatchEvent(parser_blocking_script_,
+                                           ScriptStreamer::kParsingBlocking);
+    }
     // 10. "Let the insertion point be undefined again."
     // Implemented as ~InsertionPointRecord().
 
@@ -493,54 +500,108 @@ void HTMLParserScriptRunner::ProcessScriptElementInternal(
     if (!IsExecutingScript())
       Microtask::PerformCheckpoint(V8PerIsolateData::MainThreadIsolate());
 
-    // "Let the old insertion point have the same value as the current
-    //  insertion point.
-    //  Let the insertion point be just before the next input character."
-    InsertionPointRecord insertion_point_record(host_->InputStream());
+    if (host_->InputStream()->Is8Bit()) {
+      // "Let the old insertion point have the same value as the current
+      //  insertion point.
+      //  Let the insertion point be just before the next input character."
+      InsertionPointRecord<false> insertion_point_record(host_->InputStream());
 
-    // "Increment the parser's script nesting level by one."
-    HTMLParserReentryPermit::ScriptNestingLevelIncrementer
-        nesting_level_incrementer =
-            reentry_permit_->IncrementScriptNestingLevel();
+      // "Increment the parser's script nesting level by one."
+      HTMLParserReentryPermit::ScriptNestingLevelIncrementer
+          nesting_level_incrementer =
+              reentry_permit_->IncrementScriptNestingLevel();
 
-    // "Prepare the script. This might cause some script to execute, which
-    //  might cause new characters to be inserted into the tokenizer, and
-    //  might cause the tokenizer to output more tokens, resulting in a
-    //  reentrant invocation of the parser."
-    script_loader->PrepareScript(script_start_position);
+      // "Prepare the script. This might cause some script to execute, which
+      //  might cause new characters to be inserted into the tokenizer, and
+      //  might cause the tokenizer to output more tokens, resulting in a
+      //  reentrant invocation of the parser."
+      script_loader->PrepareScript(script_start_position);
 
-    // A part of Step 23 of https://html.spec.whatwg.org/#prepare-a-script:
-    if (!script_loader->WillBeParserExecuted())
-      return;
+      // A part of Step 23 of https://html.spec.whatwg.org/#prepare-a-script:
+      if (!script_loader->WillBeParserExecuted())
+        return;
 
-    if (script_loader->WillExecuteWhenDocumentFinishedParsing()) {
-      // 1st Clause of Step 23.
-      RequestDeferredScript(script_loader);
-    } else if (script_loader->ReadyToBeParserExecuted()) {
-      // 5th Clause of Step 23.
-      // "If ... it's an HTML parser
-      //  whose script nesting level is not greater than one"
-      if (reentry_permit_->ScriptNestingLevel() == 1u) {
-        // "The element is the pending parsing-blocking script of the
-        //  Document of the parser that created the element.
-        //  (There can only be one such script per Document at a time.)"
-        CHECK(!parser_blocking_script_);
-        parser_blocking_script_ = script_loader->TakePendingScript();
+      if (script_loader->WillExecuteWhenDocumentFinishedParsing()) {
+        // 1st Clause of Step 23.
+        RequestDeferredScript(script_loader);
+      } else if (script_loader->ReadyToBeParserExecuted()) {
+        // 5th Clause of Step 23.
+        // "If ... it's an HTML parser
+        //  whose script nesting level is not greater than one"
+        if (reentry_permit_->ScriptNestingLevel() == 1u) {
+          // "The element is the pending parsing-blocking script of the
+          //  Document of the parser that created the element.
+          //  (There can only be one such script per Document at a time.)"
+          CHECK(!parser_blocking_script_);
+          parser_blocking_script_ = script_loader->TakePendingScript();
+        } else {
+          // 6th Clause of Step 23.
+          // "Immediately execute the script block,
+          //  even if other scripts are already executing."
+          // TODO(hiroshige): Merge the block into
+          // ScriptLoader::prepareScript().
+          DCHECK_GT(reentry_permit_->ScriptNestingLevel(), 1u);
+          if (parser_blocking_script_)
+            parser_blocking_script_->Dispose();
+          parser_blocking_script_ = nullptr;
+          DoExecuteScript(script_loader->TakePendingScript(),
+                          DocumentURLForScriptExecution(document_));
+        }
       } else {
-        // 6th Clause of Step 23.
-        // "Immediately execute the script block,
-        //  even if other scripts are already executing."
-        // TODO(hiroshige): Merge the block into ScriptLoader::prepareScript().
-        DCHECK_GT(reentry_permit_->ScriptNestingLevel(), 1u);
-        if (parser_blocking_script_)
-          parser_blocking_script_->Dispose();
-        parser_blocking_script_ = nullptr;
-        DoExecuteScript(script_loader->TakePendingScript(),
-                        DocumentURLForScriptExecution(document_));
+        // 2nd Clause of Step 23.
+        RequestParsingBlockingScript(script_loader);
       }
     } else {
-      // 2nd Clause of Step 23.
-      RequestParsingBlockingScript(script_loader);
+      // "Let the old insertion point have the same value as the current
+      //  insertion point.
+      //  Let the insertion point be just before the next input character."
+      InsertionPointRecord<true> insertion_point_record(host_->InputStream());
+
+      // "Increment the parser's script nesting level by one."
+      HTMLParserReentryPermit::ScriptNestingLevelIncrementer
+          nesting_level_incrementer =
+              reentry_permit_->IncrementScriptNestingLevel();
+
+      // "Prepare the script. This might cause some script to execute, which
+      //  might cause new characters to be inserted into the tokenizer, and
+      //  might cause the tokenizer to output more tokens, resulting in a
+      //  reentrant invocation of the parser."
+      script_loader->PrepareScript(script_start_position);
+
+      // A part of Step 23 of https://html.spec.whatwg.org/#prepare-a-script:
+      if (!script_loader->WillBeParserExecuted())
+        return;
+
+      if (script_loader->WillExecuteWhenDocumentFinishedParsing()) {
+        // 1st Clause of Step 23.
+        RequestDeferredScript(script_loader);
+      } else if (script_loader->ReadyToBeParserExecuted()) {
+        // 5th Clause of Step 23.
+        // "If ... it's an HTML parser
+        //  whose script nesting level is not greater than one"
+        if (reentry_permit_->ScriptNestingLevel() == 1u) {
+          // "The element is the pending parsing-blocking script of the
+          //  Document of the parser that created the element.
+          //  (There can only be one such script per Document at a time.)"
+          CHECK(!parser_blocking_script_);
+          parser_blocking_script_ = script_loader->TakePendingScript();
+        } else {
+          // 6th Clause of Step 23.
+          // "Immediately execute the script block,
+          //  even if other scripts are already executing."
+          // TODO(hiroshige): Merge the block into
+          // ScriptLoader::prepareScript().
+          DCHECK_GT(reentry_permit_->ScriptNestingLevel(), 1u);
+          if (parser_blocking_script_)
+            parser_blocking_script_->Dispose();
+          parser_blocking_script_ = nullptr;
+          DoExecuteScript(script_loader->TakePendingScript(),
+                          DocumentURLForScriptExecution(document_));
+        }
+      } else {
+        // 2nd Clause of Step 23.
+        RequestParsingBlockingScript(script_loader);
+      }
     }
 
     // "Decrement the parser's script nesting level by one.

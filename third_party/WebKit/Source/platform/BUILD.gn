@@ -1335,7 +1335,6 @@ jumbo_component("platform") {
     "text/PlatformLocale.h",
     "text/QuotedPrintable.cpp",
     "text/QuotedPrintable.h",
-    "text/SegmentedString.cpp",
     "text/SegmentedString.h",
     "text/StringTruncator.cpp",
     "text/StringTruncator.h",

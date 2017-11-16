@@ -33,6 +33,7 @@
 #include "core/html/parser/MarkupTokenizerInlines.h"
 #include "core/html_names.h"
 #include "core/html_tokenizer_names.h"
+#include "platform/text/SegmentedString.h"
 #include "platform/wtf/ASCIICType.h"
 #include "platform/wtf/text/Unicode.h"
 
@@ -80,7 +81,9 @@ void HTMLTokenizer::Reset() {
   additional_allowed_character_ = '\0';
 }
 
-inline bool HTMLTokenizer::ProcessEntity(SegmentedString& source) {
+template <bool supports16bit>
+inline bool HTMLTokenizer::ProcessEntity(
+    SegmentedStringImpl<supports16bit>& source) {
   bool not_enough_characters = false;
   DecodedHTMLEntity decoded_entity;
   bool success =
@@ -97,7 +100,9 @@ inline bool HTMLTokenizer::ProcessEntity(SegmentedString& source) {
   return true;
 }
 
-bool HTMLTokenizer::FlushBufferedEndTag(SegmentedString& source) {
+template <bool supports16bit>
+bool HTMLTokenizer::FlushBufferedEndTag(
+    SegmentedStringImpl<supports16bit>& source) {
   DCHECK(token_->GetType() == HTMLToken::kCharacter ||
          token_->GetType() == HTMLToken::kUninitialized);
   source.AdvanceAndUpdateLineNumber();
@@ -121,14 +126,18 @@ bool HTMLTokenizer::FlushBufferedEndTag(SegmentedString& source) {
     goto stateName;                                                   \
   } while (false)
 
-bool HTMLTokenizer::FlushEmitAndResumeIn(SegmentedString& source,
-                                         HTMLTokenizer::State state) {
+template <bool supports16bit>
+bool HTMLTokenizer::FlushEmitAndResumeIn(
+    SegmentedStringImpl<supports16bit>& source,
+    HTMLTokenizer::State state) {
   state_ = state;
   FlushBufferedEndTag(source);
   return true;
 }
 
-bool HTMLTokenizer::NextToken(SegmentedString& source, HTMLToken& token) {
+template <bool supports16bit>
+bool HTMLTokenizer::NextToken(SegmentedStringImpl<supports16bit>& source,
+                              HTMLToken& token) {
   // If we have a token in progress, then we're supposed to be called back
   // with the same token so we can finish it.
   DCHECK(!token_ || token_ == &token ||
@@ -933,30 +942,30 @@ bool HTMLTokenizer::NextToken(SegmentedString& source, HTMLToken& token) {
 
     HTML_BEGIN_STATE(kMarkupDeclarationOpenState) {
       if (cc == '-') {
-        SegmentedString::LookAheadResult result =
-            source.LookAhead(HTMLTokenizerNames::dashDash);
-        if (result == SegmentedString::kDidMatch) {
+        auto result = source.LookAhead(HTMLTokenizerNames::dashDash);
+        if (result == SegmentedStringImpl<supports16bit>::kDidMatch) {
           source.AdvanceAndASSERT('-');
           source.AdvanceAndASSERT('-');
           token_->BeginComment();
           HTML_SWITCH_TO(kCommentStartState);
-        } else if (result == SegmentedString::kNotEnoughCharacters)
+        } else if (result ==
+                   SegmentedStringImpl<supports16bit>::kNotEnoughCharacters)
           return HaveBufferedCharacterToken();
       } else if (cc == 'D' || cc == 'd') {
-        SegmentedString::LookAheadResult result =
-            source.LookAheadIgnoringCase(HTMLTokenizerNames::doctype);
-        if (result == SegmentedString::kDidMatch) {
+        auto result = source.LookAheadIgnoringCase(HTMLTokenizerNames::doctype);
+        if (result == SegmentedStringImpl<supports16bit>::kDidMatch) {
           AdvanceStringAndASSERTIgnoringCase(source, "doctype");
           HTML_SWITCH_TO(kDOCTYPEState);
-        } else if (result == SegmentedString::kNotEnoughCharacters)
+        } else if (result ==
+                   SegmentedStringImpl<supports16bit>::kNotEnoughCharacters)
           return HaveBufferedCharacterToken();
       } else if (cc == '[' && ShouldAllowCDATA()) {
-        SegmentedString::LookAheadResult result =
-            source.LookAhead(HTMLTokenizerNames::cdata);
-        if (result == SegmentedString::kDidMatch) {
+        auto result = source.LookAhead(HTMLTokenizerNames::cdata);
+        if (result == SegmentedStringImpl<supports16bit>::kDidMatch) {
           AdvanceStringAndASSERT(source, "[CDATA[");
           HTML_SWITCH_TO(kCDATASectionState);
-        } else if (result == SegmentedString::kNotEnoughCharacters)
+        } else if (result ==
+                   SegmentedStringImpl<supports16bit>::kNotEnoughCharacters)
           return HaveBufferedCharacterToken();
       }
       ParseError();
@@ -1130,20 +1139,22 @@ bool HTMLTokenizer::NextToken(SegmentedString& source, HTMLToken& token) {
         return EmitAndReconsumeIn(source, HTMLTokenizer::kDataState);
       } else {
         if (cc == 'P' || cc == 'p') {
-          SegmentedString::LookAheadResult result =
+          auto result =
               source.LookAheadIgnoringCase(HTMLTokenizerNames::publicString);
-          if (result == SegmentedString::kDidMatch) {
+          if (result == SegmentedStringImpl<supports16bit>::kDidMatch) {
             AdvanceStringAndASSERTIgnoringCase(source, "public");
             HTML_SWITCH_TO(kAfterDOCTYPEPublicKeywordState);
-          } else if (result == SegmentedString::kNotEnoughCharacters)
+          } else if (result ==
+                     SegmentedStringImpl<supports16bit>::kNotEnoughCharacters)
             return HaveBufferedCharacterToken();
         } else if (cc == 'S' || cc == 's') {
-          SegmentedString::LookAheadResult result =
+          auto result =
               source.LookAheadIgnoringCase(HTMLTokenizerNames::system);
-          if (result == SegmentedString::kDidMatch) {
+          if (result == SegmentedStringImpl<supports16bit>::kDidMatch) {
             AdvanceStringAndASSERTIgnoringCase(source, "system");
             HTML_SWITCH_TO(kAfterDOCTYPESystemKeywordState);
-          } else if (result == SegmentedString::kNotEnoughCharacters)
+          } else if (result ==
+                     SegmentedStringImpl<supports16bit>::kNotEnoughCharacters)
             return HaveBufferedCharacterToken();
         }
         ParseError();
@@ -1441,6 +1452,10 @@ bool HTMLTokenizer::NextToken(SegmentedString& source, HTMLToken& token) {
   NOTREACHED();
   return false;
 }
+
+template bool HTMLTokenizer::NextToken<false>(SegmentedStringImpl<false>&,
+                                              HTMLToken&);
+template bool HTMLTokenizer::NextToken(SegmentedStringImpl<true>&, HTMLToken&);
 
 String HTMLTokenizer::BufferedCharacters() const {
   // FIXME: Add an assert about m_state.

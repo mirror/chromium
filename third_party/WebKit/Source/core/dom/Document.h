@@ -68,6 +68,7 @@
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/loader/fetch/ClientHintsPreferences.h"
 #include "platform/scroll/ScrollTypes.h"
+#include "platform/text/SegmentedString.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/ReferrerPolicy.h"
 #include "platform/wtf/HashSet.h"
@@ -165,7 +166,6 @@ class ScriptRunner;
 class ScriptableDocumentParser;
 class ScriptedAnimationController;
 class SecurityOrigin;
-class SegmentedString;
 class SelectorQueryCache;
 class SerializedScriptValue;
 class Settings;
@@ -618,9 +618,6 @@ class CORE_EXPORT Document : public ContainerNode,
 
   void CancelParsing();
 
-  void write(const SegmentedString& text,
-             Document* entered_document = nullptr,
-             ExceptionState& = ASSERT_NO_EXCEPTION);
   void write(const String& text,
              Document* entered_document = nullptr,
              ExceptionState& = ASSERT_NO_EXCEPTION);
