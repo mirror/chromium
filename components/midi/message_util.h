@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_MIDI_MESSAGE_UTIL_H_
-#define MEDIA_MIDI_MESSAGE_UTIL_H_
+#ifndef COMPONENTS_MIDI_MESSAGE_UTIL_H_
+#define COMPONENTS_MIDI_MESSAGE_UTIL_H_
 
 #include <stddef.h>
 #include <stdint.h>
 
 #include <vector>
 
-#include "media/midi/midi_export.h"
+#include "components/midi/midi_export.h"
 
 namespace midi {
 
@@ -48,4 +48,4 @@ const uint8_t kSysRTMessageBitPattern = 0xf8;
 
 }  // namespace midi
 
-#endif  // MEDIA_MIDI_MESSAGE_UTIL_H_
+#endif  // COMPONENTS_MIDI_MESSAGE_UTIL_H_

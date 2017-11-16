@@ -12,7 +12,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_checker.h"
-#include "media/midi/midi_export.h"
+#include "components/midi/midi_export.h"
 
 namespace midi {
 
