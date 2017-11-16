@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a9670256_d5b42e11",
+        "filename": "ios/chrome/browser/translate/language_selection_context.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T17:18:23Z",
+      "side": 1,
+      "message": "Oh I see. There are indeed two menus in the UI.",
+      "parentUuid": "dd92a85a_7fd473bf",
+      "range": {
+        "startLine": 30,
+        "startChar": 70,
+        "endLine": 31,
+        "endChar": 14
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee6ceef2_e149378b",
         "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.h",
         "patchSetId": 10
@@ -128,6 +152,48 @@
       "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c4c2be7_4ca59197",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T17:18:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1a19287_1279b4ed",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 68
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2d9e534_6fbbc187",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T17:18:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2410ee2e_ae16dd2e",
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -222,6 +288,30 @@
       "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "633efdfb_dacb1b18",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T17:18:23Z",
+      "side": 1,
+      "message": "You might still need to remove line 31?",
+      "parentUuid": "dd83f17a_6bc0c391",
+      "range": {
+        "startLine": 22,
+        "startChar": 76,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -401,6 +491,30 @@
     },
     {
       "key": {
+        "uuid": "a7a7a6e2_dec361c4",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T17:18:23Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "769271af_e12b1df7",
+      "range": {
+        "startLine": 13,
+        "startChar": 54,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0892688_77de6ed7",
         "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.h",
         "patchSetId": 10
@@ -542,6 +656,30 @@
     },
     {
       "key": {
+        "uuid": "5198c66f_a4d59ccc",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T17:18:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2be0052f_3e1ea570",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 0
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfa49856_0680c734",
         "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.mm",
         "patchSetId": 10
@@ -589,6 +727,30 @@
     },
     {
       "key": {
+        "uuid": "ee85974f_99968185",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T17:18:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9152a8cc_3217db34",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 69
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "151207f2_5ac5f137",
         "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.mm",
         "patchSetId": 10
@@ -633,6 +795,30 @@
       "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "988e18c2_c88e45b7",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T17:18:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4c8907c_aa33bc6b",
+      "range": {
+        "startLine": 124,
+        "startChar": 19,
+        "endLine": 126,
+        "endChar": 48
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

@@ -34,6 +34,24 @@
       "revId": "5ba549a64c68240f4f57e7b5d91e397a1a33fa1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d0804f_576daa24",
+        "filename": "ios/chrome/browser/translate/translate_egtest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T17:18:23Z",
+      "side": 0,
+      "message": "Ack. Marking as resolved, feel free to do in this CL or a follow-up.",
+      "parentUuid": "259dbb64_faf00cc7",
+      "revId": "5ba549a64c68240f4f57e7b5d91e397a1a33fa1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

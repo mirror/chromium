@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9cdfea4_b407b39c",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T17:18:23Z",
+      "side": 1,
+      "message": "Nit: cleans",
+      "range": {
+        "startLine": 35,
+        "startChar": 3,
+        "endLine": 35,
+        "endChar": 8
+      },
+      "revId": "d9d86fcced3ee3751b080c544885c6d183b8313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01d16d6_94bd1196",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T17:18:23Z",
+      "side": 1,
+      "message": "Optional nit: double parenthesis, to avoid quickly parsing as \"if (self \u003d\u003d )\"?",
+      "revId": "d9d86fcced3ee3751b080c544885c6d183b8313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8ef9c3_10498cec",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T17:18:23Z",
+      "side": 1,
+      "message": "Remove \"over the\"?",
+      "range": {
+        "startLine": 25,
+        "startChar": 48,
+        "endLine": 25,
+        "endChar": 60
+      },
+      "revId": "d9d86fcced3ee3751b080c544885c6d183b8313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
