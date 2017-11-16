@@ -1145,6 +1145,8 @@ bool UnownedFormElementsAndFieldSetsToFormData(
     FormData* form,
     FormFieldData* field) {
   form->origin = GetCanonicalOriginForDocument(document);
+  form->root_origin = GetCanonicalOriginForDocument(
+      document.GetFrame()->LocalRoot()->GetDocument());
   form->is_form_tag = false;
 
   return FormOrFieldsetsToFormData(
@@ -1463,13 +1465,15 @@ bool WebFormElementToFormData(
     ExtractMask extract_mask,
     FormData* form,
     FormFieldData* field) {
-  const WebLocalFrame* frame = form_element.GetDocument().GetFrame();
+  WebLocalFrame* frame = form_element.GetDocument().GetFrame();
   if (!frame)
     return false;
 
   form->name = GetFormIdentifier(form_element);
   form->origin = GetCanonicalOriginForDocument(frame->GetDocument());
   form->action = frame->GetDocument().CompleteURL(form_element.Action());
+  form->root_origin =
+      GetCanonicalOriginForDocument(frame->LocalRoot()->GetDocument());
 
   // If the completed URL is not valid, just use the action we get from
   // WebKit.

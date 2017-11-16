@@ -454,6 +454,7 @@ FormStructure::FormStructure(const FormData& form)
     : form_name_(form.name),
       source_url_(form.origin),
       target_url_(form.action),
+      root_source_url_(form.root_origin),
       autofill_count_(0),
       active_field_count_(0),
       upload_required_(USE_UPLOAD_RATES),
@@ -536,7 +537,7 @@ void FormStructure::DetermineHeuristicTypes(ukm::UkmRecorder* ukm_recorder) {
   }
 
   if (developer_engagement_metrics)
-    AutofillMetrics::LogDeveloperEngagementUkm(ukm_recorder, source_url(),
+    AutofillMetrics::LogDeveloperEngagementUkm(ukm_recorder, root_source_url(),
                                                developer_engagement_metrics);
 
   if (base::FeatureList::IsEnabled(kAutofillRationalizeFieldTypePredictions))
@@ -708,6 +709,7 @@ std::vector<FormDataPredictions> FormStructure::GetFieldTypePredictions(
     form.data.name = form_structure->form_name_;
     form.data.origin = form_structure->source_url_;
     form.data.action = form_structure->target_url_;
+    form.data.root_origin = form_structure->root_source_url_;
     form.data.is_form_tag = form_structure->is_form_tag_;
     form.data.is_formless_checkout = form_structure->is_formless_checkout_;
     form.signature = form_structure->FormSignatureAsStr();
@@ -955,8 +957,8 @@ void FormStructure::LogQualityMetrics(
             GetFormTypes(), did_autofill_some_possible_fields, elapsed);
       }
     }
-    if (form_interactions_ukm_logger->url() != source_url())
-      form_interactions_ukm_logger->UpdateSourceURL(source_url());
+    if (form_interactions_ukm_logger->url() != root_source_url())
+      form_interactions_ukm_logger->UpdateSourceURL(root_source_url());
     AutofillMetrics::LogAutofillFormSubmittedState(
         state, form_parsed_timestamp_, form_interactions_ukm_logger);
   }
@@ -1159,6 +1161,7 @@ FormData FormStructure::ToFormData() const {
   data.name = form_name_;
   data.origin = source_url_;
   data.action = target_url_;
+  data.root_origin = root_source_url_;
 
   for (size_t i = 0; i < fields_.size(); ++i) {
     data.fields.push_back(FormFieldData(*fields_[i]));

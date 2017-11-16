@@ -192,6 +192,8 @@ class FormStructure {
 
   const GURL& target_url() const { return target_url_; }
 
+  const GURL& root_source_url() const { return root_source_url_; }
+
   bool has_author_specified_types() const {
     return has_author_specified_types_;
   }
@@ -295,6 +297,9 @@ class FormStructure {
 
   // The target URL.
   GURL target_url_;
+
+  // The source URL of the root frame of this form.
+  GURL root_source_url_;
 
   // The number of fields able to be auto-filled.
   size_t autofill_count_;
