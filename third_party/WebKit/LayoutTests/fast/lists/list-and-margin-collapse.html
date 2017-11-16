@@ -1,0 +1,12 @@
+<ul id="target" style="margin-top:100px;">
+  <li>
+    <div style="overflow:hidden; margin-top:100px; height:25px;"><a href="#">xxx</a></div>
+  </li>
+</ul>
+<script>
+  var height = document.getElementById("target").clientHeight;
+  if (height == 25)
+    document.body.innerHTML="pass";
+  else
+    document.body.innerHTML="fail";
+</script>
