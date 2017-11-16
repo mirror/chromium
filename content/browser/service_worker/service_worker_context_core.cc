@@ -174,6 +174,7 @@ class RegistrationDeletionListener
   }
 
   void OnRegistrationDeleted(ServiceWorkerRegistration* registration) override {
+    LOG(ERROR) << "DELETED";
     registration->RemoveListener(this);
     callback_.Run();
     delete this;
@@ -524,6 +525,8 @@ void ServiceWorkerContextCore::DidGetRegistrationsForDeleteForOrigin(
       base::BindOnce(&SuccessReportingCallback, base::Owned(overall_success),
                      result));
   for (auto registration : registrations) {
+    LOG(ERROR) << "deletion started" << registration->is_uninstalled()
+               << registration->is_deleted();
     if (!registration->is_uninstalling()) {
       RegistrationDeletionListener::WaitForDeletion(registration.get(),
                                                     barrier);
@@ -531,6 +534,7 @@ void ServiceWorkerContextCore::DidGetRegistrationsForDeleteForOrigin(
       // Deletion will not be triggered if the ServiceWorker is uninstalling.
       barrier.Run();
     }
+
     UnregisterServiceWorker(
         registration->GetInfo().pattern,
         base::Bind(&SuccessCollectorCallback, barrier, overall_success));

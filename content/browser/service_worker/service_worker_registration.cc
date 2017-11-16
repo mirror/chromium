@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "content/browser/service_worker/service_worker_registration.h"
+#include "base/debug/stack_trace.h"
 
 #include <utility>
 
@@ -60,6 +61,8 @@ ServiceWorkerRegistration::ServiceWorkerRegistration(
 ServiceWorkerRegistration::~ServiceWorkerRegistration() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(!listeners_.might_have_observers());
+  if (listeners_.might_have_observers())
+    LOG(ERROR) << base::debug::StackTrace().ToString();
   if (context_)
     context_->RemoveLiveRegistration(registration_id_);
   if (active_version())
