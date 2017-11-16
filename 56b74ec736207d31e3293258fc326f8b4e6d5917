@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29d5a756_1a664988",
+        "filename": "chrome/renderer/net/net_error_helper_core.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-11-16T21:23:04Z",
+      "side": 1,
+      "message": "I get presubmit errors including these:\n\n\nYou added one or more #includes that violate checkdeps rules.\n  chrome/renderer/net/net_error_helper_core.cc\n      Illegal include: \"chrome/browser/profiles/profile_manager.h\"\n    Because of \"-chrome\" from chrome\u0027s include_rules. \\\n  chrome/renderer/net/net_error_helper_core.cc\n      Illegal include: \"chrome/browser/ui/chrome_pages.h\"\n    Because of \"-chrome\" from chrome\u0027s include_rules.",
+      "range": {
+        "startLine": 31,
+        "startChar": 46,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "56b74ec736207d31e3293258fc326f8b4e6d5917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
