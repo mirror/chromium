@@ -92,6 +92,47 @@ namespace blink {
 
 using namespace HTMLNames;
 
+static EphemeralRangeInFlatTree CalcSelectionInFlatTree(
+    const FrameSelection& frame_selection) {
+  frame_selection.GetLayoutSelection().Commit();
+  const SelectionInDOMTree& selection_in_dom =
+      frame_selection.GetSelectionInDOMTree();
+  // None
+  if (frame_selection.GetLayoutSelection().IsNone())
+    return {};
+
+  // Range Selection
+  if (frame_selection.GetLayoutSelection().IsRange()) {
+    const PositionInFlatTree& base =
+        ToPositionInFlatTree(selection_in_dom.Base());
+    const PositionInFlatTree& extent =
+        ToPositionInFlatTree(selection_in_dom.Extent());
+    if (base.IsNull() || extent.IsNull() || base == extent ||
+        !base.IsValidFor(frame_selection.GetDocument()) ||
+        !extent.IsValidFor(frame_selection.GetDocument()))
+      return {};
+    return base <= extent ? EphemeralRangeInFlatTree(base, extent)
+                          : EphemeralRangeInFlatTree(extent, base);
+  }
+
+  // Caret
+  if (frame_selection.GetLayoutSelection().IsCaret()) {
+    const PositionInFlatTree& base =
+        CreateVisiblePosition(ToPositionInFlatTree(selection_in_dom.Base()))
+            .DeepEquivalent();
+    if (base.IsNull())
+      return {};
+    const PositionInFlatTree end_position =
+        NextPositionOf(base, PositionMoveType::kGraphemeCluster);
+    if (end_position.IsNull())
+      return {};
+    return base <= end_position ? EphemeralRangeInFlatTree(base, end_position)
+                                : EphemeralRangeInFlatTree(end_position, base);
+  }
+  NOTREACHED();
+  return {};
+}
+
 static inline bool ShouldAlwaysUseDirectionalSelection(LocalFrame* frame) {
   return frame->GetEditor().Behavior().ShouldConsiderSelectionAsDirectional();
 }
@@ -865,10 +906,7 @@ void FrameSelection::SetFocusedNodeIfNeeded() {
 
 static String ExtractSelectedText(const FrameSelection& selection,
                                   TextIteratorBehavior behavior) {
-  const VisibleSelectionInFlatTree& visible_selection =
-      selection.ComputeVisibleSelectionInFlatTree();
-  const EphemeralRangeInFlatTree& range =
-      visible_selection.ToNormalizedEphemeralRange();
+  const EphemeralRangeInFlatTree& range = CalcSelectionInFlatTree(selection);
   // We remove '\0' characters because they are not visibly rendered to the
   // user.
   return PlainText(range, behavior).Replace(0, "");
