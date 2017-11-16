@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc376418_dc04820f",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-16T00:44:41Z",
+      "side": 1,
+      "message": "nit: These protobuf/io/ headers seem to be not used anymore.",
+      "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fdc86fc_694a774e",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-16T00:44:41Z",
+      "side": 1,
+      "message": "nit: This comment seems to be obsolete now?\n\nBTW, so nice that the CL fixes this weirdness!",
+      "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98789b0b_1acd580c",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-16T00:44:41Z",
+      "side": 1,
+      "message": "nit: I\u0027m feeling that the explicit type would be better here, as the type is not obvious in this context (one has to go to the proto file to see what\u0027s the type of SerializedInstallAttributes::attributes()).",
+      "range": {
+        "startLine": 297,
+        "startChar": 4,
+        "endLine": 297,
+        "endChar": 8
+      },
+      "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f337650f_f0bcc32a",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-16T00:44:41Z",
+      "side": 1,
+      "message": "nit: Maybe add local variables for it.first and it.second, and with explicit type declarations? It\u0027s a bit hard to track their meaning.",
+      "range": {
+        "startLine": 299,
+        "startChar": 35,
+        "endLine": 299,
+        "endChar": 44
+      },
+      "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9658aa52_25f5ff9a",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-16T00:44:41Z",
+      "side": 1,
+      "message": "nit: \"chromeos::\" not required.",
+      "range": {
+        "startLine": 786,
+        "startChar": 19,
+        "endLine": 786,
+        "endChar": 29
+      },
+      "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579edec5_6d34391a",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-16T00:44:41Z",
+      "side": 1,
+      "message": "nit: This was probably intended to be an if() condition - bad copy-pasting?",
+      "range": {
+        "startLine": 786,
+        "startChar": 67,
+        "endLine": 786,
+        "endChar": 69
+      },
+      "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b2a25e5_5ff570ab",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-16T00:44:41Z",
+      "side": 1,
+      "message": "nit: Maybe just use base::ReadFileToStringWithMaxSize()?\nEven though you just copied this existing code, I\u0027d say we should avoid this low-level style when possible.",
+      "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb56ba95_ac834407",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-16T00:44:41Z",
+      "side": 1,
+      "message": "Shouldn\u0027t |install_attrs_| be cleared of the old values?",
+      "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0460f3e_4951168c",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-16T00:44:41Z",
+      "side": 1,
+      "message": "Shouldn\u0027t |install_attrs_| be cleared of the old values?",
+      "range": {
+        "startLine": 803,
+        "startChar": 4,
+        "endLine": 803,
+        "endChar": 18
+      },
+      "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
