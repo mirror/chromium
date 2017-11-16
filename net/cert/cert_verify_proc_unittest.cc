@@ -589,7 +589,7 @@ TEST_P(CertVerifyProcInternalTest, RejectExpiredCert) {
 }
 
 // Currently, only RSA and DSA keys are checked for weakness, and our example
-// weak size is 768. These could change in the future.
+// weak sizes are 768 and 1024. These could change in the future.
 //
 // Note that this means there may be false negatives: keys for other
 // algorithms and which are weak will pass this test.
@@ -599,7 +599,7 @@ static bool IsWeakKeyType(const std::string& key_type) {
   std::string type = key_type.substr(pos + 1);
 
   if (type == "rsa" || type == "dsa")
-    return size == "768";
+    return size == "768" || size == "1024";
 
   return false;
 }
