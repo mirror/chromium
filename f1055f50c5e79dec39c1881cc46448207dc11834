@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d13bacc2_981328c7",
+        "filename": "ios/build/bots/scripts/run.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-11-16T22:12:57Z",
+      "side": 1,
+      "message": "Not a big deal but currently these kwargs are sorted, you could sort the new ones too.",
+      "revId": "f1055f50c5e79dec39c1881cc46448207dc11834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7576ca40_978a69ac",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-11-16T22:12:57Z",
+      "side": 1,
+      "message": "Same here re: sorting.",
+      "revId": "f1055f50c5e79dec39c1881cc46448207dc11834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
