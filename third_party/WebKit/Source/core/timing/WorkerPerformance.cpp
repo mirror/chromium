@@ -30,6 +30,8 @@
 
 #include "core/timing/WorkerPerformance.h"
 
+#include "core/dom/Document.h"
+#include "core/frame/UseCounter.h"
 #include "core/timing/MemoryInfo.h"
 #include "core/workers/DedicatedWorkerGlobalScope.h"
 #include "core/workers/WorkerGlobalScope.h"
