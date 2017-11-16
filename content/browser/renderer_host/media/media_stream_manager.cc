@@ -416,7 +416,6 @@ MediaStreamManager::MediaStreamManager(
       video_capture_thread_("VideoCaptureThread"),
 #endif
       fake_ui_factory_() {
-
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kUseFakeUIForMediaStream)) {
     fake_ui_factory_ = base::Bind([] {
@@ -1442,17 +1441,14 @@ void MediaStreamManager::UseFakeUIFactoryForTests(
 void MediaStreamManager::RegisterNativeLogCallback(
     int renderer_host_id,
     const base::Callback<void(const std::string&)>& callback) {
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&MediaStreamManager::DoNativeLogCallbackRegistration,
-                     base::Unretained(this), renderer_host_id, callback));
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  // Re-registering (overwriting) is allowed and happens in some tests.
+  log_callbacks_[renderer_host_id] = callback;
 }
 
 void MediaStreamManager::UnregisterNativeLogCallback(int renderer_host_id) {
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&MediaStreamManager::DoNativeLogCallbackUnregistration,
-                     base::Unretained(this), renderer_host_id));
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  log_callbacks_.erase(renderer_host_id);
 }
 
 void MediaStreamManager::AddLogMessageOnIOThread(const std::string& message) {
@@ -1687,20 +1683,6 @@ void MediaStreamManager::OnMediaStreamUIWindowId(
                                                       window_id);
     break;
   }
-}
-
-void MediaStreamManager::DoNativeLogCallbackRegistration(
-    int renderer_host_id,
-    const base::Callback<void(const std::string&)>& callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  // Re-registering (overwriting) is allowed and happens in some tests.
-  log_callbacks_[renderer_host_id] = callback;
-}
-
-void MediaStreamManager::DoNativeLogCallbackUnregistration(
-    int renderer_host_id) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  log_callbacks_.erase(renderer_host_id);
 }
 
 // static

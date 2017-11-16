@@ -231,9 +231,7 @@ class CONTENT_EXPORT MediaStreamManager
           fake_ui_factory);
 
   // Register and unregister a new callback for receiving native log entries.
-  // The registered callback will be invoked on the IO thread.
-  // The registration and unregistration will be done asynchronously so it is
-  // not guaranteed that when the call returns the operation has completed.
+  // Called on the OI thread.
   void RegisterNativeLogCallback(int renderer_host_id,
       const base::Callback<void(const std::string&)>& callback);
   void UnregisterNativeLogCallback(int renderer_host_id);
@@ -396,11 +394,6 @@ class CONTENT_EXPORT MediaStreamManager
   void OnMediaStreamUIWindowId(MediaStreamType video_type,
                                const MediaStreamDevices& devices,
                                gfx::NativeViewId window_id);
-
-  // Runs on the IO thread and does the actual [un]registration of callbacks.
-  void DoNativeLogCallbackRegistration(int renderer_host_id,
-      const base::Callback<void(const std::string&)>& callback);
-  void DoNativeLogCallbackUnregistration(int renderer_host_id);
 
   // Callback to handle the reply to a low-level enumeration request.
   void DevicesEnumerated(bool requested_audio_input,
