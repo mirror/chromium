@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eea2c8dc_e4299cea",
+        "filename": "cc/paint/paint_filter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-16T19:08:54Z",
+      "side": 1,
+      "message": "Is base/logging.h needed?",
+      "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e989c59_6ecb1c38",
+        "filename": "cc/paint/paint_filter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-16T19:08:54Z",
+      "side": 1,
+      "message": "Curious: why do we use SkRefCnt instead of RefCounted?",
+      "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df642f5_1454b10b",
+        "filename": "cc/paint/paint_filter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-16T19:08:54Z",
+      "side": 1,
+      "message": "Since we already have a vtable and type() is only used for DHCECKs, could switching to inheritance save a little space on each PaintFilter instance?\nType type() override { return Type::kSkColorFilter; }",
+      "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "923f2a3c_2d19dc32",
+        "filename": "third_party/WebKit/Source/platform/graphics/filters/FEDisplacementMap.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-16T19:08:54Z",
+      "side": 1,
+      "message": "Nit: update comment (can this be done?)",
+      "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8b0d32b_d3ac0295",
+        "filename": "third_party/WebKit/Source/platform/graphics/filters/FELighting.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-16T19:08:54Z",
+      "side": 1,
+      "message": "Joining the specular and diffuse types is a little confusing to me since shininess is only used by the specular type. Also, \"kd\" but it will become \"ks\" for the specular types. Is there a need to join these types?",
+      "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba6d36a2_5efaf037",
+        "filename": "third_party/WebKit/Source/platform/graphics/filters/ImageFilterBuilderTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-16T19:08:54Z",
+      "side": 1,
+      "message": "Nit: \"Should be InterpolationSpace (Linear-\u003eDevice).\" or \"Should be CS (L-\u003eD).\"\n\nNot your fault but this is confusing because \"child\" gets re-used. Can you rename these locals to make this easier to follow?",
+      "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "895e2d4a_c7ddcc7f",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintFilter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-16T19:08:54Z",
+      "side": 1,
+      "message": "Can you help me understand why we need this file?",
+      "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
