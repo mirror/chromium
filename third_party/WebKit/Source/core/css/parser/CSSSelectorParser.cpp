@@ -284,7 +284,8 @@ std::unique_ptr<CSSParserSelector> CSSSelectorParser::ConsumeCompoundSelector(
   AtomicString namespace_prefix;
   AtomicString element_name;
   CSSSelector::PseudoType compound_pseudo_element = CSSSelector::kPseudoUnknown;
-  if (!ConsumeName(range, element_name, namespace_prefix)) {
+  const WTF::Optional<QualifiedName> q_name = ConsumeName(range);
+  if (!q_name) {
     compound_selector = ConsumeSimpleSelector(range);
     if (!compound_selector)
       return nullptr;
@@ -358,11 +359,10 @@ std::unique_ptr<CSSParserSelector> CSSSelectorParser::ConsumeSimpleSelector(
   return selector;
 }
 
-bool CSSSelectorParser::ConsumeName(CSSParserTokenRange& range,
-                                    AtomicString& name,
-                                    AtomicString& namespace_prefix) {
-  name = g_null_atom;
-  namespace_prefix = g_null_atom;
+WTF::Optional<QualifiedName> CSSSelectorParser::ConsumeName(
+    CSSParserTokenRange& range) {
+  AtomicString name = g_null_atom;
+  AtomicString namespace_prefix = g_null_atom;
 
   const CSSParserToken& first_token = range.Peek();
   if (first_token.GetType() == kIdentToken) {
@@ -377,28 +377,37 @@ bool CSSSelectorParser::ConsumeName(CSSParserTokenRange& range,
     // This is an empty namespace, which'll get assigned this value below
     name = g_empty_atom;
   } else {
-    return false;
+    return WTF::nullopt;
   }
 
-  if (range.Peek().GetType() != kDelimiterToken ||
-      range.Peek().Delimiter() != '|')
-    return true;
-  range.Consume();
+  if (range.Peek().GetType() == kDelimiterToken &&
+      range.Peek().Delimiter() == '|') {
+    range.Consume();
 
-  namespace_prefix = name;
-  const CSSParserToken& name_token = range.Consume();
-  if (name_token.GetType() == kIdentToken) {
-    name = name_token.Value().ToAtomicString();
-  } else if (name_token.GetType() == kDelimiterToken &&
-             name_token.Delimiter() == '*') {
-    name = g_star_atom;
-  } else {
-    name = g_null_atom;
+    namespace_prefix = name;
+    const CSSParserToken& name_token = range.Consume();
+    if (name_token.GetType() == kIdentToken) {
+      name = name_token.Value().ToAtomicString();
+    } else if (name_token.GetType() == kDelimiterToken &&
+               name_token.Delimiter() == '*') {
+      name = g_star_atom;
+    } else {
+      return WTF::nullopt;
+    }
+  }
+
+  if (context_->IsHTMLDocument())
+    name = name.LowerASCII();
+
+  AtomicString namespace_uri = DetermineNamespace(namespace_prefix);
+  if (namespace_uri.IsNull()) {
+    failed_parsing_ = true;
+    return WTF::nullopt;
+  }
+  if (namespace_uri == DefaultNamespace())
     namespace_prefix = g_null_atom;
-    return false;
-  }
 
-  return true;
+  return QualifiedName(namespace_prefix, name, namespace_uri);
 }
 
 std::unique_ptr<CSSParserSelector> CSSSelectorParser::ConsumeId(
@@ -435,25 +444,15 @@ std::unique_ptr<CSSParserSelector> CSSSelectorParser::ConsumeAttribute(
   CSSParserTokenRange block = range.ConsumeBlock();
   block.ConsumeWhitespace();
 
-  AtomicString namespace_prefix;
-  AtomicString attribute_name;
-  if (!ConsumeName(block, attribute_name, namespace_prefix))
-    return nullptr;
-  if (attribute_name == g_star_atom)
+  const WTF::Optional<QualifiedName> q_name = ConsumeName(block);
+  if (!q_name || q_name->LocalName() == g_star_atom)
     return nullptr;
   block.ConsumeWhitespace();
 
-  if (context_->IsHTMLDocument())
-    attribute_name = attribute_name.LowerASCII();
-
-  AtomicString namespace_uri = DetermineNamespace(namespace_prefix);
-  if (namespace_uri.IsNull())
-    return nullptr;
-
   QualifiedName qualified_name =
-      namespace_prefix.IsNull()
-          ? QualifiedName(g_null_atom, attribute_name, g_null_atom)
-          : QualifiedName(namespace_prefix, attribute_name, namespace_uri);
+      q_name->Prefix().IsNull()
+          ? QualifiedName(g_null_atom, q_name->LocalName(), g_null_atom)
+          : *q_name;
 
   std::unique_ptr<CSSParserSelector> selector = CSSParserSelector::Create();
 
