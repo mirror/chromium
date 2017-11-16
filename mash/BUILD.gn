@@ -98,7 +98,7 @@ if (is_chromeos) {
       "//ash:test_support_without_content",
       "//ash/mus:resources",
       "//ash/mus:unittests",
-      "//ash/public/cpp:ash_public_cpp",
+      "//ash/public/cpp",
       "//base",
       "//base/test:test_support",
       "//cc",

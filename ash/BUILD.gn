@@ -953,7 +953,7 @@ component("ash") {
   ]
   deps = [
     "//ash/autoclick/common:autoclick",
-    "//ash/public/cpp:ash_public_cpp",
+    "//ash/public/cpp",
     "//ash/touch_hud",
     "//base",
     "//base:i18n",
@@ -1063,7 +1063,7 @@ component("ash_with_content") {
     ":ash",
   ]
   deps = [
-    "//ash/public/cpp:ash_public_cpp",
+    "//ash/public/cpp",
     "//base",
     "//base/third_party/dynamic_annotations",
     "//content/public/browser",
@@ -1124,7 +1124,7 @@ static_library("ash_shell_lib") {
   deps = [
     ":ash",
     ":test_support_without_content",
-    "//ash/public/cpp:ash_public_cpp",
+    "//ash/public/cpp",
     "//base",
     "//base:i18n",
     "//components/user_manager",
@@ -1160,7 +1160,7 @@ static_library("ash_shell_lib_with_content") {
     ":ash_shell_lib",
     ":ash_with_content",
     ":test_support_without_content",
-    "//ash/public/cpp:ash_public_cpp",
+    "//ash/public/cpp",
     "//base:i18n",
     "//chrome:packed_resources",
     "//chromeos",
@@ -1201,7 +1201,7 @@ test("ash_content_unittests") {
     ":ash",
     ":ash_with_content",
     ":test_support_with_content",
-    "//ash/public/cpp:ash_public_cpp",
+    "//ash/public/cpp",
     "//base",
     "//base/test:test_support",
     "//chromeos",
@@ -1469,7 +1469,7 @@ test("ash_unittests") {
     ":test_support_without_content",
     "//ash/autoclick/common:autoclick",
     "//ash/mus:lib",
-    "//ash/public/cpp:ash_public_cpp",
+    "//ash/public/cpp",
     "//ash/public/cpp:unit_tests",
     "//ash/resources",
     "//ash/resources/vector_icons",
@@ -1553,7 +1553,7 @@ test("ash_perftests") {
 
   deps = [
     ":test_support_without_content",
-    "//ash/public/cpp:ash_public_cpp",
+    "//ash/public/cpp",
     "//base/test:test_support",
     "//cc/base",
     "//mojo/edk/embedder:headers",
@@ -1752,7 +1752,7 @@ static_library("test_support_common") {
   deps = [
     "//ash",
     "//ash/mus:lib",
-    "//ash/public/cpp:ash_public_cpp",
+    "//ash/public/cpp",
     "//ash/public/interfaces:test_interfaces",
     "//ash/resources",
     "//base",

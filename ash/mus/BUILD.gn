@@ -83,7 +83,7 @@ source_set("lib") {
 
   public_deps = [
     "//ash",
-    "//ash/public/cpp:ash_public_cpp",
+    "//ash/public/cpp",
     "//ash/wayland",
     "//base",
     "//base:i18n",
@@ -204,7 +204,7 @@ source_set("unittests") {
     ":resources",
     "//ash",
     "//ash:test_support_without_content",
-    "//ash/public/cpp:ash_public_cpp",
+    "//ash/public/cpp",
     "//base",
     "//base/test:test_config",
     "//base/test:test_support",
