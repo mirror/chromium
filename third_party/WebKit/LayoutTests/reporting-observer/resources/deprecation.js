@@ -10,9 +10,12 @@ async_test(function(test) {
             "reporting-observer/deprecation.html"));
         assert_true(report.body.sourceFile.endsWith(
             "reporting-observer/resources/deprecation.js"));
-        assert_equals(typeof reports[0].body.lineNumber, "number");
-        assert_equals(typeof reports[0].body.message, "string");
+        assert_equals(typeof report.body.id, "string");
+        assert_equals(typeof report.body.anticipatedRemoval, "string");
+        assert_equals(typeof report.body.message, "string");
+        assert_equals(typeof report.body.lineNumber, "number");
       }
+      assert_not_equals(reports[0].body.id, reports[1].body.id);
     });
 
     test.done();
