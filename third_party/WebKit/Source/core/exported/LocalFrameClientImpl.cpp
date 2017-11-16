@@ -1107,6 +1107,11 @@ LocalFrameClientImpl::GetInterfaceProvider() {
   return web_frame_->Client()->GetInterfaceProvider();
 }
 
+AssociatedInterfaceProvider*
+LocalFrameClientImpl::GetAssociatedInterfaceProvider() {
+  return web_frame_->Client()->GetAssociatedInterfaceProvider();
+}
+
 void LocalFrameClientImpl::AnnotatedRegionsChanged() {
   web_frame_->Client()->DraggableRegionsChanged();
 }

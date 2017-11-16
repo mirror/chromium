@@ -48,6 +48,7 @@ class InterfaceProvider;
 
 namespace blink {
 
+class AssociatedInterfaceProvider;
 class Color;
 class ContentSettingsClient;
 class Document;
@@ -229,6 +230,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
 
   service_manager::InterfaceProvider& GetInterfaceProvider();
   InterfaceRegistry* GetInterfaceRegistry() { return interface_registry_; }
+  AssociatedInterfaceProvider* GetAssociatedInterfaceProvider();
 
   String GetInstrumentationToken() { return instrumentation_token_; }
 
