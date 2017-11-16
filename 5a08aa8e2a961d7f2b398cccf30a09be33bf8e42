@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "daeec10a_69a6fcd2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ClipDrawableProgressBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-16T18:39:55Z",
+      "side": 1,
+      "message": "Yes, done.",
+      "parentUuid": "8365b0f1_aba8ee22",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 10
+      },
+      "revId": "5a08aa8e2a961d7f2b398cccf30a09be33bf8e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7e51c2e_d130dc0a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ClipDrawableProgressBar.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "5a08aa8e2a961d7f2b398cccf30a09be33bf8e42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49d01349_7c054729",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ClipDrawableProgressBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-16T18:39:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7e51c2e_d130dc0a",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 10
+      },
+      "revId": "5a08aa8e2a961d7f2b398cccf30a09be33bf8e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6a381bd8_9d1176a8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ToolbarProgressBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-16T18:39:55Z",
+      "side": 1,
+      "message": "Yes, done.",
+      "parentUuid": "193ff1e6_5e3283e5",
+      "range": {
+        "startLine": 110,
+        "startChar": 18,
+        "endLine": 110,
+        "endChar": 19
+      },
+      "revId": "5a08aa8e2a961d7f2b398cccf30a09be33bf8e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "182fd72c_32789bd7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ToolbarProgressBar.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-15T20:07:00Z",
       "side": 1,
       "message": "is this condition the same as above?  I\u0027m wondering if it could be:\nif (MathUtils.areFloatsEqual(getProgress(), 1.f)) finish(true); here too.\n\nIf that is the case, should setProgressInternal/setProgress/something be calling this for us instead of both listeners needing to?",
+      "range": {
+        "startLine": 209,
+        "startChar": 26,
+        "endLine": 209,
+        "endChar": 40
+      },
+      "revId": "5a08aa8e2a961d7f2b398cccf30a09be33bf8e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adfd7eb3_1a328d9d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ToolbarProgressBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-16T18:39:55Z",
+      "side": 1,
+      "message": "I think the idea was that if an animation wasn\u0027t running, the external source would be responsible for calling finish(...). However, it seems like setting progress to 100% and finish are more or less synonymous. I moved this call. The one above is still needed since the smooth animation does not set progress in this class.",
+      "parentUuid": "182fd72c_32789bd7",
       "range": {
         "startLine": 209,
         "startChar": 26,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4515875d_4210896c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ToolbarProgressBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-16T18:39:55Z",
+      "side": 1,
+      "message": "That depends on whether \u0027fadeOut\u0027 is set. Looking at usages of this method, instances where we want the progress to hide immediately (not reaching 100%) are set to false (crash, navigation to ntp, etc.). All others are set to true; this seems like the intended behavior but isn\u0027t documented anywhere. I updated the comment.",
+      "parentUuid": "a97cf0e9_3fc25fdc",
+      "range": {
+        "startLine": 334,
+        "startChar": 43,
+        "endLine": 334,
+        "endChar": 0
+      },
+      "revId": "5a08aa8e2a961d7f2b398cccf30a09be33bf8e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6191f66_1bbee8e0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ToolbarProgressBar.java",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "ce3d2ab3_8b33f929",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ToolbarProgressBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-16T18:39:55Z",
+      "side": 1,
+      "message": "You\u0027re correct, this can definitely be simplified. Done.",
+      "parentUuid": "b6191f66_1bbee8e0",
+      "range": {
+        "startLine": 350,
+        "startChar": 8,
+        "endLine": 350,
+        "endChar": 19
+      },
+      "revId": "5a08aa8e2a961d7f2b398cccf30a09be33bf8e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5577e35_9e98bb50",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ToolbarProgressBar.java",
         "patchSetId": 2
@@ -151,6 +295,30 @@
       "writtenOn": "2017-11-15T20:07:00Z",
       "side": 1,
       "message": "can we add thread assertion checks throughout this code.  This works because this runs on the same thread as start (mIsStarted is thread safe), but it would be better to be forceful about that.",
+      "range": {
+        "startLine": 372,
+        "startChar": 51,
+        "endLine": 372,
+        "endChar": 0
+      },
+      "revId": "5a08aa8e2a961d7f2b398cccf30a09be33bf8e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9cb102d_7b0a5dcc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ToolbarProgressBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-16T18:39:55Z",
+      "side": 1,
+      "message": "Added to the primary public APIs (start, setProgress, finish) and here.",
+      "parentUuid": "e5577e35_9e98bb50",
       "range": {
         "startLine": 372,
         "startChar": 51,
@@ -180,6 +348,24 @@
     },
     {
       "key": {
+        "uuid": "0aa19e67_e8519859",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ToolbarProgressBarTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-16T18:39:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45c959ac_43731a98",
+      "revId": "5a08aa8e2a961d7f2b398cccf30a09be33bf8e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1204cae3_300e91e3",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ToolbarProgressBarTest.java",
         "patchSetId": 2
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "4ed03bdd_1df21518",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ToolbarProgressBarTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-16T18:39:55Z",
+      "side": 1,
+      "message": "Yes, added support method to call this on the UI thread; done.",
+      "parentUuid": "1204cae3_300e91e3",
+      "range": {
+        "startLine": 169,
+        "startChar": 41,
+        "endLine": 169,
+        "endChar": 53
+      },
+      "revId": "5a08aa8e2a961d7f2b398cccf30a09be33bf8e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca02d926_fa69a0bc",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ToolbarProgressBarTest.java",
         "patchSetId": 2
@@ -217,6 +427,24 @@
       "revId": "5a08aa8e2a961d7f2b398cccf30a09be33bf8e42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74845148_5798f955",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ToolbarProgressBarTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-16T18:39:55Z",
+      "side": 1,
+      "message": "No, added a support method to call this on the UI thread.",
+      "parentUuid": "ca02d926_fa69a0bc",
+      "revId": "5a08aa8e2a961d7f2b398cccf30a09be33bf8e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
