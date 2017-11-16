@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Document timelines report current time relative to navigationStart assert_equals: The current time matches requestAnimationFrame time expected 46.90299999992931 but got 47.185333333345625
+Harness: the test ran to completion.
+
