@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "260dccf2_c695f849",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/AppIndexingUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-16T21:01:19Z",
+      "side": 1,
+      "message": "I wonder if there are mojo changes we should investigate to support things like AutoCloseable or something to make this less error prone in the future.  Since this is only closed after the async task completes, there isn\u0027t really a path where AutoCloseable would make since.  Just something we should see if we can introduce some nicer patterns.\n\nnyquist@ has a patch to support automatically deleting native counterparts when the java side is GC\u0027d:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/704180\n\nI\u0027d prefer to find a way to enforce and explicit close vs relying on GC magic, but that\u0027s a hard thing to force in java.",
+      "range": {
+        "startLine": 79,
+        "startChar": 12,
+        "endLine": 79,
+        "endChar": 25
+      },
+      "revId": "c0a97574909b5ec72da6335d0ec1842ccc684abb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
