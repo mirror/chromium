@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffa77401_70cb229b",
+        "filename": "chrome/browser/notifications/metrics/mock_notification_metrics_logger.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T16:56:23Z",
+      "side": 1,
+      "message": "You imagine this class to be used by multiple testing fixtures, right? Should we update those in a next CL?",
+      "revId": "c2fdcf7a84fb046b5905e908ad73aae5c7417753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "475828fd_aeab00a3",
+        "filename": "chrome/browser/notifications/metrics/notification_metrics_logger.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T16:56:23Z",
+      "side": 1,
+      "message": "nit: maybe document that methods are virtual for testing purposes.",
+      "revId": "c2fdcf7a84fb046b5905e908ad73aae5c7417753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee53603_9d2a0ee7",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T16:56:23Z",
+      "side": 1,
+      "message": "nit: you could consider just passing the by_user boolean to the Log*() function, and having the if() there.",
+      "revId": "c2fdcf7a84fb046b5905e908ad73aae5c7417753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

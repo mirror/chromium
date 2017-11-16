@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "89350de0_10e162f7",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T16:56:23Z",
+      "side": 1,
+      "message": "The number of calls in this class kind of warrants it, doesn\u0027t it?",
+      "parentUuid": "1e672ed1_a3431648",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d54bdeb6_05e3bd31",
         "filename": "chrome/browser/notifications/platform_notification_service_impl.h",
         "patchSetId": 6
@@ -317,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "543aa9ab_a2a75722",
+        "filename": "chrome/browser/notifications/platform_notification_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T16:56:23Z",
+      "side": 1,
+      "message": "The latter. Something like the following would be grand:\n\n// Owned by the |profile_| as a keyed service.",
+      "parentUuid": "ebb58a1d_599c76f2",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "133789c4_669c71b9",
         "filename": "chrome/browser/notifications/platform_notification_service_unittest.cc",
         "patchSetId": 6
@@ -381,6 +417,24 @@
       "side": 1,
       "message": "Done.\n\n(Why?)",
       "parentUuid": "439f5fca_32821b14",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "716cc5d5_8f512da6",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 2247,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T16:56:23Z",
+      "side": 1,
+      "message": "This is the unit_test target that contains the actual tests, not the infrastructure to support them. We consider such infrastructure \"test support\", which has its own target for most directories. Lines 2253-2256 actually shouldn\u0027t be here either.",
+      "parentUuid": "bf1ac3e2_2d1d4d97",
       "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
