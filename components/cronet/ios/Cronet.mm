@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #import "components/cronet/ios/Cronet.h"
+#import <objc/runtime.h>
 
 #include <memory>
 #include <vector>
@@ -532,6 +533,78 @@ class CronetHttpProtocolHandlerDelegate
     }
     return NO;
   }
+}
+
+@end
+
+#pragma mark - Swizzle
+@interface URLSessionTaskDelegateProxy : NSProxy<NSURLSessionTaskDelegate>
+- (id)initWithDelegate:(id<NSURLSessionDelegate>)delegate;
+@end
+
+@implementation URLSessionTaskDelegateProxy {
+  id<NSURLSessionDelegate> _delegate;
+}
+- (id)initWithDelegate:(id<NSURLSessionDelegate>)delegate {
+  _delegate = delegate;
+  return self;
+}
+
+- (void)forwardInvocation:(NSInvocation*)invocation {
+  [invocation setTarget:_delegate];
+  [invocation invoke];
+}
+
+- (nullable NSMethodSignature*)methodSignatureForSelector:(SEL)sel {
+  return [(id)_delegate methodSignatureForSelector:sel];
+}
+
+- (void)URLSession:(NSURLSession*)session
+                          task:(NSURLSessionTask*)task
+    didFinishCollectingMetrics:(NSURLSessionTaskMetrics*)metrics {
+  NSURLSessionTaskMetrics* cronet_metrics =
+      [CRNHTTPProtocolHandler metricsForTask:task];
+  if ([_delegate conformsToProtocol:@protocol(NSURLSessionTaskDelegate)] &&
+      cronet_metrics) {
+    [(id<NSURLSessionTaskDelegate>)_delegate URLSession:session
+                                                   task:task
+                             didFinishCollectingMetrics:cronet_metrics];
+  }
+}
+@end
+
+@implementation NSURLSession (Cronet)
+
++ (void)load {
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    [self swizzleSessionWithConfiguration];
+  });
+}
+
++ (void)swizzleSessionWithConfiguration {
+  Class c = object_getClass(self);
+
+  SEL originalSelector =
+      @selector(sessionWithConfiguration:delegate:delegateQueue:);
+  SEL swizzledSelector =
+      @selector(hookSessionWithConfiguration:delegate:delegateQueue:);
+
+  Method originalMethod = class_getInstanceMethod(c, originalSelector);
+  Method swizzledMethod = class_getInstanceMethod(c, swizzledSelector);
+
+  method_exchangeImplementations(originalMethod, swizzledMethod);
+}
+
++ (NSURLSession*)
+hookSessionWithConfiguration:(NSURLSessionConfiguration*)configuration
+                    delegate:(nullable id<NSURLSessionDelegate>)delegate
+               delegateQueue:(nullable NSOperationQueue*)queue {
+  URLSessionTaskDelegateProxy* delegate_proxy =
+      [[URLSessionTaskDelegateProxy alloc] initWithDelegate:delegate];
+  return [self hookSessionWithConfiguration:configuration
+                                   delegate:delegate_proxy
+                              delegateQueue:queue];
 }
 
 @end

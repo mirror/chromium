@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "components/grpc_support/include/bidirectional_stream_c.h"
+
 namespace net {
 class URLRequestContextGetter;
 
@@ -33,11 +35,23 @@ class HTTPProtocolHandlerDelegate {
 
 }  // namespace net
 
+GRPC_SUPPORT_EXPORT
+@interface CronetTransactionMetrics : NSURLSessionTaskTransactionMetrics
+@property(readonly) NSString* cronetCustomField;
+@end
+
+@interface CronetTaskMetrics : NSURLSessionTaskMetrics
+@property(copy, readonly)
+    NSArray<NSURLSessionTaskTransactionMetrics*>* transactionMetrics;
+@end
+
 // Custom NSURLProtocol handling HTTP and HTTPS requests.
 // The HttpProtocolHandler is registered as a NSURLProtocol in the iOS system.
 // This protocol is called for each NSURLRequest. This allows handling the
 // requests issued by UIWebView using our own network stack.
 @interface CRNHTTPProtocolHandler : NSURLProtocol
++ (CronetTaskMetrics*)metricsForTask:(NSURLSessionTask*)task;
+- (void)setTransactionMetric:(CronetTransactionMetrics*)metric;
 @end
 
 #endif  // IOS_NET_CRN_HTTP_PROTOCOL_HANDLER_H_

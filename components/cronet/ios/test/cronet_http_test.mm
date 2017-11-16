@@ -14,6 +14,7 @@
 #include "components/cronet/ios/test/start_cronet.h"
 #include "components/cronet/ios/test/test_server.h"
 #include "components/grpc_support/test/quic_test_server.h"
+#include "ios/net/crn_http_protocol_handler.h"
 #include "net/base/mac/url_conversions.h"
 #include "net/base/net_errors.h"
 #include "net/cert/mock_cert_verifier.h"
@@ -419,6 +420,32 @@ TEST_F(HttpTest, PostRequest) {
   ASSERT_STREQ(base::SysNSStringToUTF8(request_body).c_str(),
                base::SysNSStringToUTF8(response_body).c_str());
   ASSERT_TRUE(block_used);
+}
+
+TEST_F(HttpTest, NSURLSessionTaskMetrics) {
+  NSURL* url = net::NSURLWithGURL(GURL(grpc_support::kTestServerSimpleUrl));
+  __block BOOL block_used = NO;
+  NSURLSessionDataTask* task = [session_ dataTaskWithURL:url];
+  [Cronet setRequestFilterBlock:^(NSURLRequest* request) {
+    block_used = YES;
+    EXPECT_EQ([request URL], url);
+    return YES;
+  }];
+  StartDataTaskAndWaitForCompletion(task);
+  EXPECT_TRUE(block_used);
+  EXPECT_EQ(nil, [delegate_ error]);
+  EXPECT_STREQ(grpc_support::kSimpleBodyValue,
+               base::SysNSStringToUTF8([delegate_ responseBody]).c_str());
+  NSURLSessionTaskMetrics* task_metrics = [delegate_ taskMetrics];
+  ASSERT_TRUE(task_metrics);
+  ASSERT_EQ(1lU, task_metrics.transactionMetrics.count);
+  NSURLSessionTaskTransactionMetrics* metrics =
+      task_metrics.transactionMetrics.firstObject;
+  ASSERT_TRUE([metrics isMemberOfClass:[CronetTransactionMetrics class]]);
+  CronetTransactionMetrics* cronet_metrics = (CronetTransactionMetrics*)metrics;
+  ASSERT_STREQ(
+      "Hello from Cronet!",
+      base::SysNSStringToUTF8(cronet_metrics.cronetCustomField).c_str());
 }
 
 }  // namespace cronet

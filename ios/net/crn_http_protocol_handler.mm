@@ -51,6 +51,9 @@ class HttpProtocolHandlerCore;
 
 namespace {
 
+static NSMutableDictionary<NSURLSessionTask*, CronetTransactionMetrics*>*
+    _taskToMetricsMap;
+
 // Minimum size of the buffer used to read the net::URLRequest.
 const int kIOBufferMinSize = 64 * 1024;
 
@@ -64,6 +67,11 @@ net::HTTPProtocolHandlerDelegate* g_protocol_handler_delegate = nullptr;
 void DoNothing(bool flag) {}
 
 }  // namespace
+
+@interface CronetTaskMetrics ()
+- (void)setTransactionMetrics:
+    (NSArray<NSURLSessionTaskTransactionMetrics*>*)transactionMetrics;
+@end
 
 // Bridge class to forward NSStream events to the HttpProtocolHandlerCore.
 // Lives on the IO thread.
@@ -887,9 +895,14 @@ void HttpProtocolHandlerCore::StripPostSpecificHeaders(
   base::scoped_nsprotocol<id<CRNHTTPProtocolHandlerProxy>> _protocolProxy;
   __weak NSThread* _clientThread;
   BOOL _supportedURL;
+  NSURLSessionTask* _task;
 }
 
 #pragma mark NSURLProtocol methods
+
++ (void)initialize {
+  _taskToMetricsMap = [[NSMutableDictionary alloc] init];
+}
 
 + (BOOL)canInitWithRequest:(NSURLRequest*)request {
   DVLOG(5) << "canInitWithRequest " << net::FormatUrlRequestForLogging(request);
@@ -903,16 +916,18 @@ void HttpProtocolHandlerCore::StripPostSpecificHeaders(
   return request;
 }
 
-- (instancetype)initWithRequest:(NSURLRequest*)request
-                 cachedResponse:(NSCachedURLResponse*)cachedResponse
-                         client:(id<NSURLProtocolClient>)client {
+- (instancetype)initWithTask:(NSURLSessionTask*)task
+              cachedResponse:(NSCachedURLResponse*)cachedResponse
+                      client:(id<NSURLProtocolClient>)client {
   DCHECK(!cachedResponse);
+  NSURLRequest* request = task.currentRequest;
   self = [super initWithRequest:request
                  cachedResponse:cachedResponse
                          client:client];
   if (self) {
     _supportedURL = g_protocol_handler_delegate->IsRequestSupported(request);
     _core = new net::HttpProtocolHandlerCore(request);
+    _task = task;
   }
   return self;
 }
@@ -987,6 +1002,50 @@ void HttpProtocolHandlerCore::StripPostSpecificHeaders(
 - (void)stopLoading {
   [self cancelRequest];
   _protocolProxy.reset();
+}
+
++ (CronetTaskMetrics*)metricsForTask:(NSURLSessionTask*)task {
+  CronetTransactionMetrics* metrics = _taskToMetricsMap[task];
+  if (!metrics) {
+    return nil;
+  }
+  NSArray* transaction_metrics = @[ metrics ];
+  CronetTaskMetrics* task_metrics = [[CronetTaskMetrics alloc] init];
+  [task_metrics setTransactionMetrics:transaction_metrics];
+  // Remove the metrics to free memory.
+  [_taskToMetricsMap removeObjectForKey:task];
+  return task_metrics;
+}
+
+- (void)setTransactionMetric:(CronetTransactionMetrics*)metric {
+  _taskToMetricsMap[_task] = metric;
+}
+@end
+
+@implementation CronetTaskMetrics {
+  NSArray<NSURLSessionTaskTransactionMetrics*>* _transactionMetrics;
+}
+@synthesize transactionMetrics = _transactionMetrics;
+
+- (void)setTransactionMetrics:
+    (NSArray<NSURLSessionTaskTransactionMetrics*>*)transactionMetrics {
+  _transactionMetrics = transactionMetrics;
+}
+@end
+
+@implementation CronetTransactionMetrics : NSURLSessionTaskTransactionMetrics
+@synthesize cronetCustomField = _cronetCustomField;
+
+- (instancetype)init {
+  id old_self = self;
+  self = [super init];
+  // NSURLSessionTaskTransactionMetrics class is not supposed to be extended.
+  // That is why we replace |self| returned by [super init] by the original
+  // value. We still assign it to |self| because compiler requires that the
+  // result of [super init] is assigned to |self| or returned immediatly.
+  self = old_self;
+  _cronetCustomField = @"Hello from Cronet!";
+  return old_self;
 }
 
 @end

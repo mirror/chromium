@@ -9,6 +9,7 @@
 #include "base/logging.h"
 #import "base/mac/scoped_nsobject.h"
 #include "base/time/time.h"
+#import "crn_http_protocol_handler.h"
 #import "ios/net/protocol_handler_util.h"
 #include "net/base/auth.h"
 #include "net/url_request/url_request.h"
@@ -185,6 +186,8 @@
   DCHECK(_clientThread);
   if (!_protocol)
     return;
+  CronetTransactionMetrics* metric = [[CronetTransactionMetrics alloc] init];
+  [(CRNHTTPProtocolHandler*)_protocol setTransactionMetric:metric];
   [self postBlockToClientThread:^{
     [self didFinishLoadingOnClientThread];
   }];
