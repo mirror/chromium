@@ -2,10 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/media/router/discovery/media_sink_service_base.h"
+#include "chrome/common/media_router/discovery/media_sink_service_base.h"
 #include "base/test/mock_callback.h"
 #include "base/timer/mock_timer.h"
-#include "chrome/browser/media/router/test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -58,8 +57,7 @@ class TestMediaSinkServiceBase : public MediaSinkServiceBase {
 class MediaSinkServiceBaseTest : public ::testing::Test {
  public:
   MediaSinkServiceBaseTest()
-      :  // thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP),
-        media_sink_service_(
+      : media_sink_service_(
             new TestMediaSinkServiceBase(mock_sink_discovered_cb_.Get())) {}
 
   void SetUp() override {
@@ -79,8 +77,7 @@ class MediaSinkServiceBaseTest : public ::testing::Test {
   }
 
  protected:
-  base::MockCallback<MediaSinkService::OnSinksDiscoveredCallback>
-      mock_sink_discovered_cb_;
+  base::MockCallback<OnSinksDiscoveredCallback> mock_sink_discovered_cb_;
   base::MockTimer* mock_timer_;
 
   std::unique_ptr<TestMediaSinkServiceBase> media_sink_service_;

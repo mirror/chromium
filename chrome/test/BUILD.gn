@@ -2449,6 +2449,7 @@ test("unit_tests") {
     "../common/mac/mock_launchd.cc",
     "../common/mac/mock_launchd.h",
     "../common/media_router/discovery/media_sink_internal_unittest.cc",
+    "../common/media_router/discovery/media_sink_service_base_unittest.cc",
     "../common/media_router/issue_unittest.cc",
     "../common/media_router/media_route_unittest.cc",
     "../common/media_router/media_sink_unittest.cc",
