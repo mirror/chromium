@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c42637e_9757ceb0",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-16T16:52:03Z",
+      "side": 1,
+      "message": "would prefer inlining",
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c479e08f_b620fc02",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-16T16:52:03Z",
+      "side": 1,
+      "message": "nit: saving the field position* \n\nmakes it a little more clear",
+      "range": {
+        "startLine": 95,
+        "startChar": 25,
+        "endLine": 95,
+        "endChar": 30
+      },
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "033291c5_ac9808b6",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-16T16:52:03Z",
+      "side": 1,
+      "message": "const int kMaxCcFieldsSkipped \u003d 3; and please add a little context as to how you picked the actual value of 3",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 20
+      },
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f91c503_9796df79",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-16T16:52:03Z",
+      "side": 1,
+      "message": "Can you explain some of this logic?",
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229e0f15_e9285df6",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-16T16:52:03Z",
+      "side": 1,
+      "message": "should we update this comment?",
+      "range": {
+        "startLine": 144,
+        "startChar": 46,
+        "endLine": 146,
+        "endChar": 60
+      },
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0021ba7d_4fd4e315",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-16T16:52:03Z",
+      "side": 1,
+      "message": "these 4 lines confuse me, could you write a comment detailing what state we are in?",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 51
+      },
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3073de_e5b35360",
+        "filename": "components/autofill/core/browser/credit_card_field_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-16T16:52:03Z",
+      "side": 1,
+      "message": "Minimum",
+      "range": {
+        "startLine": 155,
+        "startChar": 33,
+        "endLine": 155,
+        "endChar": 39
+      },
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "685f3a20_d52c7242",
+        "filename": "components/autofill/core/browser/credit_card_field_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-16T16:52:03Z",
+      "side": 1,
+      "message": "can we use base::ContainsKey(field_candidates_map_, ASCIIToUTF16(\"number1\"));",
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70df1a73_e11ab9d4",
+        "filename": "components/autofill/core/common/autofill_regex_constants.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-16T16:52:03Z",
+      "side": 1,
+      "message": "Cool, should this be a different CL?",
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
