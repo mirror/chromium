@@ -57,8 +57,15 @@ class RendererMetricsHelperTest : public ::testing::Test {
     metrics_helper_->RecordTaskMetrics(queue.get(), start, start + duration);
   }
 
-  base::TimeTicks Microseconds(int microseconds) {
-    return base::TimeTicks() + base::TimeDelta::FromMicroseconds(microseconds);
+  void RunTask(WebFrameScheduler* scheduler,
+               base::TimeTicks start,
+               base::TimeDelta duration) {
+    DCHECK_LE(clock_->NowTicks(), start);
+    clock_->SetNowTicks(start + duration);
+    scoped_refptr<MainThreadTaskQueueForTest> queue(
+        new MainThreadTaskQueueForTest(QueueType::kDefault));
+    queue->SetFrameScheduler(scheduler);
+    metrics_helper_->RecordTaskMetrics(queue.get(), start, start + duration);
   }
 
   base::TimeTicks Milliseconds(int milliseconds) {
@@ -293,6 +300,251 @@ TEST_F(RendererMetricsHelperTest, BackgroundedRendererTransition) {
                   Bucket(static_cast<int>(Transition::kForegrounded), 2),
                   Bucket(static_cast<int>(Transition::kStoppedAfterDelay), 1),
                   Bucket(static_cast<int>(Transition::kResumed), 1)));
+}
+
+TEST_F(RendererMetricsHelperTest, TaskCountPerFrameType) {
+  int task_count = 0;
+  const int none_count = 4;
+  for (int i = 0; i < none_count; ++i) {
+    RunTask(nullptr, Milliseconds(++task_count),
+            base::TimeDelta::FromMicroseconds(100));
+  }
+
+  const int main_frame_visible_count = 8;
+  for (int i = 0; i < main_frame_visible_count; ++i) {
+    std::unique_ptr<FakeWebFrameScheduler> frame =
+        FakeWebFrameScheduler::Builder()
+            .SetFrameType(WebFrameScheduler::FrameType::kMainFrame)
+            .SetIsPageVisible(true)
+            .SetIsFrameVisible(true)
+            .Build();
+    RunTask(frame.get(), Milliseconds(++task_count),
+            base::TimeDelta::FromMicroseconds(100));
+  }
+
+  const int main_frame_background_exempt_self_count = 5;
+  for (int i = 0; i < main_frame_background_exempt_self_count; ++i) {
+    std::unique_ptr<FakeWebFrameScheduler> frame =
+        FakeWebFrameScheduler::Builder()
+            .SetFrameType(WebFrameScheduler::FrameType::kMainFrame)
+            .SetIsExemptFromThrottling(true)
+            .Build();
+    RunTask(frame.get(), Milliseconds(++task_count),
+            base::TimeDelta::FromMicroseconds(100));
+  }
+
+  const int cross_origin_hidden_count = 3;
+  for (int i = 0; i < cross_origin_hidden_count; ++i) {
+    std::unique_ptr<FakeWebFrameScheduler> frame =
+        FakeWebFrameScheduler::Builder()
+            .SetFrameType(WebFrameScheduler::FrameType::kSubframe)
+            .SetIsPageVisible(true)
+            .SetIsCrossOrigin(true)
+            .Build();
+    RunTask(frame.get(), Milliseconds(++task_count),
+            base::TimeDelta::FromMicroseconds(100));
+  }
+
+  const int cross_origin_hidden_service_count = 7;
+  for (int i = 0; i < cross_origin_hidden_service_count; ++i) {
+    std::unique_ptr<FakeWebViewScheduler> view =
+        FakeWebViewScheduler::Builder().SetIsPlayingAudio(true).Build();
+    std::unique_ptr<FakeWebFrameScheduler> frame =
+        FakeWebFrameScheduler::Builder()
+            .SetWebViewScheduler(view.get())
+            .SetIsCrossOrigin(true)
+            .SetFrameType(WebFrameScheduler::FrameType::kSubframe)
+            .Build();
+    RunTask(frame.get(), Milliseconds(++task_count),
+            base::TimeDelta::FromMicroseconds(100));
+  }
+
+  const int cross_origin_visible_count = 1;
+  for (int i = 0; i < cross_origin_visible_count; ++i) {
+    std::unique_ptr<FakeWebFrameScheduler> frame =
+        FakeWebFrameScheduler::Builder()
+            .SetFrameType(WebFrameScheduler::FrameType::kSubframe)
+            .SetIsCrossOrigin(true)
+            .SetIsPageVisible(true)
+            .SetIsFrameVisible(true)
+            .Build();
+    RunTask(frame.get(), Milliseconds(++task_count),
+            base::TimeDelta::FromMicroseconds(100));
+  }
+
+  const int main_frame_background_exempt_other_count = 2;
+  for (int i = 0; i < main_frame_background_exempt_other_count; ++i) {
+    std::unique_ptr<FakeWebViewScheduler> view =
+        FakeWebViewScheduler::Builder().SetIsThrottlingExempt(true).Build();
+    std::unique_ptr<FakeWebFrameScheduler> frame =
+        FakeWebFrameScheduler::Builder()
+            .SetWebViewScheduler(view.get())
+            .SetFrameType(WebFrameScheduler::FrameType::kMainFrame)
+            .Build();
+    RunTask(frame.get(), Milliseconds(++task_count),
+            base::TimeDelta::FromMicroseconds(100));
+  }
+
+  const int same_origin_visible_count = 10;
+  for (int i = 0; i < same_origin_visible_count; ++i) {
+    std::unique_ptr<FakeWebFrameScheduler> frame =
+        FakeWebFrameScheduler::Builder()
+            .SetFrameType(WebFrameScheduler::FrameType::kSubframe)
+            .SetIsPageVisible(true)
+            .SetIsFrameVisible(true)
+            .Build();
+    RunTask(frame.get(), Milliseconds(++task_count),
+            base::TimeDelta::FromMicroseconds(100));
+  }
+
+  const int same_origin_background_count = 9;
+  for (int i = 0; i < same_origin_background_count; ++i) {
+    std::unique_ptr<FakeWebFrameScheduler> frame =
+        FakeWebFrameScheduler::Builder()
+            .SetFrameType(WebFrameScheduler::FrameType::kSubframe)
+            .Build();
+    RunTask(frame.get(), Milliseconds(++task_count),
+            base::TimeDelta::FromMicroseconds(100));
+  }
+
+  const int same_origin_visible_service_count = 6;
+  for (int i = 0; i < same_origin_visible_service_count; ++i) {
+    std::unique_ptr<FakeWebViewScheduler> view =
+        FakeWebViewScheduler::Builder().SetIsPlayingAudio(true).Build();
+    std::unique_ptr<FakeWebFrameScheduler> frame =
+        FakeWebFrameScheduler::Builder()
+            .SetWebViewScheduler(view.get())
+            .SetIsFrameVisible(true)
+            .SetFrameType(WebFrameScheduler::FrameType::kSubframe)
+            .Build();
+    RunTask(frame.get(), Milliseconds(++task_count),
+            base::TimeDelta::FromMicroseconds(100));
+  }
+
+  EXPECT_THAT(
+      histogram_tester_->GetAllSamples(
+          "RendererScheduler.TaskCountPerFrameType"),
+      UnorderedElementsAre(
+          Bucket(static_cast<int>(FrameType::kNone), none_count),
+          Bucket(static_cast<int>(FrameType::kMainFrameVisible),
+                 main_frame_visible_count),
+          Bucket(static_cast<int>(FrameType::kMainFrameBackgroundExemptSelf),
+                 main_frame_background_exempt_self_count),
+          Bucket(static_cast<int>(FrameType::kMainFrameBackgroundExemptOther),
+                 main_frame_background_exempt_other_count),
+          Bucket(static_cast<int>(FrameType::kSameOriginVisible),
+                 same_origin_visible_count),
+          Bucket(static_cast<int>(FrameType::kSameOriginVisibleService),
+                 same_origin_visible_service_count),
+          Bucket(static_cast<int>(FrameType::kSameOriginBackground),
+                 same_origin_background_count),
+          Bucket(static_cast<int>(FrameType::kCrossOriginVisible),
+                 cross_origin_visible_count),
+          Bucket(static_cast<int>(FrameType::kCrossOriginHidden),
+                 cross_origin_hidden_count),
+          Bucket(static_cast<int>(FrameType::kCrossOriginHiddenService),
+                 cross_origin_hidden_service_count)));
+}
+
+TEST_F(RendererMetricsHelperTest, TaskCountPerFrameTypeLongerThan) {
+  const int same_origin_hidden_task_durations[] = {
+      2,  15,  16,  20,  25,  30,  49,   50,  73,
+      99, 100, 110, 140, 150, 800, 1000, 1200};
+  const int same_origin_hidden_count = 17;
+  int total_duration = 0;
+  for (int i = 0; i < same_origin_hidden_count; ++i) {
+    std::unique_ptr<FakeWebFrameScheduler> frame =
+        FakeWebFrameScheduler::Builder()
+            .SetFrameType(WebFrameScheduler::FrameType::kSubframe)
+            .SetIsPageVisible(true)
+            .Build();
+    RunTask(frame.get(), Milliseconds(++total_duration),
+            base::TimeDelta::FromMilliseconds(
+                same_origin_hidden_task_durations[i]));
+    total_duration += same_origin_hidden_task_durations[i];
+  }
+
+  const int cross_origin_visible_service_task_durations[] = {5,  10, 18, 19,
+                                                             20, 55, 75, 220};
+  const int cross_origin_visible_service_count = 8;
+  for (int i = 0; i < cross_origin_visible_service_count; ++i) {
+    std::unique_ptr<FakeWebViewScheduler> view =
+        FakeWebViewScheduler::Builder().SetIsPlayingAudio(true).Build();
+    std::unique_ptr<FakeWebFrameScheduler> frame =
+        FakeWebFrameScheduler::Builder()
+            .SetWebViewScheduler(view.get())
+            .SetIsCrossOrigin(true)
+            .SetIsFrameVisible(true)
+            .SetFrameType(WebFrameScheduler::FrameType::kSubframe)
+            .Build();
+    RunTask(frame.get(), Milliseconds(++total_duration),
+            base::TimeDelta::FromMilliseconds(
+                cross_origin_visible_service_task_durations[i]));
+    total_duration += cross_origin_visible_service_task_durations[i];
+  }
+
+  const int main_frame_background_task_durations[] = {21, 31, 41, 51,  61,
+                                                      71, 81, 91, 101, 1001};
+  const int main_frame_background_count = 10;
+  for (int i = 0; i < main_frame_background_count; ++i) {
+    std::unique_ptr<FakeWebFrameScheduler> frame =
+        FakeWebFrameScheduler::Builder()
+            .SetFrameType(WebFrameScheduler::FrameType::kMainFrame)
+            .Build();
+    RunTask(frame.get(), Milliseconds(++total_duration),
+            base::TimeDelta::FromMilliseconds(
+                main_frame_background_task_durations[i]));
+    total_duration += main_frame_background_task_durations[i];
+  }
+
+  EXPECT_THAT(
+      histogram_tester_->GetAllSamples(
+          "RendererScheduler.TaskCountPerFrameType"),
+      UnorderedElementsAre(
+          Bucket(static_cast<int>(FrameType::kMainFrameBackground),
+                 main_frame_background_count),
+          Bucket(static_cast<int>(FrameType::kSameOriginHidden),
+                 same_origin_hidden_count),
+          Bucket(static_cast<int>(FrameType::kCrossOriginVisibleService),
+                 cross_origin_visible_service_count)));
+
+  EXPECT_THAT(
+      histogram_tester_->GetAllSamples(
+          "RendererScheduler.TaskCountPerFrameType.LongerThan16ms"),
+      UnorderedElementsAre(
+          Bucket(static_cast<int>(FrameType::kMainFrameBackground), 10),
+          Bucket(static_cast<int>(FrameType::kSameOriginHidden), 15),
+          Bucket(static_cast<int>(FrameType::kCrossOriginVisibleService), 6)));
+
+  EXPECT_THAT(
+      histogram_tester_->GetAllSamples(
+          "RendererScheduler.TaskCountPerFrameType.LongerThan50ms"),
+      UnorderedElementsAre(
+          Bucket(static_cast<int>(FrameType::kMainFrameBackground), 7),
+          Bucket(static_cast<int>(FrameType::kSameOriginHidden), 10),
+          Bucket(static_cast<int>(FrameType::kCrossOriginVisibleService), 3)));
+
+  EXPECT_THAT(
+      histogram_tester_->GetAllSamples(
+          "RendererScheduler.TaskCountPerFrameType.LongerThan100ms"),
+      UnorderedElementsAre(
+          Bucket(static_cast<int>(FrameType::kMainFrameBackground), 2),
+          Bucket(static_cast<int>(FrameType::kSameOriginHidden), 7),
+          Bucket(static_cast<int>(FrameType::kCrossOriginVisibleService), 1)));
+
+  EXPECT_THAT(
+      histogram_tester_->GetAllSamples(
+          "RendererScheduler.TaskCountPerFrameType.LongerThan150ms"),
+      UnorderedElementsAre(
+          Bucket(static_cast<int>(FrameType::kMainFrameBackground), 1),
+          Bucket(static_cast<int>(FrameType::kSameOriginHidden), 4),
+          Bucket(static_cast<int>(FrameType::kCrossOriginVisibleService), 1)));
+
+  EXPECT_THAT(histogram_tester_->GetAllSamples(
+                  "RendererScheduler.TaskCountPerFrameType.LongerThan1s"),
+              UnorderedElementsAre(
+                  Bucket(static_cast<int>(FrameType::kMainFrameBackground), 1),
+                  Bucket(static_cast<int>(FrameType::kSameOriginHidden), 2)));
 }
 
 // TODO(crbug.com/754656): Add tests for NthMinute and AfterNthMinute

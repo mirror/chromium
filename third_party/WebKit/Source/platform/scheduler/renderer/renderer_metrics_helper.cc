@@ -21,6 +21,7 @@ namespace scheduler {
 #define EXTENSIONS_MAIN_THREAD_LOAD_METRIC_NAME \
   MAIN_THREAD_LOAD_METRIC_NAME ".Extension"
 #define PER_FRAME_TYPE_METRIC_NAME "RendererScheduler.TaskDurationPerFrameType2"
+#define PER_FRAME_COUNT_METRIC_NAME "RendererScheduler.TaskCountPerFrameType"
 
 enum class MainThreadTaskLoadState { kLow, kHigh, kUnknown };
 
@@ -351,8 +352,40 @@ void RendererMetricsHelper::RecordTaskMetrics(MainThreadTaskQueue* queue,
     visible_task_duration_reporter.RecordTask(queue_type, duration);
   }
 
-  frame_type_duration_reporter.RecordTask(
-      GetFrameType(queue->GetFrameScheduler()), duration);
+  FrameType frame_type = GetFrameType(queue->GetFrameScheduler());
+  frame_type_duration_reporter.RecordTask(frame_type, duration);
+  UMA_HISTOGRAM_ENUMERATION(PER_FRAME_COUNT_METRIC_NAME,
+                            static_cast<int>(frame_type),
+                            static_cast<int>(FrameType::kCount));
+  if (duration >= base::TimeDelta::FromMilliseconds(16)) {
+    UMA_HISTOGRAM_ENUMERATION(PER_FRAME_COUNT_METRIC_NAME ".LongerThan16ms",
+                              static_cast<int>(frame_type),
+                              static_cast<int>(FrameType::kCount));
+  }
+
+  if (duration >= base::TimeDelta::FromMilliseconds(50)) {
+    UMA_HISTOGRAM_ENUMERATION(PER_FRAME_COUNT_METRIC_NAME ".LongerThan50ms",
+                              static_cast<int>(frame_type),
+                              static_cast<int>(FrameType::kCount));
+  }
+
+  if (duration >= base::TimeDelta::FromMilliseconds(100)) {
+    UMA_HISTOGRAM_ENUMERATION(PER_FRAME_COUNT_METRIC_NAME ".LongerThan100ms",
+                              static_cast<int>(frame_type),
+                              static_cast<int>(FrameType::kCount));
+  }
+
+  if (duration >= base::TimeDelta::FromMilliseconds(150)) {
+    UMA_HISTOGRAM_ENUMERATION(PER_FRAME_COUNT_METRIC_NAME ".LongerThan150ms",
+                              static_cast<int>(frame_type),
+                              static_cast<int>(FrameType::kCount));
+  }
+
+  if (duration >= base::TimeDelta::FromSeconds(1)) {
+    UMA_HISTOGRAM_ENUMERATION(PER_FRAME_COUNT_METRIC_NAME ".LongerThan1s",
+                              static_cast<int>(frame_type),
+                              static_cast<int>(FrameType::kCount));
+  }
 }
 
 void RendererMetricsHelper::RecordMainThreadTaskLoad(base::TimeTicks time,
