@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66878be0_662ad04f",
+        "filename": "chrome/browser/vr/ui.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-16T19:18:08Z",
+      "side": 0,
+      "message": "It is not enforced. But it would be nice to move the implementation of SetOmniboxSuggestions to below OnSpeechRecognitionStateChanged in .cc file as well.",
+      "revId": "1e306a32b31517697cc6f1da2e406ff73abe3408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
