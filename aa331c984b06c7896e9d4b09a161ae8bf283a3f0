@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "722ec400_57832042",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-16T17:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "062ca95f_7c4ea133",
+      "revId": "aa331c984b06c7896e9d4b09a161ae8bf283a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d96f157_cd6c6688",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.html",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "aa331c984b06c7896e9d4b09a161ae8bf283a3f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2835c6f8_3878851d",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-16T17:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d96f157_cd6c6688",
+      "revId": "aa331c984b06c7896e9d4b09a161ae8bf283a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "77cf2739_999dccc6",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-16T17:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "387f2070_5b4dfa4d",
+      "revId": "aa331c984b06c7896e9d4b09a161ae8bf283a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6304014e_d6beda62",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.html",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "aa331c984b06c7896e9d4b09a161ae8bf283a3f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b0d5281_1da0b2ce",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-16T17:15:43Z",
+      "side": 1,
+      "message": "Yes. The buttons do not appear on a straight line without it.",
+      "parentUuid": "6304014e_d6beda62",
+      "revId": "aa331c984b06c7896e9d4b09a161ae8bf283a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "687e4468_09dbda82",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-16T17:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f7c0074_b502d35f",
+      "revId": "aa331c984b06c7896e9d4b09a161ae8bf283a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2d2511f_3d734da8",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
         "patchSetId": 8
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "28bc65d8_3a348ab6",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-16T17:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2d2511f_3d734da8",
+      "revId": "aa331c984b06c7896e9d4b09a161ae8bf283a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc1c46bb_89c069eb",
         "filename": "chrome/test/data/webui/settings/settings_passwords_section_browsertest.js",
         "patchSetId": 8
@@ -118,6 +226,24 @@
       "revId": "aa331c984b06c7896e9d4b09a161ae8bf283a3f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b7eb6f_0b25027f",
+        "filename": "chrome/test/data/webui/settings/settings_passwords_section_browsertest.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-16T17:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc1c46bb_89c069eb",
+      "revId": "aa331c984b06c7896e9d4b09a161ae8bf283a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
