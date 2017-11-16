@@ -6,6 +6,7 @@
 
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/strings/string_util.h"
 #include "base/time/default_clock.h"
 #include "chrome/common/media_router/media_source_helper.h"
 #include "url/gurl.h"
@@ -120,12 +121,14 @@ void MediaRouterMetrics::RecordMediaRouterFileSize(int64_t size) {
 
 // static
 void MediaRouterMetrics::RecordDialParsingError(
-    chrome::mojom::DialParsingError parsing_error) {
+    SafeDialDeviceDescriptionParser::ParsingError parsing_error) {
   DCHECK_LT(static_cast<int>(parsing_error),
-            static_cast<int>(chrome::mojom::DialParsingError::TOTAL_COUNT));
+            static_cast<int>(
+                SafeDialDeviceDescriptionParser::ParsingError::kTotalCount));
   UMA_HISTOGRAM_ENUMERATION(
       kHistogramDialParsingError, parsing_error,
-      static_cast<int>(chrome::mojom::DialParsingError::TOTAL_COUNT));
+      static_cast<int>(
+          SafeDialDeviceDescriptionParser::ParsingError::kTotalCount));
 }
 
 // static

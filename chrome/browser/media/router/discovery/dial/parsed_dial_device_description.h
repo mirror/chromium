@@ -32,6 +32,9 @@ struct ParsedDialDeviceDescription {
   // Device model name.
   std::string model_name;
 
+  // The reported device type, e.g. urn:dial-multiscreen-org:device:dial:1
+  std::string device_type;
+
   // The DIAL application URL (used to launch DIAL applications).
   GURL app_url;
 };
