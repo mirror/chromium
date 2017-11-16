@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3013e3bf_09df8e6c",
+        "filename": "components/exo/wayland/clients/perftests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-16T20:55:32Z",
+      "side": 1,
+      "message": "is there precedence for this format? why not SimpleFrameRate?",
+      "range": {
+        "startLine": 35,
+        "startChar": 62,
+        "endLine": 35,
+        "endChar": 74
+      },
+      "revId": "25c79235ed3feb23b87ef84f77b68152a3cd5721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6c7cd1_0986644b",
+        "filename": "components/exo/wayland/clients/perftests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-16T20:55:32Z",
+      "side": 1,
+      "message": "static_cast if cast is needed here",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 16
+      },
+      "revId": "25c79235ed3feb23b87ef84f77b68152a3cd5721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4317e87c_397e582b",
+        "filename": "components/exo/wayland/clients/perftests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-16T20:55:32Z",
+      "side": 1,
+      "message": "this might cause issues when parsing the data in the dash board. can we use 0 or a really large number instead?",
+      "range": {
+        "startLine": 45,
+        "startChar": 60,
+        "endLine": 45,
+        "endChar": 75
+      },
+      "revId": "25c79235ed3feb23b87ef84f77b68152a3cd5721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ed462f4_aba0a828",
+        "filename": "components/exo/wayland/clients/simple.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-16T20:55:32Z",
+      "side": 1,
+      "message": "let\u0027s avoid mixing up the frame callback with this feedback if possible.",
+      "revId": "25c79235ed3feb23b87ef84f77b68152a3cd5721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32cb588b_9fe50d69",
+        "filename": "components/exo/wayland/clients/simple.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-16T20:55:32Z",
+      "side": 1,
+      "message": "can you remove values not used from here? maybe simply add\n\n\"base::TimeDelta* total_presentation_latency, int* num_frames_presented\" arguments to Run function below instead?",
+      "revId": "25c79235ed3feb23b87ef84f77b68152a3cd5721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
