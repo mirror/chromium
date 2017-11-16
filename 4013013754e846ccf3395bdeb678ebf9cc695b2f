@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bb66548_298bbaa3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-16T11:34:29Z",
+      "side": 1,
+      "message": "cannot store policy into Session Manager",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 57
+      },
+      "revId": "4013013754e846ccf3395bdeb678ebf9cc695b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4184de95_9e9aa050",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-16T11:34:29Z",
+      "side": 1,
+      "message": "Didn\u0027t I comment on this already? Was that another CL? Am I taking crazy pills.",
+      "range": {
+        "startLine": 10,
+        "startChar": 11,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "4013013754e846ccf3395bdeb678ebf9cc695b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b5ae74e_7d7854d2",
+        "filename": "chrome/browser/chromeos/policy/enrollment_handler_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-16T11:34:29Z",
+      "side": 1,
+      "message": "Nit: if (...) else () should be shorter here than switch.",
+      "range": {
+        "startLine": 674,
+        "startChar": 0,
+        "endLine": 674,
+        "endChar": 29
+      },
+      "revId": "4013013754e846ccf3395bdeb678ebf9cc695b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83154b32_3a1e6339",
+        "filename": "chrome/browser/chromeos/policy/enrollment_handler_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-16T11:34:29Z",
+      "side": 1,
+      "message": "Please add a comment what this means and how the logic works, in particular that authpolicyd caches policy and returns this error because the device isn\u0027t locked yet and that we store the cached policy in the STEP_STORE_POLICY step.",
+      "range": {
+        "startLine": 676,
+        "startChar": 0,
+        "endLine": 676,
+        "endChar": 59
+      },
+      "revId": "4013013754e846ccf3395bdeb678ebf9cc695b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbee23cf_58ea9fc5",
+        "filename": "chrome/browser/chromeos/policy/enrollment_handler_chromeos.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-16T11:34:29Z",
+      "side": 1,
+      "message": "Nit: POLICY",
+      "range": {
+        "startLine": 131,
+        "startChar": 18,
+        "endLine": 131,
+        "endChar": 26
+      },
+      "revId": "4013013754e846ccf3395bdeb678ebf9cc695b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
