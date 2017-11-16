@@ -83,7 +83,7 @@ class MediaRoute {
   void set_custom_controller_path(const std::string& custom_controller_path) {
     custom_controller_path_ = custom_controller_path;
   }
-  const std::string& custom_controller_path() const {
+  const base::Optional<std::string>& custom_controller_path() const {
     return custom_controller_path_;
   }
 
@@ -139,7 +139,7 @@ class MediaRoute {
   // the media router dialog.
   // TODO(crbug.com/684642): Remove this field in favor of controller_type once
   // new controller is fully rolled out.
-  std::string custom_controller_path_;
+  base::Optional<std::string> custom_controller_path_;
 
   // Whether the provider for this route supports the Media Route Controller.
   // TODO(crbug.com/684642): Remove this field in favor of controller_type.
