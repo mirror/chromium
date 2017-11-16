@@ -46,6 +46,11 @@ class CONTENT_EXPORT DevToolsDownloadManagerDelegate
       content::DownloadItem* item,
       const content::DownloadOpenDelayedCallback& callback) override;
   void GetNextId(const content::DownloadIdCallback& callback) override;
+  void CheckDownloadAllowed(
+      const ResourceRequestInfo::WebContentsGetter& web_contents_getter,
+      const GURL& url,
+      const std::string& request_method,
+      CheckDownloadAllowedCallback check_download_allowed_cb) override;
 
  private:
   friend class base::RefCounted<DevToolsDownloadManagerDelegate>;

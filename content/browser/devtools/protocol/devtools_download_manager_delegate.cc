@@ -148,6 +148,14 @@ void DevToolsDownloadManagerDelegate::GetNextId(
   callback.Run(next_id++);
 }
 
+void DevToolsDownloadManagerDelegate::CheckDownloadAllowed(
+    const ResourceRequestInfo::WebContentsGetter& web_contents_getter,
+    const GURL& url,
+    const std::string& request_method,
+    CheckDownloadAllowedCallback check_download_allowed_cb) {
+  std::move(check_download_allowed_cb).Run(true);
+}
+
 // static
 void DevToolsDownloadManagerDelegate::GenerateFilename(
     const GURL& url,
