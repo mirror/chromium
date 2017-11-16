@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99abe70c_656ddbb2",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPageAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-16T00:23:45Z",
+      "side": 1,
+      "message": "Let\u0027s not introduce this dependency!",
+      "revId": "ab7684ee64ed3f187d82173389bcd68370fbc9ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5fa87aa_9c6a2e06",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPageAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-16T00:23:45Z",
+      "side": 1,
+      "message": "So this is going to work one way if the user has enabled network domain and another if they didn\u0027t? Have you considered documenting this somewhere?",
+      "revId": "ab7684ee64ed3f187d82173389bcd68370fbc9ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
