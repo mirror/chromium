@@ -22,6 +22,30 @@
       "revId": "adc56dde985bb8ee00cb074f1cb32b12fd3b9203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "333e041b_8162979b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-11-16T01:04:59Z",
+      "side": 1,
+      "message": "Actually, some crashes happen on JB, see crbug.com/781396#c12\n\nAlso, this is about finishing CTA, not starting anything. So FRE will start, it\u0027s just that CTA might end up also starting in the background.\n\nI like killProcess() idea, but how would it play with any activities that are starting? abortLaunch() is called after we start other activity.\n\nBoth finishAndRemoveTask() and finish() can fail, under the hood they both call a single function that takes \u0027finishTask\u0027 argument.\n\nOverall I feel that killProcess() is almost the same as crashing in onStart() - so should we bother at all? Although we could make crashing more explicit (if (!mCreated) crash()), and try suppress any indication that we crashed (are there any?).",
+      "parentUuid": "fa64887d_cadd8c15",
+      "range": {
+        "startLine": 274,
+        "startChar": 12,
+        "endLine": 274,
+        "endChar": 28
+      },
+      "revId": "adc56dde985bb8ee00cb074f1cb32b12fd3b9203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
