@@ -206,6 +206,7 @@ class CC_EXPORT LayerTreeHostImpl
       InputHandler::ScrollInputType type) const override;
   EventListenerProperties GetEventListenerProperties(
       EventListenerClass event_class) const override;
+  gfx::Rect GetWheelEventListenerRect() const override;
   InputHandler::TouchStartOrMoveEventListenerType
   EventListenerTypeForTouchStartOrMoveAt(
       const gfx::Point& viewport_port,

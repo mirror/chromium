@@ -948,6 +948,12 @@ void RenderWidgetCompositor::SetEventListenerProperties(
       static_cast<cc::EventListenerProperties>(properties));
 }
 
+void RenderWidgetCompositor::SetWheelEventListenerRect(WebRect rect) {
+  LOG(ERROR) << "RWC: " << rect.x << ", " << rect.y << " " << rect.width << "x"
+             << rect.height;
+  layer_tree_host_->SetWheelEventListenerRect(rect);
+}
+
 void RenderWidgetCompositor::UpdateEventRectsForSubframeIfNecessary() {
   if (!is_for_oopif_)
     return;
