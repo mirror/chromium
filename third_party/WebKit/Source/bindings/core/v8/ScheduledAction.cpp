@@ -159,7 +159,8 @@ void ScheduledAction::Execute(LocalFrame* frame) {
     DVLOG(1) << "ScheduledAction::execute " << this
              << ": executing from source";
     frame->GetScriptController().ExecuteScriptAndReturnValue(
-        script_state_->GetContext(), ScriptSourceCode(code_));
+        script_state_->GetContext(),
+        ScriptSourceCode(code_, ScriptSourceOrigin::kEvalForScheduledAction));
   }
 
   // The frame might be invalid at this point because JavaScript could have
@@ -191,7 +192,8 @@ void ScheduledAction::Execute(WorkerGlobalScope* worker) {
         function, worker, script_state_->GetContext()->Global(), info.size(),
         info.data(), script_state_->GetIsolate());
   } else {
-    worker->ScriptController()->Evaluate(ScriptSourceCode(code_));
+    worker->ScriptController()->Evaluate(
+        ScriptSourceCode(code_, ScriptSourceOrigin::kEvalForScheduledAction));
   }
 }
 

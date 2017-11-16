@@ -470,19 +470,27 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
     // 22.2. "Switch on the script's type:"
     switch (GetScriptType()) {
       // - "classic":
-      case ScriptType::kClassic:
+      case ScriptType::kClassic: {
         // 1. Let script be the result of creating a classic script using source
         // text, settings object, base URL, and options.
         //
         // TODO(hiroshige): Implement base URL and options.
-        prepared_pending_script_ =
-            ClassicPendingScript::CreateInline(element_, position, options);
+
+        ScriptSourceOrigin script_origin = ScriptSourceOrigin::kInline;
+        if (!parser_inserted_)
+          script_origin = ScriptSourceOrigin::kInlineInsideGeneratedElement;
+        else if (element_->GetDocument().IsInDocumentWrite())
+          script_origin = ScriptSourceOrigin::kInlineInsideDocumentWrite;
+
+        prepared_pending_script_ = ClassicPendingScript::CreateInline(
+            element_, position, script_origin, options);
 
         // 2. Set the script's script to script.
         // 3. The script is ready.
         // Implemented by ClassicPendingScript.
 
         break;
+      }
 
       // - "module":
       case ScriptType::kModule: {

@@ -12,7 +12,7 @@ namespace blink {
 WebScriptSource::operator ScriptSourceCode() const {
   TextPosition position(OrdinalNumber::FromOneBasedInt(start_line),
                         OrdinalNumber::First());
-  return ScriptSourceCode(code, url, position);
+  return ScriptSourceCode(code, ScriptSourceOrigin::kUnknown, url, position);
 }
 
 }  // namespace blink
