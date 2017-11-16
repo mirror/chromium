@@ -106,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "86e496fa_3bbdd5af",
+        "filename": "components/arc/common/net.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-16T19:29:22Z",
+      "side": 1,
+      "message": "Right. Some day I\u0027d actually love to replace net.mojom with a TBD onc.mojom and do all of the translaiton on the Arc/Android side. In the meanwhile, Android may change and we may want the \u0027maybe\u0027 state, so it seems like it might make more sense to do the conversion further up the stack. That said, I don\u0027t have a strong opinion, just thought it was worth mentioning.",
+      "parentUuid": "01a38324_3a088669",
+      "revId": "3ed4f5a86412eb10e202622920e68b6ad893a1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d3107e1_c8f8514b",
         "filename": "components/onc/onc_constants.cc",
         "patchSetId": 5
