@@ -314,7 +314,7 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
       base::TimeTicks dns_resolution_end_time,
       QuicClientPushPromiseIndex* push_promise_index,
       ServerPushDelegate* push_delegate,
-      base::TaskRunner* task_runner,
+      base::SequencedTaskRunner* task_runner,
       std::unique_ptr<SocketPerformanceWatcher> socket_performance_watcher,
       NetLog* net_log);
   ~QuicChromiumClientSession() override;
@@ -609,7 +609,7 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
   std::vector<CompletionCallback> waiting_for_confirmation_callbacks_;
   CompletionCallback callback_;
   size_t num_total_streams_;
-  base::TaskRunner* task_runner_;
+  base::SequencedTaskRunner* task_runner_;
   NetLogWithSource net_log_;
   std::vector<std::unique_ptr<QuicChromiumPacketReader>> packet_readers_;
   LoadTimingInfo::ConnectTiming connect_timing_;
