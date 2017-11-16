@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "859b58be_cc5b94bd",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-16T17:39:10Z",
+      "side": 1,
+      "message": "nit: rephrase this as |error_page_content| is only used when |skip_throttles| is true. (double negation makes it harder to understand).",
+      "revId": "3a6e00e71e198244bbc7761b55b5f54346606fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
