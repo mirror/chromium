@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b2d1363_bfcc0542",
+        "filename": "base/ios/scoped_critical_action.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-16T16:10:43Z",
+      "side": 1,
+      "message": "Can you add a comment that lock protect all the variable below and must be held to read/write them?",
+      "revId": "4efe67e0f8befdd79af2e996593fb83b0898e4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4edaf93_04849116",
+        "filename": "base/ios/scoped_critical_action.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-16T16:10:43Z",
+      "side": 1,
+      "message": "Can you add DISALLOW_COPY_AND_ASSIGN() so that no instance is captured by copy by a block?",
+      "revId": "4efe67e0f8befdd79af2e996593fb83b0898e4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
