@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a996e424_b11ee1de",
+        "filename": "chrome/browser/ui/views/hover_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-16T03:10:58Z",
+      "side": 1,
+      "message": "nit: we usually just mention direct parent classes, so this can be omitted and the declaration can hug up next to ShouldUseFloodFillInkDrop().\n\nBut since StateChanged comes from Button (a more ancestral parent), it should come before ShouldUseFloodFillInkDrop. (reorder in .cc as well)",
+      "revId": "fcf57425b4d85193beb5e31491c2fd2394689357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
