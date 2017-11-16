@@ -124,6 +124,7 @@ bool VTTTokenizer::NextToken(VTTToken& token) {
     kStartTagAnnotationState,
     kHTMLCharacterReferenceInAnnotationState,
     kEndTagState,
+    kTimestampHourState,
     kTimestampTagState,
   } state = kDataState;
 
@@ -168,7 +169,7 @@ bool VTTTokenizer::NextToken(VTTToken& token) {
         WEBVTT_ADVANCE_TO(kEndTagState);
       } else if (WTF::IsASCIIDigit(cc)) {
         result.Append(cc);
-        WEBVTT_ADVANCE_TO(kTimestampTagState);
+        WEBVTT_ADVANCE_TO(kTimestampHourState);
       } else if (cc == '>' || cc == kEndOfFileMarker) {
         DCHECK(result.IsEmpty());
         return AdvanceAndEmitToken(input_, token,
@@ -244,6 +245,20 @@ bool VTTTokenizer::NextToken(VTTToken& token) {
                                    VTTToken::EndTag(result.ToString()));
       result.Append(cc);
       WEBVTT_ADVANCE_TO(kEndTagState);
+    }
+    END_STATE()
+
+    WEBVTT_BEGIN_STATE(kTimestampHourState) {
+      if (cc == ':') {
+        // Add an extra leading zero if the hour component contains only one
+        // digit
+        UChar prevChar = result[0];
+        result.Clear();
+        result.Append('0');
+        result.Append(prevChar);
+      }
+      result.Append(cc);
+      WEBVTT_ADVANCE_TO(kTimestampTagState);
     }
     END_STATE()
 
