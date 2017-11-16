@@ -188,7 +188,8 @@ class SupportsWeakPtrBase {
   template <typename Derived, typename Base>
   static WeakPtr<Derived> AsWeakPtrImpl(
       Derived* t, const SupportsWeakPtr<Base>&) {
-    WeakPtr<Base> ptr = t->Base::AsWeakPtr();
+    Base* const b = t;
+    WeakPtr<Base> ptr = b->AsWeakPtr();
     return WeakPtr<Derived>(
         ptr.ref_, static_cast<Derived*>(reinterpret_cast<Base*>(ptr.ptr_)));
   }
