@@ -16,6 +16,40 @@
       "revId": "d6bf1923f257560b21c78aabcdd1945e23fc8516",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "053891dd_04bb962e",
+        "filename": "media/capture/video/chromeos/mojo/arc_camera3_service.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T04:03:34Z",
+      "side": 1,
+      "message": "I assume this will be called by the server to do jpeg decoding in there. Just for context, could you remind me again why jpeg decoding is needed in the server? Is it because clients other than Chromium, e.g. the Android runtime, expect the server to deliver decoded frames?\n\nI am asking because Chromium can accept MJpeg frames and will decode them at VideoCaptureDeviceClient.",
+      "revId": "d6bf1923f257560b21c78aabcdd1945e23fc8516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62df7574_f87757cc",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T04:03:34Z",
+      "side": 1,
+      "message": "Is THREAD_CHECKER needed or would SEQUENCE_CHECKER be sufficient?\nIf THREAD_CHECKER is indeed needed, please add a comment indicating why.",
+      "revId": "d6bf1923f257560b21c78aabcdd1945e23fc8516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
