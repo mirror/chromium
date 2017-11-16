@@ -1,0 +1,93 @@
+<link rel="import" href="chrome://resources/html/polymer.html">
+
+<link rel="import" href="button_css.html">
+<link rel="import" href="print_preview_shared_css.html">
+<link rel="import" href="throbber_css.html">
+<link rel="import" href="settings_section.html">
+
+<dom-module id="print-preview-destination-settings">
+  <template>
+    <style include="print-preview-shared button throbber">
+      :host button {
+        margin: 10px 0;
+      }
+
+      .throbber {
+        margin-top: 6px;
+      }
+
+      .destination-settings-box,
+      .throbber-container {
+        align-items: center;
+        display: flex;
+        min-height: 28px;
+      }
+
+      .destination-icon {
+        -webkit-margin-end: 8px;
+        height: 24px;
+        vertical-align: middle;
+        width: 24px;
+      }
+
+      .destination-info-wrapper {
+        flex: 1;
+      }
+
+      .destination-info {
+        display: table;
+        table-layout: fixed;
+        width: 100%;
+      }
+
+      .destination-info > div {
+        display: table-row;
+      }
+
+      .destination-info > div > div {
+        display: table-cell;
+      }
+
+      .destination-info > div > div,
+      .destination-throbber-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .destination-throbber-name,
+      .destination-name {
+        font-size: 110%;
+      }
+
+      .destination-location {
+        opacity: 0.4;
+      }
+    </style>
+    <print-preview-settings-section class="multirow">
+      <span slot="title">$i18n{destinationLabel}</span>
+      <div slot="controls">
+        <div class="throbber-container" hidden="[[!loadingDestination_]]">
+          <div class="throbber"></div>
+          <div class="destination-throbber-name"></div>
+        </div>
+        <div class="destination-settings-box" hidden="[[loadingDestination_]]">
+          <img class="destination-icon"
+             src="[[model.destinationIcon]]" alt="">
+          <div class="destination-info-wrapper">
+            <div class = "destination-info">
+              <div><div class="destination-name">
+                  [[model.destinationId]]</div></div>
+              <div><div class="destination-location">
+                  [[model.destinationLocation]]</div></div>
+              <div><div class="destination-offline-status">
+                  [[model.destinationOfflineStatus]]</div></div>
+            </div>
+          </div>
+        </div>
+        <button>$i18n{changeDestination}</button>
+      </div>
+    </print-preview-settings-section>
+  </template>
+  <script src="destination_settings.js"></script>
+</dom-module>
