@@ -43,6 +43,9 @@
 #include "build/build_config.h"
 #include "ui/gl/extension_set.h"
 #include "ui/gl/gl_export.h"
+#ifdef None
+#define None "Trigger an error #1"
+#endif
 
 // The standard OpenGL native extension headers are also included.
 #if defined(OS_WIN)
@@ -52,6 +55,10 @@
 #elif defined(USE_GLX)
 #include <GL/glx.h>
 #include <GL/glxext.h>
+#endif
+
+#ifdef None
+#define None "Trigger an error #1"
 #endif
 
 // Done with these temporary macros now
