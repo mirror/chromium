@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7998a2_ed46c93a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-16T00:09:09Z",
+      "side": 1,
+      "message": "nit: What does SetVerbose do? Maybe move the original TODO comment about setVerbose here?",
+      "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1a67031_af2f0fdc",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-16T00:09:09Z",
+      "side": 1,
+      "message": "Nit:  Maybe\n\n...method call failed for some reason or an exception was thrown by the user supplied code....",
+      "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab9ce35_26df3c64",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-16T00:09:09Z",
+      "side": 1,
+      "message": "Nit: \"is necessary\" -\u003e \"is used\"",
+      "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a877ff1f_24dda284",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-16T00:09:09Z",
+      "side": 1,
+      "message": "What? \"If the disabled processor means that...\"?  Clarify this a bit.",
+      "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad040a3_e8a97a1e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-16T00:09:09Z",
+      "side": 1,
+      "message": "Nit: Maybe document these states and the transitions allowed?  The spec doesn\u0027t say much about the transitions.",
+      "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "391b5b68_c277a993",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-16T00:09:09Z",
+      "side": 1,
+      "message": "Could this check be done at a higher level, like in the AudioWorkletNode itself?  There\u0027s lot of stuff being done and then thrown away if we decide not to process anything here.",
+      "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e14b08d4_bf8c973d",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-16T00:09:09Z",
+      "side": 1,
+      "message": "If the only time is_disabled_ is set is when there\u0027s an error, then I think a more forceful name than \"disable\" would be better.  \"disable\" seems like you can re-enable it later.\n\nDoes this also kind of duplicate the kError state?",
+      "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
