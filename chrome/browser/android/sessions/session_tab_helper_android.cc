@@ -10,7 +10,7 @@
 using base::android::JavaParamRef;
 
 // static
-jint IdForTab(JNIEnv* env,
+jint SessionTabHelper__IdForTab(JNIEnv* env,
               const JavaParamRef<jclass>& clazz,
               const JavaParamRef<jobject>& java_web_contents) {
   content::WebContents* web_contents =

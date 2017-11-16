@@ -24,7 +24,7 @@ using blink::WebContextMenuData;
 
 namespace content {
 
-void Init(JNIEnv* env,
+void SelectionPopupController__Init(JNIEnv* env,
           const JavaParamRef<jobject>& obj,
           const JavaParamRef<jobject>& jweb_contents) {
   WebContents* web_contents = WebContents::FromJavaWebContents(jweb_contents);

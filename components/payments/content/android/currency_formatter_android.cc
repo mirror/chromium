@@ -55,7 +55,7 @@ CurrencyFormatterAndroid::GetFormattedCurrencyCode(
       env, currency_formatter_->formatted_currency_code());
 }
 
-static jlong InitCurrencyFormatterAndroid(
+static jlong CurrencyFormatter__InitCurrencyFormatterAndroid(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
     const JavaParamRef<jstring>& currency_code,

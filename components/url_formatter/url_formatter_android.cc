@@ -17,7 +17,7 @@ using base::android::ScopedJavaLocalRef;
 
 namespace {
 
-GURL ConvertJavaStringToGURL(JNIEnv* env, jstring url) {
+GURL UrlFormatter__ConvertJavaStringToGURL(JNIEnv* env, jstring url) {
   return url ? GURL(base::android::ConvertJavaStringToUTF8(env, url)) : GURL();
 }
 
@@ -27,7 +27,7 @@ namespace url_formatter {
 
 namespace android {
 
-static ScopedJavaLocalRef<jstring> FixupUrl(JNIEnv* env,
+static ScopedJavaLocalRef<jstring> UrlFormatter__FixupUrl(JNIEnv* env,
                                             const JavaParamRef<jclass>& clazz,
                                             const JavaParamRef<jstring>& url) {
   DCHECK(url);
@@ -39,30 +39,30 @@ static ScopedJavaLocalRef<jstring> FixupUrl(JNIEnv* env,
              : ScopedJavaLocalRef<jstring>();
 }
 
-static ScopedJavaLocalRef<jstring> FormatUrlForDisplay(
+static ScopedJavaLocalRef<jstring> UrlFormatter__FormatUrlForDisplay(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& url) {
   return base::android::ConvertUTF16ToJavaString(
-      env, url_formatter::FormatUrl(ConvertJavaStringToGURL(env, url)));
+      env, url_formatter::FormatUrl(UrlFormatter__ConvertJavaStringToGURL(env, url)));
 }
 
-static ScopedJavaLocalRef<jstring> FormatUrlForSecurityDisplay(
+static ScopedJavaLocalRef<jstring> UrlFormatter__FormatUrlForSecurityDisplay(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& url) {
   return base::android::ConvertUTF16ToJavaString(
       env, url_formatter::FormatUrlForSecurityDisplay(
-               ConvertJavaStringToGURL(env, url)));
+               UrlFormatter__ConvertJavaStringToGURL(env, url)));
 }
 
-static ScopedJavaLocalRef<jstring> FormatUrlForSecurityDisplayOmitScheme(
+static ScopedJavaLocalRef<jstring> UrlFormatter__FormatUrlForSecurityDisplayOmitScheme(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& url) {
   return base::android::ConvertUTF16ToJavaString(
       env, url_formatter::FormatUrlForSecurityDisplay(
-               ConvertJavaStringToGURL(env, url),
+               UrlFormatter__ConvertJavaStringToGURL(env, url),
                url_formatter::SchemeDisplay::OMIT_HTTP_AND_HTTPS));
 }
 

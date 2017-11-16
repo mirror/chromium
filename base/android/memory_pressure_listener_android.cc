@@ -10,7 +10,7 @@
 using base::android::JavaParamRef;
 
 // Defined and called by JNI.
-static void OnMemoryPressure(JNIEnv* env,
+static void MemoryPressureListener__OnMemoryPressure(JNIEnv* env,
                              const JavaParamRef<jclass>& clazz,
                              jint memory_pressure_level) {
   base::MemoryPressureListener::NotifyMemoryPressure(

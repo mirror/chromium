@@ -22,7 +22,7 @@ using base::android::JavaRef;
 using base::android::RunCallbackAndroid;
 using base::android::ScopedJavaGlobalRef;
 
-void ListenForChildStatusReceived(JNIEnv* env,
+void ChildAccountService__ListenForChildStatusReceived(JNIEnv* env,
                                   const JavaParamRef<jclass>& jcaller,
                                   const JavaParamRef<jobject>& callback) {
   ProfileManager* profile_manager = g_browser_process->profile_manager();
@@ -52,7 +52,7 @@ void ReauthenticateChildAccount(content::WebContents* web_contents,
       reinterpret_cast<jlong>(callback_copy.release()));
 }
 
-void OnReauthenticationResult(JNIEnv* env,
+void ChildAccountService__OnReauthenticationResult(JNIEnv* env,
                               const JavaParamRef<jclass>& jcaller,
                               jlong jcallbackPtr,
                               jboolean result) {

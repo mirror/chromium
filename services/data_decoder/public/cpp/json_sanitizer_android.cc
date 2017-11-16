@@ -87,7 +87,7 @@ void JsonSanitizerAndroid::OnError(const std::string& error) {
 
 }  // namespace
 
-void OnSuccess(JNIEnv* env,
+void JsonSanitizer__OnSuccess(JNIEnv* env,
                const JavaParamRef<jclass>& clazz,
                jlong jsanitizer,
                const JavaParamRef<jstring>& json) {
@@ -96,7 +96,7 @@ void OnSuccess(JNIEnv* env,
   sanitizer->OnSuccess(base::android::ConvertJavaStringToUTF8(env, json));
 }
 
-void OnError(JNIEnv* env,
+void JsonSanitizer__OnError(JNIEnv* env,
              const JavaParamRef<jclass>& clazz,
              jlong jsanitizer,
              const JavaParamRef<jstring>& error) {

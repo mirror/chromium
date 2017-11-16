@@ -39,7 +39,7 @@ void InstantAppsSettings::RecordInfoBarDismissEvent(
       base::Time::Now());
 }
 
-static void SetInstantAppDefault(
+static void InstantAppsSettings__SetInstantAppDefault(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& jweb_contents,
@@ -58,7 +58,7 @@ static void SetInstantAppDefault(
       base::Time::Now());
 }
 
-static jboolean GetInstantAppDefault(
+static jboolean InstantAppsSettings__GetInstantAppDefault(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& jweb_contents,
@@ -78,7 +78,7 @@ static jboolean GetInstantAppDefault(
   return !added_time.is_null();
 }
 
-static jboolean ShouldShowBanner(JNIEnv* env,
+static jboolean InstantAppsSettings__ShouldShowBanner(JNIEnv* env,
                                  const JavaParamRef<jclass>& clazz,
                                  const JavaParamRef<jobject>& jweb_contents,
                                  const JavaParamRef<jstring>& jurl) {

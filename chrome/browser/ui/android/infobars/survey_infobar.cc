@@ -98,7 +98,7 @@ ScopedJavaLocalRef<jobject> SurveyInfoBar::CreateRenderInfoBar(JNIEnv* env) {
       survey_delegate->GetSurveyInfoBarDelegate());
 }
 
-void Create(JNIEnv* env,
+void SurveyInfoBar__Create(JNIEnv* env,
             const JavaParamRef<jclass>& j_caller,
             const JavaParamRef<jobject>& j_web_contents,
             const JavaParamRef<jstring>& j_site_id,

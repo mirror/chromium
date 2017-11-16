@@ -128,7 +128,7 @@ std::unique_ptr<net::test_server::HttpResponse> HandleExabyteRequest(
 
 }  // namespace
 
-jboolean StartNativeTestServer(JNIEnv* env,
+jboolean NativeTestServer__StartNativeTestServer(JNIEnv* env,
                                const JavaParamRef<jclass>& jcaller,
                                const JavaParamRef<jstring>& jtest_files_root,
                                const JavaParamRef<jstring>& jtest_data_dir) {
@@ -155,7 +155,7 @@ jboolean StartNativeTestServer(JNIEnv* env,
   return g_test_server->Start();
 }
 
-void ShutdownNativeTestServer(JNIEnv* env,
+void NativeTestServer__ShutdownNativeTestServer(JNIEnv* env,
                               const JavaParamRef<jclass>& jcaller) {
   if (!g_test_server)
     return;
@@ -163,7 +163,7 @@ void ShutdownNativeTestServer(JNIEnv* env,
   g_test_server = NULL;
 }
 
-ScopedJavaLocalRef<jstring> GetEchoBodyURL(
+ScopedJavaLocalRef<jstring> NativeTestServer__GetEchoBodyURL(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller) {
   DCHECK(g_test_server);
@@ -171,7 +171,7 @@ ScopedJavaLocalRef<jstring> GetEchoBodyURL(
   return base::android::ConvertUTF8ToJavaString(env, url.spec());
 }
 
-ScopedJavaLocalRef<jstring> GetEchoHeaderURL(
+ScopedJavaLocalRef<jstring> NativeTestServer__GetEchoHeaderURL(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller,
     const JavaParamRef<jstring>& jheader) {
@@ -184,7 +184,7 @@ ScopedJavaLocalRef<jstring> GetEchoHeaderURL(
   return base::android::ConvertUTF8ToJavaString(env, url.spec());
 }
 
-ScopedJavaLocalRef<jstring> GetEchoAllHeadersURL(
+ScopedJavaLocalRef<jstring> NativeTestServer__GetEchoAllHeadersURL(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller) {
   DCHECK(g_test_server);
@@ -192,7 +192,7 @@ ScopedJavaLocalRef<jstring> GetEchoAllHeadersURL(
   return base::android::ConvertUTF8ToJavaString(env, url.spec());
 }
 
-ScopedJavaLocalRef<jstring> GetEchoMethodURL(
+ScopedJavaLocalRef<jstring> NativeTestServer__GetEchoMethodURL(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller) {
   DCHECK(g_test_server);
@@ -200,7 +200,7 @@ ScopedJavaLocalRef<jstring> GetEchoMethodURL(
   return base::android::ConvertUTF8ToJavaString(env, url.spec());
 }
 
-ScopedJavaLocalRef<jstring> GetRedirectToEchoBody(
+ScopedJavaLocalRef<jstring> NativeTestServer__GetRedirectToEchoBody(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller) {
   DCHECK(g_test_server);
@@ -208,7 +208,7 @@ ScopedJavaLocalRef<jstring> GetRedirectToEchoBody(
   return base::android::ConvertUTF8ToJavaString(env, url.spec());
 }
 
-ScopedJavaLocalRef<jstring> GetFileURL(
+ScopedJavaLocalRef<jstring> NativeTestServer__GetFileURL(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller,
     const JavaParamRef<jstring>& jfile_path) {
@@ -218,12 +218,12 @@ ScopedJavaLocalRef<jstring> GetFileURL(
   return base::android::ConvertUTF8ToJavaString(env, url.spec());
 }
 
-int GetPort(JNIEnv* env, const JavaParamRef<jclass>& jcaller) {
+int NativeTestServer__GetPort(JNIEnv* env, const JavaParamRef<jclass>& jcaller) {
   DCHECK(g_test_server);
   return g_test_server->port();
 }
 
-ScopedJavaLocalRef<jstring> GetExabyteResponseURL(
+ScopedJavaLocalRef<jstring> NativeTestServer__GetExabyteResponseURL(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller) {
   DCHECK(g_test_server);
@@ -231,7 +231,7 @@ ScopedJavaLocalRef<jstring> GetExabyteResponseURL(
   return base::android::ConvertUTF8ToJavaString(env, url.spec());
 }
 
-ScopedJavaLocalRef<jstring> GetHostPort(JNIEnv* env,
+ScopedJavaLocalRef<jstring> NativeTestServer__GetHostPort(JNIEnv* env,
                                         const JavaParamRef<jclass>& jcaller) {
   DCHECK(g_test_server);
   std::string host_port =

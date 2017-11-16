@@ -18,23 +18,23 @@ using base::android::JavaParamRef;
 namespace mojo {
 namespace android {
 
-static jlong CreateBaseRunLoop(JNIEnv* env,
+static jlong BaseRunLoop__CreateBaseRunLoop(JNIEnv* env,
                                const JavaParamRef<jobject>& jcaller) {
   base::MessageLoop* message_loop = new base::MessageLoop;
   return reinterpret_cast<uintptr_t>(message_loop);
 }
 
-static void Run(JNIEnv* env,
+static void BaseRunLoop__Run(JNIEnv* env,
                 const JavaParamRef<jobject>& jcaller) {
   base::RunLoop().Run();
 }
 
-static void RunUntilIdle(JNIEnv* env,
+static void BaseRunLoop__RunUntilIdle(JNIEnv* env,
                          const JavaParamRef<jobject>& jcaller) {
   base::RunLoop().RunUntilIdle();
 }
 
-static void Quit(JNIEnv* env, const JavaParamRef<jobject>& jcaller) {
+static void BaseRunLoop__Quit(JNIEnv* env, const JavaParamRef<jobject>& jcaller) {
   base::RunLoop::QuitCurrentWhenIdleDeprecated();
 }
 
@@ -44,7 +44,7 @@ static void RunJavaRunnable(
                                runnable_ref);
 }
 
-static void PostDelayedTask(JNIEnv* env,
+static void BaseRunLoop__PostDelayedTask(JNIEnv* env,
                             const JavaParamRef<jobject>& jcaller,
                             jlong runLoopID,
                             const JavaParamRef<jobject>& runnable,
@@ -60,7 +60,7 @@ static void PostDelayedTask(JNIEnv* env,
                         base::TimeDelta::FromMicroseconds(delay));
 }
 
-static void DeleteMessageLoop(JNIEnv* env,
+static void BaseRunLoop__DeleteMessageLoop(JNIEnv* env,
                               const JavaParamRef<jobject>& jcaller,
                               jlong runLoopID) {
   base::MessageLoop* message_loop =

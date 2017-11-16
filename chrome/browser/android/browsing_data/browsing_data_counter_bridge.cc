@@ -69,7 +69,7 @@ void BrowsingDataCounterBridge::onCounterFinished(
                                                                result_string);
 }
 
-static jlong Init(JNIEnv* env,
+static jlong BrowsingDataCounterBridge__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
                   jint data_type,
                   jint clear_browsing_data_tab) {

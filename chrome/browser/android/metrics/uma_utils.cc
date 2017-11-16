@@ -25,13 +25,13 @@ base::Time GetMainEntryPointTime() {
          base::TimeDelta::FromMilliseconds(startTimeUnixMs);
 }
 
-static jboolean IsClientInMetricsReportingSample(
+static jboolean UmaUtils__IsClientInMetricsReportingSample(
     JNIEnv* env,
     const JavaParamRef<jclass>& obj) {
   return ChromeMetricsServicesManagerClient::IsClientInSample();
 }
 
-static void RecordMetricsReportingDefaultOptIn(JNIEnv* env,
+static void UmaUtils__RecordMetricsReportingDefaultOptIn(JNIEnv* env,
                                                const JavaParamRef<jclass>& obj,
                                                jboolean opt_in) {
   DCHECK(g_browser_process);

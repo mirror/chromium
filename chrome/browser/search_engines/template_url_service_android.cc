@@ -418,7 +418,7 @@ TemplateUrlServiceAndroid::UpdateLastVisitedForTesting(
   return base::android::ConvertUTF16ToJavaString(env, t_url->data().keyword());
 }
 
-static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+static jlong TemplateUrlService__Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   TemplateUrlServiceAndroid* template_url_service_android =
       new TemplateUrlServiceAndroid(env, obj);
   return reinterpret_cast<intptr_t>(template_url_service_android);

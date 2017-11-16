@@ -109,19 +109,19 @@ bool AwDevToolsServer::IsStarted() const {
   return is_started_;
 }
 
-static jlong InitRemoteDebugging(JNIEnv* env,
+static jlong AwDevToolsServer__InitRemoteDebugging(JNIEnv* env,
                                  const JavaParamRef<jobject>& obj) {
   AwDevToolsServer* server = new AwDevToolsServer();
   return reinterpret_cast<intptr_t>(server);
 }
 
-static void DestroyRemoteDebugging(JNIEnv* env,
+static void AwDevToolsServer__DestroyRemoteDebugging(JNIEnv* env,
                                    const JavaParamRef<jobject>& obj,
                                    jlong server) {
   delete reinterpret_cast<AwDevToolsServer*>(server);
 }
 
-static void SetRemoteDebuggingEnabled(JNIEnv* env,
+static void AwDevToolsServer__SetRemoteDebuggingEnabled(JNIEnv* env,
                                       const JavaParamRef<jobject>& obj,
                                       jlong server,
                                       jboolean enabled) {

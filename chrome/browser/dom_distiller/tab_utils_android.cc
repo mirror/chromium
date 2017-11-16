@@ -21,7 +21,7 @@ using base::android::ScopedJavaLocalRef;
 
 namespace android {
 
-void DistillCurrentPageAndView(JNIEnv* env,
+void DomDistillerTabUtils__DistillCurrentPageAndView(JNIEnv* env,
                                const JavaParamRef<jclass>& clazz,
                                const JavaParamRef<jobject>& j_web_contents) {
   content::WebContents* web_contents =
@@ -29,7 +29,7 @@ void DistillCurrentPageAndView(JNIEnv* env,
   ::DistillCurrentPageAndView(web_contents);
 }
 
-void DistillCurrentPage(JNIEnv* env,
+void DomDistillerTabUtils__DistillCurrentPage(JNIEnv* env,
                         const JavaParamRef<jclass>& clazz,
                         const JavaParamRef<jobject>& j_source_web_contents) {
   content::WebContents* source_web_contents =
@@ -37,7 +37,7 @@ void DistillCurrentPage(JNIEnv* env,
   ::DistillCurrentPage(source_web_contents);
 }
 
-void DistillAndView(JNIEnv* env,
+void DomDistillerTabUtils__DistillAndView(JNIEnv* env,
                     const JavaParamRef<jclass>& clazz,
                     const JavaParamRef<jobject>& j_source_web_contents,
                     const JavaParamRef<jobject>& j_destination_web_contents) {
@@ -48,7 +48,7 @@ void DistillAndView(JNIEnv* env,
   ::DistillAndView(source_web_contents, destination_web_contents);
 }
 
-ScopedJavaLocalRef<jstring> GetFormattedUrlFromOriginalDistillerUrl(
+ScopedJavaLocalRef<jstring> DomDistillerTabUtils__GetFormattedUrlFromOriginalDistillerUrl(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& j_url) {
@@ -69,20 +69,20 @@ ScopedJavaLocalRef<jstring> GetFormattedUrlFromOriginalDistillerUrl(
 // Returns true if the distiller experiment is set to use any heuristic other
 // than "NONE". This is used to prevent the Reader Mode panel from loading
 // when it would otherwise never be shown.
-jboolean IsDistillerHeuristicsEnabled(JNIEnv* env,
+jboolean DomDistillerTabUtils__IsDistillerHeuristicsEnabled(JNIEnv* env,
                                     const JavaParamRef<jclass>& clazz) {
   return dom_distiller::GetDistillerHeuristicsType()
       != dom_distiller::DistillerHeuristicsType::NONE;
 }
 
 // Returns true if distiller is reporting every page as distillable.
-jboolean IsHeuristicAlwaysTrue(JNIEnv* env,
+jboolean DomDistillerTabUtils__IsHeuristicAlwaysTrue(JNIEnv* env,
                                const JavaParamRef<jclass>& clazz) {
   return dom_distiller::GetDistillerHeuristicsType()
       == dom_distiller::DistillerHeuristicsType::ALWAYS_TRUE;
 }
 
-void SetInterceptNavigationDelegate(
+void DomDistillerTabUtils__SetInterceptNavigationDelegate(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& delegate,

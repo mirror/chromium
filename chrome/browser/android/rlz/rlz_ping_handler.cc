@@ -131,7 +131,7 @@ void RlzPingHandler::OnURLFetchComplete(const net::URLFetcher* source) {
   delete this;
 }
 
-void StartPing(JNIEnv* env,
+void RlzPingHandler__StartPing(JNIEnv* env,
                const JavaParamRef<jclass>& clazz,
                const base::android::JavaParamRef<jobject>& j_profile,
                const base::android::JavaParamRef<jstring>& j_brand,

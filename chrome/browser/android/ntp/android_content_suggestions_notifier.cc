@@ -94,21 +94,21 @@ void AndroidContentSuggestionsNotifier::UnregisterChannel() {
   return Java_ContentSuggestionsNotifier_unregisterChannel(env);
 }
 
-static void RecordNotificationOptOut(JNIEnv* env,
+static void ContentSuggestionsNotifier__RecordNotificationOptOut(JNIEnv* env,
                                      const JavaParamRef<jclass>& class_object,
                                      jint reason) {
   RecordContentSuggestionsNotificationOptOut(
       static_cast<ContentSuggestionsNotificationOptOut>(reason));
 }
 
-static void RecordNotificationAction(JNIEnv* env,
+static void ContentSuggestionsNotifier__RecordNotificationAction(JNIEnv* env,
                                      const JavaParamRef<jclass>& class_object,
                                      jint action) {
   RecordContentSuggestionsNotificationAction(
       static_cast<ContentSuggestionsNotificationAction>(action));
 }
 
-static void ReceiveFlushedMetrics(JNIEnv* env,
+static void ContentSuggestionsNotifier__ReceiveFlushedMetrics(JNIEnv* env,
                                   const JavaParamRef<jclass>& class_object,
                                   jint tap_count,
                                   jint dismissal_count,

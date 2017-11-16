@@ -9,7 +9,7 @@
 using base::android::JavaParamRef;
 
 // static
-void SaveHistogram(JNIEnv* env,
+void AnimationFrameTimeHistogram__SaveHistogram(JNIEnv* env,
                    const JavaParamRef<jobject>& jcaller,
                    const JavaParamRef<jstring>& j_histogram_name,
                    const JavaParamRef<jlongArray>& j_frame_times_ms,

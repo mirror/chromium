@@ -23,7 +23,7 @@ using ui::WindowAndroid;
 namespace chrome {
 namespace android {
 
-void SnapshotCallback(JNIEnv* env,
+void ScreenshotTask__SnapshotCallback(JNIEnv* env,
                       const JavaRef<jobject>& callback,
                       scoped_refptr<base::RefCountedMemory> png_data) {
   if (png_data.get()) {
@@ -36,7 +36,7 @@ void SnapshotCallback(JNIEnv* env,
   }
 }
 
-void GrabWindowSnapshotAsync(JNIEnv* env,
+void ScreenshotTask__GrabWindowSnapshotAsync(JNIEnv* env,
                              const JavaParamRef<jclass>& clazz,
                              const JavaParamRef<jobject>& jcallback,
                              jlong native_window_android,
@@ -47,7 +47,7 @@ void GrabWindowSnapshotAsync(JNIEnv* env,
   gfx::Rect window_bounds(window_width, window_height);
   ui::GrabWindowSnapshotAsyncPNG(
       window_android, window_bounds,
-      base::Bind(&SnapshotCallback, env,
+      base::Bind(&ScreenshotTask__SnapshotCallback, env,
                  ScopedJavaGlobalRef<jobject>(env, jcallback)));
 }
 

@@ -11,7 +11,7 @@
 using base::android::JavaParamRef;
 
 // static
-jint GetSecurityLevelForWebContents(
+jint SecurityStateModel__GetSecurityLevelForWebContents(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller,
     const JavaParamRef<jobject>& jweb_contents) {

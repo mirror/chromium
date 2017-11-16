@@ -63,7 +63,7 @@ uint32_t data_use_ui_message_id_map[DATA_USE_UI_MESSAGE_MAX] = {
 }  // namespace
 
 // static
-jboolean CheckAndResetDataUseTrackingStarted(
+jboolean DataUseTabUIManager__CheckAndResetDataUseTrackingStarted(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     jint tab_id,
@@ -81,7 +81,7 @@ jboolean CheckAndResetDataUseTrackingStarted(
 }
 
 // static
-jboolean CheckAndResetDataUseTrackingEnded(
+jboolean DataUseTabUIManager__CheckAndResetDataUseTrackingEnded(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     jint tab_id,
@@ -99,7 +99,7 @@ jboolean CheckAndResetDataUseTrackingEnded(
 }
 
 // static
-void UserClickedContinueOnDialogBox(JNIEnv* env,
+void DataUseTabUIManager__UserClickedContinueOnDialogBox(JNIEnv* env,
                                     const JavaParamRef<jclass>& clazz,
                                     jint tab_id,
                                     const JavaParamRef<jobject>& jprofile) {
@@ -116,7 +116,7 @@ void UserClickedContinueOnDialogBox(JNIEnv* env,
 }
 
 // static
-jboolean WouldDataUseTrackingEnd(JNIEnv* env,
+jboolean DataUseTabUIManager__WouldDataUseTrackingEnd(JNIEnv* env,
                                  const JavaParamRef<jclass>& clazz,
                                  const JavaParamRef<jobject>& j_web_contents,
                                  jint tab_id,
@@ -141,7 +141,7 @@ jboolean WouldDataUseTrackingEnd(JNIEnv* env,
 }
 
 // static
-void OnCustomTabInitialNavigation(JNIEnv* env,
+void DataUseTabUIManager__OnCustomTabInitialNavigation(JNIEnv* env,
                                   const JavaParamRef<jclass>& clazz,
                                   jint tab_id,
                                   const JavaParamRef<jstring>& jpackage_name,
@@ -168,7 +168,7 @@ void OnCustomTabInitialNavigation(JNIEnv* env,
 }
 
 // static
-ScopedJavaLocalRef<jstring> GetDataUseUIString(
+ScopedJavaLocalRef<jstring> DataUseTabUIManager__GetDataUseUIString(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     int message_id) {
@@ -179,7 +179,7 @@ ScopedJavaLocalRef<jstring> GetDataUseUIString(
 }
 
 // static
-jboolean IsNonRoamingCellularConnection(JNIEnv* env,
+jboolean DataUseTabUIManager__IsNonRoamingCellularConnection(JNIEnv* env,
                                         const JavaParamRef<jclass>& clazz) {
   return net::NetworkChangeNotifier::IsConnectionCellular(
              net::NetworkChangeNotifier::GetConnectionType()) &&

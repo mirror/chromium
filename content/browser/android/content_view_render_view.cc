@@ -40,7 +40,7 @@ ContentViewRenderView::~ContentViewRenderView() {
 }
 
 // static
-static jlong Init(JNIEnv* env,
+static jlong ContentViewRenderView__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
                   jlong native_root_window) {
   gfx::NativeWindow root_window =

@@ -10,7 +10,7 @@
 namespace base {
 namespace android {
 
-static jlong GetTimeTicksNowUs(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
+static jlong TimeUtils__GetTimeTicksNowUs(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
   return (TimeTicks::Now() - TimeTicks()).InMicroseconds();
 }
 

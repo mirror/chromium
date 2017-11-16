@@ -78,7 +78,7 @@ void OnEnsureIconIsAvailableFinished(
 
 }  // namespace
 
-static jlong Init(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
+static jlong FaviconHelper__Init(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
   return reinterpret_cast<intptr_t>(new FaviconHelper());
 }
 

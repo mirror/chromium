@@ -142,7 +142,7 @@ void AppWebMessagePort::OnMessagesAvailable() {
   Java_AppWebMessagePort_onMessagesAvailable(env, obj);
 }
 
-void InitializeAppWebMessagePortPair(
+void AppWebMessagePort__InitializeAppWebMessagePortPair(
     JNIEnv* env,
     const base::android::JavaParamRef<jclass>& jcaller,
     const base::android::JavaParamRef<jobjectArray>& ports) {

@@ -33,7 +33,7 @@ void ProcessingDoneCallback(
 }  // namespace
 
 // JNI call to start request processing in scheduled mode.
-static jboolean StartScheduledProcessing(
+static jboolean BackgroundSchedulerBridge__StartScheduledProcessing(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller,
     const jboolean j_power_connected,
@@ -59,7 +59,7 @@ static jboolean StartScheduledProcessing(
 }
 
 // JNI call to stop request processing in scheduled mode.
-static void StopScheduledProcessing(JNIEnv* env,
+static void BackgroundSchedulerBridge__StopScheduledProcessing(JNIEnv* env,
                                     const JavaParamRef<jclass>& jcaller) {
   Profile* profile = ProfileManager::GetLastUsedProfile();
   RequestCoordinator* coordinator =

@@ -99,7 +99,7 @@ base::LazyInstance<ChildProcessSurfaceManager>::Leaky
 
 // Chrome actually uses the renderer code path for all of its child
 // processes such as renderers, plugins, etc.
-void InternalInitChildProcess(JNIEnv* env,
+void ContentChildProcessServiceDelegate__InternalInitChildProcess(JNIEnv* env,
                               const JavaParamRef<jobject>& service_impl,
                               jint cpu_count,
                               jlong cpu_features) {
@@ -118,18 +118,18 @@ void InternalInitChildProcess(JNIEnv* env,
 
 }  // namespace
 
-void InitChildProcess(JNIEnv* env,
+void ContentChildProcessServiceDelegate__InitChildProcess(JNIEnv* env,
                       const JavaParamRef<jobject>& obj,
                       jint cpu_count,
                       jlong cpu_features) {
-  InternalInitChildProcess(env, obj, cpu_count, cpu_features);
+  ContentChildProcessServiceDelegate__InternalInitChildProcess(env, obj, cpu_count, cpu_features);
 }
 
-void ShutdownMainThread(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+void ContentChildProcessServiceDelegate__ShutdownMainThread(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   ChildThreadImpl::ShutdownThread();
 }
 
-void RetrieveFileDescriptorsIdsToKeys(JNIEnv* env,
+void ContentChildProcessServiceDelegate__RetrieveFileDescriptorsIdsToKeys(JNIEnv* env,
                                       const JavaParamRef<jobject>& obj) {
   std::map<int, std::string> ids_to_keys;
   std::string file_switch_value =

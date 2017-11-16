@@ -45,7 +45,7 @@ content::WebContents* ToolbarModelAndroid::GetActiveWebContents() const {
 }
 
 // static
-jlong Init(JNIEnv* env,
+jlong ToolbarModel__Init(JNIEnv* env,
            const JavaParamRef<jobject>& obj,
            const JavaParamRef<jobject>& delegate) {
   ToolbarModelAndroid* toolbar_model = new ToolbarModelAndroid(env, delegate);

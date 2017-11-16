@@ -19,7 +19,7 @@ struct ActionCallbackWrapper {
 namespace base {
 namespace android {
 
-static void RecordUserAction(JNIEnv* env,
+static void RecordUserAction__RecordUserAction(JNIEnv* env,
                              const JavaParamRef<jclass>& clazz,
                              const JavaParamRef<jstring>& j_action) {
   RecordComputedAction(ConvertJavaStringToUTF8(env, j_action));
@@ -32,7 +32,7 @@ static void OnActionRecorded(const JavaRef<jobject>& callback,
       env, callback, ConvertUTF8ToJavaString(env, action));
 }
 
-static jlong AddActionCallbackForTesting(
+static jlong RecordUserAction__AddActionCallbackForTesting(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& callback) {
@@ -44,7 +44,7 @@ static jlong AddActionCallbackForTesting(
   return reinterpret_cast<intptr_t>(wrapper);
 }
 
-static void RemoveActionCallbackForTesting(JNIEnv* env,
+static void RecordUserAction__RemoveActionCallbackForTesting(JNIEnv* env,
                                            const JavaParamRef<jclass>& clazz,
                                            jlong callback_id) {
   DCHECK(callback_id);

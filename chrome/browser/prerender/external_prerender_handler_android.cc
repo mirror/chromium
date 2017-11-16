@@ -24,7 +24,7 @@ namespace prerender {
 
 namespace {
 
-bool CheckAndConvertParams(JNIEnv* env,
+bool ExternalPrerenderHandler__CheckAndConvertParams(JNIEnv* env,
                            const JavaParamRef<jobject>& jprofile,
                            const JavaParamRef<jstring>& jurl,
                            const JavaParamRef<jobject>& jweb_contents,
@@ -117,7 +117,7 @@ void ExternalPrerenderHandlerAndroid::CancelCurrentPrerender(
   prerender_handle_.reset();
 }
 
-static jboolean HasPrerenderedUrl(JNIEnv* env,
+static jboolean ExternalPrerenderHandler__HasPrerenderedUrl(JNIEnv* env,
                                   const JavaParamRef<jclass>& clazz,
                                   const JavaParamRef<jobject>& jprofile,
                                   const JavaParamRef<jstring>& jurl,
@@ -125,14 +125,14 @@ static jboolean HasPrerenderedUrl(JNIEnv* env,
   GURL url;
   PrerenderManager* prerender_manager;
   content::WebContents* web_contents;
-  if (!CheckAndConvertParams(env, jprofile, jurl, jweb_contents, &url,
+  if (!ExternalPrerenderHandler__CheckAndConvertParams(env, jprofile, jurl, jweb_contents, &url,
                              &prerender_manager, &web_contents))
     return false;
 
   return prerender_manager->HasPrerenderedUrl(url, web_contents);
 }
 
-static jboolean HasPrerenderedAndFinishedLoadingUrl(
+static jboolean ExternalPrerenderHandler__HasPrerenderedAndFinishedLoadingUrl(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& jprofile,
@@ -141,7 +141,7 @@ static jboolean HasPrerenderedAndFinishedLoadingUrl(
   GURL url;
   PrerenderManager* prerender_manager;
   content::WebContents* web_contents;
-  if (!CheckAndConvertParams(env, jprofile, jurl, jweb_contents, &url,
+  if (!ExternalPrerenderHandler__CheckAndConvertParams(env, jprofile, jurl, jweb_contents, &url,
                              &prerender_manager, &web_contents))
     return false;
 
@@ -153,7 +153,7 @@ ExternalPrerenderHandlerAndroid::ExternalPrerenderHandlerAndroid() {}
 
 ExternalPrerenderHandlerAndroid::~ExternalPrerenderHandlerAndroid() {}
 
-static jlong Init(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
+static jlong ExternalPrerenderHandler__Init(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
   ExternalPrerenderHandlerAndroid* external_handler =
       new ExternalPrerenderHandlerAndroid();
   return reinterpret_cast<intptr_t>(external_handler);

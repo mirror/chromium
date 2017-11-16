@@ -28,7 +28,7 @@ LoadingPredictor* LoadingPredictorFromProfileAndroid(
 
 }  // namespace
 
-static jboolean StartInitialization(JNIEnv* env,
+static jboolean LoadingPredictor__StartInitialization(JNIEnv* env,
                                     const JavaParamRef<jclass>& clazz,
                                     const JavaParamRef<jobject>& j_profile) {
   auto* loading_predictor = LoadingPredictorFromProfileAndroid(j_profile);
@@ -38,7 +38,7 @@ static jboolean StartInitialization(JNIEnv* env,
   return true;
 }
 
-static jboolean PrepareForPageLoad(JNIEnv* env,
+static jboolean LoadingPredictor__PrepareForPageLoad(JNIEnv* env,
                                    const JavaParamRef<jclass>& clazz,
                                    const JavaParamRef<jobject>& j_profile,
                                    const JavaParamRef<jstring>& j_url) {
@@ -51,7 +51,7 @@ static jboolean PrepareForPageLoad(JNIEnv* env,
   return true;
 }
 
-static jboolean CancelPageLoadHint(JNIEnv* env,
+static jboolean LoadingPredictor__CancelPageLoadHint(JNIEnv* env,
                                    const JavaParamRef<jclass>& clazz,
                                    const JavaParamRef<jobject>& j_profile,
                                    const JavaParamRef<jstring>& j_url) {

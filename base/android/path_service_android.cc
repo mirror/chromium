@@ -11,7 +11,7 @@
 namespace base {
 namespace android {
 
-void Override(JNIEnv* env,
+void PathService__Override(JNIEnv* env,
               const JavaParamRef<jclass>& clazz,
               jint what,
               const JavaParamRef<jstring>& path) {

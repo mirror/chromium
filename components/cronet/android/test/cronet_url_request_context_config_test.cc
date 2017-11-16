@@ -21,7 +21,7 @@ namespace cronet {
 // Verifies that all the configuration options set by
 // CronetUrlRequestContextTest.testCronetEngineBuilderConfig
 // made it from the CronetEngine.Builder to the URLRequestContextConfig.
-static void VerifyUrlRequestContextConfig(
+static void CronetUrlRequestContextTest__VerifyUrlRequestContextConfig(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller,
     jlong jurl_request_context_config,

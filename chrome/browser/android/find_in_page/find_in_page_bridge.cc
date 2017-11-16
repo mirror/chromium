@@ -76,7 +76,7 @@ void FindInPageBridge::ActivateFindInPageResultForAccessibility(
 }
 
 // static
-static jlong Init(JNIEnv* env,
+static jlong FindInPageBridge__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
                   const JavaParamRef<jobject>& j_web_contents) {
   FindInPageBridge* bridge = new FindInPageBridge(env, obj, j_web_contents);

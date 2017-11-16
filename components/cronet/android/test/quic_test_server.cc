@@ -77,7 +77,7 @@ void ShutdownOnServerThread() {
 
 // Quic server is currently hardcoded to run on port 6121 of the localhost on
 // the device.
-void StartQuicTestServer(JNIEnv* env,
+void QuicTestServer__StartQuicTestServer(JNIEnv* env,
                          const JavaParamRef<jclass>& /*jcaller*/,
                          const JavaParamRef<jstring>& jtest_files_root,
                          const JavaParamRef<jstring>& jtest_data_dir) {
@@ -98,7 +98,7 @@ void StartQuicTestServer(JNIEnv* env,
       base::Bind(&StartOnServerThread, test_files_root, test_data_dir));
 }
 
-void ShutdownQuicTestServer(JNIEnv* env,
+void QuicTestServer__ShutdownQuicTestServer(JNIEnv* env,
                             const JavaParamRef<jclass>& /*jcaller*/) {
   DCHECK(!g_quic_server_thread->task_runner()->BelongsToCurrentThread());
   g_quic_server_thread->task_runner()->PostTask(
@@ -106,7 +106,7 @@ void ShutdownQuicTestServer(JNIEnv* env,
   delete g_quic_server_thread;
 }
 
-int GetServerPort(JNIEnv* env, const JavaParamRef<jclass>& /*jcaller*/) {
+int QuicTestServer__GetServerPort(JNIEnv* env, const JavaParamRef<jclass>& /*jcaller*/) {
   return kServerPort;
 }
 

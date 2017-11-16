@@ -29,7 +29,7 @@ FakeServerHelperAndroid::FakeServerHelperAndroid(JNIEnv* env, jobject obj) {}
 
 FakeServerHelperAndroid::~FakeServerHelperAndroid() {}
 
-static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+static jlong FakeServerHelper__Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   FakeServerHelperAndroid* fake_server_android =
       new FakeServerHelperAndroid(env, obj);
   return reinterpret_cast<intptr_t>(fake_server_android);
@@ -308,4 +308,5 @@ void FakeServerHelperAndroid::ClearServerData(JNIEnv* env,
       reinterpret_cast<fake_server::FakeServer*>(fake_server);
   fake_server_ptr->ClearServerData();
 }
+
 

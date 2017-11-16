@@ -18,6 +18,6 @@ class AfterStartupTaskUtilsJNI {
 
 }  // android
 
-static void SetStartupComplete(JNIEnv* env, const JavaParamRef<jclass>& obj) {
+static void AfterStartupTaskUtils__SetStartupComplete(JNIEnv* env, const JavaParamRef<jclass>& obj) {
   android::AfterStartupTaskUtilsJNI::SetBrowserStartupIsComplete();
 }

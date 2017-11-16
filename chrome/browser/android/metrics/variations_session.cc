@@ -17,7 +17,7 @@ bool g_on_app_enter_foreground_called = false;
 
 }  // namespace
 
-static void StartVariationsSession(
+static void VariationsSession__StartVariationsSession(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
     const JavaParamRef<jstring>& jrestrict_mode) {
@@ -37,7 +37,7 @@ static void StartVariationsSession(
   }
 }
 
-static base::android::ScopedJavaLocalRef<jstring> GetLatestCountry(
+static base::android::ScopedJavaLocalRef<jstring> VariationsSession__GetLatestCountry(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   variations::VariationsService* variations_service =

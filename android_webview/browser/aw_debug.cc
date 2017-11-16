@@ -20,7 +20,7 @@ using base::android::ScopedJavaLocalRef;
 
 namespace android_webview {
 
-static jboolean DumpWithoutCrashing(JNIEnv* env,
+static jboolean AwDebug__DumpWithoutCrashing(JNIEnv* env,
                                     const JavaParamRef<jclass>& clazz,
                                     const JavaParamRef<jstring>& dump_path) {
   // This may be called from any thread, and we might be in a state
@@ -36,12 +36,12 @@ static jboolean DumpWithoutCrashing(JNIEnv* env,
   return crash_reporter::DumpWithoutCrashingToFd(target.TakePlatformFile());
 }
 
-static void InitCrashKeysForWebViewTesting(JNIEnv* env,
+static void AwDebug__InitCrashKeysForWebViewTesting(JNIEnv* env,
                                            const JavaParamRef<jclass>& clazz) {
   crash_keys::InitCrashKeysForWebViewTesting();
 }
 
-static void SetCrashKeyValue(JNIEnv* env,
+static void AwDebug__SetCrashKeyValue(JNIEnv* env,
                              const JavaParamRef<jclass>& clazz,
                              const JavaParamRef<jstring>& key,
                              const JavaParamRef<jstring>& value) {

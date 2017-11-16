@@ -232,13 +232,13 @@ CreateAssetFileRequestInterceptor() {
       new AssetFileRequestInterceptor());
 }
 
-static ScopedJavaLocalRef<jstring> GetAndroidAssetPath(
+static ScopedJavaLocalRef<jstring> AndroidProtocolHandler__GetAndroidAssetPath(
     JNIEnv* env,
     const JavaParamRef<jclass>& /*clazz*/) {
   return ConvertUTF8ToJavaString(env, android_webview::kAndroidAssetPath);
 }
 
-static ScopedJavaLocalRef<jstring> GetAndroidResourcePath(
+static ScopedJavaLocalRef<jstring> AndroidProtocolHandler__GetAndroidResourcePath(
     JNIEnv* env,
     const JavaParamRef<jclass>& /*clazz*/) {
   return ConvertUTF8ToJavaString(env, android_webview::kAndroidResourcePath);

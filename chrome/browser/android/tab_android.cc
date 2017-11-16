@@ -954,7 +954,7 @@ void TabAndroid::SetDevToolsAgentHost(
   devtools_host_ = std::move(host);
 }
 
-static void Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+static void Tab__Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   TRACE_EVENT0("native", "TabAndroid::Init");
   // This will automatically bind to the Java object and pass ownership there.
   new TabAndroid(env, obj);
