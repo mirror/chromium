@@ -418,6 +418,8 @@ ServiceManagerContext::ServiceManagerContext() {
       base::CreateSingleThreadTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::BACKGROUND});
 
+  auto override_location_provider =
+      GetContentClient()->browser()->OverrideSystemLocationProvider();
 #if defined(OS_ANDROID)
   JNIEnv* env = base::android::AttachCurrentThread();
   base::android::ScopedJavaGlobalRef<jobject> java_nfc_delegate;
@@ -426,15 +428,16 @@ ServiceManagerContext::ServiceManagerContext() {
 
   // See the comments on wake_lock_context_host.h and ContentNfcDelegate.java
   // respectively for comments on those parameters.
-  device_info.factory =
-      base::Bind(&device::CreateDeviceService, device_blocking_task_runner,
-                 BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
-                 base::Bind(&WakeLockContextHost::GetNativeViewForContext),
-                 std::move(java_nfc_delegate));
+  device_info.factory = base::Bind(
+      &device::CreateDeviceService, device_blocking_task_runner,
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
+      base::Bind(&WakeLockContextHost::GetNativeViewForContext),
+      base::Passed(&override_location_provider), std::move(java_nfc_delegate));
 #else
   device_info.factory =
       base::Bind(&device::CreateDeviceService, device_blocking_task_runner,
-                 BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
+                 BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
+                 base::Passed(&override_location_provider));
 #endif
   device_info.task_runner = base::ThreadTaskRunnerHandle::Get();
   packaged_services_connection_->AddEmbeddedService(device::mojom::kServiceName,
