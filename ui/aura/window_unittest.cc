@@ -1777,14 +1777,13 @@ class WindowObserverTest : public WindowTest,
         ui::PropertyChangeReason::NOT_FROM_ANIMATION;
   };
 
-  WindowObserverTest()
-      : added_count_(0),
-        removed_count_(0),
-        destroyed_count_(0),
-        old_property_value_(-3) {
-  }
+  struct LayerRecreatedInfo {
+    int count = 0;
+    Window* window = nullptr;
+  };
 
-  ~WindowObserverTest() override {}
+  WindowObserverTest() = default;
+  ~WindowObserverTest() override = default;
 
   const VisibilityInfo* GetVisibilityInfo() const {
     return visibility_info_.get();
@@ -1805,6 +1804,10 @@ class WindowObserverTest : public WindowTest,
 
   const WindowTransformedInfo& window_transformed_info() const {
     return window_transformed_info_;
+  }
+
+  const LayerRecreatedInfo& layer_recreated_info() const {
+    return layer_recreated_info_;
   }
 
   void ResetVisibilityInfo() {
@@ -1894,17 +1897,23 @@ class WindowObserverTest : public WindowTest,
     window_transformed_info_.reason = reason;
   }
 
-  int added_count_;
-  int removed_count_;
-  int destroyed_count_;
+  void OnWindowLayerRecreated(Window* window) override {
+    ++layer_recreated_info_.count;
+    layer_recreated_info_.window = window;
+  }
+
+  int added_count_ = 0;
+  int removed_count_ = 0;
+  int destroyed_count_ = 0;
   std::unique_ptr<VisibilityInfo> visibility_info_;
-  const void* property_key_;
-  intptr_t old_property_value_;
+  const void* property_key_ = nullptr;
+  intptr_t old_property_value_ = -3;
   std::vector<std::pair<int, int> > transform_notifications_;
   WindowBoundsInfo window_bounds_info_;
   WindowOpacityInfo window_opacity_info_;
   WindowTargetTransformChangingInfo window_target_transform_changing_info_;
   WindowTransformedInfo window_transformed_info_;
+  LayerRecreatedInfo layer_recreated_info_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowObserverTest);
 };
@@ -2173,6 +2182,16 @@ TEST_P(WindowObserverTest, SetTransformAnimation) {
   EXPECT_EQ(window.get(), window_transformed_info().window);
   EXPECT_EQ(ui::PropertyChangeReason::FROM_ANIMATION,
             window_transformed_info().reason);
+}
+
+TEST_P(WindowObserverTest, OnWindowLayerRecreated) {
+  std::unique_ptr<Window> window(CreateTestWindowWithId(1, root_window()));
+  window->AddObserver(this);
+
+  EXPECT_EQ(0, layer_recreated_info().count);
+  std::unique_ptr<ui::Layer> old_layer = window->RecreateLayer();
+  EXPECT_EQ(1, layer_recreated_info().count);
+  EXPECT_EQ(window.get(), layer_recreated_info().window);
 }
 
 TEST_P(WindowTest, AcquireLayer) {

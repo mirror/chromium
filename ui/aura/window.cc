@@ -1173,6 +1173,9 @@ std::unique_ptr<ui::Layer> Window::RecreateLayer() {
   if (GetFrameSinkId().is_valid() && old_layer)
     AllocateLocalSurfaceId();
 
+  for (WindowObserver& observer : observers_)
+    observer.OnWindowLayerRecreated(this);
+
   return old_layer;
 }
 
