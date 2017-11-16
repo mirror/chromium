@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e62bf564_1eb1e879",
+        "filename": "tools/perf/contrib/leak_detection/data/leak_detection_000.wprgo.sha1.sha1",
+        "patchSetId": 30
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-11-16T08:33:45Z",
+      "side": 1,
+      "message": "Do we need all these files in data/?\nI don\u0027t know how wpr works but \"*.sha1.sha1\" looks like it might be a mistake?\nAlso do we need 001 and 002? Could you get away with one wprgo file if you regenerate?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 40
+      },
+      "revId": "4b675010bcdf89761bf40d7089535dc6d83e429f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
