@@ -22,6 +22,30 @@
       "revId": "57969f9ca5428dfde599248e5ba4932748f752a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f08bf18_896c573a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-16T19:11:40Z",
+      "side": 1,
+      "message": "As discussed, EXTRA_APPLICATION_ID seems to be a reasonable extra to use. Added UMA to log EXTRA_APPLICATION_ID with wekapk",
+      "parentUuid": "933bbc23_0368b558",
+      "range": {
+        "startLine": 105,
+        "startChar": 19,
+        "endLine": 105,
+        "endChar": 48
+      },
+      "revId": "57969f9ca5428dfde599248e5ba4932748f752a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
