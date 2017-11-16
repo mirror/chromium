@@ -262,15 +262,12 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
     @VisibleForTesting
     @CalledByNative
-    public void showSelectionMenu(int left, int top, int right, int bottom, boolean isEditable,
-            boolean isPasswordType, String selectionText, int selectionStartOffset,
-            boolean canSelectAll, boolean canRichlyEdit, boolean shouldSuggest,
-            @MenuSourceType int sourceType) {
-        mSelectionRect.set(left, top, right, bottom);
+    public void showSelectionMenu(boolean isEditable, boolean isPasswordType, String selectionText,
+            int selectionStartOffset, boolean canSelectAll, boolean canRichlyEdit,
+            boolean shouldSuggest, @MenuSourceType int sourceType) {
         mEditable = isEditable;
         mLastSelectedText = selectionText;
         mLastSelectionOffset = selectionStartOffset;
-        mHasSelection = selectionText.length() != 0;
         mIsPasswordType = isPasswordType;
         mCanSelectAllForPastePopup = canSelectAll;
         mCanEditRichly = canRichlyEdit;
@@ -802,6 +799,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     }
 
     private float getDeviceScaleFactor() {
+        if (mWebContents.getRenderCoordinates() == null) return 0;
         return mWebContents.getRenderCoordinates().getDeviceScaleFactor();
     }
 
@@ -857,6 +855,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
      */
     @VisibleForTesting
     void selectAll() {
+        hideActionMode(true);
         mWebContents.selectAll();
         mClassificationResult = null;
         // Even though the above statement logged a SelectAll user action, we want to
@@ -1052,17 +1051,17 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     }
 
     // All coordinates are in DIP.
+    @VisibleForTesting
     @CalledByNative
-    private void onSelectionEvent(int eventType, int left, int top, int right, int bottom) {
+    public void onSelectionEvent(int eventType, int left, int top, int right, int bottom) {
         // Ensure the provided selection coordinates form a non-empty rect, as required by
         // the selection action mode.
         if (left == right) ++right;
         if (top == bottom) ++bottom;
         switch (eventType) {
             case SelectionEventType.SELECTION_HANDLES_SHOWN:
-                break;
-
             case SelectionEventType.SELECTION_HANDLES_MOVED:
+                mHasSelection = true;
                 mSelectionRect.set(left, top, right, bottom);
                 invalidateContentRect();
                 break;
@@ -1161,7 +1160,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
     @CalledByNative
     private void onSelectionChanged(String text) {
-        if (text.length() == 0 && mHasSelection && mSelectionMetricsLogger != null) {
+        if (text.length() == 0 && hasSelection() && mSelectionMetricsLogger != null) {
             mSelectionMetricsLogger.logSelectionAction(mLastSelectedText, mLastSelectionOffset,
                     SmartSelectionMetricsLogger.ActionType.ABANDON,
                     /* SelectionClient.Result = */ null);
