@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "9977e4cf_5b31c6a9",
+        "filename": "components/omnibox/browser/autocomplete_match_type.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-16T18:37:56Z",
+      "side": 1,
+      "message": "I wouldn\u0027t bother testing it.  The team has decided to unlaunch physical web suggestions in the omnibox (well, it technically wasn\u0027t entirely launch, but mostly).  We\u0027re in the process of disabling the experiment configs that launched it and removing the code.",
+      "parentUuid": "1ee98a43_59fbad7f",
+      "range": {
+        "startLine": 89,
+        "startChar": 11,
+        "endLine": 89,
+        "endChar": 21
+      },
+      "revId": "9e010bdd46e14d741b8e9dcb0486994cab34ccba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ece4d95e_2e6a0b8c",
         "filename": "components/omnibox_strings.grdp",
         "patchSetId": 6
