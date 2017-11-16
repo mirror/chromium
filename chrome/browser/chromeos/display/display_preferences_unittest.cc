@@ -1078,7 +1078,7 @@ TEST_F(DisplayPreferencesTest, RestoreUnifiedMode) {
   EXPECT_TRUE(display_manager()->IsInUnifiedMode());
 
   // Restored to mirror, then unified.
-  StoreDisplayBoolPropertyForList(list, "mirrored", true);
+  display_manager()->set_request_mirror_mode_on_for_test(true);
   StoreDisplayBoolPropertyForList(list, "default_unified", true);
   LoadDisplayPreferences(false);
   UpdateDisplay("100x100,200x200");
@@ -1089,7 +1089,6 @@ TEST_F(DisplayPreferencesTest, RestoreUnifiedMode) {
 
   // Sanity check. Restore to extended.
   StoreDisplayBoolPropertyForList(list, "default_unified", false);
-  StoreDisplayBoolPropertyForList(list, "mirrored", false);
   LoadDisplayPreferences(false);
   UpdateDisplay("100x100,200x200");
   EXPECT_FALSE(display_manager()->IsInMirrorMode());
