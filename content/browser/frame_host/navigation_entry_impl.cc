@@ -784,20 +784,27 @@ void NavigationEntryImpl::ResetForCommit(FrameNavigationEntry* frame_entry) {
 
 NavigationEntryImpl::TreeNode* NavigationEntryImpl::GetTreeNode(
     FrameTreeNode* frame_tree_node) const {
-  NavigationEntryImpl::TreeNode* node = nullptr;
+  NavigationEntryImpl::TreeNode* result = nullptr;
   base::queue<NavigationEntryImpl::TreeNode*> work_queue;
   work_queue.push(root_node());
   while (!work_queue.empty()) {
-    node = work_queue.front();
+    NavigationEntryImpl::TreeNode* node = work_queue.front();
     work_queue.pop();
-    if (node->MatchesFrame(frame_tree_node))
-      return node;
+    if (node->MatchesFrame(frame_tree_node)) {
+      DCHECK(!result);  // There should be only 1 match.
+      result = node;
+#if !DCHECK_IS_ON()
+      // No need to iterate through the remaining nodes, unless
+      // we care about the DCHECK above.
+      break;
+#endif
+    }
 
     // Enqueue any children and keep looking.
     for (const auto& child : node->children)
       work_queue.push(child.get());
   }
-  return nullptr;
+  return result;
 }
 
 void NavigationEntryImpl::AddOrUpdateFrameEntry(
@@ -913,41 +920,23 @@ void NavigationEntryImpl::RemoveEntryForFrame(FrameTreeNode* frame_tree_node,
                                               bool only_if_different_position) {
   DCHECK(!frame_tree_node->IsMainFrame());
 
-  NavigationEntryImpl::TreeNode* node = nullptr;
-  base::queue<NavigationEntryImpl::TreeNode*> work_queue;
-  int count = 0;
+  NavigationEntryImpl::TreeNode* node = GetTreeNode(frame_tree_node);
+  if (!node)
+    return;
 
-  work_queue.push(root_node());
-  while (!work_queue.empty()) {
-    node = work_queue.front();
-    work_queue.pop();
-
-    // Enqueue any children and keep looking if the current node doesn't match.
-    if (!node->MatchesFrame(frame_tree_node)) {
-      for (const auto& child : node->children) {
-        work_queue.push(child.get());
-      }
-      continue;
-    }
-
-    // Remove the node from the tree if it is not in the same position in the
-    // tree of FrameNavigationEntries and the FrameTree.
-    if (!only_if_different_position ||
-        !InSameTreePosition(frame_tree_node, node)) {
-      NavigationEntryImpl::TreeNode* parent_node = node->parent;
-      auto it = std::find_if(
-          parent_node->children.begin(), parent_node->children.end(),
-          [node](const std::unique_ptr<NavigationEntryImpl::TreeNode>& item) {
-            return item.get() == node;
-          });
-      CHECK(it != parent_node->children.end());
-      parent_node->children.erase(it);
-    }
-    ++count;
+  // Remove the node from the tree if it is not in the same position in the
+  // tree of FrameNavigationEntries and the FrameTree.
+  if (!only_if_different_position ||
+      !InSameTreePosition(frame_tree_node, node)) {
+    NavigationEntryImpl::TreeNode* parent_node = node->parent;
+    auto it = std::find_if(
+        parent_node->children.begin(), parent_node->children.end(),
+        [node](const std::unique_ptr<NavigationEntryImpl::TreeNode>& item) {
+          return item.get() == node;
+        });
+    CHECK(it != parent_node->children.end());
+    parent_node->children.erase(it);
   }
-
-  // At most one match is expected, since it is based on unique frame name.
-  DCHECK_LE(count, 1);
 }
 
 void NavigationEntryImpl::SetScreenshotPNGData(
