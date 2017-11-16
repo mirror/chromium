@@ -87,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "f3b8f8f6_fd824d8f",
+        "filename": "ash/public/interfaces/accessibility_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-16T18:58:29Z",
+      "side": 1,
+      "message": "Think it again. I agree with (1). If ash side only passes SPOKEN_FEEDBACK_ENABLED (currently it is), then this CL is dependent on whether ash knows spoken feedback is enabled CL. Then we can remove PlaySoundOption.",
+      "parentUuid": "2451da06_4ff47259",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d62133b9_0cfc96ec",
         "filename": "ash/public/interfaces/accessibility_controller.mojom",
         "patchSetId": 3
@@ -149,6 +167,24 @@
       "writtenOn": "2017-11-16T18:31:49Z",
       "side": 1,
       "message": "Is there any particular reason to move this function here instead of keeping it in AccessibilityManager?",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "159c058b_39c805e1",
+        "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-16T18:58:29Z",
+      "side": 1,
+      "message": "I saw this idea \"Where possible, move all the code out of AccessibilityManager into AccessibilityController.\" from the doc: go/mustash-tray-accessibility.\n\nProbably I misunderstood. It is (1) moving all controls that ash-needed to AccessibilityController mojom, (2) while keep others still in AccessibilityManager?",
+      "parentUuid": "a49f73f8_bdf57397",
       "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
