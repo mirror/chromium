@@ -413,7 +413,7 @@ public class ChromeActivityTestRule<T extends ChromeActivity> extends ActivityTe
     public void waitForActivityNativeInitializationComplete() {
         CriteriaHelper.pollUiThread(() -> ChromeBrowserInitializer.getInstance(
                 getActivity()).hasNativeInitializationCompleted(),
-                "Native initialization never finished", 2 * CriteriaHelper.DEFAULT_MAX_TIME_TO_POLL,
+                "Native initialization never finished", 20 * CriteriaHelper.DEFAULT_MAX_TIME_TO_POLL,
                 CriteriaHelper.DEFAULT_POLLING_INTERVAL);
 
         CriteriaHelper.pollUiThread(() -> getActivity().didFinishNativeInitialization(),
