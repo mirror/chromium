@@ -7,6 +7,7 @@
 
 #include "core/css/parser/CSSParserToken.h"
 #include "core/css/parser/CSSParserTokenRange.h"
+#include "core/dom/SecureContextMode.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/text/WTFString.h"
 
@@ -46,7 +47,8 @@ class CORE_EXPORT CSSVariableData : public RefCounted<CSSVariableData> {
 
   bool NeedsVariableResolution() const { return needs_variable_resolution_; }
 
-  const CSSValue* ParseForSyntax(const CSSSyntaxDescriptor&) const;
+  const CSSValue* ParseForSyntax(const CSSSyntaxDescriptor&,
+                                 SecureContextMode) const;
 
  private:
   CSSVariableData(const CSSParserTokenRange&,

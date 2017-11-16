@@ -7068,6 +7068,7 @@ bool Document::IsSecureContext() const {
   }
   UseCounter::Count(*this, is_secure ? WebFeature::kSecureContextCheckPassed
                                      : WebFeature::kSecureContextCheckFailed);
+
   return is_secure;
 }
 

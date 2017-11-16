@@ -12,10 +12,12 @@ namespace blink {
 namespace {
 
 bool CompareGradients(const char* gradient1, const char* gradient2) {
-  const CSSValue* value1 = CSSParser::ParseSingleValue(
-      CSSPropertyBackgroundImage, gradient1, StrictCSSParserContext());
-  const CSSValue* value2 = CSSParser::ParseSingleValue(
-      CSSPropertyBackgroundImage, gradient2, StrictCSSParserContext());
+  const CSSValue* value1 =
+      CSSParser::ParseSingleValue(CSSPropertyBackgroundImage, gradient1,
+                                  StrictCSSParserContext(kInsecureContext));
+  const CSSValue* value2 =
+      CSSParser::ParseSingleValue(CSSPropertyBackgroundImage, gradient2,
+                                  StrictCSSParserContext(kInsecureContext));
   return *value1 == *value2;
 }
 
