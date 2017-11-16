@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6624592b_a4afeb38",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-16T21:03:38Z",
+      "side": 1,
+      "message": "This doesn\u0027t work if database_ is a nullptr - you\u0027ll have to change your SetCacheMode to accept the new cache mode if the goal is to have Keys \u0026 VAlues \u0026 we don\u0027t have a database.",
+      "revId": "585c3a81b89295e8bb8ab75a82874a656dbbdf2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
