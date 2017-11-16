@@ -86,6 +86,11 @@ class PLATFORM_EXPORT StrokeData final {
                                 const int path_length = 0,
                                 const int dash_thickness = 0) const;
 
+  // Compute an approximation of the bounding box that this stroke geometry
+  // would generate when applied to a shape with the (tight-fitting) bounding
+  // box |shape_bbox|.
+  FloatRect ApproximateBoundingBox(const FloatRect& shape_bbox) const;
+
   // Determine whether a stroked line should be drawn using dashes. In practice,
   // we draw dashes when a dashed stroke is specified or when a dotted stroke
   // is specified but the line width is too small to draw circles.

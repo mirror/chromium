@@ -86,7 +86,7 @@ FloatRect LayoutSVGShape::HitTestStrokeBoundingBox() const {
     return stroke_bounding_box_;
 
   // Implementation of
-  // http://dev.w3.org/fxtf/css-masking-1/#compute-stroke-bounding-box
+  // https://drafts.fxtf.org/css-masking/#compute-stroke-bounding-box
   // for the <rect> / <ellipse> / <circle> case except that we ignore whether
   // the stroke is none.
 
@@ -317,7 +317,8 @@ FloatRect LayoutSVGShape::CalculateStrokeBoundingBox() const {
         stroke_bounding_box.Unite(stroke_bounding_rect);
       }
     } else {
-      stroke_bounding_box.Unite(GetPath().StrokeBoundingRect(stroke_data));
+      stroke_bounding_box =
+          stroke_data.ApproximateBoundingBox(stroke_bounding_box);
     }
   }
 

@@ -34,6 +34,31 @@
 
 namespace blink {
 
+FloatRect StrokeData::ApproximateBoundingBox(
+    const FloatRect& shape_bbox) const {
+  FloatRect stroke_box = shape_bbox;
+
+  // Implementation of
+  // https://drafts.fxtf.org/css-masking/#compute-stroke-bounding-box
+  // except that we ignore whether the stroke is none.
+
+  if (thickness_ <= 0)
+    return stroke_box;
+
+  float delta = thickness_ / 2;
+  if (line_join_ == PaintFlags::kMiter_Join) {
+    if (miter_limit_ < M_SQRT2 && line_cap_ == PaintFlags::kSquare_Cap)
+      delta *= M_SQRT2;
+    else
+      delta *= miter_limit_;
+  } else if (line_cap_ == PaintFlags::kSquare_Cap) {
+    delta *= M_SQRT2;
+  }
+
+  stroke_box.Inflate(delta);
+  return stroke_box;
+}
+
 void StrokeData::SetLineDash(const DashArray& dashes, float dash_offset) {
   // FIXME: This is lifted directly off SkiaSupport, lines 49-74
   // so it is not guaranteed to work correctly.
