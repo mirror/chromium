@@ -22,6 +22,30 @@
       "revId": "9c4ad4b1490335d9909d8b3bad3ad99b7230d7fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582b129e_2ae61415",
+        "filename": "ui/gl/gl_implementation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-16T18:26:08Z",
+      "side": 1,
+      "message": "It\u0027s not exactly forbidden, but I would prefer being explicit at call sites.",
+      "parentUuid": "fd971435_855f32f2",
+      "range": {
+        "startLine": 99,
+        "startChar": 39,
+        "endLine": 99,
+        "endChar": 67
+      },
+      "revId": "9c4ad4b1490335d9909d8b3bad3ad99b7230d7fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
