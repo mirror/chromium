@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88f967ff_61669cd3",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T00:44:41Z",
+      "side": 1,
+      "message": "sessionStorage",
+      "range": {
+        "startLine": 716,
+        "startChar": 50,
+        "endLine": 716,
+        "endChar": 62
+      },
+      "revId": "fd9dd4a14e65601ae0575348897a715d795b11e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "983e3394_c997039e",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T00:44:41Z",
+      "side": 1,
+      "message": "you don\u0027t seem to ever set this field?",
+      "revId": "fd9dd4a14e65601ae0575348897a715d795b11e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
