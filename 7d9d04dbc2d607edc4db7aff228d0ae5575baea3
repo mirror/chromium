@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd882fe3_b938ab48",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PlatformServiceBridge.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-11-16T00:57:06Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem great to have the default implementation just not call the callback at all.. would it make more sense to just immediately call it with false, like warmUpSafeBrowsing?",
+      "revId": "7d9d04dbc2d607edc4db7aff228d0ae5575baea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
