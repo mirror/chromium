@@ -193,9 +193,6 @@ struct WebContextMenuData {
   // Custom context menu items provided by the WebCore internals.
   WebVector<WebMenuItemInfo> custom_items;
 
-  // Selection in viewport coordinates.
-  WebRect selection_rect;
-
   // TODO(https://crbug.com/781914): Remove this field after we done with Blink
   // side tracking.
   // Global index of start position for the current selection.

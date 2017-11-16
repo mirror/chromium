@@ -114,6 +114,16 @@ public class ContentViewCoreSelectionTest {
     @Test
     @SmallTest
     @Feature({"TextSelection"})
+    public void testSelectionHappensBeforeSelectActionBar() throws Throwable {
+        Assert.assertFalse(mSelectionPopupController.hasSelection());
+        DOMUtils.longPressNode(mContentViewCore, "textarea");
+        waitForSelectActionBarVisible(true);
+        Assert.assertTrue(mSelectionPopupController.hasSelection());
+    }
+
+    @Test
+    @SmallTest
+    @Feature({"TextSelection"})
     public void testSelectionClearedAfterLossOfFocus() throws Throwable {
         requestFocusOnUiThread(true);
 
