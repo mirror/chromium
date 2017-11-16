@@ -22,6 +22,30 @@
       "revId": "ce3da9962f985990a2606b456598de7301eeb895",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81de57f1_5e844061",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-16T13:40:52Z",
+      "side": 1,
+      "message": "Ok, we need to include the hour component (optional component) even when it is not present.\n(ProcessingInstruction node whose target is \"timestamp\" and whose data is a WebVTT timestamp representing the value of the WebVTT Timestamp Object, with all optional components included, with one leading zero if the hours component is less than ten, and with no leading zeros otherwise.)\n\nThanks for the clarification. I will try that.",
+      "parentUuid": "9d308658_4e1d8bc9",
+      "range": {
+        "startLine": 556,
+        "startChar": 11,
+        "endLine": 556,
+        "endChar": 75
+      },
+      "revId": "ce3da9962f985990a2606b456598de7301eeb895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
