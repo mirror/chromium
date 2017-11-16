@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc33827f_4683acb3",
+        "filename": "chrome/browser/notifications/metrics/mock_notification_metrics_logger.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T13:51:58Z",
+      "side": 1,
+      "message": "\u003d default",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e533a6_47a559c2",
+        "filename": "chrome/browser/notifications/metrics/mock_notification_metrics_logger.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T13:51:58Z",
+      "side": 1,
+      "message": "nit: make the constructor private. (Means you can\u0027t use std::make_unique\u003c\u003e in FactoryForTests(), but makes sure that users always use this through the KeyedService.)",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa064a0_79c713b2",
+        "filename": "chrome/browser/notifications/metrics/notification_metrics_logger.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T13:51:58Z",
+      "side": 1,
+      "message": "Please delete the NotificationMetricsLoggerImpl and just implement it in this interface. The \"virtual\" keyword in front of the methods is still sufficient to enable the overrides in the mock.",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be08886_130452e6",
+        "filename": "chrome/browser/notifications/metrics/notification_metrics_logger_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T13:51:58Z",
+      "side": 1,
+      "message": "Why?",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "304b65fd_f8f1fef1",
+        "filename": "chrome/browser/notifications/metrics/notification_metrics_logger_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T13:51:58Z",
+      "side": 1,
+      "message": "You could just name this GetForBrowserContext() that takes a content::BrowserContext* to avoid all the casts in the PNSI.",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb35d823_ab797a95",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T13:51:58Z",
+      "side": 1,
+      "message": "chrome/browser/notifications/metrics/notification_metrics_logger.h",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7958ee7_59f055f4",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T13:51:58Z",
+      "side": 1,
+      "message": "Mind adding a GetMetricsLogger(content::BrowserContext*) method or something? This is very verbose now.",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54bdeb6_05e3bd31",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T13:51:58Z",
+      "side": 1,
+      "message": "delete",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af9ee6b_e8287ea4",
+        "filename": "chrome/browser/notifications/platform_notification_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T13:51:58Z",
+      "side": 1,
+      "message": "nit: document ownership",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133789c4_669c71b9",
+        "filename": "chrome/browser/notifications/platform_notification_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T13:51:58Z",
+      "side": 1,
+      "message": "base::nullopt",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "439f5fca_32821b14",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 2247,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T13:51:58Z",
+      "side": 1,
+      "message": "these should be in //chrome/browser/BUILD.gn:test_support",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
