@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "410a16cd_565ed8b2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/sequence.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-16T14:31:27Z",
+      "side": 1,
+      "message": "We said that this would return a base::Optional\u003cbase::PendingTask\u003e https://docs.google.com/document/d/1h-FlOeO-27g__JnuRvdJ8KG9G-bmG_zn6zuw7GerFkc/edit#heading\u003dh.15xr14hs01ab",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5534bcd4_3754fc29",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/sequence.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-16T14:31:27Z",
+      "side": 1,
+      "message": "We said that this would return a bool indicating whether TakeTask() should be called again \nhttps://docs.google.com/document/d/1h-FlOeO-27g__JnuRvdJ8KG9G-bmG_zn6zuw7GerFkc/edit#heading\u003dh.15xr14hs01ab",
+      "range": {
+        "startLine": 18,
+        "startChar": 10,
+        "endLine": 18,
+        "endChar": 14
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d00d40_bb16adab",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-16T14:31:27Z",
+      "side": 1,
+      "message": "This DCHECK and the ThreadController::RunsTasksInCurrentSequence() method are not very useful if you add a SequenceChecker in TaskQueueManager::TakeTask/DidRunTask (the SequenceChecker will effectively verify that the constructor and TakeTask/DidRunTask are called on the same sequence). I would really like removing RunsTasksInCurrentSequence() from the ThreadController interface to make it simpler.",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 52
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4ab55ba_f213e07d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-16T14:31:27Z",
+      "side": 1,
+      "message": "Should this be implemented?\n\ncontroller_-\u003eRestoreDefaultTaskRunner();",
+      "range": {
+        "startLine": 759,
+        "startChar": 50,
+        "endLine": 759,
+        "endChar": 52
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa0f8d6_43324994",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-16T14:31:27Z",
+      "side": 1,
+      "message": "replace \"/\" -\u003e \" \"",
+      "range": {
+        "startLine": 68,
+        "startChar": 33,
+        "endLine": 68,
+        "endChar": 34
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "548327df_2f407b95",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-16T14:31:27Z",
+      "side": 1,
+      "message": "Add comment.",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 67
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a33a5828_1e7cb260",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-16T14:31:27Z",
+      "side": 1,
+      "message": "Could you use CreateTaskQueueManagerWithTestTimeForTest https://chromium-review.googlesource.com/c/chromium/src/+/763511/8/third_party/WebKit/Source/platform/scheduler/test/create_task_queue_manager_for_test.cc#57 ?",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 2
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea39d52_f0fe7a66",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/compositor_worker_scheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-16T14:31:27Z",
+      "side": 1,
+      "message": "Add a forward declaration for this class.",
+      "range": {
+        "startLine": 28,
+        "startChar": 22,
+        "endLine": 28,
+        "endChar": 43
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3a6a15e_d6d2cc50",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/scheduler_helperh",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-16T14:31:27Z",
+      "side": 1,
+      "message": "This file shouldn\u0027t exist.",
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

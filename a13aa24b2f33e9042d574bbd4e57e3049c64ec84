@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e8dd60c_7ed245bd",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/time_domain.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-16T14:31:27Z",
+      "side": 0,
+      "message": "I would make a separate CL just to remove unused headers to reduce the number of files changed in this CL (makes reviews easier).",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 64
+      },
+      "revId": "a13aa24b2f33e9042d574bbd4e57e3049c64ec84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
