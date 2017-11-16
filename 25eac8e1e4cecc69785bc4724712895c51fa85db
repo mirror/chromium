@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "c9dc1581_0c4c471d",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-16T14:05:55Z",
+      "side": 1,
+      "message": "OK. Let\u0027s keep it this way and remove the requester in a later CL.",
+      "parentUuid": "26c21151_824ad743",
+      "range": {
+        "startLine": 186,
+        "startChar": 32,
+        "endLine": 186,
+        "endChar": 52
+      },
+      "revId": "25eac8e1e4cecc69785bc4724712895c51fa85db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dddf2114_323e4f52",
         "filename": "content/renderer/media/media_stream_dispatcher.cc",
         "patchSetId": 7
