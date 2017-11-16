@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b95b562f_804ef157",
+        "filename": "content/public/common/resource_request.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-16T08:19:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c0646af_6251a734",
+      "revId": "483c599d97e18ba9f52d2fe7aa3d2c0080fff552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "091af5c5_2761e7e8",
         "filename": "services/network/public/interfaces/cors.mojom",
         "patchSetId": 2
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "370a9630_154098d2",
+        "filename": "services/network/public/interfaces/cors.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-16T08:19:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7802946d_206f3fb9",
+      "revId": "483c599d97e18ba9f52d2fe7aa3d2c0080fff552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c593fe9a_b3a77609",
         "filename": "third_party/WebKit/public/platform/WebURLRequest.h",
         "patchSetId": 2
@@ -68,6 +104,24 @@
       "revId": "483c599d97e18ba9f52d2fe7aa3d2c0080fff552",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "818d1d9d_2518748c",
+        "filename": "third_party/WebKit/public/platform/WebURLRequest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-16T08:19:38Z",
+      "side": 1,
+      "message": "Aha. Thanks, I overlooked this naming convention difference here.",
+      "parentUuid": "c593fe9a_b3a77609",
+      "revId": "483c599d97e18ba9f52d2fe7aa3d2c0080fff552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +175,24 @@
       "revId": "483c599d97e18ba9f52d2fe7aa3d2c0080fff552",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b305d87_1adfed75",
+        "filename": "third_party/WebKit/public/web/WebAssociatedURLLoaderOptions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-16T08:19:38Z",
+      "side": 1,
+      "message": "Yep, I\u0027m using -shared.h under public/{web|platform}.\nIn this CL, I intentionally specify the exact header file name in DEPS to allow use, and should not allow others, such as -blink.h. Probably, I\u0027d have some comments there for other people.",
+      "parentUuid": "aa4c9ee8_b72fcbeb",
+      "revId": "483c599d97e18ba9f52d2fe7aa3d2c0080fff552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
