@@ -16,6 +16,24 @@
       "revId": "79872df78047d79fbdab74da35fc31ecd3c89b33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d5b9849_82c0a40f",
+        "filename": "dbus/util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-16T20:15:52Z",
+      "side": 0,
+      "message": "If it looks too generic, this template is more generic. So the reason is confusing to me. Could you clarify?\nPendingCall::Delete() is for the specific type, PendingCall, so belonging to the class as static member does not sound generic to me?",
+      "parentUuid": "734bb9ff_8a62dec1",
+      "revId": "79872df78047d79fbdab74da35fc31ecd3c89b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

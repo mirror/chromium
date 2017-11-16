@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3effca85_54dae5f5",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-16T20:15:52Z",
+      "side": 1,
+      "message": "Done. Added another check to dtor.",
+      "parentUuid": "51a184cf_ca07cbd6",
+      "revId": "f2c1cef620599baca848d8fcc6d27b0d8b581493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4215ffe3_9a0564b5",
         "filename": "dbus/object_proxy.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "f2c1cef620599baca848d8fcc6d27b0d8b581493",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58eef6a3_c4b11ff7",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-16T20:15:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4215ffe3_9a0564b5",
+      "range": {
+        "startLine": 90,
+        "startChar": 43,
+        "endLine": 90,
+        "endChar": 47
+      },
+      "revId": "f2c1cef620599baca848d8fcc6d27b0d8b581493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +113,24 @@
       "side": 1,
       "message": "This should be a class if it\u0027s for better encapsulation.\n\nAlso, OnPendingCallIsCompleteData having a method Run looks weird (usually data doesn\u0027t run).\nProbably it\u0027s better to rename this class to PendingCall, and change the method name to something like OnPendingCallIsComplete() or Resume().\n\nMaybe this class should be replaced with a function which runs a given callback, so that this doesn\u0027t need to access ObjectProxy\u0027s private member.",
       "parentUuid": "e0d34efe_4b82d9c4",
+      "revId": "f2c1cef620599baca848d8fcc6d27b0d8b581493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "598ea355_ca7419a4",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-16T20:15:52Z",
+      "side": 1,
+      "message": "Thank you for suggestion. Done.",
+      "parentUuid": "a5f83633_a0a70115",
       "revId": "f2c1cef620599baca848d8fcc6d27b0d8b581493",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
