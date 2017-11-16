@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f4e9c1e_0467d6f3",
+        "filename": "services/video_capture/device_factory_media_to_mojo_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T14:15:07Z",
+      "side": 1,
+      "message": "I haven\u0027t followed recent changes in coding guidelines for Chromium. Is the C++14 std::make_unique now officially allowed and recommended to be used instead of base::MakeUnique?",
+      "revId": "20921a7f0e4c8e8c4a52d4b0114379ed20c2d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8242e6d8_3ae3da6d",
+        "filename": "services/video_capture/public/interfaces/virtual_device.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T14:15:07Z",
+      "side": 1,
+      "message": "We need to update the description comments to explain how this is supposed to work.\nFirst, we need to describe that the basic idea is that every time the producer wants to push a frame it first calls RequestFrameBuffer, then waits for a response indicating new or reused buffer handle, then calls OnFrameReadyInBuffer. \n\nMy understanding is that this method is to be called by the producer to request a free buffer large enough to hold a frame with the given parameters. The service can react in one of two ways.\n1. It may provide a new buffer. If so, it will invoke Producer::OnNewBufferHandle() and will respond with the corresponding |buffer_id|.\n2. It may choose to reuse an existing buffer. If so it responds with the corresponding |buffer_id| without invoking Producer::OnNewBufferHandle().\n\nI think we could improve the clarity of the API by removing the \u003d\u003e (int32 buffer_id) response here and instead adding a method OnReuseBufferHandle() to the Producer interface. This would change the above to \n1. It may provide a new buffer. If so it will invoke Producer::OnNewBufferHandle().\n2. It may choose to reuse an existing buffer. If so it will invoke Producer::OnReuseBufferHandle().\n\nWe may also consider renaming this method here to \"RequestFrameBuffer\".",
+      "revId": "20921a7f0e4c8e8c4a52d4b0114379ed20c2d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b26b93_f22f1ec2",
+        "filename": "services/video_capture/test/virtual_device_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T14:15:07Z",
+      "side": 1,
+      "message": "It would be nice if we could add a test case that demonstrates how the producer is able to transport a series of frames larger than max_buffer_pool_buffer_count without having to remap any buffer handles.",
+      "revId": "20921a7f0e4c8e8c4a52d4b0114379ed20c2d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
