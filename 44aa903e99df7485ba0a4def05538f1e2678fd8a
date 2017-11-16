@@ -22,6 +22,30 @@
       "revId": "44aa903e99df7485ba0a4def05538f1e2678fd8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a56a0d5_bf131ed9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/LayoutManagerChrome.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-16T15:53:24Z",
+      "side": 1,
+      "message": "I know I commented this somewhere, guess it wasn\u0027t in code :P. 25 works better. Updated CL description.",
+      "parentUuid": "4363fd5a_aaf68e1f",
+      "range": {
+        "startLine": 628,
+        "startChar": 53,
+        "endLine": 628,
+        "endChar": 55
+      },
+      "revId": "44aa903e99df7485ba0a4def05538f1e2678fd8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
