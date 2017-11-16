@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cb8290a_991af261",
+        "filename": "chrome/browser/ui/views/extensions/bookmark_app_confirmation_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-16T03:26:07Z",
+      "side": 0,
+      "message": "I think we might still need this when chrome://flags/#secondary-ui-md is disabled (which we are doing in m64 beta) - can you check?. It\u0027s fine to have the old code (i.e. don\u0027t worry about  DISTANCE_MODAL_DIALOG_WIDTH_CONTAINING_MULTILINE_TEXT)",
+      "revId": "97e5a19825fdb8f50b27f1229b5cf9d9476a2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

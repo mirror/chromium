@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74517db8_d7d9edae",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-16T03:26:07Z",
+      "side": 1,
+      "message": "nit: auto name_label \u003d std::make_unique\u003cviews::Label\u003e\n\n(this avoids repeating the typename and has been deemed acceptable use of auto :)",
+      "revId": "4ef286f074be2283dcca7286e0e6fccf244c98b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56ee47f9_9cdba145",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-16T03:26:07Z",
+      "side": 1,
+      "message": "nit: auto",
+      "revId": "4ef286f074be2283dcca7286e0e6fccf244c98b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "716f6d40_1dd9caac",
+        "filename": "chrome/browser/ui/views/extensions/web_app_info_image_source.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-16T03:26:07Z",
+      "side": 1,
+      "message": "optional: since this is only needed to implement an overridden method, it\u0027s acceptable to omit for iwyu. (depending how image_skia_source.h does stuff it might be needed in the .cc though)",
+      "revId": "4ef286f074be2283dcca7286e0e6fccf244c98b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
