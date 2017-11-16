@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0755404d_2042de13",
+        "filename": "components/download/internal/scheduler/device_status.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-16T00:17:12Z",
+      "side": 1,
+      "message": "Should this still be finch configurable?",
+      "range": {
+        "startLine": 31,
+        "startChar": 19,
+        "endLine": 31,
+        "endChar": 51
+      },
+      "revId": "a929c88a1d64f5c591bab4c330bd23f5ceab8305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
