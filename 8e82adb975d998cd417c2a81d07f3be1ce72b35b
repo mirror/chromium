@@ -118,6 +118,23 @@
     },
     {
       "key": {
+        "uuid": "b48d0e13_ce35f9ca",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-16T21:26:09Z",
+      "side": 1,
+      "message": "why not return the enum? Also, mgr not used?",
+      "revId": "8e82adb975d998cd417c2a81d07f3be1ce72b35b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcc7d3e3_2c2879ae",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 5
@@ -162,6 +179,23 @@
       "revId": "8e82adb975d998cd417c2a81d07f3be1ce72b35b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29b0008a_99fb588a",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-16T21:26:09Z",
+      "side": 1,
+      "message": "is browsing_mode still need given it is under the new browsing mode node?",
+      "revId": "8e82adb975d998cd417c2a81d07f3be1ce72b35b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
