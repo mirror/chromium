@@ -117,6 +117,30 @@
       "revId": "84ed42472779157039ad552506980e691acfae97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4081c989_20b528e7",
+        "filename": "android_webview/browser/aw_media_url_interceptor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-16T18:46:30Z",
+      "side": 1,
+      "message": "Actually, looking further into this issue, it looks like you are right Wei-Yin that the casting to int64_t wouldn\u0027t help. It appears the Android API can actually return negative values in ApkAssets.java (in /base) which we try to assign to region.size (which is size_t). I\u0027ve commented in more details on the bug crbug.com/784572..",
+      "parentUuid": "545e165f_63c2c3d7",
+      "range": {
+        "startLine": 31,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 23
+      },
+      "revId": "84ed42472779157039ad552506980e691acfae97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
