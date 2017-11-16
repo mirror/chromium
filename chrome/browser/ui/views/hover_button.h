@@ -48,6 +48,9 @@ class HoverButton : public views::LabelButton {
   // views::LabelButton:
   bool ShouldUseFloodFillInkDrop() const override;
 
+  // views::Button:
+  void StateChanged(ButtonState old_state) override;
+
   // views::InkDropHostView:
   SkColor GetInkDropBaseColor() const override;
   std::unique_ptr<views::InkDropHighlight> CreateInkDropHighlight()
