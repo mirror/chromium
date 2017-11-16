@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ffe3ea7_89343676",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-11-16T01:29:13Z",
+      "side": 1,
+      "message": "Since these are both const globals, should we just let SurfaceChooserHelper look them up? Or inject them when we construct SurfaceChooserHelper?",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 19
+      },
+      "revId": "1d02726e3492032aed5bda5ab0b17859000d6a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b274cfc1_e8a94642",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-11-16T01:29:13Z",
+      "side": 1,
+      "message": "We could also disable hints if enable_threaded_texture_mailboxes_. But it\u0027s minor.",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 80
+      },
+      "revId": "1d02726e3492032aed5bda5ab0b17859000d6a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4484175_e88ebdaa",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-11-16T01:29:13Z",
+      "side": 1,
+      "message": "Can be deleted now that you added the helper?",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 62
+      },
+      "revId": "1d02726e3492032aed5bda5ab0b17859000d6a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
