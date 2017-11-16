@@ -418,6 +418,59 @@ CleanupJailSymlinks() {
   cd "$SAVEDPWD"
 }
 
+
+VerifyLibraryDepsCommon() {
+  local arch=$1
+  local os=$2
+  local find_dirs=(
+    "${INSTALL_ROOT}/lib/${arch}-${os}/"
+    "${INSTALL_ROOT}/usr/lib/${arch}-${os}/"
+  )
+  local needed_libs="$(
+    find ${find_dirs[*]} -name "*\.so*" -type f -exec file {} \; | \
+      grep ': ELF' | sed 's/^\(.*\): .*$/\1/' | xargs readelf -d | \
+      grep NEEDED | sort | uniq | sed 's/^.*Shared library: \[\(.*\)\]$/\1/g')"
+  local all_libs="$(find ${find_dirs[*]} -printf '%f\n')"
+  local missing_libs="$(grep -vFxf <(echo "${all_libs}") \
+    <(echo "${needed_libs}"))"
+  if [ ! -z "${missing_libs}" ]; then
+    echo "Missing libraries:"
+    echo "${missing_libs}"
+    exit 1
+  fi
+}
+
+
+VerifyLibraryDepsAmd64() {
+  VerifyLibraryDepsCommon x86_64 linux-gnu
+}
+
+
+VerifyLibraryDepsI386() {
+  VerifyLibraryDepsCommon i386 linux-gnu
+}
+
+
+VerifyLibraryDepsARM() {
+  VerifyLibraryDepsCommon arm linux-gnueabihf
+}
+
+
+VerifyLibraryDepsARM64() {
+  VerifyLibraryDepsCommon aarch64 linux-gnu
+}
+
+
+VerifyLibraryDepsMips() {
+  VerifyLibraryDepsCommon mipsel linux-gnu
+}
+
+
+VerifyLibraryDepsMips64el() {
+  VerifyLibraryDepsCommon mips64el linux-gnuabi64
+}
+
+
 #@
 #@ BuildSysrootAmd64
 #@
@@ -435,6 +488,7 @@ BuildSysrootAmd64() {
   InstallIntoSysroot ${files_and_sha256sums}
   CleanupJailSymlinks
   HacksAndPatchesAmd64
+  VerifyLibraryDepsAmd64
   CreateTarBall
 }
 
@@ -455,6 +509,7 @@ BuildSysrootI386() {
   InstallIntoSysroot ${files_and_sha256sums}
   CleanupJailSymlinks
   HacksAndPatchesI386
+  VerifyLibraryDepsI386
   CreateTarBall
 }
 
@@ -475,6 +530,7 @@ BuildSysrootARM() {
   InstallIntoSysroot ${files_and_sha256sums}
   CleanupJailSymlinks
   HacksAndPatchesARM
+  VerifyLibraryDepsARM
   CreateTarBall
 }
 
@@ -495,6 +551,7 @@ BuildSysrootARM64() {
   InstallIntoSysroot ${files_and_sha256sums}
   CleanupJailSymlinks
   HacksAndPatchesARM64
+  VerifyLibraryDepsARM64
   CreateTarBall
 }
 
@@ -516,6 +573,7 @@ BuildSysrootMips() {
   InstallIntoSysroot ${files_and_sha256sums}
   CleanupJailSymlinks
   HacksAndPatchesMips
+  VerifyLibraryDepsMips
   CreateTarBall
 }
 
@@ -537,6 +595,7 @@ BuildSysrootMips64el() {
   InstallIntoSysroot ${files_and_sha256sums}
   CleanupJailSymlinks
   HacksAndPatchesMips64el
+  VerifyLibraryDepsMips64el
   CreateTarBall
 }
 
