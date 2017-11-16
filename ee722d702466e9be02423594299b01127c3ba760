@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "6e396051_5d6889de",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-16T23:20:44Z",
+      "side": 1,
+      "message": "When there\u0027s a file read error, we don\u0027t retry the request, we just fail.  So the change in behavior shouldn\u0027t affect correctness of the code.",
+      "parentUuid": "2600f407_3af0ec7f",
+      "range": {
+        "startLine": 189,
+        "startChar": 17,
+        "endLine": 189,
+        "endChar": 19
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29898e7d_dfc2dc33",
         "filename": "net/base/upload_file_element_reader.cc",
         "patchSetId": 3
@@ -557,6 +581,30 @@
       "side": 1,
       "message": "I don\u0027t understand?  If the UploadFileElementReader is destroyed, cleanup/preventing callbacks is taken care of by the weak pointers, so I\u0027m not sure why it\u0027s relevant to where code within UploadFileElementReader is placed?",
       "parentUuid": "4f011407_70f94863",
+      "range": {
+        "startLine": 279,
+        "startChar": 30,
+        "endLine": 279,
+        "endChar": 52
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7a7a38_8959bd06",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-16T23:20:44Z",
+      "side": 1,
+      "message": "It\u0027s not the callback that\u0027s the issue.  It\u0027s writing to freed memory.  If the FileInfo is owned by |this| while there\u0027s a pending GetFileInfo request, we could delete the FileInfo before GetFileInfo completes running off-thread.  It would then write into freed memory.",
+      "parentUuid": "7a2dc65c_0fa8e302",
       "range": {
         "startLine": 279,
         "startChar": 30,
