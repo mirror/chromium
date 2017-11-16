@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2e35aeff_aa32f9c1",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-16T22:57:14Z",
+      "side": 1,
+      "message": "Whoops, sorry.  Got it now.",
+      "parentUuid": "f2362777_71789d67",
+      "range": {
+        "startLine": 119,
+        "startChar": 4,
+        "endLine": 119,
+        "endChar": 21
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f254c26_02d3200d",
         "filename": "net/base/upload_file_element_reader.cc",
         "patchSetId": 3
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Done.  I\u0027m not convinced this really improves anything, but may be missing something (And don\u0027t have a strong preference for the old approach).",
       "parentUuid": "5f254c26_02d3200d",
+      "range": {
+        "startLine": 131,
+        "startChar": 28,
+        "endLine": 131,
+        "endChar": 41
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f223d41e_13db2452",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-16T22:57:14Z",
+      "side": 1,
+      "message": "It\u0027s mostly relevant when the state machine is larger and more convoluted.  Or maybe it\u0027s just my bias; I don\u0027t know :-}.",
+      "parentUuid": "d7d1acdb_54376af4",
       "range": {
         "startLine": 131,
         "startChar": 28,
@@ -187,6 +235,30 @@
       "revId": "ee722d702466e9be02423594299b01127c3ba760",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2600f407_3af0ec7f",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-16T22:57:14Z",
+      "side": 1,
+      "message": "My focus was on correctness, not performance.  I was specifically wondering if there was any case in which the consumer did an Init() to try and clear out bogus state that the rewind wouldn\u0027t affect.  \n\nI\u0027m confused about how the Chrome consumer could currently be sandboxed on desktop, since currently all consumers open a file.  I agree that for sandboxed consumers there\u0027s no choice, but it was wanted to (not suggesting it) we could do the rewind behavior when we\u0027re passed a File and the reset behavior otherwise.  \n\nBut at the end of the day I just wanted to make sure you had done an evaluation of the consumers to make sure this behavior change wasn\u0027t going to cause problems.  I\u0027m good.",
+      "parentUuid": "c720ed0c_63fdae04",
+      "range": {
+        "startLine": 189,
+        "startChar": 17,
+        "endLine": 189,
+        "endChar": 19
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -284,6 +356,30 @@
     },
     {
       "key": {
+        "uuid": "62531f8a_0b9a80c9",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-16T22:57:14Z",
+      "side": 1,
+      "message": "Just thinking about dotting Is and crossing Ts; if the object has a record that it\u0027s in an error state it could conceivably do a more controlled response.  But understood that this isn\u0027t a change in behavior--I won\u0027t worry about it.",
+      "parentUuid": "814bdda6_6c6025b8",
+      "range": {
+        "startLine": 209,
+        "startChar": 15,
+        "endLine": 209,
+        "endChar": 16
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b8ecc73_327e6340",
         "filename": "net/base/upload_file_element_reader.cc",
         "patchSetId": 3
@@ -319,6 +415,30 @@
       "side": 1,
       "message": "They\u0027re allowed and quite heavily used.  If you look at https://chromium-cpp.appspot.com/, it\u0027s only capturing lambdas that shouldn\u0027t be bound for use beyond the lifetime of the current stack frame.\n\nThis is mostly a lambda because I don\u0027t like having DoFoo and OnFooComplete methods that don\u0027t quite match.  I didn\u0027t do that for OnGetFileInfoCompleted because it\u0027s more complicated.\n\nI\u0027m keeping as-is, since the question was about if it\u0027s allowed, however, if you feel adding a method makes for cleaner code, I\u0027ll switch.",
       "parentUuid": "1b8ecc73_327e6340",
+      "range": {
+        "startLine": 229,
+        "startChar": 27,
+        "endLine": 229,
+        "endChar": 50
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22b24a58_2065658f",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-16T22:57:14Z",
+      "side": 1,
+      "message": "Nope, I think the lambda is cleaner code.  Thanks for the pointer at chromium-cpp.appspot.com; I\u0027ll know for the future.  I\u0027m not a big fan of capturing lambdas, so I suspect for my purposes it\u0027ll be an \"it\u0027s all good\" :-}.",
+      "parentUuid": "64c9e405_ee5552c2",
       "range": {
         "startLine": 229,
         "startChar": 27,
@@ -413,6 +533,30 @@
       "side": 1,
       "message": "I don\u0027t think that works.\n\nThe UploadFileElementReader can be deleted at any time - including while the FileStream::Context is getting metadata off thread.\n\nI decided it was simpler just to keep the current ownership model here as before this CL.  The only other reasonable option that occurs to me would be to make the FileStream take a different callback type.  The works, but requires reworking FileStream::Context (Or using the same pattering in FileStream::Context::GetFileInfo), since OnAsyncComplete requires a CompletionCallback.",
       "parentUuid": "ba444d92_48bce3dc",
+      "range": {
+        "startLine": 279,
+        "startChar": 30,
+        "endLine": 279,
+        "endChar": 52
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2dc65c_0fa8e302",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-16T22:57:14Z",
+      "side": 1,
+      "message": "I don\u0027t understand?  If the UploadFileElementReader is destroyed, cleanup/preventing callbacks is taken care of by the weak pointers, so I\u0027m not sure why it\u0027s relevant to where code within UploadFileElementReader is placed?",
+      "parentUuid": "4f011407_70f94863",
       "range": {
         "startLine": 279,
         "startChar": 30,
