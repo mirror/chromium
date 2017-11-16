@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "1ee98a43_59fbad7f",
+        "filename": "components/omnibox/browser/autocomplete_match_type.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-16T18:29:22Z",
+      "side": 1,
+      "message": "Good question. Physical web suggestions are provided when a web beacon is physically nearby.\n\nmpearson: do you know an easy way to produce one without an actual beacon (other than hacking at the physical web provider)?",
+      "parentUuid": "81c537ac_d250bef4",
+      "range": {
+        "startLine": 89,
+        "startChar": 11,
+        "endLine": 89,
+        "endChar": 21
+      },
+      "revId": "9e010bdd46e14d741b8e9dcb0486994cab34ccba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ece4d95e_2e6a0b8c",
         "filename": "components/omnibox_strings.grdp",
         "patchSetId": 6
