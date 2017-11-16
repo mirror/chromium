@@ -407,12 +407,13 @@ cursors.Cursor.prototype = {
         }
         break;
       case Unit.LINE:
-        var deepEquivalent = this.deepEquivalent;
-        newNode = deepEquivalent.node || newNode;
-        newIndex = deepEquivalent.index || 0;
-
+        newIndex = 0;
         switch (movement) {
           case Movement.BOUND:
+            var deepEquivalent = this.deepEquivalent;
+            newNode = deepEquivalent.node || newNode;
+            newIndex = deepEquivalent.index || 0;
+
             newNode = AutomationUtil.findNodeUntil(
                 newNode, dir, AutomationPredicate.linebreak, true);
             newNode = newNode || originalNode;

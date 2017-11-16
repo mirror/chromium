@@ -279,7 +279,7 @@ CommandHandler.onCommand = function(command) {
     case 'previousLine':
       dir = Dir.BACKWARD;
       didNavigate = true;
-      current = current.move(cursors.Unit.LINE);
+      current = current.move(cursors.Unit.LINE, dir);
       break;
     case 'nextButton':
       dir = Dir.FORWARD;
