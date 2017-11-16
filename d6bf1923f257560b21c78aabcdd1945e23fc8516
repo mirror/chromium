@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "6928b059_eb3dab1e",
+        "filename": "media/capture/video/chromeos/mojo/arc_camera3_service.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2017-11-16T06:16:25Z",
+      "side": 1,
+      "message": "We decode the jpeg in Camera HAL v3 which is in Chrome OS.\nBoth chromium and arc++ use the same Camera HAL v3.",
+      "parentUuid": "053891dd_04bb962e",
+      "revId": "d6bf1923f257560b21c78aabcdd1945e23fc8516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62df7574_f87757cc",
         "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.h",
         "patchSetId": 12
