@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2080b3d4_6d2c26f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-16T23:10:37Z",
+      "side": 1,
+      "message": "What does this mean?",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb50a1f7_2c098191",
+        "filename": "ash/login/login_screen_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-16T23:10:37Z",
+      "side": 1,
+      "message": "Should we move this one spot up?",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c2b89b_444d9121",
+        "filename": "ash/login/ui/lock_screen.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-16T23:10:37Z",
+      "side": 1,
+      "message": "Is it possible to come up with something other than Type? Screen? ScreenType?",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5529b7d_7582adb8",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-16T23:10:37Z",
+      "side": 1,
+      "message": "This seems like a rather unfortunate combination of pure virtual methods and implementation methods. Does it make sense to put the pure virtual methods into an interface class?",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc718b6_36e7f9e1",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-16T23:10:37Z",
+      "side": 1,
+      "message": "Is this likely to be the permanent fix?",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a11cf82c_241b2b65",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-16T23:10:37Z",
+      "side": 1,
+      "message": "We could keep posting ourself N times, right?",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "235ee183_99cec48f",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-16T23:10:37Z",
+      "side": 1,
+      "message": "What\u0027s this?",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf0449bc_0e806f5d",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-16T23:10:37Z",
+      "side": 1,
+      "message": "Why not chromeos::SigninSpecifics() here?",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "498d1c3f_64cd50ad",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-16T23:10:37Z",
+      "side": 1,
+      "message": "nit const",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933ac266_976f23b7",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-16T23:10:37Z",
+      "side": 1,
+      "message": "nit const",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da84eb98_b3bddf8b",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-16T23:10:37Z",
+      "side": 1,
+      "message": "Might we worthwhile caching Get()?",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
