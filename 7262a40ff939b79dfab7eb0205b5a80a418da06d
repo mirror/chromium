@@ -213,6 +213,30 @@
       "revId": "7262a40ff939b79dfab7eb0205b5a80a418da06d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a96d2e_af9830da",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-11-16T03:56:33Z",
+      "side": 1,
+      "message": "I\u0027m OK to add UnixEpoch().\n\n(TimeWrapper is in an unfortunate state right now. Not sure what\u0027s blocking the complete conversion to base::TimeTicks...)",
+      "parentUuid": "4e875be8_7c92fdbf",
+      "range": {
+        "startLine": 52,
+        "startChar": 10,
+        "endLine": 52,
+        "endChar": 25
+      },
+      "revId": "7262a40ff939b79dfab7eb0205b5a80a418da06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
