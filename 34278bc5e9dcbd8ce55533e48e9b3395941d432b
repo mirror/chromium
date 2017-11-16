@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3fc2c03_7876cce9",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-16T00:20:17Z",
+      "side": 1,
+      "message": "Doh. Do you mind moving this check up into PRESUBMIT.py where we loop over AffectedFiles(), and change it to use input.AffectedSourceFiles() with input.FilterSourceFile?",
+      "revId": "34278bc5e9dcbd8ce55533e48e9b3395941d432b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
