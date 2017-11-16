@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce773383_d119cb16",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-16T20:31:42Z",
+      "side": 1,
+      "message": "This is a new one, different from the one at l.253. block.SetVerbose(true) allow the dev console to print out any exception in AWGS.",
+      "parentUuid": "7a7998a2_ed46c93a",
+      "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1a67031_af2f0fdc",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd239b3d_e93bcc76",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-16T20:31:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1a67031_af2f0fdc",
+      "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d0e98a73_5729531a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-16T20:31:42Z",
+      "side": 1,
+      "message": "Hah, I changed this from `used` to `necessary` just before uploading the CL.\n\nDone!",
+      "parentUuid": "eab9ce35_26df3c64",
+      "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a877ff1f_24dda284",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e1c852ae_d5d5f9f1",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-16T20:31:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a877ff1f_24dda284",
+      "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ad040a3_e8a97a1e",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-16T00:09:09Z",
       "side": 1,
       "message": "Nit: Maybe document these states and the transitions allowed?  The spec doesn\u0027t say much about the transitions.",
+      "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e014ae_44a5a776",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-16T20:31:42Z",
+      "side": 1,
+      "message": "Document where? Here or in the spec? I can add a link to the spec here (which seems redundant) and raise an spec issue later.",
+      "parentUuid": "5ad040a3_e8a97a1e",
       "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "14b7864a_d9e947eb",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-16T20:31:42Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "391b5b68_c277a993",
+      "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e14b08d4_bf8c973d",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.h",
         "patchSetId": 5
@@ -118,6 +226,24 @@
       "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce003fd5_fbba1187",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-16T20:31:42Z",
+      "side": 1,
+      "message": "Yes, this is asynchronously liked to kError state.\n\nWe discussed this offline and chose the name as \"runnable\".",
+      "parentUuid": "e14b08d4_bf8c973d",
+      "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
