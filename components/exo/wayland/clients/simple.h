@@ -5,6 +5,7 @@
 #ifndef COMPONENTS_EXO_WAYLAND_CLIENTS_SIMPLE_H_
 #define COMPONENTS_EXO_WAYLAND_CLIENTS_SIMPLE_H_
 
+#include "base/time/time.h"
 #include "components/exo/wayland/clients/client_base.h"
 
 namespace exo {
@@ -15,7 +16,26 @@ class Simple : public wayland::clients::ClientBase {
  public:
   Simple();
 
-  void Run(int frames);
+  struct Result {
+    // Total frame latency of all commit.
+    base::TimeDelta frame_latency;
+
+    // Total presentation latency of all presented frames.
+    base::TimeDelta presentation_latency;
+
+    // Total presentation ipc latency of all presented frames.
+    base::TimeDelta presentation_ipc_latency;
+
+    // Number of frames received successfully.
+    uint32_t num_frames = 0;
+
+    // Number of presented frames.
+    uint32_t num_frames_presented = 0;
+
+    // Number of discarded frames.
+    uint32_t num_frames_discarded = 0;
+  };
+  void Run(int frames, Result* result = nullptr);
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Simple);

@@ -27,12 +27,24 @@ TEST_F(WaylandClientPerfTests, Simple) {
 
   client.Run(kWarmUpFrames);
 
+  exo::wayland::clients::Simple::Result result;
   auto start_time = base::Time::Now();
-  client.Run(kTestFrames);
+  client.Run(kTestFrames, &result);
   auto time_delta = base::Time::Now() - start_time;
   float fps = kTestFrames / time_delta.InSecondsF();
-  perf_test::PrintResult("WaylandClientPerfTests", "", "Simple", fps,
-                         "frames/s", true);
+  perf_test::PrintResult("WaylandClientPerfTests", "", "Simple::frame_rate",
+                         fps, "frames/s", true);
+  if (result.num_frames_presented) {
+    auto average_latency =
+        result.presentation_latency / result.num_frames_presented;
+    perf_test::PrintResult(
+        "WaylandClientPerfTests", "", "Simple::presentation_latency",
+        static_cast<size_t>(average_latency.InMicroseconds()), "us", true);
+  } else {
+    perf_test::PrintResult("WaylandClientPerfTests", "",
+                           "Simple::presentation_latency", "(not available)",
+                           "us", true);
+  }
 }
 
 class WaylandClientBlurPerfTests
