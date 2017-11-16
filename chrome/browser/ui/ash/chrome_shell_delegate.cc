@@ -71,6 +71,8 @@
 #include "ui/base/resource/resource_bundle.h"
 #include "url/url_constants.h"
 
+#include "ash/public/interfaces/accessibility_controller.mojom.h"
+
 using chromeos::AccessibilityManager;
 
 namespace {
@@ -270,16 +272,6 @@ class AccessibilityDelegateImpl : public ash::AccessibilityDelegate {
   void PlaySpokenFeedbackToggleCountdown(int tick_count) override {
     DCHECK(AccessibilityManager::Get());
     AccessibilityManager::Get()->PlaySpokenFeedbackToggleCountdown(tick_count);
-  }
-
-  void PlayEarcon(int sound_key) override {
-    DCHECK(AccessibilityManager::Get());
-    AccessibilityManager::Get()->PlayEarcon(
-        sound_key, chromeos::PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
-  }
-
-  base::TimeDelta PlayShutdownSound() const override {
-    return AccessibilityManager::Get()->PlayShutdownSound();
   }
 
   void HandleAccessibilityGesture(ui::AXGesture gesture) override {

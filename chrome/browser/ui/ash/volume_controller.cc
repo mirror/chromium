@@ -8,6 +8,7 @@
 #include "ash/public/interfaces/constants.mojom.h"
 #include "base/command_line.h"
 #include "chrome/browser/chromeos/accessibility/accessibility_manager.h"
+#include "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h"
 #include "chrome/grit/browser_resources.h"
 #include "chromeos/audio/chromeos_sounds.h"
 #include "chromeos/audio/cras_audio_handler.h"
@@ -29,9 +30,9 @@ bool VolumeAdjustSoundEnabled() {
 
 void PlayVolumeAdjustSound() {
   if (VolumeAdjustSoundEnabled()) {
-    chromeos::AccessibilityManager::Get()->PlayEarcon(
+    AccessibilityControllerClient::Get()->PlayEarcon(
         chromeos::SOUND_VOLUME_ADJUST,
-        chromeos::PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
+        ash::mojom::PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
   }
 }
 

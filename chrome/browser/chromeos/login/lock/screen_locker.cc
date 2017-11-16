@@ -38,6 +38,7 @@
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/signin/easy_unlock_service.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
+#include "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h"
 #include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/browser/ui/ash/lock_screen_client.h"
 #include "chrome/browser/ui/ash/session_controller_client.h"
@@ -72,6 +73,8 @@
 #include "ui/display/screen.h"
 #include "ui/gfx/image/image.h"
 #include "url/gurl.h"
+
+#include "ash/public/interfaces/accessibility_controller.mojom.h"
 
 using base::UserMetricsAction;
 using content::BrowserThread;
@@ -433,8 +436,9 @@ void ScreenLocker::OnStartLockCallback(bool locked) {
 
   delegate_->OnAshLockAnimationFinished();
 
-  AccessibilityManager::Get()->PlayEarcon(
-      chromeos::SOUND_LOCK, PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
+  AccessibilityControllerClient::Get()->PlayEarcon(
+      chromeos::SOUND_LOCK,
+      ash::mojom::PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
 }
 
 void ScreenLocker::ClearErrors() {
@@ -559,8 +563,8 @@ void ScreenLocker::ScheduleDeletion() {
     return;
   VLOG(1) << "Deleting ScreenLocker " << screen_locker_;
 
-  AccessibilityManager::Get()->PlayEarcon(
-      SOUND_UNLOCK, PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
+  AccessibilityControllerClient::Get()->PlayEarcon(
+      SOUND_UNLOCK, ash::mojom::PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
 
   delete screen_locker_;
   screen_locker_ = nullptr;

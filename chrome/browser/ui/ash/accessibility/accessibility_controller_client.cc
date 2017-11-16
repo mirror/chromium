@@ -5,14 +5,22 @@
 #include "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h"
 
 #include "ash/public/interfaces/constants.mojom.h"
+#include "base/command_line.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/aura/accessibility/automation_manager_aura.h"
 #include "chrome/grit/generated_resources.h"
+#include "chromeos/audio/chromeos_sounds.h"
 #include "content/public/common/service_manager_connection.h"
+#include "media/audio/sounds/sounds_manager.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "ui/base/l10n/l10n_util.h"
 
+#include "chrome/browser/chromeos/accessibility/accessibility_manager.h"
+
 namespace {
+
+// When this flag is set, system sounds will not be played.
+constexpr char kAshDisableSystemSounds[] = "ash-disable-system-sounds";
 
 AccessibilityControllerClient* g_instance = nullptr;
 
@@ -115,6 +123,25 @@ void AccessibilityControllerClient::TriggerAccessibilityAlert(
   }
 }
 
+void AccessibilityControllerClient::PlayEarcon(
+    int32_t sound_key,
+    ash::mojom::PlaySoundOption option) {
+  PlayEarconInternal(sound_key, option);
+}
+
+void AccessibilityControllerClient::PlayShutdownSound(
+    PlayShutdownSoundCallback callback) {
+  LOG(ERROR) << "PLAY shutdown sound...";
+  base::TimeDelta sound_duration;
+  if (PlayEarconInternal(
+          chromeos::SOUND_SHUTDOWN,
+          ash::mojom::PlaySoundOption::SPOKEN_FEEDBACK_ENABLED)) {
+    sound_duration =
+        media::SoundsManager::Get()->GetDuration(chromeos::SOUND_SHUTDOWN);
+  }
+  std::move(callback).Run(std::move(sound_duration));
+}
+
 void AccessibilityControllerClient::FlushForTesting() {
   accessibility_controller_.FlushForTesting();
 }
@@ -123,4 +150,18 @@ void AccessibilityControllerClient::BindAndSetClient() {
   ash::mojom::AccessibilityControllerClientPtr client;
   binding_.Bind(mojo::MakeRequest(&client));
   accessibility_controller_->SetClient(std::move(client));
+}
+
+bool AccessibilityControllerClient::PlayEarconInternal(
+    int32_t sound_key,
+    ash::mojom::PlaySoundOption option) {
+  DCHECK_LT(sound_key, chromeos::SOUND_COUNT);
+  const base::CommandLine* cl = base::CommandLine::ForCurrentProcess();
+  if (cl->HasSwitch(kAshDisableSystemSounds))
+    return false;
+  if (option == ash::mojom::PlaySoundOption::SPOKEN_FEEDBACK_ENABLED &&
+      !chromeos::AccessibilityManager::Get()->IsSpokenFeedbackEnabled()) {
+    return false;
+  }
+  return media::SoundsManager::Get()->Play(sound_key);
 }

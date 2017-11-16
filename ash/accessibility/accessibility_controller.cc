@@ -14,6 +14,7 @@
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/system/tray/system_tray_notifier.h"
+#include "ash/wm/lock_state_controller.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_change_registrar.h"
 #include "components/prefs/pref_registry_simple.h"
@@ -41,7 +42,7 @@ PrefService* GetActivePrefService() {
 
 AccessibilityController::AccessibilityController(
     service_manager::Connector* connector)
-    : connector_(connector), binding_(this) {
+    : connector_(connector), binding_(this), weak_ptr_factory_(this) {
   Shell::Get()->session_controller()->AddObserver(this);
 }
 
@@ -106,6 +107,21 @@ void AccessibilityController::TriggerAccessibilityAlert(
     mojom::AccessibilityAlert alert) {
   if (client_)
     client_->TriggerAccessibilityAlert(alert);
+}
+
+void AccessibilityController::PlayEarcon(int32_t sound_key) {
+  if (client_) {
+    client_->PlayEarcon(sound_key,
+                        mojom::PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
+  }
+}
+
+void AccessibilityController::PlayShutdownSound() {
+  if (client_ && client_.is_bound()) {
+    client_->PlayShutdownSound(
+        base::Bind(&AccessibilityController::OnGetShutdownSoundDuration,
+                   weak_ptr_factory_.GetWeakPtr()));
+  }
 }
 
 void AccessibilityController::SetClient(
@@ -197,6 +213,12 @@ void AccessibilityController::UpdateHighContrastFromPref() {
   // Under classic ash high contrast mode is handled internally.
   Shell::Get()->high_contrast_controller()->SetEnabled(enabled);
   Shell::Get()->UpdateCursorCompositingEnabled();
+}
+
+void AccessibilityController::OnGetShutdownSoundDuration(
+    base::TimeDelta shutdown_sound_duration) {
+  Shell::Get()->lock_state_controller()->OnGetShutdownSoundDuration(
+      shutdown_sound_duration);
 }
 
 }  // namespace ash

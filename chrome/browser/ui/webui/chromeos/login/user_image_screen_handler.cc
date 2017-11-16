@@ -17,6 +17,7 @@
 #include "chrome/browser/chromeos/login/screens/user_image_screen.h"
 #include "chrome/browser/chromeos/login/ui/webui_login_display.h"
 #include "chrome/browser/chromeos/login/users/default_user_image/default_user_images.h"
+#include "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
@@ -30,6 +31,8 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "url/gurl.h"
+
+#include "ash/public/interfaces/accessibility_controller.mojom.h"
 
 namespace {
 
@@ -133,8 +136,8 @@ void UserImageScreenHandler::HandleScreenReady() {
 }
 
 void UserImageScreenHandler::HandlePhotoTaken(const std::string& image_url) {
-  AccessibilityManager::Get()->PlayEarcon(
-      SOUND_CAMERA_SNAP, PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
+  AccessibilityControllerClient::Get()->PlayEarcon(
+      SOUND_CAMERA_SNAP, ash::mojom::PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
 
   std::string raw_data;
   base::StringPiece url(image_url);
@@ -151,8 +154,9 @@ void UserImageScreenHandler::HandlePhotoTaken(const std::string& image_url) {
 }
 
 void UserImageScreenHandler::HandleDiscardPhoto() {
-  AccessibilityManager::Get()->PlayEarcon(
-      SOUND_OBJECT_DELETE, PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
+  AccessibilityControllerClient::Get()->PlayEarcon(
+      SOUND_OBJECT_DELETE,
+      ash::mojom::PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
 }
 
 void UserImageScreenHandler::HandleSelectImage(const std::string& image_type,

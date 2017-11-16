@@ -22,6 +22,7 @@
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/default_user_image/default_user_images.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/chrome_select_file_policy.h"
@@ -45,6 +46,8 @@
 #include "ui/base/webui/web_ui_util.h"
 #include "ui/views/widget/widget.h"
 #include "url/gurl.h"
+
+#include "ash/public/interfaces/accessibility_controller.mojom.h"
 
 using content::BrowserThread;
 
@@ -163,14 +166,15 @@ void ChangePictureHandler::HandleChooseFile(const base::ListValue* args) {
 
 void ChangePictureHandler::HandleDiscardPhoto(const base::ListValue* args) {
   DCHECK(args->empty());
-  AccessibilityManager::Get()->PlayEarcon(
-      SOUND_OBJECT_DELETE, PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
+  AccessibilityControllerClient::Get()->PlayEarcon(
+      SOUND_OBJECT_DELETE,
+      ash::mojom::PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
 }
 
 void ChangePictureHandler::HandlePhotoTaken(const base::ListValue* args) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  AccessibilityManager::Get()->PlayEarcon(
-      SOUND_CAMERA_SNAP, PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
+  AccessibilityControllerClient::Get()->PlayEarcon(
+      SOUND_CAMERA_SNAP, ash::mojom::PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
 
   std::string image_url;
   if (!args || args->GetSize() != 1 || !args->GetString(0, &image_url))

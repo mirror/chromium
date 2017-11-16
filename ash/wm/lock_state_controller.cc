@@ -8,7 +8,7 @@
 #include <string>
 #include <utility>
 
-#include "ash/accessibility/accessibility_delegate.h"
+#include "ash/accessibility/accessibility_controller.h"
 #include "ash/cancel_mode.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/public/interfaces/shutdown.mojom.h"
@@ -200,7 +200,8 @@ void LockStateController::RequestShutdown(ShutdownReason reason) {
       SessionStateAnimator::ROOT_CONTAINER,
       SessionStateAnimator::ANIMATION_GRAYSCALE_BRIGHTNESS,
       SessionStateAnimator::ANIMATION_SPEED_SHUTDOWN);
-  StartRealShutdownTimer(true);
+  shutdown_with_animation_ = true;
+  StartRealShutdownTimer();
 }
 
 void LockStateController::OnLockScreenHide(base::OnceClosure callback) {
@@ -300,23 +301,28 @@ void LockStateController::OnPreShutdownAnimationTimeout() {
   if (shell->cursor_manager())
     shell->cursor_manager()->HideCursor();
 
-  StartRealShutdownTimer(false);
+  shutdown_with_animation_ = false;
+  StartRealShutdownTimer();
 }
 
-void LockStateController::StartRealShutdownTimer(bool with_animation_time) {
+void LockStateController::StartRealShutdownTimer() {
+  Shell::Get()->accessibility_controller()->PlayShutdownSound();
+}
+
+void LockStateController::OnGetShutdownSoundDuration(
+    base::TimeDelta shutdown_sound_duration) {
+  LOG(ERROR) << "shutdown sound duration: "
+             << shutdown_sound_duration.InMilliseconds();
   base::TimeDelta duration =
       base::TimeDelta::FromMilliseconds(kShutdownRequestDelayMs);
-  if (with_animation_time) {
+  if (shutdown_with_animation_) {
     duration +=
         animator_->GetDuration(SessionStateAnimator::ANIMATION_SPEED_SHUTDOWN);
   }
-
-  base::TimeDelta sound_duration =
-      Shell::Get()->accessibility_delegate()->PlayShutdownSound();
-  sound_duration =
-      std::min(sound_duration,
+  shutdown_sound_duration =
+      std::min(shutdown_sound_duration,
                base::TimeDelta::FromMilliseconds(kMaxShutdownSoundDurationMs));
-  duration = std::max(duration, sound_duration);
+  duration = std::max(duration, shutdown_sound_duration);
 
   real_shutdown_timer_.Start(
       FROM_HERE, duration,
