@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "757d400a_58224c6f",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 15
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-11-16T00:18:32Z",
+      "side": 1,
+      "message": "Without it the presubmit check fails:\n\nYou added one or more #includes that violate checkdeps rules.\n  chrome/browser/extensions/display_info_provider_chromeos_unittest.cc\n      Illegal include: \"ui/events/devices/touch_device_transform.h\"\n    Because of \"-ui/events/devices\" from chrome/browser\u0027s include_rules.",
+      "parentUuid": "6b35eeb5_cc1c5e02",
+      "revId": "368359747e6aa18ab7e74f677dae781c2c270f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3725aab_e02e81e3",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos_unittest.cc",
         "patchSetId": 15
