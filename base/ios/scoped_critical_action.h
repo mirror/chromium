@@ -31,38 +31,8 @@ class ScopedCriticalAction {
   ~ScopedCriticalAction();
 
  private:
-  // Core logic; ScopedCriticalAction should not be reference counted so
-  // that it follows the normal pattern of stack-allocating ScopedFoo objects,
-  // but the expiration handler needs to have a reference counted object to
-  // refer to.
-  class Core : public base::RefCountedThreadSafe<Core> {
-   public:
-    Core();
-
-    // Informs the OS that the background task has started. This is a
-    // static method to ensure that the instance has a non-zero refcount.
-    static void StartBackgroundTask(scoped_refptr<Core> core);
-    // Informs the OS that the background task has completed. This is a
-    // static method to ensure that the instance has a non-zero refcount.
-    static void EndBackgroundTask(scoped_refptr<Core> core);
-
-   private:
-    friend base::RefCountedThreadSafe<Core>;
-    ~Core();
-
-    // |UIBackgroundTaskIdentifier| returned by
-    // |beginBackgroundTaskWithExpirationHandler:| when marking the beginning of
-    // a long-running background task. It is defined as an |unsigned int|
-    // instead of a |UIBackgroundTaskIdentifier| so this class can be used in
-    // .cc files.
-    unsigned int background_task_id_;
-    Lock background_task_id_lock_;
-
-    DISALLOW_COPY_AND_ASSIGN(Core);
-  };
-
-  // The instance of the core that drives the background task.
-  scoped_refptr<Core> core_;
+  // Task identifier.
+  int task_id_;
 
   DISALLOW_COPY_AND_ASSIGN(ScopedCriticalAction);
 };
