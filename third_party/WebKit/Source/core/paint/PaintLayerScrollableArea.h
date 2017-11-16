@@ -553,7 +553,7 @@ class CORE_EXPORT PaintLayerScrollableArea final
     return *rare_data_.get();
   }
 
-  bool ComputeNeedsCompositedScrolling(const bool, const PaintLayer*);
+  bool ComputeNeedsCompositedScrolling(const bool layer_has_been_composited);
 
   IntRect CornerRect(const IntRect& bounds) const;
 
