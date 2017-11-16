@@ -15,6 +15,7 @@
 #include "chrome/browser/search/instant_unittest_base.h"
 #include "chrome/browser/search/search.h"
 #include "chrome/browser/ui/browser_instant_controller.h"
+#include "chrome/browser/ui/search/new_tab_page_interceptor_service_factory.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/url_constants.h"
 #include "content/public/browser/navigation_handle.h"
@@ -104,6 +105,10 @@ class FakeWebContentsObserver : public content::WebContentsObserver {
 TEST_F(BrowserInstantControllerTest, DefaultSearchProviderChanged) {
   size_t num_tests = arraysize(kTabReloadTestCasesFinalProviderNotGoogle);
   std::vector<std::unique_ptr<FakeWebContentsObserver>> observers;
+
+  // The NTP interceptor's job is to clear the cached per-profile NTP details.
+  NewTabPageInterceptorServiceFactory::GetForProfile(profile());
+
   for (size_t i = 0; i < num_tests; ++i) {
     const TabReloadTestCase& test =
         kTabReloadTestCasesFinalProviderNotGoogle[i];

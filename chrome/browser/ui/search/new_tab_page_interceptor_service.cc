@@ -113,6 +113,7 @@ NewTabPageInterceptorService::~NewTabPageInterceptorService() {
 
 void NewTabPageInterceptorService::OnTemplateURLServiceChanged() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  search::ClearCachedNewTabPageURL(profile_);
   GURL new_tab_page_url(search::GetNewTabPageURL(profile_));
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
