@@ -4,9 +4,21 @@
 <dom-module id="print-preview-shared">
   <template>
     <style>
+      [hidden] {
+        display: none !important;
+      }
+
       h1 {
         line-height: 1;
         user-select: none;
+      }
+
+      :host .multirow span {
+        --settings-section-title-style: {
+          /* Override so label is always aligned with top element on right */
+          padding-top: 13px;
+          vertical-align: top;
+        }
       }
 
       /* Default state ********************************************************/
