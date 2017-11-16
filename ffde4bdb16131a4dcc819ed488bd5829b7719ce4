@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aa6df6c9_e3e059a6",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-16T23:17:19Z",
+      "side": 1,
+      "message": "comments added.",
+      "parentUuid": "dc18489f_2e384e16",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be6bd57b_1b0d129e",
         "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-14T23:53:00Z",
       "side": 1,
       "message": "This would cause the details page to close whenever an arc VPN becomes disconnected which could be confusing and disruptive to a user. Why do we want to do this exactly?",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f84ccad1_a21cbdd3",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-16T23:17:19Z",
+      "side": 1,
+      "message": "It\u0027s described in the main prd https://docs.google.com/document/d/1PeGbg-Fvlpen1KR_xiwmuaJEgmqjYWSMC4Bn7-V8l70/edit?ts\u003d59cac9dd#\n\"We CANNOT display an unconnected VPN session previously used or show a Connect button because Android doesn’t support an API initiating a specific VPN session\"\nAnd I did ask yoshi@ whether this is the correct behavior and show this behavior during the UI review.",
+      "parentUuid": "be6bd57b_1b0d129e",
       "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d68259f0_c2d4bcbb",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-16T23:17:19Z",
+      "side": 1,
+      "message": "TODO added. \nI think they mentioned the plan to support connect through UI. But this will require negotiation with Android team.",
+      "parentUuid": "514c0411_893dddf3",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "236f3fff_cc682270",
         "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "783fd14d_7f8fb0a9",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-16T23:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "236f3fff_cc682270",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2cfcfdf8_d1b48ebc",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-16T23:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a53701a_220769c0",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07f423ff_6114e3b4",
         "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
         "patchSetId": 11
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "d0666439_e107ea58",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-16T23:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07f423ff_6114e3b4",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43adc7e1_9c74c834",
         "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
         "patchSetId": 11
@@ -115,6 +223,24 @@
       "writtenOn": "2017-11-14T23:53:00Z",
       "side": 1,
       "message": "Why don\u0027t we want to show IP address for Arc VPN?",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff000b3a_68760ca5",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-16T23:17:19Z",
+      "side": 1,
+      "message": "This behavior is requested in the mock of PRD.\nFrom what I observe is that if we show IP here, it shows a fixed predefined ip \"100.115.92.2\"(I guess kevin set it) rather than the real IP.",
+      "parentUuid": "43adc7e1_9c74c834",
       "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "a658fe3e_bcba5925",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-16T23:17:19Z",
+      "side": 1,
+      "message": "Add todo here. Will move this chrome.send and the ones in internet_subpage to proper browser_proxy.",
+      "parentUuid": "8bd5a869_437a38be",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "310222a7_efa1a30a",
         "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
         "patchSetId": 11
@@ -152,6 +296,24 @@
       "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0953ae2d_5ee4c980",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-16T23:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "310222a7_efa1a30a",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "7e556b34_b3071f65",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-16T23:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3930d3d8_6f466b90",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5ea8aca_c2227cb2",
         "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
         "patchSetId": 11
@@ -186,6 +366,24 @@
       "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c04abf6_eafac539",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-16T23:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5ea8aca_c2227cb2",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "7cbaf2af_8c23463a",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-16T23:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac1ac818_285ada67",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa2779f7_3c5b77ce",
         "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.js",
         "patchSetId": 11
@@ -220,6 +436,24 @@
       "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9268bb6_ac68bb11",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-16T23:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa2779f7_3c5b77ce",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "ac20d13b_fd9b2ee0",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-16T23:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a41282f_109f9799",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7091829_bd537478",
         "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.js",
         "patchSetId": 11
@@ -254,6 +506,24 @@
       "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa05ebb_8e41f580",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-16T23:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7091829_bd537478",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "79987d09_d778d2ca",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-16T23:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01db4ef0_bef83871",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc8d42ee_792232b7",
         "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.js",
         "patchSetId": 11
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "2de42c34_dd645f7b",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-16T23:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc8d42ee_792232b7",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f12c01a_14ad7a04",
         "filename": "chrome/browser/ui/webui/settings/chromeos/internet_handler.h",
         "patchSetId": 11
@@ -302,6 +608,24 @@
       "writtenOn": "2017-11-14T23:53:00Z",
       "side": 1,
       "message": "Can we actually make this a separate \u0027ThirdPartyVpnHandler\u0027? The rest of this handler should eventually go away and that will make the deprecation easier to track / revert / etc.",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed31843a_2b7007d6",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/internet_handler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-16T23:17:19Z",
+      "side": 1,
+      "message": "Will do this in crbug.com/785500",
+      "parentUuid": "1f12c01a_14ad7a04",
       "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
