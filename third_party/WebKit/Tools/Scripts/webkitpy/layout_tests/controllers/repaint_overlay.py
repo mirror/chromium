@@ -169,7 +169,7 @@ function flip() {
     }
     expected_showing = !expected_showing
 }
-setInterval(flip, 3000);
+setInterval(flip, 1500);
 </script>
 </body>
 </html>
