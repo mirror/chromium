@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5e170a8_760fc0a0",
+        "filename": "third_party/WebKit/Source/core/animation/Keyframe.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-16T19:36:59Z",
+      "side": 1,
+      "message": "nit: since these all have static lifetime, you can return a StringView instead of String, avoiding an extra heap allocation",
+      "revId": "6a68484e35f75e6a30e1fef2a5746b5dbad6a9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cffc22d_f73dd5b5",
+        "filename": "third_party/WebKit/Source/core/animation/Keyframe.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-16T19:36:59Z",
+      "side": 1,
+      "message": "super-nit: this blank line in a three-line function is a little odd :)",
+      "revId": "6a68484e35f75e6a30e1fef2a5746b5dbad6a9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001a53d0_3ce4cb2b",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-16T19:36:59Z",
+      "side": 1,
+      "message": "super-nit: might as well ReserveInitialCapacity on the computed_keyframes, since we know exactly how big it\u0027s going to be.",
+      "revId": "6a68484e35f75e6a30e1fef2a5746b5dbad6a9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dbb1ad1_f67c148d",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-16T19:36:59Z",
+      "side": 1,
+      "message": "nit: you can say script_value.V8Value().As\u003cv8::Object\u003e() instead (we expect this value to already be an object, without need for a conversion). Might be moot given the below.",
+      "revId": "6a68484e35f75e6a30e1fef2a5746b5dbad6a9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af61e72f_d4c37d04",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-16T19:36:59Z",
+      "side": 1,
+      "message": "This bit of code is subtle and duplicates knowledge that V8ObjectBuilder has. We could allow V8ObjectBuilder to extend an existing object (which will work, but is kinda subtle because it\u0027s fine only if the particular object used satisfies our assumptions), or we could simply move the call site of V8ObjectBuilder here, which seems simplest:\n\n  V8ObjectBuilder builder(script_state);\n  keyframes[i]-\u003eAddPropertyValuePairsToV8Object(builder);\n  builder.AddNumber(\"computedOffset\", computed_offsets[i]);\n  computed_keyframes.push_back(builder.GetScriptValue());",
+      "revId": "6a68484e35f75e6a30e1fef2a5746b5dbad6a9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
