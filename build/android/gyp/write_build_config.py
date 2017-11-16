@@ -583,7 +583,7 @@ def main(argv):
     config['resources']['extra_package_names'] = []
     config['resources']['extra_r_text_files'] = []
 
-  if options.type == 'android_apk' or options.type == 'resource_rewriter':
+  if options.type in ('android_apk', 'junit_binary', 'resource_rewriter'):
     config['resources']['extra_package_names'] = [
         c['package_name'] for c in all_resources_deps if 'package_name' in c]
     config['resources']['extra_r_text_files'] = [

@@ -538,6 +538,10 @@ def AddJUnitTestOptions(parser):
       '--package-name',
       help='Default app package name for Robolectric tests.')
   parser.add_argument(
+      '--resource-package-name',
+      action='append', dest='resource_package_names', default=[],
+      help='Packages to generate an R.java for.')
+  parser.add_argument(
       '--resource-zip',
       action='append', dest='resource_zips', default=[],
       help='Path to resource zips to configure Robolectric.')

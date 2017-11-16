@@ -80,6 +80,10 @@ class LocalMachineJunitTestRun(test_run.TestRun):
         jvm_args += ['-Dchromium.robolectric.package.name=%s' %
                      self._test_instance.package_name]
 
+      if self._test_instance.resource_package_names:
+        jvm_args += ['-Dchromium.robolectric.resource.packages=%s' %
+                     ':'.join(self._test_instance.resource_package_names)]
+
       if resource_dirs:
         jvm_args += ['-Dchromium.robolectric.resource.dirs=%s' %
                      ':'.join(resource_dirs)]

@@ -14,6 +14,7 @@ class JunitTestInstance(test_instance.TestInstance):
     self._coverage_dir = args.coverage_dir
     self._package_filter = args.package_filter
     self._package_name = args.package_name
+    self._resource_package_names = args.resource_package_names
     self._resource_zips = args.resource_zips
     self._robolectric_runtime_deps_dir = args.robolectric_runtime_deps_dir
     self._runner_filter = args.runner_filter
@@ -39,6 +40,10 @@ class JunitTestInstance(test_instance.TestInstance):
   @property
   def coverage_dir(self):
     return self._coverage_dir
+
+  @property
+  def resource_package_names(self):
+    return self._resource_package_names
 
   @property
   def package_filter(self):

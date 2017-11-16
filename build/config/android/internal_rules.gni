@@ -593,6 +593,8 @@ template("test_runner_script") {
         _rebased_build_config =
             rebase_path("$_junit_binary_build_config", root_build_dir)
         test_runner_args += [
+          "--resource-package-names",
+          "@FileArg($_rebased_build_config:resources:extra_package_names)",
           "--resource-zips",
           "@FileArg($_rebased_build_config:resources:dependency_zips)",
         ]

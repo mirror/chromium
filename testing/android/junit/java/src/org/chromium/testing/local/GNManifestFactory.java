@@ -23,6 +23,7 @@ import java.util.List;
 public class GNManifestFactory implements ManifestFactory {
     private static final String CHROMIUM_MANIFEST_PATH = "chromium.robolectric.manifest";
     private static final String CHROMIUM_RES_DIRECTORIES = "chromium.robolectric.resource.dirs";
+    private static final String CHROMIUM_RES_PACKAGES = "chromium.robolectric.resource.packages";
 
     @Override
     public ManifestIdentifier identify(Config config) {
@@ -44,13 +45,23 @@ public class GNManifestFactory implements ManifestFactory {
     public AndroidManifest create(ManifestIdentifier manifestIdentifier) {
         String manifestPath = System.getProperty(CHROMIUM_MANIFEST_PATH);
         String resourceDirs = System.getProperty(CHROMIUM_RES_DIRECTORIES);
+        String resourcePackages = System.getProperty(CHROMIUM_RES_PACKAGES);
 
-        final List<FsFile> resourceDirsList = new ArrayList<FsFile>();
+        final List<Class> resourceRClassList = new ArrayList<>();
+        final List<FsFile> resourceDirsList = new ArrayList<>();
         if (resourceDirs != null) {
+            for (String packageName : resourcePackages.split(":")) {
+                try {
+                    resourceRClassList.add(Class.forName(packageName + ".R"));
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             for (String resourceDir : resourceDirs.split(":")) {
                 try {
                     resourceDirsList.add(Fs.fromURL(new File(resourceDir).toURI().toURL()));
                 } catch (MalformedURLException e) {
+                    throw new RuntimeException(e);
                 }
             }
         }
@@ -60,15 +71,25 @@ public class GNManifestFactory implements ManifestFactory {
             try {
                 manifestFile = Fs.fromURL(new File(manifestPath).toURI().toURL());
             } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
             }
         }
 
-        return new AndroidManifest(manifestFile, null, null, manifestIdentifier.getPackageName()) {
+        return new AndroidManifest(manifestFile, null, manifestIdentifier.getAssetDir(), manifestIdentifier.getPackageName()) {
             @Override
             public List<ResourcePath> getIncludedResourcePaths() {
                 List<ResourcePath> paths = super.getIncludedResourcePaths();
+                Class mainRClass = getRClass();
                 for (FsFile resourceDir : resourceDirsList) {
-                    paths.add(new ResourcePath(getRClass(), resourceDir, getAssetsDirectory()));
+                    paths.add(new ResourcePath(mainRClass, resourceDir, null));
+                }
+
+                // Add all non-primary R classes, but set their resources to null to avoid them from
+                // being re-parsed.
+                for (Class rClass : resourceRClassList) {
+                    if (rClass != mainRClass) {
+                        paths.add(new ResourcePath(rClass, null, null));
+                    }
                 }
                 return paths;
             }

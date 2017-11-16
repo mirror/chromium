@@ -80,6 +80,7 @@ def main(args):
   group.add_argument('--test-apk-incremental-install-json')
   group.add_argument('--coverage-dir')
   group.add_argument('--android-manifest-path')
+  group.add_argument('--resource-package-names')
   group.add_argument('--resource-zips')
   group.add_argument('--robolectric-runtime-deps-dir')
   group.add_argument('--non-native-packed-relocations')
@@ -147,6 +148,10 @@ def main(args):
     test_runner_path_args.append(
         ('--android-manifest-path',
          RelativizePathToScript(args.android_manifest_path)))
+  if args.resource_package_names:
+    test_runner_args.extend(
+        '--resource-package-name=' + n
+        for n in build_utils.ParseGnList(args.resource_package_names))
   if args.resource_zips:
     test_runner_path_args.extend(
         ('--resource-zip', RelativizePathToScript(r))
