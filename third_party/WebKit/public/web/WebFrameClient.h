@@ -658,9 +658,11 @@ class BLINK_EXPORT WebFrameClient {
   // A performance timing event (e.g. first paint) occurred
   virtual void DidChangePerformanceTiming() {}
 
+  // UseCounter ----------------------------------------------------------
   // Blink exhibited a certain loading behavior that the browser process will
   // use for segregated histograms.
   virtual void DidObserveLoadingBehavior(WebLoadingBehaviorFlag) {}
+  virtual bool ShouldTrackUseCounter(const WebURL&) { return true; }
 
   // Blink hit the code path for a certain feature for the first time on this
   // frame. As a performance optimization, features already hit on other frames
