@@ -158,5 +158,77 @@ TEST_F(GCCallbackTest, ContextInvalidatedBeforeGC) {
   EXPECT_FALSE(callback_invoked);
 }
 
+// Test the scenario of an object being garbage collected while the
+// ScriptContext is valid, but the ScriptContext being invalidated before the
+// callback has a chance to run.
+TEST_F(GCCallbackTest,
+       ContextInvalidatedBetweenGarbageCollectionAndCallbackRunning) {
+  v8::Isolate* isolate = v8::Isolate::GetCurrent();
+  v8::HandleScope handle_scope(isolate);
+  v8::Context::Scope context_scope(v8_context());
+
+  ScriptContext* script_context = RegisterScriptContext();
+
+  bool callback_invoked = false;
+  bool fallback_invoked = false;
+
+  {
+    // Nest another HandleScope so that |object| and |unreachable_function|'s
+    // handles will be garbage collected.
+    v8::HandleScope handle_scope(isolate);
+    v8::Local<v8::Object> object = v8::Object::New(isolate);
+    v8::Local<v8::FunctionTemplate> unreachable_function =
+        gin::CreateFunctionTemplate(isolate,
+                                    base::Bind(SetToTrue, &callback_invoked));
+    // The GCCallback will delete itself, or memory tests will complain.
+    new GCCallback(script_context, object, unreachable_function->GetFunction(),
+                   base::Bind(SetToTrue, &fallback_invoked));
+  }
+
+  RequestGarbageCollection();                   // Object GC'd; callback queued.
+  script_context_set().Remove(script_context);  // Script context invalidated.
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_FALSE(callback_invoked);
+  EXPECT_TRUE(fallback_invoked);
+}
+
+// Test using a base::Closure instead of a v8 callback.
+TEST_F(GCCallbackTest, TestClosureCallbacks) {
+  v8::Isolate* isolate = v8::Isolate::GetCurrent();
+  v8::HandleScope handle_scope(isolate);
+  v8::Context::Scope context_scope(v8_context());
+
+  ScriptContext* script_context = RegisterScriptContext();
+
+  bool callback_invoked = false;
+  bool fallback_invoked = false;
+
+  {
+    // Nest another HandleScope so that the |object| handle will be garbage
+    // collected.
+    v8::HandleScope handle_scope(isolate);
+    v8::Local<v8::Object> object = v8::Object::New(isolate);
+    // The GCCallback will delete itself, or memory tests will complain.
+    new GCCallback(script_context, object,
+                   base::Bind(SetToTrue, &callback_invoked),
+                   base::Bind(SetToTrue, &fallback_invoked));
+  }
+
+  // Trigger a GC. Only the callback should be invoked.
+  RequestGarbageCollection();
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_TRUE(callback_invoked);
+  EXPECT_FALSE(fallback_invoked);
+
+  // Invalidate the context. The fallback should not be invoked because the
+  // callback was already invoked.
+  script_context_set().Remove(script_context);
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_FALSE(fallback_invoked);
+}
+
 }  // namespace
 }  // namespace extensions
