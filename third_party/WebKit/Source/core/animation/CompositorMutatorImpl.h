@@ -15,6 +15,7 @@
 namespace blink {
 
 class CompositorMutatorClient;
+class WaitableEvent;
 
 // Fans out requests from the compositor to all of the registered
 // CompositorAnimators which can then mutate layers through their respective
@@ -36,20 +37,30 @@ class CORE_EXPORT CompositorMutatorImpl final : public CompositorMutator {
   // TODO(majidvp): Remove when timeline inputs are known.
   bool HasAnimators() override;
 
+  // Interface for use by the AnimationWorklet Thread(s)
   void RegisterCompositorAnimator(CompositorAnimator*);
   void UnregisterCompositorAnimator(CompositorAnimator*);
-
   void SetMutationUpdate(std::unique_ptr<CompositorMutatorOutputState>);
+
   void SetClient(CompositorMutatorClient* client) { client_ = client; }
 
  private:
   CompositorMutatorImpl();
 
+  void RegisterCompositorAnimatorInternal(CompositorAnimator*);
+  void UnregisterCompositorAnimatorInternal(CompositorAnimator*);
+
+  void MutateWithEvent(const CompositorMutatorInputState*,
+                       CompositorMutatorOutputState*,
+                       WaitableEvent*);
+
   using CompositorAnimators =
       HashSet<CrossThreadPersistent<CompositorAnimator>>;
   CompositorAnimators animators_;
+  bool has_animators_;
 
   CompositorMutatorClient* client_;
+  WebThread* thread_;
 };
 
 }  // namespace blink
