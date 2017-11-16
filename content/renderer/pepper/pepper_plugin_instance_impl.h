@@ -117,7 +117,6 @@ class PluginInstanceThrottlerImpl;
 class PluginModule;
 class PluginObject;
 class PPB_Graphics3D_Impl;
-class PPB_ImageData_Impl;
 class RenderFrameImpl;
 
 // Represents one time a plugin appears on one web page.
@@ -664,8 +663,6 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   // print format that we can handle (we can handle only PDF).
   bool GetPreferredPrintOutputFormat(PP_PrintOutputFormat_Dev* format,
                                      const blink::WebPrintParams& params);
-  bool PrintPDFOutput(PP_Resource print_output,
-                      printing::PdfMetafileSkia* metafile);
 
   // Updates the layer for compositing. This creates a layer and attaches to the
   // container if:
@@ -677,11 +674,6 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   // force_creation: Force UpdateLayer() to recreate the layer and attaches
   //   to the container. Set to true if the bound device has been changed.
   void UpdateLayer(bool force_creation);
-
-  // Internal helper function for PrintPage().
-  void PrintPageHelper(PP_PrintPageNumberRange_Dev* page_ranges,
-                       int num_ranges,
-                       printing::PdfMetafileSkia* metafile);
 
   void DoSetCursor(std::unique_ptr<blink::WebCursorInfo> cursor);
 
@@ -843,21 +835,15 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   // This is only valid between a successful PrintBegin call and a PrintEnd
   // call.
   PP_PrintSettings_Dev current_print_settings_;
-#if defined(OS_MACOSX)
-  // On the Mac, when we draw the bitmap to the PDFContext, it seems necessary
-  // to keep the pixels valid until CGContextEndPage is called. We use this
-  // variable to hold on to the pixels.
-  scoped_refptr<PPB_ImageData_Impl> last_printed_page_;
-#endif  // defined(OS_MACOSX)
-  // Always when printing to PDF on Linux and when printing for preview on Mac
-  // and Win, the entire document goes into one metafile.  However, when users
-  // print only a subset of all the pages, it is impossible to know if a call
-  // to PrintPage() is the last call. Thus in PrintPage(), just store the page
-  // number in |ranges_|. The hack is in PrintEnd(), where a valid |metafile_|
-  // is preserved in PrintWebFrameHelper::PrintPages. This makes it possible
-  // to generate the entire PDF given the variables below:
+
+  // The entire document goes into one metafile. However, it is impossible to
+  // know if a call to PrintPage() is the last call. Thus in PrintPage(), just
+  // store the page number in |ranges_|. The hack is in PrintEnd(), where a
+  // valid |metafile_| is preserved in PrintWebFrameHelper::PrintPages(). This
+  // makes it possible to generate the entire PDF given the variables below:
   //
-  // The most recently used metafile_, guaranteed to be valid.
+  // The metafile to save into, which is guaranteed to be valid for the
+  // duration of a print job, when it is not a nullptr.
   printing::PdfMetafileSkia* metafile_;
   // An array of page ranges.
   std::vector<PP_PrintPageNumberRange_Dev> ranges_;
