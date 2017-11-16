@@ -52,6 +52,7 @@
 #include "platform/loader/fetch/SubstituteData.h"
 #include "platform/wtf/HashSet.h"
 #include "public/platform/WebLoadingBehaviorFlag.h"
+#include "public/web/WebGlobalObjectReusePolicy.h"
 
 #include <memory>
 
@@ -237,7 +238,7 @@ class CORE_EXPORT DocumentLoader
   enum class InstallNewDocumentReason { kNavigation, kJavascriptURL };
   void InstallNewDocument(const KURL&,
                           Document* owner_document,
-                          bool should_reuse_default_view,
+                          WebGlobalObjectReusePolicy,
                           const AtomicString& mime_type,
                           const AtomicString& encoding,
                           InstallNewDocumentReason,
@@ -245,7 +246,7 @@ class CORE_EXPORT DocumentLoader
                           const KURL& overriding_url);
   void DidInstallNewDocument(Document*);
   void WillCommitNavigation();
-  void DidCommitNavigation();
+  void DidCommitNavigation(WebGlobalObjectReusePolicy);
 
   void CommitNavigation(const AtomicString& mime_type,
                         const KURL& overriding_url = KURL());
