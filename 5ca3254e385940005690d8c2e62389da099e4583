@@ -45,6 +45,54 @@
       "revId": "5ca3254e385940005690d8c2e62389da099e4583",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab59939c_622e8437",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-16T19:12:10Z",
+      "side": 1,
+      "message": "Updated commit message and code comments.",
+      "parentUuid": "3a7878c3_91ab54c7",
+      "range": {
+        "startLine": 9,
+        "startChar": 27,
+        "endLine": 9,
+        "endChar": 33
+      },
+      "revId": "5ca3254e385940005690d8c2e62389da099e4583",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b2875f_ccb66f3c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-16T19:12:10Z",
+      "side": 1,
+      "message": "No. Removed. We decided to go with media remoting enabled / policy, etc.",
+      "parentUuid": "e3abb791_297a2ea1",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "5ca3254e385940005690d8c2e62389da099e4583",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
