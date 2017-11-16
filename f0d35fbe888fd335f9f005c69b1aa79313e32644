@@ -124,6 +124,30 @@
     },
     {
       "key": {
+        "uuid": "5f49c416_53b122b6",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-16T18:59:46Z",
+      "side": 1,
+      "message": "Sorry, I was able to track how the state gets into the resource provider, but I couldn\u0027t find anything that uses the state once there. It\u0027s exposed by thsi function as WantsPromotionHint() but only unit tests call this method. So it looks to me like a lot of plumbing that reaches a dead end?",
+      "parentUuid": "49e5edf8_a516e9d3",
+      "range": {
+        "startLine": 316,
+        "startChar": 18,
+        "endLine": 316,
+        "endChar": 60
+      },
+      "revId": "f0d35fbe888fd335f9f005c69b1aa79313e32644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46b29612_861f28c8",
         "filename": "cc/resources/video_resource_updater.cc",
         "patchSetId": 6
