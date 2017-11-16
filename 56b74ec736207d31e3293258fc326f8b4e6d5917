@@ -22,6 +22,76 @@
       "revId": "56b74ec736207d31e3293258fc326f8b4e6d5917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0390066_f34e6f81",
+        "filename": "chrome/renderer/net/net_error_helper_core.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-16T22:53:40Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with the relationship between //chrome/browser and //chrome/renderer, but it seems that there is no DEPS entry between the two. I would talk to the OWNERS of both of them to figure out the right way to do do this; it\u0027s likely that you\u0027ll need to use some sort of delegation technique.\n\nI believe you should be able to use the SystemTrayClient Mojo interface (see [1]) to open settings from //chrome/renderer. See [2] for an example.\n\n[1] https://cs.chromium.org/chromium/src/ash/public/interfaces/system_tray.mojom\n[2] https://cs.chromium.org/chromium/src/ash/system/tray/system_tray_controller.h",
+      "parentUuid": "29d5a756_1a664988",
+      "range": {
+        "startLine": 31,
+        "startChar": 46,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "56b74ec736207d31e3293258fc326f8b4e6d5917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd8c4c7_1230c5a4",
+        "filename": "components/error_page/common/localized_error.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-16T22:53:40Z",
+      "side": 1,
+      "message": "We should only enable this for Chrome OS (not Linux).",
+      "range": {
+        "startLine": 737,
+        "startChar": 24,
+        "endLine": 737,
+        "endChar": 45
+      },
+      "revId": "56b74ec736207d31e3293258fc326f8b4e6d5917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40047da1_7b4be699",
+        "filename": "components/error_page/common/localized_error.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-16T22:53:40Z",
+      "side": 1,
+      "message": "We\u0027ll only want to show this if Instant Tethering is enabled. You\u0027ll want to use this value to determine whether that is the case:\n\nchromeos::NetworkStateHandler::IsTechnologyEnabled(chromeos::NetworkTypePattern::Tether())\n\nHowever, NetworkStateHandler isn\u0027t visible from //components/error_page, so you\u0027ll need to pass a delegate to this component during start-up in order to do so. I\u0027d recommend something like this:\n\nclass TetherAvailabilityDelegate {\n public:\n  bool IsInstantTetheringAvailable();\n};\n\nThe delegate\u0027s implementation would just call NetworkStateHandler in the way I stated above. Then, in localized_error.cc, you\u0027d wrap this AddSingleEntryDictionaryToList() call in an if block:\n\nif (tether_availability_delegate_-\u003eIsInstantTetheringAvailable()) {}",
+      "range": {
+        "startLine": 738,
+        "startChar": 0,
+        "endLine": 738,
+        "endChar": 71
+      },
+      "revId": "56b74ec736207d31e3293258fc326f8b4e6d5917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
