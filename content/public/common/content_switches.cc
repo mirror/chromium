@@ -5,6 +5,7 @@
 #include "content/public/common/content_switches.h"
 
 #include "build/build_config.h"
+#include "content/common/content_switches_internal.h"
 #include "media/media_features.h"
 
 namespace switches {
@@ -1102,6 +1103,10 @@ const char kEnableV2Sandbox[] = "v2-sandbox";
 // processes will be assumed to run under the V2 sandbox.
 const char kV2SandboxedEnabled[] = "v2-sandbox-enabled";
 #endif  // defined(OS_MACOSX)
+
+bool UseZoomForDSFEnabled() {
+  return content::IsUseZoomForDSFEnabled();
+}
 
 // Don't dump stuff here, follow the same order as the header.
 
