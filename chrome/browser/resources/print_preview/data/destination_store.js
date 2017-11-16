@@ -302,21 +302,19 @@ cr.define('print_preview', function() {
     }
 
     /**
-     * @return {boolean} Whether a search for local destinations is in progress.
+     * @return {boolean} Whether a search for print destinations is in progress.
      */
-    get isLocalDestinationSearchInProgress() {
-      return Array.from(this.destinationSearchStatus_.values())
-          .some(
-              el => el ===
-                  print_preview.DestinationStorePrinterSearchStatus.SEARCHING);
-    }
-
-    /**
-     * @return {boolean} Whether a search for cloud destinations is in progress.
-     */
-    get isCloudDestinationSearchInProgress() {
-      return !!this.cloudPrintInterface_ &&
+    get isPrintDestinationSearchInProgress() {
+      let isLocalDestinationSearchInProgress =
+          Array.from(this.destinationSearchStatus_.values())
+              .some(
+                  el => el ===
+                      print_preview.DestinationStorePrinterSearchStatus
+                          .SEARCHING);
+      let isCloudDestinationSearchInProgress = !!this.cloudPrintInterface_ &&
           this.cloudPrintInterface_.isCloudDestinationSearchInProgress;
+      return isLocalDestinationSearchInProgress ||
+          isCloudDestinationSearchInProgress;
     }
 
     /**
