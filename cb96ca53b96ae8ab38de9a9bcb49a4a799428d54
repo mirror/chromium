@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "114d81c7_d6c7401a",
+        "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupportWithMockScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-16T06:16:33Z",
+      "side": 1,
+      "message": "Good point. The thread runs the ctor should be bound to the |thread_|, and we should expect it runs on the main thread. So, it sounds a good idea to have dcheck here and ctor to ensure it.",
+      "parentUuid": "11b83bb4_f2983894",
+      "revId": "cb96ca53b96ae8ab38de9a9bcb49a4a799428d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01ab7664_ba38a53c",
         "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupportWithMockScheduler.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "cb96ca53b96ae8ab38de9a9bcb49a4a799428d54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0724ed19_e9937868",
+        "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupportWithMockScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-16T06:16:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01ab7664_ba38a53c",
+      "revId": "cb96ca53b96ae8ab38de9a9bcb49a4a799428d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
