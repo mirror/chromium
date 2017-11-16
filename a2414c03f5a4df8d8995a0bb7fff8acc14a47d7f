@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f474433_6760ec4e",
+        "filename": "chrome/browser/vr/elements/shadow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-16T00:22:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ef51241_b8496036",
+      "range": {
+        "startLine": 83,
+        "startChar": 33,
+        "endLine": 83,
+        "endChar": 36
+      },
+      "revId": "a2414c03f5a4df8d8995a0bb7fff8acc14a47d7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0941b73_387c5c64",
         "filename": "chrome/browser/vr/elements/shadow.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0f749a61_44fb3c9d",
+        "filename": "chrome/browser/vr/elements/shadow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-16T00:22:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0941b73_387c5c64",
+      "range": {
+        "startLine": 98,
+        "startChar": 23,
+        "endLine": 98,
+        "endChar": 41
+      },
+      "revId": "a2414c03f5a4df8d8995a0bb7fff8acc14a47d7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02e06694_bc08cf23",
         "filename": "chrome/browser/vr/elements/shadow.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "a2414c03f5a4df8d8995a0bb7fff8acc14a47d7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62b4399_7211b0f5",
+        "filename": "chrome/browser/vr/elements/shadow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-16T00:22:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02e06694_bc08cf23",
+      "range": {
+        "startLine": 102,
+        "startChar": 23,
+        "endLine": 102,
+        "endChar": 48
+      },
+      "revId": "a2414c03f5a4df8d8995a0bb7fff8acc14a47d7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
