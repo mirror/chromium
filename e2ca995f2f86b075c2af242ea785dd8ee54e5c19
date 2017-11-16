@@ -16,6 +16,24 @@
       "revId": "e2ca995f2f86b075c2af242ea785dd8ee54e5c19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097d3521_3d3542eb",
+        "filename": "chromeos/login/auth/extended_authenticator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-11-16T06:33:27Z",
+      "side": 1,
+      "message": "Done.\n\nI\u0027m not sure if it can be (see line 97, though I suppose this is not conclusive) but I did it anyway just to be safe.",
+      "parentUuid": "2d112bf4_01fb7d2b",
+      "revId": "e2ca995f2f86b075c2af242ea785dd8ee54e5c19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
