@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "16158746_66cc606f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-16T18:33:53Z",
+      "side": 1,
+      "message": "Done. Also, to follow up on our earlier conversation,\nit\u0027s never OK to capitalise after colon if this introduces\na list.\nhttps://www.grammarly.com/blog/capitalization-after-colons/",
+      "parentUuid": "564cdc07_d595e383",
+      "revId": "a49e0b87c01ac893bc8d4375952948db3f648a57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2473cf05_36d7ce90",
         "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
         "patchSetId": 8
