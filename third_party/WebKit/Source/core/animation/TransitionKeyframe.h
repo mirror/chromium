@@ -83,6 +83,9 @@ class CORE_EXPORT TransitionKeyframe : public Keyframe {
     scoped_refptr<AnimatableValue> compositor_value_;
   };
 
+ protected:
+  void AddPropertyValuePairsToV8Object(V8ObjectBuilder&) const override;
+
  private:
   TransitionKeyframe(const PropertyHandle& property) : property_(property) {}
 

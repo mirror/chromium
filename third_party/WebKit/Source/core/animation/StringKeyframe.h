@@ -153,6 +153,9 @@ class CORE_EXPORT StringKeyframe : public Keyframe {
     String value_;
   };
 
+ protected:
+  void AddPropertyValuePairsToV8Object(V8ObjectBuilder&) const override;
+
  private:
   StringKeyframe()
       : css_property_map_(

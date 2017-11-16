@@ -6,6 +6,7 @@
 
 #include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/unrestricted_double_or_keyframe_effect_options.h"
 #include "core/animation/Animation.h"
 #include "core/animation/EffectInput.h"
@@ -21,6 +22,7 @@
 #include "core/frame/UseCounter.h"
 #include "core/paint/PaintLayer.h"
 #include "core/svg/SVGElement.h"
+#include "platform/bindings/ScriptState.h"
 
 namespace blink {
 
@@ -82,7 +84,9 @@ KeyframeEffectReadOnly::KeyframeEffectReadOnly(Element* target,
       target_(target),
       model_(model),
       sampled_effect_(nullptr),
-      priority_(priority) {}
+      priority_(priority) {
+  DCHECK(!model_ || model_->IsKeyframeEffectModel());
+}
 
 void KeyframeEffectReadOnly::Attach(Animation* animation) {
   if (target_) {
@@ -309,6 +313,34 @@ void KeyframeEffectReadOnly::StartAnimationOnCompositor(
       GetAnimation(), *compositor_player, *Model(), compositor_animation_ids_,
       animation_playback_rate);
   DCHECK(!compositor_animation_ids_.IsEmpty());
+}
+
+Vector<ScriptValue> KeyframeEffectReadOnly::getKeyframes(
+    ScriptState* script_state) {
+  Vector<ScriptValue> computed_keyframes;
+  if (!model_)
+    return computed_keyframes;
+
+  KeyframeEffectModelBase* keyframe_model = ToKeyframeEffectModelBase(model_);
+  const KeyframeVector& keyframes = keyframe_model->GetFrames();
+  Vector<double> computed_offsets =
+      KeyframeEffectModelBase::GetComputedOffsets(keyframes);
+  for (size_t i = 0; i < keyframes.size(); i++) {
+    ScriptValue script_value = keyframes[i]->GetScriptValue(script_state);
+    v8::Local<v8::Object> object = script_value.V8Value()
+                                       ->ToObject(script_state->GetContext())
+                                       .ToLocalChecked();
+    object
+        ->CreateDataProperty(
+            script_state->GetContext(),
+            V8AtomicString(script_state->GetIsolate(), "computedOffset"),
+            ToV8(computed_offsets[i], script_state->GetContext()->Global(),
+                 script_state->GetIsolate()))
+        .ToChecked();
+    computed_keyframes.push_back(script_value);
+  }
+
+  return computed_keyframes;
 }
 
 bool KeyframeEffectReadOnly::HasActiveAnimationsOnCompositor() const {
