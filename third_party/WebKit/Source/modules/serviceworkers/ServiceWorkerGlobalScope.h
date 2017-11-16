@@ -107,7 +107,8 @@ class MODULES_EXPORT ServiceWorkerGlobalScope final : public WorkerGlobalScope {
   bool IsInstalling() const { return is_installing_; }
   void SetIsInstalling(bool is_installing);
 
-  void CountCacheStorageInstalledScript(uint64_t script_size);
+  void CountCacheStorageInstalledScript(uint64_t script_size,
+                                        uint64_t script_metadata_size);
 
   DEFINE_ATTRIBUTE_EVENT_LISTENER(install);
   DEFINE_ATTRIBUTE_EVENT_LISTENER(activate);
@@ -144,9 +145,11 @@ class MODULES_EXPORT ServiceWorkerGlobalScope final : public WorkerGlobalScope {
   size_t script_count_ = 0;
   size_t script_total_size_ = 0;
   size_t script_cached_metadata_total_size_ = 0;
+
   bool is_installing_ = false;
   size_t cache_storage_installed_script_count_ = 0;
   uint64_t cache_storage_installed_script_total_size_ = 0;
+  uint64_t cache_storage_installed_script_metadata_total_size_ = 0;
 };
 
 DEFINE_TYPE_CASTS(ServiceWorkerGlobalScope,
