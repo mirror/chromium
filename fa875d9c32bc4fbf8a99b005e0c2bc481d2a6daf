@@ -2,6 +2,213 @@
   "comments": [
     {
       "key": {
+        "uuid": "6982aca7_5e7816f5",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-16T23:27:45Z",
+      "side": 1,
+      "message": "This naming is so confusing (it looks just like the other Start/Stop methods). Can we call it GetMonitorForRenderFrame()?",
+      "range": {
+        "startLine": 18,
+        "startChar": 20,
+        "endLine": 18,
+        "endChar": 45
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed34592_f3cb78df",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-16T23:27:45Z",
+      "side": 1,
+      "message": "Rather than have all these extra helper methods, we can leverage newer callback styles (enabled by C++11) to greatly improve readability. I suggest getting rid of StartMonitoringHelper(), and change the code here to:\n\n// static\nvoid AudioStreamMonitor::StartMonitoringStream(int render_process_id,\n                                               int render_frame_id,\n                                               int stream_id) {\n  BrowserThread::PostTask(\n      BrowserThread::UI, FROM_HERE,\n      base::BindOnce(\n          [](const StreamID\u0026 sid) {\n            if (AudioStreamMonitor* monitor \u003d\n                    GetMonitorForRenderFrame(sid.render_process_id, sid.render_frame_id)) {\n              monitor-\u003eStartMonitoringStreamOnUIThread(sid);\n            }\n          },\n          StreamID{render_process_id, render_frame_id, stream_id}));\n}\n\n...with similar changes for StopMonitoringStream() and UpdateStreamAudibleState().",
+      "range": {
+        "startLine": 94,
+        "startChar": 22,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8109891_a7f97e68",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-16T23:27:45Z",
+      "side": 1,
+      "message": "It seems like everything after this point is no longer needed. How about we just:\n\n    ...\n    streams_[qualified_id] \u003d !audible_state_monitoring_available();\n    UpdateStreams();\n  } // END OF METHOD\n\n...and delete the OnStreamAdded() method since it doesn\u0027t really serve a purpose when this class no longer is responsible for polling the audible state.",
+      "range": {
+        "startLine": 164,
+        "startChar": 1,
+        "endLine": 164,
+        "endChar": 65
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82cec960_5ff1e5b3",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-16T23:27:45Z",
+      "side": 1,
+      "message": "I think this method can be greatly simplified to just a few LOC:\n\nvoid AudioStreamMonitor::StopMonitoringStreamOnUIThread(...) {\n  DCHECK(thread_checker_...);\n\n  const StreamID sid \u003d {render_process_id, render_frame_id, stream_id};\n  streams_[sid] \u003d false;\n  UpdateStreams();\n  streams_.erase(sid);\n}\n\n...this also fixes a bug I noticed (see next comment). Also, we can then delete OnStreamRemoved().",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 178,
+        "endChar": 56
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c824e7e_82f99153",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-16T23:27:45Z",
+      "side": 1,
+      "message": "This is broken behavior: If there are two streams from the same RFHost, this will tell the RFHost that it is no longer audible when only one of the streams is stopped.\n\nBut, this would be fixed if you accept my suggestion above. :)",
+      "range": {
+        "startLine": 196,
+        "startChar": 6,
+        "endLine": 196,
+        "endChar": 54
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf6e2ba_284d3cb7",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-16T23:27:45Z",
+      "side": 1,
+      "message": "I don\u0027t see the point in building-up the |audible_frame_map|. Let\u0027s simplify this to:\n\n  if (is_stream_audible !\u003d render_frame_host_impl-\u003eis_audible())\n    render_frame_host_impl-\u003eOnAudibleStateChanged(is_stream_audible);\n\n...and then delete the |audible_frame_map| and the loop that iterates over it below.",
+      "range": {
+        "startLine": 237,
+        "startChar": 4,
+        "endLine": 237,
+        "endChar": 67
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "390e2d16_1e727873",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-16T23:27:45Z",
+      "side": 1,
+      "message": "Perhaps this should be:\n\n  const bool should_stop_timer \u003d is_audible_ || now \u003e\u003d off_time;\n\n...since there\u0027s no reason to have the off_timer_ running to update things while audio is audible.",
+      "range": {
+        "startLine": 262,
+        "startChar": 1,
+        "endLine": 262,
+        "endChar": 49
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f073d627_e97ccd25",
+        "filename": "content/browser/media/audio_stream_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-16T23:27:45Z",
+      "side": 1,
+      "message": "I suggest we remove this and all the special-case handling around it. Instead, let AudioOutputDelegateImpl call UpdateStreamAudibleState() to hard-set the audible state to \"always on\" when AOC does not monitor audio.",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 3
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cee4895_13328062",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-16T23:27:45Z",
+      "side": 1,
+      "message": "Now that this is much \"closer\" (in a code factoring sense) to AudioOutputController, in a future change we should consider just getting rid of this poll timer. Instead, we could add a method to AOC like:\n\n  // Every approximately |interval| amount of audio signal, invoke |callback| with the current power monitor level.\n  void BeginPowerMonitoring(base::TimeDelta interval, base::RepeatingCallback callback);\n\nThen, in AudioOutputDelegateImpl, just rely on AOC calling our |callback| 15 times a second:\n\n  controller_-\u003eBeginPowerMonitoring(\n      base::TimeDelta::FromSecondsD(1.0 / 15.0),\n      base::BindRepeating(\u0026AudioOutputDelegateImpl::UpdateAudibleState, ...));\n\nNow, no polling and no timer are needed. :)",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 35
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c74eac0_c31c2e4c",
         "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.h",
         "patchSetId": 6
@@ -77,6 +284,29 @@
       "writtenOn": "2017-11-16T13:53:37Z",
       "side": 1,
       "message": "Should we make sure that we stopped monitoring?",
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0872250f_1e90bc09",
+        "filename": "content/browser/renderer_host/media/render_frame_audio_output_stream_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-16T23:27:45Z",
+      "side": 1,
+      "message": "Not just logging. This helps to separate individual audio streams from the same render frame, right?",
+      "range": {
+        "startLine": 67,
+        "startChar": 5,
+        "endLine": 67,
+        "endChar": 40
+      },
       "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
