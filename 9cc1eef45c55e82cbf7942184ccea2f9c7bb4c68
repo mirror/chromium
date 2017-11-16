@@ -16,6 +16,24 @@
       "revId": "9cc1eef45c55e82cbf7942184ccea2f9c7bb4c68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa22efb3_536b754e",
+        "filename": "chrome/browser/vr/elements/exit_prompt_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-16T19:43:33Z",
+      "side": 1,
+      "message": "No good reason, except that this forces us to check that we only draw this when we\u0027ve explicitly set the field vs. us silently drawing the wrong one?",
+      "parentUuid": "3de734e0_d12b2e98",
+      "revId": "9cc1eef45c55e82cbf7942184ccea2f9c7bb4c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
