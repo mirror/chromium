@@ -138,6 +138,24 @@
     },
     {
       "key": {
+        "uuid": "fbd859d1_22bbf4a2",
+        "filename": "content/public/browser/interstitial_page.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1244346
+      },
+      "writtenOn": "2017-11-16T23:28:49Z",
+      "side": 1,
+      "message": "WebContentsView call this across GetInterstitialPage() from web_contents_, so using \"static_cast\" possible, but i think it would be a bad style.",
+      "parentUuid": "ea49c9ba_e9722926",
+      "revId": "c905ec2718f2487458319afb586ce740d5d797ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78afbbab_696dae80",
         "filename": "content/public/browser/web_contents_view_delegate.h",
         "patchSetId": 4
@@ -158,6 +176,30 @@
       "revId": "c905ec2718f2487458319afb586ce740d5d797ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a57db45f_aa33cd05",
+        "filename": "content/public/browser/web_contents_view_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1244346
+      },
+      "writtenOn": "2017-11-16T23:28:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78afbbab_696dae80",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 39
+      },
+      "revId": "c905ec2718f2487458319afb586ce740d5d797ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
