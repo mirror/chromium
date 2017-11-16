@@ -16,19 +16,17 @@
 #if defined(OS_POSIX) && !defined(__STDC_FORMAT_MACROS)
 #define __STDC_FORMAT_MACROS
 #endif
-#if defined(USE_X11)
+#if defined(USE_GLX)
 // Must be included before GL headers or they might pollute the global
 // namespace with X11 macros indirectly.
 #include "ui/gfx/x/x11.h"
-#endif  // USE_X11
 
-#if defined(OS_LINUX)
 // GL headers expect Bool and Status this to be defined but we avoid
 // defining them since they clash with too much code. Instead we have
 // to add them temporarily here and undef them again below.
 #define Bool int
 #define Status int
-#endif  // OS_LINUX
+#endif  // USE_GLX
 
 #include <GL/gl.h>
 #include <GL/glext.h>
@@ -52,12 +50,11 @@
 #elif defined(USE_GLX)
 #include <GL/glx.h>
 #include <GL/glxext.h>
-#endif
 
 // Done with these temporary macros now
 #undef Bool
-#undef None
 #undef Status
+#endif
 
 
 // GLES2 defines not part of Desktop GL
