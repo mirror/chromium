@@ -1,0 +1,337 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a840a5ad_381a0fd6",
+        "filename": "ios/chrome/browser/translate/language_selection_context.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T13:05:51Z",
+      "side": 1,
+      "message": "What is the vice-versa case?",
+      "range": {
+        "startLine": 30,
+        "startChar": 70,
+        "endLine": 31,
+        "endChar": 14
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6ceef2_e149378b",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T13:05:51Z",
+      "side": 1,
+      "message": "This breaks the assumptions of the parent class (Liskov substitution). I don\u0027t think we ever decided to abide by this principles, but this raises the question: is subclassing our best option here?",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 68
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "973b1a02_806b1997",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T13:05:51Z",
+      "side": 1,
+      "message": "Could we mark -start -stop as NS_UNAVAILABLE then? Internally we would need to avoid overloading and calling them, but since we don\u0027t call on to super anyway, there name doesn\u0027t matter much. WDYT?",
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e54f67_34bced1d",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T13:05:51Z",
+      "side": 1,
+      "message": "La*n*guage",
+      "range": {
+        "startLine": 16,
+        "startChar": 30,
+        "endLine": 16,
+        "endChar": 53
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc250e1f_89943fa2",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T13:05:51Z",
+      "side": 1,
+      "message": "The sentence is unfinished.\n\nMoreover, given that a client should not call -start themselves, the comment is stating a side-effect of something already forbidden?",
+      "range": {
+        "startLine": 22,
+        "startChar": 76,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c43f9c8_f11d3406",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T13:05:51Z",
+      "side": 1,
+      "message": "Nit: Missing period.",
+      "range": {
+        "startLine": 25,
+        "startChar": 68,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca72a1f_82acc5c3",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_mediator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T13:05:51Z",
+      "side": 1,
+      "message": "Nit: sort. I think clang-format is blind to those.",
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8375183f_a5f25e1f",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_mediator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T13:05:51Z",
+      "side": 1,
+      "message": "Nit: NOTREACHED()",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 14
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77bb93b0_dfef1bfa",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T13:05:51Z",
+      "side": 1,
+      "message": "Out of curiosity, why?",
+      "range": {
+        "startLine": 13,
+        "startChar": 54,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0892688_77de6ed7",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T13:05:51Z",
+      "side": 1,
+      "message": "Maybe add a comment about the range of the index? Mentioning this comes from the consumer?",
+      "range": {
+        "startLine": 24,
+        "startChar": 29,
+        "endLine": 24,
+        "endChar": 37
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b95775_e6d0c527",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T13:05:51Z",
+      "side": 1,
+      "message": "Nit: displays",
+      "range": {
+        "startLine": 32,
+        "startChar": 26,
+        "endLine": 32,
+        "endChar": 35
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae3f0951_cd56810b",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T13:05:51Z",
+      "side": 1,
+      "message": "Isn\u0027t this already synthesized for you?",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 0
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa49856_0680c734",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T13:05:51Z",
+      "side": 1,
+      "message": "The protocol has a \"provider\" property, not \"languageProvider\". I don\u0027t see this method (setLanguageProvider:) being used in this file, so it can probably be removed.",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 69
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151207f2_5ac5f137",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T13:05:51Z",
+      "side": 1,
+      "message": "Nit: you could use ObjCCast and elvis operator:\nUILabel* label \u003d\n    base::mac::ObjCCast\u003cUILabel\u003e(view) ?: [[UILabel alloc] init];\n\nReads like Swift\u0027s:\nlet label \u003d view as? UILabel ?? UILabel()",
+      "range": {
+        "startLine": 124,
+        "startChar": 19,
+        "endLine": 126,
+        "endChar": 48
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ac2130_c0f45854",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T13:05:51Z",
+      "side": 1,
+      "message": "Tiny nit: use dot notation to be consistent with the rest of the file.",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 54
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
