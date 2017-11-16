@@ -22,6 +22,30 @@
       "revId": "dbe7cc1edaf08203d97d278e1cf7fd185fb5590d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba2e0b54_41c6a53a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_features.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-16T20:40:09Z",
+      "side": 1,
+      "message": "Hmm, I was following the style in resource_coordinator_features.cc. But now I did some search and I saw all kinds of styles...\nhttps://cs.chromium.org/search/?q\u003dParamName+file:%5Esrc/chrome/browser/\u0026type\u003dcs\n\nIs there any preferred style for TabManager code?",
+      "parentUuid": "cae799ef_b2dcec4f",
+      "range": {
+        "startLine": 12,
+        "startChar": 53,
+        "endLine": 12,
+        "endChar": 71
+      },
+      "revId": "dbe7cc1edaf08203d97d278e1cf7fd185fb5590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
