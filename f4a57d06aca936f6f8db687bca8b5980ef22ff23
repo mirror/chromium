@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "5599d884_6a441ef7",
+        "filename": "chrome/browser/test_service_manager_listener.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-16T02:58:27Z",
+      "side": 1,
+      "message": "nit: Should this go in chrome/test somewhere?",
+      "revId": "f4a57d06aca936f6f8db687bca8b5980ef22ff23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb643f55_d72e9dd4",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-16T02:58:27Z",
+      "side": 1,
+      "message": "nit: I think safety is implied by use of data_decoder APIs. Can we just call this ParseXml? Also nit: name in comment is out of sync with actual name",
+      "revId": "f4a57d06aca936f6f8db687bca8b5980ef22ff23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32183e77_721769e0",
         "filename": "services/data_decoder/xml_parser_unittest.cc",
         "patchSetId": 5
