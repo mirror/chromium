@@ -15,6 +15,7 @@ description("Tests that when timeout is negative, the error callback is called i
 var error;
 
 let mock = geolocationMock;
+mock.setGeolocationPermission(true);
 mock.setGeolocationPosition(51.478, -0.166, 100.0);
 
 navigator.geolocation.getCurrentPosition(function(p) {
