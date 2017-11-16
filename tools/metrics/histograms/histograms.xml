@@ -57491,6 +57491,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PartnerBookmark.FaviconThrottleFetchResult"
+    enum="PartnerBookmark.FaviconFetchResult">
+  <owner>thildebr@chromium.org</owner>
+  <summary>
+    The response we got back from our favicon fetching throttler, once for each
+    bookmark at each cold start.
+  </summary>
+</histogram>
+
 <histogram name="PartnerBookmark.Null" enum="BooleanNull">
   <owner>wychen@chromium.org</owner>
   <summary>
@@ -57506,6 +57515,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Whether reading of partner bookmark is skipped. Logged when using the
     bookmark, and at most once per cold start.
+  </summary>
+</histogram>
+
+<histogram name="PartnerBookmarksFaviconThrottle.NumElements" units="entries">
+  <owner>thildebr@chromium.org</owner>
+  <summary>
+    Number of elements read from the partner bookmarks favicon cache, recorded
+    once per cold start when reading partner bookmarks.
   </summary>
 </histogram>
 
