@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "caec44a4_318cd45d",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-16T22:48:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c28ee937_05a54943",
+      "range": {
+        "startLine": 226,
+        "startChar": 27,
+        "endLine": 226,
+        "endChar": 0
+      },
+      "revId": "80ec30e1dca3f093b8cb3341e05038b0419b32f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "374f57f6_60a6e1ef",
         "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
         "patchSetId": 5
@@ -117,6 +141,30 @@
       "revId": "80ec30e1dca3f093b8cb3341e05038b0419b32f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46d4b06c_02ba9ea2",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-16T22:48:53Z",
+      "side": 1,
+      "message": "I found that other iOS code that passes an unsupported switch to variations_service, a dummy value is used. So, I replicated that here, and left a comment.",
+      "parentUuid": "b70d297e_8f34db98",
+      "range": {
+        "startLine": 228,
+        "startChar": 35,
+        "endLine": 228,
+        "endChar": 42
+      },
+      "revId": "80ec30e1dca3f093b8cb3341e05038b0419b32f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
