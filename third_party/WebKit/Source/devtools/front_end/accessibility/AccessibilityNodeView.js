@@ -94,9 +94,8 @@ Accessibility.AXNodeSubPane = class extends Accessibility.AccessibilitySubPane {
       propertyMap[property.name] = property;
 
     for (var propertySet
-             of [Protocol.Accessibility.AXWidgetAttributes, Protocol.Accessibility.AXWidgetStates,
-                 Protocol.Accessibility.AXGlobalStates, Protocol.Accessibility.AXLiveRegionAttributes,
-                 Protocol.Accessibility.AXRelationshipAttributes]) {
+             of [Accessibility.AXWidgetAttributes, Accessibility.AXWidgetStates, Accessibility.AXGlobalStates,
+                 Accessibility.AXLiveRegionAttributes, Accessibility.AXRelationshipAttributes]) {
       for (var propertyKey in propertySet) {
         var property = propertySet[propertyKey];
         if (property in propertyMap)
@@ -114,6 +113,22 @@ Accessibility.AXNodeSubPane = class extends Accessibility.AccessibilitySubPane {
     this._axNode = null;
   }
 };
+
+/** @type {!Set<string>} */
+Accessibility.AXGlobalStates =
+    new Set(['busy', 'disabled', 'hidden', 'hiddenRoot', 'invalid', 'keyshortcuts', 'roledescription']);
+/** @type {!Set<string>} */
+Accessibility.AXLiveRegionAttributes = new Set(['live', 'atomic', 'relevant', 'root']);
+/** @type {!Set<string>} */
+Accessibility.AXWidgetAttributes = new Set([
+  'autocomplete', 'haspopup', 'level', 'multiselectable', 'orientation', 'multiline', 'readonly', 'required',
+  'valuemin', 'valuemax', 'valuetext'
+]);
+/** @type {!Set<string>} */
+Accessibility.AXWidgetStates = new Set(['checked', 'expanded', 'pressed', 'selected']);
+/** @type {!Set<string>} */
+Accessibility.AXRelationshipAttributes =
+    new Set(['activedescendant', 'flowto', 'controls', 'describedby', 'labelledby', 'owns']);
 
 /**
  * @unrestricted
