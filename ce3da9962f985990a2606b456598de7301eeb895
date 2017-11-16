@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d308658_4e1d8bc9",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-16T12:55:11Z",
+      "side": 1,
+      "message": "Note that when we get here we don\u0027t know anything about the format of the timestamp (we know it\u0027s valid, but not if it actually has an hour component...)\n\nSo what I think we should do here is to (re)serialize the parsed timestamp to the prescribed \"normal form\".\n\nThere\u0027s also this test: https://wpt.fyi/webvtt/parsing/cue-text-parsing/tests/timestamps.html which is essentially the same thing (and has no hour component.)",
+      "range": {
+        "startLine": 556,
+        "startChar": 11,
+        "endLine": 556,
+        "endChar": 75
+      },
+      "revId": "ce3da9962f985990a2606b456598de7301eeb895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
