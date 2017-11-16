@@ -29,7 +29,6 @@
 #include "ipc/message_filter.h"
 #include "ipc/message_router.h"
 #include "ui/gfx/gpu_memory_buffer.h"
-#include "ui/latency/latency_info.h"
 
 namespace base {
 class WaitableEvent;
@@ -111,7 +110,7 @@ class GPU_EXPORT GpuChannelHost
   // that can be used to ensure or verify the flush later.
   uint32_t OrderingBarrier(int32_t route_id,
                            int32_t put_offset,
-                           std::vector<ui::LatencyInfo> latency_info,
+                           bool snapshot_requested,
                            std::vector<SyncToken> sync_token_fences);
 
   // Ensure that the all ordering barriers prior upto |flush_id| have been
