@@ -102,6 +102,24 @@
       "revId": "6a68484e35f75e6a30e1fef2a5746b5dbad6a9be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45618615_6626c7b3",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-16T20:09:12Z",
+      "side": 1,
+      "message": "AFAICT, V8ObjectBuilder wraps up a ScriptState and object, and ScriptValue wraps up the same two things so it seems like we should be able to just adopt the ScriptValue into the V8ObjectBuilder.\n\nI do like this approach better than having a public interface which takes an object builder.",
+      "parentUuid": "167c2298_5d278a48",
+      "revId": "6a68484e35f75e6a30e1fef2a5746b5dbad6a9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
