@@ -22,6 +22,30 @@
       "revId": "d0dc257d05cb10cea49c3446e97ba77316824b82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14f67ee4_dc81ac1f",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-16T13:06:37Z",
+      "side": 1,
+      "message": "visible_rect is set to coded_size here. But I don\u0027t see |frame|\u0027s visible_rect being used by the underlying platform accelerator.\nSo, may be there\u0027s a different visible_rect. I am not really sure though.",
+      "parentUuid": "f83f3b60_8d281ba7",
+      "range": {
+        "startLine": 148,
+        "startChar": 16,
+        "endLine": 148,
+        "endChar": 26
+      },
+      "revId": "d0dc257d05cb10cea49c3446e97ba77316824b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
