@@ -884,6 +884,14 @@ void ChromeClientImpl::SetEventListenerProperties(
   }
 }
 
+void ChromeClientImpl::SetWheelEventListenerRect(LocalFrame* frame,
+                                                 const WebRect& rect) {
+  WebLocalFrameImpl* web_frame = WebLocalFrameImpl::FromFrame(frame);
+  WebFrameWidgetBase* widget = web_frame->LocalRoot()->FrameWidget();
+  if (WebLayerTreeView* tree_view = widget->GetLayerTreeView())
+    tree_view->SetWheelEventListenerRect(rect);
+}
+
 void ChromeClientImpl::UpdateEventRectsForSubframeIfNecessary(
     LocalFrame* frame) {
   WebLocalFrameImpl* web_frame = WebLocalFrameImpl::FromFrame(frame);
@@ -911,6 +919,18 @@ WebEventListenerProperties ChromeClientImpl::EventListenerProperties(
   if (!widget || !widget->GetLayerTreeView())
     return WebEventListenerProperties::kNothing;
   return widget->GetLayerTreeView()->EventListenerProperties(event_class);
+}
+
+WebRect ChromeClientImpl::WheelEventListenerRect(LocalFrame* frame) const {
+  if (!frame)
+    return WebRect();
+
+  WebFrameWidgetBase* widget =
+      WebLocalFrameImpl::FromFrame(frame)->LocalRoot()->FrameWidget();
+
+  if (!widget || !widget->GetLayerTreeView())
+    return WebRect();
+  return widget->GetLayerTreeView()->WheelEventListenerRect();
 }
 
 void ChromeClientImpl::SetHasScrollEventHandlers(LocalFrame* frame,

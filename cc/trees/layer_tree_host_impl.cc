@@ -619,6 +619,12 @@ EventListenerProperties LayerTreeHostImpl::GetEventListenerProperties(
   return active_tree_->event_listener_properties(event_class);
 }
 
+gfx::Rect LayerTreeHostImpl::GetWheelEventListenerRect() const {
+  LOG(ERROR) << "GetWheelEventListenerRect "
+             << active_tree_->wheel_event_listener_rect().ToString();
+  return active_tree_->wheel_event_listener_rect();
+}
+
 // Return true if scrollable node for 'ancestor' is the same as 'child' or an
 // ancestor along the scroll tree.
 bool LayerTreeHostImpl::IsScrolledBy(LayerImpl* child, ScrollNode* ancestor) {
@@ -2779,6 +2785,7 @@ InputHandler::ScrollStatus LayerTreeHostImpl::TryScroll(
       scroll_status.thread = InputHandler::SCROLL_ON_MAIN_THREAD;
       scroll_status.main_thread_scrolling_reasons =
           MainThreadScrollingReason::kNonFastScrollableRegion;
+      LOG(ERROR) << "Non fast scrollable region!";
       return scroll_status;
     }
   }

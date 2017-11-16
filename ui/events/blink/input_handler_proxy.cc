@@ -518,6 +518,7 @@ void InputHandlerProxy::RecordMainThreadScrollingReasons(
   static const char* kWheelHistogramName =
       "Renderer4.MainThreadWheelScrollReason";
 
+  LOG(ERROR) << "reasons = " << reasons;
   if (device != blink::kWebGestureDeviceTouchpad &&
       device != blink::kWebGestureDeviceTouchscreen) {
     return;
@@ -655,20 +656,33 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleMouseWheel(
   cc::EventListenerProperties properties =
       input_handler_->GetEventListenerProperties(
           cc::EventListenerClass::kMouseWheel);
-  switch (properties) {
-    case cc::EventListenerProperties::kPassive:
-      result = DID_HANDLE_NON_BLOCKING;
-      break;
-    case cc::EventListenerProperties::kBlockingAndPassive:
-    case cc::EventListenerProperties::kBlocking:
-      result = DID_NOT_HANDLE;
-      break;
-    case cc::EventListenerProperties::kNone:
-      result = DROP_EVENT;
-      break;
-    default:
-      NOTREACHED();
-      result = DROP_EVENT;
+  gfx::Rect event_rect = input_handler_->GetWheelEventListenerRect();
+  WebFloatPoint position_in_screen = wheel_event.PositionInWidget();
+  LOG(ERROR) << event_rect.ToString() << " vs " << position_in_screen.x << ", "
+             << position_in_screen.y;
+  if (!event_rect.IsEmpty() &&
+      event_rect.ManhattanDistanceToPoint(
+          gfx::Point(position_in_screen.x, position_in_screen.y))) {
+    // The wheel event is outside wheel event rect
+    LOG(ERROR) << "Outside";
+    result = DROP_EVENT;
+  } else {
+    LOG(ERROR) << "Inside";
+    switch (properties) {
+      case cc::EventListenerProperties::kPassive:
+        result = DID_HANDLE_NON_BLOCKING;
+        break;
+      case cc::EventListenerProperties::kBlockingAndPassive:
+      case cc::EventListenerProperties::kBlocking:
+        result = DID_NOT_HANDLE;
+        break;
+      case cc::EventListenerProperties::kNone:
+        result = DROP_EVENT;
+        break;
+      default:
+        NOTREACHED();
+        result = DROP_EVENT;
+    }
   }
 
   mouse_wheel_result_ = result;

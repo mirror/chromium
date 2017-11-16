@@ -285,6 +285,11 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
     return event_listener_properties_[static_cast<size_t>(event_class)];
   }
 
+  void SetWheelEventListenerRect(gfx::Rect rect);
+  gfx::Rect wheel_event_listener_rect() const {
+    return wheel_event_listener_rect_;
+  }
+
   void SetViewportSize(
       const gfx::Size& device_viewport_size,
       const viz::LocalSurfaceId& local_surface_id = viz::LocalSurfaceId());
@@ -628,6 +633,7 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
   bool have_scroll_event_handlers_ = false;
   EventListenerProperties event_listener_properties_[static_cast<size_t>(
       EventListenerClass::kNumClasses)];
+  gfx::Rect wheel_event_listener_rect_;
 
   std::unique_ptr<PendingPageScaleAnimation> pending_page_scale_animation_;
 

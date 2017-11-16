@@ -268,6 +268,8 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
   virtual WebEventListenerProperties EventListenerProperties(
       LocalFrame*,
       WebEventListenerClass) const = 0;
+  virtual void SetWheelEventListenerRect(LocalFrame*, const WebRect&) = 0;
+  virtual WebRect WheelEventListenerRect(LocalFrame*) const = 0;
   virtual void UpdateEventRectsForSubframeIfNecessary(LocalFrame*) = 0;
   virtual void SetHasScrollEventHandlers(LocalFrame*, bool) = 0;
   virtual void SetNeedsLowLatencyInput(LocalFrame*, bool) = 0;
