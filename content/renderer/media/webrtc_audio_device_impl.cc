@@ -53,6 +53,7 @@ void WebRtcAudioDeviceImpl::RenderData(media::AudioBus* audio_bus,
   {
     base::AutoLock auto_lock(lock_);
 #if DCHECK_IS_ON()
+    DCHECK(renderer_);
     DCHECK(renderer_->CurrentThreadIsRenderingThread());
     if (!audio_renderer_thread_checker_.CalledOnValidThread()) {
       for (auto* sink : playout_sinks_)
