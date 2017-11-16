@@ -25,6 +25,104 @@
     },
     {
       "key": {
+        "uuid": "c5754d1d_04f62299",
+        "filename": "chrome/browser/extensions/extension_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-16T02:39:22Z",
+      "side": 1,
+      "message": "I\u0027d prefer objects that need this go through ExtensionPrefs::Get() to avoid a dependency on ExtensionService.",
+      "parentUuid": "9911d370_1276479a",
+      "range": {
+        "startLine": 408,
+        "startChar": 54,
+        "endLine": 408,
+        "endChar": 55
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f330703f_dc856ba7",
+        "filename": "chrome/browser/extensions/extension_system_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-16T02:39:22Z",
+      "side": 1,
+      "message": "We try to use ExtensionSystem as an entry point more than a location for complicated logic (because otherwise things have a funny way of piling up there).\n\nCould this live somewhere else?  CrxInstaller, or even a new class?",
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb66e12c_f8db5e87",
+        "filename": "chrome/browser/extensions/extension_system_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-16T02:39:22Z",
+      "side": 1,
+      "message": "Prefer using GetExtensionFileTaskRunner()",
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7739c4d0_0452ef0e",
+        "filename": "chrome/browser/extensions/extension_system_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-16T02:39:22Z",
+      "side": 1,
+      "message": "This is a bit weird - the reply will already be on the UI thread. Why do we need to re-post it?",
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f148afb8_fc4a5c12",
+        "filename": "chrome/browser/extensions/extension_system_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-16T02:39:22Z",
+      "side": 1,
+      "message": "no need for extensions:: prefix",
+      "range": {
+        "startLine": 474,
+        "startChar": 6,
+        "endLine": 474,
+        "endChar": 18
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91d4275b_1b4c87ad",
         "filename": "chrome/browser/extensions/extension_system_impl_browsertest.cc",
         "patchSetId": 3
@@ -134,6 +232,23 @@
         "endLine": 90,
         "endChar": 15
       },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "587ae571_a985a7bd",
+        "filename": "extensions/browser/updater/update_data_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-16T02:39:22Z",
+      "side": 1,
+      "message": "why do we add 0 as a disable reason?",
       "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
