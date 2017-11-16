@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "435ff62f_6605ffc6",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-16T16:53:22Z",
+      "side": 1,
+      "message": "Can you be more specific about the type of helper class for this?",
+      "parentUuid": "9c74eac0_c31c2e4c",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 55
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6880c122_a8b0fef0",
         "filename": "content/browser/renderer_host/media/audio_output_delegate_impl_unittest.cc",
         "patchSetId": 6
