@@ -106,6 +106,24 @@
       "revId": "b39a7926a836c242be334bbd35b8fdc5e2457b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f89fc442_7fbe9ba6",
+        "filename": "components/drive/job_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-16T14:48:34Z",
+      "side": 1,
+      "message": "\u003e Can we assume type\u003d\u003dCONNECTION_NONE \u0026\u0026 !net::NetworkChangeNotifier::IsOffline() iff the device is switching from one connection to another?\n\nNo, type\u003d\u003dCONNECTION_NONE \u0026\u0026 !net::NetworkChangeNotifier::IsOffline() is also sent when an offline device goes online.\n\n\u003e (e.g. switching from ethernet to wifi but suddenly signal lost doesn\u0027t result in CONNECTION_ETHERNET/Online -\u003e CONNECTION_NONE/Online -\u003e CONNECTION_NONE/Offline, possibly the last CONNECTION_NONE not notified to the observers)?\n\nSwitching from Ethernet to WiFi will always mean CONNECTION_NONE is sent out followed immediately by CONNECTION_WIFI.",
+      "parentUuid": "25c530bc_b7c72d45",
+      "revId": "b39a7926a836c242be334bbd35b8fdc5e2457b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
