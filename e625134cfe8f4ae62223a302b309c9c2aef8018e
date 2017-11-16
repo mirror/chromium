@@ -16,6 +16,24 @@
       "revId": "e625134cfe8f4ae62223a302b309c9c2aef8018e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da6ee612_13d0223e",
+        "filename": "content/gpu/gpu_service_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-16T18:36:48Z",
+      "side": 1,
+      "message": "how does one know that this doesn\u0027t end up on the main thread?  or is that what blocking prevents?\n\ni know that there exists at least one set of traits exists that can run tasks on the main thread.",
+      "parentUuid": "03a447f7_c66edade",
+      "revId": "e625134cfe8f4ae62223a302b309c9c2aef8018e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
