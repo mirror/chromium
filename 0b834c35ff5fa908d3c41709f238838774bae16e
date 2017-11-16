@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "e6ab252c_3b11212d",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-16T16:16:08Z",
+      "side": 1,
+      "message": "If passing by value, please use std::move(). Note that it\u0027s typically more common to just pass by copy though (unless it\u0027s expected for this to be large).",
+      "range": {
+        "startLine": 48,
+        "startChar": 32,
+        "endLine": 48,
+        "endChar": 45
+      },
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef24d39_7584cee8",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-16T16:16:08Z",
+      "side": 1,
+      "message": "If passing by value, please use std::move(). Note it\u0027s more common to just pass by copy though (unless it\u0027s expected for this to be large).",
+      "range": {
+        "startLine": 48,
+        "startChar": 32,
+        "endLine": 48,
+        "endChar": 45
+      },
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b1c2f81_896fe896",
         "filename": "components/printing/browser/print_composite_client.cc",
         "patchSetId": 3
@@ -36,6 +82,46 @@
       "writtenOn": "2017-11-16T15:08:50Z",
       "side": 1,
       "message": "Is |status| really |is_ready| ?",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e22db9_0aafa903",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-16T16:16:08Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand what status here means: does it mean it failed if it\u0027s false?",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb7eee6_6e8a5c55",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-16T16:16:08Z",
+      "side": 1,
+      "message": "Frame routing IDs are signed ints.",
+      "range": {
+        "startLine": 24,
+        "startChar": 33,
+        "endLine": 24,
+        "endChar": 41
+      },
       "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +156,29 @@
       "writtenOn": "2017-11-16T15:08:50Z",
       "side": 1,
       "message": "const ref?",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa147f54_2bde248b",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-16T16:16:08Z",
+      "side": 1,
+      "message": "Maybe subframe_content_ids?",
+      "range": {
+        "startLine": 28,
+        "startChar": 46,
+        "endLine": 28,
+        "endChar": 59
+      },
       "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -201,6 +310,29 @@
     },
     {
       "key": {
+        "uuid": "294a5fc0_7204ed34",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-16T16:16:08Z",
+      "side": 1,
+      "message": "Would it make sense to use the value of read_only here?",
+      "range": {
+        "startLine": 165,
+        "startChar": 58,
+        "endLine": 165,
+        "endChar": 78
+      },
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ece73c8_f77b3c1f",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 3
@@ -252,6 +384,23 @@
     },
     {
       "key": {
+        "uuid": "c8ee9f90_7f67625f",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-16T16:16:08Z",
+      "side": 1,
+      "message": "Any way to consolidate this? It seems like there are several copies of this now.",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10559130_49eee786",
         "filename": "components/printing/service/pdf_compositor_impl.h",
         "patchSetId": 3
@@ -263,6 +412,23 @@
       "writtenOn": "2017-11-16T15:08:50Z",
       "side": 1,
       "message": "Move to anonymous namespace in .cc file",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a29959f9_5452a719",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-16T16:16:08Z",
+      "side": 1,
+      "message": "Nit: static constexpr base::TimeDelta kRequestTimeout \u003d base::TimeDelta::FromSeconds(15);",
       "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -371,6 +537,23 @@
       "writtenOn": "2017-11-16T15:08:50Z",
       "side": 1,
       "message": "There is no gfx::Rect here. Does that mean frames can potentially draw outside of their bounds?",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e8456f_bab0c060",
+        "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-16T16:16:08Z",
+      "side": 1,
+      "message": "Nit: 80 chars (below as well)",
       "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
