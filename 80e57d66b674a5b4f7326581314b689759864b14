@@ -16,6 +16,24 @@
       "revId": "80e57d66b674a5b4f7326581314b689759864b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b97607dd_ab8c022a",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1582,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-16T07:22:17Z",
+      "side": 1,
+      "message": "Checking the inline style sounds very hacky... I don\u0027t think anyone should do that, other than the style code itself.\n\nCompared to that, having one more style update in editing commands seems acceptable.",
+      "parentUuid": "ac1936ec_4f7bd2cd",
+      "revId": "80e57d66b674a5b4f7326581314b689759864b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
