@@ -23,6 +23,7 @@ ios_framework_bundle("material_internationalization_ios") {
     "src/Sources/UIView+MaterialRTL.m",
   ]
   public_headers = [
+    "src/Sources/MDFInternationalization.h",
     "src/Sources/MDFRTL.h",
     "src/Sources/UIImage+MaterialRTL.h",
     "src/Sources/UIView+MaterialRTL.h",
@@ -32,12 +33,12 @@ ios_framework_bundle("material_internationalization_ios") {
     "CoreImage.framework",
     "UIKit.framework",
   ]
-  public_configs = [ ":config" ]
   configs -= [
     "//build/config/gcc:symbol_visibility_hidden",
     "//build/config/compiler:chromium_code",
   ]
   configs += [
+    ":config",
     "//build/config/compiler:enable_arc",
     "//build/config/compiler:no_chromium_code",
     "//build/config/gcc:symbol_visibility_default",
