@@ -8,16 +8,21 @@ static_library("cpp") {
   sources = [
     "net_adapters.cc",
     "net_adapters.h",
+    "ssl_info_ipc_traits.cc",
+    "ssl_info_ipc_traits.h",
     "url_loader_status.cc",
     "url_loader_status.h",
   ]
 
   deps = [
     "//base",
+    "//ipc",
     "//mojo/common",
     "//net",
     "//services/network/public/interfaces",
   ]
+
+  defines = [ "NETWORK_PUBLIC_CPP_IMPL" ]
 }
 
 mojom("test_interfaces") {
