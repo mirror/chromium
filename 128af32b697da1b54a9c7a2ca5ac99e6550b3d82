@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "2f6ea8a2_a8e860fa",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-16T23:16:30Z",
+      "side": 1,
+      "message": "i was under the impression that proto2 fields should always be optional to aid in compatibility, although i see arguments both for and against that viewpoint when i search internally.",
+      "parentUuid": "9fd69114_13651315",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 10
+      },
+      "revId": "128af32b697da1b54a9c7a2ca5ac99e6550b3d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b06c71c0_119704ba",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
         "patchSetId": 7
