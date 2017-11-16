@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2fd0c1c3_38e77f7c",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1223189
+      },
+      "writtenOn": "2017-11-16T23:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78889147_4763ada2",
+      "revId": "c7e746112ee0794b90a4d45c8c1da2a8f338c23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e56fb3c_01def396",
         "filename": "ui/display/manager/display_manager_utilities.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "c7e746112ee0794b90a4d45c8c1da2a8f338c23b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "247c6722_889108cb",
+        "filename": "ui/display/manager/display_manager_utilities.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1223189
+      },
+      "writtenOn": "2017-11-16T23:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e56fb3c_01def396",
+      "revId": "c7e746112ee0794b90a4d45c8c1da2a8f338c23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1b06a8fd_110c3482",
+        "filename": "ui/display/manager/display_manager_utilities.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1223189
+      },
+      "writtenOn": "2017-11-16T23:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b981889f_206fedcf",
+      "revId": "c7e746112ee0794b90a4d45c8c1da2a8f338c23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79775d01_6328c16a",
         "filename": "ui/display/manager/display_manager_utilities.h",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "c7e746112ee0794b90a4d45c8c1da2a8f338c23b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da88fff6_ebfed653",
+        "filename": "ui/display/manager/display_manager_utilities.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1223189
+      },
+      "writtenOn": "2017-11-16T23:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79775d01_6328c16a",
+      "revId": "c7e746112ee0794b90a4d45c8c1da2a8f338c23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
