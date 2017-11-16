@@ -129,7 +129,7 @@ class ServiceWorkerPaymentAppFactoryBrowserTest : public InProcessBrowserTest {
         method_data,
         base::BindOnce(
             &ServiceWorkerPaymentAppFactoryBrowserTest::OnGotAllPaymentApps,
-            base::Unretained(this)));
+            base::Unretained(this), run_loop.QuitClosure()));
     run_loop.Run();
   }
 
@@ -164,7 +164,9 @@ class ServiceWorkerPaymentAppFactoryBrowserTest : public InProcessBrowserTest {
  private:
   // Called by the factory upon completed app lookup. These |apps| have only
   // valid payment methods.
-  void OnGotAllPaymentApps(content::PaymentAppProvider::PaymentApps apps) {
+  void OnGotAllPaymentApps(base::Closure run_loop_quit_closure,
+                           content::PaymentAppProvider::PaymentApps apps) {
+    run_loop_quit_closure.Run();
     apps_ = std::move(apps);
   }
 
