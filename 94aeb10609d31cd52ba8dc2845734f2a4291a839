@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "78a09fd8_04feff61",
+        "filename": "chrome/browser/resource_coordinator/lifetime_unit.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-16T21:10:29Z",
+      "side": 1,
+      "message": "Is last focused too simplistic? I\u0027d argue background tabs should always be discarded sooner than tabs that are visible but not focused...",
+      "range": {
+        "startLine": 39,
+        "startChar": 20,
+        "endLine": 39,
+        "endChar": 37
+      },
+      "revId": "94aeb10609d31cd52ba8dc2845734f2a4291a839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5460c8c_92bd98d3",
         "filename": "chrome/browser/resource_coordinator/lifetime_unit.h",
         "patchSetId": 3
@@ -22,6 +45,30 @@
       "revId": "94aeb10609d31cd52ba8dc2845734f2a4291a839",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66714581_b402fcdb",
+        "filename": "chrome/browser/resource_coordinator/lifetime_unit.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-16T21:10:29Z",
+      "side": 1,
+      "message": "Seems fine to me.",
+      "parentUuid": "d5460c8c_92bd98d3",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 63
+      },
+      "revId": "94aeb10609d31cd52ba8dc2845734f2a4291a839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
