@@ -17,7 +17,12 @@ class GL_EXPORT GLFenceEGL : public GLFence {
   static void SetIgnoreFailures();
 
   GLFenceEGL();
+  explicit GLFenceEGL(bool use_default_initialization);
   ~GLFenceEGL() override;
+
+  // Initialize with custom properties, for use on a GLFenceEGL(false)
+  // constructed object. Returns true on success.
+  bool Initialize(EGLenum type, EGLint* attribs);
 
   // GLFence implementation:
   bool HasCompleted() override;
@@ -26,6 +31,11 @@ class GL_EXPORT GLFenceEGL : public GLFence {
 
   // EGL-specific wait-with-timeout implementation:
   EGLint ClientWaitWithTimeoutNanos(EGLTimeKHR timeout);
+
+  // Extract backing file descriptor for use in a GpuFenceHandle. Requires
+  // GLSurfaceEGL::IsAndroidNativeFenceSyncSupported(), and the fence must
+  // have been created with type EGL_SYNC_NATIVE_FENCE_ANDROID.
+  EGLint ExtractNativeFileDescriptor();
 
  private:
   EGLSyncKHR sync_;

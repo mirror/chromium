@@ -127,6 +127,10 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
                       unsigned internalformat) override;
   void DestroyImage(int32_t id) override;
   void SignalQuery(uint32_t query_id, const base::Closure& callback) override;
+  void SendGpuFence(uint32_t gpu_fence_id, ClientGpuFence source) override;
+  void GetGpuFenceHandle(uint32_t gpu_fence_id,
+                         const base::Callback<void(const gfx::GpuFenceHandle&)>&
+                             callback) override;
   void SetLock(base::Lock*) override;
   void EnsureWorkVisible() override;
   CommandBufferNamespace GetNamespaceID() const override;
