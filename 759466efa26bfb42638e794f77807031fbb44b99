@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7cde028_592b1672",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_features.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-16T18:29:42Z",
+      "side": 1,
+      "message": "Oh, right, to check the finch param. Added",
+      "parentUuid": "0b69063b_cfaca238",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 19
+      },
+      "revId": "759466efa26bfb42638e794f77807031fbb44b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "024f51af_56b16952",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "759466efa26bfb42638e794f77807031fbb44b99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6a9e5c2_62bb75f7",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-16T18:29:42Z",
+      "side": 1,
+      "message": "I use this name because it easily connects to the callsite function.",
+      "parentUuid": "024f51af_56b16952",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 30
+      },
+      "revId": "759466efa26bfb42638e794f77807031fbb44b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
