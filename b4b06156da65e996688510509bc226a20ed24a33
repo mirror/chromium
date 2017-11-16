@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7be32378_f2b68c14",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-16T14:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c393d40a_9705b3c3",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 142,
+        "endChar": 29
+      },
+      "revId": "b4b06156da65e996688510509bc226a20ed24a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc8719fd_28fe8dc6",
         "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "b4b06156da65e996688510509bc226a20ed24a33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba109d0_0b85a2fd",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-16T14:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc8719fd_28fe8dc6",
+      "revId": "b4b06156da65e996688510509bc226a20ed24a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
