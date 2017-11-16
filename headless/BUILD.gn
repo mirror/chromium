@@ -586,7 +586,10 @@ test("headless_unittests") {
   ]
 
   if (!is_fuchsia) {
-    deps += [ "//components/crash/content/browser" ]
+    deps += [
+      "//components/crash/content/browser",
+      "//components/crash/core/common",
+    ]
   }
 
   if (is_win) {
