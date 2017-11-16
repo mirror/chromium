@@ -34,6 +34,7 @@ source_set("cronet_native_impl_tests") {
   ]
 
   sources = [
+    "executors_unittest.cc",
     "generated/cronet.idl_impl_interface_unittest.cc",
     "generated/cronet.idl_impl_struct_unittest.cc",
   ]
