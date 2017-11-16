@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f39087e4_f3f8cdf3",
+        "filename": "chrome/browser/download/download_request_limiter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-16T05:40:22Z",
+      "side": 1,
+      "message": "Removed the bool argument. This probably does need to stay explicit because in the content settings tests we don\u0027t trigger a real download, but we still need to pretend that a real download was invoked so that the UI will show up.\n\nAlso made it a single callsite in the cc file for clarity.",
+      "parentUuid": "a00359e9_5a95d94b",
+      "revId": "15b0fdc7b81334f533dadead777b90a4a1745a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16d15927_2cdb9e71",
         "filename": "chrome/browser/download/download_request_limiter_unittest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "15b0fdc7b81334f533dadead777b90a4a1745a29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c3364c2_a8251520",
+        "filename": "chrome/browser/download/download_request_limiter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-16T05:40:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16d15927_2cdb9e71",
+      "revId": "15b0fdc7b81334f533dadead777b90a4a1745a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
