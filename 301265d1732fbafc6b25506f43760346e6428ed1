@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "2633629d_8cfe0b59",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-16T06:24:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4bf7c521_a02cee48",
+      "revId": "301265d1732fbafc6b25506f43760346e6428ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3c110cb_2cca249e",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-16T06:24:29Z",
+      "side": 1,
+      "message": "I\u0027d prefer if you also DCHECK(GetTemplateURLService()) here before the call.",
+      "revId": "301265d1732fbafc6b25506f43760346e6428ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ffecb13_6d001264",
         "filename": "components/omnibox/browser/keyword_provider.cc",
         "patchSetId": 2
@@ -33,6 +68,24 @@
       "revId": "301265d1732fbafc6b25506f43760346e6428ed1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c6de53_56daa1d0",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-16T06:24:29Z",
+      "side": 1,
+      "message": "Good catch.",
+      "parentUuid": "9ffecb13_6d001264",
+      "revId": "301265d1732fbafc6b25506f43760346e6428ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "e8c21c2f_cb211a7f",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-16T06:24:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "952df0a0_2f537862",
+      "revId": "301265d1732fbafc6b25506f43760346e6428ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24ec0517_32213ed9",
         "filename": "components/omnibox/browser/keyword_provider.cc",
         "patchSetId": 2
@@ -67,6 +138,24 @@
       "revId": "301265d1732fbafc6b25506f43760346e6428ed1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "156e9110_30b81240",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-16T06:24:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "24ec0517_32213ed9",
+      "revId": "301265d1732fbafc6b25506f43760346e6428ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
