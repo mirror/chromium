@@ -40,6 +40,7 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/events/Event.h"
 #include "core/events/BeforeUnloadEvent.h"
+#include "core/frame/UseCounter.h"
 #include "core/workers/WorkerOrWorkletGlobalScope.h"
 #include "platform/InstanceCounters.h"
 #include "platform/bindings/V8PrivateProperty.h"
@@ -139,9 +140,18 @@ void V8AbstractEventListener::InvokeEventHandler(
     v8::Local<v8::Value> saved_event = event_symbol.GetOrUndefined(global);
     try_catch.Reset();
 
-    // Make the event available in the global object, so LocalDOMWindow can
-    // expose it.
-    event_symbol.Set(global, js_event);
+    // If event target is not in a V1 shadow tree, make the event available in
+    // the global object, so LocalDOMWindow can expose it.
+    Node* target_node = event->target()->ToNode();
+    if (target_node && target_node->IsInV1ShadowTree()) {
+      event_symbol.DeleteProperty(global);
+    } else {
+      event_symbol.Set(global, js_event);
+      // Track use of window.event in V0 shadow trees
+      if (target_node && target_node->IsInV0ShadowTree()) {
+        UseCounter::Count(target_node->GetDocument(), WebFeature::kWindowEvent);
+      }
+    }
     try_catch.Reset();
 
     return_value = CallListenerFunction(script_state, js_event, event);
