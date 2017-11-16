@@ -166,6 +166,12 @@ void RemoteTextInputClient::SetTextEditCommandForNextKeyEvent(
   NOTIMPLEMENTED_LOG_ONCE();
 }
 
+const GURL& RemoteTextInputClient::GetClientSourceInfo() const {
+  // TODO(moshayedi): crbug.com/631527.
+  NOTIMPLEMENTED_LOG_ONCE();
+  return GURL::EmptyGURL();
+}
+
 ui::EventDispatchDetails RemoteTextInputClient::DispatchKeyEventPostIME(
     ui::KeyEvent* event) {
   remote_client_->DispatchKeyEventPostIME(ui::Event::Clone(*event),
