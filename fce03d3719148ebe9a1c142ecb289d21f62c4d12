@@ -22,6 +22,30 @@
       "revId": "fce03d3719148ebe9a1c142ecb289d21f62c4d12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e3d758_e72f3a2a",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1436,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T19:56:15Z",
+      "side": 1,
+      "message": "My guess is the list may have grown or shrank over time? Or this was copy + pasted from the other file? I\u0027ll try to look at merging similar code in another CL.",
+      "parentUuid": "11975bda_9c79a5df",
+      "range": {
+        "startLine": 1436,
+        "startChar": 31,
+        "endLine": 1436,
+        "endChar": 58
+      },
+      "revId": "fce03d3719148ebe9a1c142ecb289d21f62c4d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
