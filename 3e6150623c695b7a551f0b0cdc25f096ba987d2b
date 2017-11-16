@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bbe76125_f97b153c",
+        "filename": "third_party/WebKit/Source/core/animation/Keyframe.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-16T16:05:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32023603_3303210f",
+      "revId": "3e6150623c695b7a551f0b0cdc25f096ba987d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faa7f038_a7ecb132",
         "filename": "third_party/WebKit/Source/core/animation/Keyframe.h",
         "patchSetId": 11
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "I\u0027m not aware of a similar case existing already. A (less efficient, but less dependent on V8 in core/animation/) alternative might be to represent it as a Vector\u003cstd::pair\u003cString, String\u003e\u003e or something like that and then build the object in somewhere that\u0027s already aware of JS objects, assuming that\u0027s sufficient.\n\nBut I\u0027m not strongly opposed to this as-is, either. I\u0027m not convinced ScriptValue or v8::Local\u003cv8::Object\u003e would be a massive improvement.\n\nI think if anything I might super-duper-mildly prefer AddKeyframeProperties(V8ObjectBuilder\u0026) or similar, because it doesn\u0027t rely on the builder being copyable (which it really shouldn\u0027t be) or movable (which it can be), and puts the use of the relevant ScriptState closer to the code which is conceptually constructing the object. But this is bikeshed-level stuff.",
       "parentUuid": "faa7f038_a7ecb132",
+      "revId": "3e6150623c695b7a551f0b0cdc25f096ba987d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a9321ad_ca945c0d",
+        "filename": "third_party/WebKit/Source/core/animation/Keyframe.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-16T16:05:29Z",
+      "side": 1,
+      "message": "I\u0027m actually happy to bikeshed this, because it\u0027s important in making sure the Keyframe class stays sane. So far I have implemented Rob\u0027s suggestion, so please look at the latest patchset for that, but it does make the adding of computedOffset very ugly (woo v8 code).\n\nJeremy\u0027s suggestion seems tidier, however I\u0027m not sure how we would later integrate the BaseComputedKeyframe IDL dictionary which specifies the underlying dictionary. Perhaps the best answer is that we should just never actually add BaseComputedKeyframe and just leave it as implied by the C++ code. It doesn\u0027t add much value that I can see.",
+      "parentUuid": "9ed691db_f2d7c632",
       "revId": "3e6150623c695b7a551f0b0cdc25f096ba987d2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
