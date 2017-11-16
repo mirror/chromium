@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d41f932_5bfaa9a2",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-16T02:11:05Z",
+      "side": 1,
+      "message": "Is it me or is this method\u0027s name getting longer every day?",
+      "range": {
+        "startLine": 437,
+        "startChar": 74,
+        "endLine": 437,
+        "endChar": 0
+      },
+      "revId": "170170d2f2158c9c43ba1cc5e9d545d17fc623dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19788a2d_d35d4c6d",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-16T02:11:05Z",
+      "side": 1,
+      "message": "Since you are early returning, no need for the else block.",
+      "revId": "170170d2f2158c9c43ba1cc5e9d545d17fc623dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1799a084_1b578b61",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-16T02:11:05Z",
+      "side": 1,
+      "message": "Can you add an assert that checks GetTypeForTesting() returns SSL?",
+      "range": {
+        "startLine": 442,
+        "startChar": 61,
+        "endLine": 442,
+        "endChar": 0
+      },
+      "revId": "170170d2f2158c9c43ba1cc5e9d545d17fc623dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7b98534_55420483",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-16T02:11:05Z",
+      "side": 1,
+      "message": "nit: Rename to MaybeWaitForInterstitial?\n\nActually I don\u0027t know how I feel about wrapping this. It hides the logic a bit. But then again, not that important.",
+      "range": {
+        "startLine": 448,
+        "startChar": 5,
+        "endLine": 448,
+        "endChar": 24
+      },
+      "revId": "170170d2f2158c9c43ba1cc5e9d545d17fc623dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
