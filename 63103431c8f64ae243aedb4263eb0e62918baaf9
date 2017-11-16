@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "e552d406_e076443f",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-16T20:13:20Z",
+      "side": 1,
+      "message": "Oops, I see your comment now.\n\n\"This is moved here because resizer can exist even there are no scrollbars.\"\n\nSo this is for the case when there are no scrollbars but there is a scroll corner layer?\n\nIf so, LGTM. Can you add the following to your change description:\nThe resizer paints on the scroll corner layer (if present). This change moves\nresizer invalidation above an early-out when there are no scrollbars because\nthere can still be a scroll corner rect that needs invalidation.\n\nAlso, I added the root-layer-scrolls trybot to this patch. Can you add RLS expectations for this patch too?",
+      "parentUuid": "0558313b_0c596c1e",
+      "revId": "63103431c8f64ae243aedb4263eb0e62918baaf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "145b7b80_2084b0c4",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 3
