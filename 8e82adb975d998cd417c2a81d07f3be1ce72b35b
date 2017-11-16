@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "88b64218_7f16c8a2",
+        "filename": "chrome/browser/vr/model/modal_prompt.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-16T21:24:39Z",
+      "side": 1,
+      "message": "is this needed for NOTREACHED?",
+      "range": {
+        "startLine": 7,
+        "startChar": 15,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "8e82adb975d998cd417c2a81d07f3be1ce72b35b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "257f9143_b993bc01",
+        "filename": "chrome/browser/vr/model/modal_prompt.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-16T21:24:39Z",
+      "side": 1,
+      "message": "nit: ModalPrompt sounds like an element. Maybe ModalPromptType? This is entirely optional and just my preference.",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 16
+      },
+      "revId": "8e82adb975d998cd417c2a81d07f3be1ce72b35b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0887f300_203356ef",
         "filename": "chrome/browser/vr/ui_renderer_unittest.cc",
         "patchSetId": 5
@@ -46,6 +92,29 @@
       "revId": "8e82adb975d998cd417c2a81d07f3be1ce72b35b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e96e5f5_526cad7d",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-16T21:24:39Z",
+      "side": 1,
+      "message": "nit: update our probably already out of date hierarchy in the header? Also, a quick comment about why we have this element may be helpful in the future.",
+      "range": {
+        "startLine": 200,
+        "startChar": 7,
+        "endLine": 200,
+        "endChar": 27
+      },
+      "revId": "8e82adb975d998cd417c2a81d07f3be1ce72b35b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
