@@ -8,12 +8,14 @@
 #include "core/dom/Document.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/WebLocalFrameImpl.h"
+#include "modules/animationworklet/AnimationWorkletThread.h"
+#include "platform/WaitableEvent.h"
 
 namespace blink {
 
 AnimationWorkletProxyClientImpl::AnimationWorkletProxyClientImpl(
     CompositorMutatorImpl* mutator)
-    : mutator_(mutator) {
+    : mutator_(mutator), active_(false) {
   DCHECK(IsMainThread());
 }
 
@@ -24,31 +26,55 @@ void AnimationWorkletProxyClientImpl::Trace(blink::Visitor* visitor) {
 
 void AnimationWorkletProxyClientImpl::SetGlobalScope(
     WorkletGlobalScope* global_scope) {
-  DCHECK(global_scope->IsContextThread());
   DCHECK(global_scope);
+  DCHECK(global_scope->IsContextThread());
   global_scope_ = static_cast<AnimationWorkletGlobalScope*>(global_scope);
+  active_ = true;
   mutator_->RegisterCompositorAnimator(this);
 }
 
 void AnimationWorkletProxyClientImpl::Dispose() {
   DCHECK(global_scope_->IsContextThread());
   // At worklet scope termination break the reference cycle between
-  // CompositorMutatorImpl and AnimationProxyClientImpl and also the cycle
-  // between AnimationWorkletGlobalScope and AnimationWorkletProxyClientImpl.
-  mutator_->UnregisterCompositorAnimator(this);
+  // CompositorMutatorImpl and AnimationProxyClientImpl.
+  active_ = false;
   global_scope_ = nullptr;
+  mutator_->UnregisterCompositorAnimator(this);
+}
+
+void AnimationWorkletProxyClientImpl::MutateWithEvent(
+    const CompositorMutatorInputState* input_state,
+    WaitableEvent* is_done) {
+  if (active_) {
+    DCHECK(global_scope_->IsContextThread());
+    mutator_->SetMutationUpdate(global_scope_->Mutate(*input_state));
+  }
+  is_done->Signal();
 }
 
 void AnimationWorkletProxyClientImpl::Mutate(
     const CompositorMutatorInputState& state) {
-  DCHECK(global_scope_->IsContextThread());
+  DCHECK(mutator_->IsContextThread());
 
-  std::unique_ptr<CompositorMutatorOutputState> output = nullptr;
-
-  if (global_scope_)
-    output = global_scope_->Mutate(state);
-
-  mutator_->SetMutationUpdate(std::move(output));
+  if (active_) {
+    // TODO(petermayo) Schedule a pending mutation rather than block on
+    // the mutation to complete. (Or ensure a mutation is pending).
+    // crbug.com/767210
+    // TODO(petermayo) Switch to TaskRunnerHelper to get an appropriate
+    // TaskRunner.  Currently there is an ordering problem since we
+    // have to be on the Worklet thread to get the TaskRunner to get to
+    // the Worklet thread. Perhaps we can send it with the registration?
+    WaitableEvent is_done;
+    AnimationWorkletThread::GetSharedBackingThread()
+        ->GetSingleThreadTaskRunner()
+        ->PostTask(
+            BLINK_FROM_HERE,
+            ConvertToBaseCallback(CrossThreadBind(
+                &AnimationWorkletProxyClientImpl::MutateWithEvent,
+                WrapCrossThreadPersistent(this), CrossThreadUnretained(&state),
+                CrossThreadUnretained(&is_done))));
+    is_done.Wait();
+  }
 }
 
 // static
