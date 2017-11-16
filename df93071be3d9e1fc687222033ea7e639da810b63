@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b642378d_41d916a8",
+        "filename": "content/browser/download/download_request_core.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-16T00:02:15Z",
+      "side": 1,
+      "message": "I believe the navigation service path no longer goes through DownloadRequestCore.  You might have to add support for another path as well.  +qinmin@ with details.",
+      "range": {
+        "startLine": 181,
+        "startChar": 4,
+        "endLine": 186,
+        "endChar": 5
+      },
+      "revId": "df93071be3d9e1fc687222033ea7e639da810b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
