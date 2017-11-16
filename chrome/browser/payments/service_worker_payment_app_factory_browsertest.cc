@@ -45,6 +45,8 @@ class ServiceWorkerPaymentAppFactoryBrowserTest : public InProcessBrowserTest {
         georgepay_(net::EmbeddedTestServer::TYPE_HTTPS) {
     scoped_feature_list_.InitAndEnableFeature(
         features::kServiceWorkerPaymentApps);
+    ServiceWorkerPaymentAppFactory::GetInstance()
+        ->IgnorePortInAppScopeForTesting();
   }
 
   ~ServiceWorkerPaymentAppFactoryBrowserTest() override {}
@@ -111,24 +113,23 @@ class ServiceWorkerPaymentAppFactoryBrowserTest : public InProcessBrowserTest {
                                  frankpay_.GetURL("frankpay.com", "/"));
     downloader->AddTestServerURL("https://georgepay.com/",
                                  georgepay_.GetURL("georgepay.com", "/"));
-    ServiceWorkerPaymentAppFactory factory;
-    factory.IgnorePortInAppScopeForTesting();
+    ServiceWorkerPaymentAppFactory::GetInstance()
+        ->SetTestPaymentMethodManifestDownloader(std::move(downloader));
 
     std::vector<mojom::PaymentMethodDataPtr> method_data;
     method_data.emplace_back(mojom::PaymentMethodData::New());
     method_data.back()->supported_methods = payment_method_identifiers;
 
     base::RunLoop run_loop;
-    factory.GetAllPaymentApps(
-        context, std::move(downloader),
+    ServiceWorkerPaymentAppFactory::GetInstance()->GetAllPaymentApps(
+        context,
         WebDataServiceFactory::GetPaymentManifestWebDataForProfile(
             Profile::FromBrowserContext(context),
             ServiceAccessType::EXPLICIT_ACCESS),
         method_data,
         base::BindOnce(
             &ServiceWorkerPaymentAppFactoryBrowserTest::OnGotAllPaymentApps,
-            base::Unretained(this)),
-        run_loop.QuitClosure());
+            base::Unretained(this)));
     run_loop.Run();
   }
 
