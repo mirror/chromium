@@ -57,7 +57,7 @@ source_set("exo") {
   ]
 
   deps = [
-    "//ash",
+    #    "//ash",
     "//ash/public/cpp:ash_public_cpp",
     "//base",
     "//cc",
