@@ -450,6 +450,9 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleInputEvent(
         return DROP_EVENT;
       return DID_NOT_HANDLE;
 
+    case WebInputEvent::kGestureTap:
+      return HandleGestureTap(static_cast<const WebGestureEvent&>(event));
+
     case WebInputEvent::kTouchStart:
       return HandleTouchStart(static_cast<const WebTouchEvent&>(event));
 
@@ -1041,6 +1044,14 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureFlingStart(
   return DID_NOT_HANDLE;
 }
 
+InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureTap(
+    const blink::WebGestureEvent& gesture_event) {
+  if (input_handler_->IsRecentlyMovedFrameAt(
+          gfx::Point(gesture_event.x, gesture_event.y)))
+    return DROP_IF_CROSS_ORIGIN;
+  return DID_NOT_HANDLE;
+}
+
 InputHandlerProxy::EventDisposition InputHandlerProxy::HitTestTouchEvent(
     const blink::WebTouchEvent& touch_event,
     bool* is_touching_scrolling_layer,
@@ -1623,6 +1634,9 @@ bool InputHandlerProxy::TouchpadFlingScroll(
     case DID_HANDLE_SHOULD_BUBBLE:
       NOTREACHED();
       return false;
+    case DROP_IF_CROSS_ORIGIN:
+      NOTREACHED();
+      break;
   }
 
   return false;

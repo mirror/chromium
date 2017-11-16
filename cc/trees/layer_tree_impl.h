@@ -6,6 +6,7 @@
 #define CC_TREES_LAYER_TREE_IMPL_H_
 
 #include <map>
+#include <queue>
 #include <set>
 #include <string>
 #include <unordered_map>
@@ -21,6 +22,7 @@
 #include "cc/layers/layer_impl.h"
 #include "cc/layers/layer_list_iterator.h"
 #include "cc/resources/ui_resource_client.h"
+#include "cc/trees/draw_property_utils.h"
 #include "cc/trees/layer_tree_host_impl.h"
 #include "cc/trees/property_tree.h"
 #include "cc/trees/swap_promise.h"
@@ -471,6 +473,8 @@ class CC_EXPORT LayerTreeImpl {
   LayerImpl* FindLayerThatIsHitByPointInTouchHandlerRegion(
       const gfx::PointF& screen_space_point);
 
+  bool IsRecentlyMovedFrameAt(const gfx::PointF& screen_space_point);
+
   void RegisterSelection(const LayerSelection& selection);
 
   bool GetAndResetHandleVisibilityChanged();
@@ -552,6 +556,16 @@ class CC_EXPORT LayerTreeImpl {
 
   LayerTreeLifecycle& lifecycle() { return lifecycle_; }
 
+  void set_frame_rect_position_map(const FrameRectPositionMap& map) {
+    frame_rect_position_map_ = map;
+  }
+  const FrameRectPositionMap& frame_rect_position_map() {
+    return frame_rect_position_map_;
+  }
+
+  void ClearOldFrameRects();
+  void AddFrameRect(ElementId id, const gfx::Rect& rect);
+
  protected:
   float ClampPageScaleFactorToLimits(float page_scale_factor) const;
   void PushPageScaleFactorAndLimits(const float* page_scale_factor,
@@ -617,6 +631,19 @@ class CC_EXPORT LayerTreeImpl {
   // horizontal). This mapping is maintained as part of scrollbar registration.
   base::flat_map<ElementId, ScrollbarLayerIds>
       element_id_to_scrollbar_layer_ids_;
+
+  struct FrameRectHistoryItem {
+    gfx::Rect rect;
+    base::TimeTicks timestamp;
+  };
+
+  // TODO(ajuma): Using a deque here because we need to be able to iterate over
+  // the list, but there's probably a better choice instead of deque.
+  std::unordered_map<ElementId, std::deque<FrameRectHistoryItem>, ElementIdHash>
+      frame_rect_history_;
+  std::queue<base::TimeTicks> recent_frame_times_;
+
+  FrameRectPositionMap frame_rect_position_map_;
 
   std::vector<PictureLayerImpl*> picture_layers_;
 

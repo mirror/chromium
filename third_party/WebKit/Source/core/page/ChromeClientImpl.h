@@ -167,6 +167,11 @@ class CORE_EXPORT ChromeClientImpl final : public ChromeClient {
   void UpdateCompositedSelection(LocalFrame*,
                                  const CompositedSelection&) override;
 
+  void SetFrameRect(const CompositorElementId& element_id,
+                    int layer_id,
+                    const IntRect& rect) override;
+  void ClearFrameRect(const CompositorElementId& element_id) override;
+
   // ChromeClient methods:
   String AcceptLanguages() override;
   void SetCursorForPlugin(const WebCursorInfo&, LocalFrame*) override;

@@ -632,10 +632,30 @@ WebInputEventResult WebViewImpl::HandleGestureEvent(
       page_->DeprecatedLocalMainFrame()->GetEventHandler().TargetGestureEvent(
           scaled_event);
 
+  // Handle this outside the main switch since it needs to happen before link
+  // highlighting.
+  if (event.GetType() == WebInputEvent::kGestureTap &&
+      static_cast<WebGestureEvent>(event).data.tap.drop_if_cross_origin) {
+    fprintf(stderr,
+            "WebViewImpl::handleGestureEvent received dropIfCrossOrigin\n");
+    // Do we need to null-check the innerNodeFrame?
+    if (targeted_event.GetHitTestResult()
+            .InnerNodeFrame()
+            ->IsCrossOriginSubframe()) {
+      fprintf(stderr,
+              "WebViewImpl::handleGestureEvent dropped cross-origin tap\n");
+      event_result = WebInputEventResult::kHandledSuppressed;
+      event_cancelled = true;
+      client_->DidHandleGestureEvent(event, event_cancelled);
+      return event_result;
+    }
+  }
+
   // Handle link highlighting outside the main switch to avoid getting lost in
   // the complicated set of cases handled below.
   switch (event.GetType()) {
     case WebInputEvent::kGestureShowPress:
+      fprintf(stderr, "Link highlight from GestureShowPress\n");
       // Queue a highlight animation, then hand off to regular handler.
       EnableTapHighlightAtPoint(targeted_event);
       break;

@@ -278,7 +278,8 @@ void MainThreadEventQueue::HandleEvent(
          original_dispatch_type == DISPATCH_TYPE_NON_BLOCKING);
   DCHECK(ack_result == INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING ||
          ack_result == INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING_DUE_TO_FLING ||
-         ack_result == INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
+         ack_result == INPUT_EVENT_ACK_STATE_NOT_CONSUMED ||
+         ack_result == INPUT_EVENT_ACK_STATE_SET_DROP_IF_CROSS_ORIGIN);
 
   bool non_blocking = original_dispatch_type == DISPATCH_TYPE_NON_BLOCKING ||
                       ack_result == INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING;
@@ -344,6 +345,12 @@ void MainThreadEventQueue::HandleEvent(
       wheel_event->dispatch_type =
           blink::WebInputEvent::kListenersNonBlockingPassive;
     }
+  }
+
+  if (event->GetType() == blink::WebInputEvent::kGestureTap &&
+      ack_result == INPUT_EVENT_ACK_STATE_SET_DROP_IF_CROSS_ORIGIN) {
+    static_cast<blink::WebGestureEvent*>(event.get())
+        ->data.tap.drop_if_cross_origin = true;
   }
 
   HandledEventCallback event_callback;

@@ -1177,6 +1177,16 @@ void RenderWidgetCompositor::SetScrollBoundaryBehavior(
   layer_tree_host_->SetScrollBoundaryBehavior(behavior);
 }
 
+void RenderWidgetCompositor::SetFrameRect(const cc::ElementId& element_id,
+                                          int layer_id,
+                                          const blink::WebRect& rect) {
+  layer_tree_host_->SetFrameRect(element_id, layer_id, rect);
+}
+
+void RenderWidgetCompositor::ClearFrameRect(const cc::ElementId& element_id) {
+  layer_tree_host_->ClearFrameRect(element_id);
+}
+
 void RenderWidgetCompositor::WillBeginMainFrame() {
   delegate_->WillBeginCompositorFrame();
 }

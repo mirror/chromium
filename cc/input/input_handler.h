@@ -213,6 +213,10 @@ class CC_EXPORT InputHandler {
   EventListenerTypeForTouchStartOrMoveAt(const gfx::Point& viewport_point,
                                          TouchAction* out_touch_action) = 0;
 
+  // Whether the |viewport_point| is inside a frame's current position but
+  // not within all of the frame's positions over the past 100ms.
+  virtual bool IsRecentlyMovedFrameAt(const gfx::Point& viewport_point) = 0;
+
   // Calling CreateLatencyInfoSwapPromiseMonitor() to get a scoped
   // LatencyInfoSwapPromiseMonitor. During the life time of the
   // LatencyInfoSwapPromiseMonitor, if SetNeedsRedraw() or SetNeedsRedrawRect()

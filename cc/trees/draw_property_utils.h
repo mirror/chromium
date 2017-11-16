@@ -7,6 +7,8 @@
 
 #include "cc/cc_export.h"
 #include "cc/layers/layer_collections.h"
+#include "cc/trees/element_id.h"
+#include "ui/gfx/geometry/rect.h"
 
 namespace gfx {
 class Transform;
@@ -24,6 +26,14 @@ class EffectTree;
 class TransformTree;
 class PropertyTrees;
 struct EffectNode;
+
+// TOOD(ajuma): Put this in a better spot.
+struct FrameRectPosition {
+  int layer_id;
+  gfx::Rect rect;
+};
+using FrameRectPositionMap =
+    std::unordered_map<ElementId, FrameRectPosition, ElementIdHash>;
 
 namespace draw_property_utils {
 

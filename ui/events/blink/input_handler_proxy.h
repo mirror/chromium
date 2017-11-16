@@ -68,6 +68,7 @@ class InputHandlerProxy : public cc::InputHandlerClient,
     DID_NOT_HANDLE,
     DID_NOT_HANDLE_NON_BLOCKING_DUE_TO_FLING,
     DID_HANDLE_NON_BLOCKING,
+    DROP_IF_CROSS_ORIGIN,
     DROP_EVENT,
     // The compositor did handle the scroll event (so it wouldn't forward the
     // event to the main thread.) but it didn't consume the scroll so it should
@@ -145,6 +146,7 @@ class InputHandlerProxy : public cc::InputHandlerClient,
       const blink::WebGestureEvent& event);
   EventDisposition HandleGestureFlingStart(
       const blink::WebGestureEvent& event);
+  EventDisposition HandleGestureTap(const blink::WebGestureEvent& event);
   EventDisposition HandleTouchStart(const blink::WebTouchEvent& event);
   EventDisposition HandleTouchMove(const blink::WebTouchEvent& event);
   EventDisposition HandleTouchEnd(const blink::WebTouchEvent& event);

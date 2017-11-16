@@ -270,6 +270,7 @@ void InputEventFilter::DidForwardToHandlerAndOverscroll(
 
   if (ack_state == INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING ||
       ack_state == INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING_DUE_TO_FLING ||
+      ack_state == INPUT_EVENT_ACK_STATE_SET_DROP_IF_CROSS_ORIGIN ||
       ack_state == INPUT_EVENT_ACK_STATE_NOT_CONSUMED) {
     DCHECK(!overscroll_params);
     RouteQueueMap::iterator iter = route_queues_.find(routing_id);

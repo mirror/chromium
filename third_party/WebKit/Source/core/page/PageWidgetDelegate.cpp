@@ -199,6 +199,12 @@ WebInputEventResult PageWidgetDelegate::HandleInputEvent(
     case WebInputEvent::kGestureTwoFingerTap:
     case WebInputEvent::kGestureLongPress:
     case WebInputEvent::kGestureLongTap:
+      if (event.GetType() == WebInputEvent::kGestureTap &&
+          static_cast<const WebGestureEvent&>(event)
+              .data.tap.drop_if_cross_origin)
+        fprintf(stderr,
+                "PageWidgetDelegate::handleInputEvent received "
+                "dropIfCrossOrigin\n");
       return handler.HandleGestureEvent(
           static_cast<const WebGestureEvent&>(event));
 

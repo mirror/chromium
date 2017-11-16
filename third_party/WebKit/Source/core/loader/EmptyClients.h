@@ -210,6 +210,12 @@ class CORE_EXPORT EmptyChromeClient : public ChromeClient {
   void UpdateEventRectsForSubframeIfNecessary(LocalFrame* frame) override {}
   void SetHasScrollEventHandlers(LocalFrame*, bool) override {}
   void SetNeedsLowLatencyInput(LocalFrame*, bool) override {}
+
+  void SetFrameRect(const CompositorElementId&,
+                    int layer_id,
+                    const IntRect&) override {}
+  void ClearFrameRect(const CompositorElementId&) override {}
+
   void SetTouchAction(LocalFrame*, TouchAction) override {}
 
   void DidAssociateFormControlsAfterLoad(LocalFrame*) override {}
