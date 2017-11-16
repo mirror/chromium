@@ -100,6 +100,9 @@ MessageCenterButtonBar::MessageCenterButtonBar(
   layout->SetFlexForView(notification_label_, 1);
 
   button_container_ = new views::View;
+  button_container_->SetPaintToLayer();
+  button_container_->SetBackground(
+      views::CreateSolidBackground(message_center_style::kBackgroundColor));
   button_container_->SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kHorizontal));
   close_all_button_ = new views::ImageButton(this);
@@ -139,6 +142,9 @@ MessageCenterButtonBar::MessageCenterButtonBar(
   button_container_->AddChildView(CreateVerticalSeparator());
 
   collapse_button_ = new views::ImageButton(this);
+  collapse_button_->SetBackground(
+      views::CreateSolidBackground(message_center_style::kBackgroundColor));
+  collapse_button_->SetPaintToLayer();
   collapse_button_->SetImage(
       views::Button::STATE_NORMAL,
       gfx::CreateVectorIcon(kNotificationCenterCollapseIcon,
@@ -192,9 +198,34 @@ views::Button* MessageCenterButtonBar::GetSettingsButtonForTest() const {
 }
 
 void MessageCenterButtonBar::SetBackArrowVisible(bool visible) {
+  bool settings_focused =
+      GetFocusManager() &&
+      (GetFocusManager()->GetFocusedView() == collapse_button_ ||
+       GetFocusManager()->GetFocusedView() == settings_button_);
+
+  DCHECK(collapse_button_->layer());
+  DCHECK(button_container_->layer());
+  collapse_button_->layer()->SetOpacity(1.0);
+  button_container_->layer()->SetOpacity(1.0);
   collapse_button_->SetVisible(visible);
   button_container_->SetVisible(!visible);
   Layout();
+
+  if (settings_focused) {
+    if (visible)
+      collapse_button_->RequestFocus();
+    else
+      settings_button_->RequestFocus();
+  }
+}
+
+void MessageCenterButtonBar::SetBackArrowOpacity(double back_arrow_opacity) {
+  DCHECK(collapse_button_->layer());
+  DCHECK(button_container_->layer());
+  collapse_button_->layer()->SetOpacity(back_arrow_opacity);
+  button_container_->layer()->SetOpacity(1.0 - back_arrow_opacity);
+  collapse_button_->SetVisible(true);
+  button_container_->SetVisible(true);
 }
 
 void MessageCenterButtonBar::SetTitle(const base::string16& title) {
@@ -217,6 +248,20 @@ void MessageCenterButtonBar::SetQuietModeState(bool is_quiet_mode) {
 
 void MessageCenterButtonBar::ChildVisibilityChanged(views::View* child) {
   InvalidateLayout();
+}
+
+void MessageCenterButtonBar::Layout() {
+  views::View::Layout();
+
+  if (collapse_button_->visible() && button_container_->visible()) {
+    // During animation, the settings button and the collapse button should be
+    // shown in overwrapped manner, while both are visible.
+    collapse_button_->SetBounds(
+        button_container_->x() + button_container_->width() -
+            collapse_button_->width(),
+        collapse_button_->y(), collapse_button_->width(),
+        collapse_button_->height());
+  }
 }
 
 void MessageCenterButtonBar::ButtonPressed(views::Button* sender,

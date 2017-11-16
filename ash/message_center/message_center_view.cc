@@ -127,6 +127,8 @@ MessageCenterView::MessageCenterView(
   else if (initially_settings_visible)
     mode_ = Mode::SETTINGS;
 
+  previous_mode_ = mode_;
+
   message_center_->AddObserver(this);
   set_notify_enter_exit_on_child(true);
   SetBackground(views::CreateSolidBackground(kBackgroundColor));
@@ -223,7 +225,7 @@ void MessageCenterView::ClearAllClosableNotifications() {
     return;
 
   is_clearing_all_notifications_ = true;
-  UpdateButtonBarStatus();
+  UpdateButtonBarStatus(false /* will_animate */);
   SetViewHierarchyEnabled(scroller_, false);
   message_list_view_->ClearAllClosableNotifications(
       scroller_->GetVisibleRect());
@@ -519,10 +521,19 @@ void MessageCenterView::AnimationEnded(const gfx::Animation* animation) {
   // This is required when switching between message list and settings panel.
   if (!scroller_->visible())
     message_list_view_->ResetRepositionSession();
+
+  button_bar_->SetBackArrowVisible(mode_ == Mode::SETTINGS);
 }
 
 void MessageCenterView::AnimationProgressed(const gfx::Animation* animation) {
   DCHECK_EQ(animation, settings_transition_animation_.get());
+
+  double progress = settings_transition_animation_->GetCurrentValue();
+  if (previous_mode_ != Mode::SETTINGS && mode_ == Mode::SETTINGS)
+    button_bar_->SetBackArrowOpacity(progress);
+  else if (previous_mode_ == Mode::SETTINGS && mode_ != Mode::SETTINGS)
+    button_bar_->SetBackArrowOpacity(1.0 - progress);
+
   PreferredSizeChanged();
   Layout();
   SchedulePaint();
@@ -578,7 +589,7 @@ void MessageCenterView::Update(bool animate) {
 #endif
   }
 
-  UpdateButtonBarStatus();
+  UpdateButtonBarStatus(animate);
 
   if (scroller_->visible())
     scroller_->InvalidateLayout();
@@ -611,6 +622,7 @@ void MessageCenterView::SetVisibilityMode(Mode mode, bool animate) {
   else
     target_view_ = nullptr;
 
+  previous_mode_ = mode_;
   mode_ = mode;
 
   source_height_ = source_view_ ? source_view_->GetHeightForWidth(width()) : 0;
@@ -634,7 +646,7 @@ void MessageCenterView::SetVisibilityMode(Mode mode, bool animate) {
   settings_transition_animation_->Show();
 }
 
-void MessageCenterView::UpdateButtonBarStatus() {
+void MessageCenterView::UpdateButtonBarStatus(bool will_animate) {
   // Disables all buttons during animation of cleaning of all notifications.
   if (is_clearing_all_notifications_) {
     button_bar_->SetSettingsAndQuietModeButtonsEnabled(false);
@@ -642,7 +654,8 @@ void MessageCenterView::UpdateButtonBarStatus() {
     return;
   }
 
-  button_bar_->SetBackArrowVisible(mode_ == Mode::SETTINGS);
+  if (!will_animate)
+    button_bar_->SetBackArrowVisible(mode_ == Mode::SETTINGS);
   button_bar_->SetButtonsVisible(!is_locked_);
   button_bar_->SetTitle(GetButtonBarTitle());
 
