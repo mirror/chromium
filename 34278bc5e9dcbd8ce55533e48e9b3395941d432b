@@ -16,6 +16,24 @@
       "revId": "34278bc5e9dcbd8ce55533e48e9b3395941d432b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "928df816_1814e246",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-16T00:25:00Z",
+      "side": 1,
+      "message": "Sure. I\u0027ll do that.",
+      "parentUuid": "f3fc2c03_7876cce9",
+      "revId": "34278bc5e9dcbd8ce55533e48e9b3395941d432b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
