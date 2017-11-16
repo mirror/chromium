@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0caab88_b7b715ae",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-16T13:28:52Z",
+      "side": 1,
+      "message": "Is this change related to OpenDevice() or a drive-by fix?\nIf the latter, I\u0027d prefer to revert it to the original since this is going to change when you migrate GenerateStream",
+      "revId": "25eac8e1e4cecc69785bc4724712895c51fa85db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "725c738f_a43b259f",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-16T13:28:52Z",
+      "side": 1,
+      "message": "Same question as for the if in FinalizeGenerateStream",
+      "range": {
+        "startLine": 1282,
+        "startChar": 9,
+        "endLine": 1282,
+        "endChar": 16
+      },
+      "revId": "25eac8e1e4cecc69785bc4724712895c51fa85db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bed60dc_49592d69",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-16T13:28:52Z",
+      "side": 1,
+      "message": "why pass the requester? \nIf it\u0027s to notify MSD about DeviceStopped it\u0027s OK. We\u0027ll fix that later.\n\nwhy default to nullptr?",
+      "range": {
+        "startLine": 186,
+        "startChar": 32,
+        "endLine": 186,
+        "endChar": 52
+      },
+      "revId": "25eac8e1e4cecc69785bc4724712895c51fa85db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dddf2114_323e4f52",
+        "filename": "content/renderer/media/media_stream_dispatcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-16T13:28:52Z",
+      "side": 1,
+      "message": "replace .size() \u003c\u003d 0 with .empty()",
+      "range": {
+        "startLine": 283,
+        "startChar": 50,
+        "endLine": 283,
+        "endChar": 63
+      },
+      "revId": "25eac8e1e4cecc69785bc4724712895c51fa85db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02807c77_3588167c",
+        "filename": "content/renderer/media/media_stream_dispatcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-16T13:28:52Z",
+      "side": 1,
+      "message": "AddStream() would be a better name to use together with RemoveStream()",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 19
+      },
+      "revId": "25eac8e1e4cecc69785bc4724712895c51fa85db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
