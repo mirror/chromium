@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "398d03e4_89da3e56",
+        "filename": "components/arc/common/net.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-16T21:31:39Z",
+      "side": 1,
+      "message": "Okay I can make an enum",
+      "parentUuid": "86e496fa_3bbdd5af",
+      "revId": "3ed4f5a86412eb10e202622920e68b6ad893a1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d3107e1_c8f8514b",
         "filename": "components/onc/onc_constants.cc",
         "patchSetId": 5
