@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08060e98_828824d7",
+        "filename": "ui/app_list/app_list_constants.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-16T20:29:42Z",
+      "side": 1,
+      "message": "nit: I\u0027d say\n  // Keep |kGridIconDimension| in folder_image.cc consistent with this.\n  // TODO(hejq): Figure out a way to consolidate the two.",
+      "revId": "0a697808bad671f481ff1b7b8ff35507a70b6658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d899c7a_327c62cb",
+        "filename": "ui/app_list/folder_image.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-16T20:29:42Z",
+      "side": 1,
+      "message": "nit: update this too",
+      "revId": "0a697808bad671f481ff1b7b8ff35507a70b6658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
