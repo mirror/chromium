@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5f4ba91_619ba0a6",
+        "filename": "ios/showcase/tab/sc_tab_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T14:12:20Z",
+      "side": 0,
+      "message": "You can mark this bug as fixed by this CL.",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 24
+      },
+      "revId": "5ba549a64c68240f4f57e7b5d91e397a1a33fa1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a46756_64526ebe",
+        "filename": "ios/showcase/toolbar/sc_toolbar_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T14:12:20Z",
+      "side": 0,
+      "message": "Ditto",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "5ba549a64c68240f4f57e7b5d91e397a1a33fa1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
