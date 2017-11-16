@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6c643d8c_9727b84c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-16T00:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa20f154_9f30f1c3",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dce4886a_480fc642",
         "filename": "/COMMIT_MSG",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e449c29a_ce657265",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-16T00:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dce4886a_480fc642",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -336,6 +372,30 @@
     },
     {
       "key": {
+        "uuid": "db881d4b_4788a255",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-16T00:48:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0b185d80_1ee92df6",
+      "range": {
+        "startLine": 74,
+        "startChar": 68,
+        "endLine": 74,
+        "endChar": 78
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0656a824_eefa37b7",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 9
@@ -506,6 +566,24 @@
     },
     {
       "key": {
+        "uuid": "5ba4bb34_ff9863a5",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-16T00:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13a6ce00_6041ea84",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ba97e24_ce2d1310",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 9
@@ -520,6 +598,24 @@
       "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af9234c_11c6e553",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-16T00:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ba97e24_ce2d1310",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -670,6 +766,24 @@
     },
     {
       "key": {
+        "uuid": "c1058637_5a3c526e",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-16T00:48:08Z",
+      "side": 1,
+      "message": "I\u0027ve stuck with CONTROL because it more closely approximates the mock, and since icon is non-text.",
+      "parentUuid": "9d954dc5_bbaedec2",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad9e93cc_f49a73c7",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 9
@@ -723,6 +837,24 @@
     },
     {
       "key": {
+        "uuid": "69156475_2a22598b",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-16T00:48:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3c4db901_6ee0a987",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2768b70_421dff7a",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 9
@@ -737,6 +869,24 @@
       "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95c0e3d6_4e8dad46",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-16T00:48:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e2768b70_421dff7a",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -757,6 +907,24 @@
     },
     {
       "key": {
+        "uuid": "c89cdbe4_20939b30",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-16T00:48:08Z",
+      "side": 1,
+      "message": "I prototyped GridLayout and it works, but the height of the icon is distributed evenly as whitespace between the labels, which seems wrong.  With BoxLayout, the labels are stack one on top of the other, and approximate the mock (explicit padding could be added if more is needed).  I\u0027ve stuck with BoxLayout.",
+      "parentUuid": "a9d8131c_14b58b52",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fbfdaf5_801ab27f",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 9
@@ -771,6 +939,24 @@
       "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a936b180_12068ffc",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-16T00:48:08Z",
+      "side": 1,
+      "message": "I\u0027ve implemented CalculatePreferredSize, as you suggested. However, I am confused by what appears to me to be a contradiction between your first and second paragraphs: your suggested CalculatePreferredSize implementation uses DISTANCE_MODAL_DIALOG_WIDTH_CONTAINING_MULTILINE_TEXT, but you mention above that any layout code which depends on it will be deleted.  Should I be replacing this with a constant defined in this file?",
+      "parentUuid": "7fbfdaf5_801ab27f",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -982,6 +1168,30 @@
       "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e316b75e_b78648e1",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-16T00:48:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "93d354de_fc75d07f",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 12
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
