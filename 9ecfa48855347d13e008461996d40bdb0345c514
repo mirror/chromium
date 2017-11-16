@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "054ab4c4_f6a9dc93",
+        "filename": "components/feature_engagement/internal/feature_config_condition_validator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-16T22:50:06Z",
+      "side": 1,
+      "message": "Why is this 5?  Just some random number greater than 2?  Maybe use 3 instead?\n\nAlso below.",
+      "range": {
+        "startLine": 749,
+        "startChar": 38,
+        "endLine": 749,
+        "endChar": 40
+      },
+      "revId": "9ecfa48855347d13e008461996d40bdb0345c514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
