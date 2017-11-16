@@ -141,10 +141,9 @@ class ReflectorImplTest : public testing::Test {
         std::make_unique<NoTransportImageTransportFactory>());
     task_runner_ = message_loop_->task_runner();
     compositor_task_runner_ = new FakeTaskRunner();
-    begin_frame_source_ = std::make_unique<viz::DelayBasedBeginFrameSource>(
+    begin_frame_source_.reset(new viz::DelayBasedBeginFrameSource(
         std::make_unique<viz::DelayBasedTimeSource>(
-            compositor_task_runner_.get()),
-        viz::BeginFrameSource::kNotRestartableId);
+            compositor_task_runner_.get())));
     compositor_.reset(new ui::Compositor(
         context_factory_private->AllocateFrameSinkId(), context_factory,
         context_factory_private, compositor_task_runner_.get(),

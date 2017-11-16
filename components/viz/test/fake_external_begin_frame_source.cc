@@ -15,8 +15,7 @@ namespace viz {
 FakeExternalBeginFrameSource::FakeExternalBeginFrameSource(
     double refresh_rate,
     bool tick_automatically)
-    : BeginFrameSource(kNotRestartableId),
-      tick_automatically_(tick_automatically),
+    : tick_automatically_(tick_automatically),
       milliseconds_per_frame_(1000.0 / refresh_rate),
       weak_ptr_factory_(this) {
   DETACH_FROM_SEQUENCE(sequence_checker_);
