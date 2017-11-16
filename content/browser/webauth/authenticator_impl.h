@@ -44,12 +44,19 @@ class CONTENT_EXPORT AuthenticatorImpl : public webauth::mojom::Authenticator {
   void MakeCredential(webauth::mojom::MakePublicKeyCredentialOptionsPtr options,
                       MakeCredentialCallback callback) override;
 
+  void GetAssertion(
+      webauth::mojom::PublicKeyCredentialRequestOptionsPtr options,
+      GetAssertionCallback callback) override;
+
   // Callback to handle the async response from a U2fDevice.
-  void OnDeviceResponse(MakeCredentialCallback callback,
-                        std::unique_ptr<CollectedClientData> client_data,
-                        device::U2fReturnCode status_code,
-                        const std::vector<uint8_t>& data,
-                        const std::vector<uint8_t>& key_handle);
+  void OnDeviceResponse(
+      base::OnceCallback<void(webauth::mojom::AuthenticatorStatus,
+                              webauth::mojom::PublicKeyCredentialInfoPtr)>
+          callback,
+      std::unique_ptr<CollectedClientData> client_data,
+      device::U2fReturnCode status_code,
+      const std::vector<uint8_t>& data,
+      const std::vector<uint8_t>& key_handle);
 
   // Runs when timer expires and cancels all issued requests to a U2fDevice.
   void OnTimeout(

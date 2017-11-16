@@ -9,6 +9,7 @@
 #include "core/page/Page.h"
 #include "modules/ModulesExport.h"
 #include "modules/credentialmanager/MakePublicKeyCredentialOptions.h"
+#include "modules/credentialmanager/PublicKeyCredentialRequestOptions.h"
 #include "modules/credentialmanager/WebAuthenticationClient.h"
 #include "platform/Supplementable.h"
 #include "public/platform/WebCredentialManagerClient.h"
@@ -56,6 +57,10 @@ class MODULES_EXPORT CredentialManagerClient final
   virtual void DispatchMakeCredential(
       LocalFrame&,
       const MakePublicKeyCredentialOptions&,
+      std::unique_ptr<WebAuthenticationClient::PublicKeyCallbacks>);
+  virtual void DispatchGetAssertion(
+      LocalFrame&,
+      const PublicKeyCredentialRequestOptions&,
       std::unique_ptr<WebAuthenticationClient::PublicKeyCallbacks>);
 
  private:

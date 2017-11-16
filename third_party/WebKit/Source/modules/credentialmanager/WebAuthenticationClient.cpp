@@ -15,6 +15,9 @@
 #include "core/typed_arrays/DOMArrayBuffer.h"
 #include "modules/credentialmanager/AuthenticatorAttestationResponse.h"
 #include "modules/credentialmanager/MakePublicKeyCredentialOptions.h"
+#include "modules/credentialmanager/PublicKeyCredentialRequestOptions.h"
+#include "platform/weborigin/OriginAccessEntry.h"
+#include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/InterfaceProvider.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
@@ -56,10 +59,8 @@ void RespondToPublicKeyCallback(
     return;
   }
 
-  // Ensure we have an AuthenticatorAttestationResponse
   DCHECK(credential);
   DCHECK(!credential->client_data_json.IsEmpty());
-  DCHECK(!credential->response->attestation_object.IsEmpty());
   callbacks->OnSuccess(std::move(credential));
 }
 }  // namespace
@@ -81,6 +82,7 @@ using webauth::mojom::blink::PublicKeyCredentialUserEntity;
 using webauth::mojom::blink::PublicKeyCredentialUserEntityPtr;
 using webauth::mojom::blink::PublicKeyCredentialParameters;
 using webauth::mojom::blink::PublicKeyCredentialParametersPtr;
+using webauth::mojom::blink::PublicKeyCredentialRequestOptionsPtr;
 using webauth::mojom::blink::PublicKeyCredentialType;
 using webauth::mojom::blink::AuthenticatorTransport;
 
@@ -239,6 +241,49 @@ struct TypeConverter<MakePublicKeyCredentialOptionsPtr,
   }
 };
 
+template <>
+struct TypeConverter<PublicKeyCredentialRequestOptionsPtr,
+                     blink::PublicKeyCredentialRequestOptions> {
+  static PublicKeyCredentialRequestOptionsPtr Convert(
+      const blink::PublicKeyCredentialRequestOptions options) {
+    auto mojo_options =
+        webauth::mojom::blink::PublicKeyCredentialRequestOptions::New();
+    mojo_options->challenge = ConvertTo<Vector<uint8_t>>(options.challenge());
+
+    if (options.hasTimeout()) {
+      WTF::TimeDelta adjusted_timeout;
+      adjusted_timeout = WTF::TimeDelta::FromMilliseconds(options.timeout());
+      mojo_options->adjusted_timeout =
+          std::max(kAdjustedTimeoutLower,
+                   std::min(kAdjustedTimeoutUpper, adjusted_timeout));
+    } else {
+      mojo_options->adjusted_timeout = kAdjustedTimeoutLower;
+    }
+
+    mojo_options->relying_party_id = options.rpId();
+
+    if (options.hasAllowCredentials()) {
+      // Adds the allowList members
+      for (const blink::PublicKeyCredentialDescriptor& descriptor :
+           options.allowCredentials()) {
+        auto mojo_descriptor =
+            webauth::mojom::blink::PublicKeyCredentialDescriptor::New();
+        mojo_descriptor->type =
+            ConvertTo<PublicKeyCredentialType>(descriptor.type());
+        mojo_descriptor->id = ConvertTo<Vector<uint8_t>>((descriptor.id()));
+        if (descriptor.hasTransports()) {
+          for (const auto& transport : descriptor.transports()) {
+            mojo_descriptor->transports.push_back(
+                ConvertTo<AuthenticatorTransport>(transport));
+          }
+        }
+        mojo_options->allow_credentials.push_back(std::move(mojo_descriptor));
+      }
+    }
+    return mojo_options;
+  }
+};
+
 }  // namespace mojo
 
 namespace blink {
@@ -270,11 +315,15 @@ void WebAuthenticationClient::DispatchMakeCredential(
   return;
 }
 
-void WebAuthenticationClient::GetAssertion(
+void WebAuthenticationClient::DispatchGetAssertion(
     const PublicKeyCredentialRequestOptions& publicKey,
-    PublicKeyCallbacks* callbacks) {
-  // TODO (kpaulhamus): implement GetAssertion and removed NOTREACHED().
-  NOTREACHED();
+    std::unique_ptr<PublicKeyCallbacks> callbacks) {
+  auto options = mojo::ConvertTo<
+      webauth::mojom::blink::PublicKeyCredentialRequestOptionsPtr>(publicKey);
+  authenticator_->GetAssertion(
+      std::move(options),
+      ConvertToBaseCallback(WTF::Bind(&RespondToPublicKeyCallback,
+                                      WTF::Passed(std::move(callbacks)))));
   return;
 }
 

@@ -36,6 +36,26 @@ class MockAuthenticator {
     return {status, credential: info};
   }
 
+  async getAssertion(options) {
+    var info = null;
+    if (this.status_ == webauth.mojom.AuthenticatorStatus.SUCCESS) {
+      let response = new webauth.mojom.AuthenticatorResponse(
+          { attestationObject: this.attestationObject_,
+            authenticatorData: this.authenticatorData_,
+            signature: this.signature_
+          });
+      info = new webauth.mojom.PublicKeyCredentialInfo(
+          { id: this.id_,
+            rawId: this.rawId_,
+            clientDataJson: this.clientDataJson_,
+            response: response
+          });
+    }
+    let status = this.status_;
+    this.reset();
+    return {status, credential: info};
+  }
+
   // Mock functions
 
   // Resets state of mock Authenticator.

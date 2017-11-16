@@ -48,7 +48,10 @@ struct AuthenticatorResponse {
   array<uint8> authenticator_data;
 
   // Cryptographic signature proving possession of the credential private key.
+  // Returned after generating an assertion.
   array<uint8> signature;
+
+  array<uint8> user_handle;
 };
 
 // Information about the relying party. These fields take arbitrary input.
@@ -108,6 +111,19 @@ struct MakePublicKeyCredentialOptions {
   // TODO(kpaulhamus): add AuthenticatorSelectionCriteria
 };
 
+// Parameters passed into calls to GetAssertion.
+struct PublicKeyCredentialRequestOptions {
+  // A blob passed from the the relying party server.
+  array<uint8> challenge;
+
+  mojo.common.mojom.TimeDelta adjusted_timeout;
+
+  // An ASCII serialization of an origin claimed by the relying party.
+  string? relying_party_id;
+
+  array<PublicKeyCredentialDescriptor> allow_credentials;
+};
+
 enum PublicKeyCredentialType {
   PUBLIC_KEY,
 };
@@ -137,5 +153,11 @@ interface Authenticator {
   // authenticator for the given |MakePublicKeyCredentialOptions|
   // [PublicKeyCredentialInfo] will only be set if status == SUCCESS.
   MakeCredential(MakePublicKeyCredentialOptions options)
+      => (AuthenticatorStatus status, PublicKeyCredentialInfo? credential);
+
+  // Uses an existing credential to produce an assertion for the given
+  // |PublicKeyCredentialRequestOptions|.
+  // |PublicKeyCredentialInfo| will only be set if status == SUCCESS.
+  GetAssertion(PublicKeyCredentialRequestOptions options)
       => (AuthenticatorStatus status, PublicKeyCredentialInfo? credential);
 };

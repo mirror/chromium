@@ -372,6 +372,12 @@ const std::vector<uint8_t>& GetTestECPublicKeyCBOR() {
   return data;
 }
 
+const std::vector<uint8_t>& GetTestSignResponse() {
+  static const std::vector<uint8_t> data(std::begin(kTestU2fSignResponse),
+                                         std::end(kTestU2fSignResponse));
+  return data;
+}
+
 const std::vector<uint8_t>& GetTestRegisterResponse() {
   static const std::vector<uint8_t> data(std::begin(kTestU2fRegisterResponse),
                                          std::end(kTestU2fRegisterResponse));
@@ -719,7 +725,7 @@ TEST_F(AuthenticatorImplTest, TestSignResponseData) {
       GetTestClientData(authenticator_utils::kGetType);
   std::unique_ptr<SignResponseData> response =
       SignResponseData::CreateFromU2fSignResponse(
-          std::move(client_data), std::move(kTestU2fSignResponse),
+          std::move(client_data), GetTestSignResponse(),
           GetTestCredentialRawIdBytes());
 
   EXPECT_EQ(std::vector<uint8_t>(kTestSignClientDataJsonString,

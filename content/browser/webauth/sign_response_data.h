@@ -35,12 +35,14 @@ class CONTENT_EXPORT SignResponseData : public ResponseData {
 
   std::vector<uint8_t> GetAuthenticatorDataBytes();
   const std::vector<uint8_t>& signature() { return signature_; }
+  const std::vector<uint8_t>& key_handle() { return key_handle_; }
 
   ~SignResponseData() override;
 
  private:
   const std::unique_ptr<AuthenticatorData> authenticator_data_;
   const std::vector<uint8_t> signature_;
+  const std::vector<uint8_t> key_handle_;
 
   DISALLOW_COPY_AND_ASSIGN(SignResponseData);
 };
