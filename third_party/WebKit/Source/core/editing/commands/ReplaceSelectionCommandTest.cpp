@@ -154,4 +154,21 @@ TEST_F(ReplaceSelectionCommandTest, TextAutosizingDoesntInflateText) {
   EXPECT_EQ(1u, div->CountChildren());
 }
 
+// This is a regression test for https://crbug.com/781282
+TEST_F(ReplaceSelectionCommandTest, TrailingNonVisibleTextCrash) {
+  GetDocument().setDesignMode("on");
+  Selection().SetSelection(SetSelectionTextToBody("<div>^foo|</div>"));
+
+  // Crash should not occur on executing below command
+  DocumentFragment* fragment = GetDocument().createDocumentFragment();
+  fragment->ParseHTML("<div>bar</div> ", GetDocument().QuerySelector("div"));
+  ReplaceSelectionCommand::CommandOptions options = 0;
+  ReplaceSelectionCommand* command =
+      ReplaceSelectionCommand::Create(GetDocument(), fragment, options);
+
+  EXPECT_FALSE(command->Apply());
+  EXPECT_EQ("<div>bar</div>|<br>",
+            GetSelectionTextFromBody(Selection().GetSelectionInDOMTree()));
+}
+
 }  // namespace blink
