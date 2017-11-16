@@ -12,9 +12,12 @@
 #include "chrome/browser/resource_coordinator/tab_manager.h"
 #include "chrome/browser/resource_coordinator/tab_manager_stats_collector.h"
 #include "chrome/browser/resource_coordinator/time.h"
+#include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/page_importance_signals.h"
+#include "net/base/mime_util.h"
 #include "services/metrics/public/cpp/ukm_builders.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
@@ -26,12 +29,62 @@ DEFINE_WEB_CONTENTS_USER_DATA_KEY(
     resource_coordinator::TabManager::WebContentsData);
 
 namespace resource_coordinator {
+namespace {
+
+constexpr base::TimeDelta kMinimumTimeBetweenTabLogs =
+    base::TimeDelta::FromSeconds(10);
+
+enum class ContentType {
+  // Not one of the types below.
+  OTHER = 0,
+
+  // The "application/*" type. Supported application sub-types are enumerated
+  // in Chrome's PluginType.
+  APPLICATION = 1,
+
+  // The "audio/*" type.
+  AUDIO = 2,
+
+  // The "image/*" type.
+  IMAGE = 3,
+
+  // The "text/*" type. For "text/html", TEXT_HTML is used instead.
+  TEXT = 4,
+
+  // The "text/html" type, representing web pages.
+  TEXT_HTML = 5,
+
+  // The "video/*" type.
+  VIDEO = 6,
+};
+
+int GetContentTypeFromMimeType(const std::string& mime_type) {
+  ContentType content_type = ContentType::OTHER;
+
+  // Test for sub-types before primary types.
+  if (net::MatchesMimeType("text/html", mime_type))
+    content_type = ContentType::TEXT_HTML;
+  else if (net::MatchesMimeType("application/*", mime_type))
+    content_type = ContentType::APPLICATION;
+  else if (net::MatchesMimeType("audio/*", mime_type))
+    content_type = ContentType::AUDIO;
+  else if (net::MatchesMimeType("image/*", mime_type))
+    content_type = ContentType::IMAGE;
+  else if (net::MatchesMimeType("text/*", mime_type))
+    content_type = ContentType::TEXT;
+  else if (net::MatchesMimeType("video/*", mime_type))
+    content_type = ContentType::VIDEO;
+  return static_cast<int>(content_type);
+}
+
+}  // namespace
 
 TabManager::WebContentsData::WebContentsData(content::WebContents* web_contents)
     : WebContentsObserver(web_contents),
       time_to_purge_(base::TimeDelta::FromMinutes(30)),
       is_purged_(false),
-      ukm_source_id_(0) {}
+      ukm_source_id_(0),
+      last_tab_log_time_(TimeTicks::UnixEpoch()) {}
 
 TabManager::WebContentsData::~WebContentsData() {}
 
@@ -77,6 +130,7 @@ void TabManager::WebContentsData::DidFinishNavigation(
   tab_data_.navigation_time = navigation_handle->NavigationStart();
   ukm_source_id_ = ukm::ConvertToSourceId(navigation_handle->GetNavigationId(),
                                           ukm::SourceIdType::NAVIGATION_ID);
+  ReportUKMForTab();
 }
 
 void TabManager::WebContentsData::WasShown() {
@@ -120,6 +174,29 @@ void TabManager::WebContentsData::NotifyTabIsLoaded() {
     SetTabLoadingState(TAB_IS_LOADED);
     g_browser_process->GetTabManager()->OnTabIsLoaded(web_contents());
   }
+}
+
+void TabManager::WebContentsData::ReportUKMForTab() {
+  if (!ukm_source_id_)
+    return;
+  if (NowTicks() - last_tab_log_time_ < kMinimumTimeBetweenTabLogs)
+    return;
+  last_tab_log_time_ = NowTicks();
+
+  TabStripModel* model = nullptr;
+  int tab_index = g_browser_process->GetTabManager()->FindTabStripModelById(
+      resource_coordinator::TabManager::IdFromWebContents(web_contents()),
+      &model);
+  if (!model)
+    return;
+
+  ukm::builders::TabManager_Tab(ukm_source_id_)
+      .SetIsPinned(model->IsTabPinned(tab_index))
+      .SetHasFormEntry(
+          web_contents()->GetPageImportanceSignals().had_form_interaction)
+      .SetContentType(
+          GetContentTypeFromMimeType(web_contents()->GetContentsMimeType()))
+      .Record(ukm::UkmRecorder::Get());
 }
 
 bool TabManager::WebContentsData::IsDiscarded() {
@@ -239,6 +316,7 @@ void TabManager::WebContentsData::
       .SetTimeFromBackgrounded(duration.InMilliseconds())
       .SetIsForegrounded(is_foregrounded)
       .Record(ukm::UkmRecorder::Get());
+  ReportUKMForTab();
 }
 
 TabManager::WebContentsData::Data::Data()
