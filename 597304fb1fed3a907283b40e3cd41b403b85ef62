@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3796d032_2e4252fd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/message-port.html",
+        "patchSetId": 20
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-16T21:51:34Z",
+      "side": 1,
+      "message": "I initially read that AudioWorkletProcessor (in general) does this.  But no, it\u0027s actually the port-processor creation.  Maybe change to make it clear that it\u0027s how port-processor works here.",
+      "revId": "597304fb1fed3a907283b40e3cd41b403b85ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "447ce4a4_bf5efbd8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/message-port.html",
+        "patchSetId": 20
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-16T21:51:34Z",
+      "side": 1,
+      "message": "Be consistent?  Line 34 just says \"processor\".  I think I\u0027be say \"port-processor\" in both places.",
+      "revId": "597304fb1fed3a907283b40e3cd41b403b85ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e46751_43228b84",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-16T21:51:34Z",
+      "side": 1,
+      "message": "\"temporary storage\" seems not the correct comment for a class?",
+      "revId": "597304fb1fed3a907283b40e3cd41b403b85ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa803972_c71658fd",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-16T21:51:34Z",
+      "side": 1,
+      "message": "Is this used anywhere else other than from an AudioWorkletProcessor object?  If not, maybe move this inside of the AudioWorkletProcessor class?",
+      "revId": "597304fb1fed3a907283b40e3cd41b403b85ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a0b2799_c3307b1d",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-16T21:51:34Z",
+      "side": 1,
+      "message": "Clears what data?",
+      "revId": "597304fb1fed3a907283b40e3cd41b403b85ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e5a914_1bc6baf3",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-16T21:51:34Z",
+      "side": 1,
+      "message": "Why does this have to be a slot in the class?  It seems it\u0027s created once, used, and then all elements cleared all in one function.  Can\u0027t it just be a local to the function?",
+      "revId": "597304fb1fed3a907283b40e3cd41b403b85ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
