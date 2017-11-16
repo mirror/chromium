@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8911bd4_2457a2da",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T23:48:59Z",
+      "side": 1,
+      "message": "This is implied as part of the static C++ behavior and can be removed.",
+      "range": {
+        "startLine": 12,
+        "startChar": 63,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "3aaae015610f35a6cbd20f2af7318b97bf5a5289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
