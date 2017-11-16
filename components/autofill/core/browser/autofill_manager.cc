@@ -421,16 +421,25 @@ bool AutofillManager::OnFormSubmitted(const FormData& form) {
 
   CreditCard credit_card =
       form_data_importer_->ExtractCreditCardFromForm(*submitted_form);
-  if (IsValidCreditCardNumber(credit_card.number())) {
-    credit_card_form_event_logger_->DetectedCardInSubmittedForm();
-    if (personal_data_->IsKnownCard(credit_card)) {
-      credit_card_form_event_logger_->SubmittedKnownCard();
-    }
+  base::string16 number = credit_card.number();
+  AutofillMetrics::SubmittedCard submitted_card;
+  if (number.empty()) {
+    submitted_card = AutofillMetrics::EMPTY_CARD;
+  } else if (!HasCorrectLength(number)) {
+    submitted_card = AutofillMetrics::WRONG_SIZE_CARD;
+  } else if (!PassesLuhnCheck(number)) {
+    submitted_card = AutofillMetrics::FAIL_LUHN_CHECK_CARD;
+  } else if (personal_data_->IsKnownCard(credit_card)) {
+    submitted_card = AutofillMetrics::KNOWN_CARD;
+  } else {
+    submitted_card = AutofillMetrics::UNKNOWN_CARD;
   }
 
-  address_form_event_logger_->OnFormSubmitted(/*force_logging=*/false);
+  address_form_event_logger_->OnFormSubmitted(/*force_logging=*/false,
+                                              submitted_card);
   if (IsCreditCardAutofillEnabled())
-    credit_card_form_event_logger_->OnFormSubmitted(enable_ablation_logging_);
+    credit_card_form_event_logger_->OnFormSubmitted(enable_ablation_logging_,
+                                                    submitted_card);
 
   // Update Personal Data with the form's submitted data.
   // Also triggers offering local/upload credit card save, if applicable.
