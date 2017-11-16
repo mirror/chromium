@@ -12,6 +12,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "content/browser/accessibility/browser_accessibility_android.h"
 #include "content/browser/accessibility/browser_accessibility_manager_android.h"
+#include "content/browser/accessibility/browser_accessibility_position.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/url_constants.h"
@@ -20,8 +21,15 @@
 #include "content/shell/browser/shell.h"
 #include "content/test/accessibility_browser_test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/accessibility/ax_range.h"
+#include "ui/accessibility/ax_text_utils.h"
 
 namespace content {
+
+using BrowserAccessibilityPositionInstance =
+    BrowserAccessibilityPosition::AXPositionInstance;
+using AXPlatformRange =
+    ui::AXRange<BrowserAccessibilityPositionInstance::element_type>;
 
 const int GRANULARITY_CHARACTER =
     ANDROID_ACCESSIBILITY_NODE_INFO_MOVEMENT_GRANULARITY_CHARACTER;
@@ -209,6 +217,34 @@ IN_PROC_BROWSER_TEST_F(AndroidGranularityMovementBrowserTest,
 
   ASSERT_EQ(base::ASCIIToUTF16("'One,', 'two,', 'three!'"),
             TraverseNodeAtGranularity(pre, GRANULARITY_LINE));
+}
+
+IN_PROC_BROWSER_TEST_F(AndroidGranularityMovementBrowserTest,
+                       NavigateByLineUsingAXPosition) {
+  GURL url(
+      "data:text/html,"
+      "<a href=\"#\">"
+      "<div>cat</div>"
+      "<div>ate</div>"
+      "<div>dog</div>"
+      "</a>");
+  BrowserAccessibility* root = LoadUrlAndGetAccessibilityRoot(url);
+  ASSERT_EQ(1U, root->PlatformChildCount());
+  BrowserAccessibility* link = root->PlatformGetChild(0);
+  ASSERT_EQ(3U, link->PlatformChildCount());
+
+  BrowserAccessibilityPositionInstance start_position =
+      BrowserAccessibilityPosition::CreateTextPosition(
+          link->manager()->ax_tree_id(), link->GetId(), 0,
+          ui::AX_TEXT_AFFINITY_DOWNSTREAM);
+  BrowserAccessibilityPositionInstance end_position =
+      BrowserAccessibilityPosition::CreateTextPosition(
+          link->manager()->ax_tree_id(), link->GetId(), 0,
+          ui::AX_TEXT_AFFINITY_DOWNSTREAM);
+  AXPlatformRange range(start_position->CreateNextLineStartPosition(),
+                        end_position->CreateNextLineStartPosition()
+                            ->CreateNextLineStartPosition());
+  EXPECT_EQ("", range.GetText());
 }
 
 }  // namespace content
