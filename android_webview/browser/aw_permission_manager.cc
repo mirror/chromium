@@ -327,6 +327,8 @@ int AwPermissionManager::RequestPermissions(
       case PermissionType::SENSORS:
       case PermissionType::FLASH:
       case PermissionType::ACCESSIBILITY_EVENTS:
+      case PermissionType::CLIPBOARD_READ:
+      case PermissionType::CLIPBOARD_WRITE:
         NOTIMPLEMENTED() << "RequestPermissions is not implemented for "
                          << static_cast<int>(permissions[i]);
         pending_request_raw->SetPermissionStatus(permissions[i],
@@ -467,6 +469,8 @@ void AwPermissionManager::CancelPermissionRequest(int request_id) {
       case PermissionType::SENSORS:
       case PermissionType::FLASH:
       case PermissionType::ACCESSIBILITY_EVENTS:
+      case PermissionType::CLIPBOARD_READ:
+      case PermissionType::CLIPBOARD_WRITE:
         NOTIMPLEMENTED() << "CancelPermission not implemented for "
                          << static_cast<int>(permission);
         break;
