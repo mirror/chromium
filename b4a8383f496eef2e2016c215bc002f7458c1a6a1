@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d2c2dfb_8cb33dd8",
+        "filename": "gpu/command_buffer/service/scheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-16T23:47:38Z",
+      "side": 1,
+      "message": "nit: friend declarations go below private:",
+      "revId": "b4a8383f496eef2e2016c215bc002f7458c1a6a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aad9368_4401f371",
+        "filename": "gpu/command_buffer/service/scheduler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-16T23:47:38Z",
+      "side": 1,
+      "message": "nit: do you need the lock for these tests?",
+      "revId": "b4a8383f496eef2e2016c215bc002f7458c1a6a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
