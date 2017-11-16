@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aca65042_e48bbd91",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7257,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-16T20:02:50Z",
+      "side": 1,
+      "message": "This is cool-- I didn\u0027t expect it to work, but it makes sense if we\u0027re calling RemoveChild for these frames as we navigate away.\n\nI suppose we do that for main frames as well?  Is it easy to add a test that FNEs for dynamic subframes go away on a main frame navigation?",
+      "revId": "53eae77c4077dcbcd63bfc8428933502de0d4d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4449474_56c4e267",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7283,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-16T20:02:50Z",
+      "side": 1,
+      "message": "Can you make this a cross-site URL so that we also test the cross-process case on the FYI bots?",
+      "revId": "53eae77c4077dcbcd63bfc8428933502de0d4d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d9813e_53931fdf",
+        "filename": "content/browser/frame_host/navigation_entry_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-16T20:02:50Z",
+      "side": 1,
+      "message": "nit: Update comment.",
+      "revId": "53eae77c4077dcbcd63bfc8428933502de0d4d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
