@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "564cdc07_d595e383",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-16T17:29:02Z",
+      "side": 1,
+      "message": "nit: lines? Also, if you have a bullet list and you use a period at the end, you might want to be consistent in all entries.",
+      "revId": "a49e0b87c01ac893bc8d4375952948db3f648a57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2473cf05_36d7ce90",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-16T17:29:02Z",
+      "side": 1,
+      "message": "I\u0027m ok with this, if for any reason the old counter is preferred, we can always just count the buffers that are non-flush here.",
+      "revId": "a49e0b87c01ac893bc8d4375952948db3f648a57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
