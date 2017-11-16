@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11b83bb4_f2983894",
+        "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupportWithMockScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-16T05:21:15Z",
+      "side": 1,
+      "message": "Is this equivalent to IsMainThread()?\n\nIf yes, we want to add a dcheck.",
+      "revId": "cb96ca53b96ae8ab38de9a9bcb49a4a799428d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ab7664_ba38a53c",
+        "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupportWithMockScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-16T05:21:15Z",
+      "side": 1,
+      "message": "Can we add a dcheck that this is never null?",
+      "revId": "cb96ca53b96ae8ab38de9a9bcb49a4a799428d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
