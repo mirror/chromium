@@ -45,8 +45,8 @@ bool AudioWorkletProcessor::Process(
     HashMap<String, std::unique_ptr<AudioFloatArray>>* param_value_map,
     double current_time) {
   DCHECK(global_scope_->IsContextThread());
-  return global_scope_->Process(
-      this, input_buses, output_buses, param_value_map, current_time);
+  return global_scope_->Process(this, input_buses, output_buses,
+                                param_value_map, current_time);
 }
 
 void AudioWorkletProcessor::Trace(blink::Visitor* visitor) {
