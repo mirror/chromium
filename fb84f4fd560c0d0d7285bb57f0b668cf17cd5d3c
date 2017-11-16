@@ -16,6 +16,24 @@
       "revId": "fb84f4fd560c0d0d7285bb57f0b668cf17cd5d3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be27265_4497c420",
+        "filename": "components/policy/proto/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-16T16:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "903d4f15_aedd3395",
+      "revId": "fb84f4fd560c0d0d7285bb57f0b668cf17cd5d3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
