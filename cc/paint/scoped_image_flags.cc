@@ -34,7 +34,7 @@ ScopedImageFlags::DecodeStashingImageProvider::GetDecodedDrawImage(
   // No need to add any destruction callback to the returned image. The images
   // decoded here match the lifetime of this provider.
   auto image_to_return = ScopedDecodedDrawImage(decode.decoded_image());
-  decoded_images_.push_back(std::move(decode));
+  decoded_images_->push_back(std::move(decode));
   return image_to_return;
 }
 
