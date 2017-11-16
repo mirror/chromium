@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7289c694_69fc1fa4",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-16T21:10:59Z",
+      "side": 1,
+      "message": "Let\u0027s instead check for the presence of headers rather than for the scheme.",
+      "revId": "fff8fd60b8644ce3e9e5af795d2b9923e2e41754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
