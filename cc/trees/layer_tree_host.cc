@@ -979,6 +979,15 @@ void LayerTreeHost::SetEventListenerProperties(
   SetNeedsCommit();
 }
 
+void LayerTreeHost::SetWheelEventListenerRect(gfx::Rect rect) {
+  if (wheel_event_listener_rect_ == rect)
+    return;
+
+  wheel_event_listener_rect_ = rect;
+  LOG(ERROR) << "LTH: " << rect.ToString();
+  SetNeedsCommit();
+}
+
 void LayerTreeHost::SetViewportSize(
     const gfx::Size& device_viewport_size,
     const viz::LocalSurfaceId& local_surface_id) {
@@ -1243,6 +1252,7 @@ void LayerTreeHost::PushLayerTreePropertiesTo(LayerTreeImpl* tree_impl) {
   tree_impl->set_event_listener_properties(
       EventListenerClass::kTouchEndOrCancel,
       event_listener_properties(EventListenerClass::kTouchEndOrCancel));
+  tree_impl->set_wheel_event_listener_rect(wheel_event_listener_rect_);
 
   if (viewport_layers_.page_scale && viewport_layers_.inner_viewport_scroll) {
     LayerTreeImpl::ViewportLayerIds ids;

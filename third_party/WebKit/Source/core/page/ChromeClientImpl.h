@@ -142,6 +142,10 @@ class CORE_EXPORT ChromeClientImpl final : public ChromeClient {
   WebEventListenerProperties EventListenerProperties(
       LocalFrame*,
       WebEventListenerClass) const override;
+
+  void SetWheelEventListenerRect(LocalFrame*, const WebRect&) override;
+  WebRect WheelEventListenerRect(LocalFrame*) const override;
+
   void UpdateEventRectsForSubframeIfNecessary(LocalFrame*);
   // Informs client about the existence of handlers for scroll events so
   // appropriate scroll optimizations can be chosen.

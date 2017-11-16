@@ -163,6 +163,7 @@ class CONTENT_EXPORT RenderWidgetCompositor
   void SetEventListenerProperties(
       blink::WebEventListenerClass eventClass,
       blink::WebEventListenerProperties properties) override;
+  void SetWheelEventListenerRect(blink::WebRect rect) override;
   void UpdateEventRectsForSubframeIfNecessary() override;
   blink::WebEventListenerProperties EventListenerProperties(
       blink::WebEventListenerClass eventClass) const override;

@@ -207,6 +207,11 @@ class CORE_EXPORT EmptyChromeClient : public ChromeClient {
       WebEventListenerClass event_class) const override {
     return WebEventListenerProperties::kNothing;
   }
+
+  void SetWheelEventListenerRect(LocalFrame*, const WebRect& rect) override {}
+  WebRect WheelEventListenerRect(LocalFrame*) const override {
+    return WebRect();
+  }
   void UpdateEventRectsForSubframeIfNecessary(LocalFrame* frame) override {}
   void SetHasScrollEventHandlers(LocalFrame*, bool) override {}
   void SetNeedsLowLatencyInput(LocalFrame*, bool) override {}

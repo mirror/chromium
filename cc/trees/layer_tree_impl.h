@@ -534,6 +534,14 @@ class CC_EXPORT LayerTreeImpl {
         event_properties;
   }
 
+  gfx::Rect wheel_event_listener_rect() const {
+    return wheel_event_listener_rect_;
+  }
+  void set_wheel_event_listener_rect(gfx::Rect rect) {
+    LOG(ERROR) << "set_wheel_event_listener_rect " << rect.ToString();
+    wheel_event_listener_rect_ = rect;
+  }
+
   void ResetAllChangeTracking();
 
   void AddToLayerList(LayerImpl* layer);
@@ -651,6 +659,7 @@ class CC_EXPORT LayerTreeImpl {
   bool have_scroll_event_handlers_;
   EventListenerProperties event_listener_properties_[static_cast<size_t>(
       EventListenerClass::kNumClasses)];
+  gfx::Rect wheel_event_listener_rect_;
 
   // Whether or not Blink's viewport size was shrunk by the height of the top
   // controls at the time of the last layout.
