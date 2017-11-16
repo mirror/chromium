@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21bb4418_78cf8dbe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-16T21:38:02Z",
+      "side": 1,
+      "message": "nit, but I\u0027d say timeDeltaMillis to make it easier to compare between the micros below.",
+      "range": {
+        "startLine": 490,
+        "startChar": 13,
+        "endLine": 490,
+        "endChar": 22
+      },
+      "revId": "cb0a0361a5442db3c21b2db25e4935814129ff95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba6fef1_7ee106b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-16T21:38:02Z",
+      "side": 1,
+      "message": "Do we want to log Fail here if we haven\u0027t recorded anything?  This would be a case where they opened but took no action?\n\nI guess not needed per say for this CL, just a thought.",
+      "revId": "cb0a0361a5442db3c21b2db25e4935814129ff95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
