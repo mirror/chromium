@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0720ee09_90cca0c2",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-16T19:31:59Z",
+      "side": 1,
+      "message": "It looks like there\u0027s already a \"UpdateScrollableAreaSet\" just a few lines up. Why is this needed here?",
+      "revId": "63103431c8f64ae243aedb4263eb0e62918baaf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ea6dd8_9f9387fc",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-16T19:31:59Z",
+      "side": 1,
+      "message": "What\u0027s the need to move this above the scrollbar existence calculation?",
+      "revId": "63103431c8f64ae243aedb4263eb0e62918baaf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "145b7b80_2084b0c4",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1679,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-16T19:31:59Z",
+      "side": 1,
+      "message": "It seems that scroll corners and resizers are very similar. Do we need this exact logic in UpdateScrollCornerStyle too?",
+      "revId": "63103431c8f64ae243aedb4263eb0e62918baaf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
