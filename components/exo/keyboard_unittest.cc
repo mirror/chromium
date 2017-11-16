@@ -16,6 +16,7 @@
 #include "components/exo/surface.h"
 #include "components/exo/test/exo_test_base.h"
 #include "components/exo/test/exo_test_helper.h"
+#include "components/exo/xdg_shell_surface.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "ui/aura/client/focus_client.h"
 #include "ui/events/devices/device_data_manager.h"
@@ -59,16 +60,17 @@ class MockKeyboardObserver : public KeyboardObserver {
   MOCK_METHOD1(OnKeyboardDestroying, void(Keyboard*));
 };
 
-class TestShellSurface : public ShellSurface {
+class TestShellSurface : public XdgShellSurface {
  public:
-  explicit TestShellSurface(Surface* surface) : ShellSurface(surface) {}
+  explicit TestShellSurface(Surface* surface) : XdgShellSurface(surface) {}
 
   MOCK_METHOD1(AcceleratorPressed, bool(const ui::Accelerator& accelerator));
 };
 
 TEST_F(KeyboardTest, OnKeyboardEnter) {
   std::unique_ptr<Surface> surface(new Surface);
-  std::unique_ptr<ShellSurface> shell_surface(new ShellSurface(surface.get()));
+  std::unique_ptr<ShellSurface> shell_surface(
+      exo_test_helper()->CreateShellSurface(surface.get()));
   gfx::Size buffer_size(10, 10);
   std::unique_ptr<Buffer> buffer(
       new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
@@ -108,7 +110,8 @@ TEST_F(KeyboardTest, OnKeyboardEnter) {
 
 TEST_F(KeyboardTest, OnKeyboardLeave) {
   std::unique_ptr<Surface> surface(new Surface);
-  std::unique_ptr<ShellSurface> shell_surface(new ShellSurface(surface.get()));
+  std::unique_ptr<ShellSurface> shell_surface(
+      exo_test_helper()->CreateShellSurface(surface.get()));
   gfx::Size buffer_size(10, 10);
   std::unique_ptr<Buffer> buffer(
       new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
@@ -137,7 +140,8 @@ TEST_F(KeyboardTest, OnKeyboardLeave) {
 
 TEST_F(KeyboardTest, OnKeyboardKey) {
   std::unique_ptr<Surface> surface(new Surface);
-  std::unique_ptr<ShellSurface> shell_surface(new ShellSurface(surface.get()));
+  std::unique_ptr<ShellSurface> shell_surface(
+      exo_test_helper()->CreateShellSurface(surface.get()));
   gfx::Size buffer_size(10, 10);
   std::unique_ptr<Buffer> buffer(
       new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
@@ -175,7 +179,8 @@ TEST_F(KeyboardTest, OnKeyboardKey) {
 
 TEST_F(KeyboardTest, OnKeyboardModifiers) {
   std::unique_ptr<Surface> surface(new Surface);
-  std::unique_ptr<ShellSurface> shell_surface(new ShellSurface(surface.get()));
+  std::unique_ptr<ShellSurface> shell_surface(
+      exo_test_helper()->CreateShellSurface(surface.get()));
   gfx::Size buffer_size(10, 10);
   std::unique_ptr<Buffer> buffer(
       new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
@@ -218,7 +223,8 @@ TEST_F(KeyboardTest, OnKeyboardModifiers) {
 
 TEST_F(KeyboardTest, OnKeyboardTypeChanged) {
   std::unique_ptr<Surface> surface(new Surface);
-  std::unique_ptr<ShellSurface> shell_surface(new ShellSurface(surface.get()));
+  std::unique_ptr<ShellSurface> shell_surface(
+      exo_test_helper()->CreateShellSurface(surface.get()));
   gfx::Size buffer_size(10, 10);
   std::unique_ptr<Buffer> buffer(
       new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
@@ -266,7 +272,8 @@ TEST_F(KeyboardTest, OnKeyboardTypeChanged) {
 
 TEST_F(KeyboardTest, KeyboardObserver) {
   std::unique_ptr<Surface> surface(new Surface);
-  std::unique_ptr<ShellSurface> shell_surface(new ShellSurface(surface.get()));
+  std::unique_ptr<ShellSurface> shell_surface(
+      exo_test_helper()->CreateShellSurface(surface.get()));
   gfx::Size buffer_size(10, 10);
   std::unique_ptr<Buffer> buffer(
       new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
@@ -288,7 +295,8 @@ TEST_F(KeyboardTest, KeyboardObserver) {
 
 TEST_F(KeyboardTest, NeedKeyboardKeyAcks) {
   std::unique_ptr<Surface> surface(new Surface);
-  std::unique_ptr<ShellSurface> shell_surface(new ShellSurface(surface.get()));
+  std::unique_ptr<ShellSurface> shell_surface(
+      exo_test_helper()->CreateShellSurface(surface.get()));
   gfx::Size buffer_size(10, 10);
   std::unique_ptr<Buffer> buffer(
       new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
@@ -488,10 +496,10 @@ TEST_F(KeyboardTest, AckKeyboardKeyExpired) {
 // another window, it causes clearing the map of pending key acks in Keyboard.
 // We can't assume that an iterator of the map is valid after processing an
 // accelerator.
-class TestShellSurfaceWithMovingFocusAccelerator : public ShellSurface {
+class TestShellSurfaceWithMovingFocusAccelerator : public XdgShellSurface {
  public:
   explicit TestShellSurfaceWithMovingFocusAccelerator(Surface* surface)
-      : ShellSurface(surface) {}
+      : XdgShellSurface(surface) {}
 
   bool AcceleratorPressed(const ui::Accelerator& accelerator) override {
     aura::client::FocusClient* focus_client =
