@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "84580c2c_3454e0a0",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-16T00:02:41Z",
+      "side": 1,
+      "message": "Ah, I see. Done.",
+      "parentUuid": "48c40c25_7f985091",
+      "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d9033d3_ecfbf35a",
         "filename": "ui/display/manager/chromeos/display_configurator.cc",
         "patchSetId": 5
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "can you check if this condition can still happen?",
       "parentUuid": "235043a3_ce5d71fe",
+      "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d914e4_fee0f104",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-16T00:02:41Z",
+      "side": 1,
+      "message": "Do you mean that i should add a CHECK for this function to be true instead of \u0027if condition\u0027?",
+      "parentUuid": "fca49015_dfb46b42",
       "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

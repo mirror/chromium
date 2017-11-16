@@ -16,6 +16,24 @@
       "revId": "f7f64302f9a2af6772e818a69de55955fc5f69b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c13fc82d_fd2cbc89",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-16T00:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d7db4e5_74702e34",
+      "revId": "f7f64302f9a2af6772e818a69de55955fc5f69b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
