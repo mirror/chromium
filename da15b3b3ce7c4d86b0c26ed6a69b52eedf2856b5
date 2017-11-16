@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ad39029_a3666c5b",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-16T21:39:55Z",
+      "side": 1,
+      "message": "I\u0027d leave this as \n\nbool CARendererLayerTree::RootLayer::CheckForFullscreenLowPowerLayer(\n   float scale_factor,\n   gfx::RectF* background_rect);\n\nReturning true and populating *background_rect on success.",
+      "revId": "da15b3b3ce7c4d86b0c26ed6a69b52eedf2856b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcfbc5c5_e41cacbe",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-16T21:39:55Z",
+      "side": 1,
+      "message": "We shouldn\u0027t set the background to black by default (it should stay clear), we should only make the transition when entering fslp, so, in particular:\n\nif (FullscreenLowPower(\u0026bg_rect)) {\n  [ca_layer setFrame:bg_rect]\n  [ca_layer setBackgroundColor:Black]\n} else {\n  [ca_layer setFrame:empty]\n  [ca_layer setBackgroundColor:Transparent]\n}",
+      "revId": "da15b3b3ce7c4d86b0c26ed6a69b52eedf2856b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
