@@ -53,6 +53,16 @@ void X11WindowOzone::SetCursor(PlatformCursor cursor) {
   XDefineCursor(xdisplay(), xwindow(), cursor_ozone->xcursor());
 }
 
+bool X11WindowOzone::CanDispatchPlatformEvent(XEvent* xev) {
+  if (xwindow() == None)
+    return false;
+  return IsEventForXWindow(*xev);
+}
+
+void X11WindowOzone::WillDispatchPlatformEvent() {
+  handle_next_event_ = true;
+}
+
 bool X11WindowOzone::DispatchXEvent(XEvent* xev) {
   if (!IsEventForXWindow(*xev))
     return false;
@@ -62,22 +72,11 @@ bool X11WindowOzone::DispatchXEvent(XEvent* xev) {
 }
 
 bool X11WindowOzone::CanDispatchEvent(const PlatformEvent& platform_event) {
-  if (xwindow() == None)
-    return false;
-
-  // If there is a grab, capture events here.
-  XID grabber = window_manager_->event_grabber();
-  if (grabber != None)
-    return grabber == xwindow();
-
-  const Event* event = static_cast<const Event*>(platform_event);
-  if (event->IsLocatedEvent())
-    return GetBounds().Contains(event->AsLocatedEvent()->root_location());
-
-  return true;
+  return handle_next_event_;
 }
 
 uint32_t X11WindowOzone::DispatchEvent(const PlatformEvent& platform_event) {
+  handle_next_event_ = false;
   // This is unfortunately needed otherwise events that depend on global state
   // (eg. double click) are broken.
   DispatchEventFromNativeUiEvent(
