@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "07c1c33a_6f9dd06b",
+        "filename": "chromeos/network/network_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:27:48Z",
+      "side": 1,
+      "message": "Maybe sort lexicographically?",
+      "range": {
+        "startLine": 300,
+        "startChar": 30,
+        "endLine": 300,
+        "endChar": 48
+      },
+      "revId": "3ed4f5a86412eb10e202622920e68b6ad893a1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c15114_27038c2f",
+        "filename": "chromeos/network/onc/onc_translation_tables.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:27:48Z",
+      "side": 1,
+      "message": "Sort lexicographically",
+      "range": {
+        "startLine": 387,
+        "startChar": 29,
+        "endLine": 387,
+        "endChar": 53
+      },
+      "revId": "3ed4f5a86412eb10e202622920e68b6ad893a1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b000cae_8bae3581",
+        "filename": "chromeos/network/onc/onc_translation_tables.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:27:48Z",
+      "side": 1,
+      "message": "Not sure if sorting this list is desired :(",
+      "range": {
+        "startLine": 38,
+        "startChar": 52,
+        "endLine": 38,
+        "endChar": 72
+      },
+      "revId": "3ed4f5a86412eb10e202622920e68b6ad893a1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13c3b70d_43a9559a",
         "filename": "components/arc/common/net.mojom",
         "patchSetId": 5
@@ -31,6 +100,98 @@
       "side": 1,
       "message": "If Android wants a true/false boolean, and Chrome OS has a true/maybe/false enum, we have to translate the \"maybe\" state _somewhere_.\n\nOne reason we might want to translate it on the Android side instead of in arc_net_host_impl is that we\u0027ve generally tried to closely map ONC properties to mojo fields.",
       "parentUuid": "13c3b70d_43a9559a",
+      "revId": "3ed4f5a86412eb10e202622920e68b6ad893a1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d3107e1_c8f8514b",
+        "filename": "components/onc/onc_constants.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:27:48Z",
+      "side": 1,
+      "message": "Sort lexicographically",
+      "range": {
+        "startLine": 239,
+        "startChar": 11,
+        "endLine": 239,
+        "endChar": 26
+      },
+      "revId": "3ed4f5a86412eb10e202622920e68b6ad893a1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7db526_1c7dec69",
+        "filename": "components/onc/onc_constants.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:27:48Z",
+      "side": 1,
+      "message": "Sort lexicographically",
+      "range": {
+        "startLine": 465,
+        "startChar": 11,
+        "endLine": 465,
+        "endChar": 35
+      },
+      "revId": "3ed4f5a86412eb10e202622920e68b6ad893a1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4653ef49_5afbf7fc",
+        "filename": "components/onc/onc_constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:27:48Z",
+      "side": 1,
+      "message": "Sort lexicographically",
+      "range": {
+        "startLine": 252,
+        "startChar": 29,
+        "endLine": 252,
+        "endChar": 44
+      },
+      "revId": "3ed4f5a86412eb10e202622920e68b6ad893a1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a4bb3ac_5cb388b0",
+        "filename": "components/onc/onc_constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:27:48Z",
+      "side": 1,
+      "message": "Sort lexicographically",
+      "range": {
+        "startLine": 476,
+        "startChar": 29,
+        "endLine": 476,
+        "endChar": 53
+      },
       "revId": "3ed4f5a86412eb10e202622920e68b6ad893a1bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
