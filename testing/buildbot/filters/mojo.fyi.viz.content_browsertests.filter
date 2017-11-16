@@ -19,6 +19,7 @@
 -RenderViewBrowserTest.ConfirmCacheInformationPlumbed
 -ResourceFetcherTests.*
 -SavableResourcesTest.*
+-WebRtcCaptureFromElementBrowserTest.CaptureFromCanvas2DHandlesContextLoss
 
 # OOPIFs aren't supported yet http://crbug.com/778751
 -CrossProcessFrameTreeBrowserTest.*
