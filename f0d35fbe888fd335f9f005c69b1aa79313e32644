@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d26691b0_31a759c7",
+        "filename": "cc/layers/video_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-16T01:16:55Z",
+      "side": 1,
+      "message": "nit: DCHECK_NE? (here and below)",
+      "revId": "f0d35fbe888fd335f9f005c69b1aa79313e32644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49925afb_61a0e16f",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-16T01:16:55Z",
+      "side": 1,
+      "message": "nit: DCHECK_NE?",
+      "revId": "f0d35fbe888fd335f9f005c69b1aa79313e32644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46b29612_861f28c8",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-16T01:16:55Z",
+      "side": 1,
+      "message": "nit: the comment seems out of place. We\u0027re making a GL resource here (not an Overlay one) and we don\u0027t include the size. Did you mean it for l.694?",
+      "revId": "f0d35fbe888fd335f9f005c69b1aa79313e32644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
