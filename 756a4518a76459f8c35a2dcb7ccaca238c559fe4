@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae631580_2cd8d37e",
+        "filename": "chrome/browser/safe_browsing/download_protection/check_client_download_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-11-16T00:52:50Z",
+      "side": 1,
+      "message": "this alias seems to not be in line with http://go/cpp-style#Aliases\n\nDoes making it private hide it from other files? I doubt so.",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 79
+      },
+      "revId": "756a4518a76459f8c35a2dcb7ccaca238c559fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb64f14_5b558f3b",
+        "filename": "chrome/browser/safe_browsing/download_protection/check_client_download_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-11-16T00:52:50Z",
+      "side": 1,
+      "message": "archived_binaries_?",
+      "range": {
+        "startLine": 133,
+        "startChar": 20,
+        "endLine": 133,
+        "endChar": 35
+      },
+      "revId": "756a4518a76459f8c35a2dcb7ccaca238c559fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9f04fd9_13ecc436",
+        "filename": "chrome/browser/safe_browsing/download_protection/check_client_download_request_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-11-16T00:52:50Z",
+      "side": 1,
+      "message": "it might be useful to have the first case of when the max isn\u0027t set or is set higher than 4.",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 36
+      },
+      "revId": "756a4518a76459f8c35a2dcb7ccaca238c559fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c71dd377_a299290d",
+        "filename": "chrome/browser/safe_browsing/download_protection/check_client_download_request_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-11-16T00:52:50Z",
+      "side": 1,
+      "message": "expected_value goes first.",
+      "range": {
+        "startLine": 50,
+        "startChar": 12,
+        "endLine": 50,
+        "endChar": 26
+      },
+      "revId": "756a4518a76459f8c35a2dcb7ccaca238c559fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
