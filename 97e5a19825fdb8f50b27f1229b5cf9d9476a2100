@@ -16,6 +16,24 @@
       "revId": "97e5a19825fdb8f50b27f1229b5cf9d9476a2100",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85362ae3_3023d59f",
+        "filename": "chrome/browser/ui/views/extensions/bookmark_app_confirmation_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-16T04:26:50Z",
+      "side": 0,
+      "message": "It looks fine (same dialog widths in both the short_text and long_text cases) with secondary-ui-md disabled.",
+      "parentUuid": "1cb8290a_991af261",
+      "revId": "97e5a19825fdb8f50b27f1229b5cf9d9476a2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
