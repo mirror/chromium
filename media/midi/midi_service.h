@@ -16,7 +16,7 @@
 #include "base/synchronization/lock.h"
 #include "base/threading/thread.h"
 #include "base/time/time.h"
-#include "media/midi/midi_export.h"
+#include "components/midi/midi_export.h"
 #include "media/midi/midi_manager.h"
 
 namespace midi {
@@ -39,7 +39,6 @@ class MIDI_EXPORT MidiService final {
 
   // Converts Web MIDI timestamp to base::TimeDelta dealy for PostDelayedTask.
   static base::TimeDelta TimestampToTimeDeltaDelay(double timestamp);
-
   // Use the first constructor for production code.
   MidiService();
   // ManagerFactory can be specified in the constructor for testing.  If the

@@ -75,15 +75,13 @@ if (is_android) {
 
 component("midi") {
   sources = [
-    "message_util.cc",
-    "message_util.h",
-    "midi_export.h",
+    "//components/midi/message_util.h",
+    "//components/midi/midi_export.h",
+    "//components/midi/midi_message_queue.h",
     "midi_manager.cc",
     "midi_manager.h",
     "midi_manager_mac.cc",
     "midi_manager_mac.h",
-    "midi_message_queue.cc",
-    "midi_message_queue.h",
     "midi_port_info.cc",
     "midi_port_info.h",
     "midi_scheduler.cc",
@@ -102,6 +100,7 @@ component("midi") {
   deps = [
     ":mojo",
     "//base",
+    "//components/midi:midi_utils",
   ]
   libs = []
 

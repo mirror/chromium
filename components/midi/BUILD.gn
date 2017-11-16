@@ -1,0 +1,22 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//build/config/features.gni")
+import("//media/media_options.gni")
+
+static_library("midi_utils") {
+  sources = [
+    "message_util.cc",
+    "message_util.h",
+    "midi_export.h",
+    "midi_message_queue.cc",
+    "midi_message_queue.h",
+  ]
+
+  defines = [ "MIDI_IMPLEMENTATION" ]
+
+  deps = [
+    "//base",
+  ]
+}
