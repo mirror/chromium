@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87c7713e_48c349e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-16T19:29:13Z",
+      "side": 1,
+      "message": "remove this",
+      "range": {
+        "startLine": 11,
+        "startChar": 20,
+        "endLine": 11,
+        "endChar": 52
+      },
+      "revId": "75ac71a8705dabc58f8f88909d02591c4c81dc05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96dc548d_a2c74fbf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-16T19:29:13Z",
+      "side": 1,
+      "message": "nit: remove this paragraph.",
+      "revId": "75ac71a8705dabc58f8f88909d02591c4c81dc05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
