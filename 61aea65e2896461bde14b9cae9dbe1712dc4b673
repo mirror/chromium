@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53cedcb7_94d18efa",
+        "filename": "chrome/browser/ui/views/payments/credit_card_editor_view_controller_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-11-16T15:21:21Z",
+      "side": 1,
+      "message": "Not sure why this change is necessary? Did this prevent the test from passing?",
+      "revId": "61aea65e2896461bde14b9cae9dbe1712dc4b673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
