@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f15baeb6_9e755b9b",
+        "filename": "chrome/browser/resources/print_preview/new/number_settings_section.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-16T22:33:37Z",
+      "side": 1,
+      "message": "Okay, sounds good.",
+      "parentUuid": "b5527ea7_7c7747e2",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 21
+      },
+      "revId": "2b50ba5d125d0988f08b389c291218cce103e32d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7bc2c9d_1ba4e853",
         "filename": "chrome/browser/resources/print_preview/new/other_options_settings.html",
         "patchSetId": 9
