@@ -16,6 +16,24 @@
       "revId": "40d5f3bc2cf87bf81879110f6b83f17460b47751",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e3745b_85a41675",
+        "filename": "media/mojo/interfaces/video_decode_stats_recorder.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-16T17:49:05Z",
+      "side": 1,
+      "message": "Sending the origin in this way is expected to be short lived thing. Here and in the other CL, this origin is needed as the input to ukm_recorder-\u003eUpdateSourceURL(...). hotle@ is working on restricting visibility of this method and replacing it with another mechanism such that we don\u0027t have to supply the url going forward. \n\nIn his comments here (https://chromium-review.googlesource.com/c/chromium/src/+/760056/1/media/blink/webmediaplayer_impl.cc#1529) he mentions a way to get an ID (instead of the URL) from the RenderFrameHost NavigationHandle. But the problem for us is our mojo services are only requested for pages containing media elements. They are not around during navigations and the NavigationHandle doesn\u0027t exist anymore by the time they\u0027re requested. So this CL and its twin are stop gaps while we wait for holte@\u0027s larger change. The alternative is to create some component that sniffs the URL of committed navigations, which feels like the greater of two evils. \n\nGiven the above, LMK if you feel passing origin is a blocker to LGTM. I\u0027ll sniff navigations if I must :).\n\nAlso, these services rely on the renderer trust for a every other input. Is there something about origin specifically that makes it more concerning?",
+      "parentUuid": "6cdcf628_ebd668e7",
+      "revId": "40d5f3bc2cf87bf81879110f6b83f17460b47751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
