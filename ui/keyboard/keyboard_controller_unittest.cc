@@ -35,6 +35,7 @@
 #include "ui/keyboard/keyboard_ui.h"
 #include "ui/keyboard/keyboard_util.h"
 #include "ui/wm/core/default_activation_client.h"
+#include "url/gurl.h"
 
 #if defined(USE_OZONE)
 #include "ui/ozone/public/ozone_platform.h"
