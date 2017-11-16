@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c5e5243_9ccf0e3f",
+        "filename": "chrome/common/extensions/api/privacy.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-16T00:05:01Z",
+      "side": 0,
+      "message": "+msramek - is it OK to remove this? Will it break existing extensions that reference this?",
+      "revId": "037fa7a47811be3afc75b413bb136343b3774a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
