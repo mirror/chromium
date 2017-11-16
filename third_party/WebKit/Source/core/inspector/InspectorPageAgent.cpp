@@ -53,6 +53,7 @@
 #include "core/inspector/IdentifiersFactory.h"
 #include "core/inspector/InspectedFrames.h"
 #include "core/inspector/InspectorCSSAgent.h"
+#include "core/inspector/InspectorNetworkAgent.h"
 #include "core/inspector/InspectorResourceContentLoader.h"
 #include "core/inspector/V8InspectorString.h"
 #include "core/layout/AdjustForAbsoluteZoom.h"
@@ -366,11 +367,12 @@ bool InspectorPageAgent::CachedResourceContent(Resource* cached_resource,
 }
 
 InspectorPageAgent* InspectorPageAgent::Create(
+    InspectorNetworkAgent* network_agent,
     InspectedFrames* inspected_frames,
     Client* client,
     InspectorResourceContentLoader* resource_content_loader,
     v8_inspector::V8InspectorSession* v8_session) {
-  return new InspectorPageAgent(inspected_frames, client,
+  return new InspectorPageAgent(network_agent, inspected_frames, client,
                                 resource_content_loader, v8_session);
 }
 
@@ -442,11 +444,13 @@ String InspectorPageAgent::CachedResourceTypeJson(
 }
 
 InspectorPageAgent::InspectorPageAgent(
+    InspectorNetworkAgent* network_agent,
     InspectedFrames* inspected_frames,
     Client* client,
     InspectorResourceContentLoader* resource_content_loader,
     v8_inspector::V8InspectorSession* v8_session)
-    : inspected_frames_(inspected_frames),
+    : network_agent_(network_agent),
+      inspected_frames_(inspected_frames),
       v8_session_(v8_session),
       client_(client),
       last_script_identifier_(0),
@@ -689,12 +693,19 @@ void InspectorPageAgent::GetResourceContentAfterResourcesContentLoaded(
   }
   String content;
   bool base64_encoded;
+  Response response =
+      network_agent_->GetResponseBody(KURL(url), &content, &base64_encoded);
+  if (response.isSuccess()) {
+    callback->sendSuccess(content, base64_encoded);
+    return;
+  }
   if (InspectorPageAgent::CachedResourceContent(
           CachedResource(frame, KURL(url), inspector_resource_content_loader_),
-          &content, &base64_encoded))
+          &content, &base64_encoded)) {
     callback->sendSuccess(content, base64_encoded);
-  else
-    callback->sendFailure(Response::Error("No resource with given URL found"));
+    return;
+  }
+  callback->sendFailure(Response::Error("No resource with given URL found"));
 }
 
 void InspectorPageAgent::getResourceContent(
@@ -728,11 +739,18 @@ void InspectorPageAgent::SearchContentAfterResourcesContentLoaded(
   }
   String content;
   bool base64_encoded;
-  if (!InspectorPageAgent::CachedResourceContent(
-          CachedResource(frame, KURL(url), inspector_resource_content_loader_),
-          &content, &base64_encoded)) {
-    callback->sendFailure(Response::Error("No resource with given URL found"));
-    return;
+
+  Response response =
+      network_agent_->GetResponseBody(KURL(url), &content, &base64_encoded);
+  if (!response.isSuccess()) {
+    if (!InspectorPageAgent::CachedResourceContent(
+            CachedResource(frame, KURL(url),
+                           inspector_resource_content_loader_),
+            &content, &base64_encoded)) {
+      callback->sendFailure(
+          Response::Error("No resource with given URL found"));
+      return;
+    }
   }
 
   auto matches = v8_session_->searchInTextByLines(
@@ -1148,6 +1166,7 @@ protocol::Response InspectorPageAgent::createIsolatedWorld(
 }
 
 void InspectorPageAgent::Trace(blink::Visitor* visitor) {
+  visitor->Trace(network_agent_);
   visitor->Trace(inspected_frames_);
   visitor->Trace(inspector_resource_content_loader_);
   InspectorBaseAgent::Trace(visitor);
