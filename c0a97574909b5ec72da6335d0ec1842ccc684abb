@@ -22,6 +22,30 @@
       "revId": "c0a97574909b5ec72da6335d0ec1842ccc684abb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6ce02b8_5abdf372",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/AppIndexingUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-16T22:18:20Z",
+      "side": 1,
+      "message": "Let\u0027s continue the discussion on the bug.",
+      "parentUuid": "260dccf2_c695f849",
+      "range": {
+        "startLine": 79,
+        "startChar": 12,
+        "endLine": 79,
+        "endChar": 25
+      },
+      "revId": "c0a97574909b5ec72da6335d0ec1842ccc684abb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
