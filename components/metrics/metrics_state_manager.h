@@ -15,6 +15,7 @@
 #include "base/strings/string16.h"
 #include "components/metrics/clean_exit_beacon.h"
 #include "components/metrics/client_info.h"
+#include "components/metrics/gms_core_version.h"
 
 class PrefService;
 class PrefRegistrySimple;
@@ -62,6 +63,8 @@ class MetricsStateManager {
   const CleanExitBeacon* clean_exit_beacon() const {
     return &clean_exit_beacon_;
   }
+
+  GmsCoreVersion* gms_core_version() { return &gms_core_version_; }
 
   // Forces the client ID to be generated. This is useful in case it's needed
   // before recording.
@@ -187,6 +190,8 @@ class MetricsStateManager {
   // A beacon used to determine whether the previous Chrome browser session
   // terminated gracefully.
   CleanExitBeacon clean_exit_beacon_;
+
+  GmsCoreVersion gms_core_version_;
 
   // The identifier that's sent to the server with the log reports.
   std::string client_id_;

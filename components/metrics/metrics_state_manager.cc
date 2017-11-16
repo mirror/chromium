@@ -139,6 +139,7 @@ MetricsStateManager::MetricsStateManager(
       store_client_info_(store_client_info),
       load_client_info_(retrieve_client_info),
       clean_exit_beacon_(backup_registry_key, local_state),
+      gms_core_version_(local_state),
       low_entropy_source_(kLowEntropySourceNotSet),
       entropy_source_returned_(ENTROPY_SOURCE_NONE),
       metrics_ids_were_reset_(false) {

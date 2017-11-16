@@ -39,6 +39,8 @@ static_library("metrics") {
     "field_trials_provider.h",
     "file_metrics_provider.cc",
     "file_metrics_provider.h",
+    "gms_core_version.cc",
+    "gms_core_version.h",
     "histogram_encoder.cc",
     "histogram_encoder.h",
     "log_decoder.cc",

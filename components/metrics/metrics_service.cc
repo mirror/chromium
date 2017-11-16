@@ -211,6 +211,7 @@ void MetricsService::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterIntegerPref(prefs::kTabStatsTotalTabCountMax, 0);
   registry->RegisterIntegerPref(prefs::kTabStatsMaxTabsPerWindow, 0);
   registry->RegisterIntegerPref(prefs::kTabStatsWindowCountMax, 0);
+  registry->RegisterStringPref(prefs::kStabilityGmsCoreVersion, "");
   metrics::DailyEvent::RegisterPref(registry, prefs::kTabStatsDailySample);
 }
 
@@ -481,7 +482,14 @@ void MetricsService::InitializeMetricsState() {
 
   StabilityMetricsProvider provider(local_state_);
   if (!state_manager_->clean_exit_beacon()->exited_cleanly()) {
-    provider.LogCrash();
+#if defined(OS_ANDROID)
+    // In android, if there is an update for GMS core when Chrome is running,
+    // Chrome will be killed and restart. This is expected and we should not
+    // report crash in this case.
+    if (!state_manager_->gms_core_version()->check_and_update())
+#endif
+      provider.LogCrash();
+
     // Reset flag, and wait until we call LogNeedForCleanShutdown() before
     // monitoring.
     state_manager_->clean_exit_beacon()->WriteBeaconValue(true);
