@@ -225,6 +225,8 @@ InlineBoxPosition ComputeInlineBoxPositionForTextNode(
     int caret_offset,
     TextAffinity affinity,
     TextDirection primary_direction) {
+  DCHECK(CanUseInlineBox(*layout_object));
+
   InlineBox* inline_box = nullptr;
   LayoutText* text_layout_object = ToLayoutText(layout_object);
 
@@ -272,6 +274,7 @@ InlineBoxPosition ComputeInlineBoxPositionForAtomicInline(
   // stop setting atomic inline level for non-inline.
   if (!layout_object->IsInline())
     return InlineBoxPosition();
+  DCHECK(CanUseInlineBox(*layout_object));
   // An atomic inline must have a box and a wrapping inline box.
   DCHECK(layout_object->IsBox());
   DCHECK(ToLayoutBox(layout_object)->InlineBoxWrapper());
