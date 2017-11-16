@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17cd5aa2_9bc240a0",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-16T20:11:45Z",
+      "side": 1,
+      "message": "This, along with the added test only state is not ideal but I could not find a better way (open to any suggestions).\n\nIdeally, we should not rely on so maybe the tests themselves need to be modified? Perhaps one or two \"real\" browsertests could replace them? WDYT?",
+      "revId": "7616c87ddf06c904ca344af2b5f7a400b8ece101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
