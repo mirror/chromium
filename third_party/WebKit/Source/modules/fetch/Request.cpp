@@ -367,7 +367,7 @@ Request* Request::CreateRequestWithRequestOrString(
 
     const OriginAccessEntry access_entry =
         OriginAccessEntry(r->url().Protocol(), r->url().Host(),
-                          OriginAccessEntry::kAllowRegisterableDomains);
+                          OriginAccessEntry::kAllowRegisterableDomains, false);
     if (access_entry.MatchesDomain(*origin) ==
         OriginAccessEntry::kDoesNotMatchOrigin) {
       exception_state.ThrowTypeError(
