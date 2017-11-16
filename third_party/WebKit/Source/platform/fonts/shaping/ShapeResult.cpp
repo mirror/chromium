@@ -36,6 +36,7 @@
 #include "platform/fonts/Font.h"
 #include "platform/fonts/shaping/ShapeResultInlineHeaders.h"
 #include "platform/fonts/shaping/ShapeResultSpacing.h"
+#include "platform/text/TextBreakIterator.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/StringBuilder.h"
 
@@ -67,15 +68,16 @@ unsigned ShapeResult::RunInfo::PreviousSafeToBreakOffset(
 }
 
 float ShapeResult::RunInfo::XPositionForVisualOffset(
+    const TextRun* text_run,
     unsigned offset,
     AdjustMidCluster adjust_mid_cluster) const {
   DCHECK_LT(offset, num_characters_);
   if (Rtl())
     offset = num_characters_ - offset - 1;
-  return XPositionForOffset(offset, adjust_mid_cluster);
+  return XPositionForOffset(text_run, offset, adjust_mid_cluster);
 }
 
-float ShapeResult::RunInfo::XPositionForOffset(
+float ShapeResult::RunInfo::XPositionForOffsetOrig(
     unsigned offset,
     AdjustMidCluster adjust_mid_cluster) const {
   DCHECK_LE(offset, num_characters_);
@@ -122,6 +124,119 @@ float ShapeResult::RunInfo::XPositionForOffset(
           break;
       }
     }
+  }
+  return position;
+}
+
+// XPositionForOffset returns the X position (in layout space) from the
+// beginning of the run to the beginning of the cluster of glyphs for X
+// character.
+// For RTL, beginning means the right most side of the cluster.
+// Characters may spawn multiple glyphs.
+// In the case that multiple characters spawn a single glyph, we run the text
+// through UCI and linearly split the glyph into its characters.
+float ShapeResult::RunInfo::XPositionForOffset(
+    const TextRun* text_run,
+    unsigned offset,
+    AdjustMidCluster adjust_mid_cluster) const {
+  DVLOG(3) << " ===== XPositionForOffset(): offset: " << offset
+           << ": idx: " << start_index_ << " chars: " << num_characters_ << " "
+           << (adjust_mid_cluster == kAdjustToStart ? "start" : "end")
+           << " =====";
+  DCHECK_LE(offset, num_characters_);
+  const unsigned num_glyphs = glyph_data_.size();
+
+  for (unsigned i = 0; i < num_glyphs; ++i) {
+    DVLOG(3) << "   " << i << ". ci: " << glyph_data_[i].character_index
+             << " - " << glyph_data_[i].advance;
+  }
+
+  // [track_idx, track_end] are both inclusive for the range of characters of
+  // the current sequence we are visiting.
+  unsigned track_idx = Rtl() ? num_characters_ - 1 : 0;
+  unsigned track_end = track_idx;
+  // track_pos is the advance of the current track.
+  float track_pos = 0.0;
+  // position is the summed advance before the current track.
+  float position = 0;
+  unsigned last_character = Rtl() ? 0 : num_characters_ - 1;
+
+  // We visit each glyph and keep track of the current character interval.
+  for (unsigned i = 0; i < num_glyphs; ++i) {
+    unsigned c = glyph_data_[i].character_index;
+
+    if (track_idx == c) {
+      track_pos += glyph_data_[i].advance;
+      continue;
+    }
+
+    // LTR has intervals open on the right side.
+    if (!Rtl() && track_idx <= offset && offset < c) {
+      track_end = c - 1;
+      break;
+    }
+
+    // RTL has intervals open on the left side.
+    if (Rtl() && c < offset && offset <= track_idx) {
+      track_end = c + 1;
+      break;
+    }
+
+    track_idx = c;
+    // since we always update track_end when we break, set this to
+    // last_character in case this is the final iteration of the loop.
+    track_end = last_character;
+    position += track_pos;
+    track_pos = glyph_data_[i].advance;
+  }
+
+  // At this point, we have position tracking the left side of the offset,
+  // and track_pos containing the length of the cluster of glyphs where offset
+  // is in.
+  DVLOG(3) << "TRACK "
+           << " track: (" << track_idx << "," << track_end << ")"
+           << " tpos: " << track_pos << " pos: " << position;
+
+  // If we have text_run available, we calculate the number of ICU units on the
+  // subset of characters. We use this to update track_pos and position to
+  // match the "subposition" of the character.
+  if (text_run) {
+    float graphemes = static_cast<float>(
+        NumCursorGraphemesClusters(*text_run, track_idx, track_end + 1));
+    if (graphemes > 0) {
+      int pos = offset - std::min(track_idx, track_end);
+      track_pos = track_pos / graphemes;
+      track_idx = offset;
+      position += track_pos * pos;
+
+      DVLOG(3) << "FRACTION " << pos << "/" << graphemes << " track: ("
+               << track_idx << "," << track_end << ")"
+               << " tpos: " << track_pos << " pos: " << position;
+    }
+  }
+
+  // The mid cluster adjustment don't happen when we have ICU info, since we are
+  // always in the character's correct position.
+  if (!Rtl()) {
+    if (!text_run && adjust_mid_cluster == kAdjustToEnd &&
+        track_idx != offset) {
+      position += track_pos;
+    }
+  } else {
+    // For RTL, we return the right side.
+    position += track_pos;
+    if (!text_run && adjust_mid_cluster == kAdjustToStart ||
+        track_idx == offset) {
+      position += track_pos;
+    }
+  }
+
+  float orig = XPositionForOffsetOrig(offset, adjust_mid_cluster);
+
+  if (orig != position) {
+    DVLOG(1) << "return " << position << "  orig: " << orig;
+  } else {
+    DVLOG(1) << "return " << position;
   }
   return position;
 }
@@ -368,7 +483,8 @@ float ShapeResult::PositionForOffset(unsigned absolute_offset) const {
     unsigned num_characters = runs_[i]->num_characters_;
 
     if (!offset_x && offset < num_characters) {
-      offset_x = runs_[i]->XPositionForVisualOffset(offset, kAdjustToEnd) + x;
+      // offset_x = runs_[i]->XPositionForVisualOffset(offset, kAdjustToEnd) +
+      // x;
       break;
     }
 

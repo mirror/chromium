@@ -40,6 +40,10 @@ class PLATFORM_EXPORT ShapeResultBuffer {
                                    float total_width,
                                    unsigned from,
                                    unsigned to) const;
+  CharacterRange GetCharacterRangeForSelection(const TextRun&,
+                                               float total_width,
+                                               unsigned from,
+                                               unsigned to) const;
   Vector<CharacterRange> IndividualCharacterRanges(TextDirection,
                                                    float total_width) const;
 
@@ -62,6 +66,7 @@ class PLATFORM_EXPORT ShapeResultBuffer {
   friend class ShapeResultBloberizer;
   static CharacterRange GetCharacterRangeInternal(
       const Vector<scoped_refptr<const ShapeResult>, 64>&,
+      const TextRun*,
       TextDirection,
       float total_width,
       unsigned from,
