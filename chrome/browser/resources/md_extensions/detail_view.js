@@ -30,7 +30,10 @@ cr.define('extensions', function() {
 
     /** @private */
     onCloseButtonTap_: function() {
-      extensions.navigation.navigateTo({page: Page.LIST});
+      extensions.navigation.navigateTo({
+        extensionId: this.data.id,
+        page: Page.LIST,
+      });
     },
 
     /**
