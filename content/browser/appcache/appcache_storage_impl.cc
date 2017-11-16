@@ -110,7 +110,7 @@ void AppCacheStorageImpl::ClearSessionOnlyOrigins(
   std::set<GURL>::const_iterator origin;
   DCHECK(special_storage_policy.get());
   for (origin = origins.begin(); origin != origins.end(); ++origin) {
-    if (!special_storage_policy->IsStorageSessionOnly(*origin))
+    if (!special_storage_policy->IsStorageSessionOnlyOrBlocked(*origin))
       continue;
     if (special_storage_policy->IsStorageProtected(*origin))
       continue;

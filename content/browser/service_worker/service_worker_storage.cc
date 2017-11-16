@@ -1617,7 +1617,7 @@ void ServiceWorkerStorage::ClearSessionOnlyOrigins() {
 
   std::set<GURL> session_only_origins;
   for (const GURL& origin : registered_origins_) {
-    if (special_storage_policy_->IsStorageSessionOnly(origin))
+    if (special_storage_policy_->IsStorageSessionOnlyOrBlocked(origin))
       session_only_origins.insert(origin);
   }
 

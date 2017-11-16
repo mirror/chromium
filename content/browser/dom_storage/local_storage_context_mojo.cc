@@ -969,7 +969,7 @@ void LocalStorageContextMojo::OnGotStorageUsageForShutdown(
   for (const auto& info : usage) {
     if (special_storage_policy_->IsStorageProtected(info.origin))
       continue;
-    if (!special_storage_policy_->IsStorageSessionOnly(info.origin))
+    if (!special_storage_policy_->IsStorageSessionOnlyOrBlocked(info.origin))
       continue;
 
     AddDeleteOriginOperations(&operations, url::Origin::Create(info.origin));

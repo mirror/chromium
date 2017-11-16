@@ -852,7 +852,7 @@ void DatabaseTracker::ClearSessionOnlyOrigins() {
            origin_identifiers.begin();
        origin != origin_identifiers.end(); ++origin) {
     GURL origin_url = storage::GetOriginFromIdentifier(*origin);
-    if (!special_storage_policy_->IsStorageSessionOnly(origin_url))
+    if (!special_storage_policy_->IsStorageSessionOnlyOrBlocked(origin_url))
       continue;
     if (special_storage_policy_->IsStorageProtected(origin_url))
       continue;

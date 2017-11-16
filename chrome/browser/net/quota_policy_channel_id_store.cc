@@ -39,7 +39,7 @@ QuotaPolicyChannelIDStore::~QuotaPolicyChannelIDStore() {
        it != server_identifiers_.end();
        ++it) {
     GURL url(net::cookie_util::CookieOriginToURL(*it, true));
-    if (special_storage_policy_->IsStorageSessionOnly(url))
+    if (special_storage_policy_->IsStorageSessionOnlyOrBlocked(url))
       session_only_server_identifiers.push_back(*it);
   }
   persistent_store_->DeleteAllInList(session_only_server_identifiers);

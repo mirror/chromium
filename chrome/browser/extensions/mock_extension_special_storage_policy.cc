@@ -15,7 +15,7 @@ bool MockExtensionSpecialStoragePolicy::IsStorageUnlimited(const GURL& origin) {
   return false;
 }
 
-bool MockExtensionSpecialStoragePolicy::IsStorageSessionOnly(
+bool MockExtensionSpecialStoragePolicy::IsStorageSessionOnlyOrBlocked(
     const GURL& origin) {
   return false;
 }

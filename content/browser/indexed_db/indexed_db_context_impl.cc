@@ -99,7 +99,7 @@ void IndexedDBContextImpl::ClearSessionOnlyOrigins(
   auto origin = origins.cbegin();
   for (; origin != origins.cend(); ++origin, ++file_path) {
     const GURL origin_url = GURL(origin->Serialize());
-    if (!special_storage_policy->IsStorageSessionOnly(origin_url))
+    if (!special_storage_policy->IsStorageSessionOnlyOrBlocked(origin_url))
       continue;
     if (special_storage_policy->IsStorageProtected(origin_url))
       continue;

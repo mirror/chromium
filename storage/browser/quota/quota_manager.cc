@@ -874,9 +874,9 @@ void QuotaManager::GetUsageAndQuotaWithBreakdown(
   }
   LazyInitialize();
 
-  bool is_session_only = type == kStorageTypeTemporary &&
-                         special_storage_policy_ &&
-                         special_storage_policy_->IsStorageSessionOnly(origin);
+  bool is_session_only =
+      type == kStorageTypeTemporary && special_storage_policy_ &&
+      special_storage_policy_->IsStorageSessionOnlyOrBlocked(origin);
   UsageAndQuotaHelper* helper = new UsageAndQuotaHelper(
       this, origin, type, IsStorageUnlimited(origin, type), is_session_only,
       is_incognito_, callback);

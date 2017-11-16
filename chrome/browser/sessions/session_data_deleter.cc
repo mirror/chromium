@@ -104,7 +104,7 @@ void SessionDataDeleter::ClearSessionOnlyLocalStorage(
   DCHECK(storage_policy_->HasSessionOnlyOrigins());
   for (size_t i = 0; i < usages.size(); ++i) {
     const content::LocalStorageUsageInfo& usage = usages[i];
-    if (!storage_policy_->IsStorageSessionOnly(usage.origin))
+    if (!storage_policy_->IsStorageSessionOnlyOrBlocked(usage.origin))
       continue;
     storage_partition->GetDOMStorageContext()->DeleteLocalStorage(usage.origin);
   }
@@ -152,7 +152,7 @@ void SessionDataDeleter::DeleteSessionOnlyOriginCookies(
   for (const auto& cookie : cookies) {
     GURL url =
         net::cookie_util::CookieOriginToURL(cookie.Domain(), cookie.IsSecure());
-    if (!storage_policy_->IsStorageSessionOnly(url))
+    if (!storage_policy_->IsStorageSessionOnlyOrBlocked(url))
       continue;
     cookie_store->DeleteCanonicalCookieAsync(cookie, base::Bind(CookieDeleted));
   }

@@ -434,7 +434,7 @@ void DOMStorageContextImpl::ClearSessionOnlyOrigins() {
       const GURL& origin = infos[i].origin;
       if (special_storage_policy_->IsStorageProtected(origin))
         continue;
-      if (!special_storage_policy_->IsStorageSessionOnly(origin))
+      if (!special_storage_policy_->IsStorageSessionOnlyOrBlocked(origin))
         continue;
 
       base::FilePath database_file_path = localstorage_directory_.Append(
@@ -449,7 +449,7 @@ void DOMStorageContextImpl::ClearSessionOnlyOrigins() {
       const GURL& origin = infos[i].origin;
       if (special_storage_policy_->IsStorageProtected(origin))
         continue;
-      if (!special_storage_policy_->IsStorageSessionOnly(origin))
+      if (!special_storage_policy_->IsStorageSessionOnlyOrBlocked(origin))
         continue;
       session_storage_database_->DeleteArea(infos[i].persistent_namespace_id,
                                             origin);

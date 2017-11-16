@@ -56,7 +56,7 @@ class STORAGE_EXPORT SpecialStoragePolicy
 
   // Some origins are only allowed to store session-only data which is deleted
   // when the session ends.
-  virtual bool IsStorageSessionOnly(const GURL& origin) = 0;
+  virtual bool IsStorageSessionOnlyOrBlocked(const GURL& origin) = 0;
 
   // Returns true if some origins are only allowed session-only storage.
   virtual bool HasSessionOnlyOrigins() = 0;

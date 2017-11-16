@@ -38,7 +38,7 @@ class ExtensionSpecialStoragePolicy : public storage::SpecialStoragePolicy {
   // browsing data remover. These methods are safe to call on any thread.
   bool IsStorageProtected(const GURL& origin) override;
   bool IsStorageUnlimited(const GURL& origin) override;
-  bool IsStorageSessionOnly(const GURL& origin) override;
+  bool IsStorageSessionOnlyOrBlocked(const GURL& origin) override;
   bool HasIsolatedStorage(const GURL& origin) override;
   bool HasSessionOnlyOrigins() override;
   bool IsStorageDurable(const GURL& origin) override;

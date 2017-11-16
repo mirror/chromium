@@ -26,7 +26,8 @@ bool ShellSpecialStoragePolicy::IsStorageDurable(const GURL& origin) {
   return false;
 }
 
-bool ShellSpecialStoragePolicy::IsStorageSessionOnly(const GURL& origin) {
+bool ShellSpecialStoragePolicy::IsStorageSessionOnlyOrBlocked(
+    const GURL& origin) {
   return false;
 }
 
