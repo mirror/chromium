@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "077bb202_7878943e",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-16T19:01:33Z",
+      "side": 1,
+      "message": "This change fixes the OmniboxViewTest.AcceptKeywordBySpace test failure [1].\n\nThe HandleOnKeywordEntered() call in the OmniboxEditModel will execute for *any* keyword. We should only allow the extensions_delegate_-\u003eStart() and OnKeywordEntered() to execute for extensions keywords, particularly when template_url-\u003etype() is  TemplateURL::OMNIBOX_API_EXTENSION.\n\n[1] For more details on the failure, it was a seg fault in TemplateUrl::GetExtensionInfo() [2] because the |extension_info_| member doesn\u0027t exist, which is expected for search keywords. The OmniboxViewTest instantiates its TemplateURL with this constructor [3] instead of this one [4].",
+      "range": {
+        "startLine": 229,
+        "startChar": 26,
+        "endLine": 229,
+        "endChar": 31
+      },
+      "revId": "946be569e8da16b603395f5c739b3372176d50c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95baf96f_b2e32062",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-16T19:01:33Z",
+      "side": 1,
+      "message": "This change fixes the OmniboxViewTest.AcceptKeywordBySpace test failure [1].\n\nThe HandleOnKeywordEntered() call in the OmniboxEditModel will execute for *any* keyword. We should only allow the extensions_delegate_-\u003eStart() and OnKeywordEntered() to execute for extensions keywords, particularly when template_url-\u003etype() is  TemplateURL::OMNIBOX_API_EXTENSION.\n\n[1] For more details on the failure, it was a seg fault in TemplateUrl::GetExtensionInfo() [2] because the |extension_info_| member doesn\u0027t exist, which is expected for search keywords. The OmniboxViewTest instantiates its TemplateURL with the search engine constructor [3] instead of the extension controlled one [4].\n\n[2] https://chromium.googlesource.com/chromium/src/+/5913da3a2633e8567ddc0eb3dc4227352be822ce/components/search_engines/template_url.cc#1281\n\n[3] https://chromium.googlesource.com/chromium/src/+/5913da3a2633e8567ddc0eb3dc4227352be822ce/components/search_engines/template_url.cc#1155\n\n[4] https://chromium.googlesource.com/chromium/src/+/5913da3a2633e8567ddc0eb3dc4227352be822ce/components/search_engines/template_url.cc#1168",
+      "range": {
+        "startLine": 229,
+        "startChar": 26,
+        "endLine": 229,
+        "endChar": 31
+      },
+      "revId": "946be569e8da16b603395f5c739b3372176d50c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

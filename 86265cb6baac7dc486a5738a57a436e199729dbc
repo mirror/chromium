@@ -87,6 +87,24 @@
       "revId": "86265cb6baac7dc486a5738a57a436e199729dbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62595652_3803f0f0",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-16T19:01:33Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. In short, I think this should be okay, but I\u0027ll have Istiaque double check. \n\nThe check before:\n\nextension_delegate_ \u0026\u0026 !extensions_delegate_-\u003eIsEnabledExtension(..)\n\nis essentially the same now as:\n\n!(extension_delegate_ \u0026\u0026 extensions_delegate_-\u003eIsEnabledExtension(..)) which is\n\n!extension_delegate_ || !extensions_delegate_-\u003eIsEnabledExtension(..)).\n\nIf |extension_delegate| is false and doesn\u0027t exist, then IsKeywordEnabled() should still return false.",
+      "parentUuid": "acf2dc46_23cbabc0",
+      "revId": "86265cb6baac7dc486a5738a57a436e199729dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
