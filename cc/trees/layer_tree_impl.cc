@@ -1732,7 +1732,8 @@ static bool PointHitsRect(
     const gfx::PointF& screen_space_point,
     const gfx::Transform& local_space_to_screen_space_transform,
     const gfx::Rect& local_space_rect,
-    float* distance_to_camera) {
+    float* distance_to_camera,
+    gfx::PointF* hit_test_point_in_layer_space) {
   // If the transform is not invertible, then assume that this point doesn't hit
   // this rect.
   gfx::Transform inverse_local_space_to_screen_space(
@@ -1748,6 +1749,9 @@ static bool PointHitsRect(
       inverse_local_space_to_screen_space, screen_space_point, &clipped);
   gfx::PointF hit_test_point_in_local_space =
       gfx::PointF(planar_point.x(), planar_point.y());
+
+  if (hit_test_point_in_layer_space)
+    *hit_test_point_in_layer_space = hit_test_point_in_local_space;
 
   // If ProjectPoint could not project to a valid value, then we assume that
   // this point doesn't hit this rect.
@@ -1812,7 +1816,8 @@ static bool PointIsClippedByAncestorClipNode(
   const TransformTree& transform_tree = property_trees->transform_tree;
   const ClipNode* clip_node = clip_tree.Node(1);
   gfx::Rect clip = gfx::ToEnclosingRect(clip_node->clip);
-  if (!PointHitsRect(screen_space_point, gfx::Transform(), clip, nullptr))
+  if (!PointHitsRect(screen_space_point, gfx::Transform(), clip, nullptr,
+                     nullptr))
     return true;
 
   for (const ClipNode* clip_node = clip_tree.Node(layer->clip_tree_index());
@@ -1824,7 +1829,7 @@ static bool PointIsClippedByAncestorClipNode(
       gfx::Transform screen_space_transform =
           transform_tree.ToScreen(clip_node->transform_id);
       if (!PointHitsRect(screen_space_point, screen_space_transform, clip,
-                         nullptr)) {
+                         nullptr, nullptr)) {
         return true;
       }
     }
@@ -1842,10 +1847,12 @@ static bool PointIsClippedBySurfaceOrClipRect(
 
 static bool PointHitsLayer(const LayerImpl* layer,
                            const gfx::PointF& screen_space_point,
-                           float* distance_to_intersection) {
+                           float* distance_to_intersection,
+                           gfx::PointF* hit_test_point_in_layer_space) {
   gfx::Rect content_rect(layer->bounds());
   if (!PointHitsRect(screen_space_point, layer->ScreenSpaceTransform(),
-                     content_rect, distance_to_intersection)) {
+                     content_rect, distance_to_intersection,
+                     hit_test_point_in_layer_space)) {
     return false;
   }
 
@@ -1876,19 +1883,22 @@ template <typename Functor>
 static void FindClosestMatchingLayer(const gfx::PointF& screen_space_point,
                                      LayerImpl* root_layer,
                                      const Functor& func,
-                                     FindClosestMatchingLayerState* state) {
+                                     FindClosestMatchingLayerState* state,
+                                     TouchAction* out_touch_action) {
   // We want to iterate from front to back when hit testing.
   for (auto* layer : base::Reversed(*root_layer->layer_tree_impl())) {
     if (!func(layer))
       continue;
 
     float distance_to_intersection = 0.f;
+    gfx::PointF hit_test_point_in_layer_space;
     bool hit = false;
     if (layer->Is3dSorted())
-      hit =
-          PointHitsLayer(layer, screen_space_point, &distance_to_intersection);
+      hit = PointHitsLayer(layer, screen_space_point, &distance_to_intersection,
+                           &hit_test_point_in_layer_space);
     else
-      hit = PointHitsLayer(layer, screen_space_point, nullptr);
+      hit = PointHitsLayer(layer, screen_space_point, nullptr,
+                           &hit_test_point_in_layer_space);
 
     if (!hit)
       continue;
@@ -1903,6 +1913,15 @@ static void FindClosestMatchingLayer(const gfx::PointF& screen_space_point,
     if (!state->closest_match || in_front_of_previous_candidate) {
       state->closest_distance = distance_to_intersection;
       state->closest_match = layer;
+      // At this point, we know that this hit test point is hitting a layer that
+      // is currently the closest layer, and the func(layer) being true tells us
+      // that there is a touch event handler in this layer, so we get the white
+      // listed touch action of this layer.
+      if (out_touch_action) {
+        *out_touch_action =
+            layer->touch_action_region().GetWhiteListedTouchAction(
+                gfx::ToRoundedPoint(hit_test_point_in_layer_space));
+      }
     }
   }
 }
@@ -1919,7 +1938,8 @@ LayerTreeImpl::FindFirstScrollingLayerOrDrawnScrollbarThatIsHitByPoint(
   FindClosestMatchingLayerState state;
   LayerImpl* root_layer = layer_list_.empty() ? nullptr : layer_list_[0];
   FindClosestMatchingLayer(screen_space_point, root_layer,
-                           FindScrollingLayerOrDrawnScrollbarFunctor(), &state);
+                           FindScrollingLayerOrDrawnScrollbarFunctor(), &state,
+                           nullptr);
   return state.closest_match;
 }
 
@@ -1938,8 +1958,8 @@ LayerImpl* LayerTreeImpl::FindLayerThatIsHitByPoint(
     return nullptr;
   FindClosestMatchingLayerState state;
   FindClosestMatchingLayer(screen_space_point, layer_list_[0],
-                           HitTestVisibleScrollableOrTouchableFunctor(),
-                           &state);
+                           HitTestVisibleScrollableOrTouchableFunctor(), &state,
+                           nullptr);
   return state.closest_match;
 }
 
@@ -1970,15 +1990,28 @@ struct FindTouchEventLayerFunctor {
 };
 
 LayerImpl* LayerTreeImpl::FindLayerThatIsHitByPointInTouchHandlerRegion(
-    const gfx::PointF& screen_space_point) {
+    const gfx::PointF& screen_space_point,
+    TouchAction* out_touch_action) {
   if (layer_list_.empty())
     return nullptr;
   if (!UpdateDrawProperties())
     return nullptr;
   FindTouchEventLayerFunctor func = {screen_space_point};
   FindClosestMatchingLayerState state;
-  FindClosestMatchingLayer(screen_space_point, layer_list_[0], func, &state);
+  FindClosestMatchingLayer(screen_space_point, layer_list_[0], func, &state,
+                           out_touch_action);
   return state.closest_match;
+}
+
+bool LayerTreeImpl::HasLayerThatIsHitByPointInTouchHandlerRegion(
+    const gfx::PointF& screen_space_point,
+    TouchAction* out_touch_action) {
+  LayerImpl* layer_impl_with_touch_handler =
+      FindLayerThatIsHitByPointInTouchHandlerRegion(screen_space_point,
+                                                    out_touch_action);
+  if (layer_impl_with_touch_handler == nullptr)
+    return false;
+  return true;
 }
 
 void LayerTreeImpl::RegisterSelection(const LayerSelection& selection) {
@@ -2048,7 +2081,7 @@ static gfx::SelectionBound ComputeViewportSelectionBound(
 
     float intersect_distance = 0.f;
     viewport_bound.set_visible(
-        PointHitsLayer(layer, visibility_point, &intersect_distance));
+        PointHitsLayer(layer, visibility_point, &intersect_distance, nullptr));
   }
 
   return viewport_bound;
