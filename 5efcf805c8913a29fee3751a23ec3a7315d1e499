@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "afabce3a_aed332e8",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-16T09:21:55Z",
+      "side": 1,
+      "message": "It returns the virtual URL, which is a little different.",
+      "parentUuid": "4daaf7f0_3ce8e818",
+      "range": {
+        "startLine": 114,
+        "startChar": 25,
+        "endLine": 114,
+        "endChar": 38
+      },
+      "revId": "5efcf805c8913a29fee3751a23ec3a7315d1e499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "143096e0_8018fbbf",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_mediator.h",
         "patchSetId": 2
