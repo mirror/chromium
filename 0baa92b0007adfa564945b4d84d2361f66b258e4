@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "4753bcaf_fbe7605f",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorResourceContentLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-16T12:03:18Z",
+      "side": 1,
+      "message": "This diamond inheritance now involves a member variable, which makes me sad.",
+      "revId": "0baa92b0007adfa564945b4d84d2361f66b258e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36dfdfd5_37410ac5",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
         "patchSetId": 14
