@@ -173,7 +173,7 @@ std::unique_ptr<base::DictionaryValue> RouteToValue(
     dictionary->SetInteger("currentCastMode", current_cast_mode);
   }
 
-  const std::string& custom_path = route.custom_controller_path();
+  const std::string& custom_path = route.custom_controller_path().value_or("");
   if (!incognito && !custom_path.empty()) {
     std::string full_custom_controller_path =
         base::StringPrintf("%s://%s/%s", extensions::kExtensionScheme,
@@ -219,8 +219,8 @@ std::unique_ptr<base::DictionaryValue> IssueToValue(const Issue& issue) {
     dictionary->SetInteger("secondaryActionType",
                            static_cast<int>(issue_info.secondary_actions[0]));
   }
-  if (!issue_info.route_id.empty())
-    dictionary->SetString("routeId", issue_info.route_id);
+  if (issue_info.route_id)
+    dictionary->SetString("routeId", *issue_info.route_id);
   dictionary->SetBoolean("isBlocking", issue_info.is_blocking);
   if (issue_info.help_page_id > 0)
     dictionary->SetInteger("helpPageId", issue_info.help_page_id);
