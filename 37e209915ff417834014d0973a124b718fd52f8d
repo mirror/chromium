@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "953ba23b_3e4ffafe",
+        "filename": "content/renderer/loader/resource_dispatcher.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-16T04:40:12Z",
+      "side": 1,
+      "message": "These three parameters have too generic names. Can you define a struct consisting of these triple (NavigationOverrideRequestParameters?) and pass its Optional here?",
+      "range": {
+        "startLine": 125,
+        "startChar": 13,
+        "endLine": 125,
+        "endChar": 25
+      },
+      "revId": "37e209915ff417834014d0973a124b718fd52f8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
