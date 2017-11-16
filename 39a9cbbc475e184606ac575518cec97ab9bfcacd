@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "67c685ba_b7c418cd",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1766,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-11-16T23:17:44Z",
+      "side": 1,
+      "message": "Ack, GetStartTime() is the time the first request is sent, it will persist to history db.\n\nFor download resumption, it can be long time ago(Like a week ago or something). Is it the actual timestamp we want here?",
+      "parentUuid": "60193659_e6eaba62",
+      "range": {
+        "startLine": 1766,
+        "startChar": 2,
+        "endLine": 1766,
+        "endChar": 60
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e3933c8_ed8be19f",
         "filename": "content/browser/download/download_item_impl.cc",
         "patchSetId": 6
