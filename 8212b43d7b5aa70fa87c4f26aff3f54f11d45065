@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52480e72_a81ea155",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-16T00:55:50Z",
+      "side": 1,
+      "message": "Do you want to name this \"material_motion\" to match the github location of https://github.com/material-motion/motion-animator-objc ?\n\nDitto for motion-interchange-objc.",
+      "range": {
+        "startLine": 226,
+        "startChar": 57,
+        "endLine": 226,
+        "endChar": 76
+      },
+      "revId": "8212b43d7b5aa70fa87c4f26aff3f54f11d45065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
