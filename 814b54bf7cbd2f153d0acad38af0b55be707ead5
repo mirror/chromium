@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41390147_d3967736",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-16T23:57:47Z",
+      "side": 1,
+      "message": "nit: Typically we use file_name style as this is a variable to display.",
+      "range": {
+        "startLine": 72,
+        "startChar": 48,
+        "endLine": 72,
+        "endChar": 56
+      },
+      "revId": "814b54bf7cbd2f153d0acad38af0b55be707ead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4fa17fa_4740bbfc",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-16T23:57:47Z",
+      "side": 1,
+      "message": "also record the status just in case",
+      "revId": "814b54bf7cbd2f153d0acad38af0b55be707ead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
