@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "992012f3_ba47ed82",
+        "filename": "chrome/browser/resources/print_preview/new/number_settings_section.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-16T21:51:39Z",
+      "side": 1,
+      "message": "Is there a reason to duplicate this into the different sections vs having a shared mixin in print_preview_shared_css?",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 21
+      },
+      "revId": "2b50ba5d125d0988f08b389c291218cce103e32d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bc2c9d_1ba4e853",
+        "filename": "chrome/browser/resources/print_preview/new/other_options_settings.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-16T21:51:39Z",
+      "side": 1,
+      "message": "I believe this is no longer needed - it was only there for the --settings-section-title-style that has been removed and moved below.",
+      "range": {
+        "startLine": 10,
+        "startChar": 56,
+        "endLine": 10,
+        "endChar": 61
+      },
+      "revId": "2b50ba5d125d0988f08b389c291218cce103e32d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
