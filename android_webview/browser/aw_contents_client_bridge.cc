@@ -138,8 +138,8 @@ void AwContentsClientBridge::AllowCertificateError(
   if (obj.is_null())
     return;
 
-  std::string der_string;
-  net::X509Certificate::GetDEREncoded(cert->os_cert_handle(), &der_string);
+  base::StringPiece der_string =
+      net::x509_util::CryptoBufferAsStringPiece(cert->cert_buffer());
   ScopedJavaLocalRef<jbyteArray> jcert = base::android::ToJavaByteArray(
       env, reinterpret_cast<const uint8_t*>(der_string.data()),
       der_string.length());
