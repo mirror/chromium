@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d145c4a3_9dec632c",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-16T22:45:19Z",
+      "side": 1,
+      "message": "I feel slightly uncomfortable about doing a bare call like this. I\u0027d prefer to be importing some python script.\n\nI found two I could use; one is depot_tool\u0027s download_from_google_storage, and one is //build/android/pylib/utils. Is there a preference for either? Should I bother using them?",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
