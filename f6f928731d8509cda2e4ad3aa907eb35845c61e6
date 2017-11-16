@@ -16,6 +16,24 @@
       "revId": "f6f928731d8509cda2e4ad3aa907eb35845c61e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b44702_2c1eb69e",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T00:54:25Z",
+      "side": 1,
+      "message": "I\u0027ll leave this for a follow up CL, basically forking that string, such that the old UI is not affected.",
+      "parentUuid": "5e1cd44b_6a27d738",
+      "revId": "f6f928731d8509cda2e4ad3aa907eb35845c61e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
