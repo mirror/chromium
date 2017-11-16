@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0632ff4_fb0846e0",
+        "filename": "ash/wm/default_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-16T21:07:10Z",
+      "side": 1,
+      "message": "I think it\u0027s better to use pre automanaged one if one exists?",
+      "revId": "0415d90265940c440e35c60c212ffea05cc950dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
