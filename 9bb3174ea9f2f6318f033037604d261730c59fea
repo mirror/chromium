@@ -16,6 +16,24 @@
       "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6dbfb4f_353acc26",
+        "filename": "chrome/browser/clipboard/clipboard_write_permission_context.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-16T14:02:37Z",
+      "side": 1,
+      "message": "I looked at sensor_permission_context.cc (which is similar) and they included it.\n\nWithout knowing where these are actually needed, it\u0027s hard to know for sure, so modeling after existing code seems safer.",
+      "parentUuid": "c5d248a3_229744d4",
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
