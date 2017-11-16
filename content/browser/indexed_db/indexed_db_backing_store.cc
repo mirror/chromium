@@ -3321,6 +3321,21 @@ uint64_t IndexedDBBackingStore::Transaction::GetTransactionSize() {
   return transaction_->GetTransactionSize();
 }
 
+uint64_t IndexedDBBackingStore::Transaction::GetBlobSize() {
+  int64_t size = 0;
+  for (const auto& os_blobs_pair : blob_change_map_) {
+    for (const auto& blob_info : os_blobs_pair.second->blob_info()) {
+      size += blob_info.size();
+    }
+  }
+  for (const auto& os_blobs_pair : incognito_blob_map_) {
+    for (const auto& blob_info : os_blobs_pair.second->blob_info()) {
+      size += blob_info.size();
+    }
+  }
+  return size;
+}
+
 IndexedDBBackingStore::BlobChangeRecord::BlobChangeRecord(
     const std::string& key,
     int64_t object_store_id)

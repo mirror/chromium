@@ -588,4 +588,9 @@ IndexedDBTransaction::GetPendingChangesForConnection(int32_t connection_id) {
   return nullptr;
 }
 
+int64_t IndexedDBTransaction::GetBlobSize() const {
+  DCHECK(transaction_);
+  return transaction_->GetBlobSize();
+}
+
 }  // namespace content

@@ -937,7 +937,7 @@ void DatabaseImpl::IDBSequenceHelper::OnGotUsageAndQuotaForCommit(
     return;
 
   if (status == storage::kQuotaStatusOk &&
-      usage + transaction->size() <= quota) {
+      usage + transaction->size() + transaction->GetBlobSize() <= quota) {
     connection_->database()->Commit(transaction);
   } else {
     connection_->AbortTransaction(

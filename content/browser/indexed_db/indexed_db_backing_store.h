@@ -171,6 +171,7 @@ class CONTENT_EXPORT IndexedDBBackingStore
     LevelDBTransaction* transaction() { return transaction_.get(); }
 
     virtual uint64_t GetTransactionSize();
+    virtual uint64_t GetBlobSize();
 
     leveldb::Status GetBlobInfoForRecord(
         int64_t database_id,
