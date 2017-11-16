@@ -367,6 +367,7 @@ void PaintOpReader::Read(scoped_refptr<PaintTextBlob>* paint_blob) {
   // typefaces are serialized. Fix this once we serialize everything. For now
   // the behavior is that the |paint_blob| op exists and is valid, but
   // internally it has a nullptr SkTextBlob which skia ignores.
+  // See also: TODO in paint_op_buffer_eq_fuzzer.
   *paint_blob = base::MakeRefCounted<PaintTextBlob>(std::move(blob),
                                                     std::move(typefaces));
 }
