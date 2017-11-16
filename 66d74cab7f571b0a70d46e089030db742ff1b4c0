@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be3397a5_97c5cf43",
+        "filename": "content/browser/service_worker/service_worker_context_core.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-16T10:39:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41b7354d_83df65b2",
+      "revId": "66d74cab7f571b0a70d46e089030db742ff1b4c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe99c947_5f1fe59b",
         "filename": "content/browser/service_worker/service_worker_context_core.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-16T04:55:49Z",
       "side": 1,
       "message": "This can be base::OnceClosure since it\u0027s only called once.",
+      "revId": "66d74cab7f571b0a70d46e089030db742ff1b4c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd16c368_8023ddc0",
+        "filename": "content/browser/service_worker/service_worker_context_core.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-16T10:39:03Z",
+      "side": 1,
+      "message": "Multiple instances of this class are created that each call the same BarrierClosure. I don\u0027t think a OnceClosure would work?",
+      "parentUuid": "fe99c947_5f1fe59b",
       "revId": "66d74cab7f571b0a70d46e089030db742ff1b4c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "66d74cab7f571b0a70d46e089030db742ff1b4c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91fb13a4_8de99e70",
+        "filename": "content/browser/service_worker/service_worker_context_core.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-16T10:39:03Z",
+      "side": 1,
+      "message": "The flaky test I am trying to fix is using Javascript to create a service worker, then it uses the BrowsingDataRemover to erase all data and afterwards checks if any kind of site data is left. \nWe had a few issues where data deletion didn\u0027t work properly, so I\u0027m currently adding integration tests for each data type https://crbug.com/769425.\n\nThe deletion problem is not just an issue with this test but I think this could happen to a real user as well.\n\nThe deletion can happen this way:\n1. QuotaManager tells every quota managed type to delete itself\n2. All ServiceWorkers are told to delete themselve and waits for the deletions to finish\n3. QuotaManager removes all Origins from its internal database\n4. A late ServiceWorker deletion notifies the quota manager that some quota changed and the quota manager recreates the origin entry in its database.\n\nIf that happens a user will still see the origin e.g. in chrome://settings/siteData.\n\nI implemented your suggestion to get the registrations directly. It looks better than before. I\u0027m still waiting for the listener as well as the other callback in order to retrieve the deletion status codes.",
+      "parentUuid": "3d0dc163_317597b2",
+      "revId": "66d74cab7f571b0a70d46e089030db742ff1b4c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

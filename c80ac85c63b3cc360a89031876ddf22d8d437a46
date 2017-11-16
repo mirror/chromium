@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b56ab800_bcc7e12c",
+        "filename": "content/browser/service_worker/service_worker_context_core.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-16T10:39:03Z",
+      "side": 1,
+      "message": "From looking at the unregister flow, the only case, where OnRegistrationDeleted is not called is if the ServiceWorker is already unregistering (see ServiceWorkerRegistration::ClearWhenReady). Do you know of any other case, this could go wrong?",
+      "revId": "c80ac85c63b3cc360a89031876ddf22d8d437a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c4cf51_c18a293d",
+        "filename": "content/browser/service_worker/service_worker_context_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-16T10:39:03Z",
+      "side": 1,
+      "message": "The order of these deletions changed. My guess is that storage()-\u003eGetRegistrationsForOrigin() returns a different order than storage()-\u003eGetAllRegistrationsInfos()? \nI don\u0027t think that is an issue?",
+      "revId": "c80ac85c63b3cc360a89031876ddf22d8d437a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
