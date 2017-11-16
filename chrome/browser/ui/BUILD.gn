@@ -1532,6 +1532,12 @@ split_static_library("ui") {
     if (use_cras) {
       defines += [ "USE_CRAS" ]
     }
+  } else {
+    # !is_chromeos
+    sources += [
+      "webui/settings/printing_handler.cc",
+      "webui/settings/printing_handler.h",
+    ]
   }
 
   if (is_win || is_mac || is_desktop_linux) {
