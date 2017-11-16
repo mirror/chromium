@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bee53ee_111e2e0b",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4278,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-16T02:22:52Z",
+      "side": 1,
+      "message": "Do you want to use |if (@available(iOS 11, *))| ?",
+      "range": {
+        "startLine": 4278,
+        "startChar": 17,
+        "endLine": 4278,
+        "endChar": 40
+      },
+      "revId": "be21914ccba2c57139001cfbdf2920f31f698593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
