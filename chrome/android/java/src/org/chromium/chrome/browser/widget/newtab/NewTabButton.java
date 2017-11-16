@@ -16,6 +16,7 @@ import android.util.AttributeSet;
 import android.widget.Button;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.TraceEvent;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.device.DeviceClassManager;
 import org.chromium.chrome.browser.widget.animation.AnimatorProperties;
@@ -183,6 +184,7 @@ public class NewTabButton extends Button implements Drawable.Callback {
 
     @Override
     protected void drawableStateChanged() {
+        try (TraceEvent te = TraceEvent.scoped("NewTabButton.drawableStateChanged")) {
         super.drawableStateChanged();
 
         if (mModernDrawable != null) {
@@ -191,5 +193,5 @@ public class NewTabButton extends Button implements Drawable.Callback {
             mNormalDrawable.setState(getDrawableState());
             mIncognitoDrawable.setState(getDrawableState());
         }
-    }
+    }}
 }
