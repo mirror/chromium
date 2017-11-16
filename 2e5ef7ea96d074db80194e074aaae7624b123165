@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe913361_245f78a6",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-16T16:18:20Z",
+      "side": 1,
+      "message": "Devlin: Daniel asked in his previous comment to point out to you the changes in this file.  In particular, he said that \"it seems a bit unfortunate to have to extract the extension for a RenderFrame based on the \u0027effective document URL\u0027\".\n\nFWIW, the look-up via GetEffectiveDocumentURL is needed for handling about:blank URLs.  See ExtensionFunctionalTest.FindingUnrelatedExtensionFramesFromAboutBlank (*) test for details about the scenario solved by using GetEffectiveDocumentURL.\n\n\nBTW, I note that \"effective URL\" is a bit of an overloaded term:\n\n- ScriptContext::GetEffectiveDocumentURL just goes up over local parents/openers until it reaches a frame that is not about:blank.  There is nothing extension-specific here (maybe this kind of functionality should instead be replaced by a new blink::WebSecurityOrigin::GetURL (or something like that, fetching the URL from the wrapped blink::SecurityOrigin).\n\n- SiteInstanceImpl::GetEffectiveURL translates hosted app URLs into extension URLs (if the original URL matched one of web extents of the hosted app).\n\n\n(*) https://chromium-review.googlesource.com/c/chromium/src/+/764487/8/chrome/browser/extensions/extension_functional_browsertest.cc#115",
+      "range": {
+        "startLine": 102,
+        "startChar": 23,
+        "endLine": 102,
+        "endChar": 61
+      },
+      "revId": "2e5ef7ea96d074db80194e074aaae7624b123165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ea92ad_e000c9da",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-16T16:18:20Z",
+      "side": 1,
+      "message": "Please also note https://crrev.com/c/766469.  It is a bit stale, but shows that in a follow-up we plan to gather some UMA stats that hopefully will support restricting conditions that enable piercing of a browsing instance.  In particular, hopefully the piercing is only needed if the target of the lookup is a EXTENSION_BACKGROUND_PAGE or a BACKGROUND_CONTENTS.",
+      "range": {
+        "startLine": 178,
+        "startChar": 6,
+        "endLine": 178,
+        "endChar": 15
+      },
+      "revId": "2e5ef7ea96d074db80194e074aaae7624b123165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
