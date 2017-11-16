@@ -50,6 +50,7 @@ template("generate_runner_script") {
     ]
     data += [
       invoker.generated_script,
+      "//build/fuchsia/elf_info.py",
       "//build/fuchsia/exe_runner.py",
       "//build/fuchsia/test_runner.py",
       "//build/fuchsia/runner_common.py",
