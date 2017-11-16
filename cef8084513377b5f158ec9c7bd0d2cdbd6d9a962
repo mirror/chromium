@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "456c43b5_cdab9732",
+        "filename": "base/files/file_util.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "* Thanks for the shorter form. I\u0027ll use it in the next revision.\n* This is a bug I\u0027ve opened specifically for this TODO. Putting it as \"verified\" was a mistake - thanks for catching. I\u0027ve changed it to \"assigned\".",
+      "parentUuid": "08ecf7a4_f1dc3fc1",
+      "revId": "cef8084513377b5f158ec9c7bd0d2cdbd6d9a962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8cadc33c_9cfc4f33",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 12
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "f5fe3d5a_5f92232e",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "1. 50KB is pretty small.\n2. This is the limit. It\u0027s not actually reached in all but one test. Therefore, lowering this would only improve the efficiency of a single test, while at the same time making the test less \"real\" (because the real max is about 60MB - already about three orders of magnitude from what we actually test).",
+      "parentUuid": "01319b34_67dee410",
+      "revId": "cef8084513377b5f158ec9c7bd0d2cdbd6d9a962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20ad951c_a6d0297b",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
         "patchSetId": 12
@@ -81,6 +117,24 @@
       "writtenOn": "2017-11-16T15:30:41Z",
       "side": 1,
       "message": "Prefer a higher timeout like 10s. Slow bots and memory bots can sometimes flake with what seems like sensible timeouts.",
+      "revId": "cef8084513377b5f158ec9c7bd0d2cdbd6d9a962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "894cee81_7bf57c91",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "Great minds think alike - it was actually 10s. Then I changed it temporarily to 1s while testing something, and forgot about it, because I then removed the code that had used it. I\u0027ve now removed this line altogether; thanks for drawing my attention to it. (In next revision.)",
+      "parentUuid": "20ad951c_a6d0297b",
       "revId": "cef8084513377b5f158ec9c7bd0d2cdbd6d9a962",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

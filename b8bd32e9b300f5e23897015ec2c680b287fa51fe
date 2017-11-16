@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7836784b_c68aae8a",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "* These logs are saved based on explicit input from the user. No need to clean anything up.\n* It\u0027s interesting to note that the user\u0027s request to save these logs is not remembered when Chrome is restarted, so we shouldn\u0027t even worry about that.",
+      "parentUuid": "21b3ebc7_0bf0edc0",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e14b990_42bf9814",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-16T21:26:56Z",
       "side": 1,
       "message": "Since by design the destructor should never run, only the singleton should be used, these should not be public.\n\nIf they are public and usable, using these would expose a race between destructor and tasks in-flight, most easily avoided by making this class ref-counted, as PostTask would then protect it from destruction. Not needed if these are made private/protected.",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d5cb94_e9c2531a",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "You\u0027re right that these need to be protected; I will change that when I upload the next revision. Good catch.",
+      "parentUuid": "8e14b990_42bf9814",
       "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b5287e72_8b82cd94",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "For private structs which are also POD, I think an explicit ctor is overkill.",
+      "parentUuid": "86eeed68_66e43329",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "085beba2_a0124959",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 13
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-16T21:26:56Z",
       "side": 1,
       "message": "nit: I suggest calling these \"...OnFileThread\". Up to you.",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbefe79a_e5bfa068",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "I find that a bit confusing, since it will be done on a dedicated SequencedTaskRunner, which, if I understand correctly, though it ensures sequentiality, does not ensure it will all happen on just one thread. I\u0027m okay with ...Internal, or something else, if you feel that the distinction between external and internal is not clear enough?",
+      "parentUuid": "085beba2_a0124959",
       "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4f1dec7c_83ec0041",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "I\u0027ll change in the next revision. (I thought we generally wanted to do that for assignment, but I didn\u0027t know it was the preferred style for initialization-lists too.)",
+      "parentUuid": "9c78176a_3728fcac",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f5e1ddc_9038daec",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
         "patchSetId": 13
@@ -101,6 +191,24 @@
       "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63bdf489_f888b2be",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "Please see the fixture\u0027s directory - I delete the entire directory. So it doesn\u0027t matter what names the files get.",
+      "parentUuid": "3f5e1ddc_9038daec",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "4a0f976e_0d179d1c",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "* I would be surprised if trybots don\u0027t anyway run in a sandbox that cleans everything up anyway. Otherwise, we\u0027d have to manually clean them up every once in a while; it\u0027s highly unlikely not a single test in the entire suite forgets to clean things up.\n* I see no mention of what \"temporary\" means in the documentation of CreateNewTempDirectory(), so even if the implementation ensures it, it wouldn\u0027t be wise to rely on it remaining like that.\n* Even if the trybots run in a sandbox, locally we probably don\u0027t. It\u0027s nice to clean between sessions. It\u0027s also nice towards the next tests.",
+      "parentUuid": "ccc8974a_5e7e4685",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d94cd8aa_1f12bfd5",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
         "patchSetId": 13
@@ -132,6 +258,24 @@
       "writtenOn": "2017-11-16T21:26:56Z",
       "side": 1,
       "message": "nit: Does a name for what this is used for like WaitForCallback or WaitForReply make more sense?",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68eefc1c_71c9fad5",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "Let\u0027s revisit this naming issue once we decide if we go with Callback\u003cvoid(bool)\u003e and Callback\u003cvoid(FilePath)\u003e, keep things as they are, or do something altogether different.",
+      "parentUuid": "d94cd8aa_1f12bfd5",
       "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "10cc3e14_60d6853e",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "Same answer. I\u0027m resolving this one issue and keeping only the other; I won\u0027t end up renaming one but not the other.",
+      "parentUuid": "76e9e651_443ab51c",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fbaf963_115a5efd",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
         "patchSetId": 13
@@ -166,6 +328,24 @@
       "writtenOn": "2017-11-16T21:26:56Z",
       "side": 1,
       "message": ":D",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb254f4f_c1bcd065",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "Don\u0027t worry, it must be public domain by now. :-)",
+      "parentUuid": "3fbaf963_115a5efd",
       "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "50a7b7e9_378baa19",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "I agree in principle, but I don\u0027t think this is a right application of the principle. The length of |log| is of no consequence, provided that it\u0027s longer than |file_size_limit|. The error of off-by-one would manifest itself if we end up writing one more/less than |file_size_limit|. That option is covered by:\n  EXPECT_EQ(file_contents, log.substr(0, file_size_limit));",
+      "parentUuid": "c6ce912b_67e806ef",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "433199c3_748d1b92",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
         "patchSetId": 13
@@ -200,6 +398,24 @@
       "writtenOn": "2017-11-16T21:26:56Z",
       "side": 1,
       "message": "I don\u0027t think a test is needed for \"writing a lot\" and slows down the bots, I think it is enough to make sure that you can create with unlimited size argument and that write works like in the LocalLogCreateAndWriteToFile case.",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9fd8db_05545abf",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "Agreed. Since \"a lot\" is such a vague concept when faced with \"unlimited\", I agree that there\u0027s no way to tell how much better ~1MB is than 100B(*). I\u0027ll change this test in the next revision.\n\n---\n(*) One might say it\u0027s about 999990 bytes better, though.",
+      "parentUuid": "433199c3_748d1b92",
       "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "6a6c1a21_52784d3f",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "I think it would be good to keep around, and it\u0027s simple enough that I don\u0027t see the argues for removing it as strong.",
+      "parentUuid": "1c1aaf55_d3015d85",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acd03aef_d7a666db",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
         "patchSetId": 13
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "2cac2f93_cacbb175",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "I disagree - you\u0027d be relying on the UUT (unit under test) having either two bugs or none. What if the UUT reports the right thing, but behaves incorrectly otherwise? That is to say, what if it returns false/true as expected, but then writes/does-not-write to files incorrectly?",
+      "parentUuid": "acd03aef_d7a666db",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c0e689d_bd2dd14b",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
         "patchSetId": 13
@@ -251,6 +503,24 @@
       "writtenOn": "2017-11-16T21:26:56Z",
       "side": 1,
       "message": "nit: Prefer std::vector to arraysize (initializer list still works).",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d48d9d4b_692946e0",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "Could you please provide the rationale for your preference? (I might come to share it.)",
+      "parentUuid": "1c0e689d_bd2dd14b",
       "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "f48450eb_f05cd2b3",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "1. We already check that it saves to the right directory. Or do you mean that it forms the filename part of the path according to our expectations?\n2. We already have a test for starting and never stopping - LocalLogSanityDestructorWithActiveFile.",
+      "parentUuid": "cc9ca6b0_2f70edf7",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c389c3b_ca2d9011",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
         "patchSetId": 13
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "56d9331e_f9852599",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "I\u0027m okay with never adding non-POSIX versions. However, please note that the two tests you have mentioned are distinct - they hit on different early-exits in the logic of the class.\n\nDo you oppose keeping this TODO? If so, please un-resolve this issue to let me know.",
+      "parentUuid": "6c389c3b_ca2d9011",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0289012d_6e2126a4",
         "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
         "patchSetId": 13
@@ -305,6 +611,24 @@
       "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af1e9a61_de2b0bb1",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-16T22:17:31Z",
+      "side": 1,
+      "message": "As per the comment, these values were not set by me, but rather moved here from elsewhere; I don\u0027t think we want to open the discussion for the appropriate values over this CL.",
+      "parentUuid": "0289012d_6e2126a4",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
