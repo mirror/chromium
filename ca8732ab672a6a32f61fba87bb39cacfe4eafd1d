@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5dd2e297_61743ff6",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/SelectionPopupControllerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-16T20:58:11Z",
+      "side": 1,
+      "message": "SELECTION_HANDLES_SHOWN is actually falling through to SELECTION_HANDLES_MOVED in this CL.",
+      "parentUuid": "15b9d1c8_a591a2c2",
+      "range": {
+        "startLine": 136,
+        "startChar": 56,
+        "endLine": 136,
+        "endChar": 79
+      },
+      "revId": "ca8732ab672a6a32f61fba87bb39cacfe4eafd1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af958652_9ecf7ce7",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 7
@@ -36,6 +60,29 @@
       "writtenOn": "2017-11-16T20:02:37Z",
       "side": 1,
       "message": "anonymous namespace",
+      "revId": "ca8732ab672a6a32f61fba87bb39cacfe4eafd1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a76ac1_9107766c",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4494,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-16T20:58:11Z",
+      "side": 1,
+      "message": "No need to use explicit.",
+      "range": {
+        "startLine": 4494,
+        "startChar": 2,
+        "endLine": 4494,
+        "endChar": 10
+      },
       "revId": "ca8732ab672a6a32f61fba87bb39cacfe4eafd1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
