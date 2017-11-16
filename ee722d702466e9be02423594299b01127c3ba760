@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29d6c272_aa64dad7",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-16T19:32:26Z",
+      "side": 1,
+      "message": "I tend to dislike changing states while async operations are outstanding; it feels like an abuse of the DoLoop() idiom.  In a comment on Reset() I suggest a different pattern, which would apply here as well.",
+      "range": {
+        "startLine": 77,
+        "startChar": 19,
+        "endLine": 77,
+        "endChar": 20
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f804e862_5abb1d16",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-16T19:32:26Z",
+      "side": 1,
+      "message": "Why not if-then-else for these two?  (Up to you.)",
+      "range": {
+        "startLine": 119,
+        "startChar": 4,
+        "endLine": 119,
+        "endChar": 21
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f254c26_02d3200d",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-16T19:32:26Z",
+      "side": 1,
+      "message": "Suggestion/thought: The racing of changing of states while an async operation is outstanding disturbs me a bit--it feels like a breakage of the pure DoLoop() idiom (which is mostly just writing sequential code with blocking on async operations turned into a state transition).  Instead, if we receive a Reset request (or, really, an Init() request, since that\u0027s the only thing that calls Reset()) and the state machine is currently cranking, we could note the request in a boolean and execute it with appropriate state transitions in OnIOComplete().",
+      "range": {
+        "startLine": 131,
+        "startChar": 28,
+        "endLine": 131,
+        "endChar": 41
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65d58c0c_1dd87ab0",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-16T19:32:26Z",
+      "side": 1,
+      "message": "Not resetting the file stream on re-Init() strikes me as a pretty large change in behavior from the old path, though it\u0027s clearly more inline with the expected sandboxed usage.  Do you have a sense as to how many consumers take the re-initialization path?  What exploration did you do to conclude that rewinding is as good for those consumers?",
+      "range": {
+        "startLine": 189,
+        "startChar": 17,
+        "endLine": 189,
+        "endChar": 19
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29898e7d_dfc2dc33",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-16T19:32:26Z",
+      "side": 1,
+      "message": "I have a slight preference for encoding the presence of file_stream_ in the state variable and converting this to a DCHECK(); my rule of thumb is that if it\u0027s a state of the object and can be encoded in the state variable is should be.  But up to you.",
+      "range": {
+        "startLine": 191,
+        "startChar": 6,
+        "endLine": 191,
+        "endChar": 18
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed88d1f_4d54d73b",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-16T19:32:26Z",
+      "side": 1,
+      "message": "Huh.  No state representing the fact that the object is in error and the only valid thing to do with it is reset?  Doesn\u0027t this mean that Read() will think it should succeed and fall over when it tries to use the file stream?  (Because the default set in the DoLoop() is the IDLE state.)",
+      "range": {
+        "startLine": 209,
+        "startChar": 15,
+        "endLine": 209,
+        "endChar": 16
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8ecc73_327e6340",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-16T19:32:26Z",
+      "side": 1,
+      "message": "I\u0027m no expert, but on a different code review (https://chromium-review.googlesource.com/c/chromium/src/+/760037/3/chrome/browser/sessions/session_data_deleter.cc#84 ) Scott Violet indicated to me that closures are only ok for synchronous usage.  This is a heads up rather than a change request, as I don\u0027t consider myself competent to evaluate the question.",
+      "range": {
+        "startLine": 229,
+        "startChar": 27,
+        "endLine": 229,
+        "endChar": 50
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ba1b0c_f65459d5",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-16T19:32:26Z",
+      "side": 1,
+      "message": "When can this happen?  Reset() is private, and looks to only be called from Init()?",
+      "range": {
+        "startLine": 274,
+        "startChar": 9,
+        "endLine": 274,
+        "endChar": 10
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba444d92_48bce3dc",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-16T19:32:26Z",
+      "side": 1,
+      "message": "My preference would be to store file_info in a member data variable and do all of this state management in DoGetFileInfoComplete; I think it keeps the process of understanding the state diagram cleaner.  If the states been unilaterally set to OPEN by a Reset/Init, there might be problems, but I think everything just works because all the information is dropped on the floor?  (Up to you--I think it\u0027s quite possible reading this CL that you and I have different aesthetics around the DoLoop() idiom, possibly due to my extensive reviewing of the cache CLs :-}.)",
+      "range": {
+        "startLine": 279,
+        "startChar": 30,
+        "endLine": 279,
+        "endChar": 52
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6dab62_f3ad5986",
+        "filename": "net/base/upload_file_element_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-16T19:32:26Z",
+      "side": 1,
+      "message": "nit: \"and opened *for* reading\"?",
+      "range": {
+        "startLine": 34,
+        "startChar": 30,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d1838e_c0b9f1ad",
+        "filename": "net/base/upload_file_element_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-16T19:32:26Z",
+      "side": 1,
+      "message": "nit: Formatting.",
+      "range": {
+        "startLine": 38,
+        "startChar": 13,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c0e9dca_a2d24c66",
+        "filename": "net/base/upload_file_element_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-16T19:32:26Z",
+      "side": 1,
+      "message": "nit: Sentence fragment?",
+      "range": {
+        "startLine": 94,
+        "startChar": 51,
+        "endLine": 94,
+        "endChar": 55
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4efa8dee_11f64a3b",
+        "filename": "net/base/upload_file_element_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-16T19:32:26Z",
+      "side": 1,
+      "message": "nit: Incorrect plural?",
+      "range": {
+        "startLine": 115,
+        "startChar": 19,
+        "endLine": 115,
+        "endChar": 22
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
