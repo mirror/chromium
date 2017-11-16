@@ -4,7 +4,6 @@
 
 package org.chromium.chrome.browser;
 
-import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.content_public.browser.WebContents;
 
 /**
@@ -24,8 +23,7 @@ public abstract class WebContentsFactory {
      * @return                A newly created {@link WebContents} object.
      */
     public static WebContents createWebContents(boolean incognito, boolean initiallyHidden) {
-        return nativeCreateWebContents(
-                Profile.getLastUsedProfile(), incognito, initiallyHidden, false);
+        return nativeCreateWebContents(incognito, initiallyHidden, false);
     }
 
     /**
@@ -40,10 +38,9 @@ public abstract class WebContentsFactory {
      */
     public static WebContents createWebContentsWithWarmRenderer(
             boolean incognito, boolean initiallyHidden) {
-        return nativeCreateWebContents(
-                Profile.getLastUsedProfile(), incognito, initiallyHidden, true);
+        return nativeCreateWebContents(incognito, initiallyHidden, true);
     }
 
-    private static native WebContents nativeCreateWebContents(Profile profile, boolean incognito,
-            boolean initiallyHidden, boolean initializeRenderer);
+    private static native WebContents nativeCreateWebContents(
+            boolean incognito, boolean initiallyHidden, boolean initializeRenderer);
 }
