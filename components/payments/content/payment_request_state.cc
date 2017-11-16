@@ -24,7 +24,6 @@
 #include "components/payments/core/autofill_payment_instrument.h"
 #include "components/payments/core/journey_logger.h"
 #include "components/payments/core/payment_instrument.h"
-#include "components/payments/core/payment_manifest_downloader.h"
 #include "components/payments/core/payment_request_data_util.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_features.h"
@@ -60,22 +59,12 @@ PaymentRequestState::PaymentRequestState(
       weak_ptr_factory_(this) {
   if (base::FeatureList::IsEnabled(features::kServiceWorkerPaymentApps)) {
     get_all_instruments_finished_ = false;
-    service_worker_payment_app_factory_ =
-        std::make_unique<ServiceWorkerPaymentAppFactory>();
-    service_worker_payment_app_factory_->GetAllPaymentApps(
-        context,
-        std::make_unique<PaymentManifestDownloader>(
-            content::BrowserContext::GetDefaultStoragePartition(context)
-                ->GetURLRequestContext()),
-        payment_request_delegate_->GetPaymentManifestWebDataService(),
+    ServiceWorkerPaymentAppFactory::GetInstance()->GetAllPaymentApps(
+        context, payment_request_delegate_->GetPaymentManifestWebDataService(),
         spec_->method_data(),
         base::BindOnce(&PaymentRequestState::GetAllPaymentAppsCallback,
                        weak_ptr_factory_.GetWeakPtr(), context,
-                       top_level_origin, frame_origin),
-        base::BindOnce(
-            &PaymentRequestState::
-                OnServiceWorkerPaymentAppFactoryFinishedUsingResources,
-            weak_ptr_factory_.GetWeakPtr()));
+                       top_level_origin, frame_origin));
   } else {
     PopulateProfileCache();
     SetDefaultProfileSelections();
@@ -142,11 +131,6 @@ void PaymentRequestState::FinishedGetAllSWPaymentInstruments() {
   if (are_requested_methods_supported_callback_)
     CheckRequestedMethodsSupported(
         std::move(are_requested_methods_supported_callback_));
-}
-
-void PaymentRequestState::
-    OnServiceWorkerPaymentAppFactoryFinishedUsingResources() {
-  service_worker_payment_app_factory_.reset();
 }
 
 void PaymentRequestState::OnPaymentResponseReady(
