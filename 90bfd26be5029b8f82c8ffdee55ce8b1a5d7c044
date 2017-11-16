@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "af3f026e_ebf439e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-16T08:51:24Z",
+      "side": 1,
+      "message": "\u003e IIUC, Workers don\u0027t inherit CSP from the owner Document, so I specified\n\u003e CSP on a response for a worker script, not for the owner Document, but\n\u003e it didn\u0027t work.\n\nDedicated workers ought to inherit policy from their owner: see https://github.com/w3c/web-platform-tests/blob/master/content-security-policy/inside-worker/dedicated-inheritance.html. If `\u0027unsafe-eval\u0027` isn\u0027t being applied, then it\u0027s a bug we ought to poke at. :)\n\nI\u0027m surprised to hear it though: we have tests for this in https://github.com/w3c/web-platform-tests/blob/f282e9db1454e7d98e9cce578ad4a441c7c33893/content-security-policy/inside-worker/dedicated-script.html (which tests workers via https://github.com/w3c/web-platform-tests/blob/f282e9db1454e7d98e9cce578ad4a441c7c33893/content-security-policy/inside-worker/support/script-src-self.sub.js).\n\nCan you share the code you wrote that didn\u0027t work the way you expected it to work?",
+      "parentUuid": "555cda1e_5b373211",
+      "revId": "90bfd26be5029b8f82c8ffdee55ce8b1a5d7c044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7965beb9_3fbb6521",
         "filename": "third_party/WebKit/Source/core/workers/MainThreadWorkletTest.cpp",
         "patchSetId": 5
