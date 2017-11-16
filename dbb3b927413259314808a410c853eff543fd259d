@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d4254be_c7f0c90a",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1502,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-16T17:23:05Z",
+      "side": 1,
+      "message": "Prefer to delete the code since we can get it back from history if needed.",
+      "revId": "dbb3b927413259314808a410c853eff543fd259d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
