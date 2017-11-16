@@ -40,6 +40,7 @@ enum class SharedIdNamespaces {
   kTextures,
   kSamplers,
   kSyncs,
+  kGpuFences,
   kNumSharedIdNamespaces
 };
 
@@ -66,6 +67,8 @@ static_assert(static_cast<int>(SharedIdNamespaces::kSamplers) == 4,
               "kSamplers should equal 4");
 static_assert(static_cast<int>(SharedIdNamespaces::kSyncs) == 5,
               "kProgramsAndShaders should equal 5");
+static_assert(static_cast<int>(SharedIdNamespaces::kGpuFences) == 6,
+              "kGpuFences should equal 4");
 static_assert(static_cast<int>(IdNamespaces::kFramebuffers) == 0,
               "kFramebuffers should equal 0");
 static_assert(static_cast<int>(IdNamespaces::kQueries) == 1,
