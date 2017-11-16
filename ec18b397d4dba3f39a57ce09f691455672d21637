@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ce431ba_39d87740",
+        "filename": "third_party/WebKit/Source/core/css/CSSPaintValue.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-16T06:10:08Z",
+      "side": 1,
+      "message": "Is there any way of verifying this, e.g. a DCHECK?",
+      "revId": "ec18b397d4dba3f39a57ce09f691455672d21637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "893c971c_5888fb79",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-16T06:10:08Z",
+      "side": 1,
+      "message": "Same here, it would be great if we could verify that this is really the case.",
+      "revId": "ec18b397d4dba3f39a57ce09f691455672d21637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
