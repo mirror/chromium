@@ -166,7 +166,7 @@ void X11EventSourceLibevent::RemoveXEventDispatcher(
 void X11EventSourceLibevent::ProcessXEvent(XEvent* xevent) {
   std::unique_ptr<ui::Event> translated_event = TranslateXEventToEvent(*xevent);
   if (translated_event) {
-    DispatchEvent(translated_event.get());
+    PreDispatchEvent(translated_event.get(), xevent);
   } else {
     // Only if we can't translate XEvent into ui::Event, try to dispatch XEvent
     // directly to XEventDispatchers.
@@ -185,6 +185,16 @@ void X11EventSourceLibevent::AddEventWatcher() {
       fd, true, base::MessagePumpLibevent::WATCH_READ, &watcher_controller_,
       this);
   initialized_ = true;
+}
+
+void X11EventSourceLibevent::PreDispatchEvent(const PlatformEvent& event,
+                                              XEvent* xevent) {
+  for (XEventDispatcher& dispatcher : dispatchers_xevent_) {
+    if (dispatcher.CanDispatchPlatformEvent(xevent)) {
+      dispatcher.WillDispatchPlatformEvent();
+      DispatchEvent(event);
+    }
+  }
 }
 
 void X11EventSourceLibevent::DispatchXEventToXEventDispatchers(XEvent* xevent) {

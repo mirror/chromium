@@ -16,8 +16,19 @@ namespace ui {
 // Interface for classes that want to receive XEvent directly. Only used with
 // Ozone X11 currently and only events that can't be translated into ui::Events
 // are sent via this path.
+
+// Interface for classes that want to receive XEvent directly or are able to say
+// if they can process platform events (translated events).  Only used with
+// Ozone X11 currently and only events that can't be translated into ui::Events
+// are sent via this path (DispatchXEvent).
 class EVENTS_EXPORT XEventDispatcher {
  public:
+  // Tells if can process translated events.
+  virtual bool CanDispatchPlatformEvent(XEvent* xev) = 0;
+
+  // Prepares to receive a translated events and process it.
+  virtual void WillDispatchPlatformEvent() = 0;
+
   // Sends XEvent to XEventDispatcher for handling. Returns true if the XEvent
   // was dispatched, otherwise false. After the first XEventDispatcher returns
   // true XEvent dispatching stops.
@@ -53,6 +64,8 @@ class EVENTS_EXPORT X11EventSourceLibevent
  private:
   // Registers event watcher with Libevent.
   void AddEventWatcher();
+
+  void PreDispatchEvent(const PlatformEvent& event, XEvent* xevent);
 
   // Sends XEvent to registered XEventDispatchers.
   void DispatchXEventToXEventDispatchers(XEvent* xevent);

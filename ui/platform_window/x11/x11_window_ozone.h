@@ -32,6 +32,8 @@ class X11_WINDOW_EXPORT X11WindowOzone : public X11WindowBase,
   void SetCursor(PlatformCursor cursor) override;
 
   // XEventDispatcher:
+  bool CanDispatchPlatformEvent(XEvent* xev) override;
+  void WillDispatchPlatformEvent() override;
   bool DispatchXEvent(XEvent* event) override;
 
  private:
@@ -40,6 +42,8 @@ class X11_WINDOW_EXPORT X11WindowOzone : public X11WindowBase,
   uint32_t DispatchEvent(const PlatformEvent& event) override;
 
   X11WindowManagerOzone* window_manager_;
+
+  bool handle_next_event_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(X11WindowOzone);
 };

@@ -26,6 +26,8 @@ class GLSurfaceGLXOzone : public gl::NativeViewGLSurfaceGLX,
   void UnregisterEvents() override;
 
   // XEventDispatcher:
+  bool CanDispatchPlatformEvent(XEvent* xev) override;
+  void WillDispatchPlatformEvent() override;
   bool DispatchXEvent(XEvent* xevent) override;
 
  private:
