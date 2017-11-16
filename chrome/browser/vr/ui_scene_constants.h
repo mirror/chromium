@@ -207,6 +207,8 @@ static constexpr float kSpeechRecognitionResultTextYOffset = 0.5f;
 static constexpr int kSpeechRecognitionResultTimeoutSeconds = 2;
 static constexpr int kSpeechRecognitionOpacityAnimationDurationMs = 200;
 
+static constexpr float kModalPromptFadeOpacity = 0.5f;
+
 }  // namespace vr
 
 #endif  // CHROME_BROWSER_VR_UI_SCENE_CONSTANTS_H_
