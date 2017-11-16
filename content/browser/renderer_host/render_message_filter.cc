@@ -266,6 +266,9 @@ void RenderMessageFilter::DidGenerateCacheableMetadata(
     const GURL& url,
     base::Time expected_response_time,
     const std::vector<uint8_t>& data) {
+  if (!url.SchemeIsHTTPOrHTTPS())
+    return;
+
   net::HttpCache* cache = request_context_->GetURLRequestContext()->
       http_transaction_factory()->GetCache();
   if (!cache)
