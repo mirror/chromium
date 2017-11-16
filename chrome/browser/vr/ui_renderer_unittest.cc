@@ -123,6 +123,9 @@ TEST_P(UiRendererTest, UiRendererSortingTest) {
   EXPECT_EQ(GetParam().expected_order.size(), sorted.size());
 
   for (size_t i = 0; i < sorted.size(); ++i) {
+    LOG(ERROR) << i << ": " << sorted[i]->DebugName();
+  }
+  for (size_t i = 0; i < sorted.size(); ++i) {
     EXPECT_NE(0, sorted[i]->name());
     EXPECT_EQ(UiElementNameToString(GetParam().expected_order[i]),
               sorted[i]->DebugName());
@@ -147,9 +150,6 @@ TestParams params[] = {
          kScreenCaptureIndicator,
          kBluetoothConnectedIndicator,
          kLocationAccessIndicator,
-         kExitPromptBackplane,
-         kExitPrompt,
-         kAudioPermissionPrompt,
          kUrlBar,
          kLoadingIndicator,
          kLoadingIndicatorForeground,
@@ -157,6 +157,9 @@ TestParams params[] = {
          kVoiceSearchButton,
          kCloseButton,
          kExclusiveScreenToast,
+         kExitPromptBackplane,
+         kExitPrompt,
+         kAudioPermissionPrompt,
          kSpeechRecognitionResultText,
          kSpeechRecognitionResultCircle,
          kSpeechRecognitionResultMicrophoneIcon,
