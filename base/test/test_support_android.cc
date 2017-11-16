@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <android/looper.h>
 #include <stdarg.h>
 #include <string.h>
 
@@ -36,7 +37,7 @@ struct RunState {
   bool should_quit;
 };
 
-RunState* g_state = NULL;
+RunState* g_state = nullptr;
 
 // A singleton WaitableEvent wrapper so we avoid a busy loop in
 // MessagePumpForUIStub. Other platforms use the native event loop which blocks
@@ -73,6 +74,11 @@ class Waitable {
 
 // The MessagePumpForUI implementation for test purpose.
 class MessagePumpForUIStub : public base::MessagePumpForUI {
+ public:
+  MessagePumpForUIStub() : base::MessagePumpForUI() {
+    Waitable::GetInstance();
+    Initialize(true);
+  }
   ~MessagePumpForUIStub() override {}
 
   void Start(base::MessagePump::Delegate* delegate) override {
@@ -81,6 +87,8 @@ class MessagePumpForUIStub : public base::MessagePumpForUI {
   }
 
   void Run(base::MessagePump::Delegate* delegate) override {
+    SetDelegate(delegate);
+
     // The following was based on message_pump_glib.cc, except we're using a
     // WaitableEvent since there are no native message loop to use.
     RunState state(delegate, g_state ? g_state->run_depth + 1 : 1);
@@ -88,6 +96,35 @@ class MessagePumpForUIStub : public base::MessagePumpForUI {
     RunState* previous_state = g_state;
     g_state = &state;
 
+    // When not nested we can use the real implementation, otherwise fall back
+    // to the stub implementation.
+    if (g_state->run_depth > 1) {
+      RunNested(delegate);
+    } else {
+      RunNonNested(delegate);
+    }
+
+    g_state = previous_state;
+    if (g_state && g_state->run_depth == 1)
+      MessagePumpForUI::ScheduleWork();
+  }
+
+  void RunNonNested(base::MessagePump::Delegate* delegate) {
+    // This is to handle tests that call RunUntilIdle with no tasks queued up.
+    // Calling PollOnce would block indefinitely.
+    if (IsIdle())
+      delegate->DoIdleWork();
+
+    for (;;) {
+      if (g_state->should_quit)
+        break;
+      ALooper_pollOnce(-1, nullptr, nullptr, nullptr);
+      if (g_state->should_quit)
+        break;
+    }
+  }
+
+  void RunNested(base::MessagePump::Delegate* delegate) {
     bool more_work_is_plausible = true;
 
     for (;;) {
@@ -116,16 +153,32 @@ class MessagePumpForUIStub : public base::MessagePumpForUI {
 
       more_work_is_plausible |= !delayed_work_time.is_null();
     }
-
-    g_state = previous_state;
   }
 
-  void Quit() override { Waitable::GetInstance()->Quit(); }
+  void Quit() override {
+    CHECK(g_state);
+    if (g_state->run_depth > 1) {
+      Waitable::GetInstance()->Quit();
+    } else {
+      g_state->should_quit = true;
+      ScheduleWork();  // Schedule fake work to ensure the looper is woken up.
+    }
+  }
 
-  void ScheduleWork() override { Waitable::GetInstance()->Signal(); }
+  void ScheduleWork() override {
+    if (g_state && g_state->run_depth > 1) {
+      Waitable::GetInstance()->Signal();
+    } else {
+      MessagePumpForUI::ScheduleWork();
+    }
+  }
 
   void ScheduleDelayedWork(const base::TimeTicks& delayed_work_time) override {
-    Waitable::GetInstance()->Signal();
+    if (g_state && g_state->run_depth > 1) {
+      Waitable::GetInstance()->Signal();
+    } else {
+      MessagePumpForUI::ScheduleDelayedWork(delayed_work_time);
+    }
   }
 };
 
