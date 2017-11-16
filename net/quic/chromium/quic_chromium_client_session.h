@@ -631,6 +631,15 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
   // Stores packet that witnesses socket write error. This packet is
   // written to a new socket after migration completes.
   scoped_refptr<QuicChromiumPacketWriter::ReusableIOBuffer> packet_;
+
+  IPEndPoint probing_peer_address_;
+  std::unique_ptr<DatagramClientSocket> probing_socket_;
+  std::unique_ptr<QuicChromiumPacketWriter> probing_writer_;
+  std::unique_ptr<QuicChromiumPacketReader> probing_reader_;
+  int probe_retry_count_;
+  int initial_probe_timeout_;
+  // Timer set when connectivity probe should be retried after timeout.
+  base::OneShotTimer retry_send_probing_packet_timer_;
   // TODO(jri): Replace use of migration_pending_ sockets_.size().
   // When a task is posted for MigrateSessionOnError, pass in
   // sockets_.size(). Then in MigrateSessionOnError, check to see if
