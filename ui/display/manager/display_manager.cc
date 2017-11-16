@@ -96,8 +96,8 @@ void SetInternalManagedDisplayModeList(ManagedDisplayInfo* info) {
 
 void MaybeInitInternalDisplay(ManagedDisplayInfo* info) {
   int64_t id = info->id();
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  if (command_line->HasSwitch(::switches::kUseFirstDisplayAsInternal)) {
+  bool use_first_display_as_internal = UseFirstDisplayAsInternal();
+  if (use_first_display_as_internal) {
     Display::SetInternalDisplayId(id);
     SetInternalManagedDisplayModeList(info);
   }
