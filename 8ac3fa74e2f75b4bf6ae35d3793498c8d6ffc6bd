@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f446af2f_7aae2628",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/fullscreen/ChromeFullscreenManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-16T00:47:03Z",
+      "side": 1,
+      "message": "CompositorViewHolder is already a FullscreenListener, can this be handled through an existing or new call?\n\nMaybe some new listener method like updateViewportSize() or \"something\"?",
+      "revId": "8ac3fa74e2f75b4bf6ae35d3793498c8d6ffc6bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f1f7f9_d902e134",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsDelegateAndroid.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-16T00:47:03Z",
+      "side": 1,
+      "message": "getActivity() can be null.  We should probably return 0 in that case.",
+      "revId": "8ac3fa74e2f75b4bf6ae35d3793498c8d6ffc6bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
