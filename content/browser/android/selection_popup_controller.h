@@ -36,7 +36,7 @@ class SelectionPopupController : public RenderWidgetHostConnector {
   void OnSelectionEvent(ui::SelectionEventType event,
                         const gfx::RectF& selection_rect);
   void OnSelectionChanged(const std::string& text);
-  bool ShowSelectionMenu(const ContextMenuParams& params, int handle_height);
+  bool ShowSelectionMenu(const ContextMenuParams& params);
   void OnShowUnhandledTapUIIfNeeded(int x_dip, int y_dip, float dip_scale);
   void OnSelectWordAroundCaretAck(bool did_select,
                                   int start_adjust,
