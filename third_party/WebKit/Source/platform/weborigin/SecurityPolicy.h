@@ -74,7 +74,28 @@ class PLATFORM_EXPORT SecurityPolicy {
       const String& destination_protocol,
       const String& destination_domain,
       bool allow_destination_subdomains);
+
+  static void RemoveOriginAccessWhitelistExceptionEntry(
+      const SecurityOrigin& source_origin,
+      const String& destination_protocol,
+      const String& destination_domain,
+      bool allow_destination_subdomains,
+      bool blacklist,
+      bool match_any_etld);
+
   static void ResetOriginAccessWhitelists();
+
+  static void AddOriginAccessWhitelistExceptionEntry(
+      const SecurityOrigin& source_origin,
+      const String& destination_protocol,
+      const String& destination_domain,
+      bool allow_destination_subdomains,
+      bool blacklist,
+      bool match_any_etld);
+
+  // True if the whitelist should not apply to a specific access request.
+  static bool IsExceptionToWhitelist(const SecurityOrigin* active_origin,
+                                     const SecurityOrigin* target_origin);
 
   static bool IsAccessWhiteListed(const SecurityOrigin* active_origin,
                                   const SecurityOrigin* target_origin);

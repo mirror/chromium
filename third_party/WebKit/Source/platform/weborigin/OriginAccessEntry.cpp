@@ -78,11 +78,13 @@ bool IsSubdomainOfHost(const String& subdomain, const String& host) {
 
 OriginAccessEntry::OriginAccessEntry(const String& protocol,
                                      const String& host,
-                                     SubdomainSetting subdomain_setting)
+                                     SubdomainSetting subdomain_setting,
+                                     bool match_any_etld)
     : protocol_(protocol),
       host_(host),
       subdomain_settings_(subdomain_setting),
-      host_is_public_suffix_(false) {
+      host_is_public_suffix_(false),
+      match_any_etld_(match_any_etld) {
   DCHECK(subdomain_setting >= kAllowSubdomains ||
          subdomain_setting <= kDisallowSubdomains);
 
@@ -95,7 +97,7 @@ OriginAccessEntry::OriginAccessEntry(const String& protocol,
       return;
 
     size_t public_suffix_length = suffix_list->GetPublicSuffixLength(host_);
-    if (host_.length() <= public_suffix_length + 1) {
+    if (host_.length() <= public_suffix_length + 1 && !match_any_etld) {
       host_is_public_suffix_ = true;
     } else if (subdomain_setting == kAllowRegisterableDomains &&
                public_suffix_length) {
@@ -126,13 +128,29 @@ OriginAccessEntry::MatchResult OriginAccessEntry::MatchesDomain(
   if (subdomain_settings_ != kDisallowSubdomains && host_.IsEmpty())
     return kMatchesOrigin;
 
+  WTF::String origin_host = origin.Host();
   // Exact match.
-  if (host_ == origin.Host())
+  if (host_ == origin_host)
     return kMatchesOrigin;
 
   // Don't try to do subdomain matching on IP addresses.
   if (host_is_ip_address_)
     return kDoesNotMatchOrigin;
+
+  if (match_any_etld_) {
+    // Subsequent matches are performed against Origin without eTLD.
+    WebPublicSuffixList* suffix_list = Platform::Current()->PublicSuffixList();
+    if (!suffix_list)
+      return kDoesNotMatchOrigin;
+
+    size_t public_suffix_length =
+        suffix_list->GetPublicSuffixLength(origin_host);
+    origin_host = origin_host.Substring(
+        0, origin_host.length() - public_suffix_length - 1);
+
+    if (origin_host == host_)
+      return kMatchesOrigin;
+  }
 
   // Match subdomains.
   switch (subdomain_settings_) {
@@ -140,7 +158,7 @@ OriginAccessEntry::MatchResult OriginAccessEntry::MatchesDomain(
       return kDoesNotMatchOrigin;
 
     case kAllowSubdomains:
-      if (!IsSubdomainOfHost(origin.Host(), host_))
+      if (!IsSubdomainOfHost(origin_host, host_))
         return kDoesNotMatchOrigin;
       break;
 
@@ -148,10 +166,10 @@ OriginAccessEntry::MatchResult OriginAccessEntry::MatchesDomain(
       // Fall back to a simple subdomain check if no registerable domain could
       // be found:
       if (registerable_domain_.IsEmpty()) {
-        if (!IsSubdomainOfHost(origin.Host(), host_))
+        if (!IsSubdomainOfHost(origin_host, host_))
           return kDoesNotMatchOrigin;
-      } else if (registerable_domain_ != origin.Host() &&
-                 !IsSubdomainOfHost(origin.Host(), registerable_domain_)) {
+      } else if (registerable_domain_ != origin_host &&
+                 !IsSubdomainOfHost(origin_host, registerable_domain_)) {
         return kDoesNotMatchOrigin;
       }
       break;

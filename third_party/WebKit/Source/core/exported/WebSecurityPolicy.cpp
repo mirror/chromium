@@ -70,6 +70,32 @@ void WebSecurityPolicy::AddOriginAccessWhitelistEntry(
       destination_host, allow_destination_subdomains);
 }
 
+void WebSecurityPolicy::AddOriginAccessWhitelistExceptionEntry(
+    const WebURL& source_origin,
+    const WebString& destination_protocol,
+    const WebString& destination_host,
+    bool allow_destination_subdomains,
+    bool blacklist,
+    bool match_any_etld) {
+  SecurityPolicy::AddOriginAccessWhitelistExceptionEntry(
+      *SecurityOrigin::Create(source_origin), destination_protocol,
+      destination_host, allow_destination_subdomains, blacklist,
+      match_any_etld);
+}
+
+void WebSecurityPolicy::RemoveOriginAccessWhitelistExceptionEntry(
+    const WebURL& source_origin,
+    const WebString& destination_protocol,
+    const WebString& destination_host,
+    bool allow_destination_subdomains,
+    bool blacklist,
+    bool match_any_etld) {
+  SecurityPolicy::AddOriginAccessWhitelistExceptionEntry(
+      *SecurityOrigin::Create(source_origin), destination_protocol,
+      destination_host, allow_destination_subdomains, blacklist,
+      match_any_etld);
+}
+
 void WebSecurityPolicy::RemoveOriginAccessWhitelistEntry(
     const WebURL& source_origin,
     const WebString& destination_protocol,

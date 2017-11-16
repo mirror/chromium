@@ -4878,9 +4878,9 @@ Document::EventFactorySet& Document::EventFactories() {
 
 const OriginAccessEntry& Document::AccessEntryFromURL() {
   if (!access_entry_from_url_) {
-    access_entry_from_url_ = WTF::WrapUnique(
-        new OriginAccessEntry(Url().Protocol(), Url().Host(),
-                              OriginAccessEntry::kAllowRegisterableDomains));
+    access_entry_from_url_ = WTF::WrapUnique(new OriginAccessEntry(
+        Url().Protocol(), Url().Host(),
+        OriginAccessEntry::kAllowRegisterableDomains, false));
   }
   return *access_entry_from_url_;
 }
@@ -5165,7 +5165,7 @@ void Document::setDomain(const String& raw_domain,
   if (!RuntimeEnabledFeatures::NullableDocumentDomainEnabled() ||
       new_domain != "null") {
     OriginAccessEntry access_entry(GetSecurityOrigin()->Protocol(), new_domain,
-                                   OriginAccessEntry::kAllowSubdomains);
+                                   OriginAccessEntry::kAllowSubdomains, false);
     OriginAccessEntry::MatchResult result =
         access_entry.MatchesOrigin(*GetSecurityOrigin());
     if (result == OriginAccessEntry::kDoesNotMatchOrigin) {
@@ -5260,9 +5260,9 @@ const KURL Document::SiteForCookies() const {
   const OriginAccessEntry& access_entry =
       top.IsLocalFrame()
           ? ToLocalFrame(top).GetDocument()->AccessEntryFromURL()
-          : OriginAccessEntry(top_document_url.Protocol(),
-                              top_document_url.Host(),
-                              OriginAccessEntry::kAllowRegisterableDomains);
+          : OriginAccessEntry(
+                top_document_url.Protocol(), top_document_url.Host(),
+                OriginAccessEntry::kAllowRegisterableDomains, false);
   const Frame* current_frame = GetFrame();
   while (current_frame) {
     // Skip over srcdoc documents, as they are always same-origin with their

@@ -64,9 +64,12 @@ class PLATFORM_EXPORT OriginAccessEntry {
   // entry will match all domains in the specified protocol.
   // IPv6 addresses must include brackets (e.g.
   // '[2001:db8:85a3::8a2e:370:7334]', not '2001:db8:85a3::8a2e:370:7334').
+  // If match_any_etld is true an origin will match irrespective of its
+  // effective TLD.
   OriginAccessEntry(const String& protocol,
                     const String& host,
-                    SubdomainSetting);
+                    SubdomainSetting,
+                    bool match_any_etld);
 
   // 'matchesOrigin' requires a protocol match (e.g. 'http' != 'https').
   // 'matchesDomain' relaxes this constraint.
@@ -86,6 +89,7 @@ class PLATFORM_EXPORT OriginAccessEntry {
   SubdomainSetting subdomain_settings_;
   bool host_is_ip_address_;
   bool host_is_public_suffix_;
+  bool match_any_etld_;
 };
 
 PLATFORM_EXPORT inline bool operator==(const OriginAccessEntry& a,

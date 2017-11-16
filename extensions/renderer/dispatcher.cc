@@ -133,6 +133,21 @@ static const int64_t kMaxExtensionIdleHandlerDelayMs = 5 * 60 * 1000;
 static const char kOnSuspendEvent[] = "runtime.onSuspend";
 static const char kOnSuspendCanceledEvent[] = "runtime.onSuspendCanceled";
 
+// Extensions can be granted exceptions to the same origin check for these
+// schemes. This depends on the permissions an extension declares and any
+// restrictions an admin has set by policy.
+static const char* kOriginWhitelistSchemes[] = {
+    url::kHttpScheme,
+    url::kHttpsScheme,
+    url::kFileScheme,
+    content::kChromeUIScheme,
+    url::kFtpScheme,
+#if defined(OS_CHROMEOS)
+    content::kExternalFileScheme,
+#endif
+    extensions::kExtensionScheme,
+};
+
 void CrashOnException(const v8::TryCatch& trycatch) {
   NOTREACHED();
 }
@@ -1161,6 +1176,17 @@ void Dispatcher::OnUnloaded(const std::string& id) {
 
 void Dispatcher::OnUpdateDefaultPolicyHostRestrictions(
     const ExtensionMsg_UpdateDefaultPolicyHostRestrictions_Params& params) {
+  // Update blink host permission whitelist exceptions for all loaded extensions
+  for (std::set<std::string>::iterator iter = active_extension_ids_.begin();
+       iter != active_extension_ids_.end(); ++iter) {
+    const Extension* extension =
+        RendererExtensionRegistry::Get()->GetByID(*iter);
+    if (extension->permissions_data()->UsesDefaultPolicyHostRestrictions()) {
+      UpdateOriginExtensionPolicy(extension,
+                                  params.default_policy_blocked_hosts,
+                                  params.default_policy_allowed_hosts);
+    }
+  }
   PermissionsData::SetDefaultPolicyHostRestrictions(
       params.default_policy_blocked_hosts, params.default_policy_allowed_hosts);
   UpdateBindings(std::string());
@@ -1186,8 +1212,13 @@ void Dispatcher::OnUpdatePermissions(
   extension->permissions_data()->SetPermissions(std::move(active),
                                                 std::move(withheld));
   if (params.uses_default_policy_host_restrictions) {
+    UpdateOriginExtensionPolicy(
+        extension, PermissionsData::default_policy_blocked_hosts(),
+        PermissionsData::default_policy_allowed_hosts());
     extension->permissions_data()->SetUsesDefaultHostRestrictions();
   } else {
+    UpdateOriginExtensionPolicy(extension, params.policy_blocked_hosts,
+                                params.policy_allowed_hosts);
     extension->permissions_data()->SetPolicyHostRestrictions(
         params.policy_blocked_hosts, params.policy_allowed_hosts);
   }
@@ -1216,8 +1247,7 @@ void Dispatcher::OnUpdateTabSpecificPermissions(const GURL& visible_url,
 
   if (update_origin_whitelist) {
     UpdateOriginPermissions(
-        extension->url(),
-        old_effective,
+        extension->url(), old_effective,
         extension->permissions_data()->GetEffectiveHostPermissions());
   }
 }
@@ -1234,8 +1264,7 @@ void Dispatcher::OnClearTabSpecificPermissions(
       extension->permissions_data()->ClearTabSpecificPermissions(tab_id);
       if (update_origin_whitelist) {
         UpdateOriginPermissions(
-            extension->url(),
-            old_effective,
+            extension->url(), old_effective,
             extension->permissions_data()->GetEffectiveHostPermissions());
       }
     }
@@ -1265,28 +1294,88 @@ void Dispatcher::UpdateActiveExtensions() {
 void Dispatcher::InitOriginPermissions(const Extension* extension) {
   delegate_->InitOriginPermissions(extension,
                                    IsExtensionActive(extension->id()));
+
+  // Populate policy restriction blacklist, there are no old permissions.
+  AddOriginExtensionPolicyEntry(
+      extension, extension->permissions_data()->policy_blocked_hosts(), true);
+  // Populate policy restriction whitelist, there are no old permissions.
+  AddOriginExtensionPolicyEntry(
+      extension, extension->permissions_data()->policy_allowed_hosts(), false);
+
   UpdateOriginPermissions(
       extension->url(),
       URLPatternSet(),  // No old permissions.
       extension->permissions_data()->GetEffectiveHostPermissions());
 }
 
+void Dispatcher::AddOriginExtensionPolicyEntry(const Extension* extension,
+                                               const URLPatternSet& origin_set,
+                                               bool is_blacklist) {
+  for (const URLPattern& origin : origin_set) {
+    for (size_t i = 0; i < arraysize(kOriginWhitelistSchemes); ++i) {
+      const char* scheme = kOriginWhitelistSchemes[i];
+      if (origin.MatchesScheme(scheme)) {
+        WebSecurityPolicy::AddOriginAccessWhitelistExceptionEntry(
+            extension->url(), WebString::FromUTF8(scheme),
+            WebString::FromUTF8(origin.host()), origin.match_subdomains(),
+            is_blacklist, !origin.match_effective_tld());
+      }
+    }
+  }
+}
+
+void Dispatcher::RemoveOriginExtensionPolicyEntry(
+    const Extension* extension,
+    const URLPatternSet& origin_set,
+    bool is_blacklist) {
+  for (const URLPattern& origin : origin_set) {
+    for (size_t i = 0; i < arraysize(kOriginWhitelistSchemes); ++i) {
+      const char* scheme = kOriginWhitelistSchemes[i];
+      if (origin.MatchesScheme(scheme)) {
+        WebSecurityPolicy::RemoveOriginAccessWhitelistExceptionEntry(
+            extension->url(), WebString::FromUTF8(scheme),
+            WebString::FromUTF8(origin.host()), origin.match_subdomains(),
+            is_blacklist, !origin.match_effective_tld());
+      }
+    }
+  }
+}
+
+void Dispatcher::UpdateOriginExtensionPolicy(
+    const Extension* extension,
+    const URLPatternSet& blocked_hosts,
+    const URLPatternSet& allowed_hosts) {
+  if (extension->location() == Manifest::COMPONENT)
+    return;
+
+  const URLPatternSet& old_blocked_hosts =
+      extension->permissions_data()->policy_blocked_hosts();
+  const URLPatternSet& old_allowed_hosts =
+      extension->permissions_data()->policy_allowed_hosts();
+
+  // CreateDifference set = (old - new) Remove these entries
+  // CreateDifference set = (new - old) Add these entries
+  const URLPatternSet blacklist_to_remove =
+      URLPatternSet::CreateDifference(old_blocked_hosts, blocked_hosts);
+  const URLPatternSet blacklist_to_add =
+      URLPatternSet::CreateDifference(blocked_hosts, old_blocked_hosts);
+  const URLPatternSet whitelist_to_remove =
+      URLPatternSet::CreateDifference(old_allowed_hosts, allowed_hosts);
+  const URLPatternSet whitelist_to_add =
+      URLPatternSet::CreateDifference(allowed_hosts, old_allowed_hosts);
+
+  // Update blacklist & whitelist in Blink
+  RemoveOriginExtensionPolicyEntry(extension, blacklist_to_remove, true);
+  AddOriginExtensionPolicyEntry(extension, blacklist_to_add, true);
+  RemoveOriginExtensionPolicyEntry(extension, whitelist_to_remove, false);
+  AddOriginExtensionPolicyEntry(extension, whitelist_to_add, false);
+}
+
 void Dispatcher::UpdateOriginPermissions(const GURL& extension_url,
                                          const URLPatternSet& old_patterns,
                                          const URLPatternSet& new_patterns) {
-  static const char* kSchemes[] = {
-    url::kHttpScheme,
-    url::kHttpsScheme,
-    url::kFileScheme,
-    content::kChromeUIScheme,
-    url::kFtpScheme,
-#if defined(OS_CHROMEOS)
-    content::kExternalFileScheme,
-#endif
-    extensions::kExtensionScheme,
-  };
-  for (size_t i = 0; i < arraysize(kSchemes); ++i) {
-    const char* scheme = kSchemes[i];
+  for (size_t i = 0; i < arraysize(kOriginWhitelistSchemes); ++i) {
+    const char* scheme = kOriginWhitelistSchemes[i];
     // Remove all old patterns...
     for (URLPatternSet::const_iterator pattern = old_patterns.begin();
          pattern != old_patterns.end(); ++pattern) {
