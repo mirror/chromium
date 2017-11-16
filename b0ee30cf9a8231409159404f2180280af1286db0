@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d80b580_9b78f9b5",
+        "filename": "ui/events/platform/x11/x11_event_source_libevent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-16T14:56:30Z",
+      "side": 1,
+      "message": "nit: double space before \"Only\".",
+      "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5a769c_4ae28784",
+        "filename": "ui/platform_window/x11/x11_window_ozone.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-16T14:56:30Z",
+      "side": 1,
+      "message": "Maybe CanDispatchXEvent (for consistency)?",
+      "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba325bd4_8a69111f",
+        "filename": "ui/platform_window/x11/x11_window_ozone.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-16T14:56:30Z",
+      "side": 1,
+      "message": "WillDispatchXEvent?\n\nalso, it is a common pattern that WillXXX methods are accompanied by a corresponding DidXXX. Maybe it is ok not have it here.",
+      "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656fb23d_11bdf598",
+        "filename": "ui/platform_window/x11/x11_window_ozone.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-16T14:56:30Z",
+      "side": 1,
+      "message": "Maybe add a comment explaining this control flag?",
+      "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
