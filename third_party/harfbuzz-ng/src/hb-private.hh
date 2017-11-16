@@ -337,10 +337,10 @@ static inline HB_CONST_FUNC unsigned int
 _hb_popcount64 (uint64_t mask)
 {
 #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
-  if (sizeof (long) >= sizeof (mask))
-    return __builtin_popcountl (mask);
+  return __builtin_popcountl (mask);
+#else
+  return _hb_popcount32 (mask) + _hb_popcount32 (mask >> 32);
 #endif
-  return _hb_popcount32 (mask & 0xFFFFFFFF) + _hb_popcount32 (mask >> 32);
 }
 template <typename T> static inline unsigned int _hb_popcount (T mask);
 template <> inline unsigned int _hb_popcount<uint32_t> (uint32_t mask) { return _hb_popcount32 (mask); }
@@ -404,56 +404,41 @@ struct hb_prealloced_array_t
   Type *array;
   Type static_array[StaticSize];
 
-  void init (void)
-  {
-    len = 0;
-    allocated = ARRAY_LENGTH (static_array);
-    array = static_array;
-  }
+  void init (void) { memset (this, 0, sizeof (*this)); }
 
   inline Type& operator [] (unsigned int i) { return array[i]; }
   inline const Type& operator [] (unsigned int i) const { return array[i]; }
 
   inline Type *push (void)
   {
-    if (unlikely (!resize (len + 1)))
-      return nullptr;
+    if (!array) {
+      array = static_array;
+      allocated = ARRAY_LENGTH (static_array);
+    }
+    if (likely (len < allocated))
+      return &array[len++];
 
-    return &array[len - 1];
-  }
+    /* Need to reallocate */
+    unsigned int new_allocated = allocated + (allocated >> 1) + 8;
+    Type *new_array = nullptr;
 
-  inline bool resize (unsigned int size)
-  {
-    if (unlikely (size > allocated))
-    {
-      /* Need to reallocate */
-
-      unsigned int new_allocated = allocated;
-      while (size >= new_allocated)
-        new_allocated += (new_allocated >> 1) + 8;
-
-      Type *new_array = nullptr;
-
-      if (array == static_array) {
-	new_array = (Type *) calloc (new_allocated, sizeof (Type));
-	if (new_array)
-	  memcpy (new_array, array, len * sizeof (Type));
-      } else {
-	bool overflows = (new_allocated < allocated) || _hb_unsigned_int_mul_overflows (new_allocated, sizeof (Type));
-	if (likely (!overflows)) {
-	  new_array = (Type *) realloc (array, new_allocated * sizeof (Type));
-	}
+    if (array == static_array) {
+      new_array = (Type *) calloc (new_allocated, sizeof (Type));
+      if (new_array)
+        memcpy (new_array, array, len * sizeof (Type));
+    } else {
+      bool overflows = (new_allocated < allocated) || _hb_unsigned_int_mul_overflows (new_allocated, sizeof (Type));
+      if (likely (!overflows)) {
+	new_array = (Type *) realloc (array, new_allocated * sizeof (Type));
       }
-
-      if (unlikely (!new_array))
-	return false;
-
-      array = new_array;
-      allocated = new_allocated;
     }
 
-    len = size;
-    return true;
+    if (unlikely (!new_array))
+      return nullptr;
+
+    array = new_array;
+    allocated = new_allocated;
+    return &array[len++];
   }
 
   inline void pop (void)
@@ -532,7 +517,7 @@ struct hb_prealloced_array_t
 	return true;
       }
     }
-    if (max < 0 || (max < (int) this->len && this->array[max].cmp (x) > 0))
+    if (max < 0 || (max < (int) this->len && this->array[max].cmp (x) < 0))
       max++;
     *i = max;
     return false;
@@ -1001,10 +986,11 @@ hb_in_ranges (T u, T lo1, T hi1, T lo2, T hi2, T lo3, T hi3)
 
 /* Useful for set-operations on small enums.
  * For example, for testing "x ∈ {x1, x2, x3}" use:
- * (FLAG_UNSAFE(x) & (FLAG(x1) | FLAG(x2) | FLAG(x3)))
+ * (FLAG_SAFE(x) & (FLAG(x1) | FLAG(x2) | FLAG(x3)))
  */
-#define FLAG(x) (ASSERT_STATIC_EXPR_ZERO ((unsigned int)(x) < 32) + (1U << (unsigned int)(x)))
-#define FLAG_UNSAFE(x) ((unsigned int)(x) < 32 ? (1U << (unsigned int)(x)) : 0)
+#define FLAG(x) (ASSERT_STATIC_EXPR_ZERO ((x) < 32) + (1U << (x)))
+#define FLAG_SAFE(x) (1U << (x))
+#define FLAG_UNSAFE(x) ((x) < 32 ? FLAG_SAFE(x) : 0)
 #define FLAG_RANGE(x,y) (ASSERT_STATIC_EXPR_ZERO ((x) < (y)) + FLAG(y+1) - FLAG(x))
 
 
@@ -1056,73 +1042,6 @@ hb_codepoint_parse (const char *s, unsigned int len, int base, hb_codepoint_t *o
   *out = v;
   return true;
 }
-
-
-/* Vectorization */
-
-struct HbOpOr
-{
-  static const bool passthru_left = true;
-  static const bool passthru_right = true;
-  template <typename T> static void process (T &o, const T &a, const T &b) { o = a | b; }
-};
-struct HbOpAnd
-{
-  static const bool passthru_left = false;
-  static const bool passthru_right = false;
-  template <typename T> static void process (T &o, const T &a, const T &b) { o = a & b; }
-};
-struct HbOpMinus
-{
-  static const bool passthru_left = true;
-  static const bool passthru_right = false;
-  template <typename T> static void process (T &o, const T &a, const T &b) { o = a & ~b; }
-};
-struct HbOpXor
-{
-  static const bool passthru_left = true;
-  static const bool passthru_right = true;
-  template <typename T> static void process (T &o, const T &a, const T &b) { o = a ^ b; }
-};
-
-/* Type behaving similar to vectorized vars defined using __attribute__((vector_size(...))). */
-template <typename elt_t, unsigned int byte_size>
-struct hb_vector_size_t
-{
-  elt_t& operator [] (unsigned int i) { return v[i]; }
-  const elt_t& operator [] (unsigned int i) const { return v[i]; }
-
-  template <class Op>
-  inline hb_vector_size_t process (const hb_vector_size_t &o) const
-  {
-    hb_vector_size_t r;
-    for (unsigned int i = 0; i < ARRAY_LENGTH (v); i++)
-      Op::process (r.v[i], v[i], o.v[i]);
-    return r;
-  }
-  inline hb_vector_size_t operator | (const hb_vector_size_t &o) const
-  { return process<HbOpOr> (o); }
-  inline hb_vector_size_t operator & (const hb_vector_size_t &o) const
-  { return process<HbOpAnd> (o); }
-  inline hb_vector_size_t operator ^ (const hb_vector_size_t &o) const
-  { return process<HbOpXor> (o); }
-  inline hb_vector_size_t operator ~ () const
-  {
-    hb_vector_size_t r;
-    for (unsigned int i = 0; i < ARRAY_LENGTH (v); i++)
-      r.v[i] = ~v[i];
-    return r;
-  }
-
-  private:
-  static_assert (byte_size / sizeof (elt_t) * sizeof (elt_t) == byte_size, "");
-  elt_t v[byte_size / sizeof (elt_t)];
-};
-
-/* The `vector_size' attribute was introduced in gcc 3.1. */
-#if defined( __GNUC__ ) && ( __GNUC__ >= 4 )
-#define HAVE_VECTOR_SIZE 1
-#endif
 
 
 /* Global runtime options. */
