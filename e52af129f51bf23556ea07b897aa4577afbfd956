@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "9023a06b_467bc965",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-16T00:12:54Z",
+      "side": 1,
+      "message": "Ohh, gotcha. Done.",
+      "parentUuid": "8123958f_44036cf0",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 74
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b9e91e8_011f0a1d",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 20
@@ -470,6 +494,30 @@
       "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "545b710e_b7ad1178",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-16T00:12:54Z",
+      "side": 1,
+      "message": "Good ideer. Done.",
+      "parentUuid": "dde87885_b8dc3470",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 14
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -719,6 +767,24 @@
       "side": 1,
       "message": "If we can send the data back to the renderer that sounds good to me.",
       "parentUuid": "f01ac9bc_52308248",
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b55f13_f12cd87d",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-16T00:12:54Z",
+      "side": 1,
+      "message": "Well, guess I should check with Mike or Balazs before making any big changes. Balazs, wdyt? Would all these parser classes sit in Source/modules/CredentialManager, then?\nLogistically, I\u0027m guessing it would make the most sense to carve this CL up and add things to the renderer in smaller chunks..",
+      "parentUuid": "546f1649_317fa3c8",
       "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
