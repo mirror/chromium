@@ -283,6 +283,8 @@ bool TracingControllerImpl::StartTracing(
     const base::trace_event::TraceConfig& trace_config,
     const StartTracingDoneCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (IsTracing())
+    return false;
   trace_config_ =
       std::make_unique<base::trace_event::TraceConfig>(trace_config);
   coordinator_->StartTracing(
