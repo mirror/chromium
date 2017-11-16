@@ -116,6 +116,8 @@ static_library("vr_common") {
     "gltf_parser.h",
     "macros.h",
     "model/controller_model.h",
+    "model/modal_prompt.cc",
+    "model/modal_prompt.h",
     "model/model.cc",
     "model/model.h",
     "model/omnibox_suggestions.cc",
