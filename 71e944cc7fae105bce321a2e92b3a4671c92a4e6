@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "642424b5_d5771362",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-16T20:58:07Z",
+      "side": 1,
+      "message": "num_restored_tabs_ is fine (get rid of the of_)",
+      "range": {
+        "startLine": 228,
+        "startChar": 6,
+        "endLine": 228,
+        "endChar": 27
+      },
+      "revId": "71e944cc7fae105bce321a2e92b3a4671c92a4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b31ebc89_fbcba80d",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-16T20:58:07Z",
+      "side": 1,
+      "message": "Or should this be restored_tab_count_, to mirror the accessor?\n\nSince it\u0027s a simple accessor, it should probably also use snake_style.",
+      "range": {
+        "startLine": 614,
+        "startChar": 9,
+        "endLine": 614,
+        "endChar": 30
+      },
+      "revId": "71e944cc7fae105bce321a2e92b3a4671c92a4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d2b300_721624e4",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-16T20:58:07Z",
+      "side": 1,
+      "message": "of*",
+      "range": {
+        "startLine": 232,
+        "startChar": 24,
+        "endLine": 232,
+        "endChar": 27
+      },
+      "revId": "71e944cc7fae105bce321a2e92b3a4671c92a4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "227a763d_03855084",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-16T20:58:07Z",
+      "side": 1,
+      "message": "Why the move to constref? Under the hood this is just an int64, no?",
+      "range": {
+        "startLine": 97,
+        "startChar": 54,
+        "endLine": 97,
+        "endChar": 63
+      },
+      "revId": "71e944cc7fae105bce321a2e92b3a4671c92a4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
