@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1bb63210_a00c2ca1",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-16T21:30:27Z",
+      "side": 1,
+      "message": "i\u0027ll try it and see which looks nicer.  i don\u0027t want to make the helper check the flags directly, since that\u0027s harder to test.\n\ninjecting the flags during construction seems like it\u0027s likely to be better than it is here.  testing becomes harder, since now we have to control construction of the helper, rather than just calling methods on it.",
+      "parentUuid": "4ffe3ea7_89343676",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 19
+      },
+      "revId": "1d02726e3492032aed5bda5ab0b17859000d6a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b274cfc1_e8a94642",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7084cbe3_279ac9f5",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-16T21:30:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b274cfc1_e8a94642",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 80
+      },
+      "revId": "1d02726e3492032aed5bda5ab0b17859000d6a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4484175_e88ebdaa",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "1d02726e3492032aed5bda5ab0b17859000d6a34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a0e4f67_422bc2bc",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-16T21:30:27Z",
+      "side": 1,
+      "message": "yay!",
+      "parentUuid": "b4484175_e88ebdaa",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 62
+      },
+      "revId": "1d02726e3492032aed5bda5ab0b17859000d6a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
