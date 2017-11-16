@@ -16,6 +16,24 @@
       "revId": "7e146e7bee119ada11e00a890387448c4d2a8c08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1cfa93_c21a1d2f",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1103764
+      },
+      "writtenOn": "2017-11-16T05:45:55Z",
+      "side": 1,
+      "message": "I\u0027m sorry, There was a compilation problem. When I compile this patch set, it tried to use clang and got some errors.\nI am recovering, and I will patch it again.\nThanks.",
+      "parentUuid": "c656b31b_946b17ef",
+      "revId": "7e146e7bee119ada11e00a890387448c4d2a8c08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
