@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7c32d6e7_fb3747b9",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-16T20:00:51Z",
+      "side": 1,
+      "message": "They are different functions :)",
+      "parentUuid": "0720ee09_90cca0c2",
+      "revId": "63103431c8f64ae243aedb4263eb0e62918baaf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71ea6dd8_9f9387fc",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0558313b_0c596c1e",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-16T20:00:51Z",
+      "side": 1,
+      "message": "Resizer can exist without scrollbars. My explanation to this was buried in the previous patch set :(",
+      "parentUuid": "71ea6dd8_9f9387fc",
+      "revId": "63103431c8f64ae243aedb4263eb0e62918baaf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "145b7b80_2084b0c4",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-16T19:31:59Z",
       "side": 1,
       "message": "It seems that scroll corners and resizers are very similar. Do we need this exact logic in UpdateScrollCornerStyle too?",
+      "revId": "63103431c8f64ae243aedb4263eb0e62918baaf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "791c6baa_f12e8700",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1679,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-16T20:00:51Z",
+      "side": 1,
+      "message": "Scroll corner existence is controlled by scrollbar existence. For composited scroll corners, existence change doesn\u0027t need special handling for paint invalidation because we will create or destroy the whole layer.\n\nResizer is different from scroll corner in\n- there is a \u0027resizer\u0027 style to control its existence;\n- it is painted on the scroll corner layer when the scroll corner is composited.\nBecause of these natures, we need to invalidate the scroll corner layer when resizer style changes.",
+      "parentUuid": "145b7b80_2084b0c4",
       "revId": "63103431c8f64ae243aedb4263eb0e62918baaf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
