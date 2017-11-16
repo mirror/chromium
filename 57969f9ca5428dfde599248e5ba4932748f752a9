@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "933bbc23_0368b558",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-16T16:46:43Z",
+      "side": 1,
+      "message": "hmm. just wondering about the re-use of this extra vs an extra that\u0027s specific to our needs. I know that other stuff keys off of this:  https://cs.chromium.org/search/?q\u003dBrowser.EXTRA_APPLICATION_ID\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nbut I\u0027m not sure if this would be a bad thing or a good thing. Can you investigate?",
+      "range": {
+        "startLine": 105,
+        "startChar": 19,
+        "endLine": 105,
+        "endChar": 48
+      },
+      "revId": "57969f9ca5428dfde599248e5ba4932748f752a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
