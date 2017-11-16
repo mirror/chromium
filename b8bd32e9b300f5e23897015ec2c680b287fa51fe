@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ecdfc49_6dbed0b6",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T23:02:00Z",
+      "side": 1,
+      "message": "I suggested PostTaskAndReplyWithResult but if that doesn\u0027t work with null reply and if PostTask is not compatible with non-void like I thought or can\u0027t be wrapped in something in base:: to tell it to ignore the return value you can do something like:\n\nfile_task_runner_-\u003ePostTask(FROM_HERE, base::BindOnce(\u0026WebRtcEventLogManager::StartLocalLogFile, ..., std::move(reply)));\n\nvoid WebRtcEventLogManager::StartLocalLogFile(... reply) {\n  ...\n  if (reply) {\n    (ui thread)-\u003ePostTask(FROM_HERE, base::BindOnce(reply, success, file, etc));\n  }\n}",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21b3ebc7_0bf0edc0",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 13
