@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9eb7d76_dd75efba",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-16T02:21:20Z",
+      "side": 1,
+      "message": "nit: this should have \"JAVA\" in its name somewhere.",
+      "revId": "0ab9b57957ecb29f8fcbd2a1485b93a6d0d4704e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
