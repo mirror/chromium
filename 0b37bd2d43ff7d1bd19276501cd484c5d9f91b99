@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "56aed6a8_33f71792",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-16T01:02:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d352013a_9c8e0073",
+      "range": {
+        "startLine": 121,
+        "startChar": 40,
+        "endLine": 121,
+        "endChar": 47
+      },
+      "revId": "0b37bd2d43ff7d1bd19276501cd484c5d9f91b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9be1cd4_d1c7e97a",
         "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8558d151_3a60eb4e",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-16T01:02:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9be1cd4_d1c7e97a",
+      "range": {
+        "startLine": 132,
+        "startChar": 42,
+        "endLine": 132,
+        "endChar": 49
+      },
+      "revId": "0b37bd2d43ff7d1bd19276501cd484c5d9f91b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69f61cd8_56f7c716",
         "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "0b37bd2d43ff7d1bd19276501cd484c5d9f91b99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb6ee63_3efb3a9f",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-16T01:02:33Z",
+      "side": 1,
+      "message": "Done.\n\nIt\u0027s not directly related, but *is* indirectly related. :)",
+      "parentUuid": "69f61cd8_56f7c716",
+      "revId": "0b37bd2d43ff7d1bd19276501cd484c5d9f91b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "b92b20f8_327420e9",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-16T01:02:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58f06cb8_10b49afa",
+      "range": {
+        "startLine": 48,
+        "startChar": 25,
+        "endLine": 48,
+        "endChar": 51
+      },
+      "revId": "0b37bd2d43ff7d1bd19276501cd484c5d9f91b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f1f2a3f_2f80b032",
         "filename": "components/viz/service/frame_sinks/video_capture/in_flight_frame_delivery.h",
         "patchSetId": 1
@@ -99,6 +189,30 @@
       "writtenOn": "2017-11-14T22:50:44Z",
       "side": 1,
       "message": "nit: Add a note that this has to be called by consumer in order to re-use the buffer? Or probably the comment will be in the coming mojo IDL CL.",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 11
+      },
+      "revId": "0b37bd2d43ff7d1bd19276501cd484c5d9f91b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8070a71_9d08e66f",
+        "filename": "components/viz/service/frame_sinks/video_capture/in_flight_frame_delivery.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-16T01:02:33Z",
+      "side": 1,
+      "message": "Yep, it\u0027s coming in the next change. :)",
+      "parentUuid": "3f1f2a3f_2f80b032",
       "range": {
         "startLine": 28,
         "startChar": 7,
