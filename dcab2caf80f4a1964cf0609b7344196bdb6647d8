@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "34762d04_673ed49a",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-16T21:19:30Z",
+      "side": 1,
+      "message": "Done.\n\nCanReadRawCookies is granted from when devtools attached to a target (fame in this case). Any subframes that spawn will eventually (if not immediately) have devtools attached and granted this permission. However, for example, window.open(\u0027http://cross-site\u0027) will not have devtools attached and we should not be sending post data.",
+      "parentUuid": "bb3e45d3_28c0029e",
+      "revId": "dcab2caf80f4a1964cf0609b7344196bdb6647d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3ae30ac_09bd2b7f",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 2
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "source_site_instance() doesn\u0027t seem like the right thing to use here, given the subtle differences in how it\u0027s defined between renderer and browser initiated navigations.\n\nCan we use frame_tree_node_-\u003ecurrent_frame_host()-\u003eGetSiteInstance() directly here?  (Or rather, frame_tree_node_-\u003ecurrent_frame_host()-\u003eGetProcess()?)  The current RFH seems to be used in many other places in NavigationRequest, and should represent the current page.\n\nNormally, I\u0027d be concerned about that being wrong for navigations that target a different frame.  Here, though, I think it might do the right thing.  Suppose frame A targets frame B with a navigation that redirects from C (POST) to D (GET).  If I understand correctly, we want to leave the post_data around if frame B has DevTools attached, since that\u0027s the DevTools instance that will be showing the network activity?\n\nIf so, that means we definitely want the current_frame_host() and not the source_site_instance() (which would be A).\n\n(Side note for Camille: Can you write a CL to update the comments for source_site_instance on NavigationRequest?  It seems to be lacking comments in some places and has incorrect comments in others, like saying it\u0027s only for browser-initiated navigations at the declaration site.)",
       "parentUuid": "afb6221e_0f71613a",
+      "revId": "dcab2caf80f4a1964cf0609b7344196bdb6647d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12cd863c_051efd65",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-16T21:19:30Z",
+      "side": 1,
+      "message": "Yes I think current_frame_host() would be more appropriate.",
+      "parentUuid": "cc9dbf14_f83e9861",
       "revId": "dcab2caf80f4a1964cf0609b7344196bdb6647d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
