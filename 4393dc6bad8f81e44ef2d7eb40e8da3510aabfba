@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "349c3e6a_0e920707",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T20:31:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79e7d65d_e27d81f2",
+      "range": {
+        "startLine": 75,
+        "startChar": 34,
+        "endLine": 75,
+        "endChar": 54
+      },
+      "revId": "4393dc6bad8f81e44ef2d7eb40e8da3510aabfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89aa6544_a02b9d73",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4b1cda2b_69cbdc66",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T20:31:48Z",
+      "side": 1,
+      "message": "WorkerEnvironmentType seemed verbose and we didn\u0027t have actual environments objects. If we do, then we can change this in the future.",
+      "parentUuid": "89aa6544_a02b9d73",
+      "range": {
+        "startLine": 245,
+        "startChar": 20,
+        "endLine": 245,
+        "endChar": 39
+      },
+      "revId": "4393dc6bad8f81e44ef2d7eb40e8da3510aabfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c47bbb0d_bf896df0",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
         "patchSetId": 11
@@ -68,6 +116,30 @@
       "revId": "4393dc6bad8f81e44ef2d7eb40e8da3510aabfba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d865a66_d91101e5",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T20:31:48Z",
+      "side": 1,
+      "message": "The tricky bit here is that TaskSchedulerWorkerPoolImplTestBase::SetUp and TearDown are non-virtual. These overrides are for testing::TestWithParam. We should probably rename these to be less confusing. Done.",
+      "parentUuid": "c47bbb0d_bf896df0",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 0
+      },
+      "revId": "4393dc6bad8f81e44ef2d7eb40e8da3510aabfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
