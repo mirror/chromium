@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24e3f6a3_832b65a4",
+        "filename": "third_party/WebKit/Source/core/css/cssom/FilteredComputedStylePropertyMap.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-16T23:11:59Z",
+      "side": 0,
+      "message": "what happens to has() or am I misreading this CL?",
+      "revId": "52f6b17c72a4308f676ab95263cb0fad9ef2abbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
