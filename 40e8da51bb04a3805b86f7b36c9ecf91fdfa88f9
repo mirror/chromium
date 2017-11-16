@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c6b109b_45405734",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 4591,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-16T07:23:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "395ec565_8c9527c1",
+      "range": {
+        "startLine": 4591,
+        "startChar": 34,
+        "endLine": 4591,
+        "endChar": 40
+      },
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffb9d40a_5528d214",
         "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-15T05:16:50Z",
       "side": 1,
       "message": "hmmmm. what happens if the extension is uninstalled while the window is open? Maybe that\u0027s dealt with already, but it could be worth a comment here.",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb6aeee4_fa403cde",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-16T07:23:19Z",
+      "side": 1,
+      "message": "Hmm. Testing this manually, it seemed to be fine. The app window was closed and things seemed to work as they should. Do you think it\u0027s worth being defensive here and adding nullptr cases to the methods below?",
+      "parentUuid": "ffb9d40a_5528d214",
       "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "c21adee7_808122fa",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-16T07:23:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c70993c8_59047fa6",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef50ea9a_d27841eb",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 5
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "006134b3_85e57287",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-16T07:23:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef50ea9a_d27841eb",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbd71ea8_357532c0",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 5
@@ -87,6 +165,24 @@
       "writtenOn": "2017-11-15T05:16:50Z",
       "side": 1,
       "message": "The enclosing `if` is getting a bit unwieldy.\n\ncan this (and more) move into HostedAppHeaderPainterAsh::Init()?\n\nit would be good to move |hosted_app_button_container_|  in there as well, which might mean BrowserNonClientFrameViewAsh::NonClientHitTest() needs to consult the HeaderPainter - I think that\u0027s Ok.\n\nShould we rename HeaderPainter to something less Painty?",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074100fb_9d5036c6",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-16T07:23:19Z",
+      "side": 1,
+      "message": "I think if we start delegating View stuff to HeaderPainter, we\u0027ll end up implementing another view...\n\ne.g OnPaint also needs to move into there. It basically already has its own Layout etc etc.\n\nI think it should either be a View, or not exist at all. Unfortunately, there are other FrameViews that use it. Maybe after PanelFrameView is removed we can look at how this should be cleaned up nicely (BoxLayouts, remove HeaderPainter, etc)\n\nThis is going to be a big refactor with a lot of moving parts and should be done wholesale.",
+      "parentUuid": "fbd71ea8_357532c0",
       "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "ee32683e_a8e32374",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-16T07:23:19Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean?",
+      "parentUuid": "e2af350b_696d2ea9",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcb0579a_d0e2e8ec",
         "filename": "chrome/browser/ui/views/frame/hosted_app_header_painter_ash.cc",
         "patchSetId": 5
@@ -121,6 +235,24 @@
       "writtenOn": "2017-11-15T05:16:50Z",
       "side": 1,
       "message": "hmmm there\u0027s probably localization implications around this.. are there any FOO_SEPARATOR resources already that have solved this?",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b58c644a_5db3ff29",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_header_painter_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-16T07:23:19Z",
+      "side": 1,
+      "message": "Not that I can find. How about I leave a TODO here to explore this, since we plan to rewrite a lot of this for crazy URL eliding anyway.",
+      "parentUuid": "fcb0579a_d0e2e8ec",
       "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "416af592_786229aa",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_header_painter_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-16T07:23:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fbc594b_472d683b",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a77a006_cbf5d0f2",
         "filename": "chrome/browser/ui/views/frame/hosted_app_header_painter_ash.cc",
         "patchSetId": 5
@@ -155,6 +305,24 @@
       "writtenOn": "2017-11-15T05:16:50Z",
       "side": 1,
       "message": "why no subpixel?",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e570b80_1db077d7",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_header_painter_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-16T07:23:19Z",
+      "side": 1,
+      "message": "Copied from DefaultHeaderPainter. Doesn\u0027t seem to be anything preventing this, so... Re-enabled.",
+      "parentUuid": "4a77a006_cbf5d0f2",
       "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "bed6be7b_ae3649fa",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_header_painter_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-16T07:23:19Z",
+      "side": 1,
+      "message": "Changed GetTitleBounds \u003d\u003e GetAvailableTitleBounds.\n\nModified the comment a bit. Can you elaborate on why this is weird?",
+      "parentUuid": "ea1d955f_d7b76b46",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa76eb9b_46fc62a5",
         "filename": "chrome/browser/ui/views/frame/hosted_app_header_painter_ash.h",
         "patchSetId": 5
@@ -192,6 +378,24 @@
       "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b218255_cbc09dd2",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_header_painter_ash.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-16T07:23:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa76eb9b_46fc62a5",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
