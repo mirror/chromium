@@ -67,6 +67,8 @@ const size_t kWaitTimeForNewNetworkSecs = 10;
 // The maximum size of uncompressed QUIC headers that will be allowed.
 const size_t kMaxUncompressedHeaderSize = 256 * 1024;
 
+const int kMaxProbeRetries = 3;
+
 // Histograms for tracking down the crashes from http://crbug.com/354669
 // Note: these values must be kept in sync with the corresponding values in:
 // tools/metrics/histograms/histograms.xml
@@ -235,6 +237,117 @@ class QuicServerPushHelper : public ServerPushDelegate::ServerPushHelper {
 };
 
 }  // namespace
+
+// Responsible for sending and retransmitting connectivity probing packet on a
+// designated path to the specified peer, and for notifying associated session
+// when connectivity probe fails or succeeds.
+class QuicChromiumClientSession::QuicConnectivityProbingManager {
+ public:
+  QuicConnectivityProbingManager(QuicChromiumClientSession* session)
+      : session_(session),
+        retry_count_(0),
+        initial_timeout_(0),
+        weak_factory_(this) {}
+
+  void CancelProbe() {
+    network_ = NetworkChangeNotifier::kInvalidNetworkHandle;
+    peer_address_ = QuicSocketAddress();
+    socket_.reset();
+    writer_.reset();
+    reader_.reset();
+    retry_count_ = 0;
+    initial_timeout_ = 0;
+    retransmit_timer_.Stop();
+  }
+
+  void StartProbeNetwork(NetworkChangeNotifier::NetworkHandle network,
+                         const QuicSocketAddress& peer_address,
+                         std::unique_ptr<DatagramClientSocket> socket,
+                         std::unique_ptr<QuicChromiumPacketWriter> writer,
+                         std::unique_ptr<QuicChromiumPacketReader> reader,
+                         int initial_timeout) {
+    // Start a new probe will always cancel the previous one.
+    CancelProbe();
+
+    network_ = network;
+    peer_address_ = peer_address;
+    socket_ = std::move(socket);
+    writer_ = std::move(writer);
+    reader_ = std::move(reader);
+    initial_timeout_ = initial_timeout;
+
+    reader_->StartReading();
+    SendConnectivityProbingPacket(initial_timeout_);
+  }
+
+  void OnConnectivityProbingReceived(const QuicSocketAddress& self_address,
+                                     const QuicSocketAddress& peer_address) {
+    if (!socket_) {
+      DVLOG(1) << "Probing response is ignored as probing was cancelled "
+               << "or succeeded.";
+      return;
+    }
+
+    IPEndPoint local_address;
+    socket_->GetLocalAddress(&local_address);
+
+    DVLOG(1) << "Current probing is live at ip:port: "
+             << local_address.ToString();
+
+    if (QuicSocketAddressImpl(local_address) != self_address.impl() &&
+        peer_address_ != peer_address) {
+      DVLOG(1) << "Probing response is ignored as probing was cancelled "
+               << "or succeeded.";
+      return;
+    }
+
+    // TODO(zhongyi): add metrics collection.
+    // Notify the session that the probe succeeds and reset everything.
+    session_->OnProbeNetworkSucceeds(network_, self_address, std::move(socket_),
+                                     std::move(writer_), std::move(reader_));
+    CancelProbe();
+  }
+
+ private:
+  void SendConnectivityProbingPacket(int timeout) {
+    session_->connection()->SendConnectivityProbingPacket(writer_.get(),
+                                                          peer_address_);
+    retransmit_timer_.Start(FROM_HERE,
+                            base::TimeDelta::FromMicroseconds(timeout),
+                            base::Bind(&QuicConnectivityProbingManager::
+                                           MaybeResendConnectivityProbingPacket,
+                                       weak_factory_.GetWeakPtr()));
+  }
+
+  void MaybeResendConnectivityProbingPacket() {
+    if (retry_count_ > kMaxProbeRetries) {
+      session_->OnProbeNetworkFails(network_);
+      CancelProbe();
+      return;
+    }
+    retry_count_++;
+
+    // We will retry the probing timeout incrementally: 1
+    int timeout = retry_count_ * initial_timeout_;
+    SendConnectivityProbingPacket(timeout);
+  }
+
+  QuicChromiumClientSession* session_;
+
+  NetworkChangeNotifier::NetworkHandle network_;
+  QuicSocketAddress peer_address_;
+
+  std::unique_ptr<DatagramClientSocket> socket_;
+  std::unique_ptr<QuicChromiumPacketWriter> writer_;
+  std::unique_ptr<QuicChromiumPacketReader> reader_;
+
+  int retry_count_;
+  int initial_timeout_;
+  base::OneShotTimer retransmit_timer_;
+
+  base::WeakPtrFactory<QuicConnectivityProbingManager> weak_factory_;
+  DISALLOW_COPY_AND_ASSIGN(QuicConnectivityProbingManager);
+};
 
 QuicChromiumClientSession::Handle::Handle(
     const base::WeakPtr<QuicChromiumClientSession>& session)
@@ -692,6 +805,7 @@ QuicChromiumClientSession::QuicChromiumClientSession(
       streams_pushed_and_claimed_count_(0),
       bytes_pushed_count_(0),
       bytes_pushed_and_unclaimed_count_(0),
+      probing_manager_(new QuicConnectivityProbingManager(this)),
       migration_pending_(false),
       weak_factory_(this) {
   sockets_.push_back(std::move(socket));
@@ -1449,6 +1563,15 @@ void QuicChromiumClientSession::OnSuccessfulVersionNegotiation(
   QuicSpdySession::OnSuccessfulVersionNegotiation(version);
 }
 
+void QuicChromiumClientSession::OnConnectivityProbingReceived(
+    const QuicSocketAddress& self_address,
+    const QuicSocketAddress& peer_address) {
+  DVLOG(1) << "Probing response from ip:port: " << peer_address.ToString()
+           << " to ip:port: " << self_address.ToString() << " is received";
+  // Notify the probing manager that a connectivity probing packet is received.
+  probing_manager_->OnConnectivityProbingReceived(self_address, peer_address);
+}
+
 int QuicChromiumClientSession::HandleWriteError(
     int error_code,
     scoped_refptr<QuicChromiumPacketWriter::ReusableIOBuffer> packet) {
@@ -1568,6 +1691,33 @@ void QuicChromiumClientSession::OnMigrationTimeout(size_t num_sockets) {
                             MIGRATION_STATUS_MAX);
   CloseSessionOnError(ERR_NETWORK_CHANGED,
                       QUIC_CONNECTION_MIGRATION_NO_NEW_NETWORK);
+}
+
+void QuicChromiumClientSession::OnProbeNetworkSucceeds(
+    NetworkChangeNotifier::NetworkHandle network,
+    const QuicSocketAddress& self_address,
+    std::unique_ptr<DatagramClientSocket> socket,
+    std::unique_ptr<QuicChromiumPacketWriter> writer,
+    std::unique_ptr<QuicChromiumPacketReader> reader) {
+  DCHECK(socket);
+  DCHECK(writer);
+  DCHECK(reader);
+
+  // TODO(zhongyi): check |network| to see if we want to migrate to
+  // the network immediately.
+
+  // Mark probing socket as the default socket.
+  sockets_.push_back(std::move(socket));
+  packet_readers_.push_back(std::move(reader));
+
+  connection()->SetSelfAddress(self_address);
+  connection()->SetQuicPacketWriter(writer.release(),
+                                    /*owns_writer*/ true);
+}
+
+void QuicChromiumClientSession::OnProbeNetworkFails(
+    NetworkChangeNotifier::NetworkHandle network) {
+  DVLOG(1) << "Connectivity probing fails on NetworkHandle " << network;
 }
 
 void QuicChromiumClientSession::OnNetworkConnected(
@@ -1795,6 +1945,88 @@ void QuicChromiumClientSession::NotifyRequestsOfConfirmation(int net_error) {
     task_runner_->PostTask(FROM_HERE, base::Bind(callback, net_error));
 
   waiting_for_confirmation_callbacks_.clear();
+}
+
+ProbingResult QuicChromiumClientSession::StartProbeNetwork(
+    NetworkChangeNotifier::NetworkHandle network,
+    IPEndPoint peer_address,
+    const NetLogWithSource& migration_net_log) {
+  if (!stream_factory_)
+    return ProbingResult::FAILURE;
+
+  CHECK_NE(NetworkChangeNotifier::kInvalidNetworkHandle, network);
+
+  // Close ilde session.
+  if (GetNumActiveStreams() == 0) {
+    DVLOG(1) << "Client closes session before sends connectivity probe "
+             << "due to being idle";
+    HistogramAndLogMigrationFailure(migration_net_log,
+                                    MIGRATION_STATUS_NO_MIGRATABLE_STREAMS,
+                                    connection_id(), "Session being idle");
+    CloseSessionOnError(ERR_NETWORK_CHANGED,
+                        QUIC_CONNECTION_MIGRATION_NO_MIGRATABLE_STREAMS);
+    return ProbingResult::ABORT_WITH_IDLE_SESSION;
+  }
+
+  // Abort probing if connection migration is disabled by config.
+  if (config()->DisableConnectionMigration()) {
+    DVLOG(1) << "Client aborts probing network with connection migration "
+             << "disabled by config";
+    HistogramAndLogMigrationFailure(migration_net_log,
+                                    MIGRATION_STATUS_DISABLED, connection_id(),
+                                    "Migration disabled by config");
+    // TODO(zhongyi): do we want to close the session?
+    return ProbingResult::DISABLED_BY_CONFIG;
+  }
+
+  // TODO(zhongyi): migrate the session still, but reset non-migratable stream.
+  // TODO(zhongyi): migrate non-migrtable stream if moving from Cellular to
+  // wifi.
+  // Abort probing if there is stream marked as non-migratable.
+  if (HasNonMigratableStreams()) {
+    DVLOG(1) << "Clients aborts probing network with non-migratable streams";
+    HistogramAndLogMigrationFailure(migration_net_log,
+                                    MIGRATION_STATUS_NON_MIGRATABLE_STREAM,
+                                    connection_id(), "Non-migratable stream");
+    return ProbingResult::DISABLED_BY_NON_MIGRABLE_STREAM;
+  }
+
+  // Create and configure socket on |network|.
+  std::unique_ptr<DatagramClientSocket> probing_socket =
+      stream_factory_->CreateSocket(net_log_.net_log(), net_log_.source());
+  if (stream_factory_->ConfigureSocket(probing_socket.get(), peer_address,
+                                       network) != OK) {
+    probing_socket.reset();
+    HistogramAndLogMigrationFailure(
+        migration_net_log, MIGRATION_STATUS_INTERNAL_ERROR, connection_id(),
+        "Socket configuration failed");
+    return ProbingResult::INTERNAL_ERROR;
+  }
+
+  // Create new packet writer and reader on the probing socket.
+  std::unique_ptr<QuicChromiumPacketWriter> probing_writer(
+      new QuicChromiumPacketWriter(probing_socket.get()));
+  probing_writer->set_delegate(this);
+  std::unique_ptr<QuicChromiumPacketReader> probing_reader(
+      new QuicChromiumPacketReader(probing_socket.get(), clock_, this,
+                                   yield_after_packets_, yield_after_duration_,
+                                   net_log_));
+
+  int initial_timeout = connection()
+                            ->sent_packet_manager()
+                            .GetRttStats()
+                            ->smoothed_rtt()
+                            .ToMicroseconds();
+  const int kDefaultRTT = 300 * kNumMicrosPerMilli;
+  if (initial_timeout == 0 || initial_timeout > kDefaultRTT) {
+    initial_timeout = kDefaultRTT;
+  }
+
+  probing_manager_->StartProbeNetwork(
+      network, QuicSocketAddress(QuicSocketAddressImpl(peer_address)),
+      std::move(probing_socket), std::move(probing_writer),
+      std::move(probing_reader), initial_timeout);
+  return ProbingResult::PENDING;
 }
 
 std::unique_ptr<base::Value> QuicChromiumClientSession::GetInfoAsValue(
