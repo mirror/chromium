@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "abb64423_8a8bae63",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2017-11-16T18:52:38Z",
+      "side": 1,
+      "message": "OK, I guess my question is - are we sure we want to do the workaround in those cases as well?",
+      "parentUuid": "ff9d9cde_3fd41291",
+      "range": {
+        "startLine": 252,
+        "startChar": 7,
+        "endLine": 260,
+        "endChar": 83
+      },
+      "revId": "57b76efd99c80849c5204aba0c6c2d6ba3bc6786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f7134ab_3b171f09",
         "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.h",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "DestroyConnection() is guaranteed to be called at least one more time by the destructor. Currently, we don\u0027t expect this to be called multiple times with a GATT error, but this boolean ensures that this doesn\u0027t happen.",
       "parentUuid": "2f7134ab_3b171f09",
+      "range": {
+        "startLine": 364,
+        "startChar": 37,
+        "endLine": 365,
+        "endChar": 10
+      },
+      "revId": "57b76efd99c80849c5204aba0c6c2d6ba3bc6786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "137d9b1e_3b8b02b4",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2017-11-16T18:52:38Z",
+      "side": 1,
+      "message": "Hmmm... Ok, is there any reason it would be called twice with this error, when we don\u0027t expect it to? If not, I\u0027d rather just get rid of this for simplicity.",
+      "parentUuid": "f58c5d59_f51e4f58",
       "range": {
         "startLine": 364,
         "startChar": 37,
