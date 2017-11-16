@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c76739f_12c76a37",
+        "filename": "build/sanitizers/tsan_suppressions.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-16T20:44:33Z",
+      "side": 1,
+      "message": "Ah, I\u0027ll remove these and see what happens.",
+      "parentUuid": "83adfa36_b6942ae2",
+      "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb9e1a2a_697cd95a",
         "filename": "cc/layers/texture_layer_unittest.cc",
         "patchSetId": 15
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-16T18:48:33Z",
       "side": 1,
       "message": "nit: do we want to use TransferableResource::MakeGL and friends throughout this file?",
+      "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d523d2_9f2c086b",
+        "filename": "cc/layers/texture_layer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-16T20:44:33Z",
+      "side": 1,
+      "message": "Yeah! I didn\u0027t have those when I wrote this part :) I changed everywhere else that was setting is_software manually also.",
+      "parentUuid": "eb9e1a2a_697cd95a",
       "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6bfdaff1_12194a35",
+        "filename": "cc/trees/layer_tree_host_unittest_context.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-16T20:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcaba6a3_a1e1eed5",
+      "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a3c78e7_b12cc91e",
         "filename": "components/viz/common/quads/texture_mailbox.cc",
         "patchSetId": 15
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ef8c6def_feb10286",
+        "filename": "components/viz/common/quads/texture_mailbox.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-16T20:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a3c78e7_b12cc91e",
+      "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f73e339_6073a7d6",
         "filename": "components/viz/common/resources/transferable_resource.h",
         "patchSetId": 15
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-16T18:48:33Z",
       "side": 1,
       "message": "nit: should this be operator\u003d ? Since this is a value type, might make interaction with STL algos easier.",
+      "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1906724e_99a96a99",
+        "filename": "components/viz/common/resources/transferable_resource.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-16T20:44:33Z",
+      "side": 1,
+      "message": "Hm yeah okay.",
+      "parentUuid": "5f73e339_6073a7d6",
       "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "d341af8d_b37ffcce",
+        "filename": "content/renderer/pepper/pepper_compositor_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-16T20:44:33Z",
+      "side": 1,
+      "message": "I think it should be maybe, it has a string and a ColorSpace with things in it which could be moved.. but im not really sure how to deal with things that could be movable, when they aren\u0027t and they\u0027re being passed by const\u0026 right now. I guess I\u0027ll remove the move()s cuz it caught your eye, tho I knew they were a no-op when I wrote them but they could become not in the future, and I was expressing that I don\u0027t need the resource here anymore.. idk.",
+      "parentUuid": "81123420_14c0db49",
+      "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5c36462_299b86cb",
         "filename": "content/renderer/pepper/pepper_plugin_instance_impl.cc",
         "patchSetId": 15
@@ -115,6 +223,24 @@
       "writtenOn": "2017-11-16T18:48:33Z",
       "side": 1,
       "message": "nit: there might be value in adding a bool TransferableResource::IsEmpty() const or sth.",
+      "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07298dd9_bddf16d3",
+        "filename": "content/renderer/pepper/pepper_plugin_instance_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-16T20:44:33Z",
+      "side": 1,
+      "message": "I\u0027m trying to avoid methods, or it\u0027s no longer a struct. This one\u0027s a mouthful, but I think maybe cuz it is buried inside mailbox_holder the most.\n\nIt\u0027s also confusing cuz its the mailbox for gpu and software but not clear. I would like to improve the structure in other ways so I\u0027ll leave a TODO.",
+      "parentUuid": "f5c36462_299b86cb",
       "revId": "9ff8d490cc48724cbd4501eec4370290d833437c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
