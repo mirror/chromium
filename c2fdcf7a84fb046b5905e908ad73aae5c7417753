@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0f4bafcc_e1d88630",
+        "filename": "chrome/browser/notifications/metrics/mock_notification_metrics_logger.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-16T17:41:08Z",
+      "side": 1,
+      "message": "well if/when the NotificationMetricsLogger is used by other classes then yes, I will use this from other tests.",
+      "parentUuid": "ffa77401_70cb229b",
+      "revId": "c2fdcf7a84fb046b5905e908ad73aae5c7417753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "475828fd_aeab00a3",
         "filename": "chrome/browser/notifications/metrics/notification_metrics_logger.h",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f655901b_ccc83f6f",
+        "filename": "chrome/browser/notifications/metrics/notification_metrics_logger.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-16T17:41:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "475828fd_aeab00a3",
+      "revId": "c2fdcf7a84fb046b5905e908ad73aae5c7417753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ee53603_9d2a0ee7",
         "filename": "chrome/browser/notifications/platform_notification_service_impl.cc",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "c2fdcf7a84fb046b5905e908ad73aae5c7417753",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ab57f5_30482f6c",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-16T17:41:08Z",
+      "side": 1,
+      "message": "Yeah, I considered it, but decided I\u0027d rather keep logic out of the logger.\n\nIf there\u0027s a single method per metric this also means we can simply read the metrics off from the header file.",
+      "parentUuid": "0ee53603_9d2a0ee7",
+      "revId": "c2fdcf7a84fb046b5905e908ad73aae5c7417753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

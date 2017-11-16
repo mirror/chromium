@@ -265,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "48439ca5_f4b39dc2",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-16T17:41:08Z",
+      "side": 1,
+      "message": "You\u0027re right. Done. (Added to the anonymouse namespace, was that right?)",
+      "parentUuid": "89350de0_10e162f7",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d54bdeb6_05e3bd31",
         "filename": "chrome/browser/notifications/platform_notification_service_impl.h",
         "patchSetId": 6
@@ -350,6 +368,24 @@
       "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76019559_858e334b",
+        "filename": "chrome/browser/notifications/platform_notification_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-16T17:41:08Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "543aa9ab_a2a75722",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
