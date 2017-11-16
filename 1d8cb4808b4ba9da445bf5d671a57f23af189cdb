@@ -374,6 +374,24 @@
       "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5972e57_f4648c03",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-16T12:04:45Z",
+      "side": 1,
+      "message": "OK, as it\u0027s called only once now. Would be a bit cleaner to clear it IMHO, but I won\u0027t insist on that.",
+      "parentUuid": "4fa10696_eac7a98f",
+      "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

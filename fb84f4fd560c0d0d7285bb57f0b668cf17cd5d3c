@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "903d4f15_aedd3395",
+        "filename": "components/policy/proto/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-16T12:04:45Z",
+      "side": 1,
+      "message": "nit: Combine this statement with the one in the previous line?",
+      "revId": "fb84f4fd560c0d0d7285bb57f0b668cf17cd5d3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
