@@ -16,6 +16,24 @@
       "revId": "d5360a6949663172ffe264a6cfa6a02c06da9ba2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3573a60_8be43544",
+        "filename": "components/viz/client/client_layer_tree_frame_sink_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-16T17:43:36Z",
+      "side": 1,
+      "message": "I asked Yuzhu about this. He says if the other end of the pipe is closed at the time of the bind the error callback is run asynchronously. So, there shouldn\u0027t be raciness here and there should be no need to wait for the bind to complete. I updated the comment here.",
+      "parentUuid": "b32f1a80_211abb24",
+      "revId": "d5360a6949663172ffe264a6cfa6a02c06da9ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
