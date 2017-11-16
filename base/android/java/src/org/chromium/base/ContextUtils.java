@@ -4,6 +4,7 @@
 
 package org.chromium.base;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -94,6 +95,9 @@ public class ContextUtils {
      */
     @VisibleForTesting
     public static void initApplicationContextForTests(Context appContext) {
+        if (appContext instanceof Application) {
+            ApplicationStatus.initialize((Application) appContext);
+        }
         initJavaSideApplicationContext(appContext);
         Holder.sSharedPreferences = fetchAppSharedPreferences();
     }
