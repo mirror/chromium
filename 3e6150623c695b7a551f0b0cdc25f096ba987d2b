@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faa7f038_a7ecb132",
+        "filename": "third_party/WebKit/Source/core/animation/Keyframe.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-16T05:20:37Z",
+      "side": 1,
+      "message": "It seems like returning either a ScriptValue or v8::Local would be more canonical but then it seems like V8ObjectBuilder would need a way to take in an existing object so that subclasses could extend the object. +jbroman what do you think of doing this? Or are there other convenient ways to build up an object with overrides?\n\nI suggest either GetV8Object for returning the object builder or GetScriptValue for the script value.",
+      "revId": "3e6150623c695b7a551f0b0cdc25f096ba987d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
