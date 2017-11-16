@@ -31,7 +31,7 @@ class SigninUtilTest : public BrowserWithTestWindowTest {
 
 TEST_F(SigninUtilTest, GetForceSigninPolicy) {
   ASSERT_FALSE(signin_util::IsForceSigninEnabled());
-  chrome::RegisterLocalState(prefs_->registry());
+  RegisterLocalState(prefs_->registry());
   TestingBrowserProcess::GetGlobal()->SetLocalState(prefs_.get());
 
   g_browser_process->local_state()->SetBoolean(prefs::kForceBrowserSignin,

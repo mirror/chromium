@@ -66,7 +66,7 @@ class AppMenuModelTest : public BrowserWithTestWindowTest,
  protected:
   void SetUp() override {
     prefs_.reset(new TestingPrefServiceSimple());
-    chrome::RegisterLocalState(prefs_->registry());
+    RegisterLocalState(prefs_->registry());
 
     TestingBrowserProcess::GetGlobal()->SetLocalState(prefs_.get());
     BrowserWithTestWindowTest::SetUp();
