@@ -16,6 +16,24 @@
       "revId": "60e563ad517173562bf8318209ff77231854aaf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26833fa5_94bd5e25",
+        "filename": "services/device/generic_sensor/android/java/src/org/chromium/device/sensors/PlatformSensor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-11-16T14:35:06Z",
+      "side": 1,
+      "message": "This causes sensor thread stopping (inside provider). Unfortunately, the stack traces from the bug do not actually make it clear what call throws the exception, so just being cautious here.",
+      "parentUuid": "65a91996_69d805da",
+      "revId": "60e563ad517173562bf8318209ff77231854aaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
