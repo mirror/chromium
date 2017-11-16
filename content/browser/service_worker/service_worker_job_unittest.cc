@@ -162,25 +162,6 @@ ServiceWorkerUnregisterJob::UnregistrationCallback SaveUnregistration(
   return base::Bind(&SaveUnregistrationCallback, expected_status, called);
 }
 
-// This is for the test of mojom::ServiceWorkerInstallEventMethods.
-void RegisterForeignFetchScopes(
-    mojom::ServiceWorkerInstallEventMethodsAssociatedPtrInfo client) {
-  GURL valid_scope_1("http://www.example.com/test/subscope");
-  GURL valid_scope_2("http://www.example.com/test/othersubscope");
-  std::vector<GURL> valid_scopes;
-  valid_scopes.push_back(valid_scope_1);
-  valid_scopes.push_back(valid_scope_2);
-
-  std::vector<url::Origin> all_origins;
-  url::Origin valid_origin = url::Origin::Create(GURL("https://chromium.org/"));
-  std::vector<url::Origin> valid_origin_list(1, valid_origin);
-
-  mojom::ServiceWorkerInstallEventMethodsAssociatedPtr install_event_methods;
-  install_event_methods.Bind(std::move(client));
-  install_event_methods->RegisterForeignFetchScopes(valid_scopes,
-                                                    valid_origin_list);
-}
-
 }  // namespace
 
 class ServiceWorkerJobTest : public testing::Test {
@@ -365,10 +346,17 @@ class RegisterForeignFetchTestHelper : public EmbeddedWorkerTestHelper {
       mojom::ServiceWorkerInstallEventMethodsAssociatedPtrInfo client,
       mojom::ServiceWorkerEventDispatcher::DispatchInstallEventCallback
           callback) override {
-    RegisterForeignFetchScopes(std::move(client));
+    mojom::ServiceWorkerInstallEventMethodsAssociatedPtr install_event_methods;
+    install_event_methods.Bind(std::move(client));
+    install_event_methods->RegisterForeignFetchScopes(
+        {GURL("http://www.example.com/test/subscope"),
+         GURL("http://www.example.com/test/othersubscope")},
+        {url::Origin::Create(GURL("https://chromium.org/"))});
+    install_event_methods->SetHasFetchHandler(true);
+
     dispatched_events()->push_back(Event::Install);
     std::move(callback).Run(blink::mojom::ServiceWorkerEventStatus::COMPLETED,
-                            true /* has_fetch_handler */, base::Time::Now());
+                            base::Time::Now());
   }
 };
 
@@ -1634,8 +1622,10 @@ class EventCallbackHelper : public EmbeddedWorkerTestHelper {
           callback) override {
     if (!install_callback_.is_null())
       install_callback_.Run();
-    std::move(callback).Run(install_event_result_, has_fetch_handler_,
-                            base::Time::Now());
+    mojom::ServiceWorkerInstallEventMethodsAssociatedPtr install_event_methods;
+    install_event_methods.Bind(std::move(client));
+    install_event_methods->SetHasFetchHandler(has_fetch_handler_);
+    std::move(callback).Run(install_event_result_, base::Time::Now());
   }
 
   void OnActivateEvent(

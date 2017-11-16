@@ -429,6 +429,33 @@ const char kNavigationPreloadNetworkError[] =
     "NetworkError: The service worker navigation preload request failed with "
     "a network error.";
 
+class MockInstallEventMethodsReceiver
+    : public mojom::ServiceWorkerInstallEventMethods {
+ public:
+  MockInstallEventMethodsReceiver(
+      ServiceWorkerVersion* version,
+      mojom::ServiceWorkerInstallEventMethodsAssociatedRequest request)
+      : version_(version), binding_(this, std::move(request)) {}
+
+  // Implements mojom::ServiceWorkerInstallEventMethods
+  void RegisterForeignFetchScopes(
+      const std::vector<GURL>& /* sub_scopes */,
+      const std::vector<url::Origin>& /* origins */) override {
+    NOTIMPLEMENTED();
+  }
+
+  void SetHasFetchHandler(bool has_fetch_handler) override {
+    version_->set_fetch_handler_existence(
+        has_fetch_handler
+            ? ServiceWorkerVersion::FetchHandlerExistence::EXISTS
+            : ServiceWorkerVersion::FetchHandlerExistence::DOES_NOT_EXIST);
+  }
+
+ private:
+  ServiceWorkerVersion* version_;
+  mojo::AssociatedBinding<mojom::ServiceWorkerInstallEventMethods> binding_;
+};
+
 }  // namespace
 
 class ServiceWorkerBrowserTest : public ContentBrowserTest {
@@ -803,27 +830,25 @@ class ServiceWorkerVersionBrowserTest : public ServiceWorkerBrowserTest {
         version_->StartRequest(ServiceWorkerMetrics::EventType::INSTALL,
                                CreateReceiver(BrowserThread::UI, done, result));
     mojom::ServiceWorkerInstallEventMethodsAssociatedPtrInfo ptr_info;
-    mojo::MakeRequest(&ptr_info);
+    auto receiver = std::make_unique<MockInstallEventMethodsReceiver>(
+        version_.get(), mojo::MakeRequest(&ptr_info));
     version_->event_dispatcher()->DispatchInstallEvent(
         std::move(ptr_info),
         base::BindOnce(&self::ReceiveInstallEventOnIOThread,
-                       base::Unretained(this), done, result, request_id));
+                       base::Unretained(this), done, result, request_id,
+                       std::move(receiver)));
   }
 
   void ReceiveInstallEventOnIOThread(
       const base::Closure& done,
       ServiceWorkerStatusCode* out_result,
       int request_id,
+      std::unique_ptr<MockInstallEventMethodsReceiver> receiver,
       blink::mojom::ServiceWorkerEventStatus status,
-      bool has_fetch_handler,
       base::Time dispatch_event_time) {
     version_->FinishRequest(
         request_id, status == blink::mojom::ServiceWorkerEventStatus::COMPLETED,
         dispatch_event_time);
-    version_->set_fetch_handler_existence(
-        has_fetch_handler
-            ? ServiceWorkerVersion::FetchHandlerExistence::EXISTS
-            : ServiceWorkerVersion::FetchHandlerExistence::DOES_NOT_EXIST);
 
     *out_result = mojo::ConvertTo<ServiceWorkerStatusCode>(status);
     if (!done.is_null())

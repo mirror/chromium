@@ -304,11 +304,11 @@ void ToWebServiceWorkerResponse(const ServiceWorkerResponse& response,
       blink::WebVector<blink::WebString>(cors_exposed_header_names));
 }
 
-template <typename T, class... TArgs>
-void AbortPendingEventCallbacks(T& callbacks, TArgs... args) {
+template <typename T>
+void AbortPendingEventCallbacks(T& callbacks) {
   for (typename T::iterator it(&callbacks); !it.IsAtEnd(); it.Advance()) {
     std::move(*it.GetCurrentValue())
-        .Run(blink::mojom::ServiceWorkerEventStatus::ABORTED, args...,
+        .Run(blink::mojom::ServiceWorkerEventStatus::ABORTED,
              base::Time::Now());
   }
 }
@@ -366,8 +366,7 @@ struct ServiceWorkerContextClient::WorkerContextData {
   ~WorkerContextData() {
     DCHECK(thread_checker.CalledOnValidThread());
 
-    AbortPendingEventCallbacks(install_event_callbacks,
-                               false /* has_fetch_handler */);
+    AbortPendingEventCallbacks(install_event_callbacks);
     AbortPendingEventCallbacks(activate_event_callbacks);
     AbortPendingEventCallbacks(background_fetch_abort_event_callbacks);
     AbortPendingEventCallbacks(background_fetch_click_event_callbacks);
@@ -1024,11 +1023,15 @@ void ServiceWorkerContextClient::DidHandleInstallEvent(
     int event_id,
     blink::mojom::ServiceWorkerEventStatus status,
     double event_dispatch_time) {
+  DCHECK(context_->install_methods_map[event_id].is_bound());
+  context_->install_methods_map[event_id]->SetHasFetchHandler(
+      proxy_->HasFetchEventHandler());
+
   DispatchInstallEventCallback* callback =
       context_->install_event_callbacks.Lookup(event_id);
   DCHECK(callback);
   DCHECK(*callback);
-  std::move(*callback).Run(status, proxy_->HasFetchEventHandler(),
+  std::move(*callback).Run(status,
                            base::Time::FromDoubleT(event_dispatch_time));
   context_->install_event_callbacks.Remove(event_id);
   context_->install_methods_map.erase(event_id);
