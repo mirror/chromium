@@ -29,6 +29,10 @@
 #include "ui/events/devices/touchscreen_device.h"
 #include "ui/strings/grit/ui_strings.h"
 
+#if defined(OS_CHROMEOS)
+#include "chromeos/system/statistics_provider.h"
+#endif
+
 namespace display {
 namespace {
 
@@ -221,6 +225,12 @@ void DisplayChangeObserver::UpdateInternalDisplay(
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   bool use_first_display_as_internal =
       command_line->HasSwitch(::switches::kUseFirstDisplayAsInternal);
+#if defined(OS_CHROMEOS)
+  use_first_display_as_internal =
+      use_first_display_as_internal ||
+      chromeos::system::StatisticsProvider::GetInstance()->IsRunningOnVm();
+#endif
+
   for (auto* state : display_states) {
     if (state->type() == DISPLAY_CONNECTION_TYPE_INTERNAL ||
         (use_first_display_as_internal &&
