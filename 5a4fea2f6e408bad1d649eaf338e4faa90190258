@@ -22,6 +22,30 @@
       "revId": "5a4fea2f6e408bad1d649eaf338e4faa90190258",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb904071_5b3fed6e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/instantapps/InstantAppsHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-16T15:49:39Z",
+      "side": 1,
+      "message": "Yes, downstream shouldLaunchInstantApp is overridden with additional conditions so we don\u0027t automatically launch the instant app.",
+      "parentUuid": "76c5e872_1c51a50a",
+      "range": {
+        "startLine": 302,
+        "startChar": 15,
+        "endLine": 302,
+        "endChar": 34
+      },
+      "revId": "5a4fea2f6e408bad1d649eaf338e4faa90190258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
