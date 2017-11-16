@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "800f197e_d5a0da12",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/sequence.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-16T19:19:11Z",
+      "side": 1,
+      "message": "Why is this \"temporary\"? I thought it was in the final design, required as an interface for TaskScheduler to request work from the SequenceManager.",
+      "revId": "37ce9b49795d7b4e7eda0f25c6851d3fa67eb660",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06cded1f_28416c8c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-16T19:19:11Z",
+      "side": 1,
+      "message": "nit: name parameter",
+      "range": {
+        "startLine": 57,
+        "startChar": 27,
+        "endLine": 57,
+        "endChar": 36
+      },
+      "revId": "37ce9b49795d7b4e7eda0f25c6851d3fa67eb660",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6686e02_caa666e0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-16T19:19:11Z",
+      "side": 1,
+      "message": "nit: empty line above",
+      "revId": "37ce9b49795d7b4e7eda0f25c6851d3fa67eb660",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6a1b5f_4ee54a09",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-16T19:19:11Z",
+      "side": 1,
+      "message": "Add comments about fields in this class. In particular, it seems to me like |task_runner_| and |message_loop_task_runner_| point to the same task runner?",
+      "range": {
+        "startLine": 58,
+        "startChar": 46,
+        "endLine": 58,
+        "endChar": 58
+      },
+      "revId": "37ce9b49795d7b4e7eda0f25c6851d3fa67eb660",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
