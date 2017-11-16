@@ -16,6 +16,8 @@ blink_modules_sources("fetch") {
     "BytesConsumer.h",
     "BytesConsumerForDataConsumerHandle.cpp",
     "BytesConsumerForDataConsumerHandle.h",
+    "BytesConsumerForMojoDataPipe.cpp",
+    "BytesConsumerForMojoDataPipe.h",
     "FetchDataLoader.cpp",
     "FetchDataLoader.h",
     "FetchHeaderList.cpp",

@@ -32,6 +32,25 @@ namespace blink {
 
 class BlobDataHandle;
 
+// Refcounted wrapper around a data pipe.
+class PLATFORM_EXPORT WrappedDataPipe final
+    : public RefCounted<WrappedDataPipe> {
+ public:
+  explicit WrappedDataPipe(mojo::ScopedDataPipeConsumerHandle consumer_handle)
+      : consumer_handle_(std::move(consumer_handle)) {}
+  ~WrappedDataPipe() {}
+
+  bool is_valid() const { return consumer_handle_.is_valid(); }
+
+  mojo::ScopedDataPipeConsumerHandle ReleaseDataPipe() {
+    DCHECK(is_valid());
+    return std::move(consumer_handle_);
+  }
+
+ private:
+  mojo::ScopedDataPipeConsumerHandle consumer_handle_;
+};
+
 class PLATFORM_EXPORT FormDataElement final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
@@ -39,7 +58,6 @@ class PLATFORM_EXPORT FormDataElement final {
   FormDataElement() : type_(kData) {}
   explicit FormDataElement(const Vector<char>& array)
       : type_(kData), data_(array) {}
-
   FormDataElement(const String& filename,
                   long long file_start,
                   long long file_length,
@@ -49,15 +67,17 @@ class PLATFORM_EXPORT FormDataElement final {
         file_start_(file_start),
         file_length_(file_length),
         expected_file_modification_time_(expected_file_modification_time) {}
-  explicit FormDataElement(const String& blob_uuid,
-                           scoped_refptr<BlobDataHandle> optional_handle)
+  FormDataElement(const String& blob_uuid,
+                  scoped_refptr<BlobDataHandle> optional_handle)
       : type_(kEncodedBlob),
         blob_uuid_(blob_uuid),
         optional_blob_data_handle_(std::move(optional_handle)) {}
+  explicit FormDataElement(scoped_refptr<WrappedDataPipe> handle)
+      : type_(kDataPipe), consumer_handle_(std::move(handle)) {}
 
   bool IsSafeToSendToAnotherThread() const;
 
-  enum Type { kData, kEncodedFile, kEncodedBlob } type_;
+  enum Type { kData, kEncodedFile, kEncodedBlob, kDataPipe } type_;
   Vector<char> data_;
   String filename_;
   String blob_uuid_;
@@ -65,6 +85,9 @@ class PLATFORM_EXPORT FormDataElement final {
   long long file_start_;
   long long file_length_;
   double expected_file_modification_time_;
+  // The data pipe is shareable to allow copies but once anyone takes and reads
+  // it no one else can access it.
+  scoped_refptr<WrappedDataPipe> consumer_handle_;
 };
 
 inline bool operator==(const FormDataElement& a, const FormDataElement& b) {
@@ -82,6 +105,8 @@ inline bool operator==(const FormDataElement& a, const FormDataElement& b) {
                b.expected_file_modification_time_;
   if (a.type_ == FormDataElement::kEncodedBlob)
     return a.blob_uuid_ == b.blob_uuid_;
+  if (a.type_ == FormDataElement::kDataPipe)
+    return a.consumer_handle_ == b.consumer_handle_;
 
   return true;
 }
@@ -114,12 +139,14 @@ class PLATFORM_EXPORT EncodedFormData : public RefCounted<EncodedFormData> {
                        double expected_modification_time);
   void AppendBlob(const String& blob_uuid,
                   scoped_refptr<BlobDataHandle> optional_handle);
+  void AppendDataPipe(scoped_refptr<WrappedDataPipe> handle);
 
   void Flatten(Vector<char>&) const;  // omits files
   String FlattenToString() const;     // omits files
 
   bool IsEmpty() const { return elements_.IsEmpty(); }
   const Vector<FormDataElement>& Elements() const { return elements_; }
+  Vector<FormDataElement>& MutableElements() { return elements_; }
 
   const Vector<char>& Boundary() const { return boundary_; }
   void SetBoundary(Vector<char> boundary) { boundary_ = boundary; }

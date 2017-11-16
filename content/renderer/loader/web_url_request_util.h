@@ -38,6 +38,8 @@ std::string GetWebURLRequestHeadersAsString(
 int GetLoadFlagsForWebURLRequest(const blink::WebURLRequest& request);
 
 // Takes a ResourceRequestBody and converts into WebHTTPBody.
+// XXX: This is a destructive operation. Is that OK? This probably meant to be
+// const ResourceRequestBody&. What about the history_serialization callsite?
 blink::WebHTTPBody GetWebHTTPBodyForRequestBody(
     const scoped_refptr<ResourceRequestBody>& input);
 
