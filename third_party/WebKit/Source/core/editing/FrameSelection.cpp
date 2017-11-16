@@ -92,6 +92,64 @@ namespace blink {
 
 using namespace HTMLNames;
 
+enum class SelectionMode {
+  kNone,
+  kRange,
+  kBlockCursor,
+};
+
+static SelectionMode ComputeSelectionMode(
+    const FrameSelection& frame_selection) {
+  const SelectionInDOMTree& selection_in_dom =
+      frame_selection.GetSelectionInDOMTree();
+  if (selection_in_dom.IsRange())
+    return SelectionMode::kRange;
+  //  DCHECK(selection_in_dom.IsCaret());
+  if (!frame_selection.ShouldShowBlockCursor())
+    return SelectionMode::kNone;
+  if (IsLogicalEndOfLine(CreateVisiblePosition(selection_in_dom.Base())))
+    return SelectionMode::kNone;
+  return SelectionMode::kBlockCursor;
+}
+
+static EphemeralRangeInFlatTree CalcSelectionInFlatTree(
+    const FrameSelection& frame_selection) {
+  const SelectionInDOMTree& selection_in_dom =
+      frame_selection.GetSelectionInDOMTree();
+  switch (ComputeSelectionMode(frame_selection)) {
+    case SelectionMode::kNone:
+      return {};
+    case SelectionMode::kRange: {
+      const PositionInFlatTree& base =
+          ToPositionInFlatTree(selection_in_dom.Base());
+      const PositionInFlatTree& extent =
+          ToPositionInFlatTree(selection_in_dom.Extent());
+      if (base.IsNull() || extent.IsNull() || base == extent ||
+          !base.IsValidFor(frame_selection.GetDocument()) ||
+          !extent.IsValidFor(frame_selection.GetDocument()))
+        return {};
+      return base <= extent ? EphemeralRangeInFlatTree(base, extent)
+                            : EphemeralRangeInFlatTree(extent, base);
+    }
+    case SelectionMode::kBlockCursor: {
+      const PositionInFlatTree& base =
+          CreateVisiblePosition(ToPositionInFlatTree(selection_in_dom.Base()))
+              .DeepEquivalent();
+      if (base.IsNull())
+        return {};
+      const PositionInFlatTree end_position =
+          NextPositionOf(base, PositionMoveType::kGraphemeCluster);
+      if (end_position.IsNull())
+        return {};
+      return base <= end_position
+                 ? EphemeralRangeInFlatTree(base, end_position)
+                 : EphemeralRangeInFlatTree(end_position, base);
+    }
+  }
+  NOTREACHED();
+  return {};
+}
+
 static inline bool ShouldAlwaysUseDirectionalSelection(LocalFrame* frame) {
   return frame->GetEditor().Behavior().ShouldConsiderSelectionAsDirectional();
 }
@@ -228,8 +286,8 @@ bool FrameSelection::SetSelectionDeprecated(
     selection_editor_->SetSelection(new_selection);
   should_shrink_next_tap_ = options.ShouldShrinkNextTap();
   is_handle_visible_ = should_show_handle;
-  ScheduleVisualUpdateForPaintInvalidationIfNeeded();
 
+  ScheduleVisualUpdateForPaintInvalidationIfNeeded();
   const Document& current_document = GetDocument();
   frame_->GetEditor().RespondToChangedSelection();
   DCHECK_EQ(current_document, GetDocument());
@@ -865,10 +923,7 @@ void FrameSelection::SetFocusedNodeIfNeeded() {
 
 static String ExtractSelectedText(const FrameSelection& selection,
                                   TextIteratorBehavior behavior) {
-  const VisibleSelectionInFlatTree& visible_selection =
-      selection.ComputeVisibleSelectionInFlatTree();
-  const EphemeralRangeInFlatTree& range =
-      visible_selection.ToNormalizedEphemeralRange();
+  const EphemeralRangeInFlatTree& range = CalcSelectionInFlatTree(selection);
   // We remove '\0' characters because they are not visibly rendered to the
   // user.
   return PlainText(range, behavior).Replace(0, "");
