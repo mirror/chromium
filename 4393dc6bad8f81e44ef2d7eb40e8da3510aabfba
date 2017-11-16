@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "7aab6280_4f0d0a28",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-16T23:01:32Z",
+      "side": 1,
+      "message": "I don\u0027t think WorkerEnvironmentType is verbose, it\u0027s specific, which is a good thing. It makes it obvious this is a lightweight type whereas otherwise a reader has to look elsewhere to figure out this is a mere enum param to be used on initialization.\n\nAnd we do have environment variables/objects (i.e. |win_thread_environment_|).",
+      "parentUuid": "4b1cda2b_69cbdc66",
+      "range": {
+        "startLine": 245,
+        "startChar": 20,
+        "endLine": 245,
+        "endChar": 39
+      },
+      "revId": "4393dc6bad8f81e44ef2d7eb40e8da3510aabfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c47bbb0d_bf896df0",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
         "patchSetId": 11
