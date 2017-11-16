@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c656b31b_946b17ef",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-16T05:29:12Z",
+      "side": 1,
+      "message": "break_mode is not defined in this function.  I think you meant to move lines 136-141 down into this function.",
+      "revId": "7e146e7bee119ada11e00a890387448c4d2a8c08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
