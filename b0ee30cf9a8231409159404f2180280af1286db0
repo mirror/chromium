@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "0fe0d6cb_6c047386",
+        "filename": "ui/events/platform/x11/x11_event_source_libevent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-16T15:13:04Z",
+      "side": 1,
+      "message": "I don\u0027t think this is right. There are PlatformEventObservers that need to be called and theoretically could be non-XEventDispatcher that could dispatch the event.\n\nYou always still want to call DispatchEvent() and you only want to do it once. Would this type of thing work?\n\nfor (auto\u0026 xdispatcher : dispatchers_xevent_)\n  xdispatcher-\u003eCheckCanDispatchNextPlatformEvent(xevent);\n\nDispatchEvent(event);\n\nfor (auto\u0026 xdispatcher : dispatchers_xevent_)\n  xdispatcher-\u003ePlatformEventDispatchFinished()",
+      "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f224181_ff4d7dab",
+        "filename": "ui/events/platform/x11/x11_event_source_libevent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-16T15:13:04Z",
+      "side": 1,
+      "message": "Duplicate comment?",
+      "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d80b580_9b78f9b5",
         "filename": "ui/events/platform/x11/x11_event_source_libevent.h",
         "patchSetId": 2
@@ -13,6 +47,40 @@
       "writtenOn": "2017-11-16T14:56:30Z",
       "side": 1,
       "message": "nit: double space before \"Only\".",
+      "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc51cb4a_3b0d0e63",
+        "filename": "ui/platform_window/x11/x11_window_ozone.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-16T15:13:04Z",
+      "side": 1,
+      "message": "If CanDispatchPlatformEvent() \u003d\u003d true then you call WillDispatchPlatformEvent() I think? Why not just have one function CheckCanDispatchNextPlatformEvent() that sets handle_next_event_ \u003d true.",
+      "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad0b1cd_aaa37a8d",
+        "filename": "ui/platform_window/x11/x11_window_ozone.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-16T15:13:04Z",
+      "side": 1,
+      "message": "If another PlatformEventDispatcher returns POST_DISPATCH_STOP_PROPAGATION first then this won\u0027t get reset. In practice, that shouldn\u0027t happen but I think you should explicitly reset to be safe.",
       "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
