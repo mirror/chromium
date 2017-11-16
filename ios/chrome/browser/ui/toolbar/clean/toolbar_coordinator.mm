@@ -110,6 +110,27 @@
   // the mediator. Investigate how to handle it.
 }
 
+- (void)updateToolbarForSideSwipeSnapshot:(web::WebState*)webState {
+  BOOL isNTP = webState->GetVisibleURL() == GURL(kChromeUINewTabURL);
+
+  // Don't do anything for a live non-ntp tab.
+  if (webState == [self getWebState] && !isNTP) {
+    [_locationBarView setHidden:NO];
+    return;
+  }
+
+  self.viewController.view.hidden = NO;
+  [_locationBarView setHidden:YES];
+  [self.mediator updateConsumerForWebState:webState];
+  [self.viewController updateForSideSwipeSnapshotOnNTP:isNTP];
+}
+
+- (void)resetToolbarAfterSideSwipeSnapshot {
+  [self.mediator updateConsumerForWebState:[self getWebState]];
+  [_locationBarView setHidden:NO];
+  [self.viewController resetAfterSideSwipeSnapshot];
+}
+
 #pragma mark - LocationBarDelegate
 
 - (void)loadGURLFromLocationBar:(const GURL&)url
