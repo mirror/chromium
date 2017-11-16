@@ -306,6 +306,8 @@ void ClassicPendingScript::AdvanceReadyState(ReadyState new_ready_state) {
       if (done)
         std::move(done).Run();
       is_currently_streaming_ = false;
+    } else {
+      streamer_done_.Reset();
     }
   }
 
