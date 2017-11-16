@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7335cddd_257fa00e",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-16T10:19:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cacbaa83_ffc4b5e9",
+      "revId": "b813cf68c80779b875f9a60bd97f102df5ace9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a75c1841_85694936",
         "filename": "device/geolocation/geolocation_provider_impl.cc",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9a2e7159_16fdada8",
+        "filename": "device/geolocation/geolocation_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-16T10:19:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a75c1841_85694936",
+      "range": {
+        "startLine": 214,
+        "startChar": 56,
+        "endLine": 214,
+        "endChar": 63
+      },
+      "revId": "b813cf68c80779b875f9a60bd97f102df5ace9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92fab50d_26a51121",
         "filename": "device/geolocation/geolocation_provider_impl.h",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2017-11-15T16:27:57Z",
       "side": 1,
       "message": "nit: where is this used?",
+      "revId": "b813cf68c80779b875f9a60bd97f102df5ace9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e53e42_bba530e8",
+        "filename": "device/geolocation/geolocation_provider_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-16T10:19:38Z",
+      "side": 1,
+      "message": "Now we pass the override location provider itself instead of this callback, so remove it.\nDone.",
+      "parentUuid": "92fab50d_26a51121",
       "revId": "b813cf68c80779b875f9a60bd97f102df5ace9cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "63af7236_381be5fd",
+        "filename": "device/geolocation/location_arbitrator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-16T10:19:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bffb0dc_5c127ec0",
+      "revId": "b813cf68c80779b875f9a60bd97f102df5ace9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7c29b9a_92f2ae7a",
         "filename": "device/geolocation/location_arbitrator_unittest.cc",
         "patchSetId": 3
@@ -90,6 +168,24 @@
       "revId": "b813cf68c80779b875f9a60bd97f102df5ace9cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3faf2b2_d5940e30",
+        "filename": "device/geolocation/location_arbitrator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-16T10:19:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7c29b9a_92f2ae7a",
+      "revId": "b813cf68c80779b875f9a60bd97f102df5ace9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "a21d7f51_d1b19ace",
+        "filename": "device/geolocation/public/cpp/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-16T10:19:38Z",
+      "side": 1,
+      "message": "Yes, after geolocation-core is moved into //services, the GEOLOCATION_EXPORT is not needed, even for the public/cpp/location_provider.h.\nBefore the moving, How about we temporally leave it here? I\u0027m not sure whether it is currently depended by some Component target.",
+      "parentUuid": "1b5e075a_00e97dfc",
+      "range": {
+        "startLine": 10,
+        "startChar": 26,
+        "endLine": 10,
+        "endChar": 44
+      },
+      "revId": "b813cf68c80779b875f9a60bd97f102df5ace9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3548b58c_3f69cd44",
         "filename": "services/device/device_service.h",
         "patchSetId": 3
@@ -130,6 +250,24 @@
       "revId": "b813cf68c80779b875f9a60bd97f102df5ace9cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4fb2207_791a961e",
+        "filename": "services/device/device_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-16T10:19:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3548b58c_3f69cd44",
+      "revId": "b813cf68c80779b875f9a60bd97f102df5ace9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
