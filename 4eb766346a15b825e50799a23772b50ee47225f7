@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "190b275b_75e06a26",
+        "filename": "third_party/gvr-android-keyboard/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-16T21:42:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4ab7d3d_aaa16c76",
+      "revId": "4eb766346a15b825e50799a23772b50ee47225f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f8238b8_8cbc547a",
         "filename": "third_party/gvr-android-keyboard/README.chromium",
         "patchSetId": 1
