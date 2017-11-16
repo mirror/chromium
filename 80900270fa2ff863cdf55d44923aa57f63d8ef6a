@@ -22,6 +22,30 @@
       "revId": "80900270fa2ff863cdf55d44923aa57f63d8ef6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa8d131_83fed8ef",
+        "filename": "content/test/gpu/gpu_tests/gpu_integration_test.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-16T21:12:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6431bccd_c504645e",
+      "range": {
+        "startLine": 65,
+        "startChar": 21,
+        "endLine": 65,
+        "endChar": 27
+      },
+      "revId": "80900270fa2ff863cdf55d44923aa57f63d8ef6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
