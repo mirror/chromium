@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c74eac0_c31c2e4c",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-16T13:53:37Z",
+      "side": 1,
+      "message": "Could we encapsulate all the \"playing\"/\"audible\" in a helper class?",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 55
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6880c122_a8b0fef0",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-16T13:53:37Z",
+      "side": 1,
+      "message": "Should we add tests with nullptr observer?",
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e029e87_800f173f",
+        "filename": "content/browser/renderer_host/media/audio_output_stream_observer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-16T13:53:37Z",
+      "side": 1,
+      "message": "Should we make sure that we stopped monitoring?",
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e03cea4d_e27f8066",
+        "filename": "media/mojo/interfaces/audio_output_stream.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-16T13:53:37Z",
+      "side": 1,
+      "message": "Could you add more explanations:\nWhen start/stop playing, will observer also receive audible state change?\nDoes each \"start\" guaranteed to have a paired \"stop\"? Or is it possible that we never receive \"stop\"? Is it possible to receive audible state change after stop?",
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "680ada0b_f0f2f07d",
+        "filename": "media/mojo/services/mojo_audio_output_stream_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-16T13:53:37Z",
+      "side": 1,
+      "message": "Can it be nullptr?",
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
