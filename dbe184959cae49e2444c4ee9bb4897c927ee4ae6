@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70dc21c3_4cb44c2f",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-16T22:02:23Z",
+      "side": 1,
+      "message": "can you add something to define \"core\" terminology here or elsewhere? Eg, core being hosted in central data center?",
+      "range": {
+        "startLine": 21,
+        "startChar": 27,
+        "endLine": 21,
+        "endChar": 31
+      },
+      "revId": "dbe184959cae49e2444c4ee9bb4897c927ee4ae6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21622a12_964f3e15",
+        "filename": "components/data_reduction_proxy/proto/network_properties.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-16T22:02:23Z",
+      "side": 1,
+      "message": "consider some comment here wrt core and non-core",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 49
+      },
+      "revId": "dbe184959cae49e2444c4ee9bb4897c927ee4ae6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
