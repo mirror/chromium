@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52b2cb02_c343fc3a",
+        "filename": "ios/chrome/browser/passwords/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-16T18:45:11Z",
+      "side": 1,
+      "message": "nit: Do we still need this dependency?",
+      "revId": "d0ca04241f79707f1e7aaa1714a08c7a41ef3031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bcf88a7_686fdaca",
+        "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-16T18:45:11Z",
+      "side": 1,
+      "message": "Optional nit: We can improve the formatting by utilizing C++\u0027s \"using\".\n\n\nusing testing::WaitUntilConditionOrTimeout;\nusing testing::kWaitForJSCompletionTimeout;\n\nEXPECT_TRUE(WaitUntilConditionOrTimeout(kWaitForJSCompletionTimeout, ^{",
+      "range": {
+        "startLine": 571,
+        "startChar": 25,
+        "endLine": 571,
+        "endChar": 52
+      },
+      "revId": "d0ca04241f79707f1e7aaa1714a08c7a41ef3031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a930e10_3c02ea5d",
+        "filename": "ios/chrome/browser/ui/settings/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-16T18:45:11Z",
+      "side": 1,
+      "message": "nit: Is this dependency still necessary?",
+      "range": {
+        "startLine": 252,
+        "startChar": 12,
+        "endLine": 252,
+        "endChar": 29
+      },
+      "revId": "d0ca04241f79707f1e7aaa1714a08c7a41ef3031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f8dfb2_e33324ea",
+        "filename": "ios/chrome/browser/ui/settings/autofill_collection_view_controller_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-16T18:45:11Z",
+      "side": 1,
+      "message": "nit: Maybe we should use kWaitForUIElementTimeout here?",
+      "range": {
+        "startLine": 140,
+        "startChar": 17,
+        "endLine": 140,
+        "endChar": 38
+      },
+      "revId": "d0ca04241f79707f1e7aaa1714a08c7a41ef3031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7c3c87_916d5ee0",
+        "filename": "ios/chrome/browser/ui/settings/block_popups_collection_view_controller_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-16T18:45:11Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 156,
+        "startChar": 17,
+        "endLine": 156,
+        "endChar": 38
+      },
+      "revId": "d0ca04241f79707f1e7aaa1714a08c7a41ef3031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef461ae_2adeb803",
+        "filename": "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-16T18:45:11Z",
+      "side": 1,
+      "message": "Maybe we should use kWaitForUIElementTimeout here?",
+      "revId": "d0ca04241f79707f1e7aaa1714a08c7a41ef3031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5c5c23_454c70bd",
+        "filename": "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-16T18:45:11Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 266,
+        "startChar": 17,
+        "endLine": 266,
+        "endChar": 38
+      },
+      "revId": "d0ca04241f79707f1e7aaa1714a08c7a41ef3031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c423dd5_2f5e303c",
+        "filename": "ios/chrome/browser/ui/settings/sync_create_passphrase_collection_view_controller_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-16T18:45:11Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 189,
+        "startChar": 23,
+        "endLine": 189,
+        "endChar": 50
+      },
+      "revId": "d0ca04241f79707f1e7aaa1714a08c7a41ef3031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e550c1ca_2145a8db",
+        "filename": "ios/chrome/browser/ui/settings/sync_encryption_passphrase_collection_view_controller_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-16T18:45:11Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 204,
+        "startChar": 15,
+        "endLine": 204,
+        "endChar": 36
+      },
+      "revId": "d0ca04241f79707f1e7aaa1714a08c7a41ef3031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
