@@ -286,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "b7a6189b_39e0d522",
+        "filename": "extensions/browser/api/declarative/declarative_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T01:03:48Z",
+      "side": 1,
+      "message": "Done. I thought you were saying \"return std::move(data)\".",
+      "parentUuid": "b93ac7c9_8512c2b1",
+      "range": {
+        "startLine": 102,
+        "startChar": 21,
+        "endLine": 102,
+        "endChar": 27
+      },
+      "revId": "5ea747515447c0729ca053e50fb9238e67ce8cdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ace9e98_f8bd25f1",
         "filename": "extensions/browser/api/declarative/declarative_api.cc",
         "patchSetId": 1

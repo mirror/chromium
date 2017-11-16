@@ -22,6 +22,30 @@
       "revId": "5992e86dd527f7ffe3be0d7bbbd4d874eafc61fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b01f9aa_e675532f",
+        "filename": "extensions/browser/api/declarative/declarative_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T01:03:48Z",
+      "side": 1,
+      "message": "Is there an advantage to \"\u003d default\" over \"{}\"? The latter is shorter.",
+      "parentUuid": "1f5ab493_ec718a98",
+      "range": {
+        "startLine": 139,
+        "startChar": 30,
+        "endLine": 139,
+        "endChar": 33
+      },
+      "revId": "5992e86dd527f7ffe3be0d7bbbd4d874eafc61fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
