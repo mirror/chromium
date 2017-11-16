@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0887f300_203356ef",
+        "filename": "chrome/browser/vr/ui_renderer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-11-16T21:13:10Z",
+      "side": 1,
+      "message": "nit: please remove this",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 54
+      },
+      "revId": "8e82adb975d998cd417c2a81d07f3be1ce72b35b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcc7d3e3_2c2879ae",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-11-16T21:13:10Z",
+      "side": 1,
+      "message": "nit: define a constant for this",
+      "range": {
+        "startLine": 219,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 26
+      },
+      "revId": "8e82adb975d998cd417c2a81d07f3be1ce72b35b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
