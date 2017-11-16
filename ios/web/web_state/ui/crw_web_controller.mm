@@ -430,6 +430,9 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 // Downloader for PassKit files. Lazy initialized.
 @property(weak, nonatomic, readonly) CRWPassKitDownloader* passKitDownloader;
 
+// GURL from self.webView.backForwardList.currentItem.URL.
+@property(weak, nonatomic, readonly) GURL currentBackForwardListItemURL;
+
 // The web view's view of the current URL. During page transitions
 // this may not be the same as the session history's view of the current URL.
 // This method can change the state of the CRWWebController, as it will display
@@ -1194,7 +1197,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   // TODO(crbug.com/738020): Investigate if this method is still needed and if
   // it can be implemented using NavigationManager API after removal of legacy
   // navigation stack.
-  if (_webView && !IsPlaceholderUrl(net::GURLWithNSURL(_webView.URL))) {
+  if (_webView && !IsPlaceholderUrl(self.currentBackForwardListItemURL)) {
     return [self webURLWithTrustLevel:trustLevel];
   }
   // Any non-web URL source is trusted.
@@ -2126,6 +2129,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
   return _passKitDownloader;
 }
 
+- (net::GURLWithNSURL)currentBackForwardListItemURL {
+  return net::GURLWithNSURL(self.webView.backForwardList.currentItem.URL);
+}
+
 - (void)updateDesktopUserAgentForItem:(web::NavigationItem*)item
                 previousUserAgentType:(web::UserAgentType)userAgentType {
   if (!item)
@@ -2675,7 +2682,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
       << "Session restore failed unexpectedly with error: " << errorMessage
       << ". Web view URL: "
       << (self.webView
-              ? net::GURLWithNSURL(self.webView.URL).possibly_invalid_spec()
+              ? self.currentBackForwardListItemURL.possibly_invalid_spec()
               : " N/A");
   return YES;
 }
@@ -4277,7 +4284,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (void)webView:(WKWebView*)webView
     didStartProvisionalNavigation:(WKNavigation*)navigation {
-  GURL webViewURL = net::GURLWithNSURL(webView.URL);
+  GURL webViewURL = self.currentBackForwardListItemURL;
 
   // If this is a placeholder URL, there are only two possibilities:
   // 1. This navigation is initiated by |loadPlaceholderInWebViewForURL| in
@@ -4381,7 +4388,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (void)webView:(WKWebView*)webView
     didReceiveServerRedirectForProvisionalNavigation:(WKNavigation*)navigation {
-  GURL webViewURL = net::GURLWithNSURL(webView.URL);
+  GURL webViewURL = self.currentBackForwardListItemURL;
 
   // This callback should never be triggered for placeholder navigations.
   DCHECK(!(web::GetWebClient()->IsSlimNavigationManagerEnabled() &&
@@ -4451,7 +4458,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (void)webView:(WKWebView*)webView
     didCommitNavigation:(WKNavigation*)navigation {
-  GURL webViewURL = net::GURLWithNSURL(webView.URL);
+  GURL webViewURL = self.currentBackForwardListItemURL;
 
   // If this is a placeholder navigation or if |navigation| has been previous
   // aborted, return without modifying the navigation states. The latter case
@@ -4580,7 +4587,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (void)webView:(WKWebView*)webView
     didFinishNavigation:(WKNavigation*)navigation {
-  GURL webViewURL = net::GURLWithNSURL(webView.URL);
+  GURL webViewURL = self.currentBackForwardListItemURL;
 
   // If this is a placeholder navigation for an app-specific URL, finish
   // loading by running the completion handler.
@@ -4627,7 +4634,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
             withError:(NSError*)error {
   // This callback should never be triggered for placeholder navigations.
   if (web::GetWebClient()->IsSlimNavigationManagerEnabled()) {
-    DCHECK(!IsPlaceholderUrl(net::GURLWithNSURL(webView.URL)));
+    DCHECK(!IsPlaceholderUrl(self.currentBackForwardListItemURL));
     // Sometimes |didFailNavigation| callback arrives after |stopLoading| has
     // been called. Abort in this case.
     if ([_navigationStates stateForNavigation:navigation] ==
@@ -4652,7 +4659,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
                                   NSURLCredential*))completionHandler {
   // This callback should never be triggered for placeholder navigations.
   DCHECK(!(web::GetWebClient()->IsSlimNavigationManagerEnabled() &&
-           IsPlaceholderUrl(net::GURLWithNSURL(webView.URL))));
+           IsPlaceholderUrl(self.currentBackForwardListItemURL)));
 
   NSString* authMethod = challenge.protectionSpace.authenticationMethod;
   if ([authMethod isEqual:NSURLAuthenticationMethodHTTPBasic] ||
