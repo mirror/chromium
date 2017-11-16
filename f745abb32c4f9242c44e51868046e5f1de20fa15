@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da10023b_38d0c62e",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-16T23:59:50Z",
+      "side": 1,
+      "message": "Creating a NavigationSimulator with an empty URL feels a bit odd to me, since there is a real URL we\u0027re expecting.  This is especially true if we\u0027re expecting tests to follow this pattern externally (e.g., SafeBrowsingBlockingPageTest.NavigatingBackAndForth).\n\nIs the URL actually unused in the history navigation case, or will it get exposed in some places where it could confuse tests?\n\nI\u0027m wondering if it\u0027s better to have a factory method like CreateHistoryNavigation which takes an index instead of a URL, so other tests don\u0027t have to see this detail?  We could also set the URL if we needed to, though that\u0027s non-trivial for history subframe navigations (where we have to detect which frames are affected).",
+      "revId": "f745abb32c4f9242c44e51868046e5f1de20fa15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e399ffb3_0303e136",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-16T23:59:50Z",
+      "side": 1,
+      "message": "Note: This seems like a pretty big divergence from what we do in practice after my fix for https://crbug.com/596707 in https://chromium-review.googlesource.com/c/chromium/src/+/567683/15/content/renderer/render_frame_impl.cc.  Specifically, client redirects and location.replace now create a new entry but replace the existing one.\n\nShould we try to do something closer here?",
+      "revId": "f745abb32c4f9242c44e51868046e5f1de20fa15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f6d3151_30342bf4",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-16T23:59:50Z",
+      "side": 1,
+      "message": "Having separate GoBack/GoForward (with separate internal bools and implementations for them) feels a bit redundant.  It\u0027s restrictive as well-- it would be hard to model going back two entries at once, for example.\n\nMaybe we should have GoToIndex, and implement GoBack and GoForward on top of that?  NavigationController can handle it under the hood.  Then we could also replace is_back_navigation_ and is_forward_navigation_ with a session_history_index_, which is usually -1.",
+      "revId": "f745abb32c4f9242c44e51868046e5f1de20fa15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
