@@ -31,7 +31,7 @@ class CHROMEOS_EXPORT MockHomedirMethods : public HomedirMethods {
                     const Callback& callback));
   MOCK_METHOD4(MountEx,
                void(const Identification& id,
-                    const Authorization& key,
+                    const AuthorizationRequest& auth,
                     const MountRequest& request,
                     const MountCallback& callback));
   MOCK_METHOD5(AddKeyEx,
