@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2eef08a_ac49a5a9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-16T18:30:40Z",
+      "side": 1,
+      "message": "Let\u0027s instead add copyWithStyles method to viewport.",
+      "revId": "196ad924f1c0c40d07fde9d088752f6209c16bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
