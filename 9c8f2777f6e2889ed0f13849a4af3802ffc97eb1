@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69d7a0f8_9601ace9",
+        "filename": "chrome/browser/ui/webui/about_ui.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-16T23:09:39Z",
+      "side": 1,
+      "message": "nit: nested parens not needed.",
+      "range": {
+        "startLine": 432,
+        "startChar": 9,
+        "endLine": 432,
+        "endChar": 10
+      },
+      "revId": "9c8f2777f6e2889ed0f13849a4af3802ffc97eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
