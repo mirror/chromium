@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11975bda_9c79a5df",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1436,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-16T19:34:05Z",
+      "side": 1,
+      "message": "An array of one element used one line later? Why not just test that one flag?",
+      "range": {
+        "startLine": 1436,
+        "startChar": 31,
+        "endLine": 1436,
+        "endChar": 58
+      },
+      "revId": "fce03d3719148ebe9a1c142ecb289d21f62c4d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
