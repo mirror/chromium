@@ -248,6 +248,9 @@ AutomationPredicate.group = AutomationPredicate.match({
  * @return {boolean}
  */
 AutomationPredicate.linebreak = function(first, second) {
+  // Things offscreen should always trigger a line break.
+  if (first.state[State.OFFSCREEN] || second.state[State.OFFSCREEN])
+    return true;
   // TODO(dtseng): Use next/previousOnLin once available.
   var fl = first.location;
   var sl = second.location;
@@ -317,7 +320,7 @@ AutomationPredicate.root = function(node) {
       return node.root.role == Role.DESKTOP;
     case Role.ROOT_WEB_AREA:
       if (node.parent && node.parent.role == Role.WEB_VIEW &&
-          !node.parent.state[chrome.automation.StateType.FOCUSED]) {
+          !node.parent.state[State.FOCUSED]) {
         // If parent web view is not focused, we should allow this root web area
         // to be crossed when performing traversals up the ancestry chain.
         return false;
