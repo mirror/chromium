@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a7d36af_ab0f35c5",
+        "filename": "third_party/gvr-android-keyboard/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-16T20:41:22Z",
+      "side": 1,
+      "message": "I think we usually put relative paths here, so \"//third_party/gvr-android-keyboard/\" is not necessary.",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 40
+      },
+      "revId": "02cc329763946566b30fa2c1baf862f705c7e4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
