@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01e2dd8d_47aa27f9",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-16T23:29:06Z",
+      "side": 1,
+      "message": "Should this return an empty GURL for users that haven\u0027t opted into UMA? I also asked on the bug: Was any thought put into collecting urls from incognito windows/tabs?",
+      "revId": "779b8e4575f323a9f8cdf2e6fc5d37c7a9b1aee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eac49f7_a78bacf3",
+        "filename": "ui/base/ime/text_input_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-16T23:29:06Z",
+      "side": 1,
+      "message": "I\u0027m not sure it makes sense to collect this information directly through TextInputClient, were any alternative approaches considered? Perhaps the Virtual Keyboard already knows the window/content with keyboard focus and can get the URL that way? I\u0027d defer to others here.",
+      "revId": "779b8e4575f323a9f8cdf2e6fc5d37c7a9b1aee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
