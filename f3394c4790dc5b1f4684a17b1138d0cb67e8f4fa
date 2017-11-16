@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b4d6b7f_9055ce0b",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_app.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T18:51:34Z",
+      "side": 1,
+      "message": "Should the \u003ca\u003e be an \u003ca is\u003d\"action-link\"\u003e instead? Then you would not need to preventDefault(), but also it would look consistent with other such links (examples https://cs.chromium.org/search/?q\u003dis%3D%22action-link%22+file:%5Esrc/chrome/browser/resources/+package:%5Echromium$\u0026type\u003dcs).",
+      "revId": "f3394c4790dc5b1f4684a17b1138d0cb67e8f4fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "396c6811_205912bd",
+        "filename": "chrome/browser/ui/webui/welcome_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T18:51:34Z",
+      "side": 1,
+      "message": "Extra space?",
+      "range": {
+        "startLine": 24,
+        "startChar": 25,
+        "endLine": 24,
+        "endChar": 26
+      },
+      "revId": "f3394c4790dc5b1f4684a17b1138d0cb67e8f4fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b6b90ce_f28d68c3",
+        "filename": "chrome/browser/ui/webui/welcome_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T18:51:34Z",
+      "side": 1,
+      "message": "Not for this CL: Are you expecting to add many more files for the new UI? Also are you planning to use polymer-bundler for this page? If so, I would consider moving all DICE resources to their own grd file similar to Setings and Extensnions (for example https://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/extensions_resources.grd).\n\nAs a side benefit, you would also not need to repeat the names of any resources when calling AddResourcePath (see example at https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/extensions/extensions_ui.cc?q\u003dextensions_ui.cc\u0026dr\u0026l\u003d339-342).",
+      "revId": "f3394c4790dc5b1f4684a17b1138d0cb67e8f4fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
