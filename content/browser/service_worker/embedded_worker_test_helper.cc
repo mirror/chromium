@@ -643,8 +643,11 @@ void EmbeddedWorkerTestHelper::OnInstallEvent(
     mojom::ServiceWorkerEventDispatcher::DispatchInstallEventCallback
         callback) {
   dispatched_events()->push_back(Event::Install);
+  mojom::ServiceWorkerInstallEventMethodsAssociatedPtr client_ptr;
+  client_ptr.Bind(std::move(client));
+  client_ptr->SetHasFetchHandler(true);
   std::move(callback).Run(blink::mojom::ServiceWorkerEventStatus::COMPLETED,
-                          true /* has_fetch_handler */, base::Time::Now());
+                          base::Time::Now());
 }
 
 void EmbeddedWorkerTestHelper::OnFetchEvent(

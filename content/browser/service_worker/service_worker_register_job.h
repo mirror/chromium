@@ -130,7 +130,6 @@ class ServiceWorkerRegisterJob : public ServiceWorkerRegisterJobBase,
       int request_id,
       std::unique_ptr<InstallEventMethodsReceiver> install_event_methods,
       blink::mojom::ServiceWorkerEventStatus event_status,
-      bool has_fetch_handler,
       base::Time dispatch_event_time);
   void OnInstallFailed(ServiceWorkerStatusCode status);
   void Complete(ServiceWorkerStatusCode status);

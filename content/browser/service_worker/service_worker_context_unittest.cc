@@ -95,7 +95,7 @@ class RejectInstallTestHelper : public EmbeddedWorkerTestHelper {
           callback) override {
     dispatched_events()->push_back(Event::Install);
     std::move(callback).Run(blink::mojom::ServiceWorkerEventStatus::REJECTED,
-                            true /* has_fetch_handler */, base::Time::Now());
+                            base::Time::Now());
   }
 };
 

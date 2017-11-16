@@ -51,6 +51,15 @@ class InstallEventMethodsReceiver
     version_->RegisterForeignFetchScopes(sub_scopes, origins);
   }
 
+  void SetHasFetchHandler(bool has_fetch_handler) override {
+    DCHECK_EQ(version_->fetch_handler_existence(),
+              ServiceWorkerVersion::FetchHandlerExistence::UNKNOWN);
+    version_->set_fetch_handler_existence(
+        has_fetch_handler
+            ? ServiceWorkerVersion::FetchHandlerExistence::EXISTS
+            : ServiceWorkerVersion::FetchHandlerExistence::DOES_NOT_EXIST);
+  }
+
  private:
   ServiceWorkerVersion* version_;
 
@@ -481,7 +490,6 @@ void ServiceWorkerRegisterJob::OnInstallFinished(
     int request_id,
     std::unique_ptr<InstallEventMethodsReceiver> install_methods_receiver,
     blink::mojom::ServiceWorkerEventStatus event_status,
-    bool has_fetch_handler,
     base::Time dispatch_event_time) {
   install_methods_receiver.reset();
   bool succeeded =
@@ -500,10 +508,6 @@ void ServiceWorkerRegisterJob::OnInstallFinished(
 
   SetPhase(STORE);
   DCHECK(!registration()->last_update_check().is_null());
-  new_version()->set_fetch_handler_existence(
-      has_fetch_handler
-          ? ServiceWorkerVersion::FetchHandlerExistence::EXISTS
-          : ServiceWorkerVersion::FetchHandlerExistence::DOES_NOT_EXIST);
   context_->storage()->StoreRegistration(
       registration(),
       new_version(),
