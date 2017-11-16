@@ -3727,6 +3727,17 @@
       },
       {
         "args": [
+          "--enable-viz",
+          "--test-launcher-filter-file=../../testing/buildbot/filters/viz.content_browsertests.filter"
+        ],
+        "name": "viz_content_browsertests",
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "content_browsertests"
+      },
+      {
+        "args": [
           "--disable-browser-side-navigation"
         ],
         "name": "renderer_side_navigation_content_browsertests",
@@ -4410,6 +4421,17 @@
         "test": "compositor_unittests"
       },
       {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "content_browsertests"
+      },
+      {
+        "args": [
+          "--enable-viz",
+          "--test-launcher-filter-file=../../testing/buildbot/filters/viz.content_browsertests.filter"
+        ],
+        "name": "viz_content_browsertests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
