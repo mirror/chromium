@@ -46,6 +46,30 @@
       "revId": "7f9a587992f9bbbb8ecb5d7f6494255f149b3615",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a376329_e78ba37f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/thumbnail_cache_entry.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1251197
+      },
+      "writtenOn": "2017-11-16T02:05:45Z",
+      "side": 1,
+      "message": "Please reach out to protobuf-team@ for guidance then. This should be available externally.",
+      "parentUuid": "fb2e8e6b_5f50562d",
+      "range": {
+        "startLine": 13,
+        "startChar": 35,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "7f9a587992f9bbbb8ecb5d7f6494255f149b3615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
