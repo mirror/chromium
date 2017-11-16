@@ -663,6 +663,8 @@ Console.ConsoleView = class extends UI.VBox {
     contextMenu.defaultSection().appendAction('console.clear');
     contextMenu.defaultSection().appendAction('console.clear.history');
     contextMenu.saveSection().appendItem(Common.UIString('Save as...'), this._saveConsole.bind(this));
+    contextMenu.clipboardSection().appendItem(
+        Common.UIString('Copy visible styled text'), this._viewport.copyWithStyles.bind(this._viewport));
 
     var request = consoleMessage ? consoleMessage.request : null;
     if (request && SDK.NetworkManager.canReplayRequest(request)) {
