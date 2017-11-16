@@ -282,9 +282,28 @@ InlineBoxPosition ComputeInlineBoxPositionTemplate(
     return ComputeInlineBoxPositionForTextNode(layout_object, caret_offset,
                                                affinity, primary_direction);
   }
-  if (CanHaveChildrenForEditing(anchor_node) &&
-      layout_object->IsLayoutBlockFlow() &&
-      HasRenderedNonAnonymousDescendantsWithHeight(layout_object)) {
+
+  if (layout_object->IsAtomicInlineLevel()) {
+    // TODO(xiaochengh): Simplify, and wrap the code below into a function.
+    if (!layout_object->IsBox())
+      return InlineBoxPosition();
+    InlineBox* const inline_box =
+        ToLayoutBox(layout_object)->InlineBoxWrapper();
+    if (!inline_box)
+      return InlineBoxPosition();
+    if ((caret_offset > inline_box->CaretMinOffset() &&
+         caret_offset < inline_box->CaretMaxOffset()))
+      return InlineBoxPosition(inline_box, caret_offset);
+    return AdjustInlineBoxPositionForTextDirection(
+        inline_box, caret_offset, layout_object->Style()->GetUnicodeBidi(),
+        primary_direction);
+  }
+
+  if (layout_object->IsLayoutBlockFlow()) {
+    // TODO(xiaochengh): Simplify, and wrap the code below into a function.
+    if (!CanHaveChildrenForEditing(anchor_node) ||
+        !HasRenderedNonAnonymousDescendantsWithHeight(layout_object))
+      return InlineBoxPosition();
     // Try a visually equivalent position with possibly opposite
     // editability. This helps in case |this| is in an editable block
     // but surrounded by non-editable positions. It acts to negate the
@@ -305,17 +324,8 @@ InlineBoxPosition ComputeInlineBoxPositionTemplate(
     return ComputeInlineBoxPosition(upstream_equivalent,
                                     TextAffinity::kUpstream, primary_direction);
   }
-  if (!layout_object->IsBox())
-    return InlineBoxPosition();
-  InlineBox* const inline_box = ToLayoutBox(layout_object)->InlineBoxWrapper();
-  if (!inline_box)
-    return InlineBoxPosition();
-  if ((caret_offset > inline_box->CaretMinOffset() &&
-       caret_offset < inline_box->CaretMaxOffset()))
-    return InlineBoxPosition(inline_box, caret_offset);
-  return AdjustInlineBoxPositionForTextDirection(
-      inline_box, caret_offset, layout_object->Style()->GetUnicodeBidi(),
-      primary_direction);
+
+  return InlineBoxPosition();
 }
 
 template <typename Strategy>
