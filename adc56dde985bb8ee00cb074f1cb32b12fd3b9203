@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa64887d_cadd8c15",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-16T00:34:16Z",
+      "side": 1,
+      "message": "If you look at the crash, it\u0027s only happening on Lollipop.  Then our ApiCompatibilityUtils specifically handles the case where finish() doesn\u0027t return true for isFinishing():\n\nhttps://cs.chromium.org/chromium/src/base/android/java/src/org/chromium/base/ApiCompatibilityUtils.java?q\u003dApiCompa\u0026sq\u003dpackage:chromium\u0026l\u003d335\n\nThere are a few cases where we definitely don\u0027t want to allow this activity to proceed, so this seems quite dangerous to me.\n\nIf this fails to start first run for example and we allow this to proceed, then that is really quite bad.\n\nWe can consider just doing in abortLaunch:\n\nif (OS \u003d\u003d L \u0026\u0026 !isFinishing()) {\n    finish();\n    if (!isFinishing()) killProcess();\n}\n\nAt least in the work around for the apicompatibility code seems to eventually call finish() if all else fails, so that must happen more reliably.\n\nOtherwise, we could look at extracting all of the activity lifecycle calls into a delegate that is ripped out if finish() fails, but that seems quite a large change.",
+      "range": {
+        "startLine": 274,
+        "startChar": 12,
+        "endLine": 274,
+        "endChar": 28
+      },
+      "revId": "adc56dde985bb8ee00cb074f1cb32b12fd3b9203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
