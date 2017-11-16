@@ -36,6 +36,8 @@ template <typename T>
 class WeakMember;
 template <typename T>
 class WeakPersistent;
+template <typename T>
+class HeapDoublyLinkedList;
 
 // "g++ -Os" reasonably considers the mark() eager-tracing specialization
 // as an inlinable method. Its optimization pipeline will however trigger
@@ -432,6 +434,14 @@ class TraceEagerlyTrait<CrossThreadWeakPersistent<T>> {
 
  public:
   static const bool value = TraceEagerlyTrait<T>::value;
+};
+
+template <typename T>
+class TraceEagerlyTrait<HeapDoublyLinkedList<T>> {
+  STATIC_ONLY(TraceEagerlyTrait);
+
+ public:
+  static const bool value = false;
 };
 
 template <typename ValueArg, size_t inlineCapacity>
