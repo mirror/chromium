@@ -16,6 +16,29 @@
       "revId": "585c3a81b89295e8bb8ab75a82874a656dbbdf2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa59adac_55f1d441",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-16T21:04:30Z",
+      "side": 1,
+      "message": "Why not test both?",
+      "range": {
+        "startLine": 497,
+        "startChar": 0,
+        "endLine": 497,
+        "endChar": 54
+      },
+      "revId": "585c3a81b89295e8bb8ab75a82874a656dbbdf2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
