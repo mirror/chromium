@@ -21,6 +21,7 @@
 class SkPaint;
 
 namespace cc {
+class PaintFilter;
 
 class CC_PAINT_EXPORT PaintFlags {
  public:
@@ -196,12 +197,10 @@ class CC_PAINT_EXPORT PaintFlags {
                    const SkRect* cull_rect = nullptr,
                    SkScalar res_scale = 1) const;
 
-  ALWAYS_INLINE const sk_sp<SkImageFilter>& getImageFilter() const {
+  ALWAYS_INLINE const sk_sp<PaintFilter>& getImageFilter() const {
     return image_filter_;
   }
-  void setImageFilter(sk_sp<SkImageFilter> filter) {
-    image_filter_ = std::move(filter);
-  }
+  void setImageFilter(sk_sp<PaintFilter> filter);
 
   ALWAYS_INLINE const sk_sp<SkDrawLooper>& getLooper() const {
     return draw_looper_;
@@ -238,7 +237,7 @@ class CC_PAINT_EXPORT PaintFlags {
   sk_sp<SkMaskFilter> mask_filter_;
   sk_sp<SkColorFilter> color_filter_;
   sk_sp<SkDrawLooper> draw_looper_;
-  sk_sp<SkImageFilter> image_filter_;
+  sk_sp<PaintFilter> image_filter_;
 
   // Match(ish) SkPaint defaults.  SkPaintDefaults is not public, so this
   // just uses these values and ignores any SkUserConfig overrides.
