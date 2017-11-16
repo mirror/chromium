@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a162a89b_2b7b3327",
+        "filename": "ios/chrome/browser/ui/toolbar/legacy_toolbar_ui_updater.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-16T14:51:38Z",
+      "side": 1,
+      "message": "This callback is deprecated. Could you please use DidFinishNavigation instead.",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 34
+      },
+      "revId": "2370b5967804e157614d459bd1f4f09b663705d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
