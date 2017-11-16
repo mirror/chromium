@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4c27480_a64fbab3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/Images/mediumIcons_2x.png",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-11-16T06:24:29Z",
+      "side": 1,
+      "message": "I like how this file got smaller because of better compression",
+      "revId": "08eb9a423463d34ddd40630b6a4d9411a6e89561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
