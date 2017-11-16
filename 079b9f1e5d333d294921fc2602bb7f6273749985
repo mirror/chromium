@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e760e18_ff921740",
+        "filename": "content/gpu/gpu_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T22:18:04Z",
+      "side": 1,
+      "message": "These decoders aren\u0027t doing I/O, right? MayBlock is intended for operations that can put the thread to sleep (e.g. waiting on WaitableEvents or doing I/O).",
+      "range": {
+        "startLine": 41,
+        "startChar": 55,
+        "endLine": 42,
+        "endChar": 36
+      },
+      "revId": "079b9f1e5d333d294921fc2602bb7f6273749985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee584e23_1b610bdd",
+        "filename": "content/gpu/gpu_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T22:18:04Z",
+      "side": 1,
+      "message": "Is there a bug tracking this?",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 72
+      },
+      "revId": "079b9f1e5d333d294921fc2602bb7f6273749985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
