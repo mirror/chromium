@@ -16,6 +16,24 @@
       "revId": "50cd453af6356f323d9adb48c879f67eea2f31e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e617987_1703b9d6",
+        "filename": "chromeos/cryptohome/homedir_methods.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-11-16T02:31:14Z",
+      "side": 1,
+      "message": "You mean in cryptohome_client? \n\nIt\u0027s not clear to me why the client has this proto in the signature if it\u0027s always unauthenticated; is it for uniformity between methods? Note that even the comment on the method here: https://cs.chromium.org/chromium/src/chromeos/dbus/cryptohome_client.h?dr\u003dC\u0026l\u003d495 says that it\u0027s never required.\n\nFor now my only goal is to make this layer pass-through, I think we can circle back to deleting AuthorizationRequest from the client interface. WDYT?",
+      "parentUuid": "71c20d3b_cf32d1c6",
+      "revId": "50cd453af6356f323d9adb48c879f67eea2f31e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
