@@ -140,22 +140,34 @@ inline HTMLCanvasElement::HTMLCanvasElement(Document& document)
       PageVisibilityObserver(document.GetPage()),
       size_(kDefaultWidth, kDefaultHeight),
       ignore_reset_(false),
-      externally_allocated_memory_(0),
       origin_clean_(true),
       did_fail_to_create_image_buffer_(false),
       image_buffer_is_clear_(false),
-      surface_layer_bridge_(nullptr) {
+      surface_layer_bridge_(nullptr),
+      gpu_memory_usage_(0),
+      externally_allocated_memory_(0),
+      gpu_readback_invoked_in_current_frame_(false),
+      gpu_readback_successive_frames_(0) {
   CanvasMetrics::CountCanvasContextUsage(CanvasMetrics::kCanvasCreated);
   UseCounter::Count(document, WebFeature::kHTMLCanvasElement);
 }
 
 DEFINE_NODE_FACTORY(HTMLCanvasElement)
 
+intptr_t HTMLCanvasElement::global_gpu_memory_usage_ = 0;
+unsigned HTMLCanvasElement::global_accelerated_context_count_ = 0;
+
 HTMLCanvasElement::~HTMLCanvasElement() {
   if (surface_layer_bridge_ && surface_layer_bridge_->GetWebLayer()) {
     GraphicsLayer::UnregisterContentsLayer(
         surface_layer_bridge_->GetWebLayer());
   }
+  if (image_buffer_ && gpu_memory_usage_) {
+    DCHECK_GT(global_accelerated_context_count_, 0u);
+    global_accelerated_context_count_--;
+  }
+  global_gpu_memory_usage_ -= gpu_memory_usage_;
+
   v8::Isolate::GetCurrent()->AdjustAmountOfExternalAllocatedMemory(
       -externally_allocated_memory_);
 }
@@ -170,7 +182,6 @@ void HTMLCanvasElement::Dispose() {
   }
 
   if (image_buffer_) {
-    image_buffer_->SetClient(nullptr);
     image_buffer_ = nullptr;
   }
 }
@@ -380,8 +391,26 @@ void HTMLCanvasElement::DidDraw() {
 }
 
 void HTMLCanvasElement::FinalizeFrame() {
-  if (GetImageBuffer())
+  if (GetImageBuffer()) {
+    // Compute to determine whether disable accleration is needed
+    if (IsAccelerated() &&
+        CanvasHeuristicParameters::kGPUReadbackForcesNoAcceleration &&
+        !RuntimeEnabledFeatures::Canvas2dFixedRenderingModeEnabled()) {
+      if (gpu_readback_invoked_in_current_frame_) {
+        gpu_readback_successive_frames_++;
+        gpu_readback_invoked_in_current_frame_ = false;
+      } else {
+        gpu_readback_successive_frames_ = 0;
+      }
+
+      if (gpu_readback_successive_frames_ >=
+          CanvasHeuristicParameters::kGPUReadbackMinSuccessiveFrames) {
+        DisableAcceleration();
+      }
+    }
+
     image_buffer_->FinalizeFrame();
+  }
 
   // If the canvas is visible, notifying listeners is taken
   // care of in the in doDeferredPaintInvalidation, which allows
@@ -395,11 +424,20 @@ void HTMLCanvasElement::FinalizeFrame() {
   did_notify_listeners_for_current_frame_ = false;
 }
 
-void HTMLCanvasElement::DidDisableAcceleration() {
+void HTMLCanvasElement::DisableAcceleration() {
+  // Create and configure a recording (unaccelerated) surface.
+  std::unique_ptr<ImageBufferSurface> surface =
+      WTF::WrapUnique(new RecordingImageBufferSurface(
+          Size(), RecordingImageBufferSurface::kAllowFallback, ColorParams(),
+          this));
+  if (image_buffer_)
+    image_buffer_->SetSurface(std::move(surface));
+
   // We must force a paint invalidation on the canvas even if it's
   // content did not change because it layer was destroyed.
   DidDraw();
   SetNeedsCompositingUpdate();
+  UpdateGPUMemoryUsage();
 }
 
 void HTMLCanvasElement::RestoreCanvasMatrixClipStack(
@@ -918,14 +956,13 @@ bool HTMLCanvasElement::ShouldAccelerate(AccelerationCriteria criteria) const {
     // accelerated canvases), the compositor starves and browser becomes laggy.
     // Thus, we should stop allocating more GPU memory to new canvases created
     // when the current memory usage exceeds the threshold.
-    if (ImageBuffer::GetGlobalGPUMemoryUsage() >= kMaxGlobalGPUMemoryUsage)
+    if (global_gpu_memory_usage_ >= kMaxGlobalGPUMemoryUsage)
       return false;
 
     // Allocating too many GPU resources can makes us run into the driver's
     // resource limits. So we need to keep the number of texture resources
     // under tight control
-    if (ImageBuffer::GetGlobalAcceleratedImageBufferCount() >=
-        kMaxGlobalAcceleratedImageBufferCount)
+    if (global_gpu_memory_usage_ >= kMaxGlobalAcceleratedImageBufferCount)
       return false;
   }
 
@@ -1004,7 +1041,7 @@ HTMLCanvasElement::CreateAcceleratedImageBufferSurface(int* msaa_sample_count) {
 
   auto surface = std::make_unique<Canvas2DLayerBridge>(
       Size(), *msaa_sample_count, Canvas2DLayerBridge::kEnableAcceleration,
-      ColorParams());
+      ColorParams(), this);
   if (!surface->IsValid()) {
     CanvasMetrics::CountCanvasContextUsage(
         CanvasMetrics::kGPUAccelerated2DCanvasImageBufferCreationFailed);
@@ -1023,7 +1060,8 @@ std::unique_ptr<ImageBufferSurface>
 HTMLCanvasElement::CreateUnacceleratedImageBufferSurface() {
   if (ShouldUseDisplayList()) {
     auto surface = std::make_unique<RecordingImageBufferSurface>(
-        Size(), RecordingImageBufferSurface::kAllowFallback, ColorParams());
+        Size(), RecordingImageBufferSurface::kAllowFallback, ColorParams(),
+        this);
     if (surface->IsValid()) {
       CanvasMetrics::CountCanvasContextUsage(
           CanvasMetrics::kDisplayList2DCanvasImageBufferCreated);
@@ -1034,7 +1072,8 @@ HTMLCanvasElement::CreateUnacceleratedImageBufferSurface() {
   }
 
   auto surface = std::make_unique<Canvas2DLayerBridge>(
-      Size(), 0, Canvas2DLayerBridge::kDisableAcceleration, ColorParams());
+      Size(), 0, Canvas2DLayerBridge::kDisableAcceleration, ColorParams(),
+      this);
   if (surface->IsValid()) {
     CanvasMetrics::CountCanvasContextUsage(
         CanvasMetrics::kUnaccelerated2DCanvasImageBufferCreated);
@@ -1082,11 +1121,11 @@ void HTMLCanvasElement::CreateImageBufferInternal(
   DCHECK(surface->IsValid());
   image_buffer_ = ImageBuffer::Create(std::move(surface));
   DCHECK(image_buffer_);
-  image_buffer_->SetClient(this);
 
   did_fail_to_create_image_buffer_ = false;
 
   UpdateExternallyAllocatedMemory();
+  UpdateGPUMemoryUsage();
 
   if (Is3d()) {
     // Early out for WebGL canvases
@@ -1193,17 +1232,6 @@ void HTMLCanvasElement::CreateImageBufferUsingSurfaceForTesting(
   CreateImageBufferInternal(std::move(surface));
 }
 
-void HTMLCanvasElement::EnsureUnacceleratedImageBuffer() {
-  DCHECK(context_);
-  if ((GetImageBuffer() && !GetImageBuffer()->IsAccelerated()) ||
-      did_fail_to_create_image_buffer_)
-    return;
-  DiscardImageBuffer();
-  image_buffer_ = ImageBuffer::Create(Size(), kInitializeImagePixels,
-                                      context_->ColorParams());
-  did_fail_to_create_image_buffer_ = !image_buffer_;
-}
-
 scoped_refptr<Image> HTMLCanvasElement::CopiedImage(
     SourceDrawingBuffer source_buffer,
     AccelerationHint hint,
@@ -1244,6 +1272,7 @@ void HTMLCanvasElement::DiscardImageBuffer() {
   image_buffer_.reset();
   dirty_rect_ = FloatRect();
   UpdateExternallyAllocatedMemory();
+  UpdateGPUMemoryUsage();
 }
 
 void HTMLCanvasElement::ClearCopiedImage() {
@@ -1302,6 +1331,7 @@ void HTMLCanvasElement::WillDrawImageTo2DContext(CanvasImageSource* source) {
         CreateAcceleratedImageBufferSurface(&msaa_sample_count);
     if (surface) {
       GetOrCreateImageBuffer()->SetSurface(std::move(surface));
+      UpdateGPUMemoryUsage();
       SetNeedsCompositingUpdate();
     }
   }
@@ -1361,7 +1391,7 @@ scoped_refptr<Image> HTMLCanvasElement::GetSourceImageForCanvas(
         !RuntimeEnabledFeatures::Canvas2dFixedRenderingModeEnabled() &&
         hint == kPreferNoAcceleration && GetImageBuffer() &&
         GetImageBuffer()->IsAccelerated()) {
-      GetImageBuffer()->DisableAcceleration();
+      DisableAcceleration();
     }
     image = RenderingContext()->GetImage(hint, reason);
     if (!image) {
@@ -1528,6 +1558,32 @@ void HTMLCanvasElement::OnWebLayerUpdated() {
 
 FontSelector* HTMLCanvasElement::GetFontSelector() {
   return GetDocument().GetStyleEngine().GetFontSelector();
+}
+
+void HTMLCanvasElement::UpdateGPUMemoryUsage() const {
+  if (this->IsAccelerated()) {
+    // If canvas is accelerated, we should keep track of GPU memory usage.
+    int gpu_buffer_count = 2;
+    CheckedNumeric<intptr_t> checked_gpu_usage =
+        ColorParams().BytesPerPixel() * gpu_buffer_count;
+    checked_gpu_usage *= this->Size().Width();
+    checked_gpu_usage *= this->Size().Height();
+    intptr_t gpu_memory_usage =
+        checked_gpu_usage.ValueOrDefault(std::numeric_limits<intptr_t>::max());
+
+    if (!gpu_memory_usage_)  // was not accelerated before
+      global_accelerated_context_count_++;
+
+    global_gpu_memory_usage_ += (gpu_memory_usage - gpu_memory_usage_);
+    gpu_memory_usage_ = gpu_memory_usage;
+  } else if (gpu_memory_usage_) {
+    // In case of switching from accelerated to non-accelerated mode,
+    // the GPU memory usage needs to be updated too.
+    DCHECK_GT(global_accelerated_context_count_, 0u);
+    global_accelerated_context_count_--;
+    global_gpu_memory_usage_ -= gpu_memory_usage_;
+    gpu_memory_usage_ = 0;
+  }
 }
 
 }  // namespace blink

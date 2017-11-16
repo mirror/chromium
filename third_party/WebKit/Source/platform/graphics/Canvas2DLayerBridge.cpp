@@ -62,7 +62,7 @@ Canvas2DLayerBridge::Canvas2DLayerBridge(const IntSize& size,
                                          int msaa_sample_count,
                                          AccelerationMode acceleration_mode,
                                          const CanvasColorParams& color_params,
-                                         bool is_unit_test)
+                                         CanvasResourceConsumer* consumer)
     : ImageBufferSurface(size, color_params),
       logger_(WTF::WrapUnique(new Logger)),
       weak_ptr_factory_(this),
@@ -76,11 +76,11 @@ Canvas2DLayerBridge::Canvas2DLayerBridge(const IntSize& size,
       is_deferral_enabled_(true),
       software_rendering_while_hidden_(false),
       acceleration_mode_(acceleration_mode),
-      color_params_(color_params) {
+      color_params_(color_params),
+      consumer_(consumer) {
   // Used by browser tests to detect the use of a Canvas2DLayerBridge.
   TRACE_EVENT_INSTANT0("test_gpu", "Canvas2DLayerBridgeCreation",
                        TRACE_EVENT_SCOPE_GLOBAL);
-
   StartRecording();
   Clear();
 }
@@ -100,9 +100,10 @@ void Canvas2DLayerBridge::StartRecording() {
   // and clip.
   canvas->save();
 
-  if (image_buffer_) {
-    image_buffer_->ResetCanvas(canvas);
+  if (consumer_) {
+    consumer_->RestoreCanvasMatrixClipStack(canvas);
   }
+
   recording_pixel_count_ = 0;
 }
 
@@ -228,8 +229,8 @@ void Canvas2DLayerBridge::Hibernate() {
   layer_->ClearTexture();
 
   // shouldBeDirectComposited() may have changed.
-  if (image_buffer_)
-    image_buffer_->SetNeedsCompositingUpdate();
+  if (consumer_)
+    consumer_->SetNeedsCompositingUpdate();
   logger_->DidStartHibernating();
 }
 
@@ -316,14 +317,12 @@ CanvasResourceProvider* Canvas2DLayerBridge::GetOrCreateResourceProvider(
                                             &copy_paint);
     hibernation_image_.reset();
 
-    if (image_buffer_) {
-      image_buffer_->UpdateGPUMemoryUsage();
-
+    if (consumer_) {
       if (!is_deferral_enabled_)
-        image_buffer_->ResetCanvas(resource_provider_->Canvas());
+        consumer_->RestoreCanvasMatrixClipStack(resource_provider_->Canvas());
 
       // shouldBeDirectComposited() may have changed.
-      image_buffer_->SetNeedsCompositingUpdate();
+      consumer_->SetNeedsCompositingUpdate();
     }
   }
 
@@ -366,14 +365,14 @@ void Canvas2DLayerBridge::DisableDeferral(DisableDeferralReason reason) {
   recorder_.reset();
   // install the current matrix/clip stack onto the immediate canvas
   GetOrCreateResourceProvider();
-  if (image_buffer_ && resource_provider_)
-    image_buffer_->ResetCanvas(resource_provider_->Canvas());
+  if (consumer_ && resource_provider_)
+    consumer_->RestoreCanvasMatrixClipStack(resource_provider_->Canvas());
 }
 
 void Canvas2DLayerBridge::SetImageBuffer(ImageBuffer* image_buffer) {
   image_buffer_ = image_buffer;
-  if (image_buffer_ && is_deferral_enabled_) {
-    image_buffer_->ResetCanvas(recorder_->getRecordingCanvas());
+  if (consumer_ && is_deferral_enabled_) {
+    consumer_->RestoreCanvasMatrixClipStack(recorder_->getRecordingCanvas());
   }
 }
 
@@ -453,8 +452,8 @@ void Canvas2DLayerBridge::SetIsHidden(bool hidden) {
             old_resource_provider->Snapshot()->PaintImageForCurrentFrame();
         resource_provider_->Canvas()->drawImage(snapshot, 0, 0, &copy_paint);
       }
-      if (image_buffer_ && !is_deferral_enabled_) {
-        image_buffer_->ResetCanvas(resource_provider_->Canvas());
+      if (consumer_ && !is_deferral_enabled_) {
+        consumer_->RestoreCanvasMatrixClipStack(resource_provider_->Canvas());
       }
     } else {
       // New resource provider could not be created. Stay with old one.
@@ -503,8 +502,8 @@ bool Canvas2DLayerBridge::WritePixels(const SkImageInfo& orig_info,
   canvas->drawImage(builder.TakePaintImage(), x, y, &copy_paint);
 
   canvas->save();  // intial save
-  if (image_buffer_ && !is_deferral_enabled_) {
-    image_buffer_->ResetCanvas(canvas);
+  if (consumer_ && !is_deferral_enabled_) {
+    consumer_->RestoreCanvasMatrixClipStack(canvas);
   }
 
   // We did not make a copy of the pixel data, so it needs to be consumed
@@ -563,8 +562,8 @@ bool Canvas2DLayerBridge::CheckResourceProviderValid() {
       resource_provider_->IsGpuContextLost()) {
     context_lost_ = true;
     ResetResourceProvider();
-    if (image_buffer_)
-      image_buffer_->NotifySurfaceInvalid();
+    if (consumer_)
+      consumer_->NotifySurfaceInvalid();
     CanvasMetrics::CountCanvasContextUsage(
         CanvasMetrics::kAccelerated2DCanvasGPUContextLost);
     return false;
@@ -608,8 +607,6 @@ bool Canvas2DLayerBridge::Restore() {
     }
     context_lost_ = false;
   }
-  if (image_buffer_)
-    image_buffer_->UpdateGPUMemoryUsage();
 
   return resource_provider_.get();
 }

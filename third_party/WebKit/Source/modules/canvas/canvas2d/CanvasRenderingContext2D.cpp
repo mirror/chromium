@@ -1071,4 +1071,12 @@ unsigned CanvasRenderingContext2D::HitRegionsCount() const {
   return 0;
 }
 
+void CanvasRenderingContext2D::DisableAcceleration() {
+  canvas()->DisableAcceleration();
+}
+
+void CanvasRenderingContext2D::DidInvokeGPUReadbackInCurrentFrame() {
+  canvas()->DidInvokeGPUReadbackInCurrentFrame();
+}
+
 }  // namespace blink

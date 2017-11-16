@@ -44,9 +44,9 @@
 #include "platform/bindings/ScriptWrappableVisitor.h"
 #include "platform/geometry/FloatRect.h"
 #include "platform/geometry/IntSize.h"
+#include "platform/graphics/CanvasResourceConsumer.h"
 #include "platform/graphics/GraphicsTypes.h"
 #include "platform/graphics/GraphicsTypes3D.h"
-#include "platform/graphics/ImageBufferClient.h"
 #include "platform/graphics/OffscreenCanvasPlaceholder.h"
 #include "platform/graphics/SurfaceLayerBridge.h"
 #include "platform/heap/Handle.h"
@@ -82,9 +82,9 @@ class CORE_EXPORT HTMLCanvasElement final
       public CanvasImageSource,
       public CanvasRenderingContextHost,
       public WebSurfaceLayerBridgeObserver,
-      public ImageBufferClient,
       public ImageBitmapSource,
-      public OffscreenCanvasPlaceholder {
+      public OffscreenCanvasPlaceholder,
+      public CanvasResourceConsumer {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(HTMLCanvasElement);
   USING_PRE_FINALIZER(HTMLCanvasElement, Dispose);
@@ -147,7 +147,6 @@ class CORE_EXPORT HTMLCanvasElement final
 
   CanvasRenderingContext* RenderingContext() const { return context_.Get(); }
 
-  void EnsureUnacceleratedImageBuffer();
   scoped_refptr<Image> CopiedImage(SourceDrawingBuffer,
                                    AccelerationHint,
                                    SnapshotReason);
@@ -202,11 +201,12 @@ class CORE_EXPORT HTMLCanvasElement final
   // SurfaceLayerBridgeObserver implementation
   void OnWebLayerUpdated() override;
 
-  // ImageBufferClient implementation
+  // CanvasResourceConsumer implementation
   void NotifySurfaceInvalid() override;
-  void DidDisableAcceleration() override;
   void RestoreCanvasMatrixClipStack(PaintCanvas*) const override;
   void SetNeedsCompositingUpdate() override;
+
+  void DisableAcceleration();
 
   // ImageBitmapSource implementation
   IntSize BitmapSourceSize() const override;
@@ -267,6 +267,17 @@ class CORE_EXPORT HTMLCanvasElement final
   bool IsWebGL2Enabled() const override;
   bool IsWebGLBlocked() const override;
 
+  // GPU Memory Management
+  void UpdateGPUMemoryUsage() const;
+  static intptr_t GetGlobalGPUMemoryUsage() { return global_gpu_memory_usage_; }
+  static unsigned GetGlobalAcceleratedContextCount() {
+    return global_accelerated_context_count_;
+  }
+  intptr_t GetGPUMemoryUsage() { return gpu_memory_usage_; }
+  void DidInvokeGPUReadbackInCurrentFrame() {
+    gpu_readback_invoked_in_current_frame_ = true;
+  }
+
  protected:
   void DidMoveToNewDocument(Document& old_document) override;
 
@@ -320,8 +331,6 @@ class CORE_EXPORT HTMLCanvasElement final
   bool ignore_reset_;
   FloatRect dirty_rect_;
 
-  mutable intptr_t externally_allocated_memory_;
-
   bool origin_clean_;
 
   // It prevents HTMLCanvasElement::buffer() from continuously re-attempting to
@@ -338,6 +347,15 @@ class CORE_EXPORT HTMLCanvasElement final
   std::unique_ptr<::blink::SurfaceLayerBridge> surface_layer_bridge_;
 
   bool did_notify_listeners_for_current_frame_ = false;
+
+  // GPU Memory Management
+  static intptr_t global_gpu_memory_usage_;
+  static unsigned global_accelerated_context_count_;
+  mutable intptr_t gpu_memory_usage_;
+  mutable intptr_t externally_allocated_memory_;
+
+  mutable bool gpu_readback_invoked_in_current_frame_;
+  int gpu_readback_successive_frames_;
 };
 
 }  // namespace blink
