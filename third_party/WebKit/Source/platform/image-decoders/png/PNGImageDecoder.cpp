@@ -40,6 +40,10 @@
 
 #include <memory>
 
+#if (defined(__ARM_NEON__) || defined(__ARM_NEON))
+#include <arm_neon.h>
+#endif
+
 namespace blink {
 
 PNGImageDecoder::PNGImageDecoder(AlphaOption alpha_option,
@@ -275,6 +279,92 @@ void PNGImageDecoder::HeaderAvailable() {
   has_alpha_channel_ = (channels == 4);
 }
 
+#if (defined(__ARM_NEON__) || defined(__ARM_NEON))
+static void SetRGBAPremultiplyRowNeon8(png_bytep src_ptr,
+                                       const int pixel_count,
+                                       ImageFrame::PixelData* dst_pixel,
+                                       unsigned* alpha_mask) {
+  constexpr int kPixelsPerLoad = 8;
+  constexpr int kRgbaStep = kPixelsPerLoad * 4;
+
+  constexpr int kRoundFractionControl = 257 * 128;
+  constexpr int kLastColorChannel = 2;
+  // Input registers.
+  uint8x8x4_t rgba;
+  // Output registers.
+  uint8x8x4_t bgra;
+  // Alpha mask.
+  uint8x8_t alpha_mask_vector = vdup_n_u8(255);
+
+  // Scale the color channel by alpha - the opacity coefficient.
+  // See SetRGBAPremultiply() in ImageFrame.h.
+  auto premultiply_color_channel = [&](size_t channel) {
+    // Multiply color channel by alpha.
+    uint16x8_t accumulator = vmull_u8(rgba.val[channel], rgba.val[3]);
+    // Multiply the result by 257.
+    uint32x4_t acc_low = vmull_u16(vget_low_u16(accumulator), vdup_n_u16(257));
+    uint32x4_t acc_high =
+        vmull_u16(vget_high_u16(accumulator), vdup_n_u16(257));
+    // Add kRoundFractionControl to the result, store high half.
+    uint16x4_t temp_low =
+        vaddhn_u32(acc_low, vdupq_n_u32(kRoundFractionControl));
+    uint16x4_t temp_high =
+        vaddhn_u32(acc_high, vdupq_n_u32(kRoundFractionControl));
+    // Combine results, narrow to the least significant 8 bits and write to
+    // output register. (kLastColorChannel - channel) re-orders the color
+    // channels for little endian.
+    bgra.val[kLastColorChannel - channel] =
+        vmovn_u16(vcombine_u16(temp_low, temp_high));
+  };
+
+  int i = pixel_count;
+  for (; i >= kPixelsPerLoad; i -= kPixelsPerLoad) {
+    // Reads 8 pixels at once, each color channel in a different
+    // 64-bit register.
+    rgba = vld4_u8(src_ptr);
+    uint64_t alphas_u64 = vget_lane_u64(vreinterpret_u64_u8(rgba.val[3]), 0);
+
+    // If all of the pixels are opaque, no need to premultiply.
+    if (~alphas_u64 == 0) {
+      // Write to output register, re-ordering color channels for little endian.
+      bgra.val[0] = rgba.val[2];
+      bgra.val[1] = rgba.val[1];
+      bgra.val[2] = rgba.val[0];
+    } else {
+      premultiply_color_channel(0);
+      premultiply_color_channel(1);
+      premultiply_color_channel(2);
+    }
+    bgra.val[3] = rgba.val[3];
+
+    // AND pixel alpha values with the alpha detection mask.
+    alpha_mask_vector = vand_u8(alpha_mask_vector, rgba.val[3]);
+
+    // Write back (interleaved) results to memory.
+    vst4_u8(reinterpret_cast<uint8_t*>(dst_pixel), bgra);
+
+    // Advance to next elements.
+    src_ptr += kRgbaStep;
+    dst_pixel += kPixelsPerLoad;
+  }
+
+  // AND together the 8 alpha values in the alpha_mask_vector.
+  uint64_t alpha_mask_u64 =
+      vget_lane_u64(vreinterpret_u64_u8(alpha_mask_vector), 0);
+  alpha_mask_u64 &= (alpha_mask_u64 >> 32);
+  alpha_mask_u64 &= (alpha_mask_u64 >> 16);
+  alpha_mask_u64 &= (alpha_mask_u64 >> 8);
+  *alpha_mask &= alpha_mask_u64;
+
+  // Handle the tail elements.
+  for (; i > 0; i--, dst_pixel++, src_ptr += 4) {
+    ImageFrame::SetRGBAPremultiply(dst_pixel, src_ptr[0], src_ptr[1],
+                                   src_ptr[2], src_ptr[3]);
+    *alpha_mask &= src_ptr[3];
+  }
+}
+#endif
+
 void PNGImageDecoder::RowAvailable(unsigned char* row_buffer,
                                    unsigned row_index,
                                    int) {
@@ -395,12 +485,16 @@ void PNGImageDecoder::RowAvailable(unsigned char* row_buffer,
     if (frame_buffer_cache_[current_frame_].GetAlphaBlendSource() ==
         ImageFrame::kBlendAtopBgcolor) {
       if (buffer.PremultiplyAlpha()) {
+#if (defined(__ARM_NEON__) || defined(__ARM_NEON))
+        SetRGBAPremultiplyRowNeon8(src_ptr, width, dst_row, &alpha_mask);
+#else
         for (auto *dst_pixel = dst_row; dst_pixel < dst_row + width;
              dst_pixel++, src_ptr += 4) {
           ImageFrame::SetRGBAPremultiply(dst_pixel, src_ptr[0], src_ptr[1],
                                          src_ptr[2], src_ptr[3]);
           alpha_mask &= src_ptr[3];
         }
+#endif
       } else {
         for (auto *dst_pixel = dst_row; dst_pixel < dst_row + width;
              dst_pixel++, src_ptr += 4) {
