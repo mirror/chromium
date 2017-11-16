@@ -52,6 +52,24 @@
       "revId": "80e57d66b674a5b4f7326581314b689759864b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51c55de_8b1b1d32",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1582,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-16T19:35:45Z",
+      "side": 1,
+      "message": "I still seems wrong to me to check inline style instead of computed style.\n\nIf we use the inline style as a marker, it might suggest that we are using the wrong marker.\n\nLet\u0027s ask the style team.",
+      "parentUuid": "5d73ac2c_8673374a",
+      "revId": "80e57d66b674a5b4f7326581314b689759864b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
