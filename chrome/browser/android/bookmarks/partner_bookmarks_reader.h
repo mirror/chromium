@@ -62,6 +62,8 @@ class PartnerBookmarksReader {
     // Request sent out and a connection error occurred (no valid HTTP response
     // received).
     FAILURE_CONNECTION_ERROR = 4,
+    // Boundary value for UMA.
+    UMA_BOUNDARY,
   };
 
   using FaviconFetchedCallback = base::OnceCallback<void(FaviconFetchResult)>;
