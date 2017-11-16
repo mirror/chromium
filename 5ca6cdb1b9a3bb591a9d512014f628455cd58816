@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a8c6662_1b6434f4",
+        "filename": "components/autofill/content/browser/risk/fingerprint.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-16T10:21:49Z",
+      "side": 1,
+      "message": "Yes! Done.",
+      "parentUuid": "da7ae345_12905ece",
+      "revId": "5ca6cdb1b9a3bb591a9d512014f628455cd58816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e3396ca_1bf77aad",
         "filename": "components/autofill/content/browser/risk/fingerprint_browsertest.cc",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "5ca6cdb1b9a3bb591a9d512014f628455cd58816",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83af3133_f1d6afcb",
+        "filename": "components/autofill/content/browser/risk/fingerprint_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-16T10:21:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e3396ca_1bf77aad",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 29
+      },
+      "revId": "5ca6cdb1b9a3bb591a9d512014f628455cd58816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
