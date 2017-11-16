@@ -1,0 +1,550 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6feb81d6_d3107453",
+        "filename": "chrome/browser/signin/account_reconcilor_factory.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "Should this also be in an #if BUILDFLAG(ENABLE_DICE_SUPPORT)?",
+      "range": {
+        "startLine": 78,
+        "startChar": 17,
+        "endLine": 78,
+        "endChar": 41
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "678bbe55_2016f72b",
+        "filename": "chrome/browser/signin/account_reconcilor_factory.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "I think I would prefer the following structure for these delegates:\n* Interface IsAccountConsistencyEnforced (all methods are pure virtual)\n* 3 implementations: DummyAccountReconcilorDelegate, MirrorAccountReconcilorDelegate and DiceAccountReconcilorDelegate.",
+      "range": {
+        "startLine": 79,
+        "startChar": 42,
+        "endLine": 79,
+        "endChar": 67
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb4b6b3b_ae04d1f9",
+        "filename": "chrome/browser/signin/account_reconcilor_factory.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "Move mirror above Dice fixing auth errors.",
+      "range": {
+        "startLine": 81,
+        "startChar": 17,
+        "endLine": 81,
+        "endChar": 41
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "900b1079_55f2a763",
+        "filename": "chrome/browser/signin/account_reconcilor_factory.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "Change this method to CreateAccountReconcilorDelegate and make it return the delegate. The pass it on the constructor in AccountReconcilorFactory::BuildServiceInstanceFor",
+      "range": {
+        "startLine": 27,
+        "startChar": 45,
+        "endLine": 27,
+        "endChar": 62
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "167b66ac_f2b55cc0",
+        "filename": "chrome/browser/signin/account_reconcilor_factory.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "If it is for testing, then I think it is better to make is protected and friend the test methods.",
+      "range": {
+        "startLine": 27,
+        "startChar": 14,
+        "endLine": 27,
+        "endChar": 44
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eeb0ce6_fe7d50b7",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "Resetting the delegate should not be allowed:\nDCHECK(!delegate_);",
+      "range": {
+        "startLine": 93,
+        "startChar": 9,
+        "endLine": 93,
+        "endChar": 17
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e90f0ceb_373a07b8",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "s/IsEnabled/IsReconcileEnabled",
+      "range": {
+        "startLine": 107,
+        "startChar": 17,
+        "endLine": 107,
+        "endChar": 26
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5972794_d26c1698",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "We may be able to remove this Stop method (or at least the argument) - see comment on OnNewProfileManagementFlagChanged",
+      "range": {
+        "startLine": 118,
+        "startChar": 34,
+        "endLine": 118,
+        "endChar": 57
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fb7df8_9fe8b58a",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "This method name is confusing - it the the opposite of Initialize, but its name is Stop (which makes me think it is the opposite of StartReconcile).\n\nIt needs a better naming (if we really need to keep it). Maybe Reset could be an option as we\u0027re resetting the reconcilor to the initial start (before initialize).\n\nThis method deserves a comments in the header to explain what it does.",
+      "range": {
+        "startLine": 118,
+        "startChar": 24,
+        "endLine": 118,
+        "endChar": 28
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e457a0_d0d2fda6",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "Should this be called with true (when shutdown is called, the current reconcile should be aborted, right)?",
+      "range": {
+        "startLine": 128,
+        "startChar": 7,
+        "endLine": 128,
+        "endChar": 12
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c04308e6_11e85e2a",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "I think this function has side effects that are hard to follow - basically what it does is that it loads in chrome_accounts_ the list of accounts from token service that are not in an error state. I think it would make the code more readable if we change it like:\nstd::vector\u003cstd::string\u003e LoadValidAccountsFromTokenService(\n  std::string* out_primary_account,\n  bool* out_is_primary_account_valid)",
+      "range": {
+        "startLine": 344,
+        "startChar": 24,
+        "endLine": 344,
+        "endChar": 56
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81198118_b1358f3b",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "With the current code, the primary account is always removes from chrome_accounts_ if it has an error (this was not the case in the past). I do not know what side effects this may have.",
+      "range": {
+        "startLine": 359,
+        "startChar": 9,
+        "endLine": 359,
+        "endChar": 14
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd644bf_3fd74b38",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "This is dead code. Simply remove this method.\n\nThis may also remove the need to have a Stop method.",
+      "range": {
+        "startLine": 375,
+        "startChar": 24,
+        "endLine": 375,
+        "endChar": 57
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3803e17a_af8b76e4",
+        "filename": "components/signin/core/browser/account_reconcilor.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "AccountReconcilor does not work without a delegate. The delegate should be passed on constructor (and remove the SetDelegate method).",
+      "range": {
+        "startLine": 83,
+        "startChar": 7,
+        "endLine": 83,
+        "endChar": 18
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890f6400_91b70468",
+        "filename": "components/signin/core/browser/account_reconcilor.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "s/Log/Logs",
+      "range": {
+        "startLine": 109,
+        "startChar": 8,
+        "endLine": 109,
+        "endChar": 9
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ab304a9_46e2931c",
+        "filename": "components/signin/core/browser/account_reconcilor.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "This method should remain private (clients of this class should not be able to log out all accounts). It looks like this is only called with Stop, so maybe we could pass an additional boolean to Stop method to also logout all accounts.",
+      "range": {
+        "startLine": 110,
+        "startChar": 15,
+        "endLine": 110,
+        "endChar": 45
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ebcdcc8_65d1fb2a",
+        "filename": "components/signin/core/browser/account_reconcilor_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "Optional: I think all methods in the base class should be pure virtual (this is an interface with no default implementation).",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 31
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99de3d58_54e1ecf1",
+        "filename": "components/signin/core/browser/account_reconcilor_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "Comment:\nReturns true if the account reconcilor should reconcile the account.",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 14
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe259f56_7431f565",
+        "filename": "components/signin/core/browser/account_reconcilor_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "s/IsEnabled/IsReconcileEnabled",
+      "range": {
+        "startLine": 21,
+        "startChar": 15,
+        "endLine": 21,
+        "endChar": 24
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19ff93e0_8f3a8868",
+        "filename": "components/signin/core/browser/account_reconcilor_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "s/AbortReconcileIfPrimaryHasError/ShouldAbortReconcileIfPrimaryHasError",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 47
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1baa6dd7_3b134fbe",
+        "filename": "components/signin/core/browser/dice_account_reconcilor_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "Was this blank line intentional?",
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1aea8df_95ef8d42",
+        "filename": "components/signin/core/browser/mirror_account_reconcilor_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "I think it is a bad pattern to call initialize multiple times on the same service (without ever calling Shutdown before).\n\nI also do not like the method name \"Stop\" as this is not the opposite of \"Initialize\". Proposal:\n* Rename s/Stop/Shutdown. Move PerformLogoutAllAccountsAction in there.",
+      "range": {
+        "startLine": 51,
+        "startChar": 15,
+        "endLine": 51,
+        "endChar": 25
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf0ee07_5f0001ee",
+        "filename": "components/signin/core/browser/mirror_account_reconcilor_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "In general I\u0027ve seen this comment as:\n// AccountReconcilorDelegate:",
+      "range": {
+        "startLine": 25,
+        "startChar": 20,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a341f5c_9db857d9",
+        "filename": "components/signin/core/browser/mirror_account_reconcilor_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-16T12:19:28Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 35,
+        "startChar": 20,
+        "endLine": 35,
+        "endChar": 37
+      },
+      "revId": "fae6406586c3d9f79d948242c0c125b5b3c37b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
