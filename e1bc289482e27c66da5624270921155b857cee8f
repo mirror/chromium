@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "44403091_48fc611a",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-16T17:24:46Z",
+      "side": 1,
+      "message": "Hmmm... I guess it is not that difficult to iterate over all the NavEntries stored in a NavigationController.  It might not even be O(\u003cnumber of *all* entries\u003e), because we can just go back in history one-by-one and *stop* when we no longer find an FNE for the |child|, right?\n\nDo you think this might work?  If yes, them I might want to try it in a follow-up CL (to be landed after making sure this CL recovers from the performance regression).",
+      "parentUuid": "6943e8b5_cf60ae33",
+      "revId": "e1bc289482e27c66da5624270921155b857cee8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "121a6a2a_216c5156",
         "filename": "content/browser/frame_host/frame_tree_node.cc",
         "patchSetId": 5
