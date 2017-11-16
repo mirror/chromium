@@ -52,9 +52,12 @@ std::vector<uint8_t> AuthenticatorData::SerializeToByteArray() {
   authenticator_utils::Append(&authenticator_data, rp_id_hash);
   authenticator_data.insert(authenticator_data.end(), flags_);
   authenticator_utils::Append(&authenticator_data, counter_);
-  std::vector<uint8_t> attestation_bytes = attested_data_->SerializeAsBytes();
-  authenticator_utils::Append(&authenticator_data, attestation_bytes);
 
+  if (attested_data_) {
+    // Add the attestation if one exists.
+    std::vector<uint8_t> attestation_bytes = attested_data_->SerializeAsBytes();
+    authenticator_utils::Append(&authenticator_data, attestation_bytes);
+  }
   return authenticator_data;
 }
 

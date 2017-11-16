@@ -62,26 +62,11 @@ RegisterResponseData::RegisterResponseData(
     std::unique_ptr<CollectedClientData> client_data,
     std::vector<uint8_t> credential_id,
     std::unique_ptr<AttestationObject> object)
-    : client_data_(std::move(client_data)),
-      raw_id_(std::move(credential_id)),
+    : ResponseData(std::move(client_data), std::move(credential_id)),
       attestation_object_(std::move(object)) {}
-
-std::vector<uint8_t> RegisterResponseData::GetClientDataJSONBytes() {
-  std::string client_data_json = client_data_->SerializeToJson();
-  return std::vector<uint8_t>(client_data_json.begin(), client_data_json.end());
-}
 
 std::vector<uint8_t> RegisterResponseData::GetCBOREncodedAttestationObject() {
   return attestation_object_->SerializeToCBOREncodedBytes();
-}
-
-std::string RegisterResponseData::GetId() {
-  std::string id;
-  base::Base64UrlEncode(
-      base::StringPiece(reinterpret_cast<const char*>(raw_id_.data()),
-                        raw_id_.size()),
-      base::Base64UrlEncodePolicy::OMIT_PADDING, &id);
-  return id;
 }
 
 RegisterResponseData::~RegisterResponseData() {}

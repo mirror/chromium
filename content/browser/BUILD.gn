@@ -2157,6 +2157,10 @@ source_set("browser") {
       "webauth/public_key.h",
       "webauth/register_response_data.cc",
       "webauth/register_response_data.h",
+      "webauth/response_data.cc",
+      "webauth/response_data.h",
+      "webauth/sign_response_data.cc",
+      "webauth/sign_response_data.h",
     ]
     deps += [ "//third_party/flac" ]
   }

@@ -15,6 +15,7 @@
 #include "base/macros.h"
 #include "base/timer/timer.h"
 #include "content/browser/webauth/register_response_data.h"
+#include "content/browser/webauth/sign_response_data.h"
 #include "content/common/content_export.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
@@ -63,9 +64,7 @@ class CONTENT_EXPORT AuthenticatorImpl : public webauth::mojom::Authenticator {
 
   std::unique_ptr<device::U2fRequest> u2f_request_;
   base::OneShotTimer timer_;
-
   RenderFrameHost* render_frame_host_;
-
   base::WeakPtrFactory<AuthenticatorImpl> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(AuthenticatorImpl);

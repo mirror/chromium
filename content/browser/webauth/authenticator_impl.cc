@@ -15,6 +15,7 @@
 #include "device/u2f/u2f_register.h"
 #include "device/u2f/u2f_request.h"
 #include "device/u2f/u2f_return_code.h"
+#include "device/u2f/u2f_sign.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/service_manager/public/cpp/connector.h"
 
@@ -44,6 +45,20 @@ webauth::mojom::PublicKeyCredentialInfoPtr CreatePublicKeyCredentialInfo(
       response_data->GetCBOREncodedAttestationObject();
   credential_info->response = std::move(response);
   return credential_info;
+}
+
+webauth::mojom::PublicKeyCredentialInfoPtr CreatePublicKeyCredentialInfo(
+    std::unique_ptr<SignResponseData> response_data) {
+  auto credentialInfo = webauth::mojom::PublicKeyCredentialInfo::New();
+  credentialInfo->client_data_json = response_data->GetClientDataJSONBytes();
+  credentialInfo->raw_id = response_data->raw_id();
+  credentialInfo->id = response_data->GetId();
+  webauth::mojom::AuthenticatorResponsePtr response =
+      webauth::mojom::AuthenticatorResponse::New();
+  response->authenticator_data = response_data->GetAuthenticatorDataBytes();
+  response->signature = response_data->signature();
+  credentialInfo->response = std::move(response);
+  return credentialInfo;
 }
 }  // namespace
 
@@ -139,7 +154,7 @@ void AuthenticatorImpl::MakeCredential(
   // The challenge parameter is the SHA-256 hash of the Client Data,
   // Among other things, the Client Data contains the challenge from the
   // relying party (hence the name of the parameter).
-  device::U2fRegister::ResponseCallback response_callback = base::Bind(
+  device::U2fRequest::ResponseCallback response_callback = base::Bind(
       &AuthenticatorImpl::OnDeviceResponse, weak_factory_.GetWeakPtr(),
       copyable_callback, base::Passed(&client_data));
 

@@ -17,6 +17,7 @@ namespace content {
 
 namespace authenticator_utils {
 constexpr char kCreateType[] = "webauthn.create";
+constexpr char kGetType[] = "webauthn.get";
 }
 
 // Represents the contextual bindings of both the Relying Party and the
