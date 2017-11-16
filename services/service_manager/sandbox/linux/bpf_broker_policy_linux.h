@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef SERVICES_SERVICE_MANAGER_SANDBOX_LINUX_BPF_NETWORK_POLICY_LINUX_H_
-#define SERVICES_SERVICE_MANAGER_SANDBOX_LINUX_BPF_NETWORK_POLICY_LINUX_H_
+#ifndef SERVICES_SERVICE_MANAGER_SANDBOX_LINUX_BPF_BROKER_POLICY_LINUX_H_
+#define SERVICES_SERVICE_MANAGER_SANDBOX_LINUX_BPF_BROKER_POLICY_LINUX_H_
 
 #include "sandbox/linux/bpf_dsl/bpf_dsl.h"
 #include "services/service_manager/sandbox/export.h"
@@ -11,19 +11,21 @@
 
 namespace service_manager {
 
-class SERVICE_MANAGER_SANDBOX_EXPORT NetworkProcessPolicy
+// A broker policy is one for a privileged syscall broker that allows
+// access, open, openat, and (in the non-Chrome OS case) unlink.
+class SERVICE_MANAGER_SANDBOX_EXPORT BrokerProcessPolicy
     : public BPFBasePolicy {
  public:
-  NetworkProcessPolicy();
-  ~NetworkProcessPolicy() override;
+  BrokerProcessPolicy();
+  ~BrokerProcessPolicy() override;
 
   sandbox::bpf_dsl::ResultExpr EvaluateSyscall(
       int system_call_number) const override;
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(NetworkProcessPolicy);
+  DISALLOW_COPY_AND_ASSIGN(BrokerProcessPolicy);
 };
 
 }  // namespace service_manager
 
-#endif  // SERVICES_SERVICE_MANAGER_SANDBOX_LINUX_BPF_NETWORK_POLICY_LINUX_H_
+#endif  // SERVICES_SERVICE_MANAGER_SANDBOX_LINUX_BPF_BROKER_POLICY_LINUX_H_

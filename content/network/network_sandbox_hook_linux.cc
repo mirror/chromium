@@ -18,10 +18,11 @@ bool NetworkPreSandboxHook(service_manager::BPFBasePolicy* policy,
   file_permissions.push_back(
       BrokerFilePermission::ReadWriteCreateRecursive("/"));
 
-  service_manager::SandboxLinux::GetInstance()->StartBrokerProcess(
-      policy, std::move(file_permissions),
-      service_manager::SandboxLinux::PreSandboxHook(), options);
-
+  auto* instance = service_manager::SandboxLinux::GetInstance();
+  instance->StartBrokerProcess(policy, std::move(file_permissions),
+                               service_manager::SandboxLinux::PreSandboxHook(),
+                               options);
+  instance->EngageNamespaceSandbox(false);
   return true;
 }
 
