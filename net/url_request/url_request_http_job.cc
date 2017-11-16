@@ -34,6 +34,7 @@
 #include "net/base/trace_constants.h"
 #include "net/base/url_util.h"
 #include "net/cert/cert_status_flags.h"
+#include "net/cert/known_roots.h"
 #include "net/cookies/canonical_cookie.h"
 #include "net/cookies/cookie_store.h"
 #include "net/filter/brotli_source_stream.h"
@@ -80,6 +81,20 @@
 #endif  // BUILDFLAG(ENABLE_REPORTING)
 
 namespace {
+
+// Records details about the most-specific trust anchor in |hashes|, which is
+// expected to be ordered with the leaf cert first and the root cert last.
+// This complements the per-verification histogram
+// Net.Certificate.RootCertUsage.Verify
+void LogRootCertUsage(const net::HashValueVector& hashes) {
+  for (const auto& hash : hashes) {
+    int32_t id = net::GetNetRootCertHistogramIdForHashValue(hash);
+    if (id == 0)
+      continue;
+    UMA_HISTOGRAM_SPARSE_SLOWLY("Net.Certificate.RootCertUsage.Request", id);
+    break;
+  }
+}
 
 // Logs whether the CookieStore used for this request matches the
 // ChannelIDService used when establishing the connection that this request is
@@ -1458,6 +1473,10 @@ void URLRequestHttpJob::DoneWithRequest(CompletionCause reason) {
 
   RecordPerfHistograms(reason);
   request()->set_received_response_content_length(prefilter_bytes_read());
+  if (transaction_) {
+    LogRootCertUsage(
+        transaction_->GetResponseInfo()->ssl_info.public_key_hashes);
+  }
 }
 
 HttpResponseHeaders* URLRequestHttpJob::GetResponseHeaders() const {
