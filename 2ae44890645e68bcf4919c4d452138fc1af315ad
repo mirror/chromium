@@ -1,0 +1,325 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9911d370_1276479a",
+        "filename": "chrome/browser/extensions/extension_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-16T00:13:41Z",
+      "side": 1,
+      "message": "maybe const?",
+      "range": {
+        "startLine": 408,
+        "startChar": 54,
+        "endLine": 408,
+        "endChar": 55
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d4275b_1b4c87ad",
+        "filename": "chrome/browser/extensions/extension_system_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-16T00:13:41Z",
+      "side": 1,
+      "message": "maybe rename this to |done|.",
+      "range": {
+        "startLine": 45,
+        "startChar": 9,
+        "endLine": 45,
+        "endChar": 18
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cca10db_3c3a92cd",
+        "filename": "chrome/browser/extensions/extension_system_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-16T00:13:41Z",
+      "side": 1,
+      "message": "OnceClosure ?",
+      "range": {
+        "startLine": 52,
+        "startChar": 43,
+        "endLine": 52,
+        "endChar": 50
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882128ee_45763a0e",
+        "filename": "chrome/browser/extensions/extension_system_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-16T00:13:41Z",
+      "side": 1,
+      "message": "why not QuitClosure ?",
+      "range": {
+        "startLine": 58,
+        "startChar": 32,
+        "endLine": 58,
+        "endChar": 51
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968a1e3c_262de42d",
+        "filename": "chrome/browser/extensions/extension_system_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-16T00:13:41Z",
+      "side": 1,
+      "message": "const ?\n\nThere are some other local variables in the code below that could be const.",
+      "range": {
+        "startLine": 87,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 8
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e771af_05171e5b",
+        "filename": "chrome/browser/extensions/extension_system_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-16T00:13:41Z",
+      "side": 1,
+      "message": "const?",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 15
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8dac291_54b58bcd",
+        "filename": "extensions/browser/updater/update_data_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-16T00:13:41Z",
+      "side": 1,
+      "message": "maybe use a c++ type alias if we are touching this code anyway.",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 10
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "063ebd27_75d3e3f7",
+        "filename": "extensions/browser/updater/update_data_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-16T00:13:41Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 43
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4118e222_bb7c8062",
+        "filename": "extensions/browser/updater/update_data_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-16T00:13:41Z",
+      "side": 1,
+      "message": "Comment is not really needed if it refers to the move operation below. We could also get rid of the auto local var and pass it directly as an arg to the the function below.",
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf823433_f04c2c14",
+        "filename": "extensions/browser/updater/update_data_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-16T00:13:41Z",
+      "side": 1,
+      "message": "const here and other local vars below",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 8
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e685c5c5_b6baeb3e",
+        "filename": "extensions/browser/updater/update_install_shim.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-16T00:13:41Z",
+      "side": 1,
+      "message": "Since this call is non-blocking, then the unpack_path is only deleted when the update_client_callback is invoked.",
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5337042c_7ed3274b",
+        "filename": "extensions/browser/updater/update_install_shim.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-16T00:13:41Z",
+      "side": 1,
+      "message": "we could dcheck we always have an callback and eliminate this execution path.",
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275837a5_fdf646d2",
+        "filename": "extensions/browser/updater/update_install_shim.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-16T00:13:41Z",
+      "side": 1,
+      "message": "maybe rename it in the future to |ExtensionInstaller| ?",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 23
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f3ccfe_9adb65e1",
+        "filename": "extensions/browser/updater/update_install_shim_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-16T00:13:41Z",
+      "side": 1,
+      "message": "is there a reason we write this test using MessageLoopRunner instead of RunLoop ?",
+      "range": {
+        "startLine": 61,
+        "startChar": 49,
+        "endLine": 61,
+        "endChar": 66
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085b0f72_cdcf178e",
+        "filename": "extensions/browser/updater/update_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-16T00:13:41Z",
+      "side": 1,
+      "message": "done ?",
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
