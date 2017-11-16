@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da6ec591_ad418384",
+        "filename": "ios/build/bots/scripts/run.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-11-16T04:08:04Z",
+      "side": 1,
+      "message": "Argh, one bug out, one bug in :-) I also found this when testing on the bot... Thanks! Done.",
+      "parentUuid": "83506f31_b052c8c2",
+      "revId": "b3fa14fd12ce0b750a3a36ff23125c37761cf7e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b622eea6_b0bb0a54",
         "filename": "ios/build/bots/scripts/test_runner.py",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "b3fa14fd12ce0b750a3a36ff23125c37761cf7e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb271f8_a3496a44",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-11-16T04:08:04Z",
+      "side": 1,
+      "message": "Hmm, indeed os.path.exists(\u0027\u0027) returns False. Done.",
+      "parentUuid": "b622eea6_b0bb0a54",
+      "revId": "b3fa14fd12ce0b750a3a36ff23125c37761cf7e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -344,6 +344,24 @@
       "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "843cbc54_397703e6",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-11-16T04:08:04Z",
+      "side": 1,
+      "message": "Indeed, this works. Removed the new functions and migrated to these mocks.\n\nOriginal tests had a more brittle pattern, which prompted me to change it, but this version more compact. Thanks for the suggestion.",
+      "parentUuid": "a8efc02c_22a40ea1",
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
