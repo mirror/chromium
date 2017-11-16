@@ -16,6 +16,24 @@
       "revId": "e0e1c2e563590825cdb01001a785f34ab084f758",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1588b10_66328995",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-11-16T07:16:57Z",
+      "side": 1,
+      "message": "Regular POSIX has its own Mask and Offsets (https://cs.chromium.org/chromium/src/base/allocator/partition_allocator/address_space_randomization.h?rcl\u003dd4191bbf4caa1a3134f65c292909be9b3a1fa35a\u0026l\u003d70), whereas Sanitizer builds have their custom ones so that its own allocations don\u0027t interfere with ours (https://cs.chromium.org/chromium/src/base/allocator/partition_allocator/address_space_randomization.h?rcl\u003dd4191bbf4caa1a3134f65c292909be9b3a1fa35a\u0026l\u003d39), both are defined in address_space_randomization.h. So even though code is same for MEMORY_TOOL_REPLACES_ALLOCATOR and OS_POSIX, the actual values are different. Need to think more to write as comment without confusion.",
+      "parentUuid": "3ae3149c_d831e5d9",
+      "revId": "e0e1c2e563590825cdb01001a785f34ab084f758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
