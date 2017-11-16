@@ -64,6 +64,8 @@ class AURA_EXPORT WindowTreeHost : public ui::internal::InputMethodDelegate,
 
   void InitHost();
 
+  virtual void X(gfx::AcceleratedWidget widget) {}
+
   void AddObserver(WindowTreeHostObserver* observer);
   void RemoveObserver(WindowTreeHostObserver* observer);
 

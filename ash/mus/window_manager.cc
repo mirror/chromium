@@ -333,6 +333,11 @@ void WindowManager::OnWmConnected() {
     wayland_server_controller_ = WaylandServerController::CreateIfNecessary();
 }
 
+void WindowManager::X(gfx::AcceleratedWidget widget) {
+  LOG(ERROR) << __PRETTY_FUNCTION__;
+  Shell::GetPrimaryRootWindow()->GetHost()->X(widget);
+}
+
 void WindowManager::OnWmSetBounds(aura::Window* window,
                                   const gfx::Rect& bounds) {
   // TODO(sky): this indirectly sets bounds, which is against what

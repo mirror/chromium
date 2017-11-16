@@ -180,6 +180,11 @@ void WindowTree::Init(std::unique_ptr<WindowTreeBinding> binding,
                     drawn, root->current_local_surface_id());
 }
 
+void WindowTree::X(gfx::AcceleratedWidget widget) {
+  // XXX(sad): Send the display id here too.
+  client()->X(reinterpret_cast<int>(widget));
+}
+
 void WindowTree::ConfigureWindowManager(
     bool automatically_create_display_roots) {
   // ConfigureWindowManager() should be called early on, before anything
@@ -193,6 +198,7 @@ void WindowTree::ConfigureWindowManager(
   window_manager_internal_ = binding_->GetWindowManager();
   window_manager_internal_->OnConnect();
   window_manager_state_ = base::MakeUnique<WindowManagerState>(this);
+  LOG(ERROR) << __PRETTY_FUNCTION__;
 }
 
 const ServerWindow* WindowTree::GetWindow(const WindowId& id) const {
@@ -266,6 +272,7 @@ void WindowTree::AddRootForWindowManager(const ServerWindow* root) {
   Display* ws_display = GetDisplay(root);
   DCHECK(ws_display);
 
+  LOG(ERROR) << "xxx";
   window_manager_internal_->WmNewDisplayAdded(
       ws_display->GetDisplay(), WindowToWindowData(root),
       root->parent()->IsDrawn(), root->current_local_surface_id());

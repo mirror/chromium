@@ -599,6 +599,7 @@ void WindowPortMus::UpdateClientSurfaceEmbedder() {
     return;
   }
 
+#if 0
   if (!client_surface_embedder_) {
     client_surface_embedder_ = std::make_unique<ClientSurfaceEmbedder>(
         window_, window_mus_type() == WindowMusType::TOP_LEVEL_IN_WM,
@@ -607,6 +608,7 @@ void WindowPortMus::UpdateClientSurfaceEmbedder() {
 
   client_surface_embedder_->SetPrimarySurfaceInfo(primary_surface_info_);
   client_surface_embedder_->SetFallbackSurfaceInfo(fallback_surface_info_);
+#endif
 }
 
 }  // namespace aura

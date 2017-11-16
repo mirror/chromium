@@ -242,13 +242,6 @@ GpuProcessTransportFactory::CreateSoftwareOutputDevice(
   if (command_line->HasSwitch(switches::kHeadless))
     return base::WrapUnique(new viz::SoftwareOutputDevice);
 
-#if defined(USE_AURA)
-  if (IsUsingMus()) {
-    NOTREACHED();
-    return nullptr;
-  }
-#endif
-
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 #if defined(OS_WIN)
   return std::make_unique<viz::SoftwareOutputDeviceWin>(software_backing_.get(),

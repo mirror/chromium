@@ -44,6 +44,49 @@ bool IsWindowConsideredWindowManagerRoot(const Display* display,
   return display_root && display_root->GetClientVisibleRoot() == window;
 }
 
+class YYYProxyImpl : public ws::XXXProxy {
+ public:
+  explicit YYYProxyImpl(viz::HostFrameSinkManager* manager)
+      : manager_(manager) {}
+
+  ~YYYProxyImpl() override = default;
+
+  // XXXProxy:
+  void RegisterFrameSinkId(const viz::FrameSinkId& frame_sink_id,
+                           viz::HostFrameSinkClient* client) override {
+    if (manager_)
+      manager_->RegisterFrameSinkId(frame_sink_id, client);
+  }
+
+  void SetFrameSinkDebugLabel(const viz::FrameSinkId& frame_sink_id,
+                              const std::string& name) override {
+    if (manager_)
+      manager_->SetFrameSinkDebugLabel(frame_sink_id, name);
+  }
+
+  void InvalidateFrameSinkId(const viz::FrameSinkId& frame_sink_id) override {
+    if (manager_)
+      manager_->InvalidateFrameSinkId(frame_sink_id);
+  }
+
+  void RegisterFrameSinkHierarchy(const viz::FrameSinkId& new_parent,
+                                  const viz::FrameSinkId& child) override {
+    if (manager_)
+      manager_->RegisterFrameSinkHierarchy(new_parent, child);
+  }
+
+  void UnregisterFrameSinkHierarchy(const viz::FrameSinkId& old_parent,
+                                    const viz::FrameSinkId& child) override {
+    if (manager_)
+      manager_->UnregisterFrameSinkHierarchy(old_parent, child);
+  }
+
+ private:
+  viz::HostFrameSinkManager* const manager_;
+
+  DISALLOW_COPY_AND_ASSIGN(YYYProxyImpl);
+};
+
 }  // namespace
 
 struct WindowServer::CurrentMoveLoopState {
@@ -59,7 +102,7 @@ struct WindowServer::CurrentDragLoopState {
   WindowTree* initiator;
 };
 
-WindowServer::WindowServer(WindowServerDelegate* delegate)
+WindowServer::WindowServer(WindowServerDelegate* delegate, bool should_host_viz)
     : delegate_(delegate),
       next_client_id_(kWindowServerClientId + 1),
       display_manager_(new DisplayManager(this, &user_id_tracker_)),
@@ -67,7 +110,11 @@ WindowServer::WindowServer(WindowServerDelegate* delegate)
       in_destructor_(false),
       next_wm_change_id_(0),
       window_manager_window_tree_factory_set_(this, &user_id_tracker_),
-      host_frame_sink_manager_(base::MakeUnique<viz::HostFrameSinkManager>()),
+      host_frame_sink_manager_(
+          should_host_viz ? base::MakeUnique<viz::HostFrameSinkManager>()
+                          : nullptr),
+      xxx_proxy_(
+          std::make_unique<YYYProxyImpl>(host_frame_sink_manager_.get())),
       video_detector_(host_frame_sink_manager_.get()),
       display_creation_config_(DisplayCreationConfig::UNKNOWN) {
   user_id_tracker_.AddObserver(this);
@@ -564,8 +611,18 @@ WindowTree* WindowServer::GetCurrentDragLoopInitiator() {
 void WindowServer::OnDisplayReady(Display* display, bool is_first) {
   if (is_first)
     delegate_->OnFirstDisplayReady();
-  gpu_host_->OnAcceleratedWidgetAvailable(
-      display->platform_display()->GetAcceleratedWidget());
+  if (gpu_host_) {
+    gpu_host_->OnAcceleratedWidgetAvailable(
+        display->platform_display()->GetAcceleratedWidget());
+  }
+  auto* display_root = display->GetActiveWindowManagerDisplayRoot();
+  LOG(ERROR) << "X: " << display_root;
+  for (auto& pair : tree_map_) {
+    if (pair.second->window_manager_state()) {
+      auto& wm_tree = pair.second;
+      wm_tree->X(display->platform_display()->GetAcceleratedWidget());
+    }
+  }
 }
 
 void WindowServer::OnDisplayDestroyed(Display* display) {
@@ -585,9 +642,16 @@ WindowManagerState* WindowServer::GetWindowManagerStateForUser(
       user_id);
 }
 
+XXXProxy* WindowServer::GetXXXProxy() {
+  return xxx_proxy_.get();
+}
+
+#if 0
 viz::HostFrameSinkManager* WindowServer::GetHostFrameSinkManager() {
+  NOTREACHED();
   return host_frame_sink_manager_.get();
 }
+#endif
 
 void WindowServer::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info,
@@ -770,12 +834,22 @@ void WindowServer::OnWindowHierarchyChanged(ServerWindow* window,
   ProcessWindowHierarchyChanged(window, new_parent, old_parent);
 
   if (old_parent) {
+#if 0
     host_frame_sink_manager_->UnregisterFrameSinkHierarchy(
         old_parent->frame_sink_id(), window->frame_sink_id());
+#else
+    xxx_proxy_->UnregisterFrameSinkHierarchy(old_parent->frame_sink_id(),
+                                             window->frame_sink_id());
+#endif
   }
   if (new_parent) {
+#if 0
     host_frame_sink_manager_->RegisterFrameSinkHierarchy(
         new_parent->frame_sink_id(), window->frame_sink_id());
+#else
+    xxx_proxy_->RegisterFrameSinkHierarchy(new_parent->frame_sink_id(),
+                                           window->frame_sink_id());
+#endif
   }
 
   if (!pending_system_modal_windows_.windows().empty()) {

@@ -222,11 +222,13 @@ WindowTreeClient::WindowTreeClient(
       io_task_runner = io_thread_->task_runner();
     }
 
+#if 0
     gpu_ = ui::Gpu::Create(connector, ui::mojom::kServiceName, io_task_runner);
     compositor_context_factory_ =
         std::make_unique<MusContextFactory>(gpu_.get());
     initial_context_factory_ = Env::GetInstance()->context_factory();
     Env::GetInstance()->set_context_factory(compositor_context_factory_.get());
+#endif
 
     // WindowServerTest will create more than one WindowTreeClient. We will not
     // create the discardable memory manager for those tests.
@@ -1712,6 +1714,12 @@ void WindowTreeClient::OnConnect() {
   got_initial_displays_ = true;
   if (window_manager_delegate_)
     window_manager_delegate_->OnWmConnected();
+}
+
+void WindowTreeClient::X(int widget) {
+  if (window_manager_delegate_)
+    window_manager_delegate_->X(
+        reinterpret_cast<gfx::AcceleratedWidget>(widget));
 }
 
 void WindowTreeClient::WmNewDisplayAdded(

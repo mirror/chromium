@@ -405,6 +405,12 @@ scoped_refptr<ui::ContextProviderCommandBuffer> CreateOffscreenContext(
       automatic_flushes, support_locking, limits, attributes, nullptr, type);
 }
 
+bool IsMusHostingViz() {
+  // XXX(sad): Look at some other cmdline flag? Maybe we should just plumb
+  // through --mus and --mash flags in here?
+  return false;
+}
+
 // Hook that allows single-sample metric code from //components/metrics to
 // connect from the renderer process to the browser process.
 void CreateSingleSampleMetricsProvider(
@@ -688,10 +694,11 @@ void RenderThreadImpl::Init(
       base::BindRepeating(&CreateSingleSampleMetricsProvider,
                           message_loop()->task_runner(), GetConnector()));
 
-  gpu_ = ui::Gpu::Create(
-      GetConnector(),
-      IsRunningInMash() ? ui::mojom::kServiceName : mojom::kBrowserServiceName,
-      GetIOTaskRunner());
+  gpu_ = ui::Gpu::Create(GetConnector(),
+                         (IsRunningInMash() && IsMusHostingViz())
+                             ? ui::mojom::kServiceName
+                             : mojom::kBrowserServiceName,
+                         GetIOTaskRunner());
 
   viz::mojom::SharedBitmapAllocationNotifierPtr
       shared_bitmap_allocation_notifier_ptr;
@@ -2048,7 +2055,7 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   }
 
 #if defined(USE_AURA)
-  if (IsRunningInMash()) {
+  if (IsMusHostingViz()) {
     if (!RendererWindowTreeClient::Get(routing_id)) {
       callback.Run(nullptr);
       return;

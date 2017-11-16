@@ -35,6 +35,8 @@ class AURA_EXPORT WindowTreeHostMus : public aura::WindowTreeHostPlatform {
 
   ~WindowTreeHostMus() override;
 
+  void X(gfx::AcceleratedWidget widget) override;
+
   // Returns the WindowTreeHostMus for |window|. This returns null if |window|
   // is null, or not in a WindowTreeHostMus.
   static WindowTreeHostMus* ForWindow(aura::Window* window);

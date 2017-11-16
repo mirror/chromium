@@ -282,7 +282,6 @@ void WindowTreeHost::CreateCompositor(const viz::FrameSinkId& frame_sink_id,
   ui::ContextFactoryPrivate* context_factory_private =
       Env::GetInstance()->context_factory_private();
   bool enable_surface_synchronization =
-      aura::Env::GetInstance()->mode() == aura::Env::Mode::MUS ||
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableSurfaceSynchronization);
   compositor_.reset(new ui::Compositor(
@@ -314,9 +313,12 @@ void WindowTreeHost::InitCompositor() {
 }
 
 void WindowTreeHost::OnAcceleratedWidgetAvailable() {
+  compositor_->SetVisible(false);
+  compositor_->ReleaseAcceleratedWidget();
   compositor_->SetAcceleratedWidget(GetAcceleratedWidget());
   prop_.reset(new ui::ViewProp(GetAcceleratedWidget(),
                                kWindowTreeHostForAcceleratedWidget, this));
+  compositor_->SetVisible(true);
 }
 
 void WindowTreeHost::OnHostMovedInPixels(

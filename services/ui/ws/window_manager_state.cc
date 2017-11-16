@@ -915,6 +915,7 @@ void WindowManagerState::OnEventOccurredOutsideOfModalWindow(
 
 viz::HitTestQuery* WindowManagerState::GetHitTestQueryForDisplay(
     int64_t display_id) {
+#if 0
   Display* display = display_manager()->GetDisplayById(display_id);
   if (!display)
     return nullptr;
@@ -925,6 +926,9 @@ viz::HitTestQuery* WindowManagerState::GetHitTestQueryForDisplay(
       display_hit_test_query_map.find(display->root_window()->frame_sink_id());
   return (iter != display_hit_test_query_map.end()) ? iter->second.get()
                                                     : nullptr;
+#else
+  return nullptr;
+#endif
 }
 
 ServerWindow* WindowManagerState::GetWindowFromFrameSinkId(

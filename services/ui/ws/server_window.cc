@@ -54,7 +54,7 @@ ServerWindow::ServerWindow(ServerWindowDelegate* delegate,
   // TODO(kylechar): Add method to reregister |frame_sink_id_| when viz service
   // has crashed.
   DCHECK(frame_sink_id_.is_valid());
-  auto* host_frame_sink_manager = delegate_->GetHostFrameSinkManager();
+  auto* host_frame_sink_manager = delegate_->GetXXXProxy();
   DCHECK(host_frame_sink_manager);
   host_frame_sink_manager->RegisterFrameSinkId(frame_sink_id_, this);
 #if DCHECK_IS_ON()
@@ -86,7 +86,7 @@ ServerWindow::~ServerWindow() {
   for (auto& observer : observers_)
     observer.OnWindowDestroyed(this);
 
-  auto* host_frame_sink_manager = delegate_->GetHostFrameSinkManager();
+  auto* host_frame_sink_manager = delegate_->GetXXXProxy();
   if (host_frame_sink_manager)
     host_frame_sink_manager->InvalidateFrameSinkId(frame_sink_id_);
 }
@@ -109,6 +109,7 @@ void ServerWindow::CreateRootCompositorFrameSink(
     viz::mojom::CompositorFrameSinkAssociatedRequest sink_request,
     viz::mojom::CompositorFrameSinkClientPtr client,
     viz::mojom::DisplayPrivateAssociatedRequest display_request) {
+#if 0
   has_created_compositor_frame_sink_ = true;
   // TODO(fsamuel): AcceleratedWidget cannot be transported over IPC for Mac
   // or Android. We should instead use GpuSurfaceTracker here on those
@@ -117,14 +118,17 @@ void ServerWindow::CreateRootCompositorFrameSink(
       frame_sink_id_, widget,
       viz::CreateRendererSettings(viz::BufferToTextureTargetMap()),
       std::move(sink_request), std::move(client), std::move(display_request));
+#endif
 }
 
 void ServerWindow::CreateCompositorFrameSink(
     viz::mojom::CompositorFrameSinkRequest request,
     viz::mojom::CompositorFrameSinkClientPtr client) {
+#if 0
   has_created_compositor_frame_sink_ = true;
   delegate_->GetHostFrameSinkManager()->CreateCompositorFrameSink(
       frame_sink_id_, std::move(request), std::move(client));
+#endif
 }
 
 void ServerWindow::Add(ServerWindow* child) {
@@ -390,7 +394,7 @@ void ServerWindow::SetProperty(const std::string& name,
     properties_.erase(it);
   }
 #if DCHECK_IS_ON()
-  auto* host_frame_sink_manager = delegate_->GetHostFrameSinkManager();
+  auto* host_frame_sink_manager = delegate_->GetXXXProxy();
   if (host_frame_sink_manager && name == mojom::WindowManager::kName_Property)
     host_frame_sink_manager->SetFrameSinkDebugLabel(frame_sink_id_, GetName());
 #endif

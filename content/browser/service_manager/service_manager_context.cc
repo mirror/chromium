@@ -20,6 +20,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "build/build_config.h"
+#include "components/viz/host/host_frame_sink_manager.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/child_process_launcher.h"
 #include "content/browser/gpu/gpu_process_host.h"
@@ -249,6 +250,7 @@ std::unique_ptr<service_manager::Service> CreateEmbeddedUIService(
   config.resource_runner = task_runner;
   config.image_cursors_set_weak_ptr = image_cursors_set_weak_ptr;
   config.memory_manager = memory_manager;
+  config.mus_should_host_viz = false;
   return base::MakeUnique<ui::Service>(&config);
 }
 

@@ -20,9 +20,31 @@ namespace ws {
 
 class ServerWindow;
 
+class XXXProxy {
+ public:
+  virtual ~XXXProxy() {}
+
+  virtual void RegisterFrameSinkId(const viz::FrameSinkId& frame_sink_id,
+                                   viz::HostFrameSinkClient* client) = 0;
+
+  virtual void SetFrameSinkDebugLabel(const viz::FrameSinkId& frame_sink_id,
+                                      const std::string& name) = 0;
+
+  virtual void InvalidateFrameSinkId(const viz::FrameSinkId& frame_sink_id) = 0;
+
+  virtual void RegisterFrameSinkHierarchy(const viz::FrameSinkId& new_parent,
+                                          const viz::FrameSinkId& child) = 0;
+  virtual void UnregisterFrameSinkHierarchy(const viz::FrameSinkId& old_parent,
+                                            const viz::FrameSinkId& child) = 0;
+};
+
 class ServerWindowDelegate {
  public:
+  virtual XXXProxy* GetXXXProxy() = 0;
+
+#if 0
   virtual viz::HostFrameSinkManager* GetHostFrameSinkManager() = 0;
+#endif
 
   // Returns the root of the window tree to which this |window| is attached.
   // Returns null if this window is not attached up through to a root window.

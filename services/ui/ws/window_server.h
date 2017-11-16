@@ -56,7 +56,7 @@ class WindowServer : public ServerWindowDelegate,
                      public UserDisplayManagerDelegate,
                      public UserIdTrackerObserver {
  public:
-  explicit WindowServer(WindowServerDelegate* delegate);
+  WindowServer(WindowServerDelegate* delegate, bool should_host_viz);
   ~WindowServer() override;
 
   WindowServerDelegate* delegate() { return delegate_; }
@@ -250,7 +250,10 @@ class WindowServer : public ServerWindowDelegate,
   VideoDetectorImpl* video_detector() { return &video_detector_; }
 
   // ServerWindowDelegate:
+  XXXProxy* GetXXXProxy() override;
+#if 0
   viz::HostFrameSinkManager* GetHostFrameSinkManager() override;
+#endif
   void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info,
                                 ServerWindow* window) override;
 
@@ -412,6 +415,7 @@ class WindowServer : public ServerWindowDelegate,
 
   // Provides interfaces to create and manage FrameSinks.
   std::unique_ptr<viz::HostFrameSinkManager> host_frame_sink_manager_;
+  std::unique_ptr<XXXProxy> xxx_proxy_;
 
   VideoDetectorImpl video_detector_;
 

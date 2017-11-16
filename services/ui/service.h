@@ -15,6 +15,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/single_thread_task_runner.h"
 #include "components/discardable_memory/public/interfaces/discardable_shared_memory_manager.mojom.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -85,6 +86,8 @@ class Service : public service_manager::Service,
     // If null Service creates a DiscardableSharedMemoryManager.
     discardable_memory::DiscardableSharedMemoryManager* memory_manager =
         nullptr;
+
+    bool mus_should_host_viz = true;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(InProcessConfig);
@@ -223,6 +226,8 @@ class Service : public service_manager::Service,
   // running in-process.
   std::unique_ptr<discardable_memory::DiscardableSharedMemoryManager>
       owned_discardable_shared_memory_manager_;
+
+  const bool should_host_viz_;
 
   service_manager::BinderRegistryWithArgs<
       const service_manager::BindSourceInfo&>

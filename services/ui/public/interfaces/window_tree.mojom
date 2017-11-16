@@ -377,6 +377,8 @@ interface WindowTreeClient {
   // the embed root policy.
   OnEmbeddedAppDisconnected(uint32 window);
 
+  X(int32 widget);
+
   // Sent when another connection is embedded in the Window this connection was
   // previously embedded in. See Embed() for more information.
   OnUnembed(uint32 window);
