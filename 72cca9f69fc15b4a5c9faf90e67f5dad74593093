@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "169186fa_64a269a1",
+        "filename": "extensions/browser/api/declarative/declarative_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T16:00:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e30d9ffb_c8d588e1",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 31
+      },
+      "revId": "72cca9f69fc15b4a5c9faf90e67f5dad74593093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb67b451_fdf06428",
         "filename": "extensions/browser/api/declarative/declarative_api.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-16T09:58:34Z",
       "side": 1,
       "message": "Ideally this would be |auto\u0026 it|, but as you probably noticed that currently doesn\u0027t work, since dereferencing the DictItems() iterator returns a temporary.\n\nLuckily once DictItems() is fixed, this code won\u0027t compile anymore (assuming base::Value\u0027s copy constructor stays deleted), and we can fix it then.",
+      "range": {
+        "startLine": 125,
+        "startChar": 7,
+        "endLine": 125,
+        "endChar": 14
+      },
+      "revId": "72cca9f69fc15b4a5c9faf90e67f5dad74593093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d075ad08_54420c0a",
+        "filename": "extensions/browser/api/declarative/declarative_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T16:00:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fb67b451_fdf06428",
       "range": {
         "startLine": 125,
         "startChar": 7,
