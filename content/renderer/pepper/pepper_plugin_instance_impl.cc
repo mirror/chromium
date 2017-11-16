@@ -364,6 +364,25 @@ class PluginInstanceLockTarget : public MouseLockDispatcher::LockTarget {
   PepperPluginInstanceImpl* plugin_;
 };
 
+void PrintPDFOutput(PP_Resource print_output,
+                    printing::PdfMetafileSkia* metafile) {
+#if BUILDFLAG(ENABLE_PRINTING)
+  DCHECK(metafile);
+
+  ppapi::thunk::EnterResourceNoLock<PPB_Buffer_API> enter(print_output, true);
+  if (enter.failed())
+    return;
+
+  BufferAutoMapper mapper(enter.object());
+  if (!mapper.data() || !mapper.size()) {
+    NOTREACHED();
+    return;
+  }
+
+  metafile->InitFromData(mapper.data(), mapper.size());
+#endif  // BUILDFLAG(ENABLE_PRINTING)
+}
+
 }  // namespace
 
 // static
@@ -1891,6 +1910,7 @@ int PepperPluginInstanceImpl::PrintBegin(const WebPrintParams& print_params) {
   current_print_settings_ = print_settings;
   metafile_ = nullptr;
   ranges_.clear();
+  ranges_.reserve(num_pages);
   return num_pages;
 }
 
@@ -1898,62 +1918,51 @@ void PepperPluginInstanceImpl::PrintPage(int page_number,
                                          blink::WebCanvas* canvas) {
 #if BUILDFLAG(ENABLE_PRINTING)
   DCHECK(plugin_print_interface_);
-  PP_PrintPageNumberRange_Dev page_range;
-  page_range.first_page_number = page_range.last_page_number = page_number;
-  // The canvas only has a metafile on it for print preview.
+
+  // |canvas| should always have an associated metafile.
   printing::PdfMetafileSkia* metafile =
       printing::MetafileSkiaWrapper::GetMetafileFromCanvas(canvas);
-  bool save_for_later = (metafile != nullptr);
-#if defined(OS_MACOSX)
-  save_for_later = save_for_later && cc::IsPreviewMetafile(canvas);
-#endif  // defined(OS_MACOSX)
-  if (save_for_later) {
-    ranges_.push_back(page_range);
+  DCHECK(metafile);
+  if (ranges_.empty()) {
+    // Store |metafile| on the first call.
+    DCHECK(!metafile_);
     metafile_ = metafile;
   } else {
-    PrintPageHelper(&page_range, 1, metafile);
+    // The metafile should be the same across all calls for a given print job.
+    DCHECK_EQ(metafile_, metafile);
   }
+
+  PP_PrintPageNumberRange_Dev page_range;
+  page_range.first_page_number = page_range.last_page_number = page_number;
+  ranges_.push_back(page_range);
 #endif
-}
-
-void PepperPluginInstanceImpl::PrintPageHelper(
-    PP_PrintPageNumberRange_Dev* page_ranges,
-    int num_ranges,
-    printing::PdfMetafileSkia* metafile) {
-  // Keep a reference on the stack. See NOTE above.
-  scoped_refptr<PepperPluginInstanceImpl> ref(this);
-  DCHECK(plugin_print_interface_);
-  if (!plugin_print_interface_)
-    return;
-  PP_Resource print_output = plugin_print_interface_->PrintPages(
-      pp_instance(), page_ranges, num_ranges);
-  if (!print_output)
-    return;
-
-  if (current_print_settings_.format == PP_PRINTOUTPUTFORMAT_PDF ||
-      current_print_settings_.format == PP_PRINTOUTPUTFORMAT_RASTER)
-    PrintPDFOutput(print_output, metafile);
-
-  // Now we need to release the print output resource.
-  PluginModule::GetCore()->ReleaseResource(print_output);
 }
 
 void PepperPluginInstanceImpl::PrintEnd() {
   // Keep a reference on the stack. See NOTE above.
   scoped_refptr<PepperPluginInstanceImpl> ref(this);
-  if (!ranges_.empty())
-    PrintPageHelper(&(ranges_.front()), ranges_.size(), metafile_);
-  metafile_ = nullptr;
-  ranges_.clear();
 
   DCHECK(plugin_print_interface_);
-  if (plugin_print_interface_)
-    plugin_print_interface_->End(pp_instance());
 
+  if (!ranges_.empty()) {
+    PP_Resource print_output = plugin_print_interface_->PrintPages(
+        pp_instance(), ranges_.data(), ranges_.size());
+    if (print_output) {
+      if (current_print_settings_.format == PP_PRINTOUTPUTFORMAT_PDF ||
+          current_print_settings_.format == PP_PRINTOUTPUTFORMAT_RASTER) {
+        PrintPDFOutput(print_output, metafile_);
+      }
+
+      // Now release the print output resource.
+      PluginModule::GetCore()->ReleaseResource(print_output);
+    }
+
+    ranges_.clear();
+    metafile_ = nullptr;
+  }
+
+  plugin_print_interface_->End(pp_instance());
   memset(&current_print_settings_, 0, sizeof(current_print_settings_));
-#if defined(OS_MACOSX)
-  last_printed_page_ = NULL;
-#endif  // defined(OS_MACOSX)
 }
 
 bool PepperPluginInstanceImpl::GetPrintPresetOptionsFromDocument(
@@ -2097,32 +2106,7 @@ bool PepperPluginInstanceImpl::IsViewAccelerated() {
   if (!frame)
     return false;
   WebView* view = frame->View();
-  if (!view)
-    return false;
-
-  return view->IsAcceleratedCompositingActive();
-}
-
-bool PepperPluginInstanceImpl::PrintPDFOutput(
-    PP_Resource print_output,
-    printing::PdfMetafileSkia* metafile) {
-#if BUILDFLAG(ENABLE_PRINTING)
-  ppapi::thunk::EnterResourceNoLock<PPB_Buffer_API> enter(print_output, true);
-  if (enter.failed())
-    return false;
-
-  BufferAutoMapper mapper(enter.object());
-  if (!mapper.data() || !mapper.size()) {
-    NOTREACHED();
-    return false;
-  }
-
-  if (metafile)
-    return metafile->InitFromData(mapper.data(), mapper.size());
-
-  NOTREACHED();
-#endif  // ENABLE_PRINTING
-  return false;
+  return view && view->IsAcceleratedCompositingActive();
 }
 
 void PepperPluginInstanceImpl::UpdateLayer(bool force_creation) {
