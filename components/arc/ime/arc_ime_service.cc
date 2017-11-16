@@ -466,6 +466,11 @@ bool ArcImeService::IsTextEditCommandEnabled(
   return false;
 }
 
+const GURL& ArcImeService::GetClientSourceInfo() {
+  // TODO(yhanada): Implement this method. crbug.com/752657
+  return GURL::EmptyGURL();
+}
+
 void ArcImeService::InvalidateSurroundingTextAndSelectionRange() {
   text_range_ = gfx::Range::InvalidRange();
   text_in_range_ = base::string16();

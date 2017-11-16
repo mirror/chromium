@@ -1626,6 +1626,10 @@ void Textfield::SetTextEditCommandForNextKeyEvent(ui::TextEditCommand command) {
   scheduled_text_edit_command_ = command;
 }
 
+const GURL& Textfield::GetClientSourceInfo() {
+  return GURL::EmptyGURL();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Textfield, protected:
 

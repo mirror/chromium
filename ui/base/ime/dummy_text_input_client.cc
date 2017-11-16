@@ -119,4 +119,8 @@ bool DummyTextInputClient::IsTextEditCommandEnabled(
 void DummyTextInputClient::SetTextEditCommandForNextKeyEvent(
     TextEditCommand command) {}
 
+const GURL& DummyTextInputClient::GetClientSourceInfo() {
+  return GURL::EmptyGURL();
+}
+
 }  // namespace ui

@@ -16,6 +16,7 @@
 #include "ui/base/ime/ui_base_ime_export.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/gfx/range/range.h"
+#include "url/gurl.h"
 
 namespace gfx {
 class Rect;
@@ -168,6 +169,10 @@ class UI_BASE_IME_EXPORT TextInputClient {
   // TextInputClient). The edit command will take into account any OS-specific,
   // or user-specified, keybindings that may be set up.
   virtual void SetTextEditCommandForNextKeyEvent(TextEditCommand command) = 0;
+
+  // Returns where the text input is. The empty URL will be returned if a
+  // TextInputClient doesn't support this method.
+  virtual const GURL& GetClientSourceInfo() = 0;
 };
 
 }  // namespace ui
