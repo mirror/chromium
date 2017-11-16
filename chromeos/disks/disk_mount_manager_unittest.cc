@@ -57,6 +57,7 @@ struct TestDiskInfo {
   bool on_boot_device;
   bool on_removable_device;
   bool is_hidden;
+  bool is_virtual;
   const char* file_system_type;
   const char* base_mount_path;
 };
@@ -93,6 +94,7 @@ const TestDiskInfo kTestDisks[] = {
         false,       // is on boot device
         true,        // is on removable device
         false,       // is hidden
+        false,       // is virtual
         kFileSystemType1,
         ""  // base mount path
     },
@@ -118,6 +120,7 @@ const TestDiskInfo kTestDisks[] = {
         false,       // is on boot device
         true,        // is on removable device
         false,       // is hidden
+        false,       // is virtual
         kFileSystemType2,
         ""  // base mount path
     },
@@ -143,6 +146,7 @@ const TestDiskInfo kTestDisks[] = {
         false,       // is on boot device
         true,        // is on removable device
         false,       // is hidden
+        false,       // is virtual
         kFileSystemType2,
         ""  // base mount path
     },
@@ -341,6 +345,13 @@ class MockDiskMountManagerObserver : public DiskMountManager::Observer {
     events_.push_back(std::make_unique<DiskEvent>(event, *disk));
   }
 
+  void OnAutoMountableDiskEvent(DiskMountManager::DiskEvent event,
+                                const DiskMountManager::Disk* disk) override {
+    // Take a snapshot (copy) of the Disk object at the time of invocation for
+    // later verification.
+    events_.push_back(std::make_unique<DiskEvent>(event, *disk));
+  }
+
   void OnFormatEvent(DiskMountManager::FormatEvent event,
                      chromeos::FormatError error_code,
                      const std::string& device_path) override {
@@ -518,8 +529,8 @@ class DiskMountManagerTest : public testing::Test {
             disk.product_name, disk.fs_uuid, disk.system_path_prefix,
             disk.device_type, disk.size_in_bytes, disk.is_parent,
             disk.is_read_only, disk.has_media, disk.on_boot_device,
-            disk.on_removable_device, disk.is_hidden, disk.file_system_type,
-            disk.base_mount_path)));
+            disk.on_removable_device, disk.is_hidden, disk.is_virtual,
+            disk.file_system_type, disk.base_mount_path)));
   }
 
   // Adds a new mount point to the disk mount manager.
