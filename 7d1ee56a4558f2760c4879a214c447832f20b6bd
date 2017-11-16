@@ -129,6 +129,30 @@
       "revId": "7d1ee56a4558f2760c4879a214c447832f20b6bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2e41c3e_d80063d5",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1444,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-16T20:46:54Z",
+      "side": 1,
+      "message": "Your last sentence was unfinished...\n\nLegacyNavigationManagerImpl::AddTransientItem only references crbug.com/676129, which doesn\u0027t have more details about the non-reload use cases. So I don\u0027t think we can improve the comment here further.\n\nSince LegacyNavigationManagerImpl::AddPendingItem() either returns a brand new pending item or nullptr, we can prove that this CL doesn\u0027t introduce any behavior changes for legacy manager. I\u0027ll land this now so I can make progress on navigation refactor.",
+      "parentUuid": "9bd43fd8_f8bb3b1a",
+      "range": {
+        "startLine": 1444,
+        "startChar": 42,
+        "endLine": 1444,
+        "endChar": 48
+      },
+      "revId": "7d1ee56a4558f2760c4879a214c447832f20b6bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
