@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "01e71255_821c2182",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-11-16T19:26:59Z",
+      "side": 1,
+      "message": "A crash was reported here:\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d784561\u0026q\u003downer%3Ame\u0026colspec\u003dID%20Pri%20M%20Stars%20ReleaseBlock%20Component%20Status%20Owner%20Summary%20OS%20Modified\n\nI prefer we use Profile.getLastUsedProfile(), like you\u0027ve done in other other IPH cases, however Tommy raised this issue:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/700981/5/chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java#217\nThat\u0027s why I\u0027ve been getting it via the Activity. do you think it\u0027ll be fine if I switch back to Profile.getLastUsedProfile()?",
+      "parentUuid": "79749059_b42d0fce",
+      "range": {
+        "startLine": 199,
+        "startChar": 22,
+        "endLine": 199,
+        "endChar": 62
+      },
+      "revId": "29075da845c16abfdc88cf3d77fff181d8be76a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad92b3e4_b4d08e2a",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-16T05:00:40Z",
       "side": 1,
       "message": "I think we can remove the \"Do not translate for now.\" Let\u0027s ask Shimi for a quick consultation on the string descriptions (or a quick review on what\u0027s here) to make sure we\u0027re making translations easy for our translators.",
+      "range": {
+        "startLine": 2801,
+        "startChar": 250,
+        "endLine": 2801,
+        "endChar": 253
+      },
+      "revId": "29075da845c16abfdc88cf3d77fff181d8be76a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee3cca96_adce40cc",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 2801,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-11-16T19:26:59Z",
+      "side": 1,
+      "message": "Good idea. I\u0027ll do that.",
+      "parentUuid": "ad92b3e4_b4d08e2a",
       "range": {
         "startLine": 2801,
         "startChar": 250,
