@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "28b10cf3_59b6fcc0",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_blocking_page.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-16T04:40:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d958645_fcdc6bdb",
+      "range": {
+        "startLine": 16,
+        "startChar": 59,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "5b555b21483a1d6958434d7edb6fde33e468c49f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15d22345_16b6788d",
         "filename": "chrome/browser/ssl/ssl_error_controller_client.h",
         "patchSetId": 1
@@ -68,6 +92,30 @@
       "revId": "5b555b21483a1d6958434d7edb6fde33e468c49f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa6fe3b2_b280517d",
+        "filename": "chrome/browser/ssl/ssl_error_controller_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-16T04:40:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15d22345_16b6788d",
+      "range": {
+        "startLine": 16,
+        "startChar": 44,
+        "endLine": 16,
+        "endChar": 52
+      },
+      "revId": "5b555b21483a1d6958434d7edb6fde33e468c49f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
