@@ -2158,8 +2158,8 @@ TEST_F(TransportSecurityStateTest, RequireCTConsultsDelegate) {
   ASSERT_TRUE(cert);
 
   HashValueVector hashes;
-  hashes.push_back(HashValue(
-      X509Certificate::CalculateFingerprint256(cert->os_cert_handle())));
+  hashes.push_back(
+      HashValue(X509Certificate::CalculateFingerprint256(cert->cert_buffer())));
 
   {
     TransportSecurityState state;

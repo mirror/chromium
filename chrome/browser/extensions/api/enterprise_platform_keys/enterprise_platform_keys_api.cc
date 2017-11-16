@@ -16,6 +16,7 @@
 #include "chrome/common/extensions/api/enterprise_platform_keys_internal.h"
 #include "content/public/browser/browser_thread.h"
 #include "net/cert/x509_certificate.h"
+#include "net/cert/x509_util.h"
 
 namespace extensions {
 
@@ -117,10 +118,8 @@ void EnterprisePlatformKeysGetCertificatesFunction::OnGotCertificates(
   for (net::CertificateList::const_iterator it = certs->begin();
        it != certs->end();
        ++it) {
-    std::string der_encoding;
-    net::X509Certificate::GetDEREncoded((*it)->os_cert_handle(), &der_encoding);
-    client_certs->Append(base::Value::CreateWithCopiedBuffer(
-        der_encoding.data(), der_encoding.size()));
+    client_certs->Append(std::make_unique<base::Value>(
+        net::x509_util::CryptoBufferAsStringPiece((*it)->cert_buffer())));
   }
 
   std::unique_ptr<base::ListValue> results(new base::ListValue());
