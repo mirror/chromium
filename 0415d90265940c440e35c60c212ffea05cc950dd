@@ -34,6 +34,24 @@
       "revId": "0415d90265940c440e35c60c212ffea05cc950dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45563dd4_eff8be47",
+        "filename": "ash/wm/default_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-16T22:36:27Z",
+      "side": 1,
+      "message": "\u003e I think pre_auto_managed_window_bounds is probably not the right one to use. If we create a new window (from no window to one window). It may do auto-placement to center window: https://cs.chromium.org/chromium/src/ash/wm/window_positioner.cc?type\u003dcs\u0026q\u003dsetpreauto\u0026l\u003d356\n\u003e \n\u003e In this case, it will not set pre_auto_managed_window_bounds. Then we shall never get pre_auto_managed_window_bounds.\n\nThat\u0027s fine because if it doesn\u0027t exit, it will faillback to the current bounds right?",
+      "parentUuid": "c006d56e_847a2134",
+      "revId": "0415d90265940c440e35c60c212ffea05cc950dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
