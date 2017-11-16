@@ -106,6 +106,7 @@ class CORE_EXPORT WorkerOrWorkletScriptController
   ScriptValue Evaluate(const String& script,
                        const String& file_name,
                        const TextPosition& script_start_position,
+                       const ScriptSourceLocationType&,
                        CachedMetadataHandler*,
                        V8CacheOptions);
   void DisposeContextIfNeeded();

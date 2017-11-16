@@ -29,6 +29,7 @@
 #include <stdint.h>
 
 #include "bindings/core/v8/ReferrerScriptInfo.h"
+#include "bindings/core/v8/ScriptSourceLocationType.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/V8CacheOptions.h"
 #include "core/CoreExport.h"
@@ -60,30 +61,34 @@ class CORE_EXPORT V8ScriptRunner final {
                                                   const ScriptFetchOptions&,
                                                   AccessControlStatus,
                                                   V8CacheOptions);
-  static v8::MaybeLocal<v8::Script> CompileScript(ScriptState*,
-                                                  const String&,
-                                                  const String& file_name,
-                                                  const String& source_map_url,
-                                                  const TextPosition&,
-                                                  CachedMetadataHandler*,
-                                                  AccessControlStatus,
-                                                  V8CacheOptions,
-                                                  const ReferrerScriptInfo&);
+  static v8::MaybeLocal<v8::Script> CompileScript(
+      ScriptState*,
+      const String&,
+      const String& file_name,
+      const String& source_map_url,
+      const TextPosition&,
+      const ScriptSourceLocationType&,
+      CachedMetadataHandler*,
+      AccessControlStatus,
+      V8CacheOptions,
+      const ReferrerScriptInfo&);
   // CachedMetadataHandler is set when metadata caching is supported. For
   // normal scripe resources, CachedMetadataHandler is from ScriptResource.
   // For worker script, ScriptResource is null but CachedMetadataHandler may be
   // set. When ScriptStreamer is set, ScriptResource must be set.
-  static v8::MaybeLocal<v8::Script> CompileScript(ScriptState*,
-                                                  v8::Local<v8::String>,
-                                                  const String& file_name,
-                                                  const String& source_map_url,
-                                                  const TextPosition&,
-                                                  ScriptResource*,
-                                                  ScriptStreamer*,
-                                                  CachedMetadataHandler*,
-                                                  AccessControlStatus,
-                                                  V8CacheOptions,
-                                                  const ReferrerScriptInfo&);
+  static v8::MaybeLocal<v8::Script> CompileScript(
+      ScriptState*,
+      v8::Local<v8::String>,
+      const String& file_name,
+      const String& source_map_url,
+      const TextPosition&,
+      const ScriptSourceLocationType&,
+      ScriptResource*,
+      ScriptStreamer*,
+      CachedMetadataHandler*,
+      AccessControlStatus,
+      V8CacheOptions,
+      const ReferrerScriptInfo&);
   static v8::MaybeLocal<v8::Module> CompileModule(v8::Isolate*,
                                                   const String& source,
                                                   const String& file_name,
