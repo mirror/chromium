@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "d1f0c80d_05caa2de",
+        "filename": "chrome/browser/clipboard/clipboard_write_permission_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-16T02:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28324676_fa95ad02",
+      "revId": "733605cc3af805372089c13f4b67f16afdeee57c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e91f4a3_65367451",
         "filename": "chrome/browser/permissions/permission_request_impl.cc",
         "patchSetId": 7
