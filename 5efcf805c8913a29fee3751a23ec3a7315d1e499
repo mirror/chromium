@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "581820f3_b206d3c9",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-16T09:15:29Z",
+      "side": 1,
+      "message": "Yes it is specific (we are hiding the location bar for example).\nWe don\u0027t when we take a snapshot for the StackView.",
+      "parentUuid": "0475a40a_89f673fb",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 41
+      },
+      "revId": "5efcf805c8913a29fee3751a23ec3a7315d1e499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "613e5b50_94a296c2",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "5efcf805c8913a29fee3751a23ec3a7315d1e499",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852a8b0e_0138052b",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-16T09:15:29Z",
+      "side": 1,
+      "message": "Same.",
+      "parentUuid": "613e5b50_94a296c2",
+      "range": {
+        "startLine": 48,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 42
+      },
+      "revId": "5efcf805c8913a29fee3751a23ec3a7315d1e499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4daaf7f0_3ce8e818",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-16T09:15:29Z",
+      "side": 1,
+      "message": "GetVisibleURL is doing GetVisibleItem()-\u003eGetURL(). I have added GetOrigin.",
+      "parentUuid": "5e20b87a_1d1ddf13",
+      "range": {
+        "startLine": 114,
+        "startChar": 25,
+        "endLine": 114,
+        "endChar": 38
+      },
+      "revId": "5efcf805c8913a29fee3751a23ec3a7315d1e499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "143096e0_8018fbbf",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_mediator.h",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "5efcf805c8913a29fee3751a23ec3a7315d1e499",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c0d6950_ac8f8a99",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_mediator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-16T09:15:29Z",
+      "side": 1,
+      "message": "Changed.",
+      "parentUuid": "143096e0_8018fbbf",
+      "range": {
+        "startLine": 35,
+        "startChar": 26,
+        "endLine": 35,
+        "endChar": 27
+      },
+      "revId": "5efcf805c8913a29fee3751a23ec3a7315d1e499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
