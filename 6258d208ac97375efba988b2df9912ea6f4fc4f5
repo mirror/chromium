@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "223fe2cb_fb9a4d1a",
+        "filename": "content/browser/compositor/viz_process_transport_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-16T14:48:28Z",
+      "side": 1,
+      "message": "I\u0027ve changed it to |restart_id| throughout. Although this is removed, piman pointed out that GpuProcessHost already has exactly this value in |host_id_|.",
+      "parentUuid": "b4ad92b7_2e35a93f",
+      "range": {
+        "startLine": 148,
+        "startChar": 11,
+        "endLine": 148,
+        "endChar": 34
+      },
+      "revId": "6258d208ac97375efba988b2df9912ea6f4fc4f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61e0271e_d2a25c1f",
         "filename": "content/browser/compositor/viz_process_transport_factory.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "6258d208ac97375efba988b2df9912ea6f4fc4f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0d6fee_df00cea6",
+        "filename": "content/browser/compositor/viz_process_transport_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-16T14:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61e0271e_d2a25c1f",
+      "range": {
+        "startLine": 149,
+        "startChar": 29,
+        "endLine": 149,
+        "endChar": 55
+      },
+      "revId": "6258d208ac97375efba988b2df9912ea6f4fc4f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
