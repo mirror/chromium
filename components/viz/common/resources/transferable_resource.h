@@ -70,6 +70,12 @@ struct VIZ_COMMON_EXPORT TransferableResource {
     return r;
   }
 
+  // TODO(danakj): Some of these fiends are only GL, some are only Software,
+  // some are both but used for different purposes (like the mailbox name).
+  // It would be nice to group things together and make it more clear when
+  // they will be used or not, and provide easier access to fields such as the
+  // mailbox that also show the intent for software for GL.
+
   ResourceId id;
   // Refer to ResourceProvider::Resource for the meaning of the following data.
   ResourceFormat format;
@@ -96,6 +102,25 @@ struct VIZ_COMMON_EXPORT TransferableResource {
 #endif
   bool is_overlay_candidate;
   gfx::ColorSpace color_space;
+
+  bool operator==(const TransferableResource& o) const {
+    return id == o.id && format == o.format &&
+           buffer_format == o.buffer_format && filter == o.filter &&
+           size == o.size &&
+           mailbox_holder.mailbox == o.mailbox_holder.mailbox &&
+           mailbox_holder.sync_token == o.mailbox_holder.sync_token &&
+           mailbox_holder.texture_target == o.mailbox_holder.texture_target &&
+           read_lock_fences_enabled == o.read_lock_fences_enabled &&
+           is_software == o.is_software &&
+           shared_bitmap_sequence_number == o.shared_bitmap_sequence_number &&
+#if defined(OS_ANDROID)
+           is_backed_by_surface_texture == o.is_backed_by_surface_texture &&
+           wants_promotion_hint == o.wants_promotion_hint &&
+#endif
+           is_overlay_candidate == o.is_overlay_candidate &&
+           color_space == o.color_space;
+  }
+  bool operator!=(const TransferableResource& o) const { return !(*this == o); }
 };
 
 }  // namespace viz
