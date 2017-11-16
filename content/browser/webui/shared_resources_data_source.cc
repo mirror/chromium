@@ -200,7 +200,15 @@ SharedResourcesDataSource::GetAccessControlAllowOriginForOrigin(
 }
 
 bool SharedResourcesDataSource::IsGzipped(const std::string& path) const {
-  return path == "js/mojo_bindings.js";
+  if (path == "css/text_defaults.css" || path == "css/text_defaults_md.css" ||
+      path == "js/jstemplate_compiled.js" || path == "js/i18n_template.js" ||
+      path == "js/load_time_data.js")
+    return false;
+
+  return base::EndsWith(path, ".css", base::CompareCase::SENSITIVE) ||
+         base::EndsWith(path, ".html", base::CompareCase::SENSITIVE) ||
+         base::EndsWith(path, ".js", base::CompareCase::SENSITIVE) ||
+         base::EndsWith(path, ".svg", base::CompareCase::SENSITIVE);
 }
 
 }  // namespace content

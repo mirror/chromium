@@ -17,7 +17,6 @@
 #include "content/public/browser/web_ui_data_source.h"
 #include "net/base/url_util.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/resources/grit/webui_resources.h"
 
 WelcomeUI::WelcomeUI(content::WebUI* web_ui, const GURL& url)
     : content::WebUIController(web_ui) {
@@ -63,7 +62,6 @@ WelcomeUI::WelcomeUI(content::WebUI* web_ui, const GURL& url)
 
   html_source->AddResourcePath("logo.png", IDR_PRODUCT_LOGO_128);
   html_source->AddResourcePath("logo2x.png", IDR_PRODUCT_LOGO_256);
-  html_source->AddResourcePath("watermark.svg", IDR_WEBUI_IMAGES_GOOGLE_LOGO);
 
   if (signin::IsDiceEnabledForProfile(profile->GetPrefs())) {
     html_source->AddResourcePath("welcome.js", IDR_DICE_WELCOME_JS);
