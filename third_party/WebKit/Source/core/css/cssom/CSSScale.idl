@@ -6,12 +6,11 @@
 // "transform".
 // Spec: https://drafts.css-houdini.org/css-typed-om/#cssscale
 [
-    Constructor(double x, double y),
-    Constructor(double x, double y, double z),
+    Constructor(CSSNumberish x, CSSNumberish y, optional CSSNumberish z),
     Exposed=(Window,PaintWorklet),
     RuntimeEnabled=CSSTypedOM
 ] interface CSSScale : CSSTransformComponent {
-    attribute double x;
-    attribute double y;
-    attribute double z;
+    attribute CSSNumberish x;
+    attribute CSSNumberish y;
+    attribute CSSNumberish z;
 };
