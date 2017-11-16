@@ -71,11 +71,11 @@
    * @return {!Promise}
    */
   async function testUrls() {
-    session.evaluate(`fetch('../network/resources/small-test-1.txt')`);
+    session.evaluate(`fetch('../network/resources/small-test-1.txt');null`);
     await new Promise(resolve => responseWasReceivedCallback = resolve);
-    session.evaluate(`fetch('../network/resources/small-test-2.txt')`);
+    session.evaluate(`fetch('../network/resources/small-test-2.txt');null`);
     await new Promise(resolve => responseWasReceivedCallback = resolve);
-    session.evaluate(`fetch('../resources/test-page.html')`);
+    session.evaluate(`fetch('../resources/test-page.html');null`);
     await new Promise(resolve => responseWasReceivedCallback = resolve);
     testRunner.log('');
   }

@@ -4,6 +4,8 @@
 
 module content.mojom;
 
+import "ui/gfx/geometry/mojo/geometry.mojom";
+
 // Provides extra capabilities required for DevTools frontend to function.
 // This includes communication channel from/to inspected target which implements
 // remote debugging protocol. Protocol messages go through browser process.
@@ -31,4 +33,79 @@ interface DevToolsFrontend {
 interface DevToolsFrontendHost {
   // Sends a message to DevTools frontend embedder.
   DispatchEmbedderMessage(string message);
+};
+
+
+// Used to send large messages in chunks from session to a host.
+struct DevToolsMessageChunk {
+  // Whether this is a first chunk in a message.
+  bool is_first;
+
+  // Whether this chunk is last.
+  bool is_last;
+
+  // The total size of the message being sent in chunks, only comes in
+  // a first chunk.
+  uint32 message_size;
+
+  // Chunk data itself.
+  string data;
+
+  // Call id as defined in DevTools protocol, only comes for responses.
+  int32 call_id;
+
+  // State for future reattach, only comes for responses in a last chunk.
+  string post_state;
+};
+
+// Implemented by debugging targets which expose remote debugging protocol.
+// Examples are local frame roots and service workers.
+//
+// Note that frame instances of this interface must be associated with
+// navigation-related interface, since we should reattach sessions before
+// the navigation commits in the frame.
+interface DevToolsAgent {
+  // Attaches a new debugging session. This session speaks remote debugging
+  // protocol and restores all the changes to original state once destroyed.
+  //
+  // Non-associated io_session handles messages on IO thread and may
+  // interrupt main thread if it's busy (e.g. running long JavaScript).
+  // It should be used for debugging messages which are intended to
+  // interrupt execution, e.g. requesting a pause.
+  // Note that there is no ordering guarantee with regards to regular
+  // associated session.
+  //
+  // If |reattach_state| is present, restores the state of the session to
+  // previously saved one (see DevToolsMessageChunk). This is useful when
+  // transferring a session from one agent to another while preserving the
+  // state. For example, cross-process navigation in a frame creates a new
+  // DevToolsAgent (in a different process), but we preserve the state of
+  // debugging session by copying it from one agent to another.
+  AttachDevToolsSession(associated DevToolsSessionHost host,
+                        associated DevToolsSession& session,
+                        DevToolsSession& io_session,
+                        string? reattach_state);
+};
+
+// Represents an attached session which exposes remote debugging protocol.
+interface DevToolsSession {
+  // Dispatches protocol message from a client to a debugging target.
+  // |method| is a method name as defined in protocol (e.g. "Runtime.evaluate").
+  // |call_id| is a command id as defined in protocol, and is going to be
+  // reported back to host in response (see DevToolsMessageChunk).
+  DispatchProtocolMessage(int32 call_id, string method, string message);
+
+  // Requests an element at specific position to be inspected.
+  InspectElement(gfx.mojom.Point point);
+};
+
+// A peer of DevToolsSession, which receives notifications and responses from
+// a session, representing a remote debugging client.
+interface DevToolsSessionHost {
+  // Dispatches protocol message from a debugging target to a client.
+  DispatchProtocolMessage(DevToolsMessageChunk chunk);
+
+  // Requests a new DevTools window for a frame with given routing id.
+  // TODO(dgozman): get rid of routing id when possible.
+  RequestNewWindow(int32 frame_routing_id) => (bool success);
 };
