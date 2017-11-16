@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db372b36_728f8b73",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_buttons_updater.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-16T16:15:30Z",
+      "side": 1,
+      "message": "\"ToolbarButtonUpdater\" is, paradoxically, a better English name for this class.",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 32
+      },
+      "revId": "1f8ddf8f496101af53eac90fa3db62775e90cc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f545f8d3_bd12cf50",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_buttons_updater.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-16T16:15:30Z",
+      "side": 1,
+      "message": "What would it take to convert this (that is, the communication of the position of the button) to just use named layout guides?",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "1f8ddf8f496101af53eac90fa3db62775e90cc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
