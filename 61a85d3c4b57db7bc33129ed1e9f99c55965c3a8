@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "909efa4a_8ea1b0c1",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T23:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8ffb3f9_66a1c397",
+      "revId": "61a85d3c4b57db7bc33129ed1e9f99c55965c3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2180b4b_c531b7b8",
         "filename": "ash/touch/touch_devices_controller.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "61a85d3c4b57db7bc33129ed1e9f99c55965c3a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edde92c1_2996203a",
+        "filename": "ash/touch/touch_devices_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T23:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2180b4b_c531b7b8",
+      "revId": "61a85d3c4b57db7bc33129ed1e9f99c55965c3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
