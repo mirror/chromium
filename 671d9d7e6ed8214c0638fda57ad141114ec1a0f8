@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fd5f0b2_de267757",
+        "filename": "build/linux/sysroot_scripts/sysroot-creator-stretch.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T23:13:39Z",
+      "side": 1,
+      "message": "Stick with LANG\u003dC so this doesn\u0027t flip-flop around.",
+      "revId": "671d9d7e6ed8214c0638fda57ad141114ec1a0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
