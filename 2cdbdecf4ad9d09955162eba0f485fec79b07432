@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d127ed6c_3f1feb68",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 5999,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-16T16:48:25Z",
+      "side": 1,
+      "message": "What is the affect of not calling UpdateSourceURL? Does the UKM get ignored?\n\n(It would also be good to add some comments to ukm_interface.mojom to help document how these things are supposed to work)\n\nOne other thing to consider:\nIIRC, UKM uses the service manager Connector to connect directly--but that means trusting the renderer for things like URLs. Would it be a possibility to broker UKM recorders via the browser, via the LocalFrame\u0027s InterfaceProvider? This would let us bind more bits of interesting state on the browser side, and the information will be trustworthy (by definition)... and will also handle any OOPIF issues more seamlessly.",
+      "revId": "2cdbdecf4ad9d09955162eba0f485fec79b07432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
