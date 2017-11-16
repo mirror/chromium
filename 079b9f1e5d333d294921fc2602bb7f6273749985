@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cca6c2f2_96e9ef85",
+        "filename": "content/gpu/gpu_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-16T23:14:12Z",
+      "side": 1,
+      "message": "They don\u0027t do typical I/O for put the thread to sleep, but they talk to hardware driver to do audio/video decoding at 30/60 fps, so if you happen to run your critical task on the same sequence it\u0027ll be too bad for you.",
+      "parentUuid": "5e760e18_ff921740",
+      "range": {
+        "startLine": 41,
+        "startChar": 55,
+        "endLine": 42,
+        "endChar": 36
+      },
+      "revId": "079b9f1e5d333d294921fc2602bb7f6273749985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee584e23_1b610bdd",
         "filename": "content/gpu/gpu_service_factory.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "079b9f1e5d333d294921fc2602bb7f6273749985",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45827e85_6b7f5ca5",
+        "filename": "content/gpu/gpu_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-16T23:14:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee584e23_1b610bdd",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 72
+      },
+      "revId": "079b9f1e5d333d294921fc2602bb7f6273749985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
