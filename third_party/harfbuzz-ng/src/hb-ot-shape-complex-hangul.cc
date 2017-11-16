@@ -80,7 +80,7 @@ data_create_hangul (const hb_ot_shape_plan_t *plan)
 {
   hangul_shape_plan_t *hangul_plan = (hangul_shape_plan_t *) calloc (1, sizeof (hangul_shape_plan_t));
   if (unlikely (!hangul_plan))
-    return nullptr;
+    return NULL;
 
   for (unsigned int i = 0; i < HANGUL_FEATURE_COUNT; i++)
     hangul_plan->mask_array[i] = plan->map.get_1_mask (hangul_features[i]);
@@ -420,13 +420,12 @@ const hb_ot_complex_shaper_t _hb_ot_complex_shaper_hangul =
   data_create_hangul,
   data_destroy_hangul,
   preprocess_text_hangul,
-  nullptr, /* postprocess_glyphs */
+  NULL, /* postprocess_glyphs */
   HB_OT_SHAPE_NORMALIZATION_MODE_NONE,
-  nullptr, /* decompose */
-  nullptr, /* compose */
+  NULL, /* decompose */
+  NULL, /* compose */
   setup_masks_hangul,
-  nullptr, /* disable_otl */
-  nullptr, /* reorder_marks */
+  NULL, /* disable_otl */
   HB_OT_SHAPE_ZERO_WIDTH_MARKS_NONE,
   false, /* fallback_position */
 };

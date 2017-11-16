@@ -30,18 +30,17 @@
 const hb_ot_complex_shaper_t _hb_ot_complex_shaper_default =
 {
   "default",
-  nullptr, /* collect_features */
-  nullptr, /* override_features */
-  nullptr, /* data_create */
-  nullptr, /* data_destroy */
-  nullptr, /* preprocess_text */
-  nullptr, /* postprocess_glyphs */
+  NULL, /* collect_features */
+  NULL, /* override_features */
+  NULL, /* data_create */
+  NULL, /* data_destroy */
+  NULL, /* preprocess_text */
+  NULL, /* postprocess_glyphs */
   HB_OT_SHAPE_NORMALIZATION_MODE_DEFAULT,
-  nullptr, /* decompose */
-  nullptr, /* compose */
-  nullptr, /* setup_masks */
-  nullptr, /* disable_otl */
-  nullptr, /* reorder_marks */
+  NULL, /* decompose */
+  NULL, /* compose */
+  NULL, /* setup_masks */
+  NULL, /* disable_otl */
   HB_OT_SHAPE_ZERO_WIDTH_MARKS_BY_GDEF_LATE,
   true, /* fallback_position */
 };
