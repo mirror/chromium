@@ -306,6 +306,24 @@
     },
     {
       "key": {
+        "uuid": "8d798d05_a64c57a0",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3105,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-16T20:44:22Z",
+      "side": 1,
+      "message": "Although, you are moving formerly_visible into visible because you want visible to be empty afterwards. I think it\u0027s clearer with a swap that you\u0027re turning visible into an empty array.",
+      "parentUuid": "6c05a088_df936e41",
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71170cba_68b6106b",
         "filename": "pdf/pdfium/pdfium_engine.cc",
         "patchSetId": 9
