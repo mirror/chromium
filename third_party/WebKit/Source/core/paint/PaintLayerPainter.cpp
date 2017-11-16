@@ -58,9 +58,16 @@ void PaintLayerPainter::Paint(GraphicsContext& context,
 static ShouldRespectOverflowClipType ShouldRespectOverflowClip(
     PaintLayerFlags paint_flags,
     const LayoutObject& layout_object) {
+  // Ignore the overflow clip when painting content that is intended to
+  // be outside the clip, or when painting the mask for a clip path (spec
+  // says that the clip path can include content outside the overflow) or
+  // when painting embedded contents (because they paint all phases
+  // atomically and we do not want to clip out the border).
   return (paint_flags & kPaintLayerPaintingOverflowContents ||
           (paint_flags & kPaintLayerPaintingChildClippingMaskPhase &&
-           layout_object.HasClipPath()))
+           layout_object.HasClipPath()) ||
+          (!(paint_flags & kPaintLayerPaintingChildClippingMaskPhase) &&
+           layout_object.IsLayoutEmbeddedContent()))
              ? kIgnoreOverflowClip
              : kRespectOverflowClip;
 }
