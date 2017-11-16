@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1827ed00_461b215a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/coverage/gutter-css.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-16T22:01:54Z",
+      "side": 1,
+      "message": "I can\u0027t imagine this being necessary!",
+      "revId": "3d987fbb21172a1c81d5cdf712c3fc906f2d6be5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48bac16_7075df52",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/coverage/gutter-js.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-16T22:01:54Z",
+      "side": 1,
+      "message": "Let\u0027s nuke this while you\u0027re here, I think this got here accidentally originally when the test was copied.",
+      "revId": "3d987fbb21172a1c81d5cdf712c3fc906f2d6be5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
