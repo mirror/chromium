@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2d2d22e3_69427956",
+        "filename": "chrome/app/media_router_strings.grdp",
+        "patchSetId": 7
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-16T23:58:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4fc344f_967f98b9",
+      "revId": "2351532d2390df7edf11311a08a1ef4cc220b31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "855f8da6_c63d4d19",
         "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.css",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "35712344_6115251f",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.css",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-16T23:58:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "855f8da6_c63d4d19",
+      "revId": "2351532d2390df7edf11311a08a1ef4cc220b31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56616fb2_182d97b9",
         "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.css",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-16T19:20:33Z",
       "side": 1,
       "message": "Should we use the same styling as #hangouts-local-present-controls?",
+      "revId": "2351532d2390df7edf11311a08a1ef4cc220b31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b3b2a6_486740f5",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.css",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-16T23:58:06Z",
+      "side": 1,
+      "message": "It might be better to keep its own style. \u0027always use mirroring\u0027 checkbox does not have long descriptions as hangouts-local-present. With the same style it does not look as good as Hangout local present.",
+      "parentUuid": "56616fb2_182d97b9",
       "revId": "2351532d2390df7edf11311a08a1ef4cc220b31e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "275bbe54_67ffaeb7",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-16T23:58:06Z",
+      "side": 1,
+      "message": "Created crbug.com/786195.",
+      "parentUuid": "a6a5eb93_afa3912a",
+      "revId": "2351532d2390df7edf11311a08a1ef4cc220b31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7738da3_a6389773",
         "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
         "patchSetId": 7
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-16T19:20:33Z",
       "side": 1,
       "message": "Does this mean the browser feature/experiment or the individual user setting?",
+      "revId": "2351532d2390df7edf11311a08a1ef4cc220b31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ebfae4e_2045a45e",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-16T23:58:06Z",
+      "side": 1,
+      "message": "individual user setting.",
+      "parentUuid": "a7738da3_a6389773",
       "revId": "2351532d2390df7edf11311a08a1ef4cc220b31e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "c44dd21e_77ccea04",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-16T23:58:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3e0e83a_acc0a3df",
+      "revId": "2351532d2390df7edf11311a08a1ef4cc220b31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a949b5e_63e010e6",
         "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
         "patchSetId": 7
@@ -118,6 +226,24 @@
       "revId": "2351532d2390df7edf11311a08a1ef4cc220b31e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b788f3_0f097c9f",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-16T23:58:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a949b5e_63e010e6",
+      "revId": "2351532d2390df7edf11311a08a1ef4cc220b31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "368120e9_7e73ff1d",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-16T23:58:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bf7f603_6ef6885c",
+      "revId": "2351532d2390df7edf11311a08a1ef4cc220b31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88595c45_b10f1e21",
         "filename": "chrome/browser/resources/media_router/media_router_browser_api.js",
         "patchSetId": 7
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "2db48eb5_6b7f80d3",
+        "filename": "chrome/browser/resources/media_router/media_router_browser_api.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-16T23:58:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88595c45_b10f1e21",
+      "revId": "2351532d2390df7edf11311a08a1ef4cc220b31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e1c9c23_10c1bc2f",
         "filename": "chrome/browser/resources/media_router/media_router_data.js",
         "patchSetId": 7
@@ -169,6 +331,24 @@
       "revId": "2351532d2390df7edf11311a08a1ef4cc220b31e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb95e57_b94088bc",
+        "filename": "chrome/browser/resources/media_router/media_router_data.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-16T23:58:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e1c9c23_10c1bc2f",
+      "revId": "2351532d2390df7edf11311a08a1ef4cc220b31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
