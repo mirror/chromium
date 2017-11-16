@@ -2284,13 +2284,14 @@ void DownloadItemImpl::ResumeInterruptedDownload(
   download_params->set_fetch_error_body(fetch_error_body_);
 
   auto* manager_delegate = GetBrowserContext()->GetDownloadManagerDelegate();
+  // TODO(jming): Adjust logic for initiliaization.
   if (manager_delegate) {
     download::InProgressCache* in_progress_cache =
         manager_delegate->GetInProgressCache();
-    download::DownloadEntry* entry =
+    base::Optional<download::DownloadEntry> entry =
         in_progress_cache->RetrieveEntry(GetGuid());
     if (entry)
-      download_params->set_request_origin(entry->request_origin);
+      download_params->set_request_origin(entry.value().request_origin);
   }
 
   // Note that resumed downloads disallow redirects. Hence the referrer URL

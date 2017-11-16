@@ -23,7 +23,7 @@
 #include "base/synchronization/lock.h"
 #include "build/build_config.h"
 #include "components/download/downloader/in_progress/download_entry.h"
-#include "components/download/downloader/in_progress/in_progress_cache.h"
+#include "components/download/downloader/in_progress/in_progress_cache_impl.h"
 #include "content/browser/byte_stream.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/download/download_create_info.h"
@@ -334,6 +334,8 @@ DownloadManagerImpl::DownloadManagerImpl(BrowserContext* browser_context)
       file_factory_(new DownloadFileFactory()),
       shutdown_needed_(true),
       initialized_(false),
+      history_db_initialized_(false),
+      in_progress_cache_initialized_(false),
       browser_context_(browser_context),
       delegate_(nullptr),
       weak_factory_(this) {
@@ -683,7 +685,6 @@ DownloadInterruptReason DownloadManagerImpl::BeginDownloadRequest(
     int render_view_route_id,
     int render_frame_route_id,
     bool do_not_prompt_for_login) {
-  LOG(ERROR) << "BeginDownloadRequest";
   if (ResourceDispatcherHostImpl::Get()->is_shutdown())
     return DOWNLOAD_INTERRUPT_REASON_USER_SHUTDOWN;
 
@@ -831,11 +832,22 @@ DownloadItem* DownloadManagerImpl::CreateDownloadItem(
   return item;
 }
 
-void DownloadManagerImpl::PostInitialization() {
+void DownloadManagerImpl::PostInitialization(bool history_db_init,
+                                             bool in_progress_cache_init) {
   DCHECK(!initialized_);
-  initialized_ = true;
-  for (auto& observer : observers_)
-    observer.OnManagerInitialized();
+
+  history_db_initialized_ = history_db_init || history_db_initialized_;
+  in_progress_cache_initialized_ =
+      in_progress_cache_init || in_progress_cache_initialized_;
+
+  // Download manager is only intialized if both history db and in progress
+  // cache are intialized.
+  initialized_ = history_db_initialized_ && in_progress_cache_initialized_;
+
+  if (initialized_) {
+    for (auto& observer : observers_)
+      observer.OnManagerInitialized();
+  }
 }
 
 bool DownloadManagerImpl::IsManagerInitialized() const {
