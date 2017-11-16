@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ccca182_a5fee09d",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-16T20:20:48Z",
+      "side": 1,
+      "message": "Should this be const?",
+      "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f69bc157_b545bf35",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-16T20:20:48Z",
+      "side": 1,
+      "message": "Is true returned if no pref has been set?",
+      "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f4fb215_8083e5f1",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-16T20:20:48Z",
+      "side": 1,
+      "message": "Slight preference for:\n\nconst MediaRouteController* controller \u003d media_router_ui_-\u003eGetMediaRouteController();\n\nif (controller-\u003eGetControllerType() \u003d\u003d kMirroring) {\n  const MirroringMediaRouteController* mirroring_controller \u003d MirroringMediaRouteController::From(controller);\n  DCHECK(mirroring_controller);\n  ...\n}\n\nThis makes is clear to the caller that the following code applies only to mirroring controllers (vs an implicit check in From()).",
+      "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f296133b_5df7158a",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-16T20:20:48Z",
+      "side": 1,
+      "message": "I\u0027m a little fuzzy on the ownership here.  What if there are multiple controllers active (multiple active routes)?",
+      "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f53bbd2_6954ab48",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-16T20:20:48Z",
+      "side": 1,
+      "message": "Should the controller have a pointer to pref_service instead of having to look it up each time that there is a media status update?",
+      "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "498a1aea_5c020036",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-16T20:20:48Z",
+      "side": 1,
+      "message": "Please add a test that reads and updates the setting, and checks that the pref is synced properly to/from the UI.",
+      "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
