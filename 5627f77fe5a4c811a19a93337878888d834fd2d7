@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c71486aa_ab4fad60",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1128941
+      },
+      "writtenOn": "2017-11-16T02:00:16Z",
+      "side": 1,
+      "message": "Could you use a smaller one like the infra one that\u0027s only 11k? This is 10x larger. Bus wifi and plane wifi users shouldn\u0027t have to suffer. I know this is cached but there\u0027s no benefit to this larger image.",
+      "revId": "5627f77fe5a4c811a19a93337878888d834fd2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
