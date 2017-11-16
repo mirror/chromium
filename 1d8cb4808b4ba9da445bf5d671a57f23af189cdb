@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db9df36a_202c00ac",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-16T10:05:54Z",
+      "side": 1,
+      "message": "good point",
+      "parentUuid": "fc376418_dc04820f",
+      "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fdc86fc_694a774e",
         "filename": "chromeos/dbus/fake_cryptohome_client.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe083725_b403e1a6",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-16T10:05:54Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "0fdc86fc_694a774e",
+      "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "4a790be2_77ee2388",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-16T10:05:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98789b0b_1acd580c",
+      "range": {
+        "startLine": 297,
+        "startChar": 4,
+        "endLine": 297,
+        "endChar": 8
+      },
+      "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f337650f_f0bcc32a",
         "filename": "chromeos/dbus/fake_cryptohome_client.cc",
         "patchSetId": 1
@@ -79,6 +139,30 @@
       "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f50828c6_ff2c599b",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-16T10:05:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f337650f_f0bcc32a",
+      "range": {
+        "startLine": 299,
+        "startChar": 35,
+        "endLine": 299,
+        "endChar": 44
+      },
+      "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +212,54 @@
     },
     {
       "key": {
+        "uuid": "394ea97c_524862f7",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-16T10:05:54Z",
+      "side": 1,
+      "message": "oops, this is embarrassing.",
+      "parentUuid": "579edec5_6d34391a",
+      "range": {
+        "startLine": 786,
+        "startChar": 67,
+        "endLine": 786,
+        "endChar": 69
+      },
+      "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "757b6579_80bd4b8e",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-16T10:05:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9658aa52_25f5ff9a",
+      "range": {
+        "startLine": 786,
+        "startChar": 19,
+        "endLine": 786,
+        "endChar": 29
+      },
+      "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b2a25e5_5ff570ab",
         "filename": "chromeos/dbus/fake_cryptohome_client.cc",
         "patchSetId": 1
@@ -142,6 +274,24 @@
       "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50a0bf1c_8b6b01e3",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-16T10:05:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b2a25e5_5ff570ab",
+      "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -182,6 +332,48 @@
       "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa10696_eac7a98f",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-16T10:05:54Z",
+      "side": 1,
+      "message": "That\u0027s a good question. Now that function called in the constructor only. I\u0027ll ask an owner of that client.",
+      "parentUuid": "cb56ba95_ac834407",
+      "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cc88bf3_5a114eae",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-16T10:05:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d0460f3e_4951168c",
+      "range": {
+        "startLine": 803,
+        "startChar": 4,
+        "endLine": 803,
+        "endChar": 18
+      },
+      "revId": "1d8cb4808b4ba9da445bf5d671a57f23af189cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
