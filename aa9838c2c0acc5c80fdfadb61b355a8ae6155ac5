@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5440f700_9708c582",
+        "filename": "ui/views/controls/slider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-11-16T15:55:06Z",
+      "side": 1,
+      "message": "This will steal focus to the slider every time a user changes volume, which is undesirable since they will loose their place and we don\u0027t restore focus afterwards.\n\nCould you format the AX_ATTR_VALUE explicitly to %d\\% volume/brightness in the specific slider subclasses?",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 52
+      },
+      "revId": "aa9838c2c0acc5c80fdfadb61b355a8ae6155ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
