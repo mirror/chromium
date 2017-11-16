@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a91840a8_1570fd29",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-16T05:17:25Z",
+      "side": 1,
+      "message": "We should move this part to LayoutText.cpp along with HasTextBoxes() at L1024.",
+      "range": {
+        "startLine": 1031,
+        "startChar": 0,
+        "endLine": 1036,
+        "endChar": 58
+      },
+      "revId": "1ca3acf50cf74c8532e604a66e7d408baf114e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
