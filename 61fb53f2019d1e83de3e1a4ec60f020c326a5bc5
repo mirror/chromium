@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42cfd763_22c6cb3c",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1580,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-16T22:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95b4d537_48f86ae3",
+      "range": {
+        "startLine": 1580,
+        "startChar": 25,
+        "endLine": 1580,
+        "endChar": 41
+      },
+      "revId": "61fb53f2019d1e83de3e1a4ec60f020c326a5bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4ba3c1_4cead582",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "61fb53f2019d1e83de3e1a4ec60f020c326a5bc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f27f85b6_0c8bfcfb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-16T22:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4ba3c1_4cead582",
+      "revId": "61fb53f2019d1e83de3e1a4ec60f020c326a5bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
