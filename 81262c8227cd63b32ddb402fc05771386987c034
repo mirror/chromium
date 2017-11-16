@@ -22,6 +22,30 @@
       "revId": "81262c8227cd63b32ddb402fc05771386987c034",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52098c93_e2ff82b2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-16T19:28:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "538e4b39_b417b27c",
+      "range": {
+        "startLine": 173,
+        "startChar": 37,
+        "endLine": 173,
+        "endChar": 56
+      },
+      "revId": "81262c8227cd63b32ddb402fc05771386987c034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
