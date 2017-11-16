@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab098071_7dc0568e",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-16T16:28:20Z",
+      "side": 1,
+      "message": "Note that this is a best effort. It only goes as far up the hierarchy as is hosted in this renderer process. I.e., if the root frame is out-of-process vis-a-vis the current frame, this won\u0027t reach it.\n\nhttp://www.chromium.org/developers/design-documents/oop-iframes\n\ndocument.GetFrame()-\u003eTop() gets you the top frame, but then you have to check if it\u0027s local (you can GetDocument) or remote (you can\u0027t). Maybe you can GetSecurityOrigin().Host() on the top frame?",
+      "revId": "5e1ce553e066e887adc068c9cb2ff2727748135c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
