@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "92f8cc09_86bfc1c0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-16T22:49:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be6afd9f_9d8549db",
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cdf3900_f5c98410",
         "filename": "android_webview/browser/aw_permission_manager.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d3e18f2_4116bcf0",
+        "filename": "android_webview/browser/aw_permission_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-16T22:49:44Z",
+      "side": 1,
+      "message": "Not through the new clipboard API that this Permission is protecting.\n\nAny legacy ways of accessing the clipboard (via event handlers or execCommand()) are not affected by this permission.",
+      "parentUuid": "6cdf3900_f5c98410",
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5651b41f_887eb863",
+        "filename": "chrome/browser/clipboard/OWNERS",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-16T22:49:44Z",
+      "side": 1,
+      "message": "The other owners are already covered by the per-file specification below.",
+      "parentUuid": "d49b93eb_5d15041b",
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "511d7ee8_c07f7c73",
         "filename": "chrome/browser/clipboard/clipboard_read_permission_context.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2c6770_d4ae3feb",
+        "filename": "chrome/browser/clipboard/clipboard_read_permission_context.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-16T22:49:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "511d7ee8_c07f7c73",
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30cd38e_bcbeef18",
+        "filename": "chrome/browser/clipboard/clipboard_read_permission_context.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-16T22:49:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c5bbe70_a3133a63",
+      "range": {
+        "startLine": 16,
+        "startChar": 66,
+        "endLine": 16,
+        "endChar": 75
+      },
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "1fbc0f43_887615fd",
+        "filename": "chrome/browser/clipboard/clipboard_write_permission_context.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-16T22:49:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "148637d4_a68b08ce",
+      "range": {
+        "startLine": 18,
+        "startChar": 67,
+        "endLine": 18,
+        "endChar": 78
+      },
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "579118e4_be31e3d1",
         "filename": "chrome/browser/clipboard/clipboard_write_permission_context.cc",
         "patchSetId": 9
@@ -165,6 +285,24 @@
       "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5fae496_b6f85fcf",
+        "filename": "chrome/browser/clipboard/clipboard_write_permission_context.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-16T22:49:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "579118e4_be31e3d1",
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "876cb5d5_79e923b2",
+        "filename": "chrome/browser/permissions/permission_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-16T22:49:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e7dbd8cf_e11e0259",
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dff81df9_92efc009",
         "filename": "chrome/browser/permissions/permission_request.h",
         "patchSetId": 9
@@ -199,6 +355,24 @@
       "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b459ed0c_9d36c74e",
+        "filename": "chrome/browser/permissions/permission_request.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-16T22:49:44Z",
+      "side": 1,
+      "message": "Correct.  The Clipboard permission web standard is defined as having READ and WRITE knobs to control access, but Chrome is auto-granting write access (with gesture) and using READ as a stand-in for full-access-without-gesture.\n\nSo in Chrome, users can only request READ (aka: full).",
+      "parentUuid": "dff81df9_92efc009",
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
