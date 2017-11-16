@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
+import android.support.customtabs.CustomTabsService;
 import android.support.customtabs.CustomTabsSessionToken;
 import android.text.TextUtils;
 import android.view.View;
@@ -40,6 +41,8 @@ import org.chromium.chrome.browser.appmenu.AppMenuPropertiesDelegate;
 import org.chromium.chrome.browser.browserservices.BrowserSessionContentHandler;
 import org.chromium.chrome.browser.browserservices.BrowserSessionContentUtils;
 import org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider;
+import org.chromium.chrome.browser.browserservices.OriginVerifier;
+import org.chromium.chrome.browser.browserservices.OriginVerifier.OriginVerificationListener;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManager;
 import org.chromium.chrome.browser.customtabs.CustomTabAppMenuPropertiesDelegate;
 import org.chromium.chrome.browser.customtabs.CustomTabLayoutManager;
@@ -104,7 +107,11 @@ public class WebappActivity extends SingleTabActivity {
 
     private TrustedWebContentProvider mTrustedWebContentProvider;
 
-    private class TrustedWebContentProvider implements BrowserSessionContentHandler {
+    private class TrustedWebContentProvider
+            implements BrowserSessionContentHandler, OriginVerificationListener {
+        private boolean mVerificationFailed;
+        private OriginVerifier mOriginVerifier;
+
         @Override
         public void loadUrlAndTrackFromTimestamp(LoadUrlParams params, long timestamp) {}
 
@@ -135,6 +142,33 @@ public class WebappActivity extends SingleTabActivity {
 
             return getActivityTab().getUrl();
         }
+
+        /**
+         * Verify the Digital Asset Links declared by the Android native client with the currently
+         * loading origin. See {@link TrustedWebContentProvider#didVerificationFail()} for the
+         * result.
+         */
+        void verifyRelationship() {
+            mOriginVerifier = new OriginVerifier(mTrustedWebContentProvider,
+                    getNativeClientPackageName(), CustomTabsService.RELATION_HANDLE_ALL_URLS);
+            mOriginVerifier.start(mWebappInfo.uri());
+        }
+
+        @Override
+        public void onOriginVerified(String packageName, Uri origin, boolean verified) {
+            mVerificationFailed = !verified;
+            mOriginVerifier.cleanUp();
+            if (mVerificationFailed) {
+                findViewById(R.id.control_container).setVisibility(View.VISIBLE);
+            }
+        }
+
+        /**
+         * @return Whether origin verification for the corresponding client failed.
+         */
+        boolean didVerificationFail() {
+            return mVerificationFailed;
+        }
     }
 
     /** Initialization-on-demand holder. This exists for thread-safe lazy initialization. */
@@ -158,7 +192,7 @@ public class WebappActivity extends SingleTabActivity {
     }
 
     protected WebappSplashScreenController createWebappSplashScreenController() {
-        return new WebappSplashScreenController();
+        return new WebappSplashScreenController(mWebappInfo);
     }
 
     @Override
@@ -258,14 +292,10 @@ public class WebappActivity extends SingleTabActivity {
                 getWindowAndroid(), (byte) mWebappInfo.orientation());
 
         // TODO(yusufo): Consider not initializing these for WebAPKs.
-        mBrowserSessionDataProvider = new BrowserSessionDataProvider(intent);
-        mTrustedWebContentProvider = new TrustedWebContentProvider();
-
-        // When turning on TalkBack on Android, hitting app switcher to bring a WebappActivity to
-        // front will speak "Web App", which is the label of WebappActivity. Therefore, we set title
-        // of the WebappActivity explicitly to make it speak the short name of the Web App.
-        setTitle(mWebappInfo.shortName());
-
+        if (intent.hasExtra(BrowserSessionDataProvider.EXTRA_LAUNCH_AS_TRUSTED_WEB_ACTIVITY)) {
+            mBrowserSessionDataProvider = new BrowserSessionDataProvider(intent);
+            mTrustedWebContentProvider = new TrustedWebContentProvider();
+        }
         super.preInflationStartup();
     }
 
@@ -505,6 +535,7 @@ public class WebappActivity extends SingleTabActivity {
     @Override
     public void postInflationStartup() {
         initializeWebappData();
+        if (getBrowserSession() != null) mTrustedWebContentProvider.verifyRelationship();
 
         super.postInflationStartup();
     }
@@ -681,6 +712,7 @@ public class WebappActivity extends SingleTabActivity {
      *         this is a Trusted Web Activity.
      */
     public CustomTabsSessionToken getBrowserSession() {
+        if (mTrustedWebContentProvider == null) return null;
         return mTrustedWebContentProvider.getSession();
     }
 
@@ -689,7 +721,8 @@ public class WebappActivity extends SingleTabActivity {
      *         through Digital Asset Links (DAL) or browser level confirmation.
      */
     protected boolean isVerified() {
-        return mTrustedWebContentProvider.getSession() != null;
+        return mTrustedWebContentProvider != null
+                && mTrustedWebContentProvider.getSession() != null;
     }
 
     /**
