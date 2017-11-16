@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "23fbf708_0e6ce2d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-16T18:19:50Z",
+      "side": 1,
+      "message": "As the previous comment suggested, remove INVALID to OTHER to catch all other cases.",
+      "parentUuid": "f0c3e0d0_6f627305",
+      "range": {
+        "startLine": 47,
+        "startChar": 16,
+        "endLine": 47,
+        "endChar": 28
+      },
+      "revId": "1df24aae481746d42612fcd979bd56558e570b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "043017db_d52854ae",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
         "patchSetId": 7
