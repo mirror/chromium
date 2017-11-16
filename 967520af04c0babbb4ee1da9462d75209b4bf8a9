@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc05f860_94aa60eb",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-16T21:20:34Z",
+      "side": 1,
+      "message": "out of curiosity, why do we name this \"CALL\"? Maybe something like \"DECLARE_NULL_IMPL\"? Sorry if it\u0027s dumb question :)",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 12
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ab6f1e_bdd19a29",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-16T21:20:34Z",
+      "side": 1,
+      "message": "nit: please name all functions in the same format https://google.github.io/styleguide/cppguide.html#Function_Names",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 14
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3bffa5e_6aa5dd0a",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-16T21:20:34Z",
+      "side": 1,
+      "message": "C++ type casts are preferred: https://google.github.io/styleguide/cppguide.html#Casting",
+      "range": {
+        "startLine": 72,
+        "startChar": 58,
+        "endLine": 72,
+        "endChar": 65
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c43f98e_c148702e",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-16T21:20:34Z",
+      "side": 1,
+      "message": "Might be another dumb question: but can\u0027t we have a race condition here and in `close_sdk`. E.g. one thread is executing line #72, while other is passing check on line #83 successfully?\n\nI\u0027d guess that all of that can be called from a single GL thread only, but not sure...",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 16
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d56bd840_7a8d40dd",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-16T21:20:34Z",
+      "side": 1,
+      "message": "Should we have a LOG message or any other error reporting here?",
+      "range": {
+        "startLine": 128,
+        "startChar": 12,
+        "endLine": 129,
+        "endChar": 4
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8f8694b_95600203",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-16T21:20:34Z",
+      "side": 1,
+      "message": "Since we do not explicitly use enum type here, it\u0027s worth to have \"default:\" case with an assert (e.g. `NOTREACHED()`) as per https://google.github.io/styleguide/cppguide.html#Loops_and_Switch_Statements",
+      "range": {
+        "startLine": 107,
+        "startChar": 28,
+        "endLine": 107,
+        "endChar": 41
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e85ebf4c_b44d9ede",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1089,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-16T21:20:34Z",
+      "side": 1,
+      "message": "It looks like all these getters return int, why do we need static_cast here?\n\nhttps://cs.chromium.org/chromium/src/ui/gfx/geometry/rect.h?type\u003dcs\u0026q\u003dgfx::Rect\u0026sq\u003dpackage:chromium\u0026l\u003d97",
+      "range": {
+        "startLine": 1089,
+        "startChar": 33,
+        "endLine": 1089,
+        "endChar": 50
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8292d2a9_65b5de74",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2721,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-16T21:20:34Z",
+      "side": 1,
+      "message": "typo?",
+      "range": {
+        "startLine": 2721,
+        "startChar": 43,
+        "endLine": 2721,
+        "endChar": 44
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "049ff0c5_c142c27d",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2721,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-16T21:20:34Z",
+      "side": 1,
+      "message": "other strings are \"Enable\", not \"Enables\"",
+      "range": {
+        "startLine": 2721,
+        "startChar": 11,
+        "endLine": 2721,
+        "endChar": 12
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
