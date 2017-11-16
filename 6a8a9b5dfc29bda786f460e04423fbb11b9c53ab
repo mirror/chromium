@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "83604a44_84934f06",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1529,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-16T02:15:32Z",
+      "side": 1,
+      "message": "Now following the model of watch time (https://chromium-review.googlesource.com/c/chromium/src/+/772806), reporting the top frame URL with a flag to indicate whether the report really came from an iframe.",
+      "parentUuid": "8cf9505e_8deee16e",
+      "revId": "6a8a9b5dfc29bda786f460e04423fbb11b9c53ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f01124f3_35f25e71",
         "filename": "media/mojo/interfaces/video_decode_stats_recorder.mojom",
         "patchSetId": 1
@@ -123,6 +141,47 @@
       "revId": "6a8a9b5dfc29bda786f460e04423fbb11b9c53ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82976931_97b833dd",
+        "filename": "media/mojo/interfaces/video_decode_stats_recorder.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-16T02:15:32Z",
+      "side": 1,
+      "message": "After thinking more I changed to origin. I think it helps document that this is not the full URL.",
+      "parentUuid": "fa4373d2_8e24b187",
+      "revId": "6a8a9b5dfc29bda786f460e04423fbb11b9c53ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b29eefa_3c8a3aaf",
+        "filename": "media/mojo/services/video_decode_perf_history.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-16T02:15:32Z",
+      "side": 1,
+      "message": "This was busted before, because past_stats might be null",
+      "range": {
+        "startLine": 246,
+        "startChar": 15,
+        "endLine": 246,
+        "endChar": 25
+      },
+      "revId": "6a8a9b5dfc29bda786f460e04423fbb11b9c53ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
