@@ -264,6 +264,7 @@ CONSOLE MESSAGE: line 147:     method append
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147:     method delete
 CONSOLE MESSAGE: line 147:     method set
+CONSOLE MESSAGE: line 147:     method update
 CONSOLE MESSAGE: line 147: interface StylePropertyMapReadonly
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147:     method entries
@@ -556,6 +557,7 @@ CONSOLE MESSAGE: line 147:     method append
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147:     method delete
 CONSOLE MESSAGE: line 147:     method set
+CONSOLE MESSAGE: line 147:     method update
 CONSOLE MESSAGE: line 147: interface StylePropertyMapReadonly
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147:     method entries
