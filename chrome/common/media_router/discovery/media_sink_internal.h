@@ -128,6 +128,9 @@ class MediaSinkInternal {
   };
 };
 
+using OnSinksDiscoveredCallback =
+    base::RepeatingCallback<void(std::vector<MediaSinkInternal>)>;
+
 }  // namespace media_router
 
 #endif  // CHROME_COMMON_MEDIA_ROUTER_DISCOVERY_MEDIA_SINK_INTERNAL_H_
