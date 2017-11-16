@@ -22,6 +22,30 @@
       "revId": "9d771aaa9c53f45bf6edcb21f51843d4fbd9d2a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "479ad2a5_00f7c9c5",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-16T21:14:46Z",
+      "side": 1,
+      "message": "Very happy to. :-D",
+      "parentUuid": "b8ef2b39_1f854fa7",
+      "range": {
+        "startLine": 535,
+        "startChar": 30,
+        "endLine": 535,
+        "endChar": 58
+      },
+      "revId": "9d771aaa9c53f45bf6edcb21f51843d4fbd9d2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
