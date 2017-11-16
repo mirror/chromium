@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "10a3bfeb_7dcf2f1f",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-16T03:02:04Z",
+      "side": 1,
+      "message": ";-)",
+      "parentUuid": "3d41f932_5bfaa9a2",
+      "range": {
+        "startLine": 437,
+        "startChar": 74,
+        "endLine": 437,
+        "endChar": 0
+      },
+      "revId": "170170d2f2158c9c43ba1cc5e9d545d17fc623dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19788a2d_d35d4c6d",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "170170d2f2158c9c43ba1cc5e9d545d17fc623dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "018f13a1_c6957ac7",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-16T03:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19788a2d_d35d4c6d",
+      "revId": "170170d2f2158c9c43ba1cc5e9d545d17fc623dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "922e7b8f_0433de69",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-16T03:02:04Z",
+      "side": 1,
+      "message": "Apparently not, since different test interstitials have different types. :-/",
+      "parentUuid": "1799a084_1b578b61",
+      "range": {
+        "startLine": 442,
+        "startChar": 61,
+        "endLine": 442,
+        "endChar": 0
+      },
+      "revId": "170170d2f2158c9c43ba1cc5e9d545d17fc623dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7b98534_55420483",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 2
@@ -76,6 +142,30 @@
       "writtenOn": "2017-11-16T02:11:05Z",
       "side": 1,
       "message": "nit: Rename to MaybeWaitForInterstitial?\n\nActually I don\u0027t know how I feel about wrapping this. It hides the logic a bit. But then again, not that important.",
+      "range": {
+        "startLine": 448,
+        "startChar": 5,
+        "endLine": 448,
+        "endChar": 24
+      },
+      "revId": "170170d2f2158c9c43ba1cc5e9d545d17fc623dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b6c34d5_d7d88535",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-16T03:02:04Z",
+      "side": 1,
+      "message": "I\u0027m fairly comfortable with it, given that\u0027s what content::WaitForInterstitialAttach() itself does. [1]\nHowever, I\u0027ve updated the check to IsShowingInterstitial() and added a comment.\n\nhttps://cs.chromium.org/chromium/src/content/public/test/browser_test_utils.cc?type\u003dcs\u0026l\u003d1258",
+      "parentUuid": "f7b98534_55420483",
       "range": {
         "startLine": 448,
         "startChar": 5,
