@@ -65,7 +65,7 @@ public class PictureInPictureController {
     private static final int METRICS_END_REASON_CLOSE = 2;
     private static final int METRICS_END_REASON_CRASH = 3;
     private static final int METRICS_END_REASON_NEW_TAB = 4;
-    private static final int METRICS_END_REASON_REPARENT = 5;
+    private static final int METRICS_END_REASON_ACTIVITY_CHANGED = 5;
     private static final int METRICS_END_REASON_LEFT_FULLSCREEN = 6;
     private static final int METRICS_END_REASON_WEB_CONTENTS_LEFT_FULLSCREEN = 7;
     private static final int METRICS_END_REASON_COUNT = 8;
@@ -295,7 +295,7 @@ public class PictureInPictureController {
     /**
      * A class to dismiss the Activity when the tab:
      * - Closes.
-     * - Reparents.
+     * - Attaches to a different activity.
      * - Crashes.
      * - Leaves fullscreen.
      */
@@ -306,8 +306,10 @@ public class PictureInPictureController {
         }
 
         @Override
-        public void onReparentingFinished(Tab tab) {
-            dismissActivity(mActivity, METRICS_END_REASON_REPARENT);
+        public void onActivityAttachmentChanged(Tab tab, boolean isAttached) {
+            if (isAttached) {
+                dismissActivity(mActivity, METRICS_END_REASON_ACTIVITY_CHANGED);
+            }
         }
 
         @Override
