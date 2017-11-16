@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "708838a0_45b5cdea",
+        "filename": "components/omnibox/browser/autocomplete_match_type.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-16T15:44:42Z",
+      "side": 1,
+      "message": "The main time a user is likely to run into it is when we\u0027re suggesting what they\u0027ve already typed, but it can also happen for the other cases with id 0 above, some of which might have useful descriptive text. I have no idea what PHYSICAL_WEB or TAB_SEARCH are but they sound like they may have attached descriptive texts.",
+      "parentUuid": "9a63b239_48420cf8",
+      "range": {
+        "startLine": 89,
+        "startChar": 11,
+        "endLine": 89,
+        "endChar": 21
+      },
+      "revId": "9e010bdd46e14d741b8e9dcb0486994cab34ccba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ece4d95e_2e6a0b8c",
         "filename": "components/omnibox_strings.grdp",
         "patchSetId": 6
