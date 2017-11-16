@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "996ab338_fad196ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-16T20:52:04Z",
+      "side": 1,
+      "message": "We\u0027ll need to check for the wording after the renaming. The word \"cache\" and \"caching\" is scattered over the CL, but only few of them make sense now.",
+      "range": {
+        "startLine": 7,
+        "startChar": 34,
+        "endLine": 7,
+        "endChar": 39
+      },
+      "revId": "cf25479e9f28b4786e5041c4c6f60b4e8ce537d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02a0244c_9cfa9be9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-16T20:52:04Z",
+      "side": 1,
+      "message": "This needs to be updated.",
+      "range": {
+        "startLine": 107,
+        "startChar": 75,
+        "endLine": 107,
+        "endChar": 93
+      },
+      "revId": "cf25479e9f28b4786e5041c4c6f60b4e8ce537d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655527f9_7e559811",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 57525,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-16T20:52:04Z",
+      "side": 1,
+      "message": "One more very subtle nitpicking. Since we lazily initialize the bookmark, this won\u0027t be recorded if the user don\u0027t do anything related to the bookmarks. That\u0027s why I said \"when using the bookmark\".",
+      "range": {
+        "startLine": 57525,
+        "startChar": 4,
+        "endLine": 57525,
+        "endChar": 23
+      },
+      "revId": "cf25479e9f28b4786e5041c4c6f60b4e8ce537d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
