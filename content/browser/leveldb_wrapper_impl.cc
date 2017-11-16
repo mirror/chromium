@@ -190,17 +190,18 @@ void LevelDBWrapperImpl::Put(
   if (keys_only_map_) {
     KeysOnlyMap::const_iterator found = keys_only_map_->find(key);
     if (found != keys_only_map_->end()) {
-      if (!client_old_value ||
-          client_old_value.value().size() != found->second) {
-        bindings_.ReportBadMessage("Given old value is not consistent");
-        return;
-      } else {
+      if (client_old_value &&
+          client_old_value.value().size() == found->second) {
         if (client_old_value == value) {
           std::move(callback).Run(true);  // Key already has this value.
           return;
         }
         old_value = client_old_value.value();
       }
+      // If |client_old_value| was not provided or if it's size does not match,
+      // then we still let the change go through. But the notification sent to
+      // clients will not contain old value. This is okay since currently the
+      // only observer to these notification is the client itself.
       old_item_size = key.size() + found->second;
       old_item_memory = key.size() + sizeof(size_t);
     }
@@ -225,7 +226,13 @@ void LevelDBWrapperImpl::Put(
   // Only check quota if the size is increasing, this allows
   // shrinking changes to pre-existing maps that are over budget.
   if (new_item_size > old_item_size && new_storage_used > max_size_) {
-    std::move(callback).Run(false);
+    if (desired_load_state_ == LoadState::KEYS_ONLY) {
+      bindings_.ReportBadMessage(
+          "The quota in browser cannot exceed when there is only one "
+          "renderer.");
+    } else {
+      std::move(callback).Run(false);
+    }
     return;
   }
 
@@ -281,12 +288,8 @@ void LevelDBWrapperImpl::Delete(
       std::move(callback).Run(true);
       return;
     }
-    if (!client_old_value || client_old_value.value().size() != found->second) {
-      bindings_.ReportBadMessage("Given old value is not consistent");
-      return;
-    } else {
+    if (client_old_value && client_old_value.value().size() == found->second)
       old_value = client_old_value.value();
-    }
     storage_used_ -= key.size() + found->second;
     keys_only_map_->erase(found);
     memory_used_ -= key.size() + sizeof(size_t);
@@ -509,8 +512,10 @@ void LevelDBWrapperImpl::OnMapLoaded(
   // We proceed without using a backing store, nothing will be persisted but the
   // class is functional for the lifetime of the object.
   delegate_->OnMapLoaded(status);
-  if (status != leveldb::mojom::DatabaseError::OK)
+  if (status != leveldb::mojom::DatabaseError::OK) {
     database_ = nullptr;
+    SetCacheMode(CacheMode::KEYS_AND_VALUES);
+  }
 
   OnLoadComplete();
 }
@@ -652,16 +657,22 @@ void LevelDBWrapperImpl::CommitChanges() {
   database_->Write(std::move(operations),
                    base::BindOnce(&LevelDBWrapperImpl::OnCommitComplete,
                                   weak_ptr_factory_.GetWeakPtr()));
-
-  // When the desired load state is changed, the unload of map is deferred
-  // when there are uncommitted changes. So, try again after Starting a commit.
-  UnloadMapIfPossible();
 }
 
 void LevelDBWrapperImpl::OnCommitComplete(leveldb::mojom::DatabaseError error) {
   --commit_batches_in_flight_;
   StartCommitTimer();
   delegate_->DidCommit(error);
+
+  if (error == leveldb::mojom::DatabaseError::OK) {
+    // When the desired load state is changed, the unload of map is deferred
+    // when there are uncommitted changes. So, try again after Starting a
+    // commit.
+    UnloadMapIfPossible();
+  } else {
+    // If commit fails store the values in memory.
+    SetCacheMode(LevelDBWrapperImpl::CacheMode::KEYS_AND_VALUES);
+  }
 }
 
 void LevelDBWrapperImpl::UnloadMapIfPossible() {
@@ -672,7 +683,7 @@ void LevelDBWrapperImpl::UnloadMapIfPossible() {
 
   // Do not clear the map if there are uncommitted changes since the commit
   // batch might not have the values populated.
-  if (!database_ || commit_batch_)
+  if (!database_ || commit_batch_ || commit_batches_in_flight_)
     return;
   if (desired_load_state_ == LoadState::KEYS_ONLY) {
     keys_only_map_ = std::make_unique<KeysOnlyMap>();
