@@ -263,13 +263,17 @@ class RequestCoordinatorTest : public testing::Test {
 
   SavePageRequest AddRequest2();
 
+  void SavePageRequestCallback(AddRequestResult ignored) {}
+
   int64_t SavePageLater() {
     RequestCoordinator::SavePageLaterParams params;
     params.url = kUrl1;
     params.client_id = kClientId1;
     params.user_requested = kUserRequested;
     params.request_origin = kRequestOrigin;
-    return coordinator()->SavePageLater(params);
+    return coordinator()->SavePageLater(
+        params, base::Bind(&RequestCoordinatorTest::SavePageRequestCallback,
+                           base::Unretained(this)));
   }
 
   int64_t SavePageLaterWithAvailability(
@@ -280,7 +284,9 @@ class RequestCoordinatorTest : public testing::Test {
     params.user_requested = kUserRequested;
     params.availability = availability;
     params.request_origin = kRequestOrigin;
-    return coordinator()->SavePageLater(params);
+    return coordinator()->SavePageLater(
+        params, base::Bind(&RequestCoordinatorTest::SavePageRequestCallback,
+                           base::Unretained(this)));
   }
 
   Offliner::RequestStatus last_offlining_status() const {
@@ -569,7 +575,10 @@ TEST_F(RequestCoordinatorTest, SavePageLater) {
   params.client_id = kClientId1;
   params.original_url = kUrl2;
   params.request_origin = kRequestOrigin;
-  EXPECT_NE(0, coordinator()->SavePageLater(params));
+  EXPECT_NE(0, coordinator()->SavePageLater(
+                   params,
+                   base::Bind(&RequestCoordinatorTest::SavePageRequestCallback,
+                              base::Unretained(this))));
 
   // Expect that a request got placed on the queue.
   coordinator()->queue()->GetRequests(base::Bind(
@@ -1411,7 +1420,10 @@ TEST_F(RequestCoordinatorTest,
   params.url = kUrl2;
   params.client_id = kClientId2;
   params.user_requested = kUserRequested;
-  EXPECT_NE(0, coordinator()->SavePageLater(params));
+  EXPECT_NE(0, coordinator()->SavePageLater(
+                   params,
+                   base::Bind(&RequestCoordinatorTest::SavePageRequestCallback,
+                              base::Unretained(this))));
   PumpLoop();
 
   // Verify immediate processing did start this time.
