@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a7878c3_91ab54c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123616
+      },
+      "writtenOn": "2017-11-16T17:04:57Z",
+      "side": 1,
+      "message": "It looks like the implementation is actually a checkbox, not a slider.  Perhaps the commit message is just out of date (although I think I saw a reference to \u0027slider\u0027 in some code comments as well.",
+      "range": {
+        "startLine": 9,
+        "startChar": 27,
+        "endLine": 9,
+        "endChar": 33
+      },
+      "revId": "5ca3254e385940005690d8c2e62389da099e4583",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3abb791_297a2ea1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123616
+      },
+      "writtenOn": "2017-11-16T17:04:57Z",
+      "side": 1,
+      "message": "is intellicast an official name?",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "5ca3254e385940005690d8c2e62389da099e4583",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
