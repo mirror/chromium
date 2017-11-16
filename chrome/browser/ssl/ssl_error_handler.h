@@ -27,6 +27,7 @@
 
 class CommonNameMismatchHandler;
 class Profile;
+class UrgentInterstitialData;
 
 namespace base {
 class Clock;
@@ -106,6 +107,7 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
     virtual void ShowBadClockInterstitial(
         const base::Time& now,
         ssl_errors::ClockState clock_state) = 0;
+    virtual void ShowServerMisconfigInterstitial() = 0;
   };
 
   // Entry point for the class. The parameters are the same as SSLBlockingPage
@@ -169,6 +171,7 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
   void ShowSSLInterstitial();
   void ShowBadClockInterstitial(const base::Time& now,
                                 ssl_errors::ClockState clock_state);
+  void ShowUrgentInterstitial(UrgentInterstitialData* urgent_interstitial);
 
   // Gets the result of whether the suggested URL is valid. Displays
   // common name mismatch interstitial or ssl interstitial accordingly.

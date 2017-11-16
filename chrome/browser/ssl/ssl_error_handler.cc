@@ -25,6 +25,7 @@
 #include "chrome/browser/ssl/captive_portal_blocking_page.h"
 #include "chrome/browser/ssl/captive_portal_helper.h"
 #include "chrome/browser/ssl/mitm_software_blocking_page.h"
+#include "chrome/browser/ssl/server_misconfig_blocking_page.h"
 #include "chrome/browser/ssl/ssl_blocking_page.h"
 #include "chrome/browser/ssl/ssl_cert_reporter.h"
 #include "chrome/browser/ssl/ssl_error_assistant.h"
@@ -206,6 +207,8 @@ class ConfigSingleton {
   const std::string MatchKnownMITMSoftware(
       const scoped_refptr<net::X509Certificate> cert);
 
+  UrgentInterstitialData* MatchUrgentInterstitial(const net::SSLInfo& ssl_info);
+
   // Testing methods:
   void ResetForTesting();
   void SetInterstitialDelayForTesting(const base::TimeDelta& delay);
@@ -381,6 +384,11 @@ const std::string ConfigSingleton::MatchKnownMITMSoftware(
   return ssl_error_assistant_->MatchKnownMITMSoftware(cert);
 }
 
+UrgentInterstitialData* ConfigSingleton::MatchUrgentInterstitial(
+    const net::SSLInfo& ssl_info) {
+  return ssl_error_assistant_->MatchUrgentInterstitial(ssl_info);
+}
+
 class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
  public:
   SSLErrorHandlerDelegateImpl(
@@ -421,6 +429,7 @@ class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
   void ShowSSLInterstitial() override;
   void ShowBadClockInterstitial(const base::Time& now,
                                 ssl_errors::ClockState clock_state) override;
+  void ShowServerMisconfigInterstitial() override;
 
  private:
   content::WebContents* web_contents_;
@@ -524,6 +533,11 @@ void SSLErrorHandlerDelegateImpl::ShowBadClockInterstitial(
   (new BadClockBlockingPage(web_contents_, cert_error_, ssl_info_, request_url_,
                             now, clock_state, std::move(ssl_cert_reporter_),
                             callback_))
+      ->Show();
+}
+
+void SSLErrorHandlerDelegateImpl::ShowServerMisconfigInterstitial() {
+  (new ServerMisconfigBlockingPage(web_contents_, request_url_, ssl_info_))
       ->Show();
 }
 
@@ -688,6 +702,13 @@ void SSLErrorHandler::StartHandlingError() {
     return;
   }
 
+  UrgentInterstitialData* urgent_interstitial =
+      g_config.Pointer()->MatchUrgentInterstitial(ssl_info_);
+  if (urgent_interstitial) {
+    ShowUrgentInterstitial(urgent_interstitial);
+    return;
+  }
+
   // Ideally, a captive portal interstitial should only be displayed if the only
   // SSL error is a name mismatch error. However, captive portal detector always
   // opens a new tab if it detects a portal ignoring the types of SSL errors. To
@@ -835,6 +856,29 @@ void SSLErrorHandler::ShowBadClockInterstitial(
   // Once an interstitial is displayed, no need to keep the handler around.
   // This is the equivalent of "delete this".
   web_contents_->RemoveUserData(UserDataKey());
+}
+
+void SSLErrorHandler::ShowUrgentInterstitial(
+    UrgentInterstitialData* urgent_interstitial) {
+  switch (urgent_interstitial->interstitial_type()) {
+    case UrgentInterstitialPageType::NONE:
+      NOTREACHED();
+    case UrgentInterstitialPageType::SSL:
+      // TODO: make sure this is not overridable
+      delegate_->ShowSSLInterstitial();
+      return;
+    case UrgentInterstitialPageType::CAPTIVE_PORTAL:
+      delegate_->ShowCaptivePortalInterstitial(GURL());
+      return;
+    case UrgentInterstitialPageType::BAD_CLOCK:
+      // It doesn't make sense to show a bad clock
+      // delegate_->ShowBadClockInterstitial();
+      return;
+    case UrgentInterstitialPageType::MITM_SOFTWARE:
+      return;
+    case UrgentInterstitialPageType::SERVER_MISCONFIG:
+      return;
+  }
 }
 
 void SSLErrorHandler::CommonNameMismatchHandlerCallback(

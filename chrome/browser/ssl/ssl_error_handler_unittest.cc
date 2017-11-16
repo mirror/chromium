@@ -198,6 +198,9 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
   bool redirected_to_suggested_url() const {
     return redirected_to_suggested_url_;
   }
+  bool server_misconfig_interstitial_shown() const {
+    return server_misconfig_interstitial_shown_;
+  }
 
   void set_suggested_url_exists() { suggested_url_exists_ = true; }
   void set_non_overridable_error() { is_overridable_error_ = false; }
@@ -214,6 +217,7 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
     mitm_software_interstitial_shown_ = false;
     is_mitm_software_interstitial_enterprise_ = false;
     redirected_to_suggested_url_ = false;
+    server_misconfig_interstitial_shown_ = false;
   }
 
  private:
@@ -250,6 +254,10 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
     is_mitm_software_interstitial_enterprise_ = is_enterprise_managed;
   }
 
+  void ShowServerMisconfigInterstitial() override {
+    server_misconfig_interstitial_shown_ = true;
+  }
+
   void CheckSuggestedUrl(
       const GURL& suggested_url,
       const CommonNameMismatchHandler::CheckUrlCallback& callback) override {
@@ -276,6 +284,7 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
   bool is_mitm_software_interstitial_enterprise_;
   bool redirected_to_suggested_url_;
   bool is_overridable_error_;
+  bool server_misconfig_interstitial_shown_;
   CommonNameMismatchHandler::CheckUrlCallback suggested_url_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(TestSSLErrorHandlerDelegate);
