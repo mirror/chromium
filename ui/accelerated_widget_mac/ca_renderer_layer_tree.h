@@ -94,19 +94,15 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
                     RootLayer* old_layer,
                     float scale_factor);
 
-    // Check to see if the CALayer tree can be represented entirely by a video
-    // layer on a black background. If so, then commit the layer, assign it to
-    // |low_power_layer|, and return true. Otherwise return false. This is to
-    // be called by CommitToCA().
-    bool CommitFullscreenLowPowerLayer(ContentLayer* old_low_power_layer,
-                                       float scale_factor);
+    // Check to see if the CALayer tree is just a video layer on a black
+    // background. If so, then return the background's bounding rect, otherwise
+    // return the empty rect. CommitToCA() sets the frame of the root layer to
+    // this rect (and its background to black), which makes the layer tree
+    // eligible for low power detachment in macOS.
+    gfx::RectF FullscreenLowPowerBackdropRect(float scale_factor);
 
     std::vector<ClipAndSortingLayer> clip_and_sorting_layers;
     base::scoped_nsobject<CALayer> ca_layer;
-
-    // Weak pointer to a child ContentLayer, if any, which is presented alone
-    // for fullscreen low power mode. Set by CommitFullscreenLowPowerLayer().
-    ContentLayer* low_power_layer = nullptr;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(RootLayer);
