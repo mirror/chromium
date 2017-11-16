@@ -327,6 +327,24 @@
       "revId": "584ade1142f654b7415c328a7db9e9b93f3c764e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e8cd7b4_82b41b40",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-16T21:58:37Z",
+      "side": 1,
+      "message": "What happens in a tab model merging scenario?  Is the last tab always going to be the browser actions tab?  I think it\u0027s still probably safer to explicitly set the tab ID.  We don\u0027t know what other behavior might happen that would cause this tab not be the last one.",
+      "parentUuid": "7361b3c9_82232270",
+      "revId": "584ade1142f654b7415c328a7db9e9b93f3c764e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "169b0c87_5ef86102",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-16T21:58:37Z",
+      "side": 1,
+      "message": "should this be in the if block as well?\n\nThe only way the pending created url num wouldn\u0027t be zero is if the user went to CTA already.  In that case, we would have cleared the notification, so we\u0027d be readding it here.  Do we only want to do this if we haven\u0027t opened CTA yet?",
+      "range": {
+        "startLine": 221,
+        "startChar": 16,
+        "endLine": 221,
+        "endChar": 34
+      },
+      "revId": "248bcf8c21f8759efe5a76763bc9c201c5aab85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
