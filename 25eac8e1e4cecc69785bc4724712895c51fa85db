@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ddb43863_2dbcdc78",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-16T13:51:06Z",
+      "side": 1,
+      "message": "Also, I think there should have been a DCHECK here. When we migrate GenerateStream, we only have to replace request-\u003erequester with request-\u003egenerate_stream_cb. May be we can keep this change?",
+      "parentUuid": "08047924_e1870b3f",
+      "revId": "25eac8e1e4cecc69785bc4724712895c51fa85db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "725c738f_a43b259f",
         "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
         "patchSetId": 7
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "Yes, a drive-by fix.",
       "parentUuid": "725c738f_a43b259f",
+      "range": {
+        "startLine": 1282,
+        "startChar": 9,
+        "endLine": 1282,
+        "endChar": 16
+      },
+      "revId": "25eac8e1e4cecc69785bc4724712895c51fa85db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bba2a53f_f4ac0710",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-16T13:51:06Z",
+      "side": 1,
+      "message": "This also should have been a DCHECK. We can keep this change I guess?",
+      "parentUuid": "9a4c9be8_a989b69e",
       "range": {
         "startLine": 1282,
         "startChar": 9,
