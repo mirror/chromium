@@ -123,6 +123,7 @@ void NewTabPageInterceptorService::OnTemplateURLServiceChanged() {
 std::unique_ptr<net::URLRequestInterceptor>
 NewTabPageInterceptorService::CreateInterceptor() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  search::ClearCachedNewTabPageURL(profile_);
   std::unique_ptr<NewTabPageInterceptor> interceptor(
       new NewTabPageInterceptor(search::GetNewTabPageURL(profile_)));
   interceptor_ = interceptor->GetWeakPtr();
