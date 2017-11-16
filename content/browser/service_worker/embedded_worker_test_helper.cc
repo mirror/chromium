@@ -399,6 +399,11 @@ class EmbeddedWorkerTestHelper::MockRendererInterface : public mojom::Renderer {
   void PurgePluginListCache(bool reload_pages) override { NOTREACHED(); }
   void SetProcessBackgrounded(bool backgrounded) override { NOTREACHED(); }
   void ProcessPurgeAndSuspend() override { NOTREACHED(); }
+  void SetCurrentTimeOverride(
+      double time_millis,
+      const base::Optional<std::string>& timezone) override {
+    NOTREACHED();
+  }
 
   base::WeakPtr<EmbeddedWorkerTestHelper> helper_;
   mojo::AssociatedBindingSet<mojom::Renderer> bindings_;

@@ -229,4 +229,8 @@ interface Renderer {
 
   // Tells the renderer process to purge and suspend.
   ProcessPurgeAndSuspend();
+
+  // Set overrides for  time and/or timezone used by V8.
+  // If time is negative it's considered to be unset.
+  SetCurrentTimeOverride(double time_millis, string? timezone);
 };

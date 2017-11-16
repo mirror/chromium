@@ -1114,6 +1114,15 @@
                 "parameters": [
                     { "name": "color", "$ref": "DOM.RGBA", "optional": true, "description": "RGBA of the default background color. If not specified, any existing override will be cleared." }
                 ]
+            },
+            {
+                "name": "setTimeOverride",
+                "description": "Sets or clears an override of the current time and/or timezone.",
+                "parameters": [
+                    { "name": "time", "type": "number", "optional": true, "description": "Time in seconds since epoch. If not specified the time override is cleared." },
+                    { "name": "timezone", "type": "string", "optional": true, "description": "Time zone ID. If not specified the timezone override is cleared." }
+                ],
+                "experimental": true
             }
         ],
         "events": [
