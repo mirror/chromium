@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4512302_4d691c94",
+        "filename": "components/sync/engine_impl/non_blocking_type_commit_contribution.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-16T23:12:50Z",
+      "side": 1,
+      "message": "I\u0027m concerned tracker tests are being deleted as logic gets moved into NonBlockingTypeCommitContribution which doesn\u0027t have any unit tests. Can you add some?",
+      "revId": "68ef73923b2529024ebdf667cbd3a65a4352347b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa909b22_6f1a15ed",
+        "filename": "components/sync/engine_impl/non_blocking_type_commit_contribution.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-16T23:12:50Z",
+      "side": 1,
+      "message": "Much cleaner!",
+      "revId": "68ef73923b2529024ebdf667cbd3a65a4352347b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4822b34b_bb636bb3",
+        "filename": "components/sync/engine_impl/worker_entity_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-16T23:12:50Z",
+      "side": 1,
+      "message": "This method doesn\u0027t seem to be used anymore, remove?",
+      "revId": "68ef73923b2529024ebdf667cbd3a65a4352347b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40424dd7_b8de484d",
+        "filename": "components/sync/model_impl/shared_model_type_processor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-16T23:12:50Z",
+      "side": 1,
+      "message": "Fighting the good fight!",
+      "revId": "68ef73923b2529024ebdf667cbd3a65a4352347b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
