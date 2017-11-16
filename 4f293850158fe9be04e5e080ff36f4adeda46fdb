@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "00b8baaa_6754af69",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-11-16T17:52:43Z",
+      "side": 1,
+      "message": "Yup that\u0027s correct, added the comment.",
+      "parentUuid": "5b9d17a0_f7efe82c",
+      "revId": "4f293850158fe9be04e5e080ff36f4adeda46fdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1e73126_eb11efaa",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-16T01:53:35Z",
       "side": 1,
       "message": "I don\u0027t understand this addition at all?",
+      "revId": "4f293850158fe9be04e5e080ff36f4adeda46fdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f2a75b_3eaf3d2a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-11-16T17:52:43Z",
+      "side": 1,
+      "message": "Same as above, if we\u0027ve had an empty block affected by clearance, we should already have a BFC offset.",
+      "parentUuid": "e1e73126_eb11efaa",
       "revId": "4f293850158fe9be04e5e080ff36f4adeda46fdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
