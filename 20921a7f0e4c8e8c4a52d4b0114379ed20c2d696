@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "267eaf2a_cad750f0",
+        "filename": "services/video_capture/public/interfaces/virtual_device.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T22:51:51Z",
+      "side": 1,
+      "message": "Hmm, what you write makes sense.\nOne remaining concern with this, is that the call (or lack of call) to Producer::OnNewBufferHandle() must be guaranteed to arrive before the response \u003d\u003e (int32 buffer_id), because otherwise the response may point to a buffer_id that is not yet known by the producer.\n\nIn the Mojo world, it is not enough to simply call producer_-\u003eOnNewBufferHandler() before invoking the callback to guarantee they arrive in the same order. \n\nOne possible solution would be to use Mojo \"Associated interfaces\", but I think this is not recommended. Maybe a better solution would be to have OnNewBufferHandle() send an empty response back, basically just indicating that the message was received by the producer. Then the service can wait for that before sending out the response \u003d\u003e (buffer_id).",
+      "parentUuid": "9f3be8c5_7e81c737",
+      "revId": "20921a7f0e4c8e8c4a52d4b0114379ed20c2d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35b26b93_f22f1ec2",
         "filename": "services/video_capture/test/virtual_device_unittest.cc",
         "patchSetId": 5
