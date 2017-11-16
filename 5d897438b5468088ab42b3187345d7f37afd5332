@@ -220,6 +220,24 @@
     },
     {
       "key": {
+        "uuid": "ebe35e49_3f4ae0d3",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar_unittest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-16T01:24:18Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. The class has moved to an anonymous namespace.",
+      "parentUuid": "0abe5c22_6a54000c",
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fdc5f3f_320f1264",
         "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar_unittest.h",
         "patchSetId": 2
@@ -287,6 +305,24 @@
       "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9500310a_052faebe",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-16T01:24:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ecca4f8_b781829c",
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -372,6 +408,24 @@
       "side": 1,
       "message": "The scoped observer can be instantiated without adding the observee.  e.g.,\n\nToolbarActionsModel::ToolbarActionsModel()\n    : ....\n      error_reporter_observer_(this) {\n  ...\n}\n\nAnd then in the OnReady() function, we can add the source:\nToolbarActionsModel::OnReady() {\n  error_reporter_observer_.Add(ExtensionErrorReporter::GetInstance());\n}\n\nWould that work?  (It seems like this should both let the model be an observer directly and solve the need for the Init() call in the constructor)",
       "parentUuid": "86c3d7b1_3d2c67ff",
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b84ca041_6ddaa2bd",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-16T01:24:18Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. I\u0027ve refactored so that the ToolbarActionsModel implements the  ExtensionErrorReporter::Observer and now the ToolbarActionErrorObserver is obsolete.\n\nThis doesn\u0027t remove the need to call Init() though. Running the toolbar_actions unittest, it still complains, \"Check failed: instance_. Init() was never called\", so I\u0027ve kept the Init() call in the OnReady().",
+      "parentUuid": "38d4084b_76e8ce50",
       "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
