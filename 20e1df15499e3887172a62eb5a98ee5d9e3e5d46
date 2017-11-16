@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfb25fa2_2b8d2edf",
+        "filename": "content/renderer/pepper/pepper_plugin_instance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:39:58Z",
+      "side": 1,
+      "message": "The one and only caller never checked the return result anyway. Moved it out of the class because it can be.",
+      "revId": "20e1df15499e3887172a62eb5a98ee5d9e3e5d46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9497459_a72b2a3d",
+        "filename": "content/renderer/pepper/pepper_plugin_instance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1913,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:39:58Z",
+      "side": 1,
+      "message": "|range_| will end up consisting of [1-1, 2-2, ...], and there is actually a good chance the print job will be all the pages. e.g. In Print Preview, if the user prints pages 1, 3, and 5, then Print Preview will generate a 3 page preview PDF, and eventually send that to the printer via this code with the entire page range.",
+      "revId": "20e1df15499e3887172a62eb5a98ee5d9e3e5d46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a05c49ea_bd3717d7",
+        "filename": "content/renderer/pepper/pepper_plugin_instance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1969,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T15:39:58Z",
+      "side": 1,
+      "message": "If |ranges_| is empty, then |metafile_| should be nullptr already. Even if that assumption fails, the dangling pointer won\u0027t be used again until after the next PrintBegin() call, and PrintBegin() will reset |metafile_| as well.",
+      "revId": "20e1df15499e3887172a62eb5a98ee5d9e3e5d46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
