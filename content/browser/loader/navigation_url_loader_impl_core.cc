@@ -46,12 +46,9 @@ void NavigationURLLoaderImplCore::Start(
     std::unique_ptr<NavigationUIData> navigation_ui_data) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&NavigationURLLoaderImpl::NotifyRequestStarted, loader_,
-                     base::TimeTicks::Now()));
-
-  // The ResourceDispatcherHostImpl can be null in unit tests.
+  // The ResourceDispatcherHostImpl can be null in unit tests. Grab the
+  // |loader_| here because BeginNavigationRequest could destroy |this|.
+  base::WeakPtr<NavigationURLLoaderImpl> loader = loader_;
   if (ResourceDispatcherHostImpl::Get()) {
     ResourceDispatcherHostImpl::Get()->BeginNavigationRequest(
         resource_context, url_request_context_getter->GetURLRequestContext(),
@@ -59,6 +56,13 @@ void NavigationURLLoaderImplCore::Start(
         std::move(navigation_ui_data), this, service_worker_handle_core,
         appcache_handle_core);
   }
+  // Careful, |this| could be destroyed at this point. Call this after
+  // BeginNavigationRequest so the timestamp also accounts for synchronous time
+  // spent in the various ResourceHandlers.
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&NavigationURLLoaderImpl::NotifyRequestStarted, loader,
+                     base::TimeTicks::Now()));
 }
 
 void NavigationURLLoaderImplCore::FollowRedirect() {
