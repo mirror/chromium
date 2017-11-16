@@ -662,6 +662,7 @@ void ValidateAndConvertPaymentDetailsUpdate(const PaymentDetailsUpdate& input,
 void ValidateAndConvertPaymentMethodData(
     const HeapVector<PaymentMethodData>& input,
     Vector<payments::mojom::blink::PaymentMethodDataPtr>& output,
+    HashSet<String>& method_names,
     ExecutionContext& execution_context,
     ExceptionState& exception_state) {
   if (input.IsEmpty()) {
@@ -715,6 +716,7 @@ void ValidateAndConvertPaymentMethodData(
             "Invalid payment method identifier format");
         return;
       }
+      method_names.insert(identifier);
     }
 
     CountPaymentRequestNetworkNameInSupportedMethods(supported_methods,
@@ -1016,7 +1018,8 @@ PaymentRequest::PaymentRequest(ExecutionContext* execution_context,
 
   Vector<payments::mojom::blink::PaymentMethodDataPtr> validated_method_data;
   ValidateAndConvertPaymentMethodData(method_data, validated_method_data,
-                                      *GetExecutionContext(), exception_state);
+                                      method_names_, *GetExecutionContext(),
+                                      exception_state);
   if (exception_state.HadException())
     return;
 
@@ -1156,18 +1159,33 @@ void PaymentRequest::OnError(PaymentErrorReason error) {
   String message;
 
   switch (error) {
-    case PaymentErrorReason::USER_CANCEL:
+    case PaymentErrorReason::USER_CANCEL: {
       ec = kAbortError;
       message = "Request cancelled";
       break;
-    case PaymentErrorReason::NOT_SUPPORTED:
+    }
+
+    case PaymentErrorReason::NOT_SUPPORTED: {
       ec = kNotSupportedError;
-      message = "The payment method is not supported";
+      DCHECK_LE(1U, method_names_.size());
+      auto it = method_names_.begin();
+      if (method_names_.size() == 1U) {
+        message = "The payment method \"" + *it + "\" is not supported";
+      } else {
+        message = "The payment methods \"" + *it + "\"";
+        while (++it != method_names_.end()) {
+          message = message + ", \"" + *it + "\"";
+        }
+        message = message + " are not supported";
+      }
       break;
-    case PaymentErrorReason::UNKNOWN:
+    }
+
+    case PaymentErrorReason::UNKNOWN: {
       ec = kUnknownError;
       message = "Request failed";
       break;
+    }
   }
 
   DCHECK(!message.IsEmpty());
