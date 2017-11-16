@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2efc24d9_2552319d",
+        "filename": "media/base/cdm_promise_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-16T19:57:31Z",
+      "side": 1,
+      "message": "I see. Thanks for the explanation!\n\nI think I was confused because we report trace begin and end in two different classes. Does it make sense to always do it in CPA? We can have a boolean to control whether to trace or not.\n\nThat being said, I don\u0027t feel we are very interested in abnormal cases, especially in CdmAdapter, because this Clear() won\u0027t be sent to the renderer process...",
+      "parentUuid": "fa1e0a59_b2af267a",
+      "revId": "c99a0c8ae26a6b6733d863aa56b5f20077ef9626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31c89c81_b968a244",
         "filename": "media/mojo/services/mojo_cdm_file_io.cc",
         "patchSetId": 2
@@ -69,6 +87,24 @@
       "revId": "c99a0c8ae26a6b6733d863aa56b5f20077ef9626",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "311a03c0_d5b76494",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-16T19:57:31Z",
+      "side": 1,
+      "message": "I don\u0027t feel IPC related timing is particular interesting (you can get those through IPC traces). If we suspect our operation may be blocking (or takes long time to finish), it would be interesting to figure out why (e.g. GetStorageId on the browser side).\n\nWe don\u0027t care too much about run time impact of trace events. But these strings will be built in release builds and increase binary size. It\u0027s always a tiny increase, but we should probably only add traces that we will look at in the future.\n\nGiven you and Haoming both feel this is useful, I agree we can add these file IO traces.",
+      "parentUuid": "c1635359_61470e91",
+      "revId": "c99a0c8ae26a6b6733d863aa56b5f20077ef9626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
