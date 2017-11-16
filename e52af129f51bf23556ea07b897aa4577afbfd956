@@ -791,6 +791,24 @@
     },
     {
       "key": {
+        "uuid": "637b5b64_5473cc8f",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-16T09:38:52Z",
+      "side": 1,
+      "message": "Given that for now all of this is behind an experimental flag, and even then the worst case scenario is that the browser process gets DoS\u0027ed, I\u0027d suggest landing the CL with the current browser-side parsing behavior.\n\nI agree with Kim that having something concrete to work with as a baseline implementation would greatly simplify the rest of the engineering work.\n\nHowever, that before we make this even an origin-trial, we do have to address all of these concerns here.",
+      "parentUuid": "88b55f13_f12cd87d",
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "713ecdc1_e5ff2ba3",
         "filename": "content/browser/webauth/register_response_data.cc",
         "patchSetId": 20
