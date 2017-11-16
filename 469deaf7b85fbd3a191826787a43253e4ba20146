@@ -551,6 +551,30 @@
     },
     {
       "key": {
+        "uuid": "7306a525_868f6685",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-16T18:38:11Z",
+      "side": 1,
+      "message": "A little hand-wavy, but I\u0027m thinking along the lines that adding / removing [Abstract] attribute triggers change between Create and CreateStub, and with C we cannot just have 2 \u0027Create\u0027 functions with different sets of arguments.\n\nI don\u0027t feel very strongly about it, I just think that it could make it harder to reason. \nI\u0027ll be happy to change it though, please let me know.",
+      "parentUuid": "6033a120_7137a8c0",
+      "range": {
+        "startLine": 202,
+        "startChar": 50,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72fe2ed4_64b2f184",
         "filename": "components/cronet/native/cronet.idl_c.h",
         "patchSetId": 36
