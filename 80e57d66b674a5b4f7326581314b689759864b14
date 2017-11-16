@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac1936ec_4f7bd2cd",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1582,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-16T03:31:32Z",
+      "side": 1,
+      "message": "As comment[1], current implementation of |IsTabHTMLSpanElement()| is wrong.\nIt does too much than original intention, checking class\u003dApple-Tab-Span.\n\nLet\u0027s check only \"style\u003dwhite-space:pre\" attribute instead of computed\nstyle.\n\n\n[1] https://bugs.chromium.org/p/chromium/issues/detail?id\u003d778901#c9",
+      "revId": "80e57d66b674a5b4f7326581314b689759864b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
