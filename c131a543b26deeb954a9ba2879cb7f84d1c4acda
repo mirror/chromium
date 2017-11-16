@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4bb67d3_be50c571",
+        "filename": "media/cdm/mock_helpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-11-16T19:57:06Z",
+      "side": 1,
+      "message": "Should this be a MOCK_METHOD? You might have to update a test with EXPECT_CALL, but that is probably a good idea to ensure that it gets called.",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 20
+      },
+      "revId": "c131a543b26deeb954a9ba2879cb7f84d1c4acda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6957067_f83c9a4a",
+        "filename": "media/mojo/services/mojo_cdm_file_io_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-11-16T19:57:06Z",
+      "side": 1,
+      "message": "MOCK_METHOD? That way the 2 read tests below can verify that the size is correct (although it will always be 0), and that it\u0027s only called on a successful open (so the TwoReads test should only call this once).",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 25
+      },
+      "revId": "c131a543b26deeb954a9ba2879cb7f84d1c4acda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
