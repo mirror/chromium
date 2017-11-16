@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c90140fa_6a37e62b",
+        "filename": "chrome/browser/autocomplete/keyword_extensions_delegate_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-16T18:48:17Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3d3212a4_57a9e295",
+      "revId": "108522b355081407f79056538fb96c780593a168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2195e7cc_35469108",
         "filename": "components/omnibox/browser/keyword_provider.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "108522b355081407f79056538fb96c780593a168",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54b451a1_7c7d220e",
+        "filename": "components/omnibox/browser/keyword_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-16T18:48:17Z",
+      "side": 1,
+      "message": "I didn\u0027t forget. :) The requirement hasn\u0027t changed. I assumed you were primarily referring to e.g. CleanUserInputKeyword and ExtractKeywordFromInput, who in fact used to handle a null service. Anyways, makes sense so I\u0027m happy to add it.",
+      "parentUuid": "2195e7cc_35469108",
+      "revId": "108522b355081407f79056538fb96c780593a168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
