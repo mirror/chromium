@@ -8,6 +8,7 @@
 #include "base/test/scoped_task_environment.h"
 #include "media/gpu/accelerated_video_decoder.h"
 #include "media/gpu/vaapi/vaapi_picture.h"
+#include "media/gpu/vaapi/vaapi_picture_factory.h"
 #include "media/gpu/vaapi_wrapper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -92,6 +93,27 @@ class MockVaapiPicture : public VaapiPicture {
   bool AllowOverlay() const override { return false; }
 };
 
+class MockVaapiPictureFactory : public VaapiPictureFactory {
+ public:
+  MockVaapiPictureFactory() = default;
+  ~MockVaapiPictureFactory() override = default;
+
+  MOCK_METHOD2(MockCreateVaapiPicture, void(VaapiWrapper*, const gfx::Size&));
+  linked_ptr<VaapiPicture> Create(
+      const scoped_refptr<VaapiWrapper>& vaapi_wrapper,
+      const MakeGLContextCurrentCallback& make_context_current_cb,
+      const BindGLImageCallback& bind_image_cb,
+      int32_t picture_buffer_id,
+      const gfx::Size& size,
+      uint32_t texture_id,
+      uint32_t client_texture_id) override {
+    MockCreateVaapiPicture(vaapi_wrapper.get(), size);
+    return make_linked_ptr(new MockVaapiPicture(
+        vaapi_wrapper, make_context_current_cb, bind_image_cb,
+        picture_buffer_id, size, texture_id, client_texture_id));
+  }
+};
+
 class VaapiVideoDecodeAcceleratorTest : public TestWithParam<VideoCodecProfile>,
                                         public VideoDecodeAccelerator::Client {
  public:
@@ -103,6 +125,7 @@ class VaapiVideoDecodeAcceleratorTest : public TestWithParam<VideoCodecProfile>,
                            bool can_bind_to_sampler) { return true; })),
         decoder_thread_("VaapiVideoDecodeAcceleratorTestThread"),
         mock_decoder_(new MockAcceleratedVideoDecoder),
+        mock_vaapi_picture_factory_(new MockVaapiPictureFactory()),
         mock_vaapi_wrapper_(new MockVaapiWrapper()),
         weak_ptr_factory_(this) {
     decoder_thread_.Start();
@@ -115,10 +138,7 @@ class VaapiVideoDecodeAcceleratorTest : public TestWithParam<VideoCodecProfile>,
     vda_.decoder_.reset(mock_decoder_);
     vda_.client_ = weak_ptr_factory_.GetWeakPtr();
     vda_.vaapi_wrapper_ = mock_vaapi_wrapper_;
-
-    vda_.create_vaapi_picture_callback_ =
-        base::Bind(&VaapiVideoDecodeAcceleratorTest::CreateVaapiPicture,
-                   base::Unretained(this));
+    vda_.vaapi_picture_factory_.reset(mock_vaapi_picture_factory_);
 
     vda_.state_ = VaapiVideoDecodeAccelerator::kIdle;
   }
@@ -151,22 +171,6 @@ class VaapiVideoDecodeAcceleratorTest : public TestWithParam<VideoCodecProfile>,
     run_loop.Run();
   }
 
-  // TODO(mcasas): Use a Mock VaapiPicture factory, https://crbug.com/784507.
-  MOCK_METHOD2(MockCreateVaapiPicture, void(VaapiWrapper*, const gfx::Size&));
-  linked_ptr<VaapiPicture> CreateVaapiPicture(
-      const scoped_refptr<VaapiWrapper>& vaapi_wrapper,
-      const MakeGLContextCurrentCallback& make_context_current_cb,
-      const BindGLImageCallback& bind_image_cb,
-      int32_t picture_buffer_id,
-      const gfx::Size& size,
-      uint32_t texture_id,
-      uint32_t client_texture_id) {
-    MockCreateVaapiPicture(vaapi_wrapper.get(), size);
-    return make_linked_ptr(new MockVaapiPicture(
-        vaapi_wrapper, make_context_current_cb, bind_image_cb,
-        picture_buffer_id, size, texture_id, client_texture_id));
-  }
-
   // VideoDecodeAccelerator::Client methods.
   MOCK_METHOD1(NotifyInitializationComplete, void(bool));
   MOCK_METHOD5(
@@ -187,6 +191,7 @@ class VaapiVideoDecodeAcceleratorTest : public TestWithParam<VideoCodecProfile>,
 
   // Ownership passed to |vda_|, but we retain a pointer to it for MOCK checks.
   MockAcceleratedVideoDecoder* mock_decoder_;
+  MockVaapiPictureFactory* mock_vaapi_picture_factory_;
 
   scoped_refptr<MockVaapiWrapper> mock_vaapi_wrapper_;
 
@@ -276,7 +281,7 @@ TEST_P(VaapiVideoDecodeAcceleratorTest,
               va_surface_ids->resize(kNumPictures);
             })),
             Return(true)));
-    EXPECT_CALL(*this,
+    EXPECT_CALL(*mock_vaapi_picture_factory_,
                 MockCreateVaapiPicture(mock_vaapi_wrapper_.get(), kPictureSize))
         .Times(2);
 
