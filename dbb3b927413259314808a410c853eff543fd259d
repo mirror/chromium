@@ -16,6 +16,24 @@
       "revId": "dbb3b927413259314808a410c853eff543fd259d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25632f39_b4677a41",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1502,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-11-16T19:32:23Z",
+      "side": 1,
+      "message": "IMHO this is a special case: see the TODO note above.\nWhen we disabled a bunch of tests, we didn\u0027t delete them; we\u0027ve let them sit in the code to work as reminders for being revisited soon (and the will be!).\nThis falls to the same category.",
+      "parentUuid": "7d4254be_c7f0c90a",
+      "revId": "dbb3b927413259314808a410c853eff543fd259d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
