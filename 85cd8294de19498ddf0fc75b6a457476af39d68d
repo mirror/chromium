@@ -141,6 +141,24 @@
       "revId": "85cd8294de19498ddf0fc75b6a457476af39d68d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b6e73b_5760d393",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_mediator.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-11-16T01:56:34Z",
+      "side": 1,
+      "message": "This is old, old code \u003d)\n\nLooks like it used to just be a call to CopyFrom(), but that was made private in https://chromiumcodereview.appspot.com/19080003/ so we switched to something else.\n\nAt one point in the past we used |oldResults| to determine which tableview rows needed to be updated.  That code is now gone, but |oldResults| remained unnecessarily.\n\nSwitching this back to a single call to CopyFrom() seems fine.",
+      "parentUuid": "3d070218_6d60e7bb",
+      "revId": "85cd8294de19498ddf0fc75b6a457476af39d68d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
