@@ -16,6 +16,24 @@
       "revId": "fcb51a5ddef4d87e2566bd392c61f3582d7a5a56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7486128_22529644",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-11-16T06:10:27Z",
+      "side": 1,
+      "message": "Oops, though I already changed the description locally, it wasn\u0027t updated here.",
+      "parentUuid": "1ff44986_396ad021",
+      "revId": "fcb51a5ddef4d87e2566bd392c61f3582d7a5a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
