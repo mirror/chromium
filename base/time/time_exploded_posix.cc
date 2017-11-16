@@ -166,6 +166,7 @@ void Time::Explode(bool is_local, Exploded* exploded) const {
 
 // static
 bool Time::FromExploded(bool is_local, const Exploded& exploded, Time* time) {
+  usleep(100);
   CheckedNumeric<int> month = exploded.month;
   month--;
   CheckedNumeric<int> year = exploded.year;
