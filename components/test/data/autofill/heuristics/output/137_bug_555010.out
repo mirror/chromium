@@ -17,6 +17,6 @@ PHONE_HOME_WHOLE_NUMBER | id_skCOPhoneno | Phone |  | id_skCOShipAddress_3-defau
 CREDIT_CARD_NUMBER | cardNumber | 1234 5647 8901 2345 |  | id_skCOShipAddress_3-cc
 CREDIT_CARD_EXP_DATE_4_DIGIT_YEAR | expirationMonth | EXP |  | id_skCOShipAddress_3-cc
 CREDIT_CARD_VERIFICATION_CODE | cvv | CVV |  | id_skCOShipAddress_3-cc
-CREDIT_CARD_NAME_FULL | id_skAltPUName | Name |  | id_skCOShipAddress_3-cc
+NAME_FULL | id_skAltPUName | Name |  | id_skCOShipAddress_3-default
 PHONE_HOME_WHOLE_NUMBER | id_skAltPUPhoneno | Phone |  | id_skCOShipAddress_3-default
 EMAIL_ADDRESS | id_skAltPUEmail | Email |  | id_skCOShipAddress_3-default
