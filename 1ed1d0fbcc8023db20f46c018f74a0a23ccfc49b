@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "30d65f39_2039996a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ZoomController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-16T00:23:43Z",
+      "side": 1,
+      "message": "I think it\u0027s to prevent zooming in action like 99.4% -\u003e 100%. But may be okay if it is not a big deal. Done.",
+      "parentUuid": "1dab57b7_69bd68c1",
+      "revId": "1ed1d0fbcc8023db20f46c018f74a0a23ccfc49b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b10982e_785c5d98",
         "filename": "ui/events/android/gesture_event_android.h",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "13493b3b_a87de0db",
+        "filename": "ui/events/android/gesture_event_android.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-16T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b10982e_785c5d98",
+      "revId": "1ed1d0fbcc8023db20f46c018f74a0a23ccfc49b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07a34459_1a35dbbf",
         "filename": "ui/events/android/gesture_event_android.h",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-15T23:01:29Z",
       "side": 1,
       "message": "this and below aren\u0027t really TODOs",
+      "revId": "1ed1d0fbcc8023db20f46c018f74a0a23ccfc49b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9acdf698_6f07d0b5",
+        "filename": "ui/events/android/gesture_event_android.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-16T00:23:43Z",
+      "side": 1,
+      "message": "I remember your feedback on having union later...? Deleted TODO\u0027s anyway.",
+      "parentUuid": "07a34459_1a35dbbf",
       "revId": "1ed1d0fbcc8023db20f46c018f74a0a23ccfc49b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
