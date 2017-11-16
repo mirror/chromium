@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL PerformanceResourceTiming sizes tags test assert_equals: /svg/resources/greenSquare.svg?cb=8756076217654434 encodedBodySize expected 244 but got 0
+Harness: the test ran to completion.
+
