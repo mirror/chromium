@@ -4791,6 +4791,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 #pragma mark - ToolbarOwner
 
+- (CGFloat)toolbarHeight {
+  return [self headerHeight];
+}
+
 - (CGRect)toolbarFrame {
   return _toolbarCoordinator.toolbarViewController.view.frame;
 }

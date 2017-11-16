@@ -115,6 +115,34 @@ source_set("toolbar") {
   ]
 }
 
+source_set("toolbar_ui") {
+  sources = [
+    "toolbar_ui.h",
+    "toolbar_ui_state.h",
+    "toolbar_ui_state.mm",
+  ]
+  deps = [
+    ":toolbar",
+    "//base",
+    "//ios/chrome/browser/ui:ui_util",
+    "//ios/chrome/browser/web_state_list",
+    "//ios/web",
+  ]
+  configs += [ "//build/config/compiler:enable_arc" ]
+}
+
+source_set("toolbar_ui_broadcasting_util") {
+  sources = [
+    "toolbar_ui_broadcasting_util.h",
+    "toolbar_ui_broadcasting_util.mm",
+  ]
+  deps = [
+    ":toolbar_ui",
+    "//ios/chrome/browser/ui/broadcaster",
+  ]
+  configs += [ "//build/config/compiler:enable_arc" ]
+}
+
 source_set("feature") {
   sources = [
     "toolbar_private_base_feature.h",
@@ -159,11 +187,15 @@ source_set("unit_tests") {
   sources = [
     "toolbar_controller_unittest.mm",
     "toolbar_model_impl_ios_unittest.mm",
+    "toolbar_ui_broadcasting_util_unittest.mm",
+    "toolbar_ui_state_unittest.mm",
     "web_toolbar_controller_unittest.mm",
   ]
   deps = [
     ":test_support",
     ":toolbar",
+    ":toolbar_ui",
+    ":toolbar_ui_broadcasting_util",
     "//base",
     "//components/bookmarks/browser",
     "//components/bookmarks/test",
@@ -173,6 +205,7 @@ source_set("unit_tests") {
     "//ios/chrome/browser/browser_state:test_support",
     "//ios/chrome/browser/tabs",
     "//ios/chrome/browser/ui",
+    "//ios/chrome/browser/ui/broadcaster",
     "//ios/chrome/browser/ui/toolbar/test",
     "//ios/chrome/browser/web_state_list",
     "//ios/chrome/browser/web_state_list:test_support",
