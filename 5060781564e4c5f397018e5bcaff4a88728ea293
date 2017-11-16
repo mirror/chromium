@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cafd6ac_8f309239",
+        "filename": "sandbox/linux/syscall_broker/broker_process.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-16T21:55:24Z",
+      "side": 1,
+      "message": "\"This should be used with a bpf_dsl Trap function to broker system calls.\"",
+      "revId": "5060781564e4c5f397018e5bcaff4a88728ea293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3dd93b_f4825cac",
+        "filename": "services/service_manager/sandbox/linux/bpf_broker_policy_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-16T21:55:24Z",
+      "side": 1,
+      "message": "no (c) and 2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "5060781564e4c5f397018e5bcaff4a88728ea293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e5fd6c_51a46ea3",
+        "filename": "services/service_manager/sandbox/linux/bpf_broker_policy_linux.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-16T21:55:24Z",
+      "side": 1,
+      "message": "What happens if this just changes to the BaselinePolicy (in a follow-up CL)?",
+      "revId": "5060781564e4c5f397018e5bcaff4a88728ea293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
