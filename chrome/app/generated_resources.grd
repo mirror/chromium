@@ -5288,14 +5288,14 @@ the Bookmarks menu.">
       </if>
 
       <!-- Clipboard permission -->
-      <message name="IDS_CLIPBOARD_PERMISSION_FRAGMENT" desc="Permission request shown if the user is visiting a site that wants to read data from the system clipboard. Follows a prompt: 'This site would like to:'">
-        See text and images you copy to the clipboard
+      <message name="IDS_CLIPBOARD_PERMISSION_FRAGMENT" desc="Permission request shown if the user is visiting a site that wants to full access the system clipboard. Follows a prompt: 'This site would like to:'">
+        Copy and paste data.
       </message>
       <if expr="is_android">
-        <message name="IDS_CLIPBOARD_INFOBAR_QUESTION" desc="Question asked on the info bar whenever URL wants to read data from the system clipboard">
+        <message name="IDS_CLIPBOARD_INFOBAR_QUESTION" desc="Question asked on the info bar whenever URL wants to access the system clipboard">
           <ph name="URL">
             $1<ex>maps.google.com</ex>
-          </ph> wants to see text and images you copy to the clipboard.
+          </ph> wants to access your device's clipboard.
         </message>
       </if>
 
