@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c26c6496_640b14df",
+        "filename": "third_party/WebKit/Source/core/testing/PageTestBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-16T13:36:46Z",
+      "side": 1,
+      "message": "Can you add the same DCHECK() in `SetUp()` above as it would avoid these situations:\n```\nMyTest::SetUp() {\n  PageTestBase::SetUp({800, 600});\n\n  [...]\n\n  PageTestBase::SetUp();\n}\n```",
+      "revId": "fb68d61e1e35d4cfece416db95334aa03b5ce8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
