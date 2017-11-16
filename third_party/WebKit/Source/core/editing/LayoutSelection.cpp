@@ -242,6 +242,28 @@ static void SetShouldInvalidateIfNeeds(LayoutObject* layout_object) {
   }
 }
 
+static void SetSelectionStateIfNeeded(LayoutObject* layout_object,
+                                      SelectionState state) {
+  DCHECK(state != SelectionState::kContain) << layout_object << ' ' << state;
+  if (layout_object->GetSelectionState() == state)
+    return;
+  // TODO(yoichio): Once we make LayoutObject::SetSelectionState() tribial, use
+  // it directly.
+  layout_object->LayoutObject::SetSelectionState(state);
+
+  // Set parent SelectionState kContain for CSS ::selection style.
+  // See LayoutObject::InvalidatePaintForSelection().
+  if (state == SelectionState::kNone)
+    return;
+  for (LayoutObject* containing_block = layout_object->ContainingBlock();
+       containing_block;
+       containing_block = containing_block->ContainingBlock()) {
+    if (containing_block->GetSelectionState() == SelectionState::kContain)
+      return;
+    containing_block->LayoutObject::SetSelectionState(SelectionState::kContain);
+  }
+}
+
 // Set ShouldInvalidateSelection flag of LayoutObjects
 // comparing them in |new_range| and |old_range|.
 static void SetShouldInvalidateSelection(
@@ -267,7 +289,7 @@ static void SetShouldInvalidateSelection(
   // above.
   for (LayoutObject* layout_object : old_invalidation_set) {
     const SelectionState old_state = layout_object->GetSelectionState();
-    layout_object->SetSelectionStateIfNeeded(SelectionState::kNone);
+    SetSelectionStateIfNeeded(layout_object, SelectionState::kNone);
     if (layout_object->GetSelectionState() == old_state)
       continue;
     SetShouldInvalidateIfNeeds(layout_object);
@@ -351,7 +373,7 @@ static void MarkSelected(SelectedLayoutObjects* selected_objects,
                          LayoutObject* layout_object,
                          SelectionState state) {
   DCHECK(layout_object->CanBeSelectionLeaf());
-  layout_object->SetSelectionStateIfNeeded(state);
+  SetSelectionStateIfNeeded(layout_object, state);
   selected_objects->insert(layout_object);
 }
 
