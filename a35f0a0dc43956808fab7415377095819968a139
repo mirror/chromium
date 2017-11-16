@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d8987e2c_7050b289",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-16T06:15:29Z",
+      "side": 1,
+      "message": "The \u0027if\u0027 part removed.",
+      "parentUuid": "55047d67_14ffc260",
+      "revId": "a35f0a0dc43956808fab7415377095819968a139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df2ccba3_4140e919",
         "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
         "patchSetId": 9
@@ -122,6 +140,24 @@
       "revId": "a35f0a0dc43956808fab7415377095819968a139",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "546be27e_31f52586",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-16T06:15:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b85a93d_47d2ca13",
+      "revId": "a35f0a0dc43956808fab7415377095819968a139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

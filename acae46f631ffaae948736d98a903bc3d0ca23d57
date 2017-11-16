@@ -87,6 +87,24 @@
       "revId": "acae46f631ffaae948736d98a903bc3d0ca23d57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "874b1073_f0211f12",
+        "filename": "third_party/WebKit/Source/platform/graphics/highcontrast/highcontrast_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-16T06:15:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3e10d9f_b1265769",
+      "revId": "acae46f631ffaae948736d98a903bc3d0ca23d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
