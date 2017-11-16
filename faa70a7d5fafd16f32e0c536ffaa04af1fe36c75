@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0894290_fa4600f2",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-16T17:46:08Z",
+      "side": 1,
+      "message": "Maybe we can rename it |nodeGroupItem| or something other than node?",
+      "revId": "faa70a7d5fafd16f32e0c536ffaa04af1fe36c75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
