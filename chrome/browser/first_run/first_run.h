@@ -115,8 +115,12 @@ bool IsMetricsReportingOptIn();
 // (http://crbug.com/264694).
 void CreateSentinelIfNeeded();
 
-// Returns the creation time of the first run sentinel file. If the first run
+// Calculates the creation time of the first run sentinel file. If the first run
 // sentinel file does not exist, it will return base::Time().
+base::Time CalculateFirstRunSentinelCreationTime();
+
+// Sets and returns a static variable of value from
+// |CalculateFirstRunSentinelCreationTime|.
 base::Time GetFirstRunSentinelCreationTime();
 
 // Sets the kShowFirstRunBubbleOption local state pref so that the browser

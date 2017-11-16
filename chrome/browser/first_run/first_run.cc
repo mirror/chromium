@@ -555,9 +555,14 @@ bool IsMetricsReportingOptIn() {
 void CreateSentinelIfNeeded() {
   if (IsChromeFirstRun())
     internal::CreateSentinel();
+
+  // Sets the static variable for first run sentinel creation time. This is to
+  // prevent blocking later when calling GetFileInfo as static variables are
+  // initialized once.
+  GetFirstRunSentinelCreationTime();
 }
 
-base::Time GetFirstRunSentinelCreationTime() {
+base::Time CalculateFirstRunSentinelCreationTime() {
   base::FilePath first_run_sentinel;
   base::Time first_run_sentinel_creation_time = base::Time();
   if (first_run::internal::GetFirstRunSentinelFilePath(&first_run_sentinel)) {
@@ -565,6 +570,12 @@ base::Time GetFirstRunSentinelCreationTime() {
     if (base::GetFileInfo(first_run_sentinel, &info))
       first_run_sentinel_creation_time = info.creation_time;
   }
+  return first_run_sentinel_creation_time;
+}
+
+base::Time GetFirstRunSentinelCreationTime() {
+  static base::Time first_run_sentinel_creation_time =
+      CalculateFirstRunSentinelCreationTime();
   return first_run_sentinel_creation_time;
 }
 
