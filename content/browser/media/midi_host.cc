@@ -9,13 +9,13 @@
 #include "base/memory/ptr_util.h"
 #include "base/process/process.h"
 #include "base/trace_event/trace_event.h"
+#include "components/midi/message_util.h"
+#include "components/midi/midi_message_queue.h"
 #include "content/browser/bad_message.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/common/media/midi_messages.h"
 #include "content/public/browser/content_browser_client.h"
-#include "media/midi/message_util.h"
-#include "media/midi/midi_message_queue.h"
 #include "media/midi/midi_service.h"
 
 namespace content {
