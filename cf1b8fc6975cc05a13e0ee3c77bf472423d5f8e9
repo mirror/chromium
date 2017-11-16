@@ -22,6 +22,30 @@
       "revId": "cf1b8fc6975cc05a13e0ee3c77bf472423d5f8e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "349bb375_3c8a6e61",
+        "filename": "chrome/common/media_router/mojo/media_router_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-16T19:21:03Z",
+      "side": 1,
+      "message": "I think it\u0027s ok to leave it as is. We don\u0027t actually use this code path in production. (I think the comment below should read \"... from C++ to Mojo...\". I might\u0027ve been confused.) \n\nRe: MediaSource vs MediaSource::Id, I think it is apparent that we don\u0027t need MediaSource to be anything more than just a string, so removing the MediaSource class and replacing it with MediaSourceId that alias to std::string would be a good future cleanup.",
+      "parentUuid": "d3f1c055_a34ff8d3",
+      "range": {
+        "startLine": 393,
+        "startChar": 37,
+        "endLine": 393,
+        "endChar": 49
+      },
+      "revId": "cf1b8fc6975cc05a13e0ee3c77bf472423d5f8e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
