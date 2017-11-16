@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "663b9f1c_e9ba33f9",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-11-16T18:19:08Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is correct.... \n\n1, If we started streaming after loading, then we\u0027ll arrive here after the kReady -\u003e kReadyStreaming transition. In that case, wouldn\u0027t be kill the \u0027done\u0027 callback even though it\u0027s still needed?\n\n2, If we started streaming when starting to load, then we\u0027ll come by here in the kWaitingForResource-\u003ekWaitingForStreaming transition. Also, in that case, wouldn\u0027t we still need the \u0027done\u0027 callback?",
+      "range": {
+        "startLine": 310,
+        "startChar": 27,
+        "endLine": 310,
+        "endChar": 28
+      },
+      "revId": "6cc60721d8fa655d1b6348c0b5878432abf05179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
