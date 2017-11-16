@@ -13,6 +13,7 @@
 #include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/model/omnibox_suggestions.h"
 #include "chrome/browser/vr/speech_recognizer.h"
+#include "chrome/browser/vr/ui_browser_interface.h"
 #include "chrome/browser/vr/ui_element_renderer.h"
 #include "chrome/browser/vr/ui_input_manager.h"
 #include "chrome/browser/vr/ui_renderer.h"
@@ -25,7 +26,8 @@ namespace vr {
 Ui::Ui(UiBrowserInterface* browser,
        ContentInputForwarder* content_input_forwarder,
        const UiInitialState& ui_initial_state)
-    : scene_(base::MakeUnique<UiScene>()),
+    : browser_(browser),
+      scene_(base::MakeUnique<UiScene>()),
       model_(base::MakeUnique<Model>()),
       content_input_delegate_(
           base::MakeUnique<ContentInputDelegate>(content_input_forwarder)),
@@ -105,7 +107,27 @@ void Ui::SetLocationAccessIndicator(bool enabled) {
 }
 
 void Ui::SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) {
-  scene_manager_->SetExitVrPromptEnabled(enabled, reason);
+  if (!enabled) {
+    model_->active_modal_prompt = kModalPromptNone;
+    return;
+  }
+
+  if (model_->active_modal_prompt != kModalPromptNone) {
+    browser_->OnExitVrPromptResult(
+        GetReasonForPrompt(model_->active_modal_prompt),
+        ExitVrPromptChoice::CHOICE_NONE);
+  }
+
+  switch (reason) {
+    case UiUnsupportedMode::kUnhandledPageInfo:
+      model_->active_modal_prompt = kModalPromptExitVRForSiteInfo;
+      break;
+    case UiUnsupportedMode::kAndroidPermissionNeeded:
+      model_->active_modal_prompt = kModalPromptExitVRForAudioPermission;
+      break;
+    default:
+      NOTREACHED();
+  }
 }
 
 void Ui::SetSpeechRecognitionEnabled(bool enabled) {
