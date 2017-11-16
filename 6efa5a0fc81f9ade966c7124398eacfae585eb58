@@ -1,0 +1,469 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed962122_d417a11e",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "nit: Please add the units to the name of this constant so it\u0027s obvious if we use it the wrong way. For example:\n\nfoo \u003d FromSeconds(kDefaultRTT)\n\nvs\n\nfoo \u003d FromSeconds(kDefaultRttMs)",
+      "range": {
+        "startLine": 68,
+        "startChar": 10,
+        "endLine": 68,
+        "endChar": 21
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec72376_5daa86a0",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "Can we make this a object instead of a pointer to an object?",
+      "range": {
+        "startLine": 698,
+        "startChar": 65,
+        "endLine": 698,
+        "endChar": 0
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "603ad0d7_54700741",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "nit: should this perhaps be \"...ResponseReceived()\" or does that not actually make sense?",
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2763ef5d_2c1e76cd",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1597,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "Under what circumstances would we not migrate when a probe succeeds? I guess maybe if the network state has changed since the probe was sent?",
+      "range": {
+        "startLine": 1597,
+        "startChar": 29,
+        "endLine": 1597,
+        "endChar": 0
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c95ae70_c0b94f26",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1610,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "I\u0027m surprised there\u0027s nothing to do here, but I can\u0027t really think of what we\u0027d do so I guess it\u0027s right! :)\n\n(Would we set a timer?)",
+      "range": {
+        "startLine": 1610,
+        "startChar": 72,
+        "endLine": 1610,
+        "endChar": 0
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25dffc3_6a7c7a44",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1849,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "idle",
+      "range": {
+        "startLine": 1849,
+        "startChar": 11,
+        "endLine": 1849,
+        "endChar": 15
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96995773_30d3141f",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "Should we perhaps add an _IDLE_ enum for this case?",
+      "range": {
+        "startLine": 1854,
+        "startChar": 75,
+        "endLine": 1854,
+        "endChar": 0
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2cac65_1ef8e4ee",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1889,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "nit: I think this is not needed because it will get destroyed when this method returns, right?",
+      "range": {
+        "startLine": 1889,
+        "startChar": 27,
+        "endLine": 1889,
+        "endChar": 0
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b5ab95_8c2ed0d6",
+        "filename": "net/quic/chromium/quic_chromium_client_session.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "nit: s/aborted/disabled.",
+      "range": {
+        "startLine": 76,
+        "startChar": 47,
+        "endLine": 76,
+        "endChar": 54
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "661e37cc_6a75a4b5",
+        "filename": "net/quic/chromium/quic_chromium_client_session.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 77,
+        "startChar": 47,
+        "endLine": 77,
+        "endChar": 54
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ec6f91_089aa9bc",
+        "filename": "net/quic/chromium/quic_chromium_client_session.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "nit: Sometimes we say \"ConnectivityProbing\" and other times \"ProbeNetwork\". I\u0027d probably stick with ConnectivityProbing to be consistent.",
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91f7962_5e8aeece",
+        "filename": "net/quic/chromium/quic_chromium_client_session.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "nit: s/Succeeds/Succeeded/",
+      "range": {
+        "startLine": 499,
+        "startChar": 7,
+        "endLine": 499,
+        "endChar": 29
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ba25bc_0e2f57d4",
+        "filename": "net/quic/chromium/quic_chromium_client_session.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "nit: s/Fails/Failed/",
+      "range": {
+        "startLine": 507,
+        "startChar": 7,
+        "endLine": 507,
+        "endChar": 26
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3637a390_83068152",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "Does this Reader end up calling back to the Session or to the Manager?",
+      "range": {
+        "startLine": 54,
+        "startChar": 26,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919ef8bc_951acb5b",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "Typically we do exponential backoff. Would it make sense to do that here?",
+      "range": {
+        "startLine": 106,
+        "startChar": 55,
+        "endLine": 106,
+        "endChar": 0
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa2ad58_3f36f8c0",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "Your call, but if instead of taking a full-blown Session, you could define an interface that the session would implement. The nice thing about this approach is that it would let the unit tests of this class be smaller as you would not require a full blown Session (and all the associated dependencies)",
+      "range": {
+        "startLine": 23,
+        "startChar": 33,
+        "endLine": 23,
+        "endChar": 67
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc4c60c_cf5115fd",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "Comment please. (And probably move after Start). In particular, what is the observable behavior after Cancel is called.",
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c27b8ca_d5282fe8",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "This is StartProbeNetwork but the previous method is CancelProbing. Perhaps just Start/Cancel, or StartProbing/CancelProbing?",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd245798_76af4a2f",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "nit: Comment please",
+      "range": {
+        "startLine": 28,
+        "startChar": 70,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f71b548_fd523496",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "Since this class takes ownership of these objects it would be good to explain what happens to them. Namely, if the probe succeeds, they\u0027re handed off to the session via a callback, right?",
+      "range": {
+        "startLine": 32,
+        "startChar": 74,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46df7b38_8810ee81",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-16T16:13:32Z",
+      "side": 1,
+      "message": "nite: This should probably be base::TimeTicks.",
+      "range": {
+        "startLine": 33,
+        "startChar": 29,
+        "endLine": 33,
+        "endChar": 44
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
