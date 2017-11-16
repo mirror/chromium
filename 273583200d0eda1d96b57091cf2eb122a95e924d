@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88bdca97_8b08ee62",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-16T01:08:21Z",
+      "side": 1,
+      "message": "buffers -\u003e buffer",
+      "revId": "273583200d0eda1d96b57091cf2eb122a95e924d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2b27681_46a404a7",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-16T01:08:21Z",
+      "side": 1,
+      "message": "buffers -\u003e renderbuffers",
+      "revId": "273583200d0eda1d96b57091cf2eb122a95e924d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
