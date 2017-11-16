@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c6dc96e_253e4181",
+        "filename": "third_party/WebKit/LayoutTests/svg/custom/nested-color-stop-crash.svg",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-16T23:14:42Z",
+      "side": 1,
+      "message": "...this has me puzzled, because I don\u0027t think these \u003cstop\u003es should have been picked up in the first place [1]. At least I\u0027m assuming where hitting the DCHECK in SVGStopElement::StopColorIncludingOpacity, and then crashing? So that sounds like a bug in the Traversal\u003c...\u003e::ChildrenOf implementation.\n\n[1] Since the spec says: \"The vector ... of colors to use in a gradient is defined by the ‘stop’ elements that are child elements to a ‘linearGradient’, ... element.\" - \"child\" being fairly well-defined (\"direct descendant\".)",
+      "range": {
+        "startLine": 4,
+        "startChar": 8,
+        "endLine": 4,
+        "endChar": 16
+      },
+      "revId": "d3514bc7ca014316d528987d9b6313e7ebe0cb36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
