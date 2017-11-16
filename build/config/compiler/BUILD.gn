@@ -1321,6 +1321,7 @@ config("default_warnings") {
         "-Wno-address-of-packed-member",
       ]
     }
+    cflags += [ "-DNANANA" ]
   }
 }
 
