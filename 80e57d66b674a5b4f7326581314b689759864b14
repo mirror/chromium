@@ -34,6 +34,24 @@
       "revId": "80e57d66b674a5b4f7326581314b689759864b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d73ac2c_8673374a",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1582,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-16T07:46:20Z",
+      "side": 1,
+      "message": "Please remember we replace class\u003dApple-Tab-Span to style\u003dwhite-space:pre\nand we set this attribute.\n\nIn other words, style\u003dwhite-space:pre is a *special marker* in editing\ncommand.\n\nstyle\u003dwhite-space:pre is less hacky than class\u003dApple-Tab-Span.",
+      "parentUuid": "b97607dd_ab8c022a",
+      "revId": "80e57d66b674a5b4f7326581314b689759864b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
