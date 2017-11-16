@@ -1426,6 +1426,17 @@ void LayoutInline::ImageChanged(WrappedImagePtr,
   if (!Parent())
     return;
 
+  if (RuntimeEnabledFeatures::LayoutNGEnabled()) {
+    // TODO(kojii): Need to invalidate fragments for paint.
+    //return;
+    LayoutBlockFlow* block_flow = EnclosingNGBlockFlow();
+    if (block_flow && block_flow->PaintFragment()) {
+      //block_flow->SetShouldDoFullPaintInvalidation(PaintInvalidationReason::kImage);
+      SetAncestorLineBoxDirty();
+      return;
+    }
+  }
+
   // FIXME: We can do better.
   SetShouldDoFullPaintInvalidation(PaintInvalidationReason::kImage);
 }
