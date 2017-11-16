@@ -5,12 +5,13 @@
 #include "chrome/browser/ui/webui/bluetooth_internals/bluetooth_internals_ui.h"
 
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/webui/bluetooth_internals/bluetooth_internals_handler.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
 #include "content/public/browser/web_ui_data_source.h"
 
 BluetoothInternalsUI::BluetoothInternalsUI(content::WebUI* web_ui)
-    : content::WebUIController(web_ui) {
+    : MojoWebUIController(web_ui) {
   // Set up the chrome://bluetooth-internals source.
   content::WebUIDataSource* html_source =
       content::WebUIDataSource::Create(chrome::kChromeUIBluetoothInternalsHost);
@@ -63,3 +64,9 @@ BluetoothInternalsUI::BluetoothInternalsUI(content::WebUI* web_ui)
 }
 
 BluetoothInternalsUI::~BluetoothInternalsUI() {}
+
+void BluetoothInternalsUI::BindUIHandler(
+    // mojo::InterfaceRequest<mojom::BluetoothInternalsHandler> request) {
+    mojom::BluetoothInternalsHandlerRequest request) {
+  page_handler_.reset(new BluetoothInternalsHandler(std::move(request)));
+}

@@ -212,6 +212,8 @@ split_static_library("ui") {
     "web_contents_sizer.h",
     "webui/about_ui.cc",
     "webui/about_ui.h",
+    "webui/bluetooth_internals/bluetooth_internals_handler.cc",
+    "webui/bluetooth_internals/bluetooth_internals_handler.h",
     "webui/bluetooth_internals/bluetooth_internals_ui.cc",
     "webui/bluetooth_internals/bluetooth_internals_ui.h",
     "webui/chrome_web_ui_controller_factory.cc",
@@ -367,6 +369,7 @@ split_static_library("ui") {
     "//chrome/browser/engagement:mojo_bindings",
     "//chrome/browser/media:mojo_bindings",
     "//chrome/browser/safe_browsing",
+    "//chrome/browser/ui/webui/bluetooth_internals:mojo_bindings",
     "//chrome/browser/ui/webui/interventions_internals:mojo_bindings",
     "//chrome/browser/ui/webui/omnibox:mojo_bindings",
     "//chrome/browser/ui/webui/usb_internals:mojo_bindings",
@@ -477,7 +480,9 @@ split_static_library("ui") {
     "//content/public/common",
     "//crypto",
     "//device/base",
-    "//device/bluetooth/public/interfaces:experimental_interfaces",
+
+    # TODO(scheib) before landing:  Is this needed still?
+    #"//device/bluetooth/public/interfaces:experimental_interfaces",
     "//device/usb",
     "//extensions/features",
     "//media",
