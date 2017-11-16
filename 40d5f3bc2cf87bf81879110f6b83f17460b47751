@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cdcf628_ebd668e7",
+        "filename": "media/mojo/interfaces/video_decode_stats_recorder.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-16T16:39:23Z",
+      "side": 1,
+      "message": "Where possible, we strongly prefer to avoid passing origins over Mojo, since it requires trusting information the renderer is sending to the browser. Is it possible to have this object registered on the RenderFrameHost\u0027s InterfaceProvider, so we can hook this up directly using the browser-side information?",
+      "revId": "40d5f3bc2cf87bf81879110f6b83f17460b47751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
