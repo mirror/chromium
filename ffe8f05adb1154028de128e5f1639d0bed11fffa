@@ -1,0 +1,420 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bf63044_e9a6ec66",
+        "filename": "components/leveldb/public/interfaces/leveldb.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "can you add a comment somewhere explaining that if DELETE_PREFIXED_KEY or COPY_PREFIXED_KEY are not the first operation they won\u0027t delete/copy records that were inserted earlier in the same write batch?",
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb41015b_39dfef35",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e3fbb03_85b1215b",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "this is now always going be true, right? commit_batch is never going to have changed keys/values, and definitely always going have clear_all_first set to false.\nShould we have a DCHECK to make sure of that?",
+      "range": {
+        "startLine": 753,
+        "startChar": 6,
+        "endLine": 753,
+        "endChar": 54
+      },
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097fe70b_4dde1445",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "curious why this change was necessary?",
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af968e20_cae429d4",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "is this used anywhere?",
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d4fbb8c_2fa25fe5",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "we should probably not be adding new tests that depend on Get, since that method is going away (also this method is only used by GetStrSync below, so not really any reason to have this as a separate method)?",
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3209995e_73e26fa6",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "not used?",
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfeec2c4_81a8832c",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "The commit callback is called on the first commit, but there might be multiple commits (for example if there are forks in the load_tasks, but I think it could happen other ways as well). So this won\u0027t actually block till all the data is committed?",
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eca0d28_df586055",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "curious why sometimes you\u0027re using base::BarrierClosure, and in other places you use your new IncrementalBarrier thing?",
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9c1e9cb_4e8d681a",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "curious you wrote all those wrappers for all the various LevelDBWrapper methods, yet GetAll, which arguably is the trickiest to call you left alone...\n\nAlso why is this calling GetAll on the wrapper_impl directly, rather than on wrapper()?",
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8470af4c_ba4a8b1b",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "can\u0027t you just change the size EXPECT to an ASSERT and them EXPECT_EQ(key, *changes.begin());? Not sure why your finding in a set you just asserted has only one element anyway.\n(and similar comment for the other branch)",
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7427a46_32040bd4",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "unfinished comment? (or at least misformatted)",
+      "range": {
+        "startLine": 1230,
+        "startChar": 0,
+        "endLine": 1230,
+        "endChar": 12
+      },
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac7374c_66f6c80c",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "huh? Why pass the wrong cache_mode to GetDefaultTestingOptions to only then immediately override it?",
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "863e8098_cff34aae",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1333,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "all these helper methods with awfully generic names really should be in an anonymous namespace (or be file static)",
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711226b1_348db838",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1333,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "not sure why this isn\u0027t just using int... If your test is creating more than 2^32 forks I think we have bigger problems?",
+      "range": {
+        "startLine": 1333,
+        "startChar": 25,
+        "endLine": 1333,
+        "endChar": 32
+      },
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96eb0a12_1895acd6",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "No abbreviations like this please. Also not convinced that this even warrants a helper method like this",
+      "range": {
+        "startLine": 1339,
+        "startChar": 21,
+        "endLine": 1339,
+        "endChar": 35
+      },
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c2d48e_bc00f9bc",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1346,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "base::make_optional?",
+      "range": {
+        "startLine": 1346,
+        "startChar": 18,
+        "endLine": 1346,
+        "endChar": 54
+      },
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea76802c_d9555fe8",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "why not store things as base::Optional and avoid having to convert between the two formats all the time?",
+      "range": {
+        "startLine": 1351,
+        "startChar": 2,
+        "endLine": 1352,
+        "endChar": 9
+      },
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9521272d_2a0e99c1",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "some comment describing what this test is doing (and why the assertions at the end match what it is doing) might be helpful.",
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d42116f4_2fd817fc",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "why are these maps? you seem to just treat them as vectors...",
+      "range": {
+        "startLine": 1363,
+        "startChar": 0,
+        "endLine": 1365,
+        "endChar": 44
+      },
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e007974_174663dd",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "this will in fact cause every KEYS_ONLY wrapper to commit, right?",
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32a1668_071be8f4",
+        "filename": "content/test/fake_leveldb_database.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "nit: I\u0027d be consistent in how looping over everything with a prefix is done (between here and the DELETE_PREFIXED code)",
+      "revId": "ffe8f05adb1154028de128e5f1639d0bed11fffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

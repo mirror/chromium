@@ -822,6 +822,24 @@
     },
     {
       "key": {
+        "uuid": "cdd92673_7cc37cf8",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "I\u0027m not convinced, you\u0027re adding over a hundred lines of boilerplate code here so you can write:\nGet(key, \u0026get_success, \u0026result, barrier)\nrather than\nwrapper()-\u003eGet(key, base::BindOnce(\u0026GetCallback, barrier, \u0026result));?\n\nI think the second one is much much easier to read. It\u0027s clear what method it is calling, it\u0027s clear there is something going on with a callback (and barrier and result are somehow used in the callback, not by Get itself), and you can see all that without having to dig through well over a hundred lines of code (including overloaded methods, making it even harder to find the right method that is called). I know IDEs can help, but I don\u0027t think we should write our code in such a way that reading the code without a top-of-the-line IDE becomes unnecessarily harder.\n\n(one possible \"simplification\" which I\u0027ve seen in other tests is to add methods such that you can write: wrapper()-\u003eGet(key, MakeGetCallback(barrier, \u0026result)); something like that might make sense. At least that way it\u0027s still sort of obvious what is going on, and you\u0027re still hiding some details around the conversion callback)",
+      "parentUuid": "cd15d049_f4d6da46",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ef5418c_51ea1263",
         "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
         "patchSetId": 15

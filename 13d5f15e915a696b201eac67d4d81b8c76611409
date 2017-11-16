@@ -469,6 +469,24 @@
     },
     {
       "key": {
+        "uuid": "663eab77_9667aa67",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T18:03:38Z",
+      "side": 1,
+      "message": "Actually it \"worked\" because std::map\u003c\u003e::value_type is a std::pair\u003cconst Key, Value\u003e, so above we\u0027re calling std::move on a const std::vector, which of course just does a copy (it would also have been rather crazy to be able to move out of the key of a std::map. I guess c++17 introduces extract for that, but nothing we can use yet (also not sure if extracting items one by one and moving the key would be more/less efficient than just iterating+copying followed by clearing the whole map...))",
+      "parentUuid": "14e90928_908a6eb2",
+      "revId": "13d5f15e915a696b201eac67d4d81b8c76611409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e35bdbe2_29bf95cc",
         "filename": "content/browser/leveldb_wrapper_impl.h",
         "patchSetId": 18
