@@ -3130,6 +3130,7 @@ void RenderFrameImpl::CommitNavigation(
     const RequestNavigationParams& request_params,
     mojo::ScopedDataPipeConsumerHandle body_data,
     base::Optional<URLLoaderFactoryBundle> subresource_loader_factories) {
+  fprintf(stderr, "Here we navigate\n");
   CHECK(IsBrowserSideNavigationEnabled());
   // If this was a renderer-initiated navigation (nav_entry_id == 0) from this
   // frame, but it was aborted, then ignore it.
@@ -7001,6 +7002,11 @@ void RenderFrameImpl::HandlePepperImeCommit(const base::string16& text) {
 void RenderFrameImpl::RegisterMojoInterfaces() {
   GetAssociatedInterfaceRegistry()->AddInterface(
       base::Bind(&RenderFrameImpl::BindEngagement, weak_factory_.GetWeakPtr()));
+
+  if (devtools_agent_) {
+    GetAssociatedInterfaceRegistry()->AddInterface(
+        base::Bind(&DevToolsAgent::Bind, devtools_agent_->GetWeakPtr()));
+  }
 
   GetAssociatedInterfaceRegistry()->AddInterface(base::Bind(
       &RenderFrameImpl::BindMediaEngagement, weak_factory_.GetWeakPtr()));
