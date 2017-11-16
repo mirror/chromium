@@ -35,6 +35,29 @@ ExtensionNavigationUIData::ExtensionNavigationUIData(
   }
 }
 
+ExtensionNavigationUIData::ExtensionNavigationUIData(
+    content::WebContents* web_contents,
+    int window_id,
+    int tab_id,
+    int frame_tree_node_id) {
+  frame_data_.window_id = window_id;
+  frame_data_.tab_id = tab_id;
+  frame_data_.frame_id = ExtensionApiFrameIdMap::UnsafeGetFrameId(
+      web_contents, frame_tree_node_id);
+  frame_data_.parent_frame_id = ExtensionApiFrameIdMap::UnsafeGetParentFrameId(
+      web_contents, frame_tree_node_id);
+
+  WebViewGuest* web_view = WebViewGuest::FromWebContents(web_contents);
+  if (web_view) {
+    is_web_view_ = true;
+    web_view_instance_id_ = web_view->view_instance_id();
+    web_view_rules_registry_id_ = web_view->rules_registry_id();
+  } else {
+    is_web_view_ = false;
+    web_view_instance_id_ = web_view_rules_registry_id_ = 0;
+  }
+}
+
 std::unique_ptr<ExtensionNavigationUIData> ExtensionNavigationUIData::DeepCopy()
     const {
   std::unique_ptr<ExtensionNavigationUIData> copy(

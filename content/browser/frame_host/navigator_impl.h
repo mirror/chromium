@@ -57,10 +57,12 @@ class CONTENT_EXPORT NavigatorImpl : public Navigator {
       RenderFrameHostImpl* render_frame_host,
       const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
       std::unique_ptr<NavigationHandleImpl> navigation_handle) override;
-  bool NavigateToPendingEntry(FrameTreeNode* frame_tree_node,
-                              const FrameNavigationEntry& frame_entry,
-                              ReloadType reload_type,
-                              bool is_same_document_history_load) override;
+  bool NavigateToPendingEntry(
+      FrameTreeNode* frame_tree_node,
+      const FrameNavigationEntry& frame_entry,
+      ReloadType reload_type,
+      bool is_same_document_history_load,
+      std::unique_ptr<NavigationUIData> navigation_ui_data) override;
   bool NavigateNewChildFrame(RenderFrameHostImpl* render_frame_host,
                              const GURL& default_url) override;
   void RequestOpenURL(
@@ -118,7 +120,8 @@ class CONTENT_EXPORT NavigatorImpl : public Navigator {
                        bool is_same_document_history_load,
                        bool is_history_navigation_in_new_child,
                        bool is_pending_entry,
-                       const scoped_refptr<ResourceRequestBody>& post_body);
+                       const scoped_refptr<ResourceRequestBody>& post_body,
+                       std::unique_ptr<NavigationUIData> navigation_ui_data);
 
   // PlzNavigate: if needed, sends a BeforeUnload IPC to the renderer to ask it
   // to execute the beforeUnload event. Otherwise, the navigation request will
@@ -133,7 +136,8 @@ class CONTENT_EXPORT NavigatorImpl : public Navigator {
                          bool is_same_document_history_load,
                          bool is_history_navigation_in_new_child,
                          const scoped_refptr<ResourceRequestBody>& post_body,
-                         base::TimeTicks navigation_start);
+                         base::TimeTicks navigation_start,
+                         std::unique_ptr<NavigationUIData> navigation_ui_data);
 
   void RecordNavigationMetrics(
       const LoadCommittedDetails& details,
