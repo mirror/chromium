@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0faa45cc_bb82aafa",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-16T02:57:27Z",
+      "side": 1,
+      "message": "Hi Shimi, please help us review all the messages added here.\n\nI tried to split the strings changes into a separate CL but it failed for unused resource. So I have to add you in this CL to review the Strings here.\n\nThanks",
+      "range": {
+        "startLine": 912,
+        "startChar": 11,
+        "endLine": 912,
+        "endChar": 20
+      },
+      "revId": "8d756b3a06e2fbef541c02a6ca67ff616a1f51ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
