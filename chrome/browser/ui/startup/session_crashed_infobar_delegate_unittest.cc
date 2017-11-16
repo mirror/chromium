@@ -25,7 +25,7 @@ class SessionCrashedInfoBarDelegateUnitTest : public BrowserWithTestWindowTest {
   void SetUp() override {
     static_cast<TestingBrowserProcess*>(g_browser_process)
         ->SetLocalState(&pref_service);
-    chrome::RegisterLocalState(pref_service.registry());
+    RegisterLocalState(pref_service.registry());
 
     // This needs to be called after the local state is set, because it will
     // create a browser which will try to read from the local state.

@@ -415,7 +415,7 @@ class NoteTakingHelperTest : public BrowserWithTestWindowTest,
     // registered with |profile_manager_|.
     auto prefs =
         base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>();
-    chrome::RegisterUserProfilePrefs(prefs->registry());
+    RegisterUserProfilePrefs(prefs->registry());
     profile_prefs_ = prefs.get();
     return profile_manager_->CreateTestingProfile(
         kTestProfileName, std::move(prefs), base::ASCIIToUTF16("Test profile"),
@@ -947,7 +947,7 @@ TEST_P(NoteTakingHelperTest, AddProfileWithPlayStoreEnabled) {
   // this case: http://crbug.com/700554
   const char kSecondProfileName[] = "second-profile";
   auto prefs = base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>();
-  chrome::RegisterUserProfilePrefs(prefs->registry());
+  RegisterUserProfilePrefs(prefs->registry());
   prefs->SetBoolean(arc::prefs::kArcEnabled, true);
   profile_manager_->CreateTestingProfile(
       kSecondProfileName, std::move(prefs), base::ASCIIToUTF16("Second User"),
@@ -1509,7 +1509,7 @@ TEST_P(NoteTakingHelperTest, LockScreenSupportInSecondaryProfile) {
 
   // Initialize secondary profile.
   auto prefs = base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>();
-  chrome::RegisterUserProfilePrefs(prefs->registry());
+  RegisterUserProfilePrefs(prefs->registry());
   sync_preferences::TestingPrefServiceSyncable* profile_prefs = prefs.get();
   const std::string kSecondProfileName = "second-profile";
   TestingProfile* second_profile = profile_manager_->CreateTestingProfile(
