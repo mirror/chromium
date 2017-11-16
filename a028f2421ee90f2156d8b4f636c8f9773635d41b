@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "cf55a241_8a65731e",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedWorkletGlobalScope.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-11-16T21:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef431d55_3db840ec",
+      "range": {
+        "startLine": 41,
+        "startChar": 9,
+        "endLine": 41,
+        "endChar": 23
+      },
+      "revId": "a028f2421ee90f2156d8b4f636c8f9773635d41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21a22198_36faec55",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 31
@@ -56,6 +80,24 @@
       "revId": "a028f2421ee90f2156d8b4f636c8f9773635d41b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fff26a2_0f329022",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-11-16T21:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21a22198_36faec55",
+      "revId": "a028f2421ee90f2156d8b4f636c8f9773635d41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +124,30 @@
     },
     {
       "key": {
+        "uuid": "8f85d9c4_44966338",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-11-16T21:44:04Z",
+      "side": 1,
+      "message": "Quite - now when we are on the AnimationWorklet thread we may only access global_scope_ when active_ is true.\n\nFor other (queuing work) I taught the mutator_ how to check it is on the originating thread, I have exposed it and added the check here.",
+      "parentUuid": "478e4c39_d1485cfb",
+      "range": {
+        "startLine": 57,
+        "startChar": 29,
+        "endLine": 57,
+        "endChar": 42
+      },
+      "revId": "a028f2421ee90f2156d8b4f636c8f9773635d41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31cef471_f524f50e",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 31
@@ -96,6 +162,24 @@
       "revId": "a028f2421ee90f2156d8b4f636c8f9773635d41b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a494eb_2946b19a",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-11-16T21:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31cef471_f524f50e",
+      "revId": "a028f2421ee90f2156d8b4f636c8f9773635d41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +200,24 @@
     },
     {
       "key": {
+        "uuid": "4a3a74e0_2f43ee5c",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThread.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-11-16T21:44:04Z",
+      "side": 1,
+      "message": "Not any more, fixed.",
+      "parentUuid": "e842b2bc_34c3adca",
+      "revId": "a028f2421ee90f2156d8b4f636c8f9773635d41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79438234_2be0a44a",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThreadTest.cpp",
         "patchSetId": 31
@@ -133,6 +235,24 @@
     },
     {
       "key": {
+        "uuid": "fb156e7b_fa187000",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThreadTest.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-11-16T21:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79438234_2be0a44a",
+      "revId": "a028f2421ee90f2156d8b4f636c8f9773635d41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46422e1e_0a949573",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThreadTest.cpp",
         "patchSetId": 31
@@ -147,6 +267,24 @@
       "revId": "a028f2421ee90f2156d8b4f636c8f9773635d41b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ff33c1_30cfbd29",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThreadTest.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-11-16T21:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46422e1e_0a949573",
+      "revId": "a028f2421ee90f2156d8b4f636c8f9773635d41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "1ffd2a6c_387174fb",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-11-16T21:44:04Z",
+      "side": 1,
+      "message": "Mutate may be called simultaneously, but MutateWithEvent will not.\nThe new change should fix the race by not accessing anything on this-\u003e\nexcept active_, which is a boolean which only goes from 1-\u003e0 once.  If it\ngets called an extra time there is no harm, since the pending task will keep \u0027this\u0027 alive and will complete emptily on the backing thread, then unblock the caller. (preventing the Post/Dispatch/Signal is an optimization)",
+      "parentUuid": "83854871_7255daa8",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 19
+      },
+      "revId": "172269f1a548abbcc7712a3a56483b5b2ee036e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85acd0c7_fad05d09",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 24
@@ -194,6 +218,24 @@
       "revId": "172269f1a548abbcc7712a3a56483b5b2ee036e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80bd548c_488ec015",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-11-16T21:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa59b2c9_9090ed75",
+      "revId": "172269f1a548abbcc7712a3a56483b5b2ee036e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

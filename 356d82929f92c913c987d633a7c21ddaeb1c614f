@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f6741723_f514ab8d",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-11-16T21:44:04Z",
+      "side": 1,
+      "message": "Fixed by making register/unregister asynchronous and handled on the same thread that accesses the list.",
+      "parentUuid": "2c497cd9_cbbef52d",
+      "revId": "356d82929f92c913c987d633a7c21ddaeb1c614f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c226443_b2d24fec",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
         "patchSetId": 29
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "3c226443_b2d24fec",
+      "revId": "356d82929f92c913c987d633a7c21ddaeb1c614f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0ba8cfe_b90b71be",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-11-16T21:44:04Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ba4b5541_f6bec99c",
       "revId": "356d82929f92c913c987d633a7c21ddaeb1c614f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -86,6 +122,24 @@
       "revId": "356d82929f92c913c987d633a7c21ddaeb1c614f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9a2b7bc_4c6ca374",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-11-16T21:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3efebac3_7d2f76ec",
+      "revId": "356d82929f92c913c987d633a7c21ddaeb1c614f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -183,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "6d8246ee_31287ab2",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-11-16T21:44:04Z",
+      "side": 1,
+      "message": "Yes, we can.",
+      "parentUuid": "89f59f2c_1641249e",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 15
+      },
+      "revId": "356d82929f92c913c987d633a7c21ddaeb1c614f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c2854f6_7d6ecfd1",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 29
@@ -203,6 +281,30 @@
       "revId": "356d82929f92c913c987d633a7c21ddaeb1c614f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e787eec_28418e5a",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-11-16T21:44:04Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "5c2854f6_7d6ecfd1",
+      "range": {
+        "startLine": 81,
+        "startChar": 12,
+        "endLine": 81,
+        "endChar": 33
+      },
+      "revId": "356d82929f92c913c987d633a7c21ddaeb1c614f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
