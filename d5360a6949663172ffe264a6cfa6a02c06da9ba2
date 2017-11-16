@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b32f1a80_211abb24",
+        "filename": "components/viz/client/client_layer_tree_frame_sink_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-16T16:40:58Z",
+      "side": 1,
+      "message": "Should we wait for bind to be called before we do this? Else its racey and might close this before bind and then bind could just abort?",
+      "revId": "d5360a6949663172ffe264a6cfa6a02c06da9ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
