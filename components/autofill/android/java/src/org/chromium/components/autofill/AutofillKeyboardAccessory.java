@@ -13,7 +13,6 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v7.content.res.AppCompatResources;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -122,8 +121,8 @@ public class AutofillKeyboardAccessory extends LinearLayout
                 if (mSeparatorPosition == -1 && !isKeyboardAccessoryHint) mSeparatorPosition = i;
 
                 ImageView icon = (ImageView) touchTarget;
-                Drawable drawable =
-                        AppCompatResources.getDrawable(getContext(), suggestion.getIconId());
+                Drawable drawable = ApiCompatibilityUtils.getDrawable(
+                        getContext().getResources(), suggestion.getIconId());
                 if (isKeyboardAccessoryHint) {
                     drawable.setColorFilter(ApiCompatibilityUtils.getColor(getResources(),
                                                     R.color.keyboard_accessory_hint_icon),
@@ -149,9 +148,9 @@ public class AutofillKeyboardAccessory extends LinearLayout
                 }
 
                 if (suggestion.getIconId() != 0) {
-                    ApiCompatibilityUtils.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                            label,
-                            AppCompatResources.getDrawable(getContext(), suggestion.getIconId()),
+                    ApiCompatibilityUtils.setCompoundDrawablesRelativeWithIntrinsicBounds(label,
+                            ApiCompatibilityUtils.getDrawable(
+                                    getContext().getResources(), suggestion.getIconId()),
                             null /* top */, null /* end */, null /* bottom */);
                 }
 
