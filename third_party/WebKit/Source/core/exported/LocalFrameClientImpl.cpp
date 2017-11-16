@@ -779,6 +779,12 @@ void LocalFrameClientImpl::DidObserveNewFeatureUsage(
     web_frame_->Client()->DidObserveNewFeatureUsage(feature);
 }
 
+bool LocalFrameClientImpl::ShouldTrackUseCounter(const KURL& url) {
+  if (web_frame_->Client())
+    return web_frame_->Client()->ShouldTrackUseCounter(url);
+  return true;
+}
+
 void LocalFrameClientImpl::SelectorMatchChanged(
     const Vector<String>& added_selectors,
     const Vector<String>& removed_selectors) {
