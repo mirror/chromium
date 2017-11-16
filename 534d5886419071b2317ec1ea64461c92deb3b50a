@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb9434f7_2dfdea2b",
+        "filename": "chrome/renderer/autofill/form_autocomplete_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "I will add some tests once I pass events to AutofillDriver, this patch roughly moves the code from AutofillAgent \u0026 PasswordAutofillAgent to InteractedFormTracker, isn\u0027t supposed to change the AutofillDriver behavior too much, the existing tests should cover the changes.",
+      "parentUuid": "32be7123_db93b989",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e95f9b4a_3432f0ba",
         "filename": "chrome/renderer/autofill/form_autocomplete_browsertest.cc",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-15T15:49:16Z",
       "side": 1,
       "message": "Disabling tests is not great if we want to keep the existing functionality, no?",
+      "range": {
+        "startLine": 235,
+        "startChar": 29,
+        "endLine": 235,
+        "endChar": 38
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1724b52_2111aab4",
+        "filename": "chrome/renderer/autofill/form_autocomplete_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "The feature this test covered is changed, we will combine WillSendSubmit and WillSubmitForm, this test should be changed to if OnSuccessfulSubmission() is called, it is browser side test once I pass submission successful event to AutofillDriver side, I will rewrite this test.",
+      "parentUuid": "e95f9b4a_3432f0ba",
       "range": {
         "startLine": 235,
         "startChar": 29,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "ba53def1_9770ea97",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c8cd3b3_2f18305f",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90fe5a0e_316d7b91",
         "filename": "components/autofill/content/renderer/autofill_agent.cc",
         "patchSetId": 1
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "f4e734f2_d187a727",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90fe5a0e_316d7b91",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a56547be_77bc98c5",
         "filename": "components/autofill/content/renderer/autofill_agent.cc",
         "patchSetId": 1
@@ -90,6 +168,24 @@
       "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419f5e26_75d59df0",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a56547be_77bc98c5",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "cd8c6b06_8ec86539",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a066dad4_bc383bc6",
+      "range": {
+        "startLine": 789,
+        "startChar": 28,
+        "endLine": 789,
+        "endChar": 41
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba9d2135_3ced7cc9",
         "filename": "components/autofill/content/renderer/autofill_agent.h",
         "patchSetId": 1
@@ -156,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "4660c3b6_23fdf50c",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "Thanks, removed, it is leftover.",
+      "parentUuid": "ba9d2135_3ced7cc9",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b519fd1b_79bc4eda",
         "filename": "components/autofill/content/renderer/autofill_agent.h",
         "patchSetId": 1
@@ -167,6 +305,24 @@
       "writtenOn": "2017-11-15T15:49:16Z",
       "side": 1,
       "message": "where is this used?",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f60cbf4_f00a0612",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "It is used by PasswordAutofillAgent, previously, it was commented as WeakRef (see the PasswordAutofillAgent), since PasswordAutofillAgent adds/removes Observer though AutofillAgent, I used the real WeakRef now.",
+      "parentUuid": "b519fd1b_79bc4eda",
       "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -196,6 +352,30 @@
     },
     {
       "key": {
+        "uuid": "66ef672f_55b8918d",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bebeddb_3a9d2598",
+      "range": {
+        "startLine": 113,
+        "startChar": 25,
+        "endLine": 113,
+        "endChar": 59
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d7fef21_2998eefc",
         "filename": "components/autofill/content/renderer/autofill_agent.h",
         "patchSetId": 1
@@ -219,6 +399,30 @@
     },
     {
       "key": {
+        "uuid": "64172193_38d75b56",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d7fef21_2998eefc",
+      "range": {
+        "startLine": 164,
+        "startChar": 11,
+        "endLine": 164,
+        "endChar": 14
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d457dd4_a8701828",
         "filename": "components/autofill/content/renderer/autofill_agent.h",
         "patchSetId": 1
@@ -230,6 +434,30 @@
       "writtenOn": "2017-11-15T15:49:16Z",
       "side": 1,
       "message": "The format for TODO is TODO(crbug.com/xxxxxx). Helps keep track of work",
+      "range": {
+        "startLine": 246,
+        "startChar": 10,
+        "endLine": 246,
+        "endChar": 20
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d974add_3302d774",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "Filed bugs for all TODO.",
+      "parentUuid": "6d457dd4_a8701828",
       "range": {
         "startLine": 246,
         "startChar": 10,
@@ -289,6 +517,30 @@
     },
     {
       "key": {
+        "uuid": "a4acf593_16f05016",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "I wonder this is real case, since PasswordAutofillAgent only uses one element to infer form submission. To make the behavior unchanged by this patch, I put the checking back, see GetSubmittedForm().",
+      "parentUuid": "d4f2379c_6fe9e63a",
+      "range": {
+        "startLine": 279,
+        "startChar": 51,
+        "endLine": 279,
+        "endChar": 0
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6b02c1c_cfe9e069",
         "filename": "components/autofill/content/renderer/autofill_agent.h",
         "patchSetId": 1
@@ -300,6 +552,24 @@
       "writtenOn": "2017-11-15T15:49:16Z",
       "side": 1,
       "message": "Does this need to be a std::unique_ptr? I think it could be a straight member.",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f0a87e_30c267b7",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "Yes, it does, this is owned by AutofillAgent, just like page_click_tracker_",
+      "parentUuid": "f6b02c1c_cfe9e069",
       "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -329,6 +599,30 @@
     },
     {
       "key": {
+        "uuid": "1f284915_cdaeb3cc",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "filed crbug.com/785535",
+      "parentUuid": "e9f10f64_88bb3a30",
+      "range": {
+        "startLine": 14,
+        "startChar": 48,
+        "endLine": 14,
+        "endChar": 64
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "342d078e_59e34bcf",
         "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
         "patchSetId": 1
@@ -346,6 +640,24 @@
     },
     {
       "key": {
+        "uuid": "bdde5706_4bc7d42c",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "342d078e_59e34bcf",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49f03eba_20e1b5ab",
         "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
         "patchSetId": 1
@@ -357,6 +669,24 @@
       "writtenOn": "2017-11-15T15:49:16Z",
       "side": 1,
       "message": "can this be in the anonymous namespace?",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ef3c28_6c77cc8b",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "This calls FireSuccessfulFormSubmission(), moving to anonymous namespace will make it public.",
+      "parentUuid": "49f03eba_20e1b5ab",
       "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -386,6 +716,30 @@
     },
     {
       "key": {
+        "uuid": "bea9b08d_dd979468",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1433d39d_d46b8e07",
+      "range": {
+        "startLine": 53,
+        "startChar": 6,
+        "endLine": 55,
+        "endChar": 38
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edf6e74b_85cd17cd",
         "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
         "patchSetId": 1
@@ -400,6 +754,24 @@
       "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a07842_22c025f2",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edf6e74b_85cd17cd",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -426,6 +798,30 @@
     },
     {
       "key": {
+        "uuid": "d7ab4f09_21547acb",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c70b795_05a92a12",
+      "range": {
+        "startLine": 135,
+        "startChar": 6,
+        "endLine": 135,
+        "endChar": 31
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6400d2a8_af845977",
         "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
         "patchSetId": 1
@@ -443,6 +839,24 @@
     },
     {
       "key": {
+        "uuid": "8adee019_29e74c5f",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6400d2a8_af845977",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6feb44f_7cbb9206",
         "filename": "components/autofill/content/renderer/interacted_form_tracker.h",
         "patchSetId": 1
@@ -454,6 +868,24 @@
       "writtenOn": "2017-11-15T15:49:16Z",
       "side": 1,
       "message": "need?",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3064b60e_7a849940",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "Yes, it is needed for class class InteractedFormTracker::FormElementObserverCallback\n in cc file.",
+      "parentUuid": "a6feb44f_7cbb9206",
       "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -480,6 +912,30 @@
       "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "985ad2ff_3b7a8fe7",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38f01781_aba3ddff",
+      "range": {
+        "startLine": 587,
+        "startChar": 13,
+        "endLine": 587,
+        "endChar": 14
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -518,6 +974,30 @@
       "side": 1,
       "message": "PasswordAutofillAgent is created for every iframe, but reused for main frame. So it\u0027s needed to be sure that it\u0027s cleared correctly on navigation. I\u0027m not sure when exactly FrameDetached and FrameClosing are called (it\u0027s pretty hard to figure out from Blink code). If you can check in code that FrameClosing is always called for the main frame, we can drop this call, otherwise in order to be on safe-side it\u0027s better to leave it.",
       "parentUuid": "7342665b_d38e2b7b",
+      "range": {
+        "startLine": 1209,
+        "startChar": 2,
+        "endLine": 1209,
+        "endChar": 14
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0121a40_0f3c47eb",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1209,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "Could you elaborate more about reuse? As the render_frame is passed into PasswordAutofillAgent constructor, and there is no method to notify PasswordAutofillAgent that the frame is changed. In which use cases it will be reused?\n\nI will leave it to not make the patch more complicated.",
+      "parentUuid": "3d460327_a701a922",
       "range": {
         "startLine": 1209,
         "startChar": 2,
@@ -577,6 +1057,30 @@
     },
     {
       "key": {
+        "uuid": "3d0bb9c2_abbc8f58",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "this method is returned early for sub frame, see line 1290. gatekeeper is only reset for main frame.",
+      "parentUuid": "b0a8b235_953647bf",
+      "range": {
+        "startLine": 1278,
+        "startChar": 48,
+        "endLine": 1278,
+        "endChar": 0
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2c88f38_1fbff1ce",
         "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
         "patchSetId": 1
@@ -624,6 +1128,30 @@
     },
     {
       "key": {
+        "uuid": "024e29bd_c8c6605e",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1300,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "The detection behavior isn\u0027t changed here, see the line 1344-1349 in base, we don\u0027t detect submission for iframes",
+      "parentUuid": "ed60e671_f9488451",
+      "range": {
+        "startLine": 1300,
+        "startChar": 30,
+        "endLine": 1300,
+        "endChar": 0
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69720483_e7c5175a",
         "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
         "patchSetId": 1
@@ -644,6 +1172,30 @@
       "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb8e3c48_37910c9b",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1887,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-16T02:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69720483_e7c5175a",
+      "range": {
+        "startLine": 1887,
+        "startChar": 13,
+        "endLine": 1887,
+        "endChar": 65
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
