@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2c046b19_a70a17ab",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_attributes.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-16T04:47:30Z",
+      "side": 1,
+      "message": "Yes, this should be defined not only for attributes. (i.e. in other module)\nBut I remove this in this CL, because it is not used.",
+      "parentUuid": "09e81e0c_ea8392ba",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "db8aa1a88d07f77288cd1a636350ad99242ae1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfd3009e_0d7150e4",
         "filename": "third_party/WebKit/Source/bindings/templates/attributes.cpp.tmpl",
         "patchSetId": 12
@@ -78,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "3137cbb9_1f0af6c7",
+        "filename": "third_party/WebKit/Source/bindings/templates/attributes.cpp.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-16T04:47:30Z",
+      "side": 1,
+      "message": "While I was reading generated code, I found prototypeObject was not set after construction,\nso I made this change to make it obvious.\n\nI put it back to use prototypeObject in case other caller appears.",
+      "parentUuid": "91fc779f_d8185698",
+      "revId": "db8aa1a88d07f77288cd1a636350ad99242ae1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a905969c_9cebafb7",
         "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
         "patchSetId": 12
@@ -92,6 +134,24 @@
       "revId": "db8aa1a88d07f77288cd1a636350ad99242ae1cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8e5fcc8_8a7efe66",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-16T04:47:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a905969c_9cebafb7",
+      "revId": "db8aa1a88d07f77288cd1a636350ad99242ae1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "3e3a09cc_7284c2b1",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-16T04:47:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ec96314_bba3b581",
+      "range": {
+        "startLine": 960,
+        "startChar": 8,
+        "endLine": 960,
+        "endChar": 21
+      },
+      "revId": "db8aa1a88d07f77288cd1a636350ad99242ae1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab5b8521_994ecc57",
         "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
         "patchSetId": 12
@@ -132,6 +216,24 @@
       "revId": "db8aa1a88d07f77288cd1a636350ad99242ae1cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b4b8bca_c648c1fd",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-16T04:47:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ab5b8521_994ecc57",
+      "revId": "db8aa1a88d07f77288cd1a636350ad99242ae1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +257,30 @@
       "revId": "db8aa1a88d07f77288cd1a636350ad99242ae1cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d08826e_85095ffd",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-16T04:47:30Z",
+      "side": 1,
+      "message": "Not necessary. Done",
+      "parentUuid": "ebca7182_6e638cae",
+      "range": {
+        "startLine": 1012,
+        "startChar": 81,
+        "endLine": 1012,
+        "endChar": 93
+      },
+      "revId": "db8aa1a88d07f77288cd1a636350ad99242ae1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
