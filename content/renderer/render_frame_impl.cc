@@ -2637,7 +2637,7 @@ bool RenderFrameImpl::ScheduleFileChooser(
 }
 
 void RenderFrameImpl::DidFailProvisionalLoadInternal(
-    const blink::WebURLError& error,
+    const WebURLError& error,
     blink::WebHistoryCommitType commit_type,
     const base::Optional<std::string>& error_page_content) {
   TRACE_EVENT1("navigation,benchmark,rail",
@@ -2881,7 +2881,7 @@ blink::WebPlugin* RenderFrameImpl::CreatePlugin(
 }
 
 void RenderFrameImpl::LoadErrorPage(int reason) {
-  blink::WebURLError error(reason, frame_->GetDocument().Url());
+  WebURLError error(reason, frame_->GetDocument().Url());
 
   std::string error_html;
   GetContentClient()->renderer()->GetNavigationErrorStrings(
@@ -3898,7 +3898,7 @@ void RenderFrameImpl::DidReceiveServerRedirectForProvisionalLoad() {
 }
 
 void RenderFrameImpl::DidFailProvisionalLoad(
-    const blink::WebURLError& error,
+    const WebURLError& error,
     blink::WebHistoryCommitType commit_type) {
   DidFailProvisionalLoadInternal(error, commit_type, base::nullopt);
 }
@@ -4247,7 +4247,7 @@ void RenderFrameImpl::DidHandleOnloadEvents() {
   }
 }
 
-void RenderFrameImpl::DidFailLoad(const blink::WebURLError& error,
+void RenderFrameImpl::DidFailLoad(const WebURLError& error,
                                   blink::WebHistoryCommitType commit_type) {
   TRACE_EVENT1("navigation,rail", "RenderFrameImpl::didFailLoad",
                "id", routing_id_);
@@ -6825,7 +6825,7 @@ void RenderFrameImpl::SendUpdateState() {
 
 void RenderFrameImpl::SendFailedProvisionalLoad(
     const blink::WebURLRequest& request,
-    const blink::WebURLError& error,
+    const WebURLError& error,
     blink::WebLocalFrame* frame) {
   bool show_repost_interstitial =
       (error.reason() == net::ERR_CACHE_MISS &&
