@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eade05d4_8033f4e4",
+        "filename": "chrome/browser/sessions/tab_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-16T17:35:27Z",
+      "side": 1,
+      "message": "nit: maybe also a DCHECK(resource_coordinator::IsPageAlmostIdleSignalEnabled()) for extra guarantee.",
+      "revId": "da290e28aa8deabe09af972c9b46d969f81d074f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
