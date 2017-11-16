@@ -243,6 +243,10 @@ const char kDisableOfflineAutoReloadVisibleOnly[] =
 const char kDisablePermissionActionReporting[] =
     "disable-permission-action-reporting";
 
+// Prevents from permission prompts from appearing by denying instead of showing
+// prompts.
+const char kDisablePermissionPrompts[] = "disable-permission-prompts";
+
 // Disable pop-up blocking.
 const char kDisablePopupBlocking[]          = "disable-popup-blocking";
 

@@ -86,6 +86,7 @@ extern const char kDisableExtensionsHttpThrottling[];
 extern const char kDisableOfflineAutoReload[];
 extern const char kDisableOfflineAutoReloadVisibleOnly[];
 extern const char kDisablePermissionActionReporting[];
+extern const char kDisablePermissionPrompts[];
 extern const char kDisablePopupBlocking[];
 extern const char kDisablePrintPreview[];
 extern const char kDisablePromptOnRepost[];
