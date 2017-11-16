@@ -47,7 +47,6 @@ KeyedService* TrackerFactory::BuildServiceInstanceFor(
 
   base::FilePath storage_dir = profile->GetPath().Append(
       chrome::kFeatureEngagementTrackerStorageDirname);
-
   return feature_engagement::Tracker::Create(storage_dir,
                                              background_task_runner);
 }

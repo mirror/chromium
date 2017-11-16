@@ -14,6 +14,8 @@
 #include "components/feature_engagement/public/feature_constants.h"
 #include "components/feature_engagement/public/tracker.h"
 
+using content::BrowserThread;
+
 namespace {
 constexpr double kTwentyFourHoursInSeconds = 86400;
 }
