@@ -22,6 +22,30 @@
       "revId": "debdd039518d6724de31877e81abff5b54ea6c18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d05b5b_b990e607",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T18:18:57Z",
+      "side": 1,
+      "message": "Changed to\n// Wait for the task to complete to keep |manager_started| alive.",
+      "parentUuid": "34beefee_6611b907",
+      "range": {
+        "startLine": 617,
+        "startChar": 2,
+        "endLine": 617,
+        "endChar": 57
+      },
+      "revId": "debdd039518d6724de31877e81abff5b54ea6c18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
