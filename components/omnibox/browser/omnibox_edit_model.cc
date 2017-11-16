@@ -599,20 +599,17 @@ void OmniboxEditModel::OpenMatch(AutocompleteMatch match,
   fake_single_entry_matches.push_back(match);
   AutocompleteResult fake_single_entry_result;
   fake_single_entry_result.AppendMatches(input_, fake_single_entry_matches);
-  OmniboxLog log(
-      input_.from_omnibox_focus() ? base::string16() : input_text,
-      just_deleted_text_,
-      input_.type(),
-      popup_open,
-      dropdown_ignored ? 0 : index,
-      !pasted_text.empty(),
-      -1,  // don't yet know tab ID; set later if appropriate
-      ClassifyPage(),
-      elapsed_time_since_user_first_modified_omnibox,
-      match.allowed_to_be_default_match ? match.inline_autocompletion.length() :
-          base::string16::npos,
-      elapsed_time_since_last_change_to_default_match,
-      dropdown_ignored ? fake_single_entry_result : result());
+  OmniboxLog log(input_.current_url(),
+                 input_.from_omnibox_focus() ? base::string16() : input_text,
+                 just_deleted_text_, input_.type(), popup_open,
+                 dropdown_ignored ? 0 : index, !pasted_text.empty(),
+                 -1,  // don't yet know tab ID; set later if appropriate
+                 ClassifyPage(), elapsed_time_since_user_first_modified_omnibox,
+                 match.allowed_to_be_default_match
+                     ? match.inline_autocompletion.length()
+                     : base::string16::npos,
+                 elapsed_time_since_last_change_to_default_match,
+                 dropdown_ignored ? fake_single_entry_result : result());
   DCHECK(dropdown_ignored ||
          (log.elapsed_time_since_user_first_modified_omnibox >=
           log.elapsed_time_since_last_change_to_default_match))

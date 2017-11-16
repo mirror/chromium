@@ -16,6 +16,7 @@
 #include "components/omnibox/browser/autocomplete_provider.h"
 #include "components/omnibox/browser/autocomplete_result.h"
 #include "components/omnibox/browser/omnibox_log.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
 #include "third_party/metrics_proto/omnibox_event.pb.h"
 #include "third_party/metrics_proto/omnibox_input_type.pb.h"
 
@@ -111,8 +112,22 @@ void OmniboxMetricsProvider::ProvideCurrentSessionData(
 void OmniboxMetricsProvider::OnURLOpenedFromOmnibox(OmniboxLog* log) {
   // Do not log events to UMA if the embedder reports that the user is in an
   // off-the-record context.
-  if (!is_off_the_record_callback_.Run())
-    RecordOmniboxOpenedURL(*log);
+  if (is_off_the_record_callback_.Run())
+    return;
+  RecordOmniboxOpenedURL(*log);
+
+  // Record UKMs.
+  DCHECK_LT(log->selected_index, log->result.size());
+  const AutocompleteMatch& selected_match =
+      log->result.match_at(log->selected_index);
+  ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+  ukm::SourceId source_id = ukm::UkmRecorder::GetNewSourceID();
+  if (ukm_recorder)
+    ukm_recorder->UpdateSourceURL(source_id, log->url);
+  ukm::builders::Omnibox_SuggestionUsed(source_id)
+      .SetProviderType(selected_match.provider->type())
+      .SetSubtypeIdentifier(selected_match.subtype_identifier)
+      .Record(ukm_recorder);
 }
 
 void OmniboxMetricsProvider::RecordOmniboxOpenedURL(const OmniboxLog& log) {

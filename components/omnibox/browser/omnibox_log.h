@@ -19,7 +19,8 @@ class AutocompleteResult;
 // The data to log (via the metrics service) when the user selects an item from
 // the omnibox popup.
 struct OmniboxLog {
-  OmniboxLog(const base::string16& text,
+  OmniboxLog(const GURL& url,
+             const base::string16& text,
              bool just_deleted_text,
              metrics::OmniboxInputType input_type,
              bool is_popup_open,
@@ -33,6 +34,10 @@ struct OmniboxLog {
              base::TimeDelta elapsed_time_since_last_change_to_default_match,
              const AutocompleteResult& result);
   ~OmniboxLog();
+
+  // The URL the  the selected autocomplete suggestion was opened in. Used for
+  // UKMs.
+  const GURL& url;
 
   // The user's input text in the omnibox.
   base::string16 text;

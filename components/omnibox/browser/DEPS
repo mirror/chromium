@@ -24,6 +24,7 @@ include_rules = [
   "+components/vector_icons",
   "+extensions/common/constants.h",
   "+net",
+  "+services/metrics/public",
   "+sql",
   "+third_party/metrics_proto",
   "+third_party/protobuf/src/google",

@@ -175,6 +175,7 @@ static_library("browser") {
     "//components/variations/net",
     "//extensions/common:common_constants",
     "//net",
+    "//services/metrics/public/cpp:ukm_builders",
     "//skia",
     "//sql",
     "//third_party/protobuf:protobuf_lite",

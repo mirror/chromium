@@ -1674,4 +1674,28 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
+<event name="Omnibox.SuggestionUsed">
+  <owner>gcomanici@chromium.org</owner>
+  <summary>
+    Recorded when a user is using the omnibox to transition to a new page or a
+    search query. The metrics are related only to Omnibox suggestions selected
+    by the user. Note that this does not apply to Omnibox interations in
+    incognito mode.
+  </summary>
+  <metric name="ProviderType">
+    <summary>
+      The type of the autocomplete provider for the suggestion used. See
+      AutocompleteProvider::Type for details.
+    </summary>
+  </metric>
+  <metric name="SubtypeIdentifier">
+    <summary>
+      The integer corresponding to the subtype for the suggestion used. The
+      meaning of individual values is determined by the provider of each
+      suggestion and is different for every provider type. See
+      OmniboxEventProto::Suggestion::ResultType for details.
+    </summary>
+  </metric>
+</event>
+
 </ukm-configuration>
