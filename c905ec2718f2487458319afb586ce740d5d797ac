@@ -97,6 +97,47 @@
     },
     {
       "key": {
+        "uuid": "6b22e43b_e2826e2c",
+        "filename": "content/browser/web_contents/web_contents_view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-16T00:55:12Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not familiar with this call at all, so I don\u0027t know if I can provide much insight here.  Is the question whether this is used on Android at all?\n\u003e \n\u003e If that is the question, then the answer is yes.  android_webview/browser/aw_contents.cc calls web_contents_-\u003eFocusThroughTabTraversal.\n\u003e \n\u003e Now if the question is about this implementation and whether the previous behavior in WebContents was correct, then that is something I\u0027m definitely not sure of.\n\nSeems fine.\n\nLooking at WebContents and android webview documentation, seem to match. And there are no store/restoreFocus equivalents for andoird views afaict. These could be useful for clank, but looks like clank just doesn\u0027t implement tab focus at all, so meh.",
+      "parentUuid": "71ed86f8_b1e7c02c",
+      "range": {
+        "startLine": 220,
+        "startChar": 1,
+        "endLine": 230,
+        "endChar": 63
+      },
+      "revId": "c905ec2718f2487458319afb586ce740d5d797ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea49c9ba_e9722926",
+        "filename": "content/public/browser/interstitial_page.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-16T00:55:12Z",
+      "side": 1,
+      "message": "embedder doesn\u0027t actually calls this? content code is allowed to just cast to impl type, so there is no need to expose this?",
+      "revId": "c905ec2718f2487458319afb586ce740d5d797ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78afbbab_696dae80",
         "filename": "content/public/browser/web_contents_view_delegate.h",
         "patchSetId": 4
