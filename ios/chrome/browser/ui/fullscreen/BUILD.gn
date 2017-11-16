@@ -38,6 +38,10 @@ source_set("new_fullscreen") {
 
 source_set("new_fullscreen_internal") {
   sources = [
+    "fullscreen_broadcast_forwarder.h",
+    "fullscreen_broadcast_forwarder.mm",
+    "fullscreen_broadcast_receiver.h",
+    "fullscreen_broadcast_receiver.mm",
     "fullscreen_controller.mm",
     "fullscreen_ui_updater.mm",
   ]
@@ -74,6 +78,7 @@ source_set("new_fullscreen_ui") {
 source_set("new_unit_tests") {
   testonly = true
   sources = [
+    "fullscreen_broadcast_forwarder_unittest.mm",
     "fullscreen_ui_updater_unittest.mm",
   ]
 
@@ -85,6 +90,7 @@ source_set("new_unit_tests") {
     ":new_fullscreen_ui",
     "//ios/chrome/browser/ui:ui_util",
     "//ios/chrome/browser/ui/broadcaster",
+    "//ios/chrome/browser/ui/fullscreen/test",
     "//ios/web",
     "//ios/web/public",
     "//ios/web/public/test/fakes",

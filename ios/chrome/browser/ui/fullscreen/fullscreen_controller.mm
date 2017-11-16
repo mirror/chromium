@@ -4,11 +4,21 @@
 
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_controller.h"
 
+#include "base/logging.h"
+#import "ios/chrome/browser/ui/broadcaster/chrome_broadcaster.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_broadcast_forwarder.h"
+
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
 
-FullscreenController::FullscreenController() {}
+FullscreenController::FullscreenController(ChromeBroadcaster* broadcaster)
+    : broadcaster_(broadcaster),
+      forwarder_([[FullscreenBroadcastForwarder alloc]
+          initWithBroadcaster:broadcaster_
+                     receiver:receiver_]) {
+  DCHECK(broadcaster_);
+}
 
 FullscreenController::~FullscreenController() {}
 
