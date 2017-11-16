@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0582af80_1ee1aca2",
+        "filename": "components/printing/renderer/print_render_frame_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T23:06:06Z",
+      "side": 1,
+      "message": "I just removed the comment, since this function is very similar to Mac RenderPage() now.",
+      "parentUuid": "83763a2c_83572086",
+      "revId": "704cd48b99fe83834567a34c5622afa88f54bb51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1bc99eec_dee63f9a",
         "filename": "components/printing/renderer/print_render_frame_helper.h",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d1a90f6a_6393d0e5",
+        "filename": "components/printing/renderer/print_render_frame_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T23:06:06Z",
+      "side": 1,
+      "message": "Done. Likely the two functions can be merged in the future. I added a TODO.",
+      "parentUuid": "1bc99eec_dee63f9a",
+      "revId": "704cd48b99fe83834567a34c5622afa88f54bb51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fd5967c_a21440f8",
         "filename": "components/printing/renderer/print_render_frame_helper_mac.mm",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-16T21:00:13Z",
       "side": 1,
       "message": "On a related note: not to be addressed in this CL, if we print all pages at once for all platforms, do we still need to send results per page?",
+      "revId": "704cd48b99fe83834567a34c5622afa88f54bb51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de52c111_4c6851cf",
+        "filename": "components/printing/renderer/print_render_frame_helper_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T23:06:06Z",
+      "side": 1,
+      "message": "No, but this CL is reasonably and it can stand on its own. This is why the CL description says this opens up opportunities.",
+      "parentUuid": "0fd5967c_a21440f8",
       "revId": "704cd48b99fe83834567a34c5622afa88f54bb51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0ef973d8_96d7fa2e",
+        "filename": "content/renderer/pepper/pepper_plugin_instance_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1926,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T23:06:06Z",
+      "side": 1,
+      "message": "I changed this. I think it\u0027s what you want?",
+      "parentUuid": "bb8793b5_e99d84ec",
+      "revId": "704cd48b99fe83834567a34c5622afa88f54bb51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "830dc20b_b3996341",
         "filename": "content/renderer/pepper/pepper_plugin_instance_impl.cc",
         "patchSetId": 8
@@ -84,6 +156,24 @@
       "revId": "704cd48b99fe83834567a34c5622afa88f54bb51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ee9e77_e92d2199",
+        "filename": "content/renderer/pepper/pepper_plugin_instance_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1936,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T23:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "830dc20b_b3996341",
+      "revId": "704cd48b99fe83834567a34c5622afa88f54bb51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "324383b4_d782bdc4",
+        "filename": "printing/printed_document_mac.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T23:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "342230b1_1934ceb6",
+      "revId": "704cd48b99fe83834567a34c5622afa88f54bb51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfcb95be_7cff8f80",
         "filename": "printing/printed_document_mac.cc",
         "patchSetId": 8
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "f0fe00c5_b35f67d2",
+        "filename": "printing/printed_document_mac.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T23:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfcb95be_7cff8f80",
+      "revId": "704cd48b99fe83834567a34c5622afa88f54bb51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e04aed71_4036781c",
         "filename": "printing/printed_document_mac.cc",
         "patchSetId": 8
@@ -132,6 +258,24 @@
       "writtenOn": "2017-11-16T21:00:13Z",
       "side": 1,
       "message": "Would this be a bit less efficient for large doc?",
+      "revId": "704cd48b99fe83834567a34c5622afa88f54bb51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c7a26e9_59272486",
+        "filename": "printing/printed_document_mac.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T23:06:06Z",
+      "side": 1,
+      "message": "I can\u0027t think of a better way. Unlike std::vector::iterators, std::map::iterators can\u0027t be subtracted. Otherwise I would do: it \u003d container.find(target); num \u003d it - container.first();\n\nEven if the page count is 10000, modern CPUs can iterate through the sorted map pretty quickly.",
+      "parentUuid": "e04aed71_4036781c",
       "revId": "704cd48b99fe83834567a34c5622afa88f54bb51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
