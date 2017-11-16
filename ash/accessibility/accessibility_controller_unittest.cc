@@ -4,6 +4,7 @@
 
 #include "ash/accessibility/accessibility_controller.h"
 
+#include "ash/accessibility/test_accessibility_controller_client.h"
 #include "ash/ash_constants.h"
 #include "ash/public/cpp/ash_pref_names.h"
 #include "ash/session/session_controller.h"
@@ -104,6 +105,20 @@ TEST_F(AccessibilityControllerTest, SetHighContrastEnabled) {
   EXPECT_EQ(2, observer.changed_);
 
   Shell::Get()->system_tray_notifier()->RemoveAccessibilityObserver(&observer);
+}
+
+// Tests that ash's controller gets shutdown sound duration properly from
+// remote client.
+TEST_F(AccessibilityControllerTest, GetShutdownSoundDuration) {
+  AccessibilityController* controller =
+      Shell::Get()->accessibility_controller();
+  TestAccessibilityControllerClient client;
+  controller->SetClient(client.CreateInterfacePtrAndBind());
+
+  controller->PlayShutdownSound();
+  controller->FlushMojoForTest();
+  EXPECT_EQ(TestAccessibilityControllerClient::kShutdownSoundDuration,
+            controller->shutdown_sound_duration_for_test());
 }
 
 using AccessibilityControllerSigninTest = NoSessionAshTestBase;

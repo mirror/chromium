@@ -264,6 +264,12 @@ class LockStateControllerTest : public PowerButtonTestBase {
     lock_state_controller_->OnLockScreenHide(closure);
   }
 
+  // Simulate that shutdown sound duration callback is done.
+  void ShutdownSoundPlayed() {
+    lock_state_controller_->OnGetShutdownSoundDuration(
+        base::TimeDelta::FromMilliseconds(0));
+  }
+
   TestShutdownController test_shutdown_controller_;
   TestSessionStateAnimator* test_animator_ = nullptr;  // not owned
 
@@ -320,6 +326,7 @@ TEST_F(LockStateControllerTest, LegacyLockAndShutDown) {
   if (Shell::GetAshConfig() != Config::MASH)
     EXPECT_FALSE(cursor_visible());
 
+  ShutdownSoundPlayed();
   EXPECT_TRUE(lock_state_test_api_->real_shutdown_timer_is_running());
   lock_state_test_api_->trigger_real_shutdown_timeout();
   EXPECT_EQ(1, NumShutdownRequests());
@@ -333,6 +340,7 @@ TEST_F(LockStateControllerTest, LegacyNotLoggedIn) {
   PressPowerButton();
   ExpectShutdownAnimationStarted();
 
+  ShutdownSoundPlayed();
   EXPECT_TRUE(lock_state_test_api_->real_shutdown_timer_is_running());
 }
 
@@ -344,6 +352,7 @@ TEST_F(LockStateControllerTest, LegacyGuest) {
   PressPowerButton();
   ExpectShutdownAnimationStarted();
 
+  ShutdownSoundPlayed();
   EXPECT_TRUE(lock_state_test_api_->real_shutdown_timer_is_running());
 }
 
@@ -378,6 +387,7 @@ TEST_F(LockStateControllerTest, ShutdownWhenNotLoggedIn) {
   ExpectShutdownAnimationFinished();
   lock_state_test_api_->trigger_shutdown_timeout();
 
+  ShutdownSoundPlayed();
   EXPECT_TRUE(lock_state_test_api_->real_shutdown_timer_is_running());
   EXPECT_EQ(0, NumShutdownRequests());
 
@@ -539,6 +549,7 @@ TEST_F(LockStateControllerTest, LockToShutdown) {
   ExpectShutdownAnimationFinished();
   lock_state_test_api_->trigger_shutdown_timeout();
 
+  ShutdownSoundPlayed();
   EXPECT_TRUE(lock_state_test_api_->real_shutdown_timer_is_running());
   EXPECT_EQ(0, NumShutdownRequests());
   lock_state_test_api_->trigger_real_shutdown_timeout();
@@ -754,6 +765,7 @@ TEST_F(LockStateControllerTest, RequestShutdownFromLoginScreen) {
     EXPECT_FALSE(cursor_visible());
 
   EXPECT_EQ(0, NumShutdownRequests());
+  ShutdownSoundPlayed();
   EXPECT_TRUE(lock_state_test_api_->real_shutdown_timer_is_running());
   lock_state_test_api_->trigger_real_shutdown_timeout();
   EXPECT_EQ(1, NumShutdownRequests());
@@ -779,6 +791,7 @@ TEST_F(LockStateControllerTest, RequestShutdownFromLockScreen) {
     EXPECT_FALSE(cursor_visible());
 
   EXPECT_EQ(0, NumShutdownRequests());
+  ShutdownSoundPlayed();
   EXPECT_TRUE(lock_state_test_api_->real_shutdown_timer_is_running());
   lock_state_test_api_->trigger_real_shutdown_timeout();
   EXPECT_EQ(1, NumShutdownRequests());

@@ -26,6 +26,9 @@ class AccessibilityControllerClient
 
   // ash::mojom::AccessibilityControllerClient:
   void TriggerAccessibilityAlert(ash::mojom::AccessibilityAlert alert) override;
+  void PlayEarcon(int32_t sound_key,
+                  ash::mojom::PlaySoundOption option) override;
+  void PlayShutdownSound(PlayShutdownSoundCallback callback) override;
 
   // Flushes the mojo pipe to ash.
   void FlushForTesting();
@@ -37,6 +40,10 @@ class AccessibilityControllerClient
  private:
   // Binds this object to its mojo interface and sets it as the ash client.
   void BindAndSetClient();
+
+  // The implementation of |PlayEarcon|. Return false if no sound is played.
+  bool PlayEarconInternal(int32_t sound_key,
+                          ash::mojom::PlaySoundOption option);
 
   // Binds to the client interface.
   mojo::Binding<ash::mojom::AccessibilityControllerClient> binding_;

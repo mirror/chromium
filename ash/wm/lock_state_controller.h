@@ -109,6 +109,9 @@ class ASH_EXPORT LockStateController : public aura::WindowTreeHostObserver,
   // Callback is guaranteed to be called once and then discarded.
   void SetLockScreenDisplayedCallback(base::OnceClosure callback);
 
+  // Called on getting shutdown sound duration from chrome.
+  void OnGetShutdownSoundDuration(base::TimeDelta shutdown_sound_duration);
+
   // aura::WindowTreeHostObserver override:
   void OnHostCloseRequested(aura::WindowTreeHost* host) override;
 
@@ -143,9 +146,7 @@ class ASH_EXPORT LockStateController : public aura::WindowTreeHostObserver,
   void OnPreShutdownAnimationTimeout();
 
   // Starts timer for final shutdown animation.
-  // If |with_animation_time| is true, it will also include time of "fade to
-  // white" shutdown animation.
-  void StartRealShutdownTimer(bool with_animation_time);
+  void StartRealShutdownTimer();
 
   // Request that the machine be shut down.
   void OnRealPowerTimeout();
@@ -209,6 +210,10 @@ class ASH_EXPORT LockStateController : public aura::WindowTreeHostObserver,
 
   // Indicates whether post lock animation should be immediate.
   bool post_lock_immediate_animation_ = false;
+
+  // If true, the timer for final shutdown animation will also include "fade to
+  // white" shutdown animation.
+  bool shutdown_with_animation_ = false;
 
   std::unique_ptr<UnlockedStateProperties> unlocked_properties_;
 
