@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "490321f6_e0cc3938",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/delete-temp-file.cgi",
+        "patchSetId": 75
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-16T23:35:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08d1526d_be41ef86",
+      "revId": "2454c4bc793d575e450a1b3beef4068952ea826e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79a35733_d656ff32",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 75
@@ -59,6 +77,30 @@
     },
     {
       "key": {
+        "uuid": "3f1bd6aa_035da561",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 75
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-16T23:35:04Z",
+      "side": 1,
+      "message": "Just dropped \"or similar\" instead",
+      "parentUuid": "bb7ec0d5_e80b7041",
+      "range": {
+        "startLine": 243,
+        "startChar": 9,
+        "endLine": 243,
+        "endChar": 32
+      },
+      "revId": "2454c4bc793d575e450a1b3beef4068952ea826e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b6029e5_e968b0a6",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 75
@@ -93,6 +135,24 @@
     },
     {
       "key": {
+        "uuid": "8e65992f_4c4ee1cb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 75
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-16T23:35:04Z",
+      "side": 1,
+      "message": "Done, but worded differently since it entirely depends on the characters in the passed-in name.",
+      "parentUuid": "57951b3f_bd1c68a9",
+      "revId": "2454c4bc793d575e450a1b3beef4068952ea826e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00a91e16_a92c91d4",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
         "patchSetId": 75
@@ -107,6 +167,24 @@
       "revId": "2454c4bc793d575e450a1b3beef4068952ea826e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bc49ba_304df6a1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 75
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-16T23:35:04Z",
+      "side": 1,
+      "message": "Actually I dug deeper and I\u0027m a bit shocked: this was apparently fixed (according to https://rt.cpan.org/Public/Bug/Display.html?id\u003d78820 at least) in Win32-0.45 back in 2012. Not sure how/why it\u0027s still missing on the bots. Maybe I am somehow holding it wrong?\n\nIn any case, added a link and clarified to remove \"at some unstated moment in the past\" assumption from the comment.",
+      "parentUuid": "00a91e16_a92c91d4",
+      "revId": "2454c4bc793d575e450a1b3beef4068952ea826e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +211,30 @@
     },
     {
       "key": {
+        "uuid": "e2529aca_8c961567",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 75
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-16T23:35:04Z",
+      "side": 1,
+      "message": "Yes, it\u0027s Apache - specifically on Win32 - not getting the variable with a useful value. Added a link to the issue in the comment (thanks for filing that!)",
+      "parentUuid": "39593ebe_c699d576",
+      "range": {
+        "startLine": 70,
+        "startChar": 39,
+        "endLine": 70,
+        "endChar": 62
+      },
+      "revId": "2454c4bc793d575e450a1b3beef4068952ea826e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9b80306_8cc3fd2d",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
         "patchSetId": 75
@@ -156,6 +258,30 @@
     },
     {
       "key": {
+        "uuid": "d164fe9e_f664432f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 75
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-16T23:35:04Z",
+      "side": 1,
+      "message": "Clarified.",
+      "parentUuid": "e9b80306_8cc3fd2d",
+      "range": {
+        "startLine": 71,
+        "startChar": 11,
+        "endLine": 71,
+        "endChar": 34
+      },
+      "revId": "2454c4bc793d575e450a1b3beef4068952ea826e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b3b6edc_1882a0b5",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
         "patchSetId": 75
@@ -176,6 +302,30 @@
       "revId": "2454c4bc793d575e450a1b3beef4068952ea826e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4baf988_63b3d339",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 75
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-16T23:35:04Z",
+      "side": 1,
+      "message": "Clarified+simplified.",
+      "parentUuid": "7b3b6edc_1882a0b5",
+      "range": {
+        "startLine": 163,
+        "startChar": 47,
+        "endLine": 164,
+        "endChar": 21
+      },
+      "revId": "2454c4bc793d575e450a1b3beef4068952ea826e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
