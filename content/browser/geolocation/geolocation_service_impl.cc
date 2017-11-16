@@ -79,7 +79,8 @@ void GeolocationServiceImpl::Bind(
 
 void GeolocationServiceImpl::CreateGeolocation(
     mojo::InterfaceRequest<device::mojom::Geolocation> request,
-    bool user_gesture) {
+    bool user_gesture,
+    CreateGeolocationCallback callback) {
   if (base::FeatureList::IsEnabled(features::kFeaturePolicy) &&
       base::FeatureList::IsEnabled(features::kUseFeaturePolicyForPermissions) &&
       !render_frame_host_->IsFeatureEnabled(
@@ -92,12 +93,15 @@ void GeolocationServiceImpl::CreateGeolocation(
       // NOTE: The request is canceled by the destructor of the
       // dispatch_context, so it is safe to bind |this| as Unretained.
       base::Bind(&GeolocationServiceImpl::CreateGeolocationWithPermissionStatus,
-                 base::Unretained(this), base::Passed(&request)));
+                 base::Unretained(this), base::Passed(&request),
+                 base::Passed(&callback)));
 }
 
 void GeolocationServiceImpl::CreateGeolocationWithPermissionStatus(
     device::mojom::GeolocationRequest request,
+    CreateGeolocationCallback callback,
     blink::mojom::PermissionStatus permission_status) {
+  std::move(callback).Run(permission_status);
   if (permission_status != blink::mojom::PermissionStatus::GRANTED)
     return;
 
