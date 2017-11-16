@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf09fa07_ba4aed0e",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-16T17:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb5871fa_3ebbb81d",
+      "range": {
+        "startLine": 123,
+        "startChar": 32,
+        "endLine": 123,
+        "endChar": 39
+      },
+      "revId": "7084768c5e3d9ee53b17cfcecf8b3d9eeefadf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9de6453b_05db7c19",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-15T22:49:23Z",
       "side": 1,
       "message": "nit: Consider using DictionaryPrefUpdate for this: https://cs.chromium.org/chromium/src/components/prefs/scoped_user_pref_update.h?type\u003dcs\u0026q\u003dDictionaryPrefUpdate\u0026sq\u003dpackage:chromium\u0026l\u003d106",
+      "range": {
+        "startLine": 141,
+        "startChar": 1,
+        "endLine": 141,
+        "endChar": 37
+      },
+      "revId": "7084768c5e3d9ee53b17cfcecf8b3d9eeefadf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f80c913_aa4e6dd1",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-16T17:03:17Z",
+      "side": 1,
+      "message": "Not done. I am not sure what\u0027s the benefit of using DictionaryPrefUpdate. It seems the benefit of that class is \"...guaranteeing that PrefObservers are notified of changed values.\" which this class does not care about.",
+      "parentUuid": "9de6453b_05db7c19",
       "range": {
         "startLine": 141,
         "startChar": 1,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d1826dfb_db9bc100",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-16T17:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba24e520_6e370365",
+      "range": {
+        "startLine": 73,
+        "startChar": 51,
+        "endLine": 73,
+        "endChar": 69
+      },
+      "revId": "7084768c5e3d9ee53b17cfcecf8b3d9eeefadf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "123f4fa9_948d1c2b",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
         "patchSetId": 10
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-15T22:49:23Z",
       "side": 1,
       "message": "Could you split the UI-thread functionality into a separate class? It doesn\u0027t have to be too complicated.",
+      "range": {
+        "startLine": 94,
+        "startChar": 2,
+        "endLine": 94,
+        "endChar": 29
+      },
+      "revId": "7084768c5e3d9ee53b17cfcecf8b3d9eeefadf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2d6ebe_efe77d5d",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-16T17:03:17Z",
+      "side": 1,
+      "message": "I tried doing this but hit into some roadblock. If you feel strongly about this, I can file a bug, and do it later along with modifications to the IOData class as well (that class also has ShutdownOnUIThread method). Personally, I do not think that it makes things simpler. The difficult part is that the data is accessed on both IO and UI threads. There is not a whole lot of room to avoid complexity.",
+      "parentUuid": "123f4fa9_948d1c2b",
       "range": {
         "startLine": 94,
         "startChar": 2,
@@ -114,6 +210,30 @@
       "revId": "7084768c5e3d9ee53b17cfcecf8b3d9eeefadf34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eab47a9_5fccdccc",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-16T17:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cafd2739_1c102477",
+      "range": {
+        "startLine": 100,
+        "startChar": 7,
+        "endLine": 100,
+        "endChar": 17
+      },
+      "revId": "7084768c5e3d9ee53b17cfcecf8b3d9eeefadf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
