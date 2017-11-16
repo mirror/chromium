@@ -46,6 +46,30 @@
       "revId": "adc56dde985bb8ee00cb074f1cb32b12fd3b9203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c3ffd4_a0038431",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-16T01:15:52Z",
+      "side": 1,
+      "message": "killProcess() would likely prevent the other Activities from starting.  We definitely don\u0027t want these activities to proceed as they could be loading a URL or something if they haven\u0027t gone through first run.\n\nIn general, it seems like someone broke the API contract from:\nhttps://developer.android.com/reference/android/app/Activity.html#onCreate()\n\n\"You can call finish() from within this function, in which case onDestroy() will be immediately called without any of the rest of the activity lifecycle (onStart(), onResume(), onPause(), etc) executing.\"\n\nI think killing gracefully seems \"OK\" to me.  But I don\u0027t know if it\u0027s worth spending a ton of time working around something that is broken at the framework level.",
+      "parentUuid": "333e041b_8162979b",
+      "range": {
+        "startLine": 274,
+        "startChar": 12,
+        "endLine": 274,
+        "endChar": 28
+      },
+      "revId": "adc56dde985bb8ee00cb074f1cb32b12fd3b9203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
