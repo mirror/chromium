@@ -8,6 +8,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
+#include "device/geolocation/public/cpp/location_provider.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/device/device_service.h"
 #include "services/device/public/interfaces/constants.mojom.h"
@@ -50,11 +51,11 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
 #if defined(OS_ANDROID)
       device_service_context_.reset(new service_manager::ServiceContext(
           CreateDeviceService(file_task_runner_, io_task_runner_,
-                              wake_lock_context_callback_, nullptr),
+                              wake_lock_context_callback_, nullptr, nullptr),
           std::move(request)));
 #else
       device_service_context_.reset(new service_manager::ServiceContext(
-          CreateDeviceService(file_task_runner_, io_task_runner_),
+          CreateDeviceService(file_task_runner_, io_task_runner_, nullptr),
           std::move(request)));
 #endif
     }
