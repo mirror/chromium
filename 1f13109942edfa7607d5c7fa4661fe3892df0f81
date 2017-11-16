@@ -55,6 +55,29 @@
     },
     {
       "key": {
+        "uuid": "b65c8042_ef7b7b9a",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-16T00:22:38Z",
+      "side": 1,
+      "message": "posciak@: IMHO I\u0027d like to log here |input_buffers_.size()|,\nwhich would also count the Flush-type InputBuffers, but OTOH\nit would simplify the logic. WDYT? (In subsequent CL, in any\ncase).",
+      "range": {
+        "startLine": 1016,
+        "startChar": 17,
+        "endLine": 1016,
+        "endChar": 35
+      },
+      "revId": "1f13109942edfa7607d5c7fa4661fe3892df0f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a5d1a44_e9c0afb8",
         "filename": "media/gpu/vaapi_video_decode_accelerator.h",
         "patchSetId": 4
@@ -69,6 +92,24 @@
       "revId": "1f13109942edfa7607d5c7fa4661fe3892df0f81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2ca57de_92a5f0cd",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-16T00:22:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a5d1a44_e9c0afb8",
+      "revId": "1f13109942edfa7607d5c7fa4661fe3892df0f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
