@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41b7354d_83df65b2",
+        "filename": "content/browser/service_worker/service_worker_context_core.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-16T04:55:49Z",
+      "side": 1,
+      "message": "Does `\u003d default` work?",
+      "revId": "66d74cab7f571b0a70d46e089030db742ff1b4c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe99c947_5f1fe59b",
+        "filename": "content/browser/service_worker/service_worker_context_core.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-16T04:55:49Z",
+      "side": 1,
+      "message": "This can be base::OnceClosure since it\u0027s only called once.",
+      "revId": "66d74cab7f571b0a70d46e089030db742ff1b4c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0dc163_317597b2",
+        "filename": "content/browser/service_worker/service_worker_context_core.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-16T04:55:49Z",
+      "side": 1,
+      "message": "This is kind of a bizarre API since it only waits for registration deletion if the registration was live and not already uninstalling. E.g., you could call UnregisterForServiceWorkers() and if there didn\u0027t happen to be any live registration objects around, it would call the callback before deletion occurred.\n\nIt\u0027s not clear to me how the ServiceWorkerDeletion test relies on this function since there isn\u0027t really a test body there. When I made the suggestion, I imagined the test had a ServiceWorkerRegistration object and was waiting for it to be deleted, in which case the test code itself could add a deletion listener. But I guess your test is instead relying on a signal from QuotaManager.\n\nIt seems like the UnregisterServiceWorkers() is only called by DeleteForOrigin(). So we could name it DeleteForOrigin() and the callback should only be concerned with deletion and not the web platform exposed concept of unregistration.\n\nI think this may be the best approach:\n1) DeleteForOrigin() (previously named UnregisterServiceWorkers) calls GetRegistrationsForOrigin() instead of GetAlLRegistrationInfos(). This will give you all registrations as live registrations.\n2) For each registration, call UnregisterServiceWorker.\n3) If the registration is not yet deleted, wait for the deletion.\n4) Once all awaiting deletions are done, call the callback.\n\nIf that turns out complex, adding the second callback to UnregisterJob might be the better approach after all.",
+      "revId": "66d74cab7f571b0a70d46e089030db742ff1b4c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
