@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb0f1223_95fcf928",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1103764
+      },
+      "writtenOn": "2017-11-16T02:25:52Z",
+      "side": 1,
+      "message": "Fixed, thanks.",
+      "parentUuid": "c29094b8_8724bd07",
+      "revId": "bd5a78cd32c8486bbdc8f9c8e592ddc2c6b3ea3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee24c67c_a020dcbb",
         "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-15T19:25:09Z",
       "side": 1,
       "message": "I\u0027m fine with the extra signature, but this code duplication seems wrong to me.\nCan you create a function\nString16Vector String16VectorFromString16(\n    const base::string16\u0026 cleaned_uni_string,\n    bool break_on_space,\n    bool break_on_underscore,\n    WordStarts* word_starts);\nAnd use that in tests?\n\n(This function is the function you have from lines 136-169, just without looking up the feature string.)\n\nIn tests, call it with (cleaned_uni_string, false, false, word_starts).\n\nThen add the function with the shorter signature:\nString16Vector String16VectorFromString16(\n    const base::string16\u0026 cleaned_uni_string,\n    bool break_on_space,\n    WordStarts* word_starts) {\n  static const bool experiment_enabled \u003d\n      base::FeatureList::IsEnabled(omnibox::kBreakWordsAtUnderscores);\n  return String16VectorFromString16(cleaned_uni_string, break_on_space, experiment_enabled, word_starts);\n}\n\nThis would result in no code duplication.\n\nAdded bonus: no functions will need be labeled as \"Used used for unit tests.\"",
+      "revId": "bd5a78cd32c8486bbdc8f9c8e592ddc2c6b3ea3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73fd2e43_0b129496",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1103764
+      },
+      "writtenOn": "2017-11-16T02:25:52Z",
+      "side": 1,
+      "message": "Looks good!,I fixed. Thanks.",
+      "parentUuid": "ee24c67c_a020dcbb",
       "revId": "bd5a78cd32c8486bbdc8f9c8e592ddc2c6b3ea3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "93c5f45a_5f3091e0",
+        "filename": "components/omnibox/browser/omnibox_field_trial.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1103764
+      },
+      "writtenOn": "2017-11-16T02:25:52Z",
+      "side": 1,
+      "message": "Fixed, thanks.",
+      "parentUuid": "b1556afa_358a31bc",
+      "revId": "bd5a78cd32c8486bbdc8f9c8e592ddc2c6b3ea3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6eb079ae_47bc1a2a",
         "filename": "components/omnibox/browser/url_index_private_data.cc",
         "patchSetId": 12
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-15T19:25:09Z",
       "side": 1,
       "message": "You can also use the same strategy I mention in the other comment with the functions in this file so as to avoid code duplication.",
+      "revId": "bd5a78cd32c8486bbdc8f9c8e592ddc2c6b3ea3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8aa477c_cd1df283",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1103764
+      },
+      "writtenOn": "2017-11-16T02:25:52Z",
+      "side": 1,
+      "message": "Fixed, thanks.",
+      "parentUuid": "6eb079ae_47bc1a2a",
       "revId": "bd5a78cd32c8486bbdc8f9c8e592ddc2c6b3ea3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
