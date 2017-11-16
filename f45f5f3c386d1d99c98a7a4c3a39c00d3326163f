@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5e2dc2c_cb9e3e37",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-16T08:54:55Z",
+      "side": 1,
+      "message": "Why don\u0027t you make this GC-managed?",
+      "revId": "f45f5f3c386d1d99c98a7a4c3a39c00d3326163f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2fe608c_d88f5630",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-16T08:54:55Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 31,
+        "startChar": 24,
+        "endLine": 31,
+        "endChar": 26
+      },
+      "revId": "f45f5f3c386d1d99c98a7a4c3a39c00d3326163f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e311c1c_59a513af",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-16T08:54:55Z",
+      "side": 1,
+      "message": "It would be breakable to have both setters and public fields. How about changing this \u0027struct\u0027 to \u0027class\u0027, and moving the fields to the \u0027private\u0027 section?",
+      "revId": "f45f5f3c386d1d99c98a7a4c3a39c00d3326163f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0e7b639_4565dd62",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-16T08:54:55Z",
+      "side": 1,
+      "message": "I wonder if we should invalidate |port_channel| like MessagePort::Disentangle():\n\nMessagePortChannel MessagePort::Disentangle() {\n  DCHECK(!IsNeutered());\n  channel_.ClearCallback();\n  auto result \u003d std::move(channel_);\n  channel_ \u003d MessagePortChannel();\n  return result;\n}",
+      "revId": "f45f5f3c386d1d99c98a7a4c3a39c00d3326163f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb21835_79fad2a2",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-16T08:54:55Z",
+      "side": 1,
+      "message": "How about moving |is_closing_| from Worker/WorkletGlobalScope to WorkerOrWorkletGlobalScope, and implementing this function there?",
+      "revId": "f45f5f3c386d1d99c98a7a4c3a39c00d3326163f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7787fe24_388ff863",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-16T08:54:55Z",
+      "side": 1,
+      "message": "ToAudioWorkletGlobalScope() internally checks the pointer type, so this check should be unnecessary.",
+      "revId": "f45f5f3c386d1d99c98a7a4c3a39c00d3326163f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34df9797_058dd040",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-16T08:54:55Z",
+      "side": 1,
+      "message": "+explicit\n\nCan you move the ctor to private because of public Create()?",
+      "revId": "f45f5f3c386d1d99c98a7a4c3a39c00d3326163f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
