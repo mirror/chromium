@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "bccc2ee1_3680c184",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-16T08:11:50Z",
+      "side": 1,
+      "message": "Do you know which repository is used to check out the base library?\nIs this? https://cs.corp.google.com/chromeos_internal/src/aosp/external/libchrome/base/containers/\n\nI guess just the base library platform2 uses is old.\n\n//base/containers is not so big, and is not a separate repository from //base.\nhttps://cs.chromium.org/chromium/src/base/containers/\n\nAnyway, I\u0027m ok to use std::deque here, but may need some comments. It should explain that this is used in platform2, and base:circular_deque is not available there. Also, when it\u0027s available, we\u0027d be back to use it.",
+      "parentUuid": "92919079_c1907353",
+      "range": {
+        "startLine": 10,
+        "startChar": 44,
+        "endLine": 11,
+        "endChar": 13
+      },
+      "revId": "1f4e1cd2f6d2b94ce603afa38ee7788c0ad362ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d02a35cf_cabb2836",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -130,6 +154,30 @@
       "writtenOn": "2017-11-16T07:25:57Z",
       "side": 1,
       "message": "PTAL.\n\nFor the code to be re-used in platform2, we will have to convert this to std::deque. I tested this locally and it works fine (CQ dry run also passes with std::deque). The difference in semantics between the two is irrelevant from the MidiMessageQueue perspective.",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 22
+      },
+      "revId": "1f4e1cd2f6d2b94ce603afa38ee7788c0ad362ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "908502d8_484b5e76",
+        "filename": "components/midi/midi_message_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-16T08:11:50Z",
+      "side": 1,
+      "message": "Yep. Original code used std::deque. So it will work. Can you have a comment here? Otherwise, someone will accidentally create a revert path in the future.",
+      "parentUuid": "097dca3d_46fec9f8",
       "range": {
         "startLine": 67,
         "startChar": 2,
