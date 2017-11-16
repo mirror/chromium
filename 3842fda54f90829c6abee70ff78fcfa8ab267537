@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "046a9fc2_82b25ade",
+        "filename": "cc/paint/scoped_image_flags.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T01:48:30Z",
+      "side": 1,
+      "message": "While I was here. :)",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 65
+      },
+      "revId": "3842fda54f90829c6abee70ff78fcfa8ab267537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
