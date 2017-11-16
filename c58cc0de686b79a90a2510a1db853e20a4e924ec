@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b176dcc_d4b65f08",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T23:05:39Z",
+      "side": 1,
+      "message": "Nit: GetFileInfo()",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "c58cc0de686b79a90a2510a1db853e20a4e924ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118bad6f_d34c1f17",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T23:05:39Z",
+      "side": 1,
+      "message": "CL descriptions tend to stick to the third-person.\n\nIn this case you can word it as follows:\nThis change moves getting the creation time to sentinel creation and caches that result in a static variable.",
+      "range": {
+        "startLine": 11,
+        "startChar": 28,
+        "endLine": 12,
+        "endChar": 41
+      },
+      "revId": "c58cc0de686b79a90a2510a1db853e20a4e924ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7525de3d_218ed03d",
+        "filename": "chrome/browser/first_run/first_run.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T23:05:39Z",
+      "side": 1,
+      "message": "Nit: Swap these two variables so that first_run_sentinel is closer to its first use.",
+      "range": {
+        "startLine": 429,
+        "startChar": 0,
+        "endLine": 430,
+        "endChar": 61
+      },
+      "revId": "c58cc0de686b79a90a2510a1db853e20a4e924ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af83ae1_22c1a079",
+        "filename": "chrome/browser/first_run/first_run.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T23:05:39Z",
+      "side": 1,
+      "message": "static const",
+      "range": {
+        "startLine": 578,
+        "startChar": 8,
+        "endLine": 578,
+        "endChar": 9
+      },
+      "revId": "c58cc0de686b79a90a2510a1db853e20a4e924ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
