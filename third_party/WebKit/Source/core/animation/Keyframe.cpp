@@ -4,9 +4,26 @@
 
 #include "core/animation/Keyframe.h"
 
+#include "bindings/core/v8/V8ObjectBuilder.h"
+#include "core/animation/EffectModel.h"
 #include "core/animation/InvalidatableInterpolation.h"
+#include "platform/bindings/ScriptState.h"
 
 namespace blink {
+
+namespace {
+String CompositeOperationToString(EffectModel::CompositeOperation op) {
+  switch (op) {
+    case EffectModel::kCompositeAdd:
+      return "add";
+    case EffectModel::kCompositeReplace:
+      return "replace";
+    default:
+      NOTREACHED();
+      return "";
+  }
+}
+}  // namespace
 
 scoped_refptr<Interpolation>
 Keyframe::PropertySpecificKeyframe::CreateInterpolation(
@@ -18,9 +35,25 @@ Keyframe::PropertySpecificKeyframe::CreateInterpolation(
       const_cast<PropertySpecificKeyframe*>(&end));
 }
 
+ScriptValue Keyframe::GetScriptValue(ScriptState* script_state) const {
+  V8ObjectBuilder object_builder(script_state);
+  AddPropertyValuePairsToV8Object(object_builder);
+
+  return object_builder.GetScriptValue();
+}
+
 bool Keyframe::CompareOffsets(const scoped_refptr<Keyframe>& a,
                               const scoped_refptr<Keyframe>& b) {
   return a->Offset() < b->Offset();
+}
+
+void Keyframe::AddPropertyValuePairsToV8Object(
+    V8ObjectBuilder& object_builder) const {
+  object_builder.Add("offset", offset_);
+  object_builder.Add("easing", easing_->ToString());
+  // TODO(crbug.com/785526): This should be absent if it matches the composite
+  // operation of the keyframe effect (which is not yet implemented).
+  object_builder.Add("composite", CompositeOperationToString(composite_));
 }
 
 }  // namespace blink

@@ -6,6 +6,7 @@
 #define Keyframe_h
 
 #include "base/memory/scoped_refptr.h"
+#include "bindings/core/v8/ScriptValue.h"
 #include "core/CoreExport.h"
 #include "core/animation/AnimationEffectReadOnly.h"
 #include "core/animation/EffectModel.h"
@@ -21,6 +22,8 @@ using PropertyHandleSet = HashSet<PropertyHandle>;
 
 class Element;
 class ComputedStyle;
+class ScriptState;
+class V8ObjectBuilder;
 
 // A base class representing an animation keyframe.
 //
@@ -100,6 +103,9 @@ class CORE_EXPORT Keyframe : public RefCounted<Keyframe> {
     the_clone->SetOffset(offset);
     return the_clone;
   }
+
+  // Creates a JavaScript object representation of this Keyframe.
+  ScriptValue GetScriptValue(ScriptState*) const;
 
   virtual bool IsStringKeyframe() const { return false; }
   virtual bool IsTransitionKeyframe() const { return false; }
@@ -183,6 +189,10 @@ class CORE_EXPORT Keyframe : public RefCounted<Keyframe> {
     if (!easing_)
       easing_ = LinearTimingFunction::Shared();
   }
+
+  // Add the (property, value) pairs stored by this keyframe to the passed
+  // V8ObjectBuilder.
+  virtual void AddPropertyValuePairsToV8Object(V8ObjectBuilder&) const;
 
   double offset_;
   EffectModel::CompositeOperation composite_;
