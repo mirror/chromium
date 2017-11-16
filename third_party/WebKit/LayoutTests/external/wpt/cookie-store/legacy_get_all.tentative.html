@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="timeout" content="long">
+<title>Cookie Store Tests: set legacy unprefixed cookies and getAll</title>
+<meta name="help"
+      href="https://github.com/WICG/cookie-store/blob/gh-pages/explainer.md">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/testharness-helpers.js"></script>
+<script>
+'use strict';
+
+promise_test(async testCase => {
+  const allCookies = await cookieStore.getAll();
+  assert_equals(
+      allCookies.length,
+      0,
+      `cookieStore.getAll should have returned an empty array, got ${
+         JSON.stringify(allCookies)
+       } instead`);
+}, 'getAll with no arguments and empty cookie jar');
+
+promise_test(async testCase => {
+  await cookieStore.set('one-cookie', 'cookie-value');
+  try {
+    const allCookies = await cookieStore.getAll();
+    assert_equals(
+        allCookies.length,
+        1,
+        `cookieStore.getAll should have returned a one-element array, got ${
+           JSON.stringify(allCookies)
+         } instead`);
+    const [{name, value}] = allCookies;
+    assert_equals(
+        name,
+        'one-cookie',
+        'cookieStore.getAll should report a cookie named one-cookie');
+    assert_equals(
+        value,
+        'cookie-value',
+        'cookieStore.getAll should report one-cookie=cookie-value');
+  } finally {
+    await cookieStore.delete('one-cookie');
+  }
+}, 'getAll with no arguments and one unprefixed cookie');
+
+promise_test(async testCase => {
+  await cookieStore.set('one-cookie', 'cookie-value');
+  await cookieStore.set('one-more-cookie', 'cookie-value-2');
+  try {
+    assert_equals(
+        cookieString(await cookieStore.getAll()),
+        'one-cookie=cookie-value; one-more-cookie=cookie-value-2');
+  } finally {
+    await cookieStore.delete('one-cookie');
+    await cookieStore.delete('one-more-cookie');
+  }
+}, 'getAll with no arguments and two unprefixed cookies');
+
+promise_test(async testCase => {
+  await cookieStore.set('one-cookie', 'cookie-value');
+  await cookieStore.set('one-more-cookie', 'cookie-value-2');
+  await cookieStore.set('third-cookie', 'cookie-value-3');
+  try {
+    assert_equals(
+        cookieString(await cookieStore.getAll()),
+        'one-cookie=cookie-value; one-more-cookie=cookie-value-2; ' +
+          'third-cookie=cookie-value-3');
+  } finally {
+    await cookieStore.delete('one-cookie');
+    await cookieStore.delete('one-more-cookie');
+    await cookieStore.delete('third-cookie');
+  }
+}, 'getAll with no arguments and three unprefixed cookies');
+
+promise_test(async testCase => {
+  await cookieStore.set('one-cookie', 'cookie-value');
+  await cookieStore.set('one-cookie-more', 'cookie-value-2');
+  await cookieStore.set('third-cookie', 'cookie-value-3');
+  try {
+    assert_equals(
+        cookieString(await cookieStore.getAll({name: 'one-cookie'})),
+        'one-cookie=cookie-value');
+  } finally {
+    await cookieStore.delete('one-cookie');
+    await cookieStore.delete('one-cookie-more');
+    await cookieStore.delete('third-cookie');
+  }
+}, 'getAll with name implicitly equals match and three unprefixed cookies');
+
+promise_test(async testCase => {
+  await cookieStore.set('one-cookie', 'cookie-value');
+  await cookieStore.set('one-cookie-more', 'cookie-value-2');
+  await cookieStore.set('third-cookie', 'cookie-value-3');
+  try {
+    assert_equals(
+        cookieString(await cookieStore.getAll({
+          name: 'one-cookie',
+          matchType: 'equals',
+        })),
+        'one-cookie=cookie-value');
+  } finally {
+    await cookieStore.delete('one-cookie');
+    await cookieStore.delete('one-cookie-more');
+    await cookieStore.delete('third-cookie');
+  }
+}, 'getAll with name explicitly equals match and three unprefixed cookies');
+
+
+promise_test(async testCase => {
+  await cookieStore.set('one-cookie', 'cookie-value');
+  await cookieStore.set('one-cookie-more', 'cookie-value-2');
+  await cookieStore.set('third-cookie', 'cookie-value-3');
+  try {
+    assert_equals(
+        cookieString(await cookieStore.getAll({
+          name: 'one-cookie',
+          matchType: 'startsWith',
+        })),
+        'one-cookie=cookie-value; one-cookie-more=cookie-value-2');
+  } finally {
+    await cookieStore.delete('one-cookie');
+    await cookieStore.delete('one-cookie-more');
+    await cookieStore.delete('third-cookie');
+  }
+}, 'getAll with name startsWith match and three unprefixed cookies');
+
+</script>

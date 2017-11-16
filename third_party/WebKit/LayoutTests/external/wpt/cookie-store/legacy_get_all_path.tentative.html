@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="timeout" content="long">
+<title>Cookie Store Tests: set legacy unprefixed cookies and getAll <!--
+    -->(path shadowing)</title>
+<meta name="help"
+      href="https://github.com/WICG/cookie-store/blob/gh-pages/explainer.md">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/testharness-helpers.js"></script>
+<script>
+'use strict';
+
+const kMyPath = location.pathname.replace(/[^\/]+$/, '');
+
+// Cookie names: K1, K2, K3
+// Cookie values: V1, V2 + suffix codes, V3
+// Suffix codes for V2:
+// - P*<path> - Implicit path=<path>
+// - P:<path> - Explicit path=<path>
+
+promise_test(async testCase => {
+  await cookieStore.set('K1', 'V1P*/');
+  await cookieStore.set('K2', 'V2P*/');
+  await cookieStore.set('K3', 'V3P*/');
+  await cookieStore.set('K2', 'V2P:' + kMyPath, {
+    path: kMyPath,
+  });
+  try {
+    assert_equals(
+        cookieString(await cookieStore.getAll()),
+        'K2=V2P:' + kMyPath + '; K1=V1P*/; K2=V2P*/; K3=V3P*/');
+  } finally {
+    await cookieStore.delete('K1');
+    await cookieStore.delete('K2');
+    await cookieStore.delete('K3');
+    await cookieStore.delete('K2', {path: kMyPath});
+  }
+}, 'getAll with implicit path shadowing');
+
+promise_test(async testCase => {
+  await cookieStore.set('K1', 'V1P:/', {path: '/'});
+  await cookieStore.set('K2', 'V2P:/', {path: '/'});
+  await cookieStore.set('K3', 'V3P:/', {path: '/'});
+  await cookieStore.set('K2', 'V2P:' + kMyPath, {
+    path: kMyPath,
+  });
+  try {
+    assert_equals(
+        cookieString(await cookieStore.getAll()),
+        'K2=V2P:' + kMyPath + '; K1=V1P:/; K2=V2P:/; K3=V3P:/');
+  } finally {
+    await cookieStore.delete('K1', {path: '/'});
+    await cookieStore.delete('K2', {path: '/'});
+    await cookieStore.delete('K3', {path: '/'});
+    await cookieStore.delete('K2', {path: kMyPath});
+  }
+}, 'getAll with explicit path shadowing');
+
+</script>

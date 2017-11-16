@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="timeout" content="long">
+<title>Cookie Store Tests: set legacy unprefixed cookies and getAll <!--
+    -->(path and domain shadowing)</title>
+<meta name="help"
+      href="https://github.com/WICG/cookie-store/blob/gh-pages/explainer.md">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/testharness-helpers.js"></script>
+<script>
+'use strict';
+
+const kMyPath = location.pathname.replace(/[^\/]+$/, '');
+const kMyDomain = document.domain;
+
+// Cookie names: K1, K2, K3
+// Cookie values: V1, V2 + suffix codes, V3
+// Suffix codes for V2:
+// - D*<domain> - Implicit domain=<domain>
+//    NOTE: not actually the same as explicit except in IE/Edge
+// - D:<domain> - Explicit domain=<domain>
+// - P*<path> - Implicit path=<path>
+// - P:<path> - Explicit path=<path>
+
+promise_test(async testCase => {
+  await cookieStore.set('K1', 'V1D*' + kMyDomain + 'P*/');
+  await cookieStore.set('K2', 'V2D*' + kMyDomain + 'P*/');
+  await cookieStore.set('K3', 'V3D*' + kMyDomain + 'P*/');
+  await cookieStore.set('K2', 'V2D*' + kMyDomain + 'P:' + kMyPath, {
+    path: kMyPath,
+  });
+  await cookieStore.set('K2', 'V2D:' + kMyDomain + 'P*/', {
+    domain: kMyDomain,
+  });
+  await cookieStore.set(
+      'K2',
+      'V2D:' + kMyDomain + 'P:' + kMyPath,
+      {
+        domain: kMyDomain,
+        path: kMyPath,
+      });
+  try {
+    assert_equals(
+        cookieString(await cookieStore.getAll()),
+        'K2=V2D:' + kMyDomain + 'P*/; K2=V2D:' + kMyDomain + 'P:' + kMyPath + '; ' +
+          'K1=V1D*' + kMyDomain + 'P*/; K2=V2D*' + kMyDomain + 'P*/; ' +
+          'K3=V3D*' + kMyDomain + 'P*/');
+  } finally {
+    await cookieStore.delete('K1');
+    await cookieStore.delete('K2');
+    await cookieStore.delete('K3');
+    await cookieStore.delete('K2', {path: kMyPath});
+    await cookieStore.delete('K2', {domain: kMyDomain});
+    await cookieStore.delete('K2', {
+      domain: kMyDomain,
+      path: kMyPath,
+    });
+  }
+}, 'getAll with domain and implicit path shadowing');
+
+promise_test(async testCase => {
+  await cookieStore.set('K1', 'V1D*' + kMyDomain + 'P:/', {path: '/'});
+  await cookieStore.set('K2', 'V2D*' + kMyDomain + 'P:/', {path: '/'});
+  await cookieStore.set('K3', 'V3D*' + kMyDomain + 'P:/', {path: '/'});
+  await cookieStore.set('K2', 'V2D*' + kMyDomain + 'P:' + kMyPath, {
+    path: kMyPath,
+  });
+  await cookieStore.set('K2', 'V2D:' + kMyDomain + 'P:/', {
+    path: '/',
+    domain: kMyDomain,
+  });
+  await cookieStore.set(
+      'K2',
+      'V2D:' + kMyDomain + 'P:' + kMyPath,
+      {
+        domain: kMyDomain,
+        path: kMyPath,
+      });
+  try {
+    assert_equals(
+        cookieString(await cookieStore.getAll()),
+        'K2=V2D:' + kMyDomain + 'P:/; K2=V2D:' + kMyDomain + 'P:' + kMyPath + '; ' +
+          'K1=V1D*' + kMyDomain + 'P:/; K2=V2D*' + kMyDomain + 'P:/; ' +
+          'K3=V3D*' + kMyDomain + 'P:/');
+  } finally {
+    await cookieStore.delete('K1', {path: '/'});
+    await cookieStore.delete('K2', {path: '/'});
+    await cookieStore.delete('K3', {path: '/'});
+    await cookieStore.delete('K2', {path: kMyPath});
+    await cookieStore.delete('K2', {path: '/', domain: kMyDomain});
+    await cookieStore.delete('K2', {
+      domain: kMyDomain,
+      path: kMyPath,
+    });
+  }
+}, 'getAll with domain and explicit path shadowing');
+
+</script>
