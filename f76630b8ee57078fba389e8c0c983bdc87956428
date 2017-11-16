@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e14e174_0dbdcd52",
+        "filename": "ios/chrome/browser/ui/browser_view_controller_dependency_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-16T07:58:21Z",
+      "side": 1,
+      "message": "We are passing the WSL to have the number of tab opened displayed in the toolbar.\nThis information is directly set by the BVC in the current toolbar. So we are not passing it, but the BVC is directly setting values in the toolbar. We want the toolbar to be self contained, this is why we are passing the WSL.",
+      "parentUuid": "9d0254a1_649ed81e",
+      "range": {
+        "startLine": 40,
+        "startChar": 42,
+        "endLine": 40,
+        "endChar": 54
+      },
+      "revId": "f76630b8ee57078fba389e8c0c983bdc87956428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61540018_4e90592c",
         "filename": "ios/chrome/browser/ui/browser_view_controller_unittest.mm",
         "patchSetId": 6
