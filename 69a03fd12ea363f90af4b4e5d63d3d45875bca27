@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b84bddf_3c5f0770",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-16T19:07:33Z",
+      "side": 1,
+      "message": "This is moved here because resizer can exist even there are no scrollbars.",
+      "revId": "69a03fd12ea363f90af4b4e5d63d3d45875bca27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
