@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9a294e0_84e84857",
+        "filename": "chromeos/login/auth/extended_authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-16T20:09:03Z",
+      "side": 1,
+      "message": "nit/style: Could you elide brace? For chromeos, AFAIK, we often do so.",
+      "revId": "08b1d086cf5ea9824382593324aee4c4cc5c079f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
