@@ -1,0 +1,452 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80771601_cd9a6075",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "Please change the title of this CL to something indicating what it changes, as opposed to the symptom it is attempting to fix.",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0889741c_ab040333",
+        "filename": "content/browser/webrtc/webrtc_image_capture_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "Considering the tests were not active for Windows DirectShow before, and they seem to be not working or at least flaky, I would say it is okay to keep them disabled in this CL.",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec4409e_46779e46",
+        "filename": "media/capture/video/win/video_capture_device_factory_win.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "I believe with your reworked implementation, now Windows 8 is the minimum requirement for using it, which makes the above comment inaccurate. Personally, I don\u0027t think the comment is very useful in the first place, so I would be okay with removing it.",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "294d5e97_05bbf1de",
+        "filename": "media/capture/video/win/video_capture_device_factory_win.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "As a slightly less encapsulation-breaking option for allowing tests to set this configuration, I propose keeping the member private and exposing a setter named set_use_media_foundation_for_testing(bool use).",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "631539d1_e447fbd6",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "Sorry to ask for changes in parts that you didn\u0027t touch, but since this is the first time I am reviewing this class, there are certain things that confuse me while reading.\n\nI think this method should be named consistently with the two methods above.\nAs a reader, for me it would be easiest to understand if they were named something like \"GetFrameSizeFromMediaType\", \"GetFrameRateFromMediaType\", and \"GetFormatFromMediaType\".",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b201ac83_200fd6ee",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "For variable and parameter names, please use lower case with underscores as per Chromium style guidelines [1].\n\n[1] https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c37e728_b718dc5d",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "Not sure if it understood by all readers that PhotoMediaType implies Jpeg. Maybe we could add this detail to the method name.",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48431b1e_6a99a62a",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "Use of C++11 \u003cthread\u003e library is banned in Chromium as per [1].\nI believe the Chromium equivalent here would be base::PlatformThread::Sleep, see [2].\n\n[1] https://chromium-cpp.appspot.com/#library-blacklist\n[2] https://cs.chromium.org/chromium/src/base/threading/platform_thread.h?type\u003dcs\u0026q\u003dthread+sleep\u0026l\u003d153",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fefc258a_fed7d5f5",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "I am a bit uncomfortable with this retry loop not having a counter for maximum retries. I think we should add one and give up after a certain number of retries.",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275cc51f_82ace874",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "In the above block, why are we doing the static_casts? Is this to have the compiler double-check that we are actually implementing this interface?\n\nIn case the caller requests IID_IUnknown do we really need the static_cast?",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff00ec4c_ce77463b",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "|count| is a little unspecific, lets go with |buffer_count| instead.",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e573127_9cd697aa",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "Can this fail in case, let\u0027s say, the data size does not match what would be expected for |format_|?",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21621f99_17e2875a",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "If there is more than one buffer, can it happen that we reach this line a second time and then crash because |callback_| is nullptr?\n\nI guess a follow-up question is what it is supposed to mean if there is more than buffer sent to us as a response to requesting a single still image. Are we supposed to somehow concatenate the buffers? Or is it safe to ignore extra buffers?",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa6bd56_eff3ae26",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "Why do we need to add a lock here? Can this really get called simultaneously with any other code path that accesses the same members?",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "924f08dd_cdcaca07",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "if (!capture_)\n return;\n\nThis eliminates the need for the long scope and indentation below.",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a1c6dc8_1e180760",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "I am not sure if/how a base::RefCountedThreadSafe class works when not wrapped in a scoped_refptr\u003c\u003e. Does it have a refcount of 1 after construction? Does MediaFoundation increase the refcount and release it when it is done with it, or does it only release, or does it do neither?",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "614c2b95_79cb5764",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "same as above, return here if !capture_.",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e254c4ec_9a17bc98",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 641,
+        "startChar": 6,
+        "endLine": 641,
+        "endChar": 14
+      },
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d3dc127_e35b1288",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "Instead of 4 nested if (SUCCEEDED(hr)), I would prefer to return early on failure, even if it means that we have to duplicate the LogError() call 4 times.",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116cf22d_9dc3c34b",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "Please extract the code for finding the best match to a separate method, because otherwise the method here gets way too long.",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e38e23f5_565a313d",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "Is this lock still needed? Before this CL there was access to |capture_| and |reader_|, but now we only access |client_|. Probably still needed to prevent this executing concurrently with StopAndDeAllocate().",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17af5ea_2478399d",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "If we use a lock in OnIncomingCaptureData to guard |client_| from concurrent usage/modification, do we need to do it here as well?",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db1cf791_2465d722",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "Just a quick though about unit testing this class.\nI think this class contains more than enough complexity to warrant unit testing it in isolation.\nCurrently all tests that exercise this are very high-level integration/end-to-end tests.\nUnit testing would be possible by abstracting out the parts of the MediaFoundation API that are called into from here and using a mock implementation in a unit test.\n\nSince this is consistently not done in any of the other platform-specific implementations of VideoCaptureDevice as well, I am not going to insist on it here. But I feel the need to point out that I believe this would be a good idea and the right thing to do.",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "563ad9be_72c4ab0b",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "Since we now also have a separate callback object for the photo case, I recommend we name this one |video_callback_|.",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3fe9df_fadef41c",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "I\u0027d like to make this explanation more concrete, something like:\n\"Guards the below variables from concurrent access between methods running on |sequence_checker_| and calls to OnIncomingCapturedData() and OnEvent() made by MediaFoundation on threads outside of our control.\"",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b5556c8_326503a9",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-16T09:53:28Z",
+      "side": 1,
+      "message": "If my understanding is correct that this indicates whether or not the device is started, let us rename this to |is_started_|.",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
