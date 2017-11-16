@@ -18,6 +18,7 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8HTMLDivElement.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/preemption/PreemptionCheckpointScope.h"
 
 namespace blink {
 

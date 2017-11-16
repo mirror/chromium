@@ -28,6 +28,7 @@
 #include "core/dom/StaticNodeList.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/html/forms/LabelsNodeList.h"
+#include "core/preemption/PreemptionCheckpointScope.h"
 #include "platform/bindings/RuntimeCallStats.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/wtf/GetPtr.h"
@@ -79,6 +80,8 @@ static_assert(
 namespace TestTypedefsV8Internal {
 
 static void uLongLongAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestTypedefs* impl = V8TestTypedefs::ToImpl(holder);
@@ -88,7 +91,7 @@ static void uLongLongAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8:
 
 static void uLongLongAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -106,6 +109,8 @@ static void uLongLongAttributeAttributeSetter(v8::Local<v8::Value> v8Value, cons
 }
 
 static void longWithClampAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestTypedefs* impl = V8TestTypedefs::ToImpl(holder);
@@ -115,7 +120,7 @@ static void longWithClampAttributeAttributeGetter(const v8::FunctionCallbackInfo
 
 static void longWithClampAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -133,6 +138,8 @@ static void longWithClampAttributeAttributeSetter(v8::Local<v8::Value> v8Value, 
 }
 
 static void domStringOrDoubleOrNullAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestTypedefs* impl = V8TestTypedefs::ToImpl(holder);
@@ -145,7 +152,7 @@ static void domStringOrDoubleOrNullAttributeAttributeGetter(const v8::FunctionCa
 
 static void domStringOrDoubleOrNullAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -446,78 +453,91 @@ void V8TestTypedefs::domStringOrDoubleOrNullAttributeAttributeSetterCallback(con
 }
 
 void V8TestTypedefs::voidMethodLongSequenceArgMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestTypedefs_voidMethodLongSequenceArg");
 
   TestTypedefsV8Internal::voidMethodLongSequenceArgMethod(info);
 }
 
 void V8TestTypedefs::voidMethodFloatArgStringArgMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestTypedefs_voidMethodFloatArgStringArg");
 
   TestTypedefsV8Internal::voidMethodFloatArgStringArgMethod(info);
 }
 
 void V8TestTypedefs::voidMethodTestCallbackInterfaceTypeArgMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestTypedefs_voidMethodTestCallbackInterfaceTypeArg");
 
   TestTypedefsV8Internal::voidMethodTestCallbackInterfaceTypeArgMethod(info);
 }
 
 void V8TestTypedefs::uLongLongMethodTestInterfaceEmptyTypeSequenceArgMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestTypedefs_uLongLongMethodTestInterfaceEmptyTypeSequenceArg");
 
   TestTypedefsV8Internal::uLongLongMethodTestInterfaceEmptyTypeSequenceArgMethod(info);
 }
 
 void V8TestTypedefs::testInterfaceOrTestInterfaceEmptyMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestTypedefs_testInterfaceOrTestInterfaceEmptyMethod");
 
   TestTypedefsV8Internal::testInterfaceOrTestInterfaceEmptyMethodMethod(info);
 }
 
 void V8TestTypedefs::domStringOrDoubleMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestTypedefs_domStringOrDoubleMethod");
 
   TestTypedefsV8Internal::domStringOrDoubleMethodMethod(info);
 }
 
 void V8TestTypedefs::arrayOfStringsMethodArrayOfStringsArgMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestTypedefs_arrayOfStringsMethodArrayOfStringsArg");
 
   TestTypedefsV8Internal::arrayOfStringsMethodArrayOfStringsArgMethod(info);
 }
 
 void V8TestTypedefs::methodTakingRecordMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestTypedefs_methodTakingRecord");
 
   TestTypedefsV8Internal::methodTakingRecordMethod(info);
 }
 
 void V8TestTypedefs::methodTakingOilpanValueRecordMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestTypedefs_methodTakingOilpanValueRecord");
 
   TestTypedefsV8Internal::methodTakingOilpanValueRecordMethod(info);
 }
 
 void V8TestTypedefs::unionWithRecordMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestTypedefs_unionWithRecordMethod");
 
   TestTypedefsV8Internal::unionWithRecordMethodMethod(info);
 }
 
 void V8TestTypedefs::methodThatReturnsRecordMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestTypedefs_methodThatReturnsRecord");
 
   TestTypedefsV8Internal::methodThatReturnsRecordMethod(info);
 }
 
 void V8TestTypedefs::voidMethodNestedUnionTypeMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestTypedefs_voidMethodNestedUnionType");
 
   TestTypedefsV8Internal::voidMethodNestedUnionTypeMethod(info);
 }
 
 void V8TestTypedefs::voidMethodUnionWithTypedefMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestTypedefs_voidMethodUnionWithTypedef");
 
   TestTypedefsV8Internal::voidMethodUnionWithTypedefMethod(info);

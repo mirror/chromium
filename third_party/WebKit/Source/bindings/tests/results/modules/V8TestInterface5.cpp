@@ -18,6 +18,7 @@
 #include "bindings/modules/v8/V8TestInterface5.h"
 #include "bindings/modules/v8/v8_void_callback_function_modules.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/preemption/PreemptionCheckpointScope.h"
 #include "platform/bindings/RuntimeCallStats.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/runtime_enabled_features.h"
@@ -70,6 +71,8 @@ static_assert(
 namespace TestInterface5ImplementationV8Internal {
 
 static void testInterfaceAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterface5Implementation* impl = V8TestInterface5::ToImpl(holder);
@@ -79,7 +82,7 @@ static void testInterfaceAttributeAttributeGetter(const v8::FunctionCallbackInfo
 
 static void testInterfaceAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -101,6 +104,8 @@ static void testInterfaceAttributeAttributeSetter(v8::Local<v8::Value> v8Value, 
 }
 
 static void doubleAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterface5Implementation* impl = V8TestInterface5::ToImpl(holder);
@@ -110,7 +115,7 @@ static void doubleAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Va
 
 static void doubleAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -128,6 +133,8 @@ static void doubleAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v
 }
 
 static void floatAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterface5Implementation* impl = V8TestInterface5::ToImpl(holder);
@@ -137,7 +144,7 @@ static void floatAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Val
 
 static void floatAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -155,6 +162,8 @@ static void floatAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8
 }
 
 static void unrestrictedDoubleAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterface5Implementation* impl = V8TestInterface5::ToImpl(holder);
@@ -164,7 +173,7 @@ static void unrestrictedDoubleAttributeAttributeGetter(const v8::FunctionCallbac
 
 static void unrestrictedDoubleAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -182,6 +191,8 @@ static void unrestrictedDoubleAttributeAttributeSetter(v8::Local<v8::Value> v8Va
 }
 
 static void unrestrictedFloatAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterface5Implementation* impl = V8TestInterface5::ToImpl(holder);
@@ -191,7 +202,7 @@ static void unrestrictedFloatAttributeAttributeGetter(const v8::FunctionCallback
 
 static void unrestrictedFloatAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -209,12 +220,14 @@ static void unrestrictedFloatAttributeAttributeSetter(v8::Local<v8::Value> v8Val
 }
 
 static void staticStringAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   V8SetReturnValueString(info, TestInterface5Implementation::staticStringAttribute(), info.GetIsolate());
 }
 
 static void staticStringAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -228,6 +241,8 @@ static void staticStringAttributeAttributeSetter(v8::Local<v8::Value> v8Value, c
 }
 
 static void lengthAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterface5Implementation* impl = V8TestInterface5::ToImpl(holder);
@@ -236,6 +251,8 @@ static void lengthAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& inf
 }
 
 static void alwaysExposedAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterface5Implementation* impl = V8TestInterface5::ToImpl(holder);
@@ -245,7 +262,7 @@ static void alwaysExposedAttributeAttributeGetter(const v8::FunctionCallbackInfo
 
 static void alwaysExposedAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -263,6 +280,8 @@ static void alwaysExposedAttributeAttributeSetter(v8::Local<v8::Value> v8Value, 
 }
 
 static void workerExposedAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterface5Implementation* impl = V8TestInterface5::ToImpl(holder);
@@ -272,7 +291,7 @@ static void workerExposedAttributeAttributeGetter(const v8::FunctionCallbackInfo
 
 static void workerExposedAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -290,6 +309,8 @@ static void workerExposedAttributeAttributeSetter(v8::Local<v8::Value> v8Value, 
 }
 
 static void windowExposedAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterface5Implementation* impl = V8TestInterface5::ToImpl(holder);
@@ -299,7 +320,7 @@ static void windowExposedAttributeAttributeGetter(const v8::FunctionCallbackInfo
 
 static void windowExposedAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -744,102 +765,119 @@ void V8TestInterface5::windowExposedAttributeAttributeSetterCallback(const v8::F
 }
 
 void V8TestInterface5::voidMethodTestInterfaceEmptyArgMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface5Implementation_voidMethodTestInterfaceEmptyArg");
 
   TestInterface5ImplementationV8Internal::voidMethodTestInterfaceEmptyArgMethod(info);
 }
 
 void V8TestInterface5::voidMethodDoubleArgFloatArgMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface5Implementation_voidMethodDoubleArgFloatArg");
 
   TestInterface5ImplementationV8Internal::voidMethodDoubleArgFloatArgMethod(info);
 }
 
 void V8TestInterface5::voidMethodUnrestrictedDoubleArgUnrestrictedFloatArgMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface5Implementation_voidMethodUnrestrictedDoubleArgUnrestrictedFloatArg");
 
   TestInterface5ImplementationV8Internal::voidMethodUnrestrictedDoubleArgUnrestrictedFloatArgMethod(info);
 }
 
 void V8TestInterface5::voidMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface5Implementation_voidMethod");
 
   TestInterface5ImplementationV8Internal::voidMethodMethod(info);
 }
 
 void V8TestInterface5::voidMethodMethodCallbackForMainWorld(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface5Implementation_voidMethod");
 
   TestInterface5ImplementationV8Internal::voidMethodMethodForMainWorld(info);
 }
 
 void V8TestInterface5::alwaysExposedMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface5Implementation_alwaysExposedMethod");
 
   TestInterface5ImplementationV8Internal::alwaysExposedMethodMethod(info);
 }
 
 void V8TestInterface5::workerExposedMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface5Implementation_workerExposedMethod");
 
   TestInterface5ImplementationV8Internal::workerExposedMethodMethod(info);
 }
 
 void V8TestInterface5::windowExposedMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface5Implementation_windowExposedMethod");
 
   TestInterface5ImplementationV8Internal::windowExposedMethodMethod(info);
 }
 
 void V8TestInterface5::alwaysExposedStaticMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface5Implementation_alwaysExposedStaticMethod");
 
   TestInterface5ImplementationV8Internal::alwaysExposedStaticMethodMethod(info);
 }
 
 void V8TestInterface5::workerExposedStaticMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface5Implementation_workerExposedStaticMethod");
 
   TestInterface5ImplementationV8Internal::workerExposedStaticMethodMethod(info);
 }
 
 void V8TestInterface5::windowExposedStaticMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface5Implementation_windowExposedStaticMethod");
 
   TestInterface5ImplementationV8Internal::windowExposedStaticMethodMethod(info);
 }
 
 void V8TestInterface5::windowAndServiceWorkerExposedMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface5Implementation_windowAndServiceWorkerExposedMethod");
 
   TestInterface5ImplementationV8Internal::windowAndServiceWorkerExposedMethodMethod(info);
 }
 
 void V8TestInterface5::voidMethodBooleanOrDOMStringArgMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface5Implementation_voidMethodBooleanOrDOMStringArg");
 
   TestInterface5ImplementationV8Internal::voidMethodBooleanOrDOMStringArgMethod(info);
 }
 
 void V8TestInterface5::voidMethodDoubleOrDOMStringArgMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface5Implementation_voidMethodDoubleOrDOMStringArg");
 
   TestInterface5ImplementationV8Internal::voidMethodDoubleOrDOMStringArgMethod(info);
 }
 
 void V8TestInterface5::voidMethodVoidExperimentalCallbackFunctionMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface5Implementation_voidMethodVoidExperimentalCallbackFunction");
 
   TestInterface5ImplementationV8Internal::voidMethodVoidExperimentalCallbackFunctionMethod(info);
 }
 
 void V8TestInterface5::voidMethodVoidCallbackFunctionModulesArgMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface5Implementation_voidMethodVoidCallbackFunctionModulesArg");
 
   TestInterface5ImplementationV8Internal::voidMethodVoidCallbackFunctionModulesArgMethod(info);
 }
 
 void V8TestInterface5::toStringMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface5Implementation_toString");
 
   TestInterface5ImplementationV8Internal::toStringMethod(info);

@@ -177,6 +177,7 @@ void TaskQueueManager::OnBeginNestedRunLoop() {
     observer_->OnBeginNestedRunLoop();
 
   delegate_->PostTask(FROM_HERE, immediate_do_work_closure_);
+  delegate_->PostTask(FROM_HERE, delayed_do_work_closure_);
 }
 
 void TaskQueueManager::OnQueueHasIncomingImmediateWork(

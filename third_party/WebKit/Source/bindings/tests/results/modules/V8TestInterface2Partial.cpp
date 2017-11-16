@@ -18,6 +18,7 @@
 #include "bindings/tests/idls/modules/TestInterface2Partial.h"
 #include "bindings/tests/idls/modules/TestInterface2Partial2.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/preemption/PreemptionCheckpointScope.h"
 #include "platform/bindings/RuntimeCallStats.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/runtime_enabled_features.h"
@@ -63,12 +64,14 @@ static void voidMethodPartial2Method(const v8::FunctionCallbackInfo<v8::Value>& 
 } // namespace TestInterface2PartialV8Internal
 
 void V8TestInterface2Partial::voidMethodPartial1MethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface2_voidMethodPartial1");
 
   TestInterface2PartialV8Internal::voidMethodPartial1Method(info);
 }
 
 void V8TestInterface2Partial::voidMethodPartial2MethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface2_voidMethodPartial2");
 
   TestInterface2PartialV8Internal::voidMethodPartial2Method(info);

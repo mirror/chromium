@@ -16,6 +16,7 @@
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/V8DOMConfiguration.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/preemption/PreemptionCheckpointScope.h"
 #include "platform/bindings/RuntimeCallStats.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/wtf/GetPtr.h"
@@ -67,6 +68,8 @@ static_assert(
 namespace TestAttributeGettersV8Internal {
 
 static void lenientThisLongAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   // [LenientThis]
   // Make sure that info.Holder() really points to an instance if [LenientThis].
   if (!V8TestAttributeGetters::hasInstance(info.Holder(), info.GetIsolate()))
@@ -80,6 +83,8 @@ static void lenientThisLongAttributeAttributeGetter(const v8::FunctionCallbackIn
 }
 
 static void stringPromiseAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   // This attribute returns a Promise.
   // Per https://heycam.github.io/webidl/#dfn-attribute-getter, all exceptions
   // must be turned into a Promise rejection.
@@ -102,6 +107,8 @@ static void stringPromiseAttributeAttributeGetter(const v8::FunctionCallbackInfo
 }
 
 static void lenientThisStringPromiseAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   // [LenientThis]
   // Make sure that info.Holder() really points to an instance if [LenientThis].
   if (!V8TestAttributeGetters::hasInstance(info.Holder(), info.GetIsolate()))
@@ -115,6 +122,8 @@ static void lenientThisStringPromiseAttributeAttributeGetter(const v8::FunctionC
 }
 
 static void raisesExceptionShortPromiseAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   // This attribute returns a Promise.
   // Per https://heycam.github.io/webidl/#dfn-attribute-getter, all exceptions
   // must be turned into a Promise rejection.
@@ -142,6 +151,8 @@ static void raisesExceptionShortPromiseAttributeAttributeGetter(const v8::Functi
 }
 
 static void floatAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestAttributeGetters* impl = V8TestAttributeGetters::ToImpl(holder);

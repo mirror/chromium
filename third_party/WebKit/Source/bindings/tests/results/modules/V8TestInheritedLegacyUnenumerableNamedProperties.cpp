@@ -15,6 +15,7 @@
 #include "bindings/core/v8/NativeValueTraitsImpl.h"
 #include "bindings/core/v8/V8DOMConfiguration.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/preemption/PreemptionCheckpointScope.h"
 #include "platform/bindings/RuntimeCallStats.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/wtf/GetPtr.h"
@@ -66,6 +67,8 @@ static_assert(
 namespace TestInheritedLegacyUnenumerableNamedPropertiesV8Internal {
 
 static void longAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInheritedLegacyUnenumerableNamedProperties* impl = V8TestInheritedLegacyUnenumerableNamedProperties::ToImpl(holder);

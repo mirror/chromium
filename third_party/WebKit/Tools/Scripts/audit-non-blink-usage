@@ -40,6 +40,10 @@ _CONFIG = [
             'base::span',
             'logging::GetVlogLevel',
 
+            # TODO(tzik): Revisit before submitting this CL.
+            'base::RunLoop',
+            'base::ThreadTaskRunnerHandle',
+
             # Standalone utility libraries that only depend on //base
             'skia::.+',
             'url::.+',

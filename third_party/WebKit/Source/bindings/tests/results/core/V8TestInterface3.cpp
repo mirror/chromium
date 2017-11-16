@@ -17,6 +17,7 @@
 #include "bindings/core/v8/V8Document.h"
 #include "bindings/core/v8/V8Node.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/preemption/PreemptionCheckpointScope.h"
 #include "platform/bindings/RuntimeCallStats.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/wtf/GetPtr.h"
@@ -68,6 +69,8 @@ static_assert(
 namespace TestInterface3V8Internal {
 
 static void lengthAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterface3* impl = V8TestInterface3::ToImpl(holder);
@@ -76,6 +79,8 @@ static void lengthAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& inf
 }
 
 static void readonlyStringifierAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterface3* impl = V8TestInterface3::ToImpl(holder);
@@ -145,12 +150,14 @@ void V8TestInterface3::readonlyStringifierAttributeAttributeGetterCallback(const
 }
 
 void V8TestInterface3::voidMethodDocumentMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface3_voidMethodDocument");
 
   TestInterface3V8Internal::voidMethodDocumentMethod(info);
 }
 
 void V8TestInterface3::toStringMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterface3_toString");
 
   TestInterface3V8Internal::toStringMethod(info);

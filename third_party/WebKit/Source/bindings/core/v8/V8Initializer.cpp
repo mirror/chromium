@@ -51,6 +51,7 @@
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/MainThreadDebugger.h"
+#include "core/preemption/PreemptionManager.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/bindings/DOMWrapperWorld.h"
@@ -646,6 +647,8 @@ void V8Initializer::InitializeMainThread(const intptr_t* reference_table) {
 
   V8PerIsolateData::From(isolate)->SetThreadDebugger(
       std::make_unique<MainThreadDebugger>(isolate));
+  V8PerIsolateData::From(isolate)->SetPreemptionManager(
+      std::make_unique<PreemptionManager>(isolate));
 
   BindingSecurity::InitWrapperCreationSecurityCheck();
 }

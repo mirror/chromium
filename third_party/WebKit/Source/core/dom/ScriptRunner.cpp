@@ -27,8 +27,10 @@
 
 #include <algorithm>
 #include "bindings/core/v8/ScriptStreamer.h"
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/Document.h"
 #include "core/dom/ScriptLoader.h"
+#include "core/preemption/PreemptionOptInScope.h"
 #include "platform/heap/Handle.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/scheduler/child/web_scheduler.h"
@@ -230,6 +232,8 @@ bool ScriptRunner::ExecuteAsyncTask() {
 void ScriptRunner::ExecuteTask() {
   if (is_suspended_)
     return;
+
+  PreemptionOptInScope scope(ToIsolate(document_));
 
   if (ExecuteAsyncTask())
     return;
