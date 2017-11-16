@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9c290449_9767b81f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-16T09:58:42Z",
+      "side": 1,
+      "message": "Thank you for the clarification.\n\nYou\u0027re right! DedicatedWorker inherits the Document\u0027s CSP. My code works as intended after setting CSP on the owner Document. I was confused because ReferrerPolicy is not inherited from the owner Document :p\n\nRegarding Worklets, I\u0027ll take another look tomorrow (in Japan).",
+      "parentUuid": "af3f026e_ebf439e9",
+      "revId": "90bfd26be5029b8f82c8ffdee55ce8b1a5d7c044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7965beb9_3fbb6521",
         "filename": "third_party/WebKit/Source/core/workers/MainThreadWorkletTest.cpp",
         "patchSetId": 5
