@@ -7059,16 +7059,21 @@ bool Document::IsSecureContext(String& error_message) const {
 }
 
 bool Document::IsSecureContext() const {
-  bool is_secure = IsSecureContextImpl();
-  if (GetSandboxFlags() != kSandboxNone) {
-    UseCounter::Count(
-        *this, is_secure
-                   ? WebFeature::kSecureContextCheckForSandboxedOriginPassed
-                   : WebFeature::kSecureContextCheckForSandboxedOriginFailed);
+  if (!is_secure_context_.has_value()) {
+    bool is_secure = IsSecureContextImpl();
+    if (GetSandboxFlags() != kSandboxNone) {
+      UseCounter::Count(
+          *this, is_secure
+                     ? WebFeature::kSecureContextCheckForSandboxedOriginPassed
+                     : WebFeature::kSecureContextCheckForSandboxedOriginFailed);
+    }
+    UseCounter::Count(*this, is_secure ? WebFeature::kSecureContextCheckPassed
+                                       : WebFeature::kSecureContextCheckFailed);
+
+    is_secure_context_ = is_secure;
   }
-  UseCounter::Count(*this, is_secure ? WebFeature::kSecureContextCheckPassed
-                                     : WebFeature::kSecureContextCheckFailed);
-  return is_secure;
+
+  return is_secure_context_.value();
 }
 
 void Document::EnforceInsecureRequestPolicy(WebInsecureRequestPolicy policy) {
