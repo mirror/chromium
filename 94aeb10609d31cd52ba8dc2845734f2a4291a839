@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5460c8c_92bd98d3",
+        "filename": "chrome/browser/resource_coordinator/lifetime_unit.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-16T14:36:21Z",
+      "side": 1,
+      "message": "We will eventually introduce the NEVER_LOADED state, but it will never be possible to make a transition to that state. Therefore, I prefer having Load() and Discard() methods than a SetState(State) method which would allow invalid code such as SetState(NEVER_LOADED).",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 63
+      },
+      "revId": "94aeb10609d31cd52ba8dc2845734f2a4291a839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
