@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "2b505ae3_ca9d31c7",
+        "filename": "gin/v8_background_task_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2017-11-16T12:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e1eb21d_c4aab079",
+      "range": {
+        "startLine": 27,
+        "startChar": 33,
+        "endLine": 27,
+        "endChar": 60
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57e0d5eb_c459ed6b",
+        "filename": "gin/v8_background_task_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2017-11-16T12:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb693ad5_9dce4e8f",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 16
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66e2c194_82c0cb1f",
         "filename": "gin/v8_background_task_runner.cc",
         "patchSetId": 8
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "324a9c9b_ed0088aa",
+        "filename": "gin/v8_background_task_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2017-11-16T12:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66e2c194_82c0cb1f",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 16
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f45fdc9_ee17e2cf",
+        "filename": "gin/v8_background_task_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2017-11-16T12:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77f1c91d_ce42598f",
+      "range": {
+        "startLine": 34,
+        "startChar": 33,
+        "endLine": 34,
+        "endChar": 60
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b4a2521_0ce6180d",
         "filename": "gin/v8_background_task_runner.h",
         "patchSetId": 8
@@ -108,6 +204,24 @@
       "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5ba4759_aece20d4",
+        "filename": "gin/v8_background_task_runner.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2017-11-16T12:44:32Z",
+      "side": 1,
+      "message": "Done. I will talk with the involved people from the V8 side. For the compilers it may not be a problem to spawn one task per work item, but for the GC the number of available threads may be essential.",
+      "parentUuid": "1b4a2521_0ce6180d",
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -131,6 +245,30 @@
       "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40480e82_e2a923dd",
+        "filename": "gin/v8_foreground_task_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2017-11-16T12:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20ff9257_2f60f188",
+      "range": {
+        "startLine": 16,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +318,54 @@
     },
     {
       "key": {
+        "uuid": "32b73571_a6d5626e",
+        "filename": "gin/v8_foreground_task_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2017-11-16T12:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68b06a97_6b2409e1",
+      "range": {
+        "startLine": 24,
+        "startChar": 17,
+        "endLine": 24,
+        "endChar": 27
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fad14f4_f4ce9625",
+        "filename": "gin/v8_foreground_task_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2017-11-16T12:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "538cf754_08964fd5",
+      "range": {
+        "startLine": 24,
+        "startChar": 44,
+        "endLine": 24,
+        "endChar": 72
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a45bc1_61ef815b",
         "filename": "gin/v8_foreground_task_runner.cc",
         "patchSetId": 8
@@ -226,6 +412,54 @@
     },
     {
       "key": {
+        "uuid": "15818556_ba53230c",
+        "filename": "gin/v8_foreground_task_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2017-11-16T12:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7a45bc1_61ef815b",
+      "range": {
+        "startLine": 30,
+        "startChar": 17,
+        "endLine": 30,
+        "endChar": 27
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d529b816_cf37a732",
+        "filename": "gin/v8_foreground_task_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2017-11-16T12:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "392a55b2_0cf86e7d",
+      "range": {
+        "startLine": 30,
+        "startChar": 44,
+        "endLine": 30,
+        "endChar": 71
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b986059e_0608f7b1",
         "filename": "gin/v8_foreground_task_runner_with_locker.cc",
         "patchSetId": 8
@@ -246,6 +480,30 @@
       "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65523462_6223201c",
+        "filename": "gin/v8_foreground_task_runner_with_locker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2017-11-16T12:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b986059e_0608f7b1",
+      "range": {
+        "startLine": 18,
+        "startChar": 38,
+        "endLine": 18,
+        "endChar": 49
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "6d071ee5_0e084402",
+        "filename": "gin/v8_foreground_task_runner_with_locker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2017-11-16T12:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fb60254_999d05e8",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 40
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "088aa587_6c399b46",
         "filename": "gin/v8_foreground_task_runner_with_locker.cc",
         "patchSetId": 8
@@ -295,6 +577,30 @@
     },
     {
       "key": {
+        "uuid": "adb15d3f_e294e82b",
+        "filename": "gin/v8_foreground_task_runner_with_locker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2017-11-16T12:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "088aa587_6c399b46",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 16
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00719afa_2f89fe0c",
         "filename": "gin/v8_foreground_task_runner_with_locker.cc",
         "patchSetId": 8
@@ -315,6 +621,30 @@
       "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a11bf880_eeb005b6",
+        "filename": "gin/v8_foreground_task_runner_with_locker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2017-11-16T12:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00719afa_2f89fe0c",
+      "range": {
+        "startLine": 66,
+        "startChar": 17,
+        "endLine": 66,
+        "endChar": 44
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
