@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14a6720a_f5384a25",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-16T00:56:01Z",
+      "side": 1,
+      "message": "Nit: #include checked_math.h instead?",
+      "revId": "c42ec74b38edba06c44997242793faa6bb25c486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b461231_8c4b2843",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-16T00:56:01Z",
+      "side": 1,
+      "message": "Btw I think when this switches to Mojo, posting a task to indicate a bad message won\u0027t work -- the mojo version depends on having the context for the message being dispatched.\n\nSo if it\u0027s possible, it might be better to do this before bouncing between sequences so it Just Works when it changes to Mojo (it would also mean we don\u0027t need to post two callbacks in the error case)",
+      "revId": "c42ec74b38edba06c44997242793faa6bb25c486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
