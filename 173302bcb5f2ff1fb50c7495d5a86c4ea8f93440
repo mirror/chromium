@@ -78,6 +78,24 @@
     },
     {
       "key": {
+        "uuid": "b6a37e09_9f6c3f68",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-16T01:25:02Z",
+      "side": 1,
+      "message": "Daniel@, sorry, could you confirm this? thanks.",
+      "parentUuid": "636676f4_33592174",
+      "revId": "173302bcb5f2ff1fb50c7495d5a86c4ea8f93440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb11c4e0_0d90fc14",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 9
