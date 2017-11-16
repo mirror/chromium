@@ -14,6 +14,7 @@
 
 namespace blink {
 class WebHistoryItem;
+class WebURL;
 }
 
 namespace content {
@@ -50,6 +51,7 @@ class TestRenderFrame : public RenderFrameImpl {
       int start,
       int end,
       const std::vector<blink::WebImeTextSpan>& ime_text_spans);
+  bool ShouldTrackUseCounter(const blink::WebURL& url) override;
 
   blink::WebNavigationPolicy DecidePolicyForNavigation(
       const blink::WebFrameClient::NavigationPolicyInfo& info) override;
