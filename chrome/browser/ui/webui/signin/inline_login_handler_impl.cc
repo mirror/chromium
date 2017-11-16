@@ -558,7 +558,10 @@ void InlineLoginHandlerImpl::SetExtraInitParams(base::DictionaryValue& params) {
         flow = "reauth";
         break;
       default:
-        flow = "signin";
+        if (signin_util::IsForceSigninEnabled())
+          flow = "enterprisefsi";
+        else
+          flow = "signin";
         break;
     }
     params.SetString("flow", flow);
