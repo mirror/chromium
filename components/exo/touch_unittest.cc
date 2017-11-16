@@ -10,6 +10,7 @@
 #include "ash/wm/window_positioner.h"
 #include "ash/wm/window_positioning_utils.h"
 #include "components/exo/buffer.h"
+#include "components/exo/client_controlled_shell_surface.h"
 #include "components/exo/shell_surface.h"
 #include "components/exo/surface.h"
 #include "components/exo/test/exo_test_base.h"
@@ -221,14 +222,15 @@ TEST_F(TouchTest, OnTouchCancel) {
 
 TEST_F(TouchTest, IgnoreTouchEventDuringModal) {
   auto window = exo_test_helper()->CreateWindow(10, 10, false);
-  auto modal = exo_test_helper()->CreateWindow(5, 5, true);
+  auto modal = exo_test_helper()->CreateWindow(
+      5, 5, true, ShellSurface::BoundsMode::CLIENT);
 
   MockTouchDelegate delegate;
   std::unique_ptr<Touch> touch(new Touch(&delegate));
   ui::test::EventGenerator generator(ash::Shell::GetPrimaryRootWindow());
 
   // Make the window modal.
-  modal.shell_surface()->SetSystemModal(true);
+  modal.client_controlled_shell_surface()->SetSystemModal(true);
 
   EXPECT_TRUE(ash::ShellPort::Get()->IsSystemModalWindowOpen());
   EXPECT_CALL(delegate, OnTouchShape(testing::_, testing::_, testing::_))
@@ -269,7 +271,7 @@ TEST_F(TouchTest, IgnoreTouchEventDuringModal) {
   generator.PressMoveAndReleaseTouchBy(1, 1);
 
   // Make the window non-modal.
-  modal.shell_surface()->SetSystemModal(false);
+  modal.client_controlled_shell_surface()->SetSystemModal(false);
   EXPECT_FALSE(ash::ShellPort::Get()->IsSystemModalWindowOpen());
 
   // Check if touch events on non-modal window are registered.
