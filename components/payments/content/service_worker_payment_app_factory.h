@@ -59,8 +59,8 @@ class ServiceWorkerPaymentAppFactory {
   ServiceWorkerPaymentAppFactory();
   ~ServiceWorkerPaymentAppFactory();
 
-  // Removes |apps| that don't match any of the |requested_method_data| based on
-  // the method names and method-specific capabilities.
+  // Below interfaces and variables are used for test only.
+  // The interface to expose RemoveAppsWithoutMatchingMethodDataImpl for test.
   void RemoveAppsWithoutMatchingMethodData(
       const std::vector<mojom::PaymentMethodDataPtr>& requested_method_data,
       content::PaymentAppProvider::PaymentApps* apps);

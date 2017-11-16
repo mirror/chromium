@@ -84,6 +84,8 @@ void RemovePortNumbersFromScopesForTest(
   }
 }
 
+// Removes |apps| that don't match any of the |requested_method_data| based on
+// the method names and method-specific capabilities.
 void RemoveAppsWithoutMatchingMethodDataImpl(
     const std::vector<mojom::PaymentMethodDataPtr>& requested_method_data,
     content::PaymentAppProvider::PaymentApps* apps) {

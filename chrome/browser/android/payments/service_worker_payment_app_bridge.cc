@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/web_data_service_factory.h"
+#include "components/payments/content/payment_manifest_web_data_service.h"
 #include "components/payments/content/service_worker_payment_app_factory.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
@@ -197,7 +198,7 @@ static void GetAllPaymentApps(JNIEnv* env,
   content::WebContents* web_contents =
       content::WebContents::FromJavaWebContents(jweb_contents);
 
-  ServiceWorkerPaymentAppFactory::GetInstance()->GetAllPaymentApps(
+  payments::ServiceWorkerPaymentAppFactory::GetInstance()->GetAllPaymentApps(
       web_contents->GetBrowserContext(),
       WebDataServiceFactory::GetPaymentManifestWebDataForProfile(
           Profile::FromBrowserContext(web_contents->GetBrowserContext()),
