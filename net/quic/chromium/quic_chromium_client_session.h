@@ -48,6 +48,7 @@ class CertVerifyResult;
 class DatagramClientSocket;
 class NetLog;
 class QuicCryptoClientStreamFactory;
+class QuicConnectivityProbingManager;
 class QuicServerInfo;
 class QuicStreamFactory;
 class SSLInfo;
@@ -66,6 +67,16 @@ enum class MigrationResult {
   SUCCESS,         // Migration succeeded.
   NO_NEW_NETWORK,  // Migration failed since no new network was found.
   FAILURE          // Migration failed for other reasons.
+};
+
+// Result of a connectivity probing attempt.
+enum class ProbingResult {
+  PENDING,                          // Probing started, pending result.
+  ABORT_WITH_IDLE_SESSION,          // Probing aborted with idle session.
+  DISABLED_BY_CONFIG,               // Probing aborted by config.
+  DISABLED_BY_NON_MIGRABLE_STREAM,  // Probing aborted by special stream.
+  INTERNAL_ERROR,                   // Probing failed for internal reason.
+  FAILURE,                          // Probing failed for other reason.
 };
 
 class NET_EXPORT_PRIVATE QuicChromiumClientSession
@@ -382,6 +393,9 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
                           ConnectionCloseSource source) override;
   void OnSuccessfulVersionNegotiation(
       const QuicTransportVersion& version) override;
+  void OnConnectivityProbingReceived(
+      const QuicSocketAddress& self_address,
+      const QuicSocketAddress& peer_address) override;
   void OnPathDegrading() override;
   bool HasOpenDynamicStreams() const override;
 
@@ -480,6 +494,18 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
                        std::unique_ptr<QuicChromiumPacketReader> reader,
                        std::unique_ptr<QuicChromiumPacketWriter> writer);
 
+  // Called when QuicConnectivityProbingManger concludes probing has been
+  // successful on |network|.
+  void OnProbeNetworkSucceeds(NetworkChangeNotifier::NetworkHandle network,
+                              const QuicSocketAddress& self_address,
+                              std::unique_ptr<DatagramClientSocket> socket,
+                              std::unique_ptr<QuicChromiumPacketWriter> writer,
+                              std::unique_ptr<QuicChromiumPacketReader> reader);
+
+  // Called when QuicConnectivityProbingManger concludes probing fails
+  // on |network|.
+  void OnProbeNetworkFails(NetworkChangeNotifier::NetworkHandle network);
+
   // Called when NetworkChangeNotifier notifies observers of a newly
   // connected network. Migrates this session to the newly connected
   // network if the session has a pending migration.
@@ -541,6 +567,10 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
 
   bool require_confirmation() const { return require_confirmation_; }
 
+  QuicConnectivityProbingManager* probing_manager() {
+    return probing_manager_.get();
+  }
+
  protected:
   // QuicSession methods:
   bool ShouldCreateIncomingDynamicStream(QuicStreamId id) override;
@@ -568,6 +598,10 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
   void CloseAllHandles(int net_error);
   void CancelAllRequests(int net_error);
   void NotifyRequestsOfConfirmation(int net_error);
+
+  ProbingResult StartProbeNetwork(NetworkChangeNotifier::NetworkHandle network,
+                                  IPEndPoint peer_address,
+                                  const NetLogWithSource& migration_net_log);
 
   // Notifies the factory that this session is going away and no more streams
   // should be created from it.  This needs to be called before closing any
@@ -631,6 +665,7 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
   // Stores packet that witnesses socket write error. This packet is
   // written to a new socket after migration completes.
   scoped_refptr<QuicChromiumPacketWriter::ReusableIOBuffer> packet_;
+  std::unique_ptr<QuicConnectivityProbingManager> probing_manager_;
   // TODO(jri): Replace use of migration_pending_ sockets_.size().
   // When a task is posted for MigrateSessionOnError, pass in
   // sockets_.size(). Then in MigrateSessionOnError, check to see if
