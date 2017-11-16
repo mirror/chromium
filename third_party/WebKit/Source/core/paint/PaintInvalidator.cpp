@@ -4,15 +4,20 @@
 
 #include "core/paint/PaintInvalidator.h"
 
+#include "core/dom/DOMNodeIds.h"
 #include "core/editing/FrameSelection.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
+#include "core/html/HTMLFrameOwnerElement.h"
 #include "core/layout/LayoutBlockFlow.h"
 #include "core/layout/LayoutTable.h"
 #include "core/layout/LayoutTableSection.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/svg/SVGLayoutSupport.h"
+#include "core/page/ChromeClient.h"
+#include "core/page/Page.h"
+#include "core/paint/compositing/CompositedLayerMapping.h"
 #include "core/paint/FindPaintOffsetAndVisualRectNeedingUpdate.h"
 #include "core/paint/ObjectPaintProperties.h"
 #include "core/paint/PaintLayer.h"
@@ -419,6 +424,45 @@ void PaintInvalidator::UpdateVisualRect(const LayoutObject& object,
 
   fragment_data.SetVisualRect(new_visual_rect);
   fragment_data.SetLocationInBacking(new_location);
+
+  if (object.IsLayoutIFrame()) {
+    EmbeddedContentView* embedded_content_view =
+        ToHTMLFrameOwnerElement(object.GetNode())->OwnedEmbeddedContentView();
+    if (embedded_content_view && embedded_content_view->IsLocalFrameView()) {
+      LocalFrameView* frame_view = ToLocalFrameView(embedded_content_view);
+      if (frame_view->GetFrame().IsCrossOriginSubframe()) {
+        int dom_node_id = DOMNodeIds::IdForNode(object.GetNode());
+        CompositorElementId compositor_element_id = CompositorElementIdFromUniqueObjectId(
+            dom_node_id, CompositorElementIdNamespace::kFrame);
+        const LayoutBoxModelObject& invalidation_container =
+            object.ContainerForPaintInvalidation();
+        IntRect frame_rect =
+            EnclosingIntRect(object.VisualRectIncludingCompositedScrolling(
+                invalidation_container));
+        fprintf(stderr, "Cross-origin iframe has visual rect %d,%d %dx%d\n",
+                frame_rect.X(), frame_rect.Y(), frame_rect.Width(),
+                frame_rect.Height());
+        CompositedLayerMapping* mapping =
+            invalidation_container.Layer()->GroupedMapping();
+        if (!mapping)
+          mapping = invalidation_container.Layer()->GetCompositedLayerMapping();
+        // TODO(ajuma): Sometimes the mapping is null here. Need to figure out
+        // why. Shouldn't the invalidation container be composited by
+        // definition?
+        if (mapping) {
+          // Is it fine to always use mainGraphicsLayer, or do we need to also
+          // consider foregroundLayer and the squashing layer?
+          // What if the offsetFromLayoutObject changes? Are we guaranteed to
+          // get another call to setPreviousLocationInBacking in that case?
+          frame_rect.Move(
+              -mapping->MainGraphicsLayer()->OffsetFromLayoutObject());
+          frame_view->GetFrame().GetPage()->GetChromeClient().SetFrameRect(
+              compositor_element_id,
+              mapping->MainGraphicsLayer()->PlatformLayer()->Id(), frame_rect);
+        }
+      }
+    }
+  }
 }
 
 void PaintInvalidator::InvalidatePaint(

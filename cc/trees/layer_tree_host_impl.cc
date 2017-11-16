@@ -677,6 +677,13 @@ LayerTreeHostImpl::EventListenerTypeForTouchStartOrMoveAt(
                      : InputHandler::TouchStartOrMoveEventListenerType::HANDLER;
 }
 
+bool LayerTreeHostImpl::IsRecentlyMovedFrameAt(
+    const gfx::Point& viewport_point) {
+  gfx::PointF device_viewport_point = gfx::ScalePoint(
+      gfx::PointF(viewport_point), active_tree_->device_scale_factor());
+  return active_tree_->IsRecentlyMovedFrameAt(device_viewport_point);
+}
+
 std::unique_ptr<SwapPromiseMonitor>
 LayerTreeHostImpl::CreateLatencyInfoSwapPromiseMonitor(
     ui::LatencyInfo* latency) {

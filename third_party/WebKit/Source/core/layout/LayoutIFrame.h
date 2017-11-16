@@ -34,7 +34,7 @@ class LayoutIFrame final : public LayoutEmbeddedContent {
  public:
   explicit LayoutIFrame(Element*);
 
-  const char* GetName() const override { return "LayoutIFrame"; }
+  const char* GetName() const override { return "LayoutIFrame"; } 
 
  private:
   bool ShouldComputeSizeAsReplaced() const override;

@@ -66,6 +66,9 @@ void LayerTreeLifecycle::AdvanceTo(LifecycleState next_state) {
   state_ = next_state;
 }
 
+const base::TimeDelta kFrameRecentMovementInterval =
+    base::TimeDelta::FromMilliseconds(100);
+
 LayerTreeImpl::LayerTreeImpl(
     LayerTreeHostImpl* host_impl,
     scoped_refptr<SyncedProperty<ScaleGroup>> page_scale_factor,
@@ -309,6 +312,33 @@ void LayerTreeImpl::InvalidateRegionForImages(
     picture_layer->InvalidateRegionForImages(images_to_invalidate);
 }
 
+void LayerTreeImpl::ClearOldFrameRects() {
+  base::TimeTicks cutoff =
+      CurrentBeginFrameArgs().frame_time - kFrameRecentMovementInterval;
+  while (!recent_frame_times_.empty() && recent_frame_times_.front() <= cutoff)
+    recent_frame_times_.pop();
+  for (auto it = frame_rect_history_.begin();
+       it != frame_rect_history_.end();) {
+    while (!it->second.empty() && it->second.front().timestamp <= cutoff)
+      it->second.pop_front();
+
+    if (it->second.empty())
+      it = frame_rect_history_.erase(it);
+    else
+      it++;
+  }
+}
+
+void LayerTreeImpl::AddFrameRect(ElementId id, const gfx::Rect& rect) {
+  if (recent_frame_times_.empty() ||
+      recent_frame_times_.back() != CurrentBeginFrameArgs().frame_time)
+    recent_frame_times_.push(CurrentBeginFrameArgs().frame_time);
+  FrameRectHistoryItem history_item;
+  history_item.rect = rect;
+  history_item.timestamp = CurrentBeginFrameArgs().frame_time;
+  frame_rect_history_[id].push_back(history_item);
+}
+
 bool LayerTreeImpl::IsRootLayer(const LayerImpl* layer) const {
   return layer_list_.empty() ? false : layer_list_[0] == layer;
 }
@@ -464,6 +494,8 @@ void LayerTreeImpl::PushPropertiesTo(LayerTreeImpl* target_tree) {
   target_tree->set_event_listener_properties(
       EventListenerClass::kTouchEndOrCancel,
       event_listener_properties(EventListenerClass::kTouchEndOrCancel));
+
+  target_tree->set_frame_rect_position_map(frame_rect_position_map_);
 
   if (ViewportSizeInvalid())
     target_tree->SetViewportSizeInvalid();
@@ -1979,6 +2011,34 @@ LayerImpl* LayerTreeImpl::FindLayerThatIsHitByPointInTouchHandlerRegion(
   FindClosestMatchingLayerState state;
   FindClosestMatchingLayer(screen_space_point, layer_list_[0], func, &state);
   return state.closest_match;
+}
+
+bool LayerTreeImpl::IsRecentlyMovedFrameAt(
+    const gfx::PointF& screen_space_point) {
+  for (const auto& it : frame_rect_history_) {
+    const std::deque<FrameRectHistoryItem>& history_list = it.second;
+    fprintf(stderr, "Considering rect %s\n",
+            history_list.back().rect.ToString().c_str());
+    DCHECK(!history_list.empty());
+    if (gfx::RectF(history_list.back().rect).Contains(screen_space_point)) {
+      fprintf(stderr, "IsRecentlyMovedFrameAt found a rect for element %lu\n",
+              it.first.ToInternalValue());
+
+      DCHECK(history_list.size() <= recent_frame_times_.size());
+      if (history_list.size() != recent_frame_times_.size()) {
+        fprintf(stderr,
+                "Different sizes! history: %zu, recent frame times: %lu\n",
+                history_list.size(), recent_frame_times_.size());
+        return true;
+      }
+      for (const FrameRectHistoryItem& history_item : history_list) {
+        if (!gfx::RectF(history_item.rect).Contains(screen_space_point))
+          return true;
+      }
+    }
+  }
+
+  return false;
 }
 
 void LayerTreeImpl::RegisterSelection(const LayerSelection& selection) {

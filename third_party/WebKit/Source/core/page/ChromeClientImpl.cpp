@@ -768,6 +768,22 @@ void ChromeClientImpl::UpdateCompositedSelection(
     layer_tree_view->RegisterSelection(WebSelection(selection));
 }
 
+void ChromeClientImpl::SetFrameRect(const CompositorElementId& element_id,
+                                    int layer_id,
+                                    const IntRect& rect) {
+  WebLayerTreeView* layer_tree_view = web_view_->LayerTreeView();
+  // TODO(ajuma): Is this null-check really needed?
+  if (layer_tree_view)
+    layer_tree_view->SetFrameRect(element_id, layer_id, rect);
+}
+
+void ChromeClientImpl::ClearFrameRect(const CompositorElementId& element_id) {
+  WebLayerTreeView* layer_tree_view = web_view_->LayerTreeView();
+  // TODO(ajuma): Is this null-check really needed?
+  if (layer_tree_view)
+    layer_tree_view->ClearFrameRect(element_id);
+}
+
 bool ChromeClientImpl::HasOpenedPopup() const {
   return web_view_->HasOpenedPopup();
 }

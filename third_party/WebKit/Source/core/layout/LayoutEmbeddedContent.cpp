@@ -25,6 +25,7 @@
 #include "core/layout/LayoutEmbeddedContent.h"
 
 #include "core/dom/AXObjectCache.h"
+#include "core/dom/DOMNodeIds.h"
 #include "core/frame/EmbeddedContentView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
@@ -36,6 +37,8 @@
 #include "core/layout/LayoutView.h"
 #include "core/layout/api/LayoutAPIShim.h"
 #include "core/layout/api/LayoutViewItem.h"
+#include "core/page/ChromeClient.h"
+#include "core/page/Page.h"
 #include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/paint/EmbeddedContentPainter.h"
 #include "core/plugins/PluginView.h"
@@ -58,6 +61,23 @@ void LayoutEmbeddedContent::Release() {
 }
 
 void LayoutEmbeddedContent::WillBeDestroyed() {
+  if (IsLayoutIFrame()) {
+    EmbeddedContentView* embedded_content_view =
+        ToHTMLFrameOwnerElement(GetNode())->OwnedEmbeddedContentView();
+    if (embedded_content_view && embedded_content_view->IsLocalFrameView()) {
+      LocalFrameView* frame_view = ToLocalFrameView(embedded_content_view);
+      // TODO(ajuma): Can a frame change from cross-origin to non-cross-origin
+      // during its lifetime?
+      if (frame_view->GetFrame().IsCrossOriginSubframe()) {
+        int dom_node_id = DOMNodeIds::IdForNode(GetNode());
+        CompositorElementId compositor_element_id = CompositorElementIdFromUniqueObjectId(
+            dom_node_id, CompositorElementIdNamespace::kFrame);
+        frame_view->GetFrame().GetPage()->GetChromeClient().ClearFrameRect(
+            compositor_element_id);
+      }
+    }
+  }
+
   if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache()) {
     cache->ChildrenChanged(this->Parent());
     cache->Remove(this);

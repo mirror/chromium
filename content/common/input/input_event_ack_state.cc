@@ -22,6 +22,8 @@ const char* InputEventAckStateToString(InputEventAckState ack_state) {
       return "NO_CONSUMER_EXISTS";
     case INPUT_EVENT_ACK_STATE_IGNORED:
       return "IGNORED";
+    case INPUT_EVENT_ACK_STATE_SET_DROP_IF_CROSS_ORIGIN:
+      return "SET_DROP_IF_CROSS_ORIGIN";
     case INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING:
       return "SET_NON_BLOCKING";
     case INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING_DUE_TO_FLING:

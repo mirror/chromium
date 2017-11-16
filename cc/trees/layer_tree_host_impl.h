@@ -211,6 +211,7 @@ class CC_EXPORT LayerTreeHostImpl
   EventListenerTypeForTouchStartOrMoveAt(
       const gfx::Point& viewport_port,
       TouchAction* out_touch_action) override;
+  bool IsRecentlyMovedFrameAt(const gfx::Point& viewport_point) override;
   std::unique_ptr<SwapPromiseMonitor> CreateLatencyInfoSwapPromiseMonitor(
       ui::LatencyInfo* latency) override;
   ScrollElasticityHelper* CreateScrollElasticityHelper() override;

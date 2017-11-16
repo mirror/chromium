@@ -825,6 +825,29 @@ void FindLayersThatNeedUpdates(LayerTreeImpl* layer_tree_impl,
                                std::vector<LayerImpl*>* visible_layer_list) {
   const TransformTree& transform_tree = property_trees->transform_tree;
   const EffectTree& effect_tree = property_trees->effect_tree;
+  const ClipTree& clip_tree = property_trees->clip_tree;
+
+  // TODO(ajuma): Move this logic to a helper.
+  layer_tree_impl->ClearOldFrameRects();
+  // fprintf(stderr, "Begin frame rect update\n");
+  for (const auto& it : layer_tree_impl->frame_rect_position_map()) {
+    int layer_id = it.second.layer_id;
+    LayerImpl* layer_impl = layer_tree_impl->LayerById(layer_id);
+    // TODO(ajuma): Turn this into a DCHECK.
+    if (!layer_impl)
+      continue;
+    // fprintf(stderr, "Local frame rect %s\n",
+    // it.second.rect.ToString().c_str());
+    gfx::Rect local_rect = it.second.rect;
+    gfx::Rect screen_space_rect = MathUtil::MapEnclosingClippedRect(
+        layer_impl->ScreenSpaceTransform(), local_rect);
+    const ClipNode* clip_node = clip_tree.Node(layer_impl->clip_tree_index());
+    gfx::Rect combined_clip_in_screen_space = gfx::ToEnclosingRect(
+        clip_node->cached_accumulated_rect_in_screen_space);
+    gfx::Rect clipped_screen_space_rect =
+        gfx::IntersectRects(screen_space_rect, combined_clip_in_screen_space);
+    layer_tree_impl->AddFrameRect(it.first, clipped_screen_space_rect);
+  }
 
   for (auto* layer_impl : *layer_tree_impl) {
     DCHECK(layer_impl);
