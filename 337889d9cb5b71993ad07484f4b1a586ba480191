@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5faa4f4a_8cc72066",
+        "filename": "third_party/WebKit/Source/core/dom/SecureContextMode.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-16T22:19:00Z",
+      "side": 1,
+      "message": "I\u0027d prefer adding this to Execution.h.\n\nAlso use an enum class.",
+      "revId": "337889d9cb5b71993ad07484f4b1a586ba480191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
