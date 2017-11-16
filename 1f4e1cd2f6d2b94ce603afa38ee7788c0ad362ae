@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "b638f1d1_81c5b3da",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-11-16T08:22:17Z",
+      "side": 1,
+      "message": "Yes that is the one. As you probably noticed, it is upreved *very* infrequently.\n\nI would imagine it would get upreved at some point, at which time we can revert to using base::circular_deque. \n\nI will drop a comment as you suggest with a TODO, and a bug associated with that TODO so that I don\u0027t forget (I will assign the bug to myself).",
+      "parentUuid": "bccc2ee1_3680c184",
+      "range": {
+        "startLine": 10,
+        "startChar": 44,
+        "endLine": 11,
+        "endChar": 13
+      },
+      "revId": "1f4e1cd2f6d2b94ce603afa38ee7788c0ad362ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d02a35cf_cabb2836",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
