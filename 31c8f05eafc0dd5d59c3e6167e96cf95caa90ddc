@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "632b61cd_8953e4fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-16T21:24:42Z",
+      "side": 1,
+      "message": "I think longTimes vs Times uses different bucketing. I don\u0027t think it\u0027s safe to make this change to an existing histogram. If you need different bucketing you probably need to rename it.",
+      "range": {
+        "startLine": 72,
+        "startChar": 28,
+        "endLine": 72,
+        "endChar": 48
+      },
+      "revId": "31c8f05eafc0dd5d59c3e6167e96cf95caa90ddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
