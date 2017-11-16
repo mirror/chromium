@@ -50,6 +50,24 @@
       "revId": "967f023e12c53c01be41e17d8e446ae0f72643dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d021741_27908116",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-16T05:18:01Z",
+      "side": 1,
+      "message": "Chatted offline and confirmed that |content_offset| is same in DIP or in CSS. So it\u0027s fine to say that it is in CSS as well.",
+      "parentUuid": "6a0cb853_110600d2",
+      "revId": "967f023e12c53c01be41e17d8e446ae0f72643dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
