@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c77dec01_32b6e2a2",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-16T21:43:53Z",
+      "side": 1,
+      "message": "Use scoped/typed enums.\n\nenum class : uint32_t {",
+      "revId": "e4d063155a7a7bfadff3acc8abc1c5c9f9f490e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3250c1ec_21a9a5e6",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-16T21:43:53Z",
+      "side": 1,
+      "message": "Trailing whitespace. You should be able to setup you editor to automatically delete it when you save.",
+      "revId": "e4d063155a7a7bfadff3acc8abc1c5c9f9f490e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0522b51_060987e6",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-16T21:43:53Z",
+      "side": 1,
+      "message": "Why not pass the ProviderId class here?",
+      "revId": "e4d063155a7a7bfadff3acc8abc1c5c9f9f490e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
