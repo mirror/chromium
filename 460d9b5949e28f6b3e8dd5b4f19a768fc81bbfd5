@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50a91af5_f38d2f8f",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-16T20:09:13Z",
+      "side": 1,
+      "message": "I\u0027m not sure waht \"overwrapped\" means?",
+      "revId": "460d9b5949e28f6b3e8dd5b4f19a768fc81bbfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1495b6_ca947a2c",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-16T20:09:13Z",
+      "side": 1,
+      "message": "Looking at the mock, it seems like the settings and collapse buttons always occupy the same space? Can we just always lay them out that way?",
+      "revId": "460d9b5949e28f6b3e8dd5b4f19a768fc81bbfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe6f801_ffaae54c",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-16T20:09:13Z",
+      "side": 1,
+      "message": "It seems like we are putting too much awareness of the implementation of |button_bar_| in MessageCenterView. I think we might be better off just passing |progress| and |mode_| to button_bar_ so that it can handle any visibility / opacity changes.",
+      "revId": "460d9b5949e28f6b3e8dd5b4f19a768fc81bbfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
