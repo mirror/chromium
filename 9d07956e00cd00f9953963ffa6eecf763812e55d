@@ -16,6 +16,24 @@
       "revId": "9d07956e00cd00f9953963ffa6eecf763812e55d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fef61fa_e9e7073c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-11-16T00:23:20Z",
+      "side": 1,
+      "message": "It\u0027s wrong but doesn\u0027t have an effect, might be clearer to pass a \"/* unused */ NGBoxStruct()\" or place this with:\n   NGLogicalOffset logical_offset \u003d LogicalFromBfcOffsets(\n        fragment, child_bfc_offset.value(), ContainerBfcOffset(),\n        container_builder_.Size().inline_size, ConstraintSpace().Direction());",
+      "parentUuid": "7f234752_9c411ca8",
+      "revId": "9d07956e00cd00f9953963ffa6eecf763812e55d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
