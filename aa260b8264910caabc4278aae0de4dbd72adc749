@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2cb034a_8978718e",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-16T23:33:55Z",
+      "side": 1,
+      "message": "nit: This works, but it seems a bit confusing to overload this one field to mean both \"properties received\" and \"GUID is in the list\". Do you think it would be better to have two separate fields?",
+      "range": {
+        "startLine": 543,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 41
+      },
+      "revId": "aa260b8264910caabc4278aae0de4dbd72adc749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "599dfad6_326023c4",
+        "filename": "chrome/browser/resources/settings/internet_page/network_summary.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-16T23:33:55Z",
+      "side": 1,
+      "message": "nit: Since we are moving the other listeners to internet-page, should this be moved as well for consistency?",
+      "range": {
+        "startLine": 125,
+        "startChar": 27,
+        "endLine": 125,
+        "endChar": 51
+      },
+      "revId": "aa260b8264910caabc4278aae0de4dbd72adc749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
