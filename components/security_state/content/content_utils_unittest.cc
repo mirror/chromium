@@ -578,7 +578,8 @@ TEST(SecurityStateContentUtilsTest, SubjectAltNameWarning) {
 // Tests that an explanation using the shorter constructor sets the correct
 // default values for other fields.
 TEST(SecurityStateContentUtilsTest, DefaultSecurityStyleExplanation) {
-  content::SecurityStyleExplanation explanation("summary", "description");
+  content::SecurityStyleExplanation explanation("title", "summary",
+                                                "description");
 
   EXPECT_EQ(false, !!explanation.certificate);
   EXPECT_EQ(blink::WebMixedContentContextType::kNotMixedContent,
