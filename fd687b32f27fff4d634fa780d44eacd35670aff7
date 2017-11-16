@@ -22,6 +22,30 @@
       "revId": "fd687b32f27fff4d634fa780d44eacd35670aff7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2de6fd0_20764139",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 2132,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-16T20:08:39Z",
+      "side": 0,
+      "message": "the  tabIndex \u003d\u003d -1 is not considered by blink.\nI can make the change either way,\nI don\u0027t know about aria-hidden for sure but I think it is handled.",
+      "parentUuid": "63c40ea7_eed2c455",
+      "range": {
+        "startLine": 2132,
+        "startChar": 8,
+        "endLine": 2132,
+        "endChar": 29
+      },
+      "revId": "fd687b32f27fff4d634fa780d44eacd35670aff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

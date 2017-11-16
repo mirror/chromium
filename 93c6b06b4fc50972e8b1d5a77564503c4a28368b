@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "482cf283_73199f0c",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-16T20:08:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c42637e_9757ceb0",
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c479e08f_b620fc02",
         "filename": "components/autofill/core/browser/credit_card_field.cc",
         "patchSetId": 19
@@ -39,6 +57,30 @@
       "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be2e853_6470d637",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-16T20:08:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c479e08f_b620fc02",
+      "range": {
+        "startLine": 95,
+        "startChar": 25,
+        "endLine": 95,
+        "endChar": 30
+      },
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "68f6797f_ae35ac41",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-16T20:08:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "033291c5_ac9808b6",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 20
+      },
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f91c503_9796df79",
         "filename": "components/autofill/core/browser/credit_card_field.cc",
         "patchSetId": 19
@@ -79,6 +145,24 @@
       "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c480320_fa1fd08e",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-16T20:08:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f91c503_9796df79",
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "f1d60cb3_ef81d205",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-16T20:08:39Z",
+      "side": 1,
+      "message": "There is a comment on the definition of the cursor.\nDone for merging ifs",
+      "parentUuid": "a40dd631_8ac504dc",
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "229e0f15_e9285df6",
         "filename": "components/autofill/core/browser/credit_card_field.cc",
         "patchSetId": 19
@@ -110,6 +212,30 @@
       "writtenOn": "2017-11-16T16:52:03Z",
       "side": 1,
       "message": "should we update this comment?",
+      "range": {
+        "startLine": 144,
+        "startChar": 46,
+        "endLine": 146,
+        "endChar": 60
+      },
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f2e311_9bc99dc9",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-16T20:08:39Z",
+      "side": 1,
+      "message": "No. The comment is actually correct now (was not).",
+      "parentUuid": "229e0f15_e9285df6",
       "range": {
         "startLine": 144,
         "startChar": 46,
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "c0172e1d_8a8484c5",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-16T20:08:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0021ba7d_4fd4e315",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 51
+      },
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3f03233_28222c40",
         "filename": "components/autofill/core/browser/credit_card_field.cc",
         "patchSetId": 19
@@ -159,6 +309,24 @@
       "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1493eac0_244cd3a9",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-16T20:08:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3f03233_28222c40",
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +364,24 @@
     },
     {
       "key": {
+        "uuid": "c858cdd5_02fab5a8",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-16T20:08:39Z",
+      "side": 1,
+      "message": "The rational here is that date are likely successive fields (may not be the case).\nWe could skip unfocusable fields here too, but it is far more difficult.",
+      "parentUuid": "2a3cda47_7cc58715",
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e3073de_e5b35360",
         "filename": "components/autofill/core/browser/credit_card_field_unittest.cc",
         "patchSetId": 19
@@ -219,6 +405,30 @@
     },
     {
       "key": {
+        "uuid": "917180ea_083bf566",
+        "filename": "components/autofill/core/browser/credit_card_field_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-16T20:08:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e3073de_e5b35360",
+      "range": {
+        "startLine": 155,
+        "startChar": 33,
+        "endLine": 155,
+        "endChar": 39
+      },
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "685f3a20_d52c7242",
         "filename": "components/autofill/core/browser/credit_card_field_unittest.cc",
         "patchSetId": 19
@@ -230,6 +440,24 @@
       "writtenOn": "2017-11-16T16:52:03Z",
       "side": 1,
       "message": "can we use base::ContainsKey(field_candidates_map_, ASCIIToUTF16(\"number1\"));",
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a017186_f3ad5c95",
+        "filename": "components/autofill/core/browser/credit_card_field_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-16T20:08:39Z",
+      "side": 1,
+      "message": "Yes, but for consistency with the rest of the file I would prefer to keep it that way in this CL.",
+      "parentUuid": "685f3a20_d52c7242",
       "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -253,6 +481,24 @@
     },
     {
       "key": {
+        "uuid": "2b83087f_8ed216d2",
+        "filename": "components/autofill/core/common/autofill_regex_constants.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-16T20:08:39Z",
+      "side": 1,
+      "message": "I will try to make a separate CL.",
+      "parentUuid": "70df1a73_e11ab9d4",
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1b75dc0_d0c75939",
         "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
         "patchSetId": 19
@@ -264,6 +510,24 @@
       "writtenOn": "2017-11-16T17:09:14Z",
       "side": 1,
       "message": "does this pick up aria-hidden?",
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd19dc51_52264f6f",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 2132,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-16T20:08:39Z",
+      "side": 1,
+      "message": "I have to check that",
+      "parentUuid": "f1b75dc0_d0c75939",
       "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
