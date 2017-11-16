@@ -216,6 +216,20 @@ void BaseArena::MakeConsistentForMutator() {
   DCHECK(!first_unswept_page_);
 }
 
+void BaseArena::UnmarkAll() {
+  //DCHECK(!first_page_);
+
+  // Drop marks from marked objects and rebuild free lists in preparation for
+  // resuming the executions of mutators.
+  BasePage* previous_page = nullptr;
+  for (BasePage *page = first_page_; page;
+       previous_page = page, page = page->Next()) {
+    page->UnmarkAll();
+    page->MarkAsSwept();
+    page->InvalidateObjectStartBitmap();
+  }
+}
+
 size_t BaseArena::ObjectPayloadSizeForTesting() {
 #if DCHECK_IS_ON()
   DCHECK(IsConsistentForGC());
@@ -273,6 +287,7 @@ Address BaseArena::LazySweep(size_t allocation_size, size_t gc_info_index) {
 
 void BaseArena::SweepUnsweptPage() {
   BasePage* page = first_unswept_page_;
+  CHECK(page->IsValid());
   if (page->IsEmpty()) {
     page->Unlink(&first_unswept_page_);
     page->RemoveFromHeap();
@@ -661,8 +676,9 @@ void NormalPageArena::AllocatePage() {
   // to the free list.
   ASAN_UNPOISON_MEMORY_REGION(page->Payload(), page->PayloadSize());
   Address address = page->Payload();
-  for (size_t i = 0; i < page->PayloadSize(); i++)
+  for (size_t i = 0; i < page->PayloadSize(); i++) {
     address[i] = kReuseAllowedZapValue;
+  }
   ASAN_POISON_MEMORY_REGION(page->Payload(), page->PayloadSize());
 #endif
   AddToFreeList(page->Payload(), page->PayloadSize());
@@ -1189,8 +1205,11 @@ void NEVER_INLINE FreeList::ZapFreedMemory(Address address, size_t size) {
 void NEVER_INLINE FreeList::CheckFreedMemoryIsZapped(Address address,
                                                      size_t size) {
   for (size_t i = 0; i < size; i++) {
-    DCHECK(address[i] == kReuseAllowedZapValue ||
-           address[i] == kReuseForbiddenZapValue);
+    if (address[i] != kReuseAllowedZapValue && address[i] != kReuseForbiddenZapValue) {
+      fprintf(stderr, "%x\n", address[i]);
+    }
+    //DCHECK(address[i] == kReuseAllowedZapValue ||
+    //       address[i] == kReuseForbiddenZapValue);
   }
 }
 #endif
@@ -1537,6 +1556,25 @@ void NormalPage::MakeConsistentForMutator() {
     normal_arena->AddToFreeList(start_of_gap, PayloadEnd() - start_of_gap);
 }
 
+void NormalPage::UnmarkAll() {
+  for (Address header_address = Payload(); header_address < PayloadEnd();) {
+    HeapObjectHeader* header =
+        reinterpret_cast<HeapObjectHeader*>(header_address);
+    size_t size = header->size();
+    DCHECK_LT(size, BlinkPagePayloadSize());
+    CHECK(header->IsValidOrZapped());
+    if (header->IsPromptlyFreed() || header->IsFree()) { // MEMO: is free possible?
+      header_address += size;
+      continue;
+    }
+    CHECK(size > 0);
+    if (header->IsMarked())
+      header->Unmark();
+    header_address += size;
+    DCHECK_LE(header_address, PayloadEnd());
+  }
+}
+
 #if defined(ADDRESS_SANITIZER)
 void NormalPage::PoisonUnmarkedObjects() {
   for (Address header_address = Payload(); header_address < PayloadEnd();) {
@@ -1564,6 +1602,9 @@ void NormalPage::PopulateObjectStartBitMap() {
         reinterpret_cast<HeapObjectHeader*>(header_address);
     // HeapObjectHeaders can be either valid or a FreeListEntry with a zapped
     // magic value.
+    if (!header->IsValidOrZapped()) {
+      LOG(ERROR) << Arena()->ArenaIndex();
+    }
     DCHECK(header->IsValidOrZapped());
     size_t object_offset = header_address - start;
     DCHECK(!(object_offset & kAllocationMask));
@@ -1762,6 +1803,12 @@ void LargeObjectPage::Sweep() {
 }
 
 void LargeObjectPage::MakeConsistentForMutator() {
+  HeapObjectHeader* header = GetHeapObjectHeader();
+  if (header->IsMarked())
+    header->Unmark();
+}
+
+void LargeObjectPage::UnmarkAll() {
   HeapObjectHeader* header = GetHeapObjectHeader();
   if (header->IsMarked())
     header->Unmark();

@@ -18,7 +18,7 @@ void HeapAllocator::BackingFree(void* address) {
   // Don't promptly free large objects because their page is never reused.
   // Don't free backings allocated on other threads.
   BasePage* page = PageFromObject(address);
-  if (page->IsLargeObjectPage() || page->Arena()->GetThreadState() != state)
+  //if (page->IsLargeObjectPage() || page->Arena()->GetThreadState() != state)
     return;
 
   HeapObjectHeader* header = HeapObjectHeader::FromPayload(address);

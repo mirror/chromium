@@ -239,6 +239,8 @@ class PLATFORM_EXPORT ThreadHeap {
     // threads.
     if (!ThreadState::Current())
       return true;
+    if (ThreadState::Current()->IsMarkingInProgress())
+      return true;
     DCHECK(&ThreadState::Current()->Heap() ==
            &PageFromObject(object)->Arena()->GetThreadState()->Heap());
     return ObjectAliveTrait<T>::IsHeapObjectAlive(object);
@@ -290,6 +292,8 @@ class PLATFORM_EXPORT ThreadHeap {
     // Page has been swept and it is still alive.
     if (page->HasBeenSwept())
       return false;
+    if (!page->Arena()->GetThreadState()->IsSweepingInProgress())
+      return false;
     DCHECK(page->Arena()->GetThreadState()->IsSweepingInProgress());
 
     // If marked and alive, the object hasn't yet been swept..and won't
@@ -326,6 +330,7 @@ class PLATFORM_EXPORT ThreadHeap {
   // the callback with the visitor and the object pointer.  Returns
   // false when there is nothing more to do.
   bool PopAndInvokePostMarkingCallback(Visitor*);
+  void InvokeEphemeronDoneCallback(Visitor*);
 
   // Remove an item from the weak callback work list and call the callback
   // with the visitor and the closure pointer.  Returns false when there is
@@ -492,6 +497,7 @@ class PLATFORM_EXPORT ThreadHeap {
   // free lists. This is called after taking a snapshot and before resuming
   // the executions of mutators.
   void MakeConsistentForMutator();
+  void UnmarkAll();
 
   void Compact();
 
@@ -544,6 +550,7 @@ class PLATFORM_EXPORT ThreadHeap {
   std::unique_ptr<CallbackStack> post_marking_callback_stack_;
   std::unique_ptr<CallbackStack> weak_callback_stack_;
   std::unique_ptr<CallbackStack> ephemeron_stack_;
+  std::unique_ptr<CallbackStack> ephemeron_done_stack_;
   StackFrameDepth stack_frame_depth_;
 
   std::unique_ptr<HeapCompact> compaction_;

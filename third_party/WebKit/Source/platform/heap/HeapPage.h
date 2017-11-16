@@ -406,6 +406,7 @@ class BasePage {
   virtual void RemoveFromHeap() = 0;
   virtual void Sweep() = 0;
   virtual void MakeConsistentForMutator() = 0;
+  virtual void UnmarkAll() = 0;
   virtual void InvalidateObjectStartBitmap() = 0;
 
 #if defined(ADDRESS_SANITIZER)
@@ -441,7 +442,7 @@ class BasePage {
   virtual bool Contains(Address) = 0;
 #endif
   virtual size_t size() = 0;
-  virtual bool IsLargeObjectPage() { return false; }
+  virtual bool IsLargeObjectPage() const { return false; }
 
   Address GetAddress() { return reinterpret_cast<Address>(this); }
   PageMemory* Storage() const { return storage_; }
@@ -456,7 +457,7 @@ class BasePage {
   }
 
   void MarkAsUnswept() {
-    DCHECK(swept_);
+    //DCHECK(swept_);
     swept_ = false;
   }
 
@@ -495,6 +496,7 @@ class NormalPage final : public BasePage {
   void RemoveFromHeap() override;
   void Sweep() override;
   void MakeConsistentForMutator() override;
+  void UnmarkAll() override;
   void InvalidateObjectStartBitmap() override {
     object_start_bit_map_computed_ = false;
   }
@@ -549,9 +551,9 @@ class NormalPage final : public BasePage {
   };
 
   void SweepAndCompact(CompactionContext&);
+  PLATFORM_EXPORT HeapObjectHeader* FindHeaderFromAddress(Address);
 
  private:
-  HeapObjectHeader* FindHeaderFromAddress(Address);
   void PopulateObjectStartBitMap();
 
   bool object_start_bit_map_computed_;
@@ -586,6 +588,7 @@ class LargeObjectPage final : public BasePage {
   void RemoveFromHeap() override;
   void Sweep() override;
   void MakeConsistentForMutator() override;
+  void UnmarkAll() override;
   void InvalidateObjectStartBitmap() override {}
 #if defined(ADDRESS_SANITIZER)
   void PoisonUnmarkedObjects() override;
@@ -618,7 +621,7 @@ class LargeObjectPage final : public BasePage {
         kAllocationGranularity;
     return sizeof(LargeObjectPage) + padding_size;
   }
-  bool IsLargeObjectPage() override { return true; }
+  bool IsLargeObjectPage() const override { return true; }
 
   HeapObjectHeader* GetHeapObjectHeader() {
     Address header_address = GetAddress() + PageHeaderSize();
@@ -743,6 +746,7 @@ class PLATFORM_EXPORT BaseArena {
   virtual void ClearFreeLists() {}
   void MakeConsistentForGC();
   void MakeConsistentForMutator();
+  void UnmarkAll();
 #if DCHECK_IS_ON()
   virtual bool IsConsistentForGC() = 0;
 #endif

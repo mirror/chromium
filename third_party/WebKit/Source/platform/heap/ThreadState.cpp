@@ -391,7 +391,7 @@ bool ThreadState::ShouldSchedulePageNavigationGC(
                           1.5 * (1 - estimated_removal_ratio));
 }
 
-bool ThreadState::ShouldForceConservativeGC() {
+bool ThreadState::ShouldForceConservativeGC() {return false;
   // TODO(haraken): 400% is too large. Lower the heap growing factor.
   return JudgeGCThreshold(kDefaultAllocatedObjectSizeThreshold,
                           32 * 1024 * 1024, 5.0);
@@ -547,6 +547,7 @@ void ThreadState::ScheduleGCIfNeeded() {
 #if PRINT_HEAP_STATS
     DataLogF("Scheduled IncrementalMarking\n");
 #endif
+    CompleteSweep();
     ScheduleIncrementalMarkingStart();
   }
 }
@@ -730,12 +731,11 @@ void ThreadState::SetGCState(GCState gc_state) {
       break;
     case kIncrementalMarkingStepScheduled:
       DCHECK(CheckThread());
-      VERIFY_STATE_TRANSITION(gc_state_ == kIncrementalMarkingStartScheduled ||
-                              gc_state_ == kIncrementalMarkingStepScheduled);
+      VERIFY_STATE_TRANSITION(gc_state_ == kGCRunning);
       break;
     case kIncrementalMarkingFinalizeScheduled:
       DCHECK(CheckThread());
-      VERIFY_STATE_TRANSITION(gc_state_ == kIncrementalMarkingStepScheduled);
+      VERIFY_STATE_TRANSITION(gc_state_ == kGCRunning);
       break;
     case kIdleGCScheduled:
     case kPreciseGCScheduled:
@@ -817,6 +817,7 @@ void ThreadState::RunScheduledGC(BlinkGC::StackState stack_state) {
 }
 
 void ThreadState::PreSweep(BlinkGC::GCType gc_type) {
+  LOG(ERROR) << "ThreadState::PreSweep";
   DCHECK(IsInGC());
   DCHECK(CheckThread());
   Heap().PrepareForSweep();
@@ -937,6 +938,7 @@ BlinkGCObserver::~BlinkGCObserver() {
 }
 
 void ThreadState::PostSweep() {
+  LOG(ERROR) << "ThreadState::PostSweep";
   DCHECK(CheckThread());
   ThreadHeap::ReportMemoryUsageForTracing();
 
@@ -1215,28 +1217,68 @@ void ThreadState::InvokePreFinalizers() {
 }
 
 void ThreadState::IncrementalMarkingStart() {
-  DataLogF("IncrementalMarkingStart\n");
+  LOG(ERROR) << "ThreadState::IncrementalMarkingStart";
+  CompleteSweep();
+  GCForbiddenScope gc_forbidden_scope(this);
+  MarkPhasePrologue(BlinkGC::kNoHeapPointersOnStack, BlinkGC::kGCWithoutSweep, BlinkGC::kIdleGC);
+  {
+    CrossThreadPersistentRegion::LockScope persistent_lock(
+      ProcessHeap::GetCrossThreadPersistentRegion());
+    MarkPhaseVisitRoots();
+  }
   Heap().EnableIncrementalMarkingBarrier();
   ScheduleIncrementalMarkingStep();
+  DataLogF("IncrementalMarkingStart END\n");
 }
 
 void ThreadState::IncrementalMarkingStep() {
-  DataLogF("IncrementalMarkingStep\n");
-  ScheduleIncrementalMarkingFinalize();
+  LOG(ERROR) << "ThreadState::IncrementalMarkingStep";
+  GCForbiddenScope gc_forbidden_scope(this);
+  SetGCState(kGCRunning);
+  bool complete = MarkPhaseAdvanceMarking(MonotonicallyIncreasingTime() + 0.00001);
+  MarkPhaseAbort();
+  return;
+  if (complete)
+    IncrementalMarkingFinalize();
+  else
+    ScheduleIncrementalMarkingStep();
+  LOG(ERROR) << "ThreadState::IncrementalMarkingStep END";
 }
 
 void ThreadState::IncrementalMarkingFinalize() {
-  DataLogF("IncrementalMarkingFinalize\n");
+  LOG(ERROR) << "ThreadState::IncrementalMarkingFinalize";
+  {
+    CrossThreadPersistentRegion::LockScope persistent_lock(
+      ProcessHeap::GetCrossThreadPersistentRegion());
+    MarkPhaseVisitRoots();
+  }
   Heap().DisableIncrementalMarkingBarrier();
-  SetGCState(kNoGCScheduled);
+  MarkPhaseEpilogue();
+  PreSweep(BlinkGC::kGCWithoutSweep);
+  LOG(ERROR) << "ThreadState::IncrementalMarkingFinalize END";
+}
+
+void ThreadState::MarkPhaseAbort() {
+  LOG(ERROR) << "ThreadState::MarkPhaseAbort";
+  Heap().UnmarkAll();
+  Heap().InvokeEphemeronDoneCallback(current_gc_data_.visitor.get());
+  Heap().DisableIncrementalMarkingBarrier();
+  Heap().DecommitCallbackStacks();
+  current_gc_data_.visitor.reset();
+  gc_state_ = kNoGCScheduled;
 }
 
 void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
                                  BlinkGC::GCType gc_type,
                                  BlinkGC::GCReason reason) {
+  LOG(ERROR) << "ThreadState::CollectGarbage " << GcReasonString(reason) << " lazy sweep: " << (gc_type == BlinkGC::kGCWithoutSweep);
   // Nested collectGarbage() invocations aren't supported.
   CHECK(!IsGCForbidden());
   CompleteSweep();
+
+  if (current_gc_data_.visitor) {
+    MarkPhaseAbort();
+  }
 
   RUNTIME_CALL_TIMER_SCOPE_IF_ISOLATE_EXISTS(
       GetIsolate(), RuntimeCallStats::CounterId::kCollectGarbage);
@@ -1272,6 +1314,7 @@ void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
 #endif
 
   PreSweep(gc_type);
+  LOG(ERROR) << "ThreadState::CollectGarbage END";
 }
 
 void ThreadState::MarkPhasePrologue(BlinkGC::StackState stack_state,
@@ -1360,6 +1403,8 @@ void ThreadState::MarkPhaseEpilogue() {
   Heap().PostMarkingProcessing(current_gc_data_.visitor.get());
   Heap().WeakProcessing(current_gc_data_.visitor.get());
   Heap().DecommitCallbackStacks();
+
+  current_gc_data_.visitor.reset();
 
   Heap().HeapStats().SetEstimatedMarkingTimePerByte(
       current_gc_data_.marked_object_size
