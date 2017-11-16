@@ -28,25 +28,6 @@
 
 namespace {
 
-content::mojom::NetworkContextParamsPtr CreateNetworkContextParams() {
-  // TODO(mmenke): Set up parameters here (in memory cookie store, etc).
-  content::mojom::NetworkContextParamsPtr network_context_params =
-      CreateDefaultNetworkContextParams();
-
-  network_context_params->context_name = std::string("system");
-
-  network_context_params->http_cache_enabled = false;
-
-  // These are needed for PAC scripts that use file or data URLs (Or FTP URLs?).
-  network_context_params->enable_data_url_support = true;
-  network_context_params->enable_file_url_support = true;
-#if !BUILDFLAG(DISABLE_FTP_SUPPORT)
-  network_context_params->enable_ftp_url_support = true;
-#endif
-
-  return network_context_params;
-}
-
 // Called on IOThread to disable QUIC for HttpNetworkSessions not using the
 // network service. Note that re-enabling QUIC dynamically is not supported for
 // simpliciy and requires a browser restart.
@@ -102,11 +83,18 @@ void SystemNetworkContextManager::SetUp(
     content::mojom::NetworkContextParamsPtr* network_context_params,
     bool* is_quic_allowed) {
   *network_context_request = mojo::MakeRequest(&io_thread_network_context_);
-  *network_context_params = CreateNetworkContextParams();
+  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+    *network_context_params = CreateNetworkContextParams();
+  } else {
+    // Just use defaults if the network service is enabled, since
+    // CreateNetworkContextParams() can only be called once.
+    *network_context_params = CreateDefaultNetworkContextParams();
+  }
   *is_quic_allowed = is_quic_allowed_;
 }
 
-SystemNetworkContextManager::SystemNetworkContextManager() {
+SystemNetworkContextManager::SystemNetworkContextManager()
+    : proxy_config_monitor_(nullptr /* profile */) {
   const base::Value* value =
       g_browser_process->policy_service()
           ->GetPolicies(policy::PolicyNamespace(policy::POLICY_DOMAIN_CHROME,
@@ -144,4 +132,30 @@ void SystemNetworkContextManager::DisableQuic() {
 
 void SystemNetworkContextManager::FlushNetworkInterfaceForTesting() {
   network_service_network_context_.FlushForTesting();
+}
+
+void SystemNetworkContextManager::FlushProxyConfigMonitorForTesting() {
+  proxy_config_monitor_.FlushForTesting();
+}
+
+content::mojom::NetworkContextParamsPtr
+SystemNetworkContextManager::CreateNetworkContextParams() {
+  // TODO(mmenke): Set up parameters here (in memory cookie store, etc).
+  content::mojom::NetworkContextParamsPtr network_context_params =
+      CreateDefaultNetworkContextParams();
+
+  network_context_params->context_name = std::string("system");
+
+  network_context_params->http_cache_enabled = false;
+
+  // These are needed for PAC scripts that use file or data URLs (Or FTP URLs?).
+  network_context_params->enable_data_url_support = true;
+  network_context_params->enable_file_url_support = true;
+#if !BUILDFLAG(DISABLE_FTP_SUPPORT)
+  network_context_params->enable_ftp_url_support = true;
+#endif
+
+  proxy_config_monitor_.AddToNetworkContextParams(network_context_params.get());
+
+  return network_context_params;
 }
