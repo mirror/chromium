@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2740725d_2d648134",
+        "filename": "storage/common/data_element.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T19:14:14Z",
+      "side": 1,
+      "message": "as more and more types are added that are only valid for particular users of DataElement I find it harder and harder to figure out what types actually are valid in which context. I think ultimately we\u0027ll probably end up splitting DataElement in different classes for its different users, but for now could we at least try to annotate all the various types with which types are valid in which situations?\nI\u0027m aware of at least 4 different places a different subset of types are valid:\n- over IPC for the old Blob registration codepath\n- in memory/at rest for the Blob system\n- for loading stuff with network service\n- for loading stuff without network service\n\nAnd who knows, maybe there are others? But with every new type that gets added for only one of the users it feels like we\u0027re moving further and further away from having any benefit of sharing one class.\n\n(also specifically, replacing TYPE_FILE with TYPE_RAW_FILE might make sense in one of these use cases, but certainly doesn\u0027t make sense for the in-memory use case of the Blob system)",
+      "revId": "f083632df45284ec41228aeb2579e056396e35a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
