@@ -411,18 +411,6 @@ AsyncMatch V4LocalDatabaseManager::CheckCsdWhitelistUrl(const GURL& url,
   return HandleWhitelistCheck(std::move(check));
 }
 
-bool V4LocalDatabaseManager::MatchCsdWhitelistUrl(const GURL& url) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  StoresToCheck stores_to_check({GetUrlCsdWhitelistId()});
-  if (!AreAllStoresAvailableNow(stores_to_check)) {
-    // Fail open: Whitelist everything. See CheckCsdWhitelistUrl.
-    return true;
-  }
-
-  return HandleUrlSynchronously(url, stores_to_check);
-}
-
 bool V4LocalDatabaseManager::MatchDownloadWhitelistString(
     const std::string& str) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
