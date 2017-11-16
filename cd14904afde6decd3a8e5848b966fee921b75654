@@ -22,6 +22,30 @@
       "revId": "cd14904afde6decd3a8e5848b966fee921b75654",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed4959a_16afa74f",
+        "filename": "content/browser/webui/web_ui_data_source_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-11-16T23:40:42Z",
+      "side": 1,
+      "message": "(unless, of course, the caller themselves duplicated something while creating the argument to pass to UseGzip())",
+      "parentUuid": "75200482_2df12738",
+      "range": {
+        "startLine": 161,
+        "startChar": 18,
+        "endLine": 161,
+        "endChar": 24
+      },
+      "revId": "cd14904afde6decd3a8e5848b966fee921b75654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
