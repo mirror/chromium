@@ -62,6 +62,29 @@
       "revId": "bf40ed0d70726572eef16c177f2cb13698c28148",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c68ecb_ccd7a995",
+        "filename": "testing/libfuzzer/fuzzers/v8_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115961
+      },
+      "writtenOn": "2017-11-16T20:16:30Z",
+      "side": 1,
+      "message": "MutexLocker instead?",
+      "range": {
+        "startLine": 99,
+        "startChar": 11,
+        "endLine": 99,
+        "endChar": 15
+      },
+      "revId": "bf40ed0d70726572eef16c177f2cb13698c28148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
