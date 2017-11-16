@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5950dc56_f1dcd27c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarContainer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-16T22:40:59Z",
+      "side": 1,
+      "message": "nit: short circuit instead?",
+      "range": {
+        "startLine": 131,
+        "startChar": 12,
+        "endLine": 131,
+        "endChar": 29
+      },
+      "revId": "477392839228fba5bceb72ebd54a0f8cf30ce8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44c8b624_7dc79197",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/PictureInPictureController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-16T22:40:59Z",
+      "side": 1,
+      "message": "Do any descriptions in metrics need to change around this?",
+      "range": {
+        "startLine": 311,
+        "startChar": 43,
+        "endLine": 311,
+        "endChar": 78
+      },
+      "revId": "477392839228fba5bceb72ebd54a0f8cf30ce8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
