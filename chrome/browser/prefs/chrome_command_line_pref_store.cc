@@ -21,12 +21,14 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "components/browser_sync/browser_sync_switches.h"
+#include "components/content_settings/core/common/pref_names.h"  // ???
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_pref_names.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_switches.h"
 #include "components/proxy_config/proxy_config_dictionary.h"
 #include "components/proxy_config/proxy_config_pref_names.h"
 #include "components/ssl_config/ssl_config_prefs.h"
 #include "components/ssl_config/ssl_config_switches.h"
+
 #include "components/sync/base/pref_names.h"
 #include "content/public/common/content_switches.h"
 #include "ui/base/ui_base_switches.h"
@@ -48,6 +50,8 @@ const CommandLinePrefStore::SwitchToPreferenceMapEntry
         {switches::kAuthAndroidNegotiateAccountType,
          prefs::kAuthAndroidNegotiateAccountType},
 #endif
+        {switches::kUnsafelyTreatInsecureOriginAsSecure,
+         prefs::kInsecurelyTreatInsecureOriginAsSecure},
 };
 
 const CommandLinePrefStore::SwitchToPreferenceMapEntry

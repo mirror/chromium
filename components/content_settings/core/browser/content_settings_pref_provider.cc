@@ -84,6 +84,10 @@ void PrefProvider::RegisterProfilePrefs(
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
 #endif  // !defined(OS_ANDROID)
 #endif  // !defined(OS_IOS)
+
+  // ??????
+  registry->RegisterStringPref(prefs::kInsecurelyTreatInsecureOriginAsSecure,
+                               "");
 }
 
 PrefProvider::PrefProvider(PrefService* prefs,

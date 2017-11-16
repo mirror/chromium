@@ -10605,6 +10605,20 @@
       If the policy is not configured, the user will be able to change this setting.
       '''
     },
+    {
+      'name': 'UnsafelyTreatInsecureOriginsAsSecure',
+      'type': 'main',
+      'schema': { 'type': 'string'},
+      'supported_on': ['chrome.*:64-'],
+      'features': { },
+      'example_value': '',
+      'id': 99999, # TODO
+      'caption': '''TODO''',
+      'tags': ['system-security'],
+      'desc': '''
+        Same as --unsafely-treat-insecure-origins-as-secure. Also, TODO.
+        '''
+    },
   ],
   'messages': {
     # Messages that are not associated to any policies.

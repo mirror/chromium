@@ -18,6 +18,10 @@ const char kContentSettingsVersion[] = "profile.content_settings.pref_version";
 const char kContentSettingsWindowLastTabIndex[] =
     "content_settings_window.last_tab_index";
 
+// ... TODO
+const char kInsecurelyTreatInsecureOriginAsSecure[] =
+    "insecurely_treat_origin_as_secure";
+
 // Preferences that are exclusively used to store managed values for default
 // content settings.
 const char kManagedDefaultCookiesSetting[] =
