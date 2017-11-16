@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae3251a3_99233c42",
+        "filename": "third_party/WebKit/Source/core/html/forms/FormController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-11-16T23:44:52Z",
+      "side": 0,
+      "message": "Done, but I also had to set the next/prev pointers to be null in RemoveControl.",
+      "parentUuid": "742a433d_def31069",
+      "range": {
+        "startLine": 410,
+        "startChar": 9,
+        "endLine": 410,
+        "endChar": 15
+      },
+      "revId": "47be7de585bb807028571c4bc9d2507d853e58bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e15d18e_1e913870",
         "filename": "third_party/WebKit/Source/core/html/forms/FormController.cpp",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "47be7de585bb807028571c4bc9d2507d853e58bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b3243b_cd61acd5",
+        "filename": "third_party/WebKit/Source/core/html/forms/FormController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-11-16T23:44:52Z",
+      "side": 0,
+      "message": "There\u0027s a check done inside DoublyLinkedList::Remove that should cover this.",
+      "parentUuid": "6e15d18e_1e913870",
+      "range": {
+        "startLine": 415,
+        "startChar": 2,
+        "endLine": 415,
+        "endChar": 7
+      },
+      "revId": "47be7de585bb807028571c4bc9d2507d853e58bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
