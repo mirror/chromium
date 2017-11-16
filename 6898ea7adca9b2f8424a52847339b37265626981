@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3dd194d_3682cf63",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 30
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-16T21:13:14Z",
+      "side": 1,
+      "message": "support",
+      "range": {
+        "startLine": 20,
+        "startChar": 22,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "6898ea7adca9b2f8424a52847339b37265626981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610a0443_144679cf",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-16T21:13:14Z",
+      "side": 1,
+      "message": "nit: Sets",
+      "range": {
+        "startLine": 143,
+        "startChar": 5,
+        "endLine": 143,
+        "endChar": 8
+      },
+      "revId": "6898ea7adca9b2f8424a52847339b37265626981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6192fb9c_67ef2997",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-16T21:13:14Z",
+      "side": 1,
+      "message": "sent",
+      "range": {
+        "startLine": 168,
+        "startChar": 20,
+        "endLine": 168,
+        "endChar": 24
+      },
+      "revId": "6898ea7adca9b2f8424a52847339b37265626981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0980b0_7818cc45",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-16T21:13:14Z",
+      "side": 1,
+      "message": "side-comment: interesting name!",
+      "range": {
+        "startLine": 384,
+        "startChar": 17,
+        "endLine": 384,
+        "endChar": 64
+      },
+      "revId": "6898ea7adca9b2f8424a52847339b37265626981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794edc28_48ab706a",
+        "filename": "chrome/browser/net/proxy_config_monitor.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-16T21:13:14Z",
+      "side": 1,
+      "message": "weird formatting, is that clang-format does?",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 76,
+        "endChar": 19
+      },
+      "revId": "6898ea7adca9b2f8424a52847339b37265626981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5bdd0b7_16152f1f",
+        "filename": "chrome/browser/net/proxy_config_monitor.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-16T21:13:14Z",
+      "side": 1,
+      "message": "optional: I would use two different constructors or factory methods, rather than allowing nullity of |profile|.\n\nAs it can be easy for a refactored code-path to forward a null-value unintentionally, and end up causing a behavioral change rather than crash.",
+      "range": {
+        "startLine": 32,
+        "startChar": 30,
+        "endLine": 32,
+        "endChar": 46
+      },
+      "revId": "6898ea7adca9b2f8424a52847339b37265626981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

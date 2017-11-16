@@ -236,6 +236,24 @@
     },
     {
       "key": {
+        "uuid": "f39d71fa_d8bc709f",
+        "filename": "chrome/browser/net/proxy_service_factory.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-16T21:13:14Z",
+      "side": 1,
+      "message": "I haven\u0027t looked through the dependent code in detail, but at a minimum the documentation and variable names needs changing (proxy_config_service_linux makes several references to io vs ui thread).\n\nFrom a code-clarity perspective it would be nice to change the threading dependency so ProxyConfigServiceLinux takes the glib thread as a dependency and allows construction on any origin thread, although I can\u0027t reasonably ask you to do even more refactoring here...",
+      "parentUuid": "bce829ff_e56a6f79",
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43555d85_62777ecd",
         "filename": "components/proxy_config/pref_proxy_config_tracker_impl.cc",
         "patchSetId": 25
