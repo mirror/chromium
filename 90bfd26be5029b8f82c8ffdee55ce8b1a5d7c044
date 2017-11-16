@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "555cda1e_5b373211",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-16T07:22:01Z",
+      "side": 1,
+      "message": "Good idea!\n\nHmmm... I tried this but didn\u0027t work. Worklets can call eval() regardless of the \u0027unsafe-eval\u0027 directive. Looks like Worklets don\u0027t obey the directive.\n\nWorklets share the infra with Workers, so I looked into the Worker code. Looks like Workers can also call eval() regardless of the directive. IIUC, Workers don\u0027t inherit CSP from the owner Document, so I specified CSP on a response for a worker script, not for the owner Document, but it didn\u0027t work.\n\nmkwst@: Do you know how Workers handle the \u0027unsafe-eval\u0027 directive? Is there layout/WPT tests for that?",
+      "parentUuid": "2cf69973_fcc310bf",
+      "revId": "90bfd26be5029b8f82c8ffdee55ce8b1a5d7c044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7965beb9_3fbb6521",
         "filename": "third_party/WebKit/Source/core/workers/MainThreadWorkletTest.cpp",
         "patchSetId": 5
