@@ -88,7 +88,12 @@ void BindBytesProvider(std::unique_ptr<BlobBytesProvider> provider,
   mojo::MakeStrongBinding(std::move(provider), std::move(request));
 }
 
-BlobRegistryPtr& GetThreadSpecificRegistry() {
+mojom::blink::BlobRegistry* g_blob_registry_for_testing = nullptr;
+
+mojom::blink::BlobRegistry* GetThreadSpecificRegistry() {
+  if (UNLIKELY(g_blob_registry_for_testing))
+    return g_blob_registry_for_testing;
+
   DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<BlobRegistryPtr>, registry,
                                   ());
   if (!registry.IsSet()) {
@@ -98,7 +103,7 @@ BlobRegistryPtr& GetThreadSpecificRegistry() {
     Platform::Current()->GetInterfaceProvider()->GetInterface(
         MakeRequest(&*registry));
   }
-  return *registry;
+  return registry->get();
 }
 
 }  // namespace
@@ -443,6 +448,12 @@ BlobPtr BlobDataHandle::CloneBlobPtr() {
   blob->Clone(MakeRequest(&blob_clone));
   blob_info_ = blob.PassInterface();
   return blob_clone;
+}
+
+// static
+void BlobDataHandle::SetBlobRegistryForTesting(
+    mojom::blink::BlobRegistry* registry) {
+  g_blob_registry_for_testing = registry;
 }
 
 }  // namespace blink
