@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3afb10b0_50b571f4",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-16T17:58:39Z",
+      "side": 1,
+      "message": "We only care about startType for this use counter. This is the data we\u0027ll be using to convince other vendors that we can modify the measure method to take an object as the second parameter.",
+      "range": {
+        "startLine": 477,
+        "startChar": 36,
+        "endLine": 477,
+        "endChar": 63
+      },
+      "revId": "b02eefa4ae0ce80f210cf115ef5910471a2ee8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6632756d_e4575f57",
+        "filename": "third_party/WebKit/Source/core/timing/WorkerPerformance.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-16T17:58:39Z",
+      "side": 1,
+      "message": "Clean up.",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 34
+      },
+      "revId": "b02eefa4ae0ce80f210cf115ef5910471a2ee8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
