@@ -2,6 +2,80 @@
   "comments": [
     {
       "key": {
+        "uuid": "be6afd9f_9d8549db",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T20:36:56Z",
+      "side": 1,
+      "message": "Can you wrap at 72 columns?",
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d49b93eb_5d15041b",
+        "filename": "chrome/browser/clipboard/OWNERS",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T20:36:56Z",
+      "side": 1,
+      "message": "If there are others or backup OWNERS, please add them too.",
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "511d7ee8_c07f7c73",
+        "filename": "chrome/browser/clipboard/clipboard_read_permission_context.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T20:36:56Z",
+      "side": 1,
+      "message": "nit: Not needed?",
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c5bbe70_a3133a63",
+        "filename": "chrome/browser/clipboard/clipboard_read_permission_context.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T20:36:56Z",
+      "side": 1,
+      "message": "nit: can you pick between {} (like in the ctor) and \"\u003d default\" ?",
+      "range": {
+        "startLine": 16,
+        "startChar": 66,
+        "endLine": 16,
+        "endChar": 75
+      },
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5d248a3_229744d4",
         "filename": "chrome/browser/clipboard/clipboard_write_permission_context.cc",
         "patchSetId": 9
@@ -34,6 +108,80 @@
       "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "148637d4_a68b08ce",
+        "filename": "chrome/browser/clipboard/clipboard_write_permission_context.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T20:36:56Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 18,
+        "startChar": 67,
+        "endLine": 18,
+        "endChar": 78
+      },
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579118e4_be31e3d1",
+        "filename": "chrome/browser/clipboard/clipboard_write_permission_context.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T20:36:56Z",
+      "side": 1,
+      "message": "nit: New line above.",
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7dbd8cf_e11e0259",
+        "filename": "chrome/browser/permissions/permission_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T20:36:56Z",
+      "side": 1,
+      "message": "If you want to, switch this method all to std::make_unique. (base::MakeUnique is deprecated.)",
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dff81df9_92efc009",
+        "filename": "chrome/browser/permissions/permission_request.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-16T20:36:56Z",
+      "side": 1,
+      "message": "No WRITE permission here and in other places in c/b/permissions?",
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
