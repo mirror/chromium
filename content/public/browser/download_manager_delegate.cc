@@ -47,6 +47,12 @@ DownloadManagerDelegate::ApplicationClientIdForFileScanning() const {
   return std::string();
 }
 
+void DownloadManagerDelegate::CheckDownloadAllowed(
+    const ResourceRequestInfo::WebContentsGetter& web_contents_getter,
+    const GURL& url,
+    const std::string& request_method,
+    CheckDownloadAllowedCallback check_download_allowed_cb) {}
+
 DownloadManagerDelegate::~DownloadManagerDelegate() {}
 
 }  // namespace content

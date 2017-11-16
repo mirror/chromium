@@ -30,6 +30,11 @@ class ShellDownloadManagerDelegate : public DownloadManagerDelegate {
   bool ShouldOpenDownload(DownloadItem* item,
                           const DownloadOpenDelayedCallback& callback) override;
   void GetNextId(const DownloadIdCallback& callback) override;
+  void CheckDownloadAllowed(
+      const ResourceRequestInfo::WebContentsGetter& web_contents_getter,
+      const GURL& url,
+      const std::string& request_method,
+      CheckDownloadAllowedCallback check_download_allowed_cb) override;
 
   // Inhibits prompting and sets the default download path.
   void SetDownloadBehaviorForTesting(
