@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "af701e3a_4a45cfde",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-16T21:32:22Z",
+      "side": 1,
+      "message": "A short comment saying we set verbose to print out messages from AWGS would be good. I won\u0027t remember what this is for later.",
+      "parentUuid": "ce773383_d119cb16",
+      "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1a67031_af2f0fdc",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
         "patchSetId": 5
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "c1a67031_af2f0fdc",
+      "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04801670_7ddedff1",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-16T21:32:22Z",
+      "side": 1,
+      "message": "Phrasing is still funny. \"fails due to some reasons\"",
+      "parentUuid": "cd239b3d_e93bcc76",
       "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -171,6 +207,24 @@
       "side": 1,
       "message": "Document where? Here or in the spec? I can add a link to the spec here (which seems redundant) and raise an spec issue later.",
       "parentUuid": "5ad040a3_e8a97a1e",
+      "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fbd6ec9_7bab0c48",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-16T21:32:22Z",
+      "side": 1,
+      "message": "Probably best in the spec.",
+      "parentUuid": "a9e014ae_44a5a776",
       "revId": "5c0d61ad49138ec824a4459756648aea096d0e0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
