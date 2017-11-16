@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ae6fed5_0c2e7e1f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 28241,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-16T18:26:49Z",
+      "side": 1,
+      "message": "Please revise the second half of the sentence slight (\"whether...\").  This isn\u0027t clear about what \"true\" means.\n\nDid you mean instead to define your own enum in enums.xml, something like\n0\u003dheader inspected (after opening entry)\n1\u003dindex inspected (did not open entry)\n?\n\nEither revise the description, or clarify by using a descriptive enum.",
+      "revId": "c13261aa3cc80b75122041886ec76ccaac451ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
