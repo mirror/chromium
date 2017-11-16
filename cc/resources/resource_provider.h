@@ -312,6 +312,8 @@ class CC_EXPORT ResourceProvider
   bool IsBackedBySurfaceTexture(viz::ResourceId id);
 
   // Indicates if this resource wants to receive promotion hints.
+  // TODO(danakj): Wants-promotion-hint appears to be unused outside of tests,
+  // was added in https://codereview.chromium.org/2508203004.
   bool WantsPromotionHint(viz::ResourceId id);
 
   // Return the number of resources that request promotion hints.
