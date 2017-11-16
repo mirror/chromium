@@ -137,6 +137,7 @@ FrameTreeNode::FrameTreeNode(FrameTree* frame_tree,
                              blink::WebTreeScopeType scope,
                              const std::string& name,
                              const std::string& unique_name,
+                             bool is_created_by_script,
                              const base::UnguessableToken& devtools_frame_token,
                              const FrameOwnerProperties& frame_owner_properties)
     : frame_tree_(frame_tree),
@@ -158,6 +159,7 @@ FrameTreeNode::FrameTreeNode(FrameTree* frame_tree,
           false /* should enforce strict mixed content checking */,
           false /* is a potentially trustworthy unique origin */,
           false /* has received a user gesture */),
+      is_created_by_script_(is_created_by_script),
       devtools_frame_token_(devtools_frame_token),
       frame_owner_properties_(frame_owner_properties),
       loading_progress_(kLoadingProgressNotStarted),
@@ -231,6 +233,19 @@ FrameTreeNode* FrameTreeNode::AddChild(std::unique_ptr<FrameTreeNode> child,
 }
 
 void FrameTreeNode::RemoveChild(FrameTreeNode* child) {
+  // If the removed |child| was created by a script, then its history entry will
+  // never be reused - we can save some memory by removing the history entry.
+  // See also https://crbug.com/784356.
+  if (child->is_created_by_script_) {
+    NavigationEntryImpl* nav_entry = static_cast<NavigationEntryImpl*>(
+        navigator()->GetController()->GetLastCommittedEntry());
+    if (nav_entry) {
+      nav_entry->RemoveEntryForFrame(child,
+                                     /* only_if_different_position = */ false);
+    }
+  }
+
+  // Remove the child.
   for (auto iter = children_.begin(); iter != children_.end(); ++iter) {
     if (iter->get() == child) {
       // Subtle: we need to make sure the node is gone from the tree before
@@ -515,7 +530,6 @@ void FrameTreeNode::ResetNavigationRequest(bool keep_state,
     current_frame_host()->Send(
         new FrameMsg_DroppedNavigation(current_frame_host()->GetRoutingID()));
   }
-
 }
 
 bool FrameTreeNode::has_started_loading() const {

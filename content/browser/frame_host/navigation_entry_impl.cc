@@ -6,6 +6,9 @@
 
 #include <stddef.h>
 
+#include <algorithm>
+#include <map>
+#include <string>
 #include <utility>
 
 #include "base/containers/queue.h"
@@ -906,8 +909,8 @@ std::map<std::string, bool> NavigationEntryImpl::GetSubframeUniqueNames(
   return names;
 }
 
-void NavigationEntryImpl::ClearStaleFrameEntriesForNewFrame(
-    FrameTreeNode* frame_tree_node) {
+void NavigationEntryImpl::RemoveEntryForFrame(FrameTreeNode* frame_tree_node,
+                                              bool only_if_different_position) {
   DCHECK(!frame_tree_node->IsMainFrame());
 
   NavigationEntryImpl::TreeNode* node = nullptr;
@@ -929,7 +932,8 @@ void NavigationEntryImpl::ClearStaleFrameEntriesForNewFrame(
 
     // Remove the node from the tree if it is not in the same position in the
     // tree of FrameNavigationEntries and the FrameTree.
-    if (!InSameTreePosition(frame_tree_node, node)) {
+    if (!only_if_different_position ||
+        !InSameTreePosition(frame_tree_node, node)) {
       NavigationEntryImpl::TreeNode* parent_node = node->parent;
       auto it = std::find_if(
           parent_node->children.begin(), parent_node->children.end(),
