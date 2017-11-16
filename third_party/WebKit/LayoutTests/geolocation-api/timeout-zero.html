@@ -14,6 +14,7 @@ description("Tests that when timeout is zero, the error callback is called immed
 
 var error;
 
+geolocationMock.setGeolocationPermission(true);
 geolocationMock.setGeolocationPosition(51.478, -0.166, 100.0);
 
 navigator.geolocation.getCurrentPosition(function(p) {

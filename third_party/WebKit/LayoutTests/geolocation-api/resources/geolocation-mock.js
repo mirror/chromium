@@ -138,8 +138,11 @@ class GeolocationMock {
   createGeolocation(request, user_gesture) {
     switch (this.permissionStatus_) {
      case blink.mojom.PermissionStatus.ASK:
-      setTimeout(() => { this.createGeolocation(request, user_gesture)}, 50);
-      break;
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(this.createGeolocation(request, user_gesture));
+        }, 50);
+      });
 
      case blink.mojom.PermissionStatus.GRANTED:
       this.geolocationBindingSet_.addBinding(this, request);
@@ -148,6 +151,7 @@ class GeolocationMock {
      default:
       request.close();
     }
+    return Promise.resolve(this.permissionStatus_);
   }
 
   /**
