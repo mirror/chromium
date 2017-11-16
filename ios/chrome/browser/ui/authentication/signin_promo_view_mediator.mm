@@ -110,6 +110,9 @@ void RecordSigninUserActionForAccessPoint(
       base::RecordAction(
           base::UserMetricsAction("Signin_Signin_FromRecentTabs"));
       break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS:
+      base::RecordAction(base::UserMetricsAction("Signin_Signin_FromSettings"));
+      break;
     case signin_metrics::AccessPoint::ACCESS_POINT_TAB_SWITCHER:
       base::RecordAction(
           base::UserMetricsAction("Signin_Signin_FromTabSwitcher"));
@@ -131,6 +134,10 @@ void RecordSigninDefaultUserActionForAccessPoint(
     case signin_metrics::AccessPoint::ACCESS_POINT_RECENT_TABS:
       base::RecordAction(
           base::UserMetricsAction("Signin_SigninWithDefault_FromRecentTabs"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_SigninWithDefault_FromSettings"));
       break;
     case signin_metrics::AccessPoint::ACCESS_POINT_TAB_SWITCHER:
       base::RecordAction(
@@ -154,6 +161,10 @@ void RecordSigninNotDefaultUserActionForAccessPoint(
       base::RecordAction(
           base::UserMetricsAction("Signin_SigninNotDefault_FromRecentTabs"));
       break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_SigninNotDefault_FromSettings"));
+      break;
     case signin_metrics::AccessPoint::ACCESS_POINT_TAB_SWITCHER:
       base::RecordAction(
           base::UserMetricsAction("Signin_SigninNotDefault_FromTabSwitcher"));
@@ -175,6 +186,10 @@ void RecordSigninNewAccountUserActionForAccessPoint(
     case signin_metrics::AccessPoint::ACCESS_POINT_RECENT_TABS:
       base::RecordAction(
           base::UserMetricsAction("Signin_SigninNewAccount_FromRecentTabs"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_SigninNewAccount_FromSettings"));
       break;
     case signin_metrics::AccessPoint::ACCESS_POINT_TAB_SWITCHER:
       base::RecordAction(
@@ -418,6 +433,30 @@ const char* AlreadySeenSigninViewPreferenceKey(
     [_consumer signinDidFinish];
 }
 
+- (void)showSigninWithIdentity:(ChromeIdentity*)identity
+                   promoAction:(signin_metrics::PromoAction)promoAction {
+  __weak SigninPromoViewMediator* weakSelf = self;
+  ShowSigninCommandCompletionCallback completion = ^(BOOL succeeded) {
+    [weakSelf signinCallback];
+  };
+  if ([self.consumer respondsToSelector:@selector
+                     (signinPromoViewMediator:shouldOpenSigninWithIdentity
+                                                :promoAction:completion:)]) {
+    [self.consumer signinPromoViewMediator:self
+              shouldOpenSigninWithIdentity:identity
+                               promoAction:promoAction
+                                completion:completion];
+  } else {
+    ShowSigninCommand* command = [[ShowSigninCommand alloc]
+        initWithOperation:AUTHENTICATION_OPERATION_SIGNIN
+                 identity:identity
+              accessPoint:_accessPoint
+              promoAction:promoAction
+                 callback:^completion];
+    [self.presenter showSignin:command];
+  }
+}
+
 #pragma mark - ChromeIdentityServiceObserver
 
 - (void)identityListChanged {
@@ -464,16 +503,9 @@ const char* AlreadySeenSigninViewPreferenceKey(
   [self sendImpressionsTillSigninButtonsHistogram];
   RecordSigninUserActionForAccessPoint(_accessPoint);
   RecordSigninNewAccountUserActionForAccessPoint(_accessPoint);
-  __weak SigninPromoViewMediator* weakSelf = self;
-  ShowSigninCommand* command = [[ShowSigninCommand alloc]
-      initWithOperation:AUTHENTICATION_OPERATION_SIGNIN
-               identity:nil
-            accessPoint:_accessPoint
-            promoAction:signin_metrics::PromoAction::PROMO_ACTION_NEW_ACCOUNT
-               callback:^(BOOL succeeded) {
-                 [weakSelf signinCallback];
-               }];
-  [self.presenter showSignin:command];
+  [self showSigninWithIdentity:nil
+                   promoAction:signin_metrics::PromoAction::
+                                   PROMO_ACTION_NEW_ACCOUNT];
 }
 
 - (void)signinPromoViewDidTapSigninWithDefaultAccount:
@@ -482,16 +514,9 @@ const char* AlreadySeenSigninViewPreferenceKey(
   [self sendImpressionsTillSigninButtonsHistogram];
   RecordSigninUserActionForAccessPoint(_accessPoint);
   RecordSigninDefaultUserActionForAccessPoint(_accessPoint);
-  __weak SigninPromoViewMediator* weakSelf = self;
-  ShowSigninCommand* command = [[ShowSigninCommand alloc]
-      initWithOperation:AUTHENTICATION_OPERATION_SIGNIN
-               identity:_defaultIdentity
-            accessPoint:_accessPoint
-            promoAction:signin_metrics::PromoAction::PROMO_ACTION_WITH_DEFAULT
-               callback:^(BOOL succeeded) {
-                 [weakSelf signinCallback];
-               }];
-  [self.presenter showSignin:command];
+  [self showSigninWithIdentity:_defaultIdentity
+                   promoAction:signin_metrics::PromoAction::
+                                   PROMO_ACTION_WITH_DEFAULT];
 }
 
 - (void)signinPromoViewDidTapSigninWithOtherAccount:
@@ -500,16 +525,9 @@ const char* AlreadySeenSigninViewPreferenceKey(
   [self sendImpressionsTillSigninButtonsHistogram];
   RecordSigninNotDefaultUserActionForAccessPoint(_accessPoint);
   RecordSigninUserActionForAccessPoint(_accessPoint);
-  __weak SigninPromoViewMediator* weakSelf = self;
-  ShowSigninCommand* command = [[ShowSigninCommand alloc]
-      initWithOperation:AUTHENTICATION_OPERATION_SIGNIN
-               identity:nil
-            accessPoint:_accessPoint
-            promoAction:signin_metrics::PromoAction::PROMO_ACTION_NOT_DEFAULT
-               callback:^(BOOL succeeded) {
-                 [weakSelf signinCallback];
-               }];
-  [self.presenter showSignin:command];
+  [self showSigninWithIdentity:nil
+                   promoAction:signin_metrics::PromoAction::
+                                   PROMO_ACTION_NOT_DEFAULT];
 }
 
 @end
