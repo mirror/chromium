@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "939acc1e_96bc2e67",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ToolbarProgressBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-16T22:43:35Z",
+      "side": 1,
+      "message": "can this not call setProgressInternal (which in turn calls super.setProgress)?\n\nWould still like to find a way where that would be the only place that needs to call finish, but that might be again outside the scope of this CL.",
+      "range": {
+        "startLine": 147,
+        "startChar": 35,
+        "endLine": 147,
+        "endChar": 40
+      },
+      "revId": "9e39a220f434995c95e7e9abf55832852f9cdc06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
