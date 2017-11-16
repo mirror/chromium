@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "4a5e9a50_b486fe42",
+        "filename": "services/video_capture/device_factory_media_to_mojo_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-11-16T17:45:15Z",
+      "side": 1,
+      "message": "It turns out that all base::MakeUnique are changed to std::unique_ptr in this CL: https://chromium-review.googlesource.com/c/chromium/src/+/767370\n\nThe leftover instances mentioned in previous comment are actually new code added by me :)",
+      "parentUuid": "c9ae3cc6_8038a3ed",
+      "revId": "20921a7f0e4c8e8c4a52d4b0114379ed20c2d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8242e6d8_3ae3da6d",
         "filename": "services/video_capture/public/interfaces/virtual_device.mojom",
         "patchSetId": 5
