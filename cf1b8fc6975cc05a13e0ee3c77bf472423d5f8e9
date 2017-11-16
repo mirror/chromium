@@ -70,6 +70,30 @@
       "revId": "cf1b8fc6975cc05a13e0ee3c77bf472423d5f8e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a733864f_50243d0c",
+        "filename": "chrome/common/media_router/mojo/media_router_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-16T19:53:37Z",
+      "side": 1,
+      "message": "I was thinking we can replace MediaSource and MediaSource::Id with GURL and update the source helper class to deal with custom schemes for tabs, desktop and remoting sources.",
+      "parentUuid": "a89708f7_9ebbe074",
+      "range": {
+        "startLine": 393,
+        "startChar": 37,
+        "endLine": 393,
+        "endChar": 49
+      },
+      "revId": "cf1b8fc6975cc05a13e0ee3c77bf472423d5f8e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
