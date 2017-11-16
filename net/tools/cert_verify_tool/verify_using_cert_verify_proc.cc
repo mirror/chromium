@@ -44,8 +44,7 @@ bool DumpX509CertificateChain(const base::FilePath& file_path,
 }
 
 // Returns a hex-encoded sha256 of the DER-encoding of |cert_handle|.
-std::string FingerPrintOSCertHandle(
-    net::X509Certificate::OSCertHandle cert_handle) {
+std::string FingerPrintCryptoBuffer(const CRYPTO_BUFFER* cert_handle) {
   net::SHA256HashValue hash =
       net::X509Certificate::CalculateFingerprint256(cert_handle);
   return base::HexEncode(hash.data, arraysize(hash.data));
@@ -57,11 +56,10 @@ std::string SubjectFromX509Certificate(const net::X509Certificate* cert) {
 }
 
 // Returns a textual representation of the Subject of |cert_handle|.
-std::string SubjectFromOSCertHandle(
-    net::X509Certificate::OSCertHandle cert_handle) {
+std::string SubjectFromCryptoBuffer(CRYPTO_BUFFER* cert_handle) {
   scoped_refptr<net::X509Certificate> cert =
       net::X509Certificate::CreateFromHandle(
-          cert_handle, net::X509Certificate::OSCertHandles());
+          x509_util::DupCryptoBuffer(cert_handle), {});
   if (!cert)
     return std::string();
   return SubjectFromX509Certificate(cert.get());
@@ -97,12 +95,13 @@ void PrintCertVerifyResult(const net::CertVerifyResult& result) {
 
   if (result.verified_cert) {
     std::cout << "chain:\n "
-              << FingerPrintOSCertHandle(result.verified_cert->os_cert_handle())
+              << FingerPrintCryptoBuffer(result.verified_cert->cert_buffer())
               << " " << SubjectFromX509Certificate(result.verified_cert.get())
               << "\n";
-    for (auto* os_cert : result.verified_cert->GetIntermediateCertificates()) {
-      std::cout << " " << FingerPrintOSCertHandle(os_cert) << " "
-                << SubjectFromOSCertHandle(os_cert) << "\n";
+    for (const auto& intermediate :
+         result.verified_cert->intermediate_buffers()) {
+      std::cout << " " << FingerPrintCryptoBuffer(intermediate.get()) << " "
+                << SubjectFromCryptoBuffer(intermediate.get()) << "\n";
     }
   }
 }
