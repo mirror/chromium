@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "97383d22_a64e9c52",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-16T05:56:54Z",
+      "side": 1,
+      "message": "\u003e Not sure why constexpr. it is just an int, so isn\u0027t const equivalent to constexpr?\n\nSuppose so, but it cannot hurt to be more precise.  (A quick code reader could stop at the beginning of the line knowing the right hand side isn\u0027t a function call or something complicated and that it requires no knowledge of local state.)",
+      "parentUuid": "97633619_b449ef12",
+      "range": {
+        "startLine": 562,
+        "startChar": 2,
+        "endLine": 562,
+        "endChar": 7
+      },
+      "revId": "1e6a4c65b1aaf473715f0eab32fbfb0e579c3569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ca18496_71894006",
         "filename": "components/omnibox/browser/omnibox_field_trial.cc",
         "patchSetId": 2
