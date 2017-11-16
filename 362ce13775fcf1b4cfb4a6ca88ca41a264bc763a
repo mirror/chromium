@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "263a1e6d_d1446880",
+        "filename": "media/gpu/vaapi_drm_picture.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-16T16:04:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3951d64_5a6ac634",
+      "revId": "362ce13775fcf1b4cfb4a6ca88ca41a264bc763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "582368a6_3087c9c9",
         "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
         "patchSetId": 6
@@ -86,6 +104,24 @@
       "revId": "362ce13775fcf1b4cfb4a6ca88ca41a264bc763a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42f20602_eefb92b6",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-16T16:04:35Z",
+      "side": 1,
+      "message": "You\u0027re right, I need a lock here for those vars. Reviewed\nthe places where those vars are used and not locked and \nupdated where needed (and also the comments on the header).",
+      "parentUuid": "582368a6_3087c9c9",
+      "revId": "362ce13775fcf1b4cfb4a6ca88ca41a264bc763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "42f6583a_02278fee",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-16T16:04:35Z",
+      "side": 1,
+      "message": "It looks dicey, I know, but there\u0027s an explanation on the \nheader file |weak_this_| entry, that I rewrote for clarity, \nsee:\n\nhttps://cs.chromium.org/chromium/src/media/gpu/vaapi_video_decode_accelerator.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d273",
+      "parentUuid": "ac1242b4_6a662ff7",
+      "revId": "362ce13775fcf1b4cfb4a6ca88ca41a264bc763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9f50600_c8fcfc2c",
         "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
         "patchSetId": 6
@@ -123,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "d13033a0_1141227a",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-16T16:04:35Z",
+      "side": 1,
+      "message": "Same as above, see the comments on the header file,\nbut essentially VaVDA owns |decoder_thread_task_runner_|\nand all these data structures and guarantees proper\nstopping.",
+      "parentUuid": "e9f50600_c8fcfc2c",
+      "revId": "362ce13775fcf1b4cfb4a6ca88ca41a264bc763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "112cf62b_73774002",
         "filename": "media/gpu/vaapi_video_decode_accelerator.h",
         "patchSetId": 6
@@ -137,6 +209,24 @@
       "revId": "362ce13775fcf1b4cfb4a6ca88ca41a264bc763a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba94833b_c1082bcb",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-16T16:04:35Z",
+      "side": 1,
+      "message": "Following what comes up in\n  grep -rn On.*Runner content \n\ns/OnTaskRunner/OnDecodingTaskRunner/",
+      "parentUuid": "112cf62b_73774002",
+      "revId": "362ce13775fcf1b4cfb4a6ca88ca41a264bc763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
