@@ -584,7 +584,7 @@
     "label": "//chrome/test:interactive_ui_tests",
     "type": "windowed_test_launcher",
     "args": [
-      "--snapshot-output-dir=${ISOLATED_OUTDIR}",
+      "--snapshot-output-dir=${ISOLATED_OUTDIR} --gtest_also_run_disabled_tests",
     ],
   },
   "ios_chrome_bookmarks_egtests": {
