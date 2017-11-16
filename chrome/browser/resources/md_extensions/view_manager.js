@@ -51,6 +51,9 @@ cr.define('extensions', function() {
   const ViewManager = Polymer({
     is: 'extensions-view-manager',
 
+    /** @private {null|string} */
+    currentId_: null,
+
     /**
      * @param {!Element} element
      * @param {string} animation
@@ -87,6 +90,13 @@ cr.define('extensions', function() {
       effectiveView.dispatchEvent(new CustomEvent('view-enter-start'));
       return animationFunction(effectiveView).then(() => {
         effectiveView.dispatchEvent(new CustomEvent('view-enter-finish'));
+        if (this.currentId_ !== null) {
+          const element =
+              effectiveView.querySelector('* /deep/ #' + this.currentId_);
+          if (element) {
+            cr.ui.focusWithoutInk(element);
+          }
+        }
       });
     },
 
@@ -99,6 +109,13 @@ cr.define('extensions', function() {
     switchView: function(newViewId, enterAnimation, exitAnimation) {
       const previousView = this.querySelector('.active');
       const newView = assert(this.querySelector('#' + newViewId));
+
+      if (newViewId != 'items-list') {
+        const element = previousView.querySelector('* /deep/ [focused]');
+        if (element) {
+          this.currentId_ = element.parentNode.id + ' #' + element.id;
+        }
+      }
 
       const promises = [];
       if (previousView) {
