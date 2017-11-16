@@ -307,6 +307,46 @@ TEST(MessageLoopTest, JavaExceptionAbortInitJavaFirst) {
   RunTest_AbortDontRunMoreTasks(delayed, init_java_first);
 }
 
+void OnFairnessCheckCallback(int* java_count, int* native_count, bool java) {
+  if (java) {
+    (*java_count)++;
+  } else {
+    (*native_count)++;
+  }
+  int diff = std::abs(*java_count - *native_count);
+  EXPECT_LE(diff, 2);
+}
+
+TEST(MessageLoopTest, JavaThreadRunsTasksFairly) {
+  auto java_thread = MakeUnique<android::JavaHandlerThread>("test");
+  java_thread->Start();
+
+  int java_count = 0;
+  int native_count = 0;
+
+  java_thread->message_loop()->task_runner()->PostTask(
+      FROM_HERE,
+      BindOnce(
+          [](android::JavaHandlerThread* java_thread, int* java_count,
+             int* native_count) {
+            android::JavaHandlerThreadHelpers::SetOnJavaTaskRunCallback(
+                BindRepeating(&OnFairnessCheckCallback, java_count,
+                              native_count));
+            for (int i = 0; i < 20; ++i) {
+              java_thread->message_loop()->task_runner()->PostTask(
+                  FROM_HERE, BindOnce(&OnFairnessCheckCallback, java_count,
+                                      native_count, false));
+              android::JavaHandlerThreadHelpers::PostJavaTask();
+            }
+          },
+          Unretained(java_thread.get()), Unretained(&java_count),
+          Unretained(&native_count)));
+
+  java_thread->Stop();
+  EXPECT_EQ(java_count, native_count);
+  EXPECT_EQ(java_count, 20);
+}
+
 TEST(MessageLoopTest, RunTasksWhileShuttingDownJavaThread) {
   const int kNumPosts = 6;
   DummyTaskObserver observer(kNumPosts, 1);

@@ -45,6 +45,7 @@ import org.chromium.components.signin.AccountManagerFacade;
 import org.chromium.components.signin.ProfileDataSource;
 import org.chromium.components.signin.test.util.AccountHolder;
 import org.chromium.components.signin.test.util.FakeAccountManagerDelegate;
+import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.ui.test.util.UiDisableIf;
 
 import java.io.Closeable;
@@ -72,6 +73,7 @@ public class BookmarkPersonalizedSigninPromoTest {
     public void setUp() throws Exception {
         AccountManagerFacade.overrideAccountManagerFacadeForTests(mAccountManagerDelegate);
         mActivityTestRule.startMainActivityFromLauncher();
+        mActivityTestRule.waitForActivityVisible();
     }
 
     @Test
@@ -162,8 +164,20 @@ public class BookmarkPersonalizedSigninPromoTest {
     }
 
     private void openBookmarkManager() throws InterruptedException {
-        onView(withId(R.id.menu_button)).perform(click());
-        onView(withText("Bookmarks")).perform(click());
+        // In testing on a svelte build on a nexus 5, two things can go wrong here: perform(click())
+        // can take so long that it triggers the long-press refresh behavior on the menu button,
+        // or the view somehow isn't fully visible (no idea why). Retrying works around these
+        // issues.
+        CriteriaHelper.pollInstrumentationThread(() -> {
+            try {
+                onView(withId(R.id.menu_button)).perform(click());
+                onView(withText("Bookmarks")).perform(click());
+            } catch (android.support.test.espresso.NoMatchingViewException
+                    | android.support.test.espresso.PerformException e) {
+                return false;
+            }
+            return true;
+        });
     }
 
     private void addTestAccount() {

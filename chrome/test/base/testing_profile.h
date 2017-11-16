@@ -304,6 +304,8 @@ class TestingProfile : public Profile {
 
   PrefService* GetPrefs() override;
   const PrefService* GetPrefs() const override;
+  policy::PolicyService* GetPolicy() override;
+
 #if !defined(OS_ANDROID)
   ChromeZoomLevelPrefs* GetZoomLevelPrefs() override;
 #endif  // !defined(OS_ANDROID)
