@@ -258,14 +258,14 @@ void CompositingRequirementsUpdater::MaybeEnableCompositedScrolling(
   // layer->needsCompositedScrolling() true. That is, for cases where we
   // explicitly decide not to have LCD text or cases where the layer will
   // still support LCD text even if the layer is composited.
-  if (reasons && layer->ScrollsOverflow() &&
-      !layer->NeedsCompositedScrolling()) {
+  PaintLayerScrollableArea* scrollable_area = layer->GetScrollableArea();
+  if (reasons && scrollable_area && !layer->NeedsCompositedScrolling()) {
     // We can get here for a scroller that will be composited for some other
     // reason and hence will already use grayscale AA text. We recheck for
     // needsCompositedScrolling ignoring LCD to correctly add the
     // CompositingReasonOverflowScrollingTouch reason to layers that can
     // support it with grayscale AA text.
-    layer->GetScrollableArea()->UpdateNeedsCompositedScrolling(true);
+    scrollable_area->UpdateNeedsCompositedScrolling(true);
     if (layer->NeedsCompositedScrolling())
       reasons |= kCompositingReasonOverflowScrollingTouch;
   }
