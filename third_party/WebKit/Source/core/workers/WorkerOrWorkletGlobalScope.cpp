@@ -169,8 +169,9 @@ void WorkerOrWorkletGlobalScope::RegisterEventListener(
 void WorkerOrWorkletGlobalScope::DeregisterEventListener(
     V8AbstractEventListener* event_listener) {
   auto it = event_listeners_.find(event_listener);
-  CHECK(it != event_listeners_.end() || IsClosing());
-  event_listeners_.erase(it);
+  CHECK(IsClosing());
+  if (it != event_listeners_.end())
+    event_listeners_.erase(it);
 }
 
 scoped_refptr<WebTaskRunner> WorkerOrWorkletGlobalScope::GetTaskRunner(
