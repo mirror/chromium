@@ -22,6 +22,52 @@
       "revId": "75f0cc0f5e98ff59f47145590de2e40db84c5cba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c0c74d8_f329b763",
+        "filename": "ui/app_list/app_list_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-16T15:30:37Z",
+      "side": 1,
+      "message": "nit: \nif (user_jorney_end_.is_null())\n  return;",
+      "range": {
+        "startLine": 501,
+        "startChar": 2,
+        "endLine": 501,
+        "endChar": 42
+      },
+      "revId": "75f0cc0f5e98ff59f47145590de2e40db84c5cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78631de3_5f648fd2",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-16T15:30:37Z",
+      "side": 1,
+      "message": "nit: This is bit straightforward. May be before setting these times we can check that start time is set?",
+      "range": {
+        "startLine": 860,
+        "startChar": 10,
+        "endLine": 860,
+        "endChar": 46
+      },
+      "revId": "75f0cc0f5e98ff59f47145590de2e40db84c5cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
