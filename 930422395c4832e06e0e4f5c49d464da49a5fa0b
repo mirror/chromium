@@ -22,6 +22,30 @@
       "revId": "930422395c4832e06e0e4f5c49d464da49a5fa0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e903b2d_f2cadc5f",
+        "filename": "base/memory/weak_ptr.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2017-11-16T22:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2c4ed57_0ace0a44",
+      "range": {
+        "startLine": 189,
+        "startChar": 61,
+        "endLine": 189,
+        "endChar": 62
+      },
+      "revId": "930422395c4832e06e0e4f5c49d464da49a5fa0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
