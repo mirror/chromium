@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "cfc2768b_d4f605ad",
+        "filename": "cc/layers/video_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-16T16:02:18Z",
+      "side": 1,
+      "message": "This is part of the patch I\u0027m rebased on",
+      "revId": "f0d35fbe888fd335f9f005c69b1aa79313e32644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49925afb_61a0e16f",
         "filename": "cc/resources/resource_provider.cc",
         "patchSetId": 6
@@ -47,6 +64,24 @@
       "writtenOn": "2017-11-16T01:16:55Z",
       "side": 1,
       "message": "nit: the comment seems out of place. We\u0027re making a GL resource here (not an Overlay one) and we don\u0027t include the size. Did you mean it for l.694?",
+      "revId": "f0d35fbe888fd335f9f005c69b1aa79313e32644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3ada82_3def225a",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-16T16:02:18Z",
+      "side": 1,
+      "message": "Ah, I thought this needed size and wrote the comment and continued investigating and sorted out why it doesn\u0027t. Comment should go away. Thanks!",
+      "parentUuid": "46b29612_861f28c8",
       "revId": "f0d35fbe888fd335f9f005c69b1aa79313e32644",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
