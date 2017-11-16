@@ -943,11 +943,11 @@ TEST_P(ResourceProviderTest, OverlayPromotionHint) {
   // Make sure that the request for a promotion hint was noticed.
   EXPECT_TRUE(resource_provider_->IsOverlayCandidate(mapped_id1));
   EXPECT_TRUE(resource_provider_->IsBackedBySurfaceTexture(mapped_id1));
-  EXPECT_TRUE(resource_provider_->WantsPromotionHintForTesting(mapped_id1));
+  EXPECT_TRUE(resource_provider_->WantsPromotionHint(mapped_id1));
 
   EXPECT_TRUE(resource_provider_->IsOverlayCandidate(mapped_id2));
   EXPECT_FALSE(resource_provider_->IsBackedBySurfaceTexture(mapped_id2));
-  EXPECT_FALSE(resource_provider_->WantsPromotionHintForTesting(mapped_id2));
+  EXPECT_FALSE(resource_provider_->WantsPromotionHint(mapped_id2));
 
   EXPECT_EQ(1u, resource_provider_->CountPromotionHintRequestsForTesting());
 
