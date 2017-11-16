@@ -88,6 +88,24 @@
       "revId": "b39a7926a836c242be334bbd35b8fdc5e2457b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c530bc_b7c72d45",
+        "filename": "components/drive/job_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-16T04:43:00Z",
+      "side": 1,
+      "message": "\u003e \u003e I\u0027m still confused by the difference between \"constructive\" and \"destructive\".\n\u003e \n\u003e \"constructive\" refers to observers that attempt to do something constructive, like making forward progress, like attempting to communicate/sync with a server.\n\u003e \"destructive\" refers to observers that attempt to flush stale state (DNS cache, idle socket pools etc).\n\u003e \n\u003e \u003e DoJobLoop() may start and abort jobs at the same time.\n\u003e \u003e What should we do for this code with the new API?\n\u003e \n\u003e If DoJobLoop() is intended to cancel jobs when the device goes offline (a \"destructive\" action) as well as initiate jobs when the device goes online (a \"constructive\" action) perhaps we should just ignore the CONNECTION_NONE signal that is sent out immediately prior to online signals, perhaps by changing this if statement condition to \"type \u003d\u003d net::NetworkChangeNotifier::CONNECTION_NONE \u0026\u0026 !net::NetworkChangeNotifier::IsOffline()\"?\n\nDoJobLoop() is also intended to cancel some jobs when the device switches to a cellular connection from wifi.\n\nCan we assume type\u003d\u003dCONNECTION_NONE \u0026\u0026 !net::NetworkChangeNotifier::IsOffline() iff the device is switching from one connection to another? (e.g. switching from ethernet to wifi but suddenly signal lost doesn\u0027t result in CONNECTION_ETHERNET/Online -\u003e CONNECTION_NONE/Online -\u003e CONNECTION_NONE/Offline, possibly the last CONNECTION_NONE not notified to the observers)?\n\nIf the assumption holds, sgtm.\nPlease update the comment below too (\"we don\u0027t need to check ...\").\n\n\n\u003e \n\u003e \u003e Also, IsOffline() and GetConnectionType() being inconsistent with the connection type value here is surprising.\n\u003e \u003e It\u0027d be helpful if you could note this in the comment for NetworkChangeObserver, hopefully with diagrams which describe how the values returned by IsOffline(), GetConnectionType(), and NetworkChangeObserver will change in each step in various scenarios (e.g. the device being online/offline, the device switching from ethernet to wifi, the device switching from ethernet to wifi but suddenly being offline before being completely online, etc.).\n\u003e \n\u003e I filed crbug.com/784832 for this.\n\nThank you for doing this!",
+      "parentUuid": "73b490be_ebf75827",
+      "revId": "b39a7926a836c242be334bbd35b8fdc5e2457b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
