@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "395815f3_917db97a",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-16T01:48:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "916846cc_a4b12936",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4e73ade_e3bc9d24",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-15T15:18:13Z",
       "side": 1,
       "message": "i think i don\u0027t understand the calls to MaybeSetEventType. why do you call it in PowerChanged (which will be called fairly arbitrarily every 30 seconds or so) but not here, for example?",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa6bf95_415f29ce",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-16T01:48:02Z",
+      "side": 1,
+      "message": "I\u0027m not setting event type here, because \n\n(i). If it\u0027s the result of a previous SuspendImminent, and SuspendDone hasn\u0027t been called, then the type should have been set in SuspendImminent.\n(ii). For all other cases, logging_in_progress should be false, and so we don\u0027t need to set the type.",
+      "parentUuid": "b4e73ade_e3bc9d24",
       "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c264c040_ec769596",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-16T01:48:02Z",
+      "side": 1,
+      "message": "Now we\u0027re using it. :)",
+      "parentUuid": "d46c2dec_ef3287b4",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59f756f7_5042043e",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fadf1f56_90dadfb8",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-16T01:48:02Z",
+      "side": 1,
+      "message": "Done. Thanks for pointing out! :) I\u0027ve changed the impl to set external power and only consider it a result of user activity if external power is changed.",
+      "parentUuid": "59f756f7_5042043e",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f7d71556_3c49a7bc",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-16T01:48:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c3cfc29_518f3313",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba673795_7f2c2dff",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-15T15:18:13Z",
       "side": 1,
       "message": "if you want to lump all non-idle types together, consider just putting them in a default section",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a41d2c_306d8f48",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-16T01:48:02Z",
+      "side": 1,
+      "message": "I consider LID_CLOSED and OTHER as explicit user triggered suspend, hence I put them together. I have an explicit default just in case there will be future values that represent non-user requested suspend.",
+      "parentUuid": "ba673795_7f2c2dff",
       "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "f3503b27_ca82133f",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-16T01:48:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d735e82f_e8ec01cc",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caf9b917_df3a811f",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b0abe3_99298b45",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-16T01:48:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caf9b917_df3a811f",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "ad75925c_8dadc83d",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-16T01:48:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cea5eefb_f185befa",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d155c5f_892a88e8",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
         "patchSetId": 3
@@ -169,6 +331,24 @@
       "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6139aa0c_c6396650",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-16T01:48:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d155c5f_892a88e8",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "432a7bd4_0a5dc936",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-16T01:48:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b211c91_647d9bfa",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e27d89b0_516893d1",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
         "patchSetId": 3
@@ -230,6 +428,30 @@
     },
     {
       "key": {
+        "uuid": "da5a89fe_eceb1199",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-16T01:48:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e27d89b0_516893d1",
+      "range": {
+        "startLine": 33,
+        "startChar": 10,
+        "endLine": 33,
+        "endChar": 21
+      },
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5f09d4c_722eb902",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
         "patchSetId": 3
@@ -244,6 +466,24 @@
       "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e23b5a1c_9189862c",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-16T01:48:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5f09d4c_722eb902",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -264,6 +504,24 @@
     },
     {
       "key": {
+        "uuid": "60514867_105e1682",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-16T01:48:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8335f3fd_b4052e2c",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f98d6d3_f2fa9fad",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
         "patchSetId": 3
@@ -275,6 +533,24 @@
       "writtenOn": "2017-11-15T12:41:17Z",
       "side": 1,
       "message": "it seems to me that we can only log one event at a time, what will happen to other event?",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db9f65b_a19e4866",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-16T01:48:02Z",
+      "side": 1,
+      "message": "We can indeed log only one event at a time.",
+      "parentUuid": "2f98d6d3_f2fa9fad",
       "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -298,6 +574,24 @@
     },
     {
       "key": {
+        "uuid": "f802ac51_692a3616",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-16T01:48:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d43ea58_f45a72df",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f518bc9_0cb6c7f3",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
         "patchSetId": 3
@@ -309,6 +603,24 @@
       "writtenOn": "2017-11-15T12:41:17Z",
       "side": 1,
       "message": "how about we store an unordered_map\u003cUserActivityEvent_Type, UserActivityEvent\u003e, so not just one event type can be logged at a time?",
+      "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca6ca31_249480df",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-16T01:48:02Z",
+      "side": 1,
+      "message": "We won\u0027t need to store other events as they will be sent to backend logs after we record them in this class.",
+      "parentUuid": "8f518bc9_0cb6c7f3",
       "revId": "63f7bb78a7446de33c0d2e8408a346cef5a7600b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
