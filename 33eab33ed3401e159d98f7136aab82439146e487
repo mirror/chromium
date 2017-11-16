@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57bbce65_b9dd8a58",
+        "filename": "tools/perry.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-16T18:07:28Z",
+      "side": 1,
+      "message": "Can you add an example usage command line in the comment here at the top of the file?",
+      "range": {
+        "startLine": 7,
+        "startChar": 37,
+        "endLine": 7,
+        "endChar": 38
+      },
+      "revId": "33eab33ed3401e159d98f7136aab82439146e487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8334d49_24d1f764",
+        "filename": "tools/perry.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-16T18:07:28Z",
+      "side": 1,
+      "message": "Yuck. Can you pass by param instead?",
+      "range": {
+        "startLine": 49,
+        "startChar": 22,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "33eab33ed3401e159d98f7136aab82439146e487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b42ade_e7e0b306",
+        "filename": "tools/perry.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-16T18:07:28Z",
+      "side": 1,
+      "message": "Nit: Start internal function names (those only used in this file, which should be all of them), with _, e.g. _PrintStatus()",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 15
+      },
+      "revId": "33eab33ed3401e159d98f7136aab82439146e487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
