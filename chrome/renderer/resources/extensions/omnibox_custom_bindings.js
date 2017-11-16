@@ -128,5 +128,13 @@ registerArgumentMassager('omnibox.onInputChanged', function(args, dispatch) {
   dispatch([text, suggestCallback]);
 });
 
+registerArgumentMassager('omnibox.onKeywordEntered', function(args, dispatch) {
+  var requestId = args[0];
+  var suggestCallback = function(suggestions) {
+    chrome.omnibox.sendSuggestions(requestId, suggestions);
+  };
+  dispatch([suggestCallback]);
+});
+
 if (!apiBridge)
   exports.$set('binding', binding.generate());

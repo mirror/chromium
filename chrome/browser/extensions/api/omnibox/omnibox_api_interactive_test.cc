@@ -11,6 +11,8 @@
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/test/base/interactive_test_utils.h"
 #include "chrome/test/base/search_test_utils.h"
+#include "content/public/test/browser_test_utils.h"
+#include "extensions/browser/process_manager.h"
 #include "extensions/test/extension_test_message_listener.h"
 #include "extensions/test/result_catcher.h"
 #include "third_party/metrics_proto/omnibox_event.pb.h"
@@ -25,13 +27,86 @@ void InputKeys(Browser* browser, const std::vector<ui::KeyboardCode>& keys) {
   }
 }
 
+bool CallAPI(const std::string& script,
+             Profile* profile,
+             const extensions::Extension* extension) {
+  content::RenderViewHost* background_page =
+      extensions::ProcessManager::Get(profile)
+          ->GetBackgroundHostForExtension(extension->id())
+          ->render_view_host();
+  bool error = false;
+  return content::ExecuteScriptAndExtractBool(background_page, script,
+                                              &error) &&
+         !error;
+}
+
 }  // namespace
+
+class KeywordEnteredTest : public OmniboxApiTest {
+ public:
+  void SetupOmnibox() {
+    // The results depend on the TemplateURLService being loaded. Make sure it
+    // is loaded so that the autocomplete results are consistent.
+    search_test_utils::WaitForTemplateURLServiceToLoad(
+        TemplateURLServiceFactory::GetForProfile(browser()->profile()));
+
+    autocomplete_controller_ = GetAutocompleteController(browser());
+
+    chrome::FocusLocationBar(browser());
+    ASSERT_TRUE(ui_test_utils::IsViewFocused(browser(), VIEW_ID_OMNIBOX));
+  }
+
+  void VerifyOnKeywordEnteredSuggestionResults() {
+    const AutocompleteResult& result = autocomplete_controller_->result();
+    ASSERT_EQ(3U, result.size()) << AutocompleteResultAsString(result);
+
+    EXPECT_EQ(base::ASCIIToUTF16("kw"), result.match_at(0).fill_into_edit);
+    EXPECT_EQ(AutocompleteProvider::TYPE_SEARCH,
+              result.match_at(0).provider->type());
+
+    EXPECT_EQ(base::ASCIIToUTF16("kw entered 1"),
+              result.match_at(1).fill_into_edit);
+    EXPECT_EQ(AutocompleteProvider::TYPE_KEYWORD,
+              result.match_at(1).provider->type());
+
+    EXPECT_EQ(base::ASCIIToUTF16("kw entered 2"),
+              result.match_at(2).fill_into_edit);
+    EXPECT_EQ(AutocompleteProvider::TYPE_KEYWORD,
+              result.match_at(2).provider->type());
+  }
+
+  // TODO(catmullings): Generalize function to any input instead of specifically
+  // "p".
+  void VerifyOnInputChangeSuggestionResults() {
+    const AutocompleteResult& result = autocomplete_controller_->result();
+    ASSERT_EQ(3U, result.size());
+
+    EXPECT_EQ(base::ASCIIToUTF16("kw p"), result.match_at(0).fill_into_edit);
+    EXPECT_EQ(AutocompleteProvider::TYPE_KEYWORD,
+              result.match_at(0).provider->type());
+
+    EXPECT_EQ(base::ASCIIToUTF16("kw p 1"), result.match_at(1).fill_into_edit);
+    EXPECT_EQ(AutocompleteProvider::TYPE_KEYWORD,
+              result.match_at(1).provider->type());
+
+    EXPECT_EQ(base::ASCIIToUTF16("kw p"), result.match_at(2).fill_into_edit);
+    EXPECT_EQ(AutocompleteProvider::TYPE_SEARCH,
+              result.match_at(2).provider->type());
+  }
+
+  AutocompleteController* autocomplete_controller() {
+    return autocomplete_controller_;
+  }
+
+ private:
+  AutocompleteController* autocomplete_controller_;
+};
 
 // Tests that the autocomplete popup doesn't reopen after accepting input for
 // a given query.
 // http://crbug.com/88552
 IN_PROC_BROWSER_TEST_F(OmniboxApiTest, PopupStaysClosed) {
-  ASSERT_TRUE(RunExtensionTest("omnibox")) << message_;
+  ASSERT_TRUE(RunExtensionTest("omnibox/basic")) << message_;
 
   // The results depend on the TemplateURLService being loaded. Make sure it is
   // loaded so that the autocomplete results are consistent.
@@ -76,7 +151,7 @@ IN_PROC_BROWSER_TEST_F(OmniboxApiTest, PopupStaysClosed) {
 
 // Tests deleting a deletable omnibox extension suggestion result.
 IN_PROC_BROWSER_TEST_F(OmniboxApiTest, DeleteOmniboxSuggestionResult) {
-  ASSERT_TRUE(RunExtensionTest("omnibox")) << message_;
+  ASSERT_TRUE(RunExtensionTest("omnibox/delete_match")) << message_;
 
   // The results depend on the TemplateURLService being loaded. Make sure it is
   // loaded so that the autocomplete results are consistent.
@@ -145,4 +220,211 @@ IN_PROC_BROWSER_TEST_F(OmniboxApiTest, DeleteOmniboxSuggestionResult) {
   EXPECT_EQ(base::ASCIIToUTF16("kw n2"), result.match_at(1).fill_into_edit);
   EXPECT_EQ(base::ASCIIToUTF16("kw d"), result.match_at(2).fill_into_edit);
 #endif
+}
+
+// If an extension implements the onKeywordEntered() event to display suggest
+// results, this test verifies that when a user inputs and accepts the
+// extension's keyword, the suggest results specified in onKeywordEntered()
+// are displayed.
+IN_PROC_BROWSER_TEST_F(KeywordEnteredTest, Basic) {
+  const extensions::Extension* extension =
+      LoadExtension(test_data_dir_.AppendASCII("omnibox/keyword_entered"));
+  Profile* profile = browser()->profile();
+  ASSERT_TRUE(
+      CallAPI("registerOnKeywordEnteredListener();", profile, extension));
+  ASSERT_TRUE(CallAPI("registerOnInputStartedListener();", profile, extension));
+  ASSERT_TRUE(CallAPI("registerOnInputChangedListener();", profile, extension));
+
+  SetupOmnibox();
+
+  ExtensionTestMessageListener keyword_entered_listener("onKeywordEntered",
+                                                        false);
+
+  // Input and trigger the extension keyword.
+  InputKeys(browser(), {ui::VKEY_K, ui::VKEY_W, ui::VKEY_SPACE});
+  WaitForAutocompleteDone(autocomplete_controller());
+  EXPECT_TRUE(autocomplete_controller()->done());
+
+  // Verify that the onKeywordEntered event was fired.
+  ASSERT_TRUE(keyword_entered_listener.WaitUntilSatisfied());
+
+  // Peek into the controller to see if it has the results we expect. The
+  // suggestion results for onKeywordEntered should be displayed.
+  VerifyOnKeywordEnteredSuggestionResults();
+
+  ExtensionTestMessageListener input_started_listener("onInputStarted", false);
+
+  // Input another key to trigger onInputChanged.
+  InputKeys(browser(), {ui::VKEY_P});
+  WaitForAutocompleteDone(autocomplete_controller());
+  EXPECT_TRUE(autocomplete_controller()->done());
+
+  // Verify that the onInputedStarted event was fired.
+  ASSERT_TRUE(input_started_listener.WaitUntilSatisfied());
+
+  // Ensure that the matches for onKeywordEntered are not displayed, and instead
+  // only the onInputChanged suggestion results are shown.
+  VerifyOnInputChangeSuggestionResults();
+}
+
+// Tests the input edge case where, for example, if the keyword is "ssh" and the
+// user types "sshfoo" in the omnibox, keyword mode is entered when the users
+// presses space within "sshfoo" to form "ssh foo". This test tests the case
+// when both the onKeywordEntered and onInputChanged events are registered. In
+// this case only the onInputChanged event listener should be fired, and its
+// suggestion results should populate the omnibox.
+IN_PROC_BROWSER_TEST_F(
+    KeywordEnteredTest,
+    InputEdgeCaseWithOnKeywordEnteredAndOnInputChangedEventsRegistered) {
+  const extensions::Extension* extension =
+      LoadExtension(test_data_dir_.AppendASCII("omnibox/keyword_entered"));
+
+  Profile* profile = browser()->profile();
+
+  ASSERT_TRUE(
+      CallAPI("registerOnKeywordEnteredListener();", profile, extension));
+  ASSERT_TRUE(CallAPI("registerOnInputStartedListener();", profile, extension));
+  ASSERT_TRUE(CallAPI("registerOnInputChangedListener();", profile, extension));
+
+  SetupOmnibox();
+
+  // Input a string such that the keyword and additional input are coupled.
+  // Because this extension's keyword is "kw", we input "kwp", where "p" is the
+  // additional input.
+  InputKeys(browser(), {ui::VKEY_K, ui::VKEY_W, ui::VKEY_P});
+  WaitForAutocompleteDone(autocomplete_controller());
+  EXPECT_TRUE(autocomplete_controller()->done());
+
+  // Peek into the controller to see if it has the results we expect.
+  // onKeywordEntered suggestion results should not be displayed.
+  const AutocompleteResult& result = autocomplete_controller()->result();
+  ASSERT_EQ(1U, result.size()) << AutocompleteResultAsString(result);
+  EXPECT_EQ(base::ASCIIToUTF16("kwp"), result.match_at(0).fill_into_edit);
+  EXPECT_EQ(AutocompleteProvider::TYPE_SEARCH,
+            result.match_at(0).provider->type());
+
+  ExtensionTestMessageListener input_started_listener("onInputStarted", false);
+
+  // Edit the current omnibox input "kwp" such that it becomes "kw p". This
+  // should trigger the onInputStarted and onInputChanged events in that order.
+  InputKeys(browser(), {ui::VKEY_LEFT, ui::VKEY_SPACE});
+  WaitForAutocompleteDone(autocomplete_controller());
+  EXPECT_TRUE(autocomplete_controller()->done());
+
+  ASSERT_TRUE(input_started_listener.WaitUntilSatisfied());
+
+  // Ensure that the matches for onKeywordEntered are not displayed, and instead
+  // only the onInputChanged suggestion results are shown.
+  VerifyOnInputChangeSuggestionResults();
+}
+
+// Tests the input edge case where, for example, if the keyword is "ssh" and the
+// user types "sshfoo" in the omnibox, keyword mode is entered when the users
+// presses space within "sshfoo" to form "ssh foo".
+
+// This test tests the case when onInputChanged event is registered and the
+// onKeywordEntered event is not. In this case only onInputChanged suggestion
+// results should populate the omnibox.
+IN_PROC_BROWSER_TEST_F(KeywordEnteredTest,
+                       InputEdgeCaseWithOnlyOnInputChangedEventRegistered) {
+  const extensions::Extension* extension =
+      LoadExtension(test_data_dir_.AppendASCII("omnibox/keyword_entered"));
+
+  Profile* profile = browser()->profile();
+
+  ASSERT_TRUE(CallAPI("registerOnInputStartedListener();", profile, extension));
+  ASSERT_TRUE(CallAPI("registerOnInputChangedListener();", profile, extension));
+
+  SetupOmnibox();
+
+  // Input a string such that the keyword and input are joined, e.g. if the
+  // keyword is "key", then such an input would be "keyfoo" instead of
+  // "key foo".
+  InputKeys(browser(), {ui::VKEY_K, ui::VKEY_W, ui::VKEY_P});
+  WaitForAutocompleteDone(autocomplete_controller());
+  EXPECT_TRUE(autocomplete_controller()->done());
+
+  // Peek into the controller to see if it has the results we expect.
+  const AutocompleteResult& result = autocomplete_controller()->result();
+  ASSERT_EQ(1U, result.size()) << AutocompleteResultAsString(result);
+  EXPECT_EQ(base::ASCIIToUTF16("kwp"), result.match_at(0).fill_into_edit);
+  EXPECT_EQ(AutocompleteProvider::TYPE_SEARCH,
+            result.match_at(0).provider->type());
+
+  ExtensionTestMessageListener input_started_listener("onInputStarted", false);
+
+  // Edit the current omnibox input "kwp" such that it becomes "kw p". This
+  // should trigger onInputStarted and onInputChanged events in that order.
+  InputKeys(browser(), {ui::VKEY_LEFT, ui::VKEY_SPACE});
+  WaitForAutocompleteDone(autocomplete_controller());
+  EXPECT_TRUE(autocomplete_controller()->done());
+
+  // Verify that the onInputedStarted event was fired.
+  //
+  // TODO(catmullings): Enforce ordering check such that onInputStarted precedes
+  // onInputChanged.
+  ASSERT_TRUE(input_started_listener.WaitUntilSatisfied());
+
+  VerifyOnInputChangeSuggestionResults();
+}
+
+// Tests the input edge case where, for example, if the keyword is "ssh" and the
+// user types "sshfoo" in the omnibox, keyword mode is entered when the users
+// presses space within "sshfoo" to form "ssh foo".
+
+// This test tests the case when onKeywordEntered event is registered and the
+// onInputChanged event is not. In this case, onKeywordEntered event listeners
+// should not be fired.
+IN_PROC_BROWSER_TEST_F(KeywordEnteredTest,
+                       InputEdgeCaseWithOnlyOnKeyboardEnteredEventRegistered) {
+  const extensions::Extension* extension =
+      LoadExtension(test_data_dir_.AppendASCII("omnibox/keyword_entered"));
+
+  Profile* profile = browser()->profile();
+
+  ASSERT_TRUE(
+      CallAPI("registerOnKeywordEnteredListener();", profile, extension));
+  ASSERT_TRUE(CallAPI("registerOnInputStartedListener();", profile, extension));
+
+  SetupOmnibox();
+
+  // Input a string such that the keyword and input are joined, e.g. if the
+  // keyword is "key", then the such an input would be "keyfoo" instead of
+  // "key foo".
+  InputKeys(browser(), {ui::VKEY_K, ui::VKEY_W, ui::VKEY_P});
+  WaitForAutocompleteDone(autocomplete_controller());
+  EXPECT_TRUE(autocomplete_controller()->done());
+
+  // Peek into the controller to see if it has the results we expect. The
+  // suggestion results for onKeywordEntered should be displayed.
+  const AutocompleteResult& result = autocomplete_controller()->result();
+  ASSERT_EQ(1U, result.size()) << AutocompleteResultAsString(result);
+  EXPECT_EQ(base::ASCIIToUTF16("kwp"), result.match_at(0).fill_into_edit);
+  EXPECT_EQ(AutocompleteProvider::TYPE_SEARCH,
+            result.match_at(0).provider->type());
+
+  ExtensionTestMessageListener input_started_listener("onInputStarted", false);
+
+  // Edit the current omnibox input "kwp" such that it becomes "kw p". This
+  // should trigger onKeywordEntered and onInputStarted events in that order.
+  InputKeys(browser(), {ui::VKEY_LEFT, ui::VKEY_SPACE});
+  WaitForAutocompleteDone(autocomplete_controller());
+  EXPECT_TRUE(autocomplete_controller()->done());
+
+  // Verify that the onInputedStarted event was fired.
+  //
+  // TODO(catmullings): Enforce ordering check such that onInputStarted precedes
+  // onInputChanged.
+  ASSERT_TRUE(input_started_listener.WaitUntilSatisfied());
+
+  ASSERT_EQ(2U, result.size()) << AutocompleteResultAsString(result);
+
+  // No developer specified suggestions should be present.
+  EXPECT_EQ(base::ASCIIToUTF16("kw p"), result.match_at(0).fill_into_edit);
+  EXPECT_EQ(AutocompleteProvider::TYPE_KEYWORD,
+            result.match_at(0).provider->type());
+
+  EXPECT_EQ(base::ASCIIToUTF16("kw p"), result.match_at(0).fill_into_edit);
+  EXPECT_EQ(AutocompleteProvider::TYPE_SEARCH,
+            result.match_at(1).provider->type());
 }
