@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fcd0d1_f7c90637",
+        "filename": "chrome/browser/ui/cocoa/location_bar/autocomplete_text_field_cell.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-16T08:44:11Z",
+      "side": 1,
+      "message": "previously this was achieved done by drawing a fully opaque focus ring on \"half\" pixels (0.5 dip non-retina, 0.25 DIP retina). This meant that the outer edge was blended with the background to get opacity, but the centreline pixel where it overlapped the dark incognito omnibox border would still be fully opaque, resulting in an effective |opaqueFocusColor| for the border.",
+      "revId": "3f73bdd460c105e9d1b2b7c5bf5995ef5f3e6479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

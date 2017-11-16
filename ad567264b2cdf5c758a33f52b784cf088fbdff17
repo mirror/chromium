@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1f5a4fa_957b1e75",
+        "filename": "chrome/browser/ui/cocoa/location_bar/autocomplete_text_field_cell.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-16T08:44:11Z",
+      "side": 0,
+      "message": "this special case is gone -- it has the effect of putting a white \"dot\" just outside the rounded corners. But the line below insets anyway, so it\u0027s already relying on the canvas to have the correct background. Makes no sense, so it\u0027s gone.",
+      "revId": "ad567264b2cdf5c758a33f52b784cf088fbdff17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
