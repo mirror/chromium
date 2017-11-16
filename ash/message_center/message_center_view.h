@@ -142,7 +142,7 @@ class ASH_EXPORT MessageCenterView
   base::string16 GetButtonBarTitle() const;
   void Update(bool animate);
   void SetVisibilityMode(Mode mode, bool animate);
-  void UpdateButtonBarStatus();
+  void UpdateButtonBarStatus(bool will_animate);
   void EnableCloseAllIfAppropriate();
   void SetNotificationViewForTest(message_center::MessageView* view);
   void UpdateNotification(const std::string& notification_id);
@@ -189,6 +189,8 @@ class ASH_EXPORT MessageCenterView
 
   // Current view mode. During animation, it is the target mode.
   Mode mode_ = Mode::NO_NOTIFICATIONS;
+  // Previous view mode.
+  Mode previous_mode_ = Mode::NO_NOTIFICATIONS;
 
   message_center::MessageViewContextMenuController context_menu_controller_{
       this};

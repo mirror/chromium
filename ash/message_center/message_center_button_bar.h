@@ -40,6 +40,7 @@ class MessageCenterButtonBar : public views::View,
 
   // Overridden from views::View:
   void ChildVisibilityChanged(views::View* child) override;
+  void Layout() override;
 
   // Overridden from views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
@@ -57,6 +58,7 @@ class MessageCenterButtonBar : public views::View,
 
   // Sometimes we shouldn't see the back arrow (not in settings).
   void SetBackArrowVisible(bool visible);
+  void SetBackArrowOpacity(double back_arrow_opacity);
 
   // Update the label of the title.
   void SetTitle(const base::string16& title);
