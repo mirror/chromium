@@ -1029,6 +1029,7 @@
     "script": "//testing/scripts/run_gtest_perf_test.py",
     "args": [
       "media_perftests",
+      "--test-launcher-retry-limit=0",
     ],
   },
   "load_library_perf_tests": {
