@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b612e2bd_496727dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-16T20:31:04Z",
+      "side": 1,
+      "message": "nit: also mention it\u0027s a followup of https://crrev.com/c/770451?",
+      "revId": "f4978ebbe861edd76befcfd18cead63ccf7fcb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
