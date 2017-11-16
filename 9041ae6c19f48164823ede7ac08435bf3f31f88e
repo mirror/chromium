@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8870d353_389a3ba7",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-16T22:59:12Z",
+      "side": 1,
+      "message": "Done\n\nThe rule feels a bit arbitrary. Adding or removing lines will end up adding or removing the braces... Anyway...",
+      "parentUuid": "a9b4ab5f_e18339b2",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 28
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7812ee4_a58aac29",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89860135_f7415033",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-16T22:59:12Z",
+      "side": 1,
+      "message": "This is basically a replica of the logic in line 136 in HandleMouseEvent. Basically if the browser is in fullscreen, then the button should not be shown for any reason, so unconditionally hiding it here should be fine.\n\nTBH this logic isn\u0027t very useful because BrowserView will call FullscreenControlHost::Hide when exiting fullscreen, so I think it\u0027s simpler to just return if browser is not in fullscreen.",
+      "parentUuid": "a7812ee4_a58aac29",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 39
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8e989176_db1971bc",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-16T22:59:12Z",
+      "side": 1,
+      "message": "I don\u0027t think so. See comments above.",
+      "parentUuid": "0d54459d_7573cccd",
+      "range": {
+        "startLine": 84,
+        "startChar": 5,
+        "endLine": 84,
+        "endChar": 17
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "820674c0_9c88c5de",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "914132c2_b33aabed",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-16T22:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "820674c0_9c88c5de",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 5
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6020a157_def003bf",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-16T22:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30749de5_807eae33",
+      "range": {
+        "startLine": 92,
+        "startChar": 6,
+        "endLine": 94,
+        "endChar": 19
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e565fce6_1d9ae6bd",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "bdb15bb8_58c4e638",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-16T22:59:12Z",
+      "side": 1,
+      "message": "This is probably not useful. Just removed.\n\nI was trying to match the spec of system keyboard lock, which reverses the animation if the key is released before the button is fully shown: https://keyboard-lock-fs-exit-a-dot-show.googleplex.com/keyboard-lock-fs-exit-a/\n\nIt looks like the touch mock doesn\u0027t do this.",
+      "parentUuid": "e565fce6_1d9ae6bd",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 100,
+        "endChar": 7
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba1c9625_fc959fe2",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
         "patchSetId": 3
@@ -151,6 +295,30 @@
       "writtenOn": "2017-11-16T21:49:00Z",
       "side": 1,
       "message": "Should this timer be started after the animation completes?",
+      "range": {
+        "startLine": 105,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 48
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b84d742_37805a86",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-16T22:59:12Z",
+      "side": 1,
+      "message": "It probably doesn\u0027t matter as long as the animation duration is constant. Delaying the timer until animation is done will require adding another observer interface to observe the end of the animation...",
+      "parentUuid": "ba1c9625_fc959fe2",
       "range": {
         "startLine": 105,
         "startChar": 8,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "bd0a43f8_5cba2dec",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-16T22:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4eccee6_79a574bf",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 153,
+        "endChar": 3
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cc47f06_f238f1a0",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
         "patchSetId": 3
@@ -206,6 +398,30 @@
       "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e3696da_d0bc5400",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-16T22:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cc47f06_f238f1a0",
+      "range": {
+        "startLine": 159,
+        "startChar": 4,
+        "endLine": 159,
+        "endChar": 15
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "95621059_26ac53d7",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-16T22:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc2502c3_22b6fc84",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 55
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33b13e2f_72dfeae6",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
         "patchSetId": 3
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "4a1612a4_b8dbfdd3",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-16T22:59:12Z",
+      "side": 1,
+      "message": "Obsolete.",
+      "parentUuid": "33b13e2f_72dfeae6",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 3
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de52ec9a_a0bf2fce",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.h",
         "patchSetId": 3
@@ -275,6 +539,30 @@
       "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e126a00_3a2140aa",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-16T22:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de52ec9a_a0bf2fce",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 48
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
