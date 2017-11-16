@@ -287,6 +287,8 @@ split_static_library("browser") {
     "component_updater/sw_reporter_installer_win.h",
     "component_updater/third_party_module_list_component_installer_win.cc",
     "component_updater/third_party_module_list_component_installer_win.h",
+    "component_updater/vr_assets_component_installer.cc",
+    "component_updater/vr_assets_component_installer.h",
     "conflicts/enumerate_input_method_editors_win.cc",
     "conflicts/enumerate_input_method_editors_win.h",
     "conflicts/enumerate_shell_extensions_win.cc",
