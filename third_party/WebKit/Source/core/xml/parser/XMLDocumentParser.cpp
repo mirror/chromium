@@ -314,7 +314,7 @@ void XMLDocumentParser::ClearCurrentNodeStack() {
   }
 }
 
-void XMLDocumentParser::insert(const SegmentedString&) {
+void XMLDocumentParser::insert(const String&) {
   NOTREACHED();
 }
 

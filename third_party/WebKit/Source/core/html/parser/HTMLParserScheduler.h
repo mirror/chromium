@@ -28,13 +28,13 @@
 
 #include <memory>
 #include "base/memory/scoped_refptr.h"
+#include "core/html/parser/HTMLDocumentParser.h"
 #include "core/html/parser/NestingLevelIncrementer.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/wtf/Allocator.h"
 
 namespace blink {
 
-class HTMLDocumentParser;
 class WebTaskRunner;
 
 class PumpSession : public NestingLevelIncrementer {

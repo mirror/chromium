@@ -50,7 +50,7 @@ class CORE_EXPORT HTMLViewSourceParser final
   HTMLViewSourceParser(HTMLViewSourceDocument&, const String& mime_type);
 
   // DocumentParser
-  void insert(const SegmentedString&) override { NOTREACHED(); }
+  void insert(const String&) override { NOTREACHED(); }
   void Append(const String&) override;
   void Finish() override;
 
@@ -62,7 +62,7 @@ class CORE_EXPORT HTMLViewSourceParser final
   void PumpTokenizer();
   void UpdateTokenizerState();
 
-  HTMLInputStream input_;
+  HTMLInputStream<true> input_;
   HTMLToken token_;
   HTMLSourceTracker source_tracker_;
   std::unique_ptr<HTMLTokenizer> tokenizer_;

@@ -30,6 +30,7 @@
 #include "core/dom/DocumentEncodingData.h"
 #include "core/html/parser/BackgroundHTMLInputStream.h"
 #include "core/html/parser/CompactHTMLToken.h"
+#include "core/html/parser/HTMLDocumentParser.h"
 #include "core/html/parser/HTMLParserOptions.h"
 #include "core/html/parser/HTMLPreloadScanner.h"
 #include "core/html/parser/HTMLSourceTracker.h"
@@ -41,7 +42,6 @@
 
 namespace blink {
 
-class HTMLDocumentParser;
 class XSSAuditor;
 class WebTaskRunner;
 

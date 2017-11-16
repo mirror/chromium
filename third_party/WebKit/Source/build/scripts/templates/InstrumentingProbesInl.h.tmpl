@@ -8,6 +8,7 @@
 #ifndef {{file.header_name}}_h
 #define {{file.header_name}}_h
 
+#include "core/html/parser/HTMLDocumentParser.h"
 #include "platform/heap/HeapAllocator.h"
 {% for include in config["settings"]["includes"] %}
 #include "{{include}}"

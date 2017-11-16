@@ -49,7 +49,7 @@ void HTMLViewSourceParser::PumpTokenizer() {
     source_tracker_.Start(input_.Current(), tokenizer_.get(), token_);
     if (!tokenizer_->NextToken(input_.Current(), token_))
       return;
-    source_tracker_.end(input_.Current(), tokenizer_.get(), token_);
+    source_tracker_.End(input_.Current(), tokenizer_.get(), token_);
 
     std::unique_ptr<XSSInfo> xss_info =
         xss_auditor_.FilterToken(FilterTokenRequest(

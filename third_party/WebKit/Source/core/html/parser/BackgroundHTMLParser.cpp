@@ -241,7 +241,7 @@ void BackgroundHTMLParser::PumpTokenizer() {
     }
 
     if (xss_auditor_->IsEnabled())
-      source_tracker_.end(input_.Current(), tokenizer_.get(), *token_);
+      source_tracker_.End(input_.Current(), tokenizer_.get(), *token_);
 
     {
       TextPosition position = TextPosition(input_.Current().CurrentLine(),
