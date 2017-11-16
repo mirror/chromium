@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b5527ea7_7c7747e2",
+        "filename": "chrome/browser/resources/print_preview/new/number_settings_section.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T22:30:25Z",
+      "side": 1,
+      "message": "I kept it separate because I am not sure if all sections will have the same padding-top value. For example the \"Destinations\" section in the old UI has a much larger top-padding than other sections (to align with the icon on the right).\n\nPerhaps we should revisit this once the destinations section is done?",
+      "parentUuid": "992012f3_ba47ed82",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 21
+      },
+      "revId": "2b50ba5d125d0988f08b389c291218cce103e32d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7bc2c9d_1ba4e853",
         "filename": "chrome/browser/resources/print_preview/new/other_options_settings.html",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "2b50ba5d125d0988f08b389c291218cce103e32d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "081af068_b1f82730",
+        "filename": "chrome/browser/resources/print_preview/new/other_options_settings.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-16T22:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7bc2c9d_1ba4e853",
+      "range": {
+        "startLine": 10,
+        "startChar": 56,
+        "endLine": 10,
+        "endChar": 61
+      },
+      "revId": "2b50ba5d125d0988f08b389c291218cce103e32d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
