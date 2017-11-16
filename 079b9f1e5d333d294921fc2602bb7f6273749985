@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "19b5714b_bacc3426",
+        "filename": "content/gpu/gpu_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T23:21:52Z",
+      "side": 1,
+      "message": "Gotta love gerrit. Just saw this comment.\n\nIs your decoding job time sensitive? If so, you\u0027ll really want to consider getting a dedicated Single Thread Task Runner or determining if you can be sequenced.",
+      "parentUuid": "cca6c2f2_96e9ef85",
+      "range": {
+        "startLine": 41,
+        "startChar": 55,
+        "endLine": 42,
+        "endChar": 36
+      },
+      "revId": "079b9f1e5d333d294921fc2602bb7f6273749985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee584e23_1b610bdd",
         "filename": "content/gpu/gpu_service_factory.cc",
         "patchSetId": 5
