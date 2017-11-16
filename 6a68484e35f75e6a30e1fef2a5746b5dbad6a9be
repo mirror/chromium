@@ -120,6 +120,24 @@
       "revId": "6a68484e35f75e6a30e1fef2a5746b5dbad6a9be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd122012_81660134",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-16T20:22:08Z",
+      "side": 1,
+      "message": "You won\u0027t have problems with them here, probably (because you have a plain blank object), but things like this can be problematic, which is why it\u0027s convenient to just have V8ObjectBuilder not expose this footgun:\n\n- if the property already exists and is not configurable, this throws an exception callers generally aren\u0027t prepared to handle\n- similar if the object has been configured as not extensible\n- similar if there is an access check failure on lookup (for some of the magical cross-context objects like Window)\n- similar if a property exists which uses the internal accessor-that-looks-like-a-data-property API\n- things may be unexpected if the receiver is an array, and the property is an index (this includes strings that consist of numbers, like \"0\") or \"length\"\n- similar for typed arrays\n- if the object is a Proxy, then this can actually be intercepted by script to do arbitrary things (including throwing an exception that isn\u0027t handled properly here, of course)\n\n\u003e AFAICT, V8ObjectBuilder wraps up a ScriptState and object, and ScriptValue wraps up the same two things so it seems like we should be able to just adopt the ScriptValue into the V8ObjectBuilder.\n\nFrom my perspective, the difference is that ScriptValue can wrap an arbitrary value, which may or may not be an object, let alone the plain object that V8ObjectBuilder is expecting (see the above concerns). In this case, what you describe would be safe and work, but I\u0027m a little afraid of having to explain the above in a comment. At the moment, its constructor ensures that it\u0027s dealing with an ordinary object by making one itself.",
+      "parentUuid": "167c2298_5d278a48",
+      "revId": "6a68484e35f75e6a30e1fef2a5746b5dbad6a9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
