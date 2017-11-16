@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b671d1e_dd12d27d",
+        "filename": "content/network/proxy_config_service_mojo_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-16T22:31:07Z",
+      "side": 1,
+      "message": "wording",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "205817371c98672900f1ec32cb7ae83ee81bcfc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8d8415_8bddd8a3",
+        "filename": "content/network/proxy_config_service_mojo_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-16T22:31:07Z",
+      "side": 1,
+      "message": "ProxyConfigService::Observer ?",
+      "range": {
+        "startLine": 64,
+        "startChar": 21,
+        "endLine": 64,
+        "endChar": 34
+      },
+      "revId": "205817371c98672900f1ec32cb7ae83ee81bcfc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c09bab_6a84426f",
+        "filename": "content/network/proxy_config_service_mojo_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-16T22:31:07Z",
+      "side": 1,
+      "message": "remove blank line",
+      "revId": "205817371c98672900f1ec32cb7ae83ee81bcfc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29564705_9bac5577",
+        "filename": "content/public/common/proxy_config_traits.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-16T22:31:07Z",
+      "side": 1,
+      "message": "I believe you should be checking the return value of AddRuleFromString(), and failing Read() if parsing fails (as that would indicate a bad message).",
+      "revId": "205817371c98672900f1ec32cb7ae83ee81bcfc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd1e7d00_4d3c5c1e",
+        "filename": "content/public/common/proxy_config_traits.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-16T22:31:07Z",
+      "side": 1,
+      "message": "Check that parsing didn\u0027t fail with ProxyServer::is_invalid().\n\n(Not an exact translation, but close enough).",
+      "range": {
+        "startLine": 53,
+        "startChar": 53,
+        "endLine": 53,
+        "endChar": 73
+      },
+      "revId": "205817371c98672900f1ec32cb7ae83ee81bcfc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca6137e2_ca8853ee",
+        "filename": "content/public/common/proxy_config_traits.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-16T22:31:07Z",
+      "side": 1,
+      "message": "how does this work? What is ProxyConfigDataView, how is ReadProxyRules generated?",
+      "revId": "205817371c98672900f1ec32cb7ae83ee81bcfc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
