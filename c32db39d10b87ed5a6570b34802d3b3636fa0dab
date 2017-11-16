@@ -142,6 +142,30 @@
       "revId": "c32db39d10b87ed5a6570b34802d3b3636fa0dab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "561d80ec_327805fb",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-16T21:57:02Z",
+      "side": 1,
+      "message": "I\u0027m coming into the conversation a little cold, so I\u0027m not sure I grok what I\u0027m trading off, sorry.\n\nIs the current solution that autofill gets notified twice? That seems like it would be OK as long as we ignore the 2nd notfication (since the ui is already visible). Or is the solution to ignore one of the events?",
+      "parentUuid": "1e263d04_d9578161",
+      "range": {
+        "startLine": 398,
+        "startChar": 19,
+        "endLine": 398,
+        "endChar": 26
+      },
+      "revId": "c32db39d10b87ed5a6570b34802d3b3636fa0dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
