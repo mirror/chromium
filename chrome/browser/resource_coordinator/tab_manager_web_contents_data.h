@@ -63,6 +63,9 @@ class TabManager::WebContentsData
   // tab is considered loaded.
   void NotifyTabIsLoaded();
 
+  // Logs a UKM TabManager.Tab entry for the tab.
+  void ReportUKMForTab();
+
   // Returns true if the tab has been discarded to save memory.
   bool IsDiscarded();
 
@@ -200,6 +203,9 @@ class TabManager::WebContentsData
   bool is_purged_;
 
   ukm::SourceId ukm_source_id_;
+
+  // The last time the TabManager.Tab UKM event was logged.
+  base::TimeTicks last_tab_log_time_;
 
   DISALLOW_COPY_AND_ASSIGN(WebContentsData);
 };
