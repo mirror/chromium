@@ -12,6 +12,7 @@
 
 #include "base/macros.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
+#include "content/common/navigation_params.mojom.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/test/mock_render_process_host.h"
 #include "content/public/test/test_renderer_host.h"
@@ -120,6 +121,11 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
   // Simulates a navigation to |url| committing in the RenderFrameHost.
   // DEPRECATED: use NavigationSimulator instead.
   void SimulateNavigationCommit(const GURL& url);
+
+  // Simulates the renderer asking the RenderFrameHost to navigate.
+  // DEPRECATED: use NavigationSimulator instead.
+  void SimulateBeginNavigation(const CommonNavigationParams& common_params,
+                               mojom::BeginNavigationParamsPtr begin_params);
 
   // PlzNavigate: this method simulates receiving a BeginNavigation IPC.
   void SendRendererInitiatedNavigationRequest(const GURL& url,
