@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8ffb3f9_66a1c397",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-16T22:57:47Z",
+      "side": 1,
+      "message": "nit: maybe clarify that this only enables projection if the pref is set to true?",
+      "revId": "61a85d3c4b57db7bc33129ed1e9f99c55965c3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2180b4b_c531b7b8",
+        "filename": "ash/touch/touch_devices_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-16T22:57:47Z",
+      "side": 1,
+      "message": "nit: \"use or sync\"?",
+      "revId": "61a85d3c4b57db7bc33129ed1e9f99c55965c3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
