@@ -34,6 +34,24 @@
       "revId": "5e1ce553e066e887adc068c9cb2ff2727748135c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c49e174a_e8a4423f",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-16T20:12:10Z",
+      "side": 1,
+      "message": "Can you see if this pattern is used in other parts of the code and whether we can test for it? Rouslan may know, having worked on iframe/main frame for Payment Request.",
+      "parentUuid": "876a0331_7a338e3f",
+      "revId": "5e1ce553e066e887adc068c9cb2ff2727748135c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
