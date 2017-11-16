@@ -52,6 +52,24 @@
       "revId": "0415d90265940c440e35c60c212ffea05cc950dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c30e136d_b4b083e2",
+        "filename": "ash/wm/default_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-16T23:15:58Z",
+      "side": 1,
+      "message": "cleared from offline chat. Auto-window management will work if it hasn\u0027t been changed by user.",
+      "parentUuid": "45563dd4_eff8be47",
+      "revId": "0415d90265940c440e35c60c212ffea05cc950dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
