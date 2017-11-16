@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77791f35_f90c9485",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-16T06:45:33Z",
+      "side": 1,
+      "message": "use e.g. this instead:\n\n  constexpr base::TimeDelta kModelStartDelay \u003d base::TimeDelta::FromSeconds(10);",
+      "revId": "b285ed461d2913ca35e715c3f3047bc1f2c05f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad649dc3_f55f52c1",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-16T06:45:33Z",
+      "side": 1,
+      "message": "i\u0027d double-check that you actually need this; i think that existing code in chrome is already requesting an update at startup.",
+      "revId": "b285ed461d2913ca35e715c3f3047bc1f2c05f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6656daf2_cb825c9e",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-16T06:45:33Z",
+      "side": 1,
+      "message": "instead of default/NOTREACHED(), i think that you can just leave out the default section, which will cause an error from the compiler if you don\u0027t cover all values in the enum.",
+      "revId": "b285ed461d2913ca35e715c3f3047bc1f2c05f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc6c0841_6d2523e0",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event_logger.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-16T06:45:33Z",
+      "side": 1,
+      "message": "maybe something like this?\n\n  // Last-received external power state. Changes are treated as user activity.",
+      "revId": "b285ed461d2913ca35e715c3f3047bc1f2c05f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
