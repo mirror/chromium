@@ -5,10 +5,10 @@
 #include "components/exo/sub_surface.h"
 
 #include "base/memory/ptr_util.h"
-#include "components/exo/shell_surface.h"
 #include "components/exo/surface.h"
 #include "components/exo/test/exo_test_base.h"
 #include "components/exo/test/exo_test_helper.h"
+#include "components/exo/xdg_shell_surface.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace exo {
@@ -18,7 +18,7 @@ using SubSurfaceTest = test::ExoTestBase;
 
 TEST_F(SubSurfaceTest, SetPosition) {
   auto parent = std::make_unique<Surface>();
-  auto shell_surface = std::make_unique<ShellSurface>(parent.get());
+  auto shell_surface = std::make_unique<XdgShellSurface>(parent.get());
   auto surface = std::make_unique<Surface>();
   auto sub_surface = std::make_unique<SubSurface>(surface.get(), parent.get());
 
@@ -51,7 +51,7 @@ TEST_F(SubSurfaceTest, SetPosition) {
 
 TEST_F(SubSurfaceTest, PlaceAbove) {
   auto parent = std::make_unique<Surface>();
-  auto shell_surface = std::make_unique<ShellSurface>(parent.get());
+  auto shell_surface = std::make_unique<XdgShellSurface>(parent.get());
   auto surface1 = std::make_unique<Surface>();
   auto surface2 = std::make_unique<Surface>();
   auto non_sibling_surface = std::make_unique<Surface>();
@@ -83,7 +83,7 @@ TEST_F(SubSurfaceTest, PlaceAbove) {
 
 TEST_F(SubSurfaceTest, PlaceBelow) {
   auto parent = std::make_unique<Surface>();
-  auto shell_surface = std::make_unique<ShellSurface>(parent.get());
+  auto shell_surface = std::make_unique<XdgShellSurface>(parent.get());
   auto surface1 = std::make_unique<Surface>();
   auto surface2 = std::make_unique<Surface>();
   auto non_sibling_surface = std::make_unique<Surface>();
@@ -115,7 +115,7 @@ TEST_F(SubSurfaceTest, PlaceBelow) {
 
 TEST_F(SubSurfaceTest, SetCommitBehavior) {
   auto parent = std::make_unique<Surface>();
-  auto shell_surface = std::make_unique<ShellSurface>(parent.get());
+  auto shell_surface = std::make_unique<XdgShellSurface>(parent.get());
   auto child = std::make_unique<Surface>();
   auto grandchild = std::make_unique<Surface>();
   auto child_sub_surface =
