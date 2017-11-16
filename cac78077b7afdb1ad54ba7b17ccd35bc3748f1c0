@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a409a4b7_8278a06c",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-16T08:16:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ae969eb_2ab4319c",
+      "revId": "cac78077b7afdb1ad54ba7b17ccd35bc3748f1c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fefe18a_6272f662",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "cac78077b7afdb1ad54ba7b17ccd35bc3748f1c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccee4913_fff5a384",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-16T08:16:32Z",
+      "side": 1,
+      "message": "Because we don\u0027t need it for WillProcessResponse() for our purposes.\nYour question gives me the impression you\u0027d rather support it for all 4 methods, so I\u0027ve gone ahead and added it to the NavigationThrottle::BLOCK_RESPONSE case below.\n\nHowever, OnRequestFailedInternal() will not actually use the error page content if the net error is ERR_ABORTED, so I haven\u0027t added it here.",
+      "parentUuid": "0fefe18a_6272f662",
+      "revId": "cac78077b7afdb1ad54ba7b17ccd35bc3748f1c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
