@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b63965d_56738e86",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-16T14:25:05Z",
+      "side": 1,
+      "message": "Would it be useful to add \"summary\" about this? There are a few cases where it will be 0 (no playback happened or first playback)",
+      "revId": "4c084593b5933b8240b8829347ff23dacd694bb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
