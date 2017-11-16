@@ -9,8 +9,9 @@
 namespace extensions {
 
 ScopedWebFrame::ScopedWebFrame()
-    : view_(blink::WebView::Create(nullptr,
-                                   blink::kWebPageVisibilityStateVisible)),
+    : view_(blink::WebView::Create(/* client = */ nullptr,
+                                   blink::kWebPageVisibilityStateVisible,
+                                   /* opener = */ nullptr)),
       frame_(blink::WebLocalFrame::CreateMainFrame(view_,
                                                    &frame_client_,
                                                    nullptr,
