@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "057974e0_a0208acb",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-11-16T19:52:19Z",
+      "side": 1,
+      "message": "so, is this mixing also deprecated? If so, please add removal of it to your TODO above.",
+      "range": {
+        "startLine": 304,
+        "startChar": 14,
+        "endLine": 304,
+        "endChar": 22
+      },
+      "revId": "adac9ffc6bd721ed555f5032bafecb7f71e6affb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
