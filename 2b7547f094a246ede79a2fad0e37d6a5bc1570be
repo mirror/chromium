@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b4c9914_f20414af",
+        "filename": "media/filters/vpx_video_decoder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-16T02:22:15Z",
+      "side": 0,
+      "message": "Removed these since they\u0027re now tested by the unit tests for FrameBufferPool.",
+      "revId": "2b7547f094a246ede79a2fad0e37d6a5bc1570be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c21b2133_a7e3b23c",
+        "filename": "media/filters/vpx_video_decoder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-16T02:22:15Z",
+      "side": 0,
+      "message": "Ditto on removal.",
+      "revId": "2b7547f094a246ede79a2fad0e37d6a5bc1570be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
