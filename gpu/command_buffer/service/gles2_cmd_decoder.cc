@@ -5863,9 +5863,6 @@ uint32_t GLES2DecoderImpl::GetAndClearBackbufferClearBitsForTest() {
 
 void GLES2DecoderImpl::OnFboChanged() const {
   state_.fbo_binding_for_scissor_workaround_dirty = true;
-
-  if (workarounds().flush_on_framebuffer_change)
-    api()->glFlushFn();
 }
 
 // Called after the FBO is checked for completeness.
