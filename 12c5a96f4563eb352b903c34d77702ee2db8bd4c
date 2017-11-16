@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fab028dc_65743002",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-16T13:49:33Z",
+      "side": 1,
+      "message": "Set(global, v8::Undefined(GetIsolate()));\n\nis better.  We\u0027d like to return |undefined| temporarily inside V1 shadow tree, right?  Then, let\u0027s simply set it to undefined.",
+      "range": {
+        "startLine": 147,
+        "startChar": 19,
+        "endLine": 147,
+        "endChar": 41
+      },
+      "revId": "12c5a96f4563eb352b903c34d77702ee2db8bd4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b204ad8f_3e1040cb",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-16T13:49:33Z",
+      "side": 1,
+      "message": "This is not the right place, I think.\n\nOn this line, you\u0027re counting how many times events were dispatched inside V0 shadow trees, regardless of whether author script actually used window.event or not.  I think that you\u0027d like to count how many times author script used window.event inside V0 shadow trees.\n\nbindings/core/v8/custom/V8WindowCustom.cpp\nV8Window::eventAttributeGetterCustom()\nis the function that is called back when author script accesses window.event.",
+      "revId": "12c5a96f4563eb352b903c34d77702ee2db8bd4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd46847f_b60c79a6",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-16T13:49:33Z",
+      "side": 1,
+      "message": "You\u0027re going to retire this feature in V0 shadow tree, too, in future, right?  Then, please add a TODO comment.",
+      "revId": "12c5a96f4563eb352b903c34d77702ee2db8bd4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "204237f7_4c2321a9",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-16T13:49:33Z",
+      "side": 1,
+      "message": "This name is confusing to me because it reads like that we\u0027re counting all the use cases of window.event.  This counts only the case in V0 shadow tree.\n\nIf there is no restriction nor convention on naming, I\u0027d suggest kWindowEventInV0ShadowTree or something like that.",
+      "range": {
+        "startLine": 152,
+        "startChar": 66,
+        "endLine": 152,
+        "endChar": 78
+      },
+      "revId": "12c5a96f4563eb352b903c34d77702ee2db8bd4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
