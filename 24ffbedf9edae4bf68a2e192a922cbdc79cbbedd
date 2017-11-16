@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "583bdef8_c0ba8d8f",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-16T21:35:04Z",
+      "side": 0,
+      "message": "please remove mirrored if it\u0027s no longer necessary.",
+      "revId": "24ffbedf9edae4bf68a2e192a922cbdc79cbbedd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
