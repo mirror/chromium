@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "144d2db7_57c9d6a5",
+        "filename": "content/browser/android/content_view_core.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-11-16T05:51:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05f00be4_66374edb",
+      "revId": "967f023e12c53c01be41e17d8e446ae0f72643dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d90fd078_ddb0dda8",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "967f023e12c53c01be41e17d8e446ae0f72643dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf7b6891_89ba40da",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1514,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-11-16T05:51:03Z",
+      "side": 1,
+      "message": "Done\n\nI see the comment \"device pixels\" in line 874. It seems \"physical pixels\" is the same with \"device pixels\".",
+      "parentUuid": "d90fd078_ddb0dda8",
+      "revId": "967f023e12c53c01be41e17d8e446ae0f72643dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -68,6 +104,42 @@
       "revId": "967f023e12c53c01be41e17d8e446ae0f72643dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b0c88c_508f8666",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-11-16T05:51:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7d021741_27908116",
+      "revId": "967f023e12c53c01be41e17d8e446ae0f72643dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f65c05d_593a1c78",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-11-16T05:51:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7d021741_27908116",
+      "revId": "967f023e12c53c01be41e17d8e446ae0f72643dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
