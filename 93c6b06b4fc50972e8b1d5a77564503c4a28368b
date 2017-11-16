@@ -382,6 +382,24 @@
     },
     {
       "key": {
+        "uuid": "3ae0df9c_f242c244",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-16T21:33:12Z",
+      "side": 1,
+      "message": "the test results you\u0027re updating for 141_checkout_cc_keurig.com.{html|out} captures a case where they\u0027re not successive.\n\nThe month is (together) a hidden dropdown followed by a visible text field and the year is (together) another hidden dropdown followed by a visible text field.",
+      "parentUuid": "c858cdd5_02fab5a8",
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e3073de_e5b35360",
         "filename": "components/autofill/core/browser/credit_card_field_unittest.cc",
         "patchSetId": 19
@@ -528,6 +546,46 @@
       "side": 1,
       "message": "I have to check that",
       "parentUuid": "f1b75dc0_d0c75939",
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44c9badb_bc2524b5",
+        "filename": "components/test/data/autofill/heuristics/output/141_checkout_cc_keurig.com.out",
+        "patchSetId": 19
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-16T21:33:12Z",
+      "side": 1,
+      "message": "this is non-focusable",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 33
+      },
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58c67cf0_a0eb56c5",
+        "filename": "components/test/data/autofill/heuristics/output/141_checkout_cc_keurig.com.out",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-16T21:33:12Z",
+      "side": 1,
+      "message": "this is also non-focusable",
       "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
