@@ -119,6 +119,22 @@ void Node::InsertChild(base::StringPiece name, Node* node) {
   children_.emplace(name.as_string(), node);
 }
 
+Node* Node::CreateChild(base::StringPiece name) {
+  Node* new_child = dump_graph_->global_graph()->CreateNode(dump_graph_, this);
+  InsertChild(name, new_child);
+  return new_child;
+}
+
+bool Node::IsDescendentOf(const Node& possible_parent) const {
+  const Node* current = this;
+  while (current != nullptr) {
+    if (current == &possible_parent)
+      return true;
+    current = current->parent();
+  }
+  return false;
+}
+
 void Node::AddOwnedByEdge(Edge* edge) {
   owned_by_edges_.push_back(edge);
 }
