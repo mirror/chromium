@@ -138,6 +138,24 @@
       "revId": "6a68484e35f75e6a30e1fef2a5746b5dbad6a9be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab82a7c_6885c70e",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-16T20:35:21Z",
+      "side": 1,
+      "message": "Fair enough. These concerns sound like they\u0027d require careful consideration and outweigh the benefit of having an easy way to reuse V8ObjectBuilder to extend an object.",
+      "parentUuid": "bd122012_81660134",
+      "revId": "6a68484e35f75e6a30e1fef2a5746b5dbad6a9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
