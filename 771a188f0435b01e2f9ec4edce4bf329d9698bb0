@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dd92a85a_7fd473bf",
+        "filename": "ios/chrome/browser/translate/language_selection_context.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-16T16:07:00Z",
+      "side": 1,
+      "message": "Where this context is for target selection and |unavailableLanguageIndex| is the index of the source selection. Short of spelling that out, which seemed confusing, I didn\u0027t see a clearer way of phrasing it.",
+      "parentUuid": "a840a5ad_381a0fd6",
+      "range": {
+        "startLine": 30,
+        "startChar": 70,
+        "endLine": 31,
+        "endChar": 14
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee6ceef2_e149378b",
         "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.h",
         "patchSetId": 10
@@ -65,6 +89,48 @@
     },
     {
       "key": {
+        "uuid": "e1a19287_1279b4ed",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-16T16:07:00Z",
+      "side": 1,
+      "message": "Yep, you\u0027re right. This is better off as an NSObject.",
+      "parentUuid": "ee6ceef2_e149378b",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 68
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2410ee2e_ae16dd2e",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-16T16:07:00Z",
+      "side": 1,
+      "message": "I\u0027ll change the superclass instead.",
+      "parentUuid": "973b1a02_806b1997",
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08e54f67_34bced1d",
         "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.h",
         "patchSetId": 10
@@ -85,6 +151,30 @@
       "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8c58f5_8cc4f450",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-16T16:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08e54f67_34bced1d",
+      "range": {
+        "startLine": 16,
+        "startChar": 30,
+        "endLine": 16,
+        "endChar": 53
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "dd83f17a_6bc0c391",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-16T16:07:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fc250e1f_89943fa2",
+      "range": {
+        "startLine": 22,
+        "startChar": 76,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c43f9c8_f11d3406",
         "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.mm",
         "patchSetId": 10
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "acbd1243_475bfaf0",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-16T16:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c43f9c8_f11d3406",
+      "range": {
+        "startLine": 25,
+        "startChar": 68,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ca72a1f_82acc5c3",
         "filename": "ios/chrome/browser/ui/translate/language_selection_mediator.h",
         "patchSetId": 10
@@ -148,6 +286,24 @@
       "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d3d6e0_2832a63f",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_mediator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-16T16:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ca72a1f_82acc5c3",
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "7a58b9ae_b87dd716",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_mediator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-16T16:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8375183f_a5f25e1f",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 14
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77bb93b0_dfef1bfa",
         "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.h",
         "patchSetId": 10
@@ -185,6 +365,30 @@
       "writtenOn": "2017-11-16T13:05:51Z",
       "side": 1,
       "message": "Out of curiosity, why?",
+      "range": {
+        "startLine": 13,
+        "startChar": 54,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "769271af_e12b1df7",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-16T16:07:00Z",
+      "side": 1,
+      "message": "No idea. I\u0027m copying this verbatim from before_translate_infobar_controller.h",
+      "parentUuid": "77bb93b0_dfef1bfa",
       "range": {
         "startLine": 13,
         "startChar": 54,
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "71410ee1_3c585af4",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-16T16:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0892688_77de6ed7",
+      "range": {
+        "startLine": 24,
+        "startChar": 29,
+        "endLine": 24,
+        "endChar": 37
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69b95775_e6d0c527",
         "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.h",
         "patchSetId": 10
@@ -243,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "b9dc8fdb_32aff25c",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-16T16:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69b95775_e6d0c527",
+      "range": {
+        "startLine": 32,
+        "startChar": 26,
+        "endLine": 32,
+        "endChar": 35
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae3f0951_cd56810b",
         "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.mm",
         "patchSetId": 10
@@ -254,6 +506,30 @@
       "writtenOn": "2017-11-16T13:05:51Z",
       "side": 1,
       "message": "Isn\u0027t this already synthesized for you?",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 0
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2be0052f_3e1ea570",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-16T16:07:00Z",
+      "side": 1,
+      "message": "Yeah, no idea why I did that.",
+      "parentUuid": "ae3f0951_cd56810b",
       "range": {
         "startLine": 98,
         "startChar": 0,
@@ -289,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "9152a8cc_3217db34",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-16T16:07:00Z",
+      "side": 1,
+      "message": "Indeed, this is more inexplicable nonsense I should have caught.",
+      "parentUuid": "cfa49856_0680c734",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 69
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "151207f2_5ac5f137",
         "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.mm",
         "patchSetId": 10
@@ -300,6 +600,30 @@
       "writtenOn": "2017-11-16T13:05:51Z",
       "side": 1,
       "message": "Nit: you could use ObjCCast and elvis operator:\nUILabel* label \u003d\n    base::mac::ObjCCast\u003cUILabel\u003e(view) ?: [[UILabel alloc] init];\n\nReads like Swift\u0027s:\nlet label \u003d view as? UILabel ?? UILabel()",
+      "range": {
+        "startLine": 124,
+        "startChar": 19,
+        "endLine": 126,
+        "endChar": 48
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4c8907c_aa33bc6b",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-16T16:07:00Z",
+      "side": 1,
+      "message": "Yep, this was mostly cloned from the UI code in browser/translate.",
+      "parentUuid": "151207f2_5ac5f137",
       "range": {
         "startLine": 124,
         "startChar": 19,
@@ -332,6 +656,30 @@
       "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c307498_9996e9c2",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_view_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-16T16:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7ac2130_c0f45854",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 54
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
