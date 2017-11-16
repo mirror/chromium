@@ -105,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "97e139c2_acb0ee4e",
+        "filename": "ash/public/interfaces/accessibility_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T20:57:59Z",
+      "side": 1,
+      "message": "Yeah, it would be nice if we only called this PlayEarcon() method when we actually wanted a sound to play.",
+      "parentUuid": "f3b8f8f6_fd824d8f",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d62133b9_0cfc96ec",
         "filename": "ash/public/interfaces/accessibility_controller.mojom",
         "patchSetId": 3
@@ -185,6 +203,24 @@
       "side": 1,
       "message": "I saw this idea \"Where possible, move all the code out of AccessibilityManager into AccessibilityController.\" from the doc: go/mustash-tray-accessibility.\n\nProbably I misunderstood. It is (1) moving all controls that ash-needed to AccessibilityController mojom, (2) while keep others still in AccessibilityManager?",
       "parentUuid": "a49f73f8_bdf57397",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cfaba37_9576adda",
+        "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-16T20:57:59Z",
+      "side": 1,
+      "message": "I meant moving code from chrome (A11yManager) into ash (A11yController). I wasn\u0027t referring to the mojom interface, or this class.\n\nIf the code stays in chrome, I don\u0027t think it matters if it stays in A11yManager or A11yControllerClient, so I don\u0027t see a good reason to move it.",
+      "parentUuid": "159c058b_39c805e1",
       "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
