@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_MIDI_MIDI_MESSAGE_QUEUE_H_
-#define MEDIA_MIDI_MIDI_MESSAGE_QUEUE_H_
+#ifndef COMPONENTS_MIDI_MIDI_MESSAGE_QUEUE_H_
+#define COMPONENTS_MIDI_MIDI_MESSAGE_QUEUE_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -12,7 +12,7 @@
 
 #include "base/containers/circular_deque.h"
 #include "base/macros.h"
-#include "media/midi/midi_export.h"
+#include "components/midi/midi_export.h"
 
 namespace midi {
 
@@ -72,4 +72,4 @@ class MIDI_EXPORT MidiMessageQueue {
 
 }  // namespace midi
 
-#endif  // MEDIA_MIDI_MIDI_MESSAGE_QUEUE_H_
+#endif  // COMPONENTS_MIDI_MIDI_MESSAGE_QUEUE_H_

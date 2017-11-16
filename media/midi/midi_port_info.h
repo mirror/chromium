@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-#include "media/midi/midi_export.h"
+#include "components/midi/midi_export.h"
 #include "media/midi/midi_service.mojom.h"
 
 namespace midi {
