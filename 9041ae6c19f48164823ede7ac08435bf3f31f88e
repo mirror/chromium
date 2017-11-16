@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9b4ab5f_e18339b2",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T21:49:00Z",
+      "side": 1,
+      "message": "Braces are required here.",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 28
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7812ee4_a58aac29",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T21:49:00Z",
+      "side": 1,
+      "message": "With this structure, touch events will be able to hide the dismiss button invoked from a mouse. Is this okay?",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 39
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d54459d_7573cccd",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T21:49:00Z",
+      "side": 1,
+      "message": "Is there any harm in unconditionally hiding the control in this case?",
+      "range": {
+        "startLine": 84,
+        "startChar": 5,
+        "endLine": 84,
+        "endChar": 17
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820674c0_9c88c5de",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T21:49:00Z",
+      "side": 1,
+      "message": "Braces aren\u0027t required here.",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 5
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30749de5_807eae33",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T21:49:00Z",
+      "side": 1,
+      "message": "Nit: Braces are required when the if condition spans multiple lines.\n\nApply these rules to the rest of the change.",
+      "range": {
+        "startLine": 92,
+        "startChar": 6,
+        "endLine": 94,
+        "endChar": 19
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e565fce6_1d9ae6bd",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T21:49:00Z",
+      "side": 1,
+      "message": "We\u0027re already showing the control so the user would probably expect the action to complete. What\u0027s the goal of hiding it before the animation completes?\n\nUpdate the comment with the reason.",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 100,
+        "endChar": 7
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba1c9625_fc959fe2",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T21:49:00Z",
+      "side": 1,
+      "message": "Should this timer be started after the animation completes?",
+      "range": {
+        "startLine": 105,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 48
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4eccee6_79a574bf",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T21:49:00Z",
+      "side": 1,
+      "message": "Braces aren\u0027t required here.",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 153,
+        "endChar": 3
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc47f06_f238f1a0",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T21:49:00Z",
+      "side": 1,
+      "message": "Nit: Braces are required when the if condition spans multiple lines.",
+      "range": {
+        "startLine": 159,
+        "startChar": 4,
+        "endLine": 159,
+        "endChar": 15
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc2502c3_22b6fc84",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T21:49:00Z",
+      "side": 1,
+      "message": "Seems like this is always set. If that\u0027s the case, you can DCHECK(on_visibility_changed) and remove the if (on_visibility_changed) below.",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 55
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b13e2f_72dfeae6",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T21:49:00Z",
+      "side": 1,
+      "message": "No braces here.",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 3
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de52ec9a_a0bf2fce",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T21:49:00Z",
+      "side": 1,
+      "message": "Make this const.",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 48
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
