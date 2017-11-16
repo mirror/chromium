@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a2070f2_f7349273",
+        "filename": "components/omnibox/browser/autocomplete_match_type.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-16T13:35:16Z",
+      "side": 1,
+      "message": "do you want to include the descriptive text in the default description too?",
+      "range": {
+        "startLine": 89,
+        "startChar": 11,
+        "endLine": 89,
+        "endChar": 21
+      },
+      "revId": "9e010bdd46e14d741b8e9dcb0486994cab34ccba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece4d95e_2e6a0b8c",
+        "filename": "components/omnibox_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-16T13:35:16Z",
+      "side": 1,
+      "message": "the \u003cph\u003e tag wraps only one of the $1/$2/etc things, afaik, and has a \u003cex\u003e inside it, so this might read like:\n\n  \u003cph name\u003d\"TEXT\"\u003e$2\u003cex\u003eChromium\u003c/ex\u003e\u003c/ph\u003e \u003cph name\u003d\"LOC\"\u003e$1\u003cex\u003ehttps://www.chromium.org\u003c/ex\u003e\u003c/ph\u003e location from history\n\nnote that if the ph name occurs anywhere in the string, its value will get substituted (!) so if you do:\n\n  \u003cph name\u003d\"URL\"\u003e$1\u003cex\u003ehttps://www.chromium.org\u003c/ex\u003e\u003c/ph\u003e URL from history\n\nI think you\u0027ll get:\n\n  \"https://www.chromium.org https://www.chromium.org from history\"\n\nsame for the ones below.",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 7
+      },
+      "revId": "9e010bdd46e14d741b8e9dcb0486994cab34ccba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
