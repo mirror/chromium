@@ -15,7 +15,7 @@
 #include "base/threading/thread.h"
 #include "device/geolocation/geolocation_export.h"
 #include "device/geolocation/geolocation_provider.h"
-#include "device/geolocation/location_provider.h"
+#include "device/geolocation/public/cpp/location_provider.h"
 #include "device/geolocation/public/interfaces/geoposition.mojom.h"
 
 namespace base {
@@ -47,6 +47,12 @@ class DEVICE_GEOLOCATION_EXPORT GeolocationProviderImpl
   // called on the UI thread so that the GeolocationProviderImpl is always
   // instantiated on the same thread. Ownership is NOT returned.
   static GeolocationProviderImpl* GetInstance();
+
+  // Optional: provide a customed location provider from embedder.
+  // Call before using Init() on the singleton GetInstance(), and call no more
+  // than once.
+  static void SetOverrideLocationProvider(
+      std::unique_ptr<LocationProvider> provider);
 
   bool user_did_opt_into_location_services_for_testing() {
     return user_did_opt_into_location_services_;
