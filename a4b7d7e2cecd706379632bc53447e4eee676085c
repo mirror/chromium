@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea3fa13e_93224cc2",
+        "filename": "content/browser/browser_plugin/browser_plugin_guest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-16T18:22:43Z",
+      "side": 1,
+      "message": "nit: This call to RegisterFrameSinkId() could be moved into OnAttached().",
+      "revId": "a4b7d7e2cecd706379632bc53447e4eee676085c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
