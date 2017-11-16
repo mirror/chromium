@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "38521387_5481c234",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-16T20:04:32Z",
+      "side": 1,
+      "message": "Good catch.",
+      "parentUuid": "cb27d2d0_4669ba06",
+      "range": {
+        "startLine": 84,
+        "startChar": 6,
+        "endLine": 84,
+        "endChar": 32
+      },
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f71b7dd5_2dc9b4d2",
         "filename": "chrome/browser/resources/discards/discards.css",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "3c5c7526_f4019df6",
+        "filename": "chrome/browser/resources/discards/discards.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-16T20:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f71b7dd5_2dc9b4d2",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "858a0ca2_c03990e3",
         "filename": "chrome/browser/resources/discards/discards.html",
         "patchSetId": 5
@@ -53,6 +95,24 @@
       "writtenOn": "2017-11-15T01:17:20Z",
       "side": 1,
       "message": "Did you mean \u003ca is\u003d\"action-link\"...\u003e\nI don\u0027t think you can make a div inherit from action-link.",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "909cd541_6dee9976",
+        "filename": "chrome/browser/resources/discards/discards.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-16T20:04:32Z",
+      "side": 1,
+      "message": "Actually, it appears to work just fine. Is there any reason why \u003ca\u003e should be used?",
+      "parentUuid": "858a0ca2_c03990e3",
       "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "9c5fb7dd_bc99f9fd",
+        "filename": "chrome/browser/resources/discards/discards.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-16T20:04:32Z",
+      "side": 1,
+      "message": "I\u0027m planning on adding other tables to this UX, so the compound selectors would be less obvious.\n\nI also find it counter-intuitive that there\u0027s a preference for navigating to the element, as this creates an implicit dependency between the document structure and the code. Don\u0027t ids decouple this?",
+      "parentUuid": "e16f5681_b48a6157",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13960dce_4c346ee3",
         "filename": "chrome/browser/resources/discards/discards.js",
         "patchSetId": 5
@@ -90,6 +168,24 @@
       "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f0c6c4a_ea153517",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-16T20:04:32Z",
+      "side": 1,
+      "message": "Aha, \"IIFE\" is another acronym and best practice I\u0027ve never heard of. Thanks again :)\n\nDone.",
+      "parentUuid": "13960dce_4c346ee3",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "a7e2dc4b_a2d78ac1",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-16T20:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c564ec3d_df127577",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e22874c_e88b3a0c",
         "filename": "chrome/browser/resources/discards/discards.js",
         "patchSetId": 5
@@ -124,6 +238,24 @@
       "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f477f0_811a3f2f",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-16T20:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e22874c_e88b3a0c",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "54e9e68b_7beb9bbc",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-16T20:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0ec6a50_403502b6",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee295eba_6d1660fe",
         "filename": "chrome/browser/resources/discards/discards.js",
         "patchSetId": 5
@@ -158,6 +308,24 @@
       "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9a1e31_8543572d",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-16T20:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee295eba_6d1660fe",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "03ca8f8d_259f0246",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-16T20:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "289ec03a_a3045ea3",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "386bfd88_ed7fa380",
         "filename": "chrome/browser/resources/discards/discards.js",
         "patchSetId": 5
@@ -189,6 +375,30 @@
       "writtenOn": "2017-11-15T01:17:20Z",
       "side": 1,
       "message": "Equivalent to:\nrow.querySelector(\u0027img\u0027).src \u003d info.faviconUrl;",
+      "range": {
+        "startLine": 287,
+        "startChar": 23,
+        "endLine": 287,
+        "endChar": 31
+      },
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff92a6f6_e6d876f9",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-16T20:04:32Z",
+      "side": 1,
+      "message": "Happy to use .src, but I slightly dislike using an img selector, as if another img is added this code is brittle. Isn\u0027t explicit naming more robust in the face of changes/refactors?",
+      "parentUuid": "386bfd88_ed7fa380",
       "range": {
         "startLine": 287,
         "startChar": 23,
