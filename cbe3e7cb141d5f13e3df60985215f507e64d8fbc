@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "dc0c0b4f_56ad7bc3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-16T06:06:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "073bd283_3573e7ae",
+      "range": {
+        "startLine": 2046,
+        "startChar": 76,
+        "endLine": 2046,
+        "endChar": 77
+      },
+      "revId": "cbe3e7cb141d5f13e3df60985215f507e64d8fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa642b45_2b34ee38",
         "filename": "ui/app_list/app_list_model.cc",
         "patchSetId": 1
@@ -131,6 +155,24 @@
     },
     {
       "key": {
+        "uuid": "f5ccedf7_dd36391a",
+        "filename": "ui/app_list/app_list_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-16T06:06:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "95218068_6c41e6a7",
+      "revId": "cbe3e7cb141d5f13e3df60985215f507e64d8fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5c49970_0ae7ffae",
         "filename": "ui/app_list/app_list_model.cc",
         "patchSetId": 1
@@ -160,6 +202,24 @@
       "side": 1,
       "message": "You\u0027re right, it should only be called once. \n\nThis is me being defensive, and ensuring that it can only be called once.\n\nI\u0027ve had histograms regress before, and I want to lean in the \"more defensive\" side. I don\u0027t think it has any negative effects here, what do you think?",
       "parentUuid": "f5c49970_0ae7ffae",
+      "revId": "cbe3e7cb141d5f13e3df60985215f507e64d8fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d45fac_61daccfa",
+        "filename": "ui/app_list/app_list_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-16T06:06:43Z",
+      "side": 1,
+      "message": "\u003e You\u0027re right, it should only be called once. \n\u003e \n\u003e This is me being defensive, and ensuring that it can only be called once.\n\u003e \n\u003e I\u0027ve had histograms regress before, and I want to lean in the \"more defensive\" side. I don\u0027t think it has any negative effects here, what do you think?\n\nI don\u0027t think it has negative effects.  I have two concerns however:\n* This logic to prevent double-counting may be hiding control flow problems.  In other words, if this logic is actually necessary, you have may an issue that could be broader than logging.  Have you considered temporarily putting a bool flag around (has_emitted), having code here that DCHECKs(!has_emitted), and then hammering this interface in a lot of different ways to see if you can cause a double-emission?\n  - Once you do that, you may be confident enough to remove the safety harness of setting journey_end_ to null.\n* If you don\u0027t want removing the setting of journey_end_ to null, please comment that this is merely a precaution--you don\u0027t expect any double-counting anyway.  The current comment implies that some might happen and this is the way to prevent it.",
+      "parentUuid": "f01cdfa4_cf8f1eac",
       "revId": "cbe3e7cb141d5f13e3df60985215f507e64d8fbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

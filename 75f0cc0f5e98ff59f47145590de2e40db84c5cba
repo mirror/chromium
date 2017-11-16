@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc70cd0e_ba7e9a6c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2051,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-16T06:06:43Z",
+      "side": 1,
+      "message": "It looks like you\u0027re enumerating possibilities.  Please add the last one:\nIf the user doesn\u0027t see an answer card and then opens an app or search result, we record the time it takes them to open the app or search result.",
+      "range": {
+        "startLine": 2051,
+        "startChar": 18,
+        "endLine": 2051,
+        "endChar": 0
+      },
+      "revId": "75f0cc0f5e98ff59f47145590de2e40db84c5cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
