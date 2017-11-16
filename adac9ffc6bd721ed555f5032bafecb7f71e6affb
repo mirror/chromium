@@ -22,6 +22,30 @@
       "revId": "adac9ffc6bd721ed555f5032bafecb7f71e6affb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2aeb2b9_3c46deca",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-11-16T19:57:26Z",
+      "side": 1,
+      "message": "Yes, they should be gone after we all switch to the single findit_variable builder.",
+      "parentUuid": "057974e0_a0208acb",
+      "range": {
+        "startLine": 304,
+        "startChar": 14,
+        "endLine": 304,
+        "endChar": 22
+      },
+      "revId": "adac9ffc6bd721ed555f5032bafecb7f71e6affb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
