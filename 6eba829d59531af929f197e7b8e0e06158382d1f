@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2d6de44a_8794d593",
+        "filename": "cc/paint/paint_filter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "For DCHECKs.",
+      "parentUuid": "eea2c8dc_e4299cea",
+      "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e989c59_6ecb1c38",
         "filename": "cc/paint/paint_filter.h",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a3b55b_57ca7985",
+        "filename": "cc/paint/paint_filter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "Its because cc/paint is used in blink as well, which can not depend on base. So refcounting for most cc/paint objects uses skia.",
+      "parentUuid": "7e989c59_6ecb1c38",
+      "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3bae8cb8_47ff5c8b",
+        "filename": "cc/paint/paint_filter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "RenderSurfaceFilters uses it outside of DCHECKs. I was originally planning to go PaintOp style with filters but none of the types we have ended up with here are trivially copyable. I was considering moving inputs_ to the base class to make it so but given that filter serialization won\u0027t really be the hot code path, it doesn\u0027t make sense to try to over optimize it.\n\nI kinda like having the type as a const member on the filter but both approaches seem fine. Its an extra byte on something we won\u0027t have a lot of instances of. I\u0027d prefer to let it be unless you feel strongly.",
+      "parentUuid": "6df642f5_1454b10b",
+      "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "923f2a3c_2d19dc32",
         "filename": "third_party/WebKit/Source/platform/graphics/filters/FEDisplacementMap.cpp",
         "patchSetId": 13
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "11c978ac_6d24766b",
+        "filename": "third_party/WebKit/Source/platform/graphics/filters/FEDisplacementMap.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "Nope, because we still go to skia for raster finally.",
+      "parentUuid": "923f2a3c_2d19dc32",
+      "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8b0d32b_d3ac0295",
         "filename": "third_party/WebKit/Source/platform/graphics/filters/FELighting.cpp",
         "patchSetId": 13
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-16T19:08:54Z",
       "side": 1,
       "message": "Joining the specular and diffuse types is a little confusing to me since shininess is only used by the specular type. Also, \"kd\" but it will become \"ks\" for the specular types. Is there a need to join these types?",
+      "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e86407e2_1f193cad",
+        "filename": "third_party/WebKit/Source/platform/graphics/filters/FELighting.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "I can change it to kc (kconstant?). It was towards the end and I was trying hard to not add more types where it made sense. :X",
+      "parentUuid": "d8b0d32b_d3ac0295",
       "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "721be566_29d9cb44",
+        "filename": "third_party/WebKit/Source/platform/graphics/filters/ImageFilterBuilderTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba6d36a2_5efaf037",
+      "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "895e2d4a_c7ddcc7f",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintFilter.h",
         "patchSetId": 13
@@ -118,6 +226,24 @@
       "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c3da29_6a1ff619",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintFilter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "I think its for stuff that\u0027s used in core/ and uses cc but needs to be pretend that it doesn\u0027t. :P",
+      "parentUuid": "895e2d4a_c7ddcc7f",
+      "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

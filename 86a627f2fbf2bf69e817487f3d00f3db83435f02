@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19ed27a7_a931d381",
+        "filename": "cc/ipc/cc_param_traits.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8fa5888_2370e645",
+      "revId": "86a627f2fbf2bf69e817487f3d00f3db83435f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d67940e6_6e01f75f",
         "filename": "cc/ipc/cc_param_traits.cc",
         "patchSetId": 11
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "0766425b_77a90302",
+        "filename": "cc/ipc/cc_param_traits.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d67940e6_6e01f75f",
+      "range": {
+        "startLine": 160,
+        "startChar": 14,
+        "endLine": 160,
+        "endChar": 20
+      },
+      "revId": "86a627f2fbf2bf69e817487f3d00f3db83435f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffcc21ba_4baadf4c",
         "filename": "cc/ipc/cc_param_traits.cc",
         "patchSetId": 11
@@ -56,6 +98,24 @@
       "revId": "86a627f2fbf2bf69e817487f3d00f3db83435f02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463cc3a3_0508c553",
+        "filename": "cc/ipc/cc_param_traits.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffcc21ba_4baadf4c",
+      "revId": "86a627f2fbf2bf69e817487f3d00f3db83435f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "9e3e33c6_5c082a86",
+        "filename": "cc/paint/filter_operation.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "Actually, do we need to record anything here for no filter?",
+      "parentUuid": "d830be60_1de71319",
+      "range": {
+        "startLine": 315,
+        "startChar": 75,
+        "endLine": 315,
+        "endChar": 78
+      },
+      "revId": "86a627f2fbf2bf69e817487f3d00f3db83435f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfb747e0_28c42fa4",
         "filename": "cc/paint/paint_filter.cc",
         "patchSetId": 11
@@ -102,6 +186,30 @@
       "revId": "86a627f2fbf2bf69e817487f3d00f3db83435f02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d98804_83fdd167",
+        "filename": "cc/paint/paint_filter.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfb747e0_28c42fa4",
+      "range": {
+        "startLine": 86,
+        "startChar": 10,
+        "endLine": 86,
+        "endChar": 13
+      },
+      "revId": "86a627f2fbf2bf69e817487f3d00f3db83435f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "435fd905_152853db",
+        "filename": "cc/paint/paint_filter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc14c60b_f8e36c41",
+      "range": {
+        "startLine": 89,
+        "startChar": 10,
+        "endLine": 89,
+        "endChar": 22
+      },
+      "revId": "86a627f2fbf2bf69e817487f3d00f3db83435f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1eafcbc8_f943c59b",
         "filename": "cc/paint/paint_filter.h",
         "patchSetId": 11
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "14605e58_03299b99",
+        "filename": "cc/paint/paint_filter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "ipc serialization tests use it for comparison tests, while has to keep using this because we currently depend on skia serialization.",
+      "parentUuid": "1eafcbc8_f943c59b",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 30
+      },
+      "revId": "86a627f2fbf2bf69e817487f3d00f3db83435f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "379c73e1_635f6b04",
         "filename": "cc/paint/paint_filter.h",
         "patchSetId": 11
@@ -162,6 +318,30 @@
       "writtenOn": "2017-11-16T01:05:51Z",
       "side": 1,
       "message": "maybe just have a cached sk filter getter?",
+      "range": {
+        "startLine": 103,
+        "startChar": 30,
+        "endLine": 103,
+        "endChar": 41
+      },
+      "revId": "86a627f2fbf2bf69e817487f3d00f3db83435f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50f45cd_e4f34a4a",
+        "filename": "cc/paint/paint_filter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "Did you mean have a public getter? I\u0027m trying to avoid having sk filter usage outside of raster code.",
+      "parentUuid": "379c73e1_635f6b04",
       "range": {
         "startLine": 103,
         "startChar": 30,
@@ -191,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "94ea52f2_56a1f542",
+        "filename": "cc/paint/paint_filter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5216480b_f3534669",
+      "revId": "86a627f2fbf2bf69e817487f3d00f3db83435f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "445da5c7_578cb883",
         "filename": "cc/paint/paint_filter.h",
         "patchSetId": 11
@@ -214,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "1826d089_f6295c05",
+        "filename": "cc/paint/paint_filter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "445da5c7_578cb883",
+      "range": {
+        "startLine": 134,
+        "startChar": 22,
+        "endLine": 134,
+        "endChar": 24
+      },
+      "revId": "86a627f2fbf2bf69e817487f3d00f3db83435f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0a9f9f3_e18f5e3e",
         "filename": "cc/paint/paint_filter.h",
         "patchSetId": 11
@@ -225,6 +447,30 @@
       "writtenOn": "2017-11-16T01:05:51Z",
       "side": 1,
       "message": "We can just have a static kType variable with each of the filter types like PaintOps do. Then you don\u0027t really need this one, but up to you.\n\nAlso, I haven\u0027t gotten there but how is this From function going to be used? It seems like you have to have a switch on type anyway, so the DCHECK it adds is pretty moot. Other than that it\u0027s buying you\n\nconst auto* filter \u003d SkColorFilterPaintFilter::From(paint_filter); instead of\nconst auto* filter \u003d static_cast\u003cconst SkColorFilterPaintFilter*\u003e(paint_filter);",
+      "range": {
+        "startLine": 141,
+        "startChar": 53,
+        "endLine": 141,
+        "endChar": 73
+      },
+      "revId": "86a627f2fbf2bf69e817487f3d00f3db83435f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56ad5492_09f7f860",
+        "filename": "cc/paint/paint_filter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "\u003e We can just have a static kType variable with each of the filter types like PaintOps do. Then you don\u0027t really need this one, but up to you.\n\nGood idea. Done.\n\n\u003e \n\u003e Also, I haven\u0027t gotten there but how is this From function going to be used? It seems like you have to have a switch on type anyway, so the DCHECK it adds is pretty moot. Other than that it\u0027s buying you\n\u003e \n\u003e const auto* filter \u003d SkColorFilterPaintFilter::From(paint_filter); instead of\n\u003e const auto* filter \u003d static_cast\u003cconst SkColorFilterPaintFilter*\u003e(paint_filter);\n\nIt felt like nice syntactic sugar for doing the cast...",
+      "parentUuid": "e0a9f9f3_e18f5e3e",
       "range": {
         "startLine": 141,
         "startChar": 53,
@@ -260,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "207fd458_a89a13d4",
+        "filename": "cc/paint/render_surface_filters.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "Yup yup, callers will definitely have to know the type before casting. The DCHECK is just to ensure that they do. And the From functions just looked better than having static_cast at multiple places. I took inspiration from DrawQuads while writing it. :)",
+      "parentUuid": "e4907faf_e7e94285",
+      "range": {
+        "startLine": 268,
+        "startChar": 0,
+        "endLine": 269,
+        "endChar": 70
+      },
+      "revId": "86a627f2fbf2bf69e817487f3d00f3db83435f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37721dae_9984d3ad",
         "filename": "cc/trees/damage_tracker_unittest.cc",
         "patchSetId": 11
@@ -280,6 +550,30 @@
       "revId": "86a627f2fbf2bf69e817487f3d00f3db83435f02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf9ffca6_e960005d",
+        "filename": "cc/trees/damage_tracker_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-16T20:20:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "37721dae_9984d3ad",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "86a627f2fbf2bf69e817487f3d00f3db83435f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
