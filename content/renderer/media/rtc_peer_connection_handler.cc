@@ -1001,15 +1001,15 @@ class RTCPeerConnectionHandler::Observer
   }
 
   // When an RTC event log is sent back from PeerConnection, it arrives here.
-  void OnRtcEventLogWrite(const std::string& output) override {
+  void OnWebRtcEventLogWrite(const std::string& output) override {
     if (!main_thread_->BelongsToCurrentThread()) {
       main_thread_->PostTask(
           FROM_HERE,
           base::BindOnce(
-              &RTCPeerConnectionHandler::Observer::OnRtcEventLogWrite, this,
+              &RTCPeerConnectionHandler::Observer::OnWebRtcEventLogWrite, this,
               output));
     } else if (handler_) {
-      handler_->OnRtcEventLogWrite(output);
+      handler_->OnWebRtcEventLogWrite(output);
     }
   }
 
@@ -1871,6 +1871,9 @@ void RTCPeerConnectionHandler::StartEventLog(IPC::PlatformFileForTransit file,
 
 void RTCPeerConnectionHandler::StartEventLog() {
   DCHECK(thread_checker_.CalledOnValidThread());
+  // TODO(eladalon): StartRtcEventLog() return value is not useful; remove it
+  // or find a way to be able to use it.
+  // https://bugs.chromium.org/p/chromium/issues/detail?id=775415
   native_peer_connection_->StartRtcEventLog(
       base::MakeUnique<RtcEventLogOutputSinkProxy>(
           peer_connection_observer_.get()));
@@ -1881,7 +1884,8 @@ void RTCPeerConnectionHandler::StopEventLog() {
   native_peer_connection_->StopRtcEventLog();
 }
 
-void RTCPeerConnectionHandler::OnRtcEventLogWrite(const std::string& output) {
+void RTCPeerConnectionHandler::OnWebRtcEventLogWrite(
+    const std::string& output) {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (peer_connection_tracker_) {
     peer_connection_tracker_->TrackRtcEventLogWrite(this, output);
