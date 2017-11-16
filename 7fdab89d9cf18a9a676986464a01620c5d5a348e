@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "334c1999_d1f6b8dd",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1754,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-16T02:07:11Z",
+      "side": 1,
+      "message": "Yes, that\u0027s what I mean, I changed it in the new patch.",
+      "parentUuid": "f466f429_973ae39a",
+      "revId": "7fdab89d9cf18a9a676986464a01620c5d5a348e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3253e02c_5285f4eb",
         "filename": "cc/trees/layer_tree_impl.h",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-15T22:49:25Z",
       "side": 1,
       "message": "Does this have any callsites left other than tests? If no, then maybe this should be ForTesting?",
+      "range": {
+        "startLine": 472,
+        "startChar": 13,
+        "endLine": 472,
+        "endChar": 58
+      },
+      "revId": "7fdab89d9cf18a9a676986464a01620c5d5a348e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b799302_2ac81847",
+        "filename": "cc/trees/layer_tree_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-16T02:07:11Z",
+      "side": 1,
+      "message": "This is still called by \"HasLayerThatIsHitByPointInTouchHandlerRegion\".",
+      "parentUuid": "3253e02c_5285f4eb",
       "range": {
         "startLine": 472,
         "startChar": 13,
