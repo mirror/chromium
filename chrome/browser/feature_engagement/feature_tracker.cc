@@ -56,7 +56,6 @@ bool FeatureTracker::ShouldShowPromo() {
     NotifyAndRemoveSessionDurationObserverIfSessionTimeMet(
         session_duration_updater_.GetCumulativeElapsedSessionTime());
   }
-
   return IsNewUser() ? GetTracker()->ShouldTriggerHelpUI(*feature_) : false;
 }
 
