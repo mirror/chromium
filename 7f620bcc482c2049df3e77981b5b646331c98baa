@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70560f06_d072a64d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-16T21:14:59Z",
+      "side": 1,
+      "message": "\"Copy visible styled selection\" ?\nCan we also check there is a selection?",
+      "revId": "7f620bcc482c2049df3e77981b5b646331c98baa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
