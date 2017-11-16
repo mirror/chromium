@@ -49,7 +49,7 @@ class CC_PAINT_EXPORT ScopedImageFlags {
 
    private:
     ImageProvider* source_provider_;
-    std::vector<ScopedDecodedDrawImage> decoded_images_;
+    base::StackVector<ScopedDecodedDrawImage, 1> decoded_images_;
 
     DISALLOW_COPY_AND_ASSIGN(DecodeStashingImageProvider);
   };
