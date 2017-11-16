@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5029fa8f_ab0d7055",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-16T23:39:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2617e955_b0085a3a",
+      "revId": "336dc3ab3686f327aa407adcb328ffa0f7ecb4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97d0de1d_f9eda8d2",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "336dc3ab3686f327aa407adcb328ffa0f7ecb4a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ee085f_ad484ba6",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-16T23:39:35Z",
+      "side": 1,
+      "message": "IsShowingInterstitial() right below doesn\u0027t. ;-)",
+      "parentUuid": "97d0de1d_f9eda8d2",
+      "revId": "336dc3ab3686f327aa407adcb328ffa0f7ecb4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "336dc3ab3686f327aa407adcb328ffa0f7ecb4a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "877ea599_8a464517",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-16T23:39:35Z",
+      "side": 1,
+      "message": "Yeah, we need a version that knows how to handle committed interstitials.\n\nWebContents::ShowingInterstitialPage() is not appropriate because //content shouldn\u0027t know about kCommitted interstitial (which is a Chrome switch right how).\n\nI\u0027m happy to take other ideas, but I think this is the least fussy for now.",
+      "parentUuid": "00c6caf0_16f56884",
+      "range": {
+        "startLine": 449,
+        "startChar": 37,
+        "endLine": 449,
+        "endChar": 0
+      },
+      "revId": "336dc3ab3686f327aa407adcb328ffa0f7ecb4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
