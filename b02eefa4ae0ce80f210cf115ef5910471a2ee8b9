@@ -69,6 +69,30 @@
       "revId": "b02eefa4ae0ce80f210cf115ef5910471a2ee8b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f50be6c_26e4711c",
+        "filename": "third_party/WebKit/Source/core/timing/WorkerPerformance.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-11-16T19:47:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6632756d_e4575f57",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 34
+      },
+      "revId": "b02eefa4ae0ce80f210cf115ef5910471a2ee8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
