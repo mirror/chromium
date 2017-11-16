@@ -181,8 +181,6 @@ class VADisplayState {
   // The VADisplay handle.
   VADisplay va_display_;
 
-  // True if vaInitialize() has been called successfully.
-  bool va_initialized_;
 };
 
 // static
@@ -227,8 +225,7 @@ bool VADisplayState::PostSandboxInitialization() {
   return success;
 }
 
-VADisplayState::VADisplayState()
-    : refcount_(0), va_display_(nullptr), va_initialized_(false) {}
+VADisplayState::VADisplayState() : refcount_(0), va_display_(nullptr) {}
 
 bool VADisplayState::Initialize() {
   va_lock_.AssertAcquired();
@@ -259,7 +256,6 @@ bool VADisplayState::Initialize() {
     return false;
   }
 
-  va_initialized_ = true;
   DVLOG(1) << "VAAPI version: " << major_version << "." << minor_version;
 
   if (major_version != VA_MAJOR_VERSION || minor_version != VA_MINOR_VERSION) {
@@ -276,14 +272,8 @@ void VADisplayState::Deinitialize(VAStatus* status) {
   if (--refcount_ > 0)
     return;
 
-  // Must check if vaInitialize completed successfully, to work around a bug in
-  // libva. The bug was fixed upstream:
-  // http://lists.freedesktop.org/archives/libva/2013-July/001807.html
-  // TODO(mgiuca): Remove this check, and the |va_initialized_| variable, once
-  // the fix has rolled out sufficiently.
-  if (va_initialized_ && va_display_)
+  if (va_display_)
     *status = vaTerminate(va_display_);
-  va_initialized_ = false;
   va_display_ = nullptr;
 }
 
