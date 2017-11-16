@@ -4,6 +4,7 @@
 
 #import "ios/chrome/browser/ui/toolbar/toolbar_adapter.h"
 
+#import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.h"
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_delegate.h"
 
@@ -80,11 +81,11 @@
 }
 
 - (void)updateToolbarForSideSwipeSnapshot:(Tab*)tab {
-  return;
+  [self.cleanToolbarCoordinator updateToolbarForSideSwipeSnapshot:tab.webState];
 }
 
 - (void)resetToolbarAfterSideSwipeSnapshot {
-  return;
+  [self.cleanToolbarCoordinator resetToolbarAfterSideSwipeSnapshot];
 }
 
 #pragma mark - Abstract Toolbar

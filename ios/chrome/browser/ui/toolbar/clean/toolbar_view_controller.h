@@ -44,6 +44,11 @@
 - (void)contractOmnibox;
 // Animates the toolbar so the omnibox is expanding to its expanded state.
 - (void)expandOmniboxAnimated:(BOOL)animated;
+// Updates the view so a snapshot can be taken. It needs to be adapted,
+// depending on if it is a snapshot displayed |onNTP| or not.
+- (void)updateForSideSwipeSnapshotOnNTP:(BOOL)onNTP;
+// Resets the view after taking a snapshot for a side swipe.
+- (void)resetAfterSideSwipeSnapshot;
 
 @end
 
