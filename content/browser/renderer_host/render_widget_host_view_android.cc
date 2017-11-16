@@ -1504,11 +1504,15 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
   bool is_mobile_optimized = IsMobileOptimizedFrame(frame_metadata);
   gesture_provider_.SetDoubleTapSupportForPageEnabled(!is_mobile_optimized);
 
-  float dip_scale = IsUseZoomForDSFEnabled() ? 1.f : view_.GetDipScale();
-  float top_controls_pix = frame_metadata.top_controls_height * dip_scale;
+  float dip_scale = view_.GetDipScale();
+  float css_to_device = IsUseZoomForDSFEnabled() ? 1.f : dip_scale;
+  float top_controls_pix = frame_metadata.top_controls_height * css_to_device;
+  // |top_content_offset| is in device scale if --use-zoom-for-dsf is enabled.
+  // Otherwise, it is in CSS scale.
   float top_content_offset = frame_metadata.top_controls_height *
                              frame_metadata.top_controls_shown_ratio;
-  float top_shown_pix = top_content_offset * dip_scale;
+  // |top_shown_pix| is in device scale.
+  float top_shown_pix = top_content_offset * css_to_device;
 
   if (ime_adapter_android_)
     ime_adapter_android_->UpdateFrameInfo(frame_metadata.selection.start,
@@ -1544,8 +1548,13 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
   UpdateBackgroundColor(is_transparent ? SK_ColorTRANSPARENT
                                        : frame_metadata.root_background_color);
 
+  // ViewAndroid::content_offset() must be in CSS scale
+  float top_content_offset_css = IsUseZoomForDSFEnabled()
+                                     ? top_content_offset / dip_scale
+                                     : top_content_offset;
   view_.UpdateFrameInfo({frame_metadata.scrollable_viewport_size,
-                         frame_metadata.page_scale_factor, top_content_offset});
+                         frame_metadata.page_scale_factor,
+                         top_content_offset_css});
 
   bool top_changed = !FloatEquals(top_shown_pix, prev_top_shown_pix_);
   if (top_changed) {
@@ -1554,7 +1563,8 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
     prev_top_shown_pix_ = top_shown_pix;
   }
 
-  float bottom_controls_pix = frame_metadata.bottom_controls_height * dip_scale;
+  float bottom_controls_pix =
+      frame_metadata.bottom_controls_height * css_to_device;
   float bottom_shown_pix =
       bottom_controls_pix * frame_metadata.bottom_controls_shown_ratio;
   bool bottom_changed = !FloatEquals(bottom_shown_pix, prev_bottom_shown_pix_);
@@ -1564,13 +1574,13 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
     prev_bottom_shown_pix_ = bottom_shown_pix;
   }
 
-  // All offsets and sizes are in CSS pixels.
+  // All offsets and sizes except |top_shown_pix| are in CSS pixels.
   content_view_core_->UpdateFrameInfo(
       frame_metadata.root_scroll_offset, frame_metadata.page_scale_factor,
       gfx::Vector2dF(frame_metadata.min_page_scale_factor,
                      frame_metadata.max_page_scale_factor),
       frame_metadata.root_layer_size, frame_metadata.scrollable_viewport_size,
-      top_content_offset, top_shown_pix, top_changed, is_mobile_optimized);
+      top_content_offset_css, top_shown_pix, top_changed, is_mobile_optimized);
 
   EvictFrameIfNecessary();
 }
