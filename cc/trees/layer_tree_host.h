@@ -34,6 +34,7 @@
 #include "cc/layers/layer_collections.h"
 #include "cc/layers/layer_list_iterator.h"
 #include "cc/trees/compositor_mode.h"
+#include "cc/trees/draw_property_utils.h"
 #include "cc/trees/layer_tree_frame_sink.h"
 #include "cc/trees/layer_tree_host_client.h"
 #include "cc/trees/layer_tree_settings.h"
@@ -342,6 +343,11 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
   const gfx::ColorSpace& raster_color_space() const {
     return raster_color_space_;
   }
+
+  void SetFrameRect(const ElementId& element_id,
+                    int layer_id,
+                    const gfx::Rect& rect);
+  void ClearFrameRect(const ElementId& element_id);
 
   // Used externally by blink for setting the PropertyTrees when
   // UseLayerLists() is true, which also implies that Slimming Paint
@@ -660,6 +666,8 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
   std::unordered_map<int, Layer*> layer_id_map_;
 
   std::unordered_map<ElementId, Layer*, ElementIdHash> element_layers_map_;
+
+  FrameRectPositionMap frame_rect_position_map_;
 
   bool in_paint_layer_contents_ = false;
   bool in_update_property_trees_ = false;

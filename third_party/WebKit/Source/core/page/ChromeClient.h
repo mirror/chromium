@@ -38,6 +38,7 @@
 #include "platform/PlatformChromeClient.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/graphics/TouchAction.h"
+#include "platform/graphics/CompositorElementId.h"
 #include "platform/heap/Handle.h"
 #include "platform/scroll/ScrollTypes.h"
 #include "platform/text/TextDirection.h"
@@ -260,6 +261,11 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
   virtual void ClearCompositedSelection(LocalFrame*) {}
   virtual void UpdateCompositedSelection(LocalFrame*,
                                          const CompositedSelection&) {}
+
+  virtual void SetFrameRect(const CompositorElementId& element_id,
+                            int layer_id,
+                            const IntRect& rect) = 0;
+  virtual void ClearFrameRect(const CompositorElementId& element_id) = 0;
 
   virtual void SetEventListenerProperties(LocalFrame*,
                                           WebEventListenerClass,

@@ -1129,6 +1129,16 @@ void LayerTreeHost::SetLocalSurfaceId(
   SetNeedsCommit();
 }
 
+void LayerTreeHost::SetFrameRect(const ElementId& element_id,
+                                 int layer_id,
+                                 const gfx::Rect& rect) {
+  frame_rect_position_map_[element_id] = {layer_id, rect};
+}
+
+void LayerTreeHost::ClearFrameRect(const ElementId& element_id) {
+  frame_rect_position_map_.erase(element_id);
+}
+
 void LayerTreeHost::RegisterLayer(Layer* layer) {
   DCHECK(!LayerById(layer->id()));
   DCHECK(!in_paint_layer_contents_);
@@ -1271,6 +1281,7 @@ void LayerTreeHost::PushLayerTreePropertiesTo(LayerTreeImpl* tree_impl) {
   tree_impl->set_event_listener_properties(
       EventListenerClass::kTouchEndOrCancel,
       event_listener_properties(EventListenerClass::kTouchEndOrCancel));
+  tree_impl->set_frame_rect_position_map(frame_rect_position_map_);
 
   if (viewport_layers_.page_scale && viewport_layers_.inner_viewport_scroll) {
     LayerTreeImpl::ViewportLayerIds ids;

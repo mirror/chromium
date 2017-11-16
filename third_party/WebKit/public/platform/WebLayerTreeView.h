@@ -33,6 +33,7 @@
 #include "WebEventListenerProperties.h"
 #include "WebFloatPoint.h"
 #include "WebImageLayer.h"
+#include "WebRect.h"
 #include "WebScrollBoundaryBehavior.h"
 #include "WebSize.h"
 #include "base/callback.h"
@@ -43,6 +44,8 @@
 
 namespace cc {
 class AnimationHost;
+class AnimationTimeline;
+struct ElementId;
 }
 
 namespace blink {
@@ -138,6 +141,12 @@ class WebLayerTreeView {
   // Set the browser's behavior when overscroll happens, e.g. whether to glow
   // or navigate.
   virtual void SetScrollBoundaryBehavior(const WebScrollBoundaryBehavior&) {}
+
+  // Updates the position of iframes wrt the composited layer they paint to.
+  virtual void SetFrameRect(const cc::ElementId& element_id,
+                            int layer_id,
+                            const WebRect& rect) {}
+  virtual void ClearFrameRect(const cc::ElementId& element_id) {}
 
   // Flow control and scheduling ---------------------------------------
 

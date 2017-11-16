@@ -67,6 +67,7 @@ class WebGestureEvent : public WebInputEvent {
       int tap_count;
       float width;
       float height;
+      bool drop_if_cross_origin;
     } tap;
 
     struct {

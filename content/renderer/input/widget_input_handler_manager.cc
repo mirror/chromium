@@ -24,6 +24,7 @@
 
 namespace content {
 namespace {
+
 void CallCallback(mojom::WidgetInputHandler::DispatchEventCallback callback,
                   InputEventAckState ack_state,
                   const ui::LatencyInfo& latency_info,

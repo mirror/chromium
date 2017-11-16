@@ -184,11 +184,17 @@ class CONTENT_EXPORT RenderWidgetCompositor
                                 float bottom_height,
                                 bool shrink) override;
   void SetBrowserControlsShownRatio(float) override;
+
   void RequestDecode(const PaintImage& image,
                      const base::Callback<void(bool)>& callback) override;
 
   void SetScrollBoundaryBehavior(
       const blink::WebScrollBoundaryBehavior&) override;
+
+  void SetFrameRect(const cc::ElementId& element_id,
+                    int layer_id,
+                    const blink::WebRect& rect) override;
+  void ClearFrameRect(const cc::ElementId& elementId) override;
 
   // cc::LayerTreeHostClient implementation.
   void WillBeginMainFrame() override;

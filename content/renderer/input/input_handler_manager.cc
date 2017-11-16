@@ -41,6 +41,8 @@ InputEventAckState InputEventDispositionToAck(
       return INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING;
     case InputHandlerProxy::DID_HANDLE_SHOULD_BUBBLE:
       return INPUT_EVENT_ACK_STATE_CONSUMED_SHOULD_BUBBLE;
+    case InputHandlerProxy::DROP_IF_CROSS_ORIGIN:
+      return INPUT_EVENT_ACK_STATE_SET_DROP_IF_CROSS_ORIGIN;
   }
   NOTREACHED();
   return INPUT_EVENT_ACK_STATE_UNKNOWN;
