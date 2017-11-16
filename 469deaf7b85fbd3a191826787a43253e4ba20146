@@ -312,6 +312,30 @@
     },
     {
       "key": {
+        "uuid": "541cee4f_d0d3fbe6",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-16T14:53:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "55923753_d47aed1e",
+      "range": {
+        "startLine": 177,
+        "startChar": 40,
+        "endLine": 177,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79bf3e6c_9662c14b",
         "filename": "components/cronet/native/cronet.idl_c.h",
         "patchSetId": 36
@@ -491,6 +515,30 @@
       "side": 1,
       "message": "We definitely could, but I\u0027d like to prototype a little more to see what usage patterns emerge. My concern is that C doesn\u0027t allow functions with same name but different parameters.",
       "parentUuid": "5e39ed06_d2a75437",
+      "range": {
+        "startLine": 202,
+        "startChar": 50,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6033a120_7137a8c0",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-16T14:53:52Z",
+      "side": 1,
+      "message": "\u003e My concern is that C doesn\u0027t allow functions with same name but different parameters.\n\nCan you explain how we\u0027d be introducing functions with the same name but different parameters?",
+      "parentUuid": "147a00a3_6fe03dd6",
       "range": {
         "startLine": 202,
         "startChar": 50,
