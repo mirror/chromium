@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c4ed2828_6a4ec620",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3794,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-16T09:52:28Z",
+      "side": 1,
+      "message": "Done (here and in the other files)",
+      "parentUuid": "d85b3365_9a908972",
+      "range": {
+        "startLine": 3794,
+        "startChar": 15,
+        "endLine": 3794,
+        "endChar": 21
+      },
+      "revId": "e74d9ca44678e6930a81d91efc3d233659028634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac45c378_2415a4b9",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "e74d9ca44678e6930a81d91efc3d233659028634",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01dea95b_b7a85995",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3805,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-16T09:52:28Z",
+      "side": 1,
+      "message": "Done here and in AutoSelectCertificateForUrls.",
+      "parentUuid": "ac45c378_2415a4b9",
+      "range": {
+        "startLine": 3805,
+        "startChar": 26,
+        "endLine": 3805,
+        "endChar": 29
+      },
+      "revId": "e74d9ca44678e6930a81d91efc3d233659028634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "c15c8ae0_13280a85",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3809,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-16T09:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "406e9e58_14fa4a52",
+      "range": {
+        "startLine": 3809,
+        "startChar": 138,
+        "endLine": 3809,
+        "endChar": 147
+      },
+      "revId": "e74d9ca44678e6930a81d91efc3d233659028634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8fe45ba_8c44a338",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3809,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-16T09:52:28Z",
+      "side": 1,
+      "message": "Done (I\u0027ve kept the IdP thing as an example usage)",
+      "parentUuid": "e810d0f1_46e4d0cd",
+      "range": {
+        "startLine": 3809,
+        "startChar": 75,
+        "endLine": 3809,
+        "endChar": 83
+      },
+      "revId": "e74d9ca44678e6930a81d91efc3d233659028634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b382b72_70fd6e7d",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "e74d9ca44678e6930a81d91efc3d233659028634",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e61174_e429c243",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3811,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-16T09:52:28Z",
+      "side": 1,
+      "message": "Not sure where that margin is defined to be - is this fine now? :)",
+      "parentUuid": "8b382b72_70fd6e7d",
+      "range": {
+        "startLine": 3811,
+        "startChar": 0,
+        "endLine": 3811,
+        "endChar": 10
+      },
+      "revId": "e74d9ca44678e6930a81d91efc3d233659028634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
