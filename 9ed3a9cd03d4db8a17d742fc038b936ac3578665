@@ -16,6 +16,24 @@
       "revId": "9ed3a9cd03d4db8a17d742fc038b936ac3578665",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6213a4d_ec5d30a9",
+        "filename": "components/viz/service/display_embedder/gpu_display_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-16T14:08:55Z",
+      "side": 1,
+      "message": "Oh, that\u0027s perfect. Thank you!",
+      "parentUuid": "f3c533fb_ba0b39de",
+      "revId": "9ed3a9cd03d4db8a17d742fc038b936ac3578665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
