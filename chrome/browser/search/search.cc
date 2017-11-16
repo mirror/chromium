@@ -44,6 +44,8 @@ namespace search {
 
 namespace {
 
+static constexpr char kNewTabDetailsKey[] = "ntp-details";
+
 // Status of the New Tab URL for the default Search provider. NOTE: Used in a
 // UMA histogram so values should only be added at the end and not reordered.
 enum NewTabURLState {
@@ -142,10 +144,31 @@ bool ShouldShowLocalNewTab(const GURL& url, Profile* profile) {
 
 // Used to look up the URL to use for the New Tab page. Also tracks how we
 // arrived at that URL so it can be logged with UMA.
-struct NewTabURLDetails {
+class NewTabURLDetails : public base::SupportsUserData::Data {
+ public:
   NewTabURLDetails(const GURL& url, NewTabURLState state)
-      : url(url), state(state) {}
+      : url_(url), state_(state) {}
 
+  const GURL& url() const { return url_; }
+  NewTabURLState state() const { return state_; }
+
+  static void RemoveCachedForProfile(Profile* profile) {
+    profile->SetUserData(kNewTabDetailsKey, nullptr);
+  }
+
+  static const NewTabURLDetails& CachedForProfile(Profile* profile) {
+    NewTabURLDetails* details =
+        static_cast<NewTabURLDetails*>(profile->GetUserData(kNewTabDetailsKey));
+    if (!details) {
+      auto new_details =
+          std::make_unique<NewTabURLDetails>(ForProfile(profile));
+      details = new_details.get();
+      profile->SetUserData(kNewTabDetailsKey, std::move(new_details));
+    }
+    return *details;
+  }
+
+ private:
   static NewTabURLDetails ForProfile(Profile* profile) {
     const GURL local_url(chrome::kChromeSearchLocalNtpUrl);
 
@@ -179,8 +202,8 @@ struct NewTabURLDetails {
     }
   }
 
-  const GURL url;
-  const NewTabURLState state;
+  const GURL url_;
+  const NewTabURLState state_;
 };
 
 }  // namespace
@@ -280,7 +303,11 @@ bool IsSuggestPrefEnabled(Profile* profile) {
 }
 
 GURL GetNewTabPageURL(Profile* profile) {
-  return NewTabURLDetails::ForProfile(profile).url;
+  return NewTabURLDetails::CachedForProfile(profile).url();
+}
+
+void ClearCachedNewTabPageURL(Profile* profile) {
+  NewTabURLDetails::RemoveCachedForProfile(profile);
 }
 
 GURL GetEffectiveURLForInstant(const GURL& url, Profile* profile) {
@@ -301,10 +328,10 @@ GURL GetEffectiveURLForInstant(const GURL& url, Profile* profile) {
   // If this is the URL for a server-provided NTP, replace the host with
   // "remote-ntp".
   std::string remote_ntp_host(chrome::kChromeSearchRemoteNtpHost);
-  NewTabURLDetails details = NewTabURLDetails::ForProfile(profile);
-  if (details.state == NEW_TAB_URL_VALID &&
-      (MatchesOriginAndPath(url, details.url) ||
-       IsMatchingServiceWorker(url, details.url))) {
+  const NewTabURLDetails& details = NewTabURLDetails::CachedForProfile(profile);
+  if (details.state() == NEW_TAB_URL_VALID &&
+      (MatchesOriginAndPath(url, details.url()) ||
+       IsMatchingServiceWorker(url, details.url()))) {
     replacements.SetHost(remote_ntp_host.c_str(),
                          url::Component(0, remote_ntp_host.length()));
   }
@@ -322,11 +349,11 @@ bool HandleNewTabURLRewrite(GURL* url,
     return false;
 
   Profile* profile = Profile::FromBrowserContext(browser_context);
-  NewTabURLDetails details(NewTabURLDetails::ForProfile(profile));
-  UMA_HISTOGRAM_ENUMERATION("NewTabPage.URLState",
-                            details.state, NEW_TAB_URL_MAX);
-  if (details.url.is_valid()) {
-    *url = details.url;
+  const NewTabURLDetails& details = NewTabURLDetails::CachedForProfile(profile);
+  UMA_HISTOGRAM_ENUMERATION("NewTabPage.URLState", details.state(),
+                            NEW_TAB_URL_MAX);
+  if (details.url().is_valid()) {
+    *url = details.url();
     return true;
   }
   return false;

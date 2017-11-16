@@ -95,6 +95,8 @@ bool HandleNewTabURLReverseRewrite(GURL* url,
 // Returns the New Tab page URL for the given |profile|.
 GURL GetNewTabPageURL(Profile* profile);
 
+void ClearCachedNewTabPageURL(Profile* profile);
+
 }  // namespace search
 
 #endif  // CHROME_BROWSER_SEARCH_SEARCH_H_
