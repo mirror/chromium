@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a00359e9_5a95d94b",
+        "filename": "chrome/browser/download/download_request_limiter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-16T04:27:02Z",
+      "side": 1,
+      "message": "(optional/stray thought -- seems all callers pass `true`. Also some seem to pass true without actually \"seeing\" a download, but just because the user interacted with the setting. Maybe you don\u0027t need this entrypoint, and can set this implicitly when other entrypoints are invoked. E.g. what if it was something like |did_state_change_since_navigation_|. ..)",
+      "revId": "15b0fdc7b81334f533dadead777b90a4a1745a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d15927_2cdb9e71",
+        "filename": "chrome/browser/download/download_request_limiter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-16T04:27:02Z",
+      "side": 1,
+      "message": "I think nearly all the `ASSERT_EQ` in this file should be EXPECT_EQ -- ASSERT is just if you would crash the test runner should the test proceed past that point.\n\nThe new checks being added here are inconsistent with the surrounding code (not the ones added above - but it\u0027s probably the surrounding code that should change).",
+      "revId": "15b0fdc7b81334f533dadead777b90a4a1745a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
