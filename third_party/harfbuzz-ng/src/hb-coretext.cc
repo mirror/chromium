@@ -38,8 +38,7 @@
 #endif
 
 /* https://developer.apple.com/documentation/coretext/1508745-ctfontcreatewithgraphicsfont */
-/* Temporarily patched to original size 36.f that was used before to ease Blink reabaselining. */
-#define HB_CORETEXT_DEFAULT_FONT_SIZE 36.f
+#define HB_CORETEXT_DEFAULT_FONT_SIZE 12.f
 
 static CGFloat
 coretext_font_size (float ptem)
