@@ -288,6 +288,13 @@ void BluetoothAdapterWin::DevicesPolled(
   }
 }
 
+BluetoothDevice* BluetoothAdapterWin::ReleaseDeviceForTesting(
+    const std::string& address) {
+  auto iter = devices_.find(address);
+  DCHECK(iter != devices_.end());
+  return iter->second.release();
+}
+
 // If the method is called when |discovery_status_| is DISCOVERY_STOPPING,
 // starting again is handled by BluetoothAdapterWin::DiscoveryStopped().
 void BluetoothAdapterWin::AddDiscoverySession(
