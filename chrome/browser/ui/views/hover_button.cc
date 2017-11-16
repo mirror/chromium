@@ -13,6 +13,7 @@
 #include "ui/views/animation/ink_drop_ripple.h"
 #include "ui/views/background.h"
 #include "ui/views/border.h"
+#include "ui/views/controls/styled_label.h"
 #include "ui/views/focus/focus_manager.h"
 #include "ui/views/layout/grid_layout.h"
 
@@ -24,6 +25,34 @@ std::unique_ptr<views::Border> CreateBorderWithVerticalSpacing(
       views::DISTANCE_BUTTON_HORIZONTAL_PADDING);
   return views::CreateEmptyBorder(vert_spacing, horz_spacing, vert_spacing,
                                   horz_spacing);
+}
+
+// Sets the accessible name of |parent| to the text from |first| and |second|.
+// Also set the combined text as the tooltip for |parent| if either |first| or
+// |second|'s text is cut off or elided.
+void SetTooltipAndAccessibleName(views::Button* parent,
+                                 views::StyledLabel* first,
+                                 views::Label* second,
+                                 const gfx::Rect& available_space,
+                                 int taken_width) {
+  const base::string16 accessible_name =
+      second == nullptr ? first->text()
+                        : base::JoinString({first->text(), second->text()},
+                                           base::ASCIIToUTF16("\n"));
+
+  // |views::StyledLabel|s only add tooltips for any links they may have.
+  // However, since |HoverButton| will never insert a link inside its child
+  // |StyledLabel|, decide whether it needs a tooltip by checking whether the
+  // available space is smaller than its preferred size.
+  bool first_truncated = first->GetPreferredSize().width() >
+                         (available_space.width() - taken_width);
+  base::string16 second_tooltip;
+  if (second != nullptr)
+    second->GetTooltipText(gfx::Point(), &second_tooltip);
+  parent->SetTooltipText(first_truncated || !second_tooltip.empty()
+                             ? accessible_name
+                             : base::string16());
+  parent->SetAccessibleName(accessible_name);
 }
 
 }  // namespace
@@ -41,12 +70,8 @@ HoverButton::HoverButton(views::ButtonListener* button_listener,
       DISTANCE_CONTROL_LIST_VERTICAL);
   SetBorder(CreateBorderWithVerticalSpacing(vert_spacing));
 
-  // Turn on highlighting when the button is hovered or focused.
+  // Turn on highlighting when the button is hovered.
   SetInkDropMode(views::InkDropHostView::InkDropMode::ON);
-  GetInkDrop()->SetShowHighlightOnFocus(true);
-  // Don't show the ripple on non-MD.
-  if (!ui::MaterialDesignController::IsSecondaryUiMaterial())
-    set_ink_drop_visible_opacity(0);
 }
 
 HoverButton::HoverButton(views::ButtonListener* button_listener,
@@ -100,9 +125,14 @@ HoverButton::HoverButton(views::ButtonListener* button_listener,
   columns->AddColumn(views::GridLayout::CENTER, views::GridLayout::CENTER,
                      kFixed, views::GridLayout::USE_PREF, 0, 0);
   columns->AddPaddingColumn(kFixed, icon_label_spacing);
-  columns->AddColumn(views::GridLayout::LEADING, views::GridLayout::CENTER,
+  columns->AddColumn(views::GridLayout::LEADING, views::GridLayout::FILL,
                      kStretchy, views::GridLayout::USE_PREF, 0, 0);
 
+  taken_width_ = GetInsets().left() + icon_view->GetPreferredSize().width() +
+                 icon_label_spacing;
+
+  // Make sure hovering over the icon also hovers the |HoverButton|.
+  icon_view->set_can_process_events_within_subtree(false);
   // Don't cover |icon_view| when the ink drops are being painted. |LabelButton|
   // already does this with its own image.
   icon_view->SetPaintToLayer();
@@ -113,8 +143,13 @@ HoverButton::HoverButton(views::ButtonListener* button_listener,
   grid_layout->StartRow(0, 0, row_height);
   grid_layout->AddView(icon_view.release(), 1, num_labels);
 
-  title_ = new views::Label(title);
+  title_ = new views::StyledLabel(title, nullptr);
+  // Hover the whole button when hovering |title_|. This is OK because |title_|
+  // will never have a link in it.
+  title_->set_can_process_events_within_subtree(false);
   grid_layout->AddView(title_);
+  // Size without a maximum width to get a single line label.
+  title_->SizeToFit(0);
 
   if (!subtitle.empty()) {
     grid_layout->StartRow(0, 0, row_height);
@@ -124,22 +159,9 @@ HoverButton::HoverButton(views::ButtonListener* button_listener,
     subtitle_->SetAutoColorReadabilityEnabled(false);
     grid_layout->SkipColumns(1);
     grid_layout->AddView(subtitle_);
-
-    const base::string16 accessible_name =
-        base::JoinString({title, subtitle}, base::ASCIIToUTF16("\n"));
-    // Only set a tooltip if either |title_| or |subtitle_| are too long.
-    base::string16 title_tooltip, subtitle_tooltip;
-    title_->GetTooltipText(gfx::Point(), &title_tooltip);
-    subtitle_->GetTooltipText(gfx::Point(), &subtitle_tooltip);
-    if (!title_tooltip.empty() || !subtitle_tooltip.empty()) {
-      // Setting the tooltip text also happens to set the accessible name.
-      SetTooltipText(accessible_name);
-    } else {
-      SetAccessibleName(accessible_name);
-    }
-  } else {
-    SetAccessibleName(title);
   }
+  SetTooltipAndAccessibleName(this, title_, subtitle_, GetLocalBounds(),
+                              taken_width_);
 
   // Since this constructor doesn't use the |LabelButton|'s image / label Views,
   // make sure the minimum size is correct according to the |grid_layout|.
@@ -154,6 +176,21 @@ void HoverButton::SetSubtitleElideBehavior(gfx::ElideBehavior elide_behavior) {
     subtitle_->SetElideBehavior(elide_behavior);
 }
 
+void HoverButton::SetTitleTextWithHintRange(const base::string16& title_text,
+                                            const gfx::Range& range) {
+  DCHECK(title_);
+  title_->SetText(title_text);
+
+  if (range.IsValid()) {
+    views::StyledLabel::RangeStyleInfo style_info;
+    style_info.text_style = STYLE_SECONDARY;
+    title_->AddStyleRange(range, style_info);
+  }
+  title_->SizeToFit(0);
+  SetTooltipAndAccessibleName(this, title_, subtitle_, GetLocalBounds(),
+                              taken_width_);
+}
+
 bool HoverButton::ShouldUseFloodFillInkDrop() const {
   return views::LabelButton::ShouldUseFloodFillInkDrop() || title_ != nullptr;
 }
@@ -161,6 +198,13 @@ bool HoverButton::ShouldUseFloodFillInkDrop() const {
 SkColor HoverButton::GetInkDropBaseColor() const {
   return views::style::GetColor(views::style::CONTEXT_BUTTON,
                                 views::style::STYLE_PRIMARY, GetNativeTheme());
+}
+
+std::unique_ptr<views::InkDropRipple> HoverButton::CreateInkDropRipple() const {
+  if (ui::MaterialDesignController::IsSecondaryUiMaterial())
+    return LabelButton::CreateInkDropRipple();
+  // Don't show the ripple on non-MD.
+  return nullptr;
 }
 
 std::unique_ptr<views::InkDropHighlight> HoverButton::CreateInkDropHighlight()
@@ -182,7 +226,24 @@ views::View* HoverButton::GetTooltipHandlerForPoint(const gfx::Point& point) {
 
   // If possible, take advantage of the |views::Label| tooltip behavior, which
   // only sets the tooltip when the text is too long.
-  if (title_ && subtitle_)
+  if (title_)
     return this;
-  return title_ ? title_ : label();
+  return label();
+}
+
+void HoverButton::OnBoundsChanged(const gfx::Rect& previous_bounds) {
+  if (title_)
+    SetTooltipAndAccessibleName(this, title_, subtitle_, GetLocalBounds(),
+                                taken_width_);
+}
+
+void HoverButton::Layout() {
+  LabelButton::Layout();
+
+  // |views::StyledLabel|s are all multi-line. Without this, long |title_|s will
+  // wrap around to the next line and (for smaller |HoverButton|s), cover up
+  // |subtitle_|. Make sure |title_| is sized with an infinite max width to
+  // ensure it stays on one line only. Long |title_|s will then be truncated.
+  if (title_)
+    title_->SizeToFit(0);
 }
