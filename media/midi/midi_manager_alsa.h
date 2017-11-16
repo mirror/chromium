@@ -19,8 +19,8 @@
 #include "base/synchronization/lock.h"
 #include "base/threading/thread.h"
 #include "base/values.h"
+#include "components/midi/midi_export.h"
 #include "device/udev_linux/scoped_udev.h"
-#include "media/midi/midi_export.h"
 #include "media/midi/midi_manager.h"
 
 namespace midi {

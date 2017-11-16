@@ -14,7 +14,7 @@
 #include "base/macros.h"
 #include "base/synchronization/lock.h"
 #include "base/threading/thread.h"
-#include "media/midi/midi_export.h"
+#include "components/midi/midi_export.h"
 #include "media/midi/midi_manager.h"
 #include "media/midi/midi_port_info.h"
 

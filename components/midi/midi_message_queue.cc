@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "media/midi/midi_message_queue.h"
+#include "components/midi/midi_message_queue.h"
 
 #include <algorithm>
 
 #include "base/logging.h"
-#include "media/midi/message_util.h"
+#include "components/midi/message_util.h"
 
 namespace midi {
 
