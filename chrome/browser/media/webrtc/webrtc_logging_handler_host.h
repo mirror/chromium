@@ -220,7 +220,7 @@ class WebRtcLoggingHandlerHost : public content::BrowserMessageFilter {
       const base::FilePath& logs_path);
 
   // The render process ID this object belongs to.
-  int render_process_id_;
+  const int render_process_id_;
 
   // The profile associated with our renderer process.
   Profile* const profile_;
