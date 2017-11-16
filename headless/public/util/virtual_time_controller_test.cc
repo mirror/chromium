@@ -81,7 +81,7 @@ TEST_F(VirtualTimeControllerTest, AdvancesTimeWithoutTasks) {
               DispatchProtocolMessage(
                   &client_,
                   "{\"id\":0,\"method\":\"Emulation.setVirtualTimePolicy\","
-                  "\"params\":{\"budget\":5000,"
+                  "\"params\":{\"budget\":5000.0,"
                   "\"maxVirtualTimeTaskStarvationCount\":1000,"
                   "\"policy\":\"advance\"}}"))
       .WillOnce(Return(true));
@@ -94,14 +94,15 @@ TEST_F(VirtualTimeControllerTest, MaxVirtualTimeTaskStarvationCount) {
               DispatchProtocolMessage(
                   &client_,
                   "{\"id\":0,\"method\":\"Emulation.setVirtualTimePolicy\","
-                  "\"params\":{\"budget\":5000,"
+                  "\"params\":{\"budget\":5000.0,"
                   "\"maxVirtualTimeTaskStarvationCount\":0,"
                   "\"policy\":\"advance\"}}"))
       .WillOnce(Return(true));
 
   GrantVirtualTimeBudget(5000);
 
-  client_.DispatchProtocolMessage(mock_host_.get(), "{\"id\":0,\"result\":{}}");
+  client_.DispatchProtocolMessage(
+      mock_host_.get(), "{\"id\":0,\"result\":{\"virtualTimeBase\":1.0}}");
 
   EXPECT_TRUE(set_up_complete_);
   EXPECT_FALSE(budget_expired_);
@@ -146,7 +147,7 @@ TEST_F(VirtualTimeControllerTest, InterleavesTasksWithVirtualTime) {
               DispatchProtocolMessage(
                   &client_,
                   "{\"id\":0,\"method\":\"Emulation.setVirtualTimePolicy\","
-                  "\"params\":{\"budget\":1000,"
+                  "\"params\":{\"budget\":1000.0,"
                   "\"maxVirtualTimeTaskStarvationCount\":0,"
                   "\"policy\":\"advance\"}}"))
       .WillOnce(Return(true));
@@ -156,7 +157,8 @@ TEST_F(VirtualTimeControllerTest, InterleavesTasksWithVirtualTime) {
   EXPECT_FALSE(set_up_complete_);
   EXPECT_FALSE(budget_expired_);
 
-  client_.DispatchProtocolMessage(mock_host_.get(), "{\"id\":0,\"result\":{}}");
+  client_.DispatchProtocolMessage(
+      mock_host_.get(), "{\"id\":0,\"result\":{\"virtualTimeBase\":1.0}}");
 
   EXPECT_TRUE(set_up_complete_);
   EXPECT_FALSE(budget_expired_);
@@ -174,7 +176,7 @@ TEST_F(VirtualTimeControllerTest, InterleavesTasksWithVirtualTime) {
             &client_,
             base::StringPrintf(
                 "{\"id\":%d,\"method\":\"Emulation.setVirtualTimePolicy\","
-                "\"params\":{\"budget\":1000,"
+                "\"params\":{\"budget\":1000.0,"
                 "\"maxVirtualTimeTaskStarvationCount\":0,"
                 "\"policy\":\"advance\"}}",
                 i * 2)))
@@ -187,7 +189,8 @@ TEST_F(VirtualTimeControllerTest, InterleavesTasksWithVirtualTime) {
 
     client_.DispatchProtocolMessage(
         mock_host_.get(),
-        base::StringPrintf("{\"id\":%d,\"result\":{}}", i * 2));
+        base::StringPrintf("{\"id\":%d,\"result\":{\"virtualTimeBase\":1.0}}",
+                           i * 2));
 
     EXPECT_FALSE(set_up_complete_);
     EXPECT_FALSE(budget_expired_);
@@ -213,7 +216,7 @@ TEST_F(VirtualTimeControllerTest, CanceledTask) {
               DispatchProtocolMessage(
                   &client_,
                   "{\"id\":0,\"method\":\"Emulation.setVirtualTimePolicy\","
-                  "\"params\":{\"budget\":1000,"
+                  "\"params\":{\"budget\":1000.0,"
                   "\"maxVirtualTimeTaskStarvationCount\":0,"
                   "\"policy\":\"advance\"}}"))
       .WillOnce(Return(true));
@@ -223,7 +226,8 @@ TEST_F(VirtualTimeControllerTest, CanceledTask) {
   EXPECT_FALSE(set_up_complete_);
   EXPECT_FALSE(budget_expired_);
 
-  client_.DispatchProtocolMessage(mock_host_.get(), "{\"id\":0,\"result\":{}}");
+  client_.DispatchProtocolMessage(
+      mock_host_.get(), "{\"id\":0,\"result\":{\"virtualTimeBase\":1.0}}");
 
   EXPECT_TRUE(set_up_complete_);
   EXPECT_FALSE(budget_expired_);
@@ -237,7 +241,7 @@ TEST_F(VirtualTimeControllerTest, CanceledTask) {
               DispatchProtocolMessage(
                   &client_,
                   "{\"id\":2,\"method\":\"Emulation.setVirtualTimePolicy\","
-                  "\"params\":{\"budget\":1000,"
+                  "\"params\":{\"budget\":1000.0,"
                   "\"maxVirtualTimeTaskStarvationCount\":0,"
                   "\"policy\":\"advance\"}}"))
       .WillOnce(Return(true));
@@ -248,7 +252,8 @@ TEST_F(VirtualTimeControllerTest, CanceledTask) {
   EXPECT_FALSE(budget_expired_);
 
   client_.DispatchProtocolMessage(
-      mock_host_.get(), base::StringPrintf("{\"id\":2,\"result\":{}}"));
+      mock_host_.get(),
+      base::StringPrintf("{\"id\":2,\"result\":{\"virtualTimeBase\":1.0}}"));
 
   EXPECT_FALSE(set_up_complete_);
   EXPECT_FALSE(budget_expired_);
@@ -259,7 +264,7 @@ TEST_F(VirtualTimeControllerTest, CanceledTask) {
               DispatchProtocolMessage(
                   &client_,
                   "{\"id\":4,\"method\":\"Emulation.setVirtualTimePolicy\","
-                  "\"params\":{\"budget\":3000,"
+                  "\"params\":{\"budget\":3000.0,"
                   "\"maxVirtualTimeTaskStarvationCount\":0,"
                   "\"policy\":\"advance\"}}"))
       .WillOnce(Return(true));
@@ -270,7 +275,8 @@ TEST_F(VirtualTimeControllerTest, CanceledTask) {
   EXPECT_FALSE(budget_expired_);
 
   client_.DispatchProtocolMessage(
-      mock_host_.get(), base::StringPrintf("{\"id\":4,\"result\":{}}"));
+      mock_host_.get(),
+      base::StringPrintf("{\"id\":4,\"result\":{\"virtualTimeBase\":1.0}}"));
 
   EXPECT_FALSE(set_up_complete_);
   EXPECT_FALSE(budget_expired_);
