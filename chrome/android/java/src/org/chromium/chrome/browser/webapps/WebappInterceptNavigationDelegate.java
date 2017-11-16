@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.webapps;
 
 import android.net.Uri;
 import android.os.SystemClock;
+import android.provider.Browser;
 import android.support.customtabs.CustomTabsIntent;
 
 import org.chromium.base.metrics.RecordHistogram;
@@ -42,8 +43,9 @@ public class WebappInterceptNavigationDelegate extends InterceptNavigationDelega
          * @return {@link CustomTabTimeSpentLogger} instance if activity is WebAPP/WebApk/TWA,
          * otherwise null.
          */
-        public static CustomTabTimeSpentLogger createInstanceAndStartTimer(
+        public static CustomTabTimeSpentLogger createInstanceAndStartTimerIfNecessary(
                 @WebappActivity.ActivityType int activityType) {
+            if (activityType == WebappActivity.ACTIVITY_TYPE_INVALID) return null;
             return new CustomTabTimeSpentLogger(activityType);
         }
 
@@ -67,7 +69,7 @@ public class WebappInterceptNavigationDelegate extends InterceptNavigationDelega
                     umaSuffix = ".Other";
                     break;
             }
-            RecordHistogram.recordLongTimesHistogram(
+            RecordHistogram.recordTimesHistogram(
                     "CustomTab.SessionDuration" + umaSuffix, timeSpent, TimeUnit.MILLISECONDS);
         }
     }
@@ -99,6 +101,8 @@ public class WebappInterceptNavigationDelegate extends InterceptNavigationDelega
                     CustomTabIntentDataProvider.EXTRA_SEND_TO_EXTERNAL_DEFAULT_HANDLER, true);
             customTabIntent.intent.putExtra(CustomTabIntentDataProvider.EXTRA_BROWSER_LAUNCH_SOURCE,
                     mActivity.getActivityType());
+            customTabIntent.intent.putExtra(
+                    Browser.EXTRA_APPLICATION_ID, mActivity.mWebappInfo.apkPackageName());
             customTabIntent.launchUrl(mActivity, Uri.parse(navigationParams.url));
             return true;
         }

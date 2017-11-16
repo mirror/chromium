@@ -78,7 +78,7 @@ public class WebappActivity extends SingleTabActivity {
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({ACTIVITY_TYPE_WEBAPP, ACTIVITY_TYPE_WEBAPK, ACTIVITY_TYPE_TWA})
     public @interface ActivityType {}
-    public static final int ACTIVITY_TYPE_OTHER = -1;
+    public static final int ACTIVITY_TYPE_INVALID = -1;
     public static final int ACTIVITY_TYPE_WEBAPP = 0;
     public static final int ACTIVITY_TYPE_WEBAPK = 1;
     public static final int ACTIVITY_TYPE_TWA = 2;
@@ -878,7 +878,7 @@ public class WebappActivity extends SingleTabActivity {
 
     @Override
     protected TabDelegate createTabDelegate(boolean incognito) {
-        return new WebappTabDelegate(incognito, getActivityType());
+        return new WebappTabDelegate(incognito, getActivityType(), mWebappInfo.apkPackageName());
     }
 
     // We're temporarily disable CS on webapp since there are some issues. (http://crbug.com/471950)
