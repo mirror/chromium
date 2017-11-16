@@ -23,6 +23,7 @@ using Process = memory_instrumentation::GlobalDumpGraph::Process;
 namespace {
 
 const char kSizeEntryName[] = "size";
+const char kEffectiveSizeEntryName[] = "effective_size";
 
 Node::Entry::ScalarUnits EntryUnitsFromString(std::string units) {
   if (units == MemoryAllocatorDump::kUnitsBytes) {
@@ -132,17 +133,73 @@ void GraphProcessor::AddOverheadsAndPropogateEntries(
 
 // static
 void GraphProcessor::CalculateSizesForGraph(GlobalDumpGraph* global_graph) {
+  auto* global_root = global_graph->shared_memory_graph()->root();
+
   // Eighth pass: calculate the size field for nodes by considering the sizes
   // of their children and owners.
   {
     std::set<const Node*> visited;
     std::set<const Node*> path;
-    auto* global_root = global_graph->shared_memory_graph()->root();
     VisitInDepthFirstPostOrder(global_root, &visited, &path,
                                base::BindRepeating(&CalculateSizeForNode));
     for (auto& pid_to_process : global_graph->process_dump_graphs()) {
       VisitInDepthFirstPostOrder(pid_to_process.second->root(), &visited, &path,
                                  base::BindRepeating(&CalculateSizeForNode));
+    }
+  }
+
+  // Ninth pass: Calculate not-owned and not-owning sub-sizes of all nodes.
+  {
+    std::set<const Node*> visited;
+    std::set<const Node*> path;
+    VisitInDepthFirstPostOrder(global_root, &visited, &path,
+                               base::BindRepeating(&CalculateDumpSubSizes));
+    for (auto& pid_to_process : global_graph->process_dump_graphs()) {
+      VisitInDepthFirstPostOrder(pid_to_process.second->root(), &visited, &path,
+                                 base::BindRepeating(&CalculateDumpSubSizes));
+    }
+  }
+
+  // Tenth pass: Calculate owned and owning coefficients of owned and owner
+  // nodes.
+  {
+    std::set<const Node*> visited;
+    std::set<const Node*> path;
+    VisitInDepthFirstPostOrder(
+        global_root, &visited, &path,
+        base::BindRepeating(&CalculateDumpOwnershipCoefficient));
+    for (auto& pid_to_process : global_graph->process_dump_graphs()) {
+      VisitInDepthFirstPostOrder(
+          pid_to_process.second->root(), &visited, &path,
+          base::BindRepeating(&CalculateDumpOwnershipCoefficient));
+    }
+  }
+
+  // Eleventh pass: Calculate cumulative owned and owning coefficients of all
+  // nodes.
+  {
+    std::set<const Node*> visited;
+    VisitInDepthFirstPreOrder(
+        global_root, &visited,
+        base::BindRepeating(&CalculateDumpCumulativeOwnershipCoefficient));
+    for (auto& pid_to_process : global_graph->process_dump_graphs()) {
+      VisitInDepthFirstPreOrder(
+          pid_to_process.second->root(), &visited,
+          base::BindRepeating(&CalculateDumpCumulativeOwnershipCoefficient));
+    }
+  }
+
+  // Twelfth pass: Calculate the effective sizes of all nodes.
+  {
+    std::set<const Node*> visited;
+    std::set<const Node*> path;
+    VisitInDepthFirstPostOrder(
+        global_root, &visited, &path,
+        base::BindRepeating(&CalculateDumpEffectiveSize));
+    for (auto& pid_to_process : global_graph->process_dump_graphs()) {
+      VisitInDepthFirstPostOrder(
+          pid_to_process.second->root(), &visited, &path,
+          base::BindRepeating(&CalculateDumpEffectiveSize));
     }
   }
 }
@@ -473,7 +530,7 @@ void GraphProcessor::AggregateNumericsRecursively(Node* node) {
     for (const auto& name_to_entry : *path_to_child.second->entries()) {
       const std::string& name = name_to_entry.first;
       if (name_to_entry.second.type == Node::Entry::Type::kUInt64 &&
-          name != kSizeEntryName && name != "effective_size") {
+          name != kSizeEntryName && name != kEffectiveSizeEntryName) {
         numeric_names.insert(name);
       }
     }
@@ -607,6 +664,210 @@ void GraphProcessor::VisitInDepthFirstPostOrder(
 
   // The current node is no longer on the path.
   path->erase(node);
+}
+
+// static
+void GraphProcessor::CalculateDumpSubSizes(Node* node) {
+  // Completely skip dumps with undefined size.
+  base::Optional<uint64_t> size_opt = GetSizeEntryOfNode(node);
+  if (!size_opt)
+    return;
+
+  // If the dump is a leaf node, then both sub-sizes are equal to the size.
+  if (node->children()->empty()) {
+    node->not_owning_sub_size = *size_opt;
+    node->not_owned_sub_size = *size_opt;
+    return;
+  }
+
+  // Calculate this dump's not-owning sub-size by summing up the not-owning
+  // sub-sizes of children MADs which do not own another MAD.
+  for (const auto& path_to_child : *node->children()) {
+    if (path_to_child.second->owns_edge())
+      continue;
+    node->not_owning_sub_size += path_to_child.second->not_owning_sub_size;
+  }
+
+  // Calculate this dump's not-owned sub-size.
+  uint64_t not_owned_sub_size = 0;
+  for (const auto& path_to_child : *node->children()) {
+    Node* child = path_to_child.second;
+
+    // If the child dump is not owned, then add its not-owned sub-size.
+    if (child->owned_by_edges()->empty()) {
+      not_owned_sub_size += child->not_owned_sub_size;
+      continue;
+    }
+
+    // If the child dump is owned, then add the difference between its size
+    // and the largest owner.
+    uint64_t largest_owner_size = 0;
+    for (Edge* edge : *child->owned_by_edges()) {
+      uint64_t source_size = GetSizeEntryOfNode(edge->source()).value_or(0);
+      largest_owner_size = std::max(largest_owner_size, source_size);
+    }
+    uint64_t child_size = GetSizeEntryOfNode(child).value_or(0);
+    node->not_owned_sub_size += child_size - largest_owner_size;
+  }
+}
+
+// static
+void GraphProcessor::CalculateDumpOwnershipCoefficient(Node* node) {
+  // Completely skip dumps with undefined size.
+  base::Optional<uint64_t> size_opt = GetSizeEntryOfNode(node);
+  if (!size_opt)
+    return;
+
+  // We only need to consider owned dumps.
+  if (node->owned_by_edges()->empty())
+    return;
+
+  // Sort the owners in decreasing order of ownership priority and
+  // increasing order of not-owning sub-size (in case of equal priority).
+  std::vector<Edge*> owners = *node->owned_by_edges();
+  std::sort(owners.begin(), owners.end(), [](Edge* a, Edge* b) {
+    if (a->priority() == b->priority()) {
+      return a->source()->not_owning_sub_size <
+             b->source()->not_owning_sub_size;
+    }
+    return b->priority() < a->priority();
+  });
+
+  // Loop over the list of owners and distribute the owned dump's not-owned
+  // sub-size among them according to their ownership priority and
+  // not-owning sub-size.
+  uint64_t already_attributed_sub_size = 0;
+  for (auto current_it = owners.begin(); current_it != owners.end();) {
+    // Find the position of the first owner with lower priority.
+    int current_priority = (*current_it)->priority();
+    auto next_it =
+        std::find_if(current_it, owners.end(), [current_priority](Edge* edge) {
+          return edge->priority() < current_priority;
+        });
+
+    // Compute the number of nodes which have the same priority as current.
+    size_t difference = std::distance(current_it, next_it);
+
+    // Visit the owners with the same priority in increasing order of
+    // not-owned sub-size, split the owned memory among them appropriately,
+    // and calculate their owning coefficients.
+    uint64_t attributed_not_owning_sub_size = 0;
+    for (; current_it != next_it; current_it++) {
+      uint64_t not_owning_sub_size =
+          (*current_it)->source()->not_owning_sub_size;
+      if (not_owning_sub_size > already_attributed_sub_size) {
+        attributed_not_owning_sub_size +=
+            (not_owning_sub_size - already_attributed_sub_size) / difference;
+        already_attributed_sub_size = not_owning_sub_size;
+      }
+
+      if (not_owning_sub_size != 0) {
+        (*current_it)->source()->owning_coefficient =
+            static_cast<double>(attributed_not_owning_sub_size) /
+            not_owning_sub_size;
+      }
+      difference--;
+    }
+
+    // At the end of this loop, we should move to a node with a lower priority.
+    DCHECK(current_it == next_it);
+  }
+
+  // Attribute the remainder of the owned dump's not-owned sub-size to
+  // the dump itself and calculate its owned coefficient.
+  uint64_t not_owned_sub_size = node->not_owned_sub_size;
+  uint64_t remainder_sub_size =
+      not_owned_sub_size - already_attributed_sub_size;
+  if (not_owned_sub_size != 0) {
+    node->owned_coefficient =
+        static_cast<double>(remainder_sub_size) / not_owned_sub_size;
+  }
+}
+
+// static
+void GraphProcessor::CalculateDumpCumulativeOwnershipCoefficient(Node* node) {
+  // Completely skip nodes with undefined size.
+  base::Optional<uint64_t> size_opt = GetSizeEntryOfNode(node);
+  if (!size_opt)
+    return;
+
+  double cumulative_owned_coefficient = node->owned_coefficient;
+  if (node->parent()) {
+    cumulative_owned_coefficient *= node->parent()->owned_coefficient;
+  }
+  node->cumulative_owned_coefficient = cumulative_owned_coefficient;
+
+  if (node->owns_edge()) {
+    node->cumulative_owning_coefficient =
+        node->owning_coefficient *
+        node->owns_edge()->target()->cumulative_owning_coefficient;
+  } else if (node->parent()) {
+    node->cumulative_owning_coefficient =
+        node->parent()->cumulative_owning_coefficient;
+  } else {
+    node->cumulative_owning_coefficient = 1;
+  }
+}
+
+// static
+void GraphProcessor::CalculateDumpEffectiveSize(Node* node) {
+  // Completely skip dumps with undefined size. As a result, each dump will
+  // have defined effective size if and only if it has defined size.
+  base::Optional<uint64_t> size_opt = GetSizeEntryOfNode(node);
+  if (!size_opt) {
+    node->entries()->erase(kEffectiveSizeEntryName);
+    return;
+  }
+
+  uint64_t effective_size = 0;
+  if (node->children()->empty()) {
+    // Leaf dump.
+    effective_size = *size_opt * node->cumulative_owning_coefficient *
+                     node->cumulative_owned_coefficient;
+  } else {
+    // Non-leaf dump.
+    for (const auto& path_to_child : *node->children()) {
+      Node* child = path_to_child.second;
+      if (!GetSizeEntryOfNode(child))
+        continue;
+      effective_size +=
+          child->entries()->find(kEffectiveSizeEntryName)->second.value_uint64;
+    }
+  }
+  node->AddEntry(kEffectiveSizeEntryName, Node::Entry::ScalarUnits::kBytes,
+                 effective_size);
+}
+
+// static
+void GraphProcessor::VisitInDepthFirstPreOrder(
+    Node* node,
+    std::set<const Node*>* visited,
+    const base::RepeatingCallback<void(Node*)>& callback) {
+  // If the node has already been visited, don't visit it again.
+  if (visited->find(node) != visited->end())
+    return;
+
+  // If we haven't visited the node which this node owns then wait for that.
+  if (node->owns_edge() && visited->count(node->owns_edge()->target()) == 0)
+    return;
+
+  // If we haven't visited the node's parent then wait for that.
+  if (node->parent() && visited->count(node->parent()) == 0)
+    return;
+
+  // Visit the current node itself.
+  callback.Run(node);
+  visited->insert(node);
+
+  // Visit all owners of this node.
+  for (auto* edge : *node->owned_by_edges()) {
+    VisitInDepthFirstPreOrder(edge->source(), visited, callback);
+  }
+
+  // Visit all children of this node.
+  for (auto name_to_child : *node->children()) {
+    VisitInDepthFirstPreOrder(name_to_child.second, visited, callback);
+  }
 }
 
 }  // namespace memory_instrumentation
