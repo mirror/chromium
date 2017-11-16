@@ -605,7 +605,10 @@ TEST(EventTest, TouchEventRotationAngleFixing) {
                                     /* pointer_id*/ 0, radius_x, radius_y,
                                     /* force */ 0),
                      0, angle_in_range);
-    EXPECT_FLOAT_EQ(angle_in_range, event.rotation_angle());
+    float rotation_angle = event.pointer_details().twist % 180;
+    if (rotation_angle < 0)
+      rotation_angle += 180.0f;
+    EXPECT_FLOAT_EQ(angle_in_range, rotation_angle);
   }
 
   {
@@ -615,7 +618,10 @@ TEST(EventTest, TouchEventRotationAngleFixing) {
                                     /* pointer_id*/ 0, radius_x, radius_y,
                                     /* force */ 0),
                      0, angle_in_range);
-    EXPECT_FLOAT_EQ(angle_in_range, event.rotation_angle());
+    float rotation_angle = event.pointer_details().twist % 180;
+    if (rotation_angle < 0)
+      rotation_angle += 180.0f;
+    EXPECT_FLOAT_EQ(angle_in_range, rotation_angle);
   }
 
   {
@@ -625,7 +631,10 @@ TEST(EventTest, TouchEventRotationAngleFixing) {
                                     /* pointer_id*/ 0, radius_x, radius_y,
                                     /* force */ 0),
                      0, angle_negative);
-    EXPECT_FLOAT_EQ(180 - 0.1f, event.rotation_angle());
+    float rotation_angle = event.pointer_details().twist % 180;
+    if (rotation_angle < 0)
+      rotation_angle += 180.0f;
+    EXPECT_FLOAT_EQ(180 - 0.1f, rotation_angle);
   }
 
   {
@@ -635,7 +644,10 @@ TEST(EventTest, TouchEventRotationAngleFixing) {
                                     /* pointer_id*/ 0, radius_x, radius_y,
                                     /* force */ 0),
                      0, angle_negative);
-    EXPECT_FLOAT_EQ(360 - 200, event.rotation_angle());
+    float rotation_angle = event.pointer_details().twist % 180;
+    if (rotation_angle < 0)
+      rotation_angle += 180.0f;
+    EXPECT_FLOAT_EQ(360 - 200, rotation_angle);
   }
 
   {
@@ -645,7 +657,10 @@ TEST(EventTest, TouchEventRotationAngleFixing) {
                                     /* pointer_id*/ 0, radius_x, radius_y,
                                     /* force */ 0),
                      0, angle_too_big);
-    EXPECT_FLOAT_EQ(0, event.rotation_angle());
+    float rotation_angle = event.pointer_details().twist % 180;
+    if (rotation_angle < 0)
+      rotation_angle += 180.0f;
+    EXPECT_FLOAT_EQ(0, rotation_angle);
   }
 
   {
@@ -655,7 +670,10 @@ TEST(EventTest, TouchEventRotationAngleFixing) {
                                     /* pointer_id*/ 0, radius_x, radius_y,
                                     /* force */ 0),
                      0, angle_too_big);
-    EXPECT_FLOAT_EQ(400 - 360, event.rotation_angle());
+    float rotation_angle = event.pointer_details().twist % 180;
+    if (rotation_angle < 0)
+      rotation_angle += 180.0f;
+    EXPECT_FLOAT_EQ(400 - 360, rotation_angle);
   }
 }
 

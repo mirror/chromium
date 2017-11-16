@@ -40,9 +40,12 @@ PointerProperties GetPointerPropertiesFromTouchEvent(const TouchEvent& touch) {
   pointer_properties.tilt_x = touch.pointer_details().tilt_x;
   pointer_properties.tilt_y = touch.pointer_details().tilt_y;
 
+  float rotation_angle = touch.pointer_details().twist % 180;
+  if (rotation_angle < 0)
+    rotation_angle += 180.0f;
   pointer_properties.SetAxesAndOrientation(touch.pointer_details().radius_x,
                                            touch.pointer_details().radius_y,
-                                           touch.rotation_angle());
+                                           rotation_angle);
   if (!pointer_properties.touch_major) {
     float default_size;
     switch (touch.pointer_details().pointer_type) {
