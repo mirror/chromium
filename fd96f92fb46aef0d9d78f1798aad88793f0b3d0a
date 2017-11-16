@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a617e0bf_e8c777cb",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T13:57:39Z",
+      "side": 1,
+      "message": "This argument is named by_user, please keep it consistent. (Hypothetically activations could come from non-user sources too.)",
+      "revId": "fd96f92fb46aef0d9d78f1798aad88793f0b3d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87b856d3_e4735782",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T13:57:39Z",
+      "side": 1,
+      "message": "micro nit: {}, since the clause has \u003e2 lines",
+      "revId": "fd96f92fb46aef0d9d78f1798aad88793f0b3d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1894b474_fab3ab05",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T13:57:39Z",
+      "side": 1,
+      "message": "const std::string\u0026",
+      "revId": "fd96f92fb46aef0d9d78f1798aad88793f0b3d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "840128be_6470e60d",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T13:57:39Z",
+      "side": 1,
+      "message": "nit: can these be private, with friends declarations for the tests if necessary?",
+      "revId": "fd96f92fb46aef0d9d78f1798aad88793f0b3d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f866f0c4_c167073b",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-16T13:57:39Z",
+      "side": 1,
+      "message": "Please delete the |type| and |incognito| arguments again",
+      "revId": "fd96f92fb46aef0d9d78f1798aad88793f0b3d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
