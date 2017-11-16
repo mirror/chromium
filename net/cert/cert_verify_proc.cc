@@ -105,7 +105,7 @@ void RecordPublicKeyHistogram(const char* chain_position,
                                                    arraysize(kEccKeySizes)),
         base::HistogramBase::kUmaTargetedHistogramFlag);
   } else {
-    // Key sizes < 1024 bits should cause errors, while key sizes > 16K are not
+    // Key sizes < 2048 bits should cause errors, while key sizes > 16K are not
     // uniformly supported by the underlying cryptographic libraries.
     counter = base::CustomHistogram::FactoryGet(
         histogram_name,
@@ -117,14 +117,14 @@ void RecordPublicKeyHistogram(const char* chain_position,
 }
 
 // Returns true if |type| is |kPublicKeyTypeRSA| or |kPublicKeyTypeDSA|, and
-// if |size_bits| is < 1024. Note that this means there may be false
+// if |size_bits| is < 2048. Note that this means there may be false
 // negatives: keys for other algorithms and which are weak will pass this
 // test.
 bool IsWeakKey(X509Certificate::PublicKeyType type, size_t size_bits) {
   switch (type) {
     case X509Certificate::kPublicKeyTypeRSA:
     case X509Certificate::kPublicKeyTypeDSA:
-      return size_bits < 1024;
+      return size_bits < 2048;
     default:
       return false;
   }
