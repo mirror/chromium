@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68dae0b5_930c9174",
+        "filename": "chrome/app/vector_icons/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-16T23:29:32Z",
+      "side": 1,
+      "message": "I don\u0027t know if I would worry about not building this on cros. Since it\u0027s not referenced from anywhere on cros it should fall out during linking anyway. If you want to keep it, perhaps switch to !is_cros",
+      "range": {
+        "startLine": 145,
+        "startChar": 6,
+        "endLine": 145,
+        "endChar": 34
+      },
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038c4725_c6bbdc9f",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-16T23:29:32Z",
+      "side": 1,
+      "message": "I don\u0027t know why we have so many classes in a single file. Maybe because it started with 1 or 2, then one was added, then another was added... I would think we\u0027d prefer to add this as a new file.",
+      "range": {
+        "startLine": 451,
+        "startChar": 6,
+        "endLine": 451,
+        "endChar": 45
+      },
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
