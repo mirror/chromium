@@ -16,6 +16,47 @@
       "revId": "eabfcb1364ecb0e05db41692c62e85bf17d3e4ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "747580d9_9455e57b",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-16T04:39:03Z",
+      "side": 0,
+      "message": "s/LayoutControl/LayoutTextControl/\n\nWe want to have this explanation in source code.",
+      "parentUuid": "7099ae0e_968d5898",
+      "revId": "eabfcb1364ecb0e05db41692c62e85bf17d3e4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982d2383_23c66b48",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-16T04:39:03Z",
+      "side": 0,
+      "message": "Could you move this code fragment to function first?\nIt is hard to compare this fragment and above fragment are same.",
+      "range": {
+        "startLine": 308,
+        "startChar": 2,
+        "endLine": 318,
+        "endChar": 24
+      },
+      "revId": "eabfcb1364ecb0e05db41692c62e85bf17d3e4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
