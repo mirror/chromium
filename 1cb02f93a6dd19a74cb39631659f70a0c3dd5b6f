@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "90dc1ef1_99008b49",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-16T14:23:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8ec802e1_d1037dbc",
+      "range": {
+        "startLine": 15,
+        "startChar": 13,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0df9d5a_011c2624",
         "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.html",
         "patchSetId": 8
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "e0416670_77b81d25",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-16T14:23:01Z",
+      "side": 1,
+      "message": "I like that name. Done.",
+      "parentUuid": "e0df9d5a_011c2624",
+      "range": {
+        "startLine": 8,
+        "startChar": 16,
+        "endLine": 8,
+        "endChar": 31
+      },
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b6a1166_026e1079",
         "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.html",
         "patchSetId": 8
@@ -89,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "0c158859_80ca395f",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-16T14:23:01Z",
+      "side": 1,
+      "message": "Doesn\u0027t look like it, removing.",
+      "parentUuid": "6b6a1166_026e1079",
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84fa4644_04b35113",
         "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.html",
         "patchSetId": 8
@@ -100,6 +166,24 @@
       "writtenOn": "2017-11-15T19:23:57Z",
       "side": 1,
       "message": "Are those styles copied from somewhere? Does it make a noticeable difference if the percentage values are simplified to 0, 7, 11, 15 ... etc?",
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70a5ae8_64bbde79",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-16T14:23:01Z",
+      "side": 1,
+      "message": "I copied this from the original welcome page, not sure if I\u0027m allowed to freely make changes to these :(.",
+      "parentUuid": "84fa4644_04b35113",
       "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -123,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "995f42b6_4e664df9",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-16T14:23:01Z",
+      "side": 1,
+      "message": "Apparently I don\u0027t even need that! Straight up removing it is fine. Done.",
+      "parentUuid": "7bc37efb_b09a8fb5",
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3cbc42b_1d95d999",
         "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.html",
         "patchSetId": 8
@@ -137,6 +239,24 @@
       "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a048210_d2943c08",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-16T14:23:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3cbc42b_1d95d999",
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "6abb1bd0_dcaa845a",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-16T14:23:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f03f3e42_cf7f2758",
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb150d09_3e395e35",
         "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.js",
         "patchSetId": 8
@@ -174,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "43dd35d5_7a023dd3",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-16T14:23:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb150d09_3e395e35",
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eaa436b5_7adcef8e",
         "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.js",
         "patchSetId": 8
@@ -188,6 +344,24 @@
       "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d5517b_552a4e3e",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_content.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-16T14:23:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaa436b5_7adcef8e",
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
