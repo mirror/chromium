@@ -41,6 +41,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/stream_handle.h"
 #include "content/public/common/appcache_info.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
@@ -720,6 +721,8 @@ void NavigationRequest::OnRequestRedirected(
 
 void NavigationRequest::OnResponseStarted(
     const scoped_refptr<ResourceResponse>& response,
+    mojom::URLLoaderPtr url_loader,
+    mojom::URLLoaderClientRequest url_loader_client,
     std::unique_ptr<StreamHandle> body,
     mojo::ScopedDataPipeConsumerHandle consumer_handle,
     const SSLStatus& ssl_status,
@@ -798,6 +801,8 @@ void NavigationRequest::OnResponseStarted(
   // Store the response and the StreamHandle until checks have been processed.
   response_ = response;
   body_ = std::move(body);
+  url_loader_ = std::move(url_loader);
+  url_loader_client_ = std::move(url_loader_client);
   handle_ = std::move(consumer_handle);
   ssl_status_ = ssl_status;
   is_download_ = is_download;
@@ -1190,9 +1195,18 @@ void NavigationRequest::CommitNavigation() {
 
   TransferNavigationHandleOwnership(render_frame_host);
 
+  mojom::MainResourceLoaderParamsPtr main_resource_loader_params;
+  if (base::FeatureList::IsEnabled(features::kNetworkService) ||
+      IsNavigationMojoResponseEnabled()) {
+    main_resource_loader_params = mojom::MainResourceLoaderParamsPtr(
+        base::in_place_t(), std::move(handle_), std::move(url_loader_),
+        std::move(url_loader_client_));
+  }
+
   render_frame_host->CommitNavigation(
-      response_.get(), std::move(body_), std::move(handle_), common_params_,
-      request_params_, is_view_source_, std::move(subresource_loader_params_));
+      response_.get(), std::move(main_resource_loader_params), std::move(body_),
+      common_params_, request_params_, is_view_source_,
+      std::move(subresource_loader_params_));
 
   frame_tree_node_->ResetNavigationRequest(true, true);
 }

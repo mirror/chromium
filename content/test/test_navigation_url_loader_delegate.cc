@@ -44,6 +44,8 @@ void TestNavigationURLLoaderDelegate::WaitForRequestStarted() {
 }
 
 void TestNavigationURLLoaderDelegate::ReleaseBody() {
+  url_loader_.reset();
+  url_loader_client_ = nullptr;
   body_.reset();
   handle_.reset();
 }
@@ -59,6 +61,8 @@ void TestNavigationURLLoaderDelegate::OnRequestRedirected(
 
 void TestNavigationURLLoaderDelegate::OnResponseStarted(
     const scoped_refptr<ResourceResponse>& response,
+    mojom::URLLoaderPtr url_loader,
+    mojom::URLLoaderClientRequest url_loader_client,
     std::unique_ptr<StreamHandle> body,
     mojo::ScopedDataPipeConsumerHandle consumer_handle,
     const SSLStatus& ssl_status,
@@ -68,6 +72,8 @@ void TestNavigationURLLoaderDelegate::OnResponseStarted(
     bool is_stream,
     base::Optional<SubresourceLoaderParams> subresource_loader_params) {
   response_ = response;
+  url_loader_ = std::move(url_loader);
+  url_loader_client_ = std::move(url_loader_client);
   body_ = std::move(body);
   handle_ = std::move(consumer_handle);
   is_download_ = is_download;

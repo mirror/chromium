@@ -32,21 +32,42 @@ struct CommonNavigationParams;
 [Native]
 struct RequestNavigationParams;
 
+// Contains objects used to continue a loading that started in the browser
+// process and will end in the renderer process. It is transferred between the
+// two processes in FrameNavigationControll::CommiNavigation().
+struct MainResourceLoaderParams {
+  // Used when the network service is enabled
+  // TODO(arthursonzogni): Get rid of |body_data| and always use the
+  // |url_loader| / |url_loader_client| pair instead.
+  handle<data_pipe_consumer>? body_data;
+
+  // Used when the network service is disabled.
+  URLLoader? url_loader;
+  URLLoaderClient& url_loader_client;
+};
+
 // Implemented by the frame provider and currently must be associated with the
 // legacy IPC channel.
 interface FrameNavigationControl {
-  // Tells the renderer that a navigation is ready to commit.  The renderer
-  // should request |body_url| to get access to the stream containing the body
-  // of the response. When the Network Service is enabled, |body_url| is not
-  // used and instead the data is passed to the renderer via |body_data|. In
-  // that case |subresource_loader_factories| may also be provided by the
-  // browser as a a means for the renderer to load subresources where
-  // applicable.
+  // Tells the renderer that a navigation is ready to commit.
+  //
+  // The renderer should request |body_url| to get access to the stream
+  // containing the body of the response. When the Network Service or
+  // NavigationMojoResponse is enabled, |body_url| is not used and instead
+  // |main_resource_loader_params| provides a way to continue the navigation.
+  //
+  // Note: |body_url| and |main_resource_loader_params| may also be empty when
+  // the navigation doesn't require the current document to change (i.e.
+  // javascript-url, renderer-debug-urls and same-document navigation)
+  //
+  // When the Network Service is enabled, |subresource_loader_factories| may
+  // also be provided by the browser as a a means for the renderer to load
+  // subresources where applicable.
   CommitNavigation(URLResponseHead head,
                    url.mojom.Url body_url,
                    CommonNavigationParams common_params,
                    RequestNavigationParams request_params,
-                   handle<data_pipe_consumer>? body_data,
+                   MainResourceLoaderParams? main_resource_loader_params,
                    URLLoaderFactoryBundle? subresource_loader_factories);
 };
 

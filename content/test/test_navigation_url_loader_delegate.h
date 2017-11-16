@@ -62,6 +62,8 @@ class TestNavigationURLLoaderDelegate : public NavigationURLLoaderDelegate {
       const net::RedirectInfo& redirect_info,
       const scoped_refptr<ResourceResponse>& response) override;
   void OnResponseStarted(const scoped_refptr<ResourceResponse>& response,
+                         mojom::URLLoaderPtr url_loader,
+                         mojom::URLLoaderClientRequest url_loader_client,
                          std::unique_ptr<StreamHandle> body,
                          mojo::ScopedDataPipeConsumerHandle consumer_handle,
                          const SSLStatus& ssl_status,
@@ -80,6 +82,8 @@ class TestNavigationURLLoaderDelegate : public NavigationURLLoaderDelegate {
  private:
   net::RedirectInfo redirect_info_;
   scoped_refptr<ResourceResponse> redirect_response_;
+  mojom::URLLoaderPtr url_loader_;
+  mojom::URLLoaderClientRequest url_loader_client_;
   scoped_refptr<ResourceResponse> response_;
   std::unique_ptr<StreamHandle> body_;
   mojo::ScopedDataPipeConsumerHandle handle_;

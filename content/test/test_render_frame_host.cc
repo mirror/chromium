@@ -55,16 +55,18 @@ class TestRenderFrameHost::NavigationInterceptor
   ~NavigationInterceptor() override = default;
 
   // mojom::FrameNavigationControl:
-  void CommitNavigation(const ResourceResponseHead& head,
-                        const GURL& body_url,
-                        const CommonNavigationParams& common_params,
-                        const RequestNavigationParams& request_params,
-                        mojo::ScopedDataPipeConsumerHandle body_data,
-                        base::Optional<URLLoaderFactoryBundle>
-                            subresource_loader_factories) override {
+  void CommitNavigation(
+      const ResourceResponseHead& head,
+      const GURL& body_url,
+      const CommonNavigationParams& common_params,
+      const RequestNavigationParams& request_params,
+      mojom::MainResourceLoaderParamsPtr main_resource_loader_params,
+      base::Optional<URLLoaderFactoryBundle> subresource_loader_factories)
+      override {
     frame_host_->GetProcess()->set_did_frame_commit_navigation(true);
     frame_host_->GetInternalNavigationControl()->CommitNavigation(
-        head, body_url, common_params, request_params, std::move(body_data),
+        head, body_url, common_params, request_params,
+        std::move(main_resource_loader_params),
         std::move(subresource_loader_factories));
   }
 
