@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b43e0ee_fbdd96e7",
+        "filename": "media/gpu/vaapi/vaapi_picture_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-16T16:43:39Z",
+      "side": 1,
+      "message": "hubbe@: same here, now the dtor and this method should\nbe virtual now that crrev.com/c/763920 has landed.",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 9
+      },
+      "revId": "ee086468700fc29bd90fa48f1bfcdb50242d42eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7136669a_2a41be8a",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-16T16:43:39Z",
+      "side": 1,
+      "message": "hubbe@: I understand you now :-)\n(this can be a pointer now that crrev.com/c/763920 has landed)",
+      "range": {
+        "startLine": 231,
+        "startChar": 39,
+        "endLine": 231,
+        "endChar": 61
+      },
+      "revId": "ee086468700fc29bd90fa48f1bfcdb50242d42eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
