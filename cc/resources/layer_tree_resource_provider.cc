@@ -100,13 +100,6 @@ viz::ResourceId LayerTreeResourceProvider::CreateResourceFromTextureMailbox(
   resource->read_lock_fences_enabled = read_lock_fences_enabled;
   resource->buffer_format = buffer_format;
   resource->is_overlay_candidate = mailbox.is_overlay_candidate();
-#if defined(OS_ANDROID)
-  resource->is_backed_by_surface_texture =
-      mailbox.is_backed_by_surface_texture();
-  resource->wants_promotion_hint = mailbox.wants_promotion_hint();
-  if (resource->wants_promotion_hint)
-    wants_promotion_hints_set_.insert(id);
-#endif
   resource->color_space = mailbox.color_space();
 
   return id;
@@ -353,10 +346,6 @@ void LayerTreeResourceProvider::TransferResource(
   resource->size = source->size;
   resource->read_lock_fences_enabled = source->read_lock_fences_enabled;
   resource->is_overlay_candidate = source->is_overlay_candidate;
-#if defined(OS_ANDROID)
-  resource->is_backed_by_surface_texture = source->is_backed_by_surface_texture;
-  resource->wants_promotion_hint = source->wants_promotion_hint;
-#endif
   resource->color_space = source->color_space;
 
   if (source->type == viz::ResourceType::kBitmap) {

@@ -69,15 +69,10 @@ class CC_EXPORT VideoLayerImpl : public LayerImpl {
   uint32_t frame_bits_per_channel_;
 
   struct FrameResource {
-    FrameResource(viz::ResourceId id,
-                  gfx::Size size_in_pixels,
-                  bool is_overlay_candidate)
-        : id(id),
-          size_in_pixels(size_in_pixels),
-          is_overlay_candidate(is_overlay_candidate) {}
+    FrameResource(viz::ResourceId id, gfx::Size size_in_pixels)
+        : id(id), size_in_pixels(size_in_pixels) {}
     viz::ResourceId id;
     gfx::Size size_in_pixels;
-    bool is_overlay_candidate;
   };
   std::vector<FrameResource> frame_resources_;
 
