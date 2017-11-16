@@ -1,8 +1,9 @@
+### BRANCH BISECT TESTING
+151ICUfixes
+
 Name: harfbuzz-ng
 Short Name: harfbuzz-ng
 URL: http://harfbuzz.org
-Version: 1.6.3
-Date: 20171026
 Security Critical: yes
 License: MIT
 License File: COPYING
