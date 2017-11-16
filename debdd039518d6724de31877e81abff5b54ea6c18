@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34beefee_6611b907",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-16T13:50:15Z",
+      "side": 1,
+      "message": "It won\u0027t hang either if the task runs before Start()... Maybe just \"Wait for the task to complete before exiting the scope, to prevent it from accessing a deleted |manager_started| instance.\"",
+      "range": {
+        "startLine": 617,
+        "startChar": 2,
+        "endLine": 617,
+        "endChar": 57
+      },
+      "revId": "debdd039518d6724de31877e81abff5b54ea6c18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
