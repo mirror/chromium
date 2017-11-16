@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "582e4f89_f51a5626",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-16T20:11:44Z",
+      "side": 0,
+      "message": "Previous call. (This was subtle and confusing which is why I pulled it out fot the logging code).",
+      "range": {
+        "startLine": 1174,
+        "startChar": 7,
+        "endLine": 1174,
+        "endChar": 45
+      },
+      "revId": "445feb54df5c9158e015bc727a17ebc36d38ebba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
