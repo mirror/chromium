@@ -85,12 +85,45 @@ std::unique_ptr<FormField> CreditCardField::Parse(AutofillScanner* scanner) {
     return nullptr;
 
   std::unique_ptr<CreditCardField> credit_card_field(new CreditCardField);
+
+  // A cursor saving the field position before parsing. Scanner will be set to
+  // this field after a failed parsing.
   size_t saved_cursor = scanner->SaveCursor();
+
+  // A cursor saving the field position that is directly after the form. Scanner
+  // will be set to this field after a successful parsing.
+  size_t cursor_after_form = saved_cursor;
+
+  // True if the previous loop's field was skipped.
+  bool just_skipped = false;
+  // Total number of skipped fields in this form.
+  int skipped_field = 0;
+  // Max number of skipped fields in this form.
+  // This number must be at least 2 as forms can have hidden field to handle
+  // month and year. The number must not be too big to avoid parsing multiple
+  // forms in the same pass.
+  int max_skips = 3;
+
+  // True if the parsing is currently parsing credit card numbers.
+  // It is possible for forms to have multiple credit card number fields (by
+  // 4 digits, or a confirmation field). This is only allowed as consecutive
+  // fields.
+  bool parsing_credit_card_numbers = false;
+  bool just_parsed_credit_card_number = false;
 
   // Credit card fields can appear in many different orders.
   // We loop until no more credit card related fields are found, see |break| at
   // the bottom of the loop.
   for (int fields = 0; !scanner->IsEnd(); ++fields) {
+    if (!just_skipped) {
+      // The last field was parsed successfully on the previous loop and the
+      // cursor now points to the first field after the form.
+      cursor_after_form = scanner->SaveCursor();
+      parsing_credit_card_numbers = just_parsed_credit_card_number;
+    }
+    just_parsed_credit_card_number = false;
+    just_skipped = false;
+
     // Ignore gift card fields.
     if (IsGiftCardField(scanner))
       break;
@@ -109,9 +142,9 @@ std::unique_ptr<FormField> CreditCardField::Parse(AutofillScanner* scanner) {
       // least one other credit card field and haven't yet parsed the
       // expiration date (which usually appears at the end).
       if (fields > 0 &&
-          !credit_card_field->expiration_month_ &&
-          ParseField(scanner,
-                     base::UTF8ToUTF16(kNameOnCardContextualRe),
+          !(credit_card_field->expiration_month_ ||
+            credit_card_field->expiration_date_) &&
+          ParseField(scanner, base::UTF8ToUTF16(kNameOnCardContextualRe),
                      &credit_card_field->cardholder_)) {
         continue;
       }
@@ -185,23 +218,37 @@ std::unique_ptr<FormField> CreditCardField::Parse(AutofillScanner* scanner) {
       // Avoid autofilling any credit card number field having very low or high
       // |start_index| on the HTML form.
       size_t start_index = 0;
-      if (!credit_card_field->numbers_.empty()) {
-        size_t last_number_field_size =
-            credit_card_field->numbers_.back()->credit_card_number_offset() +
-            credit_card_field->numbers_.back()->max_length;
-
-        // Distinguish between
-        //   (a) one card split across multiple fields
-        //   (b) multiple fields for multiple cards
-        // Treat this field as a part of the same card as the last field, except
-        // when doing so would cause overflow.
-        if (last_number_field_size < kMaxValidCardNumberSize)
-          start_index = last_number_field_size;
+      if (credit_card_field->numbers_.empty()) {
+        // This is the first credit card number found in the page. This mark the
+        // begining of the credit card number section that can contain multiple
+        // credit card number (full or partial).
+        parsing_credit_card_numbers = true;
       }
+      if (parsing_credit_card_numbers) {
+        // Only allow credit card numbers in the credit card number section.
+        // This mean that either this field is the first credit card number, or
+        // previous field parsed was also one.
+        if (!credit_card_field->numbers_.empty()) {
+          // Previous fields containing card number have already be found.
+          // Check if there are multiple copies of the full number or if all
+          // fields are part of the same number input.
+          size_t last_number_field_size =
+              credit_card_field->numbers_.back()->credit_card_number_offset() +
+              credit_card_field->numbers_.back()->max_length;
 
-      current_number_field->set_credit_card_number_offset(start_index);
-      credit_card_field->numbers_.push_back(current_number_field);
-      continue;
+          // Distinguish between
+          //   (a) one card split across multiple fields
+          //   (b) multiple fields for multiple cards
+          // Treat this field as a part of the same card as the last field,
+          // except when doing so would cause overflow.
+          if (last_number_field_size < kMaxValidCardNumberSize)
+            start_index = last_number_field_size;
+        }
+        current_number_field->set_credit_card_number_offset(start_index);
+        credit_card_field->numbers_.push_back(current_number_field);
+        just_parsed_credit_card_number = true;
+        continue;
+      }
     }
 
     if (credit_card_field->ParseExpirationDate(scanner))
@@ -214,8 +261,26 @@ std::unique_ptr<FormField> CreditCardField::Parse(AutofillScanner* scanner) {
       scanner->RewindTo(saved_cursor);
       return nullptr;
     }
-
+    // All parsing failed. The current field will be be skipped or parsing will
+    // stop.
+    just_skipped = true;
+    if (fields > 0 && !scanner->IsEnd() && !scanner->Cursor()->is_focusable &&
+        skipped_field < max_skips) {
+      // If the current could not be parsed but is not focusable, it is possibly
+      // a technical field.
+      // If a form is already parsed (fields > 0) and the limit of passed fields
+      // is not reached, allow the parsing to continue ignoring this field.
+      skipped_field++;
+      scanner->Advance();
+      continue;
+    }
     break;
+  }
+
+  if (just_skipped) {
+    // The last fields were ignored, rewind the cursor to the first unparsed
+    // field.
+    scanner->RewindTo(cursor_after_form);
   }
 
   // Some pages have a billing address field after the cardholder name field.
