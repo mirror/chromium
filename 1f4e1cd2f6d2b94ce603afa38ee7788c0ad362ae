@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "92919079_c1907353",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-11-16T07:25:57Z",
+      "side": 1,
+      "message": "Gerrit seems to act funny when I push stacked CLs. It has taken the commit message of the first, and the contents of the second!\n\nThe problem is that base:circular_deque is not available in platform2. Since we will be actually compiling this code in platform2, std::deque seemed like the only option.\nTo be able to use deque, we would have to check out a huge chunk of src/base/containers (and potentially other files it includes).\n\nSince the semantics for std::deque and base::circular_deque are the same, it seemed like toe best option. Do you have any suggestions about how to fix this?",
+      "parentUuid": "b5f9440d_4a0d2473",
+      "range": {
+        "startLine": 10,
+        "startChar": 44,
+        "endLine": 11,
+        "endChar": 13
+      },
+      "revId": "1f4e1cd2f6d2b94ce603afa38ee7788c0ad362ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d02a35cf_cabb2836",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "99ae7014_04d96f8e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-11-16T07:25:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d02a35cf_cabb2836",
+      "revId": "1f4e1cd2f6d2b94ce603afa38ee7788c0ad362ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24ea2c42_975c9080",
         "filename": "components/midi/OwNERS",
         "patchSetId": 4
@@ -53,6 +95,47 @@
       "writtenOn": "2017-11-16T06:52:56Z",
       "side": 1,
       "message": "We can just remove \"per-file *.*\u003d\". Following one liner should just work.\n\nfile://media/midi/OWNERS\n\nAlso, please fix the filename, s/OwNER/OWNER/.",
+      "revId": "1f4e1cd2f6d2b94ce603afa38ee7788c0ad362ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31806b0b_023f5bab",
+        "filename": "components/midi/OwNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-11-16T07:25:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24ea2c42_975c9080",
+      "revId": "1f4e1cd2f6d2b94ce603afa38ee7788c0ad362ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "097dca3d_46fec9f8",
+        "filename": "components/midi/midi_message_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-11-16T07:25:57Z",
+      "side": 1,
+      "message": "PTAL.\n\nFor the code to be re-used in platform2, we will have to convert this to std::deque. I tested this locally and it works fine (CQ dry run also passes with std::deque). The difference in semantics between the two is irrelevant from the MidiMessageQueue perspective.",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 22
+      },
       "revId": "1f4e1cd2f6d2b94ce603afa38ee7788c0ad362ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -79,6 +162,30 @@
       "revId": "1f4e1cd2f6d2b94ce603afa38ee7788c0ad362ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c6e2cc_d4b3043b",
+        "filename": "media/midi/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-11-16T07:25:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968c4500_045a656e",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 45
+      },
+      "revId": "1f4e1cd2f6d2b94ce603afa38ee7788c0ad362ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
