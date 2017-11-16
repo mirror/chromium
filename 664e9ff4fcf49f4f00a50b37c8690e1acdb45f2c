@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c315ffa7_4af91687",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-16T20:11:17Z",
+      "side": 1,
+      "message": "This is a real bug. Could you file a bug for it?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 37
+      },
+      "revId": "664e9ff4fcf49f4f00a50b37c8690e1acdb45f2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a02a8a8c_98f287df",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-16T20:11:17Z",
+      "side": 1,
+      "message": "Does LayoutSelection do anything for non-range selection?\n\nI guess we only need IsRange() here.",
+      "range": {
+        "startLine": 118,
+        "startChar": 1,
+        "endLine": 121,
+        "endChar": 0
+      },
+      "revId": "664e9ff4fcf49f4f00a50b37c8690e1acdb45f2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

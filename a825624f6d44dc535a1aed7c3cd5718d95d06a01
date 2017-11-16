@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16b51a02_ea16d785",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-16T20:11:17Z",
+      "side": 0,
+      "message": "We need to prune this deprecated function and hoist the layout update to some proper place.",
+      "range": {
+        "startLine": 359,
+        "startChar": 19,
+        "endLine": 359,
+        "endChar": 61
+      },
+      "revId": "a825624f6d44dc535a1aed7c3cd5718d95d06a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
