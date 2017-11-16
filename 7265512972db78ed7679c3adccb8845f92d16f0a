@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93a015ab_f5d4fc17",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1223944
+      },
+      "writtenOn": "2017-11-16T08:50:26Z",
+      "side": 1,
+      "message": "keywords to add: default synchronized native",
+      "range": {
+        "startLine": 583,
+        "startChar": 21,
+        "endLine": 583,
+        "endChar": 28
+      },
+      "revId": "7265512972db78ed7679c3adccb8845f92d16f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3647c141_0b5a5ed1",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1223944
+      },
+      "writtenOn": "2017-11-16T08:50:26Z",
+      "side": 1,
+      "message": "I think we should have spaces around the assignment operator.",
+      "range": {
+        "startLine": 611,
+        "startChar": 15,
+        "endLine": 611,
+        "endChar": 16
+      },
+      "revId": "7265512972db78ed7679c3adccb8845f92d16f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
