@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6140e034_7a730959",
+        "filename": "chromeos/dbus/auth_policy_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-16T16:34:35Z",
+      "side": 1,
+      "message": "I\u0027d prefer separate protos for each method (especially since user_principal_name isn\u0027t used here).",
+      "range": {
+        "startLine": 122,
+        "startChar": 4,
+        "endLine": 122,
+        "endChar": 54
+      },
+      "revId": "fd9e9afb0fbcd27b64c3f658d2b65f1d02e2e96e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c057289a_fb7b98fc",
+        "filename": "chromeos/dbus/auth_policy_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-16T16:34:35Z",
+      "side": 1,
+      "message": "I wonder if we should send account_id here, without the \u0027a-\u0027, for consistency with all the other calls.",
+      "range": {
+        "startLine": 148,
+        "startChar": 4,
+        "endLine": 148,
+        "endChar": 79
+      },
+      "revId": "fd9e9afb0fbcd27b64c3f658d2b65f1d02e2e96e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
