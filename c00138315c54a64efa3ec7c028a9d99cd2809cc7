@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51b43db5_e55ea006",
+        "filename": "components/printing/renderer/print_render_frame_helper_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-16T23:33:47Z",
+      "side": 1,
+      "message": "Per offline discussion - can you verify that we don\u0027t need to do \u0026page_size_in_dpi[i] and \u0026content_area_in_dpi[i] like we do on Windows? (see https://cs.chromium.org/chromium/src/components/printing/renderer/print_render_frame_helper_pdf_win.cc)\n\nWould also be good to double check that everything works with non-default margins.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 71
+      },
+      "revId": "c00138315c54a64efa3ec7c028a9d99cd2809cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
