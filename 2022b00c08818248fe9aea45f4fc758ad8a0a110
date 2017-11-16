@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2127f6d4_b6c343d1",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-16T02:34:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0aa37531_064dfe26",
+      "revId": "2022b00c08818248fe9aea45f4fc758ad8a0a110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea24fa87_dbc2e805",
         "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "2022b00c08818248fe9aea45f4fc758ad8a0a110",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7048a024_e378dc10",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-16T02:34:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea24fa87_dbc2e805",
+      "range": {
+        "startLine": 154,
+        "startChar": 8,
+        "endLine": 154,
+        "endChar": 78
+      },
+      "revId": "2022b00c08818248fe9aea45f4fc758ad8a0a110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a0bfb748_aef6284f",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-16T02:34:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "858eadb4_ee3a56ad",
+      "range": {
+        "startLine": 179,
+        "startChar": 59,
+        "endLine": 179,
+        "endChar": 61
+      },
+      "revId": "2022b00c08818248fe9aea45f4fc758ad8a0a110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fe6512c_8c0d55f8",
         "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
         "patchSetId": 6
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "50ef3a7f_e2bc05c5",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-16T02:34:32Z",
+      "side": 1,
+      "message": "Let me do this one in a followup, since it will involve changes to some other files. Additionally, we can make it a oncecallback I think.",
+      "parentUuid": "0fe6512c_8c0d55f8",
+      "range": {
+        "startLine": 208,
+        "startChar": 4,
+        "endLine": 208,
+        "endChar": 40
+      },
+      "revId": "2022b00c08818248fe9aea45f4fc758ad8a0a110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6a1b414_9d717a39",
         "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.h",
         "patchSetId": 6
@@ -108,6 +198,30 @@
       "revId": "2022b00c08818248fe9aea45f4fc758ad8a0a110",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca0ebe9_147d3e84",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-16T02:34:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6a1b414_9d717a39",
+      "range": {
+        "startLine": 39,
+        "startChar": 55,
+        "endLine": 39,
+        "endChar": 75
+      },
+      "revId": "2022b00c08818248fe9aea45f4fc758ad8a0a110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
