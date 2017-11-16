@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05f00be4_66374edb",
+        "filename": "content/browser/android/content_view_core.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-16T04:59:28Z",
+      "side": 1,
+      "message": "In this class, |dpi_scale_| is a misspelled word of |dip_scale_| which is a scale factor used to convert data in DIP(device-independent pixel) unit to physical unit. a.k.a. device scale factor.\n\nYou need a comment here clarifying which unit |bounds| is in, with an without -dsf flag. My understading is that |bounds| is in DIP without -dsf. Naming it |bounds_is_css| doesn\u0027t seem right.",
+      "revId": "967f023e12c53c01be41e17d8e446ae0f72643dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d90fd078_ddb0dda8",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1514,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-16T04:59:28Z",
+      "side": 1,
+      "message": "The comment looks incorrect - _pix suffix means \u0027physical pixel\u0027 which is the right unit for this var when passed to cvc. Looks like you used the term \u0027device scale\u0027 to mean this value is in physical pixel unit, for which the comment is redundant as it is already implied in the name.",
+      "revId": "967f023e12c53c01be41e17d8e446ae0f72643dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0cb853_110600d2",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-16T04:59:28Z",
+      "side": 1,
+      "message": "Sorry for the confusion - unlike the comment above, |content_offset| apparently was in DIP unit (when used without -dsf). Please update the comment.",
+      "revId": "967f023e12c53c01be41e17d8e446ae0f72643dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
