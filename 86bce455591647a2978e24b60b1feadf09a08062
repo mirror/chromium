@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6b3c7e1_c923d788",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-16T04:55:23Z",
+      "side": 1,
+      "message": "nit: This is really just an implementation detail of how we detect issues - the real problem is that we should not be doing file I/O on the UI thread, because it may cause jank.",
+      "range": {
+        "startLine": 10,
+        "startChar": 43,
+        "endLine": 11,
+        "endChar": 19
+      },
+      "revId": "86bce455591647a2978e24b60b1feadf09a08062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f826a4f_53af590e",
+        "filename": "chrome/browser/first_run/first_run.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-16T04:55:23Z",
+      "side": 1,
+      "message": "nit: Suggest something like \"Causes the first-run sentinel creation time to be read and cached, while I/O is still allowed.\"",
+      "range": {
+        "startLine": 559,
+        "startChar": 5,
+        "endLine": 561,
+        "endChar": 22
+      },
+      "revId": "86bce455591647a2978e24b60b1feadf09a08062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18db01d2_018c3b28",
+        "filename": "chrome/browser/first_run/first_run.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-16T04:55:23Z",
+      "side": 1,
+      "message": "nit: You should wrap this in ignore_result(), I think, otherwise static analysis may complain that the result is never used.",
+      "range": {
+        "startLine": 562,
+        "startChar": 2,
+        "endLine": 562,
+        "endChar": 33
+      },
+      "revId": "86bce455591647a2978e24b60b1feadf09a08062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0008daaf_50ee7d71",
+        "filename": "chrome/browser/first_run/first_run.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-16T04:55:23Z",
+      "side": 1,
+      "message": "This function could be moved to be static (i.e. private to this .cc file, rather than publicly-accessible via a declaration in the .h file) - just move it to the anonymous namespace at the top of this file.\n\nI\u0027d also suggest renaming it to e.g. ReadFirstRunSentinelCreationTime() since what it does it basically read the creation time from the filesystem.",
+      "range": {
+        "startLine": 565,
+        "startChar": 11,
+        "endLine": 565,
+        "endChar": 48
+      },
+      "revId": "86bce455591647a2978e24b60b1feadf09a08062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eccf97f_5ecaa10f",
+        "filename": "chrome/browser/first_run/first_run.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-16T04:55:23Z",
+      "side": 1,
+      "message": "nit: You could rename this just cached_time, for example, to make it more explicit that the value is cached - the name of the function is descriptive enough that the variable doesn\u0027t really need to mention first_run_sentinel, for this to be readable.",
+      "range": {
+        "startLine": 577,
+        "startChar": 20,
+        "endLine": 577,
+        "endChar": 52
+      },
+      "revId": "86bce455591647a2978e24b60b1feadf09a08062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abb435f2_9f191752",
+        "filename": "chrome/browser/first_run/first_run.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-16T04:55:23Z",
+      "side": 1,
+      "message": "nit: This isn\u0027t really calculating it, just reading it from the file info.",
+      "range": {
+        "startLine": 120,
+        "startChar": 11,
+        "endLine": 120,
+        "endChar": 20
+      },
+      "revId": "86bce455591647a2978e24b60b1feadf09a08062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c71c6b0_a4b61655",
+        "filename": "chrome/browser/first_run/first_run.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-16T04:55:23Z",
+      "side": 1,
+      "message": "nit: This describes the implementation; what is relevant here is that this:\n\n- Returns the sentinel creation time.\n- Only requires the I/O permission on the sequence it is first called on.",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 43
+      },
+      "revId": "86bce455591647a2978e24b60b1feadf09a08062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
