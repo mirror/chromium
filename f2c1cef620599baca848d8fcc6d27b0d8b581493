@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0d34efe_4b82d9c4",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-16T07:15:53Z",
+      "side": 1,
+      "message": "Note: along with the redesign of internal class, I moved these for better encapsulation, too.",
+      "revId": "f2c1cef620599baca848d8fcc6d27b0d8b581493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7dabd67_26a0b4e1",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-16T07:15:53Z",
+      "side": 1,
+      "message": "Technically we could use Callback*, but a pointer to the newed callback is rare in Chrome, AFAIK, and I\u0027m slightly hesitate to spread it.\n\nInstead, I reworked on the class to encapsulate callback destroying stuff, as you suggested.\nIn the implementation, I used Callback* pointer (though I mentioned it is rare, just above), but it is consecutive two stmts only with comments, so I believe it wouldn\u0027t confuse future readers.",
+      "parentUuid": "ff709ad5_e6bd344f",
+      "revId": "dfb174050d4722dd30d095b7b8ba1f7208899ee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0fc90bb_d7753b38",
         "filename": "dbus/object_proxy.h",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-16T03:58:21Z",
       "side": 1,
       "message": "The UI thread doesn\u0027t shutdown. Its message loop does.",
+      "range": {
+        "startLine": 227,
+        "startChar": 62,
+        "endLine": 227,
+        "endChar": 71
+      },
+      "revId": "dfb174050d4722dd30d095b7b8ba1f7208899ee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac962e63_e9838527",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-16T07:15:53Z",
+      "side": 1,
+      "message": "Ack. Mentioned so in the comments in the new PS.",
+      "parentUuid": "c0fc90bb_d7753b38",
       "range": {
         "startLine": 227,
         "startChar": 62,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "131937d4_d846cc0f",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-16T07:15:53Z",
+      "side": 1,
+      "message": "Ack. Mentioned so in the comments in the new PS. (comments in dtor.)",
+      "parentUuid": "c0a84fef_63d367c5",
+      "range": {
+        "startLine": 230,
+        "startChar": 47,
+        "endLine": 230,
+        "endChar": 56
+      },
+      "revId": "dfb174050d4722dd30d095b7b8ba1f7208899ee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69471b09_ce73c2fc",
         "filename": "dbus/object_proxy.h",
         "patchSetId": 1
@@ -76,6 +142,30 @@
       "writtenOn": "2017-11-16T03:58:21Z",
       "side": 1,
       "message": "by the caller.",
+      "range": {
+        "startLine": 231,
+        "startChar": 39,
+        "endLine": 231,
+        "endChar": 51
+      },
+      "revId": "dfb174050d4722dd30d095b7b8ba1f7208899ee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca315a1_22e52817",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-16T07:15:53Z",
+      "side": 1,
+      "message": "Ack. Mentioned so in the comments in the new PS (comments in dtor).",
+      "parentUuid": "69471b09_ce73c2fc",
       "range": {
         "startLine": 231,
         "startChar": 39,
