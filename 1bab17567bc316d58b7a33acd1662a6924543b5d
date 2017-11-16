@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f25b7d88_92188226",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-16T23:47:38Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you\u0027re trying to cover in this file.\n\nThis test particular definitely has merit -- I don\u0027t think we have an empty getAll test anywhere else. However, I think the rest of the tests are redundant with the tests in document_getAll_set.tentative.html, document_getAll_multiple.tentative.html, and cookieStore_getAll_arguments.tentative.html",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f497f63_4b7f5dd5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_domain.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-16T23:47:38Z",
+      "side": 1,
+      "message": "nit: I don\u0027t like \"legacy\" in the file and test name -- it seems to imply that some legacy feature is tested. IIRC, cookie names without integrity guarantees (while less secure) aren\u0027t called \"legacy\" in any spec, so this is confusing.",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd399a5_22b84a9d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_domain.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-16T23:47:38Z",
+      "side": 1,
+      "message": "nit 1: Either no prefix in the title, or use the spec name \"Async Cookies\".\n\nnit 2: Is the comment necessary? Won\u0027t HTML collapse white space?",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf187fe_d5bec688",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_domain.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-16T23:47:38Z",
+      "side": 1,
+      "message": "Does not seem to be used",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07da88f3_34054e83",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_domain.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-16T23:47:38Z",
+      "side": 1,
+      "message": "Same comments as in path test regarding clearer names",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88789af9_fa7457dc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_domain.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-16T23:47:38Z",
+      "side": 1,
+      "message": "Same comment as in path test regarding clear purpose in tests",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca65ebf_bfd8fbd2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_path.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-16T23:47:38Z",
+      "side": 1,
+      "message": "Why not cookie-name1, cookie-name2, cookie-name3?\n\nIf you do that, you don\u0027t need the explanation anymore",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af7c439_8a186c04",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_path.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-16T23:47:38Z",
+      "side": 1,
+      "message": "cookie2-with-implicit-path / cookie2-with-explicit-path?\n\nI think this whole comment should not need to exist.",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0d32d17_44dda9ca",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_path.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-16T23:47:38Z",
+      "side": 1,
+      "message": "Please use explicit property comparisons, so the test is easy to extend if we add properties to returned cookies.",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53bc536_23bff678",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_path.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-16T23:47:38Z",
+      "side": 1,
+      "message": "Please be crystal clear about what each test covers. In this case, it seems like you want to check that two cookies with the same name but different paths are returned correctly. If that is correct, K1 and K3 obscure the intent of the test.",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
