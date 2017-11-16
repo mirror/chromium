@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "10993754_273c97d6",
+        "filename": "chrome/browser/test_service_manager_listener.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-16T22:59:43Z",
+      "side": 1,
+      "message": "Good point, moved to chrome/test/base.",
+      "parentUuid": "5599d884_6a441ef7",
+      "revId": "f4a57d06aca936f6f8db687bca8b5980ef22ff23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb643f55_d72e9dd4",
         "filename": "services/data_decoder/public/cpp/safe_xml_parser.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "f4a57d06aca936f6f8db687bca8b5980ef22ff23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "685994cc_3219d309",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-16T22:59:43Z",
+      "side": 1,
+      "message": "Renamed to ParseXml and fixed the comment.\nI kept the file name safe_xml_parser though for 2 reasons:\n- it \u0027s consistent with safe_json_parser\n- it\u0027s a different name than the mojom implementation which is xml_parser.h",
+      "parentUuid": "fb643f55_d72e9dd4",
+      "revId": "f4a57d06aca936f6f8db687bca8b5980ef22ff23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
