@@ -237,6 +237,12 @@ void TestWebState::OnPageLoaded(
     observer.PageLoaded(this, load_completion_status);
 }
 
+void TestWebState::OnNavigationItemCommitted(
+    const web::LoadCommittedDetails& load_details) {
+  for (auto& observer : observers_)
+    observer.NavigationItemCommitted(this, load_details);
+}
+
 void TestWebState::OnNavigationStarted(NavigationContext* navigation_context) {
   for (auto& observer : observers_)
     observer.DidStartNavigation(this, navigation_context);
