@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "135b8c5d_b20293c6",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-16T07:54:34Z",
+      "side": 1,
+      "message": "We can use LayoutSelection::paint_range_ to check type of selection.\n\nCould you utilize it by introducing IsCaret(), IsNone(), IsRange() into\nLayoutSelection?\n\nNote: Before using LayoutSelection::paint_range_, we should call\nLayoutView::CommitPendingSelection() after layout clean.",
+      "revId": "89977f6cf9d1432885e86523a8baf01b83ef2ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
