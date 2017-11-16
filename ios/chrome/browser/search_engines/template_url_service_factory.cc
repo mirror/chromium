@@ -44,7 +44,7 @@ std::unique_ptr<KeyedService> BuildTemplateURLService(
   ios::ChromeBrowserState* browser_state =
       ios::ChromeBrowserState::FromBrowserState(context);
   return base::MakeUnique<TemplateURLService>(
-      browser_state->GetPrefs(),
+      browser_state->GetPrefs(), nullptr,
       base::WrapUnique(new ios::UIThreadSearchTermsData(browser_state)),
       ios::WebDataServiceFactory::GetKeywordWebDataForBrowserState(
           browser_state, ServiceAccessType::EXPLICIT_ACCESS),

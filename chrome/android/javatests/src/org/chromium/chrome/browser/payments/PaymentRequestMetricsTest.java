@@ -35,6 +35,7 @@ import org.chromium.chrome.browser.payments.PaymentRequestTestRule.MainActivityS
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.util.ChromeTabUtils;
+import org.chromium.content.browser.test.util.CriteriaHelper;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
@@ -212,6 +213,13 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
         // Press the back button.
         ChromeTabUtils.closeCurrentTab(InstrumentationRegistry.getInstrumentation(),
                 mPaymentRequestTestRule.getActivity());
+
+        CriteriaHelper.pollUiThread(() -> {
+            return RecordHistogram.getHistogramValueCountForTesting(
+                           "PaymentRequest.CheckoutFunnel.Aborted",
+                           AbortReason.MOJO_RENDERER_CLOSING)
+                    > 0;
+        });
 
         mPaymentRequestTestRule.assertOnlySpecificAbortMetricLogged(
                 AbortReason.MOJO_RENDERER_CLOSING);

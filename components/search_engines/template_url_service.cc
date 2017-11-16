@@ -226,6 +226,7 @@ class TemplateURLService::LessWithPrefix {
 
 TemplateURLService::TemplateURLService(
     PrefService* prefs,
+    policy::PolicyService* policy_service,
     std::unique_ptr<SearchTermsData> search_terms_data,
     const scoped_refptr<KeywordWebDataService>& web_data_service,
     std::unique_ptr<TemplateURLServiceClient> client,
@@ -233,6 +234,7 @@ TemplateURLService::TemplateURLService(
     rappor::RapporServiceImpl* rappor_service,
     const base::Closure& dsp_change_callback)
     : prefs_(prefs),
+      policy_service_(policy_service),
       search_terms_data_(std::move(search_terms_data)),
       web_data_service_(web_data_service),
       client_(std::move(client)),
@@ -240,16 +242,7 @@ TemplateURLService::TemplateURLService(
       rappor_service_(rappor_service),
       dsp_change_callback_(dsp_change_callback),
       provider_map_(new SearchHostToURLsMap),
-      loaded_(false),
-      load_failed_(false),
-      disable_load_(false),
-      load_handle_(0),
-      default_search_provider_(nullptr),
-      next_id_(kInvalidTemplateURLID + 1),
       clock_(new base::DefaultClock),
-      models_associated_(false),
-      processing_syncer_changes_(false),
-      dsp_change_origin_(DSP_CHANGE_OTHER),
       default_search_manager_(
           prefs_,
           base::Bind(&TemplateURLService::OnDefaultSearchChange,
@@ -261,21 +254,13 @@ TemplateURLService::TemplateURLService(
 TemplateURLService::TemplateURLService(const Initializer* initializers,
                                        const int count)
     : prefs_(nullptr),
+      policy_service_(nullptr),
       search_terms_data_(new SearchTermsData),
       web_data_service_(nullptr),
       google_url_tracker_(nullptr),
       rappor_service_(nullptr),
       provider_map_(new SearchHostToURLsMap),
-      loaded_(false),
-      load_failed_(false),
-      disable_load_(false),
-      load_handle_(0),
-      default_search_provider_(nullptr),
-      next_id_(kInvalidTemplateURLID + 1),
       clock_(new base::DefaultClock),
-      models_associated_(false),
-      processing_syncer_changes_(false),
-      dsp_change_origin_(DSP_CHANGE_OTHER),
       default_search_manager_(
           prefs_,
           base::Bind(&TemplateURLService::OnDefaultSearchChange,
@@ -681,7 +666,7 @@ void TemplateURLService::RemoveObserver(TemplateURLServiceObserver* observer) {
 }
 
 void TemplateURLService::Load() {
-  if (loaded_ || load_handle_ || disable_load_)
+  if (loaded_ || load_handle_ || disable_load_ || load_pending_)
     return;
 
   if (web_data_service_.get())
@@ -1485,10 +1470,20 @@ void TemplateURLService::SetTemplateURLs(
 }
 
 void TemplateURLService::ChangeToLoadedState() {
-  DCHECK(!loaded_);
+  DCHECK(!load_pending_ && !loaded_);
+  load_pending_ = true;
+  if (!policy_service_) {
+    OnPoliciesUpdated();
+    return;
+  }
+  policy_service_->RefreshPolicies(base::Bind(
+      &TemplateURLService::OnPoliciesUpdated, base::Unretained(this)));
+}
 
+void TemplateURLService::OnPoliciesUpdated() {
   provider_map_->Init(template_urls_, search_terms_data());
   loaded_ = true;
+  load_pending_ = false;
 
   // This will cause a call to NotifyObservers().
   ApplyDefaultSearchChangeNoMetrics(

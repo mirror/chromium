@@ -13,17 +13,15 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-
 import android.accounts.Account;
 import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.filters.MediumTest;
 import android.support.test.runner.intent.IntentCallback;
 import android.support.test.runner.intent.IntentMonitorRegistry;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -36,15 +34,18 @@ import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
+import org.chromium.chrome.browser.omnibox.UrlBar;
 import org.chromium.chrome.browser.signin.AccountSigninActivity;
 import org.chromium.chrome.browser.signin.SigninAccessPoint;
 import org.chromium.chrome.browser.signin.SigninPromoController;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
+import org.chromium.chrome.test.util.OmniboxTestUtils;
 import org.chromium.components.signin.AccountManagerFacade;
 import org.chromium.components.signin.ProfileDataSource;
 import org.chromium.components.signin.test.util.AccountHolder;
 import org.chromium.components.signin.test.util.FakeAccountManagerDelegate;
+import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.ui.test.util.UiDisableIf;
 
 import java.io.Closeable;
@@ -72,6 +73,7 @@ public class BookmarkPersonalizedSigninPromoTest {
     public void setUp() throws Exception {
         AccountManagerFacade.overrideAccountManagerFacadeForTests(mAccountManagerDelegate);
         mActivityTestRule.startMainActivityFromLauncher();
+        mActivityTestRule.waitForActivityVisible();
     }
 
     @Test
@@ -111,12 +113,12 @@ public class BookmarkPersonalizedSigninPromoTest {
             startedIntents = helper.getStartedIntents();
         }
 
-        assertEquals("Choosing to sign in with the default account should fire an intent!", 1,
-                startedIntents.size());
+        Assert.assertEquals("Choosing to sign in with the default account should fire an intent!",
+                1, startedIntents.size());
         Intent expectedIntent = AccountSigninActivity.createIntentForConfirmationOnlySigninFlow(
                 mActivityTestRule.getActivity(), SigninAccessPoint.BOOKMARK_MANAGER,
                 TEST_ACCOUNT_NAME, true, true);
-        assertTrue(expectedIntent.filterEquals(startedIntents.get(0)));
+        Assert.assertTrue(expectedIntent.filterEquals(startedIntents.get(0)));
     }
 
     @Test
@@ -132,11 +134,11 @@ public class BookmarkPersonalizedSigninPromoTest {
             startedIntents = helper.getStartedIntents();
         }
 
-        assertEquals("Choosing to sign in with another account should fire an intent!", 1,
+        Assert.assertEquals("Choosing to sign in with another account should fire an intent!", 1,
                 startedIntents.size());
         Intent expectedIntent = AccountSigninActivity.createIntentForDefaultSigninFlow(
                 mActivityTestRule.getActivity(), SigninAccessPoint.BOOKMARK_MANAGER, true);
-        assertTrue(expectedIntent.filterEquals(startedIntents.get(0)));
+        Assert.assertTrue(expectedIntent.filterEquals(startedIntents.get(0)));
     }
 
     @Test
@@ -152,18 +154,44 @@ public class BookmarkPersonalizedSigninPromoTest {
             startedIntents = helper.getStartedIntents();
         }
 
-        assertFalse(
+        Assert.assertFalse(
                 "Adding a new account should fire at least one intent!", startedIntents.isEmpty());
         Intent expectedIntent = AccountSigninActivity.createIntentForAddAccountSigninFlow(
                 mActivityTestRule.getActivity(), SigninAccessPoint.BOOKMARK_MANAGER, true);
         // Comparing only the first intent as AccountSigninActivity will fire an intent after
         // starting the flow to add an account.
-        assertTrue(expectedIntent.filterEquals(startedIntents.get(0)));
+        Assert.assertTrue(expectedIntent.filterEquals(startedIntents.get(0)));
     }
 
     private void openBookmarkManager() throws InterruptedException {
-        onView(withId(R.id.menu_button)).perform(click());
-        onView(withText("Bookmarks")).perform(click());
+        // In testing on a svelte build on a nexus 4, two things can go wrong here: perform(click())
+        // can take so long that it triggers the long-press refresh behavior on the menu button,
+        // or the view somehow isn't fully visible (no idea why). Retrying works around these
+        // issues.
+        Exception error = null;
+        try {
+            CriteriaHelper.pollInstrumentationThread(() -> {
+                try {
+                    InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+                    onView(withId(R.id.menu_button)).perform(click());
+                    UrlBar urlBar =
+                            (UrlBar) mActivityTestRule.getActivity().findViewById(R.id.url_bar);
+                    Assert.assertFalse(OmniboxTestUtils.doesUrlBarHaveFocus(urlBar));
+                    onView(withText("Bookmarks")).perform(click());
+                } catch (android.support.test.espresso.NoMatchingViewException
+                        | android.support.test.espresso.PerformException e) {
+                    error = e;
+                    return false;
+                }
+                return true;
+            });
+        } catch (Throwable e) {
+            if (error != null) {
+                throw error;
+            } else {
+                throw e;
+            }
+        }
     }
 
     private void addTestAccount() {
