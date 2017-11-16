@@ -234,6 +234,30 @@
       "revId": "e74d9ca44678e6930a81d91efc3d233659028634",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53c63ac8_9cba1d85",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3811,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-16T12:25:07Z",
+      "side": 1,
+      "message": "Hmm, no, I think what we used to have uniformly is just 6 spaces.",
+      "parentUuid": "92e61174_e429c243",
+      "range": {
+        "startLine": 3811,
+        "startChar": 0,
+        "endLine": 3811,
+        "endChar": 10
+      },
+      "revId": "e74d9ca44678e6930a81d91efc3d233659028634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dd8c37a_cae8d8f9",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3807,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-16T12:25:07Z",
+      "side": 1,
+      "message": "nit: Let\u0027s add something into the caption to make it different from the AutoSelectCertificateForUrls\u0027s one (for instance, the AD policy UI displays those captions in the first place). Something short should be enough, like \"on the sign-in screen\" or \"for the SAML sign-in flow\".",
+      "revId": "768b58805d6ee69e46fd331b9e4a99142edb6840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
