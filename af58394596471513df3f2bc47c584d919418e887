@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "409fc3b6_c3b085d8",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:57:23Z",
+      "side": 1,
+      "message": "Can you please add a small comment here that mentions that you are reading the metafile and querying the settings in parallel, and will only print once both tasks finish?",
+      "range": {
+        "startLine": 117,
+        "startChar": 10,
+        "endLine": 117,
+        "endChar": 46
+      },
+      "revId": "af58394596471513df3f2bc47c584d919418e887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95a2c40_5215c6e8",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:57:23Z",
+      "side": 1,
+      "message": "Does this need to be a class member? Can it be just\n\n  content::NotificationRegistrar().Add(...);\n\n?",
+      "range": {
+        "startLine": 164,
+        "startChar": 4,
+        "endLine": 164,
+        "endChar": 14
+      },
+      "revId": "af58394596471513df3f2bc47c584d919418e887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7a3504_ba4ec6ec",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:57:23Z",
+      "side": 1,
+      "message": "This binds the lifetime of this class instance with the Mojo connection.",
+      "range": {
+        "startLine": 181,
+        "startChar": 55,
+        "endLine": 181,
+        "endChar": 73
+      },
+      "revId": "af58394596471513df3f2bc47c584d919418e887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7317da70_8a510d2f",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:57:23Z",
+      "side": 1,
+      "message": "PrinterDiscoverySessionImpl, for concistency with L109.",
+      "range": {
+        "startLine": 215,
+        "startChar": 6,
+        "endLine": 215,
+        "endChar": 22
+      },
+      "revId": "af58394596471513df3f2bc47c584d919418e887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2730a518_5806c933",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:57:23Z",
+      "side": 1,
+      "message": "Maybe also add:\n\n   instance_.set_connection_error_handler(\n        base::Bind(\u0026PrinterDiscoverySessionImpl::DestroyDiscoverySession,\n                   weak_ptr_factory_.WeakPtr()));\n\nthat way if the object dies (not only when the receiver severs its connection to the discovery session), you also get notified.",
+      "range": {
+        "startLine": 224,
+        "startChar": 4,
+        "endLine": 224,
+        "endChar": 21
+      },
+      "revId": "af58394596471513df3f2bc47c584d919418e887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdf4e26c_5ae67bec",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:57:23Z",
+      "side": 1,
+      "message": "Keep the ctor and dtor together: https://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "range": {
+        "startLine": 232,
+        "startChar": 3,
+        "endLine": 232,
+        "endChar": 19
+      },
+      "revId": "af58394596471513df3f2bc47c584d919418e887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "988b89c3_42d7ba03",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:57:23Z",
+      "side": 1,
+      "message": "nit: emplace_back.",
+      "range": {
+        "startLine": 324,
+        "startChar": 17,
+        "endLine": 324,
+        "endChar": 26
+      },
+      "revId": "af58394596471513df3f2bc47c584d919418e887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "561aba85_26ff4e2c",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:57:23Z",
+      "side": 1,
+      "message": "Same as above.",
+      "range": {
+        "startLine": 332,
+        "startChar": 2,
+        "endLine": 332,
+        "endChar": 18
+      },
+      "revId": "af58394596471513df3f2bc47c584d919418e887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32a542f2_0cf9faca",
+        "filename": "chrome/browser/chromeos/arc/print/print_struct_traits.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:57:23Z",
+      "side": 1,
+      "message": "nit: emplace_back",
+      "range": {
+        "startLine": 36,
+        "startChar": 10,
+        "endLine": 36,
+        "endChar": 19
+      },
+      "revId": "af58394596471513df3f2bc47c584d919418e887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d3a617_2e05875a",
+        "filename": "chrome/browser/chromeos/arc/print/print_struct_traits.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:57:23Z",
+      "side": 1,
+      "message": "Can you move all the implementations to the .cc file?",
+      "range": {
+        "startLine": 20,
+        "startChar": 18,
+        "endLine": 20,
+        "endChar": 23
+      },
+      "revId": "af58394596471513df3f2bc47c584d919418e887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7004eb38_57353048",
+        "filename": "components/arc/common/print.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:57:23Z",
+      "side": 1,
+      "message": "Add the https://developer.android.com/reference/android/printservice/PrintJob.html url for reference.",
+      "range": {
+        "startLine": 151,
+        "startChar": 33,
+        "endLine": 151,
+        "endChar": 38
+      },
+      "revId": "af58394596471513df3f2bc47c584d919418e887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
