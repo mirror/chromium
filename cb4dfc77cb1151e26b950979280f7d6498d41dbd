@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3463c5e_3134e92a",
+        "filename": "chrome/browser/android/chrome_feature_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-16T18:55:05Z",
+      "side": 1,
+      "message": "We query these things from java land when ENABLE_VR is not always true, e.g: https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java?rcl\u003d75f62492270810ec386855c6c33a773cc6a54a30\u0026l\u003d919\n\nWon\u0027t the following trigger an exception if we conditionally declare these?\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/ChromeFeatureList.java?rcl\u003d75f62492270810ec386855c6c33a773cc6a54a30\u0026l\u003d64",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 13
+      },
+      "revId": "cb4dfc77cb1151e26b950979280f7d6498d41dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb7403f_32eceb8d",
+        "filename": "chrome/browser/android/chrome_feature_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-16T18:55:05Z",
+      "side": 1,
+      "message": "s/WebVR/WebVr/ for consistency with rest? Feel free to ignore for now since its a re-land though.",
+      "range": {
+        "startLine": 132,
+        "startChar": 5,
+        "endLine": 132,
+        "endChar": 27
+      },
+      "revId": "cb4dfc77cb1151e26b950979280f7d6498d41dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
