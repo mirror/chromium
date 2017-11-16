@@ -16,6 +16,24 @@
       "revId": "da290e28aa8deabe09af972c9b46d969f81d074f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f468bfd1_472d2347",
+        "filename": "chrome/browser/sessions/tab_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-16T17:59:39Z",
+      "side": 1,
+      "message": "This is already on the code patch in here: https://cs.chromium.org/chromium/src/chrome/browser/resource_coordinator/page_signal_receiver.cc?l\u003d40",
+      "parentUuid": "eade05d4_8033f4e4",
+      "revId": "da290e28aa8deabe09af972c9b46d969f81d074f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
