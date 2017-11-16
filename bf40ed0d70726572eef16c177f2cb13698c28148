@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c53192d5_795dea40",
+        "filename": "testing/libfuzzer/fuzzers/dicts/generated/javascript.dict",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-16T17:33:59Z",
+      "side": 1,
+      "message": "You didn\u0027t delete the existing dict, just created a copy, right?",
+      "revId": "bf40ed0d70726572eef16c177f2cb13698c28148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd6e8f3_98fb37de",
+        "filename": "testing/libfuzzer/fuzzers/v8_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-16T17:33:59Z",
+      "side": 1,
+      "message": "why not \u003cctime\u003e?",
+      "range": {
+        "startLine": 5,
+        "startChar": 10,
+        "endLine": 5,
+        "endChar": 16
+      },
+      "revId": "bf40ed0d70726572eef16c177f2cb13698c28148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54fbf528_455bf832",
+        "filename": "testing/libfuzzer/fuzzers/v8_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-16T17:33:59Z",
+      "side": 1,
+      "message": "Why did you end up non having any sleep() here?",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 13
+      },
+      "revId": "bf40ed0d70726572eef16c177f2cb13698c28148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
