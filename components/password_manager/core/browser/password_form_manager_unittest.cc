@@ -757,25 +757,10 @@ class PasswordFormManagerTest : public testing::Test {
   // Returns the sample values of |metric_value| in events named |event_name|.
   std::vector<int64_t> GetAllUkmSamples(
       const ukm::TestAutoSetUkmRecorder& test_ukm_recorder,
-      base::StringPiece event_name,
-      base::StringPiece metric_name) {
-    std::vector<int64_t> values;
-    const ukm::UkmSource* source =
-        test_ukm_recorder.GetSourceForSourceId(client()->GetUkmSourceId());
-    if (!source)
-      return values;
-
-    for (size_t i = 0; i < test_ukm_recorder.entries_count(); ++i) {
-      const ukm::mojom::UkmEntry* entry = test_ukm_recorder.GetEntry(i);
-      if (entry->event_hash != base::HashMetricName(event_name))
-        continue;
-
-      for (const ukm::mojom::UkmMetricPtr& metric : entry->metrics) {
-        if (metric->metric_hash == base::HashMetricName(metric_name))
-          values.push_back(metric->value);
-      }
-    }
-    return values;
+      std::string event_name,
+      std::string metric_name) {
+    return test_ukm_recorder.GetMetricValues(
+        client()->GetUkmSourceId(), event_name.c_str(), metric_name.c_str());
   }
 
   PasswordForm* observed_form() { return &observed_form_; }
@@ -4076,13 +4061,15 @@ TEST_F(PasswordFormManagerTest, TestUkmForFilling) {
       fetcher.SetNonFederated(fetched_forms, 0u);
     }
 
-    const auto* source =
-        test_ukm_recorder.GetSourceForUrl(form_to_fill.origin.spec().c_str());
-    ASSERT_TRUE(source);
-    test_ukm_recorder.ExpectMetric(
-        *source, ukm::builders::PasswordForm::kEntryName,
-        ukm::builders::PasswordForm::kManagerFill_ActionName,
-        test.expected_event);
+    auto entries = test_ukm_recorder.GetEntriesByName(
+        ukm::builders::PasswordForm::kEntryName);
+    EXPECT_EQ(1u, entries.size());
+    for (const auto* const entry : entries) {
+      test_ukm_recorder.ExpectEntrySourceHasUrl(entry, form_to_fill.origin);
+      test_ukm_recorder.ExpectEntryMetric(
+          entry, ukm::builders::PasswordForm::kManagerFill_ActionName,
+          test.expected_event);
+    }
   }
 }
 TEST_F(PasswordFormManagerTest,
