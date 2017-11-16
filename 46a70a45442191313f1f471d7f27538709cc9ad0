@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5de8435_1d7d60fd",
+        "filename": "chrome/browser/profiles/profile.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-16T02:36:01Z",
+      "side": 1,
+      "message": "Thanks for catching this. Yes, should be SYNCABLE_PREF.",
+      "parentUuid": "7de4a951_f10d7dcf",
+      "revId": "46a70a45442191313f1f471d7f27538709cc9ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b7c92ad_0210b160",
         "filename": "chrome/common/media_router/mojo/media_status.mojom",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-14T20:46:39Z",
       "side": 1,
       "message": "Does this really apply to all routes?  It seems specific to mirroring/remoting routes and belongs in a route-specific struct.",
+      "revId": "46a70a45442191313f1f471d7f27538709cc9ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b9bc810_a2ca2e6f",
+        "filename": "chrome/common/media_router/mojo/media_status.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-16T02:36:01Z",
+      "side": 1,
+      "message": "Discussed with Derek. Removed this field and created a mirroring media route controller instead.",
+      "parentUuid": "4b7c92ad_0210b160",
       "revId": "46a70a45442191313f1f471d7f27538709cc9ad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
