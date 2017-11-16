@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "6cdf3900_f5c98410",
+        "filename": "android_webview/browser/aw_permission_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-11-16T20:37:39Z",
+      "side": 1,
+      "message": "Can web content currently access the clipboard in WebView?",
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d49b93eb_5d15041b",
         "filename": "chrome/browser/clipboard/OWNERS",
         "patchSetId": 9
