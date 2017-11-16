@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1ff197ce_09385932",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-16T21:27:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "996ab338_fad196ea",
+      "range": {
+        "startLine": 7,
+        "startChar": 34,
+        "endLine": 7,
+        "endChar": 39
+      },
+      "revId": "cf25479e9f28b4786e5041c4c6f60b4e8ce537d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02a0244c_9cfa9be9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4b38dfb9_f215752a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-16T21:27:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02a0244c_9cfa9be9",
+      "range": {
+        "startLine": 107,
+        "startChar": 75,
+        "endLine": 107,
+        "endChar": 93
+      },
+      "revId": "cf25479e9f28b4786e5041c4c6f60b4e8ce537d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "655527f9_7e559811",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "cf25479e9f28b4786e5041c4c6f60b4e8ce537d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "568918f5_248b5a14",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 57525,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-16T21:27:47Z",
+      "side": 1,
+      "message": "Right, added that.",
+      "parentUuid": "655527f9_7e559811",
+      "range": {
+        "startLine": 57525,
+        "startChar": 4,
+        "endLine": 57525,
+        "endChar": 23
+      },
+      "revId": "cf25479e9f28b4786e5041c4c6f60b4e8ce537d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
