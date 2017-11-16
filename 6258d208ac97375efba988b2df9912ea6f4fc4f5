@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4ad92b7_2e35a93f",
+        "filename": "content/browser/compositor/viz_process_transport_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-16T00:35:02Z",
+      "side": 1,
+      "message": "Perhaps process_restart_count here and throughout?",
+      "range": {
+        "startLine": 148,
+        "startChar": 11,
+        "endLine": 148,
+        "endChar": 34
+      },
+      "revId": "6258d208ac97375efba988b2df9912ea6f4fc4f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e0271e_d2a25c1f",
+        "filename": "content/browser/compositor/viz_process_transport_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-16T00:35:02Z",
+      "side": 1,
+      "message": "kNoRestartProcessRestartId is a mouthful, maybe kZeroProcessRestartCount or kProcessRestartCountZero?",
+      "range": {
+        "startLine": 149,
+        "startChar": 29,
+        "endLine": 149,
+        "endChar": 55
+      },
+      "revId": "6258d208ac97375efba988b2df9912ea6f4fc4f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
