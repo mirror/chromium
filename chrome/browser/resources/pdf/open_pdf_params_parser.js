@@ -112,12 +112,21 @@ OpenPDFParamsParser.prototype = {
     viewportPosition['url'] = url;
 
     var paramsDictionary = this.parseUrlParams_(url);
+    console.log('paramsDictionary');
+    console.log(paramsDictionary);
 
     if ('page' in paramsDictionary) {
       // |pageNumber| is 1-based, but goToPage() take a zero-based page number.
       var pageNumber = parseInt(paramsDictionary['page'], 10);
       if (!isNaN(pageNumber) && pageNumber > 0)
         viewportPosition['page'] = pageNumber - 1;
+    }
+
+    if ('view' in paramsDictionary) {
+      var viewMode = paramsDictionary['view'].toLowerCase();
+      if (['fith', 'fitv', 'fit'].indexOf(viewMode) > -1) {
+        viewportPosition['view'] = viewMode;
+      }
     }
 
     if ('zoom' in paramsDictionary)
