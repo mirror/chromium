@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5224295e_0bbd7a8c",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-16T21:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92b39a81_468884fd",
+      "revId": "46495843fa25e09fec0425d711a9b8a0249dbd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16e2e088_345a74ac",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "46495843fa25e09fec0425d711a9b8a0249dbd7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66501863_b9ca814e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-16T21:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16e2e088_345a74ac",
+      "revId": "46495843fa25e09fec0425d711a9b8a0249dbd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
