@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e1a0a30_63cd0d46",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-11-16T04:02:41Z",
+      "side": 1,
+      "message": "yeah, looks like no unit tests cover this. should be fine now (and I have also learned to compile Chrome after every change and not just run the tests :p)",
+      "parentUuid": "0ded0fef_9ec0b46a",
+      "revId": "3a8662f124ecba34e0445119251d39d53e3a0c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53ac92ec_18959f9b",
         "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "3a8662f124ecba34e0445119251d39d53e3a0c36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc1e999_367b58e0",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-11-16T04:02:41Z",
+      "side": 1,
+      "message": "Done.\n\nThough to me, as a reader, this comment is meaningless. Should I just delete it? What value does it add?",
+      "parentUuid": "53ac92ec_18959f9b",
+      "range": {
+        "startLine": 665,
+        "startChar": 6,
+        "endLine": 665,
+        "endChar": 14
+      },
+      "revId": "3a8662f124ecba34e0445119251d39d53e3a0c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "336d6cd4_b9aa6cad",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-11-16T04:02:41Z",
+      "side": 1,
+      "message": "Ack, going to leave the behaviour as-is then.",
+      "parentUuid": "73fde429_cfef9e38",
+      "range": {
+        "startLine": 672,
+        "startChar": 0,
+        "endLine": 676,
+        "endChar": 60
+      },
+      "revId": "3a8662f124ecba34e0445119251d39d53e3a0c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c0a50b8_5015f37a",
         "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.h",
         "patchSetId": 1
@@ -103,6 +169,24 @@
       "revId": "3a8662f124ecba34e0445119251d39d53e3a0c36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6057d652_835d17c8",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-11-16T04:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c0a50b8_5015f37a",
+      "revId": "3a8662f124ecba34e0445119251d39d53e3a0c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
