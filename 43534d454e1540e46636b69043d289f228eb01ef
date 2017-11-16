@@ -16,6 +16,40 @@
       "revId": "43534d454e1540e46636b69043d289f228eb01ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436932f7_d851a18d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-11-16T06:17:09Z",
+      "side": 1,
+      "message": "If we want to ensure it doesn\u0027t get put into a -expected, you can append Math.random() :D",
+      "revId": "43534d454e1540e46636b69043d289f228eb01ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0111b47_780f3d1e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-11-16T06:17:09Z",
+      "side": 1,
+      "message": "throwing `null` will cause this to throw, and then the test won\u0027t complete. err \u0026\u0026 err.stack || err",
+      "revId": "43534d454e1540e46636b69043d289f228eb01ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
