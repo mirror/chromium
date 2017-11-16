@@ -45,6 +45,30 @@
       "revId": "bdc20143ce447b93d3898a595f008846a4c01fdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e95ff92_0ea8f6e5",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-16T09:33:11Z",
+      "side": 1,
+      "message": "I guess the text is displayed in the omnibox?\nThis is moved from WebToolbarController.",
+      "parentUuid": "71c8d5ef_c90872c4",
+      "range": {
+        "startLine": 292,
+        "startChar": 3,
+        "endLine": 292,
+        "endChar": 0
+      },
+      "revId": "bdc20143ce447b93d3898a595f008846a4c01fdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
