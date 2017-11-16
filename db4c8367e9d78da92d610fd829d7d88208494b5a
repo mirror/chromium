@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bce4f22e_656c4e38",
+        "filename": "components/download/downloader/in_progress/in_progress_cache.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-16T00:41:43Z",
+      "side": 1,
+      "message": "If this is only used internally by InProgressCacheProviderImpl, make it a private method in that class and remove it from the interface.",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 66
+      },
+      "revId": "db4c8367e9d78da92d610fd829d7d88208494b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2988f5bf_a293c7a6",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-16T00:41:43Z",
+      "side": 1,
+      "message": "const \u0026",
+      "range": {
+        "startLine": 20,
+        "startChar": 24,
+        "endLine": 20,
+        "endChar": 52
+      },
+      "revId": "db4c8367e9d78da92d610fd829d7d88208494b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41f97126_51f3fc8d",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-16T00:41:43Z",
+      "side": 1,
+      "message": "\u0026 then don\u0027t return anything.",
+      "range": {
+        "startLine": 31,
+        "startChar": 31,
+        "endLine": 31,
+        "endChar": 32
+      },
+      "revId": "db4c8367e9d78da92d610fd829d7d88208494b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c250e8a_219c89d1",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-16T00:41:43Z",
+      "side": 1,
+      "message": "Should this just take a DownloadEntry and do the conversion internally?  That would be a mirror to what GetEntryFromEntries() does.",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 30
+      },
+      "revId": "db4c8367e9d78da92d610fd829d7d88208494b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76da0f8a_aa98b237",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-16T00:41:43Z",
+      "side": 1,
+      "message": "const \u0026",
+      "range": {
+        "startLine": 42,
+        "startChar": 3,
+        "endLine": 42,
+        "endChar": 32
+      },
+      "revId": "db4c8367e9d78da92d610fd829d7d88208494b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f07b82_ce6770a1",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-16T00:41:43Z",
+      "side": 1,
+      "message": "no need to use mutable.  Just do:\n\nreturn InProgressConversions::DownloadEntryFromProto(entries.entries(entry_index)); or something.",
+      "range": {
+        "startLine": 47,
+        "startChar": 50,
+        "endLine": 47,
+        "endChar": 65
+      },
+      "revId": "db4c8367e9d78da92d610fd829d7d88208494b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11303a85_eff33642",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-16T00:41:43Z",
+      "side": 1,
+      "message": "\u0026 then don\u0027t return anything.",
+      "range": {
+        "startLine": 52,
+        "startChar": 31,
+        "endLine": 52,
+        "endChar": 32
+      },
+      "revId": "db4c8367e9d78da92d610fd829d7d88208494b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51598e4c_a4559520",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-16T00:41:43Z",
+      "side": 1,
+      "message": "uint32_t or some unsigned number?\n\nI also think .size is undefined if is_directory is true.  Should we check and return early in that case too?",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 11
+      },
+      "revId": "db4c8367e9d78da92d610fd829d7d88208494b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e0d9a03_13a29204",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-16T00:41:43Z",
+      "side": 1,
+      "message": "const \u0026",
+      "range": {
+        "startLine": 94,
+        "startChar": 28,
+        "endLine": 94,
+        "endChar": 56
+      },
+      "revId": "db4c8367e9d78da92d610fd829d7d88208494b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b46a6d_c682e03a",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-16T00:41:43Z",
+      "side": 1,
+      "message": "What should we do in this case?  Are we ok writing an empty (or whatever SerializeToString leaves entries_string as) to the file?",
+      "range": {
+        "startLine": 97,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 54
+      },
+      "revId": "db4c8367e9d78da92d610fd829d7d88208494b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15bc7966_9c37dc77",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-16T00:41:43Z",
+      "side": 1,
+      "message": "I thought you *maybe* could do const \u0026 and the call site would auto copy or move these over.  Not 100% sure though, I don\u0027t remember.  Will check.",
+      "range": {
+        "startLine": 103,
+        "startChar": 24,
+        "endLine": 103,
+        "endChar": 35
+      },
+      "revId": "db4c8367e9d78da92d610fd829d7d88208494b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87be9cb4_bd60a8ed",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-16T00:41:43Z",
+      "side": 1,
+      "message": "If you call Initialize() twice in a row, will it queue up two different reads of the data?  Should we save a list of the base::Closures and just notify/flush them all in the callback?",
+      "range": {
+        "startLine": 126,
+        "startChar": 6,
+        "endLine": 126,
+        "endChar": 21
+      },
+      "revId": "db4c8367e9d78da92d610fd829d7d88208494b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b15c92_fcfae53d",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-16T00:41:43Z",
+      "side": 1,
+      "message": "Can we post this so we never get reentrancy issues?",
+      "range": {
+        "startLine": 127,
+        "startChar": 4,
+        "endLine": 127,
+        "endChar": 19
+      },
+      "revId": "db4c8367e9d78da92d610fd829d7d88208494b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e120ce_68126b46",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-16T00:41:43Z",
+      "side": 1,
+      "message": "We should have some UMA metrics for some of these I think.",
+      "range": {
+        "startLine": 142,
+        "startChar": 6,
+        "endLine": 143,
+        "endChar": 57
+      },
+      "revId": "db4c8367e9d78da92d610fd829d7d88208494b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02c49ae_0f35e52d",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-16T00:41:43Z",
+      "side": 1,
+      "message": "Set this right before calling callback.Run()?  The callback.Run() might try to query entries.",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 25
+      },
+      "revId": "db4c8367e9d78da92d610fd829d7d88208494b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf17a35c_9b6af148",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2287,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-16T00:41:43Z",
+      "side": 1,
+      "message": "initialization.  Still valid comment?",
+      "range": {
+        "startLine": 2287,
+        "startChar": 35,
+        "endLine": 2287,
+        "endChar": 50
+      },
+      "revId": "db4c8367e9d78da92d610fd829d7d88208494b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8222a89a_483b80dc",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-16T00:41:43Z",
+      "side": 1,
+      "message": "Should this be all internal to the cache?",
+      "range": {
+        "startLine": 317,
+        "startChar": 7,
+        "endLine": 319,
+        "endChar": 73
+      },
+      "revId": "db4c8367e9d78da92d610fd829d7d88208494b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
