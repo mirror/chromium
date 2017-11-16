@@ -1426,6 +1426,11 @@ void LayoutInline::ImageChanged(WrappedImagePtr,
   if (!Parent())
     return;
 
+  if (RuntimeEnabledFeatures::LayoutNGEnabled()) {
+    // TODO(kojii): Need to invalidate fragments for paint.
+    return;
+  }
+
   // FIXME: We can do better.
   SetShouldDoFullPaintInvalidation(PaintInvalidationReason::kImage);
 }
