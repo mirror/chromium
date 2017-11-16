@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "68052f35_81096d4b",
+        "filename": "chrome/browser/safe_browsing/download_protection/check_client_download_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-11-16T05:10:05Z",
+      "side": 1,
+      "message": "Hmm, the guide states it doesn\u0027t get included in the public api if it\u0027s in the private part of the class.  \n\n\"Like other declarations, aliases declared in a header file are part of that header\u0027s public API unless they\u0027re in a function definition, in the private portion of a class, or in an explicitly-marked internal namespace. \"",
+      "parentUuid": "ae631580_2cd8d37e",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 79
+      },
+      "revId": "756a4518a76459f8c35a2dcb7ccaca238c559fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fb64f14_5b558f3b",
         "filename": "chrome/browser/safe_browsing/download_protection/check_client_download_request.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "756a4518a76459f8c35a2dcb7ccaca238c559fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b104b5_b68beac7",
+        "filename": "chrome/browser/safe_browsing/download_protection/check_client_download_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-11-16T05:10:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fb64f14_5b558f3b",
+      "range": {
+        "startLine": 133,
+        "startChar": 20,
+        "endLine": 133,
+        "endChar": 35
+      },
+      "revId": "756a4518a76459f8c35a2dcb7ccaca238c559fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a14387ea_afa8c2a7",
+        "filename": "chrome/browser/safe_browsing/download_protection/check_client_download_request_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-11-16T05:10:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9f04fd9_13ecc436",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 36
+      },
+      "revId": "756a4518a76459f8c35a2dcb7ccaca238c559fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c71dd377_a299290d",
         "filename": "chrome/browser/safe_browsing/download_protection/check_client_download_request_unittest.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "756a4518a76459f8c35a2dcb7ccaca238c559fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a9cd935_3f663590",
+        "filename": "chrome/browser/safe_browsing/download_protection/check_client_download_request_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-11-16T05:10:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c71dd377_a299290d",
+      "range": {
+        "startLine": 50,
+        "startChar": 12,
+        "endLine": 50,
+        "endChar": 26
+      },
+      "revId": "756a4518a76459f8c35a2dcb7ccaca238c559fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
