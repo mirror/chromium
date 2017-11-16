@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "49590e3b_fc7ee084",
+        "filename": "services/video_capture/device_factory_media_to_mojo_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-11-16T17:30:35Z",
+      "side": 1,
+      "message": "Not sure. Will use base::MakeUnique to make it consistent.",
+      "parentUuid": "6f4e9c1e_0467d6f3",
+      "revId": "20921a7f0e4c8e8c4a52d4b0114379ed20c2d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8242e6d8_3ae3da6d",
         "filename": "services/video_capture/public/interfaces/virtual_device.mojom",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9f3be8c5_7e81c737",
+        "filename": "services/video_capture/public/interfaces/virtual_device.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-11-16T17:30:35Z",
+      "side": 1,
+      "message": "Agreed on updating the comments.\n\nHowever, I think having a response callback \u003d\u003e(int32 buffer_id) make more sense from API point of view. So that the caller can easily associate a returned buffer_id with a request, and having the service providing a response back when there is no buffer available is also important. \n\nThe fact that a returned buffer is a newly created or not is not really important to the caller, and can be handled \"out-of-band\". When a caller request a buffer, a new buffer might be created and old buffer might be retired, they will be handled by the producer (Producer.OnNewBufferHandle and Producer.OnBufferRetired), and update the buffer information accordingly. I think it make sense to keep Producer.OnNewBufferHandle and Producer.OnBufferRetired used for updating buffer information only, not as a direct answer for RequestFrameBuffer.\n\nFor example, if in the future we decided to change the implementation of VirtualDevice to pre-allocate buffers instead of on-demand, then the current API would still work. I don\u0027t think the producer needs to know if the buffers are pre-allocated or on-demand. The suggested API would not, since it assumes the buffers are allocated on-demand.\n\nSimilarly with the real device capture, when a new frame comes in, a new buffer might be created and old buffer might be retired, Receiver.OnNewBufferHandle and Receiver.OnBufferRetired are invoked to handle these events. We always use OnFrameReadyInBuffer to signal that a buffer is ready, we don\u0027t specifically indicate if this is a new or a reused buffer.\n\nI am fine with renaming it to \"RequestFrameBuffer\".\n\nLet me know what you think.",
+      "parentUuid": "8242e6d8_3ae3da6d",
+      "revId": "20921a7f0e4c8e8c4a52d4b0114379ed20c2d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35b26b93_f22f1ec2",
         "filename": "services/video_capture/test/virtual_device_unittest.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-16T14:15:07Z",
       "side": 1,
       "message": "It would be nice if we could add a test case that demonstrates how the producer is able to transport a series of frames larger than max_buffer_pool_buffer_count without having to remap any buffer handles.",
+      "revId": "20921a7f0e4c8e8c4a52d4b0114379ed20c2d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f89e740f_63246fc2",
+        "filename": "services/video_capture/test/virtual_device_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-11-16T17:30:35Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "35b26b93_f22f1ec2",
       "revId": "20921a7f0e4c8e8c4a52d4b0114379ed20c2d696",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
