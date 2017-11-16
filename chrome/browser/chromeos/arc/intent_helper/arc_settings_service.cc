@@ -104,7 +104,7 @@ class ArcSettingsServiceFactory
 class ArcSettingsServiceImpl
     : public chromeos::system::TimezoneSettings::Observer,
       public ArcSessionManager::Observer,
-      public InstanceHolder<mojom::AppInstance>::Observer,
+      public MojoConnectionObserver<mojom::AppInstance>,
       public chromeos::NetworkStateHandlerObserver {
  public:
   ArcSettingsServiceImpl(content::BrowserContext* context,
@@ -193,8 +193,8 @@ class ArcSettingsServiceImpl
   void SendSettingsBroadcast(const std::string& action,
                              const base::DictionaryValue& extras) const;
 
-  // InstanceHolder<mojom::AppInstance>::Observer:
-  void OnInstanceReady() override;
+  // MojoConnectionObserver<mojom::AppInstance>:
+  void OnConnectionReady() override;
 
   content::BrowserContext* const context_;
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
@@ -699,8 +699,8 @@ void ArcSettingsServiceImpl::SendSettingsBroadcast(
       extras_json);
 }
 
-// InstanceHolder<mojom::AppInstance>::Observer:
-void ArcSettingsServiceImpl::OnInstanceReady() {
+// MojoConnectionObserver<mojom::AppInstance>:
+void ArcSettingsServiceImpl::OnConnectionReady() {
   arc_bridge_service_->app()->RemoveObserver(this);
   SyncAppTimeSettings();
 }
@@ -721,12 +721,12 @@ ArcSettingsService::~ArcSettingsService() {
   arc_bridge_service_->intent_helper()->RemoveObserver(this);
 }
 
-void ArcSettingsService::OnInstanceReady() {
+void ArcSettingsService::OnConnectionReady() {
   impl_ =
       std::make_unique<ArcSettingsServiceImpl>(context_, arc_bridge_service_);
 }
 
-void ArcSettingsService::OnInstanceClosed() {
+void ArcSettingsService::OnConnectionClosed() {
   impl_.reset();
 }
 

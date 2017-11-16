@@ -16,10 +16,11 @@
 
 #include "base/callback_forward.h"
 #include "base/containers/queue.h"
+#include "base/threading/thread_checker.h"
 #include "base/timer/timer.h"
 #include "components/arc/common/bluetooth.mojom.h"
 #include "components/arc/common/intent_helper.mojom.h"
-#include "components/arc/instance_holder.h"
+#include "components/arc/mojo_connection_observer.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "device/bluetooth/bluetooth_adapter.h"
 #include "device/bluetooth/bluetooth_adapter_factory.h"
@@ -43,7 +44,7 @@ class ArcBridgeService;
 
 class ArcBluetoothBridge
     : public KeyedService,
-      public InstanceHolder<mojom::BluetoothInstance>::Observer,
+      public MojoConnectionObserver<mojom::BluetoothInstance>,
       public device::BluetoothAdapter::Observer,
       public device::BluetoothAdapterFactory::AdapterCallback,
       public device::BluetoothLocalGattService::Delegate,
@@ -63,9 +64,9 @@ class ArcBluetoothBridge
                      ArcBridgeService* bridge_service);
   ~ArcBluetoothBridge() override;
 
-  // Overridden from InstanceHolder<mojom::BluetoothInstance>::Observer:
-  void OnInstanceReady() override;
-  void OnInstanceClosed() override;
+  // Overridden from MojoConnectionObserver<mojom::BluetoothInstance>:
+  void OnConnectionReady() override;
+  void OnConnectionClosed() override;
 
   void OnAdapterInitialized(scoped_refptr<device::BluetoothAdapter> adapter);
 
@@ -304,9 +305,9 @@ class ArcBluetoothBridge
 
  private:
   template <typename T>
-  class InstanceObserver;
-  class AppInstanceObserver;
-  class IntentHelperInstanceObserver;
+  class ConnectionObserver;
+  class AppConnectionObserver;
+  class IntentHelperConnectionObserver;
 
   // Power state change on Bluetooth adapter.
   enum class AdapterPowerState { TURN_OFF, TURN_ON };
@@ -513,8 +514,8 @@ class ArcBluetoothBridge
   bool is_bluetooth_instance_up_;
 
   // Observers to listen the start-up of App and Intent Helper.
-  std::unique_ptr<AppInstanceObserver> app_observer_;
-  std::unique_ptr<IntentHelperInstanceObserver> intent_helper_observer_;
+  std::unique_ptr<AppConnectionObserver> app_observer_;
+  std::unique_ptr<IntentHelperConnectionObserver> intent_helper_observer_;
   // Queue to track the powered state changes initiated by Android.
   base::queue<AdapterPowerState> remote_power_changes_;
   // Queue to track the powered state changes initiated by Chrome.

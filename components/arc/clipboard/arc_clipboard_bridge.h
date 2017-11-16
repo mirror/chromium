@@ -10,7 +10,7 @@
 #include "base/macros.h"
 #include "base/threading/thread_checker.h"
 #include "components/arc/common/clipboard.mojom.h"
-#include "components/arc/instance_holder.h"
+#include "components/arc/mojo_connection_observer.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "ui/base/clipboard/clipboard_observer.h"
@@ -26,7 +26,7 @@ class ArcBridgeService;
 class ArcClipboardBridge
     : public KeyedService,
       public ui::ClipboardObserver,
-      public InstanceHolder<mojom::ClipboardInstance>::Observer,
+      public MojoConnectionObserver<mojom::ClipboardInstance>,
       public mojom::ClipboardHost {
  public:
   // Returns singleton instance for the given BrowserContext,
@@ -38,8 +38,8 @@ class ArcClipboardBridge
                      ArcBridgeService* bridge_service);
   ~ArcClipboardBridge() override;
 
-  // InstanceHolder<mojom::ClipboardInstance>::Observer overrides.
-  void OnInstanceReady() override;
+  // MojoConnectionObserver<mojom::ClipboardInstance> overrides.
+  void OnConnectionReady() override;
 
   // ClipboardObserver overrides.
   void OnClipboardDataChanged() override;

@@ -12,7 +12,7 @@
 #include "base/macros.h"
 #include "components/arc/common/oemcrypto.mojom.h"
 #include "components/arc/common/oemcrypto_daemon.mojom.h"
-#include "components/arc/instance_holder.h"
+#include "components/arc/mojo_connection_observer.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
@@ -26,7 +26,7 @@ class ArcBridgeService;
 
 class ArcOemCryptoBridge
     : public KeyedService,
-      public InstanceHolder<mojom::OemCryptoInstance>::Observer,
+      public MojoConnectionObserver<mojom::OemCryptoInstance>,
       public mojom::OemCryptoHost {
  public:
   // Returns singleton instance for the given BrowserContext,
@@ -38,8 +38,8 @@ class ArcOemCryptoBridge
                      ArcBridgeService* bridge_service);
   ~ArcOemCryptoBridge() override;
 
-  // Overridden from InstanceHolder<mojom::OemCryptoInstance>::Observer:
-  void OnInstanceReady() override;
+  // Overridden from MojoConnectionObserver<mojom::OemCryptoInstance>:
+  void OnConnectionReady() override;
 
   // OemCrypto Mojo host interface
   void Connect(mojom::OemCryptoServiceRequest request) override;
