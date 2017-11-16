@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "243c86cc_1650171d",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-16T18:34:18Z",
+      "side": 1,
+      "message": "\u003e Hmmm... I guess it is not that difficult to iterate over all the NavEntries stored in a NavigationController.  It might not even be O(\u003cnumber of *all* entries\u003e), because we can just go back in history one-by-one and *stop* when we no longer find an FNE for the |child|, right?\n\u003e \n\u003e Do you think this might work?  If yes, them I might want to try it in a follow-up CL (to be landed after making sure this CL recovers from the performance regression).\n\nI don\u0027t think that would be complete in some cases, so I\u0027m not sure it\u0027s worth the effort.  The affected NavEntries might not be contiguous for a few reasons:\n\n1) You could got back multiple entries:\n[A, B, C#one, C#two], then go back to A.  Have to visit the last two entries.\n\n2) You could replace in the middle of a chain of affected entries:\n[A#one, A#two, A#three], then do a location.replace from A#two to B.  Have to visit entries before and after.\n\nAnyway, you raise a good point about deleting TreeNodes and not just FNEs.  We can consider it further in your https://crbug.com/785534.",
+      "parentUuid": "44403091_48fc611a",
+      "revId": "e1bc289482e27c66da5624270921155b857cee8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "121a6a2a_216c5156",
         "filename": "content/browser/frame_host/frame_tree_node.cc",
         "patchSetId": 5
@@ -166,6 +184,24 @@
       "side": 1,
       "message": "I don\u0027t think so.  There are differences:\n1. NEI::RemoveTreeNode(tree_node) *unconditionally* removes tree node\n2. FTN::RemoveChild(child) looks up tree node with unique name matching |child| and unconditionally removes the tree node\n3. ClearStaleFrameEntriesForNewFrame(ftn) looks up tree node with unique name matching |ftn| and only removes such tree node is it is NOT in the same tree position as |ftn|.\n\nI guess the \"looks up tree node with unique name matching |ftn|\" is shared across 2 and 3.  I\u0027ll tweak 3 so that it calls GetTreeNode instead of reimplementing the lookup.",
       "parentUuid": "534b06f5_e8e83321",
+      "revId": "e1bc289482e27c66da5624270921155b857cee8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fde2cb32_ccc55a5a",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-16T18:34:18Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think so.  There are differences:\n\u003e 1. NEI::RemoveTreeNode(tree_node) *unconditionally* removes tree node\n\u003e 2. FTN::RemoveChild(child) looks up tree node with unique name matching |child| and unconditionally removes the tree node\n\u003e 3. ClearStaleFrameEntriesForNewFrame(ftn) looks up tree node with unique name matching |ftn| and only removes such tree node is it is NOT in the same tree position as |ftn|.\n\u003e \n\u003e I guess the \"looks up tree node with unique name matching |ftn|\" is shared across 2 and 3.  I\u0027ll tweak 3 so that it calls GetTreeNode instead of reimplementing the lookup.\n\nHmm, I\u0027d like to try again since I\u0027m not thrilled about losing the DCHECK_LE(count, 1) in that method, and since these still feel very similar to me.  (Good point about InSameTreePosition, though.)\n\nWhat if we rename ClearStaleFrameEntriesForNewFrame to RemoveFrameEntryForFrame(FrameTreeNode* frame_tree_node, bool only_if_stale), and then removed it if !only_if_stale || !InSameTreePosition?\n\nI think that would let us keep the method largely as is (including the at most once check), and share it between both cases.",
+      "parentUuid": "0e02e84d_442068c6",
       "revId": "e1bc289482e27c66da5624270921155b857cee8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
