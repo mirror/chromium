@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd80f5f2_6455dea1",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-16T22:26:37Z",
+      "side": 1,
+      "message": "Using restored_tab_count_ now.",
+      "parentUuid": "642424b5_d5771362",
+      "range": {
+        "startLine": 228,
+        "startChar": 6,
+        "endLine": 228,
+        "endChar": 27
+      },
+      "revId": "71e944cc7fae105bce321a2e92b3a4671c92a4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b31ebc89_fbcba80d",
         "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "71e944cc7fae105bce321a2e92b3a4671c92a4e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a11f4f0_df1cbc35",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-16T22:26:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b31ebc89_fbcba80d",
+      "range": {
+        "startLine": 614,
+        "startChar": 9,
+        "endLine": 614,
+        "endChar": 30
+      },
+      "revId": "71e944cc7fae105bce321a2e92b3a4671c92a4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e72b5e1f_41ac2b23",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-16T22:26:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2d2b300_721624e4",
+      "range": {
+        "startLine": 232,
+        "startChar": 24,
+        "endLine": 232,
+        "endChar": 27
+      },
+      "revId": "71e944cc7fae105bce321a2e92b3a4671c92a4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "227a763d_03855084",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
         "patchSetId": 14
@@ -91,6 +163,30 @@
       "revId": "71e944cc7fae105bce321a2e92b3a4671c92a4e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe4c8c64_9bacd2ed",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-16T22:26:37Z",
+      "side": 1,
+      "message": "Right, it is just int64. But I see most other places use const ref. So I guess that\u0027s the preferred style?",
+      "parentUuid": "227a763d_03855084",
+      "range": {
+        "startLine": 97,
+        "startChar": 54,
+        "endLine": 97,
+        "endChar": 63
+      },
+      "revId": "71e944cc7fae105bce321a2e92b3a4671c92a4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
