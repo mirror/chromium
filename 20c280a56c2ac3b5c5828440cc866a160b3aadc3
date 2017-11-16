@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3be03bd2_fd463bbb",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-16T03:57:58Z",
+      "side": 1,
+      "message": "it\u0027s selected by individual columns, and the struct was declared for easier manipulation across functions.",
+      "parentUuid": "38bda2cd_da1c3f70",
+      "range": {
+        "startLine": 48,
+        "startChar": 31,
+        "endLine": 48,
+        "endChar": 51
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24f4ced3_bfb1342c",
         "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af54a11_ba919a35",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-16T03:57:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24f4ced3_bfb1342c",
+      "range": {
+        "startLine": 49,
+        "startChar": 29,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "662faba4_fae95550",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-16T03:57:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a27ecf00_753ceed2",
+      "range": {
+        "startLine": 62,
+        "startChar": 62,
+        "endLine": 62,
+        "endChar": 74
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba356731_4cb331f2",
         "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-16T00:51:03Z",
       "side": 1,
       "message": "Is this all files in the archives_dir, or something else?",
+      "range": {
+        "startLine": 137,
+        "startChar": 27,
+        "endLine": 137,
+        "endChar": 41
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359726ec_4c81740a",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-16T03:57:58Z",
+      "side": 1,
+      "message": "file paths of all archives in |archives_dir|.",
+      "parentUuid": "ba356731_4cb331f2",
       "range": {
         "startLine": 137,
         "startChar": 27,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "cf3db14b_5d70b70f",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-16T03:57:58Z",
+      "side": 1,
+      "message": "I don\u0027t know what\u0027s the numbers we have.. but in most cases I\u0027m not expecting numbers \u003e 100 for both M and N... Is timing/memory consumption a potential issue here?",
+      "parentUuid": "75c771fe_c6fd5385",
+      "range": {
+        "startLine": 139,
+        "startChar": 8,
+        "endLine": 139,
+        "endChar": 20
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67f2885f_8c77ce86",
         "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
         "patchSetId": 1
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-16T00:51:03Z",
       "side": 1,
       "message": "So what happens when we get a failed check?  I presume it gets re-run, but that code isn\u0027t written yet, how do we remember that we have to re-run it when we write the follow-on changelist?",
+      "range": {
+        "startLine": 184,
+        "startChar": 17,
+        "endLine": 184,
+        "endChar": 23
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d56ee2c6_9b89ace6",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-16T03:57:58Z",
+      "side": 1,
+      "message": "Currently there is no retry strategy for all operation, on both ModelImpl and ModelTaskified. It\u0027s definitely something good to have but as mentioned in the other CL: https://chromium-review.googlesource.com/c/chromium/src/+/710525/1/components/offline_pages/core/model/clear_legacy_temporary_pages_task.cc#77, it\u0027s being tracked in crbug.com/785084.",
+      "parentUuid": "67f2885f_8c77ce86",
       "range": {
         "startLine": 184,
         "startChar": 17,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "b3f0147b_8df55c22",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-16T03:57:58Z",
+      "side": 1,
+      "message": "I was expecting the concern would be address in the CL which move this to Downloads directory, since that would be pretty much a rewrite of this file.\nI\u0027ve made the change in this CL trying to be future-proof.",
+      "parentUuid": "e21b6ef1_1e4b641c",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 47
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7650605_191dead2",
         "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.h",
         "patchSetId": 1
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "51e7c0af_9f17deb4",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-16T03:57:58Z",
+      "side": 1,
+      "message": "Removed the TODO since it\u0027s not related to this task anymore...",
+      "parentUuid": "e7650605_191dead2",
+      "range": {
+        "startLine": 25,
+        "startChar": 42,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cbd75bf_4e69b3b7",
         "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.h",
         "patchSetId": 1
@@ -197,6 +389,30 @@
       "writtenOn": "2017-11-16T00:51:03Z",
       "side": 1,
       "message": "How do we ensure that the store is good for the lifetime of the task?  (maybe an order of shutdown problem).  That\u0027s really a problem for the next changelist, not this one, but how do we make sure we don\u0027t forget?",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 29
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f05fae8_57f28d35",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-16T03:57:58Z",
+      "side": 1,
+      "message": "If crash/malfunction is not taken into consideration, the store should be good for the lifetime of the task:\n- Tasks are owned by TaskQueue which is owned by Model\n- The store is owned by Model as well\n- The store will be destructed later than TaskQueue, based on the ordering in Model declaration.\nBut if somehow the store or the model is corrupted, i don\u0027t think we can guarantee we can live without hitting some kind of crash...\nI\u0027m tracking this as part of crbug.com/772206, to add some DCHECKs in c-tor or Run(). WDYT?",
+      "parentUuid": "2cbd75bf_4e69b3b7",
       "range": {
         "startLine": 41,
         "startChar": 2,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "42f3e9ac_6236fda6",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-16T03:57:58Z",
+      "side": 1,
+      "message": "I wouldn\u0027t worry to much about it given the usage. Since:\n1. The ScopedTempDir will mostly be created in /tmp which wouldn\u0027t pile up.\n2. Other usage of this class seems less cautious than us, most of them don\u0027t call the Delete.",
+      "parentUuid": "1ba0c25a_8e8c28f1",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 48
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f85c639_9c5e5849",
         "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task_unittest.cc",
         "patchSetId": 1
@@ -252,6 +492,30 @@
       "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3a6a8bb_54ce3beb",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-16T03:57:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f85c639_9c5e5849",
+      "range": {
+        "startLine": 113,
+        "startChar": 46,
+        "endLine": 113,
+        "endChar": 69
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "538e98e1_5553dd15",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-16T03:57:58Z",
+      "side": 1,
+      "message": "TBH I think it\u0027s too long. Given the context of the test it should mean \u0027is the page removed\u0027. Since we should always keep the consistency, \u0027removed\u0027 should mean from both places.",
+      "parentUuid": "c7915467_1b39dbc5",
+      "range": {
+        "startLine": 120,
+        "startChar": 46,
+        "endLine": 120,
+        "endChar": 59
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b05b799_b3ea7764",
         "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task_unittest.cc",
         "patchSetId": 1
@@ -289,6 +577,30 @@
       "writtenOn": "2017-11-16T00:51:03Z",
       "side": 1,
       "message": "What\u0027s going on with this bug, do you know if a fix is being worked on?",
+      "range": {
+        "startLine": 168,
+        "startChar": 28,
+        "endLine": 168,
+        "endChar": 52
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e75717c_df53abd8",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-16T03:57:58Z",
+      "side": 1,
+      "message": "It\u0027s not being worked on, and I don\u0027t think it will be fixed soon if I don\u0027t do it myself.\nBut I don\u0027t have a windows machine.",
+      "parentUuid": "3b05b799_b3ea7764",
       "range": {
         "startLine": 168,
         "startChar": 28,
@@ -315,6 +627,24 @@
       "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41220afd_2defafe6",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-16T03:57:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3feb4c19_3d3943e6",
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
