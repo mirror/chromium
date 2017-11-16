@@ -26,6 +26,7 @@
 #endif
 
 #if !defined(MEDIA_DISABLE_LIBVPX)
+#include "media/filters/offload_video_decoder.h"
 #include "media/filters/vpx_video_decoder.h"
 #endif
 
@@ -49,7 +50,7 @@ DefaultRendererFactory::CreateAudioDecoders(
 
 #if !defined(MEDIA_DISABLE_FFMPEG)
   audio_decoders.push_back(
-      base::MakeUnique<FFmpegAudioDecoder>(media_task_runner, media_log_));
+      std::make_unique<FFmpegAudioDecoder>(media_task_runner, media_log_));
 #endif
 
   // Use an external decoder only if we cannot otherwise decode in the
@@ -83,17 +84,17 @@ DefaultRendererFactory::CreateVideoDecoders(
                                             &video_decoders);
     }
 
-    video_decoders.push_back(base::MakeUnique<GpuVideoDecoder>(
+    video_decoders.push_back(std::make_unique<GpuVideoDecoder>(
         gpu_factories, request_overlay_info_cb, target_color_space,
         media_log_));
   }
 
 #if !defined(MEDIA_DISABLE_LIBVPX)
-  video_decoders.push_back(base::MakeUnique<VpxVideoDecoder>());
+  video_decoders.push_back(std::make_unique<OffloadedVpxVideoDecoder>());
 #endif
 
 #if !defined(MEDIA_DISABLE_FFMPEG) && !defined(DISABLE_FFMPEG_VIDEO_DECODERS)
-  video_decoders.push_back(base::MakeUnique<FFmpegVideoDecoder>(media_log_));
+  video_decoders.push_back(std::make_unique<FFmpegVideoDecoder>(media_log_));
 #endif
 
   return video_decoders;
@@ -137,7 +138,7 @@ std::unique_ptr<Renderer> DefaultRendererFactory::CreateRenderer(
                  request_overlay_info_cb, target_color_space, gpu_factories),
       true, gpu_factories, media_log_));
 
-  return base::MakeUnique<RendererImpl>(
+  return std::make_unique<RendererImpl>(
       media_task_runner, std::move(audio_renderer), std::move(video_renderer));
 }
 
