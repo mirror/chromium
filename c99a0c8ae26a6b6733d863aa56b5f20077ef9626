@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa1e0a59_b2af267a",
+        "filename": "media/base/cdm_promise_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-11-16T19:35:59Z",
+      "side": 1,
+      "message": "That\u0027s why I added an additional method. The other users don\u0027t need to end traces, so they don\u0027t call this. (I debated updating Clear() with an optional parameter and do the TRACE_END there, but felt it complicated things.)",
+      "parentUuid": "d8f56dfc_45c70c57",
+      "revId": "c99a0c8ae26a6b6733d863aa56b5f20077ef9626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31c89c81_b968a244",
         "filename": "media/mojo/services/mojo_cdm_file_io.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "c99a0c8ae26a6b6733d863aa56b5f20077ef9626",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1635359_61470e91",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-11-16T19:35:59Z",
+      "side": 1,
+      "message": "I think it\u0027s useful. You can now see the elapsed time between Open/Read/Write, and if the CDM changes to have multiple files open at the same time, you can see the timing between the different requests.\n\nPlus the CDM isn\u0027t really reading and writing a lot, so the overhead should be small.",
+      "parentUuid": "31c89c81_b968a244",
+      "revId": "c99a0c8ae26a6b6733d863aa56b5f20077ef9626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
