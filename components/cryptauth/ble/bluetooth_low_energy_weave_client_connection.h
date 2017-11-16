@@ -360,6 +360,11 @@ class BluetoothLowEnergyWeaveClientConnection
   // recorded once.
   bool has_recorded_connection_result_ = false;
 
+  // Tracks whether this connection has notified observers that GATT
+  // characteristics were not found. Observers should only be notified of this
+  // once.
+  bool has_notified_gatt_services_unavailable_ = false;
+
   scoped_refptr<device::BluetoothAdapter> adapter_;
   RemoteAttribute remote_service_;
   std::unique_ptr<BluetoothLowEnergyWeavePacketGenerator> packet_generator_;
