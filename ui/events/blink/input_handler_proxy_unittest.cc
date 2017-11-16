@@ -2474,6 +2474,9 @@ TEST_P(InputHandlerProxyTest, GestureFlingCancelledAfterBothAxesStopScrolling) {
 TEST_P(InputHandlerProxyTest, HitTestTouchEventNonNullTouchAction) {
   // One of the touch points is on a touch-region. So the event should be sent
   // to the main thread.
+  // TODO(xidachen): With |kCompositorTouchAction| in blink_features.cc enabled,
+  // the whitelisted touch action is set to PanUp, we are able to ACK the event
+  // from the compositor. Then change the result to DID_HANDLE_NON_BLOCKING.
   expected_disposition_ = InputHandlerProxy::DID_NOT_HANDLE;
   VERIFY_AND_RESET_MOCKS();
 
@@ -2519,50 +2522,9 @@ TEST_P(InputHandlerProxyTest, HitTestTouchEventNonNullTouchAction) {
   VERIFY_AND_RESET_MOCKS();
 }
 
-TEST_P(InputHandlerProxyTest, HitTestTouchEventNullTouchAction) {
-  // One of the touch points is on a touch-region. So the event should be sent
-  // to the main thread.
-  expected_disposition_ = InputHandlerProxy::DID_NOT_HANDLE;
-  VERIFY_AND_RESET_MOCKS();
-
-  EXPECT_CALL(
-      mock_input_handler_,
-      EventListenerTypeForTouchStartOrMoveAt(
-          testing::Property(&gfx::Point::x, testing::Eq(0)), testing::_))
-      .WillOnce(testing::Return(
-          cc::InputHandler::TouchStartOrMoveEventListenerType::NO_HANDLER));
-
-  EXPECT_CALL(
-      mock_input_handler_,
-      EventListenerTypeForTouchStartOrMoveAt(
-          testing::Property(&gfx::Point::x, testing::Gt(0)), testing::_))
-      .WillOnce(
-          testing::Return(cc::InputHandler::TouchStartOrMoveEventListenerType::
-                              HANDLER_ON_SCROLLING_LAYER));
-  // Since the second touch point hits a touch-region, there should be no
-  // hit-testing for the third touch point.
-
-  WebTouchEvent touch(WebInputEvent::kTouchMove, WebInputEvent::kNoModifiers,
-                      WebInputEvent::kTimeStampForTesting);
-
-  touch.touches_length = 3;
-  touch.touches[0] = CreateWebTouchPoint(WebTouchPoint::kStatePressed, 0, 0);
-  touch.touches[1] = CreateWebTouchPoint(WebTouchPoint::kStatePressed, 10, 10);
-  touch.touches[2] = CreateWebTouchPoint(WebTouchPoint::kStatePressed, -10, 10);
-
-  bool is_touching_scrolling_layer;
-  cc::TouchAction* white_listed_touch_action = nullptr;
-  EXPECT_EQ(expected_disposition_, input_handler_->HitTestTouchEventForTest(
-                                       touch, &is_touching_scrolling_layer,
-                                       white_listed_touch_action));
-  EXPECT_TRUE(is_touching_scrolling_layer);
-  EXPECT_TRUE(!white_listed_touch_action);
-  VERIFY_AND_RESET_MOCKS();
-}
-
 TEST_P(InputHandlerProxyTest, MultiTouchPointHitTestNegative) {
-  // None of the three touch points fall in the touch region. So the event
-  // should be dropped.
+  // Since the touch start returns a whitelisted touch action of PanUp, we ACK
+  // the event from the compositor.
   expected_disposition_ = InputHandlerProxy::DROP_EVENT;
   VERIFY_AND_RESET_MOCKS();
 
@@ -2604,6 +2566,9 @@ TEST_P(InputHandlerProxyTest, MultiTouchPointHitTestNegative) {
 TEST_P(InputHandlerProxyTest, MultiTouchPointHitTestPositive) {
   // One of the touch points is on a touch-region. So the event should be sent
   // to the main thread.
+  // TODO(xidachen): With |kCompositorTouchAction| in blink_features.cc enabled,
+  // the whitelisted touch action is set to PanUp, we are able to ACK the event
+  // from the compositor. Then change the result to DID_HANDLE_NON_BLOCKING.
   expected_disposition_ = InputHandlerProxy::DID_NOT_HANDLE;
   VERIFY_AND_RESET_MOCKS();
 
@@ -2771,6 +2736,8 @@ TEST_P(InputHandlerProxyTest, TouchMoveBlockingAddedAfterPassiveTouchStart) {
   touch.touches_length = 1;
   touch.touch_start_or_first_touch_move = true;
   touch.touches[0] = CreateWebTouchPoint(WebTouchPoint::kStateMoved, 10, 10);
+  // TODO(xidachen): enable |kCompositorTouchAction| in blink_features.cc and
+  // change the result to DID_HANDLE_NON_BLOCKING.
   EXPECT_EQ(InputHandlerProxy::DID_NOT_HANDLE,
             input_handler_->HandleInputEvent(touch));
   VERIFY_AND_RESET_MOCKS();
@@ -3552,6 +3519,8 @@ TEST_P(InputHandlerProxyTest, GestureScrollingThreadStatusHistogram) {
               SetWhiteListedTouchAction(testing::_, testing::_, testing::_))
       .WillOnce(testing::Return());
 
+  // TODO(xidachen): enable |kCompositorTouchAction| in blink_features.cc and
+  // change the result to DID_HANDLE_NON_BLOCKING.
   expected_disposition_ = InputHandlerProxy::DID_NOT_HANDLE;
   EXPECT_EQ(expected_disposition_,
             input_handler_->HandleInputEvent(touch_start));

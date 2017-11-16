@@ -118,7 +118,9 @@ class MockInputRouter : public InputRouter {
   bool HasPendingEvents() const override { return false; }
   void SetDeviceScaleFactor(float device_scale_factor) override {}
   void SetFrameTreeNodeId(int frameTreeNodeId) override {}
-  cc::TouchAction AllowedTouchAction() override { return cc::kTouchActionAuto; }
+  base::Optional<cc::TouchAction> AllowedTouchAction() override {
+    return cc::kTouchActionAuto;
+  }
   void SetForceEnableZoom(bool enabled) override {}
   void BindHost(mojom::WidgetInputHandlerHostRequest request,
                 bool frame_handler) override {}
