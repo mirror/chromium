@@ -481,6 +481,11 @@ class CHROMEOS_EXPORT NetworkStateHandler
   // Called whenever Device.Scanning state transitions to false.
   void NotifyScanCompleted(const DeviceState* device);
 
+  // Helper function to log property updated events.
+  void LogPropertyUpdated(const ManagedState* network,
+                          const std::string& key,
+                          const base::Value& value);
+
   // Returns one technology type for |type|. This technology will be the
   // highest priority technology in the type pattern.
   std::string GetTechnologyForType(const NetworkTypePattern& type) const;
