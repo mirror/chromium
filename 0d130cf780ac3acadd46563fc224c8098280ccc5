@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "527e43ba_f10751c5",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-16T19:15:34Z",
+      "side": 1,
+      "message": "This is changed to use the new IsTight flag of FloatClipRect.",
+      "parentUuid": "555e31a4_434c0d19",
+      "revId": "0d130cf780ac3acadd46563fc224c8098280ccc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b355c473_d326ba7f",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-09T00:56:43Z",
       "side": 1,
       "message": "This is a bit lame... I think SkRegion should be efficient enough.\n\nSkRegion diff(old_chunk.bounds_in_layer);\ndiff.op(new_chunk.bounds_in_layer, SkRegion::kXOR_Op);\nfor (SkRegion::Iterator it(diff); !it.done(); id.next())\n  AddRasterInvalidation(it.rect(), \u0026new_chunk.id.client, PaintInvalidationReason::kIncremental);",
+      "revId": "0d130cf780ac3acadd46563fc224c8098280ccc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33807719_f07136b9",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-16T19:15:34Z",
+      "side": 1,
+      "message": "My consideration was: if there are more than one side, the union of the difference will cover the whole old and new rects. If cc layer unite the rects, such incremental invalidation is just the same as full invalidation; otherwise there might be not enough improvement by not invalidating the center part.\n\nHowever, the SkRegion method is really much simpler. Done.",
+      "parentUuid": "b355c473_d326ba7f",
       "revId": "0d130cf780ac3acadd46563fc224c8098280ccc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
