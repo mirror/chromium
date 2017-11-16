@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ab15325_fe150a3c",
+        "filename": "ios/clean/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-16T15:34:29Z",
+      "side": 0,
+      "message": "Has this documentation been ported somewhere else? Even though ios/clean is removed, we still want to clean ios/, and most of the contents is still relevant.",
+      "revId": "91b820248d90add6d1471269659c8c723a0b199a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
