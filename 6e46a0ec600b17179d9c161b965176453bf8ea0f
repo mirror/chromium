@@ -16,6 +16,24 @@
       "revId": "6e46a0ec600b17179d9c161b965176453bf8ea0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d12d26_0fc2e395",
+        "filename": "content/browser/devtools/protocol/network_handler.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-16T05:57:26Z",
+      "side": 1,
+      "message": "fixed in the newer patch sets.",
+      "parentUuid": "4659135d_42f6d2c1",
+      "revId": "6e46a0ec600b17179d9c161b965176453bf8ea0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

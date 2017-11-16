@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "7f731082_ef834898",
+        "filename": "third_party/WebKit/public/platform/WebURLError.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-16T05:57:26Z",
+      "side": 1,
+      "message": "resolved",
+      "parentUuid": "ceaa2364_bb0ea974",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 11
+      },
+      "revId": "fc72c68c8ed81f05705bb0748b8c9a257668f234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dab45e58_d14871d0",
         "filename": "third_party/WebKit/public/platform/WebURLError.h",
         "patchSetId": 6
