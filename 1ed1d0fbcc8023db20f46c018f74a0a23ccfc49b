@@ -104,6 +104,24 @@
       "revId": "1ed1d0fbcc8023db20f46c018f74a0a23ccfc49b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5504fec1_4f871e4f",
+        "filename": "ui/events/android/gesture_event_android.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-16T00:44:28Z",
+      "side": 1,
+      "message": "\u003e I remember your feedback on having union later...? Deleted TODO\u0027s anyway.\n\nIt\u0027s not a TODO because there is nothing to do at the moment. But you can leave the note in there that if there are more things added below delta_ conditioned on type_, then it can be turned into a union",
+      "parentUuid": "9acdf698_6f07d0b5",
+      "revId": "1ed1d0fbcc8023db20f46c018f74a0a23ccfc49b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
