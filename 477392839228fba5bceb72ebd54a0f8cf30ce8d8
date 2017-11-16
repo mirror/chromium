@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "95ec905c_0101e439",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarContainer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-16T23:43:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5950dc56_f1dcd27c",
+      "range": {
+        "startLine": 131,
+        "startChar": 12,
+        "endLine": 131,
+        "endChar": 29
+      },
+      "revId": "477392839228fba5bceb72ebd54a0f8cf30ce8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b20001c7_75ebddf0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/PictureInPictureController.java",
         "patchSetId": 1
@@ -41,6 +65,53 @@
         "startChar": 29,
         "endLine": 68,
         "endChar": 65
+      },
+      "revId": "477392839228fba5bceb72ebd54a0f8cf30ce8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0277513_bbb4dc8c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/PictureInPictureController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-16T23:43:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b20001c7_75ebddf0",
+      "range": {
+        "startLine": 68,
+        "startChar": 29,
+        "endLine": 68,
+        "endChar": 65
+      },
+      "revId": "477392839228fba5bceb72ebd54a0f8cf30ce8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7461027_ee047755",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/PictureInPictureController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-16T23:43:54Z",
+      "side": 1,
+      "message": "Peter, note that I changed this comment, OK?",
+      "range": {
+        "startLine": 298,
+        "startChar": 0,
+        "endLine": 298,
+        "endChar": 42
       },
       "revId": "477392839228fba5bceb72ebd54a0f8cf30ce8d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -68,6 +139,30 @@
       "revId": "477392839228fba5bceb72ebd54a0f8cf30ce8d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3db023b_74e1511f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/PictureInPictureController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-16T23:43:54Z",
+      "side": 1,
+      "message": "Reverted.",
+      "parentUuid": "44c8b624_7dc79197",
+      "range": {
+        "startLine": 311,
+        "startChar": 43,
+        "endLine": 311,
+        "endChar": 78
+      },
+      "revId": "477392839228fba5bceb72ebd54a0f8cf30ce8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
