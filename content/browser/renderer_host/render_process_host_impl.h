@@ -567,6 +567,10 @@ class CONTENT_EXPORT RenderProcessHostImpl
         BrowserThread::GetTaskRunnerForThread(BrowserThread::UI));
   }
 
+  GpuClient* GetGpuClient();
+
+  void SetCanDelete(bool can_delete);
+
   std::unique_ptr<mojo::edk::OutgoingBrokerClientInvitation>
       broker_client_invitation_;
 
@@ -688,6 +692,9 @@ class CONTENT_EXPORT RenderProcessHostImpl
   // not committed any web content, and it has not been given to a SiteInstance
   // that has a site assigned.
   bool is_unused_;
+
+  // When true, do not delete this RenderProcessHost in Cleanup().
+  bool can_delete_;
 
   // Prevents the class from being added as a GpuDataManagerImpl observer more
   // than once.

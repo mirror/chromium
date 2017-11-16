@@ -1292,7 +1292,7 @@ RenderProcessHostImpl::RenderProcessHostImpl(
       route_provider_binding_(this),
       visible_widgets_(0),
       priority_({
-            kLaunchingProcessIsBackgrounded,
+        kLaunchingProcessIsBackgrounded,
             kLaunchingProcessIsBoostedForPendingView,
 #if defined(OS_ANDROID)
             ChildProcessImportance::NORMAL,
@@ -1305,6 +1305,7 @@ RenderProcessHostImpl::RenderProcessHostImpl(
       ignore_input_events_(false),
       is_for_guests_only_(is_for_guests_only),
       is_unused_(true),
+      can_delete_(true),
       gpu_observer_registered_(false),
       delayed_cleanup_needed_(false),
       within_process_died_observer_(false),
@@ -1447,6 +1448,24 @@ bool RenderProcessHostImpl::Init() {
   base::FilePath renderer_path = ChildProcessHost::GetChildPath(flags);
   if (renderer_path.empty())
     return false;
+
+  if (!run_renderer_in_process()) {
+    // In in-process mode, deletion of host doesn't go through Cleanup(), so
+    // can_delete_ won't prevent the host from being deleted before the
+    // PreEstablishGpuChannel() is executed on IO thread.
+    SetCanDelete(false);
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(
+            [](RenderProcessHostImpl* host) {
+              host->GetGpuClient()->PreEstablishGpuChannel();
+              BrowserThread::PostTask(
+                  BrowserThread::UI, FROM_HERE,
+                  base::BindOnce(&RenderProcessHostImpl::SetCanDelete,
+                                 base::Unretained(host), true));
+            },
+            this));
+  }
 
   sent_render_process_ready_ = false;
 
@@ -1995,9 +2014,7 @@ void RenderProcessHostImpl::GetBlobURLLoaderFactory(
 
 void RenderProcessHostImpl::CreateMusGpuRequest(ui::mojom::GpuRequest request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (!gpu_client_)
-    gpu_client_.reset(new GpuClient(GetID()));
-  gpu_client_->Add(std::move(request));
+  GetGpuClient()->Add(std::move(request));
 }
 
 void RenderProcessHostImpl::CreateOffscreenCanvasProvider(
@@ -3020,7 +3037,7 @@ void RenderProcessHostImpl::Cleanup() {
   }
 
   // Until there are no other owners of this object, we can't delete ourselves.
-  if (!listeners_.IsEmpty() || keep_alive_ref_count_ != 0)
+  if (!listeners_.IsEmpty() || keep_alive_ref_count_ != 0 || !can_delete_)
     return;
 
 #if BUILDFLAG(ENABLE_WEBRTC)
@@ -4171,6 +4188,18 @@ void RenderProcessHostImpl::GetBrowserHistogram(
     histogram->WriteJSON(&histogram_json);
   }
   std::move(callback).Run(histogram_json);
+}
+
+GpuClient* RenderProcessHostImpl::GetGpuClient() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (!gpu_client_)
+    gpu_client_.reset(new GpuClient(GetID()));
+  return gpu_client_.get();
+}
+
+void RenderProcessHostImpl::SetCanDelete(bool can_delete) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  can_delete_ = can_delete;
 }
 
 }  // namespace content
