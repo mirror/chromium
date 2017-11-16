@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78889147_4763ada2",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-16T22:42:42Z",
+      "side": 1,
+      "message": "nit: just inline the function call in the if condition on the next line",
+      "revId": "c7e746112ee0794b90a4d45c8c1da2a8f338c23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e56fb3c_01def396",
+        "filename": "ui/display/manager/display_manager_utilities.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-16T22:42:42Z",
+      "side": 1,
+      "message": "nit: please add a comment here explaining why this is necessary",
+      "revId": "c7e746112ee0794b90a4d45c8c1da2a8f338c23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b981889f_206fedcf",
+        "filename": "ui/display/manager/display_manager_utilities.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-16T22:42:42Z",
+      "side": 1,
+      "message": "nit: \"Returns true if the first display should unconditionally be considered an internal display.\"",
+      "revId": "c7e746112ee0794b90a4d45c8c1da2a8f338c23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79775d01_6328c16a",
+        "filename": "ui/display/manager/display_manager_utilities.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-16T22:42:42Z",
+      "side": 1,
+      "message": "how about ForceFirstDisplayInternal? i\u0027d also recommend updating the variables that save the return value to match.",
+      "revId": "c7e746112ee0794b90a4d45c8c1da2a8f338c23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
