@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d112bf4_01fb7d2b",
+        "filename": "chromeos/login/auth/extended_authenticator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-16T06:23:37Z",
+      "side": 1,
+      "message": "Check if the label is empty here too?",
+      "revId": "e2ca995f2f86b075c2af242ea785dd8ee54e5c19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
