@@ -22,6 +22,30 @@
       "revId": "9e39a220f434995c95e7e9abf55832852f9cdc06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa1dcce0_b1662608",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ToolbarProgressBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-16T23:28:59Z",
+      "side": 1,
+      "message": "This would be complicated since both animations can be running at once (maybe they shouldn\u0027t). I added a todo for now. I\u0027ll probably tackle this in the follow-up patch to test the throttle.",
+      "parentUuid": "939acc1e_96bc2e67",
+      "range": {
+        "startLine": 147,
+        "startChar": 35,
+        "endLine": 147,
+        "endChar": 40
+      },
+      "revId": "9e39a220f434995c95e7e9abf55832852f9cdc06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
