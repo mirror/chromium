@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cc6eb6c_c169981c",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-11-16T14:17:28Z",
+      "side": 1,
+      "message": "This seems a little surprising.  It means that whether or not \u0027OriginTrialContext::From(context)\u0027 creates a new context depends on whether \u0027context\u0027 is const or not.  I could see that leading to subtle bugs.\n\nI\u0027d suggest either swapping the default for the CreateMode (updating all existing callers) or using distinct method names (eg. FromOrCreate which always creates and From which never does).  WDYT?",
+      "range": {
+        "startLine": 51,
+        "startChar": 34,
+        "endLine": 51,
+        "endChar": 44
+      },
+      "revId": "aabe084f27883bc0327de37dbb268845cd4cedf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
