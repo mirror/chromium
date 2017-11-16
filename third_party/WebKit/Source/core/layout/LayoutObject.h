@@ -458,16 +458,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   void ShowTreeForThis() const;
   void ShowLayoutTreeForThis() const;
   void ShowLineTreeForThis() const;
-
   void ShowLayoutObject() const;
-  // We don't make stringBuilder an optional parameter so that
-  // showLayoutObject can be called from gdb easily.
-  void ShowLayoutObject(StringBuilder&) const;
-  void ShowLayoutTreeAndMark(const LayoutObject* marked_object1 = nullptr,
-                             const char* marked_label1 = nullptr,
-                             const LayoutObject* marked_object2 = nullptr,
-                             const char* marked_label2 = nullptr,
-                             unsigned depth = 0) const;
 #endif
 
   // This function is used to create the appropriate LayoutObject based

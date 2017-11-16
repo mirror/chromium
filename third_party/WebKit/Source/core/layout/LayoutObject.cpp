@@ -1333,6 +1333,29 @@ void LayoutObject::DirtyLinesFromChangedChild(LayoutObject*, MarkingBehavior) {}
 
 #ifndef NDEBUG
 
+static void AppendLayoutObjectToStringBuilder(const LayoutObject& object,
+                                              StringBuilder& string_builder) {
+  string_builder.Append(
+      String::Format("%s %p", object.DecoratedName().Ascii().data(), &object));
+
+  if (object.IsText() && ToLayoutText(object).IsTextFragment()) {
+    string_builder.Append(String::Format(
+        " \"%s\" ", ToLayoutText(object).GetText().Ascii().data()));
+  }
+
+  if (object.VirtualContinuation()) {
+    string_builder.Append(
+        String::Format(" continuation=%p", object.VirtualContinuation()));
+  }
+
+  if (object.GetNode()) {
+    while (string_builder.length() < kShowTreeCharacterOffset)
+      string_builder.Append(' ');
+    string_builder.Append('\t');
+    string_builder.Append(object.GetNode()->ToString());
+  }
+}
+
 void LayoutObject::ShowTreeForThis() const {
   if (GetNode())
     ::showTree(GetNode());
@@ -1352,51 +1375,34 @@ void LayoutObject::ShowLineTreeForThis() const {
 
 void LayoutObject::ShowLayoutObject() const {
   StringBuilder string_builder;
-  ShowLayoutObject(string_builder);
+  AppendLayoutObjectToStringBuilder(*this, string_builder);
+  LOG(INFO) << string_builder.ToString().Utf8().data();
 }
 
-void LayoutObject::ShowLayoutObject(StringBuilder& string_builder) const {
-  string_builder.Append(
-      String::Format("%s %p", DecoratedName().Ascii().data(), this));
-
-  if (IsText() && ToLayoutText(this)->IsTextFragment())
-    string_builder.Append(String::Format(
-        " \"%s\" ", ToLayoutText(this)->GetText().Ascii().data()));
-
-  if (VirtualContinuation())
-    string_builder.Append(
-        String::Format(" continuation=%p", VirtualContinuation()));
-
-  if (GetNode()) {
-    while (string_builder.length() < kShowTreeCharacterOffset)
-      string_builder.Append(' ');
-    string_builder.Append('\t');
-    WTFLogAlways("%s%s", string_builder.ToString().Utf8().data(),
-                 GetNode()->ToString().Utf8().data());
-  } else {
-    WTFLogAlways("%s", string_builder.ToString().Utf8().data());
-  }
-}
-
-void LayoutObject::ShowLayoutTreeAndMark(const LayoutObject* marked_object1,
-                                         const char* marked_label1,
-                                         const LayoutObject* marked_object2,
-                                         const char* marked_label2,
-                                         unsigned depth) const {
+static void ShowLayoutTreeAndMarkInternal(StringBuilder& tree_builder,
+                                          const LayoutObject* current,
+                                          const LayoutObject* marked_object1,
+                                          const char* marked_label1,
+                                          const LayoutObject* marked_object2,
+                                          const char* marked_label2,
+                                          unsigned depth) {
   StringBuilder string_builder;
-  if (marked_object1 == this && marked_label1)
+  if (marked_object1 == current && marked_label1)
     string_builder.Append(marked_label1);
-  if (marked_object2 == this && marked_label2)
+  if (marked_object2 == current && marked_label2)
     string_builder.Append(marked_label2);
   while (string_builder.length() < depth * 2)
     string_builder.Append(' ');
+  AppendLayoutObjectToStringBuilder(*current, string_builder);
+  tree_builder.Append(string_builder);
+  tree_builder.Append('\n');
 
-  ShowLayoutObject(string_builder);
-
-  for (const LayoutObject* child = SlowFirstChild(); child;
-       child = child->NextSibling())
-    child->ShowLayoutTreeAndMark(marked_object1, marked_label1, marked_object2,
-                                 marked_label2, depth + 1);
+  for (const LayoutObject* child = current->SlowFirstChild(); child;
+       child = child->NextSibling()) {
+    ShowLayoutTreeAndMarkInternal(tree_builder, child, marked_object1,
+                                  marked_label1, marked_object2, marked_label2,
+                                  depth + 1);
+  }
 }
 
 #endif  // NDEBUG
@@ -3732,14 +3738,14 @@ void showTree(const blink::LayoutObject* object) {
   if (object)
     object->ShowTreeForThis();
   else
-    WTFLogAlways("%s", "Cannot showTree. Root is (nil)");
+    LOG(INFO) << "Cannot showTree. Root is (nil)";
 }
 
 void showLineTree(const blink::LayoutObject* object) {
   if (object)
     object->ShowLineTreeForThis();
   else
-    WTFLogAlways("%s", "Cannot showLineTree. Root is (nil)");
+    LOG(INFO) << "Cannot showLineTree. Root is (nil)";
 }
 
 void showLayoutTree(const blink::LayoutObject* object1) {
@@ -3752,9 +3758,11 @@ void showLayoutTree(const blink::LayoutObject* object1,
     const blink::LayoutObject* root = object1;
     while (root->Parent())
       root = root->Parent();
-    root->ShowLayoutTreeAndMark(object1, "*", object2, "-", 0);
+    StringBuilder builder;
+    ShowLayoutTreeAndMarkInternal(builder, root, object1, "*", object2, "-", 0);
+    LOG(INFO) << "\n" << builder.ToString().Utf8().data();
   } else {
-    WTFLogAlways("%s", "Cannot showLayoutTree. Root is (nil)");
+    LOG(INFO) << "Cannot showLayoutTree. Root is (nil)";
   }
 }
 
