@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d698e441_29f5535d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/message-port.html",
+        "patchSetId": 20
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-16T22:38:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3796d032_2e4252fd",
+      "revId": "597304fb1fed3a907283b40e3cd41b403b85ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "447ce4a4_bf5efbd8",
         "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/message-port.html",
         "patchSetId": 20
@@ -33,6 +51,24 @@
       "revId": "597304fb1fed3a907283b40e3cd41b403b85ef62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b46821_10951c78",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/message-port.html",
+        "patchSetId": 20
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-16T22:38:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "447ce4a4_bf5efbd8",
+      "revId": "597304fb1fed3a907283b40e3cd41b403b85ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5c7129bd_893ff376",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-16T22:38:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21e46751_43228b84",
+      "revId": "597304fb1fed3a907283b40e3cd41b403b85ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa803972_c71658fd",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
         "patchSetId": 20
@@ -67,6 +121,24 @@
       "revId": "597304fb1fed3a907283b40e3cd41b403b85ef62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c892daca_7e6decec",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-16T22:38:59Z",
+      "side": 1,
+      "message": "ProcessorCreationParams is built by AWGS to help the construction of AudioWorkletProcessor. So it needs to be approachable for both classes.",
+      "parentUuid": "fa803972_c71658fd",
+      "revId": "597304fb1fed3a907283b40e3cd41b403b85ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "218731f4_436edb6f",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-16T22:38:59Z",
+      "side": 1,
+      "message": "We discussed this offline and decided to add more comments to clarify.",
+      "parentUuid": "7a0b2799_c3307b1d",
+      "revId": "597304fb1fed3a907283b40e3cd41b403b85ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03e5a914_1bc6baf3",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
         "patchSetId": 20
@@ -101,6 +191,24 @@
       "revId": "597304fb1fed3a907283b40e3cd41b403b85ef62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0731406_9eadb6e0",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-16T22:38:59Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "03e5a914_1bc6baf3",
+      "revId": "597304fb1fed3a907283b40e3cd41b403b85ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
