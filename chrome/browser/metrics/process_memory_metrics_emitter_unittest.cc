@@ -11,6 +11,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/metrics/renderer_uptime_tracker.h"
 #include "components/ukm/test_ukm_recorder.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -24,6 +25,8 @@ using ProcessInfoPtr = resource_coordinator::mojom::ProcessInfoPtr;
 using ProcessInfoVector = std::vector<ProcessInfoPtr>;
 
 namespace {
+
+using UkmEntry = ukm::builders::Memory_Experimental;
 
 // Provide fake to surface ReceivedMemoryDump and ReceivedProcessInfos to public
 // visibility.
@@ -322,10 +325,10 @@ class ProcessMemoryMetricsEmitterTest
     CHECK(entry != nullptr);
     EXPECT_EQ(expected.size(), entry->metrics.size());
     for (auto it = expected.begin(); it != expected.end(); ++it) {
-      const ukm::mojom::UkmMetric* actual =
-          test_ukm_recorder_.FindMetric(entry, it->first);
+      const int64_t* actual =
+          test_ukm_recorder_.GetEntryMetric(entry, it->first);
       CHECK(actual != nullptr) << "Metric '" << it->first << "' is missing.";
-      EXPECT_EQ(it->second, actual->value);
+      EXPECT_EQ(it->second, *actual);
     }
   }
 
@@ -445,24 +448,20 @@ TEST_F(ProcessMemoryMetricsEmitterTest, ReceiveProcessInfoFirst) {
   emitter->ReceivedProcessInfos(GetProcessInfo(test_ukm_recorder_));
   emitter->ReceivedMemoryDump(true, std::move(global_dump));
 
-  EXPECT_EQ(1,
-            test_ukm_recorder_.CountEntries(
-                *test_ukm_recorder_.GetSourceForUrl("http://www.url201.com/"),
-                "Memory.Experimental"));
+  auto entries = test_ukm_recorder_.GetEntriesByName(UkmEntry::kEntryName);
+  ASSERT_EQ(entries.size(), 2u);
+  int total_memory_entries = 0;
+  for (const auto* const entry : entries) {
+    if (test_ukm_recorder_.EntryHasMetric(
+            entry, UkmEntry::kTotal2_PrivateMemoryFootprintName)) {
+      total_memory_entries++;
+    } else {
+      test_ukm_recorder_.ExpectEntrySourceHasUrl(
+          entry, GURL("http://www.url201.com/"));
+    }
+  }
+  EXPECT_EQ(total_memory_entries, 1);
 
-  EXPECT_EQ(0,
-            test_ukm_recorder_.CountEntries(
-                *test_ukm_recorder_.GetSourceForUrl("http://www.url2021.com/"),
-                "Memory.Experimental"));
-
-  EXPECT_EQ(0,
-            test_ukm_recorder_.CountEntries(
-                *test_ukm_recorder_.GetSourceForUrl("http://www.url2022.com/"),
-                "Memory.Experimental"));
-
-  // The second entry is for total memory, which we don't care about in this
-  // test.
-  EXPECT_EQ(2u, test_ukm_recorder_.entries_count());
   CheckMemoryUkmEntryMetrics(0, expected_metrics);
 }
 
@@ -479,24 +478,19 @@ TEST_F(ProcessMemoryMetricsEmitterTest, ReceiveProcessInfoSecond) {
   emitter->ReceivedMemoryDump(true, std::move(global_dump));
   emitter->ReceivedProcessInfos(GetProcessInfo(test_ukm_recorder_));
 
-  EXPECT_EQ(1,
-            test_ukm_recorder_.CountEntries(
-                *test_ukm_recorder_.GetSourceForUrl("http://www.url201.com/"),
-                "Memory.Experimental"));
-
-  EXPECT_EQ(0,
-            test_ukm_recorder_.CountEntries(
-                *test_ukm_recorder_.GetSourceForUrl("http://www.url2021.com/"),
-                "Memory.Experimental"));
-
-  EXPECT_EQ(0,
-            test_ukm_recorder_.CountEntries(
-                *test_ukm_recorder_.GetSourceForUrl("http://www.url2022.com/"),
-                "Memory.Experimental"));
-
-  // The second entry is for total memory, which we don't care about in this
-  // test.
-  EXPECT_EQ(2u, test_ukm_recorder_.entries_count());
+  auto entries = test_ukm_recorder_.GetEntriesByName(UkmEntry::kEntryName);
+  ASSERT_EQ(entries.size(), 2u);
+  int total_memory_entries = 0;
+  for (const auto* const entry : entries) {
+    if (test_ukm_recorder_.EntryHasMetric(
+            entry, UkmEntry::kTotal2_PrivateMemoryFootprintName)) {
+      total_memory_entries++;
+    } else {
+      test_ukm_recorder_.ExpectEntrySourceHasUrl(
+          entry, GURL("http://www.url201.com/"));
+    }
+  }
+  EXPECT_EQ(total_memory_entries, 1);
   CheckMemoryUkmEntryMetrics(0, expected_metrics);
 }
 
@@ -515,18 +509,22 @@ TEST_F(ProcessMemoryMetricsEmitterTest, ProcessInfoHasTwoURLs) {
   emitter->ReceivedProcessInfos(GetProcessInfo(test_ukm_recorder_));
 
   // Check that if there are two URLs, neither is emitted.
-  EXPECT_EQ(1,
-            test_ukm_recorder_.CountEntries(
-                *test_ukm_recorder_.GetSourceForUrl("http://www.url201.com/"),
-                "Memory.Experimental"));
-
-  EXPECT_EQ(0,
-            test_ukm_recorder_.CountEntries(
-                *test_ukm_recorder_.GetSourceForUrl("http://www.url2021.com/"),
-                "Memory.Experimental"));
-
-  EXPECT_EQ(0,
-            test_ukm_recorder_.CountEntries(
-                *test_ukm_recorder_.GetSourceForUrl("http://www.url2022.com/"),
-                "Memory.Experimental"));
+  auto entries = test_ukm_recorder_.GetEntriesByName(UkmEntry::kEntryName);
+  int total_memory_entries = 0;
+  int entries_with_urls = 0;
+  for (const auto* const entry : entries) {
+    if (test_ukm_recorder_.EntryHasMetric(
+            entry, UkmEntry::kTotal2_PrivateMemoryFootprintName)) {
+      total_memory_entries++;
+    } else {
+      if (test_ukm_recorder_.GetSourceForSourceId(entry->source_id)) {
+        entries_with_urls++;
+        test_ukm_recorder_.ExpectEntrySourceHasUrl(
+            entry, GURL("http://www.url201.com/"));
+      }
+    }
+  }
+  EXPECT_EQ(entries.size(), 4u);
+  EXPECT_EQ(total_memory_entries, 1);
+  EXPECT_EQ(entries_with_urls, 1);
 }
