@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "934e3685_5e9d22cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-16T19:48:36Z",
+      "side": 1,
+      "message": "I like the idea of PartnerBookmarksThrottle, I\u0027ve made it PartnerBookmarksFaviconThrottle for clarity.",
+      "parentUuid": "f7d8ebb1_54f41f34",
+      "range": {
+        "startLine": 23,
+        "startChar": 29,
+        "endLine": 23,
+        "endChar": 34
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed2fe5e5_c84abd36",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "7d3a011b0358628572832b043380ee0275da2891",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf8f07f_a5b20d39",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-16T19:48:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed2fe5e5_c84abd36",
+      "range": {
+        "startLine": 57,
+        "startChar": 24,
+        "endLine": 57,
+        "endChar": 44
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1eff1b23_bb16b906",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-16T19:48:36Z",
+      "side": 1,
+      "message": "Yea, I didn\u0027t think this was the case, but it is. Done.",
+      "parentUuid": "fbe98a52_2dd42f94",
+      "range": {
+        "startLine": 70,
+        "startChar": 12,
+        "endLine": 71,
+        "endChar": 77
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45b3ae28_cbcfc83b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "7d3a011b0358628572832b043380ee0275da2891",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69553930_e9ff9f97",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-16T19:48:36Z",
+      "side": 1,
+      "message": "We can just ignore that entry, you\u0027re right. It should be a small number of entries that we eject from the cache early this way, but every little bit counts.",
+      "parentUuid": "45b3ae28_cbcfc83b",
+      "range": {
+        "startLine": 96,
+        "startChar": 73,
+        "endLine": 96,
+        "endChar": 84
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3a3a560d_8385f300",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCacheTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-16T19:48:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "101af8be_a032bc11",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 38
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3af7c22_5f064332",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCacheTest.java",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "7d3a011b0358628572832b043380ee0275da2891",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0494052_9e3ccc42",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCacheTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-16T19:48:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3af7c22_5f064332",
+      "range": {
+        "startLine": 51,
+        "startChar": 59,
+        "endLine": 51,
+        "endChar": 79
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f72b3c20_bcf15d4c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 57387,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-16T19:48:36Z",
+      "side": 1,
+      "message": "Oops, also changed the histogram name to differ from the enum and changed the description below.",
+      "parentUuid": "cdbec803_2fcd7444",
+      "range": {
+        "startLine": 57387,
+        "startChar": 59,
+        "endLine": 57387,
+        "endChar": 73
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f3ac4db_addac7f4",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "7d3a011b0358628572832b043380ee0275da2891",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd140327_8e775219",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 57391,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-16T19:48:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f3ac4db_addac7f4",
+      "range": {
+        "startLine": 57391,
+        "startChar": 26,
+        "endLine": 57391,
+        "endChar": 45
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "4f4e292f_9b23a5e8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 57413,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-16T19:48:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9db51eeb_024998f6",
+      "range": {
+        "startLine": 57413,
+        "startChar": 48,
+        "endLine": 57413,
+        "endChar": 50
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a285bff5_5a271910",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -229,6 +445,30 @@
       "revId": "7d3a011b0358628572832b043380ee0275da2891",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a14424b_3a4c01ab",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 57416,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-16T19:48:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a285bff5_5a271910",
+      "range": {
+        "startLine": 57416,
+        "startChar": 4,
+        "endLine": 57416,
+        "endChar": 69
+      },
+      "revId": "7d3a011b0358628572832b043380ee0275da2891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
