@@ -218,6 +218,7 @@ var kRTCIceCandidatePairStats = new RTCStats_(null, {
   readable: 'boolean',
   bytesSent: 'number',
   bytesReceived: 'number',
+  networkType: 'number',
   totalRoundTripTime: 'number',
   currentRoundTripTime: 'number',
   availableOutgoingBitrate: 'number',
