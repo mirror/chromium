@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afecbfd3_df7f4e82",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/bindings/bindings_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-16T12:13:14Z",
+      "side": 1,
+      "message": "nit: Maybe one line comment is useful.\ne.g. Ignore backup files of patch, or something like that.",
+      "revId": "750fa71e226ac2059ec030cbade4ca33f67e5029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
