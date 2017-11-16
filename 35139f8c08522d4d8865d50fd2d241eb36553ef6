@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "795e5954_68bfe093",
+        "filename": "ios/web/download/download_controller_impl.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-16T23:04:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f64e387_f7ca0f5b",
+      "revId": "35139f8c08522d4d8865d50fd2d241eb36553ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c64375_cf45f685",
         "filename": "ios/web/public/download/download_controller.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "35139f8c08522d4d8865d50fd2d241eb36553ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3142785_d36dd3da",
+        "filename": "ios/web/public/download/download_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-16T23:04:16Z",
+      "side": 1,
+      "message": "Good catch. Fixed here: https://chromium-review.googlesource.com/#/c/chromium/src/+/769676",
+      "parentUuid": "a7c64375_cf45f685",
+      "revId": "35139f8c08522d4d8865d50fd2d241eb36553ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6712ab17_5b3ba63d",
+        "filename": "ios/web/public/download/download_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-16T23:04:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c028f0e1_3375722e",
+      "range": {
+        "startLine": 99,
+        "startChar": 5,
+        "endLine": 99,
+        "endChar": 69
+      },
+      "revId": "35139f8c08522d4d8865d50fd2d241eb36553ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0facef00_af09b35c",
         "filename": "ios/web/public/test/fakes/fake_download_controller_delegate.mm",
         "patchSetId": 5
@@ -73,6 +133,24 @@
       "revId": "35139f8c08522d4d8865d50fd2d241eb36553ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0321ce6a_656ffb34",
+        "filename": "ios/web/public/test/fakes/fake_download_controller_delegate.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-16T23:04:16Z",
+      "side": 1,
+      "message": "D\u0027oh! I can actually remove this whole method now. I needed this method to test DownloadControllerbserver::OnDownloadDestroyed, and we don\u0027t have OnDownloadDestroyed() anymore.",
+      "parentUuid": "0facef00_af09b35c",
+      "revId": "35139f8c08522d4d8865d50fd2d241eb36553ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
