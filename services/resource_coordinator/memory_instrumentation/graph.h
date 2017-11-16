@@ -136,6 +136,9 @@ class GlobalDumpGraph {
     const GlobalDumpGraph::Process* dump_graph() const { return dump_graph_; }
     std::map<std::string, Entry>* entries() { return &entries_; }
 
+    uint64_t not_owning_sub_size = 0;
+    uint64_t not_owned_sub_size = 0;
+
    private:
     GlobalDumpGraph::Process* dump_graph_;
     Node* const parent_;
