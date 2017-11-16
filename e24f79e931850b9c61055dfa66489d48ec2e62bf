@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aee7093d_cc0ff9ba",
+        "filename": "gin/isolate_holder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-16T05:51:29Z",
+      "side": 1,
+      "message": "the task runner passed from V8PerIsolateData can be null and we cannot use ThreadTaskRunnerHandle in that file.\nhttps://chromium.googlesource.com/chromium/src/+/6f07ce6c4c237245bb0392c632c7847b29000ee6/third_party/WebKit/Source/platform/bindings/V8PerIsolateData.cpp#67",
+      "parentUuid": "6e13dc63_3ff5548c",
+      "revId": "e24f79e931850b9c61055dfa66489d48ec2e62bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35d46843_1c8245e3",
         "filename": "gin/isolate_holder.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-06T01:54:24Z",
       "side": 1,
       "message": "For this one, the call site is V8PerIsolateData\u0027s constructor. You can pass in task_runner-\u003eToSingleThreadTaskRunner() from V8PerIsolateData\u0027s constructor.",
+      "revId": "e24f79e931850b9c61055dfa66489d48ec2e62bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67478961_2fdf2864",
+        "filename": "gin/isolate_holder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-16T05:51:29Z",
+      "side": 1,
+      "message": "there is no task runner in this constructor https://chromium.googlesource.com/chromium/src/+/6f07ce6c4c237245bb0392c632c7847b29000ee6/third_party/WebKit/Source/platform/bindings/V8PerIsolateData.cpp#101",
+      "parentUuid": "35d46843_1c8245e3",
       "revId": "e24f79e931850b9c61055dfa66489d48ec2e62bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
