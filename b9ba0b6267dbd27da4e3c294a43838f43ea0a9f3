@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23cc07b1_0d9f0d74",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-16T00:59:55Z",
+      "side": 0,
+      "message": "I  removed this because this is used only in unit tests and can be replaced by SetParent. Let me know if you prefer to keep it.",
+      "revId": "b9ba0b6267dbd27da4e3c294a43838f43ea0a9f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

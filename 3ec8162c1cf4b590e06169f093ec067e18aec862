@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d79eb5b_ce7f69c9",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-16T00:59:55Z",
+      "side": 1,
+      "message": "This is removed in the latest patch.",
+      "revId": "3ec8162c1cf4b590e06169f093ec067e18aec862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
