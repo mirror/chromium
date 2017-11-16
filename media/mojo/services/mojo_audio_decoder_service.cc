@@ -11,6 +11,7 @@
 #include "media/base/content_decryption_module.h"
 #include "media/mojo/common/media_type_converters.h"
 #include "media/mojo/common/mojo_decoder_buffer_converter.h"
+#include "media/mojo/services/cdm_helper.h"
 #include "media/mojo/services/mojo_cdm_service_context.h"
 
 namespace media {
@@ -38,34 +39,17 @@ void MojoAudioDecoderService::Initialize(const AudioDecoderConfig& config,
   DVLOG(1) << __func__ << " " << config.AsHumanReadableString();
 
   // Get CdmContext from cdm_id if the stream is encrypted.
-  CdmContext* cdm_context = nullptr;
-  scoped_refptr<ContentDecryptionModule> cdm;
-  if (config.is_encrypted()) {
-    if (!mojo_cdm_service_context_) {
-      DVLOG(1) << "CDM service context not available.";
-      std::move(callback).Run(false, false);
-      return;
-    }
-
-    cdm = mojo_cdm_service_context_->GetCdm(cdm_id);
-    if (!cdm) {
-      DVLOG(1) << "CDM not found for CDM id: " << cdm_id;
-      std::move(callback).Run(false, false);
-      return;
-    }
-
-    cdm_context = cdm->GetCdmContext();
-    if (!cdm_context) {
-      DVLOG(1) << "CDM context not available for CDM id: " << cdm_id;
-      std::move(callback).Run(false, false);
-      return;
-    }
+  CdmHelper cdm_helper;
+  if (config.is_encrypted() &&
+      !cdm_helper.Configure(mojo_cdm_service_context_.get(), cdm_id)) {
+    std::move(callback).Run(false, false);
+    return;
   }
 
   decoder_->Initialize(
-      config, cdm_context,
+      config, cdm_helper.cdm_context,
       base::Bind(&MojoAudioDecoderService::OnInitialized, weak_this_,
-                 base::Passed(&callback), cdm),
+                 base::Passed(&callback), std::move(cdm_helper.cdm)),
       base::Bind(&MojoAudioDecoderService::OnAudioBufferReady, weak_this_));
 }
 
