@@ -143,6 +143,12 @@ bool IndividualSettings::Parse(const base::DictionaryValue* dict,
                               "' for attribute " + key;
           return false;
         }
+        // When a scheme of '*' is parsed, the valid_schemes get set to HTTP and
+        // HTTPS which for this use case is not correct. An admin needs to be
+        // able to protect all schemes which are valid for an extension
+        // (e.g. Websocket, file, ftp, ...)
+        if (pattern.scheme() == "*")
+          pattern.SetValidSchemes(extension_scheme_mask);
         out_value->AddPattern(pattern);
       }
     }

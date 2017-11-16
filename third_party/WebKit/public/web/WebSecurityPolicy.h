@@ -67,12 +67,33 @@ class WebSecurityPolicy {
       const WebString& destination_protocol,
       const WebString& destination_host,
       bool allow_destination_subdomains);
+
+  // Support for whitelisting access to origins beyond the same-origin policy.
   BLINK_EXPORT static void RemoveOriginAccessWhitelistEntry(
       const WebURL& source_origin,
       const WebString& destination_protocol,
       const WebString& destination_host,
       bool allow_destination_subdomains);
+
+  // Place limitations on whitelisting access to origins beyond the same-origin
+  // policy.
+  BLINK_EXPORT static void RemoveOriginAccessWhitelistExceptionEntry(
+      const WebURL& source_origin,
+      const WebString& destination_protocol,
+      const WebString& destination_host,
+      bool allow_destination_subdomains,
+      bool blacklist,
+      bool match_any_etld);
+
   BLINK_EXPORT static void ResetOriginAccessWhitelists();
+
+  BLINK_EXPORT static void AddOriginAccessWhitelistExceptionEntry(
+      const WebURL& source_origin,
+      const WebString& destination_protocol,
+      const WebString& destination_host,
+      bool allow_destination_subdomains,
+      bool blacklist,
+      bool match_any_etld);
 
   // Support for whitelisting origins to treat them as trustworthy.
   BLINK_EXPORT static void AddOriginTrustworthyWhiteList(

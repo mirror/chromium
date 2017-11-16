@@ -48,9 +48,22 @@ using OriginAccessWhiteList = Vector<OriginAccessEntry>;
 using OriginAccessMap = HashMap<String, std::unique_ptr<OriginAccessWhiteList>>;
 using OriginSet = HashSet<String>;
 
+struct OriginWhitelistExceptionStruct {
+  Vector<OriginAccessEntry> whitelist_;
+  Vector<OriginAccessEntry> blacklist_;
+};
+using OriginWhitelistException = OriginWhitelistExceptionStruct;
+using OriginWhitelistExceptionMap =
+    HashMap<String, std::unique_ptr<OriginWhitelistException>>;
+
 static OriginAccessMap& GetOriginAccessMap() {
   DEFINE_STATIC_LOCAL(OriginAccessMap, origin_access_map, ());
   return origin_access_map;
+}
+
+static OriginWhitelistExceptionMap& GetOriginExceptionsMap() {
+  DEFINE_STATIC_LOCAL(OriginWhitelistExceptionMap, origin_exception_map, ());
+  return origin_exception_map;
 }
 
 static OriginSet& TrustworthyOriginSet() {
@@ -193,6 +206,45 @@ bool SecurityPolicy::IsUrlWhiteListedTrustworthy(const KURL& url) {
   return IsOriginWhiteListedTrustworthy(*SecurityOrigin::Create(url).get());
 }
 
+bool SecurityPolicy::IsExceptionToWhitelist(
+    const SecurityOrigin* active_origin,
+    const SecurityOrigin* target_origin) {
+  const OriginWhitelistExceptionMap& map = GetOriginExceptionsMap();
+
+  // No blacklist or whitelist for any active_origin
+  if (map.IsEmpty())
+    return true;
+
+  OriginWhitelistException* list = map.at(active_origin->ToString());
+  // No exceptions for this active_origin
+  if (!(list))
+    return true;
+  const Vector<blink::OriginAccessEntry>& blacklist = list->blacklist_;
+  // Blacklist is empty so no exceptions for this active_origin
+  if (blacklist.IsEmpty())
+    return true;
+  for (size_t i = 0; i < blacklist.size(); ++i) {
+    if (blacklist.at(i).MatchesOrigin(*target_origin) !=
+        OriginAccessEntry::kDoesNotMatchOrigin) {
+      // On the blacklist but no whitelist for this active_origin
+      const Vector<blink::OriginAccessEntry>& whitelist = list->whitelist_;
+      if (whitelist.IsEmpty())
+        return false;
+
+      for (size_t j = 0; j < whitelist.size(); ++j) {
+        if (whitelist.at(i).MatchesOrigin(*target_origin) !=
+            OriginAccessEntry::kDoesNotMatchOrigin) {
+          // On the blacklist but also on the whitelist
+          return true;
+        }
+      }
+      // Matched blacklist but no matching whitelist
+      return false;
+    }
+  }
+  return true;
+}
+
 bool SecurityPolicy::IsAccessWhiteListed(const SecurityOrigin* active_origin,
                                          const SecurityOrigin* target_origin) {
   const OriginAccessMap& map = GetOriginAccessMap();
@@ -201,8 +253,9 @@ bool SecurityPolicy::IsAccessWhiteListed(const SecurityOrigin* active_origin,
   if (OriginAccessWhiteList* list = map.at(active_origin->ToString())) {
     for (size_t i = 0; i < list->size(); ++i) {
       if (list->at(i).MatchesOrigin(*target_origin) !=
-          OriginAccessEntry::kDoesNotMatchOrigin)
-        return true;
+          OriginAccessEntry::kDoesNotMatchOrigin) {
+        return IsExceptionToWhitelist(active_origin, target_origin);
+      }
     }
   }
   return false;
@@ -235,7 +288,82 @@ void SecurityPolicy::AddOriginAccessWhitelistEntry(
   list->push_back(OriginAccessEntry(
       destination_protocol, destination_domain,
       allow_destination_subdomains ? OriginAccessEntry::kAllowSubdomains
-                                   : OriginAccessEntry::kDisallowSubdomains));
+                                   : OriginAccessEntry::kDisallowSubdomains,
+      false));
+}
+
+void SecurityPolicy::AddOriginAccessWhitelistExceptionEntry(
+    const SecurityOrigin& source_origin,
+    const String& destination_protocol,
+    const String& destination_domain,
+    bool allow_destination_subdomains,
+    bool blacklist,
+    bool match_any_etld) {
+  DCHECK(IsMainThread());
+  DCHECK(!source_origin.IsUnique());
+  if (source_origin.IsUnique())
+    return;
+
+  String source_string = source_origin.ToString();
+  OriginWhitelistExceptionMap::AddResult result =
+      GetOriginExceptionsMap().insert(source_string, nullptr);
+  if (result.is_new_entry)
+    result.stored_value->value = WTF::WrapUnique(new OriginWhitelistException);
+
+  OriginWhitelistException* list = result.stored_value->value.get();
+  if (blacklist) {
+    list->blacklist_.push_back(OriginAccessEntry(
+        destination_protocol, destination_domain,
+        allow_destination_subdomains ? OriginAccessEntry::kAllowSubdomains
+                                     : OriginAccessEntry::kDisallowSubdomains,
+        match_any_etld));
+  } else {
+    list->whitelist_.push_back(OriginAccessEntry(
+        destination_protocol, destination_domain,
+        allow_destination_subdomains ? OriginAccessEntry::kAllowSubdomains
+                                     : OriginAccessEntry::kDisallowSubdomains,
+        match_any_etld));
+  }
+}
+
+void SecurityPolicy::RemoveOriginAccessWhitelistExceptionEntry(
+    const SecurityOrigin& source_origin,
+    const String& destination_protocol,
+    const String& destination_domain,
+    bool allow_destination_subdomains,
+    bool blacklist,
+    bool match_any_etld) {
+  DCHECK(IsMainThread());
+  DCHECK(!source_origin.IsUnique());
+  if (source_origin.IsUnique())
+    return;
+
+  String source_string = source_origin.ToString();
+  OriginWhitelistExceptionMap& map = GetOriginExceptionsMap();
+  OriginWhitelistExceptionMap::iterator it = map.find(source_string);
+  if (it == map.end())
+    return;
+
+  OriginWhitelistException* lists = it->value.get();
+  OriginAccessWhiteList* list;
+  if (blacklist)
+    list = &(lists->blacklist_);
+  else
+    list = &(lists->whitelist_);
+
+  size_t index = list->Find(OriginAccessEntry(
+      destination_protocol, destination_domain,
+      allow_destination_subdomains ? OriginAccessEntry::kAllowSubdomains
+                                   : OriginAccessEntry::kDisallowSubdomains,
+      match_any_etld));
+
+  if (index == kNotFound)
+    return;
+
+  list->EraseAt(index);
+
+  if (list->IsEmpty())
+    map.erase(it);
 }
 
 void SecurityPolicy::RemoveOriginAccessWhitelistEntry(
@@ -258,7 +386,8 @@ void SecurityPolicy::RemoveOriginAccessWhitelistEntry(
   size_t index = list->Find(OriginAccessEntry(
       destination_protocol, destination_domain,
       allow_destination_subdomains ? OriginAccessEntry::kAllowSubdomains
-                                   : OriginAccessEntry::kDisallowSubdomains));
+                                   : OriginAccessEntry::kDisallowSubdomains,
+      false));
 
   if (index == kNotFound)
     return;
