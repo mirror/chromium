@@ -16,6 +16,24 @@
       "revId": "4e0cac9714826afc50e7496b0bc0935aeefcc7f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac65e3d_6fa323ea",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-16T22:47:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05059448_9c1dc89b",
+      "revId": "4e0cac9714826afc50e7496b0bc0935aeefcc7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
