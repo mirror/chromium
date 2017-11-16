@@ -22,6 +22,29 @@
       "revId": "02cc329763946566b30fa2c1baf862f705c7e4be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "759e769d_bcb2ba67",
+        "filename": "third_party/gvr-android-keyboard/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-16T21:19:08Z",
+      "side": 1,
+      "message": "super minor nit: I believe that we use alpha order in OWNERS files",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "02cc329763946566b30fa2c1baf862f705c7e4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
