@@ -419,6 +419,46 @@ void SetHSTSForHostName(
   EXPECT_TRUE(state->ShouldUpgradeToSSL(kHstsTestHostName));
 }
 
+bool AreCommittedInterstitialsEnabled() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kCommittedInterstitials);
+}
+
+// A getter for the tab's InterstitialPageDelegate that is agnostic about
+// whether we are using committed navigations. Returns null if there is no
+// delegate.
+content::InterstitialPageDelegate* GetInterstitialPageDelegate(
+    content::WebContents* tab) {
+  if (AreCommittedInterstitialsEnabled()) {
+    SSLErrorTabHelper* helper = SSLErrorTabHelper::FromWebContents(tab);
+    if (!helper) {
+      return nullptr;
+    }
+    return helper->GetBlockingPageForCurrentlyCommittedNavigationForTesting();
+  }
+
+  InterstitialPage* interstitial_page = tab->GetInterstitialPage();
+  if (!interstitial_page)
+    return nullptr;
+  return interstitial_page->GetDelegateForTesting();
+}
+
+bool IsShowingInterstitial(content::WebContents* tab) {
+  return GetInterstitialPageDelegate(tab) != nullptr;
+}
+
+// Waits until an interstitial is showing.
+//
+// TODO(crbug.com/752372): This should not be needed for committed
+// interstitials. Replace all call sites directly with the assert.
+void WaitForInterstitial(content::WebContents* tab) {
+  if (!IsShowingInterstitial(tab)) {
+    ASSERT_TRUE(!AreCommittedInterstitialsEnabled());
+    content::WaitForInterstitialAttach(tab);
+  }
+  ASSERT_TRUE(IsShowingInterstitial(tab));
+}
+
 }  // namespace
 
 class SSLUITest : public InProcessBrowserTest {
@@ -816,21 +856,13 @@ class SSLUITestTransientAndCommitted
   // SSLUITest:
   void SendInterstitialCommand(WebContents* tab, const std::string& command) {
     // TODO(crbug.com/785077): Execute script inside the interstitial.
-    GetDelegate(tab)->CommandReceived(command);
+    GetInterstitialPageDelegate(tab)->CommandReceived(command);
   }
 
   bool IsCommittedInterstitialTest() const { return GetParam(); }
 
-  content::InterstitialPageDelegate* GetDelegate(WebContents* tab) {
-    if (!IsCommittedInterstitialTest()) {
-      return tab->GetInterstitialPage()->GetDelegateForTesting();
-    }
-    return SSLErrorTabHelper::FromWebContents(tab)
-        ->GetBlockingPageForCurrentlyCommittedNavigationForTesting();
-  }
-
   SSLBlockingPage* GetBlockingPage(WebContents* tab) {
-    return static_cast<SSLBlockingPage*>(GetDelegate(tab));
+    return static_cast<SSLBlockingPage*>(GetInterstitialPageDelegate(tab));
   }
 };
 
@@ -1164,8 +1196,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestBrokenHTTPSMetricsReporting_Proceed) {
   // After navigating to the page, the totals should be set.
   ui_test_utils::NavigateToURL(browser(),
                                https_server_expired_.GetURL("/title1.html"));
-  content::WaitForInterstitialAttach(
-      browser()->tab_strip_model()->GetActiveWebContents());
+  WaitForInterstitial(browser()->tab_strip_model()->GetActiveWebContents());
   histograms.ExpectTotalCount(decision_histogram, 1);
   histograms.ExpectBucketCount(decision_histogram,
                                security_interstitials::MetricsHelper::SHOW, 1);
@@ -1201,8 +1232,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestBrokenHTTPSMetricsReporting_DontProceed) {
   // After navigating to the page, the totals should be set.
   ui_test_utils::NavigateToURL(browser(),
                                https_server_expired_.GetURL("/title1.html"));
-  content::WaitForInterstitialAttach(
-      browser()->tab_strip_model()->GetActiveWebContents());
+  WaitForInterstitial(browser()->tab_strip_model()->GetActiveWebContents());
   histograms.ExpectTotalCount(decision_histogram, 1);
   histograms.ExpectBucketCount(decision_histogram,
                                security_interstitials::MetricsHelper::SHOW, 1);
@@ -1244,8 +1274,7 @@ IN_PROC_BROWSER_TEST_P(SSLUITestTransientAndCommitted,
       browser(), https_server_expired_.GetURL("/ssl/google.html"));
 
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
-  if (!IsCommittedInterstitialTest())
-    WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
   CheckAuthenticationBrokenState(tab, net::CERT_STATUS_DATE_INVALID,
                                  AuthState::SHOWING_INTERSTITIAL);
 
@@ -1278,7 +1307,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialCrossSiteNavigation) {
   ASSERT_EQ("localhost", cross_site_url.host());
   ui_test_utils::NavigateToURL(browser(), cross_site_url);
   // An interstitial should be showing.
-  WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
   CheckAuthenticationBrokenState(tab, net::CERT_STATUS_COMMON_NAME_INVALID,
                                  AuthState::SHOWING_INTERSTITIAL);
 
@@ -1342,7 +1371,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSErrorCausedByClockUsingBuildTime) {
   ui_test_utils::NavigateToURL(browser(),
                                https_server_expired_.GetURL("/title1.html"));
   WebContents* clock_tab = browser()->tab_strip_model()->GetActiveWebContents();
-  content::WaitForInterstitialAttach(clock_tab);
+  WaitForInterstitial(clock_tab);
   InterstitialPage* clock_interstitial = clock_tab->GetInterstitialPage();
   ASSERT_TRUE(clock_interstitial);
   EXPECT_EQ(BadClockBlockingPage::kTypeForTesting,
@@ -1366,7 +1395,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSErrorCausedByClockUsingNetwork) {
   ui_test_utils::NavigateToURL(browser(),
                                https_server_expired_.GetURL("/title1.html"));
   WebContents* clock_tab = browser()->tab_strip_model()->GetActiveWebContents();
-  content::WaitForInterstitialAttach(clock_tab);
+  WaitForInterstitial(clock_tab);
   InterstitialPage* clock_interstitial = clock_tab->GetInterstitialPage();
   ASSERT_TRUE(clock_interstitial);
   EXPECT_EQ(BadClockBlockingPage::kTypeForTesting,
@@ -1856,7 +1885,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSErrorWithNoNavEntry) {
   EXPECT_FALSE(chrome::CanGoBack(browser()));
 
   // We should have an interstitial page showing.
-  WaitForInterstitialAttach(tab2);
+  WaitForInterstitial(tab2);
   ASSERT_TRUE(tab2->GetInterstitialPage());
   ASSERT_EQ(SSLBlockingPage::kTypeForTesting, tab2->GetInterstitialPage()
                                                   ->GetDelegateForTesting()
@@ -2438,7 +2467,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestCloseTabWithUnsafePopup) {
   nav_observer.Wait();
   // Since the popup is showing an interstitial, it shouldn't have a last
   // committed entry.
-  content::WaitForInterstitialAttach(popup);
+  WaitForInterstitial(popup);
   EXPECT_FALSE(popup->GetController().GetLastCommittedEntry());
   ASSERT_TRUE(popup->GetController().GetVisibleEntry());
   EXPECT_EQ(https_server_expired_.GetURL("/ssl/bad_iframe.html"),
@@ -2488,7 +2517,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestRedirectGoodToBadHTTPS) {
   GURL url2 = https_server_expired_.GetURL("/ssl/google.html");
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   ui_test_utils::NavigateToURL(browser(), GURL(url1.spec() + url2.spec()));
-  content::WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
 
   CheckAuthenticationBrokenState(tab, net::CERT_STATUS_DATE_INVALID,
                                  AuthState::SHOWING_INTERSTITIAL);
@@ -2527,7 +2556,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestRedirectHTTPToBadHTTPS) {
   const GURL bad_https_url = https_server_expired_.GetURL("/ssl/google.html");
   ui_test_utils::NavigateToURL(browser(),
                                GURL(http_url.spec() + bad_https_url.spec()));
-  WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
   CheckAuthenticationBrokenState(tab, net::CERT_STATUS_DATE_INVALID,
                                  AuthState::SHOWING_INTERSTITIAL);
 
@@ -3633,7 +3662,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, ProceedLinkOverridable) {
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   ui_test_utils::NavigateToURL(
       browser(), https_server_expired_.GetURL("/ssl/google.html"));
-  content::WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
   CheckAuthenticationBrokenState(tab, net::CERT_STATUS_DATE_INVALID,
                                  AuthState::SHOWING_INTERSTITIAL);
 
@@ -3680,7 +3709,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITestHSTS, TestInterstitialOptionsNonOverridable) {
                  .ReplaceComponents(replacements);
 
   ui_test_utils::NavigateToURL(browser(), url);
-  content::WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
   // Since we are connecting to a different domain than the test server default,
   // we also expect CERT_STATUS_COMMON_NAME_INVALID.
   CheckAuthenticationBrokenState(
@@ -3717,8 +3746,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialLinksOpenInNewTab) {
       browser()->tab_strip_model()->GetActiveWebContents();
   ui_test_utils::NavigateToURL(
       browser(), https_server_expired_.GetURL("/ssl/google.html"));
-  content::WaitForInterstitialAttach(
-      browser()->tab_strip_model()->GetActiveWebContents());
+  WaitForInterstitial(browser()->tab_strip_model()->GetActiveWebContents());
   InterstitialPage* interstitial_page = interstitial_tab->GetInterstitialPage();
   ASSERT_TRUE(
       content::WaitForRenderFrameReady(interstitial_page->GetMainFrame()));
@@ -3838,7 +3866,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest,
 
   ui_test_utils::NavigateToURL(
       browser(), https_server_expired_.GetURL("/ssl/google.html"));
-  content::WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
   EXPECT_TRUE(tab->ShowingInterstitialPage());
 
   content::NavigationEntry* entry = tab->GetController().GetActiveEntry();
@@ -3873,7 +3901,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest,
 
   ui_test_utils::NavigateToURL(browser(),
                                https_server_expired_.GetURL("/title1.html"));
-  content::WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
   InterstitialPage* clock_interstitial = tab->GetInterstitialPage();
   ASSERT_TRUE(clock_interstitial);
   EXPECT_EQ(BadClockBlockingPage::kTypeForTesting,
@@ -3889,7 +3917,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest,
   mock_clock.SetNow(base::Time::NowFromSystemTime());
   ui_test_utils::NavigateToURL(browser(),
                                https_server_expired_.GetURL("/title1.html"));
-  content::WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
   InterstitialPage* ssl_interstitial = tab->GetInterstitialPage();
   ASSERT_TRUE(ssl_interstitial);
   EXPECT_EQ(SSLBlockingPage::kTypeForTesting,
@@ -4175,7 +4203,7 @@ IN_PROC_BROWSER_TEST_F(SSLNetworkTimeBrowserTest, OnDemandFetchClockOk) {
 
   EXPECT_TRUE(contents->IsLoading());
   observer.Wait();
-  content::WaitForInterstitialAttach(contents);
+  WaitForInterstitial(contents);
 
   EXPECT_TRUE(contents->ShowingInterstitialPage());
   InterstitialPage* interstitial_page = contents->GetInterstitialPage();
@@ -4228,7 +4256,7 @@ IN_PROC_BROWSER_TEST_F(SSLNetworkTimeBrowserTest, OnDemandFetchClockWrong) {
 
   EXPECT_TRUE(contents->IsLoading());
   observer.Wait();
-  content::WaitForInterstitialAttach(contents);
+  WaitForInterstitial(contents);
 
   EXPECT_TRUE(contents->ShowingInterstitialPage());
   InterstitialPage* interstitial_page = contents->GetInterstitialPage();
@@ -4248,7 +4276,7 @@ IN_PROC_BROWSER_TEST_F(SSLNetworkTimeBrowserTest,
   ui_test_utils::NavigateToURL(browser(), https_server_expired_.GetURL("/"));
   WebContents* contents = browser()->tab_strip_model()->GetActiveWebContents();
   ASSERT_TRUE(contents);
-  content::WaitForInterstitialAttach(contents);
+  WaitForInterstitial(contents);
 
   EXPECT_TRUE(contents->ShowingInterstitialPage());
   InterstitialPage* interstitial_page = contents->GetInterstitialPage();
@@ -4384,7 +4412,7 @@ IN_PROC_BROWSER_TEST_F(SSLNetworkTimeBrowserTest,
   ui_test_utils::NavigateToURL(browser(), https_server_expired_.GetURL("/"));
   WebContents* contents = browser()->tab_strip_model()->GetActiveWebContents();
   ASSERT_TRUE(contents);
-  content::WaitForInterstitialAttach(contents);
+  WaitForInterstitial(contents);
 
   EXPECT_TRUE(contents->ShowingInterstitialPage());
   InterstitialPage* interstitial_page = contents->GetInterstitialPage();
@@ -4654,7 +4682,7 @@ IN_PROC_BROWSER_TEST_F(CommonNameMismatchBrowserTest,
   // (https://www.example.org) redirected to http://example.org.
   WebContents* contents = browser()->tab_strip_model()->GetActiveWebContents();
   ui_test_utils::NavigateToURL(browser(), https_server_mismatched_url);
-  WaitForInterstitialAttach(contents);
+  WaitForInterstitial(contents);
 
   CheckSecurityState(contents, net::CERT_STATUS_COMMON_NAME_INVALID,
                      security_state::DANGEROUS,
@@ -4915,9 +4943,9 @@ IN_PROC_BROWSER_TEST_P(SSLUITestTransientAndCommitted, RestoreHasSSLState) {
 
   WebContents::CreateParams params(tab->GetBrowserContext());
   WebContents* tab2 = WebContents::Create(params);
-  tab->GetDelegate()->AddNewContents(nullptr, tab2,
-                                     WindowOpenDisposition::NEW_FOREGROUND_TAB,
-                                     gfx::Rect(), false, nullptr);
+  tab->GetInterstitialPageDelegate()->AddNewContents(
+      nullptr, tab2, WindowOpenDisposition::NEW_FOREGROUND_TAB, gfx::Rect(),
+      false, nullptr);
   std::vector<std::unique_ptr<NavigationEntry>> entries;
   entries.push_back(std::move(restored_entry));
   content::TestNavigationObserver observer(tab2);
@@ -5207,7 +5235,7 @@ IN_PROC_BROWSER_TEST_F(SSLUICaptivePortalListTest, Disabled) {
   SSLInterstitialTimerObserver interstitial_timer_observer(tab);
   ui_test_utils::NavigateToURL(
       browser(), https_server_mismatched_.GetURL("/ssl/blank_page.html"));
-  content::WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
 
   InterstitialPage* interstitial_page = tab->GetInterstitialPage();
   ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
@@ -5248,7 +5276,7 @@ IN_PROC_BROWSER_TEST_F(SSLUICaptivePortalListTest, Enabled_FromProto) {
   SSLInterstitialTimerObserver interstitial_timer_observer(tab);
   ui_test_utils::NavigateToURL(
       browser(), https_server_mismatched_.GetURL("/ssl/blank_page.html"));
-  content::WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
 
   InterstitialPage* interstitial_page = tab->GetInterstitialPage();
   ASSERT_EQ(CaptivePortalBlockingPage::kTypeForTesting,
@@ -5279,7 +5307,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, OSReportsCaptivePortal) {
   SSLInterstitialTimerObserver interstitial_timer_observer(tab);
   ui_test_utils::NavigateToURL(
       browser(), https_server_mismatched_.GetURL("/ssl/blank_page.html"));
-  content::WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
 
   InterstitialPage* interstitial_page = tab->GetInterstitialPage();
   ASSERT_EQ(CaptivePortalBlockingPage::kTypeForTesting,
@@ -5315,7 +5343,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, OSReportsCaptivePortal_FeatureDisabled) {
   SSLInterstitialTimerObserver interstitial_timer_observer(tab);
   ui_test_utils::NavigateToURL(
       browser(), https_server_mismatched_.GetURL("/ssl/blank_page.html"));
-  content::WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
 
   InterstitialPage* interstitial_page = tab->GetInterstitialPage();
   ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
@@ -5403,7 +5431,7 @@ class SSLUICaptivePortalListResourceBundleTest
     WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
     SSLInterstitialTimerObserver interstitial_timer_observer(tab);
     ui_test_utils::NavigateToURL(browser(), https_server()->GetURL("/"));
-    content::WaitForInterstitialAttach(tab);
+    WaitForInterstitial(tab);
 
     InterstitialPage* interstitial_page = tab->GetInterstitialPage();
     ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
@@ -5465,7 +5493,7 @@ IN_PROC_BROWSER_TEST_F(SSLUICaptivePortalListResourceBundleTest, Enabled) {
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   SSLInterstitialTimerObserver interstitial_timer_observer(tab);
   ui_test_utils::NavigateToURL(browser(), https_server()->GetURL("/"));
-  content::WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
 
   InterstitialPage* interstitial_page = tab->GetInterstitialPage();
   ASSERT_EQ(CaptivePortalBlockingPage::kTypeForTesting,
@@ -5515,7 +5543,7 @@ IN_PROC_BROWSER_TEST_F(SSLUICaptivePortalListResourceBundleTest,
     base::HistogramTester histograms;
     SSLInterstitialTimerObserver interstitial_timer_observer(tab);
     ui_test_utils::NavigateToURL(browser(), https_server()->GetURL("/"));
-    content::WaitForInterstitialAttach(tab);
+    WaitForInterstitial(tab);
 
     InterstitialPage* interstitial_page = tab->GetInterstitialPage();
     ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
@@ -5547,7 +5575,7 @@ IN_PROC_BROWSER_TEST_F(SSLUICaptivePortalListResourceBundleTest,
     base::HistogramTester histograms;
     SSLInterstitialTimerObserver interstitial_timer_observer(tab);
     ui_test_utils::NavigateToURL(browser(), https_server()->GetURL("/"));
-    content::WaitForInterstitialAttach(tab);
+    WaitForInterstitial(tab);
 
     InterstitialPage* interstitial_page = tab->GetInterstitialPage();
     ASSERT_EQ(CaptivePortalBlockingPage::kTypeForTesting,
@@ -5579,7 +5607,7 @@ IN_PROC_BROWSER_TEST_F(SSLUICaptivePortalListResourceBundleTest,
     base::HistogramTester histograms;
     SSLInterstitialTimerObserver interstitial_timer_observer(tab);
     ui_test_utils::NavigateToURL(browser(), https_server()->GetURL("/"));
-    content::WaitForInterstitialAttach(tab);
+    WaitForInterstitial(tab);
 
     InterstitialPage* interstitial_page = tab->GetInterstitialPage();
     ASSERT_EQ(CaptivePortalBlockingPage::kTypeForTesting,
@@ -5706,7 +5734,7 @@ class SSLUIMITMSoftwareTest : public CertVerifierBrowserTest {
     WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
     SSLInterstitialTimerObserver interstitial_timer_observer(tab);
     ui_test_utils::NavigateToURL(browser(), GetHSTSTestURL());
-    content::WaitForInterstitialAttach(tab);
+    WaitForInterstitial(tab);
     InterstitialPage* interstitial_page = tab->GetInterstitialPage();
     ASSERT_EQ(MITMSoftwareBlockingPage::kTypeForTesting,
               interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
@@ -5737,7 +5765,7 @@ class SSLUIMITMSoftwareTest : public CertVerifierBrowserTest {
     WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
     SSLInterstitialTimerObserver interstitial_timer_observer(tab);
     ui_test_utils::NavigateToURL(browser(), GetHSTSTestURL());
-    content::WaitForInterstitialAttach(tab);
+    WaitForInterstitial(tab);
     InterstitialPage* interstitial_page = tab->GetInterstitialPage();
     ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
               interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
@@ -5858,7 +5886,7 @@ IN_PROC_BROWSER_TEST_F(
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   SSLInterstitialTimerObserver interstitial_timer_observer(tab);
   ui_test_utils::NavigateToURL(browser(), GetHSTSTestURL());
-  content::WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
   InterstitialPage* interstitial_page = tab->GetInterstitialPage();
   ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
             interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
@@ -5906,7 +5934,7 @@ IN_PROC_BROWSER_TEST_F(
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   SSLInterstitialTimerObserver interstitial_timer_observer(tab);
   ui_test_utils::NavigateToURL(browser(), GetHSTSTestURL());
-  content::WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
   InterstitialPage* interstitial_page = tab->GetInterstitialPage();
   ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
             interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
@@ -5952,7 +5980,7 @@ IN_PROC_BROWSER_TEST_F(SSLUIMITMSoftwareEnabledTest,
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   SSLInterstitialTimerObserver interstitial_timer_observer(tab);
   ui_test_utils::NavigateToURL(browser(), GetHSTSTestURL());
-  content::WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
   InterstitialPage* interstitial_page = tab->GetInterstitialPage();
   ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
             interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
@@ -6006,7 +6034,7 @@ IN_PROC_BROWSER_TEST_F(SSLUIMITMSoftwareEnabledTest,
   SSLInterstitialTimerObserver interstitial_timer_observer(tab);
   ui_test_utils::NavigateToURL(browser(),
                                https_server()->GetURL("/ssl/blank_page.html"));
-  content::WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
   InterstitialPage* interstitial_page = tab->GetInterstitialPage();
   ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
             interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
@@ -6234,7 +6262,7 @@ IN_PROC_BROWSER_TEST_F(SuperfishSSLUITest, SuperfishInterstitial) {
                                https_server_.GetURL("/ssl/google.html"));
   content::WebContents* tab =
       browser()->tab_strip_model()->GetActiveWebContents();
-  content::WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
   InterstitialPage* interstitial_page = tab->GetInterstitialPage();
   ASSERT_TRUE(interstitial_page);
   EXPECT_TRUE(WaitForRenderFrameReady(interstitial_page->GetMainFrame()));
@@ -6269,7 +6297,7 @@ IN_PROC_BROWSER_TEST_F(SuperfishSSLUITest, SuperfishInterstitialDisabled) {
                                https_server_.GetURL("/ssl/google.html"));
   content::WebContents* tab =
       browser()->tab_strip_model()->GetActiveWebContents();
-  content::WaitForInterstitialAttach(tab);
+  WaitForInterstitial(tab);
   InterstitialPage* interstitial_page = tab->GetInterstitialPage();
   ASSERT_TRUE(interstitial_page);
   EXPECT_TRUE(WaitForRenderFrameReady(interstitial_page->GetMainFrame()));
