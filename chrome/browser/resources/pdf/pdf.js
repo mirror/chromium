@@ -497,6 +497,8 @@ PDFViewer.prototype = {
    *     displayed.
    */
   handleURLParams_: function(viewportPosition) {
+    console.log('handleURLParams_ viewportPosition:');
+    console.log(viewportPosition);
     if (viewportPosition.page != undefined)
       this.viewport_.goToPage(viewportPosition.page);
     if (viewportPosition.position) {
@@ -508,6 +510,18 @@ PDFViewer.prototype = {
     }
     if (viewportPosition.zoom)
       this.viewport_.setZoom(viewportPosition.zoom);
+    if (viewportPosition.view) {
+      if (viewportPosition.view == 'fit') {
+        this.isUserInitiatedEvent_ = false;
+        this.zoomToolbar_.forceFitToPage();
+        this.isUserInitiatedEvent_ = true;
+      } else if (viewportPosition.view == 'fith') {
+        this.isUserInitiatedEvent_ = false;
+        this.zoomToolbar_.forceFitToWidth();
+        this.isUserInitiatedEvent_ = true;
+      }
+    }
+
   },
 
   /**
