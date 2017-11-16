@@ -16,6 +16,24 @@
       "revId": "fcf57425b4d85193beb5e31491c2fd2394689357",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1278a5_ddbfb083",
+        "filename": "chrome/browser/ui/views/hover_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-16T04:10:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a996e424_b11ee1de",
+      "revId": "fcf57425b4d85193beb5e31491c2fd2394689357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
