@@ -22,6 +22,30 @@
       "revId": "aabe084f27883bc0327de37dbb268845cd4cedf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e1cd30_e849a456",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1126101
+      },
+      "writtenOn": "2017-11-16T16:38:22Z",
+      "side": 1,
+      "message": "If I had implemented this from the start, I would have used the From/FromOrCreate pattern, and I actually thought about doing that here. I just wasn\u0027t sure if it was worth changing the existing implementation  (and callsites) at this point. I agree that it is better and less confusing though, so I\u0027l do that now.",
+      "parentUuid": "5cc6eb6c_c169981c",
+      "range": {
+        "startLine": 51,
+        "startChar": 34,
+        "endLine": 51,
+        "endChar": 44
+      },
+      "revId": "aabe084f27883bc0327de37dbb268845cd4cedf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
