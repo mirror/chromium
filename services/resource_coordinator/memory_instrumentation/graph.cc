@@ -4,6 +4,7 @@
 
 #include "services/resource_coordinator/memory_instrumentation/graph.h"
 
+#include "base/callback.h"
 #include "base/strings/string_tokenizer.h"
 
 namespace memory_instrumentation {
@@ -44,6 +45,18 @@ void GlobalDumpGraph::AddNodeOwnershipEdge(Node* owner,
 Node* GlobalDumpGraph::CreateNode(Process* process_graph, Node* parent) {
   all_nodes_.emplace_front(process_graph, parent);
   return &*all_nodes_.begin();
+}
+
+void GlobalDumpGraph::VisitInDepthFirstPostOrder(
+    const base::RepeatingCallback<void(Node*)>& callback) {
+  std::set<const Node*> visited;
+  std::set<const Node*> path;
+  shared_memory_graph()->root()->VisitInDepthFirstPostOrderRecursively(
+      &visited, &path, callback);
+  for (auto& pid_to_process : process_dump_graphs()) {
+    pid_to_process.second->root()->VisitInDepthFirstPostOrderRecursively(
+        &visited, &path, callback);
+  }
 }
 
 Process::Process(base::ProcessId pid, GlobalDumpGraph* global_graph)
@@ -119,6 +132,22 @@ void Node::InsertChild(base::StringPiece name, Node* node) {
   children_.emplace(name.as_string(), node);
 }
 
+Node* Node::CreateChild(base::StringPiece name) {
+  Node* new_child = dump_graph_->global_graph()->CreateNode(dump_graph_, this);
+  InsertChild(name, new_child);
+  return new_child;
+}
+
+bool Node::IsDescendentOf(const Node& possible_parent) const {
+  const Node* current = this;
+  while (current != nullptr) {
+    if (current == &possible_parent)
+      return true;
+    current = current->parent();
+  }
+  return false;
+}
+
 void Node::AddOwnedByEdge(Edge* edge) {
   owned_by_edges_.push_back(edge);
 }
@@ -135,6 +164,38 @@ void Node::AddEntry(std::string name,
 
 void Node::AddEntry(std::string name, std::string value) {
   entries_.emplace(name, Node::Entry(value));
+}
+
+void Node::VisitInDepthFirstPostOrderRecursively(
+    std::set<const Node*>* visited,
+    std::set<const Node*>* path,
+    const base::RepeatingCallback<void(Node*)>& callback) {
+  // If the node has already been visited, don't visit it again.
+  if (visited->find(this) != visited->end())
+    return;
+
+  // Check that the node has not already been encountered on the current path.
+  DCHECK(path->find(this) == path->end());
+  path->insert(this);
+
+  // Visit all owners of this node.
+  for (auto* edge : *owned_by_edges()) {
+    edge->source()->VisitInDepthFirstPostOrderRecursively(visited, path,
+                                                          callback);
+  }
+
+  // Visit all children of this node.
+  for (auto name_to_child : *children()) {
+    name_to_child.second->VisitInDepthFirstPostOrderRecursively(visited, path,
+                                                                callback);
+  }
+
+  // Visit the current node itself.
+  callback.Run(this);
+  visited->insert(this);
+
+  // The current node is no longer on the path.
+  path->erase(this);
 }
 
 Node::Entry::Entry(Entry::ScalarUnits units, uint64_t value)

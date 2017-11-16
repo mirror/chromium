@@ -8,6 +8,7 @@
 #include <forward_list>
 #include <map>
 #include <memory>
+#include <set>
 
 #include "base/gtest_prod_util.h"
 #include "base/process/process_handle.h"
@@ -41,11 +42,12 @@ class GlobalDumpGraph {
     GlobalDumpGraph::Node* FindNode(base::StringPiece path);
 
     base::ProcessId pid() const { return pid_; }
+    GlobalDumpGraph* global_graph() const { return global_graph_; }
     GlobalDumpGraph::Node* root() const { return root_; }
 
    private:
     base::ProcessId pid_;
-    GlobalDumpGraph* const global_graph_;
+    GlobalDumpGraph* global_graph_;
     GlobalDumpGraph::Node* root_;
 
     DISALLOW_COPY_AND_ASSIGN(Process);
@@ -94,6 +96,13 @@ class GlobalDumpGraph {
     // with the given |subpath| as the key.
     void InsertChild(base::StringPiece name, Node* node);
 
+    // Creates a child for this node with the given |name| as the key.
+    Node* CreateChild(base::StringPiece name);
+
+    // Checks if the current node is a descendent (i.e. exists as a child,
+    // child of a child, etc.) of the given node |possible_parent|.
+    bool IsDescendentOf(const Node& possible_parent) const;
+
     // Adds an entry for this dump node with the given |name|, |units| and
     // type.
     void AddEntry(std::string name, Entry::ScalarUnits units, uint64_t value);
@@ -105,6 +114,14 @@ class GlobalDumpGraph {
 
     // Sets the edge indicates that this node owns another node.
     void SetOwnsEdge(Edge* edge);
+
+    // Visits the nodes in the nodes in this sub-graph in post-order.
+    // That is, children and owners of nodes are visited before the node
+    // itself.
+    void VisitInDepthFirstPostOrderRecursively(
+        std::set<const Node*>* visited,
+        std::set<const Node*>* path,
+        const base::RepeatingCallback<void(Node*)>& callback);
 
     bool is_weak() const { return weak_; }
     void set_weak(bool weak) { weak_ = weak; }
@@ -120,7 +137,7 @@ class GlobalDumpGraph {
     std::map<std::string, Entry>* entries() { return &entries_; }
 
    private:
-    GlobalDumpGraph::Process* const dump_graph_;
+    GlobalDumpGraph::Process* dump_graph_;
     Node* const parent_;
     std::map<std::string, Entry> entries_;
     std::map<std::string, Node*> children_;
@@ -166,6 +183,12 @@ class GlobalDumpGraph {
   // Adds an edge in the dump graph with the given source and target nodes
   // and edge priority.
   void AddNodeOwnershipEdge(Node* owner, Node* owned, int priority);
+
+  // Visits the nodes in the nodes in this graph in post-order.
+  // That is, children and owners of nodes are visited before the node
+  // itself.
+  void VisitInDepthFirstPostOrder(
+      const base::RepeatingCallback<void(Node*)>& callback);
 
   const GuidNodeMap& nodes_by_guid() const { return nodes_by_guid_; }
   GlobalDumpGraph::Process* shared_memory_graph() const {
