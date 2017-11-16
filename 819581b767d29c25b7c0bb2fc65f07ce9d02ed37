@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9c6f426_5c389a1d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/fullscreen/ChromeFullscreenManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-16T17:26:53Z",
+      "side": 1,
+      "message": "Looks like we don\u0027t need contentView or webContents in this method now.  Should we call this updateViewportSize now?\n\nNeed to update the javadoc as well.",
+      "range": {
+        "startLine": 448,
+        "startChar": 16,
+        "endLine": 448,
+        "endChar": 45
+      },
+      "revId": "819581b767d29c25b7c0bb2fc65f07ce9d02ed37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
