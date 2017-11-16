@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4fa26ca8_13fadf05",
+        "filename": "chrome/browser/notifications/metrics/mock_notification_metrics_logger.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-16T16:49:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc33827f_4683acb3",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34e533a6_47a559c2",
         "filename": "chrome/browser/notifications/metrics/mock_notification_metrics_logger.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b02445e_ea200418",
+        "filename": "chrome/browser/notifications/metrics/mock_notification_metrics_logger.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-16T16:49:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34e533a6_47a559c2",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ad096ee8_28e3c561",
+        "filename": "chrome/browser/notifications/metrics/notification_metrics_logger.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-16T16:49:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fa064a0_79c713b2",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4be08886_130452e6",
         "filename": "chrome/browser/notifications/metrics/notification_metrics_logger_factory.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d52e191_53fcc7ee",
+        "filename": "chrome/browser/notifications/metrics/notification_metrics_logger_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-16T16:49:27Z",
+      "side": 1,
+      "message": "Hm looks like I just copy-pasted this with the rest of the boilerplate without understanding what it did. \n\nNow changed to GetBrowserContextRedirectedInIncognito to express the fact that there should be a single logger shared across incognito and regular profiles. \n\nAside: It would be less confusing if the implementor just had to return an enum value to indicate whether there should be a shared, separate, or no service in incognito. Filed a bug to improve documentation.",
+      "parentUuid": "4be08886_130452e6",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0ad49dd6_e415148d",
+        "filename": "chrome/browser/notifications/metrics/notification_metrics_logger_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-16T16:49:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "304b65fd_f8f1fef1",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb35d823_ab797a95",
         "filename": "chrome/browser/notifications/platform_notification_service_impl.cc",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b3e3937_aec97248",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-16T16:49:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb35d823_ab797a95",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1e672ed1_a3431648",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-16T16:49:27Z",
+      "side": 1,
+      "message": "Improved this by using a temporary variable. Let me know if you think a method is still necessary.",
+      "parentUuid": "c7958ee7_59f055f4",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d54bdeb6_05e3bd31",
         "filename": "chrome/browser/notifications/platform_notification_service_impl.h",
         "patchSetId": 6
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "5624fea4_533d72a4",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-16T16:49:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d54bdeb6_05e3bd31",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1af9ee6b_e8287ea4",
         "filename": "chrome/browser/notifications/platform_notification_service_unittest.cc",
         "patchSetId": 6
@@ -149,6 +293,24 @@
       "writtenOn": "2017-11-16T13:51:58Z",
       "side": 1,
       "message": "nit: document ownership",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebb58a1d_599c76f2",
+        "filename": "chrome/browser/notifications/platform_notification_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-16T16:49:27Z",
+      "side": 1,
+      "message": "Not sure how to do that. You want me to comment that it gets returned by the browser context keyed service factory? Or that its lifetime is tied to the profile\u0027s?",
+      "parentUuid": "1af9ee6b_e8287ea4",
       "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "47a146c8_6606c017",
+        "filename": "chrome/browser/notifications/platform_notification_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-16T16:49:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "133789c4_669c71b9",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "439f5fca_32821b14",
         "filename": "chrome/test/BUILD.gn",
         "patchSetId": 6
@@ -186,6 +366,24 @@
       "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf1ac3e2_2d1d4d97",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 2247,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-16T16:49:27Z",
+      "side": 1,
+      "message": "Done.\n\n(Why?)",
+      "parentUuid": "439f5fca_32821b14",
+      "revId": "ad9fb4a2343483a97eda7872999d1d2959f8f071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

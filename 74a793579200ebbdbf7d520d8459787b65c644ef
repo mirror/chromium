@@ -46,6 +46,30 @@
       "revId": "74a793579200ebbdbf7d520d8459787b65c644ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aada3701_b81f8d03",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-16T16:49:27Z",
+      "side": 1,
+      "message": "Will make PlatformNotificationService itself a BrowserContextKeyedService in a follow-up as discussed, which means we\u0027ll always have access to a BrowserContext (those methods simply won\u0027t be called if the profile has gone away, which is fine, since we don\u0027t want to delay shut down just to send metrics).\n\nHave removed the Click \u0026 Close Result methods from the logger for now.",
+      "parentUuid": "fe040cfa_9453834d",
+      "range": {
+        "startLine": 441,
+        "startChar": 0,
+        "endLine": 441,
+        "endChar": 28
+      },
+      "revId": "74a793579200ebbdbf7d520d8459787b65c644ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
