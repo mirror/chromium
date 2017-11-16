@@ -1,0 +1,27 @@
+{
+  "name": "Override New Tab Example",
+  "description": "Override the new tab page with a blank one",
+  "version": "0.2",
+  "background": {
+        "persistent": false,
+        "scripts": [
+            "background.js"
+        ]
+    },
+  "chrome_url_overrides": {
+    "newtab": "tab_override.html"
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "images/chromecoffee16.png",
+      "32": "images/chromecoffee32.png"
+    }
+  },
+  "icons": {
+    "16": "images/chromecoffee16.png",
+    "32": "images/chromecoffee32.png",
+    "48": "images/chromecoffee48.png",
+    "128": "images/chromecoffee128.png"
+  },
+  "manifest_version": 2
+}
