@@ -16,6 +16,7 @@
 #include "extensions/renderer/test_extensions_renderer_client.h"
 #include "gin/public/context_holder.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/Source/platform/bindings/ScriptState.h"
 #include "v8/include/v8.h"
 
 namespace extensions {
@@ -79,6 +80,9 @@ class ModuleSystemTestEnvironment {
   std::unique_ptr<StringSourceMap> source_map_;
 
   std::unique_ptr<NativeExtensionBindingsSystem> bindings_system_;
+
+  scoped_refptr<blink::ScriptState> script_state_;
+  scoped_refptr<blink::DOMWrapperWorld> world_;
 
   DISALLOW_COPY_AND_ASSIGN(ModuleSystemTestEnvironment);
 };

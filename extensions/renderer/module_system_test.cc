@@ -20,6 +20,7 @@
 #include "base/path_service.h"
 #include "base/run_loop.h"
 #include "base/strings/string_piece.h"
+#include "blink/bindings/core/v8/V8Window.h"
 #include "extensions/common/extension_builder.h"
 #include "extensions/common/extension_paths.h"
 #include "extensions/common/feature_switch.h"
@@ -34,6 +35,7 @@
 #include "extensions/renderer/test_v8_extension_configuration.h"
 #include "extensions/renderer/utils_native_handler.h"
 #include "gin/converter.h"
+#include "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.h"
 #include "ui/base/resource/resource_bundle.h"
 
 namespace extensions {
@@ -133,8 +135,10 @@ ModuleSystemTestEnvironment::ModuleSystemTestEnvironment(
       extension_(extension),
       context_set_(context_set),
       source_map_(new StringSourceMap()) {
+  world_ = blink::DOMWrapperWorld::Create(isolate_, blink::DOMWrapperWorld::WorldType::kMain);
   context_holder_->SetContext(v8::Context::New(
-      isolate, TestV8ExtensionConfiguration::GetConfiguration()));
+      isolate, TestV8ExtensionConfiguration::GetConfiguration(),
+      blink::V8Window::domTemplate(isolate_, *world_)->InstanceTemplate()));
 
   {
     auto context = std::make_unique<ScriptContext>(
@@ -145,6 +149,11 @@ ModuleSystemTestEnvironment::ModuleSystemTestEnvironment(
     context_ = context.get();
     context_set_->AddForTesting(std::move(context));
   }
+/*
+  script_state_ = blink::ScriptState::Create(
+      context_holder_->context(), blink::DOMWrapperWorld::Create(isolate_, blink::DOMWrapperWorld::WorldType::kMain));
+*/
+
 
   context_->v8_context()->Enter();
   assert_natives_ = new AssertNatives(context_);

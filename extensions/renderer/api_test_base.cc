@@ -12,6 +12,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_piece.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "blink/platform/runtime_enabled_features.h"
 #include "extensions/common/extension_urls.h"
 #include "extensions/common/feature_switch.h"
 #include "extensions/renderer/dispatcher.h"
@@ -25,6 +26,7 @@
 #include "mojo/edk/js/support.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "mojo/public/cpp/system/core.h"
+#include "third_party/WebKit/public/web/WebContextFeatures.h"
 
 namespace extensions {
 namespace {
@@ -175,6 +177,10 @@ void ApiTestEnvironment::RegisterModules() {
       ->AddBuiltinModule(env()->isolate(),
                          "content/public/renderer/frame_interfaces",
                          interface_provider.ToV8());
+  CHECK(blink::RuntimeEnabledFeatures::MojoJSEnabled());
+  //blink::RuntimeEnabledFeatures::SetMojoJSEnabled(true);
+  //blink::RuntimeEnabledFeatures::SetMojoJSTestEnabled(true);
+  //blink::WebContextFeatures::EnableMojoJS(env()->context()->v8_context(), true);
 }
 
 void ApiTestEnvironment::InitializeEnvironment() {
