@@ -14,7 +14,7 @@
 #include "base/macros.h"
 #include "chrome/browser/image_decoder.h"
 #include "components/arc/common/wallpaper.mojom.h"
-#include "components/arc/instance_holder.h"
+#include "components/arc/mojo_connection_observer.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
@@ -30,7 +30,7 @@ class ArcBridgeService;
 class ArcWallpaperService
     : public KeyedService,
       public ash::WallpaperControllerObserver,
-      public InstanceHolder<mojom::WallpaperInstance>::Observer,
+      public MojoConnectionObserver<mojom::WallpaperInstance>,
       public mojom::WallpaperHost {
  public:
   // Returns singleton instance for the given BrowserContext,
@@ -42,9 +42,9 @@ class ArcWallpaperService
                       ArcBridgeService* bridge_service);
   ~ArcWallpaperService() override;
 
-  // InstanceHolder<mojom::WallpaperInstance>::Observer overrides.
-  void OnInstanceReady() override;
-  void OnInstanceClosed() override;
+  // MojoConnectionObserver<mojom::WallpaperInstance> overrides.
+  void OnConnectionReady() override;
+  void OnConnectionClosed() override;
 
   // mojom::WallpaperHost overrides.
   void SetWallpaper(const std::vector<uint8_t>& data,

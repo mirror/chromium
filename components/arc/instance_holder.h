@@ -13,6 +13,8 @@
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "base/threading/thread_checker.h"
+#include "components/arc/mojo_connection_notifier.h"
+#include "components/arc/mojo_connection_observer.h"
 
 // A macro to call InstanceHolder<T>::GetInstanceForVersionDoNotCallDirectly().
 // In order to avoid exposing method names from within the Mojo bindings, we
@@ -32,19 +34,7 @@ namespace arc {
 template <typename T>
 class InstanceHolder {
  public:
-  // Notifies about connection events for individual instances.
-  class Observer {
-   public:
-    // Called once the instance is ready.
-    virtual void OnInstanceReady() {}
-
-    // Called when the connection to the instance is closed.
-    virtual void OnInstanceClosed() {}
-
-   protected:
-    virtual ~Observer() = default;
-  };
-
+  using Observer = MojoConnectionObserver<T>;
   using Instance = T;
 
   InstanceHolder() = default;
@@ -81,16 +71,13 @@ class InstanceHolder {
   // class was created on. RemoveObserver does nothing if |observer| is not in
   // the list.
   void AddObserver(Observer* observer) {
-    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-    observer_list_.AddObserver(observer);
-
-    if (instance_)
-      observer->OnInstanceReady();
+    connection_notifier_.AddObserver(observer);
+    if (has_instance())
+      connection_notifier_.NotifyConnectionReady();
   }
 
   void RemoveObserver(Observer* observer) {
-    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-    observer_list_.RemoveObserver(observer);
+    connection_notifier_.RemoveObserver(observer);
   }
 
   // Sets |instance| with |version|.
@@ -108,11 +95,9 @@ class InstanceHolder {
     instance_ = instance;
     version_ = version;
     if (instance_) {
-      for (auto& observer : observer_list_)
-        observer.OnInstanceReady();
+      connection_notifier_.NotifyConnectionReady();
     } else {
-      for (auto& observer : observer_list_)
-        observer.OnInstanceClosed();
+      connection_notifier_.NotifyConnectionClosed();
     }
   }
 
@@ -123,7 +108,7 @@ class InstanceHolder {
   uint32_t version_ = 0;
 
   THREAD_CHECKER(thread_checker_);
-  base::ObserverList<Observer> observer_list_;
+  internal::MojoConnectionNotifier connection_notifier_;
 
   DISALLOW_COPY_AND_ASSIGN(InstanceHolder<T>);
 };

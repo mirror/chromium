@@ -23,7 +23,7 @@
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/ui/app_list/arc/arc_default_app_list.h"
 #include "components/arc/common/app.mojom.h"
-#include "components/arc/instance_holder.h"
+#include "components/arc/mojo_connection_observer.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "ui/base/layout.h"
@@ -33,6 +33,8 @@ class Profile;
 
 namespace arc {
 class ArcPackageSyncableService;
+template <typename InstanceType>
+class InstanceHolder;
 }  // namespace arc
 
 namespace content {
@@ -51,7 +53,7 @@ class PrefRegistrySyncable;
 class ArcAppListPrefs
     : public KeyedService,
       public arc::mojom::AppHost,
-      public arc::InstanceHolder<arc::mojom::AppInstance>::Observer,
+      public arc::MojoConnectionObserver<arc::mojom::AppInstance>,
       public arc::ArcSessionManager::Observer,
       public ArcDefaultAppList::Delegate {
  public:
@@ -268,9 +270,9 @@ class ArcAppListPrefs
       Profile* profile,
       arc::InstanceHolder<arc::mojom::AppInstance>* app_instance_holder);
 
-  // arc::InstanceHolder<arc::mojom::AppInstance>::Observer:
-  void OnInstanceReady() override;
-  void OnInstanceClosed() override;
+  // MojoConnectionObserver<arc::mojom::AppInstance>:
+  void OnConnectionReady() override;
+  void OnConnectionClosed() override;
 
   // arc::mojom::AppHost:
   void OnAppListRefreshed(std::vector<arc::mojom::AppInfoPtr> apps) override;
