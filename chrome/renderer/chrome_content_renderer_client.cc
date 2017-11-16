@@ -1174,6 +1174,10 @@ bool ChromeContentRendererClient::ShouldSuppressErrorPage(
   return SearchBouncer::GetInstance()->IsNewTabPage(url);
 }
 
+bool ChromeContentRendererClient::ShouldTrackUseCounter(const GURL& url) {
+  return !SearchBouncer::GetInstance()->IsNewTabPage(url);
+}
+
 void ChromeContentRendererClient::GetNavigationErrorStrings(
     content::RenderFrame* render_frame,
     const WebURLRequest& failed_request,
