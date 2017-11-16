@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a9f96feb_ef4a37b4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-16T19:17:07Z",
+      "side": 1,
+      "message": "try-catch needs to be in the async function. `await` lets us handle async and non-async IIFE.",
+      "parentUuid": "1292ef0b_e60ec805",
+      "revId": "43534d454e1540e46636b69043d289f228eb01ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "436932f7_d851a18d",
         "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ce994975_b443c42d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-16T19:17:07Z",
+      "side": 1,
+      "message": "How machiavellian :) If this actually does get rebaselined, I\u0027ll add this.",
+      "parentUuid": "436932f7_d851a18d",
+      "revId": "43534d454e1540e46636b69043d289f228eb01ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0111b47_780f3d1e",
         "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-16T06:17:09Z",
       "side": 1,
       "message": "throwing `null` will cause this to throw, and then the test won\u0027t complete. err \u0026\u0026 err.stack || err",
+      "revId": "43534d454e1540e46636b69043d289f228eb01ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55bc54df_a5491991",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-16T19:17:07Z",
+      "side": 1,
+      "message": ":o nice.",
+      "parentUuid": "b0111b47_780f3d1e",
       "revId": "43534d454e1540e46636b69043d289f228eb01ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
