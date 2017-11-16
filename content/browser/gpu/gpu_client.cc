@@ -29,13 +29,59 @@ void GpuClient::Add(ui::mojom::GpuRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
 
+void GpuClient::PreEstablishGpuChannel() {
+  DCHECK(!gpu_channel_requested_);
+  GpuProcessHost* host = GpuProcessHost::Get();
+  if (!host)
+    return;
+  gpu_channel_requested_ = true;
+
+  bool preempts = false;
+  bool allow_view_command_buffers = false;
+  bool allow_real_time_streams = false;
+  host->EstablishGpuChannel(
+      render_process_id_,
+      ChildProcessHostImpl::ChildProcessUniqueIdToTracingProcessId(
+          render_process_id_),
+      preempts, allow_view_command_buffers, allow_real_time_streams,
+      base::Bind(&GpuClient::OnPreEstablishGpuChannel,
+                 weak_factory_.GetWeakPtr()));
+}
+
 void GpuClient::OnError() {
+  std::move(channel_handle_);
+  gpu_channel_requested_ = false;
   if (!bindings_.empty())
     return;
   BrowserGpuMemoryBufferManager* gpu_memory_buffer_manager =
       BrowserGpuMemoryBufferManager::current();
   if (gpu_memory_buffer_manager)
     gpu_memory_buffer_manager->ProcessRemoved(render_process_id_);
+}
+
+void GpuClient::OnPreEstablishGpuChannel(
+    mojo::ScopedMessagePipeHandle channel_handle,
+    const gpu::GPUInfo& gpu_info,
+    const gpu::GpuFeatureInfo& gpu_feature_info,
+    GpuProcessHost::EstablishChannelStatus status) {
+  DCHECK_EQ(channel_handle.is_valid(),
+            status == GpuProcessHost::EstablishChannelStatus::SUCCESS);
+  gpu_channel_requested_ = false;
+  if (!callbacks_.empty()) {
+    EstablishGpuChannelCallback callback = callbacks_.back();
+    callbacks_.clear();
+    if (status == GpuProcessHost::EstablishChannelStatus::GPU_HOST_INVALID) {
+      // GPU process may have crashed or been killed. Try again.
+      EstablishGpuChannel(callback);
+    } else {
+      callback.Run(render_process_id_, std::move(channel_handle), gpu_info,
+                   gpu_feature_info);
+    }
+  } else if (channel_handle.is_valid()) {
+    channel_handle_ = std::move(channel_handle);
+    gpu_info_ = gpu_info;
+    gpu_feature_info_ = gpu_feature_info_;
+  }
 }
 
 void GpuClient::OnEstablishGpuChannel(
@@ -69,6 +115,17 @@ void GpuClient::EstablishGpuChannel(
         callback, mojo::ScopedMessagePipeHandle(), gpu::GPUInfo(),
         gpu::GpuFeatureInfo(),
         GpuProcessHost::EstablishChannelStatus::GPU_ACCESS_DENIED);
+    return;
+  }
+  if (channel_handle_.is_valid()) {
+    OnEstablishGpuChannel(callback, std::move(channel_handle_), gpu_info_,
+                          gpu_feature_info_,
+                          GpuProcessHost::EstablishChannelStatus::SUCCESS);
+    DCHECK(!channel_handle_.is_valid());
+    return;
+  }
+  if (gpu_channel_requested_) {
+    callbacks_.push_back(callback);
     return;
   }
 

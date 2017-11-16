@@ -567,6 +567,8 @@ class CONTENT_EXPORT RenderProcessHostImpl
         BrowserThread::GetTaskRunnerForThread(BrowserThread::UI));
   }
 
+  GpuClient* GetGpuClient();
+
   std::unique_ptr<mojo::edk::OutgoingBrokerClientInvitation>
       broker_client_invitation_;
 

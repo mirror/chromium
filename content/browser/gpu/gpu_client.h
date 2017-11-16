@@ -19,8 +19,14 @@ class GpuClient : public ui::mojom::Gpu {
 
   void Add(ui::mojom::GpuRequest request);
 
+  void PreEstablishGpuChannel();
+
  private:
   void OnError();
+  void OnPreEstablishGpuChannel(mojo::ScopedMessagePipeHandle channel_handle,
+                                const gpu::GPUInfo& gpu_info,
+                                const gpu::GpuFeatureInfo& gpu_feature_info,
+                                GpuProcessHost::EstablishChannelStatus status);
   void OnEstablishGpuChannel(const EstablishGpuChannelCallback& callback,
                              mojo::ScopedMessagePipeHandle channel_handle,
                              const gpu::GPUInfo& gpu_info,
@@ -48,6 +54,11 @@ class GpuClient : public ui::mojom::Gpu {
 
   const int render_process_id_;
   mojo::BindingSet<ui::mojom::Gpu> bindings_;
+  bool gpu_channel_requested_ = false;
+  std::vector<EstablishGpuChannelCallback> callbacks_;
+  mojo::ScopedMessagePipeHandle channel_handle_;
+  gpu::GPUInfo gpu_info_;
+  gpu::GpuFeatureInfo gpu_feature_info_;
   base::WeakPtrFactory<GpuClient> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(GpuClient);
