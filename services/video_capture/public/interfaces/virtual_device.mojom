@@ -1,0 +1,34 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module video_capture.mojom;
+
+import "media/capture/mojo/video_capture_types.mojom";
+import "media/mojo/interfaces/media_types.mojom";
+import "services/video_capture/public/interfaces/producer.mojom";
+import "ui/gfx/geometry/mojo/geometry.mojom";
+
+// Interface for a producer to feed video frames into a virtual
+// device. These frames will appear to the consumer of the device
+// as if they were produced by the device.
+interface VirtualDevice {
+  // Return a buffer to the caller that's big enough to store
+  // a video frame with the specified |dimension|, |pixel_format|,
+  // and |pixel_storage|. This is used by the producer for requesting
+  // a buffer to store frame data, and then pushing the frame via
+  // |OnFrameReadyInBuffer|.
+  // An invalid buffer ID |Constants.kInvalidBufferId| will be returned
+  // if no buffer is available.
+  // Note: Producer.OnNewBufferHandle and Producer.OnBufferRetired
+  // might be invoked for updating buffer information.
+  RequestFrameBuffer(gfx.mojom.Size dimension,
+                 media.mojom.VideoPixelFormat pixel_format,
+                 media.mojom.VideoPixelStorage pixel_storage)
+      => (int32 buffer_id);
+
+  // Called to indicate that a video frame is ready in the specified buffer
+  // |buffer_id|.
+  OnFrameReadyInBuffer(int32 buffer_id,
+                       media.mojom.VideoFrameInfo frame_info);
+};
