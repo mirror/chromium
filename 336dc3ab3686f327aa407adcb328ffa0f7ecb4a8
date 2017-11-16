@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c7e66806_f5b6c422",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-16T23:49:47Z",
+      "side": 1,
+      "message": "nit: committed navigations -\u003e committed interstitial navigations",
+      "range": {
+        "startLine": 431,
+        "startChar": 24,
+        "endLine": 431,
+        "endChar": 33
+      },
+      "revId": "336dc3ab3686f327aa407adcb328ffa0f7ecb4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2617e955_b0085a3a",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 3
@@ -107,6 +130,30 @@
       "side": 1,
       "message": "Yeah, we need a version that knows how to handle committed interstitials.\n\nWebContents::ShowingInterstitialPage() is not appropriate because //content shouldn\u0027t know about kCommitted interstitial (which is a Chrome switch right how).\n\nI\u0027m happy to take other ideas, but I think this is the least fussy for now.",
       "parentUuid": "00c6caf0_16f56884",
+      "range": {
+        "startLine": 449,
+        "startChar": 37,
+        "endLine": 449,
+        "endChar": 0
+      },
+      "revId": "336dc3ab3686f327aa407adcb328ffa0f7ecb4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce9de40b_64fdecd8",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-16T23:49:47Z",
+      "side": 1,
+      "message": "OK, this sounds fine.",
+      "parentUuid": "877ea599_8a464517",
       "range": {
         "startLine": 449,
         "startChar": 37,
