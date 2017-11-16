@@ -34,6 +34,24 @@
       "revId": "dbb3b927413259314808a410c853eff543fd259d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4340eb14_6bf4701b",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1502,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-16T20:11:40Z",
+      "side": 1,
+      "message": "Okay. I am fine as long as the work is going to be picked up.",
+      "parentUuid": "25632f39_b4677a41",
+      "revId": "dbb3b927413259314808a410c853eff543fd259d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
