@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "097b3da2_f3064345",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-16T19:18:56Z",
+      "side": 1,
+      "message": "I\u0027m not clear on what \"on a straight line\" means exactly, but we don\u0027t use an extra div elsewhere. Can you investigate why this dialog is behaving differently than others?",
+      "parentUuid": "2b0d5281_1da0b2ce",
+      "revId": "aa331c984b06c7896e9d4b09a161ae8bf283a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f7c0074_b502d35f",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.html",
         "patchSetId": 8
