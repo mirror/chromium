@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36d180d0_ad78023a",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-16T15:06:03Z",
+      "side": 1,
+      "message": "self.class_name \u003d\u003d outer class\nnative.java_class_name \u003d\u003d inner class (when applicable)\n\nThis will be a bit confusing for nested classes (prefixed without outer class, but method from inner class). You should have it include native.java_class_name when present (see line 786)",
+      "revId": "db3a77bbc61def8d9f8ca02905135a519308b7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "950f6345_d12e2d90",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-16T15:06:03Z",
+      "side": 1,
+      "message": "nit: use single quotes. \nAlso - why two _s? Make it look a bit funny imo. Java code style doesn\u0027t use _s in methods or classes, so should be quite safe to use a single _.",
+      "range": {
+        "startLine": 983,
+        "startChar": 29,
+        "endLine": 983,
+        "endChar": 33
+      },
+      "revId": "db3a77bbc61def8d9f8ca02905135a519308b7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2ed277_10f7bf2e",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-16T15:06:03Z",
+      "side": 1,
+      "message": "nit: C_NAME-\u003eSHORT_CLASS_NAME",
+      "range": {
+        "startLine": 1014,
+        "startChar": 9,
+        "endLine": 1014,
+        "endChar": 15
+      },
+      "revId": "db3a77bbc61def8d9f8ca02905135a519308b7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
