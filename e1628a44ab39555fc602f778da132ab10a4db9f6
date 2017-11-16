@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "ced90c9f_f3d80304",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-16T00:18:30Z",
+      "side": 1,
+      "message": "Ok, I went with the alternative to stop the observation of the registry in OnClose().\n\nfyi, I hadn\u0027t replied to the comment below for OnClose(), but the reasoning for adding the is_active_bubble_ is the same as below in OnClose().",
+      "parentUuid": "db7e6e19_0a26d628",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e78910d_659cb205",
         "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
         "patchSetId": 6
@@ -157,6 +175,24 @@
       "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb23e2cf_4fb4e1b2",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-16T00:18:30Z",
+      "side": 1,
+      "message": "See comment above.",
+      "parentUuid": "1e78910d_659cb205",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
