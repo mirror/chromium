@@ -46,6 +46,30 @@
       "revId": "57969f9ca5428dfde599248e5ba4932748f752a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b9c54e_7d4a1db9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-16T23:49:27Z",
+      "side": 1,
+      "message": "I think since we are adding a new ExternalAppId entry as well, this should actually clarify things. Better than using a new extra that we add in for this specific use case imo.",
+      "parentUuid": "2f08bf18_896c573a",
+      "range": {
+        "startLine": 105,
+        "startChar": 19,
+        "endLine": 105,
+        "endChar": 48
+      },
+      "revId": "57969f9ca5428dfde599248e5ba4932748f752a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
