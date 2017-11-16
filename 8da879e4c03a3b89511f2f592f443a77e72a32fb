@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a8434c5_ba771588",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-16T23:11:13Z",
+      "side": 1,
+      "message": "Note: this doesn\u0027t do anything (counter-intuitively, std::move is just a cast, that enables move operations). Maybe just channel_handle_.reset()?\n\nWe could also keep it around, this would happen if the renderer has crashed (before it had a chance to request the channel), but if it gets restarted, it could pick up this channel.",
+      "revId": "8da879e4c03a3b89511f2f592f443a77e72a32fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982dde9f_5671ac50",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-16T23:11:13Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to distinguish the pre-connection from other connections, and this would reduce the amount of code, as well as making it easier to follow.\n\nSuggestion: make gpu_channel_requested_ a counter (gpu_channel_request_count_ ?) rather than a bool. Increment every time you call host-\u003eEstablishGpuChannel, decrement every time you send a result to a client callback.  Add a bool establish_response_received_ when you received a response but have no callback to send to (i.e. you save it in channel_handle_)\nInvariants:\n- gpu_channel_request_count_ is never less than the number of pending EstablishGpuChannel calls (i.e. the number of entries in callbacks_), and is at most 1 more (initial state when we pre-establish but haven\u0027t received a client request yet).\n- establish_response_received_ is never true unless callbacks_ is empty\n\nYou could add a TryEstablishGpuChannel function that would look like:\n{\n  GpuProcessHost* host \u003d GpuProcessHost::Get();\n  if (!host) {\n    OnEstablishGpuChannel(..., GPU_ACCESS_DENIED);\n  } else {\n    host-\u003eEstablishGpuChannel(..., \n  base::Bind(\u0026GpuClient::OnEstablishGpuChannel, weak_factory_.GetWeakPtr());\n  }\n}\n(guarantees OnEstablishGpuChannel is called exactly once). PreEstablishGpuChannel would call that (after incrementing gpu_channel_request_count_).\n\nThen EstablishGpuChannel would be like:\n{\n  if (establish_response_received_) {\n    --gpu_channel_request_count_;\n    callback.Run(..., std::move(channel_handle_), ...);\n    establish_response_received_ \u003d false;\n  } else {\n    callbacks_.push_back(callback);\n    if (callbacks_.size() \u003e gpu_channel_request_count_) {\n      ++gpu_channel_request_count_;\n      TryEstablishChannel();\n    }\n  }\n  DCHECK_EQ(callbacks_.size(), gpu_channel_request_count_);\n}\n\nGpuClient::OnEstablishGpuChannel becomes something like\n{\n  if (status \u003d\u003d GpuProcessHost::EstablishChannelStatus::GPU_HOST_INVALID) \n  {\n    // retry\n    TryEstablishChannel();  \n  }\n  if (!callbacks_.empty()) {\n    --gpu_channel_request_count_;\n    callbacks_.front().Run(..., std::move(channel_handle), ...);\n    callbacks_.pop_front();\n  } else {\n    // save info in channel_handle_/gpu_info_/gpu_feature_info_\n  }\n}",
+      "revId": "8da879e4c03a3b89511f2f592f443a77e72a32fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b9920b_ef077787",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-16T23:11:13Z",
+      "side": 1,
+      "message": "It\u0027s not clear in this version that multiple callbacks_ would be handled correctly. I think it\u0027s an edge case (renderer crashes and is recreated)",
+      "revId": "8da879e4c03a3b89511f2f592f443a77e72a32fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
