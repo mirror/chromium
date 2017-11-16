@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a35c404a_e1d1b70c",
+        "filename": "third_party/WebKit/Source/core/animation/Keyframe.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-16T16:21:29Z",
+      "side": 1,
+      "message": "nit: Move these to Keyframe::AddPropertyValuePairsToV8Object so that this virtual method completely constructs the object.",
+      "revId": "125ea936f0d422ab68b76169d901cc52782487c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b449a6_5d01880d",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-16T16:21:29Z",
+      "side": 1,
+      "message": "Can you add a TODO here / or maybe move the TODO you have about having a computed value keyframe that would make this unnecessary? We should at least explain why we have this, i.e. the keyframe we are adding is a Keyframe + computed offset which isn\u0027t part of the keyframe.",
+      "revId": "125ea936f0d422ab68b76169d901cc52782487c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
