@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a27a2df_f180c30d",
+        "filename": "content/browser/renderer_host/p2p/socket_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-11-16T18:27:44Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this check. DoGetNetworkList() should be called whenever there was any change in network configuration, including the case when the last interface has been brought down.",
+      "range": {
+        "startLine": 164,
+        "startChar": 1,
+        "endLine": 164,
+        "endChar": 58
+      },
+      "revId": "30e41b2b4de6d1653bcd2d8a0a2caff7b5681d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
