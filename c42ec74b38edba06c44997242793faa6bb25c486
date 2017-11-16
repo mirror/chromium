@@ -33,6 +33,24 @@
       "revId": "c42ec74b38edba06c44997242793faa6bb25c486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c1c29e7_0e4163ea",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-16T00:58:45Z",
+      "side": 1,
+      "message": "mojo does have GetBadMessageCallback to give you a callback you can call async to mark an earlier message as having been bad. And yeah, calling GetBadMessageCallback depends on having context, but calling the callback doesn\u0027t.",
+      "parentUuid": "2b461231_8c4b2843",
+      "revId": "c42ec74b38edba06c44997242793faa6bb25c486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
