@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83dcc4b2_fef018dc",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-16T15:24:03Z",
+      "side": 1,
+      "message": "Can we add cache.disk_cache()-\u003ecreate_count() check here to tell that if was_cached was false, the transaction creates a new entry.",
+      "revId": "3af98a8af66f340c2ffdce476c0e3ebd7d946a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
