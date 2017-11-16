@@ -42,6 +42,47 @@
     },
     {
       "key": {
+        "uuid": "86e3c4d1_798512fc",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:35:07Z",
+      "side": 1,
+      "message": "Always prefer DCHECK() to CHECK(): https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#check_dcheck_and-notreached",
+      "parentUuid": "312d98d0_0929a701",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e21285f_d841d5c2",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:35:07Z",
+      "side": 1,
+      "message": "Just do\n\n auto pending_request \u003d std::move(pending_requests_.front());",
+      "range": {
+        "startLine": 238,
+        "startChar": 8,
+        "endLine": 238,
+        "endChar": 10
+      },
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2560356b_60632b05",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 17
@@ -184,6 +225,29 @@
       "writtenOn": "2017-11-15T07:34:38Z",
       "side": 1,
       "message": "If for any reason the bitstream buffer does not end up being passed to the vda (if the request is cancelled, or we are destroyed), we need to close the handle duplicated in l.402 above.\n\nPerhaps it would be simpler to have a class that would do this for us automatically, as in the current implementation?",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af94d0a4_dcc86d09",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:35:07Z",
+      "side": 1,
+      "message": "std::move(media_bitstream_buffer)",
+      "range": {
+        "startLine": 423,
+        "startChar": 51,
+        "endLine": 423,
+        "endChar": 73
+      },
       "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -379,6 +443,52 @@
     },
     {
       "key": {
+        "uuid": "0221b213_3a27c328",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:35:07Z",
+      "side": 1,
+      "message": "nit:\n\n The type of PendingCallback must match ResetCallback.\n\nsame below.",
+      "range": {
+        "startLine": 78,
+        "startChar": 17,
+        "endLine": 78,
+        "endChar": 74
+      },
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de1c01ff_1c9f54cd",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:35:07Z",
+      "side": 1,
+      "message": "nit: it is successful.\n\nanother nit: \"iff X. Otherwise Y\" seems wrong, because the iff implies that \"otherwise !X\". Either drop the \"otherwise\" sentence or change the iff to an if.",
+      "range": {
+        "startLine": 86,
+        "startChar": 65,
+        "endLine": 87,
+        "endChar": 51
+      },
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65e5fdde_3564bb10",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
         "patchSetId": 17
@@ -402,6 +512,30 @@
     },
     {
       "key": {
+        "uuid": "ff3558b1_69e488ce",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:35:07Z",
+      "side": 1,
+      "message": "and put it |between pipes| to match the style of the rest of the codebase.",
+      "parentUuid": "65e5fdde_3564bb10",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 22
+      },
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8543d65c_4f8026cb",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
         "patchSetId": 17
@@ -413,6 +547,29 @@
       "writtenOn": "2017-11-15T07:34:38Z",
       "side": 1,
       "message": "Please document.",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db4d12a_75bf6586",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:35:07Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need the rvalue ref: \"base::Closure\" and \"PendingCallback\" are sufficient.\n\nAlso, can you add a comment on this method?",
+      "range": {
+        "startLine": 98,
+        "startChar": 39,
+        "endLine": 98,
+        "endChar": 41
+      },
       "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -470,6 +627,29 @@
       "writtenOn": "2017-11-15T07:34:38Z",
       "side": 1,
       "message": "Please document.",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75db3352_20da9310",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-16T16:35:07Z",
+      "side": 1,
+      "message": "nit: // Owned by caller.",
+      "range": {
+        "startLine": 129,
+        "startChar": 32,
+        "endLine": 129,
+        "endChar": 57
+      },
       "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
