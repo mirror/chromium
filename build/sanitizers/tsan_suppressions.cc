@@ -120,7 +120,7 @@ char kTSanDefaultSuppressions[] =
     "race:net::ProxyResolverV8Tracing::Job::~Job\n"
 
     // http://crbug.com/327330
-    "race:PrepareTextureMailbox\n"
+    "race:PrepareTransferableResource\n"
     "race:cc::LayerTreeHost::PaintLayerContents\n"
 
     // http://crbug.com/476529
