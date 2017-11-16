@@ -133,6 +133,7 @@ class BookmarkBarViewTest : public BrowserWithTestWindowTest {
       content::BrowserContext* profile) {
     return base::WrapUnique(
         new TemplateURLService(static_cast<Profile*>(profile)->GetPrefs(),
+                               static_cast<Profile*>(profile)->GetPolicy(),
                                base::WrapUnique(new SearchTermsData), NULL,
                                std::unique_ptr<TemplateURLServiceClient>(),
                                NULL, NULL, base::Closure()));

@@ -114,6 +114,10 @@ public class CombinedPolicyProvider {
     @CalledByNative
     void refreshPolicies() {
         assert mPolicyProviders.size() == mCachedPolicies.size();
+        if (mPolicyProviders.isEmpty()) {
+            nativeFlushPolicies(mNativeCombinedPolicyProvider);
+            return;
+        }
         for (int i = 0; i < mCachedPolicies.size(); ++i) {
             mCachedPolicies.set(i, null);
         }
