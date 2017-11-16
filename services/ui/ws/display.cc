@@ -19,6 +19,8 @@
 #include "services/ui/ws/display_manager.h"
 #include "services/ui/ws/focus_controller.h"
 #include "services/ui/ws/platform_display.h"
+#include "services/ui/ws/platform_display_mirror.h"
+#include "services/ui/ws/threaded_image_cursors.h"
 #include "services/ui/ws/user_activity_monitor.h"
 #include "services/ui/ws/window_manager_display_root.h"
 #include "services/ui/ws/window_manager_state.h"
@@ -66,14 +68,20 @@ Display::~Display() {
 }
 
 void Display::Init(const display::ViewportMetrics& metrics,
-                   std::unique_ptr<DisplayBinding> binding) {
+                   std::unique_ptr<DisplayBinding> binding,
+                   const viz::SurfaceId& mirror_source_surface_id) {
   binding_ = std::move(binding);
   display_manager()->AddDisplay(this);
 
   CreateRootWindow(metrics.bounds_in_pixels.size());
 
-  platform_display_ = PlatformDisplay::Create(
-      root_.get(), metrics, window_server_->GetThreadedImageCursorsFactory());
+  if (mirror_source_surface_id.is_valid()) {
+    platform_display_ = std::make_unique<PlatformDisplayMirror>(
+        root_.get(), mirror_source_surface_id, metrics, nullptr);
+  } else {
+    platform_display_ = PlatformDisplay::Create(
+        root_.get(), metrics, window_server_->GetThreadedImageCursorsFactory());
+  }
   platform_display_->Init(this);
   UpdateCursorConfig();
 }

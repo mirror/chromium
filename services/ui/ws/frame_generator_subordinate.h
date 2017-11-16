@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef SERVICES_UI_WS_FRAME_GENERATOR_H_
-#define SERVICES_UI_WS_FRAME_GENERATOR_H_
+#ifndef SERVICES_UI_WS_FRAME_GENERATOR_SUBORDINATE_H_
+#define SERVICES_UI_WS_FRAME_GENERATOR_SUBORDINATE_H_
 
 #include <memory>
 
@@ -13,6 +13,7 @@
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/common/surfaces/surface_info.h"
 #include "services/ui/ws/compositor_frame_sink_client_binding.h"
+#include "services/ui/ws/frame_generator.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom.h"
 #include "ui/gfx/geometry/rect.h"
 
@@ -25,10 +26,11 @@ namespace ws {
 
 // Responsible for redrawing the display in response to the redraw requests by
 // submitting CompositorFrames to the owned CompositorFrameSink.
-class FrameGenerator : public viz::mojom::CompositorFrameSinkClient {
+class FrameGeneratorSubordinate : public FrameGenerator {
  public:
-  FrameGenerator();
-  ~FrameGenerator() override;
+  FrameGeneratorSubordinate(const viz::SurfaceId& source_surface_id);
+  // FrameGeneratorSubordinate(const viz::SurfaceInfo& source_surface_info);
+  ~FrameGeneratorSubordinate() override;
 
   void SetDeviceScaleFactor(float device_scale_factor);
   void SetHighContrastMode(bool enabled);
@@ -37,17 +39,12 @@ class FrameGenerator : public viz::mojom::CompositorFrameSinkClient {
   void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info);
 
   // Swaps the |window_manager_surface_info_| with that of |other|.
-  void SwapSurfaceWith(FrameGenerator* other);
+  void SwapSurfaceWith(FrameGeneratorSubordinate* other);
 
   void OnWindowDamaged();
   void OnWindowSizeChanged(const gfx::Size& pixel_size);
   void Bind(
       std::unique_ptr<viz::mojom::CompositorFrameSink> compositor_frame_sink);
-
-      
-  const viz::SurfaceInfo& window_manager_surface_info() const {
-    return window_manager_surface_info_;
-  }
 
  private:
   // viz::mojom::CompositorFrameSinkClient implementation:
@@ -85,13 +82,16 @@ class FrameGenerator : public viz::mojom::CompositorFrameSinkClient {
   viz::LocalSurfaceIdAllocator id_allocator_;
   float last_device_scale_factor_ = 0.0f;
 
-  viz::SurfaceInfo window_manager_surface_info_;
+  // viz::SurfaceInfo window_manager_surface_info_;
+  viz::SurfaceInfo surface_info_; 
+  // viz::SurfaceId source_surface_id_; 
+  
+  base::RepeatingTimer timer_; 
 
-  DISALLOW_COPY_AND_ASSIGN(FrameGenerator);
+  DISALLOW_COPY_AND_ASSIGN(FrameGeneratorSubordinate);
 };
 
 }  // namespace ws
-
 }  // namespace ui
 
-#endif  // SERVICES_UI_WS_FRAME_GENERATOR_H_
+#endif  // SERVICES_UI_WS_FRAME_GENERATOR_SUBORDINATE_H_
