@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "df26ef17_12e3effe",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-16T14:30:25Z",
+      "side": 1,
+      "message": "Sure, broken up since DCHECK contents don\u0027t run in production build?",
+      "parentUuid": "e3c110cb_2cca249e",
+      "revId": "301265d1732fbafc6b25506f43760346e6428ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ffecb13_6d001264",
         "filename": "components/omnibox/browser/keyword_provider.cc",
         "patchSetId": 2
