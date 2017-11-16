@@ -16,6 +16,24 @@
       "revId": "b926962fad2685f3f80580f50feaeafff9e7e009",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eccd52c_0e7305fd",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ContentChildProcessServiceDelegate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-11-16T01:47:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae2e41a5_2ee3ff64",
+      "revId": "b926962fad2685f3f80580f50feaeafff9e7e009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
