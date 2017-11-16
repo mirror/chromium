@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5d248a3_229744d4",
+        "filename": "chrome/browser/clipboard/clipboard_write_permission_context.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-16T05:25:35Z",
+      "side": 1,
+      "message": "nit: I think GURL isn\u0027t needed because it\u0027s just a reference",
+      "revId": "9bb3174ea9f2f6318f033037604d261730c59fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
