@@ -7,21 +7,15 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
-#include "base/memory/weak_ptr.h"
-#include "base/threading/thread_checker.h"
-#include "media/base/demuxer_stream.h"
+#include "base/sequence_checker.h"
 #include "media/base/video_decoder.h"
 #include "media/base/video_decoder_config.h"
 #include "media/base/video_frame.h"
 #include "media/base/video_frame_pool.h"
+#include "media/filters/offload_video_decoder.h"
 
 struct vpx_codec_ctx;
 struct vpx_image;
-
-namespace base {
-class SequencedTaskRunner;
-class TickClock;
-}  // namespace base
 
 namespace media {
 class FrameBufferPool;
@@ -35,7 +29,16 @@ class FrameBufferPool;
 // [1] http://wiki.webmproject.org/alpha-channel
 class MEDIA_EXPORT VpxVideoDecoder : public VideoDecoder {
  public:
-  VpxVideoDecoder();
+  enum class OffloadState {
+    kOffloaded,  // Indicates VpxVideoDecoder is being used with
+                 // OffloadVideoDecoder and that callbacks provided to
+                 // VideoDecoder methods should not be bound to the current
+                 // loop.
+
+    kNormal,  // Indicates VpxVideoDecoder is being used as a normal
+              // VideoDecoder, meaning callbacks should always be asynchronous.
+  };
+  explicit VpxVideoDecoder(OffloadState offload_state = OffloadState::kNormal);
   ~VpxVideoDecoder() override;
 
   // VideoDecoder implementation.
@@ -48,12 +51,6 @@ class MEDIA_EXPORT VpxVideoDecoder : public VideoDecoder {
   void Decode(const scoped_refptr<DecoderBuffer>& buffer,
               const DecodeCB& decode_cb) override;
   void Reset(const base::Closure& closure) override;
-
-  // Returns the number of frames in the pool for testing purposes.
-  size_t GetPoolSizeForTesting() const;
-
-  // Allows injection of a base::SimpleTestClock for testing.
-  void SetTickClockForTesting(base::TickClock* tick_clock);
 
  private:
   enum DecoderState {
@@ -72,20 +69,11 @@ class MEDIA_EXPORT VpxVideoDecoder : public VideoDecoder {
     kAlphaPlaneError  // Fatal error occured when trying to decode alpha plane.
   };
 
-  // Helper function for trampolining through the |offload_task_runner_|.
-  void ResetHelper(const base::Closure& closure);
-
   // Handles (re-)initializing the decoder with a (new) config.
   // Returns true when initialization was successful.
   bool ConfigureDecoder(const VideoDecoderConfig& config);
 
   void CloseDecoder();
-
-  // Helper method for decoding buffers either on the offload thread or directly
-  // on the media thread. |bound_decode_cb| must be bound to the thread that
-  // called Decode().
-  void DecodeBuffer(const scoped_refptr<DecoderBuffer>& buffer,
-                    const DecodeCB& bound_decode_cb);
 
   // Try to decode |buffer| into |video_frame|. Return true if all decoding
   // succeeded. Note that decoding can succeed and still |video_frame| be
@@ -102,11 +90,15 @@ class MEDIA_EXPORT VpxVideoDecoder : public VideoDecoder {
       const struct vpx_image** vpx_image_alpha,
       const scoped_refptr<DecoderBuffer>& buffer);
 
-  base::ThreadChecker thread_checker_;
+  // Indicates if the decoder is being wrapped by OffloadVideoDecoder; controls
+  // whether callbacks are bound to the current loop on calls.
+  const bool bind_callbacks_;
+
+  SEQUENCE_CHECKER(sequence_checker_);
 
   // |state_| must only be read and written to on |offload_task_runner_| if it
   // is non-null and there are outstanding tasks on the offload thread.
-  DecoderState state_;
+  DecoderState state_ = kUninitialized;
 
   OutputCB output_cb_;
 
@@ -118,17 +110,20 @@ class MEDIA_EXPORT VpxVideoDecoder : public VideoDecoder {
   // |memory_pool_| is a single-threaded memory pool used for VP9 decoding
   // with no alpha. |frame_pool_| is used for all other cases.
   scoped_refptr<FrameBufferPool> memory_pool_;
-
-  // High resolution vp9 may block the media thread for too long, in such cases
-  // offload the decoding to a task pool.
-  scoped_refptr<base::SequencedTaskRunner> offload_task_runner_;
-
   VideoFramePool frame_pool_;
 
-  // NOTE: Weak pointers must be invalidated before all other member variables.
-  base::WeakPtrFactory<VpxVideoDecoder> weak_factory_;
-
   DISALLOW_COPY_AND_ASSIGN(VpxVideoDecoder);
+};
+
+// Helper class for creating a VpxVideoDecoder which will offload > 720p VP9
+// content from the media thread.
+class OffloadedVpxVideoDecoder : public OffloadVideoDecoder {
+ public:
+  OffloadedVpxVideoDecoder()
+      : OffloadVideoDecoder(1024,
+                            std::vector<VideoCodec>(1, kCodecVP9),
+                            std::make_unique<VpxVideoDecoder>(
+                                VpxVideoDecoder::OffloadState::kOffloaded)) {}
 };
 
 }  // namespace media
