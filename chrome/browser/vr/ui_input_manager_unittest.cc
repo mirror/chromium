@@ -266,7 +266,7 @@ TEST_F(UiInputManagerContentTest, NoMouseMovesDuringClick) {
 }
 
 TEST_F(UiInputManagerContentTest, ExitPromptHitTesting) {
-  manager_->SetExitVrPromptEnabled(true, UiUnsupportedMode::kUnhandledPageInfo);
+  model_->active_modal_prompt = kModalPromptExitVRForSiteInfo;
   EXPECT_TRUE(AnimateBy(MsToDelta(500)));
 
   UiElement* exit_prompt =
