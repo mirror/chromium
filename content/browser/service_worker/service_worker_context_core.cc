@@ -163,6 +163,34 @@ class ClearAllServiceWorkersHelper
   DISALLOW_COPY_AND_ASSIGN(ClearAllServiceWorkersHelper);
 };
 
+class RegistrationDeletionListener
+    : public ServiceWorkerRegistration::Listener {
+ public:
+  // Wait until a |registration| is deleted and call |callback|.
+  static void WaitForDeletion(
+      scoped_refptr<ServiceWorkerRegistration> registration,
+      const base::Closure& callback) {
+    DCHECK(!registration->is_uninstalling());
+    registration->AddListener(
+        new RegistrationDeletionListener(registration, callback));
+  }
+
+  void OnRegistrationDeleted(ServiceWorkerRegistration* registration) override {
+    registration->RemoveListener(this);
+    callback_.Run();
+    delete this;
+  }
+
+ private:
+  RegistrationDeletionListener(
+      scoped_refptr<ServiceWorkerRegistration> registration,
+      const base::Closure& callback)
+      : registration_(registration), callback_(callback) {}
+  virtual ~RegistrationDeletionListener() = default;
+
+  scoped_refptr<ServiceWorkerRegistration> registration_;
+  base::Closure callback_;
+};
 }  // namespace
 
 const base::FilePath::CharType
@@ -474,38 +502,41 @@ void ServiceWorkerContextCore::UnregisterServiceWorker(
                  callback));
 }
 
-void ServiceWorkerContextCore::UnregisterServiceWorkers(
+void ServiceWorkerContextCore::DeleteForOrigin(
     const GURL& origin,
     const UnregistrationCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  storage()->GetAllRegistrationsInfos(base::Bind(
-      &ServiceWorkerContextCore::DidGetAllRegistrationsForUnregisterForOrigin,
-      AsWeakPtr(), callback, origin));
+  storage()->GetRegistrationsForOrigin(
+      origin,
+      base::Bind(
+          &ServiceWorkerContextCore::DidGetRegistrationsForDeleteForOrigin,
+          AsWeakPtr(), callback));
 }
 
-void ServiceWorkerContextCore::DidGetAllRegistrationsForUnregisterForOrigin(
+void ServiceWorkerContextCore::DidGetRegistrationsForDeleteForOrigin(
     const UnregistrationCallback& result,
-    const GURL& origin,
     ServiceWorkerStatusCode status,
-    const std::vector<ServiceWorkerRegistrationInfo>& registrations) {
+    const std::vector<scoped_refptr<ServiceWorkerRegistration>>&
+        registrations) {
   if (status != SERVICE_WORKER_OK) {
     result.Run(status);
     return;
   }
-  std::set<GURL> scopes;
-  for (const auto& registration_info : registrations) {
-    if (origin == registration_info.pattern.GetOrigin()) {
-      scopes.insert(registration_info.pattern);
-    }
-  }
   bool* overall_success = new bool(true);
   base::Closure barrier = base::BarrierClosure(
-      scopes.size(), base::BindOnce(&SuccessReportingCallback,
-                                    base::Owned(overall_success), result));
-
-  for (const GURL& scope : scopes) {
+      2 * registrations.size(),
+      base::BindOnce(&SuccessReportingCallback, base::Owned(overall_success),
+                     result));
+  for (auto registration : registrations) {
+    if (!registration->is_uninstalling()) {
+      RegistrationDeletionListener::WaitForDeletion(registration, barrier);
+    } else {
+      // Deletion will not be triggered if the ServiceWorker is uninstalling.
+      barrier.Run();
+    }
     UnregisterServiceWorker(
-        scope, base::Bind(&SuccessCollectorCallback, barrier, overall_success));
+        registration->GetInfo().pattern,
+        base::Bind(&SuccessCollectorCallback, barrier, overall_success));
   }
 }
 
