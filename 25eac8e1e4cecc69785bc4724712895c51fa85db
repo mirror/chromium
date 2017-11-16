@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "e4561be7_7327f93d",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-16T14:05:01Z",
+      "side": 1,
+      "message": "OK. Let\u0027s keep it.",
+      "parentUuid": "ddb43863_2dbcdc78",
+      "revId": "25eac8e1e4cecc69785bc4724712895c51fa85db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "725c738f_a43b259f",
         "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
         "patchSetId": 7
@@ -123,6 +141,30 @@
       "revId": "25eac8e1e4cecc69785bc4724712895c51fa85db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5696485_6bb7c858",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-16T14:05:01Z",
+      "side": 1,
+      "message": "Let\u0027s keep it.",
+      "parentUuid": "bba2a53f_f4ac0710",
+      "range": {
+        "startLine": 1282,
+        "startChar": 9,
+        "endLine": 1282,
+        "endChar": 16
+      },
+      "revId": "25eac8e1e4cecc69785bc4724712895c51fa85db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
