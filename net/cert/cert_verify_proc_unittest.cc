@@ -589,7 +589,7 @@ TEST_P(CertVerifyProcInternalTest, RejectExpiredCert) {
 }
 
 // Currently, only RSA and DSA keys are checked for weakness, and our example
-// weak size is 768. These could change in the future.
+// weak sizes are 768 and 1024. These could change in the future.
 //
 // Note that this means there may be false negatives: keys for other
 // algorithms and which are weak will pass this test.
@@ -599,7 +599,7 @@ static bool IsWeakKeyType(const std::string& key_type) {
   std::string type = key_type.substr(pos + 1);
 
   if (type == "rsa" || type == "dsa")
-    return size == "768";
+    return size == "768" || size == "1024";
 
   return false;
 }
@@ -2361,8 +2361,8 @@ TEST_F(CertVerifyProcNameTest, DoesntMatchDnsSanTrailingDot) {
 // - If it chains to a private root, the commonName SHOULD match iff the
 //   subjectAltName is absent and the flags allow a fallback.
 TEST_F(CertVerifyProcNameTest, HandlesCommonNameFallbackLocalAnchors) {
-  scoped_refptr<X509Certificate> cert(
-      ImportCertFromFile(GetTestCertsDirectory(), "salesforce_com_test.pem"));
+  scoped_refptr<X509Certificate> cert(ImportCertFromFile(
+      GetTestCertsDirectory(), "addons_mozilla_org_test.pem"));
   ASSERT_TRUE(cert);
 
   CertVerifyResult result;
@@ -2376,9 +2376,8 @@ TEST_F(CertVerifyProcNameTest, HandlesCommonNameFallbackLocalAnchors) {
   error = 0;
   result.is_issued_by_known_root = true;
   verify_proc = new MockCertVerifyProc(result);
-  error = verify_proc->Verify(cert.get(), "prerelna1.pre.salesforce.com",
-                              std::string(), 0, nullptr, CertificateList(),
-                              &verify_result);
+  error = verify_proc->Verify(cert.get(), "addons.mozilla.org", std::string(),
+                              0, nullptr, CertificateList(), &verify_result);
   EXPECT_THAT(error, IsError(ERR_CERT_COMMON_NAME_INVALID));
   EXPECT_TRUE(verify_result.cert_status & CERT_STATUS_COMMON_NAME_INVALID);
 
@@ -2388,7 +2387,7 @@ TEST_F(CertVerifyProcNameTest, HandlesCommonNameFallbackLocalAnchors) {
   result.is_issued_by_known_root = true;
   verify_proc = new MockCertVerifyProc(result);
   error = verify_proc->Verify(
-      cert.get(), "prerelna1.pre.salesforce.com", std::string(),
+      cert.get(), "addons.mozilla.org", std::string(),
       CertVerifier::VERIFY_ENABLE_COMMON_NAME_FALLBACK_LOCAL_ANCHORS, nullptr,
       CertificateList(), &verify_result);
   EXPECT_THAT(error, IsError(ERR_CERT_COMMON_NAME_INVALID));
@@ -2400,9 +2399,8 @@ TEST_F(CertVerifyProcNameTest, HandlesCommonNameFallbackLocalAnchors) {
   error = 0;
   result.is_issued_by_known_root = false;
   verify_proc = new MockCertVerifyProc(result);
-  error = verify_proc->Verify(cert.get(), "prerelna1.pre.salesforce.com",
-                              std::string(), 0, nullptr, CertificateList(),
-                              &verify_result);
+  error = verify_proc->Verify(cert.get(), "addons.mozilla.org", std::string(),
+                              0, nullptr, CertificateList(), &verify_result);
   EXPECT_THAT(error, IsError(ERR_CERT_COMMON_NAME_INVALID));
   EXPECT_TRUE(verify_result.cert_status & CERT_STATUS_COMMON_NAME_INVALID);
 
@@ -2413,7 +2411,7 @@ TEST_F(CertVerifyProcNameTest, HandlesCommonNameFallbackLocalAnchors) {
   result.is_issued_by_known_root = false;
   verify_proc = new MockCertVerifyProc(result);
   error = verify_proc->Verify(
-      cert.get(), "prerelna1.pre.salesforce.com", std::string(),
+      cert.get(), "addons.mozilla.org", std::string(),
       CertVerifier::VERIFY_ENABLE_COMMON_NAME_FALLBACK_LOCAL_ANCHORS, nullptr,
       CertificateList(), &verify_result);
   EXPECT_THAT(error, IsOk());
