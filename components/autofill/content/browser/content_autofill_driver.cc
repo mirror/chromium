@@ -45,6 +45,7 @@ ContentAutofillDriver::ContentAutofillDriver(
     autofill_handler_ = base::MakeUnique<AutofillHandlerProxy>(this, provider);
     GetAutofillAgent()->SetUserGestureRequired(false);
     GetAutofillAgent()->SetSecureContextRequired(true);
+    GetAutofillAgent()->SetFocusRequiresScroll(false);
   } else {
     autofill_handler_ = base::MakeUnique<AutofillManager>(
         this, client, app_locale, enable_download_manager);

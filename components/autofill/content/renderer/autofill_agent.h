@@ -85,6 +85,7 @@ class AutofillAgent : public content::RenderFrameObserver,
       const PasswordFormFillData& form_data) override;
   void SetUserGestureRequired(bool required) override;
   void SetSecureContextRequired(bool required) override;
+  void SetFocusRequiresScroll(bool require) override;
 
   void ShowNotSecureWarning(const blink::WebInputElement& element);
 
@@ -287,6 +288,9 @@ class AutofillAgent : public content::RenderFrameObserver,
   // Whether or not the secure context is required to query autofill suggestion.
   // Default to false.
   bool is_secure_context_required_;
+
+  // Whether or not we delay focus handling until scrolling occurs.
+  bool focus_requires_scroll_;
 
   std::unique_ptr<PageClickTracker> page_click_tracker_;
 

@@ -39,6 +39,8 @@ class PageClickTracker {
   void DidCompleteFocusChangeInFrame();
   void DidReceiveLeftMouseDownOrGestureTapInNode(const blink::WebNode& node);
 
+  void SetFocusRequiresScroll(bool require);
+
   content::RenderFrame* render_frame() const { return render_frame_; }
 
  private:
@@ -51,6 +53,8 @@ class PageClickTracker {
   // afterwards. This helps track whether an event happened after a node was
   // already focused, or if it caused the focus to change.
   bool was_focused_before_now_;
+
+  bool focus_requires_scroll_;
 
   // The listener getting the actual notifications.
   PageClickListener* listener_;
