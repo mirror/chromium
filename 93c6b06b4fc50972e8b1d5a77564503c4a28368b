@@ -82,6 +82,23 @@
     },
     {
       "key": {
+        "uuid": "a40dd631_8ac504dc",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-16T17:09:14Z",
+      "side": 1,
+      "message": "combine these two !just_skipped then clauses?\n\nAlso add a comment as to why the cursor is saved?",
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "229e0f15_e9285df6",
         "filename": "components/autofill/core/browser/credit_card_field.cc",
         "patchSetId": 19
@@ -122,6 +139,57 @@
         "endLine": 228,
         "endChar": 51
       },
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f03233_28222c40",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-16T17:09:14Z",
+      "side": 1,
+      "message": "some comments as to why this code is here plz.",
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ffc661_0f6acac2",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-16T17:09:14Z",
+      "side": 1,
+      "message": "comments plz",
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3cda47_7cc58715",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-16T17:09:14Z",
+      "side": 1,
+      "message": "advance past non-focusable fields here?",
       "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -179,6 +247,23 @@
       "writtenOn": "2017-11-16T16:52:03Z",
       "side": 1,
       "message": "Cool, should this be a different CL?",
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b75dc0_d0c75939",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 2132,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-16T17:09:14Z",
+      "side": 1,
+      "message": "does this pick up aria-hidden?",
       "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
