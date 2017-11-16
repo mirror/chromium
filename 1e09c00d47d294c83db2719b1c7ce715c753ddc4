@@ -16,6 +16,24 @@
       "revId": "1e09c00d47d294c83db2719b1c7ce715c753ddc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2070a996_d2cdb242",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-16T07:23:21Z",
+      "side": 1,
+      "message": "There is no behavior change.\n\nThe current code returns non-null result only when InlineBoxWrapper() is non-null, which happens only when the layout object is an atomic inline.\n\nThis is because, by design, InlineBoxWrapper() caches the wrapping InlineBox of an atomic inline-level box.\n\nSee the comment here:\n\nhttps://chromium.googlesource.com/chromium/src/+/6f07ce6c4c237245bb0392c632c7847b29000ee6/third_party/WebKit/Source/core/layout/LayoutBox.h#794",
+      "parentUuid": "f5c8f63c_bc1ec908",
+      "revId": "1e09c00d47d294c83db2719b1c7ce715c753ddc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
