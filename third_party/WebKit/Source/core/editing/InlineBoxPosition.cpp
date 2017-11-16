@@ -264,6 +264,26 @@ InlineBoxPosition ComputeInlineBoxPositionForTextNode(
       primary_direction);
 }
 
+InlineBoxPosition ComputeInlineBoxPositionForAtomicInline(
+    const LayoutObject* layout_object,
+    int caret_offset,
+    TextDirection primary_direction) {
+  // TODO(crbug.com/567964): Change the following |if| into a DCHECK once we
+  // stop setting atomic inline level for non-inline.
+  if (!layout_object->IsInline())
+    return InlineBoxPosition();
+  // An atomic inline must have a box and a wrapping inline box.
+  DCHECK(layout_object->IsBox());
+  DCHECK(ToLayoutBox(layout_object)->InlineBoxWrapper());
+  InlineBox* const inline_box = ToLayoutBox(layout_object)->InlineBoxWrapper();
+  if ((caret_offset > inline_box->CaretMinOffset() &&
+       caret_offset < inline_box->CaretMaxOffset()))
+    return InlineBoxPosition(inline_box, caret_offset);
+  return AdjustInlineBoxPositionForTextDirection(
+      inline_box, caret_offset, layout_object->Style()->GetUnicodeBidi(),
+      primary_direction);
+}
+
 template <typename Strategy>
 InlineBoxPosition ComputeInlineBoxPositionTemplate(
     const PositionTemplate<Strategy>& position,
@@ -284,19 +304,8 @@ InlineBoxPosition ComputeInlineBoxPositionTemplate(
   }
 
   if (layout_object->IsAtomicInlineLevel()) {
-    // TODO(xiaochengh): Simplify, and wrap the code below into a function.
-    if (!layout_object->IsBox())
-      return InlineBoxPosition();
-    InlineBox* const inline_box =
-        ToLayoutBox(layout_object)->InlineBoxWrapper();
-    if (!inline_box)
-      return InlineBoxPosition();
-    if ((caret_offset > inline_box->CaretMinOffset() &&
-         caret_offset < inline_box->CaretMaxOffset()))
-      return InlineBoxPosition(inline_box, caret_offset);
-    return AdjustInlineBoxPositionForTextDirection(
-        inline_box, caret_offset, layout_object->Style()->GetUnicodeBidi(),
-        primary_direction);
+    return ComputeInlineBoxPositionForAtomicInline(layout_object, caret_offset,
+                                                   primary_direction);
   }
 
   if (layout_object->IsLayoutBlockFlow()) {
