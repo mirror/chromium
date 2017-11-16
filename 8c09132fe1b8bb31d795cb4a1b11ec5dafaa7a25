@@ -1,0 +1,249 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78607be8_2510f1f4",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_fence.txt",
+        "patchSetId": 37
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-16T20:08:03Z",
+      "side": 1,
+      "message": "this naming is somewhat reverse from ANDROID_native_fence_sync where \"dup\" refers when we extract a handle from an existing fence object instead of importing a fence to GL. Can we use the CreateGpuFence name here instead?",
+      "range": {
+        "startLine": 38,
+        "startChar": 15,
+        "endLine": 38,
+        "endChar": 40
+      },
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e1dd967_0da37daf",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_fence.txt",
+        "patchSetId": 37
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-16T20:08:03Z",
+      "side": 1,
+      "message": "Can this be named InsertGpuFence? so we can use the \"Create\" name above and that would also match CHROMIUM_sync_point a bit better?",
+      "range": {
+        "startLine": 46,
+        "startChar": 15,
+        "endLine": 46,
+        "endChar": 37
+      },
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddee53d2_b1bb26f3",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-16T20:08:03Z",
+      "side": 1,
+      "message": "can this return a fence id instead? similar to CreateImage..",
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a329a2e_77f68fff",
+        "filename": "gpu/command_buffer/client/gpu_control.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-16T20:08:03Z",
+      "side": 1,
+      "message": "can this be:\n\n\"int32_t CreateGpuFence(ClientGpuFence fence)\"\n\nconsistent with CreateImage above..",
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0e6a458_105ab4f0",
+        "filename": "gpu/command_buffer/client/gpu_control.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-16T20:08:03Z",
+      "side": 1,
+      "message": "Can this be:\n\n\"GetGpuFence(int32_t id, const base::Callback\u003cvoid(std::unique_ptr\u003cgfx::GpuFence\u003e)\u003e\u0026 callback)\"?\n\nto minimize the use of the handle..",
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34fca79e_368b8835",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-16T20:08:03Z",
+      "side": 1,
+      "message": "I\u0027m failing to see the need for all these callbacks as part of this class. It seems like a basic manager class like gpu/command_buffer/service/image_manager.h/cc should be sufficient with appropriate client APIs.",
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fff031b8_688170a3",
+        "filename": "ui/gfx/gpu_fence.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-16T20:08:03Z",
+      "side": 1,
+      "message": "I think this should be a base::ScopedFD or similar to make lifetime and ownership clear. Handle/FileDescriptor should be limited to IPC.",
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd7a96b_00970274",
+        "filename": "ui/gfx/gpu_fence_handle.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-16T20:08:03Z",
+      "side": 1,
+      "message": "I don\u0027t think we should have this as it encourage misuse/overuse of this handle type. Can we instead have a \"base::ScopedFD TakeFileFromHandle\" function below for consuming a handle? consistent with https://chromium-review.googlesource.com/c/chromium/src/+/717796, makes it more clear that these handles should only be used for IPC...",
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9576d7e8_2980885d",
+        "filename": "ui/gl/gl_fence.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-16T20:08:03Z",
+      "side": 1,
+      "message": "nit: move static functions above next to other static functions",
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7782354_86aa1c24",
+        "filename": "ui/gl/gl_fence.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-16T20:08:03Z",
+      "side": 1,
+      "message": "nit: CreateGpuFence?",
+      "range": {
+        "startLine": 47,
+        "startChar": 34,
+        "endLine": 47,
+        "endChar": 51
+      },
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1339c24_600ed453",
+        "filename": "ui/gl/gl_fence_android_native_fence_sync.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-16T20:08:03Z",
+      "side": 1,
+      "message": "nit: I would prefer a static CreateGpuFence function for this when using Initialize that can fail.",
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa030fd9_9d7179da",
+        "filename": "ui/gl/gl_fence_egl.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-16T20:08:03Z",
+      "side": 1,
+      "message": "can we remove this argument a require Initialize to always be called?",
+      "range": {
+        "startLine": 20,
+        "startChar": 22,
+        "endLine": 20,
+        "endChar": 53
+      },
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a8ea9ee_decf3991",
+        "filename": "ui/gl/gl_fence_egl.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-16T20:08:03Z",
+      "side": 1,
+      "message": "seems like this should be part of GLFenceAndroidNativeFenceSync. why isn\u0027t it?",
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
