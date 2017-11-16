@@ -195,6 +195,7 @@ var kRTCIceCandidateStats = new RTCStats_(null, {
   port: 'number',
   protocol: 'string',
   candidateType: 'string',
+  networkType: 'string',
   priority: 'number',
   url: 'string',
   deleted: 'boolean',
