@@ -6320,13 +6320,13 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   // updated to accommodate.
   EXPECT_NE(cc::kTouchActionAuto, cc::kTouchActionNone);
 
-  // Verify the child's input router is initially set for kTouchActionAuto. The
-  // TouchStart event will trigger kTouchActionNone being sent back to the
-  // browser.
+  // Verify the child's input router is initially not set. The TouchStart event
+  // will trigger kTouchActionNone being sent back to the browser.
   RenderWidgetHostImpl* child_render_widget_host =
       root->child_at(0)->current_frame_host()->GetRenderWidgetHost();
-  EXPECT_EQ(cc::kTouchActionAuto,
-            child_render_widget_host->input_router()->AllowedTouchAction());
+  base::Optional<cc::TouchAction> allowed_touch_action =
+      child_render_widget_host->input_router()->AllowedTouchAction();
+  EXPECT_FALSE(allowed_touch_action.has_value());
 
   // Simulate touch event to sub-frame.
   gfx::Point child_center(150, 150);
@@ -6361,8 +6361,10 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
 
   // Verify the presence of the touch handler in the child frame correctly
   // propagates touch-action:none information back to the child's input router.
-  EXPECT_EQ(cc::kTouchActionNone,
-            child_render_widget_host->input_router()->AllowedTouchAction());
+  allowed_touch_action =
+      child_render_widget_host->input_router()->AllowedTouchAction();
+  EXPECT_TRUE(allowed_touch_action.has_value());
+  EXPECT_EQ(cc::kTouchActionNone, allowed_touch_action.value());
 }
 
 // This test verifies that the test in
@@ -6390,14 +6392,13 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   // updated to accommodate.
   EXPECT_NE(cc::kTouchActionAuto, cc::kTouchActionNone);
 
-  // Verify the main frame's input router is initially set for
-  // kTouchActionAuto. The
-  // TouchStart event will trigger kTouchActionNone being sent back to the
-  // browser.
+  // Verify the main frame's input router is initially not set. The TouchStart
+  // event will trigger kTouchActionNone being sent back to the browser.
   RenderWidgetHostImpl* render_widget_host =
       root->current_frame_host()->GetRenderWidgetHost();
-  EXPECT_EQ(cc::kTouchActionAuto,
-            render_widget_host->input_router()->AllowedTouchAction());
+  base::Optional<cc::TouchAction> allowed_touch_action =
+      render_widget_host->input_router()->AllowedTouchAction();
+  EXPECT_FALSE(allowed_touch_action.has_value());
 
   // Simulate touch event to sub-frame.
   gfx::Point frame_center(150, 150);
@@ -6432,8 +6433,10 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
 
   // Verify the presence of the touch handler in the child frame correctly
   // propagates touch-action:none information back to the child's input router.
-  EXPECT_EQ(cc::kTouchActionNone,
-            render_widget_host->input_router()->AllowedTouchAction());
+  allowed_touch_action =
+      render_widget_host->input_router()->AllowedTouchAction();
+  EXPECT_TRUE(allowed_touch_action.has_value());
+  EXPECT_EQ(cc::kTouchActionNone, allowed_touch_action.value());
 }
 
 namespace {
