@@ -15,7 +15,6 @@
 #include "base/memory/ref_counted.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
-#import "base/test/ios/wait_util.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/values.h"
 #include "components/autofill/core/common/password_form_fill_data.h"
@@ -31,6 +30,7 @@
 #include "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
 #import "ios/chrome/browser/passwords/js_password_manager.h"
 #import "ios/chrome/browser/passwords/password_form_filler.h"
+#import "ios/testing/wait_util.h"
 #import "ios/web/public/navigation_item.h"
 #import "ios/web/public/navigation_manager.h"
 #include "ios/web/public/ssl_status.h"
@@ -568,9 +568,10 @@ TEST_F(PasswordControllerTest, FLAKY_FindPasswordFormsInView) {
       block_was_called = YES;
       forms = result;
     }];
-    base::test::ios::WaitUntilCondition(^bool() {
-      return block_was_called;
-    });
+    testing::WaitUntilConditionOrTimeout(testing::kWaitForJSCompletionTimeout,
+                                         ^bool() {
+                                           return block_was_called;
+                                         });
     if (data.expected_form_found) {
       ASSERT_EQ(1U, forms.size());
       EXPECT_EQ(base::ASCIIToUTF16(data.expected_username_element),
@@ -666,9 +667,10 @@ TEST_F(PasswordControllerTest, FLAKY_GetSubmittedPasswordForm) {
     [passwordController_
         extractSubmittedPasswordForm:FormName(data.number_of_forms_to_submit)
                    completionHandler:completion_handler];
-    base::test::ios::WaitUntilCondition(^bool() {
-      return block_was_called;
-    });
+    testing::WaitUntilConditionOrTimeout(testing::kWaitForJSCompletionTimeout,
+                                         ^bool() {
+                                           return block_was_called;
+                                         });
   }
 }
 
@@ -911,9 +913,10 @@ TEST_F(PasswordControllerTest, FillPasswordForm) {
                           block_was_called = YES;
                           EXPECT_EQ(data.should_succeed, success);
                         }];
-    base::test::ios::WaitUntilCondition(^bool() {
-      return block_was_called;
-    });
+    testing::WaitUntilConditionOrTimeout(testing::kWaitForJSCompletionTimeout,
+                                         ^bool() {
+                                           return block_was_called;
+                                         });
 
     id result = ExecuteJavaScript(kInputFieldValueVerificationScript);
     EXPECT_NSEQ(data.expected_result, result);
@@ -935,7 +938,7 @@ TEST_F(PasswordControllerTest, FindAndFillOnePasswordForm) {
                if (complete)
                  ++success_counter;
              }];
-  base::test::ios::WaitUntilCondition(^{
+  testing::WaitUntilConditionOrTimeout(testing::kWaitForJSCompletionTimeout, ^{
     return call_counter == 1;
   });
   EXPECT_EQ(1, success_counter);
@@ -968,7 +971,7 @@ TEST_F(PasswordControllerTest, FindAndFillMultiplePasswordForms) {
                          << success_counter;
              }];
   // There should be 3 password forms and only 2 successfully filled forms.
-  base::test::ios::WaitUntilCondition(^{
+  testing::WaitUntilConditionOrTimeout(testing::kWaitForJSCompletionTimeout, ^{
     return call_counter == 3;
   });
   EXPECT_EQ(2, success_counter);
@@ -991,7 +994,7 @@ BOOL PasswordControllerTest::BasicFormFill(NSString* html) {
                         block_was_called = YES;
                         return_value = success;
                       }];
-  base::test::ios::WaitUntilCondition(^bool() {
+  testing::WaitUntilConditionOrTimeout(testing::kWaitForActionTimeout, ^bool() {
     return block_was_called;
   });
   return return_value;
@@ -1087,9 +1090,10 @@ TEST_F(PasswordControllerTest, SuggestionUpdateTests) {
                         // Verify that the fill reports failed.
                         EXPECT_FALSE(success);
                       }];
-  base::test::ios::WaitUntilCondition(^bool() {
-    return block_was_called;
-  });
+  testing::WaitUntilConditionOrTimeout(testing::kWaitForJSCompletionTimeout,
+                                       ^bool() {
+                                         return block_was_called;
+                                       });
 
   // Verify that the form has not been autofilled.
   EXPECT_NSEQ(@"[]=, onkeyup=false, onchange=false",
@@ -1205,9 +1209,10 @@ TEST_F(PasswordControllerTest, SelectingSuggestionShouldFillPasswordForm) {
                         // Verify that the fill reports failed.
                         EXPECT_FALSE(success);
                       }];
-  base::test::ios::WaitUntilCondition(^bool() {
-    return block_was_called;
-  });
+  testing::WaitUntilConditionOrTimeout(testing::kWaitForJSCompletionTimeout,
+                                       ^bool() {
+                                         return block_was_called;
+                                       });
 
   // Verify that the form has not been autofilled.
   EXPECT_NSEQ(@"[]=, onkeyup=false, onchange=false",
@@ -1230,9 +1235,10 @@ TEST_F(PasswordControllerTest, SelectingSuggestionShouldFillPasswordForm) {
                                   forField:@"u"
                                       form:base::SysUTF8ToNSString(FormName(0))
                          completionHandler:completion];
-  base::test::ios::WaitUntilCondition(^bool() {
-    return block_was_called;
-  });
+  testing::WaitUntilConditionOrTimeout(testing::kWaitForJSCompletionTimeout,
+                                       ^bool() {
+                                         return block_was_called;
+                                       });
 }
 
 // Tests with invalid inputs.
@@ -1434,7 +1440,7 @@ TEST_F(PasswordControllerTest, SendingToStoreDynamicallyAddedFormsOnFocus) {
   ExecuteJavaScript(kSetUsernameInFocusScript);
 
   // Wait until GetLogins is called.
-  base::test::ios::WaitUntilCondition(^bool() {
+  testing::WaitUntilConditionOrTimeout(testing::kWaitForActionTimeout, ^bool() {
     return *p_get_logins_called;
   });
 }
