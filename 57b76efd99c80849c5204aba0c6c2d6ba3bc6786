@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dafffaef_8411b26b",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2017-11-16T18:27:50Z",
+      "side": 1,
+      "message": "Are these really all an indication of the same bug? I thought it was pretty much just the third one.",
+      "range": {
+        "startLine": 252,
+        "startChar": 7,
+        "endLine": 260,
+        "endChar": 83
+      },
+      "revId": "57b76efd99c80849c5204aba0c6c2d6ba3bc6786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f7134ab_3b171f09",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2017-11-16T18:27:50Z",
+      "side": 1,
+      "message": "Why is this the case? Can\u0027t this just be reentrant? Why would it be called more than once in the first place?",
+      "range": {
+        "startLine": 364,
+        "startChar": 37,
+        "endLine": 365,
+        "endChar": 10
+      },
+      "revId": "57b76efd99c80849c5204aba0c6c2d6ba3bc6786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
