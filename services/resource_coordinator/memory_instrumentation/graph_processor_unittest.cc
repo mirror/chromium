@@ -74,6 +74,13 @@ class GraphProcessorTest : public testing::Test {
       const base::RepeatingCallback<void(Node*)>& callback) {
     GraphProcessor::VisitInDepthFirstPostOrder(node, visited, path, callback);
   }
+
+  void VisitInDepthFirstPreOrder(
+      Node* node,
+      std::set<const Node*>* visited,
+      const base::RepeatingCallback<void(Node*)>& callback) {
+    GraphProcessor::VisitInDepthFirstPreOrder(node, visited, callback);
+  }
 };
 
 TEST_F(GraphProcessorTest, SmokeComputeMemoryGraph) {
@@ -753,6 +760,52 @@ TEST_F(GraphProcessorTest, VisitInDepthFirstPostOrder) {
   std::set<const Node*> visited;
   std::set<const Node*> path;
   VisitInDepthFirstPostOrder(root, &visited, &path, callback.Get());
+}
+
+TEST_F(GraphProcessorTest, VisitInDepthFirstPreOrder) {
+  GlobalDumpGraph graph;
+  Process process(1, &graph);
+  Node* root = process.root();
+
+  Node c1(&process, root);
+  Node c2(&process, root);
+  Node c2_c1(&process, &c2);
+  Node c2_c2(&process, &c2);
+  Node c3(&process, root);
+  Node c3_c1(&process, &c3);
+  Node c3_c2(&process, &c3);
+
+  root->InsertChild("c1", &c1);
+  root->InsertChild("c2", &c2);
+  root->InsertChild("c3", &c3);
+  c2.InsertChild("c1", &c2_c1);
+  c2.InsertChild("c2", &c2_c2);
+  c3.InsertChild("c1", &c3_c1);
+  c3.InsertChild("c2", &c3_c2);
+
+  // |c2_c2| owns |c3_c2|. Note this is opposite of post-order.
+  Edge edge(&c2_c2, &c3_c2, 0);
+  c3_c2.AddOwnedByEdge(&edge);
+  c2_c2.SetOwnsEdge(&edge);
+
+  // This method should always call owned nodes and parents before the node
+  // itself.
+  base::MockCallback<base::RepeatingCallback<void(Node*)>> callback;
+  {
+    testing::InSequence dummy;
+
+    EXPECT_CALL(callback, Run(root));
+    EXPECT_CALL(callback, Run(&c1));
+    EXPECT_CALL(callback, Run(&c2));
+    EXPECT_CALL(callback, Run(&c2_c1));
+    EXPECT_CALL(callback, Run(&c3));
+    EXPECT_CALL(callback, Run(&c3_c1));
+    EXPECT_CALL(callback, Run(&c3_c2));
+    EXPECT_CALL(callback, Run(&c2_c2));
+  }
+
+  std::set<const Node*> visited;
+  VisitInDepthFirstPreOrder(root, &visited, callback.Get());
 }
 
 }  // namespace memory_instrumentation

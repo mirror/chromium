@@ -23,6 +23,7 @@ using Process = memory_instrumentation::GlobalDumpGraph::Process;
 namespace {
 
 const char kSizeEntryName[] = "size";
+const char kEffectiveSizeEntryName[] = "effective_size";
 
 Node::Entry::ScalarUnits EntryUnitsFromString(std::string units) {
   if (units == MemoryAllocatorDump::kUnitsBytes) {
@@ -132,17 +133,30 @@ void GraphProcessor::AddOverheadsAndPropogateEntries(
 
 // static
 void GraphProcessor::CalculateSizesForGraph(GlobalDumpGraph* global_graph) {
+  auto* global_root = global_graph->shared_memory_graph()->root();
+
   // Eighth pass: calculate the size field for nodes by considering the sizes
   // of their children and owners.
   {
     std::set<const Node*> visited;
     std::set<const Node*> path;
-    auto* global_root = global_graph->shared_memory_graph()->root();
     VisitInDepthFirstPostOrder(global_root, &visited, &path,
                                base::BindRepeating(&CalculateSizeForNode));
     for (auto& pid_to_process : global_graph->process_dump_graphs()) {
       VisitInDepthFirstPostOrder(pid_to_process.second->root(), &visited, &path,
                                  base::BindRepeating(&CalculateSizeForNode));
+    }
+  }
+
+  // Ninth pass: Calculate not-owned and not-owning sub-sizes of all nodes.
+  {
+    std::set<const Node*> visited;
+    std::set<const Node*> path;
+    VisitInDepthFirstPostOrder(global_root, &visited, &path,
+                               base::BindRepeating(&CalculateDumpSubSizes));
+    for (auto& pid_to_process : global_graph->process_dump_graphs()) {
+      VisitInDepthFirstPostOrder(pid_to_process.second->root(), &visited, &path,
+                                 base::BindRepeating(&CalculateDumpSubSizes));
     }
   }
 }
@@ -473,7 +487,7 @@ void GraphProcessor::AggregateNumericsRecursively(Node* node) {
     for (const auto& name_to_entry : *path_to_child.second->entries()) {
       const std::string& name = name_to_entry.first;
       if (name_to_entry.second.type == Node::Entry::Type::kUInt64 &&
-          name != kSizeEntryName && name != "effective_size") {
+          name != kSizeEntryName && name != kEffectiveSizeEntryName) {
         numeric_names.insert(name);
       }
     }
@@ -607,6 +621,84 @@ void GraphProcessor::VisitInDepthFirstPostOrder(
 
   // The current node is no longer on the path.
   path->erase(node);
+}
+
+// Assumes that this function has been called on all children and owner nodes.
+// static
+void GraphProcessor::CalculateDumpSubSizes(Node* node) {
+  // Completely skip dumps with undefined size.
+  base::Optional<uint64_t> size_opt = GetSizeEntryOfNode(node);
+  if (!size_opt)
+    return;
+
+  // If the dump is a leaf node, then both sub-sizes are equal to the size.
+  if (node->children()->empty()) {
+    node->not_owning_sub_size = *size_opt;
+    node->not_owned_sub_size = *size_opt;
+    return;
+  }
+
+  // Calculate this node's not-owning sub-size by summing up the not-owning
+  // sub-sizes of children which do not own another node.
+  for (const auto& path_to_child : *node->children()) {
+    if (path_to_child.second->owns_edge())
+      continue;
+    node->not_owning_sub_size += path_to_child.second->not_owning_sub_size;
+  }
+
+  // Calculate this dump's not-owned sub-size.
+  uint64_t not_owned_sub_size = 0;
+  for (const auto& path_to_child : *node->children()) {
+    Node* child = path_to_child.second;
+
+    // If the child dump is not owned, then add its not-owned sub-size.
+    if (child->owned_by_edges()->empty()) {
+      not_owned_sub_size += child->not_owned_sub_size;
+      continue;
+    }
+
+    // If the child dump is owned, then add the difference between its size
+    // and the largest owner.
+    uint64_t largest_owner_size = 0;
+    for (Edge* edge : *child->owned_by_edges()) {
+      uint64_t source_size = GetSizeEntryOfNode(edge->source()).value_or(0);
+      largest_owner_size = std::max(largest_owner_size, source_size);
+    }
+    uint64_t child_size = GetSizeEntryOfNode(child).value_or(0);
+    node->not_owned_sub_size += child_size - largest_owner_size;
+  }
+}
+
+// static
+void GraphProcessor::VisitInDepthFirstPreOrder(
+    Node* node,
+    std::set<const Node*>* visited,
+    const base::RepeatingCallback<void(Node*)>& callback) {
+  // If the node has already been visited, don't visit it again.
+  if (visited->find(node) != visited->end())
+    return;
+
+  // If we haven't visited the node which this node owns then wait for that.
+  if (node->owns_edge() && visited->count(node->owns_edge()->target()) == 0)
+    return;
+
+  // If we haven't visited the node's parent then wait for that.
+  if (node->parent() && visited->count(node->parent()) == 0)
+    return;
+
+  // Visit the current node itself.
+  callback.Run(node);
+  visited->insert(node);
+
+  // Visit all owners of this node.
+  for (auto* edge : *node->owned_by_edges()) {
+    VisitInDepthFirstPreOrder(edge->source(), visited, callback);
+  }
+
+  // Visit all children of this node.
+  for (auto name_to_child : *node->children()) {
+    VisitInDepthFirstPreOrder(name_to_child.second, visited, callback);
+  }
 }
 
 }  // namespace memory_instrumentation
