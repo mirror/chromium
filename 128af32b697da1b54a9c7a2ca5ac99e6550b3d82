@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4082ad29_da2bca11",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-16T22:55:50Z",
+      "side": 1,
+      "message": "model_log_start_delay_sec?",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 26
+      },
+      "revId": "128af32b697da1b54a9c7a2ca5ac99e6550b3d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a3748b9_d0d97013",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-16T22:55:50Z",
+      "side": 1,
+      "message": "What does \"start making a prediction\" mean? How long do you expect making the prediction to take?\n\nI think these fields might be less confusing if they\u0027re explained only in terms of logging (\"Event logging will be triggered...\") and not in terms of inference/\"model\" at the same time.",
+      "range": {
+        "startLine": 14,
+        "startChar": 69,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "128af32b697da1b54a9c7a2ca5ac99e6550b3d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd69114_13651315",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-16T22:55:50Z",
+      "side": 1,
+      "message": "everything in this proto is \"optional\" -- should some of these fields not be optional?",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 10
+      },
+      "revId": "128af32b697da1b54a9c7a2ca5ac99e6550b3d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06c71c0_119704ba",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-16T22:55:50Z",
+      "side": 1,
+      "message": "How would you feel about breaking these fields into a separate message for model parameters, so you wouldn\u0027t need the \"model_\" prefix or the // 1. // 2. // 3. comments?",
+      "range": {
+        "startLine": 22,
+        "startChar": 17,
+        "endLine": 22,
+        "endChar": 40
+      },
+      "revId": "128af32b697da1b54a9c7a2ca5ac99e6550b3d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f17bda2c_50f6b675",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-16T22:55:50Z",
+      "side": 1,
+      "message": "can you make this clearer? eg \"Event type describing whether the user returned or we timed out waiting for activity.\"",
+      "range": {
+        "startLine": 25,
+        "startChar": 16,
+        "endLine": 25,
+        "endChar": 34
+      },
+      "revId": "128af32b697da1b54a9c7a2ca5ac99e6550b3d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43468246_f1f6cece",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-16T22:55:50Z",
+      "side": 1,
+      "message": "why do the enums start at 1 instead of 0?",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 19
+      },
+      "revId": "128af32b697da1b54a9c7a2ca5ac99e6550b3d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41403f1d_aa56fd82",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-16T22:55:50Z",
+      "side": 1,
+      "message": "none of this is currently used ;-)",
+      "range": {
+        "startLine": 34,
+        "startChar": 27,
+        "endLine": 35,
+        "endChar": 10
+      },
+      "revId": "128af32b697da1b54a9c7a2ca5ac99e6550b3d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55c655de_429dd94f",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-16T22:55:50Z",
+      "side": 1,
+      "message": "please clarify difference between activity and user activity",
+      "range": {
+        "startLine": 55,
+        "startChar": 10,
+        "endLine": 55,
+        "endChar": 18
+      },
+      "revId": "128af32b697da1b54a9c7a2ca5ac99e6550b3d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b44a3ac_9d0c7333",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-16T22:55:50Z",
+      "side": 1,
+      "message": "Similarly, \"when event logging starts\". I think most of the implementation is going to be in terms of logging and gathering events, and not the \"model\". It\u0027s very clear to me what \"logging start\" means but \"model start\" seems ambiguous.",
+      "range": {
+        "startLine": 71,
+        "startChar": 39,
+        "endLine": 71,
+        "endChar": 60
+      },
+      "revId": "128af32b697da1b54a9c7a2ca5ac99e6550b3d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cc47b8c_6b594613",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-16T22:55:50Z",
+      "side": 1,
+      "message": "remove this sentence... as written, it implies that we\u0027d have Chrome OS tablets/phones.",
+      "range": {
+        "startLine": 92,
+        "startChar": 63,
+        "endLine": 93,
+        "endChar": 46
+      },
+      "revId": "128af32b697da1b54a9c7a2ca5ac99e6550b3d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
