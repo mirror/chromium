@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6778014f_a5a955c2",
+        "filename": "ios/third_party/motion_interchange_objc/README.chromium",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-16T22:01:19Z",
+      "side": 1,
+      "message": "Is it something for animations in Chrome\u0027s Browser UI on iOS, or it\u0027s for animations on sites controlled by JS and so on?",
+      "range": {
+        "startLine": 11,
+        "startChar": 20,
+        "endLine": 12,
+        "endChar": 75
+      },
+      "revId": "ab83661f74e90bcbc21baa2af2ed938be6e8b40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
