@@ -356,7 +356,7 @@ bool Editor::CanCopy() const {
   FrameSelection& selection = GetFrameSelection();
   if (!selection.IsAvailable())
     return false;
-  return selection.ComputeVisibleSelectionInDOMTreeDeprecated().IsRange() &&
+  return selection.GetSelectionInDOMTree().IsRange() &&
          !IsInPasswordFieldWithUnrevealedPassword(
              selection.ComputeVisibleSelectionInDOMTree().Start());
 }

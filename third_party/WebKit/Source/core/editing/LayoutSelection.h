@@ -80,6 +80,15 @@ class SelectionPaintRange {
   WTF::Optional<int> EndOffset() const;
 
   bool IsNull() const { return !start_layout_object_; }
+  bool IsRange() const {
+    return (start_layout_object_ != end_layout_object_ ||
+            start_offset_ != end_offset_);
+  }
+  bool IsCaret() const {
+    return start_layout_object_ ? (start_layout_object_ == end_layout_object_ &&
+                                   start_offset_ == end_offset_)
+                                : false;
+  }
 
  private:
   LayoutObject* start_layout_object_ = nullptr;
@@ -105,6 +114,10 @@ class LayoutSelection final : public GarbageCollected<LayoutSelection> {
   WTF::Optional<int> SelectionStart() const;
   WTF::Optional<int> SelectionEnd() const;
   void OnDocumentShutdown();
+
+  bool IsRange() { return paint_range_.IsRange(); };
+  bool IsCaret() { return paint_range_.IsCaret(); }
+  bool IsNone() { return paint_range_.IsNull(); }
 
   void Trace(blink::Visitor*);
 

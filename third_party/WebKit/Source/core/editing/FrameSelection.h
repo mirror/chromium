@@ -217,6 +217,7 @@ class CORE_EXPORT FrameSelection final
   void ClearDocumentCachedRange();
 
   FrameCaret& FrameCaretForTesting() const { return *frame_caret_; }
+  LayoutSelection& GetLayoutSelection() const { return *layout_selection_; }
 
   WTF::Optional<int> LayoutSelectionStart() const;
   WTF::Optional<int> LayoutSelectionEnd() const;
