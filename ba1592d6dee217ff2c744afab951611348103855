@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae3a53f0_0cfe50b5",
+        "filename": "chrome/browser/supervised_user/child_accounts/child_account_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-16T07:30:40Z",
+      "side": 1,
+      "message": "It feels like this preference should be registered outside of child account code, maybe somewhere in signin instead?",
+      "range": {
+        "startLine": 110,
+        "startChar": 39,
+        "endLine": 110,
+        "endChar": 66
+      },
+      "revId": "ba1592d6dee217ff2c744afab951611348103855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b38ae9a2_8f808393",
+        "filename": "chrome/browser/supervised_user/supervised_user_constants.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-16T07:30:40Z",
+      "side": 1,
+      "message": "This should go into the section above starting in line 10.",
+      "revId": "ba1592d6dee217ff2c744afab951611348103855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f599c4a_d7a3acdb",
+        "filename": "chrome/browser/supervised_user/supervised_user_pref_store.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-16T07:30:40Z",
+      "side": 1,
+      "message": "Move this to the top so the mapping is alphabetically ordered by key.",
+      "range": {
+        "startLine": 63,
+        "startChar": 8,
+        "endLine": 63,
+        "endChar": 53
+      },
+      "revId": "ba1592d6dee217ff2c744afab951611348103855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe35f088_26643a6e",
+        "filename": "chrome/browser/supervised_user/supervised_user_pref_store.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-16T07:30:40Z",
+      "side": 1,
+      "message": "Move up as well please.",
+      "range": {
+        "startLine": 129,
+        "startChar": 23,
+        "endLine": 129,
+        "endChar": 57
+      },
+      "revId": "ba1592d6dee217ff2c744afab951611348103855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07bc650b_168011ee",
+        "filename": "components/signin/core/browser/signin_header_helper_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-16T07:30:40Z",
+      "side": 1,
+      "message": "It might be worth conditionally disabling these tests instead, so they\u0027re at least compiled.",
+      "range": {
+        "startLine": 171,
+        "startChar": 5,
+        "endLine": 171,
+        "endChar": 29
+      },
+      "revId": "ba1592d6dee217ff2c744afab951611348103855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
