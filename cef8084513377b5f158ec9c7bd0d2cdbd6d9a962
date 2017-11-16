@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08ecf7a4_f1dc3fc1",
+        "filename": "base/files/file_util.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T15:30:41Z",
+      "side": 1,
+      "message": "FYI links like this can be turned into a shorter version: https://crbug.com/785333\nAnd webrtc-links too, in that case: https://crbug.com/webrtc/\u003cnumber\u003e.\n\nThe referenced bug has already been Verified, should this TODO be addressed or that bug re-opened?",
+      "revId": "cef8084513377b5f158ec9c7bd0d2cdbd6d9a962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cadc33c_9cfc4f33",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T15:30:41Z",
+      "side": 1,
+      "message": "Here, in LocalWebRtcEventLogStop and OnWebRtcEventLogWrite:\n\nIn more complicated cases you can pass the callback as an argument to the task in question, giving the task the power to decide when the operation is complete and the callback should be posted. (UI thread -\u003e PostTask(reply, whatever arguments);)\n\nThis is also what you do if you want the callback to have multiple arguments.\n\nIn these cases all the async operations of this file are a single function call, the operation is complete by the time the task function returns. You can use PostTaskAndReply to invoke the callback with the return value of the task, meaning a file path or success status can be the return value of the task, and this can be provided to the reply without significant effort. The function that is used for reply simply has the desired arguments like success or file path.",
+      "revId": "cef8084513377b5f158ec9c7bd0d2cdbd6d9a962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73f1385_dd833a69",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T15:30:41Z",
+      "side": 1,
+      "message": "It is good practice to avoid making the implementation part of the test. If there is a bug in GetLocalFilePath the test would expect the incorrect file path and succeed.\n\nIf you make the file path an argument of the reply you can inspect that file in all the tests that need to inspect the file, and a have separate test(s) to ensure the file path you get makes sense (EXPECT_EQ with hard coded values). This increase test coverage and makes it more clear what is expected of the implementation.",
+      "revId": "cef8084513377b5f158ec9c7bd0d2cdbd6d9a962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01319b34_67dee410",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T15:30:41Z",
+      "side": 1,
+      "message": "How about a smaller max file size, since you get the same test coverage with less overhead if you have smaller files.",
+      "revId": "cef8084513377b5f158ec9c7bd0d2cdbd6d9a962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20ad951c_a6d0297b",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-16T15:30:41Z",
+      "side": 1,
+      "message": "Prefer a higher timeout like 10s. Slow bots and memory bots can sometimes flake with what seems like sensible timeouts.",
+      "revId": "cef8084513377b5f158ec9c7bd0d2cdbd6d9a962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
