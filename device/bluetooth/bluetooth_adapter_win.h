@@ -84,6 +84,8 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterWin
       const std::vector<std::unique_ptr<BluetoothTaskManagerWin::DeviceState>>&
           devices) override;
 
+  BluetoothDevice* ReleaseDeviceForTesting(const std::string& address);
+
   const scoped_refptr<base::SequencedTaskRunner>& ui_task_runner() const {
     return ui_task_runner_;
   }
