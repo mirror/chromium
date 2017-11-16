@@ -89,6 +89,7 @@ class PLATFORM_EXPORT ImageBufferSurface {
                            size_t row_bytes,
                            int x,
                            int y) = 0;
+  virtual void OnCanvasDisposed() {}
 
   // May return nullptr if the surface is GPU-backed and the GPU context was
   // lost.

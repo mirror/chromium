@@ -23,7 +23,8 @@ namespace blink {
 RecordingImageBufferSurface::RecordingImageBufferSurface(
     const IntSize& size,
     AllowFallback allow_fallback,
-    const CanvasColorParams& color_params)
+    const CanvasColorParams& color_params,
+    CanvasResourceConsumer* consumer)
     : ImageBufferSurface(size, color_params),
       allow_fallback_(allow_fallback),
       image_buffer_(nullptr),
@@ -32,7 +33,8 @@ RecordingImageBufferSurface::RecordingImageBufferSurface(
       frame_was_cleared_(true),
       did_record_draw_commands_in_current_frame_(false),
       current_frame_has_expensive_op_(false),
-      previous_frame_has_expensive_op_(false) {
+      previous_frame_has_expensive_op_(false),
+      consumer_(consumer) {
   InitializeCurrentFrame();
 }
 
@@ -46,8 +48,8 @@ void RecordingImageBufferSurface::InitializeCurrentFrame() {
   // and clip.
   canvas->save();
 
-  if (image_buffer_) {
-    image_buffer_->ResetCanvas(canvas);
+  if (consumer_) {
+    consumer_->RestoreCanvasMatrixClipStack(canvas);
   }
   did_record_draw_commands_in_current_frame_ = false;
   current_frame_has_expensive_op_ = false;
@@ -56,8 +58,9 @@ void RecordingImageBufferSurface::InitializeCurrentFrame() {
 
 void RecordingImageBufferSurface::SetImageBuffer(ImageBuffer* image_buffer) {
   image_buffer_ = image_buffer;
-  if (current_frame_ && image_buffer_) {
-    image_buffer_->ResetCanvas(current_frame_->getRecordingCanvas());
+  if (current_frame_ && consumer_) {
+    consumer_->RestoreCanvasMatrixClipStack(
+        current_frame_->getRecordingCanvas());
   }
   if (fallback_surface_) {
     DCHECK(fallback_surface_->IsValid());
@@ -116,8 +119,8 @@ void RecordingImageBufferSurface::FallBackToRasterCanvas(
     current_frame_.reset();
   }
 
-  if (image_buffer_) {
-    image_buffer_->ResetCanvas(fallback_surface_->Canvas());
+  if (consumer_) {
+    consumer_->RestoreCanvasMatrixClipStack(fallback_surface_->Canvas());
   }
 
   CanvasMetrics::CountCanvasContextUsage(

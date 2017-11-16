@@ -541,7 +541,7 @@ void BaseRenderingContext2D::resetTransform() {
 
   // resetTransform() resolves the non-invertible CTM state.
   ModifiableState().ResetTransform();
-  c->setMatrix(AffineTransformToSkMatrix(BaseTransform()));
+  c->setMatrix(AffineTransformToSkMatrix(AffineTransform()));
 
   if (invertible_ctm)
     path_.Transform(ctm);
@@ -1294,7 +1294,7 @@ void BaseRenderingContext2D::drawImage(ScriptState* script_state,
     float src_area = src_rect.Width() * src_rect.Height();
     if (src_area >
         CanvasHeuristicParameters::kDrawImageTextureUploadHardSizeLimit) {
-      buffer->DisableAcceleration();
+      this->DisableAcceleration();
     } else if (src_area > CanvasHeuristicParameters::
                               kDrawImageTextureUploadSoftSizeLimit) {
       SkRect bounds = dst_rect;
@@ -1304,7 +1304,7 @@ void BaseRenderingContext2D::drawImage(ScriptState* script_state,
       if (src_area >
           dst_area * CanvasHeuristicParameters::
                          kDrawImageTextureUploadSoftSizeLimitScaleThreshold) {
-        buffer->DisableAcceleration();
+        this->DisableAcceleration();
       }
     }
   }
@@ -1647,6 +1647,8 @@ ImageData* BaseRenderingContext2D::getImageData(
   if (!buffer->GetImageData(image_data_rect, contents)) {
     exception_state.ThrowRangeError("Out of memory at ImageData creation");
     return nullptr;
+  } else {
+    DidInvokeGPUReadbackInCurrentFrame();
   }
 
   NeedsFinalizeFrame();

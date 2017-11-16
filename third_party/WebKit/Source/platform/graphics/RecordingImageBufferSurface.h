@@ -6,6 +6,7 @@
 #define RecordingImageBufferSurface_h
 
 #include <memory>
+#include "platform/graphics/CanvasResourceConsumer.h"
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/ImageBufferSurface.h"
 #include "platform/wtf/Allocator.h"
@@ -31,13 +32,15 @@ class PLATFORM_EXPORT RecordingImageBufferSurface : public ImageBufferSurface {
   // Only GetRecord() should be used to access the resulting frame.
   RecordingImageBufferSurface(const IntSize&,
                               AllowFallback,
-                              const CanvasColorParams& = CanvasColorParams());
+                              const CanvasColorParams& = CanvasColorParams(),
+                              CanvasResourceConsumer* = nullptr);
   ~RecordingImageBufferSurface() override;
 
   // Implementation of ImageBufferSurface interfaces
   PaintCanvas* Canvas() override;
   void DisableDeferral(DisableDeferralReason) override;
   sk_sp<PaintRecord> GetRecord() override;
+  void OnCanvasDisposed() override { consumer_ = nullptr; }
 
   void DidDraw(const FloatRect&) override;
   bool IsValid() const override { return true; }
@@ -120,6 +123,8 @@ class PLATFORM_EXPORT RecordingImageBufferSurface : public ImageBufferSurface {
   bool did_record_draw_commands_in_current_frame_;
   bool current_frame_has_expensive_op_;
   bool previous_frame_has_expensive_op_;
+
+  CanvasResourceConsumer* consumer_;
 };
 
 }  // namespace blink
