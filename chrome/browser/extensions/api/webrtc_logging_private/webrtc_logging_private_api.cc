@@ -11,6 +11,7 @@
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/supports_user_data.h"
+#include "build/build_config.h"
 #include "chrome/browser/extensions/api/tabs/tabs_constants.h"
 #include "chrome/browser/extensions/extension_tab_util.h"
 #include "chrome/browser/profiles/profile.h"
@@ -23,6 +24,10 @@
 #include "extensions/browser/guest_view/web_view/web_view_guest.h"
 #include "extensions/browser/process_manager.h"
 #include "extensions/common/error_utils.h"
+
+#if defined(OS_LINUX) || defined(OS_CHROMEOS)
+#include "extensions/common/permissions/permissions_data.h"
+#endif
 
 namespace extensions {
 
@@ -442,8 +447,15 @@ bool WebrtcLoggingPrivateStopRtpDumpFunction::RunAsync() {
 }
 
 bool WebrtcLoggingPrivateStartAudioDebugRecordingsFunction::RunAsync() {
+  bool enabled_by_permissions = false;
+#if defined(OS_LINUX) || defined(OS_CHROMEOS)
+  enabled_by_permissions =
+      extension()->permissions_data()->active_permissions().HasAPIPermission(
+          APIPermission::kWebrtcLoggingPrivateAudioDebug);
+#endif
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableAudioDebugRecordingsFromExtension)) {
+          switches::kEnableAudioDebugRecordingsFromExtension) &&
+      !enabled_by_permissions) {
     return false;
   }
 
@@ -477,8 +489,15 @@ bool WebrtcLoggingPrivateStartAudioDebugRecordingsFunction::RunAsync() {
 }
 
 bool WebrtcLoggingPrivateStopAudioDebugRecordingsFunction::RunAsync() {
+  bool enabled_by_permissions = false;
+#if defined(OS_LINUX) || defined(OS_CHROMEOS)
+  enabled_by_permissions =
+      extension()->permissions_data()->active_permissions().HasAPIPermission(
+          APIPermission::kWebrtcLoggingPrivateAudioDebug);
+#endif
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableAudioDebugRecordingsFromExtension)) {
+          switches::kEnableAudioDebugRecordingsFromExtension) &&
+      !enabled_by_permissions) {
     return false;
   }
 
