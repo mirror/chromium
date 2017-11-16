@@ -8,6 +8,7 @@
 #include "core/animation/InterpolationType.h"
 #include "core/animation/PairwiseInterpolationValue.h"
 #include "core/animation/TransitionInterpolation.h"
+#include "platform/bindings/ScriptState.h"
 
 namespace blink {
 
@@ -23,6 +24,12 @@ PropertyHandleSet TransitionKeyframe::Properties() const {
   PropertyHandleSet result;
   result.insert(property_);
   return result;
+}
+
+V8ObjectBuilder TransitionKeyframe::GetKeyframeJavascriptObject(
+    ScriptState* script_state) const {
+  // TODO(crbug.com/777971): Add in the property/value for TransitionKeyframe.
+  return Keyframe::GetKeyframeJavascriptObject(script_state);
 }
 
 scoped_refptr<Keyframe::PropertySpecificKeyframe>
