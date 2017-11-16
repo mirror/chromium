@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "0c28cd53_34c4ed1a",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-16T01:20:16Z",
+      "side": 1,
+      "message": "As discussed offline, I replace this function with AllDisplayHaveDisplayMode() to check whether all displays have display mode. Thanks.",
+      "parentUuid": "d8d914e4_fee0f104",
+      "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b2873bc_2d29f94d",
         "filename": "ui/display/manager/chromeos/display_configurator.cc",
         "patchSetId": 5
