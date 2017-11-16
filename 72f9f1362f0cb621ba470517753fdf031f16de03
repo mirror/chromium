@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "cde8785d_15738912",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 2057,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-16T07:00:43Z",
+      "side": 1,
+      "message": "hmmm ok, I added the DCHECK before this and passed in nullptr but now we get a crash with the following stacktrace:\n\n[127070:127070:1116/174436.005253:FATAL:navigation_controller_impl.cc(2068)] Check failed: !navigation_ui_data. \n#0 base::debug::StackTrace::StackTrace()\n#1 logging::LogMessage::~LogMessage()\n#2 content::NavigationControllerImpl::NavigateToPendingEntryInternal()\n#3 content::NavigationControllerImpl::NavigateToPendingEntry()\n#4 content::NavigationControllerImpl::LoadEntry()\n#5 content::NavigationControllerImpl::LoadURLWithParams()\n#6 (anonymous namespace)::LoadURLInContents()\n#7 chrome::Navigate()\n#8 StartupBrowserCreatorImpl::OpenTabsInBrowser()\n#9 StartupBrowserCreatorImpl::RestoreOrCreateBrowser()\n#10 StartupBrowserCreatorImpl::DetermineURLsAndLaunch()\n#11 StartupBrowserCreatorImpl::Launch()\n#12 StartupBrowserCreator::LaunchBrowser()",
+      "parentUuid": "8f351ae5_f148890a",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19ddcb78_a715c4e2",
         "filename": "content/browser/frame_host/navigation_handle_impl.cc",
         "patchSetId": 22

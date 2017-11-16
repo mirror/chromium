@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae42d32a_48b11826",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-16T07:00:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d36d4cc8_aa9d2973",
+      "revId": "2536d19869ad187a399a46088bba2258e88de0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4177a241_ff6522d0",
         "filename": "content/browser/frame_host/navigation_controller_impl.cc",
         "patchSetId": 23
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-15T14:57:59Z",
       "side": 1,
       "message": "Can we std::move(NavigationUIData) here instead of cloning it? The cloning method is meant to send it to the IO thread.",
+      "revId": "2536d19869ad187a399a46088bba2258e88de0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069ff7ec_b6275c4c",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-16T07:00:43Z",
+      "side": 1,
+      "message": "Currently LoadURLParams is a const\u0026 so we would need to change the method to take a unique_ptr or plain LoadURLParams. Happy to do it but it would increase the size of the CL since we would have to change the public interface :/ Could leave a TODO and do it in a separate patch? Or we could do it in a separate patch before this one.",
+      "parentUuid": "4177a241_ff6522d0",
       "revId": "2536d19869ad187a399a46088bba2258e88de0a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "815d5dba_03c7fd8a",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-16T07:00:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf759379_e9aea57a",
+      "revId": "2536d19869ad187a399a46088bba2258e88de0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71ab1a87_bffa6648",
         "filename": "content/browser/frame_host/navigation_request.h",
         "patchSetId": 23
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "db8b4009_6c0b2f5f",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-16T07:00:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71ab1a87_bffa6648",
+      "revId": "2536d19869ad187a399a46088bba2258e88de0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8b48d18_1c6e8d01",
         "filename": "content/browser/frame_host/navigator_impl.cc",
         "patchSetId": 23
@@ -84,6 +156,24 @@
       "revId": "2536d19869ad187a399a46088bba2258e88de0a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f40498a_8f0daa8e",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-16T07:00:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8b48d18_1c6e8d01",
+      "revId": "2536d19869ad187a399a46088bba2258e88de0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
