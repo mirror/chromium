@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aee48458_b92e52c9",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.cpp.tmpl",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-16T06:34:01Z",
+      "side": 1,
+      "message": "This doesn\u0027t look like it should work... You\u0027ve moved the definition of these variables to another file...?",
+      "revId": "13e39896ba507ed9845ca24799c0832652a7b222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8195dd_1b8e3ffd",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyInline.h.tmpl",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-16T06:34:01Z",
+      "side": 1,
+      "message": "I\u0027m not sure \"Inline\" is the right name for this file, it\u0027s more like where the instances live. CSSPropertyInstances?\n\nWhat is your reasoning for moving it out of CSSProperty.cpp? As per my comment in CSSProperty.cpp, the current implementation of CSSProperty::Get relies on these variable definitions being in the same file.",
+      "revId": "13e39896ba507ed9845ca24799c0832652a7b222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e0210a_7fc940d3",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyInline.h.tmpl",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-16T06:34:01Z",
+      "side": 1,
+      "message": "You shouldn\u0027t have an anonymous namespace in a header file. It exposes all the contents to every file that #includes this one (which I guess answers my question about how this works). I think this logic should stay inside CSSProperty.cpp.",
+      "revId": "13e39896ba507ed9845ca24799c0832652a7b222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4092fc97_0e0ea40c",
+        "filename": "third_party/WebKit/Source/core/animation/PropertyHandle.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-16T06:34:01Z",
+      "side": 1,
+      "message": "Can we avoid having these almost-duplicate functions by using CSSProperty()-\u003ePropertyID() where necessary?",
+      "revId": "13e39896ba507ed9845ca24799c0832652a7b222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c27e5c_76913d23",
+        "filename": "third_party/WebKit/Source/core/animation/PropertyHandle.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-16T06:34:01Z",
+      "side": 1,
+      "message": "Likewise here...?",
+      "revId": "13e39896ba507ed9845ca24799c0832652a7b222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
