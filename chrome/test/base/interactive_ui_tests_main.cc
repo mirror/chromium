@@ -134,6 +134,10 @@ int main(int argc, char** argv) {
   // Run interactive_ui_tests serially, they do not support running in parallel.
   size_t parallel_jobs = 1U;
 
+#if defined(OS_WIN)
+  ::testing::GTEST_FLAG(also_run_disabled_tests) = true;
+#endif
+
   InteractiveUITestSuiteRunner runner;
   InteractiveUITestLauncherDelegate delegate(&runner);
   return LaunchChromeTests(parallel_jobs, &delegate, argc, argv);
