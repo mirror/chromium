@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8714551_9f924d74",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-backwards-at-start.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-16T14:14:53Z",
+      "side": 1,
+      "message": "`t.step_func`",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56742253_c23ed3c3",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-backwards.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-16T14:14:53Z",
+      "side": 1,
+      "message": "I think this is missing `t.step_func()`.",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d5c380_76e2b5c4",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-backwards.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-16T14:14:53Z",
+      "side": 1,
+      "message": "`t.step_func`",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1801a343_880cc4a6",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-backwards.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-16T14:14:53Z",
+      "side": 1,
+      "message": "Here and below, I would recommend using `Math.round()` over `parseInt()` as my understanding is that `parseInt()` will convert the double to a string then back to an integer.",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3da95e4_416609aa",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-backwards.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-16T14:14:53Z",
+      "side": 1,
+      "message": "What I meant by my previous comment is that `time` is greater than 0 but there is no guarantees that it is greater than 10 when you reach this so you might end up comparing 0 with -9 for example? Could this be strengthen to avoid flakyness?",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a935bc8e_0dca46d4",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-forwards.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-16T14:14:53Z",
+      "side": 1,
+      "message": "`t.step_func`",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8098cb_3e96bae6",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-forwards.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-16T14:14:53Z",
+      "side": 1,
+      "message": "`t.step_func`",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ea36a8_23346010",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-toggle-fullscreen.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-16T14:14:53Z",
+      "side": 1,
+      "message": "nit: probabbly `assert_equals(video, document.fullscreenElement);`?",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c363a3e_25037eff",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-16T14:14:53Z",
+      "side": 1,
+      "message": "nit: ( ) around `rect.left() - margin` and .top()?",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92be44d8_0bf9fc77",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-16T14:14:53Z",
+      "side": 1,
+      "message": "Would it make sense to move this into `TapTimerFired` so we don\u0027t inject a user gesture when it\u0027s not actually needed?",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc788bf_a7dd55db",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-16T14:14:53Z",
+      "side": 1,
+      "message": "Can you use PointerEvent instead?",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
