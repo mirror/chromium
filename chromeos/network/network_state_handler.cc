@@ -1149,6 +1149,10 @@ void NetworkStateHandler::UpdateNetworkServiceProperty(
   if (!changed)
     return;
 
+  // If added to a Profile, request a full update so that a NetworkState
+  // gets created.
+  bool request_update =
+      prev_profile_path.empty() && !network->profile_path().empty();
   if (key == shill::kStateProperty || key == shill::kVisibleProperty) {
     network_list_sorted_ = false;
     if (ConnectionStateChanged(network, prev_connection_state,
@@ -1156,44 +1160,46 @@ void NetworkStateHandler::UpdateNetworkServiceProperty(
       OnNetworkConnectionStateChanged(network);
       // If the connection state changes, other properties such as IPConfig
       // may have changed, so request a full update.
-      RequestUpdateForNetwork(service_path);
-    }
-  } else {
-    std::string value_str;
-    value.GetAsString(&value_str);
-    // Some property changes are noisy and not interesting:
-    // * Wifi SignalStrength
-    // * WifiFrequencyList updates
-    // * Device property changes to "/" (occurs before a service is removed)
-    if (key != shill::kSignalStrengthProperty &&
-        key != shill::kWifiFrequencyListProperty &&
-        (key != shill::kDeviceProperty || value_str != "/")) {
-      std::string log_event = "NetworkPropertyUpdated";
-      // Trigger a default network update for interesting changes only.
-      if (network->path() == default_network_path_) {
-        NotifyDefaultNetworkChanged(network);
-        log_event = "Default" + log_event;
-      }
-      // Log event.
-      std::string detail = network->name() + "." + key;
-      detail += " = " + ValueAsString(value);
-      device_event_log::LogLevel log_level;
-      if (key == shill::kErrorProperty || key == shill::kErrorDetailsProperty) {
-        log_level = device_event_log::LOG_LEVEL_ERROR;
-      } else {
-        log_level = device_event_log::LOG_LEVEL_EVENT;
-      }
-      NET_LOG_LEVEL(log_level, log_event, detail);
+      request_update = true;
     }
   }
 
-  // All property updates signal 'NetworkPropertiesUpdated'.
-  NotifyNetworkPropertiesUpdated(network);
-
-  // If added to a Profile, request a full update so that a NetworkState
-  // gets created.
-  if (prev_profile_path.empty() && !network->profile_path().empty())
+  if (request_update)
     RequestUpdateForNetwork(service_path);
+
+  std::string value_str;
+  value.GetAsString(&value_str);
+  if (!network->IsConnectingOrConnected() &&
+      (key == shill::kSignalStrengthProperty || key == shill::kWifiBSsid ||
+       key == shill::kWifiFrequency ||
+       key == shill::kWifiFrequencyListProperty ||
+       (key == shill::kDeviceProperty && value_str == "/"))) {
+    // For non active networks, ignore spammy updates to uninteresting
+    // properties. This includes 'Device' property changes to "/" (occurs
+    // before just a service is removed).
+    return;
+  }
+
+  {
+    // Log event before firing notification.
+    std::string log_event;
+    if (network->path() == default_network_path_) {
+      NotifyDefaultNetworkChanged(network);
+      log_event = "DefaultNetworkPropertyUpdated";
+    } else {
+      log_event = "NetworkPropertyUpdated";
+    }
+
+    std::string detail =
+        network->name() + "." + key + " = " + ValueAsString(value);
+    device_event_log::LogLevel log_level =
+        (key == shill::kErrorProperty || key == shill::kErrorDetailsProperty)
+            ? device_event_log::LOG_LEVEL_ERROR
+            : device_event_log::LOG_LEVEL_EVENT;
+    NET_LOG_LEVEL(log_level, log_event, detail);
+  }
+
+  NotifyNetworkPropertiesUpdated(network);
 }
 
 void NetworkStateHandler::UpdateDeviceProperty(const std::string& device_path,
