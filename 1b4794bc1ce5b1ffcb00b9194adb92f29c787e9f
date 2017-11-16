@@ -258,6 +258,30 @@
       "revId": "1b4794bc1ce5b1ffcb00b9194adb92f29c787e9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f623ae12_ef77ac94",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-11-16T21:54:58Z",
+      "side": 1,
+      "message": "tl/dr: Both those tests are necessary due to construction order and unit tests.\n\nI looked into this and there are some unit tests which pass in nullptr for the browser. The browser_-\u003ewindow() check is because Update is called before the BrowserWindow is available. In BrowserWindow::CreateBrowserWindow(), the BrowserView*, during which the LocationBarView is also constructed, is created prior to the BrowserWindow being fully constructed and available via Browser::window().",
+      "parentUuid": "6acaaf59_7fb5948f",
+      "range": {
+        "startLine": 767,
+        "startChar": 25,
+        "endLine": 767,
+        "endChar": 57
+      },
+      "revId": "1b4794bc1ce5b1ffcb00b9194adb92f29c787e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
