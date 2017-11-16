@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "9dc38bbb_9918d1ad",
+        "filename": "chrome/browser/ui/content_settings/framebust_block_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-11-16T18:41:18Z",
+      "side": 1,
+      "message": "There are plans for adding end-to-end testing for Framebust blocking. If there is no preferences, I\u0027ll leave it as-is.",
+      "parentUuid": "a0751a67_ea2c132d",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 49
+      },
+      "revId": "0b7b5e3c10c65543986725a1f786ebaa3cdfcafc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4c8b39f_52c8ca42",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 6
