@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8c135e1_8e9449ed",
+        "filename": "ios/chrome/browser/ui/webui/crashes_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-16T00:02:42Z",
+      "side": 1,
+      "message": "|excluded_paths(/*excluded_paths*/\u003d{})| or maybe overload UseGzip?",
+      "range": {
+        "startLine": 48,
+        "startChar": 18,
+        "endLine": 48,
+        "endChar": 19
+      },
+      "revId": "374528a08b2379419a5c511e6bcdbb1b3a309e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
