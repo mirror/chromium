@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "a9442ed0_48b8a1bd",
+        "filename": "third_party/WebKit/Source/platform/graphics/filters/FELighting.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-16T20:30:53Z",
+      "side": 1,
+      "message": "Sure, kconstant is fine. Can you add comments to kconstant and specular exponent too?",
+      "parentUuid": "e86407e2_1f193cad",
+      "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba6d36a2_5efaf037",
         "filename": "third_party/WebKit/Source/platform/graphics/filters/ImageFilterBuilderTest.cpp",
         "patchSetId": 13
@@ -241,6 +259,24 @@
       "side": 1,
       "message": "I think its for stuff that\u0027s used in core/ and uses cc but needs to be pretend that it doesn\u0027t. :P",
       "parentUuid": "895e2d4a_c7ddcc7f",
+      "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8044573b_420224b6",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintFilter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-16T20:30:53Z",
+      "side": 1,
+      "message": "Ahh yeah, the core/ files :( OK SGTM",
+      "parentUuid": "b4c3da29_6a1ff619",
       "revId": "6eba829d59531af929f197e7b8e0e06158382d1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
