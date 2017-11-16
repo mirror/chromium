@@ -809,6 +809,24 @@
     },
     {
       "key": {
+        "uuid": "bd658dc0_ebf398f3",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-16T15:00:47Z",
+      "side": 1,
+      "message": "+1000",
+      "parentUuid": "637b5b64_5473cc8f",
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "713ecdc1_e5ff2ba3",
         "filename": "content/browser/webauth/register_response_data.cc",
         "patchSetId": 20
