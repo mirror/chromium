@@ -46,15 +46,6 @@ Polymer({
     },
 
     /**
-     * Whether the custom controller extensionview is ready to be shown.
-     * @type {boolean}
-     */
-    isExtensionViewReady: {
-      type: Boolean,
-      value: false,
-    },
-
-    /**
      * The timestamp for when the route details view was opened. We initialize
      * the value in a function so that the value is set when the element is
      * loaded, rather than at page load.
@@ -233,25 +224,6 @@ Polymer({
     if (this.controllerType_ !== media_router.ControllerType.WEBUI) {
       this.updateActivityStatus_();
     }
-  },
-
-  /**
-   * @param {?media_router.Route} route
-   * @return {boolean}
-   * @private
-   */
-  shouldAttemptLoadingExtensionView_: function(route) {
-    return !!route && !route.supportsWebUiController;
-  },
-
-  /**
-   * @param {number} controllerType
-   * @return {boolean} Whether the extensionview should be shown instead of the
-   *     default route info element or the WebUI route controller.
-   * @private
-   */
-  shouldShowExtensionView_: function(controllerType) {
-    return controllerType === media_router.ControllerType.EXTENSION;
   },
 
   /**
