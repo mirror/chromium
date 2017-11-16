@@ -91,9 +91,8 @@ void installConditionalFeaturesForTesting(
 
   blink::ExecutionContext* executionContext =
       blink::ExecutionContext::From(scriptState);
-  blink::OriginTrialContext* originTrialContext =
-      blink::OriginTrialContext::From(
-          executionContext, blink::OriginTrialContext::kDontCreateIfNotExists);
+  const blink::OriginTrialContext* originTrialContext =
+      blink::OriginTrialContext::From(executionContext);
 
   if (type == &blink::V8OriginTrialsTest::wrapperTypeInfo) {
     if (originTrialContext && originTrialContext->IsTrialEnabled("Frobulate")) {
