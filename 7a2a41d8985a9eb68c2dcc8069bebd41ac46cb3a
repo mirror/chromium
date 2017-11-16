@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac1a5f0e_212ad2d1",
+        "filename": "ui/accessibility/ax_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-16T17:44:18Z",
+      "side": 1,
+      "message": "Nit: add {} to both blocks now since the condition spans two lines.\n\nDoes this code actually help? Do any tests fail if you just remove these\nfirst two lines (container \u003d node-\u003eparent())? Just making sure we didn\u0027t\nneuter it.\n\nAnother approach would be:\n\n  if (bounds.width() \u003d\u003d 0 \u0026\u0026 bounds.height() \u003d\u003d 0) {\n    // Clear out any x, y position for this node, we\u0027re going to\n    // take the bounds of our nearest ancestor.\n    bounds \u003d gfx::Rect(); /\n    container \u003d node-\u003eparent();\n  }",
+      "revId": "7a2a41d8985a9eb68c2dcc8069bebd41ac46cb3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "948ad994_7d979d2f",
+        "filename": "ui/accessibility/ax_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-16T17:44:18Z",
+      "side": 1,
+      "message": "Do we only want to do this if clipped is empty?\n\nShouldn\u0027t we also do this if clipped is small and the\nelement is completely outside of its visible bounds?",
+      "revId": "7a2a41d8985a9eb68c2dcc8069bebd41ac46cb3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
