@@ -16,6 +16,24 @@
       "revId": "3ed4f5a86412eb10e202622920e68b6ad893a1bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a38324_3a088669",
+        "filename": "components/arc/common/net.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-11-16T00:46:08Z",
+      "side": 1,
+      "message": "If Android wants a true/false boolean, and Chrome OS has a true/maybe/false enum, we have to translate the \"maybe\" state _somewhere_.\n\nOne reason we might want to translate it on the Android side instead of in arc_net_host_impl is that we\u0027ve generally tried to closely map ONC properties to mojo fields.",
+      "parentUuid": "13c3b70d_43a9559a",
+      "revId": "3ed4f5a86412eb10e202622920e68b6ad893a1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
