@@ -16,6 +16,24 @@
       "revId": "2cdbdecf4ad9d09955162eba0f485fec79b07432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fccb5c1_a0d12912",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 5999,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-16T20:10:13Z",
+      "side": 1,
+      "message": "UpdateSourceUrl just adds a message to the UKM Report saying ukm_source_id_ is associated with url_, and basically does nothing else.\n\nI\u0027m working on a change which should make an ID available off of RenderFrameHost in the browser.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/758494\n\nIt may be that we could arrange for that ID to get passed to the renderer and use it for ukm_source_id_ here instead of making a new one, and then we wouldn\u0027t need to UpdateSourceUrl at all here, which is what the TODO is suggesting with using a shared SourceId.",
+      "parentUuid": "d127ed6c_3f1feb68",
+      "revId": "2cdbdecf4ad9d09955162eba0f485fec79b07432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
