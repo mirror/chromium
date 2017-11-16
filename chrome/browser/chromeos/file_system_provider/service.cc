@@ -133,7 +133,8 @@ base::File::Error Service::MountFileSystemInternal(
 
   ProvidingExtensionInfo provider_info;
   // TODO(mtomasz): Set up a testing extension in unit tests.
-  GetProvidingExtensionInfo(provider_id, &provider_info);
+  if (!GetProvidingExtensionInfo(provider_id, &provider_info))
+    return base::File::FILE_ERROR_FAILED;
   // Store the file system descriptor. Use the mount point name as the file
   // system provider file system id.
   // Examples:
@@ -344,11 +345,14 @@ bool Service::GetProvidingExtensionInfo(const std::string& provider_id,
 
   const extensions::Extension* const extension = registry->GetExtensionById(
       provider_id, extensions::ExtensionRegistry::ENABLED);
+  if(!extension) LOG(ERROR) << "NOT EXTENSION IF";  //So now this is working (ie not logging) but the tests are crashing
   if (!extension ||
       !extension->permissions_data()->HasAPIPermission(
           extensions::APIPermission::kFileSystemProvider)) {
     return false;
   }
+
+  //Before, these lines were not touched by any tests:
 
   result->extension_id = extension->id();
   result->name = extension->name();
@@ -356,6 +360,8 @@ bool Service::GetProvidingExtensionInfo(const std::string& provider_id,
       extensions::FileSystemProviderCapabilities::Get(extension);
   DCHECK(capabilities);
   result->capabilities = *capabilities;
+
+  LOG(ERROR) << "This code is hit now";
 
   return true;
 }
