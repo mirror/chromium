@@ -218,57 +218,41 @@ void CARendererLayerTree::CommitScheduledCALayers(
   scale_factor_ = scale_factor;
 }
 
-bool CARendererLayerTree::RootLayer::CommitFullscreenLowPowerLayer(
-    ContentLayer* old_low_power_layer,
+gfx::RectF CARendererLayerTree::RootLayer::FullscreenLowPowerBackdropRect(
     float scale_factor) {
-  ContentLayer* video_layer = nullptr;
-  CGRect clip_rect;
-  CGRect frame_rect;
+  gfx::RectF bg_rect;
+  bool found_video_layer = false;
   for (auto& clip_layer : clip_and_sorting_layers) {
     for (auto& transform_layer : clip_layer.transform_layers) {
       for (auto& content_layer : transform_layer.content_layers) {
         // Detached mode requires that no layers be on top of the video layer.
-        if (video_layer)
-          return false;
+        if (found_video_layer)
+          return {};
 
         // See if this is the video layer.
         if (content_layer.use_av_layer) {
-          video_layer = &content_layer;
+          found_video_layer = true;
           if (!transform_layer.transform.IsPositiveScaleOrTranslation())
-            return false;
+            return {};
           if (content_layer.opacity != 1)
-            return false;
-          clip_rect = clip_layer.clip_rect.ToCGRect();
-          gfx::RectF frame_rect_f(video_layer->rect);
-          transform_layer.transform.TransformRect(&frame_rect_f);
-          frame_rect_f.Scale(1 / scale_factor);
-          frame_rect = frame_rect_f.ToCGRect();
+            return {};
           continue;
         }
 
         // If we haven't found the video layer yet, make sure everything is
         // solid black or transparent
         if (content_layer.io_surface)
-          return false;
-        if (content_layer.background_color != SK_ColorBLACK &&
-            content_layer.background_color != SK_ColorTRANSPARENT) {
-          return false;
+          return {};
+        if (content_layer.background_color == SK_ColorBLACK) {
+          bg_rect.Union(gfx::RectF(content_layer.rect));
+        } else if (content_layer.background_color != SK_ColorTRANSPARENT) {
+          return {};
         }
       }
     }
   }
-  if (!video_layer)
-    return false;
-  low_power_layer = video_layer;
-
-  low_power_layer->CommitToCA(ca_layer, old_low_power_layer, scale_factor);
-  if (![ca_layer backgroundColor])
-    [ca_layer setBackgroundColor:CGColorGetConstantColor(kCGColorBlack)];
-  if (!CGRectEqualToRect([ca_layer frame], clip_rect))
-    [ca_layer setFrame:clip_rect];
-  if (!CGRectEqualToRect([low_power_layer->ca_layer frame], frame_rect))
-    [low_power_layer->ca_layer setFrame:frame_rect];
-  return true;
+  bg_rect.Scale(1 / scale_factor);
+  return bg_rect;
 }
 
 id CARendererLayerTree::ContentsForSolidColorForTesting(SkColor color) {
@@ -377,9 +361,13 @@ CARendererLayerTree::ContentLayer::ContentLayer(
   // output monitor color space, but IOSurface-backed layers are color
   // corrected. Note that this is only the case when the CALayers are shared
   // across processes. To make colors consistent across both solid color and
-  // IOSurface-backed layers, use a cache of solid-color IOSurfaces as contents.
+  // IOSurface-backed layers, use a cache of solid-color IOSurfaces as
+  // contents. Black and transparent layers must use real colors to be eligible
+  // for low power detachment in fullscreen.
   // https://crbug.com/633805
-  if (!io_surface && !tree->allow_solid_color_layers_) {
+  if (!io_surface && !tree->allow_solid_color_layers_ &&
+      background_color != SK_ColorBLACK &&
+      background_color != SK_ColorTRANSPARENT) {
     solid_color_contents = SolidColorContents::Get(background_color);
     ContentLayer::contents_rect = gfx::RectF(0, 0, 1, 1);
   }
@@ -520,6 +508,7 @@ void CARendererLayerTree::RootLayer::CommitToCA(CALayer* superlayer,
     std::swap(ca_layer, old_layer->ca_layer);
   } else {
     ca_layer.reset([[CALayer alloc] init]);
+    [ca_layer setBackgroundColor:CGColorGetConstantColor(kCGColorBlack)];
     [ca_layer setAnchorPoint:CGPointZero];
     [superlayer setSublayers:nil];
     [superlayer addSublayer:ca_layer];
@@ -529,19 +518,9 @@ void CARendererLayerTree::RootLayer::CommitToCA(CALayer* superlayer,
     DLOG(ERROR) << "CARendererLayerTree root layer not attached to tree.";
   }
 
-  ContentLayer* old_low_power_layer =
-      old_layer ? old_layer->low_power_layer : nullptr;
-
-  if (CommitFullscreenLowPowerLayer(old_low_power_layer, scale_factor)) {
-    return;
-  } else if (old_low_power_layer) {
-    // Transitioning out of fullscreen low power mode, so:
-    // 1. Reset the root CALayer's background color and frame.
-    [ca_layer setBackgroundColor:nil];
-    [ca_layer setFrame:CGRectZero];
-    // 2. Reset old_layer so that the CALayer tree is rebuilt from scratch.
-    old_layer = nullptr;
-  }
+  gfx::RectF bg_rect = FullscreenLowPowerBackdropRect(scale_factor);
+  if (gfx::RectF([ca_layer frame]) != bg_rect)
+    [ca_layer setFrame:bg_rect.ToCGRect()];
 
   for (size_t i = 0; i < clip_and_sorting_layers.size(); ++i) {
     ClipAndSortingLayer* old_clip_and_sorting_layer = nullptr;
