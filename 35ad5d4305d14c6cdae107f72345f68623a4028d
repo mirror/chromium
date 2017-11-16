@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aec41ab9_23210e99",
+        "filename": "ui/events/event.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-16T18:48:01Z",
+      "side": 0,
+      "message": "Can we also get rid of GetTouchAngle() from event_utils.h and events_*.cc?  This is only used in tests.  We can use TouchEvent::ComputeRotationAngle() as Sadrul suggested.",
+      "range": {
+        "startLine": 834,
+        "startChar": 22,
+        "endLine": 834,
+        "endChar": 35
+      },
+      "revId": "35ad5d4305d14c6cdae107f72345f68623a4028d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
