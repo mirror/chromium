@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "866c734f_bb7884d1",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-16T08:59:42Z",
+      "side": 1,
+      "message": "Can you add comment for the new parameters?  The three parameters are all optional, without comment it\u0027d be hard to see what are expected when.",
+      "revId": "37e209915ff417834014d0973a124b718fd52f8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebb46b74_6688360f",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-16T08:59:42Z",
+      "side": 1,
+      "message": "Related to the other comment in the other file, but could these three parameters be bundled in a struct, e.g. MainResourceLoaderParams or something like that?",
+      "revId": "37e209915ff417834014d0973a124b718fd52f8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "953ba23b_3e4ffafe",
         "filename": "content/renderer/loader/resource_dispatcher.h",
         "patchSetId": 20
@@ -19,6 +53,47 @@
         "endLine": 125,
         "endChar": 25
       },
+      "revId": "37e209915ff417834014d0973a124b718fd52f8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71b51b22_2b5d79c7",
+        "filename": "content/renderer/loader/resource_dispatcher.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-16T08:59:42Z",
+      "side": 1,
+      "message": "Maybe we could call it something like MainResourceLoaderParams?  Fyi, we have SubresourceLoaderParams for passing subresource-related loader info upon navigation commit, these can be structured in a somewhat consistent way.",
+      "parentUuid": "953ba23b_3e4ffafe",
+      "range": {
+        "startLine": 125,
+        "startChar": 13,
+        "endLine": 125,
+        "endChar": 25
+      },
+      "revId": "37e209915ff417834014d0973a124b718fd52f8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ed914f_233d0403",
+        "filename": "content/renderer/loader/web_url_loader_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-16T08:59:42Z",
+      "side": 1,
+      "message": "We have three different code paths which could be pretty confusing, can you add a brief comment about when and how each is taken?",
       "revId": "37e209915ff417834014d0973a124b718fd52f8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
