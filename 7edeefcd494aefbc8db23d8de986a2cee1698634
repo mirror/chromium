@@ -70,6 +70,29 @@
       "revId": "7edeefcd494aefbc8db23d8de986a2cee1698634",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2b15523_6598fb98",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-16T23:05:18Z",
+      "side": 1,
+      "message": "It feels to me that this code is also testing that GetFrameType returns the right things — it makes things difficult because this test will have to change substantially if we change FrameTypes.\n\nI\u0027d suggest the following:\n1. Introduce a CreateFakeWebFrameSchedulerWithType(frame_type) helper function. Put creation logic with all SetFrameType and SetIsSomething there. (GetFrameTypeTest can benefit from it too).\n2. Reduce the boilerplate:\ndata \u003d [{FrameTypeA, 1}, {FrameType, 2}, ...];\nfor (frame_type, count): data {\n  frame \u003d CreateFakeWebFrameSchedulerWithTest(frame_type);\n  for (i \u003d 0; i \u003c count; i ++)\n    RunTask()\n}.\n\nWDYT?",
+      "range": {
+        "startLine": 315,
+        "startChar": 4,
+        "endLine": 315,
+        "endChar": 48
+      },
+      "revId": "7edeefcd494aefbc8db23d8de986a2cee1698634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
