@@ -52,6 +52,24 @@
       "revId": "e625134cfe8f4ae62223a302b309c9c2aef8018e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491cfac5_165eea1f",
+        "filename": "content/gpu/gpu_service_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-16T23:17:50Z",
+      "side": 1,
+      "message": "All task runners provided by CreateSingleThreadTaskRunnerWithTraits will not be the main thread.\n\nSpecifying base::MayBlock() only for computation is an error.",
+      "parentUuid": "1655fc2d_71e838e5",
+      "revId": "e625134cfe8f4ae62223a302b309c9c2aef8018e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
