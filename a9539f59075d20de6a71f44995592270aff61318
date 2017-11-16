@@ -52,6 +52,24 @@
       "revId": "a9539f59075d20de6a71f44995592270aff61318",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad872a62_c9b755b1",
+        "filename": "services/shape_detection/face_detection_provider_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-11-16T01:52:27Z",
+      "side": 1,
+      "message": "\u003e This will just make IFaceDetector initialization take longer since it becomes serialized so I\u0027m unsure of the benefit unless you also think that it is resource intensive and so we should avoid doing it multiple times. If the latter is true then we should do something to try to reuse the IFaceDetector interface between multiple clients but we can save that for a later patch.\n\nWhen |provider|[1] goes out of scope it will immediately closes its end of the message pipe, then |async_create_detector_ops_| will be deleted and the callback OnFaceDetectorCreated will be not called, the PauseIncomingMethodCallProcessing prevent |binding_| from closing which isn\u0027t use for preventing more than one IFaceDetector from being initialized simultaneously, because we only create a single FaceDetection instance from a FaceDetectionProvider in[1], so i think it\u0027s not necessary to reuse the IFaceDetector interface between multiple clients. \n\n\u003e In [1] we only ever create a single FaceDetection instance from a FaceDetectionProvider so we don\u0027t need to handle the case where there are multiple simultaneous requests, or even any follow-up requests. At the top of this function we can just say:\n\nDone, thanks.",
+      "parentUuid": "9a55eb18_57c8130b",
+      "revId": "a9539f59075d20de6a71f44995592270aff61318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
