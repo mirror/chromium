@@ -120,6 +120,29 @@
     },
     {
       "key": {
+        "uuid": "a0751a67_ea2c132d",
+        "filename": "chrome/browser/ui/content_settings/framebust_block_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-16T17:49:39Z",
+      "side": 1,
+      "message": "I know that Charlie asked you to extract this to a separate file, but I\u0027m not sure why. If it was a test just for the helper class, I would understand, but otherwise all the bubble models share one common browsertest.\n\nI don\u0027t have a strong opinion, especially if you plan to add more coverage, just wondering.",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 49
+      },
+      "revId": "0b7b5e3c10c65543986725a1f786ebaa3cdfcafc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4c8b39f_52c8ca42",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 6
@@ -237,6 +260,30 @@
       "side": 1,
       "message": "I like this. I wasn\u0027t sure it was OK to add another image model to GenerateContentSettingImageModels() if it wasn\u0027t related to a content setting.",
       "parentUuid": "1130b1d0_f5235c96",
+      "range": {
+        "startLine": 236,
+        "startChar": 1,
+        "endLine": 237,
+        "endChar": 0
+      },
+      "revId": "0b7b5e3c10c65543986725a1f786ebaa3cdfcafc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc7b268c_20988e95",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-16T17:49:39Z",
+      "side": 1,
+      "message": "Yeah, I thought that you would have noticed that, but my previous comment sent you the other way.\n\nI mean, how close should Framebust be to the content setting codebase is certainly to some extent just a judgement call. But I like the current version too.",
+      "parentUuid": "bad8ed04_df209395",
       "range": {
         "startLine": 236,
         "startChar": 1,
