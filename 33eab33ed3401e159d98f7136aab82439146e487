@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6c8aaa4a_a5d8dfa9",
+        "filename": "tools/perry.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-16T18:39:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57bbce65_b9dd8a58",
+      "range": {
+        "startLine": 7,
+        "startChar": 37,
+        "endLine": 7,
+        "endChar": 38
+      },
+      "revId": "33eab33ed3401e159d98f7136aab82439146e487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8334d49_24d1f764",
         "filename": "tools/perry.py",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "927c20c6_0817b9d6",
+        "filename": "tools/perry.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-16T18:39:28Z",
+      "side": 1,
+      "message": "Yeah, it was just to avoid making N copies of the binary name in the list past to the Pool (you can\u0027t use a non-global function like \"lambda x: CheckForFailure(args.binary, x)\" because the function has to be pickleable. \n\nBut it probably doesn\u0027t matter. :) Done.",
+      "parentUuid": "a8334d49_24d1f764",
+      "range": {
+        "startLine": 49,
+        "startChar": 22,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "33eab33ed3401e159d98f7136aab82439146e487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2b42ade_e7e0b306",
         "filename": "tools/perry.py",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "33eab33ed3401e159d98f7136aab82439146e487",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6700b861_06a31bff",
+        "filename": "tools/perry.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-16T18:39:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2b42ade_e7e0b306",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 15
+      },
+      "revId": "33eab33ed3401e159d98f7136aab82439146e487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
