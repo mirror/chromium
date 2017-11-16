@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "203a30bf_987ac87a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/resource-tree/resource-tree-document-url-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-16T22:46:28Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "65fea236_8090c483",
+      "revId": "b29e18bd4a3e16084b090e661b284f737d71d4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e72222b1_1a1245a1",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/resource-tree/resource-tree-frame-add-expected.txt",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-16T14:40:13Z",
       "side": 0,
       "message": "Let\u0027s add a dummy JS to cover scripts.",
+      "revId": "b29e18bd4a3e16084b090e661b284f737d71d4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbf600c3_6878ea67",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/resource-tree/resource-tree-frame-add-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-16T22:46:28Z",
+      "side": 0,
+      "message": "it\u0027s covered below",
+      "parentUuid": "e72222b1_1a1245a1",
       "revId": "b29e18bd4a3e16084b090e661b284f737d71d4fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
