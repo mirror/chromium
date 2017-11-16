@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b5f9440d_4a0d2473",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-16T06:58:07Z",
+      "side": 1,
+      "message": "This does not happen in this actual cl, but do you need this?\n\nThis was intentionally changed to use circular_deque by the following CL.\nhttps://chromium.googlesource.com/chromium/src/+/3137bc1dadcd882c878b9218cab4c418cfc35862\n\nAnd today, using std::deque is discouraged in chromium.",
+      "range": {
+        "startLine": 10,
+        "startChar": 44,
+        "endLine": 11,
+        "endChar": 13
+      },
+      "revId": "1f4e1cd2f6d2b94ce603afa38ee7788c0ad362ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d02a35cf_cabb2836",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
