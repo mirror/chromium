@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21fa0083_f358da81",
+        "filename": "content/public/browser/web_ui_data_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-11-16T23:40:01Z",
+      "side": 0,
+      "message": "this was an unordered_set so that multiple paths would be de-duped",
+      "range": {
+        "startLine": 112,
+        "startChar": 34,
+        "endLine": 112,
+        "endChar": 47
+      },
+      "revId": "96def51ced68727b0966af5c86fc8e5f4fe37e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
