@@ -1162,8 +1162,6 @@ AutofillMetrics::FormEventLogger::FormEventLogger(
       has_logged_will_submit_(false),
       has_logged_submitted_(false),
       has_logged_bank_name_available_(false),
-      has_logged_detected_card_in_submitted_form_(false),
-      has_logged_submitted_known_card(false),
       logged_suggestion_filled_was_server_data_(false),
       logged_suggestion_filled_was_masked_server_card_(false),
       form_interactions_ukm_logger_(form_interactions_ukm_logger) {}
@@ -1328,7 +1326,9 @@ void AutofillMetrics::FormEventLogger::OnWillSubmitForm() {
   base::RecordAction(base::UserMetricsAction("Autofill_OnWillSubmitForm"));
 }
 
-void AutofillMetrics::FormEventLogger::OnFormSubmitted(bool force_logging) {
+void AutofillMetrics::FormEventLogger::OnFormSubmitted(
+    bool force_logging,
+    const SubmittedCard submitted_card) {
   // Not logging this kind of form if we haven't logged a user interaction.
   if (!has_logged_interacted_)
     return;
@@ -1352,15 +1352,29 @@ void AutofillMetrics::FormEventLogger::OnFormSubmitted(bool force_logging) {
   if (has_logged_suggestions_shown_ || force_logging) {
     Log(AutofillMetrics::FORM_EVENT_SUGGESTION_SHOWN_SUBMITTED_ONCE);
     if (is_for_credit_card_ && !has_logged_suggestion_filled_) {
-      if (!has_logged_detected_card_in_submitted_form_) {
-        Log(AutofillMetrics::
-                FORM_EVENT_SUBMIT_WITHOUT_SELECTING_SUGGESTIONS_NO_CARD);
-      } else if (has_logged_submitted_known_card) {
-        Log(AutofillMetrics::
-                FORM_EVENT_SUBMIT_WITHOUT_SELECTING_SUGGESTIONS_KNOWN_CARD);
-      } else {
-        Log(AutofillMetrics::
-                FORM_EVENT_SUBMIT_WITHOUT_SELECTING_SUGGESTIONS_UNKNOWN_CARD);
+      switch (submitted_card) {
+        case EMPTY_CARD:
+          Log(AutofillMetrics::
+                  FORM_EVENT_SUBMIT_WITHOUT_SELECTING_SUGGESTIONS_NO_CARD);
+          break;
+        case WRONG_SIZE_CARD:
+          Log(AutofillMetrics::
+                  FORM_EVENT_SUBMIT_WITHOUT_SELECTING_SUGGESTIONS_WRONG_SIZE_CARD);
+          break;
+        case FAIL_LUHN_CHECK_CARD:
+          Log(AutofillMetrics::
+                  FORM_EVENT_SUBMIT_WITHOUT_SELECTING_SUGGESTIONS_FAIL_LUHN_CHECK_CARD);
+          break;
+        case KNOWN_CARD:
+          Log(AutofillMetrics::
+                  FORM_EVENT_SUBMIT_WITHOUT_SELECTING_SUGGESTIONS_KNOWN_CARD);
+          break;
+        case UNKNOWN_CARD:
+          Log(AutofillMetrics::
+                  FORM_EVENT_SUBMIT_WITHOUT_SELECTING_SUGGESTIONS_UNKNOWN_CARD);
+          break;
+        default:
+          NOTREACHED();
       }
     }
   }
@@ -1368,14 +1382,6 @@ void AutofillMetrics::FormEventLogger::OnFormSubmitted(bool force_logging) {
 
 void AutofillMetrics::FormEventLogger::SetBankNameAvailable() {
   has_logged_bank_name_available_ = true;
-}
-
-void AutofillMetrics::FormEventLogger::DetectedCardInSubmittedForm() {
-  has_logged_detected_card_in_submitted_form_ = true;
-}
-
-void AutofillMetrics::FormEventLogger::SubmittedKnownCard() {
-  has_logged_submitted_known_card = true;
 }
 
 void AutofillMetrics::FormEventLogger::Log(FormEvent event) const {
