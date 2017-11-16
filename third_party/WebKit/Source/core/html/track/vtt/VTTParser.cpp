@@ -552,9 +552,15 @@ void VTTTreeBuilder::ConstructTreeFromToken(Document& document) {
     case VTTTokenTypes::kTimestampTag: {
       String characters_string = token_.Characters();
       double parsed_time_stamp;
-      if (VTTParser::CollectTimeStamp(characters_string, parsed_time_stamp))
+      if (VTTParser::CollectTimeStamp(characters_string, parsed_time_stamp)) {
+        // Add a leading zero if the hour component contains a single digit
+        int hour_digits;
+        VTTScanner input(characters_string);
+        if (input.ScanDigits(hour_digits) == 1)
+          characters_string = "0" + characters_string;
         current_node_->ParserAppendChild(ProcessingInstruction::Create(
             document, "timestamp", characters_string));
+      }
       break;
     }
     default:
