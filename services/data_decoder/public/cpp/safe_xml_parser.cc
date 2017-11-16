@@ -181,4 +181,19 @@ const base::Value* FindXmlElementPath(
   return cur;
 }
 
+std::string GetXmlElementAttribute(const base::Value& element,
+                                   const std::string& element_name) {
+  if (!element.is_dict())
+    return "";
+
+  const base::Value* attributes = element.FindKeyOfType(
+      mojom::XmlParser::kAttributesKey, base::Value::Type::DICTIONARY);
+  if (!attributes)
+    return "";
+
+  const base::Value* value =
+      attributes->FindKeyOfType(element_name, base::Value::Type::STRING);
+  return value ? value->GetString() : "";
+}
+
 }  // namespace data_decoder

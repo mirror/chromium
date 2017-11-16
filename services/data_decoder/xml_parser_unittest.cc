@@ -137,6 +137,20 @@ TEST_F(XmlParserTest, ParseMultipleSimilarElements) {
                "]}");
 }
 
+TEST_F(XmlParserTest, ParseAttributes) {
+  TestParseXml("<a b=\"c\"/>", "{\"tag\":\"a\",\"attributes\":{\"b\":\"c\"}}");
+  TestParseXml("<a><b c=\"d\"/></a>",
+               "{\"tag\":\"a\","
+               "\"children\":[{\"tag\":\"b\",\"attributes\":{\"c\":\"d\"}}]}");
+  TestParseXml("<hello lang=\"fr\">bonjour</hello>",
+               "{\"tag\":\"hello\",\"text\":\"bonjour\","
+               "\"attributes\":{\"lang\":\"fr\"}}");
+  TestParseXml(
+      "<translate lang=\"fr\" id=\"123\"><hello>bonjour</hello></translate>",
+      "{\"tag\": \"translate\",\"attributes\":{\"lang\":\"fr\",\"id\":\"123\"},"
+      "\"children\":[{\"tag\":\"hello\", \"text\":\"bonjour\"}]}");
+}
+
 TEST_F(XmlParserTest, ParseTypicalXml) {
   constexpr char kXml[] =
       "<!-- This is an XML sample -->"
@@ -162,6 +176,7 @@ TEST_F(XmlParserTest, ParseTypicalXml) {
       "{\"tag\": \"library\","
       " \"children\":["
       "  {\"tag\": \"book\","
+      "   \"attributes\": {\"id\":\"k123\"},"
       "   \"children\": ["
       "      {\"tag\": \"author\", \"text\": \"Isaac Newton\"},"
       "      {\"tag\": \"title\","
@@ -172,6 +187,7 @@ TEST_F(XmlParserTest, ParseTypicalXml) {
       "    ]"
       "  },"
       "  {\"tag\": \"book\","
+      "   \"attributes\": {\"id\":\"k456\"},"
       "   \"children\": ["
       "      {\"tag\": \"author\", \"text\": \"Dr. Seuss\"},"
       "      {\"tag\": \"title\", \"text\": \"Green Eggs and Ham\"},"

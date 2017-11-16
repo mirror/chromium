@@ -74,6 +74,11 @@ const base::Value* FindXmlElementPath(
     std::initializer_list<base::StringPiece> path,
     bool* unique_path);
 
+// Returns the value of the attribute named |attribute_name| in |element|, or
+// an empty string if there is no such attribute.
+std::string GetXmlElementAttribute(const base::Value& element,
+                                   const std::string& attribute_name);
+
 }  // namespace data_decoder
 
 #endif  // SERVICES_DATA_DECODER_PUBLIC_CPP_SAFE_XML_PARSER_H_
