@@ -6,6 +6,7 @@ package org.chromium.content_shell_apk;
 
 import android.content.Context;
 
+import org.chromium.base.ApplicationStatus;
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.PathUtils;
@@ -36,4 +37,9 @@ public class ContentShellApplication extends ContentApplication {
         }
     }
 
+    @Override
+    public void onCreate() {
+        ApplicationStatus.initialize(this);
+        super.onCreate();
+    }
 }

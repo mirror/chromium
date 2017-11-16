@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.os.Build;
 import android.system.Os;
 
+import org.chromium.base.ApplicationStatus;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.PathUtils;
@@ -52,6 +53,7 @@ public class NativeUnitTest extends NativeTest {
         // dependency libraries must be loaded before NativeActivity::OnCreate,
         // otherwise loading android.app.lib_name will fail
         loadLibraries();
+        ApplicationStatus.initialize(activity.getApplication());
     }
 
     private void loadLibraries() {
