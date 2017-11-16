@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f1174114_30ce281d",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-16T14:04:34Z",
+      "side": 1,
+      "message": "Yes, both this and the spec narrowly ask for \"same-origin\". I guess we could extend it if we need to? Since we haven\u0027t actually heard much need, I\u0027d prefer to stay narrow for the time being.",
+      "parentUuid": "51809812_beb24c19",
+      "revId": "766c55af044968402f3d7ac7864bf5d50c0aaea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a68984a2_d3b5de1c",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-15T17:51:29Z",
       "side": 1,
       "message": "Add test for this?",
+      "revId": "766c55af044968402f3d7ac7864bf5d50c0aaea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4034cbd1_ba63e881",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-16T14:04:34Z",
+      "side": 1,
+      "message": "Added.",
+      "parentUuid": "a68984a2_d3b5de1c",
       "revId": "766c55af044968402f3d7ac7864bf5d50c0aaea9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
