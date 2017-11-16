@@ -9,10 +9,7 @@
 #include <set>
 #include <string>
 
-#include "base/callback_forward.h"
-#include "base/gtest_prod_util.h"
 #include "base/macros.h"
-#include "base/memory/weak_ptr.h"
 #include "content/public/browser/payment_app_provider.h"
 #include "third_party/WebKit/public/platform/modules/payments/payment_request.mojom.h"
 
@@ -60,7 +57,8 @@ class ServiceWorkerPaymentAppFactory {
   ~ServiceWorkerPaymentAppFactory();
 
   // Below interfaces and variables are used for test only.
-  // The interface to expose RemoveAppsWithoutMatchingMethodDataImpl for test.
+  // The interface to expose RemoveAppsWithoutMatchingMethodDataImpl for
+  // testing. Should be used only in tests.
   void RemoveAppsWithoutMatchingMethodData(
       const std::vector<mojom::PaymentMethodDataPtr>& requested_method_data,
       content::PaymentAppProvider::PaymentApps* apps);
@@ -69,7 +67,7 @@ class ServiceWorkerPaymentAppFactory {
   void IgnorePortInAppScopeForTesting();
 
   // Should be used only in tests.
-  void SetTestPaymentMethodManifestDownloader(
+  void SetPaymentMethodManifestDownloaderForTesting(
       std::unique_ptr<PaymentMethodManifestDownloaderInterface> downloader);
 
   bool ignore_port_in_app_scope_for_testing_;

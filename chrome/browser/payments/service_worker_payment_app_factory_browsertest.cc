@@ -114,7 +114,7 @@ class ServiceWorkerPaymentAppFactoryBrowserTest : public InProcessBrowserTest {
     downloader->AddTestServerURL("https://georgepay.com/",
                                  georgepay_.GetURL("georgepay.com", "/"));
     ServiceWorkerPaymentAppFactory::GetInstance()
-        ->SetTestPaymentMethodManifestDownloader(std::move(downloader));
+        ->SetPaymentMethodManifestDownloaderForTesting(std::move(downloader));
 
     std::vector<mojom::PaymentMethodDataPtr> method_data;
     method_data.emplace_back(mojom::PaymentMethodData::New());

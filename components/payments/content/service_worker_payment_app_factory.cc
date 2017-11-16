@@ -262,8 +262,9 @@ void ServiceWorkerPaymentAppFactory::IgnorePortInAppScopeForTesting() {
   ignore_port_in_app_scope_for_testing_ = true;
 }
 
-void ServiceWorkerPaymentAppFactory::SetTestPaymentMethodManifestDownloader(
-    std::unique_ptr<PaymentMethodManifestDownloaderInterface> downloader) {
+void ServiceWorkerPaymentAppFactory::
+    SetPaymentMethodManifestDownloaderForTesting(
+        std::unique_ptr<PaymentMethodManifestDownloaderInterface> downloader) {
   test_downloader_ = std::move(downloader);
 }
 

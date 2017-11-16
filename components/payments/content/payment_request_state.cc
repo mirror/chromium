@@ -20,14 +20,11 @@
 #include "components/payments/content/payment_response_helper.h"
 #include "components/payments/content/service_worker_payment_app_factory.h"
 #include "components/payments/content/service_worker_payment_instrument.h"
-#include "components/payments/content/utility/payment_manifest_parser.h"
 #include "components/payments/core/autofill_payment_instrument.h"
 #include "components/payments/core/journey_logger.h"
 #include "components/payments/core/payment_instrument.h"
 #include "components/payments/core/payment_request_data_util.h"
-#include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_features.h"
-#include "net/url_request/url_request_context_getter.h"
 
 namespace payments {
 
