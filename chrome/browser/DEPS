@@ -8,8 +8,7 @@ include_rules = [
   "+chrome/installer/util",
   "+chrome/services/file_util/public",
   "+chrome/services/media_gallery_util/public",
-  "+chrome/services/util_win/public",
-  "+chrome/services/wifi_util_win/public",
+  "+chrome/services/util_win/public/interfaces",
   "+chrome_elf/blacklist",
   "+chrome_elf/chrome_elf_constants.h",
   "+chrome_elf/dll_hash",
@@ -51,7 +50,6 @@ include_rules = [
   "+services/identity/public",
   "+services/metrics/metrics_mojo_service.h",
   "+services/metrics/public",
-  "+services/network/public",
   "+services/preferences/public/cpp",
   "+services/preferences/public/interfaces",
   "+services/proxy_resolver",  # Android runs the packaged proxy resolver
@@ -199,5 +197,8 @@ specific_include_rules = {
   ],
   "mash_service_registry.cc": [
     "+mash/quick_launch/quick_launch.h",
+  ],
+  "display_info_provider_chromeos_unittest.cc": [
+    "+ui/events/devices/touch_device_transform.h"
   ]
 }
