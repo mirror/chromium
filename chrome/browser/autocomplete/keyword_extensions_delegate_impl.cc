@@ -155,6 +155,7 @@ void KeywordExtensionsDelegateImpl::Observe(
                                                     &remaining_input))
         return;
 
+      DCHECK(model);
       const TemplateURL* template_url(
           model->GetTemplateURLForKeyword(keyword));
       extensions::ApplyDefaultSuggestionForExtensionKeyword(
@@ -177,6 +178,8 @@ void KeywordExtensionsDelegateImpl::Observe(
       if (!KeywordProvider::ExtractKeywordFromInput(input, model, &keyword,
                                                     &remaining_input))
         return;
+
+      DCHECK(model);
       const TemplateURL* template_url =
           model->GetTemplateURLForKeyword(keyword);
 
