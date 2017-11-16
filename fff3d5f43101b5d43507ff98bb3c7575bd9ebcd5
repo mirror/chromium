@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "016f8c04_a990381a",
+        "filename": "ios/chrome/browser/ui/settings/sync_utils/sync_fake_server_egtest.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-16T15:27:11Z",
+      "side": 1,
+      "message": "Usually calling SetTestingFactory from a EG tests is a bad idea as any other factory that depends on it will have a pointer to a deleted object, as would any object that cache the value returned by the factory.\n\nIf this is not temporary, then I would recommend adding a test hook that will control which instance is created in the factory implementation and override the hook in the earl grey tests. So the factory will end up with something like this:\n\n  std::unique_ptr\u003cKeyedService\u003e\n  IOSChromeContentSuggestionsServiceFactory::BuildServiceInstanceFor(\n      web::BrowserState* browser_state)\n    if (ShouldCreateContentSuggestionsServiceWithProviders()) {\n      return ntp_snippets::CreateChromeContentSuggestionsServiceWithProviders(\n          browser_state);\n    }\n\n    // Regular implementation.\n    return ...\n  }\n\nIf you need to land this yesterday, then please create a bug and add a TODO here (and in all other location where SetTestingFactory is invoked for this factory) and fix in a followup CL. If you are not in a hurry, I would prefer to have the clean fix in the current CL.\n\nNote, the hook will be defined in ios/chrome/app/tests_hook.h and will have two implementation, one for the production app, one for the EG tests.",
+      "revId": "fff3d5f43101b5d43507ff98bb3c7575bd9ebcd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
