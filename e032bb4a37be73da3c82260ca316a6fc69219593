@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "083153b4_05a2f166",
+        "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-16T06:42:24Z",
+      "side": 1,
+      "message": "For these test coverages, I am not pretty clear how to test them. It sounds pretty trivial to me.\n\nHow about creating a DelegateForTests in this class?",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
