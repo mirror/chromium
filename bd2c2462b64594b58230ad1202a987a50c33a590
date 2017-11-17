@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f57b8006_5b264c7c",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T02:11:34Z",
+      "side": 1,
+      "message": "ash:: probably not needed here (or below)",
+      "revId": "bd2c2462b64594b58230ad1202a987a50c33a590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8b9f282_de2e001b",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T02:11:34Z",
+      "side": 1,
+      "message": "drive-by: This one isn\u0027t consistent with the one above or below. Does it need to change?",
+      "revId": "bd2c2462b64594b58230ad1202a987a50c33a590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fea88f5_37420409",
+        "filename": "ash/public/interfaces/voice_interaction_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T02:11:34Z",
+      "side": 1,
+      "message": "optional nit: These comments might read better if you removed \"Assistant feature is\" from each.",
+      "revId": "bd2c2462b64594b58230ad1202a987a50c33a590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb0cd7d4_8cb51f9a",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T02:11:34Z",
+      "side": 1,
+      "message": "Is this needed? If so, move to line 6",
+      "revId": "bd2c2462b64594b58230ad1202a987a50c33a590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd5d63d_8d8f563f",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T02:11:34Z",
+      "side": 1,
+      "message": "Are these new includes needed?",
+      "revId": "bd2c2462b64594b58230ad1202a987a50c33a590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e29e45f_20f03363",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T02:11:34Z",
+      "side": 1,
+      "message": "super nit: End with \".\"",
+      "revId": "bd2c2462b64594b58230ad1202a987a50c33a590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cce677a_55c680b5",
+        "filename": "ash/voice_interaction/voice_interaction_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T02:11:34Z",
+      "side": 1,
+      "message": "nit: \"interaction is allowed\"",
+      "revId": "bd2c2462b64594b58230ad1202a987a50c33a590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
