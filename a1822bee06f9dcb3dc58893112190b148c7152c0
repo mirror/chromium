@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "32cd94bc_88717a91",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-17T12:02:52Z",
+      "side": 1,
+      "message": "Why is there any need for destruction callbacks if we go this route? Isn\u0027t PublicAddressGeolocationProvider controlling the lifetimes sufficient on its own?",
+      "parentUuid": "f546a017_e42bb8b6",
+      "revId": "a1822bee06f9dcb3dc58893112190b148c7152c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5e1ef75_5433c508",
         "filename": "services/device/geolocation/public_ip_address_geolocator.h",
         "patchSetId": 5
