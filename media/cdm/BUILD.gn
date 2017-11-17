@@ -28,6 +28,8 @@ source_set("cdm") {
   sources = [
     "aes_decryptor.cc",
     "aes_decryptor.h",
+    "cdm_proxy.cc",
+    "cdm_proxy.h",
     "default_cdm_factory.cc",
     "default_cdm_factory.h",
     "json_web_key.cc",
