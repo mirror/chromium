@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a565d13_3b3e4223",
+        "filename": "chrome/browser/ui/passwords/destination_file_system.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-17T15:35:50Z",
+      "side": 1,
+      "message": "optional nit: What about |destination_path|? A file would indicate either the file descriptor or the file contents to me.",
+      "range": {
+        "startLine": 16,
+        "startChar": 48,
+        "endLine": 16,
+        "endChar": 64
+      },
+      "revId": "0ca26eff53ba4bdcb32656053f6d21cf42ffcc57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be85905_297fe5ce",
+        "filename": "chrome/browser/ui/passwords/destination_file_system.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-17T15:35:50Z",
+      "side": 1,
+      "message": "nit: This could be const, right?",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 16
+      },
+      "revId": "0ca26eff53ba4bdcb32656053f6d21cf42ffcc57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca816e8_9c487b0d",
+        "filename": "chrome/browser/ui/passwords/destination_file_system_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-17T15:35:50Z",
+      "side": 1,
+      "message": "With one test we probably can just inline the whole fixture class and use the TEST macro.\nOr do you have ideas about what else to test (empty data, extra large data)?",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 31
+      },
+      "revId": "0ca26eff53ba4bdcb32656053f6d21cf42ffcc57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a05994_8ba8c527",
+        "filename": "chrome/browser/ui/passwords/destination_file_system_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-17T15:35:50Z",
+      "side": 1,
+      "message": "I would suggest to drop both the file extension and the CSV-specific test data. DestinationFileSystem does not care about what the data or the path ending is, and is not meant to depend on it. Imagine we add another export format in the future -- DestinationFileSystem will not change, but its test would suddenly be out of date in a sense.\nWhy not keep it simple, don\u0027t change the name and provide some arbitrary simple data?",
+      "range": {
+        "startLine": 22,
+        "startChar": 64,
+        "endLine": 22,
+        "endChar": 67
+      },
+      "revId": "0ca26eff53ba4bdcb32656053f6d21cf42ffcc57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4850e9fa_120d0f8d",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-17T15:35:50Z",
+      "side": 1,
+      "message": "Should this be a unique_ptr, later passed to the Bind call with base::Passed?\nI don\u0027t think it\u0027s wise to have raw owning pointers around, even if the current code only keeps them for a few lines. Somebody might introduce an early exit later and suddenly leak the Destination*.",
+      "range": {
+        "startLine": 204,
+        "startChar": 2,
+        "endLine": 204,
+        "endChar": 23
+      },
+      "revId": "0ca26eff53ba4bdcb32656053f6d21cf42ffcc57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
