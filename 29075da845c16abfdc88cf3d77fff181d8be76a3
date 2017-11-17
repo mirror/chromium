@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f8b4d4ff_1fdd5a4f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-11-17T19:12:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eab5f76_ceb8b17f",
+      "range": {
+        "startLine": 199,
+        "startChar": 22,
+        "endLine": 199,
+        "endChar": 62
+      },
+      "revId": "29075da845c16abfdc88cf3d77fff181d8be76a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad92b3e4_b4d08e2a",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 4
