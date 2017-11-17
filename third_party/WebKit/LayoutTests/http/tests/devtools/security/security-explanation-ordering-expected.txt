@@ -5,7 +5,9 @@ Tests that info explanations are placed after regular explanations.
     </DIV>
     <DIV class=security-explanation-text >
         <DIV class=security-explanation-title >
+            <SPAN >
 Valid Certificate
+            </SPAN>
         </DIV>
         <DIV >
 The connection to this site is using a valid, trusted server certificate.
@@ -30,7 +32,9 @@ View certificate
     </DIV>
     <DIV class=security-explanation-text >
         <DIV class=security-explanation-title >
+            <SPAN >
 Obsolete Connection Settings
+            </SPAN>
         </DIV>
         <DIV >
 The connection to this site uses a strong protocol (TLS 1.2), a strong key exchange (ECDHE_RSA), and an obsolete cipher (AES_256_CBC with HMAC-SHA1).
@@ -42,7 +46,9 @@ The connection to this site uses a strong protocol (TLS 1.2), a strong key excha
     </DIV>
     <DIV class=security-explanation-text >
         <DIV class=security-explanation-title >
+            <SPAN >
 Secure resources
+            </SPAN>
         </DIV>
         <DIV >
 All resources on this page are served securely.
@@ -54,7 +60,9 @@ All resources on this page are served securely.
     </DIV>
     <DIV class=security-explanation-text >
         <DIV class=security-explanation-title >
+            <SPAN >
 Public-Key Pinning Bypassed
+            </SPAN>
         </DIV>
         <DIV >
 Public-key pinning was bypassed by a local root certificate.

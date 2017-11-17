@@ -5,7 +5,9 @@ Tests active mixed content blocking in the security panel.
     </DIV>
     <DIV class=security-explanation-text >
         <DIV class=security-explanation-title >
+            <SPAN >
 Blocked mixed content
+            </SPAN>
         </DIV>
         <DIV >
 Your page requested non-secure resources that were blocked.

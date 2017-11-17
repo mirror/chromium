@@ -7,7 +7,9 @@ Before Refresh --------------
     </DIV>
     <DIV class=security-explanation-text >
         <DIV class=security-explanation-title >
+            <SPAN >
 Neutral Test Summary
+            </SPAN>
         </DIV>
         <DIV >
 Neutral Test Description
@@ -24,7 +26,9 @@ Refresh --------------
     </DIV>
     <DIV class=security-explanation-text >
         <DIV class=security-explanation-title >
+            <SPAN >
 Neutral Test Summary
+            </SPAN>
         </DIV>
         <DIV >
 Neutral Test Description
