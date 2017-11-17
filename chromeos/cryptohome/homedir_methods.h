@@ -73,17 +73,13 @@ class CHROMEOS_EXPORT HomedirMethods {
                        const MountRequest& request,
                        const MountCallback& callback) = 0;
 
-  // Asks cryptohomed to try to add another |key| for user identified by |id|
+  // Asks cryptohomed to try to add another key for the user identified by |id|
   // using |auth| to unlock the key.
-  // |clobber_if_exist| governs action if key with same label already exists for
-  // this user. if |true| old key will be replaced, if  |false| old key will be
-  // preserved.
-  // Key used in |auth| should have PRIV_ADD privilege.
+  // Key used in |auth| should have the PRIV_ADD privilege.
   // |callback| will be called with status info on completion.
   virtual void AddKeyEx(const Identification& id,
-                        const Authorization& auth,
-                        const KeyDefinition& key,
-                        bool clobber_if_exist,
+                        const AuthorizationRequest& auth,
+                        const AddKeyRequest& request,
                         const Callback& callback) = 0;
 
   // Asks cryptohomed to update |key| for user identified by |id| using |auth|
