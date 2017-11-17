@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5e7d90b_8a506328",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/resources/v8-cache-worker.js",
+        "patchSetId": 43
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-17T10:11:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d293669_8374fac7",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "190cceee_d7c63550",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
         "patchSetId": 43
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8cb36eb0_e18da70d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-17T10:11:05Z",
+      "side": 1,
+      "message": "This is because GenerateFullCodeCache() doesn\u0027t use CachedMetadataHandler.",
+      "parentUuid": "190cceee_d7c63550",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99080c5c_b078243f",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
         "patchSetId": 43
@@ -50,6 +86,24 @@
       "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1339352a_1b3210ef",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-17T10:11:05Z",
+      "side": 1,
+      "message": "This is just a code cleanup.",
+      "parentUuid": "99080c5c_b078243f",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "3813ad39_45c36223",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-17T10:11:05Z",
+      "side": 1,
+      "message": "This is just a code cleanup.\n|cache_handler| must not be null because of line 299.",
+      "parentUuid": "62ed8901_78f7b5a4",
+      "range": {
+        "startLine": 321,
+        "startChar": 56,
+        "endLine": 321,
+        "endChar": 0
+      },
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c018caa_f248d9b4",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
         "patchSetId": 43
@@ -90,6 +168,24 @@
       "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd2fc9c_57847f13",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-17T10:11:05Z",
+      "side": 1,
+      "message": "This is just a code cleanup.\n|cache_handler| must not be null because of line 299.",
+      "parentUuid": "6c018caa_f248d9b4",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +240,24 @@
     },
     {
       "key": {
+        "uuid": "2aa3a2a2_781b92a0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-17T10:11:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb5b8c49_118af15c",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97fc92cf_db892724",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
         "patchSetId": 43
@@ -155,6 +269,24 @@
       "writtenOn": "2017-11-17T07:26:59Z",
       "side": 1,
       "message": "Just to confirm: Is it intentional that you get only CachedMetaData and drop the compiled script?\n\nV8 experts: Do we really need to compile everything only to get CachedMetaData?",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab646ad0_75243464",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-17T10:11:05Z",
+      "side": 1,
+      "message": "Yes, we call this method only to create CachedMetaData.",
+      "parentUuid": "97fc92cf_db892724",
       "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -178,6 +310,24 @@
     },
     {
       "key": {
+        "uuid": "aa949cce_e8b34f2a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-17T10:11:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6929d635_6ae11ec6",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "feca1e9f_2c4cf1b8",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.h",
         "patchSetId": 43
@@ -192,6 +342,24 @@
       "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5519edef_f911cfef",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-17T10:11:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feca1e9f_2c4cf1b8",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +380,24 @@
     },
     {
       "key": {
+        "uuid": "f2664b3c_0f3f249d",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/Cache.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-17T10:11:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0d1231cc_1940e178",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "badc86cd_3093401c",
         "filename": "third_party/WebKit/Source/modules/cachestorage/Cache.cpp",
         "patchSetId": 43
@@ -229,6 +415,24 @@
     },
     {
       "key": {
+        "uuid": "77b17331_2dddb35c",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/Cache.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-17T10:11:05Z",
+      "side": 1,
+      "message": "Added comment.",
+      "parentUuid": "badc86cd_3093401c",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86c790d6_44a38297",
         "filename": "third_party/WebKit/Source/modules/cachestorage/Cache.cpp",
         "patchSetId": 43
@@ -243,6 +447,24 @@
       "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e05ca55e_68584604",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/Cache.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-17T10:11:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86c790d6_44a38297",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
