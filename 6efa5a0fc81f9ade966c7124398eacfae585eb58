@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4089d9d2_530bf035",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-17T01:10:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed962122_d417a11e",
+      "range": {
+        "startLine": 68,
+        "startChar": 10,
+        "endLine": 68,
+        "endChar": 21
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fec72376_5daa86a0",
         "filename": "net/quic/chromium/quic_chromium_client_session.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "71141fa5_6d00034b",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-17T01:10:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fec72376_5daa86a0",
+      "range": {
+        "startLine": 698,
+        "startChar": 65,
+        "endLine": 698,
+        "endChar": 0
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "603ad0d7_54700741",
         "filename": "net/quic/chromium/quic_chromium_client_session.cc",
         "patchSetId": 5
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "c3bf5ec3_aa039ad9",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-17T01:10:52Z",
+      "side": 1,
+      "message": "Ack. We couldn\u0027t do this because this is override QuicSession method which is shared by the server.\n\nOf course, expect this be changed to OnConnectivityProbeReceived() when upstream landed. I will do a clean up soon",
+      "parentUuid": "603ad0d7_54700741",
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2763ef5d_2c1e76cd",
         "filename": "net/quic/chromium/quic_chromium_client_session.cc",
         "patchSetId": 5
@@ -76,6 +142,30 @@
       "writtenOn": "2017-11-16T16:13:32Z",
       "side": 1,
       "message": "Under what circumstances would we not migrate when a probe succeeds? I guess maybe if the network state has changed since the probe was sent?",
+      "range": {
+        "startLine": 1597,
+        "startChar": 29,
+        "endLine": 1597,
+        "endChar": 0
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399e9fc5_2dc02a82",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1597,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-17T01:10:52Z",
+      "side": 1,
+      "message": "Yeah, the most conservative strategy here is to always check whether we still want to migrate to that network when a probe finally succeeds as there might be state change between StartProbeNetwork to OnProbeNetworkSucceeds.\n\nThis depends on the implementation, if we always CancelProbe when there\u0027s a state change, then ProbeSucceeds will be guaranteed with with no state change.",
+      "parentUuid": "2763ef5d_2c1e76cd",
       "range": {
         "startLine": 1597,
         "startChar": 29,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "0a96ddb9_bc6dbb42",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1610,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-17T01:10:52Z",
+      "side": 1,
+      "message": "I guess it\u0027s just in this CL there\u0027s nothing to do, or we could also set a timer to ReprobeNetwork. But imagine that in the future if ProbeNetwork() is probing the default network, we want to keep trying migrate back.. so yeah, timer. \n\nI am planning to have this method stuffed in with the change that we want to migrate back to default network.",
+      "parentUuid": "4c95ae70_c0b94f26",
+      "range": {
+        "startLine": 1610,
+        "startChar": 72,
+        "endLine": 1610,
+        "endChar": 0
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c25dffc3_6a7c7a44",
         "filename": "net/quic/chromium/quic_chromium_client_session.cc",
         "patchSetId": 5
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "57a1f08e_3010843a",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1849,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-17T01:10:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c25dffc3_6a7c7a44",
+      "range": {
+        "startLine": 1849,
+        "startChar": 11,
+        "endLine": 1849,
+        "endChar": 15
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96995773_30d3141f",
         "filename": "net/quic/chromium/quic_chromium_client_session.cc",
         "patchSetId": 5
@@ -145,6 +283,30 @@
       "writtenOn": "2017-11-16T16:13:32Z",
       "side": 1,
       "message": "Should we perhaps add an _IDLE_ enum for this case?",
+      "range": {
+        "startLine": 1854,
+        "startChar": 75,
+        "endLine": 1854,
+        "endChar": 0
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40b3691_11104e87",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-17T01:10:52Z",
+      "side": 1,
+      "message": "Heh, this is inherited from v1, it\u0027s a little bit hard to read:\n\nNO_MIGRATABLE_STREAM means there\u0027s NO stream to migrate in the session\nvs\nNON_MIGRATABLE_STREAM means there IS some special stream that is non-migratable in the session.\n\nI can rename them in a different CL, as I expect this will also involve some changes in histograms.xml",
+      "parentUuid": "96995773_30d3141f",
       "range": {
         "startLine": 1854,
         "startChar": 75,
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "e6b9ae14_2843caf0",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1889,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-17T01:10:52Z",
+      "side": 1,
+      "message": "Indeed, thanks for catching this, I was using a probing_socket_ in the session previously. And didn\u0027t notice this when switched to ConnectivityProbingManger",
+      "parentUuid": "dc2cac65_1ef8e4ee",
+      "range": {
+        "startLine": 1889,
+        "startChar": 27,
+        "endLine": 1889,
+        "endChar": 0
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6b5ab95_8c2ed0d6",
         "filename": "net/quic/chromium/quic_chromium_client_session.h",
         "patchSetId": 5
@@ -200,6 +386,30 @@
       "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91c1d44_51875ab7",
+        "filename": "net/quic/chromium/quic_chromium_client_session.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-17T01:10:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6b5ab95_8c2ed0d6",
+      "range": {
+        "startLine": 76,
+        "startChar": 47,
+        "endLine": 76,
+        "endChar": 54
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "acf8eed5_c1e205c1",
+        "filename": "net/quic/chromium/quic_chromium_client_session.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-17T01:10:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "661e37cc_6a75a4b5",
+      "range": {
+        "startLine": 77,
+        "startChar": 47,
+        "endLine": 77,
+        "endChar": 54
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7ec6f91_089aa9bc",
         "filename": "net/quic/chromium/quic_chromium_client_session.h",
         "patchSetId": 5
@@ -240,6 +474,24 @@
       "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205bd4a4_e7123352",
+        "filename": "net/quic/chromium/quic_chromium_client_session.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-17T01:10:52Z",
+      "side": 1,
+      "message": "Aha, if you notice this, then you probably will then discover: everything related to send/receive connectivity probing packet is associated with the \"ConnectivityProbing\". When we say ProbeNetwork, this is on a higher level, where we might end up with sends multiple connectivity probing packets to the peer if we timed out. Does this make sense to you?\n\nConfusing enough, Biren suggested me to call the connectivity probing packet as connectivity probe in the receiver side CL, which means this method name later will be changed to OnConnectivityProbeReceived(). \n\nI will do a clean up in the code about the naming later next week.\n\nWe couldn\u0027t easily change the name to Response as this is override QuicSession method, which is shared with the server.",
+      "parentUuid": "a7ec6f91_089aa9bc",
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -266,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "4eba515b_8890c783",
+        "filename": "net/quic/chromium/quic_chromium_client_session.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-17T01:10:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d91f7962_5e8aeece",
+      "range": {
+        "startLine": 499,
+        "startChar": 7,
+        "endLine": 499,
+        "endChar": 29
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06ba25bc_0e2f57d4",
         "filename": "net/quic/chromium/quic_chromium_client_session.h",
         "patchSetId": 5
@@ -286,6 +562,30 @@
       "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3bcf0d1_d002b873",
+        "filename": "net/quic/chromium/quic_chromium_client_session.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-17T01:10:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06ba25bc_0e2f57d4",
+      "range": {
+        "startLine": 507,
+        "startChar": 7,
+        "endLine": 507,
+        "endChar": 26
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -332,6 +632,30 @@
       "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453a30da_c5d3cb61",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-17T01:10:52Z",
+      "side": 1,
+      "message": "Thanks for pointing this out, yeah, agreed, I think this works expecially for small initial timeouts. \n\nIf the initial timeout is as small as 2ms, we retry at most 12 times. \n\nOtherwise: the initial timeout might be as large as 600ms, exponential backoff will cause us to try: 1st packet 600ms, 2nd packet, 600ms, 3d packet, 1200ms, 4th packet.",
+      "parentUuid": "919ef8bc_951acb5b",
+      "range": {
+        "startLine": 106,
+        "startChar": 55,
+        "endLine": 106,
+        "endChar": 0
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
