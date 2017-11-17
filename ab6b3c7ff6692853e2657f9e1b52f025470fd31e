@@ -46,6 +46,30 @@
       "revId": "ab6b3c7ff6692853e2657f9e1b52f025470fd31e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d750707_54f20cdc",
+        "filename": "content/browser/renderer_host/input/composited_scrolling_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-17T19:48:38Z",
+      "side": 1,
+      "message": "Oooooh, gotcha.\n\nYeah, that\u0027s a bit subtle. So it only watches main frames, but it still works to synchronize with compositor frames.\n\nI\u0027d be fine just calling it Frame Observer, unless that\u0027s overly overloaded.",
+      "parentUuid": "1e183378_b95ff3ea",
+      "range": {
+        "startLine": 93,
+        "startChar": 57,
+        "endLine": 93,
+        "endChar": 67
+      },
+      "revId": "ab6b3c7ff6692853e2657f9e1b52f025470fd31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
