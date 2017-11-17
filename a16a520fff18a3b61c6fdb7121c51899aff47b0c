@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ce48901e_00ac8dfa",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-17T22:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c5de06f_757103cd",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 70
+      },
+      "revId": "a16a520fff18a3b61c6fdb7121c51899aff47b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3194c1dd_8a1664b3",
         "filename": "cc/paint/paint_shader.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a16a520fff18a3b61c6fdb7121c51899aff47b0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a74660_eda3f49a",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-17T22:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3194c1dd_8a1664b3",
+      "range": {
+        "startLine": 397,
+        "startChar": 18,
+        "endLine": 397,
+        "endChar": 28
+      },
+      "revId": "a16a520fff18a3b61c6fdb7121c51899aff47b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
