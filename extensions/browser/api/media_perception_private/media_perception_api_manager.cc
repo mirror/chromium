@@ -8,7 +8,9 @@
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/media_analytics_client.h"
 #include "chromeos/dbus/upstart_client.h"
+#include "extensions/browser/api/extensions_api_client.h"
 #include "extensions/browser/api/media_perception_private/conversion_utils.h"
+#include "extensions/browser/api/media_perception_private/media_perception_cros_component_delegate.h"
 #include "extensions/browser/event_router.h"
 #include "extensions/browser/extension_function.h"
 
@@ -55,6 +57,7 @@ MediaPerceptionAPIManager::MediaPerceptionAPIManager(
     content::BrowserContext* context)
     : browser_context_(context),
       analytics_process_state_(AnalyticsProcessState::IDLE),
+      mount_point_(""),
       weak_ptr_factory_(this) {
   chromeos::MediaAnalyticsClient* dbus_client =
       chromeos::DBusThreadManager::Get()->GetMediaAnalyticsClient();
@@ -94,18 +97,67 @@ void MediaPerceptionAPIManager::GetState(const APIStateCallback& callback) {
   callback.Run(std::move(state_uninitialized));
 }
 
+void MediaPerceptionAPIManager::SetAnalyticsComponent(
+    const media_perception::Component& component,
+    const APISetAnalyticsComponentCallback& callback) {
+  MediaPerceptionCrOSComponentDelegate* delegate =
+      ExtensionsAPIClient::Get()->GetMediaPerceptionCrOSComponentDelegate();
+  if (delegate) {
+    LOG(ERROR) << "Could not get MediaPerceptionCrOSComponentDelegate.";
+    return;
+  }
+  delegate->LoadCrOSComponent(
+      component.type,
+      base::Bind(&MediaPerceptionAPIManager::LoadComponentCallback,
+                 weak_ptr_factory_.GetWeakPtr(), callback));
+}
+
+void MediaPerceptionAPIManager::LoadComponentCallback(
+    const APISetAnalyticsComponentCallback& callback,
+    const std::string& mount_point) {
+  media_perception::ComponentState component_state;
+  mount_point_ = mount_point;
+  if (!ComponentIsLoaded()) {
+    LOG(ERROR) << "Component is not loaded.";
+    component_state.status =
+        media_perception::COMPONENT_STATUS_FAILED_TO_INSTALL;
+    callback.Run(std::move(component_state));
+    return;
+  }
+
+  component_state.status = media_perception::COMPONENT_STATUS_INSTALLED;
+  callback.Run(std::move(component_state));
+  return;
+}
+
+bool MediaPerceptionAPIManager::ComponentIsLoaded() {
+  return !mount_point_.empty();
+}
+
 void MediaPerceptionAPIManager::SetState(const media_perception::State& state,
                                          const APIStateCallback& callback) {
   mri::State state_proto = StateIdlToProto(state);
   DCHECK(state_proto.status() == mri::State::RUNNING ||
          state_proto.status() == mri::State::SUSPENDED ||
-         state_proto.status() == mri::State::RESTARTING)
+         state_proto.status() == mri::State::RESTARTING ||
+         state_proto.status() == mri::State::STOPPED)
       << "Cannot set state to something other than RUNNING, SUSPENDED "
-         "or RESTARTING.";
+         "RESTARTING, or STOPPED.";
 
   if (analytics_process_state_ == AnalyticsProcessState::LAUNCHING) {
     callback.Run(GetStateForServiceError(
         media_perception::SERVICE_ERROR_SERVICE_BUSY_LAUNCHING));
+    return;
+  }
+
+  // If the media analytics process is running or not and stop is requested,
+  // then send stop upstart command.
+  if (state_proto.status() == mri::State::STOPPED) {
+    chromeos::UpstartClient* dbus_client =
+        chromeos::DBusThreadManager::Get()->GetUpstartClient();
+    dbus_client->StopMediaAnalytics(
+        base::Bind(&MediaPerceptionAPIManager::UpstartStopCallback,
+                   weak_ptr_factory_.GetWeakPtr(), callback));
     return;
   }
 
@@ -131,7 +183,12 @@ void MediaPerceptionAPIManager::SetState(const media_perception::State& state,
     analytics_process_state_ = AnalyticsProcessState::LAUNCHING;
     chromeos::UpstartClient* dbus_client =
         chromeos::DBusThreadManager::Get()->GetUpstartClient();
+    std::vector<std::string> upstart_env;
+    if (ComponentIsLoaded()) {
+      upstart_env.push_back(std::string("mount_point=") + mount_point_);
+    }
     dbus_client->StartMediaAnalytics(
+        upstart_env,
         base::Bind(&MediaPerceptionAPIManager::UpstartStartCallback,
                    weak_ptr_factory_.GetWeakPtr(), callback, state_proto));
     return;
@@ -172,6 +229,21 @@ void MediaPerceptionAPIManager::UpstartStartCallback(
   }
   analytics_process_state_ = AnalyticsProcessState::RUNNING;
   SetStateInternal(callback, state);
+}
+
+void MediaPerceptionAPIManager::UpstartStopCallback(
+    const APIStateCallback& callback,
+    bool succeeded) {
+  if (!succeeded) {
+    callback.Run(GetStateForServiceError(
+        media_perception::SERVICE_ERROR_SERVICE_UNREACHABLE));
+    return;
+  }
+  analytics_process_state_ = AnalyticsProcessState::IDLE;
+  // Stopping the process succeeded so fire a callback with status STOPPED.
+  media_perception::State state_stopped;
+  state_stopped.status = media_perception::STATUS_STOPPED;
+  callback.Run(std::move(state_stopped));
 }
 
 void MediaPerceptionAPIManager::UpstartRestartCallback(
