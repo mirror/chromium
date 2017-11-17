@@ -132,6 +132,30 @@
     },
     {
       "key": {
+        "uuid": "0b7cb3e0_9552fb15",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-17T17:01:35Z",
+      "side": 1,
+      "message": "+1 for GetMainWorldContextForFrame, since that\u0027s what we really care about in this case.\n\nAlso, I\u0027d rather not add WebSecurityOrigin::GetURL: the behavior is pretty odd and is definitely extension-specific: the returned URL is *not* the inherited security origin, but the document URL of the browsing context that we think we probably inherited the security origin from.",
+      "parentUuid": "c4171287_4afc7858",
+      "range": {
+        "startLine": 102,
+        "startChar": 23,
+        "endLine": 102,
+        "endChar": 61
+      },
+      "revId": "2e5ef7ea96d074db80194e074aaae7624b123165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62ea92ad_e000c9da",
         "filename": "extensions/renderer/extension_frame_helper.cc",
         "patchSetId": 8
