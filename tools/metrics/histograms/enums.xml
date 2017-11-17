@@ -8129,7 +8129,7 @@ Called by update_net_error_codes.py.-->
   <int value="38" label="UKM"/>
   <int value="39" label="Payments"/>
   <int value="40" label="LargeIconService"/>
-  <int value="41" label="MachineIntelligence"/>
+  <int value="41" label="AssistRanker"/>
 </enum>
 
 <enum name="DCLayerResult">

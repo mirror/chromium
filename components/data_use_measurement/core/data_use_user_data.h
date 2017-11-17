@@ -67,7 +67,7 @@ class DataUseUserData : public base::SupportsUserData::Data {
     UKM,
     PAYMENTS,
     LARGE_ICON_SERVICE,
-    MACHINE_INTELLIGENCE,
+    ASSIST_RANKER,
   };
 
   // Data use broken by content type. This enum must remain synchronized
