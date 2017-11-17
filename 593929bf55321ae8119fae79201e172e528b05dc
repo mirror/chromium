@@ -1,0 +1,279 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b93c453_7b296466",
+        "filename": "chrome/android/java/res/layout/accept_languages_item.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T18:07:00Z",
+      "side": 1,
+      "message": "There aren\u0027t any Chrome prefixed things in this file so I don\u0027t think this line is necessary.",
+      "range": {
+        "startLine": 8,
+        "startChar": 4,
+        "endLine": 8,
+        "endChar": 58
+      },
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0539339_7ecf6721",
+        "filename": "chrome/android/java/res/layout/accept_languages_list.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T18:07:00Z",
+      "side": 1,
+      "message": "I don\u0027t think this line is needed either",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c324e1c_fa2559f1",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T18:07:00Z",
+      "side": 1,
+      "message": "Some devices are smaller than 260dp wide, and iirc some versions of Android/settings on PopupWindow don\u0027t handle resizing if the popup is too large. I suggest using the max of this value and the device width when sizing the popup window.",
+      "range": {
+        "startLine": 462,
+        "startChar": 50,
+        "endLine": 462,
+        "endChar": 55
+      },
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63bf5143_cf72c432",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T18:07:00Z",
+      "side": 1,
+      "message": "This will affect all promo dialogs. Did someone from UX request this change?",
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4a4d6c_791d3918",
+        "filename": "chrome/android/java/res/xml/languages_preferences.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T18:07:00Z",
+      "side": 1,
+      "message": "Which line is xmlns:chrome used for in this file?",
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38fb607c_ab30c217",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T18:07:00Z",
+      "side": 1,
+      "message": "nit: \u0027this.\u0027 isn\u0027t necessary",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b210232a_bf532405",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T18:07:00Z",
+      "side": 1,
+      "message": "Can this be just \"mTitle\"?",
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fc1597_e5cec77d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T18:07:00Z",
+      "side": 1,
+      "message": "Is it possible to reuse this array rather than creating a new one for each language?",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 102,
+        "endChar": 85
+      },
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39eb46aa_1edd9611",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T18:07:00Z",
+      "side": 1,
+      "message": "style nit: I have a slight preferences for an else block rather than an early return here.",
+      "range": {
+        "startLine": 148,
+        "startChar": 16,
+        "endLine": 151,
+        "endChar": 9
+      },
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a73d0d09_22beaf6b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T18:07:00Z",
+      "side": 1,
+      "message": "nit: ...supports and allows users to...",
+      "range": {
+        "startLine": 13,
+        "startChar": 63,
+        "endLine": 13,
+        "endChar": 85
+      },
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "846bd9c8_f955b61e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T18:07:00Z",
+      "side": 1,
+      "message": "s/langguage/language",
+      "range": {
+        "startLine": 56,
+        "startChar": 15,
+        "endLine": 56,
+        "endChar": 24
+      },
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c78f950d_6b2ab510",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T18:07:00Z",
+      "side": 1,
+      "message": "I like this! I wonder if the autofill preferences can be updated to match?",
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3fd57d4_8e3e72f0",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T18:07:00Z",
+      "side": 1,
+      "message": "I\u0027ll let Shimi comment on this more, but I think these descriptions could better describe the string contents. While it is important where the string is shown and when, it is also imporant to capture details around what the text actually means so that it\u0027s easier to translate.",
+      "range": {
+        "startLine": 925,
+        "startChar": 61,
+        "endLine": 925,
+        "endChar": 128
+      },
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
