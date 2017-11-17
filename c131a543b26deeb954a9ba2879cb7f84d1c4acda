@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7666dc31_8224487f",
+        "filename": "media/cdm/mock_helpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T01:14:30Z",
+      "side": 1,
+      "message": "This class is now only used in CdmAdapterTest and AesDecyrptorTest and I believe we don\u0027t test file IO there. Also, this isn\u0027t very interesting to test IMHO.",
+      "parentUuid": "f4bb67d3_be50c571",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 20
+      },
+      "revId": "c131a543b26deeb954a9ba2879cb7f84d1c4acda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6957067_f83c9a4a",
         "filename": "media/mojo/services/mojo_cdm_file_io_unittest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "c131a543b26deeb954a9ba2879cb7f84d1c4acda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13821e3a_be91b274",
+        "filename": "media/mojo/services/mojo_cdm_file_io_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T01:14:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6957067_f83c9a4a",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 25
+      },
+      "revId": "c131a543b26deeb954a9ba2879cb7f84d1c4acda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
