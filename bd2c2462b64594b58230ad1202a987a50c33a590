@@ -164,6 +164,69 @@
       "revId": "bd2c2462b64594b58230ad1202a987a50c33a590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb109013_8adc79eb",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-17T18:01:04Z",
+      "side": 1,
+      "message": "Can you remove _ since this is not a member variable?",
+      "range": {
+        "startLine": 515,
+        "startChar": 57,
+        "endLine": 515,
+        "endChar": 58
+      },
+      "revId": "bd2c2462b64594b58230ad1202a987a50c33a590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa48d07d_ea5b9b1d",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-17T18:01:04Z",
+      "side": 1,
+      "message": "Is it safe to assume that the locale is unsupported for the foreseeable future?",
+      "range": {
+        "startLine": 515,
+        "startChar": 59,
+        "endLine": 515,
+        "endChar": 63
+      },
+      "revId": "bd2c2462b64594b58230ad1202a987a50c33a590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57cc6ba0_eb4979a7",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-17T18:01:04Z",
+      "side": 1,
+      "message": "what is this for? remove?",
+      "revId": "bd2c2462b64594b58230ad1202a987a50c33a590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
