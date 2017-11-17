@@ -611,6 +611,12 @@ void DirectRenderer::UseRenderPass(const RenderPass* render_pass) {
     return;
   }
 
+#if BUILDFLAG(ENABLE_VULKAN)
+  BindFramebufferToOutputSurface();
+  InitializeViewport(current_frame(), render_pass->output_rect,
+                     gfx::Rect(current_frame()->device_viewport_size),
+                     current_frame()->device_viewport_size);
+#else
   gfx::Size enlarged_size = RenderPassTextureSize(render_pass);
   enlarged_size.Enlarge(enlarge_pass_texture_amount_.width(),
                         enlarge_pass_texture_amount_.height());
@@ -622,6 +628,7 @@ void DirectRenderer::UseRenderPass(const RenderPass* render_pass) {
   InitializeViewport(current_frame(), render_pass->output_rect,
                      gfx::Rect(render_pass->output_rect.size()),
                      GetRenderPassTextureSize(render_pass->id));
+#endif
 }
 
 gfx::Rect DirectRenderer::ComputeScissorRectForRenderPass(

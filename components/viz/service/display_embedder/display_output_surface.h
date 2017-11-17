@@ -9,6 +9,7 @@
 
 #include "components/viz/common/gpu/in_process_context_provider.h"
 #include "components/viz/service/display/output_surface.h"
+#include "gpu/vulkan/features.h"
 #include "ui/latency/latency_tracker.h"
 
 namespace viz {
@@ -43,6 +44,9 @@ class DisplayOutputSurface : public OutputSurface {
   bool SurfaceIsSuspendForRecycle() const override;
   bool HasExternalStencilTest() const override;
   void ApplyExternalStencil() override;
+#if BUILDFLAG(ENABLE_VULKAN)
+  gpu::VulkanSurface* GetVulkanSurface() override;
+#endif
 
  protected:
   OutputSurfaceClient* client() const { return client_; }
