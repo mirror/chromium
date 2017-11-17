@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50d4d655_b1966ed4",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-11-17T15:42:01Z",
+      "side": 1,
+      "message": "nit: move this outside of DrawKeyboard.",
+      "range": {
+        "startLine": 1053,
+        "startChar": 7,
+        "endLine": 1053,
+        "endChar": 24
+      },
+      "revId": "31a742c933b2139053d650df248500fb1e53b459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
