@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <script>
+let device;
+
+function requestDeviceWithOptions(options) {
+  return navigator.bluetooth.requestDevice(options)
+  .then(device => device.gatt.connect());
+}
+
 window.onmessage = messageEvent => {
-  if (messageEvent.data.type === 'DiscoverServices') {
-    navigator.bluetooth.requestDevice(messageEvent.data.options)
-      .then(device => device.gatt.connect())
-      .then(gatt => {
-        return gatt.getPrimaryServices()
+  switch (messageEvent.data.type) {
+    case 'DiscoverServices':
+      requestDeviceWithOptions(messageEvent.data.options)
+      .then(gattServer => {
+        return gattServer.getPrimaryServices()
         // TODO(crbug.com/719816): Remove catch once the device
         // has some services.
           .catch(e => {
@@ -20,7 +27,18 @@ window.onmessage = messageEvent => {
         console.error(err);
         parent.postMessage('FAIL: ' + err, '*');
       });
+      break;
+    case 'RequestAndConnect':
+      requestDeviceWithOptions(messageEvent.data.options)
+      .then(gattServer => {
+        device = gattServer.device;
+        parent.postMessage('Connected', '*');
+      }).catch(err => {
+        console.error(err);
+        parent.postMessage('FAIL: ' + err, '*');
+      });
+      break;
+    default:
   }
 };
-parent.postMessage("Ready", "*");
 </script>
