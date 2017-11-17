@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "026287b5_37e2452c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-17T18:11:57Z",
+      "side": 1,
+      "message": "I\u0027ve tried to clarify.",
+      "parentUuid": "2080b3d4_6d2c26f2",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb50a1f7_2c098191",
         "filename": "ash/login/login_screen_controller.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-16T23:10:37Z",
       "side": 1,
       "message": "Should we move this one spot up?",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc12436_44434d8c",
+        "filename": "ash/login/login_screen_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-17T18:11:57Z",
+      "side": 1,
+      "message": "I was doing alphabetical order. Either position is fine with me though.",
+      "parentUuid": "cb50a1f7_2c098191",
       "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f17bb393_792b6c41",
+        "filename": "ash/login/ui/lock_screen.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-17T18:11:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05c2b89b_444d9121",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5529b7d_7582adb8",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-16T23:10:37Z",
       "side": 1,
       "message": "This seems like a rather unfortunate combination of pure virtual methods and implementation methods. Does it make sense to put the pure virtual methods into an interface class?",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9721f80_38908783",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-17T18:11:57Z",
+      "side": 1,
+      "message": "I\u0027m actually trying to move non-UI specific code into this type, and make UI-specific actions pure virtual methods. I\u0027m happy to extract the actual interface-specific methods into a separate type but I\u0027d like to do that a bit later after more of the non-UI specific code has been moved out of login_display_host_webui.cc",
+      "parentUuid": "e5529b7d_7582adb8",
       "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "47f53bb5_4b5b9bfe",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-17T18:11:57Z",
+      "side": 1,
+      "message": "Yea.",
+      "parentUuid": "4bc718b6_36e7f9e1",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a11cf82c_241b2b65",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-16T23:10:37Z",
       "side": 1,
       "message": "We could keep posting ourself N times, right?",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "248fc7a9_332abac8",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-17T18:11:57Z",
+      "side": 1,
+      "message": "I\u0027ve added a TODO",
+      "parentUuid": "a11cf82c_241b2b65",
       "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "f444e286_4c9e56ca",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-17T18:11:57Z",
+      "side": 1,
+      "message": "Authentication, this code is still WIP. I\u0027ve added a DCHECK",
+      "parentUuid": "235ee183_99cec48f",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf0449bc_0e806f5d",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
         "patchSetId": 5
@@ -135,6 +261,24 @@
       "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f65d1f62_d9ce7280",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-17T18:11:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf0449bc_0e806f5d",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "a9940f35_c97622c8",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-17T18:11:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "498d1c3f_64cd50ad",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "933ac266_976f23b7",
         "filename": "chrome/browser/chromeos/login/ui/login_display_views.cc",
         "patchSetId": 5
@@ -166,6 +328,24 @@
       "writtenOn": "2017-11-16T23:10:37Z",
       "side": 1,
       "message": "nit const",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bfa132f_6a72f3c8",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-17T18:11:57Z",
+      "side": 1,
+      "message": "It is already const?",
+      "parentUuid": "933ac266_976f23b7",
       "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -186,6 +366,24 @@
       "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c346dc_3babcd43",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-17T18:11:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da84eb98_b3bddf8b",
+      "revId": "aefea97f8f75651ce11e1d545e91b107237bd80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
