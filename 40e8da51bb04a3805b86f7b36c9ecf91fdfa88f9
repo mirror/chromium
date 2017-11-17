@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "4a1a74dd_8a9defb3",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T00:39:57Z",
+      "side": 1,
+      "message": "\u003e Hmm. Testing this manually, it seemed to be fine. The app window was closed and things seemed to work as they should. Do you think it\u0027s worth being defensive here and adding nullptr cases to the methods below?\n\noops - missed this. If the app windows closes, that\u0027s probably enough.",
+      "parentUuid": "bb6aeee4_fa403cde",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c70993c8_59047fa6",
         "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.h",
         "patchSetId": 5

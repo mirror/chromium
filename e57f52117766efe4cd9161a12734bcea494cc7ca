@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "614d7b3b_e72b6502",
+        "filename": "ash/frame/default_frame_header.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T00:39:57Z",
+      "side": 1,
+      "message": "Note there\u0027s a danger moving from Init() to a constructor -- it means subclasses can no longer override methods that the constructor calls. (style guide has a vague ~\"don\u0027t do too much in constructors\" guideline)",
+      "revId": "e57f52117766efe4cd9161a12734bcea494cc7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae3ebcb_3761a48a",
+        "filename": "ash/frame/frame_header_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T00:39:57Z",
+      "side": 1,
+      "message": "bounds -\u003e bounds available (or available bounds)",
+      "range": {
+        "startLine": 37,
+        "startChar": 17,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "e57f52117766efe4cd9161a12734bcea494cc7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b26c10_9d93e988",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T00:39:57Z",
+      "side": 1,
+      "message": "can this move into ash::DefaultFrameHeader ? Seems orthogonal to a HostedAppFrameHeaderAsh",
+      "revId": "e57f52117766efe4cd9161a12734bcea494cc7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32fb2c4_e8941683",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T00:39:57Z",
+      "side": 1,
+      "message": "Is there anything to detect when app_controller_-\u003eGetTitle() changes?  (Maybe that can/should come via an override of `SchedulePaintForTitle()`?)\n\nCan the other strings be captured in data members / constants? This would make it clear that those never change (and so never need to trigger repaints)",
+      "revId": "e57f52117766efe4cd9161a12734bcea494cc7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8213864f_cd5ec35c",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T00:39:57Z",
+      "side": 1,
+      "message": "How much of this can this move into an override of LayoutHeader() ? This is perhaps where a gfx::RenderText member will be useful, so that paint just does title_text-\u003eDraw(..)",
+      "revId": "e57f52117766efe4cd9161a12734bcea494cc7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
