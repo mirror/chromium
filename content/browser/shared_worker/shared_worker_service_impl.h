@@ -19,7 +19,6 @@
 #include "content/common/shared_worker/shared_worker_factory.mojom.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
-#include "content/public/browser/worker_service.h"
 
 namespace blink {
 class MessagePortChannel;
@@ -34,15 +33,13 @@ class WorkerStoragePartitionId;
 
 // The implementation of WorkerService. We try to place workers in an existing
 // renderer process when possible.
-class CONTENT_EXPORT SharedWorkerServiceImpl : public WorkerService {
+class CONTENT_EXPORT SharedWorkerServiceImpl {
  public:
   // Returns the SharedWorkerServiceImpl singleton.
   static SharedWorkerServiceImpl* GetInstance();
 
   bool TerminateWorker(int process_id, int route_id);
-
-  // WorkerService implementation:
-  void TerminateAllWorkersForTesting(base::OnceClosure callback) override;
+  void TerminateAllWorkersForTesting(base::OnceClosure callback);
 
   // Creates the worker if necessary or connects to an already existing worker.
   void ConnectToWorker(
@@ -65,7 +62,7 @@ class CONTENT_EXPORT SharedWorkerServiceImpl : public WorkerService {
   using WorkerHostMap = std::map<WorkerID, std::unique_ptr<SharedWorkerHost>>;
 
   SharedWorkerServiceImpl();
-  ~SharedWorkerServiceImpl() override;
+  ~SharedWorkerServiceImpl();
 
   void ResetForTesting();
 
