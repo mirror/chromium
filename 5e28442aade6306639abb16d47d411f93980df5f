@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e56d68ce_eb116a4b",
+        "filename": "components/security_state/content/content_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-17T22:40:48Z",
+      "side": 1,
+      "message": "Could you add a test for this change in content_utils_unittest.cc? Probably don\u0027t need to test the actual string contents but you could test that insecure_explanations is non-empty when malicious_content_status is set.",
+      "range": {
+        "startLine": 82,
+        "startChar": 5,
+        "endLine": 82,
+        "endChar": 32
+      },
+      "revId": "5e28442aade6306639abb16d47d411f93980df5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
