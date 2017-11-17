@@ -53,8 +53,7 @@ class TabDataExperimental {
 
   content::WebContents* contents() { return contents_; }
 
-  // Valid when type() == kSingle or kHubAndSpoke.
-  const base::string16& GetTitle() const;
+  base::string16 GetTitle() const;
 
   // Returns true if this tab data itself is counted as a enumerable item when
   // going through the view.

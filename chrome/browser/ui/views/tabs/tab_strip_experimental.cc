@@ -97,6 +97,9 @@ const int kPinnedToNonPinnedOffset = 2;
 const int kPinnedToNonPinnedOffset = 3;
 #endif
 
+// Additional size above the tabs used for group bounds.
+const int kTopPaddingForGroups = 2;
+
 // Returns the width needed for the new tab button (and padding).
 int GetNewTabButtonWidth() {
   return GetLayoutSize(NEW_TAB_BUTTON).width() -
@@ -623,11 +626,36 @@ void TabStripExperimental::Layout() {
 void TabStripExperimental::PaintChildren(const views::PaintInfo& paint_info) {
   EnsureViewOrderUpToDate();
 
-  // The order stored by the view itself doesn't match the paint order. The
-  // paint order is the reverse of the view_order_ vector (to paint
-  // back-to-front).
-  for (TabExperimental* tab : base::Reversed(view_order_))
-    tab->Paint(paint_info);
+  // TODO(brettw) The color should be
+  // controller_->GetToolbarTopSeparatorColor() which handles theming,
+  // activation, and incognito.
+  // TODO(brettw) only paint this where there are no tabs, as the tabs also
+  // paint their own bottom border and this will be overpainting.
+  {
+    ui::PaintRecorder recorder(paint_info.context(),
+                               paint_info.paint_recording_size(),
+                               paint_info.paint_recording_scale_x(),
+                               paint_info.paint_recording_scale_y(), nullptr);
+    gfx::Canvas* canvas = recorder.canvas();
+    BrowserView::Paint1pxHorizontalLine(
+        canvas,
+        ThemeProperties::GetDefaultColor(
+            ThemeProperties::COLOR_TOOLBAR_TOP_SEPARATOR, false),
+        GetLocalBounds(), true);
+  }
+
+  // The order stored by the view::View itself doesn't match the paint order.
+  // The paint order is the reverse of the view_order_ vector (to paint
+  // back-to-front), but we have to paint gropus first (since they're below
+  // everything else.
+  for (TabExperimental* tab : base::Reversed(view_order_)) {
+    if (tab->data()->type() != TabDataExperimental::Type::kSingle)
+      tab->Paint(paint_info);
+  }
+  for (TabExperimental* tab : base::Reversed(view_order_)) {
+    if (tab->data()->type() == TabDataExperimental::Type::kSingle)
+      tab->Paint(paint_info);
+  }
 
   /* TODO(brettw) I have no idea what this does.
 
@@ -644,10 +672,6 @@ void TabStripExperimental::PaintChildren(const views::PaintInfo& paint_info) {
         gfx::RectToSkRect(active_tab->GetMirroredBounds()),
         SkClipOp::kDifference);
   }
-  */
-  /* TODO(brettw) top of toolbar.
-  BrowserView::Paint1pxHorizontalLine(canvas, GetToolbarTopSeparatorColor(),
-                                      GetLocalBounds(), true);
   */
 }
 
@@ -684,8 +708,9 @@ gfx::Size TabStripExperimental::CalculatePreferredSize() const {
   needed_tab_width = std::min(std::max(needed_tab_width, min_selected_width),
                               largest_min_tab_width);
 
-  return gfx::Size(needed_tab_width + GetNewTabButtonWidth(),
-                   Tab::GetMinimumInactiveSize().height());
+  return gfx::Size(
+      needed_tab_width + GetNewTabButtonWidth(),
+      Tab::GetMinimumInactiveSize().height() + kTopPaddingForGroups);
 }
 
 void TabStripExperimental::OnDragEntered(const DropTargetEvent& event) {
@@ -1292,10 +1317,37 @@ void TabStripExperimental::GenerateIdealBounds() {
     tab_width = standard_size.width();
 
   int x = 0;
-  for (size_t i = 0; i < view_order_.size(); i++) {
-    view_order_[i]->set_ideal_bounds(
-        gfx::Rect(x, 0, tab_width, standard_size.height()));
-    x += tab_width;
+  for (const auto& top_data : model_->top_level_tabs()) {
+    const auto top_found = tabs_.find(top_data.get());
+    if (top_found == tabs_.end()) {
+      NOTREACHED();
+      continue;
+    }
+
+    if (top_data->type() == TabDataExperimental::Type::kSingle) {
+      top_found->second->set_ideal_bounds(gfx::Rect(
+          x, kTopPaddingForGroups, tab_width, standard_size.height()));
+      x += tab_width;
+    } else {
+      int top_x = x;
+      x += tab_width;  // Will increment for each child.
+
+      // Layout children inside.
+      for (const auto& inner_data : top_data->children()) {
+        const auto inner_found = tabs_.find(inner_data.get());
+        if (inner_found == tabs_.end()) {
+          NOTREACHED();
+        } else {
+          inner_found->second->set_ideal_bounds(gfx::Rect(
+              x, kTopPaddingForGroups, tab_width, standard_size.height()));
+        }
+        x += tab_width;
+      }
+
+      // Layout group.
+      top_found->second->set_ideal_bounds(gfx::Rect(
+          top_x, 0, x - top_x, standard_size.height() + kTopPaddingForGroups));
+    }
   }
 
   /* TODO(brettw) need to notify of max X.
@@ -1633,7 +1685,17 @@ void TabStripExperimental::EnsureViewOrderUpToDate() const {
 
   view_order_.reserve(tabs_.size());
 
+  // TODO(brettw) this annoyingly duplicates GenerateIdealBounds().
   for (const auto& top_data : model_->top_level_tabs()) {
+    // Group first.
+    const auto top_found = tabs_.find(top_data.get());
+    if (top_found == tabs_.end()) {
+      NOTREACHED();
+    } else {
+      top_found->second->set_view_order(view_order_.size());
+      view_order_.push_back(top_found->second);
+    }
+
     // Add children. This assumes a two-level hierarchy. If more nesting is
     // required, this will need to be recursive.
     for (const auto& inner_data : top_data->children()) {
@@ -1644,15 +1706,6 @@ void TabStripExperimental::EnsureViewOrderUpToDate() const {
         inner_found->second->set_view_order(view_order_.size());
         view_order_.push_back(inner_found->second);
       }
-    }
-
-    // The group itself goes below the child tabs.
-    const auto top_found = tabs_.find(top_data.get());
-    if (top_found == tabs_.end()) {
-      NOTREACHED();
-    } else {
-      top_found->second->set_view_order(view_order_.size());
-      view_order_.push_back(top_found->second);
     }
   }
 

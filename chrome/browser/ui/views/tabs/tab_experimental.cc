@@ -82,10 +82,14 @@ int TabExperimental::GetOverlap() {
 }
 
 void TabExperimental::OnPaint(gfx::Canvas* canvas) {
-  paint_.PaintTabBackground(canvas, active_, 0, 0, nullptr);
+  if (data_->type() == TabDataExperimental::Type::kSingle)
+    paint_.PaintTabBackground(canvas, active_, 0, 0, nullptr);
+  else
+    paint_.PaintGroupBackground(canvas, active_);
 }
 
 void TabExperimental::Layout() {
+  // Space between the favicon and title.
   constexpr int kTitleSpacing = 6;
   const gfx::Rect bounds = GetContentsBounds();
 

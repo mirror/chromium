@@ -379,12 +379,30 @@ void TabStripModelExperimental::InsertWebContentsAt(
   delegate_->WillAddWebContents(contents);
 
   bool active = (add_types & ADD_ACTIVE) != 0;
+  TabDataExperimental* data = nullptr;
 
-  // Always insert tabs at the end for now (so parent is always null).
-  TabDataExperimental* parent = nullptr;
-  tabs_.emplace_back(std::make_unique<TabDataExperimental>(
-      parent, TabDataExperimental::Type::kSingle, contents, this));
-  const TabDataExperimental* data = tabs_.back().get();
+  if ((add_types & ADD_INHERIT_GROUP) && active_index() >= 0 &&
+      active_index() < count()) {
+    // Add as a child following opener.
+    TabDataExperimental* parent = GetDataForViewIndex(active_index());
+    if (parent->type() == TabDataExperimental::Type::kSingle) {
+      // Promote parent to hub-and-spoke.
+      parent->type_ = TabDataExperimental::Type::kHubAndSpoke;
+      for (auto& observer : exp_observers_)
+        observer.TabChanged(parent);
+    }
+
+    parent->children_.push_back(std::make_unique<TabDataExperimental>(
+        parent, TabDataExperimental::Type::kSingle, contents, this));
+    data = parent->children_.back().get();
+
+  } else {
+    // Add at toplevel.
+    tabs_.push_back(std::make_unique<TabDataExperimental>(
+        nullptr, TabDataExperimental::Type::kSingle, contents, this));
+    data = tabs_.back().get();
+  }
+
   UpdateViewCount();
   index = tab_view_count_ - 1;
 
@@ -621,7 +639,7 @@ content::WebContents* TabStripModelExperimental::GetOpenerOfWebContentsAt(
 void TabStripModelExperimental::SetOpenerOfWebContentsAt(
     int index,
     content::WebContents* opener) {
-  NOTIMPLEMENTED();
+  DLOG(ERROR) << "Set opener to " << index;
 }
 
 int TabStripModelExperimental::GetIndexOfLastWebContentsOpenedBy(
@@ -649,7 +667,6 @@ bool TabStripModelExperimental::IsTabPinned(int index) const {
 }
 
 bool TabStripModelExperimental::IsTabBlocked(int index) const {
-  NOTIMPLEMENTED();
   return false;
 }
 
@@ -689,6 +706,10 @@ void TabStripModelExperimental::AddWebContents(content::WebContents* contents,
                                                int index,
                                                ui::PageTransition transition,
                                                int add_types) {
+  // Force group inheritance for link click transitions.
+  if (ui::PageTransitionTypeIncludingQualifiersIs(transition,
+                                                  ui::PAGE_TRANSITION_LINK))
+    add_types |= ADD_INHERIT_GROUP;
   InsertWebContentsAt(index, contents, add_types);
 }
 

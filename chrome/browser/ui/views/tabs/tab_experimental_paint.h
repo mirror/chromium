@@ -32,6 +32,8 @@ class TabExperimentalPaint {
                           int y_offset,
                           gfx::Path* clip);
 
+  void PaintGroupBackground(gfx::Canvas* canvas, bool active);
+
  private:
   class BackgroundCache {
    public:
