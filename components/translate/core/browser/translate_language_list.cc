@@ -19,6 +19,7 @@
 #include "components/translate/core/browser/translate_browser_metrics.h"
 #include "components/translate/core/browser/translate_download_manager.h"
 #include "components/translate/core/browser/translate_event_details.h"
+#include "components/translate/core/browser/translate_pref_names.h"
 #include "components/translate/core/browser/translate_url_fetcher.h"
 #include "components/translate/core/browser/translate_url_util.h"
 #include "components/translate/core/common/translate_util.h"
@@ -170,6 +171,7 @@ TranslateLanguageList::TranslateLanguageList()
 TranslateLanguageList::~TranslateLanguageList() {}
 
 void TranslateLanguageList::GetSupportedLanguages(
+    const PrefService* prefs,
     std::vector<std::string>* languages) {
   DCHECK(languages && languages->empty());
   std::set<std::string>::const_iterator iter = supported_languages_.begin();
@@ -178,7 +180,8 @@ void TranslateLanguageList::GetSupportedLanguages(
 
   // Update language lists if they are not updated after Chrome was launched
   // for later requests.
-  if (!update_is_disabled && language_list_fetcher_.get())
+  if (prefs->GetBoolean(prefs::kTranslateAllowedByPolicy) &&
+      !update_is_disabled && language_list_fetcher_.get())
     RequestLanguageList();
 }
 

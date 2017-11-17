@@ -129,8 +129,12 @@ class TranslatePrefs {
                  const char* accept_languages_pref,
                  const char* preferred_languages_pref);
 
-  // Checks if the translate feature is enabled.
-  bool IsEnabled() const;
+  // Checks if the "offer translate" (i.e. automatic translate bubble) feature
+  // is enabled.
+  bool IsOfferTranslateEnabled() const;
+
+  // Checks if translate is allowed by policy.
+  bool IsTranslateAllowedByPolicy() const;
 
   // Sets the country that the application is run in. Determined by the
   // VariationsService, can be left empty. Used by the TranslateRanker.
@@ -170,6 +174,7 @@ class TranslatePrefs {
   // The list returned in |languages| is sorted alphabetically based on the
   // display names in the given locale.
   static void GetLanguageInfoList(
+      PrefService* prefs,
       const std::string& app_locale,
       std::vector<TranslateLanguageInfo>* languages);
 

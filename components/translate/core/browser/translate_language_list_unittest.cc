@@ -8,7 +8,9 @@
 #include <vector>
 
 #include "base/test/scoped_command_line.h"
+#include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "components/translate/core/browser/translate_download_manager.h"
+#include "components/translate/core/browser/translate_pref_names.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -26,8 +28,11 @@ TEST(TranslateLanguageListTest, SetSupportedLanguages) {
   manager->set_application_locale("en");
   EXPECT_TRUE(manager->language_list()->SetSupportedLanguages(language_list));
 
+  sync_preferences::TestingPrefServiceSyncable prefs;
+  prefs.registry()->RegisterBooleanPref(prefs::kTranslateAllowedByPolicy, true);
+
   std::vector<std::string> results;
-  manager->language_list()->GetSupportedLanguages(&results);
+  manager->language_list()->GetSupportedLanguages(&prefs, &results);
   ASSERT_EQ(2u, results.size());
   EXPECT_EQ("en", results[0]);
   EXPECT_EQ("ja", results[1]);
@@ -81,9 +86,12 @@ TEST(TranslateLanguageListTest, IsSupportedLanguage) {
 // If either of these tests are not true, the default language configuration is
 // likely to be incorrect.
 TEST(TranslateLanguageListTest, GetSupportedLanguages) {
+  sync_preferences::TestingPrefServiceSyncable prefs;
+  prefs.registry()->RegisterBooleanPref(prefs::kTranslateAllowedByPolicy, true);
+
   TranslateLanguageList language_list;
   std::vector<std::string> languages;
-  language_list.GetSupportedLanguages(&languages);
+  language_list.GetSupportedLanguages(&prefs, &languages);
   // Check there are a lot of default languages.
   EXPECT_GE(languages.size(), 100ul);
   // Check that some very common languages are there.
