@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "63cea0fd_6db1864f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T00:06:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea62d964_4420e1d5",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 32
+      },
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92bbcf48_78772224",
         "filename": "ios/chrome/browser/browser_state/test_chrome_browser_state_manager.cc",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b66d67fb_c5328961",
+        "filename": "ios/chrome/browser/browser_state/test_chrome_browser_state_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T00:06:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92bbcf48_78772224",
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "6094d89f_a1c8818a",
+        "filename": "ios/chrome/browser/browser_state/test_chrome_browser_state_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T00:06:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c961a0aa_6f7cd868",
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b114665_0f54901b",
         "filename": "ios/chrome/browser/browser_state/test_chrome_browser_state_manager.h",
         "patchSetId": 4
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "af4ed66e_0477798e",
+        "filename": "ios/chrome/browser/browser_state/test_chrome_browser_state_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T00:06:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b114665_0f54901b",
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ac97a0a_482a79b6",
         "filename": "ios/chrome/browser/browser_state/test_chrome_browser_state_manager.h",
         "patchSetId": 4
@@ -87,6 +165,30 @@
       "writtenOn": "2017-11-16T15:53:50Z",
       "side": 1,
       "message": "Since the regular manager owns the browser state, I think it would make sense to have the test manager also own the sole instance. Can you change this and the constructor to use std::unique_ptr\u003c\u003e?",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 42
+      },
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b9cdaa_02754991",
+        "filename": "ios/chrome/browser/browser_state/test_chrome_browser_state_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T00:06:50Z",
+      "side": 1,
+      "message": "Ack. I find it much more straight forward when the test fixture itself owns the instance as it may want to use the reference throughout the test without too many indirections to get the instance from the manager. Unless you think it really has to change, I suggest we keep this a raw pointer.",
+      "parentUuid": "4ac97a0a_482a79b6",
       "range": {
         "startLine": 35,
         "startChar": 2,
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "08d8521d_64282b69",
+        "filename": "ios/chrome/browser/tabs/tab_model_list.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T00:06:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b325180_4938ecc8",
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72493152_ca99aafe",
         "filename": "ios/chrome/browser/tabs/tab_model_list.mm",
         "patchSetId": 4
@@ -130,6 +250,24 @@
       "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f191aff5_6e520128",
+        "filename": "ios/chrome/browser/tabs/tab_model_list.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T00:06:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72493152_ca99aafe",
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "6a362dbf_4d854daa",
+        "filename": "ios/chrome/browser/tabs/tab_model_list_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T00:06:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c0ec8b0_1c297d3d",
+      "range": {
+        "startLine": 20,
+        "startChar": 25,
+        "endLine": 20,
+        "endChar": 27
+      },
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17e1fcb2_62268f29",
         "filename": "ios/chrome/browser/tabs/tab_model_list_observer.h",
         "patchSetId": 4
@@ -176,6 +338,30 @@
       "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7504e5c_9f047352",
+        "filename": "ios/chrome/browser/tabs/tab_model_list_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T00:06:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17e1fcb2_62268f29",
+      "range": {
+        "startLine": 21,
+        "startChar": 34,
+        "endLine": 21,
+        "endChar": 36
+      },
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "6ee4062c_b3eb6f8a",
+        "filename": "ios/chrome/browser/tabs/tab_model_list_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T00:06:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b900c3b5_93ed90b6",
+      "range": {
+        "startLine": 35,
+        "startChar": 40,
+        "endLine": 35,
+        "endChar": 41
+      },
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de086d85_5209c524",
         "filename": "ios/chrome/browser/tabs/tab_model_list_observer.h",
         "patchSetId": 4
@@ -216,6 +426,24 @@
       "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe3b144_18f649c7",
+        "filename": "ios/chrome/browser/tabs/tab_model_list_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T00:06:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de086d85_5209c524",
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
