@@ -20,6 +20,7 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
+#include "ui/native_theme/native_theme.h"
 #include "ui/views/widget/widget.h"
 
 namespace {
@@ -305,6 +306,17 @@ void Slider::OnPaint(gfx::Canvas* canvas) {
   canvas->DrawCircle(
       thumb_center,
       is_active_ ? kThumbRadius : (kThumbRadius - kThumbStroke / 2), flags);
+
+  if (HasFocus() && should_paint_focus_rect_) {
+    gfx::Rect focus_bounds = GetLocalBounds();
+    focus_bounds.Inset(gfx::Insets(1));
+    canvas->DrawSolidFocusRect(
+        gfx::RectF(focus_bounds),
+        SkColorSetA(GetNativeTheme()->GetSystemColor(
+                        ui::NativeTheme::kColorId_FocusedBorderColor),
+                    0x99),
+        2);
+  }
 }
 
 void Slider::OnFocus() {

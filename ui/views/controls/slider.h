@@ -59,6 +59,10 @@ class VIEWS_EXPORT Slider : public View, public gfx::AnimationDelegate {
     accessibility_events_enabled_ = enabled;
   }
 
+  void set_should_paint_focus_rect(bool value) {
+    should_paint_focus_rect_ = value;
+  }
+
   // Update UI based on control on/off state.
   void UpdateState(bool control_on);
 
@@ -132,6 +136,8 @@ class VIEWS_EXPORT Slider : public View, public gfx::AnimationDelegate {
 
   // Animating value of the current radius of the thumb's highlight.
   float thumb_highlight_radius_ = 0.f;
+
+  bool should_paint_focus_rect_ = false;
 
   gfx::SlideAnimation highlight_animation_;
 
