@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5086f35c_a18422c1",
+        "filename": "ui/aura/window_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-17T11:34:31Z",
+      "side": 1,
+      "message": "I am wary of implicit assumptions like this. Can we not have this here, and instead require the observers to actually look at the layer and check if it\u0027s animating or not?\n\nWe should probably also trigger the appropriate OnWindow*Changed() methods if the * prop was animating?",
+      "revId": "adc4f0b6ac535b141ac954a729ba93a10ec87f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
