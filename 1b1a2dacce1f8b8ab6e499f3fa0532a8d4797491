@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "033e1118_6d4d2959",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9eaa65e5_06b0a109",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c377378e_3841445f",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f644062_9b659674",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Thanks. Done.",
+      "parentUuid": "c377378e_3841445f",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +198,24 @@
     },
     {
       "key": {
+        "uuid": "983c3733_b7e7b7b2",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "\"#include\"s are cleaned up once. Specifically, base/location.h is FROM_HERE.",
+      "parentUuid": "be265129_acd90611",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "761fea30_59adb06c",
         "filename": "components/arc/arc_session_impl.cc",
         "patchSetId": 1
@@ -179,6 +233,24 @@
     },
     {
       "key": {
+        "uuid": "930d6651_5c5560d9",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "761fea30_59adb06c",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f1ea364_4f919254",
         "filename": "components/arc/arc_session_impl.cc",
         "patchSetId": 1
@@ -190,6 +262,30 @@
       "writtenOn": "2017-11-14T20:57:33Z",
       "side": 1,
       "message": "nit: don\u0027t elide the braces.",
+      "range": {
+        "startLine": 47,
+        "startChar": 11,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e526d9f_9a5e8894",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "It was written so :-P. Anyway done.",
+      "parentUuid": "5f1ea364_4f919254",
       "range": {
         "startLine": 47,
         "startChar": 11,
@@ -225,6 +321,30 @@
     },
     {
       "key": {
+        "uuid": "df86120f_d93a693f",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Ack. Thanks, and I was watching it actually. Extracting CL is landed earlier.",
+      "parentUuid": "5bc7895b_276be56d",
+      "range": {
+        "startLine": 206,
+        "startChar": 13,
+        "endLine": 206,
+        "endChar": 42
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3dae32d6_b00ade4e",
         "filename": "components/arc/arc_session_impl.h",
         "patchSetId": 1
@@ -248,6 +368,30 @@
     },
     {
       "key": {
+        "uuid": "f3ac1872_b0ca561b",
+        "filename": "components/arc/arc_session_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Filed a bug. crbug.com/785140.\nAs it is necessary to change more and more codes, and it is independent topic,\nI think it\u0027s better to work on separately.",
+      "parentUuid": "3dae32d6_b00ade4e",
+      "range": {
+        "startLine": 32,
+        "startChar": 17,
+        "endLine": 32,
+        "endChar": 30
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "485323b9_478a3651",
         "filename": "components/arc/arc_session_impl.h",
         "patchSetId": 1
@@ -268,6 +412,30 @@
       "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac956b7f_81b96186",
+        "filename": "components/arc/arc_session_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "It is the same with here\nhttps://cs.chromium.org/chromium/src/chromeos/dbus/session_manager_client.h?q\u003dSessionManagerClient\u0026dr\u003dCSs\u0026l\u003d73\nand AFAIK, in \"clean\" is used in session_manager implementation, too.\n\nSo, I prefer the consistency for now.\nI\u0027m fine to change it of course, but I believe it is separate topic.",
+      "parentUuid": "485323b9_478a3651",
+      "range": {
+        "startLine": 190,
+        "startChar": 31,
+        "endLine": 190,
+        "endChar": 37
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -305,6 +473,24 @@
     },
     {
       "key": {
+        "uuid": "12a62088_abd950dc",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Ditto for FROM_HERE.",
+      "parentUuid": "2b1564b2_e8fd9d9c",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6892e152_124d5c3a",
         "filename": "components/arc/arc_session_impl_unittest.cc",
         "patchSetId": 1
@@ -322,6 +508,24 @@
     },
     {
       "key": {
+        "uuid": "ada3ec93_2822edeb",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6892e152_124d5c3a",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a43e670_757acb0b",
         "filename": "components/arc/arc_session_impl_unittest.cc",
         "patchSetId": 1
@@ -336,6 +540,24 @@
       "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ec4203_b027d7e0",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a43e670_757acb0b",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -359,6 +581,30 @@
       "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bfb5e92_e3db6926",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f741bcde_6cc50a25",
+      "range": {
+        "startLine": 96,
+        "startChar": 7,
+        "endLine": 96,
+        "endChar": 18
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -402,6 +648,48 @@
     },
     {
       "key": {
+        "uuid": "54148151_b80ef5e1",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7effb748_f58d025a",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "faba6c79_65e7337a",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Renamed to SuspendMojoConnection() following Yusuke\u0027s suggestion.",
+      "parentUuid": "c576402b_63188a05",
+      "range": {
+        "startLine": 100,
+        "startChar": 7,
+        "endLine": 100,
+        "endChar": 18
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6efd665a_b8bdc346",
         "filename": "components/arc/arc_session_impl_unittest.cc",
         "patchSetId": 1
@@ -419,6 +707,24 @@
     },
     {
       "key": {
+        "uuid": "b752eca9_cf10a644",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6efd665a_b8bdc346",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbe25902_2a1d4543",
         "filename": "components/arc/arc_session_impl_unittest.cc",
         "patchSetId": 1
@@ -430,6 +736,30 @@
       "writtenOn": "2017-11-14T20:57:33Z",
       "side": 1,
       "message": "Can this be RunCallbackAsynchronously()?",
+      "range": {
+        "startLine": 123,
+        "startChar": 7,
+        "endLine": 123,
+        "endChar": 18
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9a8d796_aa2b313e",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "How about PostCallback, then?",
+      "parentUuid": "fbe25902_2a1d4543",
       "range": {
         "startLine": 123,
         "startChar": 7,
@@ -459,6 +789,24 @@
     },
     {
       "key": {
+        "uuid": "d7f3db87_621b127e",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be40da43_5389b733",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31367481_88eef3b3",
         "filename": "components/arc/arc_session_impl_unittest.cc",
         "patchSetId": 1
@@ -473,6 +821,24 @@
       "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35c944d_fa0e7f5a",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31367481_88eef3b3",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -493,6 +859,24 @@
     },
     {
       "key": {
+        "uuid": "ded086ca_302d9598",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6d136c7_26fbc82d",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a21a5975_7fd2f5aa",
         "filename": "components/arc/arc_session_impl_unittest.cc",
         "patchSetId": 1
@@ -510,6 +894,24 @@
     },
     {
       "key": {
+        "uuid": "dac03132_fe4de2e8",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a21a5975_7fd2f5aa",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8a018d3_45e093a9",
         "filename": "components/arc/arc_session_impl_unittest.cc",
         "patchSetId": 1
@@ -521,6 +923,30 @@
       "writtenOn": "2017-11-14T23:55:40Z",
       "side": 1,
       "message": "It was unclear to me what this meant. Can you clarify? Did you mean \u0027not\u0027?",
+      "range": {
+        "startLine": 156,
+        "startChar": 38,
+        "endLine": 156,
+        "endChar": 47
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01cc0ff_e1ff8d8d",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Oops, typo. I meant \"Not owned\".\n(off topic): BTW, we often note like this, but how much valuable is this nowadays, as we use some smart pointers if the referenced object is owned by the class? WDYT?",
+      "parentUuid": "b8a018d3_45e093a9",
       "range": {
         "startLine": 156,
         "startChar": 38,
@@ -568,6 +994,24 @@
     },
     {
       "key": {
+        "uuid": "b3571af7_50355878",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Thank you for support!\n\n\u003e evaluate to the same value \n\nIt does. null unique_ptr is evaluated as a same *value*, although these could be different *objects*, IIUC. E.g. \"std::unique_ptr\u003cT\u003e() \u003d\u003d std::unique_ptr\u003cT\u003e()\" is evaluated to true.",
+      "parentUuid": "5ba9932a_e21753fc",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08da8959_6cc75ea3",
         "filename": "components/arc/arc_session_impl_unittest.cc",
         "patchSetId": 1
@@ -582,6 +1026,24 @@
       "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f72d646_b0227857",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08da8959_6cc75ea3",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -625,6 +1087,48 @@
     },
     {
       "key": {
+        "uuid": "e6de517a_8254c5f5",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8081aee_ee71c361",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81a7e5dc_34cc274f",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ab6d2a9_f9d8bd6d",
+      "range": {
+        "startLine": 215,
+        "startChar": 59,
+        "endLine": 215,
+        "endChar": 60
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7069f95_1c5888c1",
         "filename": "components/arc/arc_session_impl_unittest.cc",
         "patchSetId": 1
@@ -636,6 +1140,24 @@
       "writtenOn": "2017-11-14T23:55:40Z",
       "side": 1,
       "message": "qq: Why does this have to be an ASSERT?",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce2029a_7d40ac33",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Starting a mini instance (under some condition) is a part of testing set up, rather than main test target. If the setup fails, following main test code does not have any value, so returning it earlier with ASSERT rather than EXPECT.",
+      "parentUuid": "c7069f95_1c5888c1",
       "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -665,6 +1187,30 @@
     },
     {
       "key": {
+        "uuid": "3e53efed_28b957d9",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "On FakeSessionManagerClient, ARC is off by default. I enabled it in the test fixture.\nSo we controls true/false unlike FakeDelegate case.\n\nWe can introduce the named method like EmulateDBusFailure() in addition,\nbut it has exactly same effect with set_arc_available(false);, so TBH, I cannot find enough value on it...\n\nAnother idea is renaming set_arc_success(true/false) etc.? Though I\u0027m not sure if it is a good name...",
+      "parentUuid": "b8a80af6_45202b8d",
+      "range": {
+        "startLine": 342,
+        "startChar": 29,
+        "endLine": 342,
+        "endChar": 46
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "963e3d1f_e9604192",
         "filename": "components/arc/arc_session_impl_unittest.cc",
         "patchSetId": 1
@@ -682,6 +1228,24 @@
     },
     {
       "key": {
+        "uuid": "5cd13306_d6ad66dc",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t understand your point. Could you clarify?",
+      "parentUuid": "963e3d1f_e9604192",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b743fa2_08c821a7",
         "filename": "components/arc/arc_session_impl_unittest.cc",
         "patchSetId": 1
@@ -693,6 +1257,24 @@
       "writtenOn": "2017-11-14T23:55:40Z",
       "side": 1,
       "message": "Why can\u0027t we call delegate-\u003eResume() directly here?",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654ece01_e537f85f",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T16:58:36Z",
+      "side": 1,
+      "message": "Just to avoid raw ptr. It\u0027s not a big deal. Fixed.",
+      "parentUuid": "3b743fa2_08c821a7",
       "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
