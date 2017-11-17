@@ -31,7 +31,6 @@ struct Referrer;
 // An interface for simulating a navigation in unit tests. Currently this only
 // supports renderer-initiated navigations.
 // Note: this should not be used in browser tests.
-// TODO(clamy): support browser-initiated navigations.
 class NavigationSimulator : public WebContentsObserver {
  public:
   // Simulates a browser-initiated navigation to |url| started in
@@ -259,13 +258,8 @@ class NavigationSimulator : public WebContentsObserver {
   // NavigationHandle.
   void PrepareCompleteCallbackOnHandle();
 
-  // Simulates the DidFailProvisionalLoad IPC following a NavigationThrottle
-  // cancelling the navigation.
-  // PlzNavigate: this is not needed.
-  void FailFromThrottleCheck(NavigationThrottle::ThrottleCheckResult result);
-
   // Check if the navigation corresponds to a same-document navigation.
-  // PlzNavigate: only use on renderer-initiated navigations.
+  // Only use on renderer-initiated navigations.
   bool CheckIfSameDocument();
 
   enum State {
