@@ -254,10 +254,14 @@ TestResult(CRASH) + TextExpectation(Failure) => [ Failure <b>Crash</b> ]</pre>
   <p>Text mistmatch groups "Text failure" tests together.
   </p>
   <h3>Viewing results of a single test</h3>
+  <h4>Image results</h4>
   <p>Click on images to zoom in. Select image viewing mode from the popup.</p>
   <p>When viewing images for the first time, red flash highlights enclosing
   rectangle that was colored red in the diff. Diff flash and color eyedropper
   will not be available on file:// urls because of CSP.</p>
+  <h4>Text results</h4>
+  <p>Different panels show the expected, actual text results and differences.</p>
+  <p>For repaint tests, the "repaint" panel visualizes the repaint rectangles.</p>
   <h3>Flagging</h3>
   <p>Tests can be flagged by clicking on that square box on the right hand side. View all flagged tests with "Flagged" filter. "F" is the keyboard shortcut.
   <h3>Bugs</h3>
@@ -424,6 +428,10 @@ class PathParser {
 
   resultLink(resultName) {
     return this.dir + "/" + this.basename + resultName;
+  }
+
+  repaintOverlayLink() {
+    return this.resultLink("-overlay.html?") + encodeURIComponent(this.testHref);
   }
 
   testBaseHref() {
@@ -995,15 +1003,17 @@ const GUI = {
   showNextExpectation: function(backward) {
     let nextExpectation;
     let openDetails = document.querySelector(".details.open");
-    if (openDetails) {
-      let openExpectation = GUI.getExpectation(openDetails, "expect");
+    let openExpectation = openDetails && GUI.getExpectation(openDetails);
+    if (openExpectation)
+      GUI.hideResults(openExpectation);
+    let activeExpectation = GUI.activeExpectation();
+    if (openExpectation && openExpectation == activeExpectation) {
       nextExpectation = backward ?
         GUI.previousExpectation(openExpectation) :
         GUI.nextExpectation(openExpectation);
-      GUI.hideResults(openExpectation);
     } else {
-      if (document.activeElement && document.activeElement.classList.contains("expect"))
-        nextExpectation = document.activeElement;
+      if (activeExpectation)
+        nextExpectation = activeExpectation;
       else
         nextExpectation = document.querySelector(".expect");
     }
@@ -1015,7 +1025,11 @@ const GUI = {
   },
 
   activeExpectation: function() {
-    return GUI.closest(document.activeElement, "expect");
+    let result = GUI.closest(document.activeElement, "expect");
+    if (result)
+      return result;
+    result = GUI.closest(document.activeElement, "result-frame");
+    return result ? result.previousElementSibling : null;
   },
 
   initEvents: function() {
@@ -1871,10 +1885,11 @@ class TextResultsToolbar extends TXToolbar {
     html += `<a class="actual" href="${pathParser.resultLink("-actual.txt")}" title="Actual text">actual</a>`;
     if (!test.is_testharness_test) {
       html += `<a class="expected" href="${pathParser.resultLink("-expected.txt")}" title="Expected result">expected</a><a
-        class="diff" href="${pathParser.resultLink("-diff.txt")}" title="Difference">diff</a>
-      `;
+        class="diff" href="${pathParser.resultLink("-diff.txt")}" title="Difference">diff</a>`;
     }
-    this.toolbar.innerHTML = html;
+    if (test.has_repaint_overlay)
+      html += `<a class="repaint" href="${pathParser.repaintOverlayLink()}" title="Repaint overlay">repaint</a>`;
+    this.toolbar.innerHTML = html + "\n";
     this.toolbar.addEventListener("click", ev => {
       if (ev.target.tagName == "A") {
         this.selectAnchor(ev.target);
