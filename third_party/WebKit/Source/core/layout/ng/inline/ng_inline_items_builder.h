@@ -102,7 +102,7 @@ class CORE_TEMPLATE_CLASS_EXPORT NGInlineItemsBuilderTemplate {
  private:
   Vector<NGInlineItem>* items_;
   StringBuilder text_;
-
+  Vector<LayoutObject*> inline_containing_blocks_;
   // |mapping_builder_| builds the whitespace-collapsed offset mapping
   // during inline collection. It is updated whenever |text_| is modified or a
   // white space is collapsed.
@@ -146,6 +146,13 @@ class CORE_TEMPLATE_CLASS_EXPORT NGInlineItemsBuilderTemplate {
 
   void AppendForcedBreak(const ComputedStyle*, LayoutObject*);
 
+  void AppendItem(Vector<NGInlineItem>* items,
+                  NGInlineItem::NGInlineItemType type,
+                  unsigned start,
+                  unsigned end,
+                  const ComputedStyle* style = nullptr,
+                  LayoutObject* layout_object = nullptr);
+
   void RemoveTrailingCollapsibleSpaceIfExists();
   void RemoveTrailingCollapsibleSpace(unsigned);
   void RemoveTrailingCollapsibleNewlineIfNeeded(const String&,
@@ -154,6 +161,9 @@ class CORE_TEMPLATE_CLASS_EXPORT NGInlineItemsBuilderTemplate {
 
   void Enter(LayoutObject*, UChar);
   void Exit(LayoutObject*);
+
+  // Current inline containing block, can be null.
+  LayoutObject* InlineContainingBlock();
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT

@@ -4,6 +4,7 @@
 
 #include "core/layout/ng/ng_out_of_flow_layout_part.h"
 
+#include "core/layout/LayoutObject.h"
 #include "core/layout/ng/ng_absolute_utils.h"
 #include "core/layout/ng/ng_block_node.h"
 #include "core/layout/ng/ng_box_fragment.h"
@@ -51,8 +52,9 @@ void NGOutOfFlowLayoutPart::Run(bool update_legacy) {
       &descendant_candidates);
 
   while (descendant_candidates.size() > 0) {
+    ComputeInlineContainingBlocks(descendant_candidates);
     for (auto& candidate : descendant_candidates) {
-      if (IsContainingBlockForDescendant(candidate.node.Style())) {
+      if (IsContainingBlockForDescendant(candidate)) {
         NGLogicalOffset offset;
         scoped_refptr<NGLayoutResult> result = LayoutDescendant(
             candidate.node, candidate.static_position, &offset);
@@ -69,6 +71,22 @@ void NGOutOfFlowLayoutPart::Run(bool update_legacy) {
     container_builder_->GetAndClearOutOfFlowDescendantCandidates(
         &descendant_candidates);
   }
+}
+
+void NGOutOfFlowLayoutPart::ComputeInlineContainingBlocks(
+    Vector<NGOutOfFlowPositionedDescendant> descendants) {
+  HashMap<const LayoutObject*, NGContainerFragmentBuilder::FragmentPair>
+      inline_container_fragments;
+  for (auto& descendant : descendants) {
+    if (descendant.inline_container &&
+        !inline_container_fragments.Contains(descendant.inline_container)) {
+      NGContainerFragmentBuilder::FragmentPair fragment_pair;
+      inline_container_fragments.insert(descendant.inline_container,
+                                        fragment_pair);
+    }
+  }
+  container_builder_->ComputeInlineContainerFragments(
+      &inline_container_fragments);
 }
 
 scoped_refptr<NGLayoutResult> NGOutOfFlowLayoutPart::LayoutDescendant(
@@ -146,8 +164,12 @@ scoped_refptr<NGLayoutResult> NGOutOfFlowLayoutPart::LayoutDescendant(
 }
 
 bool NGOutOfFlowLayoutPart::IsContainingBlockForDescendant(
-    const ComputedStyle& descendant_style) {
-  EPosition position = descendant_style.GetPosition();
+    const NGOutOfFlowPositionedDescendant& descendant) {
+  if (descendant.inline_container) {
+    LOG(INFO) << "Got inline container";
+    return true;
+  }
+  EPosition position = descendant.node.Style().GetPosition();
   return (contains_absolute_ && position == EPosition::kAbsolute) ||
          (contains_fixed_ && position == EPosition::kFixed);
 }

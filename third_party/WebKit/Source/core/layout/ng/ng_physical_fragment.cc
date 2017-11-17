@@ -272,11 +272,12 @@ String NGPhysicalFragment::ToString() const {
       IsPlaced(), StringForBoxType(BoxType()).Ascii().data());
 }
 
-String NGPhysicalFragment::DumpFragmentTree(DumpFlags flags) const {
+String NGPhysicalFragment::DumpFragmentTree(DumpFlags flags,
+                                            unsigned indent) const {
   StringBuilder string_builder;
   if (flags & DumpHeaderText)
     string_builder.Append(".:: LayoutNG Physical Fragment Tree ::.\n");
-  AppendFragmentToString(this, &string_builder, flags);
+  AppendFragmentToString(this, &string_builder, flags, indent);
   return string_builder.ToString();
 }
 

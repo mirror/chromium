@@ -15,6 +15,7 @@
 #include "platform/text/TextDirection.h"
 #include "platform/text/WritingMode.h"
 #include "platform/wtf/Allocator.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
@@ -98,13 +99,24 @@ class CORE_EXPORT NGContainerFragmentBuilder : public NGBaseFragmentBuilder {
   NGContainerFragmentBuilder& AddInlineOutOfFlowChildCandidate(
       NGBlockNode,
       const NGLogicalOffset& child_line_offset,
-      TextDirection line_direction);
+      TextDirection line_direction,
+      LayoutObject* inline_container);
 
   NGContainerFragmentBuilder& AddOutOfFlowDescendant(
       NGOutOfFlowPositionedDescendant);
 
   void GetAndClearOutOfFlowDescendantCandidates(
       Vector<NGOutOfFlowPositionedDescendant>* descendant_candidates);
+
+  using FragmentPair = std::pair<scoped_refptr<NGPhysicalFragment>,
+                                 scoped_refptr<NGPhysicalFragment>>;
+
+  void ComputeInlineContainerFragments(
+      HashMap<const LayoutObject*, FragmentPair>* inline_container_fragments);
+
+#ifndef NDEBUG
+  String ToString() const;
+#endif
 
  protected:
   // An out-of-flow positioned-candidate is a temporary data structure used
