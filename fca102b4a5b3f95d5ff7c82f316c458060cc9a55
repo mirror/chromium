@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fff99f02_97dddbe8",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-17T01:30:30Z",
+      "side": 1,
+      "message": "(I assume this is the compositor thread from the class-level comment)\n\nFor clarification, how about calling Platform::Current()-\u003eCompositorThread() instead and/or renaming |thread_| to |compositor_thread_|? Also, IsContextThread() sounds like AudioWorklet\u0027s thread, so IsCompositorThread() would be clearer.",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 51
+      },
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cad9a6e6_057716cd",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-17T01:30:30Z",
+      "side": 1,
+      "message": "Which is the control thread?: main thread, compositor thread, or AnimationWorklet thread?",
+      "range": {
+        "startLine": 26,
+        "startChar": 12,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e6ad326_66d49c0c",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-17T01:30:30Z",
+      "side": 1,
+      "message": "Looks like Register/UnregisterCompositorAnimatior are called on the AnimationWorklet thread. How about like this?\n\n// Unless otherwise noted, this should be accessed only on the compositor thread.",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 51
+      },
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af072ec7_02d43f5a",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-17T01:30:30Z",
+      "side": 1,
+      "message": "animation?",
+      "range": {
+        "startLine": 52,
+        "startChar": 35,
+        "endLine": 52,
+        "endChar": 43
+      },
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
