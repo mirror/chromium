@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5fd97e59_20b1b0ce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-11-17T16:47:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19eef236_e7b8dd41",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 13
+      },
+      "revId": "e85faa339fd83844f7e07ecf4ab4fbee098b72ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e55c0047_ebb2b9a7",
         "filename": "chrome/browser/resources/gaia_auth_host/authenticator.js",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "e85faa339fd83844f7e07ecf4ab4fbee098b72ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "762c78a6_4ddafaf4",
+        "filename": "chrome/browser/resources/gaia_auth_host/authenticator.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-11-17T16:47:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e55c0047_ebb2b9a7",
+      "revId": "e85faa339fd83844f7e07ecf4ab4fbee098b72ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
