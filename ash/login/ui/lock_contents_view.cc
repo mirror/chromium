@@ -242,6 +242,14 @@ LockContentsView::LockContentsView(
       new NoteActionLaunchButton(initial_note_action_state, data_dispatcher_);
   AddChildView(note_action_);
 
+  opaque_foreground_ = new views::View();
+  opaque_foreground_->SetBackground(
+      views::CreateSolidBackground(SK_ColorBLACK));
+  opaque_foreground_->SetVisible(false);
+  opaque_foreground_->SetPaintToLayer();
+
+  AddChildView(opaque_foreground_);
+
   OnLockScreenNoteStateChanged(initial_note_action_state);
 }
 
@@ -273,6 +281,13 @@ void LockContentsView::Layout() {
 
   if (scroller_)
     scroller_->ClipHeightTo(size().height(), size().height());
+
+  opaque_foreground_->SetBoundsRect(GetLocalBounds());
+}
+
+void LockContentsView::SetForegroundVisible(bool visible) {
+  LOG(ERROR) << "SET FOREGROUND VISIBLE " << visible;
+  opaque_foreground_->SetVisible(visible);
 }
 
 void LockContentsView::AddedToWidget() {

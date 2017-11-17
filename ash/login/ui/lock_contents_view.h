@@ -72,6 +72,8 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
                    LoginDataDispatcher* data_dispatcher);
   ~LockContentsView() override;
 
+  void SetForegroundVisible(bool visible);
+
   // views::View:
   void Layout() override;
   void AddedToWidget() override;
@@ -224,6 +226,8 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
   NonAccessibleView* main_view_ = nullptr;
   // Layout used for |main_view_|.
   views::BoxLayout* main_layout_ = nullptr;
+
+  views::View* opaque_foreground_ = nullptr;
 
   // Actions that should be executed when rotation changes. A full layout pass
   // is performed after all actions are executed.
