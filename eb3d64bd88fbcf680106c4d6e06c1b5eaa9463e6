@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6134afb8_7a4dcf30",
+        "filename": "device/bluetooth/bluetooth_low_energy_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-17T19:58:14Z",
+      "side": 1,
+      "message": "Prefer direct logic in the leading statement?\n\n  if (characteristic-\u003eIsWritableWithoutResponse) {\n    flag |\u003d BLUETOOTH_GATT_FLAG_WRITE_WITHOUT_RESPONSE;\n    DCHECK(!characteristic-\u003eIsWritable);",
+      "range": {
+        "startLine": 830,
+        "startChar": 0,
+        "endLine": 831,
+        "endChar": 54
+      },
+      "revId": "eb3d64bd88fbcf680106c4d6e06c1b5eaa9463e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
