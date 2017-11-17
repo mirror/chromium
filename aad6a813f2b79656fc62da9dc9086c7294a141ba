@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8330a741_234dc778",
+        "filename": "components/navigation_metrics/navigation_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-17T01:17:56Z",
+      "side": 1,
+      "message": "nit: enum class?  You could then omit the shared \"SCHEME_\" Prefix below.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 4
+      },
+      "revId": "aad6a813f2b79656fc62da9dc9086c7294a141ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327a2274_c2e58598",
+        "filename": "components/navigation_metrics/navigation_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-17T01:17:56Z",
+      "side": 1,
+      "message": "nit: There\u0027s usually not any need to specify a backing storage type for enums.  Is there a particular benefit that you\u0027re aware of in this case?",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "aad6a813f2b79656fc62da9dc9086c7294a141ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5485d80e_f830b39d",
+        "filename": "components/navigation_metrics/navigation_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-17T01:17:56Z",
+      "side": 1,
+      "message": "nit: I\u0027d recommend naming this \"COUNT\" rather than \"MAX\" – \"MAX\" is typically used as an alias for the last element in an enum, whereas \"COUNT\" is more typically used to count the number of entries.",
+      "range": {
+        "startLine": 37,
+        "startChar": 13,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "aad6a813f2b79656fc62da9dc9086c7294a141ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79103697_58baa4c8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 30521,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-17T01:17:56Z",
+      "side": 1,
+      "message": "nit: Please add the attribute base\u003d\"true\", since code only emits to this histogram with suffixes.",
+      "range": {
+        "startLine": 30521,
+        "startChar": 59,
+        "endLine": 30521,
+        "endChar": 0
+      },
+      "revId": "aad6a813f2b79656fc62da9dc9086c7294a141ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
