@@ -1,0 +1,423 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8079f0ac_ef94b8d5",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T23:43:38Z",
+      "side": 1,
+      "message": "Do we reap old readers?",
+      "range": {
+        "startLine": 57,
+        "startChar": 46,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a2e487_ead77969",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T23:43:38Z",
+      "side": 1,
+      "message": "nit: exponential",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 69,
+        "endChar": 19
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c65971_99400938",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T23:43:38Z",
+      "side": 1,
+      "message": "If we\u0027re going to hit a limit, I wonder if it should happen before we start the probe, not after it succeeds?",
+      "range": {
+        "startLine": 1614,
+        "startChar": 32,
+        "endLine": 1614,
+        "endChar": 0
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77913f9d_c1a1a4a2",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1628,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T23:43:38Z",
+      "side": 1,
+      "message": "fails -\u003e failed.",
+      "range": {
+        "startLine": 1628,
+        "startChar": 36,
+        "endLine": 1628,
+        "endChar": 41
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c32950_1e3f930e",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1630,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T23:43:38Z",
+      "side": 1,
+      "message": "nit: \u0026\u0026 instead of a nested if.\n\nOr even better:\nDVLOG_IF(1, network \u003d\u003d default_network_ \u0026\u0026\n            GetDefaultSocket()-\u003eGetBoundNetwork() !\u003d default_network_)\n   \u003c\u003c ....;",
+      "range": {
+        "startLine": 1630,
+        "startChar": 4,
+        "endLine": 1630,
+        "endChar": 6
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5155272_1518a694",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1631,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T23:43:38Z",
+      "side": 1,
+      "message": "fails-\u003efailed \n\"stills uses\" -\u003e \"stilll using\"",
+      "range": {
+        "startLine": 1631,
+        "startChar": 34,
+        "endLine": 1631,
+        "endChar": 39
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4cb1f1b_415db5da",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1660,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T23:43:38Z",
+      "side": 1,
+      "message": "What guarantees that this is the only working network? migration_pending_ being true? (If so, perhaps it\u0027d be good to mention that in the comment.",
+      "range": {
+        "startLine": 1660,
+        "startChar": 43,
+        "endLine": 1660,
+        "endChar": 0
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "259fcdc5_7c2cb903",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1685,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T23:43:38Z",
+      "side": 1,
+      "message": "nit: Consider changing the manager to:\n probing_manager_.CancelProbing(disconnected_network)\nand let the manager do the check.",
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0745658_d713ce05",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1695,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T23:43:38Z",
+      "side": 1,
+      "message": "Attempt",
+      "range": {
+        "startLine": 1695,
+        "startChar": 5,
+        "endLine": 1695,
+        "endChar": 11
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "518c661d_84c571a4",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1736,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T23:43:38Z",
+      "side": 1,
+      "message": "I wonder if we should rename this member to something like waiting_for_new_network_? *shrug* maybe in a follow up.",
+      "range": {
+        "startLine": 1736,
+        "startChar": 24,
+        "endLine": 1736,
+        "endChar": 25
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e1c85a_01625d91",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1751,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T23:43:38Z",
+      "side": 1,
+      "message": "I don\u0027t think I understand why we need to call both StartMigrateBackToDefaultNetwork() and  StartProbeNetwork(). I think I would expect  StartProbeNetwork() to start the probe if one is needed?",
+      "range": {
+        "startLine": 1751,
+        "startChar": 39,
+        "endLine": 1751,
+        "endChar": 0
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a774e58_71465210",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1760,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T23:43:38Z",
+      "side": 1,
+      "message": "please comment these boolean literals",
+      "range": {
+        "startLine": 1760,
+        "startChar": 28,
+        "endLine": 1760,
+        "endChar": 39
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aef11526_2f275b42",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1764,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T23:43:38Z",
+      "side": 1,
+      "message": "Is this actually possible?",
+      "range": {
+        "startLine": 1764,
+        "startChar": 11,
+        "endLine": 1764,
+        "endChar": 0
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69e3dc41_22ce01f5",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2003,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T23:43:38Z",
+      "side": 1,
+      "message": "Looks like this starts a timer, right? If so, I\u0027d call this:\n\nMigrateBackToDefaultNetworkLater()\nor perhaps\nStartMigrateBackToDefaultNetworkTimer()",
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f15b4e_100df1cc",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2016,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T23:43:38Z",
+      "side": 1,
+      "message": "If I understand the probing manager correctly, current_probing_network() only changes when a new network is probed. So in the case where we end up retrying a probe, what causes the probe to be restarted? (Since it won\u0027t be this code, I don\u0027t think?)",
+      "range": {
+        "startLine": 2016,
+        "startChar": 71,
+        "endLine": 2016,
+        "endChar": 0
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e096ef91_5fae9527",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T23:43:38Z",
+      "side": 1,
+      "message": "I wonder if this is aggressive enough? *shrug*",
+      "range": {
+        "startLine": 2037,
+        "startChar": 68,
+        "endLine": 2037,
+        "endChar": 0
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce5eb3f2_4d852f8f",
+        "filename": "net/quic/chromium/quic_chromium_client_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T23:43:38Z",
+      "side": 1,
+      "message": "nit: comment on both these members, please.",
+      "range": {
+        "startLine": 700,
+        "startChar": 52,
+        "endLine": 700,
+        "endChar": 0
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a18063_747a4717",
+        "filename": "net/quic/chromium/quic_chromium_client_session_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T23:43:38Z",
+      "side": 1,
+      "message": "Surely we need some more changes to this file ... like additional tests :\u003e",
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f24fab_b87f7ddf",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T23:43:38Z",
+      "side": 1,
+      "message": "nit: Instead of exposing the v2 method here, can you just call session-\u003eOnNetworkDisconnected() and in that method do the v1 vs v2 check?\n\nIf so, that would allow the v1 vs v2-ness to be handled entirely in the session.",
+      "range": {
+        "startLine": 1212,
+        "startChar": 67,
+        "endLine": 1212,
+        "endChar": 0
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
