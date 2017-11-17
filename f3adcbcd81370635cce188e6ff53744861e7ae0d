@@ -1,0 +1,387 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adfe7ad0_7a089c25",
+        "filename": "media/cdm/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T07:13:17Z",
+      "side": 1,
+      "message": "Add cdm_proxy.* here since this is only used by \"library cdms\" (which means CDM implementing the cdm::CDM interface).",
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dedba626_5f355669",
+        "filename": "media/cdm/cdm_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T07:13:17Z",
+      "side": 1,
+      "message": "nit: here and where applicable\n\n\u003d default;",
+      "range": {
+        "startLine": 9,
+        "startChar": 19,
+        "endLine": 9,
+        "endChar": 21
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "720df808_d0c1b5a9",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T07:13:17Z",
+      "side": 1,
+      "message": "nit: \u003d 0;",
+      "range": {
+        "startLine": 22,
+        "startChar": 28,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c23833b9_7d84e2eb",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T07:13:17Z",
+      "side": 1,
+      "message": "nit: \u003d true;",
+      "range": {
+        "startLine": 29,
+        "startChar": 20,
+        "endLine": 29,
+        "endChar": 21
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd7629d_0fea5be7",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T07:13:17Z",
+      "side": 1,
+      "message": "Q: will a boolean be sufficient? Or do you expect to add more values to this enum in the future?",
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d32b5f_c1aba190",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T07:13:17Z",
+      "side": 1,
+      "message": "here and everywhere else, use \"enum class\"",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 7
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "049232af_ea67356e",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T07:13:17Z",
+      "side": 1,
+      "message": "lowercase \"k\".\n\nAlso, CSME is not a well known term, so according to the style guide, we should spell it out:\n\nkIntelConvergedSecurityAndManageabilityEngine\n\nLooks crazy?",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08e9d34_23d06de3",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T07:13:17Z",
+      "side": 1,
+      "message": "tiny nit: Since this is already an enum, \"Id\" seems redundant. \"Function\" would be very generic, but since it\u0027s scoped in CdmProxy, i.e. CdmProxy::Function, it looks good to me.",
+      "range": {
+        "startLine": 57,
+        "startChar": 7,
+        "endLine": 57,
+        "endChar": 17
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "615e4a65_c9f87055",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T07:13:17Z",
+      "side": 1,
+      "message": "Where is this defined?",
+      "range": {
+        "startLine": 58,
+        "startChar": 43,
+        "endLine": 58,
+        "endChar": 76
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b10f6da_b626c8a4",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T07:13:17Z",
+      "side": 1,
+      "message": "nit: \"not empty\" since |video_private_data| is a vector?",
+      "range": {
+        "startLine": 81,
+        "startChar": 9,
+        "endLine": 81,
+        "endChar": 17
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "576a8300_e3d86b32",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T07:13:17Z",
+      "side": 1,
+      "message": "Now CreateMediaCryptoSessions and CreateMediaCryptoSessionsCB are separated and it\u0027s harder to read the comments. Does it make sense to move this \"using\" and the comments right before CreateMediaCryptoSessions?\n\nditto for Initialize and Process.",
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4632eb26_dcf55b87",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T07:13:17Z",
+      "side": 1,
+      "message": "nit: Add an empty line here.",
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b461a21_368adeca",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T07:13:17Z",
+      "side": 1,
+      "message": "In the mojom IDL, we don\u0027t have the equivalent of a C++ constructor, hence we need an extra call to pass the client, either in an extra factory, or in the Initliaze() call.\n\nFor the sake of simplicity, since we already have Initialize, can we pass the client in Initialize()?\n\nAlso, typically the client is the host itself (which is easy to implement). So it\u0027ll be easier to just have a raw pointer here instead of the unique pointer. You can add a comment that the client will always outlive the CdmProxy.",
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd35317d_2bf0614a",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T07:13:17Z",
+      "side": 1,
+      "message": "Here and everywhere else, there\u0027s no CdmProxyClient in this class.\n\n\"reported to |init_cb|\"?",
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea92a0af_506dccd0",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T07:13:17Z",
+      "side": 1,
+      "message": "nit: this comment doesn\u0027t add any value...",
+      "range": {
+        "startLine": 98,
+        "startChar": 47,
+        "endLine": 98,
+        "endChar": 70
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec0e6c84_99de8b61",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T07:13:17Z",
+      "side": 1,
+      "message": "nit: the",
+      "range": {
+        "startLine": 98,
+        "startChar": 37,
+        "endLine": 98,
+        "endChar": 40
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b8d258_d9fbf8d1",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T07:13:17Z",
+      "side": 1,
+      "message": "Is this always true?\n\ncreate_video_crypto_session \u003d\u003d !video_private_data.empty()\n\nIf so, maybe we can drop create_video_crypto_session and use the latter to indicate whether we should create video crypto session?",
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a9cbe7_5d059539",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T07:13:17Z",
+      "side": 1,
+      "message": "Typically we don\u0027t put implementation in a pure interface. It doesn\u0027t add much value and will make the code harder to read (e.g. people looking at an impl may wonder where the client() is implemented). Also, imagine an implementation that doesn\u0027t do much work but forward the calls to another class, then it cannot forward the client, and instead, have to implement the Client as well. Not saying that\u0027s bad, but just that we are unnecessarily restricting what subclass can do.",
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc60f5bd_9013f499",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T07:13:17Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(CdmProxy);",
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
