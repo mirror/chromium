@@ -36,6 +36,114 @@
     },
     {
       "key": {
+        "uuid": "966d21fc_5c8f2794",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-17T11:01:02Z",
+      "side": 1,
+      "message": "Let\u0027s make this a switch(...) without default labels to get compile time checking that all status codes are handled, so we don\u0027t leave the promise hanging on the renderer side.",
+      "revId": "b8b8dd46b6eff6a5f73ffc6cec325813942a416f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51b07e4b_883d87c5",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-17T11:01:02Z",
+      "side": 1,
+      "message": "nit: Add DCHECK(callback_)",
+      "revId": "b8b8dd46b6eff6a5f73ffc6cec325813942a416f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8dd13f5_0e237d3b",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-17T11:01:02Z",
+      "side": 1,
+      "message": "nit: \u003d\u003d\u003d MakeCredentialCallback",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 70
+      },
+      "revId": "b8b8dd46b6eff6a5f73ffc6cec325813942a416f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7062ee3_6680e98e",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-17T11:01:02Z",
+      "side": 1,
+      "message": "nit: make_credential_response_callback_",
+      "revId": "b8b8dd46b6eff6a5f73ffc6cec325813942a416f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fedb584_666a8ba2",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-17T11:01:02Z",
+      "side": 1,
+      "message": "Hmm, I\u0027m surprised this actually ever returns. :-)\n\nTo make this test stronger, i.e. to verify it does not fail too early, we should really mock out the time here.",
+      "revId": "b8b8dd46b6eff6a5f73ffc6cec325813942a416f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c04917_732130cb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-17T11:01:02Z",
+      "side": 1,
+      "message": "What\u0027s the difference between this test and the one above?",
+      "revId": "b8b8dd46b6eff6a5f73ffc6cec325813942a416f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a121ca4_4cd1f7fd",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
         "patchSetId": 5
