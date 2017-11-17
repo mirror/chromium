@@ -292,6 +292,7 @@ class CORE_EXPORT HTMLCanvasElement final
   void Reset();
 
   std::unique_ptr<ImageBufferSurface> CreateWebGLImageBufferSurface();
+  std::unique_ptr<ImageBufferSurface> CreateLowLatencyImageBufferSurface();
   std::unique_ptr<ImageBufferSurface> CreateAcceleratedImageBufferSurface(
       int* msaa_sample_count);
   std::unique_ptr<ImageBufferSurface> CreateUnacceleratedImageBufferSurface();

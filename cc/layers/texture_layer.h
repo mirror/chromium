@@ -143,6 +143,8 @@ class CC_EXPORT TextureLayer : public Layer {
   bool IsSnapped() override;
   void PushPropertiesTo(LayerImpl* layer) override;
 
+  void SetAllowMailboxReuse(bool allow);
+
  protected:
   explicit TextureLayer(TextureLayerClient* client);
   ~TextureLayer() override;
@@ -152,8 +154,7 @@ class CC_EXPORT TextureLayer : public Layer {
   void SetTextureMailboxInternal(
       const viz::TextureMailbox& mailbox,
       std::unique_ptr<viz::SingleReleaseCallback> release_callback,
-      bool requires_commit,
-      bool allow_mailbox_reuse);
+      bool requires_commit);
 
   TextureLayerClient* client_;
 
@@ -168,6 +169,9 @@ class CC_EXPORT TextureLayer : public Layer {
 
   std::unique_ptr<TextureMailboxHolder::MainThreadReference> holder_ref_;
   bool needs_set_mailbox_ = false;
+#if DCHECK_IS_ON()
+  bool allow_mailbox_reuse_ = false;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(TextureLayer);
 };

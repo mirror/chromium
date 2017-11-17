@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<style>
+canvas {
+  border: solid 1px;
+  cursor: crosshair;
+}
+</style>
+<h3>Low latency canvas experiment.</h3>
+<p>While hovering the pointer over the canvases, the marker follows the position of the pointer.  The "low latency" canvas should be less laggy.</p>
+<h4>How to read the latency markers.</h4>
+<p>The latency markers are designed to provide a measurement of the difference in latency between the operating system's mechanism for redering the mouse pointer and canvas rendering. The rings around the marker have a radius that is proportional to the screen space velocity of the pointer. The green ring represents the distance traveled by the pointer during one display refresh period. If the OS rendered pointer (the cross), is always inside the green ring while moving, then the canvas has less that one frame period of additional latency with respect to the system's pointer. The red ring represents two frame periods.  Assessments relative to the red ring are less reliable because they assume constant velocity and direction.</p>
+<p>Low latency canvas</p>
+<canvas id="low" width="2000" height="1000"></canvas>
+<p>Normal canvas</p>
+<canvas id="normal" width="2000" height="1000"></canvas>
+<script>
+let ll_canvas = document.getElementById("low");
+let ll_ctx = ll_canvas.getContext("2d", {alpha: false, lowLatency: true});
+
+followPointer(ll_canvas, ll_ctx);
+
+let n_canvas = document.getElementById("normal");
+let n_ctx = n_canvas.getContext("2d");
+
+followPointer(n_canvas, n_ctx);
+
+function followPointer(canvas, ctx) {
+  ctx.fillStyle='white';
+  ctx.fillRect(0, 0, ll_canvas.width, ll_canvas.height);
+  let oldX = 0;
+  let oldY = 0;
+  let x = 0;
+  let y = 0;
+  let velocity = 0;
+  let oldVelocity = 0;
+  let markerRadius = 0;
+  ctx.lineWidth = 2;
+  ctx.fillStyle = 'white';
+  canvas.addEventListener('mousemove', e => {
+    // clear previous marker
+    let clearRadius = (2 * markerRadius > 20 ? 2 * markerRadius : 20) + ctx.lineWidth;
+    ctx.fillRect(x - clearRadius, y - clearRadius, 2 * clearRadius, 2 * clearRadius);
+
+    let client_rect = canvas.getBoundingClientRect();
+
+    x = e.clientX - client_rect.x;
+    y = e.clientY - client_rect.y;
+    markerRadius = velocity + oldVelocity;
+
+    // paint new marker
+    ctx.strokeStyle = 'black';
+    ctx.beginPath();
+    ctx.moveTo(x - 20, y - 20);
+    ctx.lineTo(x + 20, y + 20);
+    ctx.moveTo(x + 20, y - 20);
+    ctx.lineTo(x - 20, y + 20);
+    ctx.stroke();
+
+    ctx.strokeStyle = 'green';
+    ctx.beginPath();
+    ctx.arc(x, y, velocity, 0, 2 * Math.PI, false);
+    ctx.stroke();
+
+    ctx.strokeStyle = 'red';
+    ctx.beginPath();
+    ctx.arc(x, y, velocity + oldVelocity, 0, 2 * Math.PI, false);
+    ctx.stroke();
+
+    if (ctx.commit)
+      ctx.commit();
+  });
+
+  function velocityTracker() {
+    oldVelocity = velocity;
+    velocity = Math.sqrt((x - oldX) * (x - oldX) + (y - oldY) * (y - oldY));
+    oldX = x;
+    oldY = y;
+    requestAnimationFrame(velocityTracker);
+  }
+  requestAnimationFrame(velocityTracker);
+
+}
+
+
+</script>
