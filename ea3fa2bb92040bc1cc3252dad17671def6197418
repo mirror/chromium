@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "89c8cf9c_9065a8e6",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-17T16:05:09Z",
+      "side": 1,
+      "message": "Yes, this is certainly possible especially in partial transactions.",
+      "parentUuid": "2e3f66bd_ed660a12",
+      "range": {
+        "startLine": 642,
+        "startChar": 6,
+        "endLine": 642,
+        "endChar": 44
+      },
+      "revId": "ea3fa2bb92040bc1cc3252dad17671def6197418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e087048b_c602e25e",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-17T15:50:55Z",
       "side": 1,
       "message": "Ditto",
+      "range": {
+        "startLine": 659,
+        "startChar": 5,
+        "endLine": 659,
+        "endChar": 44
+      },
+      "revId": "ea3fa2bb92040bc1cc3252dad17671def6197418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a08781_36f70fec",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-17T16:05:09Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "e087048b_c602e25e",
       "range": {
         "startLine": 659,
         "startChar": 5,
@@ -68,6 +116,30 @@
       "revId": "ea3fa2bb92040bc1cc3252dad17671def6197418",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01307536_ab250261",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-17T16:05:09Z",
+      "side": 1,
+      "message": "Agree, removing this comment since we already have a similar comment on 388",
+      "parentUuid": "45a46653_68ff918e",
+      "range": {
+        "startLine": 382,
+        "startChar": 0,
+        "endLine": 383,
+        "endChar": 34
+      },
+      "revId": "ea3fa2bb92040bc1cc3252dad17671def6197418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
