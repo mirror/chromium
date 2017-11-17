@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ac13313_dcfbd876",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-17T19:47:13Z",
+      "side": 1,
+      "message": "Computing this from the metric aggregates won\u0027t work for events that have no metrics, like Plugins.FlashInstance.  I think it also won\u0027t be correct to take the minimum, e.g. if I have two event instances:\n\nEventA w/ Metric Foo\nEventA w/ Metric Bar\n\nAnd both are sampled, number of EventA s that are dropped is 2, which can\u0027t be derived from the dropped counts of the metrics.",
+      "range": {
+        "startLine": 129,
+        "startChar": 6,
+        "endLine": 129,
+        "endChar": 73
+      },
+      "revId": "dcf305ec29ac4f05b33d39efb208b0a5edd9389c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
