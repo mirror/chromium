@@ -94,10 +94,12 @@ class DiceTestTokenServiceObserver : public OAuth2TokenService::Observer {
 class DiceResponseHandlerTest : public testing::Test,
                                 public AccountReconcilor::Observer {
  public:
-  void WillStartRefreshTokenFetch(const std::string& gaia_id,
-                                  const std::string& email) {
+  bool WillStartRefreshTokenFetch(const std::string& gaia_id,
+                                  const std::string& email,
+                                  const std::string& auth_code) {
     start_token_fetch_gaia_id_ = gaia_id;
     start_token_fetch_email_ = email;
+    return true;
   }
 
   // Called after the refresh token was fetched and added in the token service.
@@ -189,7 +191,8 @@ class TestProcessDiceHeaderObserver : public ProcessDiceHeaderObserver {
   ~TestProcessDiceHeaderObserver() override = default;
 
   void WillStartRefreshTokenFetch(const std::string& gaia_id,
-                                  const std::string& email) override {
+                                  const std::string& email,
+                                  const std::string& auth_code) override {
     owner_->WillStartRefreshTokenFetch(gaia_id, email);
   }
 

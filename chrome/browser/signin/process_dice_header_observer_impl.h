@@ -8,19 +8,30 @@
 #include "chrome/browser/signin/dice_response_handler.h"
 
 #include "base/macros.h"
+#include "chrome/browser/ui/sync/one_click_signin_sync_starter.h"
+#include "chrome/browser/ui/webui/signin/finish_login.h"
 #include "content/public/browser/web_contents_observer.h"
 
 class ProcessDiceHeaderObserverImpl : public ProcessDiceHeaderObserver,
-                                      public content::WebContentsObserver {
+                                      public content::WebContentsObserver,
+                                      public InlineSigninHelperDelegate {
  public:
   explicit ProcessDiceHeaderObserverImpl(content::WebContents* web_contents);
   ~ProcessDiceHeaderObserverImpl() override = default;
 
   // ProcessDiceHeaderObserver:
-  void WillStartRefreshTokenFetch(const std::string& gaia_id,
-                                  const std::string& email) override;
+  bool WillStartRefreshTokenFetch(const std::string& gaia_id,
+                                  const std::string& email,
+                                  const std::string& auth_code) override;
   void DidFinishRefreshTokenFetch(const std::string& gaia_id,
                                   const std::string& email) override;
+  // InlineSigninHelperDelegate:
+  void SyncStarterCallback(
+      OneClickSigninSyncStarter::SyncSetupResult result) override;
+  void CloseTab(bool show_account_management) override;
+  void HandleLoginError(const std::string& error_msg,
+                        const base::string16& email) override;
+  void CloseLoginDialog() override;
 
  private:
   bool should_start_sync_;

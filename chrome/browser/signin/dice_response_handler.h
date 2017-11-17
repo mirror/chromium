@@ -36,8 +36,9 @@ class ProcessDiceHeaderObserver {
   virtual ~ProcessDiceHeaderObserver() = default;
 
   // Called before starting to fetch a refresh token.
-  virtual void WillStartRefreshTokenFetch(const std::string& gaia_id,
-                                          const std::string& email) = 0;
+  virtual bool WillStartRefreshTokenFetch(const std::string& gaia_id,
+                                          const std::string& email,
+                                          const std::string& auth_code) = 0;
 
   // Called after the refresh token was fetched and added in the token service.
   virtual void DidFinishRefreshTokenFetch(const std::string& gaia_id,

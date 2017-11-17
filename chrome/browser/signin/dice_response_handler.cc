@@ -291,10 +291,13 @@ void DiceResponseHandler::ProcessDiceSigninHeader(
       return;  // There is already a request in flight with the same parameters.
     }
   }
-  observer->WillStartRefreshTokenFetch(gaia_id, email);
-  token_fetchers_.push_back(base::MakeUnique<DiceTokenFetcher>(
-      gaia_id, email, authorization_code, signin_client_, account_reconcilor_,
-      std::move(observer), this));
+  bool should_start_fetch =
+      observer->WillStartRefreshTokenFetch(gaia_id, email, authorization_code);
+  if (should_start_fetch) {
+    token_fetchers_.push_back(base::MakeUnique<DiceTokenFetcher>(
+        gaia_id, email, authorization_code, signin_client_, account_reconcilor_,
+        std::move(observer), this));
+  }
 }
 
 void DiceResponseHandler::ProcessDiceSignoutHeader(
