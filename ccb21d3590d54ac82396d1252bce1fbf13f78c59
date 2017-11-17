@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1f0f2221_b64939e8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksFaviconThrottle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-17T07:23:08Z",
+      "side": 1,
+      "message": "Oops. I meant:\n  mNewEntries.put(url, mCurrentEntries.get(url));",
+      "parentUuid": "daa694c1_6b00ec25",
+      "range": {
+        "startLine": 90,
+        "startChar": 49,
+        "endLine": 90,
+        "endChar": 64
+      },
+      "revId": "ccb21d3590d54ac82396d1252bce1fbf13f78c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b48b8134_ef38c45e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
         "patchSetId": 7
