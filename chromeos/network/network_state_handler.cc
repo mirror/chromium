@@ -6,7 +6,9 @@
 
 #include <stddef.h>
 
+#include <limits>
 #include <memory>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/command_line.h"
@@ -525,7 +527,7 @@ void NetworkStateHandler::AppendTetherNetworksToList(bool get_active,
                                                      size_t limit,
                                                      NetworkStateList* list) {
   DCHECK(list);
-  DCHECK(limit != 0);
+  DCHECK_NE(limit, 0U);
   if (!IsTechnologyEnabled(NetworkTypePattern::Tether()))
     return;
 
