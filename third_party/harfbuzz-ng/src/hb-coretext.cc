@@ -175,6 +175,7 @@ create_ct_font (CGFontRef cg_font, CGFloat font_size)
     if (CFStringHasSuffix (cg_postscript_name, CFSTR ("-Bold")))
       font_type = kCTFontUIFontEmphasizedSystem;
 
+    fprintf(stderr, " create for size %f\n", font_size);
     ct_font = CTFontCreateUIFontForLanguage (font_type, font_size, nullptr);
     CFStringRef ct_result_name = CTFontCopyPostScriptName(ct_font);
     if (CFStringCompare (ct_result_name, cg_postscript_name, 0) != kCFCompareEqualTo)
@@ -291,7 +292,7 @@ _hb_coretext_shaper_font_data_create (hb_font_t *font)
   hb_face_t *face = font->face;
   if (unlikely (!hb_coretext_shaper_face_data_ensure (face))) return nullptr;
   CGFontRef cg_font = (CGFontRef) HB_SHAPER_DATA_GET (face);
-
+  fprintf(stderr, "face = %p, cg_font = %p", font, cg_font);
   CTFontRef ct_font = create_ct_font (cg_font, coretext_font_size (font->ptem));
 
   if (unlikely (!ct_font))

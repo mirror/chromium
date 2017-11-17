@@ -278,6 +278,24 @@ class HarfBuzzFace {
   hb_face_t* face_;
 };
 
+typedef std::pair<SkFontID, SkScalar> FaceKey;
+
+#if defined(OS_MACOSX)
+// On Mac, harfbuzz internally caches a CTFontRef, but it is invalidated
+// whenever the size changes, so make the size part of the key to determine
+// which hb_face_t to pass through.
+typedef std::less<FaceKey> FaceKeyCompare;
+#else
+// Ignore the text size on other platforms.
+struct FaceKeycompare {
+  bool operator()(const FaceKey& lhs, const FaceKey& rhs) const {
+    return lhs.first < rhs.first;
+  }
+};
+#endif  // OS_MACOSX
+
+typedef std::map<FaceKey, FaceCache, FaceKeyCompare> FaceMap;
+
 }  // namespace
 
 // Creates a HarfBuzz font from the given Skia face and text size.
@@ -286,9 +304,10 @@ hb_font_t* CreateHarfBuzzFont(sk_sp<SkTypeface> skia_face,
                               const FontRenderParams& params,
                               bool subpixel_rendering_suppressed) {
   // TODO(ckocagil): This shouldn't grow indefinitely. Maybe use base::MRUCache?
-  static std::map<SkFontID, FaceCache> face_caches;
+  CR_DEFINE_STATIC_LOCAL(FaceMap, face_caches, ());
 
-  FaceCache* face_cache = &face_caches[skia_face->uniqueID()];
+  const FaceKey key(skia_face->uniqueID(), text_size);
+  FaceCache* face_cache = &face_caches[key];
   if (face_cache->first.get() == NULL)
     face_cache->first.Init(skia_face.get());
 
