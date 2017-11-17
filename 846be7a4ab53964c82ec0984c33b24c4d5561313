@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "51ed1d26_bbf72b18",
+        "filename": "ui/PRESUBMIT.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-17T20:32:57Z",
+      "side": 1,
+      "message": "Windows!\n\nThe paths will come through os.path.normpath which on Windows will use \\ chars and I just didn\u0027t want to write a regexp that took that under consideration (tried to keep it not so messy), and we can\u0027t let people on Windows check in X11 headers. That would be sneaky.\n\nSo the .. in ..* has . for the path sep and .* for the rest of the string. Could just be .*.",
+      "parentUuid": "c87e83db_6ac6228d",
+      "range": {
+        "startLine": 54,
+        "startChar": 28,
+        "endLine": 54,
+        "endChar": 29
+      },
+      "revId": "846be7a4ab53964c82ec0984c33b24c4d5561313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3e59e47_feb9d894",
         "filename": "ui/gl/gl_bindings.h",
         "patchSetId": 9
