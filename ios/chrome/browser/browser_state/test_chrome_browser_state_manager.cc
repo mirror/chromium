@@ -2,11 +2,24 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <vector>
+
+#include "base/files/file_path.h"
 #include "ios/chrome/browser/browser_state/test_chrome_browser_state_manager.h"
 
 TestChromeBrowserStateManager::TestChromeBrowserStateManager(
     const base::FilePath& user_data_dir)
-    : browser_state_info_cache_(local_state_.Get(), user_data_dir) {}
+    : TestChromeBrowserStateManager(nullptr, user_data_dir) {}
+
+TestChromeBrowserStateManager::TestChromeBrowserStateManager(
+    ios::ChromeBrowserState* browser_state)
+    : TestChromeBrowserStateManager(browser_state, base::FilePath()) {}
+
+TestChromeBrowserStateManager::TestChromeBrowserStateManager(
+    ios::ChromeBrowserState* browser_state,
+    const base::FilePath& user_data_dir)
+    : browser_state_(browser_state),
+      browser_state_info_cache_(local_state_.Get(), user_data_dir) {}
 
 TestChromeBrowserStateManager::~TestChromeBrowserStateManager() {}
 
@@ -27,5 +40,8 @@ TestChromeBrowserStateManager::GetBrowserStateInfoCache() {
 
 std::vector<ios::ChromeBrowserState*>
 TestChromeBrowserStateManager::GetLoadedBrowserStates() {
-  return std::vector<ios::ChromeBrowserState*>();
+  std::vector<ios::ChromeBrowserState*> result;
+  if (browser_state_)
+    result.push_back(browser_state_);
+  return result;
 }
