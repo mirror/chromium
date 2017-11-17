@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ddfe5e1_4cf0c46c",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-17T19:36:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cbab834_b1caeb28",
+      "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f64bc0b8_d460cc6b",
         "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
         "patchSetId": 8
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-17T17:57:17Z",
       "side": 1,
       "message": "can you rename this to something else? IsImagePremul()?",
+      "range": {
+        "startLine": 225,
+        "startChar": 19,
+        "endLine": 225,
+        "endChar": 40
+      },
+      "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04262c8_89e4e809",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-17T19:36:16Z",
+      "side": 1,
+      "message": "No. The name matches the expected functionality, if we are allowed to premul the object in the code path. I can change it to ShouldAvoidPremul, though.",
+      "parentUuid": "f64bc0b8_d460cc6b",
       "range": {
         "startLine": 225,
         "startChar": 19,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "9ecffa50_47ad74f2",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-17T19:36:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "752d7e4e_bd9fafbd",
+      "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23bea748_85ccc774",
         "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
         "patchSetId": 8
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "b8137f55_9695c7b5",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-17T19:36:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23bea748_85ccc774",
+      "range": {
+        "startLine": 269,
+        "startChar": 27,
+        "endLine": 269,
+        "endChar": 46
+      },
+      "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c951bdf9_ad26fbcc",
         "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
         "patchSetId": 8
@@ -96,6 +180,24 @@
       "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56d5a3ac_fceea9c7",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-17T19:36:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c951bdf9_ad26fbcc",
+      "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "b81252e4_0f3991a1",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-17T19:36:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c0e0613_2f143579",
+      "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5488e7fd_83cb6113",
         "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
         "patchSetId": 8
@@ -127,6 +247,30 @@
       "writtenOn": "2017-11-17T17:57:17Z",
       "side": 1,
       "message": "or",
+      "range": {
+        "startLine": 380,
+        "startChar": 67,
+        "endLine": 380,
+        "endChar": 70
+      },
+      "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be7e59ad_8d258bec",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-17T19:36:16Z",
+      "side": 1,
+      "message": "\"and\" is correct.",
+      "parentUuid": "5488e7fd_83cb6113",
       "range": {
         "startLine": 380,
         "startChar": 67,
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "b1c678f9_5ef90c03",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-17T19:36:16Z",
+      "side": 1,
+      "message": "Yes, ImageData is always unpremul. Comment added.",
+      "parentUuid": "15223461_8f259628",
+      "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff40f8b9_d82542d1",
         "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.h",
         "patchSetId": 8
@@ -167,6 +329,24 @@
       "writtenOn": "2017-11-17T17:57:17Z",
       "side": 1,
       "message": "why is this different than premultiply_alpha?",
+      "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d5fe439_5dfc68b3",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-17T19:36:16Z",
+      "side": 1,
+      "message": "premultiply_alpha is an ImageBitmap creation option specified by the user. source_is_unprmul is set according to the source, e.g. false for canvas, true for ImageData.",
+      "parentUuid": "ff40f8b9_d82542d1",
       "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
