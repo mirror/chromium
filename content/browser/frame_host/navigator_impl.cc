@@ -1160,10 +1160,11 @@ void NavigatorImpl::RequestNavigation(
             *scoped_request.get());
     render_frame_host->CommitNavigation(
         nullptr,  // response
+        mojom::MainResourceLoaderParamsPtr(),
         nullptr,  // body
-        mojo::ScopedDataPipeConsumerHandle(), scoped_request->common_params(),
-        scoped_request->request_params(), scoped_request->is_view_source(),
-        base::nullopt, scoped_request->devtools_navigation_token());
+        scoped_request->common_params(), scoped_request->request_params(),
+        scoped_request->is_view_source(), base::nullopt,
+        scoped_request->devtools_navigation_token());
     return;
   }
 
