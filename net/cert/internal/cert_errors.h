@@ -114,6 +114,8 @@ class NET_EXPORT CertErrors {
   // Returns true if this contains any errors of the given severity level.
   bool ContainsAnyErrorWithSeverity(CertError::Severity severity) const;
 
+  const std::vector<CertError>& nodes() const { return nodes_; }
+
  private:
   std::vector<CertError> nodes_;
 };
@@ -139,9 +141,13 @@ class NET_EXPORT CertPathErrors {
   // creating one.
   const CertErrors* GetErrorsForCert(size_t cert_index) const;
 
+  size_t Count() const { return cert_errors_.size(); }
+
   // Returns a bucket to put errors that are not associated with a particular
   // certificate.
   CertErrors* GetOtherErrors();
+
+  const CertErrors* GetOtherErrors() const;
 
   // Returns true if CertPathErrors contains the specified error (of any
   // severity).

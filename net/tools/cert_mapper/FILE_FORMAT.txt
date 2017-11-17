@@ -1,0 +1,28 @@
+The certificate transparency database is dumped into a simpler (uncompressed)
+format that can be quickly iterated by the mapper code.
+
+The dump is a directory consisting of two files:
+
+  entries.bin
+    -> This contains the leaf certificates for paths, and an array of indices
+       into extra_certs.bin for the "extra certs" that make up the path.
+
+  extra_certs.bin
+    -> Contains a sequence of unique certificate data that appear in
+       certificate entries "extra certs". Comparatively this file is tiny as
+       the number of unique intermediate certificates is small.
+
+
+entries.bin sequence of ENTRY 
+
+ENTRY is made up of:
+  CERT     --  the leaf certificate
+  uint16   --  number of extra certificates that follow
+  uint16*  --  the list of IDs for the extra certs (the "id" is its order in extra_certs.bin)
+
+CERT is made up of:
+  uint32   --  byte count for following data (big-endian)
+  bytes    --  the DER-encoded leaf certificate
+
+extra_certs.bin is made up of:
+  CERT*    --  the extra cert

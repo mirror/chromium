@@ -139,6 +139,10 @@ CertErrors* CertPathErrors::GetOtherErrors() {
   return &other_errors_;
 }
 
+const CertErrors* CertPathErrors::GetOtherErrors() const {
+  return &other_errors_;
+}
+
 bool CertPathErrors::ContainsError(CertErrorId id) const {
   for (const CertErrors& errors : cert_errors_) {
     if (errors.ContainsError(id))
