@@ -19,8 +19,23 @@
   <message name="IDS_EDITED_NONSECURE_DESCRIPTION" desc="Description of a security problem where the site is non-secure (HTTP) and user has entered data in a form field." translateable="false">
     Data was entered in a text field on a non-secure page. A warning has been added to the URL bar.
   </message>
-  <message name="IDS_SAFEBROWSING_WARNING" desc="Summary phrase for a security problem where the site is deemed unsafe by the SafeBrowsing service." translateable="false">
+  <message name="IDS_SAFEBROWSING_WARNING" desc="Main summary for page when it has been deemed unsafe by the SafeBrowsing service." translateable="false">
     This page is dangerous (flagged by Google Safe Browsing).
+  </message>
+  <message name="IDS_SAFEBROWSING_WARNING_SUMMARY" desc="Summary phrase for a security problem where the site is deemed unsafe by the SafeBrowsing service." translateable="false">
+    Dangerous page
+  </message>
+  <message name="IDS_SAFEBROWSING_WARNING_DESCRIPTION" desc="Description of a security problem where the site is deemed unsafe by the SafeBrowsing service." translateable="false">
+    This page has been flagged by Google Safe Browsing as an unsafe page.
+  </message>
+  <message name="IDS_SAFEBROWSING_WARNING_DESCRIPTION_MALWARE" desc="Description of a security problem where the site is deemed to contain malware by the SafeBrowsing service." translateable="false">
+    This page has been flagged by Google Safe Browsing as an unsafe page. Attackers currently on this page might attempt to install dangerous programs on your computer that steal or delete your information (for example, photos, passwords, messages, and credit cards).
+  </message>
+  <message name="IDS_SAFEBROWSING_WARNING_DESCRIPTION_UNWANTED_SOFTWARE" desc="Description of a security problem where the site is deemed to contain unwanted software by the SafeBrowsing service." translateable="false">
+    This page has been flagged by Google Safe Browsing as an unsafe page. Attackers on this page might attempt to trick you into installing programs that harm your browsing experience (for example, by changing your homepage or showing extra ads on sites you visit).
+  </message>
+  <message name="IDS_SAFEBROWSING_WARNING_DESCRIPTION_SOCIAL_ENGINEERING" desc="Description of a security problem where the site is deemed to be a social engineering site by the SafeBrowsing service." translateable="false">
+    This page has been flagged by Google Safe Browsing as an unsafe page. Attackers on this page may trick you into doing something dangerous like installing software or revealing your personal information (for example, passwords, phone numbers, or credit cards).
   </message>
   <message name="IDS_SHA1" desc="Summary phrase for a security problem where the site's certificate chain contains a SHA1 signature." translateable="false">
     SHA-1 certificate
