@@ -330,7 +330,10 @@ size_t DrawDRRectOp::Serialize(const PaintOp* base_op,
                                const SerializeOptions& options) {
   auto* op = static_cast<const DrawDRRectOp*>(base_op);
   PaintOpWriter helper(memory, size);
-  helper.Write(op->flags);
+  const auto* serialized_flags = options.flags_to_serialize;
+  if (!serialized_flags)
+    serialized_flags = &op->flags;
+  helper.Write(*serialized_flags);
   helper.Write(op->outer);
   helper.Write(op->inner);
   return helper.size();
@@ -342,7 +345,10 @@ size_t DrawImageOp::Serialize(const PaintOp* base_op,
                               const SerializeOptions& options) {
   auto* op = static_cast<const DrawImageOp*>(base_op);
   PaintOpWriter helper(memory, size);
-  helper.Write(op->flags);
+  const auto* serialized_flags = options.flags_to_serialize;
+  if (!serialized_flags)
+    serialized_flags = &op->flags;
+  helper.Write(*serialized_flags);
   helper.Write(op->image, options.image_provider);
   helper.Write(op->left);
   helper.Write(op->top);
@@ -355,7 +361,10 @@ size_t DrawImageRectOp::Serialize(const PaintOp* base_op,
                                   const SerializeOptions& options) {
   auto* op = static_cast<const DrawImageRectOp*>(base_op);
   PaintOpWriter helper(memory, size);
-  helper.Write(op->flags);
+  const auto* serialized_flags = options.flags_to_serialize;
+  if (!serialized_flags)
+    serialized_flags = &op->flags;
+  helper.Write(*serialized_flags);
   helper.Write(op->image, options.image_provider);
   helper.Write(op->src);
   helper.Write(op->dst);
@@ -369,7 +378,10 @@ size_t DrawIRectOp::Serialize(const PaintOp* base_op,
                               const SerializeOptions& options) {
   auto* op = static_cast<const DrawIRectOp*>(base_op);
   PaintOpWriter helper(memory, size);
-  helper.Write(op->flags);
+  const auto* serialized_flags = options.flags_to_serialize;
+  if (!serialized_flags)
+    serialized_flags = &op->flags;
+  helper.Write(*serialized_flags);
   helper.Write(op->rect);
   return helper.size();
 }
@@ -380,7 +392,10 @@ size_t DrawLineOp::Serialize(const PaintOp* base_op,
                              const SerializeOptions& options) {
   auto* op = static_cast<const DrawLineOp*>(base_op);
   PaintOpWriter helper(memory, size);
-  helper.Write(op->flags);
+  const auto* serialized_flags = options.flags_to_serialize;
+  if (!serialized_flags)
+    serialized_flags = &op->flags;
+  helper.Write(*serialized_flags);
   helper.Write(op->x0);
   helper.Write(op->y0);
   helper.Write(op->x1);
@@ -394,7 +409,10 @@ size_t DrawOvalOp::Serialize(const PaintOp* base_op,
                              const SerializeOptions& options) {
   auto* op = static_cast<const DrawOvalOp*>(base_op);
   PaintOpWriter helper(memory, size);
-  helper.Write(op->flags);
+  const auto* serialized_flags = options.flags_to_serialize;
+  if (!serialized_flags)
+    serialized_flags = &op->flags;
+  helper.Write(*serialized_flags);
   helper.Write(op->oval);
   return helper.size();
 }
@@ -405,7 +423,10 @@ size_t DrawPathOp::Serialize(const PaintOp* base_op,
                              const SerializeOptions& options) {
   auto* op = static_cast<const DrawPathOp*>(base_op);
   PaintOpWriter helper(memory, size);
-  helper.Write(op->flags);
+  const auto* serialized_flags = options.flags_to_serialize;
+  if (!serialized_flags)
+    serialized_flags = &op->flags;
+  helper.Write(*serialized_flags);
   helper.Write(op->path);
   return helper.size();
 }
@@ -426,7 +447,10 @@ size_t DrawRectOp::Serialize(const PaintOp* base_op,
                              const SerializeOptions& options) {
   auto* op = static_cast<const DrawRectOp*>(base_op);
   PaintOpWriter helper(memory, size);
-  helper.Write(op->flags);
+  const auto* serialized_flags = options.flags_to_serialize;
+  if (!serialized_flags)
+    serialized_flags = &op->flags;
+  helper.Write(*serialized_flags);
   helper.Write(op->rect);
   return helper.size();
 }
@@ -437,7 +461,10 @@ size_t DrawRRectOp::Serialize(const PaintOp* base_op,
                               const SerializeOptions& options) {
   auto* op = static_cast<const DrawRRectOp*>(base_op);
   PaintOpWriter helper(memory, size);
-  helper.Write(op->flags);
+  const auto* serialized_flags = options.flags_to_serialize;
+  if (!serialized_flags)
+    serialized_flags = &op->flags;
+  helper.Write(*serialized_flags);
   helper.Write(op->rrect);
   return helper.size();
 }
@@ -448,7 +475,10 @@ size_t DrawTextBlobOp::Serialize(const PaintOp* base_op,
                                  const SerializeOptions& options) {
   auto* op = static_cast<const DrawTextBlobOp*>(base_op);
   PaintOpWriter helper(memory, size);
-  helper.Write(op->flags);
+  const auto* serialized_flags = options.flags_to_serialize;
+  if (!serialized_flags)
+    serialized_flags = &op->flags;
+  helper.Write(*serialized_flags);
   helper.Write(op->x);
   helper.Write(op->y);
   helper.Write(op->blob);
@@ -489,7 +519,10 @@ size_t SaveLayerOp::Serialize(const PaintOp* base_op,
                               const SerializeOptions& options) {
   auto* op = static_cast<const SaveLayerOp*>(base_op);
   PaintOpWriter helper(memory, size);
-  helper.Write(op->flags);
+  const auto* serialized_flags = options.flags_to_serialize;
+  if (!serialized_flags)
+    serialized_flags = &op->flags;
+  helper.Write(*serialized_flags);
   helper.Write(op->bounds);
   return helper.size();
 }
@@ -1213,6 +1246,11 @@ bool PaintOp::IsPaintOpWithFlags() const {
   return g_has_paint_flags[type];
 }
 
+// static
+bool PaintOp::TypeHasFlags(PaintOpType type) {
+  return g_has_paint_flags[static_cast<uint8_t>(type)];
+}
+
 void PaintOp::Raster(SkCanvas* canvas, const PlaybackParams& params) const {
   g_raster_functions[type](this, canvas, params);
 }
@@ -1722,7 +1760,6 @@ void PaintOpBuffer::Playback(SkCanvas* canvas,
 
     if (op->IsPaintOpWithFlags()) {
       const auto* flags_op = static_cast<const PaintOpWithFlags*>(op);
-
       base::Optional<ScopedImageFlags> scoped_flags;
       const bool needs_flag_override =
           iter.alpha() != 255 ||
