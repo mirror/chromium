@@ -96,7 +96,7 @@ ProxyPrefTransformer::ProxyPrefTransformer() {
 ProxyPrefTransformer::~ProxyPrefTransformer() {
 }
 
-std::unique_ptr<base::Value> ProxyPrefTransformer::ExtensionToBrowserPref(
+base::Value ProxyPrefTransformer::ExtensionToBrowserPref(
     const base::Value* extension_pref,
     std::string* error,
     bool* bad_message) {
@@ -108,10 +108,9 @@ std::unique_ptr<base::Value> ProxyPrefTransformer::ExtensionToBrowserPref(
       static_cast<const base::DictionaryValue*>(extension_pref);
 
   // Extract the various pieces of information passed to
-  // chrome.proxy.settings.set(). Several of these strings will
-  // remain blank no respective values have been passed to set().
-  // If a values has been passed to set but could not be parsed, we bail
-  // out and return NULL.
+  // chrome.proxy.settings.set(). Several of these strings will remain blank if
+  // no respective values have been passed to set(). If a values has been
+  // passed to set() but could not be parsed, bail out and return a none Value.
   ProxyPrefs::ProxyMode mode_enum;
   bool pac_mandatory;
   std::string pac_url;
@@ -130,36 +129,37 @@ std::unique_ptr<base::Value> ProxyPrefTransformer::ExtensionToBrowserPref(
           config, &proxy_rules_string, error, bad_message) ||
       !helpers::GetBypassListFromExtensionPref(
           config, &bypass_list, error, bad_message)) {
-    return nullptr;
+    return base::Value();
   }
 
-  return helpers::CreateProxyConfigDict(mode_enum, pac_mandatory, pac_url,
-                                        pac_data, proxy_rules_string,
-                                        bypass_list, error);
+  auto dict = helpers::CreateProxyConfigDict(mode_enum, pac_mandatory, pac_url,
+                                             pac_data, proxy_rules_string,
+                                             bypass_list, error);
+  if (!dict)
+    return base::Value();
+  return base::Value::FromUniquePtrValue(std::move(dict));
 }
 
-std::unique_ptr<base::Value> ProxyPrefTransformer::BrowserToExtensionPref(
+base::Value ProxyPrefTransformer::BrowserToExtensionPref(
     const base::Value* browser_pref) {
   CHECK(browser_pref->is_dict());
 
   // This is a dictionary wrapper that exposes the proxy configuration stored in
   // the browser preferences.
-  ProxyConfigDictionary config(
-      static_cast<const base::DictionaryValue*>(browser_pref)
-          ->CreateDeepCopy());
+  base::Value clone = browser_pref->Clone();
+  ProxyConfigDictionary config(base::DictionaryValue::From(
+      base::Value::ToUniquePtrValue(std::move(clone))));
 
   ProxyPrefs::ProxyMode mode;
   if (!config.GetMode(&mode)) {
     LOG(ERROR) << "Cannot determine proxy mode.";
-    return nullptr;
+    return base::Value();
   }
 
   // Build a new ProxyConfig instance as defined in the extension API.
-  std::unique_ptr<base::DictionaryValue> extension_pref(
-      new base::DictionaryValue);
-
-  extension_pref->SetString(keys::kProxyConfigMode,
-                            ProxyPrefs::ProxyModeToString(mode));
+  base::Value extension_pref(base::Value::Type::DICTIONARY);
+  extension_pref.SetKey(keys::kProxyConfigMode,
+                        base::Value(ProxyPrefs::ProxyModeToString(mode)));
 
   switch (mode) {
     case ProxyPrefs::MODE_DIRECT:
@@ -174,8 +174,10 @@ std::unique_ptr<base::Value> ProxyPrefTransformer::BrowserToExtensionPref(
       std::unique_ptr<base::DictionaryValue> pac_dict =
           helpers::CreatePacScriptDict(config);
       if (!pac_dict)
-        return nullptr;
-      extension_pref->Set(keys::kProxyConfigPacScript, std::move(pac_dict));
+        return base::Value();
+      extension_pref.SetKey(
+          keys::kProxyConfigPacScript,
+          base::Value::FromUniquePtrValue(std::move(pac_dict)));
       break;
     }
     case ProxyPrefs::MODE_FIXED_SERVERS: {
@@ -183,8 +185,10 @@ std::unique_ptr<base::Value> ProxyPrefTransformer::BrowserToExtensionPref(
       std::unique_ptr<base::DictionaryValue> proxy_rules_dict =
           helpers::CreateProxyRulesDict(config);
       if (!proxy_rules_dict)
-        return nullptr;
-      extension_pref->Set(keys::kProxyConfigRules, std::move(proxy_rules_dict));
+        return base::Value();
+      extension_pref.SetKey(
+          keys::kProxyConfigRules,
+          base::Value::FromUniquePtrValue(std::move(proxy_rules_dict)));
       break;
     }
     case ProxyPrefs::kModeCount:

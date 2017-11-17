@@ -16,10 +16,6 @@
 #include "chrome/browser/extensions/api/preference/preference_api.h"
 #include "components/proxy_config/proxy_prefs.h"
 
-namespace base {
-class Value;
-}
-
 namespace extensions {
 class EventRouterForwarder;
 
@@ -31,13 +27,11 @@ class ProxyPrefTransformer : public PrefTransformerInterface {
   ProxyPrefTransformer();
   ~ProxyPrefTransformer() override;
 
-  // Implementation of PrefTransformerInterface.
-  std::unique_ptr<base::Value> ExtensionToBrowserPref(
-      const base::Value* extension_pref,
-      std::string* error,
-      bool* bad_message) override;
-  std::unique_ptr<base::Value> BrowserToExtensionPref(
-      const base::Value* browser_pref) override;
+  // PrefTransformerInterface:
+  base::Value ExtensionToBrowserPref(const base::Value* extension_pref,
+                                     std::string* error,
+                                     bool* bad_message) override;
+  base::Value BrowserToExtensionPref(const base::Value* browser_pref) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ProxyPrefTransformer);
