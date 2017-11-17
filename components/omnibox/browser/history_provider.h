@@ -50,6 +50,7 @@ class HistoryProvider : public AutocompleteProvider {
   void ConvertOpenTabMatches();
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(HistoryQuickProviderTest, ConvertsOpenTabsCorrectly);
   AutocompleteProviderClient* client_;
 
   DISALLOW_COPY_AND_ASSIGN(HistoryProvider);

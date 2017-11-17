@@ -753,6 +753,25 @@ TEST_F(HistoryQuickProviderTest, DoesNotProvideMatchesOnFocus) {
   EXPECT_TRUE(provider().matches().empty());
 }
 
+TEST_F(HistoryQuickProviderTest, ConvertsOpenTabsCorrectly) {
+  AutocompleteMatch match;
+  match.contents = base::UTF8ToUTF16("some-url.com");
+  provider().matches_.push_back(match);
+  match.contents = base::UTF8ToUTF16("some-other-url.com");
+  match.description = base::UTF8ToUTF16("Some Other Site");
+  provider().matches_.push_back(match);
+
+  // Have IsTabOpenWithURL() return true;
+  client().is_tab_open_with_url_ = true;
+
+  provider().ConvertOpenTabMatches();
+
+  EXPECT_EQ(base::UTF8ToUTF16("Switch to tab"),
+            provider().matches_[0].description);
+  EXPECT_EQ(base::UTF8ToUTF16("Switch to tab - Some Other Site"),
+            provider().matches_[1].description);
+}
+
 // HQPOrderingTest -------------------------------------------------------------
 
 class HQPOrderingTest : public HistoryQuickProviderTest {

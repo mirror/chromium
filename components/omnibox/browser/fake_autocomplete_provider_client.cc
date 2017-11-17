@@ -12,7 +12,8 @@
 #include "components/omnibox/browser/in_memory_url_index.h"
 #include "components/omnibox/browser/in_memory_url_index_test_util.h"
 
-FakeAutocompleteProviderClient::FakeAutocompleteProviderClient() {
+FakeAutocompleteProviderClient::FakeAutocompleteProviderClient()
+    : is_tab_open_with_url_(false) {
   bookmark_model_ = bookmarks::TestBookmarkClient::CreateModel();
 
   CHECK(history_dir_.CreateUniqueTempDir());
@@ -47,4 +48,8 @@ bookmarks::BookmarkModel* FakeAutocompleteProviderClient::GetBookmarkModel() {
 
 InMemoryURLIndex* FakeAutocompleteProviderClient::GetInMemoryURLIndex() {
   return in_memory_url_index_.get();
+}
+
+bool FakeAutocompleteProviderClient::IsTabOpenWithURL(const GURL& url) {
+  return is_tab_open_with_url_;
 }
