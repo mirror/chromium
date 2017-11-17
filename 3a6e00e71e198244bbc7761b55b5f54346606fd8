@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "0354ec31_bd5558d5",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-17T16:19:02Z",
+      "side": 1,
+      "message": "Since https://chromium-review.googlesource.com/c/chromium/src/+/731083 landed, we should not hit this if clause anymore (and it seems I forgot to remove it in my CL :/). Could you remove it and replace by a DCHECK above navigation_handle_-\u003eWillFailRequest? Thanks!",
+      "revId": "3a6e00e71e198244bbc7761b55b5f54346606fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b32ead_133e2e6e",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-17T16:19:02Z",
+      "side": 1,
+      "message": "Let\u0027s check that NavigationThrottle::CANCEL_AND_IGNORE has an error code of net::ERR_ABORTED.",
+      "revId": "3a6e00e71e198244bbc7761b55b5f54346606fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "859b58be_cc5b94bd",
         "filename": "content/browser/frame_host/navigation_request.h",
         "patchSetId": 10

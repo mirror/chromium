@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57237f11_2d500652",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-17T16:19:02Z",
+      "side": 0,
+      "message": "We should still check that NavigationThrottle::CANCEL_AND_IGNORE has an error code of net::ERR_ABORTED.",
+      "revId": "0c23e036775e0d1cca1fe7ff06156050b386384b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b19c0e5c_cfbcc34f",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-17T16:19:02Z",
+      "side": 0,
+      "message": "Again, NavigationThrottle::CANCEL_AND_IGNORE should have an error code of net::ERR_ABORTED.",
+      "revId": "0c23e036775e0d1cca1fe7ff06156050b386384b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
