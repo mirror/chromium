@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c9e3865_5b3abd9b",
+        "filename": "third_party/WebKit/Tools/.gitignore",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-17T16:18:37Z",
+      "side": 0,
+      "message": "Note, this CL also deleted this line, which I think is a good thing since I\u0027m beleive it wasn\u0027t needed anymore.",
+      "revId": "f3946268c07321bc7f6c5cc06f399b2311e9ae04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
