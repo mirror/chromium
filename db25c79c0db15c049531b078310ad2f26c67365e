@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "798a18b6_ea38a876",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 7071,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-17T02:00:48Z",
+      "side": 1,
+      "message": "nit: Please remove a newly added extra blank line.",
+      "revId": "db25c79c0db15c049531b078310ad2f26c67365e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b33d793d_eb1f7a3c",
+        "filename": "third_party/WebKit/Source/core/editing/EditingStyle.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-17T02:00:48Z",
+      "side": 1,
+      "message": "Can we make EditingStyle to have Document? And verify callers to use\nsame Document? EditingStyle is valid only for using in created document.\n\nI\u0027m OK to land this patch with passing around SecureContextMode in\nEditingStyle. We\u0027ll change EditingStyle to have Document in later.",
+      "revId": "db25c79c0db15c049531b078310ad2f26c67365e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa02215a_c142f7fe",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-17T02:00:48Z",
+      "side": 1,
+      "message": "nit: s/SecureContextMode/const SecureContextMode/",
+      "range": {
+        "startLine": 873,
+        "startChar": 2,
+        "endLine": 873,
+        "endChar": 20
+      },
+      "revId": "db25c79c0db15c049531b078310ad2f26c67365e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096b195c_52ac0862",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-17T02:00:48Z",
+      "side": 1,
+      "message": "nit: s/SecureContextMode/const SecureContextMode/",
+      "range": {
+        "startLine": 888,
+        "startChar": 2,
+        "endLine": 888,
+        "endChar": 20
+      },
+      "revId": "db25c79c0db15c049531b078310ad2f26c67365e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d61b34_204792ac",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-17T02:00:48Z",
+      "side": 1,
+      "message": "nit: We don\u0027t need to have this DCHECK(). We can catch at deref point.",
+      "revId": "db25c79c0db15c049531b078310ad2f26c67365e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f25dbeaa_34ea5b14",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-17T02:00:48Z",
+      "side": 1,
+      "message": "nit: We don\u0027t need to have this DCHECK(). We can catch at deref point.",
+      "revId": "db25c79c0db15c049531b078310ad2f26c67365e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
