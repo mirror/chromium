@@ -16,6 +16,24 @@
       "revId": "d95e856827df6ee8cd5678fda7ce8b5f60eaf619",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22d3849_9f16656b",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-17T22:04:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dce7f005_964d7899",
+      "revId": "d95e856827df6ee8cd5678fda7ce8b5f60eaf619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
