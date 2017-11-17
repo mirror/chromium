@@ -279,7 +279,8 @@ public class FeatureUtilities {
         manager.setChromeHomeEnabled(isChromeHomeEnabled);
 
         PrefServiceBridge.getInstance().setChromeHomePersonalizedOmniboxSuggestionsEnabled(
-                !isChromeHomeEnabled()
+                !isChromeHomeEnabled() || localeManager.hasCompletedSearchEnginePromo()
+                                || localeManager.hasShownSearchEnginePromoThisSession()
                         ? false
                         : ChromeFeatureList.isEnabled(
                                   ChromeFeatureList.CHROME_HOME_PERSONALIZED_OMNIBOX_SUGGESTIONS));
