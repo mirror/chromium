@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44589025_4b3d89c5",
+        "filename": "components/download/downloader/in_progress/in_progress_conversions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-17T23:23:03Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 35
+      },
+      "revId": "66892013471195da6fe2bd8ed2b8eeffd2f4f56b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a2dced_bb5b2e79",
+        "filename": "content/public/browser/download_url_parameters.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-17T23:23:03Z",
+      "side": 1,
+      "message": "Is there a specific reason why this is a string and not a DownloadSource enum?",
+      "range": {
+        "startLine": 338,
+        "startChar": 2,
+        "endLine": 339,
+        "endChar": 0
+      },
+      "revId": "66892013471195da6fe2bd8ed2b8eeffd2f4f56b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
