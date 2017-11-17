@@ -27,6 +27,7 @@
 #include "ios/chrome/browser/language/language_model_factory.h"
 #include "ios/chrome/browser/language/url_language_histogram_factory.h"
 #include "ios/chrome/browser/ntp_snippets/ios_chrome_content_suggestions_service_factory.h"
+#import "ios/chrome/browser/overlays/overlay_service_factory.h"
 #include "ios/chrome/browser/passwords/ios_chrome_password_store_factory.h"
 #include "ios/chrome/browser/reading_list/reading_list_model_factory.h"
 #include "ios/chrome/browser/search_engines/template_url_service_factory.h"
