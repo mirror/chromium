@@ -55,6 +55,7 @@
 #include "core/layout/shapes/ShapeOutsideInfo.h"
 #include "core/paint/BlockFlowPaintInvalidator.h"
 #include "core/paint/PaintLayer.h"
+#include "core/svg/SVGDocumentExtensions.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/wtf/PtrUtil.h"
 
@@ -420,6 +421,14 @@ void LayoutBlockFlow::UpdateBlockLayout(bool relayout_children) {
 
   LayoutAnalyzer::BlockScope analyzer(*this);
   SubtreeLayoutScope layout_scope(*this);
+
+  if (relayout_children && IsLayoutView()) {
+    if (GetDocument().SvgExtensions()) {
+      GetDocument()
+          .AccessSVGExtensions()
+          .InvalidateSVGRootsWithRelativeLengthDescendents(&layout_scope);
+    }
+  }
 
   LayoutUnit previous_height = LogicalHeight();
   LayoutUnit old_left = LogicalLeft();
