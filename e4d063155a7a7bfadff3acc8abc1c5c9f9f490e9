@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "924dcf2d_e4b99f99",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-17T23:56:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c77dec01_32b6e2a2",
+      "revId": "e4d063155a7a7bfadff3acc8abc1c5c9f9f490e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3250c1ec_21a9a5e6",
         "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ce22cc66_647201f4",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-17T23:56:16Z",
+      "side": 1,
+      "message": "Didn\u0027t run `cl format` since was uploading a WIP",
+      "parentUuid": "3250c1ec_21a9a5e6",
+      "revId": "e4d063155a7a7bfadff3acc8abc1c5c9f9f490e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0522b51_060987e6",
         "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "e4d063155a7a7bfadff3acc8abc1c5c9f9f490e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "640b02b5_8d7b9ba6",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-17T23:56:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a0522b51_060987e6",
+      "revId": "e4d063155a7a7bfadff3acc8abc1c5c9f9f490e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
