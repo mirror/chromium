@@ -258,7 +258,7 @@ class AppWindow : public content::WebContentsDelegate,
 
   // |callback| will then be called when the first navigation in the window is
   // ready to commit.
-  void SetOnFirstCommitCallback(const base::Closure& callback);
+  void SetOnFirstCommitCallback(base::OnceClosure callback);
 
   // Called when the first navigation in the window is ready to commit.
   void OnReadyToCommitFirstNavigation();
@@ -563,8 +563,9 @@ class AppWindow : public content::WebContentsDelegate,
   // Whether |show_in_shelf| was set in the CreateParams.
   bool show_in_shelf_;
 
-  // PlzNavigate: this is called when the first navigation is ready to commit.
-  base::Closure on_first_commit_callback_;
+  // PlzNavigate: this is called when the first navigation is ready to commit or
+  // when the window is closed.
+  base::OnceClosure on_first_commit_callback_;
 
   base::WeakPtrFactory<AppWindow> image_loader_ptr_factory_;
 

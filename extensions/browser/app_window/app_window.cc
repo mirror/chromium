@@ -456,9 +456,9 @@ void AppWindow::RenderViewCreated(content::RenderViewHost* render_view_host) {
   app_delegate_->RenderViewCreated(render_view_host);
 }
 
-void AppWindow::SetOnFirstCommitCallback(const base::Closure& callback) {
+void AppWindow::SetOnFirstCommitCallback(base::OnceClosure callback) {
   DCHECK(on_first_commit_callback_.is_null());
-  on_first_commit_callback_ = callback;
+  on_first_commit_callback_ = std::move(callback);
 }
 
 void AppWindow::OnReadyToCommitFirstNavigation() {
@@ -483,6 +483,12 @@ void AppWindow::OnReadyToCommitFirstNavigation() {
 
 void AppWindow::OnNativeClose() {
   AppWindowRegistry::Get(browser_context_)->RemoveAppWindow(this);
+
+  // Run pending |on_first_commit_callback_| so that AppWindowCreateFunction
+  // is properly released.
+  if (!on_first_commit_callback_.is_null())
+    base::ResetAndReturn(&on_first_commit_callback_).Run();
+
   if (app_window_contents_) {
     WebContentsModalDialogManager* modal_dialog_manager =
         WebContentsModalDialogManager::FromWebContents(web_contents());
@@ -490,6 +496,7 @@ void AppWindow::OnNativeClose() {
       modal_dialog_manager->SetDelegate(nullptr);
     app_window_contents_->NativeWindowClosed();
   }
+
   delete this;
 }
 
