@@ -629,6 +629,9 @@ int ExtensionWebRequestEventRouter::OnBeforeRequest(
   if (IsPageLoad(request))
     NotifyPageLoad();
 
+  if (observer_)
+    observer_->OnBeforeRequest(*request);
+
   request_time_tracker_->LogRequestStartTime(request->identifier(),
                                              base::Time::Now());
 
@@ -645,11 +648,17 @@ int ExtensionWebRequestEventRouter::OnBeforeRequest(
     // Give priority to blocking rules over redirect rules.
     if (extension_info_map->GetRulesetManager()->ShouldBlockRequest(
             *request, is_incognito_context)) {
+      if (observer_)
+        observer_->OnRequestWasBlocked(*request);
+
       return net::ERR_BLOCKED_BY_CLIENT;
     }
 
     if (extension_info_map->GetRulesetManager()->ShouldRedirectRequest(
             *request, is_incognito_context, new_url)) {
+      if (observer_)
+        observer_->OnRequestWasRedirected(*request);
+
       return net::OK;
     }
   }
@@ -985,6 +994,9 @@ void ExtensionWebRequestEventRouter::OnCompleted(
     return;
   }
 
+  if (observer_)
+    observer_->OnRequestEnded(*request);
+
   request_time_tracker_->LogRequestEndTime(request->identifier(),
                                            base::Time::Now());
 
@@ -1052,6 +1064,9 @@ void ExtensionWebRequestEventRouter::OnErrorOccurred(
        !WasSignaled(*request))) {
     return;
   }
+
+  if (observer_ && net_error != net::ERR_WS_UPGRADE)
+    observer_->OnRequestEnded(*request);
 
   request_time_tracker_->LogRequestEndTime(request->identifier(),
                                            base::Time::Now());
@@ -1909,6 +1924,13 @@ int ExtensionWebRequestEventRouter::ExecuteDeltas(
 
   const bool redirected =
       blocked_request.new_url && !blocked_request.new_url->is_empty();
+
+  if (observer_) {
+    if (canceled)
+      observer_->OnRequestWasBlocked(*blocked_request.request);
+    else if (redirected)
+      observer_->OnRequestWasRedirected(*blocked_request.request);
+  }
 
   if (canceled)
     request_time_tracker_->SetRequestCanceled(request_id);

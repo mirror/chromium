@@ -75,15 +75,15 @@ bool TestTimeouts::initialized_ = false;
 
 // The timeout values should increase in the order they appear in this block.
 // static
-int TestTimeouts::tiny_timeout_ms_ = 100;
-int TestTimeouts::action_timeout_ms_ = 10000;
+int TestTimeouts::tiny_timeout_ms_ = kAlmostInfiniteTimeoutMs;
+int TestTimeouts::action_timeout_ms_ = kAlmostInfiniteTimeoutMs;
 #ifndef NDEBUG
-int TestTimeouts::action_max_timeout_ms_ = 45000;
+int TestTimeouts::action_max_timeout_ms_ = kAlmostInfiniteTimeoutMs;
 #else
-int TestTimeouts::action_max_timeout_ms_ = 30000;
+int TestTimeouts::action_max_timeout_ms_ = kAlmostInfiniteTimeoutMs;
 #endif  // NDEBUG
 
-int TestTimeouts::test_launcher_timeout_ms_ = 45000;
+int TestTimeouts::test_launcher_timeout_ms_ = kAlmostInfiniteTimeoutMs;
 
 // static
 void TestTimeouts::Initialize() {
