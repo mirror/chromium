@@ -18,6 +18,7 @@ static_library("vr_android") {
     "android_vsync_helper.cc",
     "android_vsync_helper.h",
     "gl_browser_interface.h",
+    "gvr_keyboard_shim.cc",
     "gvr_util.cc",
     "gvr_util.h",
     "mailbox_to_surface_bridge.cc",
@@ -72,7 +73,10 @@ static_library("vr_android") {
     "android",
   ]
 
-  configs += [ "//third_party/gvr-android-sdk:libgvr_config" ]
+  configs += [
+    "//third_party/gvr-android-keyboard:kb_config",
+    "//third_party/gvr-android-sdk:libgvr_config",
+  ]
 }
 
 generate_jni("vr_shell_jni_headers") {
@@ -82,6 +86,7 @@ generate_jni("vr_shell_jni_headers") {
     "//chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrCoreInfo.java",
     "//chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
     "//chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+    "//chrome/android/java/src/org/chromium/chrome/browser/vr_shell/keyboard/GvrKeyboardLoaderClient.java",
   ]
   jni_package = "vr_shell"
 }
