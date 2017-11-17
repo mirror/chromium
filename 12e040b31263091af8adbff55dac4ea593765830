@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2404c74_c3c59e35",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T03:51:29Z",
+      "side": 1,
+      "message": "Let\u0027s store this as a long (System.currentTimeMillis) to ensure we have the information we need to make a user re-eligible to see a different survey in the future.",
+      "revId": "12e040b31263091af8adbff55dac4ea593765830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77d12b90_19fa738f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T03:51:29Z",
+      "side": 1,
+      "message": "I think this name could be a little better. Maybe \"StartDownloadIfEligible\"?",
+      "range": {
+        "startLine": 239,
+        "startChar": 17,
+        "endLine": 239,
+        "endChar": 36
+      },
+      "revId": "12e040b31263091af8adbff55dac4ea593765830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a2af4b_ddf49e15",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T03:51:29Z",
+      "side": 1,
+      "message": "I think these two method names are too similar. Let\u0027s rename isEligibleForDownload to something more specific to what it\u0027s doing e.g. isRandomlySelectedForSurvey()",
+      "range": {
+        "startLine": 257,
+        "startChar": 31,
+        "endLine": 257,
+        "endChar": 94
+      },
+      "revId": "12e040b31263091af8adbff55dac4ea593765830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
