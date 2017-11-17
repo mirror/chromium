@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ebd90ef_6fb68009",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-17T19:24:39Z",
+      "side": 1,
+      "message": "Removal of FNEs has to happen here (rather than in FTN::RemoveChild method as used to happen in previous patchsets) in order to pass the new PruningOfEntriesForDynamicFrames_MainFrameNavigatedAway test.",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 39
+      },
+      "revId": "1ca9deae687820d75cfdb01ef45959b30cb2a2dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

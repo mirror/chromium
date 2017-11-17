@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8b0f6492_a5496793",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7257,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-17T19:24:39Z",
+      "side": 1,
+      "message": "Oh, I see.  I got confused what \"that\" refers to in \"do that for main frames\" - I thought that it refer3e to the removal of FNEs.\n\nI think I\u0027ve got it right this time - I\u0027ve added the test, it failed, I made it pass in the latest patchset (by moving the pruning of dynamic FNEs from FTN::RemoveChild to FTN\u0027s destructor).",
+      "parentUuid": "2e058830_b366b949",
+      "revId": "53eae77c4077dcbcd63bfc8428933502de0d4d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4449474_56c4e267",
         "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
         "patchSetId": 8
