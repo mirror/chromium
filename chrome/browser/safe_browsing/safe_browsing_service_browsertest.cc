@@ -33,6 +33,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/synchronization/lock.h"
 #include "base/test/thread_test_helper.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -103,6 +104,8 @@ using content::WebContents;
 using ::testing::_;
 using ::testing::Mock;
 using ::testing::StrictMock;
+
+#define ENABLE_FLAKY_PVER3_TESTS 1
 
 namespace safe_browsing {
 
@@ -267,6 +270,7 @@ class TestSafeBrowsingDatabase : public SafeBrowsingDatabase {
 
   // Deletes the current database and creates a new one.
   bool ResetDatabase() override {
+    base::AutoLock locker(lock_);
     badurls_.clear();
     urls_by_hash_.clear();
     return true;
@@ -278,6 +282,7 @@ class TestSafeBrowsingDatabase : public SafeBrowsingDatabase {
   bool ContainsBrowseUrl(const GURL& url,
                          std::vector<SBPrefix>* prefix_hits,
                          std::vector<SBFullHashResult>* cache_hits) override {
+    base::AutoLock locker(lock_);
     cache_hits->clear();
     return ContainsUrl(MALWARE, PHISH, std::vector<GURL>(1, url), prefix_hits);
   }
@@ -286,6 +291,7 @@ class TestSafeBrowsingDatabase : public SafeBrowsingDatabase {
       const std::vector<SBFullHash>& full_hashes,
       std::vector<SBPrefix>* prefix_hits,
       std::vector<SBFullHashResult>* cache_hits) override {
+    base::AutoLock locker(lock_);
     cache_hits->clear();
     return ContainsUrl(MALWARE, PHISH, UrlsForHashes(full_hashes), prefix_hits);
   }
@@ -294,6 +300,7 @@ class TestSafeBrowsingDatabase : public SafeBrowsingDatabase {
       const GURL& url,
       std::vector<SBPrefix>* prefix_hits,
       std::vector<SBFullHashResult>* cache_hits) override {
+    base::AutoLock locker(lock_);
     cache_hits->clear();
     return ContainsUrl(UNWANTEDURL, UNWANTEDURL, std::vector<GURL>(1, url),
                        prefix_hits);
@@ -303,6 +310,7 @@ class TestSafeBrowsingDatabase : public SafeBrowsingDatabase {
       const std::vector<SBFullHash>& full_hashes,
       std::vector<SBPrefix>* prefix_hits,
       std::vector<SBFullHashResult>* cache_hits) override {
+    base::AutoLock locker(lock_);
     cache_hits->clear();
     return ContainsUrl(UNWANTEDURL, UNWANTEDURL, UrlsForHashes(full_hashes),
                        prefix_hits);
@@ -311,6 +319,7 @@ class TestSafeBrowsingDatabase : public SafeBrowsingDatabase {
   bool ContainsDownloadUrlPrefixes(
       const std::vector<SBPrefix>& prefixes,
       std::vector<SBPrefix>* prefix_hits) override {
+    base::AutoLock locker(lock_);
     bool found = ContainsUrlPrefixes(BINURL, BINURL, prefixes, prefix_hits);
     if (!found)
       return false;
@@ -332,6 +341,7 @@ class TestSafeBrowsingDatabase : public SafeBrowsingDatabase {
   bool ContainsResourceUrlPrefixes(
       const std::vector<SBPrefix>& prefixes,
       std::vector<SBPrefix>* prefix_hits) override {
+    base::AutoLock locker(lock_);
     prefix_hits->clear();
     return ContainsUrlPrefixes(RESOURCEBLACKLIST, RESOURCEBLACKLIST, prefixes,
                                prefix_hits);
@@ -361,6 +371,7 @@ class TestSafeBrowsingDatabase : public SafeBrowsingDatabase {
   void AddUrl(const GURL& url,
               const SBFullHashResult& full_hash,
               const std::vector<SBPrefix>& prefix_hits) {
+    base::AutoLock locker(lock_);
     Hits* hits_for_url = &badurls_[url.spec()];
     hits_for_url->list_ids.push_back(full_hash.list_id);
     hits_for_url->prefix_hits.insert(hits_for_url->prefix_hits.end(),
@@ -381,6 +392,7 @@ class TestSafeBrowsingDatabase : public SafeBrowsingDatabase {
                    int list_id1,
                    const std::vector<GURL>& urls,
                    std::vector<SBPrefix>* prefix_hits) {
+    lock_.AssertAcquired();
     bool hit = false;
     for (const GURL& url : urls) {
       const auto badurls_it = badurls_.find(url.spec());
@@ -400,6 +412,7 @@ class TestSafeBrowsingDatabase : public SafeBrowsingDatabase {
   }
 
   std::vector<GURL> UrlsForHashes(const std::vector<SBFullHash>& full_hashes) {
+    lock_.AssertAcquired();
     std::vector<GURL> urls;
     for (auto hash : full_hashes) {
       auto url_it = urls_by_hash_.find(SBFullHashToString(hash));
@@ -414,6 +427,7 @@ class TestSafeBrowsingDatabase : public SafeBrowsingDatabase {
                            int list_id1,
                            const std::vector<SBPrefix>& prefixes,
                            std::vector<SBPrefix>* prefix_hits) {
+    lock_.AssertAcquired();
     bool hit = false;
     for (const SBPrefix& prefix : prefixes) {
       for (const std::pair<int, SBPrefix>& entry : bad_prefixes_) {
@@ -427,6 +441,8 @@ class TestSafeBrowsingDatabase : public SafeBrowsingDatabase {
     return hit;
   }
 
+  // Protects the members below.
+  base::Lock lock_;
   std::map<std::string, Hits> badurls_;
   std::set<std::pair<int, SBPrefix>> bad_prefixes_;
   std::map<std::string, GURL> urls_by_hash_;
@@ -480,6 +496,8 @@ class TestProtocolManager : public SafeBrowsingProtocolManager {
                    SafeBrowsingProtocolManager::FullHashCallback callback,
                    bool is_download,
                    ExtendedReportingLevel reporting_level) override {
+    base::AutoLock locker(lock_);
+
     BrowserThread::PostDelayedTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(InvokeFullHashCallback, callback, full_hashes_), delay_);
@@ -487,6 +505,7 @@ class TestProtocolManager : public SafeBrowsingProtocolManager {
 
   // Prepare the GetFullHash results for the next request.
   void AddGetFullHashResponse(const SBFullHashResult& full_hash_result) {
+    base::AutoLock locker(lock_);
     full_hashes_.push_back(full_hash_result);
   }
 
@@ -497,6 +516,8 @@ class TestProtocolManager : public SafeBrowsingProtocolManager {
   static int delete_count() { return delete_count_; }
 
  private:
+  // Protects |full_hashes_|.
+  base::Lock lock_;
   std::vector<SBFullHashResult> full_hashes_;
   base::TimeDelta delay_;
   static int create_count_;
