@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1ede1ee_49ca126d",
+        "filename": "components/viz/service/display_embedder/gpu_display_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-17T11:27:11Z",
+      "side": 1,
+      "message": "const",
+      "revId": "54d8137e280082ec81fb611661f28108e5c8b975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4d48ec_34d42137",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-17T11:27:11Z",
+      "side": 1,
+      "message": "Does std::move() not reset it?",
+      "revId": "54d8137e280082ec81fb611661f28108e5c8b975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
