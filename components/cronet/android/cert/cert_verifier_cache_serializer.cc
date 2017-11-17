@@ -15,6 +15,7 @@
 #include "net/cert/caching_cert_verifier.h"
 #include "net/cert/cert_verify_result.h"
 #include "net/cert/x509_certificate.h"
+#include "net/cert/x509_util.h"
 
 namespace cronet {
 
@@ -29,14 +30,12 @@ typedef std::map<size_t, std::string> DeserializedCertMap;
 // reference to that entry. Otherwise, add a new entry to the set of certs to
 // be serialized (|serialized_certs|). Returns true if |cert_handle| is
 // serialized correctly.
-bool SerializeCertHandle(const net::X509Certificate::OSCertHandle& cert_handle,
+bool SerializeCertHandle(const CRYPTO_BUFFER* cert_handle,
                          SerializedCertMap* serialized_certs,
                          size_t* cert_number) {
-  std::string encoded;
-  if (!net::X509Certificate::GetDEREncoded(cert_handle, &encoded))
-    return false;
-  auto result =
-      serialized_certs->insert({encoded, serialized_certs->size() + 1});
+  auto result = serialized_certs->insert(
+      {std::string(net::x509_util::CryptoBufferAsStringPiece(cert_handle)),
+       serialized_certs->size() + 1});
   *cert_number = result.first->second;
   return true;
 }
@@ -48,15 +47,14 @@ bool SerializeCertificate(net::X509Certificate* cert,
                           SerializedCertMap* serialized_certs,
                           cronet_pb::CertVerificationCertificate* certificate) {
   size_t cert_number = 0;
-  if (!SerializeCertHandle(cert->os_cert_handle(), serialized_certs,
+  if (!SerializeCertHandle(cert->cert_buffer(), serialized_certs,
                            &cert_number)) {
     return false;
   }
   certificate->add_cert_numbers(cert_number);
-  const net::X509Certificate::X509Certificate::OSCertHandles&
-      intermediate_ca_certs = cert->GetIntermediateCertificates();
-  for (auto* const intermediate : intermediate_ca_certs) {
-    if (!SerializeCertHandle(intermediate, serialized_certs, &cert_number))
+  for (const auto& intermediate : cert->intermediate_buffers()) {
+    if (!SerializeCertHandle(intermediate.get(), serialized_certs,
+                             &cert_number))
       return false;
     certificate->add_cert_numbers(cert_number);
   }
