@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90024cb6_e89bc4c6",
+        "filename": "content/browser/media/media_canplaytype_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-17T01:13:42Z",
+      "side": 1,
+      "message": "Why do we want a build flag and a runtime flag. I assume folks that build it will always want it at runtime.",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 24
+      },
+      "revId": "321667b736bdc9b88734afaa0eebbd54771a60f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2cadfc3_a718538e",
+        "filename": "media/base/mime_util_internal.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-17T01:13:42Z",
+      "side": 1,
+      "message": "Do you want android support as well? If not you might explicitly disallow it in this function.",
+      "range": {
+        "startLine": 944,
+        "startChar": 7,
+        "endLine": 944,
+        "endChar": 32
+      },
+      "revId": "321667b736bdc9b88734afaa0eebbd54771a60f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2714834_e33128d1",
+        "filename": "media/formats/webm/webm_video_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-17T01:13:42Z",
+      "side": 1,
+      "message": "weird. Do they have a bug filed on them?",
+      "range": {
+        "startLine": 93,
+        "startChar": 57,
+        "endLine": 93,
+        "endChar": 70
+      },
+      "revId": "321667b736bdc9b88734afaa0eebbd54771a60f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
