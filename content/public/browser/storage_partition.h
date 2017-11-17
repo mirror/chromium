@@ -11,6 +11,7 @@
 
 #include "base/callback_forward.h"
 #include "base/files/file_path.h"
+#include "base/supports_user_data.h"
 #include "base/time/time.h"
 #include "content/common/content_export.h"
 #include "net/cookies/cookie_store.h"
@@ -65,7 +66,7 @@ class URLLoaderFactory;
 // persistent state inside the BrowserContext. This is used to implement
 // isolated storage where a renderer with isolated storage cannot see
 // the cookies, localStorage, etc., that normal web renderers have access to.
-class CONTENT_EXPORT StoragePartition {
+class CONTENT_EXPORT StoragePartition : public base::SupportsUserData {
  public:
   virtual base::FilePath GetPath() = 0;
   virtual net::URLRequestContextGetter* GetURLRequestContext() = 0;
@@ -197,7 +198,7 @@ class CONTENT_EXPORT StoragePartition {
   virtual void ClearBluetoothAllowedDevicesMapForTesting() = 0;
 
  protected:
-  virtual ~StoragePartition() {}
+  ~StoragePartition() override {}
 };
 
 }  // namespace content

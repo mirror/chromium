@@ -269,8 +269,10 @@
 #include "chrome/browser/chromeos/fileapi/mtp_file_system_backend_delegate.h"
 #include "chrome/browser/chromeos/login/signin/merge_session_navigation_throttle.h"
 #include "chrome/browser/chromeos/login/signin/merge_session_throttling_utils.h"
+#include "chrome/browser/chromeos/login/signin_certs_user_data.h"
 #include "chrome/browser/chromeos/login/startup_utils.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
+#include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/system/input_device_settings.h"
 #include "chrome/browser/metrics/leak_detector/leak_detector_remote_controller.h"
 #include "chrome/browser/ui/browser_dialogs.h"
@@ -2304,6 +2306,27 @@ void ChromeContentBrowserClient::SelectClientCertificate(
 
   Profile* profile =
       Profile::FromBrowserContext(web_contents->GetBrowserContext());
+#if defined(OS_CHROMEOS)
+  if (chromeos::ProfileHelper::IsSigninProfile(profile)) {
+    content::StoragePartition* storage_partition =
+        content::BrowserContext::GetStoragePartition(
+            profile, web_contents->GetSiteInstance());
+    chromeos::login::SigninCertsUserData* signin_certs_user_data =
+        chromeos::login::SigninCertsUserData::GetForStoragePartition(
+            storage_partition);
+
+    if (signin_certs_user_data &&
+        signin_certs_user_data->is_allow_client_certificates()) {
+      chrome::ShowSSLClientCertificateSelector(web_contents, cert_request_info,
+                                               std::move(client_certs),
+                                               std::move(delegate));
+    } else {
+      delegate->ContinueWithCertificate(nullptr, nullptr);
+    }
+  }
+
+#endif
+
   std::unique_ptr<base::Value> filter =
       HostContentSettingsMapFactory::GetForProfile(profile)->GetWebsiteSetting(
           requesting_url, requesting_url,

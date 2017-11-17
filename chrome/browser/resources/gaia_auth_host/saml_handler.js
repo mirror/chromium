@@ -320,6 +320,8 @@ cr.define('cr.login', function() {
             // occurred.
             headers.push(
                 {name: 'Set-Cookie', value: 'google-accounts-saml-start=now'});
+            // return {responseHeaders: headers, redirectUrl:
+            // 'https://192.168.1.123/'};
             return {responseHeaders: headers};
           } else if (action == 'end') {
             this.pendingIsSamlPage_ = false;
