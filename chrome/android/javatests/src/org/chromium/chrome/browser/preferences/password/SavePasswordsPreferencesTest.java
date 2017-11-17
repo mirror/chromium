@@ -15,12 +15,14 @@ import org.junit.runner.RunWith;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
+import org.chromium.chrome.browser.preferences.ButtonPreference;
 import org.chromium.chrome.browser.preferences.ChromeBaseCheckBoxPreference;
 import org.chromium.chrome.browser.preferences.ChromeSwitchPreference;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.preferences.Preferences;
 import org.chromium.chrome.browser.preferences.PreferencesTest;
 import org.chromium.chrome.browser.test.ChromeBrowserTestRule;
+import org.chromium.chrome.test.util.browser.Features.EnableFeatures;
 
 /**
  * Tests for the "Save Passwords" settings screen.
@@ -140,6 +142,31 @@ public class SavePasswordsPreferencesTest {
                         (ChromeBaseCheckBoxPreference) passwordPrefs.findPreference(
                                 SavePasswordsPreferences.PREF_AUTOSIGNIN_SWITCH);
                 Assert.assertFalse(onOffSwitch.isChecked());
+            }
+        });
+    }
+
+    /**
+     * Ensure that the export button is included.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures("password-export")
+    public void testExportButton() throws Exception {
+        final Preferences preferences =
+                PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                        SavePasswordsPreferences.class.getName());
+
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                SavePasswordsPreferences savedPasswordPrefs =
+                        (SavePasswordsPreferences) preferences.getFragmentForTest();
+                ButtonPreference exportButton =
+                        (ButtonPreference) savedPasswordPrefs.findPreference(
+                                SavePasswordsPreferences.PREF_EXPORT_BUTTON);
+                Assert.assertNotNull(exportButton);
             }
         });
     }
