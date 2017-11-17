@@ -39,6 +39,7 @@
 #include "cc/trees/single_thread_proxy.h"
 #include "components/viz/common/gpu/context_provider.h"
 #include "components/viz/common/resources/returned_resource.h"
+#include "components/viz/common/resources/transferable_resource.h"
 #include "components/viz/test/test_layer_tree_frame_sink.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -913,9 +914,9 @@ TEST_F(TextureLayerImplWithResourceTest,
 TEST_F(TextureLayerImplWithResourceTest, TestCallbackOnInUseResource) {
   LayerTreeResourceProvider* provider =
       host_impl_.active_tree()->resource_provider();
-  viz::ResourceId id = provider->CreateResourceFromTextureMailbox(
-      viz::TextureMailbox(test_data_.mailbox_name1_, test_data_.sync_token1_,
-                          GL_TEXTURE_2D),
+  viz::ResourceId id = provider->ImportResource(
+      viz::TransferableResource::MakeGL(test_data_.mailbox_name1_, GL_LINEAR,
+                                        GL_TEXTURE_2D, test_data_.sync_token1_),
       viz::SingleReleaseCallback::Create(test_data_.release_callback1_));
   provider->AllocateForTesting(id);
 

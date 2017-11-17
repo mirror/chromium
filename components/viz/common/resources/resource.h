@@ -39,7 +39,7 @@ namespace internal {
 // for client and service libraries and should not be used directly from
 // external client code.
 struct VIZ_COMMON_EXPORT Resource {
-  enum Origin { INTERNAL, EXTERNAL, DELEGATED };
+  enum Origin { INTERNAL, DELEGATED };
   enum SynchronizationState {
     // The LOCALLY_USED state is the state each resource defaults to when
     // constructed or modified or read. This state indicates that the
@@ -172,8 +172,7 @@ struct VIZ_COMMON_EXPORT Resource {
   // Size of the resource in pixels.
   gfx::Size size;
   // Where the resource was originally allocated. Either internally by the
-  // ResourceProvider instance, externally and given to the ResourceProvider
-  // via in-process methods, or in a client and given to the ResourceProvider
+  // ResourceProvider instance, or in a client and given to the ResourceProvider
   // via IPC.
   Origin origin = INTERNAL;
   // The texture target for GpuMemoryBuffer- and texture-backed resources.
