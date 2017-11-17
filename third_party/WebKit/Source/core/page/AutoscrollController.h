@@ -94,6 +94,8 @@ class CORE_EXPORT AutoscrollController final
   void StopMiddleClickAutoscroll(LocalFrame*);
   bool MiddleClickAutoscrollInProgress() const;
 
+  bool IsAutoscrollingForTesting() const;
+
  private:
   explicit AutoscrollController(Page&);
 
