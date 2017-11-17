@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1b8a25f_1ffb30d0",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-17T01:08:42Z",
+      "side": 1,
+      "message": "Expose this function to SWRegistrationObjectHost. Then SWRegistrationObjectHost can remove dependency on SWDispatcherHost\u0027s resource_context().",
+      "range": {
+        "startLine": 322,
+        "startChar": 7,
+        "endLine": 322,
+        "endChar": 25
+      },
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a493dd04_5a2074b9",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-17T01:08:42Z",
+      "side": 1,
+      "message": "This is keeping the identical lifetime management for SWRegistrationObjectHost with before, but I\u0027m considering to change this unique_ptr to raw pointer, thus:\n  - SWRegistrationObjectHost lifetime is strongly bound on SWRegistrationObjectHost Mojo connection, and independent with SWProviderHost lifetime.\n  - this map\u0027s functionality is only one: reuse object host by registration id.\n  - also we can simplify WebSWRegistrationImpl lifetime management brought by https://chromium-review.googlesource.com/c/chromium/src/+/732998, remove those lifecycle state change logic. Then the WebSWRegistrationImpl destruction has only one scenario: \n    Blink GC removes all references to |this|, |this| closes SWRegistrationObjectHost Mojo connection causing the SWRegistrationObjectHost in the browser process destroys (closes SWRegistrationObject Mojo connection), then |this| is deleted by the error connection handler.\n\nNote: currently in the renderer process registration object lifetime is independent with \u0027provider\u0027 lifetime.\n\nWDYT? If all above makes sense, I\u0027d like to do that with a follow-up CL.",
+      "range": {
+        "startLine": 508,
+        "startChar": 20,
+        "endLine": 508,
+        "endChar": 72
+      },
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
