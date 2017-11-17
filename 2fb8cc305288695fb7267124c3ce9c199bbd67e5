@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d29c7eae_dd40070f",
+        "filename": "media/gpu/android/android_video_encode_accelerator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-11-17T20:00:30Z",
+      "side": 1,
+      "message": "Done\n\nDamn it...",
+      "parentUuid": "c09025db_eaad9f2f",
+      "range": {
+        "startLine": 100,
+        "startChar": 18,
+        "endLine": 100,
+        "endChar": 40
+      },
+      "revId": "2fb8cc305288695fb7267124c3ce9c199bbd67e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76bf3fcd_dc8691ef",
         "filename": "media/gpu/android/android_video_encode_accelerator.h",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-17T02:32:49Z",
       "side": 1,
       "message": "presentation_timestamp? Also edit the map\u0027s name to fit.",
+      "range": {
+        "startLine": 103,
+        "startChar": 30,
+        "endLine": 103,
+        "endChar": 45
+      },
+      "revId": "2fb8cc305288695fb7267124c3ce9c199bbd67e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38707cc2_29eb8690",
+        "filename": "media/gpu/android/android_video_encode_accelerator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-11-17T20:00:30Z",
+      "side": 1,
+      "message": "I changed the above \u0027input_timestamp\u0027 to \u0027presentation_timestamp\u0027 instead, to match the changes here. (input_timetamp is vague, since frame_timestamp and presentation_timestamp are both kind of input timestamp.)\nThe map is to cache/retrieve the input frame\u0027s timestamp, so I think the map name and value name are fine.",
+      "parentUuid": "76bf3fcd_dc8691ef",
       "range": {
         "startLine": 103,
         "startChar": 30,
