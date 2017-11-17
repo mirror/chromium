@@ -28,9 +28,12 @@ import java.security.MessageDigest;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
+import java.security.cert.CertificateParsingException;
 import java.security.cert.X509Certificate;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * UI component for displaying certificate information.
@@ -164,6 +167,9 @@ class CertificateViewer implements OnItemSelectedListener {
         addSectionTitle(certificateView, nativeGetCertIssuedByText());
         addItem(certificateView, nativeGetCertInfoCommonNameText(),
                 sslCert.getIssuedBy().getCName());
+        addItem(certificateView, nativeGetCertInfoCommonNameText(),
+                sslCert.getIssuedBy().getCName());
+
         addItem(certificateView, nativeGetCertInfoOrganizationText(),
                 sslCert.getIssuedBy().getOName());
         addItem(certificateView, nativeGetCertInfoOrganizationUnitText(),
@@ -179,8 +185,26 @@ class CertificateViewer implements OnItemSelectedListener {
         addSectionTitle(certificateView, nativeGetCertFingerprintsText());
         addItem(certificateView, nativeGetCertSHA256FingerprintText(),
                 formatBytes(sha256Digest, ' '));
-        addItem(certificateView, nativeGetCertSHA1FingerprintText(),
-                formatBytes(sha1Digest, ' '));
+        addItem(certificateView, nativeGetCertSHA1FingerprintText(), formatBytes(sha1Digest, ' '));
+
+        try {
+            addSectionTitle(certificateView, nativeGetCertExtensionText());
+            Collection<List<?>> nameList = x509.getSubjectAlternativeNames();
+            if (nameList != null) {
+                addLabel(certificateView, nativeGetCertSANText());
+                for (List<?> names : nameList) {
+                    if (names != null) {
+                        if (names.size() == 2 && names.get(0).getClass() == Integer.class
+                                && ((Integer) names.get(0)).intValue() == 2
+                                && names.get(1).getClass() == String.class) {
+                            addValue(certificateView, "DNS Name: " + names.get(1).toString());
+                        }
+                    }
+                }
+            }
+        } catch (CertificateParsingException e) {
+            // Ignore exception.
+        }
     }
 
     private void addSectionTitle(LinearLayout certificateView, String label) {
@@ -262,4 +286,6 @@ class CertificateViewer implements OnItemSelectedListener {
     private static native String nativeGetCertFingerprintsText();
     private static native String nativeGetCertSHA256FingerprintText();
     private static native String nativeGetCertSHA1FingerprintText();
+    private static native String nativeGetCertExtensionText();
+    private static native String nativeGetCertSANText();
 }
