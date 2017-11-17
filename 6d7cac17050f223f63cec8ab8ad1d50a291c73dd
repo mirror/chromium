@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf8040a7_33f648b9",
+        "filename": "content/renderer/mus/mus_embedded_frame.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-17T13:07:25Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this reset |tree_changed_| to false?",
+      "revId": "6d7cac17050f223f63cec8ab8ad1d50a291c73dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "279e23e6_ec8c8fc8",
+        "filename": "content/renderer/mus/mus_embedded_frame.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-17T13:07:25Z",
+      "side": 1,
+      "message": "Return the tree only if |tree_changed_| is false?",
+      "revId": "6d7cac17050f223f63cec8ab8ad1d50a291c73dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
