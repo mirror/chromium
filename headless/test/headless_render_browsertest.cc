@@ -50,18 +50,6 @@ bool IsTagWithName(const char* name, const DOMNode& node) {
   return IsTag(node) && HasName(name, node);
 }
 
-std::vector<std::string> Structure(const GetSnapshotResult* snapshot) {
-  return ElementsView<std::string, DOMNode>(
-      *snapshot->GetDomNodes(), IsTag,
-      [](const auto& node) { return node.GetNodeName(); });
-}
-
-std::vector<std::string> Contents(const GetSnapshotResult* snapshot) {
-  return ElementsView<std::string, DOMNode>(
-      *snapshot->GetDomNodes(), IsText,
-      [](const auto& node) { return node.GetNodeValue(); });
-}
-
 std::vector<std::string> TextLayout(const GetSnapshotResult* snapshot) {
   return ElementsView<std::string, LayoutTreeNode>(
       *snapshot->GetLayoutTreeNodes(),
@@ -113,44 +101,43 @@ using testing::StartsWith;
 class HelloWorldTest : public HeadlessRenderTest {
  private:
   GURL GetPageUrl(HeadlessDevToolsClient* client) override {
-    return embedded_test_server()->GetURL("/hello.html");
+    return GetURL("/hello.html");
   }
 
   void VerifyDom(GetSnapshotResult* dom_snapshot) override {
-    EXPECT_THAT(Structure(dom_snapshot),
-                ElementsAre("HTML", "HEAD", "BODY", "H1"));
-    EXPECT_THAT(Contents(dom_snapshot),
-                ElementsAre("Hello headless world!", "\n"));
+    EXPECT_THAT(FilterDOM(dom_snapshot, IsTag),
+                ElementsAre(NodeName("HTML"), NodeName("HEAD"),
+                            NodeName("BODY"), NodeName("H1")));
+    EXPECT_THAT(
+        FilterDOM(dom_snapshot, IsText),
+        ElementsAre(NodeValue("Hello headless world!"), NodeValue("\n")));
     EXPECT_THAT(TextLayout(dom_snapshot), ElementsAre("Hello headless world!"));
-    AllDone();
   }
 };
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(HelloWorldTest);
 
 class TimeoutTest : public HeadlessRenderTest {
  private:
+  void OnPageRenderCompleted() override {
+    // Never complete.
+  }
+
   GURL GetPageUrl(HeadlessDevToolsClient* client) override {
-    base::RunLoop run_loop;
-    client->GetPage()->Disable(run_loop.QuitClosure());
-    base::MessageLoop::ScopedNestableTaskAllower nest_loop(
-        base::MessageLoop::current());
-    run_loop.Run();
-    return embedded_test_server()->GetURL("/hello.html");
+    return GetURL("/hello.html");
   }
 
   void VerifyDom(GetSnapshotResult* dom_snapshot) override {
     FAIL() << "Should not reach here";
   }
 
-  void OnTimeout() override { AllDone(); }
+  void OnTimeout() override { SetTestCompleted(); }
 };
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(TimeoutTest);
 
 class JavaScriptOverrideTitle_JsEnabled : public HeadlessRenderTest {
  private:
   GURL GetPageUrl(HeadlessDevToolsClient* client) override {
-    return embedded_test_server()->GetURL(
-        "/render/javascript_override_title.html");
+    return GetURL("/render/javascript_override_title.html");
   }
 
   void VerifyDom(GetSnapshotResult* dom_snapshot) override {
@@ -160,7 +147,6 @@ class JavaScriptOverrideTitle_JsEnabled : public HeadlessRenderTest {
     size_t pos = IndexInDOM(dom_snapshot, dom[0]);
     const DOMNode* value = GetAt(dom_snapshot, pos + 1);
     EXPECT_THAT(value, NodeValue("JavaScript is on"));
-    AllDone();
   }
 };
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(JavaScriptOverrideTitle_JsEnabled);
@@ -173,8 +159,7 @@ class JavaScriptOverrideTitle_JsDisabled : public HeadlessRenderTest {
   }
 
   GURL GetPageUrl(HeadlessDevToolsClient* client) override {
-    return embedded_test_server()->GetURL(
-        "/render/javascript_override_title.html");
+    return GetURL("/render/javascript_override_title.html");
   }
 
   void VerifyDom(GetSnapshotResult* dom_snapshot) override {
@@ -184,7 +169,6 @@ class JavaScriptOverrideTitle_JsDisabled : public HeadlessRenderTest {
     size_t pos = IndexInDOM(dom_snapshot, dom[0]);
     const DOMNode* value = GetAt(dom_snapshot, pos + 1);
     EXPECT_THAT(value, NodeValue("JavaScript is off"));
-    AllDone();
   }
 };
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(JavaScriptOverrideTitle_JsDisabled);
@@ -204,7 +188,7 @@ class JavaScriptConsoleErrors : public HeadlessRenderTest,
     base::MessageLoop::ScopedNestableTaskAllower nest_loop(
         base::MessageLoop::current());
     run_loop.Run();
-    return embedded_test_server()->GetURL("/render/console_errors.html");
+    return GetURL("/render/console_errors.html");
   }
 
   void OnConsoleAPICalled(
@@ -229,7 +213,6 @@ class JavaScriptConsoleErrors : public HeadlessRenderTest,
                             StartsWith("Uncaught ReferenceError: func1"),
                             StartsWith("Uncaught ReferenceError: func2"),
                             StartsWith("Uncaught ReferenceError: func3")));
-    AllDone();
   }
 };
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(JavaScriptConsoleErrors);
