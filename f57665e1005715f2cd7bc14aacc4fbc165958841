@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "457cbbdc_870fbac3",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-17T21:27:51Z",
+      "side": 1,
+      "message": "SGTM, let\u0027s skip for this CL this for this CL.",
+      "parentUuid": "610d6b0c_0790063a",
+      "range": {
+        "startLine": 16,
+        "startChar": 31,
+        "endLine": 16,
+        "endChar": 37
+      },
+      "revId": "f57665e1005715f2cd7bc14aacc4fbc165958841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "addb5cb0_3db0d756",
         "filename": "chrome/browser/resources/print_preview/new/print_preview_shared_css.html",
         "patchSetId": 6
