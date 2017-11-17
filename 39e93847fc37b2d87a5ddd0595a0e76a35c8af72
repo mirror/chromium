@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a0fe5c0_87e7b158",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-17T09:47:36Z",
+      "side": 1,
+      "message": "ShouldNotTrackBlinkUseCounterForNTP? I think that\u0027s what\u0027s really being tested, right?\n\nThis test might also deserve an explaining comment, since the average NTP dev will probably have no idea what a UseCounter is :)",
+      "range": {
+        "startLine": 432,
+        "startChar": 37,
+        "endLine": 432,
+        "endChar": 58
+      },
+      "revId": "39e93847fc37b2d87a5ddd0595a0e76a35c8af72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23446005_4e3c1116",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-17T09:47:36Z",
+      "side": 1,
+      "message": "Is the elsewhere_observer required? I think NavigateToURLWithDisposition should already handle all the waiting.",
+      "range": {
+        "startLine": 454,
+        "startChar": 28,
+        "endLine": 454,
+        "endChar": 0
+      },
+      "revId": "39e93847fc37b2d87a5ddd0595a0e76a35c8af72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
