@@ -137,9 +137,9 @@ class CORE_EXPORT PaintLayerPainter {
                            const ClipRect&,
                            const DisplayItemClient&);
 
-  static bool NeedsToClip(const PaintLayerPaintingInfo& local_painting_info,
-                          const ClipRect&,
-                          const PaintLayerFlags&);
+  bool NeedsToClip(const PaintLayerPaintingInfo& local_painting_info,
+                   const ClipRect&,
+                   const PaintLayerFlags&);
 
   // Returns true if the painted output of this PaintLayer and its children is
   // invisible and therefore can't impact painted output.

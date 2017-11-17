@@ -922,7 +922,10 @@ void PaintPropertyTreeBuilder::UpdateScrollbarPaintOffset(
 }
 
 static bool NeedsOverflowClip(const LayoutObject& object) {
-  return object.IsBox() && ToLayoutBox(object).ShouldClipOverflow();
+  // Do not clip overflow for embedded content. We only need to do so when
+  // painting border radius clipping masks, done in the painting pass.
+  return object.IsBox() && ToLayoutBox(object).ShouldClipOverflow() &&
+         !object.IsLayoutEmbeddedContent();
 }
 
 static bool NeedsControlClipFragmentationAdjustment(const LayoutBox& box) {

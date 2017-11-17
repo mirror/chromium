@@ -58,9 +58,16 @@ void PaintLayerPainter::Paint(GraphicsContext& context,
 static ShouldRespectOverflowClipType ShouldRespectOverflowClip(
     PaintLayerFlags paint_flags,
     const LayoutObject& layout_object) {
+  // Ignore the overflow clip when painting content that is intended to
+  // be outside the clip, or when painting the mask for a clip path (spec
+  // says that the clip path can include content outside the overflow) or
+  // when painting embedded contents (because they paint all phases
+  // atomically and we do not want to clip out the border).
   return (paint_flags & kPaintLayerPaintingOverflowContents ||
           (paint_flags & kPaintLayerPaintingChildClippingMaskPhase &&
-           layout_object.HasClipPath()))
+           layout_object.HasClipPath()) ||
+          (!(paint_flags & kPaintLayerPaintingChildClippingMaskPhase) &&
+           layout_object.IsLayoutEmbeddedContent()))
              ? kIgnoreOverflowClip
              : kRespectOverflowClip;
 }
@@ -666,7 +673,12 @@ bool PaintLayerPainter::NeedsToClip(
   // Clipping will be applied by property nodes directly for SPv2.
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
     return false;
-  return clip_rect.Rect() != local_painting_info.paint_dirty_rect ||
+  // We only need to clip if we are actually clipping something, with the
+  // exception of embedded content where all clipping is mask based (only
+  // required for border radius). Note we do clip embedded content during
+  // the mask drawing phase, so the mask receives the clip.
+  return (clip_rect.Rect() != local_painting_info.paint_dirty_rect &&
+          !paint_layer_.GetLayoutObject().IsLayoutEmbeddedContent()) ||
          (paint_flags & kPaintLayerPaintingAncestorClippingMaskPhase) ||
          clip_rect.HasRadius();
 }
