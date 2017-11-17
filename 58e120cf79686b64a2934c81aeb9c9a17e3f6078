@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24e27335_7b88bf61",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-17T13:40:56Z",
+      "side": 1,
+      "message": "Could you move this DCHECK() to ScriptSourceCode\u0027s constructor?\n(Then the DCHECK() will have broader coverage)",
+      "revId": "58e120cf79686b64a2934c81aeb9c9a17e3f6078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
