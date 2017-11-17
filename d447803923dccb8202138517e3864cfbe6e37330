@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "176fca4c_f044d165",
+        "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalk.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-17T01:40:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aa78c51_e06386c2",
+      "revId": "d447803923dccb8202138517e3864cfbe6e37330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "195d771d_16ad5dfc",
         "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalk.h",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "d447803923dccb8202138517e3864cfbe6e37330",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a1c4b9f_3846afe1",
+        "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalk.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-17T01:40:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "195d771d_16ad5dfc",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 10
+      },
+      "revId": "d447803923dccb8202138517e3864cfbe6e37330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
