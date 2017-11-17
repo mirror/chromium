@@ -46,6 +46,7 @@ class EmbeddedWorkerRegistry;
 struct EmbeddedWorkerStartParams;
 class ServiceWorkerContentSettingsProxyImpl;
 class ServiceWorkerContextCore;
+class ServiceWorkerVersion;
 
 // This gives an interface to control one EmbeddedWorker instance, which
 // may be 'in-waiting' or running in one of the child processes added by
@@ -155,7 +156,7 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
   // Stops the worker if the worker is not being debugged (i.e. devtools is
   // not attached). This method is called by a stop-worker timer to kill
   // idle workers.
-  void StopIfIdle();
+  void StopIfNoDevtoolAttached();
 
   // Sends |message| to the embedded worker running in the child process.
   // It is invalid to call this while the worker is not in STARTING or RUNNING
@@ -239,6 +240,7 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
   // Constructor is called via EmbeddedWorkerRegistry::CreateWorker().
   // This instance holds a ref of |registry|.
   EmbeddedWorkerInstance(base::WeakPtr<ServiceWorkerContextCore> context,
+                         ServiceWorkerVersion* owner_version,
                          int embedded_worker_id);
 
   // Called back from StartTask after a process is allocated on the UI thread.
@@ -260,6 +262,7 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
 
   // Implements mojom::EmbeddedWorkerInstanceHost.
   // These functions all run on the IO thread.
+  void RequestTermination() override;
   void OnReadyForInspection() override;
   void OnScriptLoaded() override;
   // Notifies the corresponding provider host that the thread has started and is
@@ -302,6 +305,7 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
 
   base::WeakPtr<ServiceWorkerContextCore> context_;
   scoped_refptr<EmbeddedWorkerRegistry> registry_;
+  ServiceWorkerVersion* owner_version_;
 
   // Unique within an EmbeddedWorkerRegistry.
   const int embedded_worker_id_;

@@ -314,7 +314,7 @@ class StalledInStartWorkerHelper : public EmbeddedWorkerTestHelper {
 
 TEST_F(EmbeddedWorkerInstanceTest, StartAndStop) {
   std::unique_ptr<EmbeddedWorkerInstance> worker =
-      embedded_worker_registry()->CreateWorker();
+      embedded_worker_registry()->CreateWorker(nullptr);
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPED, worker->status());
   worker->AddListener(this);
 
@@ -365,7 +365,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StartAndStop) {
 // on the next attempt.
 TEST_F(EmbeddedWorkerInstanceTest, ForceNewProcess) {
   std::unique_ptr<EmbeddedWorkerInstance> worker =
-      embedded_worker_registry()->CreateWorker();
+      embedded_worker_registry()->CreateWorker(nullptr);
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPED, worker->status());
 
   const int64_t service_worker_version_id = 55L;
@@ -433,7 +433,7 @@ TEST_F(EmbeddedWorkerInstanceTest, ForceNewProcess) {
 
 TEST_F(EmbeddedWorkerInstanceTest, StopWhenDevToolsAttached) {
   std::unique_ptr<EmbeddedWorkerInstance> worker =
-      embedded_worker_registry()->CreateWorker();
+      embedded_worker_registry()->CreateWorker(nullptr);
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPED, worker->status());
 
   const int64_t service_worker_version_id = 55L;
@@ -444,12 +444,12 @@ TEST_F(EmbeddedWorkerInstanceTest, StopWhenDevToolsAttached) {
   helper_->SimulateAddProcessToPattern(pattern,
                                        helper_->mock_render_process_id());
 
-  // Start the worker and then call StopIfIdle().
+  // Start the worker and then call StopIfNoDevtoolAttached().
   EXPECT_EQ(SERVICE_WORKER_OK,
             StartWorker(worker.get(), service_worker_version_id, pattern, url));
   EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, worker->status());
   EXPECT_EQ(helper_->mock_render_process_id(), worker->process_id());
-  worker->StopIfIdle();
+  worker->StopIfNoDevtoolAttached();
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPING, worker->status());
   base::RunLoop().RunUntilIdle();
 
@@ -463,7 +463,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopWhenDevToolsAttached) {
             StartWorker(worker.get(), service_worker_version_id, pattern, url));
   EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, worker->status());
   EXPECT_EQ(helper_->mock_render_process_id(), worker->process_id());
-  worker->StopIfIdle();
+  worker->StopIfNoDevtoolAttached();
   base::RunLoop().RunUntilIdle();
 
   // The worker must not be stopped this time.
@@ -480,9 +480,9 @@ TEST_F(EmbeddedWorkerInstanceTest, StopWhenDevToolsAttached) {
 // other workers in the same process.
 TEST_F(EmbeddedWorkerInstanceTest, RemoveWorkerInSharedProcess) {
   std::unique_ptr<EmbeddedWorkerInstance> worker1 =
-      embedded_worker_registry()->CreateWorker();
+      embedded_worker_registry()->CreateWorker(nullptr);
   std::unique_ptr<EmbeddedWorkerInstance> worker2 =
-      embedded_worker_registry()->CreateWorker();
+      embedded_worker_registry()->CreateWorker(nullptr);
 
   const int64_t version_id1 = 55L;
   const int64_t version_id2 = 56L;
@@ -543,7 +543,7 @@ TEST_F(EmbeddedWorkerInstanceTest, DetachDuringProcessAllocation) {
   const GURL url("http://example.com/worker.js");
 
   std::unique_ptr<EmbeddedWorkerInstance> worker =
-      embedded_worker_registry()->CreateWorker();
+      embedded_worker_registry()->CreateWorker(nullptr);
   worker->AddListener(this);
 
   // Run the start worker sequence and detach during process allocation.
@@ -578,7 +578,7 @@ TEST_F(EmbeddedWorkerInstanceTest, DetachAfterSendingStartWorkerMessage) {
 
   helper_.reset(new StalledInStartWorkerHelper());
   std::unique_ptr<EmbeddedWorkerInstance> worker =
-      embedded_worker_registry()->CreateWorker();
+      embedded_worker_registry()->CreateWorker(nullptr);
   worker->AddListener(this);
 
   // Run the start worker sequence until a start worker message is sent.
@@ -619,7 +619,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringProcessAllocation) {
   const GURL url("http://example.com/worker.js");
 
   std::unique_ptr<EmbeddedWorkerInstance> worker =
-      embedded_worker_registry()->CreateWorker();
+      embedded_worker_registry()->CreateWorker(nullptr);
   worker->AddListener(this);
 
   // Stop the start worker sequence before a process is allocated.
@@ -696,7 +696,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringPausedAfterDownload) {
           helper_->AsWeakPtr(), &was_resume_after_download_called));
 
   std::unique_ptr<EmbeddedWorkerInstance> worker =
-      embedded_worker_registry()->CreateWorker();
+      embedded_worker_registry()->CreateWorker(nullptr);
   worker->AddListener(this);
 
   // Run the start worker sequence until pause after download.
@@ -730,7 +730,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopAfterSendingStartWorkerMessage) {
 
   helper_.reset(new StalledInStartWorkerHelper);
   std::unique_ptr<EmbeddedWorkerInstance> worker =
-      embedded_worker_registry()->CreateWorker();
+      embedded_worker_registry()->CreateWorker(nullptr);
   worker->AddListener(this);
 
   // Run the start worker sequence until a start worker message is sent.
@@ -794,7 +794,7 @@ TEST_F(EmbeddedWorkerInstanceTest, Detach) {
   const GURL pattern("http://example.com/");
   const GURL url("http://example.com/worker.js");
   std::unique_ptr<EmbeddedWorkerInstance> worker =
-      embedded_worker_registry()->CreateWorker();
+      embedded_worker_registry()->CreateWorker(nullptr);
   helper_->SimulateAddProcessToPattern(pattern,
                                        helper_->mock_render_process_id());
   ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_FAILED;
@@ -832,7 +832,7 @@ TEST_F(EmbeddedWorkerInstanceTest, FailToSendStartIPC) {
   helper_->RegisterMockInstanceClient(nullptr);
 
   std::unique_ptr<EmbeddedWorkerInstance> worker =
-      embedded_worker_registry()->CreateWorker();
+      embedded_worker_registry()->CreateWorker(nullptr);
   helper_->SimulateAddProcessToPattern(pattern,
                                        helper_->mock_render_process_id());
   worker->AddListener(this);
@@ -887,7 +887,7 @@ TEST_F(EmbeddedWorkerInstanceTest, RemoveRemoteInterface) {
   ASSERT_EQ(mock_instance_clients()->size(), 1UL);
 
   std::unique_ptr<EmbeddedWorkerInstance> worker =
-      embedded_worker_registry()->CreateWorker();
+      embedded_worker_registry()->CreateWorker(nullptr);
   helper_->SimulateAddProcessToPattern(pattern,
                                        helper_->mock_render_process_id());
   worker->AddListener(this);
@@ -942,7 +942,7 @@ TEST_F(EmbeddedWorkerInstanceTest, AddMessageToConsole) {
   ASSERT_EQ(mock_instance_clients()->size(), 1UL);
 
   std::unique_ptr<EmbeddedWorkerInstance> worker =
-      embedded_worker_registry()->CreateWorker();
+      embedded_worker_registry()->CreateWorker(nullptr);
   helper_->SimulateAddProcessToPattern(pattern,
                                        helper_->mock_render_process_id());
   worker->AddListener(this);
@@ -985,7 +985,7 @@ TEST_F(EmbeddedWorkerInstanceTest, AddMessageToConsole) {
 // Test that SendStartWorker checks if dispatcher host exists.
 TEST_F(EmbeddedWorkerInstanceTest, NoDispatcherHost) {
   std::unique_ptr<EmbeddedWorkerInstance> worker =
-      embedded_worker_registry()->CreateWorker();
+      embedded_worker_registry()->CreateWorker(nullptr);
   SetWorkerStatus(worker.get(), EmbeddedWorkerStatus::STARTING);
   auto params = std::make_unique<EmbeddedWorkerStartParams>();
   ServiceWorkerStatusCode result =

@@ -217,6 +217,10 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // Stops an embedded worker for this version.
   void StopWorker(base::OnceClosure callback);
 
+  // Stops the worker if it is idle (has no in-flight requests) or timed out
+  // ping.
+  void StopWorkerIfIdle();
+
   // Skips waiting and forces this version to become activated.
   void SkipWaitingFromDevTools();
 
@@ -656,10 +660,6 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // Called by PingController for ping protocol.
   void PingWorker();
   void OnPingTimeout();
-
-  // Stops the worker if it is idle (has no in-flight requests) or timed out
-  // ping.
-  void StopWorkerIfIdle();
 
   // RecordStartWorkerResult is added as a start callback by StartTimeoutTimer
   // and records metrics about startup.
