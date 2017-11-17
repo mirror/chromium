@@ -93,10 +93,7 @@ Accessibility.AXNodeSubPane = class extends Accessibility.AccessibilitySubPane {
     for (var property of propertiesArray)
       propertyMap[property.name] = property;
 
-    for (var propertySet
-             of [Protocol.Accessibility.AXWidgetAttributes, Protocol.Accessibility.AXWidgetStates,
-                 Protocol.Accessibility.AXGlobalStates, Protocol.Accessibility.AXLiveRegionAttributes,
-                 Protocol.Accessibility.AXRelationshipAttributes]) {
+    for (var propertySet of [Protocol.Accessibility.AXPropertyName]) {
       for (var propertyKey in propertySet) {
         var property = propertySet[propertyKey];
         if (property in propertyMap)
