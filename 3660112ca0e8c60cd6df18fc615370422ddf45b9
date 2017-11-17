@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9aadea79_1d6b3b37",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-17T17:49:09Z",
+      "side": 1,
+      "message": "nit: Reformat the commit message.",
+      "revId": "3660112ca0e8c60cd6df18fc615370422ddf45b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1af6698_40b3d599",
         "filename": "chrome/browser/chromeos/login/easy_unlock/easy_unlock_create_keys_operation.cc",
         "patchSetId": 5
@@ -13,6 +30,40 @@
       "writtenOn": "2017-11-17T15:04:35Z",
       "side": 1,
       "message": "Remove this?",
+      "revId": "3660112ca0e8c60cd6df18fc615370422ddf45b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98de736d_6380f724",
+        "filename": "chrome/browser/chromeos/login/easy_unlock/easy_unlock_create_keys_operation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-17T17:49:09Z",
+      "side": 1,
+      "message": "nit: insert an empty line to separate the \"if\" and this block",
+      "revId": "3660112ca0e8c60cd6df18fc615370422ddf45b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc895e75_cf73e9d8",
+        "filename": "chromeos/login/auth/extended_authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-17T17:49:09Z",
+      "side": 1,
+      "message": "nit: insert an empty line before this line",
       "revId": "3660112ca0e8c60cd6df18fc615370422ddf45b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
