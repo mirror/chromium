@@ -10,7 +10,11 @@
 #include "base/macros.h"
 #include "components/exo/data_offer.h"
 #include "components/exo/data_offer_observer.h"
+#include "components/exo/seat_observer.h"
+#include "components/exo/surface.h"
+#include "components/exo/surface_observer.h"
 #include "components/exo/wm_helper.h"
+#include "ui/base/clipboard/clipboard_observer.h"
 
 namespace ui {
 class DropTargetEvent;
@@ -21,14 +25,20 @@ namespace exo {
 class DataDeviceDelegate;
 class DataSource;
 class FileHelper;
-class Surface;
+class Seat;
 
 enum class DndAction { kNone, kCopy, kMove, kAsk };
 
 // DataDevice to start drag and drop and copy and paste oprations.
-class DataDevice : public WMHelper::DragDropObserver, public DataOfferObserver {
+class DataDevice : public WMHelper::DragDropObserver,
+                   public DataOfferObserver,
+                   public ui::ClipboardObserver,
+                   public SurfaceObserver,
+                   public SeatObserver {
  public:
-  explicit DataDevice(DataDeviceDelegate* delegate, FileHelper* file_helper);
+  explicit DataDevice(DataDeviceDelegate* delegate,
+                      Seat* seat,
+                      FileHelper* file_helper);
   ~DataDevice() override;
 
   // Starts drag-and-drop operation.
@@ -54,15 +64,28 @@ class DataDevice : public WMHelper::DragDropObserver, public DataOfferObserver {
   void OnDragExited() override;
   int OnPerformDrop(const ui::DropTargetEvent& event) override;
 
+  // Overridden from ui::ClipbaordObserver:
+  void OnClipboardDataChanged() override;
+
+  // Overridden from SeatObserver:
+  void OnSurfacePreFocused(Surface* surface) override;
+  void OnSurfaceFocused(Surface* surface) override;
+
   // Overridden from DataOfferObserver:
   void OnDataOfferDestroying(DataOffer* data_offer) override;
 
+  // Overridden from SurfaceObserver:
+  void OnSurfaceDestroying(Surface* surface) override;
+
  private:
   Surface* GetEffectiveTargetForEvent(const ui::DropTargetEvent& event) const;
+  void SendSelection();
 
   DataDeviceDelegate* const delegate_;
+  Seat* const seat_;
   FileHelper* const file_helper_;
   DataOfferTracker data_offer_;
+  SurfaceTracker focused_surface_;
 
   DISALLOW_COPY_AND_ASSIGN(DataDevice);
 };
