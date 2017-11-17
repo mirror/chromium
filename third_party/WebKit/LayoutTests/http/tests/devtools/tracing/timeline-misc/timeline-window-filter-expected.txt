@@ -1,6 +1,5 @@
 Tests the Timeline window filter.
-
-It applies different ranges to the OverviewGrid and expects that current view reflects the change.
+    It applies different ranges to the OverviewGrid and expects that current view reflects the change.
 
 OverviewPane:
 divider offsets: [0, 500, 1000, 1500]. We are expecting round numbers.
