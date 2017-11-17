@@ -39,6 +39,7 @@ component("chromeos") {
     "//components/signin/core/account_id",
     "//components/url_formatter",
     "//components/user_manager",
+    "//content/public/common",
     "//crypto",
     "//crypto:platform",
     "//google_apis",
