@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8293c98_b889a63f",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-17T17:23:22Z",
+      "side": 1,
+      "message": "unfortunately, the upstream code that calls this also filters some mime types, so we\u0027ll need to update that code as well. see BrowserPageTrackDecider::IsHtmlOrXhtmlPage() and the call sites in PageTrackDecider::ShouldTrack(). IsHtmlOrXhtmlPage only allows tracking for HTML/XHTML currently. With your need for SVG we should probably just get rid of this method as part of ShouldTrack, since each observer also has a ShouldObserveMimeType which by default only tracks html/xhtml (so the BrowserPageTrackDecider method is redundant - it\u0027s only still around for historical reasons).\n\nCan we:\n* get rid of BrowserPageTrackDecider::IsHtmlOrXhtmlPage() and its call sites\n* verify we do not record any metrics for svg by default (I think we have this in PageLoadMetricsBrowserTest.NonHtmlMainResource already but please take a look and double check)\n* add a new browsertest in page_load_metrics_browsertest.cc to make sure use counters are recorded for /circle.svg (maybe make sure PageVisits is recorded for SVG, if that\u0027s intended behavior)\n\nThanks!",
+      "revId": "d9367ec9717681fb8d7c8526ff3df4621b657eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
