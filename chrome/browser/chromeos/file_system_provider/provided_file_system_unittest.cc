@@ -47,6 +47,7 @@ const base::FilePath::CharType kDirectoryPath[] =
     FILE_PATH_LITERAL("/hello/world");
 const base::FilePath::CharType kFilePath[] =
     FILE_PATH_LITERAL("/welcome/to/my/world");
+const ProviderId kProviderId = ProviderId(kExtensionId, ProviderId::EXTENSION);
 
 // Fake implementation of the event router, mocking out a real extension.
 // Handles requests and replies with fake answers back to the file system via
@@ -238,7 +239,7 @@ class FileSystemProviderProvidedFileSystemTest : public testing::Test {
     mount_options.supports_notify_tag = true;
     mount_options.writable = true;
     file_system_info_.reset(new ProvidedFileSystemInfo(
-        kExtensionId, mount_options, mount_path, false /* configurable */,
+        kProviderId, mount_options, mount_path, false /* configurable */,
         true /* watchable */, extensions::SOURCE_FILE));
     provided_file_system_.reset(
         new ProvidedFileSystem(profile_.get(), *file_system_info_.get()));
@@ -418,7 +419,7 @@ TEST_F(FileSystemProviderProvidedFileSystemTest, AddWatcher_PersistentIllegal) {
     mount_options.display_name = kDisplayName;
     mount_options.supports_notify_tag = false;
     ProvidedFileSystemInfo file_system_info(
-        kExtensionId, mount_options, mount_path, false /* configurable */,
+        kProviderId, mount_options, mount_path, false /* configurable */,
         true /* watchable */, extensions::SOURCE_FILE);
     ProvidedFileSystem simple_provided_file_system(profile_.get(),
                                                    file_system_info);

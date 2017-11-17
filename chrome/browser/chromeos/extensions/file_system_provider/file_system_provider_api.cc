@@ -26,6 +26,7 @@ using chromeos::file_system_provider::OpenedFiles;
 using chromeos::file_system_provider::ProvidedFileSystemInfo;
 using chromeos::file_system_provider::ProvidedFileSystemInterface;
 using chromeos::file_system_provider::ProvidedFileSystemObserver;
+using chromeos::file_system_provider::ProviderId;
 using chromeos::file_system_provider::RequestValue;
 using chromeos::file_system_provider::Service;
 using chromeos::file_system_provider::Watchers;
@@ -150,8 +151,9 @@ ExtensionFunction::ResponseAction FileSystemProviderMountFunction::Run() {
                                    : 0;
   options.supports_notify_tag = params->options.supports_notify_tag != nullptr;
 
+  ProviderId provider_id(extension_id(), ProviderId::EXTENSION);
   const base::File::Error result =
-      service->MountFileSystem(extension_id(), options);
+      service->MountFileSystem(provider_id, options);
   if (result != base::File::FILE_OK)
     return RespondNow(Error(FileErrorToString(result)));
 
@@ -167,8 +169,9 @@ ExtensionFunction::ResponseAction FileSystemProviderUnmountFunction::Run() {
       Service::Get(Profile::FromBrowserContext(browser_context()));
   DCHECK(service);
 
+  ProviderId provider_id(extension_id(), ProviderId::EXTENSION);
   const base::File::Error result =
-      service->UnmountFileSystem(extension_id(), params->options.file_system_id,
+      service->UnmountFileSystem(provider_id, params->options.file_system_id,
                                  Service::UNMOUNT_REASON_USER);
   if (result != base::File::FILE_OK)
     return RespondNow(Error(FileErrorToString(result)));
@@ -187,7 +190,7 @@ ExtensionFunction::ResponseAction FileSystemProviderGetAllFunction::Run() {
   std::vector<FileSystemInfo> items;
 
   for (const auto& file_system_info : file_systems) {
-    if (file_system_info.provider_id() == extension_id()) {
+    if (file_system_info.provider_id().GetId() == extension_id()) {
       FileSystemInfo item;
 
       chromeos::file_system_provider::ProvidedFileSystemInterface* const
@@ -216,9 +219,10 @@ ExtensionFunction::ResponseAction FileSystemProviderGetFunction::Run() {
       Service::Get(Profile::FromBrowserContext(browser_context()));
   DCHECK(service);
 
+  ProviderId provider_id(extension_id(), ProviderId::EXTENSION);
   chromeos::file_system_provider::ProvidedFileSystemInterface* const
-      file_system = service->GetProvidedFileSystem(extension_id(),
-                                                   params->file_system_id);
+      file_system =
+          service->GetProvidedFileSystem(provider_id, params->file_system_id);
 
   if (!file_system) {
     return RespondNow(
@@ -241,8 +245,9 @@ bool FileSystemProviderNotifyFunction::RunAsync() {
   Service* const service = Service::Get(GetProfile());
   DCHECK(service);
 
+  ProviderId provider_id(extension_id(), ProviderId::EXTENSION);
   ProvidedFileSystemInterface* const file_system =
-      service->GetProvidedFileSystem(extension_id(),
+      service->GetProvidedFileSystem(provider_id,
                                      params->options.file_system_id);
   if (!file_system) {
     SetError(FileErrorToString(base::File::FILE_ERROR_NOT_FOUND));
