@@ -1127,7 +1127,7 @@ void LocalFrameClientImpl::ScrollRectToVisibleInParentFrame(
 }
 
 void LocalFrameClientImpl::SetVirtualTimePauser(
-    ScopedVirtualTimePauser virtual_time_pauser) {
+    WebScopedVirtualTimePauser virtual_time_pauser) {
   virtual_time_pauser_ = std::move(virtual_time_pauser);
 }
 
