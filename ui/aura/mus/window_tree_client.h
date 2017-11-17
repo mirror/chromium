@@ -131,6 +131,7 @@ class AURA_EXPORT WindowTreeClient
     return capture_synchronizer_.get();
   }
   FocusSynchronizer* focus_synchronizer() { return focus_synchronizer_.get(); }
+  ui::Gpu* gpu() { return gpu_.get(); }
 
   bool connected() const { return tree_ != nullptr; }
 

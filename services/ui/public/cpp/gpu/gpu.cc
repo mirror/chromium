@@ -11,6 +11,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "gpu/command_buffer/common/scheduling_priority.h"
+#include "gpu/config/gpu_info.h"
 #include "mojo/public/cpp/bindings/sync_call_restrictions.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -166,9 +167,9 @@ Gpu::Gpu(GpuPtrFactory factory,
 
 Gpu::~Gpu() {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
-  if (pending_request_) {
-    pending_request_->Cancel();
-    pending_request_ = nullptr;
+  if (pending_establish_request_) {
+    pending_establish_request_->Cancel();
+    pending_establish_request_ = nullptr;
   }
   gpu_ = nullptr;
   if (gpu_channel_)
@@ -222,6 +223,18 @@ void Gpu::CreateVideoEncodeAcceleratorProvider(
       std::move(vea_provider_request));
 }
 
+void Gpu::RequestCompleteGpuInfo(RequestCompleteGpuInfoCallback callback) {
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
+
+  const bool gpu_info_request_ongoing = !request_info_callbacks_.empty();
+  request_info_callbacks_.push_back(std::move(callback));
+  if (gpu_info_request_ongoing)
+    return;
+
+  (*gpu_)->RequestCompleteGpuInfo(
+      base::Bind(&Gpu::OnRequestCompleteGpuInfo, base::Unretained(this)));
+}
+
 void Gpu::EstablishGpuChannel(
     const gpu::GpuChannelEstablishedCallback& callback) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
@@ -248,12 +261,12 @@ scoped_refptr<gpu::GpuChannelHost> Gpu::EstablishGpuChannelSync(
   SendEstablishGpuChannelRequest();
   base::WaitableEvent event(base::WaitableEvent::ResetPolicy::MANUAL,
                             base::WaitableEvent::InitialState::SIGNALED);
-  pending_request_->SetWaitableEvent(&event);
+  pending_establish_request_->SetWaitableEvent(&event);
   event.Wait();
 
   // Running FinishOnMain() will create |gpu_channel_| and run any callbacks
   // from calls to EstablishGpuChannel() before we return from here.
-  pending_request_->FinishOnMain();
+  pending_establish_request_->FinishOnMain();
 
   return gpu_channel_;
 }
@@ -277,31 +290,42 @@ scoped_refptr<gpu::GpuChannelHost> Gpu::GetGpuChannel() {
   return gpu_channel_;
 }
 
+void Gpu::OnRequestCompleteGpuInfo(const gpu::GPUInfo& gpu_info) {
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
+
+  std::vector<RequestCompleteGpuInfoCallback> callbacks;
+  callbacks.swap(request_info_callbacks_);
+  for (auto&& callback : callbacks)
+    std::move(callback).Run(gpu_info);
+}
+
 void Gpu::SendEstablishGpuChannelRequest() {
-  if (pending_request_)
+  if (pending_establish_request_)
     return;
 
-  pending_request_ =
+  pending_establish_request_ =
       base::MakeRefCounted<EstablishRequest>(this, main_task_runner_);
   io_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&EstablishRequest::SendRequest, pending_request_,
-                            base::RetainedRef(gpu_)));
+      FROM_HERE,
+      base::Bind(&EstablishRequest::SendRequest, pending_establish_request_,
+                 base::RetainedRef(gpu_)));
 }
 
 void Gpu::OnEstablishedGpuChannel() {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
-  DCHECK(pending_request_);
+  DCHECK(pending_establish_request_);
   DCHECK(!gpu_channel_);
 
-  if (pending_request_->client_id() &&
-      pending_request_->channel_handle().is_valid()) {
+  if (pending_establish_request_->client_id() &&
+      pending_establish_request_->channel_handle().is_valid()) {
     gpu_channel_ = base::MakeRefCounted<gpu::GpuChannelHost>(
-        this, pending_request_->client_id(), pending_request_->gpu_info(),
-        pending_request_->gpu_feature_info(),
-        std::move(pending_request_->channel_handle()),
+        this, pending_establish_request_->client_id(),
+        pending_establish_request_->gpu_info(),
+        pending_establish_request_->gpu_feature_info(),
+        std::move(pending_establish_request_->channel_handle()),
         gpu_memory_buffer_manager_.get());
   }
-  pending_request_ = nullptr;
+  pending_establish_request_ = nullptr;
 
   std::vector<gpu::GpuChannelEstablishedCallback> callbacks;
   callbacks.swap(establish_callbacks_);

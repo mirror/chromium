@@ -37,10 +37,16 @@ GpuClient::GpuClient(
 
 GpuClient::~GpuClient() {
   gpu_memory_buffer_manager_->DestroyAllGpuMemoryBufferForClient(client_id_);
+  if (!request_info_callback_.is_null())
+    request_info_callback_.Run(gpu::GPUInfo());
   if (!establish_callback_.is_null()) {
     establish_callback_.Run(client_id_, mojo::ScopedMessagePipeHandle(),
                             gpu::GPUInfo(), gpu::GpuFeatureInfo());
   }
+}
+
+void GpuClient::OnRequestCompleteGpuInfo(const gpu::GPUInfo& gpu_info) {
+  base::ResetAndReturn(&request_info_callback_).Run(gpu_info);
 }
 
 void GpuClient::OnGpuChannelEstablished(
@@ -51,6 +57,15 @@ void GpuClient::OnGpuChannelEstablished(
 }
 
 // mojom::Gpu overrides:
+void GpuClient::RequestCompleteGpuInfo(
+    const RequestCompleteGpuInfoCallback& callback) {
+  if (!request_info_callback_.is_null())
+    request_info_callback_.Run(gpu::GPUInfo());
+  request_info_callback_ = callback;
+  gpu_service_->RequestCompleteGpuInfo(base::BindOnce(
+      &GpuClient::OnRequestCompleteGpuInfo, weak_factory_.GetWeakPtr()));
+}
+
 void GpuClient::EstablishGpuChannel(
     const EstablishGpuChannelCallback& callback) {
   // TODO(sad): crbug.com/617415 figure out how to generate a meaningful

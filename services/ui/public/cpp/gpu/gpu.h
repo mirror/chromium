@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include <vector>
 
+#include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
@@ -15,6 +16,10 @@
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "services/ui/public/cpp/gpu/client_gpu_memory_buffer_manager.h"
 #include "services/ui/public/interfaces/gpu.mojom.h"
+
+namespace gpu {
+struct GPUInfo;
+}
 
 namespace service_manager {
 class Connector;
@@ -25,6 +30,9 @@ namespace ui {
 class Gpu : public gpu::GpuChannelHostFactory,
             public gpu::GpuChannelEstablishFactory {
  public:
+  using RequestCompleteGpuInfoCallback =
+      base::OnceCallback<void(const gpu::GPUInfo& gpu_info)>;
+
   // The Gpu has to be initialized in the main thread before establishing
   // the gpu channel.
   static std::unique_ptr<Gpu> Create(
@@ -46,6 +54,8 @@ class Gpu : public gpu::GpuChannelHostFactory,
   void CreateVideoEncodeAcceleratorProvider(
       media::mojom::VideoEncodeAcceleratorProviderRequest vea_provider_request);
 
+  void RequestCompleteGpuInfo(RequestCompleteGpuInfoCallback callback);
+
   // gpu::GpuChannelEstablishFactory:
   void EstablishGpuChannel(
       const gpu::GpuChannelEstablishedCallback& callback) override;
@@ -65,12 +75,14 @@ class Gpu : public gpu::GpuChannelHostFactory,
   Gpu(GpuPtrFactory factory,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
+  void OnRequestCompleteGpuInfo(const gpu::GPUInfo& gpu_info);
+
   // Sends a request to establish a gpu channel. If a request is currently
   // pending this will do nothing.
   void SendEstablishGpuChannelRequest();
 
   // Handles results of request to establish a gpu channel in
-  // |pending_request_|.
+  // |pending_establish_request_|.
   void OnEstablishedGpuChannel();
 
   // gpu::GpuChannelHostFactory overrides:
@@ -83,7 +95,8 @@ class Gpu : public gpu::GpuChannelHostFactory,
   std::unique_ptr<ClientGpuMemoryBufferManager> gpu_memory_buffer_manager_;
 
   scoped_refptr<ui::mojom::ThreadSafeGpuPtr> gpu_;
-  scoped_refptr<EstablishRequest> pending_request_;
+  std::vector<RequestCompleteGpuInfoCallback> request_info_callbacks_;
+  scoped_refptr<EstablishRequest> pending_establish_request_;
   scoped_refptr<gpu::GpuChannelHost> gpu_channel_;
   std::vector<gpu::GpuChannelEstablishedCallback> establish_callbacks_;
 

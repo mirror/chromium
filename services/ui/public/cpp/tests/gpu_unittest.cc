@@ -31,6 +31,11 @@ class TestGpuImpl : public mojom::Gpu {
   }
 
   // ui::mojom::Gpu overrides:
+  void RequestCompleteGpuInfo(
+      const RequestCompleteGpuInfoCallback& callback) override {
+    callback.Run(gpu::GPUInfo());
+  }
+
   void EstablishGpuChannel(
       const EstablishGpuChannelCallback& callback) override {
     constexpr int client_id = 1;
