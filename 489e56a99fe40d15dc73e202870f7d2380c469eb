@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93dcc857_2bd86a28",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T07:47:54Z",
+      "side": 1,
+      "message": "Not related to this CL, would you mind moving TraceEagerlyTrait\u003cHeapTerminatedArray\u003cT\u003e\u003e here as well?",
+      "revId": "489e56a99fe40d15dc73e202870f7d2380c469eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4255de0_b600e6d3",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T07:47:54Z",
+      "side": 1,
+      "message": "This should be:\n\n  static const bool value \u003d TraceEagerlyTrait\u003cT\u003e::value;",
+      "revId": "489e56a99fe40d15dc73e202870f7d2380c469eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
