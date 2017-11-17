@@ -16,6 +16,24 @@
       "revId": "0e3fa967068aef348e7a41f4f9f81d7482451aab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f5718eb_313422d1",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-17T19:16:56Z",
+      "side": 1,
+      "message": "Maybe...but the new test passes on Windows, and I\u0027m pretty sure GMBs are used there. I\u0027d like to make the minimal change so will leave this as is for now.",
+      "parentUuid": "00388437_2612b0e4",
+      "revId": "0e3fa967068aef348e7a41f4f9f81d7482451aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
