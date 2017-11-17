@@ -18,15 +18,17 @@ namespace scheduler {
 // A dummy WebTaskRunner for tests.
 class FakeWebTaskRunner : public WebTaskRunner {
  public:
+  REQUIRE_ADOPTION_FOR_REFCOUNTED_TYPE();
+
   FakeWebTaskRunner();
 
   void SetTime(double new_time);
 
+  // base::SingleThreadTaskRunner implementation:
+  bool RunsTasksInCurrentSequence() const override;
+
   // WebTaskRunner implementation:
-  bool RunsTasksInCurrentSequence() override;
   double MonotonicallyIncreasingVirtualTimeSeconds() const override;
-  scoped_refptr<base::SingleThreadTaskRunner> ToSingleThreadTaskRunner()
-      override;
 
   void RunUntilIdle();
   void AdvanceTimeAndRun(double delta_seconds);
@@ -36,6 +38,9 @@ class FakeWebTaskRunner : public WebTaskRunner {
   bool PostDelayedTask(const base::Location& location,
                        base::OnceClosure task,
                        base::TimeDelta delay) override;
+  bool PostNonNestableDelayedTask(const base::Location&,
+                                  base::OnceClosure task,
+                                  base::TimeDelta delay) override;
 
  private:
   ~FakeWebTaskRunner() override;
@@ -43,10 +48,8 @@ class FakeWebTaskRunner : public WebTaskRunner {
   class Data;
   class BaseTaskRunner;
   scoped_refptr<Data> data_;
-  scoped_refptr<BaseTaskRunner> base_task_runner_;
 
-  FakeWebTaskRunner(scoped_refptr<Data> data,
-                    scoped_refptr<BaseTaskRunner> base_task_runner);
+  explicit FakeWebTaskRunner(scoped_refptr<Data> data);
 
   DISALLOW_COPY_AND_ASSIGN(FakeWebTaskRunner);
 };
