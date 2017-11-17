@@ -22,6 +22,53 @@
       "revId": "a2715e97caacc2cbb86a689df099b6074903ce85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "602e3424_0df22cd9",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4571,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-17T09:59:18Z",
+      "side": 1,
+      "message": "There is a \"deprecated\" field.",
+      "parentUuid": "91e48238_6bf43a13",
+      "range": {
+        "startLine": 4571,
+        "startChar": 6,
+        "endLine": 4571,
+        "endChar": 59
+      },
+      "revId": "a2715e97caacc2cbb86a689df099b6074903ce85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c98655ff_7ff91231",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4582,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-17T09:59:18Z",
+      "side": 1,
+      "message": "Can you update the description? I think we don\u0027t need this anymore, and we can just mention that plugins that require additional authorization to run are not supported anymore.",
+      "range": {
+        "startLine": 4580,
+        "startChar": 17,
+        "endLine": 4582,
+        "endChar": 171
+      },
+      "revId": "a2715e97caacc2cbb86a689df099b6074903ce85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
