@@ -46,6 +46,30 @@
       "revId": "a86dc5092423a77a578b08ed897bb3605e4b414c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6bd188e_9f91c460",
+        "filename": "base/task/sequence_manager/enqueue_order.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-11-17T09:57:08Z",
+      "side": 1,
+      "message": "How about we add a TODO here to investigate -- maybe once we get better tools to analyze locking overhead? I\u0027d be surprised if this shows up a lot since it shouldn\u0027t be *that* contented.",
+      "parentUuid": "cc0d499a_65800ddd",
+      "range": {
+        "startLine": 48,
+        "startChar": 13,
+        "endLine": 48,
+        "endChar": 18
+      },
+      "revId": "a86dc5092423a77a578b08ed897bb3605e4b414c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
