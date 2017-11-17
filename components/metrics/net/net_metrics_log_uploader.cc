@@ -23,12 +23,12 @@ namespace {
 // corresponding private key is used by the metrics server to decrypt logs.
 char kEncryptedMessageLabel[] = "metrics log";
 
-static const uint8_t kServerPublicKey[] = {
+const uint8_t kServerPublicKey[] = {
     0x51, 0xcc, 0x52, 0x67, 0x42, 0x47, 0x3b, 0x10, 0xe8, 0x63, 0x18,
     0x3c, 0x61, 0xa7, 0x96, 0x76, 0x86, 0x91, 0x40, 0x71, 0x39, 0x5f,
     0x31, 0x1a, 0x39, 0x5b, 0x76, 0xb1, 0x6b, 0x3d, 0x6a, 0x2b};
 
-static const uint32_t kServerPublicKeyVersion = 1;
+const uint32_t kServerPublicKeyVersion = 1;
 
 net::NetworkTrafficAnnotationTag GetNetworkTrafficAnnotation(
     const metrics::MetricsLogUploader::MetricServiceType& service_type) {
@@ -67,9 +67,9 @@ net::NetworkTrafficAnnotationTag GetNetworkTrafficAnnotation(
             }
           }
         })");
-  } else {
-    DCHECK_EQ(service_type, metrics::MetricsLogUploader::UKM);
-    return net::DefineNetworkTrafficAnnotation("metrics_report_ukm", R"(
+  }
+  DCHECK_EQ(service_type, metrics::MetricsLogUploader::UKM);
+  return net::DefineNetworkTrafficAnnotation("metrics_report_ukm", R"(
         semantics {
           sender: "Metrics UKM Log Uploader"
           description:
@@ -106,7 +106,6 @@ net::NetworkTrafficAnnotationTag GetNetworkTrafficAnnotation(
             }
           }
         })");
-  }
 }
 
 std::string SerializeReportingInfo(
