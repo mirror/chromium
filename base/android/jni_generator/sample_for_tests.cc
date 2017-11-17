@@ -35,17 +35,20 @@ CPPClass::~CPPClass() {
 }
 
 // static
-void CPPClass::Destroy(JNIEnv* env, const JavaParamRef<jobject>& caller) {
+void SampleForTests__CPPClass::Destroy(JNIEnv* env,
+                                       const JavaParamRef<jobject>& caller) {
   delete this;
 }
 
-jint CPPClass::Method(JNIEnv* env, const JavaParamRef<jobject>& caller) {
+jint SampleForTests__CPPClass::Method(JNIEnv* env,
+                                      const JavaParamRef<jobject>& caller) {
   return 0;
 }
 
-void CPPClass::AddStructB(JNIEnv* env,
-                          const JavaParamRef<jobject>& caller,
-                          const JavaParamRef<jobject>& structb) {
+void SampleForTests__CPPClass::AddStructB(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& caller,
+    const JavaParamRef<jobject>& structb) {
   long key = Java_InnerStructB_getKey(env, structb);
   std::string value =
       ConvertJavaStringToUTF8(env, Java_InnerStructB_getValue(env, structb));
@@ -72,23 +75,27 @@ ScopedJavaLocalRef<jstring> CPPClass::ReturnAString(
 }
 
 // Static free functions declared and called directly from java.
-static jlong Init(JNIEnv* env,
-                  const JavaParamRef<jobject>& caller,
-                  const JavaParamRef<jstring>& param) {
+static jlong JNI_SampleForTests_Init(JNIEnv* env,
+                                     const JavaParamRef<jobject>& caller,
+                                     const JavaParamRef<jstring>& param) {
   return 0;
 }
 
-static jdouble GetDoubleFunction(JNIEnv*, const JavaParamRef<jobject>&) {
+static jdouble JNI_SampleForTests_GetDoubleFunction(
+    JNIEnv*,
+    const JavaParamRef<jobject>&) {
   return 0;
 }
 
-static jfloat GetFloatFunction(JNIEnv*, const JavaParamRef<jclass>&) {
+static jfloat JNI_SampleForTests_GetFloatFunction(JNIEnv*,
+                                                  const JavaParamRef<jclass>&) {
   return 0;
 }
 
-static void SetNonPODDatatype(JNIEnv*,
-                              const JavaParamRef<jobject>&,
-                              const JavaParamRef<jobject>&) {}
+static void JNI_SampleForTests_SetNonPODDatatype(JNIEnv*,
+                                                 const JavaParamRef<jobject>&,
+                                                 const JavaParamRef<jobject>&) {
+}
 
 static ScopedJavaLocalRef<jobject> GetNonPODDatatype(
     JNIEnv*,
@@ -96,7 +103,9 @@ static ScopedJavaLocalRef<jobject> GetNonPODDatatype(
   return ScopedJavaLocalRef<jobject>();
 }
 
-static jint GetInnerIntFunction(JNIEnv*, const JavaParamRef<jclass>&) {
+static jint JNI_SampleForTests_GetInnerIntFunction(
+    JNIEnv*,
+    const JavaParamRef<jclass>&) {
   return 0;
 }
 

@@ -76,9 +76,10 @@ class UrlInterceptorJobFactoryHandle {
 // URLRequestFilter in libcronet_tests.so with the URLRequestContext in
 // libcronet.so by installing a URLRequestInterceptingJobFactory
 // that calls into libcronet_tests.so's URLRequestFilter.
-jlong AddUrlInterceptors(JNIEnv* env,
-                         const JavaParamRef<jclass>& jcaller,
-                         jlong jcontext_adapter) {
+jlong JNI_MockUrlRequestJobFactory_AddUrlInterceptors(
+    JNIEnv* env,
+    const JavaParamRef<jclass>& jcaller,
+    jlong jcontext_adapter) {
   net::URLRequestMockDataJob::AddUrlHandler();
   net::URLRequestFailedJob::AddUrlHandler();
   net::URLRequestHangingReadJob::AddUrlHandler();
@@ -88,9 +89,10 @@ jlong AddUrlInterceptors(JNIEnv* env,
 }
 
 // Put back the old URLRequestJobFactory into the URLRequestContext.
-void RemoveUrlInterceptorJobFactory(JNIEnv* env,
-                                    const JavaParamRef<jclass>& jcaller,
-                                    jlong jinterceptor_handle) {
+void JNI_MockUrlRequestJobFactory_RemoveUrlInterceptorJobFactory(
+    JNIEnv* env,
+    const JavaParamRef<jclass>& jcaller,
+    jlong jinterceptor_handle) {
   reinterpret_cast<UrlInterceptorJobFactoryHandle*>(jinterceptor_handle)
       ->ShutDown();
 }
