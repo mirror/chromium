@@ -385,6 +385,7 @@
       'Mac Builder': 'official_goma',
       'Win Builder': 'official_goma_x86',
       'Win x64 Builder': 'official_goma',
+      'obbs_fyi': 'official_goma_perf',
     },
 
     'chromium.perf.fyi': {
