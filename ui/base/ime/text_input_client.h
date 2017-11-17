@@ -168,6 +168,10 @@ class UI_BASE_IME_EXPORT TextInputClient {
   // TextInputClient). The edit command will take into account any OS-specific,
   // or user-specified, keybindings that may be set up.
   virtual void SetTextEditCommandForNextKeyEvent(TextEditCommand command) = 0;
+
+  // Returns where the text input is. The empty string will be returned if a
+  // TextInputClient doesn't support this method.
+  virtual std::string GetClientSourceInfo() const = 0;
 };
 
 }  // namespace ui

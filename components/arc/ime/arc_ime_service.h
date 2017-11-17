@@ -132,6 +132,7 @@ class ArcImeService : public KeyedService,
   bool IsTextEditCommandEnabled(ui::TextEditCommand command) const override;
   void SetTextEditCommandForNextKeyEvent(ui::TextEditCommand command) override {
   }
+  std::string GetClientSourceInfo() const override;
 
  private:
   ui::InputMethod* GetInputMethod();

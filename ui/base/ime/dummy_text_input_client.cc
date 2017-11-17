@@ -119,4 +119,8 @@ bool DummyTextInputClient::IsTextEditCommandEnabled(
 void DummyTextInputClient::SetTextEditCommandForNextKeyEvent(
     TextEditCommand command) {}
 
+std::string DummyTextInputClient::GetClientSourceInfo() const {
+  return "";
+}
+
 }  // namespace ui
