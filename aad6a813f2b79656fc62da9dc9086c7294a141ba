@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "24d62d91_af188518",
+        "filename": "components/navigation_metrics/navigation_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-17T20:14:24Z",
+      "side": 1,
+      "message": "Yeah, our docs used to recommend \"max\", which IMO lead to a lot of confusion and occasional off-by-one errors.",
+      "parentUuid": "25767daf_3d8d3b43",
+      "range": {
+        "startLine": 37,
+        "startChar": 13,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "aad6a813f2b79656fc62da9dc9086c7294a141ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79103697_58baa4c8",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
