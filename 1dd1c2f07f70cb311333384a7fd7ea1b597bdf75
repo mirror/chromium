@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f1e84f3_401bd656",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-11-17T20:11:20Z",
+      "side": 1,
+      "message": "Yea. Client() is null when the frame is detached from the page, in this case, we shouldn\u0027t be tracking the usage cause it is about to be destroyed. \n\nThanks Bryan",
+      "parentUuid": "1b596b73_5849b0c3",
+      "revId": "1dd1c2f07f70cb311333384a7fd7ea1b597bdf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5958f2d_87259582",
         "filename": "third_party/WebKit/Source/platform/weborigin/SchemeRegistry.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "1dd1c2f07f70cb311333384a7fd7ea1b597bdf75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe25c4d_c3cf666c",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SchemeRegistry.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-11-17T20:11:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5958f2d_87259582",
+      "revId": "1dd1c2f07f70cb311333384a7fd7ea1b597bdf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
