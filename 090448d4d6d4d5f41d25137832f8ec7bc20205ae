@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b82bad8_07195cc8",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-17T08:41:53Z",
+      "side": 1,
+      "message": "nit: let\u0027s keep this variable name as custom_location_provider (just the variable name).",
+      "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "036fbdcd_7b38c417",
+        "filename": "device/geolocation/geolocation_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-17T08:41:53Z",
+      "side": 1,
+      "message": "similar naming nit: I would call this variable g_custom_location_provider.",
+      "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c904e9b5_69a9a1fd",
+        "filename": "device/geolocation/geolocation_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-17T08:41:53Z",
+      "side": 1,
+      "message": "nit: I think that we can just kill this comment.",
+      "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8dc0dee_2ee93c74",
+        "filename": "device/geolocation/geolocation_provider_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-17T08:41:53Z",
+      "side": 1,
+      "message": "naming nit: I would call this method OverrideSystemLocationProvider().",
+      "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54bd6673_652c03fc",
+        "filename": "device/geolocation/location_arbitrator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-17T08:41:53Z",
+      "side": 1,
+      "message": "if we call this variable |system_location_provider_|, then we don\u0027t need the local var at all:\n\nif (!system_location_provider_)\n  system_location_provider_ \u003d NewSystemLocationProvider();\nRegisterProvider(std::move(system_location_provider_);\n\nThat brings to mind a crucial correctness question though: Are we sure that this method can only be called once? If it can be called more than once, than the change here isn\u0027t correct, as after the first call we would always use the default provider.",
+      "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e944f45_fd4de095",
+        "filename": "device/geolocation/location_arbitrator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-17T08:41:53Z",
+      "side": 1,
+      "message": "Let\u0027s call this variable |system_location_provider| at this point.",
+      "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8dc7922_b6359933",
+        "filename": "device/geolocation/public/cpp/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-17T08:41:53Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure this isn\u0027t doing anything now, unless I\u0027m missing something. Since this target is a source_set, it seems wrong that we would be putting anything about exports in files that are listed in this target? If you remove this entirely, do any builds fail? I\u0027d like to look at them if so.",
+      "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade5ac16_4be23e6a",
+        "filename": "services/device/device_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-17T08:41:53Z",
+      "side": 1,
+      "message": "nit: I would call this variable |system_geolocation_provider| here to make it clear exactly what the context is.",
+      "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
