@@ -70,6 +70,24 @@
       "revId": "9d07956e00cd00f9953963ffa6eecf763812e55d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ca9d5a_e90b3c79",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1212644
+      },
+      "writtenOn": "2017-11-17T21:33:18Z",
+      "side": 1,
+      "message": "Okay, got it.  I went with Ian\u0027s latter suggestion, it seemed the more correct way of solving the issue.\n\nThanks for the assistance, guys!",
+      "parentUuid": "bfe77524_5bea86e0",
+      "revId": "9d07956e00cd00f9953963ffa6eecf763812e55d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
