@@ -3133,6 +3133,24 @@ Element* Document::ViewportDefiningElement(
   return root_element;
 }
 
+Document* Document::open(const String& type,
+                         const String& replace,
+                         ExceptionState& exception_state) {
+  // May be : TODO : Error handling
+  open(this, exception_state);
+  return this;
+}
+
+DOMWindow* Document::open(const String& url,
+                          const String& name,
+                          const String& features,
+                          ExceptionState& exception_state) {
+  // May be : TODO : Error handling
+  AtomicString frame_name = "_blank";  // TODO
+  return domWindow()->open(url, frame_name, features, domWindow(), domWindow(),
+                           exception_state);
+}
+
 void Document::close(ExceptionState& exception_state) {
   // FIXME: We should follow the specification more closely:
   //        http://www.whatwg.org/specs/web-apps/current-work/#dom-document-close

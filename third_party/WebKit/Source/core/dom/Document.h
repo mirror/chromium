@@ -595,6 +595,12 @@ class CORE_EXPORT Document : public ContainerNode,
                                     const AtomicString& encoding);
   DocumentParser* ImplicitOpen(ParserSynchronizationPolicy);
 
+  // This is the DOM API document.open()
+  Document* open(const String& type, const String& replace, ExceptionState&);
+  DOMWindow* open(const String& url,
+                  const String& name,
+                  const String& features,
+                  ExceptionState&);
   // This is the DOM API document.close()
   void close(ExceptionState&);
   // This is used internally and does not handle exceptions.
