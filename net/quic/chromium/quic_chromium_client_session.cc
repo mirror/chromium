@@ -54,6 +54,7 @@ const size_t kAdditionalOverheadForIPv6 = 20;
 // connection migration. A new Reader is created every time this endpoint's
 // IP address changes.
 const size_t kMaxReadersPerQuicSession = 5;
+const size_t kMaxReadersPerQuicSessionV2 = 10;
 
 // Size of the MRU cache of Token Binding signatures. Since the material being
 // signed is constant and there aren't many keys being used to sign, a fairly
@@ -64,6 +65,11 @@ const size_t kTokenBindingSignatureMapSize = 10;
 // Time to wait (in seconds) when no networks are available and
 // migrating sessions need to wait for a new network to connect.
 const size_t kWaitTimeForNewNetworkSecs = 10;
+
+// With exponentail backoff, altogether we allow using non-default network
+// for up to 255 seconds before close the session.
+const int kMaxRetryCount = 7;
+const size_t kMinRetryTimeForDefaultNetworkSecs = 1;
 
 const int kDefaultRTTMilliSecs = 300;
 
@@ -651,6 +657,7 @@ QuicChromiumClientSession::QuicChromiumClientSession(
     bool require_confirmation,
     bool migrate_session_early,
     bool migrate_sessions_on_network_change,
+    bool migrate_sessions_on_network_change_v2,
     int yield_after_packets,
     QuicTime::Delta yield_after_duration,
     int cert_verify_flags,
@@ -669,6 +676,8 @@ QuicChromiumClientSession::QuicChromiumClientSession(
       require_confirmation_(require_confirmation),
       migrate_session_early_(migrate_session_early),
       migrate_session_on_network_change_(migrate_sessions_on_network_change),
+      migrate_session_on_network_change_v2_(
+          migrate_sessions_on_network_change_v2),
       clock_(clock),
       yield_after_packets_(yield_after_packets),
       yield_after_duration_(yield_after_duration),
@@ -696,8 +705,10 @@ QuicChromiumClientSession::QuicChromiumClientSession(
       bytes_pushed_count_(0),
       bytes_pushed_and_unclaimed_count_(0),
       probing_manager_(this),
+      retry_migrate_back_count_(0),
       migration_pending_(false),
       weak_factory_(this) {
+  default_network_ = socket->GetBoundNetwork();
   sockets_.push_back(std::move(socket));
   packet_readers_.push_back(std::make_unique<QuicChromiumPacketReader>(
       sockets_.back().get(), clock, this, yield_after_packets,
@@ -1593,21 +1604,34 @@ void QuicChromiumClientSession::OnProbeNetworkSucceeded(
   DCHECK(writer);
   DCHECK(reader);
 
-  // TODO(zhongyi): check |network| to see if we want to migrate to
-  // the network immediately.
-
-  // Mark probing socket as the default socket.
-  sockets_.push_back(std::move(socket));
-  packet_readers_.push_back(std::move(reader));
-
+  if (!MigrateToSocket(std::move(socket), std::move(reader),
+                       std::move(writer))) {
+    // We exceeds maximum allowed trials to migrate. Shut down
+    // probing manger, future probings will be declared as failure
+    // immediately. If the probing is for migrate back to default
+    // network, timer will fire eventually to mark session as going
+    // away.
+    probing_manager_.ShutDown();
+    return;
+  }
   connection()->SetSelfAddress(self_address);
-  connection()->SetQuicPacketWriter(writer.release(),
-                                    /*owns_writer*/ true);
+  if (network == default_network_) {
+    CancelMigrateBackToDefaultNetwork();
+  } else if (!migrate_back_to_default_timer_.IsRunning()) {
+    StartMigrateBackToDefaultNetwork();
+  }
 }
 
 void QuicChromiumClientSession::OnProbeNetworkFailed(
     NetworkChangeNotifier::NetworkHandle network) {
+  // Probing failure for default network can be ignored.
   DVLOG(1) << "Connectivity probing fails on NetworkHandle " << network;
+  if (network == default_network_) {
+    if (GetDefaultSocket()->GetBoundNetwork() != default_network_) {
+      DVLOG(1) << "Client probing fails on the default network, QUIC stills "
+                  "uses non-default network";
+    }
+  }
 }
 
 void QuicChromiumClientSession::OnSendConnectivityProbingPacket(
@@ -1624,42 +1648,24 @@ void QuicChromiumClientSession::OnNetworkConnected(
   if (!migration_pending_)
     return;
 
-  // TODO(jri): Ensure that OnSessionGoingAway is called consistently,
-  // and that it's always called at the same time in the whole
-  // migration process. Allows tests to be more uniform.
-  stream_factory_->OnSessionGoingAway(this);
-  Migrate(network, connection()->peer_address().impl().socket_address(),
-          /*close_session_on_error=*/true, net_log);
+  if (!migrate_session_on_network_change_v2_) {
+    // TODO(jri): Ensure that OnSessionGoingAway is called consistently,
+    // and that it's always called at the same time in the whole
+    // migration process. Allows tests to be more uniform.
+    stream_factory_->OnSessionGoingAway(this);
+    Migrate(network, connection()->peer_address().impl().socket_address(),
+            /*close_session_on_error=*/true, net_log);
+  } else {
+    // We discovered there was no working network, and this is the only
+    // network we got, migrate immediately.
+    MigrateImmediately(network);
+  }
 }
 
 void QuicChromiumClientSession::OnNetworkDisconnected(
     NetworkChangeNotifier::NetworkHandle alternate_network,
     const NetLogWithSource& migration_net_log) {
-  if (most_recent_path_degrading_timestamp_ != base::TimeTicks()) {
-    most_recent_network_disconnected_timestamp_ = base::TimeTicks::Now();
-    base::TimeDelta degrading_duration =
-        most_recent_network_disconnected_timestamp_ -
-        most_recent_path_degrading_timestamp_;
-    UMA_HISTOGRAM_CUSTOM_TIMES(
-        "Net.QuicNetworkDegradingDurationTillDisconnected", degrading_duration,
-        base::TimeDelta::FromMilliseconds(1), base::TimeDelta::FromMinutes(10),
-        100);
-  }
-  if (most_recent_write_error_timestamp_ != base::TimeTicks()) {
-    base::TimeDelta write_error_to_disconnection_gap =
-        most_recent_network_disconnected_timestamp_ -
-        most_recent_write_error_timestamp_;
-    UMA_HISTOGRAM_CUSTOM_TIMES(
-        "Net.QuicNetworkGapBetweenWriteErrorAndDisconnection",
-        write_error_to_disconnection_gap, base::TimeDelta::FromMilliseconds(1),
-        base::TimeDelta::FromMinutes(10), 100);
-    UMA_HISTOGRAM_SPARSE_SLOWLY(
-        "Net.QuicSession.WriteError.NetworkDisconnected",
-        -most_recent_write_error_);
-    most_recent_write_error_ = 0;
-    most_recent_write_error_timestamp_ = base::TimeTicks();
-  }
-
+  LogMetricsOnNetworkDisconnected();
   if (!migrate_session_on_network_change_)
     return;
 
@@ -1667,38 +1673,110 @@ void QuicChromiumClientSession::OnNetworkDisconnected(
       alternate_network, /*close_if_cannot_migrate*/ true, migration_net_log);
 }
 
+void QuicChromiumClientSession::OnNetworkDisconnectedV2(
+    NetworkChangeNotifier::NetworkHandle disconnected_network,
+    const NetLogWithSource& migration_net_log) {
+  LogMetricsOnNetworkDisconnected();
+  if (!migrate_session_on_network_change_v2_)
+    return;
+
+  // Stop probing the disconnected network if there is one.
+  if (probing_manager_.current_probing_network() == disconnected_network) {
+    probing_manager_.CancelProbing();
+  }
+
+  // Ignore the signal if the current active network is not affected.
+  if (GetDefaultSocket()->GetBoundNetwork() != disconnected_network) {
+    DVLOG(1) << "Client's current default network is not affected by the "
+             << "disconnected one.";
+    return;
+  }
+
+  // Attemp to find alternative network.
+  NetworkChangeNotifier::NetworkHandle new_network =
+      stream_factory_->FindAlternateNetwork(disconnected_network);
+
+  if (new_network == NetworkChangeNotifier::kInvalidNetworkHandle) {
+    OnNoNewNetwork();
+    return;
+  }
+  // Current network is being disconnected, and there is alternative network.
+  // Migrate immediately.
+  MigrateImmediately(new_network);
+}
+
 void QuicChromiumClientSession::OnNetworkMadeDefault(
     NetworkChangeNotifier::NetworkHandle new_network,
     const NetLogWithSource& migration_net_log) {
-  if (most_recent_path_degrading_timestamp_ != base::TimeTicks()) {
-    if (most_recent_network_disconnected_timestamp_ != base::TimeTicks()) {
-      // NetworkDiscconected happens before NetworkMadeDefault, the platform
-      // is dropping WiFi.
-      base::TimeTicks now = base::TimeTicks::Now();
-      base::TimeDelta disconnection_duration =
-          now - most_recent_network_disconnected_timestamp_;
-      base::TimeDelta degrading_duration =
-          now - most_recent_path_degrading_timestamp_;
-      UMA_HISTOGRAM_CUSTOM_TIMES("Net.QuicNetworkDisconnectionDuration",
-                                 disconnection_duration,
-                                 base::TimeDelta::FromMilliseconds(1),
-                                 base::TimeDelta::FromMinutes(10), 100);
-      UMA_HISTOGRAM_CUSTOM_TIMES(
-          "Net.QuicNetworkDegradingDurationTillNewNetworkMadeDefault",
-          degrading_duration, base::TimeDelta::FromMilliseconds(1),
-          base::TimeDelta::FromMinutes(10), 100);
-      most_recent_network_disconnected_timestamp_ = base::TimeTicks();
-    }
-    most_recent_path_degrading_timestamp_ = base::TimeTicks();
-  }
+  LogMetricsOnNetworkMadeDefault();
 
-  if (!migrate_session_on_network_change_)
+  if (!migrate_session_on_network_change_ &&
+      !migrate_session_on_network_change_v2_)
     return;
 
   DCHECK_NE(NetworkChangeNotifier::kInvalidNetworkHandle, new_network);
+  default_network_ = new_network;
 
-  MaybeMigrateOrCloseSession(new_network, /*close_if_cannot_migrate*/ false,
-                             migration_net_log);
+  if (!migrate_session_on_network_change_v2_) {
+    MaybeMigrateOrCloseSession(new_network, /*close_if_cannot_migrate*/ false,
+                               migration_net_log);
+    return;
+  }
+
+  // Connection migration v2.
+  // If we are already on the new network.
+  if (GetDefaultSocket()->GetBoundNetwork() == new_network) {
+    CancelMigrateBackToDefaultNetwork();
+    HistogramAndLogMigrationFailure(
+        migration_net_log, MIGRATION_STATUS_ALREADY_MIGRATED, connection_id(),
+        "Already migrated on the new network");
+    return;
+  }
+
+  if (migration_pending_) {
+    // If we have no working network previously, migrate immediately.
+    MigrateImmediately(new_network);
+    return;
+  }
+
+  // Stay on the current network.
+  StartMigrateBackToDefaultNetwork();
+  // Probe the new default network. If probe succeeds, will migrate
+  // to the new network immediately.
+  if (probing_manager_.current_probing_network() == new_network)
+    return;
+
+  StartProbeNetwork(new_network,
+                    connection()->peer_address().impl().socket_address(),
+                    migration_net_log);
+}
+
+// We have no choice but to migrate. If any error encoutered, close
+// the session. When migration succeeds: if we are no longer on the
+// default interface, set up migrate back timer; otherwise, cancel
+// migrate back timer.
+void QuicChromiumClientSession::MigrateImmediately(
+    NetworkChangeNotifier::NetworkHandle network) {
+  if (!ShouldMigrateSession(false, true, network, net_log_))
+    return;
+
+  if (network == GetDefaultSocket()->GetBoundNetwork())
+    return;
+
+  if (probing_manager_.current_probing_network() == network)
+    probing_manager_.CancelProbing();
+
+  MigrationResult result =
+      Migrate(network, connection()->peer_address().impl().socket_address(),
+              /*close_session_on_error=*/true, net_log_);
+  if (result == MigrationResult::FAILURE)
+    return;
+
+  if (network != default_network_) {
+    StartMigrateBackToDefaultNetwork();
+  } else {
+    CancelMigrateBackToDefaultNetwork();
+  }
 }
 
 void QuicChromiumClientSession::OnWriteError(int error_code) {
@@ -1922,6 +2000,147 @@ ProbingResult QuicChromiumClientSession::StartProbeNetwork(
   return ProbingResult::PENDING;
 }
 
+void QuicChromiumClientSession::StartMigrateBackToDefaultNetwork() {
+  CancelMigrateBackToDefaultNetwork();
+  TryMigrateBackToDefaultNetwork(
+      base::TimeDelta::FromSeconds(kMinRetryTimeForDefaultNetworkSecs));
+}
+
+void QuicChromiumClientSession::CancelMigrateBackToDefaultNetwork() {
+  retry_migrate_back_count_ = 0;
+  migrate_back_to_default_timer_.Stop();
+}
+
+void QuicChromiumClientSession::TryMigrateBackToDefaultNetwork(
+    base::TimeDelta timeout) {
+  if (probing_manager_.current_probing_network() != default_network_) {
+    probing_manager_.CancelProbing();
+    StartProbeNetwork(default_network_,
+                      connection()->peer_address().impl().socket_address(),
+                      net_log_);
+  }
+  migrate_back_to_default_timer_.Start(
+      FROM_HERE, timeout,
+      base::Bind(
+          &QuicChromiumClientSession::MaybeRetryMigrateBackToDefaultNetwork,
+          weak_factory_.GetWeakPtr()));
+}
+
+void QuicChromiumClientSession::MaybeRetryMigrateBackToDefaultNetwork() {
+  retry_migrate_back_count_++;
+  if (retry_migrate_back_count_ > kMaxRetryCount) {
+    // Mark session as going away to accept no more streams.
+    stream_factory_->OnSessionGoingAway(this);
+    return;
+  }
+  TryMigrateBackToDefaultNetwork(
+      base::TimeDelta::FromSeconds(1 << retry_migrate_back_count_));
+}
+
+bool QuicChromiumClientSession::ShouldMigrateSession(
+    bool mark_going_away,
+    bool close_if_cannot_migrate,
+    NetworkChangeNotifier::NetworkHandle network,
+    const NetLogWithSource& migration_net_log) {
+  if (GetDefaultSocket()->GetBoundNetwork() == network) {
+    HistogramAndLogMigrationFailure(
+        migration_net_log, MIGRATION_STATUS_ALREADY_MIGRATED, connection_id(),
+        "Already bound to new network");
+    return false;
+  }
+
+  // Close idle sessions.
+  if (GetNumActiveStreams() == 0) {
+    HistogramAndLogMigrationFailure(migration_net_log,
+                                    MIGRATION_STATUS_NO_MIGRATABLE_STREAMS,
+                                    connection_id(), "No active streams");
+    CloseSessionOnError(ERR_NETWORK_CHANGED,
+                        QUIC_CONNECTION_MIGRATION_NO_MIGRATABLE_STREAMS);
+    return false;
+  }
+
+  if (mark_going_away) {
+    // If session has active streams, mark it as going away.
+    DCHECK(stream_factory_);
+    stream_factory_->OnSessionGoingAway(this);
+  }
+
+  // Do not migrate sessions where connection migration is disabled.
+  if (config()->DisableConnectionMigration()) {
+    HistogramAndLogMigrationFailure(migration_net_log,
+                                    MIGRATION_STATUS_DISABLED, connection_id(),
+                                    "Migration disabled");
+    if (close_if_cannot_migrate)
+      CloseSessionOnError(ERR_NETWORK_CHANGED, QUIC_IP_ADDRESS_CHANGED);
+    return false;
+  }
+
+  // Do not migrate sessions with non-migratable streams.
+  if (HasNonMigratableStreams()) {
+    HistogramAndLogMigrationFailure(migration_net_log,
+                                    MIGRATION_STATUS_NON_MIGRATABLE_STREAM,
+                                    connection_id(), "Non-migratable stream");
+    if (close_if_cannot_migrate) {
+      CloseSessionOnError(ERR_NETWORK_CHANGED,
+                          QUIC_CONNECTION_MIGRATION_NON_MIGRATABLE_STREAM);
+    }
+    return false;
+  }
+
+  return true;
+}
+
+void QuicChromiumClientSession::LogMetricsOnNetworkDisconnected() {
+  if (most_recent_path_degrading_timestamp_ != base::TimeTicks()) {
+    most_recent_network_disconnected_timestamp_ = base::TimeTicks::Now();
+    base::TimeDelta degrading_duration =
+        most_recent_network_disconnected_timestamp_ -
+        most_recent_path_degrading_timestamp_;
+    UMA_HISTOGRAM_CUSTOM_TIMES(
+        "Net.QuicNetworkDegradingDurationTillDisconnected", degrading_duration,
+        base::TimeDelta::FromMilliseconds(1), base::TimeDelta::FromMinutes(10),
+        100);
+  }
+  if (most_recent_write_error_timestamp_ != base::TimeTicks()) {
+    base::TimeDelta write_error_to_disconnection_gap =
+        most_recent_network_disconnected_timestamp_ -
+        most_recent_write_error_timestamp_;
+    UMA_HISTOGRAM_CUSTOM_TIMES(
+        "Net.QuicNetworkGapBetweenWriteErrorAndDisconnection",
+        write_error_to_disconnection_gap, base::TimeDelta::FromMilliseconds(1),
+        base::TimeDelta::FromMinutes(10), 100);
+    UMA_HISTOGRAM_SPARSE_SLOWLY(
+        "Net.QuicSession.WriteError.NetworkDisconnected",
+        -most_recent_write_error_);
+    most_recent_write_error_ = 0;
+    most_recent_write_error_timestamp_ = base::TimeTicks();
+  }
+}
+
+void QuicChromiumClientSession::LogMetricsOnNetworkMadeDefault() {
+  if (most_recent_path_degrading_timestamp_ != base::TimeTicks()) {
+    if (most_recent_network_disconnected_timestamp_ != base::TimeTicks()) {
+      // NetworkDiscconected happens before NetworkMadeDefault, the platform
+      // is dropping WiFi.
+      base::TimeTicks now = base::TimeTicks::Now();
+      base::TimeDelta disconnection_duration =
+          now - most_recent_network_disconnected_timestamp_;
+      base::TimeDelta degrading_duration =
+          now - most_recent_path_degrading_timestamp_;
+      UMA_HISTOGRAM_CUSTOM_TIMES("Net.QuicNetworkDisconnectionDuration",
+                                 disconnection_duration,
+                                 base::TimeDelta::FromMilliseconds(1),
+                                 base::TimeDelta::FromMinutes(10), 100);
+      UMA_HISTOGRAM_CUSTOM_TIMES(
+          "Net.QuicNetworkDegradingDurationTillNewNetworkMadeDefault",
+          degrading_duration, base::TimeDelta::FromMilliseconds(1),
+          base::TimeDelta::FromMinutes(10), 100);
+      most_recent_network_disconnected_timestamp_ = base::TimeTicks();
+    }
+    most_recent_path_degrading_timestamp_ = base::TimeTicks();
+  }
+}
+
 std::unique_ptr<base::Value> QuicChromiumClientSession::GetInfoAsValue(
     const std::set<HostPortPair>& aliases) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
@@ -2028,50 +2247,10 @@ void QuicChromiumClientSession::MaybeMigrateOrCloseSession(
     NetworkChangeNotifier::NetworkHandle new_network,
     bool close_if_cannot_migrate,
     const NetLogWithSource& migration_net_log) {
-  // If session is already bound to |new_network|, move on.
-  if (GetDefaultSocket()->GetBoundNetwork() == new_network) {
-    HistogramAndLogMigrationFailure(
-        migration_net_log, MIGRATION_STATUS_ALREADY_MIGRATED, connection_id(),
-        "Already bound to new network");
+  if (!ShouldMigrateSession(true, close_if_cannot_migrate, new_network,
+                            migration_net_log)) {
     return;
   }
-
-  // Close idle sessions.
-  if (GetNumActiveStreams() == 0) {
-    HistogramAndLogMigrationFailure(migration_net_log,
-                                    MIGRATION_STATUS_NO_MIGRATABLE_STREAMS,
-                                    connection_id(), "No active streams");
-    CloseSessionOnError(ERR_NETWORK_CHANGED,
-                        QUIC_CONNECTION_MIGRATION_NO_MIGRATABLE_STREAMS);
-    return;
-  }
-
-  // If session has active streams, mark it as going away.
-  DCHECK(stream_factory_);
-  stream_factory_->OnSessionGoingAway(this);
-
-  // Do not migrate sessions where connection migration is disabled.
-  if (config()->DisableConnectionMigration()) {
-    HistogramAndLogMigrationFailure(migration_net_log,
-                                    MIGRATION_STATUS_DISABLED, connection_id(),
-                                    "Migration disabled");
-    if (close_if_cannot_migrate)
-      CloseSessionOnError(ERR_NETWORK_CHANGED, QUIC_IP_ADDRESS_CHANGED);
-    return;
-  }
-
-  // Do not migrate sessions with non-migratable streams.
-  if (HasNonMigratableStreams()) {
-    HistogramAndLogMigrationFailure(migration_net_log,
-                                    MIGRATION_STATUS_NON_MIGRATABLE_STREAM,
-                                    connection_id(), "Non-migratable stream");
-    if (close_if_cannot_migrate) {
-      CloseSessionOnError(ERR_NETWORK_CHANGED,
-                          QUIC_CONNECTION_MIGRATION_NON_MIGRATABLE_STREAM);
-    }
-    return;
-  }
-
   // No new network was found. Notify session, so it can wait for a new
   // network.
   if (new_network == NetworkChangeNotifier::kInvalidNetworkHandle) {
@@ -2163,8 +2342,13 @@ bool QuicChromiumClientSession::MigrateToSocket(
     std::unique_ptr<QuicChromiumPacketReader> reader,
     std::unique_ptr<QuicChromiumPacketWriter> writer) {
   DCHECK_EQ(sockets_.size(), packet_readers_.size());
-  if (sockets_.size() >= kMaxReadersPerQuicSession)
+
+  if (migrate_session_on_network_change_v2_ &&
+      sockets_.size() >= kMaxReadersPerQuicSessionV2) {
     return false;
+  } else if (sockets_.size() >= kMaxReadersPerQuicSession) {
+    return false;
+  }
 
   // TODO(jri): Make SetQuicPacketWriter take a scoped_ptr.
   packet_readers_.push_back(std::move(reader));
