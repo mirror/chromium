@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "67447caf_8e8b353b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-11-17T02:01:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1ba9760_a21152e7",
+      "range": {
+        "startLine": 802,
+        "startChar": 64,
+        "endLine": 802,
+        "endChar": 65
+      },
+      "revId": "f4c4c9b18dd48cfca2b27fae27a6bfc4198dd5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2c4e742_8f8a8878",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "f4c4c9b18dd48cfca2b27fae27a6bfc4198dd5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d3aebe_73549d49",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-11-17T02:01:42Z",
+      "side": 1,
+      "message": "This is to fix flickering. I guess this isn\u0027t strictly related so I\u0027ll move this to a separate patch.",
+      "parentUuid": "a2c4e742_8f8a8878",
+      "revId": "f4c4c9b18dd48cfca2b27fae27a6bfc4198dd5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
