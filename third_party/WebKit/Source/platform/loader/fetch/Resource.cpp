@@ -282,9 +282,6 @@ Resource::Resource(const ResourceRequest& request,
       resource_request_(request) {
   InstanceCounters::IncrementCounter(InstanceCounters::kResourceCounter);
 
-  // Currently we support the metadata caching only for HTTP family.
-  if (GetResourceRequest().Url().ProtocolIsInHTTPFamily())
-    cache_handler_ = CachedMetadataHandlerImpl::Create(this);
   if (IsMainThread())
     MemoryCoordinator::Instance().RegisterClient(this);
 }
@@ -561,9 +558,12 @@ bool Resource::WillFollowRedirect(const ResourceRequest& new_request,
 
 void Resource::SetResponse(const ResourceResponse& response) {
   response_ = response;
-  if (this->GetResponse().WasFetchedViaServiceWorker()) {
-    cache_handler_ = ServiceWorkerResponseCachedMetadataHandler::Create(
-        this, fetcher_security_origin_.get());
+  // Currently we support the metadata caching only for HTTP family.
+  if (GetResourceRequest().Url().ProtocolIsInHTTPFamily()) {
+    cache_handler_ = this->GetResponse().WasFetchedViaServiceWorker()
+                         ? ServiceWorkerResponseCachedMetadataHandler::Create(
+                               this, fetcher_security_origin_.get())
+                         : CachedMetadataHandlerImpl::Create(this);
   }
 }
 
