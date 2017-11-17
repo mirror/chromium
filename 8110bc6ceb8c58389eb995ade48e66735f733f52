@@ -22,6 +22,30 @@
       "revId": "8110bc6ceb8c58389eb995ade48e66735f733f52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ef15cdc_a10c2fa7",
+        "filename": "ui/keyboard/keyboard_controller_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-11-17T08:15:30Z",
+      "side": 1,
+      "message": "That might defeat the purpose of this CL, though. When I swap the function for one of the others (in the various classes that implement this), I\u0027ll have to provide an empty body for this, which will be difficult to remove once I want to remove the definition for all the implementers (there\u0027s about 11 of them and have different OWNERS and so I wanted to have the no-op body so that those could be checked in separately).",
+      "parentUuid": "bc12fb3c_928b3e2b",
+      "range": {
+        "startLine": 25,
+        "startChar": 71,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "8110bc6ceb8c58389eb995ade48e66735f733f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
