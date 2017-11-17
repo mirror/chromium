@@ -16,6 +16,24 @@
       "revId": "61aea65e2896461bde14b9cae9dbe1712dc4b673",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe184ff_3c44602d",
+        "filename": "chrome/browser/ui/views/payments/credit_card_editor_view_controller_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1251239
+      },
+      "writtenOn": "2017-11-17T07:41:52Z",
+      "side": 1,
+      "message": "It seems that this prevents the test from passing locally with non-US regional rules. The phone validator outside the US expects the international dialing prefix. This prefix should be also perfectly valid from inside the US. Therefore, in order to pass everywhere, this test should be fixed by adding such a prefix.\nHowever, if you consider the change inappropriate, I can remove this modification.",
+      "parentUuid": "53cedcb7_94d18efa",
+      "revId": "61aea65e2896461bde14b9cae9dbe1712dc4b673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
