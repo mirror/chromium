@@ -16,6 +16,24 @@
       "revId": "e656f4ba7a9ad83130bb89f21383ace0fdf736fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a44a211_8f7e1a10",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwSettingsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1831,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-17T18:42:09Z",
+      "side": 1,
+      "message": "I planned to monitor it on flakiness dashboard, did you mean if its not flaky anymore, then we remove @RetryOnFailure?",
+      "parentUuid": "c4f5ec4d_62ef6601",
+      "revId": "e656f4ba7a9ad83130bb89f21383ace0fdf736fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
