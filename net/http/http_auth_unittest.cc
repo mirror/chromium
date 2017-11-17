@@ -8,6 +8,7 @@
 #include <set>
 #include <string>
 
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/string_util.h"
 #include "net/base/net_errors.h"
@@ -29,8 +30,9 @@ namespace net {
 
 namespace {
 
-HttpAuthHandlerMock* CreateMockHandler(bool connection_based) {
-  HttpAuthHandlerMock* auth_handler = new HttpAuthHandlerMock();
+std::unique_ptr<HttpAuthHandlerMock> CreateMockHandler(bool connection_based) {
+  std::unique_ptr<HttpAuthHandlerMock> auth_handler =
+      base::MakeUnique<HttpAuthHandlerMock>();
   auth_handler->set_connection_based(connection_based);
   std::string challenge_text = "Basic";
   HttpAuthChallengeTokenizer challenge(challenge_text.begin(),
@@ -43,20 +45,21 @@ HttpAuthHandlerMock* CreateMockHandler(bool connection_based) {
   return auth_handler;
 }
 
-HttpResponseHeaders* HeadersFromResponseText(const std::string& response) {
-  return new HttpResponseHeaders(
-      HttpUtil::AssembleRawHeaders(response.c_str(), response.length()));
+scoped_refptr<HttpResponseHeaders> HeadersFromResponseText(
+    const std::string& response) {
+  return scoped_refptr<HttpResponseHeaders>(new HttpResponseHeaders(
+      HttpUtil::AssembleRawHeaders(response.c_str(), response.length())));
 }
 
 HttpAuth::AuthorizationResult HandleChallengeResponse(
     bool connection_based,
     const std::string& headers_text,
     std::string* challenge_used) {
-  std::unique_ptr<HttpAuthHandlerMock> mock_handler(
-      CreateMockHandler(connection_based));
+  std::unique_ptr<HttpAuthHandlerMock> mock_handler =
+      CreateMockHandler(connection_based);
   std::set<HttpAuth::Scheme> disabled_schemes;
-  scoped_refptr<HttpResponseHeaders> headers(
-      HeadersFromResponseText(headers_text));
+  scoped_refptr<HttpResponseHeaders> headers =
+      HeadersFromResponseText(headers_text);
   return HttpAuth::HandleChallengeResponse(mock_handler.get(), *headers,
                                            HttpAuth::AUTH_SERVER,
                                            disabled_schemes, challenge_used);
@@ -133,8 +136,8 @@ TEST(HttpAuthTest, ChooseBestChallenge) {
     // Make a HttpResponseHeaders object.
     std::string headers_with_status_line("HTTP/1.1 401 Unauthorized\n");
     headers_with_status_line += tests[i].headers;
-    scoped_refptr<HttpResponseHeaders> headers(
-        HeadersFromResponseText(headers_with_status_line));
+    scoped_refptr<HttpResponseHeaders> headers =
+        HeadersFromResponseText(headers_with_status_line);
 
     SSLInfo null_ssl_info;
     std::unique_ptr<HttpAuthHandler> handler;
