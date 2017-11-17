@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1989619a_0ecf3a79",
+        "filename": "components/metrics/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T19:34:16Z",
+      "side": 1,
+      "message": "I\u0027d probably put this in a conditional android section - nobody else needs this",
+      "range": {
+        "startLine": 42,
+        "startChar": 19,
+        "endLine": 42,
+        "endChar": 20
+      },
+      "revId": "fab33103cab9415b27a1b8df2ccd334d9f46337b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0e9468_8150ae4c",
+        "filename": "components/metrics/gms_core_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T19:34:16Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "fab33103cab9415b27a1b8df2ccd334d9f46337b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911607a6_e7836fcc",
+        "filename": "components/metrics/gms_core_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T19:34:16Z",
+      "side": 1,
+      "message": "you don\u0027t need this if you make the whole class conditional as I suggested above",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 12
+      },
+      "revId": "fab33103cab9415b27a1b8df2ccd334d9f46337b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd23a18_0ff6eee7",
+        "filename": "components/metrics/gms_core_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T19:34:16Z",
+      "side": 1,
+      "message": "!previous_version.empty()\n\nCurrently this falsely ignores crashes when we don\u0027t yet have a gms core version stored.",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 14
+      },
+      "revId": "fab33103cab9415b27a1b8df2ccd334d9f46337b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4dd30e3_cafab1fe",
+        "filename": "components/metrics/metrics_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T19:34:16Z",
+      "side": 1,
+      "message": "guard with OS_ANDROID",
+      "range": {
+        "startLine": 208,
+        "startChar": 12,
+        "endLine": 208,
+        "endChar": 30
+      },
+      "revId": "fab33103cab9415b27a1b8df2ccd334d9f46337b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df68c423_c9d4ed97",
+        "filename": "components/metrics/metrics_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T19:34:16Z",
+      "side": 1,
+      "message": "you\u0027re making the outer if too hard to follow. Please add braces {} to both if statements",
+      "range": {
+        "startLine": 479,
+        "startChar": 10,
+        "endLine": 479,
+        "endChar": 17
+      },
+      "revId": "fab33103cab9415b27a1b8df2ccd334d9f46337b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4364dfdf_540cf524",
+        "filename": "components/metrics/metrics_state_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T19:34:16Z",
+      "side": 1,
+      "message": "add comment",
+      "range": {
+        "startLine": 194,
+        "startChar": 17,
+        "endLine": 194,
+        "endChar": 34
+      },
+      "revId": "fab33103cab9415b27a1b8df2ccd334d9f46337b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
