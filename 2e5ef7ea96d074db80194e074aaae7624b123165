@@ -180,6 +180,30 @@
     },
     {
       "key": {
+        "uuid": "10a84321_07e1e79f",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T17:51:33Z",
+      "side": 1,
+      "message": "I would like to move away from GetEffectiveDocumentURL and other similar methods in favor of relying on some web platform concept like SecurityOrigin.  I don\u0027t know the subtleties of these well enough to know all the times that might vary from the current behavior, though.  Do we know in which circumstances GetEffectiveDocumentURL() returns somethign significantly different?\n\nRegardless, I don\u0027t think this blocks this CL, and is probably a better discussion for a meeting/email/bug/etc :)",
+      "parentUuid": "46980224_12f604d3",
+      "range": {
+        "startLine": 102,
+        "startChar": 23,
+        "endLine": 102,
+        "endChar": 61
+      },
+      "revId": "2e5ef7ea96d074db80194e074aaae7624b123165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62ea92ad_e000c9da",
         "filename": "extensions/renderer/extension_frame_helper.cc",
         "patchSetId": 8
