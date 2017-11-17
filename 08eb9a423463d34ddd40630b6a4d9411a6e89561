@@ -16,6 +16,24 @@
       "revId": "08eb9a423463d34ddd40630b6a4d9411a6e89561",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f95232_dde5b07e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/Images/mediumIcons_2x.png",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-17T00:54:34Z",
+      "side": 1,
+      "message": "me too :)",
+      "parentUuid": "c4c27480_a64fbab3",
+      "revId": "08eb9a423463d34ddd40630b6a4d9411a6e89561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
