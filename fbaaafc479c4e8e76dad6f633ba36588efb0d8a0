@@ -151,6 +151,24 @@
       "revId": "fbaaafc479c4e8e76dad6f633ba36588efb0d8a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f617ecfb_f19cf7fa",
+        "filename": "net/http/url_security_manager_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-17T21:57:41Z",
+      "side": 1,
+      "message": "Were you compiling on Windows? (If so, it would explain why you didn\u0027t get a compile failure)",
+      "parentUuid": "68d6bdc0_9fd71d1c",
+      "revId": "fbaaafc479c4e8e76dad6f633ba36588efb0d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
