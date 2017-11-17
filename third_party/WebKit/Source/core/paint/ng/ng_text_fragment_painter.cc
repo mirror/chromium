@@ -4,6 +4,8 @@
 
 #include "core/paint/ng/ng_text_fragment_painter.h"
 
+#include "core/editing/FrameSelection.h"
+#include "core/frame/LocalFrame.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
 #include "core/layout/ng/ng_text_decoration_offset.h"
@@ -21,6 +23,26 @@ NGTextFragmentPainter::NGTextFragmentPainter(
     const NGPaintFragment& text_fragment)
     : fragment_(text_fragment) {
   DCHECK(text_fragment.PhysicalFragment().IsText());
+}
+
+static std::pair<int, int> GetSelectionStartEnd(
+    const Document& document,
+    const NGPhysicalTextFragment& text_fragment) {
+  const FrameSelection& selection = document.GetFrame()->Selection();
+  switch (text_fragment.GetNode()->GetLayoutObject()->GetSelectionState()) {
+    case SelectionState::kStart:
+      return {selection.LayoutSelectionStart().value_or(0),
+              text_fragment.Text().length()};
+    case SelectionState::kEnd:
+      return {0, selection.LayoutSelectionEnd().value_or(0)};
+    case SelectionState::kStartAndEnd:
+      return {selection.LayoutSelectionStart().value_or(0),
+              selection.LayoutSelectionEnd().value_or(0)};
+    case SelectionState::kInside:
+      return {0, text_fragment.Text().length()};
+    default:
+      return {0, 0};
+  }
 }
 
 void NGTextFragmentPainter::Paint(const Document& document,
@@ -47,7 +69,9 @@ void NGTextFragmentPainter::Paint(const Document& document,
   bool is_printing = paint_info.IsPrinting();
 
   // Determine whether or not we're selected.
-  bool have_selection = false;  // TODO(layout-dev): Implement.
+  bool have_selection =
+      fragment_.GetNode()->GetLayoutObject()->GetSelectionState() !=
+      SelectionState::kNone;
   if (!have_selection && paint_info.phase == PaintPhase::kSelection) {
     // When only painting the selection, don't bother to paint if there is none.
     return;
@@ -79,9 +103,6 @@ void NGTextFragmentPainter::Paint(const Document& document,
   }
 
   // 2. Now paint the foreground, including text and decorations.
-  int selection_start = 0;
-  int selection_end = 0;
-
   const NGPhysicalTextFragment& text_fragment =
       ToNGPhysicalTextFragment(fragment_.PhysicalFragment());
 
@@ -94,6 +115,10 @@ void NGTextFragmentPainter::Paint(const Document& document,
   }
 
   unsigned length = text_fragment.Text().length();
+  int selection_start = 0;
+  int selection_end = 0;
+  std::tie(selection_start, selection_end) =
+      GetSelectionStartEnd(document, text_fragment);
   if (!paint_selected_text_only) {
     // Paint text decorations except line-through.
     DecorationInfo decoration_info;
