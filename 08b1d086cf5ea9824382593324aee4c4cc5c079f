@@ -16,6 +16,24 @@
       "revId": "08b1d086cf5ea9824382593324aee4c4cc5c079f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9056dee3_8cddf1d1",
+        "filename": "chromeos/login/auth/extended_authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-11-17T03:34:21Z",
+      "side": 1,
+      "message": "it seems somewhat inconsistent; see, for instance, line 314 in this very file which uses braces, then immediately after at line 317 which doesn\u0027t. Perhaps we should have a team-wide discussion about whether the formatter should pick one and apply it to the whole codebase?\n\nAlso I like the braces since you don\u0027t have to add them when you modify the block, so I\u0027ll keep them in this case since it still conforms to the style guide :)",
+      "parentUuid": "e9a294e0_84e84857",
+      "revId": "08b1d086cf5ea9824382593324aee4c4cc5c079f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
