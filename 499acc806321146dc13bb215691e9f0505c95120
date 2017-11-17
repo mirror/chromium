@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5e4de0b_72cbe096",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-17T02:05:58Z",
+      "side": 0,
+      "message": "Consider the following three conditions:\n\nC1: p-\u003eGetNode() \u003d\u003d this \u0026\u0026 !ToLayoutText(o)-\u003eHasTextBoxes()\nC2: o-\u003eIsText() \u0026\u0026 !o-\u003eIsBR()\nC3: o-\u003eIsAtomicInlineLevel()",
+      "revId": "499acc806321146dc13bb215691e9f0505c95120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e8f735_0893d5cb",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-17T02:05:58Z",
+      "side": 0,
+      "message": "This redundant condition is removed.",
+      "range": {
+        "startLine": 1023,
+        "startChar": 8,
+        "endLine": 1023,
+        "endChar": 20
+      },
+      "revId": "499acc806321146dc13bb215691e9f0505c95120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd3f6e8d_192e5bb2",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-17T02:05:58Z",
+      "side": 0,
+      "message": "Enter this branch if and only if |C1 \u0026\u0026 C2|",
+      "revId": "499acc806321146dc13bb215691e9f0505c95120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c0cf0b_198bd172",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-17T02:05:58Z",
+      "side": 0,
+      "message": "Enter this branch if and only if |!C1 \u0026\u0026 C2|",
+      "revId": "499acc806321146dc13bb215691e9f0505c95120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bed18d6_a53c550a",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-17T02:05:58Z",
+      "side": 0,
+      "message": "Enter this branch if and only if |!C2 \u0026\u0026 C3|",
+      "revId": "499acc806321146dc13bb215691e9f0505c95120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

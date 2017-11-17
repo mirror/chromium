@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17726fda_f8f51909",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-17T02:05:58Z",
+      "side": 1,
+      "message": "Enter this branch if and only if |C1 \u0026\u0026 C2|",
+      "revId": "0ccfb4510d02d833d590e8d6c11c180a1827bc42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60eb16b1_b7e47e9d",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-17T02:05:58Z",
+      "side": 1,
+      "message": "Enter this branch if and only if |!C1 \u0026\u0026 C2|",
+      "revId": "0ccfb4510d02d833d590e8d6c11c180a1827bc42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e0d640_f48c69a5",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-17T02:05:58Z",
+      "side": 1,
+      "message": "Enter this branch if and only if |!C2 \u0026\u0026 C3|",
+      "revId": "0ccfb4510d02d833d590e8d6c11c180a1827bc42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
