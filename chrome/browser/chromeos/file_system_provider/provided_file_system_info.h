@@ -28,12 +28,36 @@ struct MountOptions {
   int opened_files_limit;
 };
 
+class ProviderId {
+ public:
+  enum ProviderType : uint32_t { EXTENSION, NATIVE };
+  ProviderId();
+
+  ProviderId(const std::string& provider_id, ProviderType provider_type);
+
+  std::string GetId() const;
+  ProviderType GetType() const;
+
+  bool operator==(const ProviderId& other) const;
+
+ private:
+  std::string id_;
+  ProviderType type_;
+};
+
 // Contains information about the provided file system instance.
 class ProvidedFileSystemInfo {
  public:
   ProvidedFileSystemInfo();
 
-  ProvidedFileSystemInfo(const std::string& provider_id,
+  ProvidedFileSystemInfo(const ProviderId& provider_id,
+                         const MountOptions& mount_options,
+                         const base::FilePath& mount_path,
+                         bool configurable,
+                         bool watchable,
+                         extensions::FileSystemProviderSource source);
+
+  ProvidedFileSystemInfo(const std::string& extension_id,
                          const MountOptions& mount_options,
                          const base::FilePath& mount_path,
                          bool configurable,
@@ -44,7 +68,7 @@ class ProvidedFileSystemInfo {
 
   ~ProvidedFileSystemInfo();
 
-  const std::string& provider_id() const { return provider_id_; }
+  const ProviderId& provider_id() const { return provider_id_; }
   const std::string& file_system_id() const { return file_system_id_; }
   const std::string& display_name() const { return display_name_; }
   bool writable() const { return writable_; }
@@ -57,7 +81,7 @@ class ProvidedFileSystemInfo {
 
  private:
   // ID of the provider supplying this file system.
-  std::string provider_id_;
+  ProviderId provider_id_;
 
   // ID of the file system.
   std::string file_system_id_;

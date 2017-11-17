@@ -9,6 +9,24 @@
 namespace chromeos {
 namespace file_system_provider {
 
+ProviderId::ProviderId(const std::string& provider_id,
+                       ProviderType provider_type)
+    : id_(provider_id), type_(provider_type) {}
+
+ProviderId::ProviderId() {}
+
+std::string ProviderId::GetId() const {
+  return id_;
+}
+
+ProviderId::ProviderType ProviderId::GetType() const {
+  return type_;
+}
+
+bool ProviderId::operator==(const ProviderId& other) const {
+  return this->GetId() == other.GetId() && this->GetType() == other.GetType();
+}
+
 MountOptions::MountOptions()
     : writable(false),
       supports_notify_tag(false),
@@ -33,7 +51,7 @@ ProvidedFileSystemInfo::ProvidedFileSystemInfo()
 }
 
 ProvidedFileSystemInfo::ProvidedFileSystemInfo(
-    const std::string& provider_id,
+    const ProviderId& provider_id,
     const MountOptions& mount_options,
     const base::FilePath& mount_path,
     bool configurable,
@@ -51,6 +69,20 @@ ProvidedFileSystemInfo::ProvidedFileSystemInfo(
       source_(source) {
   DCHECK_LE(0, mount_options.opened_files_limit);
 }
+
+ProvidedFileSystemInfo::ProvidedFileSystemInfo(
+    const std::string& extension_id,
+    const MountOptions& mount_options,
+    const base::FilePath& mount_path,
+    bool configurable,
+    bool watchable,
+    extensions::FileSystemProviderSource source)
+    : ProvidedFileSystemInfo(ProviderId(extension_id, ProviderId::EXTENSION),
+                             mount_options,
+                             mount_path,
+                             configurable,
+                             watchable,
+                             source) {}
 
 ProvidedFileSystemInfo::ProvidedFileSystemInfo(
     const ProvidedFileSystemInfo& other) = default;
