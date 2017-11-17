@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6b7922f_01c22244",
+        "filename": "chrome/browser/ui/views/overlay/overlay_window_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-17T11:58:26Z",
+      "side": 1,
+      "message": "nit: `\u003d default;`",
+      "revId": "5783fccebd50d963712156c0ca594a8ffbd0b356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "198676cb_86365eb7",
+        "filename": "chrome/browser/ui/views/overlay/overlay_window_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-17T11:58:26Z",
+      "side": 1,
+      "message": "FWIW, ideally, a const like this should be expressed as `constexpr` but I doubt it will stay as-is. We would probably want something that takes into account the aspect ratio of the video at least :)",
+      "revId": "5783fccebd50d963712156c0ca594a8ffbd0b356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e987f8_2e01961e",
+        "filename": "chrome/browser/ui/views/overlay/overlay_window_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-17T11:58:26Z",
+      "side": 1,
+      "message": "s/quadrant/25%/ for simplicity? I had to use wikipedia to make sure what you meant, and even, quadrant seems to be used for circles :)",
+      "revId": "5783fccebd50d963712156c0ca594a8ffbd0b356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "045151c0_97591b37",
+        "filename": "chrome/browser/ui/views/overlay/overlay_window_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-17T11:58:26Z",
+      "side": 1,
+      "message": "I am not certain what that\u0027s for. My guess is that it will put the window in the middle of the screen and the initial size will be 500x300. Is that correct?\n\nWhat if 500/300 is greater than the maximum size? Would it be okay to start with a max size window? In which case, we could set the initial position by taking the right() and bottom() values and substracting width() and height()? maybe add a bit of margin to keep things nice?",
+      "revId": "5783fccebd50d963712156c0ca594a8ffbd0b356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
