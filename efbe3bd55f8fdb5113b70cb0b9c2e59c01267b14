@@ -36,6 +36,40 @@
     },
     {
       "key": {
+        "uuid": "037b2440_0e872b97",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-17T01:24:51Z",
+      "side": 1,
+      "message": "It seems we need to notify observers that the status has updated. This is so that additional dialogs are open in other tabs would also get the update. The idea is to augment the status from the MRP with the pref bit before sending it back to the observers.",
+      "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51475f36_0629b45f",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-17T01:24:51Z",
+      "side": 1,
+      "message": "It seem these overrides should be removed.",
+      "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f4fb215_8083e5f1",
         "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler.cc",
         "patchSetId": 4
@@ -81,6 +115,24 @@
       "writtenOn": "2017-11-16T20:20:48Z",
       "side": 1,
       "message": "Should the controller have a pointer to pref_service instead of having to look it up each time that there is a media status update?",
+      "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b518dfe_365f92ff",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-17T01:24:51Z",
+      "side": 1,
+      "message": "+1, it would be better for the controller to have a pref service, so we don\u0027t have to pass it in every time SetMediaRemotingEnabled is called.",
+      "parentUuid": "7f53bbd2_6954ab48",
       "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
