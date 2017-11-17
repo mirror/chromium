@@ -92,6 +92,15 @@ class PLATFORM_EXPORT ResourceRequest final {
   ResourceRequest(const ResourceRequest&);
   ResourceRequest& operator=(const ResourceRequest&);
 
+  // Constructs a new ResourceRequest for a redirect from |last_request|.
+  ResourceRequest(const ResourceRequest& last_request,
+                  const KURL& new_url,
+                  const AtomicString& new_method,
+                  const KURL& new_site_for_cookies,
+                  const String& new_referrer,
+                  ReferrerPolicy new_referrer_policy,
+                  WebURLRequest::ServiceWorkerMode new_sw_mode);
+
   // Gets a copy of the data suitable for passing to another thread.
   std::unique_ptr<CrossThreadResourceRequestData> CopyData() const;
 
