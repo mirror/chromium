@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d2f7c5b_d8fb491c",
+        "filename": "content/browser/devtools/protocol/emulation_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-17T22:25:17Z",
+      "side": 1,
+      "message": "No need for static inside anonymous namespace.",
+      "range": {
+        "startLine": 324,
+        "startChar": 0,
+        "endLine": 324,
+        "endChar": 6
+      },
+      "revId": "6c726219470540bcf0632315230fbb5f94f635d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cde0f01_804426d3",
+        "filename": "content/browser/devtools/protocol/emulation_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-17T22:25:17Z",
+      "side": 1,
+      "message": "Does this comment mean we _do_ proxy the time in zygote? If not, let\u0027s remove it. If we do, this method becomes browser-wide, and should be moved to Browser domain.",
+      "revId": "6c726219470540bcf0632315230fbb5f94f635d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "018aef3e_6b197775",
+        "filename": "content/browser/devtools/protocol/emulation_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-17T22:25:17Z",
+      "side": 1,
+      "message": "std::string",
+      "range": {
+        "startLine": 59,
+        "startChar": 53,
+        "endLine": 59,
+        "endChar": 59
+      },
+      "revId": "6c726219470540bcf0632315230fbb5f94f635d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbbafae1_d7eaedf9",
+        "filename": "content/browser/devtools/protocol/emulation_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-17T22:25:17Z",
+      "side": 1,
+      "message": "std::string",
+      "range": {
+        "startLine": 80,
+        "startChar": 18,
+        "endLine": 80,
+        "endChar": 24
+      },
+      "revId": "6c726219470540bcf0632315230fbb5f94f635d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101c391d_b0d7a472",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-17T22:25:17Z",
+      "side": 1,
+      "message": "Instead of sending message from browser to renderer, it\u0027s possible to handle protocol command in renderer itself and avoid extra plumbing.",
+      "revId": "6c726219470540bcf0632315230fbb5f94f635d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "548c2a28_f60610fa",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-17T22:25:17Z",
+      "side": 1,
+      "message": "How is this related to virtual time below? Should we unify them, e.g. pass base time when setting up virtual time? Otherwise it sounds confusing.",
+      "revId": "6c726219470540bcf0632315230fbb5f94f635d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
