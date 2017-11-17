@@ -22,6 +22,30 @@
       "revId": "6df3774d9ef279e9f1b22c3a5daf7c9a895a01d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01300781_2dcfb3c2",
+        "filename": "ui/views/controls/slider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-17T19:09:53Z",
+      "side": 1,
+      "message": "FocusableBorder has a set thickness and a the border is still there but different colour when out of focus. Should we change it so thickness/non-focus colour is settable, or maybe add a focus painter like button.h?",
+      "parentUuid": "ffb1c358_2b95558b",
+      "range": {
+        "startLine": 318,
+        "startChar": 8,
+        "endLine": 318,
+        "endChar": 9
+      },
+      "revId": "6df3774d9ef279e9f1b22c3a5daf7c9a895a01d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
