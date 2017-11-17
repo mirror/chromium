@@ -83,7 +83,7 @@ class GL_EXPORT GLSurface : public base::RefCounted<GLSurface> {
 
   // Swaps front and back buffers. This has no effect for off-screen
   // contexts.
-  virtual gfx::SwapResult SwapBuffers() = 0;
+  virtual gfx::SwapResponse SwapBuffers() = 0;
 
   // Get the size of the surface.
   virtual gfx::Size GetSize() = 0;
@@ -107,7 +107,7 @@ class GL_EXPORT GLSurface : public base::RefCounted<GLSurface> {
   // FBO. Otherwise returns 0.
   virtual unsigned int GetBackingFramebufferObject();
 
-  typedef base::Callback<void(gfx::SwapResult)> SwapCompletionCallback;
+  typedef base::Callback<void(gfx::SwapResponse)> SwapCompletionCallback;
   // Swaps front and back buffers. This has no effect for off-screen
   // contexts. On some platforms, we want to send SwapBufferAck only after the
   // surface is displayed on screen. The callback can be used to delay sending
@@ -116,11 +116,11 @@ class GL_EXPORT GLSurface : public base::RefCounted<GLSurface> {
   virtual void SwapBuffersAsync(const SwapCompletionCallback& callback);
 
   // Swap buffers with content bounds.
-  virtual gfx::SwapResult SwapBuffersWithBounds(
+  virtual gfx::SwapResponse SwapBuffersWithBounds(
       const std::vector<gfx::Rect>& rects);
 
   // Copy part of the backbuffer to the frontbuffer.
-  virtual gfx::SwapResult PostSubBuffer(int x, int y, int width, int height);
+  virtual gfx::SwapResponse PostSubBuffer(int x, int y, int width, int height);
 
   // Copy part of the backbuffer to the frontbuffer. On some platforms, we want
   // to send SwapBufferAck only after the surface is displayed on screen. The
@@ -136,7 +136,7 @@ class GL_EXPORT GLSurface : public base::RefCounted<GLSurface> {
   // Show overlay planes but don't swap the front and back buffers. This acts
   // like SwapBuffers from the point of view of the client, but is cheaper when
   // overlays account for all the damage.
-  virtual gfx::SwapResult CommitOverlayPlanes();
+  virtual gfx::SwapResponse CommitOverlayPlanes();
 
   // Show overlay planes but don't swap the front and back buffers. On some
   // platforms, we want to send SwapBufferAck only after the overlays are
@@ -274,17 +274,17 @@ class GL_EXPORT GLSurfaceAdapter : public GLSurface {
   bool Recreate() override;
   bool DeferDraws() override;
   bool IsOffscreen() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResponse SwapBuffers() override;
   void SwapBuffersAsync(const SwapCompletionCallback& callback) override;
-  gfx::SwapResult SwapBuffersWithBounds(
+  gfx::SwapResponse SwapBuffersWithBounds(
       const std::vector<gfx::Rect>& rects) override;
-  gfx::SwapResult PostSubBuffer(int x, int y, int width, int height) override;
+  gfx::SwapResponse PostSubBuffer(int x, int y, int width, int height) override;
   void PostSubBufferAsync(int x,
                           int y,
                           int width,
                           int height,
                           const SwapCompletionCallback& callback) override;
-  gfx::SwapResult CommitOverlayPlanes() override;
+  gfx::SwapResponse CommitOverlayPlanes() override;
   void CommitOverlayPlanesAsync(
       const SwapCompletionCallback& callback) override;
   bool SupportsSwapBuffersWithBounds() override;

@@ -38,17 +38,17 @@ class PassThroughImageTransportSurface : public gl::GLSurfaceAdapter {
   // GLSurface implementation.
   bool Initialize(gl::GLSurfaceFormat format) override;
   void Destroy() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResponse SwapBuffers() override;
   void SwapBuffersAsync(const SwapCompletionCallback& callback) override;
-  gfx::SwapResult SwapBuffersWithBounds(
+  gfx::SwapResponse SwapBuffersWithBounds(
       const std::vector<gfx::Rect>& rects) override;
-  gfx::SwapResult PostSubBuffer(int x, int y, int width, int height) override;
+  gfx::SwapResponse PostSubBuffer(int x, int y, int width, int height) override;
   void PostSubBufferAsync(int x,
                           int y,
                           int width,
                           int height,
                           const SwapCompletionCallback& callback) override;
-  gfx::SwapResult CommitOverlayPlanes() override;
+  gfx::SwapResponse CommitOverlayPlanes() override;
   void CommitOverlayPlanesAsync(
       const SwapCompletionCallback& callback) override;
 
@@ -64,15 +64,14 @@ class PassThroughImageTransportSurface : public gl::GLSurfaceAdapter {
 
   void UpdateSwapInterval();
 
-  void StartSwapBuffers(gfx::SwapResponse* response);
-  void FinishSwapBuffers(bool snapshot_requested, gfx::SwapResponse response);
+  void StartSwapBuffers();
+  gfx::SwapResponse FinishSwapBuffers(bool snapshot_requested,
+                                      gfx::SwapResponse response);
   void FinishSwapBuffersAsync(GLSurface::SwapCompletionCallback callback,
                               bool snapshot_requested,
-                              gfx::SwapResponse response,
-                              gfx::SwapResult result);
+                              gfx::SwapResponse response);
 
   base::WeakPtr<ImageTransportSurfaceDelegate> delegate_;
-  uint64_t swap_id_ = 0;
   bool snapshot_requested_ = false;
   MultiWindowSwapInterval multi_window_swap_interval_ =
       kMultiWindowSwapIntervalDefault;
