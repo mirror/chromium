@@ -2004,8 +2004,8 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
   // Check the sign-in promo view is visible.
   [SigninEarlGreyUtils
       checkSigninPromoVisibleWithMode:SigninPromoViewModeColdState];
-  // Check the sign-in promo will not be shown anymore.
-  [BookmarksNewGenTestCase verifyPromoAlreadySeen:YES];
+  // Check the sign-in promo already seen should not have changed.
+  [BookmarksNewGenTestCase verifyPromoAlreadySeen:NO];
   GREYAssertEqual(
       20, prefs->GetInteger(prefs::kIosBookmarkSigninPromoDisplayedCount),
       @"Should have incremented the display count");
