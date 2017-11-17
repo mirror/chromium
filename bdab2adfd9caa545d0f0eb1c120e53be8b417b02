@@ -16,6 +16,24 @@
       "revId": "bdab2adfd9caa545d0f0eb1c120e53be8b417b02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "678cbeac_e6e61134",
+        "filename": "tools/perf/benchmarks/blink_perf_unittest.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-17T22:15:58Z",
+      "side": 1,
+      "message": "How would this cause flakiness in a way that wouldn\u0027t already be flaky? I could change the check to be !\u003d 0 of course. Ultimately the \"problem\" is that there doesn\u0027t seem to be a way to detect that a particular trace event is or isn\u0027t emitted (at least none that I\u0027m aware of?). A trace event not being emitted just results in 0 for all its values...",
+      "parentUuid": "cc4d982c_ac130916",
+      "revId": "bdab2adfd9caa545d0f0eb1c120e53be8b417b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
