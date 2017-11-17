@@ -7,8 +7,10 @@
 #include <utility>
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/dom/SecurityContext.h"
 #include "core/page/Page.h"
 #include "platform/bindings/ScriptState.h"
+#include "platform/weborigin/OriginAccessEntry.h"
 
 namespace blink {
 
@@ -86,8 +88,30 @@ void CredentialManagerClient::DispatchMakeCredential(
     LocalFrame& frame,
     const MakePublicKeyCredentialOptions& options,
     std::unique_ptr<WebAuthenticationClient::PublicKeyCallbacks> callbacks) {
+  // Origin / relying party id checks.
+  const SecurityOrigin* origin =
+      frame.GetSecurityContext()->GetSecurityOrigin();
+  if (origin->IsUnique()) {
+    callbacks->OnError(
+        WebCredentialManagerError::kWebCredentialManagerNotAllowedError);
+    return;
+  }
+
+  if (options.rp().id()) {
+    OriginAccessEntry access_entry(
+        origin->Protocol(), options.rp().id(),
+        blink::OriginAccessEntry::kAllowRegisterableDomains);
+    if (access_entry.MatchesDomain(*origin) ==
+        blink::OriginAccessEntry::kDoesNotMatchOrigin) {
+      callbacks->OnError(
+          WebCredentialManagerError::kWebCredentialManagerSecurityError);
+      return;
+    }
+  }
+
   if (!authentication_client_)
     authentication_client_ = new WebAuthenticationClient(frame);
   authentication_client_->DispatchMakeCredential(options, std::move(callbacks));
 }
+
 }  // namespace blink

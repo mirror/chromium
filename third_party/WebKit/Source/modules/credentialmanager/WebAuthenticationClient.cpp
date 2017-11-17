@@ -5,6 +5,7 @@
 #include "modules/credentialmanager/WebAuthenticationClient.h"
 
 #include <utility>
+
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "bindings/core/v8/array_buffer_or_array_buffer_view.h"
@@ -46,7 +47,7 @@ WebCredentialManagerError GetWebCredentialManagerErrorFromStatus(
   };
 
   NOTREACHED();
-  return blink::WebCredentialManagerError::kWebCredentialManagerUnknownError;
+  return WebCredentialManagerError::kWebCredentialManagerUnknownError;
 }
 
 void RespondToPublicKeyCallback(
@@ -258,6 +259,7 @@ WebAuthenticationClient::~WebAuthenticationClient() {}
 void WebAuthenticationClient::DispatchMakeCredential(
     const MakePublicKeyCredentialOptions& publicKey,
     std::unique_ptr<PublicKeyCallbacks> callbacks) {
+  DCHECK(callbacks);
   auto options =
       webauth::mojom::blink::MakePublicKeyCredentialOptions::From(publicKey);
   if (!options) {
