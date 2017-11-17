@@ -22,6 +22,30 @@
       "revId": "a1890ae04e2f1398ea08fd04b61e5a9d2b616f01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e50f167_a9eed119",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-17T18:58:45Z",
+      "side": 1,
+      "message": "There\u0027s a note in the UWP api...would it be misleading to link to that?\nhttps://docs.microsoft.com/en-us/windows/uwp/devices-sensors/gatt-client#connecting-to-the-device",
+      "parentUuid": "00615550_c4074905",
+      "range": {
+        "startLine": 292,
+        "startChar": 5,
+        "endLine": 292,
+        "endChar": 54
+      },
+      "revId": "a1890ae04e2f1398ea08fd04b61e5a9d2b616f01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
