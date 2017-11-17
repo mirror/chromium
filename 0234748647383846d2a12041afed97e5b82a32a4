@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9fa0a67e_a56709cc",
+        "filename": "chrome/browser/metrics/oom/out_of_memory_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-17T22:01:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28d42fd5_b07807ae",
+      "range": {
+        "startLine": 49,
+        "startChar": 55,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "0234748647383846d2a12041afed97e5b82a32a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9271112f_1fc7f4b6",
         "filename": "chrome/browser/metrics/oom/out_of_memory_reporter.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "0234748647383846d2a12041afed97e5b82a32a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41208be9_3a44de2c",
+        "filename": "chrome/browser/metrics/oom/out_of_memory_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-17T22:01:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9271112f_1fc7f4b6",
+      "range": {
+        "startLine": 51,
+        "startChar": 59,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "0234748647383846d2a12041afed97e5b82a32a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
