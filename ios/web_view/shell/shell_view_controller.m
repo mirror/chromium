@@ -278,9 +278,29 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
   [_webView removeObserver:self forKeyPath:@"canGoForward"];
 }
 
+static NSString* kJapanesePageHTML =
+    @"<!DOCTYPE html>\n"
+     "<html lang=\"ja\">\n"
+     "  <head>\n"
+     "    <meta charset=\"UTF-8\">"
+     "    <meta name=\"viewport\" content=\"width=device-width, "
+     "initial-scale=1\">\n"
+     "  </head>\n"
+     "  <body>\n"
+     "    <div id=\"main\">日本語</div>\n"
+     "  </body>\n"
+     "</html>\n";
+
 - (BOOL)textFieldShouldReturn:(UITextField*)field {
+  NSString* base64 = [[kJapanesePageHTML dataUsingEncoding:NSUTF8StringEncoding]
+      base64EncodedStringWithOptions:0];
+  NSString* dataString =
+      [NSString stringWithFormat:@"data:text/html;base64,%@", base64];
+  // asdfasdf
   NSURLRequest* request =
-      [NSURLRequest requestWithURL:[NSURL URLWithString:[field text]]];
+      [NSURLRequest requestWithURL:[NSURL URLWithString:dataString]];
+  //  NSURLRequest* request =
+  //      [NSURLRequest requestWithURL:[NSURL URLWithString:field.text]];
   [_webView loadRequest:request];
   [field resignFirstResponder];
   [self updateToolbar];
