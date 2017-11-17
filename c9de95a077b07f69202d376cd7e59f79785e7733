@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af2eed3c_657afd2d",
+        "filename": "ui/android/java/res/values-sw600dp/values.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T01:08:17Z",
+      "side": 1,
+      "message": "This isn\u0027t the right copy right header",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 3
+      },
+      "revId": "c9de95a077b07f69202d376cd7e59f79785e7733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f78929f4_5f8ed1be",
+        "filename": "ui/android/java/src/org/chromium/ui/base/DeviceFormFactor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T01:08:17Z",
+      "side": 1,
+      "message": "This worries me, because applyOverrideConfiguration \"can only be called once, and must be called before any calls to getResources() or getAssets() are made.\"\n\nSince the application context is being used instead of the activity context, it may be okay.. The application context should also be using the full device size to load resources but I\u0027d have to test to confirm.\n\nWhat sort of manual testing have you done?",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 96
+      },
+      "revId": "c9de95a077b07f69202d376cd7e59f79785e7733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
