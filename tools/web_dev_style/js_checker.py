@@ -54,6 +54,7 @@ class JSChecker(object):
         "Please only use this.$.localId, not element.$.localId")
 
   def RunEsLintChecks(self, affected_js_files, format='stylish'):
+    print "---------------RUN ESLINT CHECKS"
     """Runs lint checks using ESLint. The ESLint rules being applied are defined
        in the .eslintrc.js configuration file.
     """
