@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dfd38a5_8657fb94",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-17T21:26:08Z",
+      "side": 1,
+      "message": "Ian, here\u0027s the crux of what I\u0027m asking:\n\n- I don\u0027t want this intermediate class.\n- Without it, I\u0027d be supplying a button click callback using base::Bind().\n- That Bind would itself require another Bind, to the browser interface.  But the browser interface can\u0027t be used in the interior bind unless it\u0027s captured in the outer bind, and Bind() only works with captureless lambdas.\n- This class works around that by letting us bind the navigation callback, and the GURL to navigate to, separately (and at separate times).\n\nCan you see a better way?",
+      "revId": "1abc81fe66f74f98dc8a7e57b81c3b9f5b0a2912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
