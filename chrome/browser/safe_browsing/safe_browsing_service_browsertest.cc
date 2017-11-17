@@ -648,16 +648,23 @@ class SafeBrowsingServiceTest : public InProcessBrowserTest {
   // to respond with |full_hash|, as well as other |full_hash|es previously set
   // via this call, on GetFullHash requests.
   void SetupResponseForUrl(const GURL& url, const SBFullHashResult& full_hash) {
+    LOG(ERROR) << __FILE__ << ":" << __LINE__ << " : " << __FUNCTION__;
     std::vector<SBPrefix> prefix_hits;
+    LOG(ERROR) << __FILE__ << ":" << __LINE__ << " : " << __FUNCTION__;
     prefix_hits.push_back(full_hash.hash.prefix);
+    LOG(ERROR) << __FILE__ << ":" << __LINE__ << " : " << __FUNCTION__;
 
     // Make sure the full hits is empty unless we need to test the
     // full hash is hit in database's local cache.
     TestSafeBrowsingDatabase* db = db_factory_.GetDb();
+    LOG(ERROR) << __FILE__ << ":" << __LINE__ << " : " << __FUNCTION__;
     db->AddUrl(url, full_hash, prefix_hits);
+    LOG(ERROR) << __FILE__ << ":" << __LINE__ << " : " << __FUNCTION__;
 
     TestProtocolManager* pm = pm_factory_.GetProtocolManager();
+    LOG(ERROR) << __FILE__ << ":" << __LINE__ << " : " << __FUNCTION__;
     pm->AddGetFullHashResponse(full_hash);
+    LOG(ERROR) << __FILE__ << ":" << __LINE__ << " : " << __FUNCTION__;
   }
 
   bool ShowingInterstitialPage() {
