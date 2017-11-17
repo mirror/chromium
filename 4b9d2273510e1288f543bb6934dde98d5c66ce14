@@ -16,6 +16,24 @@
       "revId": "4b9d2273510e1288f543bb6934dde98d5c66ce14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c5b5e70_4a57d5ee",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyBlockElementCommand.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-17T09:51:22Z",
+      "side": 0,
+      "message": "Since your main motto for this comment was to reduce the patch size, but as you know we have moved IsDirectional away from SelectionForUndoStep to EditCommand, so we again have to do few changes. So number of files affected will be the same.",
+      "parentUuid": "a0333d05_0c0f0034",
+      "revId": "4b9d2273510e1288f543bb6934dde98d5c66ce14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
