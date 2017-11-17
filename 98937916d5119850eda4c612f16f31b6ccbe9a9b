@@ -46,6 +46,30 @@
       "revId": "98937916d5119850eda4c612f16f31b6ccbe9a9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "084e5d10_ba7ce057",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerOrWorkletGlobalScope.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-17T17:53:56Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "ec1aea0d_88eb97e5",
+      "range": {
+        "startLine": 172,
+        "startChar": 2,
+        "endLine": 174,
+        "endChar": 31
+      },
+      "revId": "98937916d5119850eda4c612f16f31b6ccbe9a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
