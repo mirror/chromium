@@ -34,6 +34,24 @@
       "revId": "7a348569b5c9389d76ad9a7699bc19bb93d7341e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dafc013_2630ea17",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_physical_offset.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-11-17T21:16:41Z",
+      "side": 1,
+      "message": "I don\u0027t know if that\u0027s true -- and it is only theoretically true if we enable LTO and I don\u0027t think we do that everywhere?",
+      "parentUuid": "06e7dbbd_eca4b007",
+      "revId": "7a348569b5c9389d76ad9a7699bc19bb93d7341e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
