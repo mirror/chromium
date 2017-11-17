@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5599dad9_e370a4b6",
+        "filename": "chrome/browser/resources/interventions_internals/index.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-17T21:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8deec3c_2c6d6e41",
+      "range": {
+        "startLine": 38,
+        "startChar": 33,
+        "endLine": 38,
+        "endChar": 50
+      },
+      "revId": "fafff83c090dbc590eb87df3a8f69b519f1ca5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81c1ab26_bd373c57",
         "filename": "chrome/browser/resources/interventions_internals/index.html",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "fafff83c090dbc590eb87df3a8f69b519f1ca5a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63492ee7_64932b40",
+        "filename": "chrome/browser/resources/interventions_internals/index.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-17T21:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81c1ab26_bd373c57",
+      "range": {
+        "startLine": 39,
+        "startChar": 15,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "fafff83c090dbc590eb87df3a8f69b519f1ca5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "38e4c04f_79fa0efd",
+        "filename": "chrome/browser/resources/interventions_internals/index.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-17T21:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0933075_9d56c865",
+      "range": {
+        "startLine": 44,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "fafff83c090dbc590eb87df3a8f69b519f1ca5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63e6ccf3_0ad5841e",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "380b9924_29fb6558",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-17T21:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63e6ccf3_0ad5841e",
+      "range": {
+        "startLine": 44,
+        "startChar": 31,
+        "endLine": 44,
+        "endChar": 37
+      },
+      "revId": "fafff83c090dbc590eb87df3a8f69b519f1ca5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37fb9ee3_3e06e89a",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
         "patchSetId": 8
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-17T19:05:14Z",
       "side": 1,
       "message": "statuses -\u003e flag_details ?",
+      "range": {
+        "startLine": 48,
+        "startChar": 59,
+        "endLine": 48,
+        "endChar": 67
+      },
+      "revId": "fafff83c090dbc590eb87df3a8f69b519f1ca5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea43d854_cc889142",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-17T21:40:28Z",
+      "side": 1,
+      "message": "javascript has a key word called status. So I don\u0027t want to name the variable statuses.",
+      "parentUuid": "37fb9ee3_3e06e89a",
       "range": {
         "startLine": 48,
         "startChar": 59,
