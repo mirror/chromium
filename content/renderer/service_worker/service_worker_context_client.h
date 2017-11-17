@@ -382,6 +382,9 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
                               const GURL& url,
                               mojom::FetchEventPreloadHandlePtr preload_handle);
 
+  // Called when a certain time is passed since the last task has finished.
+  void OnIdle();
+
   base::WeakPtr<ServiceWorkerContextClient> GetWeakPtr();
 
   const int embedded_worker_id_;

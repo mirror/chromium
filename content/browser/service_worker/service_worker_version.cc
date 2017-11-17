@@ -909,6 +909,11 @@ void ServiceWorkerVersion::OnStarted() {
     observer.OnRunningStateChanged(this);
 }
 
+void ServiceWorkerVersion::OnTerminationRequested() {
+  DCHECK_EQ(EmbeddedWorkerStatus::RUNNING, running_status());
+  StopWorkerIfIdle();
+}
+
 void ServiceWorkerVersion::OnStopping() {
   DCHECK(stop_time_.is_null());
   RestartTick(&stop_time_);
@@ -1699,7 +1704,10 @@ void ServiceWorkerVersion::OnTimeoutTimer() {
     return;
 
   // The worker has been idle for longer than a certain period.
-  if (GetTickDuration(idle_time_) > kIdleWorkerTimeout) {
+  // S13nServiceWorker:
+  // The idle timer is implemented on the renderer, so we can skip this check.
+  if (!ServiceWorkerUtils::IsServicificationEnabled() &&
+      GetTickDuration(idle_time_) > kIdleWorkerTimeout) {
     StopWorkerIfIdle();
     return;
   }
@@ -1737,11 +1745,7 @@ void ServiceWorkerVersion::StopWorkerIfIdle() {
   // "ping-timeout". For idle-timeout (i.e. ping hasn't timed out), first check
   // if the worker really is idle.
   if (!ping_controller_->IsTimedOut()) {
-    // S13nServiceWorker: We don't stop the service worker for idle-timeout
-    // in the browser process when Servicification is enabled, as events
-    // might be dispatched directly without going through the browser-process.
-    // TODO(kinuko): Re-implement timers. (crbug.com/774374)
-    if (HasWork() || ServiceWorkerUtils::IsServicificationEnabled())
+    if (HasWork())
       return;
   }
   embedded_worker_->StopIfIdle();
