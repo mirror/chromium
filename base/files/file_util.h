@@ -373,6 +373,8 @@ BASE_EXPORT bool SetCurrentDirectory(const FilePath& path);
 // unique. If |path| does not exist, 0 is returned.  If it fails to find such
 // a number, -1 is returned. If |suffix| is not empty, also checks the
 // existence of it with the given suffix.
+// TODO(eladalon): This function's implementation around |suffix| is confusing,
+// which is probably why nobody uses it. https://crbug.com/785333
 BASE_EXPORT int GetUniquePathNumber(const FilePath& path,
                                     const FilePath::StringType& suffix);
 
