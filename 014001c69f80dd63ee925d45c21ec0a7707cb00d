@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9b0322c_4b956044",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 43
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-17T19:03:30Z",
+      "side": 1,
+      "message": "Can we rename this CHROMIUM_gpu_fence to match the extension name?",
+      "range": {
+        "startLine": 211,
+        "startChar": 16,
+        "endLine": 211,
+        "endChar": 19
+      },
+      "revId": "014001c69f80dd63ee925d45c21ec0a7707cb00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad9bc00_aa64b964",
+        "filename": "gpu/command_buffer/build_gles2_cmd_buffer.py",
+        "patchSetId": 43
+      },
+      "lineNbr": 4666,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-17T19:03:30Z",
+      "side": 1,
+      "message": "Can we call this CHROMIUM_gpu_fence instead?",
+      "range": {
+        "startLine": 4666,
+        "startChar": 18,
+        "endLine": 4666,
+        "endChar": 32
+      },
+      "revId": "014001c69f80dd63ee925d45c21ec0a7707cb00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
