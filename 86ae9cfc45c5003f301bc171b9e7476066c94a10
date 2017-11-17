@@ -16,6 +16,24 @@
       "revId": "86ae9cfc45c5003f301bc171b9e7476066c94a10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e59dfd_25c3d4a0",
+        "filename": "ui/webui/resources/polymer_resources.grdp",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-17T17:14:45Z",
+      "side": 1,
+      "message": "I\u0027ve considered making it the default for type\u003d\"chrome_html\" but I\u0027d like to wait on that refactor until uncompressed WebUI resources are truly a rarity to non-existent as with these patches I\u0027ve had to check very carefully that I haven\u0027t broken anything.",
+      "parentUuid": "0f5a24ca_e6102616",
+      "revId": "86ae9cfc45c5003f301bc171b9e7476066c94a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
