@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3af53b75_a394e0f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-17T13:15:51Z",
+      "side": 1,
+      "message": "nit: add a description of which variable is modified in which class.",
+      "revId": "fb0445057b0aa11acdac9065f4ce5ae5c65a1f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
