@@ -81,6 +81,24 @@
       "revId": "f019f1363b1bfca01126b8410ce9042bf1f0a7fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b7a0d65_ae8da2cd",
+        "filename": "device/bluetooth/test/bluetooth_test_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-17T21:15:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4cd36bd4_040fad30",
+      "revId": "f019f1363b1bfca01126b8410ce9042bf1f0a7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
