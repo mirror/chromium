@@ -613,4 +613,26 @@ void ArcSessionImpl::OnShutdown() {
   OnStopped(ArcStopReason::SHUTDOWN);
 }
 
+std::ostream& operator<<(std::ostream& os, ArcSessionImpl::State state) {
+#define MAP_STATE(name)             \
+  case ArcSessionImpl::State::name: \
+    return os << #name
+
+  switch (state) {
+    MAP_STATE(NOT_STARTED);
+    MAP_STATE(STARTING_MINI_INSTANCE);
+    MAP_STATE(RUNNING_MINI_INSTANCE);
+    MAP_STATE(STARTING_FULL_INSTANCE);
+    MAP_STATE(CONNECTING_MOJO);
+    MAP_STATE(RUNNING_FULL_INSTANCE);
+    MAP_STATE(STOPPED);
+  }
+#undef MAP_STATE
+
+  // Some compilers report an error even if all values of an enum-class are
+  // covered exhaustively in a switch statement.
+  NOTREACHED() << "Invalid value " << static_cast<int>(state);
+  return os;
+}
+
 }  // namespace arc
