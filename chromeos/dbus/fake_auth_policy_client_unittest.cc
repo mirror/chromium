@@ -130,10 +130,14 @@ TEST_F(FakeAuthPolicyClientTest, NotStartedAuthPolicyService) {
         EXPECT_EQ(authpolicy::ERROR_DBUS_FAILURE, error);
       }));
   authpolicy_client()->RefreshDevicePolicy(
-      base::Bind([](bool success) { EXPECT_FALSE(success); }));
+      base::Bind([](authpolicy::ErrorType error) {
+        EXPECT_EQ(authpolicy::ERROR_DBUS_FAILURE, error);
+      }));
   authpolicy_client()->RefreshUserPolicy(
       AccountId::FromUserEmail(kCorrectUserName),
-      base::Bind([](bool success) { EXPECT_FALSE(success); }));
+      base::Bind([](authpolicy::ErrorType error) {
+        EXPECT_EQ(authpolicy::ERROR_DBUS_FAILURE, error);
+      }));
 
   base::RunLoop().RunUntilIdle();
 }
