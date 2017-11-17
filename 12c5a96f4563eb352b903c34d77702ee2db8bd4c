@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e995e91b_0bf1be1d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-11-17T02:21:22Z",
+      "side": 1,
+      "message": "I see. Done.",
+      "parentUuid": "fab028dc_65743002",
+      "range": {
+        "startLine": 147,
+        "startChar": 19,
+        "endLine": 147,
+        "endChar": 41
+      },
+      "revId": "12c5a96f4563eb352b903c34d77702ee2db8bd4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b204ad8f_3e1040cb",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "12c5a96f4563eb352b903c34d77702ee2db8bd4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46d0edcd_7afd75c2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-11-17T02:21:22Z",
+      "side": 1,
+      "message": "Oops, yeah you\u0027re right. Done! Also added a comment there because we might not add the use counter in this CL.",
+      "parentUuid": "b204ad8f_3e1040cb",
+      "revId": "12c5a96f4563eb352b903c34d77702ee2db8bd4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "de51af14_7dd383c1",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-11-17T02:21:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd46847f_b60c79a6",
+      "revId": "12c5a96f4563eb352b903c34d77702ee2db8bd4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "204237f7_4c2321a9",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
         "patchSetId": 1
@@ -70,6 +130,30 @@
       "writtenOn": "2017-11-16T13:49:33Z",
       "side": 1,
       "message": "This name is confusing to me because it reads like that we\u0027re counting all the use cases of window.event.  This counts only the case in V0 shadow tree.\n\nIf there is no restriction nor convention on naming, I\u0027d suggest kWindowEventInV0ShadowTree or something like that.",
+      "range": {
+        "startLine": 152,
+        "startChar": 66,
+        "endLine": 152,
+        "endChar": 78
+      },
+      "revId": "12c5a96f4563eb352b903c34d77702ee2db8bd4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f83f5e5_a6e4366c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-11-17T02:21:22Z",
+      "side": 1,
+      "message": "OK! Also, I\u0027m not sure what the first parameter should be. Here I\u0027m using the document, but on the newest patchset I\u0027m using execution context.",
+      "parentUuid": "204237f7_4c2321a9",
       "range": {
         "startLine": 152,
         "startChar": 66,
