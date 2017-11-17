@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "74de8514_87466721",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-17T11:51:23Z",
+      "side": 1,
+      "message": "Since CompositorMutatorClient is no longer garbage collected we can remove this entire dance to construct it on the other thread. I.e. we can just go back to something like this:\nhttps://codereview.chromium.org/1895873006/diff/60001/third_party/WebKit/Source/web/WebViewImpl.cpp",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e73b88b2_9cc69bb7",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
         "patchSetId": 36
@@ -36,6 +53,24 @@
       "writtenOn": "2017-11-17T07:12:15Z",
       "side": 1,
       "message": "Who guarantees that client_ is alive until CompositorMutatorClient::SetMutationUpdate gets called?\n\nIn general would you help me understand who owns client_? CompositorMutatorImpl is not owning...",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ab519b_6d040754",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-17T11:51:23Z",
+      "side": 1,
+      "message": "CompositorMutatorClient (client_) is a LayerTreeMutator owned by AnimationHost which is owned by the LayerTreeHostImpl. I think we should use a WeakPtr to drop the tasks if the client has gone away before this task runs (for all of the calls back to the compositor).",
+      "parentUuid": "e73b88b2_9cc69bb7",
       "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +117,40 @@
         "endLine": 27,
         "endChar": 51
       },
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81fdd1a3_85ddee54",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-17T11:51:23Z",
+      "side": 1,
+      "message": "This is the compositor thread? Can we call it compositor_thread_ and/or comment to that effect? Thanks!",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b24d7c_e963c85f",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-17T11:51:23Z",
+      "side": 1,
+      "message": "When is CompositorMutatorImpl destructed? This should probably be unique_ptr?",
       "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -156,6 +225,91 @@
       "writtenOn": "2017-11-17T07:12:15Z",
       "side": 1,
       "message": "Why do we need to make it weak?",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36b4af49_ad9f5df8",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-17T11:51:23Z",
+      "side": 1,
+      "message": "Isn\u0027t active_ equivalent to whether global_scope_ is set?",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8e33d81_ec5cdf8e",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThreadTest.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-17T11:51:23Z",
+      "side": 1,
+      "message": "Why do we need to override the destructor?",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf661cc_f8a2959a",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThreadTest.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-17T11:51:23Z",
+      "side": 1,
+      "message": "Does anyone use this method?",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a658c171_912b7067",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThreadTest.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-17T11:51:23Z",
+      "side": 1,
+      "message": "TestingPlatformSupport defines CurrentThread but this isn\u0027t marked override - also it seems to do the same thing. Is this necessary?",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ae76ff_809e1062",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThreadTest.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-17T11:51:23Z",
+      "side": 1,
+      "message": "Remove unused override.",
       "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
