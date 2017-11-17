@@ -22,6 +22,30 @@
       "revId": "c00138315c54a64efa3ec7c028a9d99cd2809cc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3603fd_9ab8c399",
+        "filename": "components/printing/renderer/print_render_frame_helper_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-17T00:13:27Z",
+      "side": 1,
+      "message": "Everything seems to work, but I\u0027ll do the Windows-style rect vector to be consistent with Windows and with the existing Mac code for the non-single PDF use case.\n\nSince that made the Windows and Mac code look more the same, I adjusted them to be consistent with each other, so they are now nearly identical.",
+      "parentUuid": "51b43db5_e55ea006",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 71
+      },
+      "revId": "c00138315c54a64efa3ec7c028a9d99cd2809cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
