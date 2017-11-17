@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6666c808_aa461305",
+        "filename": "ui/gfx/swap_result.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-17T19:55:32Z",
+      "side": 1,
+      "message": "Any class-level comment to explain this?",
+      "revId": "df8e95a35bd127fb61c9a34015989bdfb5d88eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d001be26_65c0f998",
+        "filename": "ui/gfx/swap_result.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-17T19:55:32Z",
+      "side": 1,
+      "message": "I\u0027m not sure what this comment means, can it elaborate?",
+      "revId": "df8e95a35bd127fb61c9a34015989bdfb5d88eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
