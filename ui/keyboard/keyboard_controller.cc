@@ -201,6 +201,7 @@ KeyboardController::KeyboardController(std::unique_ptr<KeyboardUI> ui,
       keyboard_locked_(false),
       state_(KeyboardControllerState::UNKNOWN),
       enqueued_container_type_(ContainerType::FULL_WIDTH),
+      ukm_recorder_(),
       weak_factory_report_lingering_state_(this),
       weak_factory_will_hide_(this) {
   ui_->GetInputMethod()->AddObserver(this);
@@ -486,6 +487,7 @@ void KeyboardController::OnTextInputStateChanged(
   bool focused =
       client && (client->GetTextInputType() != ui::TEXT_INPUT_TYPE_NONE);
   bool should_hide = !focused && container_behavior_->TextBlurHidesKeyboard();
+  ukm_recorder_.UpdateUkmSource(client);
 
   if (should_hide) {
     switch (state_) {
@@ -619,6 +621,7 @@ void KeyboardController::PopulateKeyboardContent(int64_t display_id,
   DCHECK_EQ(state_, KeyboardControllerState::HIDDEN);
 
   keyboard::LogKeyboardControlEvent(keyboard::KEYBOARD_CONTROL_SHOW);
+  ukm_recorder_.RecordUkm();
 
   container_animator->set_preemption_strategy(
       ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
