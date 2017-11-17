@@ -69,8 +69,10 @@ class AuthPolicyClientImpl : public AuthPolicyClient {
     dbus::MethodCall method_call(authpolicy::kAuthPolicyInterface,
                                  authpolicy::kJoinADDomainMethod);
     dbus::MessageWriter writer(&method_call);
-    writer.AppendString(machine_name);
-    writer.AppendString(user_principal_name);
+    authpolicy::JoinDomainRequest request;
+    request.set_machine_name(machine_name);
+    request.set_user_principal_name(user_principal_name);
+    writer.AppendProtoAsArrayOfBytes(request);
     writer.AppendFileDescriptor(password_fd);
     proxy_->CallMethod(
         &method_call, kSlowDbusTimeoutMilliseconds,
@@ -85,8 +87,10 @@ class AuthPolicyClientImpl : public AuthPolicyClient {
     dbus::MethodCall method_call(authpolicy::kAuthPolicyInterface,
                                  authpolicy::kAuthenticateUserMethod);
     dbus::MessageWriter writer(&method_call);
-    writer.AppendString(user_principal_name);
-    writer.AppendString(object_guid);
+    authpolicy::AuthenticateUserRequest request;
+    request.set_user_principal_name(user_principal_name);
+    request.set_account_id(object_guid);
+    writer.AppendProtoAsArrayOfBytes(request);
     writer.AppendFileDescriptor(password_fd);
     proxy_->CallMethod(
         &method_call, kSlowDbusTimeoutMilliseconds,
@@ -100,7 +104,9 @@ class AuthPolicyClientImpl : public AuthPolicyClient {
     dbus::MethodCall method_call(authpolicy::kAuthPolicyInterface,
                                  authpolicy::kGetUserStatusMethod);
     dbus::MessageWriter writer(&method_call);
-    writer.AppendString(object_guid);
+    authpolicy::GetUserStatusRequest request;
+    request.set_account_id(object_guid);
+    writer.AppendProtoAsArrayOfBytes(request);
     proxy_->CallMethod(
         &method_call, kSlowDbusTimeoutMilliseconds,
         base::BindOnce(&AuthPolicyClientImpl::HandleCallback<
@@ -113,7 +119,9 @@ class AuthPolicyClientImpl : public AuthPolicyClient {
     dbus::MethodCall method_call(authpolicy::kAuthPolicyInterface,
                                  authpolicy::kGetUserKerberosFilesMethod);
     dbus::MessageWriter writer(&method_call);
-    writer.AppendString(object_guid);
+    authpolicy::GetUserKerberosFilesRequest request;
+    request.set_account_id(object_guid);
+    writer.AppendProtoAsArrayOfBytes(request);
     proxy_->CallMethod(
         &method_call, kSlowDbusTimeoutMilliseconds,
         base::BindOnce(
@@ -124,6 +132,9 @@ class AuthPolicyClientImpl : public AuthPolicyClient {
   void RefreshDevicePolicy(RefreshPolicyCallback callback) override {
     dbus::MethodCall method_call(authpolicy::kAuthPolicyInterface,
                                  authpolicy::kRefreshDevicePolicyMethod);
+    dbus::MessageWriter writer(&method_call);
+    authpolicy::RefreshDevicePolicyRequest request;
+    writer.AppendProtoAsArrayOfBytes(request);
     proxy_->CallMethod(
         &method_call, kSlowDbusTimeoutMilliseconds,
         base::BindOnce(&AuthPolicyClientImpl::HandleRefreshPolicyCallback,
@@ -136,7 +147,9 @@ class AuthPolicyClientImpl : public AuthPolicyClient {
     dbus::MethodCall method_call(authpolicy::kAuthPolicyInterface,
                                  authpolicy::kRefreshUserPolicyMethod);
     dbus::MessageWriter writer(&method_call);
-    writer.AppendString(account_id.GetAccountIdKey());
+    authpolicy::RefreshUserPolicyRequest request;
+    request.set_account_id(account_id.GetObjGuid());
+    writer.AppendProtoAsArrayOfBytes(request);
     proxy_->CallMethod(
         &method_call, kSlowDbusTimeoutMilliseconds,
         base::BindOnce(&AuthPolicyClientImpl::HandleRefreshPolicyCallback,
