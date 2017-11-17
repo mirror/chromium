@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d5c10a6_ad2f8126",
+        "filename": "chrome/browser/resources/media_router/media_router_common.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-17T18:51:32Z",
+      "side": 1,
+      "message": "It makes the rendering consistent between the controller and the details view since they will be showing the same information/strings.\n\nDo we need different rendering based on the presence of controls?  That will mean more complex logic in the details element once we remove the status description from controls...",
+      "parentUuid": "fa258948_fbf82cf3",
+      "revId": "f43e2cab2e01d9c83ba5bd0a79821bbccdd5568a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fbc719d_81c9eefe",
         "filename": "chrome/common/media_router/mojo/media_status.mojom",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "f43e2cab2e01d9c83ba5bd0a79821bbccdd5568a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85fb6d3b_50e42f34",
+        "filename": "chrome/common/media_router/mojo/media_status.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-17T18:51:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fbc719d_81c9eefe",
+      "revId": "f43e2cab2e01d9c83ba5bd0a79821bbccdd5568a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
