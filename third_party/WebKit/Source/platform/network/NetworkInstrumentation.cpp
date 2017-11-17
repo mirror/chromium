@@ -59,6 +59,12 @@ std::unique_ptr<TracedValue> EndResourceLoadData(RequestOutcome outcome) {
   return data;
 }
 
+std::unique_ptr<TracedValue> EndResourceTypeData(char* resourceType) {
+  std::unique_ptr<TracedValue> data = TracedValue::Create();
+  data->SetString("resourceType", resourceType);
+  return data;
+}
+
 }  // namespace
 
 ScopedResourceLoadTracker::ScopedResourceLoadTracker(
@@ -73,7 +79,7 @@ ScopedResourceLoadTracker::ScopedResourceLoadTracker(
 
 ScopedResourceLoadTracker::~ScopedResourceLoadTracker() {
   if (!resource_load_continues_beyond_scope_)
-    EndResourceLoad(resource_id_, RequestOutcome::kFail);
+    EndResourceLoad(resource_id_, (char *)"NA-failed request", RequestOutcome::kFail);
 }
 
 void ScopedResourceLoadTracker::ResourceLoadContinuesBeyondScope() {
@@ -88,11 +94,13 @@ void ResourcePrioritySet(unsigned long resource_id,
       "data", ResourcePrioritySetData(priority));
 }
 
-void EndResourceLoad(unsigned long resource_id, RequestOutcome outcome) {
-  TRACE_EVENT_NESTABLE_ASYNC_END1(
+void EndResourceLoad(unsigned long resource_id,
+                     char* resource_type,
+                     RequestOutcome outcome) {
+  TRACE_EVENT_NESTABLE_ASYNC_END2(
       kNetInstrumentationCategory, kResourceLoadTitle,
       TRACE_ID_WITH_SCOPE(kBlinkResourceID, TRACE_ID_LOCAL(resource_id)),
-      "endData", EndResourceLoadData(outcome));
+      "endData", EndResourceLoadData(outcome),"resourceType", EndResourceTypeData(resource_type));
 }
 
 }  // namespace network_instrumentation
