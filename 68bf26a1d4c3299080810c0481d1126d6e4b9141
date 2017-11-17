@@ -224,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "9ce9ba65_389b13f4",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceOrigin.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-17T14:08:57Z",
+      "side": 1,
+      "message": "Ack, the new name looks good.",
+      "parentUuid": "debaab7c_30cb2526",
+      "range": {
+        "startLine": 36,
+        "startChar": 11,
+        "endLine": 36,
+        "endChar": 29
+      },
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99cee09c_75747b74",
         "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceOrigin.h",
         "patchSetId": 3
@@ -420,6 +444,30 @@
       "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c979df4c_e19894d3",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-17T14:08:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "10cd4eb6_803e2b9b",
+      "range": {
+        "startLine": 676,
+        "startChar": 44,
+        "endLine": 676,
+        "endChar": 60
+      },
+      "revId": "68bf26a1d4c3299080810c0481d1126d6e4b9141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
