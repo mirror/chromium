@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57ac643b_b86cffd1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 24
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-17T15:36:11Z",
+      "side": 1,
+      "message": "nit: can you format this per convention? and: \"timestamp for when the buffer\"",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7dd2224_95e255f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 24
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-17T15:36:11Z",
+      "side": 1,
+      "message": "this CL might have benefited from being split up.",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13fd2d64_6397dd52",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-17T15:36:11Z",
+      "side": 1,
+      "message": "base::TimeTicks::Now()? If not, why?",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3be1a36e_21d1ccd7",
+        "filename": "components/viz/service/display_embedder/display_output_surface.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-17T15:36:11Z",
+      "side": 1,
+      "message": "we can have an enum type for flags?",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d262f61_6ffdacf5",
+        "filename": "content/browser/compositor/gpu_browser_compositor_output_surface.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-17T15:36:11Z",
+      "side": 1,
+      "message": "why did you rename this function?",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64772b8c_225bf4d6",
+        "filename": "gpu/ipc/client/command_buffer_proxy_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-17T15:36:11Z",
+      "side": 1,
+      "message": "Seems to me that you could have augmented  UpdateVsyncParametersCallback for this instead of adding a new callback?",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b11f2eb_c2791302",
+        "filename": "ui/gl/gl_surface.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-17T15:36:11Z",
+      "side": 1,
+      "message": "You should use the type throughout for flags?",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afee3978_d6bd2a60",
+        "filename": "ui/gl/gl_surface.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-17T15:36:11Z",
+      "side": 1,
+      "message": "This seems confusing. Maybe you could reword.",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c55592_39f4c417",
+        "filename": "ui/gl/gl_surface.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-17T15:36:11Z",
+      "side": 1,
+      "message": "For refresh, is it time to the vblank or scanout start?\n\ntimestamp is the time when scanout started on the buffer?",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62919a7_51ea2bba",
+        "filename": "ui/gl/gl_surface.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-17T15:36:11Z",
+      "side": 1,
+      "message": "flags should have type PresentationFlags",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80664f12_7f485cf8",
+        "filename": "ui/gl/gl_surface.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-17T15:36:11Z",
+      "side": 1,
+      "message": "If the |PresentationCallback|?",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a401d8_defeab8d",
+        "filename": "ui/ozone/demo/gl_renderer.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-17T15:36:11Z",
+      "side": 1,
+      "message": "it would be useful as a correctness proof if this was complete.",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9eccf68_0f7abf06",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surface.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-17T15:36:11Z",
+      "side": 1,
+      "message": "This seems wrong to me. Can you explain?",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e473497_df783c7a",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-17T15:36:11Z",
+      "side": 1,
+      "message": "Same question: these time values seem wrong as I understand the code. Why are they right?",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8abf253_4db99a66",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-17T15:36:11Z",
+      "side": 1,
+      "message": "create a using for this",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba15112_92eb92da",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-17T15:36:11Z",
+      "side": 1,
+      "message": "TODO who? Needs a bug",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
