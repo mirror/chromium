@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "43d66c9b_47c63205",
+        "filename": "net/http/http_auth_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1250605
+      },
+      "writtenOn": "2017-11-17T21:53:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b059bc42_5e3aba08",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 22
+      },
+      "revId": "fbaaafc479c4e8e76dad6f633ba36588efb0d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f1e6a91_97619b27",
         "filename": "net/http/http_network_session.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "fbaaafc479c4e8e76dad6f633ba36588efb0d8a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aeec11a_f64f0fac",
+        "filename": "net/http/http_network_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1250605
+      },
+      "writtenOn": "2017-11-17T21:53:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f1e6a91_97619b27",
+      "revId": "fbaaafc479c4e8e76dad6f633ba36588efb0d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "ed82b5b7_661dc5e5",
+        "filename": "net/http/http_network_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1250605
+      },
+      "writtenOn": "2017-11-17T21:53:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "640d027d_9f194c16",
+      "revId": "fbaaafc479c4e8e76dad6f633ba36588efb0d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82bc22c5_6ca629e1",
         "filename": "net/http/url_security_manager_posix.cc",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "fbaaafc479c4e8e76dad6f633ba36588efb0d8a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68d6bdc0_9fd71d1c",
+        "filename": "net/http/url_security_manager_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1250605
+      },
+      "writtenOn": "2017-11-17T21:53:20Z",
+      "side": 1,
+      "message": "Done. Weird, this was compiling on my machine, maybe I was making a mistake.",
+      "parentUuid": "82bc22c5_6ca629e1",
+      "revId": "fbaaafc479c4e8e76dad6f633ba36588efb0d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
