@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89b74c66_14f752cc",
+        "filename": "tools/gritsettings/resource_ids",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-17T23:26:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8270c1f_9d6ace89",
+      "revId": "b54d793910f4bbe370d11905d683fc89125951c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b971362f_827dff4d",
         "filename": "tools/gritsettings/resource_ids",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "b54d793910f4bbe370d11905d683fc89125951c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cac0b1d_08f24778",
+        "filename": "tools/gritsettings/resource_ids",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-17T23:26:27Z",
+      "side": 1,
+      "message": "Done. Since we are incrementing down and not trying to add space from other sections I just added 60 to get a total of 100 IDs as I think print preview will ultimately need around that many (we have only the settings sections so far, and nothing for the preview area or the other JS code, and already are out of IDs). Hopefully, this will be enough, though not 100% sure.",
+      "parentUuid": "b971362f_827dff4d",
+      "revId": "b54d793910f4bbe370d11905d683fc89125951c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
