@@ -7,9 +7,6 @@ package org.chromium.android_webview;
 import android.view.View;
 import android.view.View.MeasureSpec;
 
-import org.chromium.base.CommandLine;
-import org.chromium.content.common.ContentSwitches;
-
 /**
  * Helper methods used to manage the layout of the View that contains AwContents.
  */
@@ -90,16 +87,9 @@ public class AwLayoutSizer {
      * Update the contents size.
      * This should be called whenever the content size changes (due to DOM manipulation or page
      * load, for example).
-     * The width and height should be in DIP pixels. When --use-zoom-for-dsf is disabled, the
-     * given width and height are in CSS pixels and we must scale them by DIP scale.
      */
-    public void onContentSizeChanged(int width, int height) {
-        CommandLine commandLine = CommandLine.getInstance();
-        if (!commandLine.hasSwitch(ContentSwitches.ENABLE_USE_ZOOM_FOR_DSF)) {
-            width *= mDIPScale;
-            height *= mDIPScale;
-        }
-        doUpdate(width, height, mPageScaleFactor);
+    public void onContentSizeChanged(int widthDip, int heightDip) {
+        doUpdate(widthDip, heightDip, mPageScaleFactor);
     }
 
     /**
