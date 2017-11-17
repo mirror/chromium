@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8deec3c_2c6d6e41",
+        "filename": "chrome/browser/resources/interventions_internals/index.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T19:05:14Z",
+      "side": 1,
+      "message": "consider just using \"status\" here instead of \"statuses\".",
+      "range": {
+        "startLine": 38,
+        "startChar": 33,
+        "endLine": 38,
+        "endChar": 50
+      },
+      "revId": "fafff83c090dbc590eb87df3a8f69b519f1ca5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c1ab26_bd373c57",
+        "filename": "chrome/browser/resources/interventions_internals/index.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T19:05:14Z",
+      "side": 1,
+      "message": "previews-enabled-status ?",
+      "range": {
+        "startLine": 39,
+        "startChar": 15,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "fafff83c090dbc590eb87df3a8f69b519f1ca5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0933075_9d56c865",
+        "filename": "chrome/browser/resources/interventions_internals/index.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T19:05:14Z",
+      "side": 1,
+      "message": "previews-flags-status ?",
+      "range": {
+        "startLine": 44,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "fafff83c090dbc590eb87df3a8f69b519f1ca5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e6ccf3_0ad5841e",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T19:05:14Z",
+      "side": 1,
+      "message": "nit - I\u0027m not sure the \"modes\" terminology helps. Perhaps \"a map of previews enabled status\" or just \"a map of previews status\"",
+      "range": {
+        "startLine": 44,
+        "startChar": 31,
+        "endLine": 44,
+        "endChar": 37
+      },
+      "revId": "fafff83c090dbc590eb87df3a8f69b519f1ca5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37fb9ee3_3e06e89a",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T19:05:14Z",
+      "side": 1,
+      "message": "statuses -\u003e flag_details ?",
+      "range": {
+        "startLine": 48,
+        "startChar": 59,
+        "endLine": 48,
+        "endChar": 67
+      },
+      "revId": "fafff83c090dbc590eb87df3a8f69b519f1ca5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
