@@ -858,9 +858,11 @@ typedef void (^ViewportStateCompletion)(const web::PageViewportState*);
 - (void)cachePOSTDataForRequest:(NSURLRequest*)request
                inNavigationItem:(web::NavigationItemImpl*)item;
 
-// Returns YES if the given |action| should be allowed to continue.
-// If this returns NO, the load should be cancelled.
-- (BOOL)shouldAllowLoadWithNavigationAction:(WKNavigationAction*)action;
+// Calls |completionHandler| if the given |action| should be allowed to
+// continue. |completionHandler|, which must not be nil, is always called on
+// the UI thread.
+- (void)shouldAllowLoadWithNavigationAction:(WKNavigationAction*)action
+                          completionHandler:(void (^)(BOOL))completionHandler;
 // Called when a load ends in an error.
 - (void)handleLoadError:(NSError*)error
           forNavigation:(WKNavigation*)navigation;
@@ -2815,7 +2817,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
 // TODO(stuartmorgan): This is mostly logic from the original UIWebView delegate
 // method, which provides less information than the WKWebView version. Audit
 // this for things that should be handled in the subclass instead.
-- (BOOL)shouldAllowLoadWithNavigationAction:(WKNavigationAction*)action {
+- (void)shouldAllowLoadWithNavigationAction:(WKNavigationAction*)action
+                          completionHandler:(void (^)(BOOL))completionHandler {
+  DCHECK(completionHandler);
   // The WebDelegate may instruct the CRWWebController to stop loading, and
   // instead instruct the next page to be loaded in an animation.
   NSURLRequest* request = action.request;
@@ -2823,7 +2827,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
   GURL mainDocumentURL = net::GURLWithNSURL(request.mainDocumentURL);
   DCHECK(_webView);
   if (![self shouldOpenURL:requestURL mainDocumentURL:mainDocumentURL]) {
-    return NO;
+    dispatch_async(dispatch_get_main_queue(), ^{
+      completionHandler(NO);
+    });
+    return;
   }
 
   // If the URL doesn't look like one that can be shown as a web page, try to
@@ -2832,7 +2839,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // application? For example, only allow it for TYPED and LINK transitions.
   if (![CRWWebController webControllerCanShow:requestURL]) {
     if (![self shouldOpenExternalURLForNavigationAction:action]) {
-      return NO;
+      dispatch_async(dispatch_get_main_queue(), ^{
+        completionHandler(NO);
+      });
+      return;
     }
     web::NavigationItem* item = self.currentNavItem;
     GURL sourceURL = item ? item->GetOriginalRequestURL() : GURL::EmptyGURL();
@@ -2861,16 +2871,28 @@ registerLoadRequestForURL:(const GURL&)requestURL
     // link.
     BOOL isNavigationTypeLinkActivated =
         action.navigationType == WKNavigationTypeLinkActivated;
-    if ([_delegate openExternalURL:requestURL
-                         sourceURL:sourceURL
-                       linkClicked:isNavigationTypeLinkActivated]) {
-      // Record the URL so that errors reported following the 'NO' reply can be
-      // safely ignored.
-      [_openedApplicationURL addObject:request.URL];
-      if ([self shouldClosePageOnNativeApplicationLoad])
-        _webStateImpl->CloseWebState();
-    }
-    return NO;
+    __weak CRWWebController* weakSelf = self;
+    void (^callback)(BOOL) = ^(BOOL success) {
+      CRWWebController* strongSelf = weakSelf;
+      if (strongSelf && !strongSelf->_isBeingDestroyed && success) {
+        // Record the URL so that errors reported following the 'NO'
+        // reply can be safely ignored.
+        [strongSelf->_openedApplicationURL addObject:request.URL];
+        if ([strongSelf shouldClosePageOnNativeApplicationLoad]) {
+          web::WebStateImpl* webStateImpl = strongSelf->_webStateImpl;
+          webStateImpl->CloseWebState();
+        }
+      }
+      // This completionHandler will be executed on the main thread because
+      // -openExternalURL:sourceURL:linkClicked:completion:'s contract mandates
+      // that.
+      completionHandler(success);
+    };
+    [_delegate openExternalURL:requestURL
+                     sourceURL:sourceURL
+                   linkClicked:isNavigationTypeLinkActivated
+                    completion:callback];
+    return;
   }
 
   if ([[request HTTPMethod] isEqualToString:@"POST"]) {
@@ -2881,7 +2903,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
       [self cachePOSTDataForRequest:request inNavigationItem:item];
   }
 
-  return YES;
+  dispatch_async(dispatch_get_main_queue(), ^{
+    completionHandler(YES);
+  });
 }
 
 - (void)handleLoadError:(NSError*)error
@@ -4198,20 +4222,24 @@ registerLoadRequestForURL:(const GURL&)requestURL
     return;
   }
 
-  BOOL allowLoad = [self shouldAllowLoadWithNavigationAction:action];
-
-  if (allowLoad) {
-    ui::PageTransition transition =
-        [self pageTransitionFromNavigationType:action.navigationType];
-    allowLoad =
-        self.webStateImpl->ShouldAllowRequest(action.request, transition);
-    if (!allowLoad && action.targetFrame.mainFrame) {
-      [_pendingNavigationInfo setCancelled:YES];
+  NSURLRequest* request = action.request;
+  ui::PageTransition transition =
+      [self pageTransitionFromNavigationType:action.navigationType];
+  __weak CRWWebController* weakSelf = self;
+  void (^completionHandler)(BOOL) = ^(BOOL allowLoad) {
+    CRWWebController* strongSelf = weakSelf;
+    if (allowLoad && strongSelf && !strongSelf->_isBeingDestroyed) {
+      allowLoad =
+          strongSelf.webStateImpl->ShouldAllowRequest(request, transition);
+      if (!allowLoad && action.targetFrame.mainFrame) {
+        [strongSelf->_pendingNavigationInfo setCancelled:YES];
+      }
     }
-  }
-
-  decisionHandler(allowLoad ? WKNavigationActionPolicyAllow
-                            : WKNavigationActionPolicyCancel);
+    decisionHandler(allowLoad ? WKNavigationActionPolicyAllow
+                              : WKNavigationActionPolicyCancel);
+  };
+  [self shouldAllowLoadWithNavigationAction:action
+                          completionHandler:completionHandler];
 }
 
 - (void)webView:(WKWebView*)webView

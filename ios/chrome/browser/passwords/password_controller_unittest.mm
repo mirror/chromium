@@ -756,8 +756,7 @@ static NSString* kHtmlWithMultiplePasswordForms =
      "  doc.write('<form><input id=\\'un8\\' type=\\'text\\' name=\\'u4\\'>');"
      "  doc.write('<input id=\\'pw8\\' type=\\'text\\' name=\\'p4\\'>');"
      "  doc.write('</form>');"
-     "  doc.close();"
-     "</script>";
+     "  doc.close();";
 
 // A script that resets all text fields, including those in iframes.
 static NSString* kClearInputFieldsScript =

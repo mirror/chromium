@@ -25,13 +25,15 @@ class GURL;
 // TODO(crbug.com/674991): Remove this protocol.
 @protocol CRWWebDelegate<NSObject>
 
-// Called when an external app needs to be opened, it also passes |linkClicked|
-// to track if this call was a result of user action or not. Returns YES iff
-// |URL| is launched in an external app.
-// |sourceURL| is the original URL that triggered the navigation to |URL|.
-- (BOOL)openExternalURL:(const GURL&)URL
+// Called when an external app needs to be opened. |sourceURL| is the original
+// URL that triggered the navigation to |URL|. |linkClicked| indicates if this
+// call was a result of user action or not. |completionHandler|, which cannot
+// be null, is called on the UI thread with a boolean status of whether an
+// external app had been launched for |URL|.
+- (void)openExternalURL:(const GURL&)URL
               sourceURL:(const GURL&)sourceURL
-            linkClicked:(BOOL)linkClicked;
+            linkClicked:(BOOL)linkClicked
+             completion:(void (^)(BOOL))completionHandler;
 
 // Called when a placeholder image should be displayed instead of the WebView.
 - (void)webController:(CRWWebController*)webController
