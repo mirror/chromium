@@ -188,6 +188,7 @@ function setUpFileSystem(openedFilesLimit, callback) {
   var options = {};
   if (openedFilesLimit)
     options.openedFilesLimit = openedFilesLimit;
+  test_util.openedFiles = [];
   if (test_util.fileSystem) {
     chrome.fileSystemProvider.unmount({
       fileSystemId: test_util.FILE_SYSTEM_ID
