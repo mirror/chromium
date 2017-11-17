@@ -50,6 +50,24 @@
       "revId": "f745abb32c4f9242c44e51868046e5f1de20fa15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566746ed_658dc2b5",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-17T10:54:06Z",
+      "side": 1,
+      "message": "I think implementing it in terms of session_history_index_ is good, however I\u0027d like to at least keep the GoBack method. I think GoBack; is more immediately understandable in tests than GoToIndex(-1);\n\nThis part is for convenience functions for the test writers, and I think GoBack is enough of a current case that it could have its own function instead of GoToIndex. If people need to specify a particular index (unlikely), they can use advanced functions.",
+      "parentUuid": "5f6d3151_30342bf4",
+      "revId": "f745abb32c4f9242c44e51868046e5f1de20fa15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
