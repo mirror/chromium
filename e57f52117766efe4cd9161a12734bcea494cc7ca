@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "532eca7c_07927fd0",
+        "filename": "ash/frame/default_frame_header.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-17T05:21:59Z",
+      "side": 1,
+      "message": "Ack. To me, there\u0027s a choice here between\n\nConstruct + Init where the class is \u0027broken\u0027 until Init is called (and in the previous implementation, requires a bunch of Views to be passed which could have just been set in the constructor)\n\nvs\n\nConstruct where the constructor does a bit of work (UpdateAllButtonImages, set button size, both of which seem like things you would want to do from your parents anyway..).\n\nI think taking the setter args out Init is definitely the right thing to do. Maybe it\u0027s worth having a no param Init() that does the 2 tasks, but without much extra initialization, I think this is cleaner for now.",
+      "parentUuid": "614d7b3b_e72b6502",
+      "revId": "e57f52117766efe4cd9161a12734bcea494cc7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cae3ebcb_3761a48a",
         "filename": "ash/frame/frame_header_util.h",
         "patchSetId": 7
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "6070f657_429578af",
+        "filename": "ash/frame/frame_header_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-17T05:21:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cae3ebcb_3761a48a",
+      "range": {
+        "startLine": 37,
+        "startChar": 17,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "e57f52117766efe4cd9161a12734bcea494cc7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35b26c10_9d93e988",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 7
@@ -53,6 +95,24 @@
       "writtenOn": "2017-11-17T00:39:57Z",
       "side": 1,
       "message": "can this move into ash::DefaultFrameHeader ? Seems orthogonal to a HostedAppFrameHeaderAsh",
+      "revId": "e57f52117766efe4cd9161a12734bcea494cc7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f348658c_45c972c1",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-17T05:21:59Z",
+      "side": 1,
+      "message": "Hmm. DefaultFrameHeader doesn\u0027t know about browsers so the best I can do is to move this up into the DefaultFrameHeader block.",
+      "parentUuid": "35b26c10_9d93e988",
       "revId": "e57f52117766efe4cd9161a12734bcea494cc7ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "bb4a36b9_0121b06d",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-17T05:21:59Z",
+      "side": 1,
+      "message": "GetTitle() changes when the window title changes, which calls through NonClientFrameView::Layout via Widget::UpdateWindowTitle. Documented.\n\nOkay, cached some render texts and made layout calculations in a layout override.",
+      "parentUuid": "c32fb2c4_e8941683",
+      "revId": "e57f52117766efe4cd9161a12734bcea494cc7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8213864f_cd5ec35c",
         "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.cc",
         "patchSetId": 7
@@ -90,6 +168,24 @@
       "revId": "e57f52117766efe4cd9161a12734bcea494cc7ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b4b4fc_bca6ff81",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-17T05:21:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8213864f_cd5ec35c",
+      "revId": "e57f52117766efe4cd9161a12734bcea494cc7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
