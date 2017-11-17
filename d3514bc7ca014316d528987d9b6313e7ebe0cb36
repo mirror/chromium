@@ -46,6 +46,30 @@
       "revId": "d3514bc7ca014316d528987d9b6313e7ebe0cb36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "457f18c0_37f1302f",
+        "filename": "third_party/WebKit/LayoutTests/svg/custom/nested-color-stop-crash.svg",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-17T15:17:28Z",
+      "side": 1,
+      "message": "\u003e \u003e So that sounds like a bug in the Traversal\u003c...\u003e::ChildrenOf implementation.\n\u003e \n\u003e Agreed.  I just assumed ChildrenOf really means DescendentsOf, but looking at the docs you are of course right.\n\u003e \n\u003e I think the bug is here: \n\u003e https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/NodeTraversal.h?rcl\u003ded08e77a52d977fdb8f4c2a0b27e3d5a73019a57\u0026l\u003d247\n\u003e \n\u003e I.e. we initialize the children iterator using Traversal\u003cT\u003e::FirstWithin(), which I believe descends looking for the right type.  Should prolly be Traversal\u003cT\u003e::FirstChild() instead.\n\u003e \n\u003e I\u0027ll try to patch, see if what blows up.\n\nYes, that sounds reasonable - I think Traversal\u003cT\u003e is in ElementTraversal.h though, so rather this:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/ElementTraversal.h?l\u003d221\n\n(\"first within\" ought to equal \"first child\" for Nodes and plain/untyped Elements, so I can see how this may have gone unnoticed.)",
+      "parentUuid": "0b376f8c_62412be0",
+      "range": {
+        "startLine": 4,
+        "startChar": 8,
+        "endLine": 4,
+        "endChar": 16
+      },
+      "revId": "d3514bc7ca014316d528987d9b6313e7ebe0cb36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
