@@ -52,10 +52,10 @@ class CSSProperty {
   virtual bool IsEnabled() const { return true; }
   virtual bool IsAffectedByAll() const { return IsEnabled() && IsProperty(); }
   virtual bool IsLayoutDependent(const ComputedStyle* style, LayoutObject* layout_object) const { return false; }
-  virtual CSSPropertyID ResolveDirectionAwareProperty(
+  virtual const CSSProperty& ResolveDirectionAwareProperty(
       TextDirection,
       WritingMode) const {
-    return PropertyID();
+    return *this;
   }
   virtual bool IsShorthand() const { return false; }
   virtual bool IsLonghand() const { return false; }
@@ -65,19 +65,19 @@ class CSSProperty {
 
  protected:
   static const StylePropertyShorthand& BorderDirections();
-  static CSSPropertyID ResolveAfterToPhysicalProperty(
+  static const CSSProperty& ResolveAfterToPhysicalProperty(
       TextDirection,
       WritingMode,
       const StylePropertyShorthand&);
-  static CSSPropertyID ResolveBeforeToPhysicalProperty(
+  static const CSSProperty& ResolveBeforeToPhysicalProperty(
       TextDirection,
       WritingMode,
       const StylePropertyShorthand&);
-  static CSSPropertyID ResolveEndToPhysicalProperty(
+  static const CSSProperty& ResolveEndToPhysicalProperty(
       TextDirection,
       WritingMode,
       const StylePropertyShorthand&);
-  static CSSPropertyID ResolveStartToPhysicalProperty(
+  static const CSSProperty& ResolveStartToPhysicalProperty(
       TextDirection,
       WritingMode,
       const StylePropertyShorthand&);

@@ -51,7 +51,7 @@ CSSStyleValueVector ComputedStylePropertyMap::GetAllInternal(
   if (!style)
     return CSSStyleValueVector();
   const CSSValue* css_value = ComputedStyleCSSValueMapping::Get(
-      property_id, *style, nullptr /* layout_object */);
+      CSSProperty::Get(property_id), *style, nullptr /* layout_object */);
   if (!css_value)
     return CSSStyleValueVector();
   return StyleValueFactory::CssValueToStyleValueVector(property_id, *css_value);
