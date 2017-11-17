@@ -1508,6 +1508,10 @@ def _MatchesFile(input_api, patterns, path):
   return False
 
 
+def _FindPatternsForIpcFiles(input_api, output_api):
+  pass
+
+
 def _CheckIpcOwners(input_api, output_api):
   """Checks that affected files involving IPC have an IPC OWNERS rule.
 
@@ -2769,3 +2773,10 @@ def CheckChangeOnCommit(input_api, output_api):
   results.extend(input_api.canned_checks.CheckChangeHasDescription(
       input_api, output_api))
   return results
+
+
+def PostUploadHook(cl, change, input_api, output_api):
+  """git cl upload will call this hook after the issue is created/modified."""
+  # Various presubmit scripts appear to return things in the post upload hook,
+  # but the actual return value seems to be ignored...
+  return []
