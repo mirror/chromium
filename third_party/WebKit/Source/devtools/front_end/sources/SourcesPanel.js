@@ -815,6 +815,14 @@ Sources.SourcesPanel = class extends UI.Panel {
       contextMenu.revealSection().appendItem(
           Common.UIString('Reveal in navigator'), this._handleContextMenuReveal.bind(this, uiSourceCode));
     }
+    if (uiSourceCode.contentType().isTextType()) {
+      contextMenu.viewSection().appendItem(
+          Common.UIString('Search in file'), () => this.searchableView().showSearchField());
+      if (this.searchableView().isReplaceable()) {
+        contextMenu.viewSection().appendItem(
+            Common.UIString('Replace in file'), () => this.searchableView().showSearchField(true));
+      }
+    }
     this._appendUISourceCodeMappingItems(contextMenu, uiSourceCode);
   }
 
