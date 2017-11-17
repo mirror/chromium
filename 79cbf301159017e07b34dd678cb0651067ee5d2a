@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2287650_b330b82f",
+        "filename": "docs/android_test_instructions.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T19:51:01Z",
+      "side": 1,
+      "message": "is this the default socket for studio? Do you need to do anything in studio to attach or when you hit the Debug button, it\u0027ll include the test package?",
+      "range": {
+        "startLine": 214,
+        "startChar": 49,
+        "endLine": 214,
+        "endChar": 55
+      },
+      "revId": "79cbf301159017e07b34dd678cb0651067ee5d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
