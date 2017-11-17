@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccc53fe8_da36dc28",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 92331,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-17T20:35:19Z",
+      "side": 1,
+      "message": "Suggested rephrasing:\n\n\"The number of Android runtime permission requests that are denied for the WebAPK because Chrome does not have access to that permission.\"\n\nFeel free to refine that further, of course \u003d)",
+      "range": {
+        "startLine": 92330,
+        "startChar": 4,
+        "endLine": 92331,
+        "endChar": 66
+      },
+      "revId": "c877330c45118f6fd4bc5a3262cd37faddbf1115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
