@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efe63edd_159a4358",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T15:16:17Z",
+      "side": 1,
+      "message": "nit: Comment, please.",
+      "revId": "4a2df957a4d8addaeba203a9f644ba79ef8ee811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6376cb81_9de715aa",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T15:16:17Z",
+      "side": 1,
+      "message": "nit: It would be more idiomatic to make this a base::TimeDelta.",
+      "range": {
+        "startLine": 92,
+        "startChar": 26,
+        "endLine": 92,
+        "endChar": 0
+      },
+      "revId": "4a2df957a4d8addaeba203a9f644ba79ef8ee811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

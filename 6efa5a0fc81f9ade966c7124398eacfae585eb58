@@ -319,6 +319,30 @@
     },
     {
       "key": {
+        "uuid": "a45985a8_277cc497",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T15:16:17Z",
+      "side": 1,
+      "message": "Ah! I see. Thanks.",
+      "parentUuid": "a40b3691_11104e87",
+      "range": {
+        "startLine": 1854,
+        "startChar": 75,
+        "endLine": 1854,
+        "endChar": 0
+      },
+      "revId": "6efa5a0fc81f9ade966c7124398eacfae585eb58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc2cac65_1ef8e4ee",
         "filename": "net/quic/chromium/quic_chromium_client_session.cc",
         "patchSetId": 5
