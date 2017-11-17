@@ -20,6 +20,7 @@
 #include "chrome/test/base/chrome_render_view_test.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
+#include "components/network_session_configurator/common/network_switches.h"
 #include "content/public/common/content_constants.h"
 #include "content/public/common/url_loader_throttle.h"
 #include "content/public/renderer/render_frame.h"
@@ -188,6 +189,15 @@ class ChromeContentRendererClientBrowserTest :
         base::Unretained(this)));
     ASSERT_TRUE(https_server_->Start());
     message_runner_ = new content::MessageLoopRunner();
+  }
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    // HTTPS server only serves a valid cert for localhost, so this is needed
+    // to load pages from other hosts without an error.
+    command_line->AppendSwitch(switches::kIgnoreCertificateErrors);
+
+    // Append --site-per-process flag.
+    content::IsolateAllSitesForTesting(command_line);
   }
 
  protected:
