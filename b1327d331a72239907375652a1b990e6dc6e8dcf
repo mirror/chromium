@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dde2d3ba_716d1365",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8WindowCustom.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-17T05:47:03Z",
+      "side": 1,
+      "message": "I talked with hayato san and kochi san offline, and we agreed that the performance impact would not be that big.  Let\u0027s go with this approach in a separate patch.\n\nI will review details in the separate patch.",
+      "revId": "b1327d331a72239907375652a1b990e6dc6e8dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
