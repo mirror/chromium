@@ -128,6 +128,12 @@ class MockClientGpuControl : public GpuControl {
   MOCK_METHOD1(WaitSyncTokenHint, void(const SyncToken&));
   MOCK_METHOD1(CanWaitUnverifiedSyncToken, bool(const SyncToken&));
   MOCK_METHOD1(AddLatencyInfo, void(const std::vector<ui::LatencyInfo>&));
+  MOCK_METHOD2(SendGpuFence,
+               void(uint32_t gpu_fence_id, ClientGpuFence source));
+  MOCK_METHOD2(
+      GetGpuFenceHandle,
+      void(uint32_t gpu_fence_id,
+           const base::Callback<void(const gfx::GpuFenceHandle&)>& callback));
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockClientGpuControl);

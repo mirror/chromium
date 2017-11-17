@@ -273,6 +273,16 @@ class RecordReplayContext : public GpuControl {
     NOTIMPLEMENTED();
   }
 
+  void SendGpuFence(uint32_t gpu_fence_id, ClientGpuFence source) override {
+    NOTIMPLEMENTED();
+  }
+
+  void GetGpuFenceHandle(uint32_t gpu_fence_id,
+                         const base::Callback<void(const gfx::GpuFenceHandle&)>&
+                             callback) override {
+    NOTIMPLEMENTED();
+  }
+
   void SetLock(base::Lock*) override { NOTIMPLEMENTED(); }
 
   void EnsureWorkVisible() override {}

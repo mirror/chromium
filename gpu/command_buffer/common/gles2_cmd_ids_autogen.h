@@ -342,7 +342,10 @@
   OP(EndRasterCHROMIUM)                                    /* 583 */ \
   OP(TexStorage2DImageCHROMIUM)                            /* 584 */ \
   OP(SetColorSpaceMetadataCHROMIUM)                        /* 585 */ \
-  OP(WindowRectanglesEXTImmediate)                         /* 586 */
+  OP(WindowRectanglesEXTImmediate)                         /* 586 */ \
+  OP(CreateGpuFenceINTERNAL)                               /* 587 */ \
+  OP(WaitGpuFenceCHROMIUM)                                 /* 588 */ \
+  OP(DestroyGpuFenceCHROMIUM)                              /* 589 */
 
 enum CommandId {
   kOneBeforeStartPoint =
