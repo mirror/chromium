@@ -1660,8 +1660,6 @@ component("net") {
       "url_request/data_protocol_handler.cc",
       "url_request/data_protocol_handler.h",
       "url_request/http_user_agent_settings.h",
-      "url_request/network_error_logging_delegate.cc",
-      "url_request/network_error_logging_delegate.h",
       "url_request/redirect_info.cc",
       "url_request/redirect_info.h",
       "url_request/redirect_util.cc",
@@ -1781,6 +1779,8 @@ component("net") {
         "reporting/reporting_service.h",
         "reporting/reporting_uploader.cc",
         "reporting/reporting_uploader.h",
+        "url_request/network_error_logging_delegate.cc",
+        "url_request/network_error_logging_delegate.h",
       ]
     }
 
