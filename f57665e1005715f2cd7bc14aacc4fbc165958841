@@ -22,6 +22,63 @@
       "revId": "f57665e1005715f2cd7bc14aacc4fbc165958841",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21196110_39a027f6",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-17T18:35:34Z",
+      "side": 1,
+      "message": "What are valid values for this field? Should we add an enum to define those?",
+      "range": {
+        "startLine": 16,
+        "startChar": 31,
+        "endLine": 16,
+        "endChar": 37
+      },
+      "revId": "f57665e1005715f2cd7bc14aacc4fbc165958841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "addb5cb0_3db0d756",
+        "filename": "chrome/browser/resources/print_preview/new/print_preview_shared_css.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-17T18:35:34Z",
+      "side": 1,
+      "message": "There is a dedicated style module for this, see https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/hidden_style_css.html?l\u003d5.",
+      "revId": "f57665e1005715f2cd7bc14aacc4fbc165958841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7be9fe1_e55eb06f",
+        "filename": "chrome/browser/resources/print_preview/new/print_preview_shared_css.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-17T18:35:34Z",
+      "side": 1,
+      "message": "Instead of adding this style here, would it work if it was within settings_section.html directly? As follows\n\n:host(.multirow-controls) ::slotted([slot\u003dtitle]) {\n   padding-top: 7px;\n   align-self: flex-start;\n}",
+      "revId": "f57665e1005715f2cd7bc14aacc4fbc165958841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
