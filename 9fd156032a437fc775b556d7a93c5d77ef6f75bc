@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54673f0c_b810db12",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SchemeRegistry.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-11-17T20:24:27Z",
+      "side": 1,
+      "message": "nit: add a comment pointing at the page_load_metrics logic that this aims to match",
+      "range": {
+        "startLine": 253,
+        "startChar": 28,
+        "endLine": 253,
+        "endChar": 35
+      },
+      "revId": "9fd156032a437fc775b556d7a93c5d77ef6f75bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b34a2f7_7c87c935",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-11-17T20:24:27Z",
+      "side": 1,
+      "message": "please add a brief comment explaining the purpose of this method.  Eg. what specifically the URL refers to (page, frame, resource, etc.).",
+      "range": {
+        "startLine": 665,
+        "startChar": 0,
+        "endLine": 665,
+        "endChar": 68
+      },
+      "revId": "9fd156032a437fc775b556d7a93c5d77ef6f75bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
