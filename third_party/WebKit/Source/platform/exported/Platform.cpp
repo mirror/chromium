@@ -141,25 +141,23 @@ void Platform::Initialize(Platform* platform) {
   FontFamilyNames::init();
   InitializePlatformLanguage();
 
-  // TODO(ssid): remove this check after fixing crbug.com/486782.
-  if (g_platform->main_thread_) {
-    DCHECK(!g_gc_task_runner);
-    g_gc_task_runner = new GCTaskRunner(g_platform->main_thread_);
-    base::trace_event::MemoryDumpProvider::Options heap_profiling_options;
-    heap_profiling_options.supports_heap_profiling = true;
-    base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-        PartitionAllocMemoryDumpProvider::Instance(), "PartitionAlloc",
-        base::ThreadTaskRunnerHandle::Get(), heap_profiling_options);
-    base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-        FontCacheMemoryDumpProvider::Instance(), "FontCaches",
-        base::ThreadTaskRunnerHandle::Get());
-    base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-        MemoryCacheDumpProvider::Instance(), "MemoryCache",
-        base::ThreadTaskRunnerHandle::Get());
-    base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-        InstanceCountersMemoryDumpProvider::Instance(), "BlinkObjectCounters",
-        base::ThreadTaskRunnerHandle::Get());
-  }
+  DCHECK(g_platform->main_thread_);
+  DCHECK(!g_gc_task_runner);
+  g_gc_task_runner = new GCTaskRunner(g_platform->main_thread_);
+  base::trace_event::MemoryDumpProvider::Options heap_profiling_options;
+  heap_profiling_options.supports_heap_profiling = true;
+  base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
+      PartitionAllocMemoryDumpProvider::Instance(), "PartitionAlloc",
+      base::ThreadTaskRunnerHandle::Get(), heap_profiling_options);
+  base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
+      FontCacheMemoryDumpProvider::Instance(), "FontCaches",
+      base::ThreadTaskRunnerHandle::Get());
+  base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
+      MemoryCacheDumpProvider::Instance(), "MemoryCache",
+      base::ThreadTaskRunnerHandle::Get());
+  base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
+      InstanceCountersMemoryDumpProvider::Instance(), "BlinkObjectCounters",
+      base::ThreadTaskRunnerHandle::Get());
 
   // Pre-create the File thread so multiple threads can call FileTaskRunner() in
   // a non racy way later.
