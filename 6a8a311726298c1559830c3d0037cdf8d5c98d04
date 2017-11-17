@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0e6df9a_2e35546c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-17T18:59:15Z",
+      "side": 1,
+      "message": "Use URL to subsequent change.",
+      "range": {
+        "startLine": 13,
+        "startChar": 14,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "6a8a311726298c1559830c3d0037cdf8d5c98d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035ec8d9_d1957fc7",
+        "filename": "device/bluetooth/bluetooth_adapter_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-17T18:59:15Z",
+      "side": 1,
+      "message": "The tests use BluetoothTestBase::DeleteDevice, if there\u0027s a reason Windows needs to be different please explain \u0026 describe in relation to DeleteDevice here.",
+      "range": {
+        "startLine": 291,
+        "startChar": 38,
+        "endLine": 291,
+        "endChar": 61
+      },
+      "revId": "6a8a311726298c1559830c3d0037cdf8d5c98d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
