@@ -174,8 +174,11 @@ DrawingBuffer::DrawingBuffer(
       using_gpu_compositing_(using_gpu_compositing),
       want_depth_(want_depth),
       want_stencil_(want_stencil),
+      color_params_(color_params),
       storage_color_space_(color_params.GetStorageGfxColorSpace()),
       sampler_color_space_(color_params.GetSamplerGfxColorSpace()),
+      use_half_float_storage_(color_params.PixelFormat() ==
+                              kF16CanvasPixelFormat),
       chromium_image_usage_(chromium_image_usage) {
   // Used by browser tests to detect the use of a DrawingBuffer.
   TRACE_EVENT_INSTANT0("test_gpu", "DrawingBufferCreation",
@@ -624,6 +627,22 @@ bool DrawingBuffer::Initialize(const IntSize& size, bool use_multisampling) {
     return false;
   }
 
+  // Ensure that the extensions required for half-float storage are present if
+  // requested.
+  if (use_half_float_storage_) {
+    const char* color_buffer_extension = webgl_version_ > kWebGL1
+                                             ? "GL_EXT_color_buffer_float"
+                                             : "GL_EXT_color_buffer_half_float";
+    if (!extensions_util_->EnsureExtensionEnabled(color_buffer_extension)) {
+      DLOG(ERROR) << "Half-float color buffers support is absent.";
+      return false;
+    }
+    if (!want_alpha_channel_) {
+      DLOG(ERROR) << "RGB half-float buffers are not supported.";
+      return false;
+    }
+  }
+
   gl_->GetIntegerv(GL_MAX_TEXTURE_SIZE, &max_texture_size_);
 
   int max_sample_count = 0;
@@ -865,10 +884,13 @@ bool DrawingBuffer::ResizeDefaultFramebuffer(const IntSize& size) {
     // Note that the multisample rendertarget will allocate an alpha channel
     // based on |have_alpha_channel_|, not |allocate_alpha_channel_|, since it
     // will resolve into the ColorBuffer.
-    gl_->RenderbufferStorageMultisampleCHROMIUM(
-        GL_RENDERBUFFER, sample_count_,
-        have_alpha_channel_ ? GL_RGBA8_OES : GL_RGB8_OES, size.Width(),
-        size.Height());
+    GLenum internal_format =
+        use_half_float_storage_
+            ? (have_alpha_channel_ ? GL_RGBA16F_EXT : GL_RGB16F_EXT)
+            : (have_alpha_channel_ ? GL_RGBA8_OES : GL_RGB8_OES);
+    gl_->RenderbufferStorageMultisampleCHROMIUM(GL_RENDERBUFFER, sample_count_,
+                                                internal_format, size.Width(),
+                                                size.Height());
 
     if (gl_->GetError() == GL_OUT_OF_MEMORY)
       return false;
@@ -1088,13 +1110,19 @@ bool DrawingBuffer::PaintRenderingResultsToImageData(
   width = Size().Width();
   height = Size().Height();
 
-  CheckedNumeric<int> data_size = 4;
+  // Float32 ImageData requires 16 bytes per pixel.
+  int bytes_per_pixel = 4;
+  if (RuntimeEnabledFeatures::WebGLColorSpaceEnabled() &&
+      use_half_float_storage_) {
+    bytes_per_pixel = 16;
+  }
+  CheckedNumeric<int> data_size = bytes_per_pixel;
   data_size *= width;
   data_size *= height;
   if (!data_size.IsValid())
     return false;
 
-  WTF::ArrayBufferContents pixels(width * height, 4,
+  WTF::ArrayBufferContents pixels(width * height, bytes_per_pixel,
                                   WTF::ArrayBufferContents::kNotShared,
                                   WTF::ArrayBufferContents::kDontInitialize);
 
@@ -1111,8 +1139,10 @@ bool DrawingBuffer::PaintRenderingResultsToImageData(
   }
 
   ReadBackFramebuffer(static_cast<unsigned char*>(pixels.Data()), width, height,
-                      kReadbackRGBA, WebGLImageConversion::kAlphaDoNothing);
-  FlipVertically(static_cast<uint8_t*>(pixels.Data()), width, height);
+                      kReadbackRGBA, WebGLImageConversion::kAlphaDoNothing,
+                      bytes_per_pixel);
+  FlipVertically(static_cast<uint8_t*>(pixels.Data()), width, height,
+                 bytes_per_pixel);
 
   if (fbo) {
     gl_->FramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
@@ -1128,7 +1158,8 @@ void DrawingBuffer::ReadBackFramebuffer(unsigned char* pixels,
                                         int width,
                                         int height,
                                         ReadbackOrder readback_order,
-                                        WebGLImageConversion::AlphaOp op) {
+                                        WebGLImageConversion::AlphaOp op,
+                                        int bytes_per_pixel) {
   DCHECK(state_restorer_);
   state_restorer_->SetPixelPackParametersDirty();
   gl_->PixelStorei(GL_PACK_ALIGNMENT, 1);
@@ -1140,11 +1171,16 @@ void DrawingBuffer::ReadBackFramebuffer(unsigned char* pixels,
     state_restorer_->SetPixelPackBufferBindingDirty();
     gl_->BindBuffer(GL_PIXEL_PACK_BUFFER, 0);
   }
-  gl_->ReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+  GLenum data_type = GL_UNSIGNED_BYTE;
+  if (RuntimeEnabledFeatures::WebGLColorSpaceEnabled() &&
+      use_half_float_storage_ && bytes_per_pixel == 16) {
+    data_type = GL_FLOAT;
+  }
+  gl_->ReadPixels(0, 0, width, height, GL_RGBA, data_type, pixels);
 
-  size_t buffer_size = 4 * width * height;
+  size_t buffer_size = width * height * bytes_per_pixel;
 
-  if (readback_order == kReadbackSkia) {
+  if (readback_order == kReadbackSkia && data_type == GL_UNSIGNED_BYTE) {
 #if (SK_R32_SHIFT == 16) && !SK_B32_SHIFT
     // Swizzle red and blue channels to match SkBitmap's byte ordering.
     // TODO(kbr): expose GL_BGRA as extension.
@@ -1155,10 +1191,21 @@ void DrawingBuffer::ReadBackFramebuffer(unsigned char* pixels,
   }
 
   if (op == WebGLImageConversion::kAlphaDoPremultiply) {
-    for (size_t i = 0; i < buffer_size; i += 4) {
-      pixels[i + 0] = std::min(255, pixels[i + 0] * pixels[i + 3] / 255);
-      pixels[i + 1] = std::min(255, pixels[i + 1] * pixels[i + 3] / 255);
-      pixels[i + 2] = std::min(255, pixels[i + 2] * pixels[i + 3] / 255);
+    if (data_type == GL_UNSIGNED_BYTE) {
+      for (size_t i = 0; i < buffer_size; i += 4) {
+        pixels[i + 0] = std::min(255, pixels[i + 0] * pixels[i + 3] / 255);
+        pixels[i + 1] = std::min(255, pixels[i + 1] * pixels[i + 3] / 255);
+        pixels[i + 2] = std::min(255, pixels[i + 2] * pixels[i + 3] / 255);
+      }
+    } else if (RuntimeEnabledFeatures::WebGLColorSpaceEnabled()) {
+      float* float_data = static_cast<float*>((void*)(pixels));
+      for (size_t i = 0; i < buffer_size / 4; i += 4) {
+        float_data[i + 0] *= float_data[i + 3];
+        float_data[i + 1] *= float_data[i + 3];
+        float_data[i + 2] *= float_data[i + 3];
+      }
+    } else {
+      NOTREACHED();
     }
   } else if (op != WebGLImageConversion::kAlphaDoNothing) {
     NOTREACHED();
@@ -1167,9 +1214,12 @@ void DrawingBuffer::ReadBackFramebuffer(unsigned char* pixels,
 
 void DrawingBuffer::FlipVertically(uint8_t* framebuffer,
                                    int width,
-                                   int height) {
-  std::vector<uint8_t> scanline(width * 4);
-  unsigned row_bytes = width * 4;
+                                   int height,
+                                   int bytes_per_pixel) {
+  DCHECK(RuntimeEnabledFeatures::WebGLColorSpaceEnabled() ||
+         bytes_per_pixel == 4);
+  unsigned row_bytes = width * bytes_per_pixel;
+  std::vector<uint8_t> scanline(row_bytes);
   unsigned count = height / 2;
   for (unsigned i = 0; i < count; i++) {
     uint8_t* row_a = framebuffer + i * row_bytes;
@@ -1196,9 +1246,11 @@ scoped_refptr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
     gfx::BufferFormat buffer_format;
     GLenum gl_format = GL_NONE;
     if (allocate_alpha_channel_) {
-      buffer_format = gfx::BufferFormat::RGBA_8888;
+      buffer_format = use_half_float_storage_ ? gfx::BufferFormat::RGBA_F16
+                                              : gfx::BufferFormat::RGBA_8888;
       gl_format = GL_RGBA;
     } else {
+      DCHECK(!use_half_float_storage_);
       buffer_format = gfx::BufferFormat::RGBX_8888;
       if (gpu::IsImageFromGpuMemoryBufferFormatSupported(
               gfx::BufferFormat::BGRX_8888,
@@ -1237,13 +1289,29 @@ scoped_refptr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
   } else {
     if (storage_texture_supported_) {
       GLenum internal_storage_format =
-          allocate_alpha_channel_ ? GL_RGBA8 : GL_RGB8;
+          use_half_float_storage_
+              ? (allocate_alpha_channel_ ? GL_RGBA16F_EXT : GL_RGB16F_EXT)
+              : (allocate_alpha_channel_ ? GL_RGBA8 : GL_RGB8);
       gl_->TexStorage2DEXT(GL_TEXTURE_2D, 1, internal_storage_format,
                            size.Width(), size.Height());
     } else {
-      GLenum gl_format = allocate_alpha_channel_ ? GL_RGBA : GL_RGB;
-      gl_->TexImage2D(texture_target_, 0, gl_format, size.Width(),
-                      size.Height(), 0, gl_format, GL_UNSIGNED_BYTE, nullptr);
+      GLenum internal_format = allocate_alpha_channel_ ? GL_RGBA : GL_RGB;
+      GLenum format = internal_format;
+      GLenum data_type = GL_UNSIGNED_BYTE;
+      // TODO(ccameron): Half-float storage is allocated in GLES 3 but fails to
+      // composite.
+      // https://crbug.com/777750
+      if (use_half_float_storage_) {
+        if (webgl_version_ > kWebGL1) {
+          internal_format = allocate_alpha_channel_ ? GL_RGBA16F : GL_RGB16F;
+          data_type = GL_HALF_FLOAT;
+        } else {
+          internal_format = allocate_alpha_channel_ ? GL_RGBA : GL_RGB;
+          data_type = GL_HALF_FLOAT_OES;
+        }
+      }
+      gl_->TexImage2D(texture_target_, 0, internal_format, size.Width(),
+                      size.Height(), 0, format, data_type, nullptr);
     }
   }
 

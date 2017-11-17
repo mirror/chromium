@@ -835,13 +835,16 @@ ImageData* WebGLRenderingContextBase::ToImageData(SnapshotReason reason) {
         SkImageInfo::Make(width, height, kRGBA_8888_SkColorType,
                           CreationAttributes().alpha() ? kPremul_SkAlphaType
                                                        : kOpaque_SkAlphaType);
-    scoped_refptr<StaticBitmapImage> snapshot = MakeImageSnapshot(image_info);
-    if (snapshot) {
-      image_data = ImageData::Create(GetDrawingBuffer()->Size());
-      snapshot->PaintImageForCurrentFrame().GetSkImage()->readPixels(
-          image_info, image_data->data()->Data(), image_info.minRowBytes(), 0,
-          0);
+    CanvasColorParams color_params;
+    if (RuntimeEnabledFeatures::WebGLColorSpaceEnabled()) {
+      color_params = GetDrawingBuffer()->ColorParams();
+      image_info = image_info.makeColorSpace(color_params.GetSkColorSpace());
+      if (color_params.PixelFormat() == kF16CanvasPixelFormat)
+        image_info = image_info.makeColorType(kRGBA_F16_SkColorType);
     }
+    scoped_refptr<StaticBitmapImage> snapshot = MakeImageSnapshot(image_info);
+    if (snapshot)
+      image_data = ImageData::Create(snapshot, color_params);
   }
   return image_data;
 }
@@ -1523,8 +1526,25 @@ ImageData* WebGLRenderingContextBase::PaintRenderingResultsToImageData(
   if (!GetDrawingBuffer()->PaintRenderingResultsToImageData(
           width, height, source_buffer, contents))
     return nullptr;
-  DOMArrayBuffer* image_data_pixels = DOMArrayBuffer::Create(contents);
 
+  if (RuntimeEnabledFeatures::WebGLColorSpaceEnabled()) {
+    scoped_refptr<WTF::ArrayBuffer> buffer = WTF::ArrayBuffer::Create(contents);
+    DOMArrayBufferView* buffer_view = nullptr;
+    unsigned num_color_components = width * height * 4;
+    CanvasColorParams color_params = GetDrawingBuffer()->ColorParams();
+    if (color_params.PixelFormat() == kRGBA8CanvasPixelFormat) {
+      buffer_view =
+          DOMUint8ClampedArray::Create(buffer, 0, num_color_components);
+    } else {
+      buffer_view = DOMFloat32Array::Create(buffer, 0, num_color_components);
+    }
+
+    return ImageData::Create(IntSize(width, height),
+                             NotShared<DOMArrayBufferView>(buffer_view),
+                             color_params);
+  }
+
+  DOMArrayBuffer* image_data_pixels = DOMArrayBuffer::Create(contents);
   return ImageData::Create(
       IntSize(width, height),
       NotShared<DOMUint8ClampedArray>(DOMUint8ClampedArray::Create(
