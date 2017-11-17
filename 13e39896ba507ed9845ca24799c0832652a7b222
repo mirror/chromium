@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "9bc4e54e_c43306f8",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyInline.h.tmpl",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-17T01:51:16Z",
+      "side": 1,
+      "message": "I\u0027ll remove this section from this CL since it is only used once, and see if I can fix up StylePropertyShorthand without it in a different CL.",
+      "parentUuid": "a8b6579c_7d589709",
+      "revId": "13e39896ba507ed9845ca24799c0832652a7b222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4e0210a_7fc940d3",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyInline.h.tmpl",
         "patchSetId": 14
