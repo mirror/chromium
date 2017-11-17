@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fc7f5e6e_f8defeb2",
+        "filename": "chrome/browser/extensions/api/preference/preference_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T18:37:27Z",
+      "side": 1,
+      "message": "Looks like patch set 1 did:\nconstexpr PrefMappingEntry kPrefMapping[]\nDoes\nconstexpr const PrefMappingEntry kPrefMapping[]\nwork?\n\nI think constexpr only applies to the outermost \"type\" (the array), so constexpr Foo kFoo[] tries to construct a constant array of non-constant members, which fails, but constexpr const Foo kFoo[] should try to construct a constant array of constant members, which should succeed.\n\n(If that doesn\u0027t work either, we can leave it as-is, but it\u0027s worth a shot! :))",
+      "parentUuid": "7bbdab6c_330c3666",
+      "revId": "ddf21a5f873499b119273c005d411f6d395d81b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "032860e1_17814a5b",
         "filename": "chrome/browser/extensions/api/preference/preference_api.cc",
         "patchSetId": 2
@@ -69,6 +87,24 @@
       "revId": "ddf21a5f873499b119273c005d411f6d395d81b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5bdb8ac_024a7163",
+        "filename": "chrome/browser/extensions/api/preference/preference_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T18:37:27Z",
+      "side": 1,
+      "message": "Okay, nvm.",
+      "parentUuid": "7b528960_924f029b",
+      "revId": "ddf21a5f873499b119273c005d411f6d395d81b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
