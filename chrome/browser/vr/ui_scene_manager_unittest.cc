@@ -63,10 +63,10 @@ const std::set<UiElementName> kHitTestableElements = {
     kWebVrTimeoutMessageText,
     kWebVrTimeoutMessageButtonText,
     kSpeechRecognitionResultBackplane,
-    kSpeechRecognitionListeningBackplane,
 };
 const std::set<UiElementName> kSpecialHitTestableElements = {
     kCloseButton, kWebVrTimeoutMessageButton, kVoiceSearchButton,
+    kSpeechRecognitionListeningCloseButton,
 };
 const std::set<UiElementName> kElementsVisibleWithExitWarning = {
     kScreenDimmer, kExitWarning,
@@ -735,7 +735,7 @@ TEST_F(UiSceneManagerTest, SpeechRecognitionUiVisibility) {
                     false);
   VerifyVisibility(
       {kSpeechRecognitionListening, kSpeechRecognitionListeningMicrophoneIcon,
-       kSpeechRecognitionListeningBackplane,
+       kSpeechRecognitionListeningCloseButton,
        kSpeechRecognitionListeningInnerCircle,
        kSpeechRecognitionListeningGrowingCircle},
       true);
