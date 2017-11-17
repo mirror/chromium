@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2759d5a5_6fc94228",
+        "filename": "chrome/browser/extensions/api/chrome_extensions_api_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-17T21:34:26Z",
+      "side": 1,
+      "message": "new code should use std::make_unique",
+      "range": {
+        "startLine": 230,
+        "startChar": 14,
+        "endLine": 230,
+        "endChar": 24
+      },
+      "revId": "62e13b69b654635425ca00053fa09f96d55f92f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b302bcd_20e2f3e6",
+        "filename": "chrome/browser/extensions/api/chrome_extensions_api_client.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-17T21:34:26Z",
+      "side": 1,
+      "message": "nit: remove this line",
+      "revId": "62e13b69b654635425ca00053fa09f96d55f92f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0735cf39_9ebf32df",
+        "filename": "chromeos/dbus/upstart_client.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-17T21:34:26Z",
+      "side": 1,
+      "message": "instead do:\n|upstart_env|: List of upstart environment variables to be passed to the upstart service.",
+      "range": {
+        "startLine": 36,
+        "startChar": 41,
+        "endLine": 36,
+        "endChar": 34
+      },
+      "revId": "62e13b69b654635425ca00053fa09f96d55f92f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dbd31cb_2047c575",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-17T21:34:26Z",
+      "side": 1,
+      "message": "you don\u0027t need this",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 18
+      },
+      "revId": "62e13b69b654635425ca00053fa09f96d55f92f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53529126_4c16bbf8",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-17T21:34:26Z",
+      "side": 1,
+      "message": "run error callback in this case?",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 105,
+        "endChar": 14
+      },
+      "revId": "62e13b69b654635425ca00053fa09f96d55f92f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "568efcb4_0b15f91b",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-17T21:34:26Z",
+      "side": 1,
+      "message": "I\u0027d remove this, because the app will be notified about the error.\n\nIf you really want to keep it around, maybe use VLOG",
+      "range": {
+        "startLine": 121,
+        "startChar": 4,
+        "endLine": 121,
+        "endChar": 15
+      },
+      "revId": "62e13b69b654635425ca00053fa09f96d55f92f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c82a73_4fdfcc44",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-17T21:34:26Z",
+      "side": 1,
+      "message": "so, what is expected behavior if this is false?\n\nI though API documentation stated loading the component would be prerequisite for running the service? Is an analytics component going to be present on the device by default?",
+      "range": {
+        "startLine": 187,
+        "startChar": 8,
+        "endLine": 187,
+        "endChar": 25
+      },
+      "revId": "62e13b69b654635425ca00053fa09f96d55f92f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

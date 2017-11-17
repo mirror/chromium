@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "96a1cdb0_376954a6",
+        "filename": "extensions/browser/api/extensions_api_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-17T21:34:26Z",
+      "side": 1,
+      "message": "Can the default client implementation do\nstd::move(load_callback).Run(\"failed\" /*or some other error code*/);\n\nMainly so the extension function that uses this reports failure when not run with ChromeExtensionsAPIClient (instead of hanging forever)",
+      "parentUuid": "c692efbc_e3603e31",
+      "revId": "44474c4fd50fbea6ddfbcd9ca095dcdee2f9ab64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8441fc0_9763c3d4",
         "filename": "extensions/browser/api/media_perception_private/conversion_utils.cc",
         "patchSetId": 9
@@ -160,6 +178,24 @@
       "side": 1,
       "message": "This is quite a bit of work to separate this into two CLs unfortunately. A lot of the STOPPED changes modify the same files as the setAnalyticsComponent changes. Being able to stop the process is directly related to setAnalyticsComponent, because the process cant be running when you call it, so I don\u0027t think its unreasonable to have both of these changes in the same CL. Let me know if you think I should separate into two CLs.",
       "parentUuid": "a8441fc0_9763c3d4",
+      "revId": "44474c4fd50fbea6ddfbcd9ca095dcdee2f9ab64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9100df3_f75360ea",
+        "filename": "extensions/browser/api/media_perception_private/conversion_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-17T21:34:26Z",
+      "side": 1,
+      "message": "I think that would make the cl more focused, but I\u0027m fine either way",
+      "parentUuid": "8fb1802b_66b11293",
       "revId": "44474c4fd50fbea6ddfbcd9ca095dcdee2f9ab64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -236,6 +272,30 @@
       "side": 1,
       "message": "I\u0027m having trouble passing a OnceCallback through the delegate. I think it\u0027s because CrOSComponent::LoadComponent takes a OnceCallback by value instead of by reference.",
       "parentUuid": "f3d6a309_eb6d8202",
+      "range": {
+        "startLine": 17,
+        "startChar": 49,
+        "endLine": 17,
+        "endChar": 57
+      },
+      "revId": "44474c4fd50fbea6ddfbcd9ca095dcdee2f9ab64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f55e79_9357c3f4",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-17T21:34:26Z",
+      "side": 1,
+      "message": "OnceCallback is supposed to be passed by value.",
+      "parentUuid": "5e2e2662_1e9cbf25",
       "range": {
         "startLine": 17,
         "startChar": 49,
