@@ -35,6 +35,7 @@
 #include "components/omnibox/browser/verbatim_match.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
+#include "components/search_engines/search_engine_type.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/url_formatter/url_formatter.h"
 #include "components/variations/net/variations_http_headers.h"
@@ -85,6 +86,29 @@ const int kDefaultZeroSuggestRelevance = 100;
 
 // Used for testing whether zero suggest is ever available.
 constexpr char kArbitraryInsecureUrlString[] = "http://www.google.com/";
+
+bool ShouldDisplayMostVisitedURLs(
+    PrefService* prefs,
+    const TemplateURLService* template_url_service) {
+  if (OmniboxFieldTrial::InZeroSuggestMostVisitedFieldTrial(prefs))
+    return true;
+
+  // If the user is the zero suggest field trial that enables search-for queries
+  // as suggestions and the user does not have Google set up as their default
+  // search engine, zero suggest should instead fall-back to displaying Most
+  // Visited.
+  if (OmniboxFieldTrial::InZeroSuggestPersonalizedFieldTrial(prefs) &&
+      template_url_service != nullptr) {
+    const TemplateURL* default_provider =
+        template_url_service->GetDefaultSearchProvider();
+    return !(default_provider != nullptr &&
+             default_provider->GetEngineType(
+                 template_url_service->search_terms_data()) ==
+                 SEARCH_ENGINE_GOOGLE);
+  }
+
+  return false;
+}
 
 }  // namespace
 
@@ -170,8 +194,8 @@ void ZeroSuggestProvider::Start(const AutocompleteInput& input,
   // suggestions, if based on local browsing history.
   MaybeUseCachedSuggestions();
 
-  if (OmniboxFieldTrial::InZeroSuggestMostVisitedFieldTrial(
-          client()->GetPrefs())) {
+  if (ShouldDisplayMostVisitedURLs(client()->GetPrefs(),
+                                   template_url_service)) {
     most_visited_urls_.clear();
     scoped_refptr<history::TopSites> ts = client()->GetTopSites();
     if (ts) {
@@ -442,8 +466,8 @@ void ZeroSuggestProvider::ConvertResultsToAutocompleteMatches() {
   UMA_HISTOGRAM_COUNTS("ZeroSuggest.AllResults", num_results);
 
   // Show Most Visited results after ZeroSuggest response is received.
-  if (OmniboxFieldTrial::InZeroSuggestMostVisitedFieldTrial(
-          client()->GetPrefs())) {
+  if (ShouldDisplayMostVisitedURLs(client()->GetPrefs(),
+                                   template_url_service)) {
     if (!current_url_match_.destination_url.is_valid())
       return;
     matches_.push_back(current_url_match_);
