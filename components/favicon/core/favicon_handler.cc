@@ -265,24 +265,23 @@ bool FaviconHandler::UpdateFaviconCandidate(
   if (downloaded_favicon.candidate.score > best_favicon_.candidate.score)
     best_favicon_ = downloaded_favicon;
 
-  if (download_largest_icon_) {
-    // The size of the downloaded icon may not match the declared size. It's
-    // important to stop downloading if:
-    // - current candidate is only candidate.
-    // - next candidate has sizes attribute and it is not better than the best
-    //   one observed so far, which means any following candidate should also
-    //   be worse or equal too.
-    // - next candidate doesn't have sizes attributes, which means further
-    //   candidates don't have sizes attribute either (because the score lowest
-    //   and hence get sorted last during prioritization). We stop immediately
-    //   to avoid downloading them all, although we don't have the certainty
-    //   that no better favicon is among them.
-    return current_candidate_index_ + 1 >= candidates_.size() ||
-           candidates_[current_candidate_index_ + 1].score <=
-               best_favicon_.candidate.score;
-  } else {
+  if (!download_largest_icon_)
     return best_favicon_.candidate.score == 1;
-  }
+
+  // The size of the downloaded icon may not match the declared size. It's
+  // important to stop downloading if:
+  // - current candidate is only candidate.
+  // - next candidate has sizes attribute and it is not better than the best
+  //   one observed so far, which means any following candidate should also
+  //   be worse or equal too.
+  // - next candidate doesn't have sizes attributes, which means further
+  //   candidates don't have sizes attribute either (because the score lowest
+  //   and hence get sorted last during prioritization). We stop immediately
+  //   to avoid downloading them all, although we don't have the certainty
+  //   that no better favicon is among them.
+  return current_candidate_index_ + 1 >= candidates_.size() ||
+         candidates_[current_candidate_index_ + 1].score <=
+             best_favicon_.candidate.score;
 }
 
 void FaviconHandler::SetFavicon(const GURL& icon_url,

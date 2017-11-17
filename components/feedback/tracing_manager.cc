@@ -58,20 +58,17 @@ bool TracingManager::GetTraceData(int id, const TraceDataCallback& callback) {
     if (trace_callback_.is_null()) {
       trace_callback_ = callback;
       return true;
-    } else {
-      return false;
     }
-  } else {
-    std::map<int, scoped_refptr<base::RefCountedString> >::iterator data =
-        trace_data_.find(id);
-    if (data == trace_data_.end())
-      return false;
-
-    // Always return the data asychronously, so the behavior is consistant.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(callback, data->second));
-    return true;
+    return false;
   }
+  auto data_it = trace_data_.find(id);
+  if (data_it == trace_data_.end())
+    return false;
+
+  // Always return the data asychronously, so the behavior is consistant.
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(callback, data_it->second));
+  return true;
 }
 
 void TracingManager::DiscardTraceData(int id) {
