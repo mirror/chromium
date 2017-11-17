@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5956da06_aacc3c8b",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-17T16:22:31Z",
+      "side": 1,
+      "message": "If you don\u0027t add the third_party/.. prefix, you get a presubmit error \"Illegal include: \"vr/gvr/capi/include/gvr_keyboard.h\"\" I guess that\u0027s why we have it for gvr-android-sdk headers as well :)",
+      "parentUuid": "f6a52868_ec4e7a27",
+      "revId": "31a742c933b2139053d650df248500fb1e53b459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccdfd875_9b9119f6",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-17T15:47:16Z",
       "side": 1,
       "message": "we should probably call gvr_keyboard_destroy somewhere? It might worth wrap gvr keyboard related things in a new class instead of in vr_shell_gl",
+      "revId": "31a742c933b2139053d650df248500fb1e53b459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c5ca6f_2cefa540",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-17T16:22:31Z",
+      "side": 1,
+      "message": "Good catch, added to destructor gvr_keyboard_destroy.\n\nRE new class, all the changes in here are pretty temporary, and will move out of here when we make KB an element :)",
+      "parentUuid": "ccdfd875_9b9119f6",
       "revId": "31a742c933b2139053d650df248500fb1e53b459",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "b6ccea1c_670a78c6",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-17T16:22:31Z",
+      "side": 1,
+      "message": "I actually like this hear so that accidentally calling DrawKeyboard doesn\u0027t do anything when its not supposed to :)",
+      "parentUuid": "50d4d655_b1966ed4",
+      "range": {
+        "startLine": 1053,
+        "startChar": 7,
+        "endLine": 1053,
+        "endChar": 24
+      },
+      "revId": "31a742c933b2139053d650df248500fb1e53b459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4718afc7_83517053",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 12
@@ -73,6 +133,24 @@
       "revId": "31a742c933b2139053d650df248500fb1e53b459",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad2ff0a_903ce95a",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-17T16:22:31Z",
+      "side": 1,
+      "message": "According to the API, we do need to call set_frame_time and advance_frame every frame after we create the keyboard. This is because there may still be events to process after the kb hides.",
+      "parentUuid": "4718afc7_83517053",
+      "revId": "31a742c933b2139053d650df248500fb1e53b459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
