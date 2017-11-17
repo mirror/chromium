@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ee445442_9e558c29",
+        "filename": "chrome/browser/resources/media_router/media_router_common.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-17T21:22:06Z",
+      "side": 1,
+      "message": "Ah, missed that there was a font-size in #media-controls.  Moved font-size here back to route_details.css.",
+      "parentUuid": "e3c68a4d_ebbaf035",
+      "revId": "f43e2cab2e01d9c83ba5bd0a79821bbccdd5568a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fbc719d_81c9eefe",
         "filename": "chrome/common/media_router/mojo/media_status.mojom",
         "patchSetId": 3
