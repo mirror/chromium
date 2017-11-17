@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "744753e0_cfa64561",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-17T21:41:52Z",
+      "side": 1,
+      "message": "\u003e Indeed, this could use some tests (which I\u0027ve added).\n\nDid you upload any tests in patch 7? I don\u0027t see any.\n\n\u003e is there a way to get JS tests to run as part of an automated test suite?\n\nThere is a large amount of automated WebUI tests, see https://cs.chromium.org/chromium/src/chrome/test/data/webui/. For example look at [1] for a similar WebUI page that uses Mojo.\n\n[1] https://cs.chromium.org/chromium/src/chrome/test/data/webui/interventions_internals_browsertest.js",
+      "parentUuid": "3d823074_0eb08767",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22501df6_25f2c4db",
         "filename": "chrome/browser/resources/discards/discards.js",
         "patchSetId": 6
