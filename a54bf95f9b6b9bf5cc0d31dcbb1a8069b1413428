@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2f32c61f_716ee149",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-17T18:31:18Z",
+      "side": 1,
+      "message": "Thanks. Agreed. I just needed to make sure we do note early return or in FormControlElementClicked or ShowSuggestions() before reaching QueryAutofillSuggestions.\n\nEssentially, with some potential (and maybe nontrivial) changes to tests we could perhaps use something similar to autofill_renderer_browsertest.cc.\n\nI am thinking of filing the bug after the change lands so that I can reference the ccrev and the new file names.",
+      "parentUuid": "07cd2807_25adad47",
+      "range": {
+        "startLine": 23,
+        "startChar": 38,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "a54bf95f9b6b9bf5cc0d31dcbb1a8069b1413428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e806376_846bc5dd",
         "filename": "chrome/renderer/autofill/form_control_click_detection_browsertest.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "76638c19_2e07aee2",
+        "filename": "chrome/renderer/autofill/form_control_click_detection_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-17T18:31:18Z",
+      "side": 1,
+      "message": "Yes thanks! I did actually notice I was using the old copyright text but was not sure if I were to change it (given that I did not really design anything here). Done.",
+      "parentUuid": "7e806376_846bc5dd",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "a54bf95f9b6b9bf5cc0d31dcbb1a8069b1413428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "718b4ea5_1efc89c5",
         "filename": "components/autofill/content/renderer/autofill_agent.h",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "a54bf95f9b6b9bf5cc0d31dcbb1a8069b1413428",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "958b9990_a691fd6f",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-17T18:31:18Z",
+      "side": 1,
+      "message": "Thanks! Sorry for this :).",
+      "parentUuid": "718b4ea5_1efc89c5",
+      "range": {
+        "startLine": 302,
+        "startChar": 0,
+        "endLine": 302,
+        "endChar": 60
+      },
+      "revId": "a54bf95f9b6b9bf5cc0d31dcbb1a8069b1413428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
