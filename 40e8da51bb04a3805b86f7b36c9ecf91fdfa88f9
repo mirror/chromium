@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "ac92b4a2_b6998246",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T00:20:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "074100fb_9d5036c6",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2af350b_696d2ea9",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 5
@@ -218,6 +236,24 @@
       "side": 1,
       "message": "I\u0027m not sure what you mean?",
       "parentUuid": "e2af350b_696d2ea9",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982dd493_01c71abc",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T00:20:51Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not sure what you mean?\n\nThere\u0027s an identical call on line 155 (143 in the new patchset).\n\nIt\u0027s less of an issue if we can keep the size of this method small, but if someone wants to answer the question, \"where is the |header_painter_| data member initialized\", they need to look in two places.\n\nE.g. one approach could be a helper member function\n\n std::unique_ptr\u003cash::FrameHeader\u003e CreateFrameHeader() {\n   if (!UsePackagedAppHeaderStyle()) {\n     auto browser_header \u003d std::make_unique\u003cBrowserFrameHeaderAsh\u003e();\n     browser_header-\u003eInit(..);\n     return browser_header;\n   }\n\n   if (!extensions::HostedAppBrowserController::\n           IsForExperimentalHostedAppBrowser(browser_view()-\u003ebrowser())) {\n     return std::make_unique\u003cBrowserFrameHeaderAsh\u003e(..);\n   }\n\n  auto hosted_app_header \u003d  std::make_unique\u003cHostedAppFrameHeaderAsh\u003e();\n  ...\n  return hosted_app_header;\n}\n\n\n\nthen this line is just\n\nheader_painter_ \u003d CreateFrameHeader();",
+      "parentUuid": "ee32683e_a8e32374",
       "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -256,6 +292,24 @@
       "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f5efa75_68c91e5b",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_header_painter_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T00:20:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b58c644a_5db3ff29",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -358,6 +412,24 @@
       "side": 1,
       "message": "Changed GetTitleBounds \u003d\u003e GetAvailableTitleBounds.\n\nModified the comment a bit. Can you elaborate on why this is weird?",
       "parentUuid": "ea1d955f_d7b76b46",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56fd2058_13302e15",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_header_painter_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T00:20:51Z",
+      "side": 1,
+      "message": "\u003e Changed GetTitleBounds \u003d\u003e GetAvailableTitleBounds.\n\u003e \n\u003e Modified the comment a bit. Can you elaborate on why this is weird?\n\nThe weirdness I feel probably comes from not using View*s and a LayoutManager. It also seems to re-implement a lot of stuff that views::Label* already does. And it\u0027s very complex -- \"paint\" methods are usually very simple -- all this coordinate manipulation belongs in a Layout() method.\n\nIf you don\u0027t want to use a views::Label, perhaps having a gfx::RenderText data member will help. Then this just calls text-\u003eDraw(canvas);",
+      "parentUuid": "bed6be7b_ae3649fa",
       "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
