@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <limits>
+
 #include "base/command_line.h"
 #include "components/exo/wayland/clients/blur.h"
 #include "components/exo/wayland/clients/simple.h"
@@ -27,12 +29,24 @@ TEST_F(WaylandClientPerfTests, Simple) {
 
   client.Run(kWarmUpFrames);
 
+  exo::wayland::clients::Simple::Result result;
   auto start_time = base::Time::Now();
-  client.Run(kTestFrames);
+  client.Run(kTestFrames, &result);
   auto time_delta = base::Time::Now() - start_time;
   float fps = kTestFrames / time_delta.InSecondsF();
-  perf_test::PrintResult("WaylandClientPerfTests", "", "Simple", fps,
+  perf_test::PrintResult("WaylandClientPerfTests", "", "SimpleFrameRate", fps,
                          "frames/s", true);
+  if (result.num_frames_presented) {
+    auto average_latency =
+        result.presentation_latency / result.num_frames_presented;
+    perf_test::PrintResult(
+        "WaylandClientPerfTests", "", "SimplePresentationLatency",
+        static_cast<size_t>(average_latency.InMicroseconds()), "us", true);
+  } else {
+    perf_test::PrintResult("WaylandClientPerfTests", "",
+                           "SimplePresentationLatency",
+                           std::numeric_limits<size_t>::max(), "us", true);
+  }
 }
 
 class WaylandClientBlurPerfTests
