@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e797588b_390b6ea3",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_fence.txt",
+        "patchSetId": 37
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-17T18:59:48Z",
+      "side": 1,
+      "message": "Renamed as follows:\n\n GLuint InsertClientGpuFenceCHROMIUM(ClientGpuFence source)\n GLuint InsertGpuFenceCHROMIUM()\n\nLet me know if you prefer a different variant.",
+      "parentUuid": "26a91a6e_b42531d4",
+      "range": {
+        "startLine": 38,
+        "startChar": 15,
+        "endLine": 38,
+        "endChar": 40
+      },
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e1dd967_0da37daf",
         "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_fence.txt",
         "patchSetId": 37
@@ -93,6 +117,30 @@
       "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6eff6c8_714b2937",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_fence.txt",
+        "patchSetId": 37
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-17T18:59:48Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "199e40a2_56e5fbfd",
+      "range": {
+        "startLine": 46,
+        "startChar": 15,
+        "endLine": 46,
+        "endChar": 37
+      },
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -146,6 +194,24 @@
       "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "988daf86_d8a91dd4",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-17T18:59:48Z",
+      "side": 1,
+      "message": "Thank you for the explanation. I think the current implementation looks correct then, let me know if I\u0027m missing something. I\u0027ve renamed the method to InsertGpuFenceCHROMIUM().",
+      "parentUuid": "f961db63_0bb2f645",
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -254,6 +320,24 @@
     },
     {
       "key": {
+        "uuid": "561ca8ad_625b6b59",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-17T18:59:48Z",
+      "side": 1,
+      "message": "Marking as resolved since I think it\u0027s working as intended, but please let me know if there\u0027s a better alternative here. I don\u0027t see how it could work with just client-managed callbacks.",
+      "parentUuid": "116f1842_463bdfc3",
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fff031b8_688170a3",
         "filename": "ui/gfx/gpu_fence.h",
         "patchSetId": 37
@@ -321,6 +405,24 @@
       "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9404bcf5_bdf383da",
+        "filename": "ui/gfx/gpu_fence_handle.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-17T18:59:48Z",
+      "side": 1,
+      "message": "Done, I\u0027ve removed the Close() method.",
+      "parentUuid": "49083903_6bedea8b",
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -403,6 +505,30 @@
       "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e4082c9_43e03ab9",
+        "filename": "ui/gl/gl_fence.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-17T18:59:48Z",
+      "side": 1,
+      "message": "Done, renamed to CreateGpuFence now that GLFence is-a GpuFence.",
+      "parentUuid": "87b3a69a_a51fce33",
+      "range": {
+        "startLine": 47,
+        "startChar": 34,
+        "endLine": 47,
+        "endChar": 51
+      },
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

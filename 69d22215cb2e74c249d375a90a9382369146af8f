@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "d7d6fb39_01009467",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-17T18:59:48Z",
+      "side": 1,
+      "message": "I\u0027ve now renamed it to InsertClientGpuFenceCHROMIUM(ClientGpuFence source) to distinguish from the no-argument InsertGpuFenceCHROMIUM(), removed the no-op helper call, and updated the comment to clarify the assumed semantics.",
+      "parentUuid": "2a86bd4e_e2c93b6b",
+      "revId": "69d22215cb2e74c249d375a90a9382369146af8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1da461df_a5ff504c",
         "filename": "gpu/ipc/client/command_buffer_proxy_impl.h",
         "patchSetId": 39
