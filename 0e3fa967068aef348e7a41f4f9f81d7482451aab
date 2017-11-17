@@ -34,6 +34,24 @@
       "revId": "0e3fa967068aef348e7a41f4f9f81d7482451aab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb990752_6ededa4d",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-17T20:49:30Z",
+      "side": 1,
+      "message": "That\u0027s totally fine.\n\nFYI GLImages are used by default for WebGL only on Mac (because GMBs help with presentation on Mac and maybe-eventually-cros) but no on Windows\nhttps://cs.chromium.org/chromium/src/content/child/runtime_features.cc?rcl\u003d70f69d6656f3b3d697d2195ffa8bde031c66088e\u0026l\u003d167",
+      "parentUuid": "2f5718eb_313422d1",
+      "revId": "0e3fa967068aef348e7a41f4f9f81d7482451aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
