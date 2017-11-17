@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4f5ec4d_62ef6601",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwSettingsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1831,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-17T18:26:56Z",
+      "side": 1,
+      "message": "I generally put @RetryOnFailure on it and let it run for a week, and then check the flakiness dashboard to see if it flakes",
+      "revId": "e656f4ba7a9ad83130bb89f21383ace0fdf736fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
