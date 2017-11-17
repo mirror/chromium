@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4972975d_e2491684",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T20:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43492ad1_0e762967",
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1edf8303_44995a09",
         "filename": "ios/chrome/browser/metrics/incognito_web_state_observer.h",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35889aea_07c8bae2",
+        "filename": "ios/chrome/browser/metrics/incognito_web_state_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T20:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1edf8303_44995a09",
+      "range": {
+        "startLine": 14,
+        "startChar": 27,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "33a61c76_e57804f8",
+        "filename": "ios/chrome/browser/metrics/incognito_web_state_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T20:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ea287c3_ad464fbc",
+      "range": {
+        "startLine": 40,
+        "startChar": 44,
+        "endLine": 40,
+        "endChar": 0
+      },
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89103817_41ab8901",
         "filename": "ios/chrome/browser/metrics/incognito_web_state_observer.mm",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f5b8e5_2337402b",
+        "filename": "ios/chrome/browser/metrics/incognito_web_state_observer.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T20:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89103817_41ab8901",
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "208c6471_5962bd58",
+        "filename": "ios/chrome/browser/metrics/incognito_web_state_observer.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T20:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a6e1b76_4f783e23",
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c576500f_1389e83b",
         "filename": "ios/chrome/browser/metrics/incognito_web_state_observer.mm",
         "patchSetId": 2
@@ -113,6 +215,24 @@
       "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2457543c_b404449f",
+        "filename": "ios/chrome/browser/metrics/incognito_web_state_observer.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T20:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c576500f_1389e83b",
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "89766076_9ee5cc0c",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_metrics_service_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T20:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd08ccb9_37343b1f",
+      "range": {
+        "startLine": 90,
+        "startChar": 31,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3756e27a_98d3aa33",
         "filename": "ios/chrome/browser/metrics/ukm_egtest.mm",
         "patchSetId": 2
@@ -159,6 +303,30 @@
       "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c82fd8_74f896e7",
+        "filename": "ios/chrome/browser/metrics/ukm_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T20:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3756e27a_98d3aa33",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 0
+      },
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "07f74318_3fc45ea7",
+        "filename": "ios/chrome/browser/metrics/ukm_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T20:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9242ab11_43d4ae94",
+      "range": {
+        "startLine": 75,
+        "startChar": 45,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7507c4cf_c992b044",
         "filename": "ios/chrome/browser/metrics/ukm_egtest.mm",
         "patchSetId": 2
@@ -196,6 +388,30 @@
       "writtenOn": "2017-11-17T18:24:45Z",
       "side": 1,
       "message": "What\u0027s the reason for ending the namespace here? Is it because the ObjC code can\u0027t be in a namespace? If so, what\u0027s the value of the namespace for the helper?",
+      "range": {
+        "startLine": 77,
+        "startChar": 23,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07f29a7_fbf136a4",
+        "filename": "ios/chrome/browser/metrics/ukm_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T20:38:04Z",
+      "side": 1,
+      "message": "that\u0027s correct. The ObjC code can\u0027t be inside the namespace. UkmEGTestHelper couldn\u0027t be inside the anonymous namespace as it has to be a friend of UkmService and UkmRecorderImpl. Also it seemed like a bad idea to leave it outside any namespace, so I chose metrics:: for consistency with metrics::UkmBrowserTest.",
+      "parentUuid": "7507c4cf_c992b044",
       "range": {
         "startLine": 77,
         "startChar": 23,
@@ -231,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "c9c907c6_b02763b3",
+        "filename": "ios/chrome/browser/metrics/ukm_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T20:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9884100_483e5d03",
+      "range": {
+        "startLine": 205,
+        "startChar": 51,
+        "endLine": 205,
+        "endChar": 0
+      },
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1152523_2c58187b",
         "filename": "ios/chrome/test/earl_grey/chrome_actions.mm",
         "patchSetId": 2
@@ -251,6 +491,30 @@
       "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9c8fcd6_65ea8468",
+        "filename": "ios/chrome/test/earl_grey/chrome_actions.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T20:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1152523_2c58187b",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
