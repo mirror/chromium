@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed51dde1_32c20a3c",
+        "filename": "net/http/url_security_manager_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-17T22:53:13Z",
+      "side": 1,
+      "message": "std::make_unique()\n\n(will fix the compile failure seen in commit queue)",
+      "range": {
+        "startLine": 15,
+        "startChar": 9,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "89cb9fdcce7a1971e6271c590f10b8752ac194a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
