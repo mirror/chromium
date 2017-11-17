@@ -9,8 +9,11 @@
 #include <wrl/client.h>
 
 #include <algorithm>
+#include <memory>
 #include <set>
 #include <tuple>
+#include <utility>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/files/file_path.h"
@@ -265,11 +268,9 @@ class SelectFileDialogImpl : public ui::SelectFileDialog,
 
   // Runs a Folder selection dialog box, passes back the selected folder in
   // |path| and returns true if the user clicks OK. If the user cancels the
-  // dialog box the value in |path| is not modified and returns false. |title|
-  // is the user-supplied title text to show for the dialog box. Run on the
-  // dialog thread.
-  bool RunSelectFolderDialog(const std::wstring& title,
-                             HWND owner,
+  // dialog box the value in |path| is not modified and returns false. Run
+  // on the dialog thread.
+  bool RunSelectFolderDialog(const ExecuteSelectParams& params,
                              base::FilePath* path);
 
   // Runs an Open file dialog box, with similar semantics for input paramaters
@@ -290,6 +291,12 @@ class SelectFileDialogImpl : public ui::SelectFileDialog,
   static int CALLBACK BrowseCallbackProc(HWND window, UINT message,
                                          LPARAM parameter,
                                          LPARAM data);
+
+  // The callback function for when the upload folder dialog is opened.
+  static int CALLBACK UploadFolderCallbackProc(HWND window,
+                                               UINT message,
+                                               LPARAM parameter,
+                                               LPARAM data);
 
   bool HasMultipleFileTypeChoicesImpl() override;
 
@@ -367,15 +374,7 @@ void SelectFileDialogImpl::ExecuteSelectFile(
   bool success = false;
   unsigned filter_index = params.file_type_index;
   if (params.type == SELECT_FOLDER || params.type == SELECT_UPLOAD_FOLDER) {
-    std::wstring title = params.title;
-    if (title.empty() && params.type == SELECT_UPLOAD_FOLDER) {
-      // If it's for uploading don't use default dialog title to
-      // make sure we clearly tell it's for uploading.
-      title = l10n_util::GetStringUTF16(IDS_SELECT_UPLOAD_FOLDER_DIALOG_TITLE);
-    }
-    success = RunSelectFolderDialog(title,
-                                    params.run_state.owner,
-                                    &path);
+    success = RunSelectFolderDialog(params, &path);
   } else if (params.type == SELECT_SAVEAS_FILE) {
     std::wstring path_as_wstring = path.value();
     success = SaveFileAsWithFilter(params.run_state.owner,
@@ -522,28 +521,58 @@ int CALLBACK SelectFileDialogImpl::BrowseCallbackProc(HWND window,
   return 0;
 }
 
-bool SelectFileDialogImpl::RunSelectFolderDialog(const std::wstring& title,
-                                                 HWND owner,
-                                                 base::FilePath* path) {
+int CALLBACK SelectFileDialogImpl::UploadFolderCallbackProc(HWND window,
+                                                            UINT message,
+                                                            LPARAM parameter,
+                                                            LPARAM data) {
+  if (message == BFFM_INITIALIZED) {
+    SendMessage(window, BFFM_SETOKTEXT, 0,
+                (LPARAM)l10n_util::GetStringUTF16(
+                    IDS_SELECT_UPLOAD_FOLDER_DIALOG_UPLOAD_BUTTON)
+                    .c_str());
+    // WParam is TRUE since passing a path.
+    // data lParam member of the BROWSEINFO structure.
+    if (data)
+      SendMessage(window, BFFM_SETSELECTION, TRUE, (LPARAM)data);
+  }
+  return 0;
+}
+
+bool SelectFileDialogImpl::RunSelectFolderDialog(
+    const ExecuteSelectParams& params,
+    base::FilePath* path) {
   DCHECK(path);
+  std::wstring title = params.title;
+  if (title.empty() && params.type == SELECT_UPLOAD_FOLDER) {
+    // If it's for uploading don't use default dialog title to
+    // make sure we clearly tell it's for uploading.
+    title = l10n_util::GetStringUTF16(IDS_SELECT_UPLOAD_FOLDER_DIALOG_TITLE);
+  }
 
   wchar_t dir_buffer[MAX_PATH + 1];
 
   bool result = false;
   BROWSEINFO browse_info = {0};
-  browse_info.hwndOwner = owner;
+  browse_info.hwndOwner = params.run_state.owner;
   browse_info.lpszTitle = title.c_str();
   browse_info.pszDisplayName = dir_buffer;
   browse_info.ulFlags = BIF_USENEWUI | BIF_RETURNONLYFSDIRS;
 
-  if (path->value().length()) {
-    // Highlight the current value.
+  // If a path was provided, store it in the BROWSEINFO and set the callback
+  // function for the dialog so that the path can be selected by default in
+  // the callback.
+  if (path->value().length())
     browse_info.lParam = (LPARAM)path->value().c_str();
+
+  if (params.type == SELECT_UPLOAD_FOLDER) {
+    browse_info.ulFlags |= BIF_NONEWFOLDERBUTTON;
+    browse_info.lpfn = &UploadFolderCallbackProc;
+  } else if (browse_info.lParam) {
     browse_info.lpfn = &BrowseCallbackProc;
   }
 
   LPITEMIDLIST list = SHBrowseForFolder(&browse_info);
-  DisableOwner(owner);
+  DisableOwner(params.run_state.owner);
   if (list) {
     STRRET out_dir_buffer;
     ZeroMemory(&out_dir_buffer, sizeof(out_dir_buffer));
