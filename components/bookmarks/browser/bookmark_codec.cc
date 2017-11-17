@@ -315,11 +315,10 @@ bool BookmarkCodec::DecodeNode(const base::DictionaryValue& value,
       return false;
 
     GURL url = GURL(url_string);
-    if (!node && url.is_valid())
-      node = new BookmarkNode(id, url);
-    else
+    if (node || !url.is_valid())
       return false;  // Node invalid.
 
+    node = new BookmarkNode(id, url);
     if (parent)
       parent->Add(base::WrapUnique(node), parent->child_count());
     node->set_type(BookmarkNode::URL);
