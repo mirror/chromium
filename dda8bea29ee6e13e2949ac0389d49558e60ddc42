@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "139a8784_c2c115d3",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-17T03:16:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08501b31_39ab77f7",
+      "range": {
+        "startLine": 92,
+        "startChar": 57,
+        "endLine": 92,
+        "endChar": 70
+      },
+      "revId": "dda8bea29ee6e13e2949ac0389d49558e60ddc42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6862d274_94550ff1",
         "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl_browsertest.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "dda8bea29ee6e13e2949ac0389d49558e60ddc42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d480f9e7_489503a8",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-17T03:16:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6862d274_94550ff1",
+      "revId": "dda8bea29ee6e13e2949ac0389d49558e60ddc42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
