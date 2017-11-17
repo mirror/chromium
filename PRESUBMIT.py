@@ -2652,6 +2652,7 @@ def _CheckForIPCRules(input_api, output_api):
   """Check for same IPC rules described in
   http://www.chromium.org/Home/chromium-security/education/security-tips-for-ipc
   """
+  # Dummy change
   base_pattern = r'IPC_ENUM_TRAITS\('
   inclusion_pattern = input_api.re.compile(r'(%s)' % base_pattern)
   comment_pattern = input_api.re.compile(r'//.*(%s)' % base_pattern)
