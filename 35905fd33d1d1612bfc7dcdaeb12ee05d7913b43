@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8e91cbf_1501a6ca",
+        "filename": "cc/paint/paint_filter.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-17T01:48:47Z",
+      "side": 1,
+      "message": "I think I agree with vmsptr that I think this makes the code a little less readable and we could just static cast this.",
+      "revId": "35905fd33d1d1612bfc7dcdaeb12ee05d7913b43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
