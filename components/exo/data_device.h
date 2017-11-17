@@ -8,6 +8,7 @@
 #include <cstdint>
 
 #include "base/macros.h"
+#include "components/exo/data_offer.h"
 #include "components/exo/data_offer_observer.h"
 #include "components/exo/wm_helper.h"
 
@@ -18,7 +19,6 @@ class DropTargetEvent;
 namespace exo {
 
 class DataDeviceDelegate;
-class DataOffer;
 class DataSource;
 class FileHelper;
 class Surface;
@@ -59,11 +59,10 @@ class DataDevice : public WMHelper::DragDropObserver, public DataOfferObserver {
 
  private:
   Surface* GetEffectiveTargetForEvent(const ui::DropTargetEvent& event) const;
-  void ClearDataOffer();
 
   DataDeviceDelegate* const delegate_;
   FileHelper* const file_helper_;
-  DataOffer* data_offer_;
+  DataOfferTracker data_offer_;
 
   DISALLOW_COPY_AND_ASSIGN(DataDevice);
 };

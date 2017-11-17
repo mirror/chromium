@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/observer_list.h"
+#include "components/exo/tracker.h"
 #include "ui/base/class_property.h"
 
 namespace base {
@@ -78,6 +79,8 @@ class DataOffer final : public ui::PropertyHandler {
 
   DISALLOW_COPY_AND_ASSIGN(DataOffer);
 };
+
+using DataOfferTracker = Tracker<DataOffer, DataOfferObserver>;
 
 }  // namespace exo
 

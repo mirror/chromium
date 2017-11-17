@@ -55,6 +55,7 @@ source_set("exo") {
     "touch.cc",
     "touch.h",
     "touch_delegate.h",
+    "tracker.h",
     "wm_helper.cc",
     "wm_helper.h",
   ]
