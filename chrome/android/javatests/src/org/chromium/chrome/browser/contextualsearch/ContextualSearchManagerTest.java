@@ -83,6 +83,7 @@ import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content.browser.test.util.KeyUtils;
+import org.chromium.content.browser.test.util.TestContentViewCore;
 import org.chromium.content.browser.test.util.TouchCommon;
 import org.chromium.content_public.browser.SelectionClient;
 import org.chromium.net.test.EmbeddedTestServer;
@@ -602,7 +603,7 @@ public class ContextualSearchManagerTest {
      * A ContentViewCore that has some methods stubbed out for testing.
      * TODO(pedrosimonetti): consider using the real ContentViewCore instead.
      */
-    private static final class StubbedContentViewCore extends ContentViewCore {
+    private static final class StubbedContentViewCore extends TestContentViewCore {
         private boolean mIsFocusedNodeEditable;
 
         public StubbedContentViewCore(Context context) {

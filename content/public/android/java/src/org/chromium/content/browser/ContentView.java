@@ -37,7 +37,7 @@ public class ContentView extends FrameLayout
     public static final int DEFAULT_MEASURE_SPEC =
             MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
 
-    protected final ContentViewCore mContentViewCore;
+    protected final ContentViewCoreImpl mContentViewCore;
     private EventForwarder mEventForwarder;
 
     /**
@@ -78,7 +78,7 @@ public class ContentView extends FrameLayout
         setFocusable(true);
         setFocusableInTouchMode(true);
 
-        mContentViewCore = cvc;
+        mContentViewCore = (ContentViewCoreImpl) cvc;
     }
 
     @Override
