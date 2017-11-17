@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78b3a60d_e1c9ff26",
+        "filename": "content/browser/renderer_host/input/composited_scrolling_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-17T15:18:46Z",
+      "side": 1,
+      "message": "Does the MainThreadFrameObserver actually wait for composite?\n\nSeems like either:\n1. The comment is wrong.\n2. We made the test flaky.\n3. MainThreadFrameObserver is named poorly.\n\nLooks like it\u0027s probably option 3? If MainThreadFrameObserver actually observes compositor frames as well, can we rename it before depending on it in these tests?",
+      "range": {
+        "startLine": 93,
+        "startChar": 57,
+        "endLine": 93,
+        "endChar": 67
+      },
+      "revId": "ab6b3c7ff6692853e2657f9e1b52f025470fd31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
