@@ -22,6 +22,29 @@
       "revId": "dcf305ec29ac4f05b33d39efb208b0a5edd9389c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244c11b7_212c2635",
+        "filename": "third_party/metrics_proto/ukm/aggregate.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-17T19:51:50Z",
+      "side": 1,
+      "message": "I\u0027m also somewhat skeptical that we dropped counts on individual metrics, since we shouldn\u0027t be doing sampling on individual metrics.",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 48
+      },
+      "revId": "dcf305ec29ac4f05b33d39efb208b0a5edd9389c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
