@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aba72b2b_34983371",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-17T04:45:48Z",
+      "side": 1,
+      "message": "nit: you could just scroll the FrameView here :)",
+      "range": {
+        "startLine": 593,
+        "startChar": 40,
+        "endLine": 593,
+        "endChar": 44
+      },
+      "revId": "4badb6f8483ff73124c9e75998595bd0ff13b6d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
