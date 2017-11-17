@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "4a8469d3_c6bbb653",
+        "filename": "chrome/android/java/res/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T20:01:42Z",
+      "side": 1,
+      "message": "Ah, okay. Let\u0027s keep it like this then.",
+      "parentUuid": "e3bbb67a_b099abd4",
+      "range": {
+        "startLine": 22,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 55
+      },
+      "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c84b6229_a4fd8a9a",
         "filename": "chrome/android/java/res/PRESUBMIT.py",
         "patchSetId": 2
@@ -175,6 +199,30 @@
       "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f52aa7_376f4a7d",
+        "filename": "chrome/android/java/res/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T20:01:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1ab1707c_9e5dbe0a",
+      "range": {
+        "startLine": 64,
+        "startChar": 54,
+        "endLine": 64,
+        "endChar": 61
+      },
+      "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -225,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "43521471_5fda320e",
+        "filename": "chrome/android/java/res/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T20:01:42Z",
+      "side": 1,
+      "message": "Resolved",
+      "parentUuid": "db91f625_cb7f3bea",
+      "range": {
+        "startLine": 86,
+        "startChar": 18,
+        "endLine": 86,
+        "endChar": 60
+      },
+      "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "231383bd_d2309b1c",
         "filename": "chrome/android/java/res/PRESUBMIT.py",
         "patchSetId": 2
@@ -272,6 +344,30 @@
     },
     {
       "key": {
+        "uuid": "56c9af4f_45ba5b8f",
+        "filename": "chrome/android/java/res/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T20:01:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e0c04a00_792a6ed9",
+      "range": {
+        "startLine": 109,
+        "startChar": 35,
+        "endLine": 109,
+        "endChar": 44
+      },
+      "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9252a836_957129fd",
         "filename": "chrome/android/java/res/PRESUBMIT_test.py",
         "patchSetId": 2
@@ -307,6 +403,30 @@
       "side": 1,
       "message": "Same to the above comment, I made the format RRGGBB for opaque color and AARRGGBB for translucent color.",
       "parentUuid": "9252a836_957129fd",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 28
+      },
+      "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e3c2b4_c1206c6b",
+        "filename": "chrome/android/java/res/PRESUBMIT_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T20:01:42Z",
+      "side": 1,
+      "message": "Maybe something like testColorInvalidAlphaValue() would make it a bit more clear? I missed that #FF was disallowed.",
+      "parentUuid": "f68f1f81_20abdbf3",
       "range": {
         "startLine": 40,
         "startChar": 6,
@@ -363,6 +483,30 @@
       "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be2867f_6a695370",
+        "filename": "chrome/android/java/res/PRESUBMIT_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T20:01:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ec1d5ba8_caea8eef",
+      "range": {
+        "startLine": 70,
+        "startChar": 40,
+        "endLine": 70,
+        "endChar": 55
+      },
+      "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
