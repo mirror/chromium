@@ -6,6 +6,7 @@
 #define CONTENT_BROWSER_GPU_GPU_CLIENT_H_
 
 #include "base/memory/weak_ptr.h"
+#include "base/optional.h"
 #include "content/browser/gpu/gpu_process_host.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/ui/public/interfaces/gpu.mojom.h"
@@ -19,15 +20,19 @@ class GpuClient : public ui::mojom::Gpu {
 
   void Add(ui::mojom::GpuRequest request);
 
+  void PreEstablishGpuChannel();
+
  private:
   void OnError();
-  void OnEstablishGpuChannel(const EstablishGpuChannelCallback& callback,
-                             mojo::ScopedMessagePipeHandle channel_handle,
+  void OnEstablishGpuChannel(mojo::ScopedMessagePipeHandle channel_handle,
                              const gpu::GPUInfo& gpu_info,
                              const gpu::GpuFeatureInfo& gpu_feature_info,
                              GpuProcessHost::EstablishChannelStatus status);
   void OnCreateGpuMemoryBuffer(const CreateGpuMemoryBufferCallback& callback,
                                const gfx::GpuMemoryBufferHandle& handle);
+  void EstablishGpuChannelImpl(
+      base::Optional<EstablishGpuChannelCallback> callback);
+  void ClearCallback();
 
   // ui::mojom::Gpu overrides:
   void EstablishGpuChannel(
@@ -48,6 +53,11 @@ class GpuClient : public ui::mojom::Gpu {
 
   const int render_process_id_;
   mojo::BindingSet<ui::mojom::Gpu> bindings_;
+  bool gpu_channel_requested_ = false;
+  base::Optional<EstablishGpuChannelCallback> callback_;
+  mojo::ScopedMessagePipeHandle channel_handle_;
+  gpu::GPUInfo gpu_info_;
+  gpu::GpuFeatureInfo gpu_feature_info_;
   base::WeakPtrFactory<GpuClient> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(GpuClient);
