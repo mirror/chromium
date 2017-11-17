@@ -290,6 +290,24 @@
     },
     {
       "key": {
+        "uuid": "8ae5b244_dbff82c3",
+        "filename": "chrome/browser/net/proxy_service_factory.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-17T17:11:54Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "a448aa85_6837b987",
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43555d85_62777ecd",
         "filename": "components/proxy_config/pref_proxy_config_tracker_impl.cc",
         "patchSetId": 25
