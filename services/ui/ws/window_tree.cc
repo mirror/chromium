@@ -12,6 +12,7 @@
 #include "base/callback_helpers.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "build/build_config.h"
 #include "mojo/public/cpp/bindings/map.h"
 #include "services/ui/display/screen_manager.h"
 #include "services/ui/ws/cursor_location_manager.h"
@@ -49,6 +50,14 @@ using EventProperties = std::unordered_map<std::string, std::vector<uint8_t>>;
 namespace ui {
 namespace ws {
 namespace {
+
+uint32_t TransportIdForAcceleratedWidget(gfx::AcceleratedWidget widget) {
+#if defined(OS_WIN)
+  return reinterpret_cast<uint32_t>(widget);
+#else
+  return static_cast<uint32_t>(widget);
+#endif
+}
 
 bool HasPositiveInset(const gfx::Insets& insets) {
   return insets.width() > 0 || insets.height() > 0 || insets.left() > 0 ||
@@ -178,6 +187,14 @@ void WindowTree::Init(std::unique_ptr<WindowTreeBinding> binding,
   client()->OnEmbed(WindowToWindowData(to_send.front()), std::move(tree),
                     display_id, ClientWindowIdToTransportId(focused_window_id),
                     drawn, root->current_local_surface_id());
+}
+
+void WindowTree::OnAcceleratedWidgetAvailableForDisplay(Display* display) {
+  DCHECK(window_manager_internal_);
+  window_manager_internal_->WmOnAcceleratedWidgetForDisplay(
+      display->GetId(),
+      TransportIdForAcceleratedWidget(
+          display->platform_display()->GetAcceleratedWidget()));
 }
 
 void WindowTree::ConfigureWindowManager(
