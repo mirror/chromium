@@ -16,6 +16,24 @@
       "revId": "aaeb49d2b56f171c9923bf5461f1fce8b6ed1b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57bd2cc_aa809371",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-17T15:16:19Z",
+      "side": 1,
+      "message": "Oh wow, that feels like quite the footgun. Fixed, but would appreciate if someone could fix V8ObjectBuilder one day...",
+      "parentUuid": "2fb534cc_316a5856",
+      "revId": "aaeb49d2b56f171c9923bf5461f1fce8b6ed1b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
