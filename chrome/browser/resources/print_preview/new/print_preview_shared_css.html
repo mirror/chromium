@@ -4,9 +4,20 @@
 <dom-module id="print-preview-shared">
   <template>
     <style>
+      [hidden] {
+        display: none !important;
+      }
+
       h1 {
         line-height: 1;
         user-select: none;
+      }
+
+      :host .multirow-controls span {
+        --settings-section-title-style: {
+          padding-top: 7px;
+          align-self: flex-start;
+        }
       }
 
       /* Default state ********************************************************/
