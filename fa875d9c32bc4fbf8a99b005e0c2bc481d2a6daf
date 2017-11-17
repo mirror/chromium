@@ -256,6 +256,30 @@
     },
     {
       "key": {
+        "uuid": "91590bc3_04006200",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-17T10:59:58Z",
+      "side": 1,
+      "message": "My suggestion was to have something like\n\nclass PlayingState {\npublic:\n  void Update(bool playing);\n\nprivate:\n  void PollAudioLevel();\n  bool IsAudible() const;\n\n  bool playing_ \u003d false;\n  // Calls PollAudioLevel() at regular intervals while |playing_| is true.\n  base::RepeatingTimer poll_timer_;\n  bool is_audible_ \u003d false;\n  // |observer_| is notified about changes in the audible state of the stream.\n  media::mojom::AudioOutputStreamObserverPtr observer_;\n}\n\n- which should also update playing state upon destruction, instead of calling UpdatePlayingState(false) in AOD destructor.\n\n(This is may be not relevant after changes proposed by Yuri)",
+      "parentUuid": "435ff62f_6605ffc6",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 55
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6880c122_a8b0fef0",
         "filename": "content/browser/renderer_host/media/audio_output_delegate_impl_unittest.cc",
         "patchSetId": 6
