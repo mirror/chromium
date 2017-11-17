@@ -29,6 +29,8 @@ class InterventionsInternalsPageHandler
 
   // mojom::InterventionsInternalsPageHandler:
   void GetPreviewsEnabled(GetPreviewsEnabledCallback callback) override;
+  void GetPreviewsFlagsStatuses(
+      GetPreviewsFlagsStatusesCallback callback) override;
   void SetClientPage(mojom::InterventionsInternalsPagePtr page) override;
   void SetIgnorePreviewsBlacklistDecision(bool ignore) override;
 
