@@ -33,6 +33,24 @@
       "revId": "b4a8383f496eef2e2016c215bc002f7458c1a6a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae3ecb87_ae52554d",
+        "filename": "gpu/command_buffer/service/scheduler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-11-17T01:48:26Z",
+      "side": 1,
+      "message": "Yes.  These private methods should only be called with the lock taken.",
+      "parentUuid": "7aad9368_4401f371",
+      "revId": "b4a8383f496eef2e2016c215bc002f7458c1a6a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
