@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "f7aa38ff_07eb7e3b",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-17T22:53:52Z",
+      "side": 1,
+      "message": "\u003e 1. When determining idle events, it\u0027ll be similar to inactivity_delays as you\u0027ve pointed out. We will observe other input events such as video and user activity (but audio now), as I\u0027ve described in the doc (https://docs.google.com/document/d/123eFd0rUTu0140V6hJKkkWmpqibdIfM-zTtUR5a2qaQ/edit#). I\u0027m only implementing one observer (power) in this cl because \n\u003e (i). I\u0027d like to see how you think about this approach (separating idle event notifier from the main logging class that only does logging following idle event).\n\u003e (ii). keep cls smaller.\n\nthanks. can you incorporate more of this into this comment so it\u0027s clearer what this class is tracking to someone who doesn\u0027t have the full background?",
+      "parentUuid": "8f774519_730f782b",
+      "revId": "4d53cf70bff51a26395c04ebe044a9890d87dc48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21b7b80a_dcba83dd",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
         "patchSetId": 7
@@ -87,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "ceda96a2_2f04999d",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-17T22:53:52Z",
+      "side": 1,
+      "message": "\u003e Why is it singleton bad? I\u0027ll only need one in our case. :)\n\nit\u0027s hard to know who\u0027s responsible for initializing and deinitializing singletons, and it can be challenging to make sure that it\u0027s initialized before you use it. unit tests become responsible for calling a bunch of Initialize() and Shutdown() methods, and your test can be broken if some other test forgets to shut down a singleton after initializing it. explicit ownership is better.",
+      "parentUuid": "21b7b80a_dcba83dd",
+      "revId": "4d53cf70bff51a26395c04ebe044a9890d87dc48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5ced5bc_9eac44e7",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
         "patchSetId": 7
@@ -98,6 +134,24 @@
       "writtenOn": "2017-11-17T17:56:30Z",
       "side": 1,
       "message": "how many observers do you anticipate having?",
+      "revId": "4d53cf70bff51a26395c04ebe044a9890d87dc48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b20b23_b5e947f5",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-17T22:53:52Z",
+      "side": 1,
+      "message": "\u003e At the moment, we plan to have one observer (UserActivityEventLogger)\n\nadding an observer interface may be premature. this class could just take a pointer to UserActivityEventLogger and call directly into it to let it know about idle events, for instance.",
+      "parentUuid": "f5ced5bc_9eac44e7",
       "revId": "4d53cf70bff51a26395c04ebe044a9890d87dc48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
