@@ -13,7 +13,6 @@
 #include "core/inspector/InspectorPageAgent.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/resource/CSSStyleSheetResource.h"
-#include "core/loader/resource/StyleSheetResourceClient.h"
 #include "core/page/Page.h"
 #include "platform/loader/fetch/RawResource.h"
 #include "platform/loader/fetch/Resource.h"
@@ -25,73 +24,36 @@
 
 namespace blink {
 
-class InspectorResourceContentLoader::ResourceClient final
-    : public GarbageCollectedFinalized<
-          InspectorResourceContentLoader::ResourceClient>,
-      private RawResourceClient,
-      private StyleSheetResourceClient {
-  USING_GARBAGE_COLLECTED_MIXIN(ResourceClient);
+class InspectorResourceContentLoader::Client final
+    : public GarbageCollectedFinalized<InspectorResourceContentLoader::Client>,
+      private ResourceClient {
+  USING_GARBAGE_COLLECTED_MIXIN(Client);
 
  public:
-  explicit ResourceClient(InspectorResourceContentLoader* loader)
-      : loader_(loader) {}
+  explicit Client(InspectorResourceContentLoader* loader) : loader_(loader) {}
 
-  void WaitForResource(Resource* resource) {
-    if (resource->GetType() == Resource::kRaw)
-      resource->AddClient(static_cast<RawResourceClient*>(this));
-    else
-      resource->AddClient(static_cast<StyleSheetResourceClient*>(this));
-  }
+  void WaitForResource(Resource* resource) { resource->AddClient(this); }
 
   void Trace(blink::Visitor* visitor) override {
     visitor->Trace(loader_);
-    StyleSheetResourceClient::Trace(visitor);
-    RawResourceClient::Trace(visitor);
+    ResourceClient::Trace(visitor);
   }
 
  private:
   Member<InspectorResourceContentLoader> loader_;
 
-  void SetCSSStyleSheet(const String&,
-                        const KURL&,
-                        ReferrerPolicy,
-                        const WTF::TextEncoding&,
-                        const CSSStyleSheetResource*) override;
-  void NotifyFinished(Resource*) override;
-  String DebugName() const override {
-    return "InspectorResourceContentLoader::ResourceClient";
+  void NotifyFinished(Resource* resource) override {
+    if (loader_)
+      loader_->ResourceFinished(this);
+    resource->RemoveClient(this);
   }
-  void ResourceFinished(Resource*);
+
+  String DebugName() const override {
+    return "InspectorResourceContentLoader::Client";
+  }
 
   friend class InspectorResourceContentLoader;
 };
-
-void InspectorResourceContentLoader::ResourceClient::ResourceFinished(
-    Resource* resource) {
-  if (loader_)
-    loader_->ResourceFinished(this);
-
-  if (resource->GetType() == Resource::kRaw)
-    resource->RemoveClient(static_cast<RawResourceClient*>(this));
-  else
-    resource->RemoveClient(static_cast<StyleSheetResourceClient*>(this));
-}
-
-void InspectorResourceContentLoader::ResourceClient::SetCSSStyleSheet(
-    const String&,
-    const KURL& url,
-    ReferrerPolicy,
-    const WTF::TextEncoding&,
-    const CSSStyleSheetResource* resource) {
-  ResourceFinished(const_cast<CSSStyleSheetResource*>(resource));
-}
-
-void InspectorResourceContentLoader::ResourceClient::NotifyFinished(
-    Resource* resource) {
-  if (resource->GetType() == Resource::kCSSStyleSheet)
-    return;
-  ResourceFinished(resource);
-}
 
 InspectorResourceContentLoader::InspectorResourceContentLoader(
     LocalFrame* inspected_frame)
@@ -133,7 +95,7 @@ void InspectorResourceContentLoader::Start() {
       if (resource) {
         // Prevent garbage collection by holding a reference to this resource.
         resources_.push_back(resource);
-        ResourceClient* resource_client = new ResourceClient(this);
+        Client* resource_client = new Client(this);
         pending_resource_clients_.insert(resource_client);
         resource_client->WaitForResource(resource);
       }
@@ -160,7 +122,7 @@ void InspectorResourceContentLoader::Start() {
         continue;
       // Prevent garbage collection by holding a reference to this resource.
       resources_.push_back(resource);
-      ResourceClient* resource_client = new ResourceClient(this);
+      Client* resource_client = new Client(this);
       pending_resource_clients_.insert(resource_client);
       resource_client->WaitForResource(resource);
     }
@@ -217,7 +179,7 @@ void InspectorResourceContentLoader::Dispose() {
 }
 
 void InspectorResourceContentLoader::Stop() {
-  HeapHashSet<Member<ResourceClient>> pending_resource_clients;
+  HeapHashSet<Member<Client>> pending_resource_clients;
   pending_resource_clients_.swap(pending_resource_clients);
   for (const auto& client : pending_resource_clients)
     client->loader_ = nullptr;
@@ -243,7 +205,7 @@ void InspectorResourceContentLoader::CheckDone() {
   }
 }
 
-void InspectorResourceContentLoader::ResourceFinished(ResourceClient* client) {
+void InspectorResourceContentLoader::ResourceFinished(Client* client) {
   pending_resource_clients_.erase(client);
   CheckDone();
 }

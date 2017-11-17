@@ -25,7 +25,7 @@
 #include "core/css/StyleEngineContext.h"
 #include "core/dom/CharacterData.h"
 #include "core/loader/resource/StyleSheetResource.h"
-#include "core/loader/resource/StyleSheetResourceClient.h"
+#include "platform/loader/fetch/ResourceClient.h"
 #include "platform/loader/fetch/ResourceOwner.h"
 
 namespace blink {
@@ -85,14 +85,7 @@ class ProcessingInstruction final : public CharacterData,
   bool CheckStyleSheet(String& href, String& charset);
   void Process(const String& href, const String& charset);
 
-  void SetCSSStyleSheet(const String& href,
-                        const KURL& base_url,
-                        ReferrerPolicy,
-                        const WTF::TextEncoding&,
-                        const CSSStyleSheetResource*) override;
-  void SetXSLStyleSheet(const String& href,
-                        const KURL& base_url,
-                        const String& sheet) override;
+  void NotifyFinished(Resource*) override;
 
   bool SheetLoaded() override;
 

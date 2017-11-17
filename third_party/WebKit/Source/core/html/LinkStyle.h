@@ -9,7 +9,7 @@
 #include "core/dom/Node.h"
 #include "core/html/LinkResource.h"
 #include "core/loader/resource/StyleSheetResource.h"
-#include "core/loader/resource/StyleSheetResourceClient.h"
+#include "platform/loader/fetch/ResourceClient.h"
 #include "platform/loader/fetch/ResourceOwner.h"
 #include "platform/wtf/Forward.h"
 
@@ -59,12 +59,8 @@ class LinkStyle final : public LinkResource, ResourceOwner<StyleSheetResource> {
   CSSStyleSheet* Sheet() const { return sheet_.Get(); }
 
  private:
-  // From StyleSheetResourceClient
-  void SetCSSStyleSheet(const String& href,
-                        const KURL& base_url,
-                        ReferrerPolicy,
-                        const WTF::TextEncoding&,
-                        const CSSStyleSheetResource*) override;
+  // From ResourceClient
+  void NotifyFinished(Resource*) override;
   String DebugName() const override { return "LinkStyle"; }
   enum LoadReturnValue { kLoaded, kNotNeeded, kBail };
   LoadReturnValue LoadStylesheetIfNeeded(const KURL&,

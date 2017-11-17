@@ -37,7 +37,6 @@ namespace blink {
 class CSSParserContext;
 class FetchParameters;
 class KURL;
-class ResourceClient;
 class ResourceFetcher;
 class StyleSheetContents;
 
@@ -53,13 +52,9 @@ class CORE_EXPORT CSSStyleSheetResource final : public StyleSheetResource {
   void Trace(blink::Visitor*) override;
 
   const String SheetText(MIMETypeCheck = MIMETypeCheck::kStrict) const;
-
-  void DidAddClient(ResourceClient*) override;
-
   StyleSheetContents* CreateParsedStyleSheetFromCache(const CSSParserContext*);
   void SaveParsedStyleSheet(StyleSheetContents*);
-
-  void AppendData(const char* data, size_t length) override;
+  ReferrerPolicy GetReferrerPolicy() const;
 
  private:
   class CSSStyleSheetResourceFactory : public ResourceFactory {
@@ -94,8 +89,6 @@ class CORE_EXPORT CSSStyleSheetResource final : public StyleSheetResource {
   String decoded_sheet_text_;
 
   Member<StyleSheetContents> parsed_style_sheet_cache_;
-
-  bool did_notify_first_data_;
 };
 
 DEFINE_RESOURCE_TYPE_CASTS(CSSStyleSheet);

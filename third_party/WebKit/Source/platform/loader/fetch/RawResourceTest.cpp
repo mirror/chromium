@@ -73,7 +73,7 @@ TEST_F(RawResourceTest, DontIgnoreAcceptForCacheReuse) {
 }
 
 class DummyClient final : public GarbageCollectedFinalized<DummyClient>,
-                          public RawResourceClient {
+                          public ResourceClient {
   USING_GARBAGE_COLLECTED_MIXIN(DummyClient);
 
  public:
@@ -101,7 +101,7 @@ class DummyClient final : public GarbageCollectedFinalized<DummyClient>,
   }
   const Vector<char>& Data() { return data_; }
   void Trace(blink::Visitor* visitor) override {
-    RawResourceClient::Trace(visitor);
+    ResourceClient::Trace(visitor);
   }
 
  private:
@@ -112,7 +112,7 @@ class DummyClient final : public GarbageCollectedFinalized<DummyClient>,
 
 // This client adds another client when notified.
 class AddingClient final : public GarbageCollectedFinalized<AddingClient>,
-                           public RawResourceClient {
+                           public ResourceClient {
   USING_GARBAGE_COLLECTED_MIXIN(AddingClient);
 
  public:
@@ -141,7 +141,7 @@ class AddingClient final : public GarbageCollectedFinalized<AddingClient>,
   void Trace(blink::Visitor* visitor) override {
     visitor->Trace(dummy_client_);
     visitor->Trace(resource_);
-    RawResourceClient::Trace(visitor);
+    ResourceClient::Trace(visitor);
   }
 
  private:
@@ -171,7 +171,7 @@ TEST_F(RawResourceTest, AddClientDuringCallback) {
 
 // This client removes another client when notified.
 class RemovingClient : public GarbageCollectedFinalized<RemovingClient>,
-                       public RawResourceClient {
+                       public ResourceClient {
   USING_GARBAGE_COLLECTED_MIXIN(RemovingClient);
 
  public:
@@ -187,7 +187,7 @@ class RemovingClient : public GarbageCollectedFinalized<RemovingClient>,
   String DebugName() const override { return "RemovingClient"; }
   void Trace(blink::Visitor* visitor) override {
     visitor->Trace(dummy_client_);
-    RawResourceClient::Trace(visitor);
+    ResourceClient::Trace(visitor);
   }
 
  private:

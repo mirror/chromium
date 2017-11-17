@@ -42,8 +42,6 @@ class XSLStyleSheetResource final : public StyleSheetResource {
 
   const String& Sheet() const { return sheet_; }
 
-  void DidAddClient(ResourceClient*) override;
-
  private:
   class XSLStyleSheetResourceFactory : public ResourceFactory {
    public:
