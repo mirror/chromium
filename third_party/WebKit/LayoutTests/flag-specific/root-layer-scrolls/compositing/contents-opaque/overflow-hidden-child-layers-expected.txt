@@ -3,22 +3,26 @@
     {
       "name": "LayoutView #document",
       "bounds": [800, 600],
-      "backgroundColor": "#FFFFFF"
-    },
-    {
-      "name": "Scrolling Layer",
-      "bounds": [800, 600],
-      "drawsContent": false
-    },
-    {
-      "name": "Scrolling Contents Layer",
-      "bounds": [800, 600],
       "contentsOpaque": true,
       "backgroundColor": "#FFFFFF"
     },
     {
       "name": "LayoutBlockFlow DIV class='box'",
       "bounds": [138, 138],
+      "backgroundColor": "#0000FF",
+      "transform": 1
+    },
+    {
+      "name": "Scrolling Layer",
+      "position": [19, 19],
+      "bounds": [100, 100],
+      "drawsContent": false,
+      "transform": 1
+    },
+    {
+      "name": "Scrolling Contents Layer",
+      "position": [19, 19],
+      "bounds": [270, 300],
       "backgroundColor": "#0000FF",
       "transform": 1
     }
