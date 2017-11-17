@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4e90ed5_4a2beb0c",
+        "filename": "chrome/browser/insecure_origin_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-17T09:26:32Z",
+      "side": 1,
+      "message": "Maybe move this to `//chrome/browser/policy/`?",
+      "revId": "e225c05b121e5a236d616ea766504782dc29808d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b068192b_7f4e1887",
+        "filename": "chrome/test/data/insecure_origin_browsertest.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-17T09:26:32Z",
+      "side": 1,
+      "message": "Nit: Maybe \"This will be replaced by the code below.\" or something similarly explanatory? :)",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 10
+      },
+      "revId": "e225c05b121e5a236d616ea766504782dc29808d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f65d14_d98b6551",
+        "filename": "components/content_settings/core/browser/content_settings_pref_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-17T09:26:32Z",
+      "side": 1,
+      "message": "Maybe move this to `IOThread::RegisterPrefs`? Seems like something of a catch-all...",
+      "revId": "e225c05b121e5a236d616ea766504782dc29808d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0945becb_124e3ac0",
+        "filename": "components/content_settings/core/common/pref_names.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-17T09:26:32Z",
+      "side": 1,
+      "message": "Nit: I know you\u0027re not looking for feedback on this, but it would be nice if the policy name matched the switch name.",
+      "revId": "e225c05b121e5a236d616ea766504782dc29808d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04670f3_3312a472",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10619,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-17T09:26:32Z",
+      "side": 1,
+      "message": "How about:\n\n\"\"\"\nThis policy allows a set of origins to be treated as \"secure contexts\" (https://w3c.github.io/webappsec-secure-contexts/), regardless of their actual transport security or ancestry. This will allow code executing on those origins the possibility of accessing those APIs which are restricted to secure contexts, such as Geolocation or Service Workers.\n\"\"\"",
+      "revId": "e225c05b121e5a236d616ea766504782dc29808d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
