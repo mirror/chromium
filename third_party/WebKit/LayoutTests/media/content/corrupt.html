@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<button id="runa">A</button>
+<button id="runb">B</button>
+<button id="runx">X</button>
+<script>
+
+function trace(name) {
+  for (let v of document.getElementsByTagName("video")) {
+    console.log(name, v.readyState, v.networkState);
+  }
+}
+
+document.getElementById("runa").addEventListener("click", () => {
+  let v = document.createElement("video");
+  trace("create");
+
+  v.addEventListener("error", () => {
+    trace("error");
+    v.removeAttribute("src");
+    trace("-src");
+    let s = document.createElement("source");
+    v.appendChild(s);
+    trace("+source");
+    v.removeChild(s);
+    trace("-source");
+    window.setTimeout(() => trace("settle2"), 10);
+  });
+
+  v.addEventListener("ended", () => console.log("Unexpected ENDED event"));
+  v.addEventListener("waiting", () => console.log("EVENT"));
+
+  document.body.appendChild(v);
+  trace("append");
+  v.src = "corrupt.mp4";
+  trace("+src");
+  v.play();
+  trace("play");
+  window.setTimeout(() => trace("settle1"), 10);
+});
+
+document.getElementById("runb").addEventListener("click", () => {
+  let v = document.createElement("video");
+  trace("create");
+
+  v.addEventListener("error", () => {
+    trace("error");
+    v.removeAttribute("src");
+    trace("-src");
+    let s = document.createElement("source");
+    v.appendChild(s);
+    trace("+source");
+    window.setTimeout(() => {
+      trace("settle2");
+      v.removeChild(s);
+      trace("-source");
+      window.setTimeout(() => trace("settle3"), 10);
+    }, 10);
+  });
+
+  v.addEventListener("ended", () => {
+    console.log("Unexpected ENDED event");
+  });
+
+  document.body.appendChild(v);
+  trace("append");
+  v.src = "corrupt.mp4";
+  trace("+src");
+  v.play();
+  trace("play");
+  window.setTimeout(() => trace("settle1"), 10);
+});
+
+document.getElementById("runx").addEventListener("click", () => {
+  for (let v of document.getElementsByTagName("video")) {
+    v.parentElement.removeChild(v);
+  }
+});
+
+</script>
