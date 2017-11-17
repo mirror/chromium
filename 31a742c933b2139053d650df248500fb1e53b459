@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "0822e119_26b378d3",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-17T17:01:40Z",
+      "side": 1,
+      "message": "Spoke to you offline. When the KB is added as an element, we will add a KeyboardDelegate interface that the KB element will know about. GvrKeyboardDelegate will implement that interface and probably be in vr_shell/.",
+      "parentUuid": "861144a4_cdd4e8e3",
+      "revId": "31a742c933b2139053d650df248500fb1e53b459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50d4d655_b1966ed4",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 12
