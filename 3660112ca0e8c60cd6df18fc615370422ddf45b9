@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1af6698_40b3d599",
+        "filename": "chrome/browser/chromeos/login/easy_unlock/easy_unlock_create_keys_operation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T15:04:35Z",
+      "side": 1,
+      "message": "Remove this?",
+      "revId": "3660112ca0e8c60cd6df18fc615370422ddf45b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
