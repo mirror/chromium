@@ -4,12 +4,16 @@
 
 #include "components/password_manager/core/browser/password_list_sorter.h"
 
+#include <memory>
+#include <string>
 #include <vector>
 
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/histogram_tester.h"
 #include "components/autofill/core/common/password_form.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
+#include "url/origin.h"
 
 namespace password_manager {
 
@@ -183,6 +187,91 @@ TEST(PasswordListSorterTest, Sorting_SpecialCharacters) {
       {"https://xn--ndalk.com/", "user_a", "pwd", nullptr, nullptr, 5},
   };
   SortAndCheckPositions(test_cases, PasswordEntryType::SAVED);
+}
+
+// Test that histograms for counting the difference between duplicates with
+// legacy and passwordless keys are correctly emitted.
+TEST(PasswordListSorterTest, PasswordlessDuplicates) {
+  // The test proceeds in multiple runs. In each it constructs a sample list of
+  // PasswordForms, with a one for a federated credential, another for an
+  // Android federated one, and then all |TestCase::entries| added.
+
+  struct PasswordEntry {
+    std::string username;
+    std::string password;
+    GURL origin;
+  };
+
+  struct TestCase {
+    std::vector<PasswordEntry> entries;
+    int expected_difference;
+  };
+
+  const std::vector<TestCase> test_cases = {
+      {{{"user_a", "pwd", GURL("https://example.com/")}}, 0},
+      {{{"user_a", "pwd", GURL("https://example.com/")},
+        {"user_a", "pwd", GURL("https://example.com/")}},
+       0},
+      {{{"user_a", "pwd", GURL("https://example.com/")},
+        {"user_a", "pwd1", GURL("https://example.com/")}},
+       1},
+  };
+
+  autofill::PasswordForm federated;
+  federated.origin = GURL("https://federation.com");
+  federated.signon_realm = "federation://example.in/accounts.google.com";
+  federated.username_value = base::ASCIIToUTF16("Federated Fred");
+  federated.action = GURL("https://federation.com/login");
+  federated.federation_origin =
+      url::Origin::Create(GURL("federation://example.in/accounts.google.com"));
+
+  autofill::PasswordForm android;
+  android.origin = GURL("android://hash@com.example.android/");
+  android.signon_realm = "android://hash@com.example.android/";
+  android.username_value = base::ASCIIToUTF16("Arnold Android");
+  android.federation_origin =
+      url::Origin::Create(GURL("federation://example.in/accounts.google.com"));
+  android.is_affiliation_based_match = true;
+
+  for (const TestCase& test_case : test_cases) {
+    std::vector<std::unique_ptr<autofill::PasswordForm>> list;
+    list.push_back(std::make_unique<autofill::PasswordForm>(federated));
+    list.push_back(std::make_unique<autofill::PasswordForm>(android));
+    for (const PasswordEntry& entry : test_case.entries) {
+      auto form = std::make_unique<autofill::PasswordForm>();
+      form->signon_realm = entry.origin.spec();
+      form->origin = entry.origin;
+      form->username_value = base::ASCIIToUTF16(entry.username);
+      form->password_value = base::ASCIIToUTF16(entry.password);
+      list.push_back(std::move(form));
+    }
+
+    base::HistogramTester histogram_tester;
+    DuplicatesMap duplicates;
+    password_manager::SortEntriesAndHideDuplicates(&list, &duplicates,
+                                                   PasswordEntryType::SAVED);
+    histogram_tester.ExpectUniqueSample(
+        "PasswordManager.DeltaPasswordlessDuplicates",
+        test_case.expected_difference, 1);
+  }
+}
+
+// Test that histograms for counting the difference between duplicates with
+// legacy and passwordless keys are not emitted for blacklisted entries.
+TEST(PasswordListSorterTest, PasswordlessDuplicates_Blacklisted) {
+  autofill::PasswordForm blacklisted;
+  blacklisted.blacklisted_by_user = true;
+  blacklisted.origin = GURL("https://federation.com");
+  blacklisted.signon_realm = "federation://example.in/accounts.google.com";
+  std::vector<std::unique_ptr<autofill::PasswordForm>> list;
+  list.push_back(std::make_unique<autofill::PasswordForm>(blacklisted));
+
+  base::HistogramTester histogram_tester;
+  DuplicatesMap duplicates;
+  password_manager::SortEntriesAndHideDuplicates(
+      &list, &duplicates, PasswordEntryType::BLACKLISTED);
+  histogram_tester.ExpectTotalCount(
+      "PasswordManager.DeltaPasswordlessDuplicates", 0);
 }
 
 }  // namespace password_manager

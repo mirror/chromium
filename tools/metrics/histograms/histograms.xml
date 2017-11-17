@@ -58001,6 +58001,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PasswordManager.DeltaPasswordlessDuplicates">
+  <owner>vabr@chromium.org</owner>
+  <summary>
+    Every time Chrome sorts saved passwords for display in settings, this
+    measures how many now-separate entries would be merged if the sort key did
+    not contain the password value.
+  </summary>
+</histogram>
+
 <histogram name="PasswordManager.EditsInSaveBubble"
     enum="PasswordManagerEditsInSaveBubbleEnum">
   <owner>battre@chromium.org</owner>
