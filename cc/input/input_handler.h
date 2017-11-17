@@ -200,6 +200,9 @@ class CC_EXPORT InputHandler {
   virtual EventListenerProperties GetEventListenerProperties(
       EventListenerClass event_class) const = 0;
 
+  virtual bool PointInWidgetInsideWheelEventListenerRegion(
+      const gfx::Point&) const = 0;
+
   // It returns the type of a touch start or move event listener at
   // |viewport_point|. Whether the page should be given the opportunity to
   // suppress scrolling by consuming touch events that started at
