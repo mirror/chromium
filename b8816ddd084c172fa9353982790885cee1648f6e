@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c307abea_a9c39ac7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/resources/inspector-protocol-test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-17T22:48:59Z",
+      "side": 1,
+      "message": "all of them are const actually.",
+      "revId": "b8816ddd084c172fa9353982790885cee1648f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b0cad9_64ad0d0b",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerInspectorProxy.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-17T22:48:59Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "b8816ddd084c172fa9353982790885cee1648f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c51c6f5b_2c141635",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-17T22:48:59Z",
+      "side": 1,
+      "message": "I believe you now need {}",
+      "revId": "b8816ddd084c172fa9353982790885cee1648f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
