@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "00a3c407_26e276bd",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/compiled_resources2.gyp",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-17T19:05:51Z",
+      "side": 1,
+      "message": "GYP is still used to type-check Javascript on the closure_compilation trybot. There is ongoing work to migrate off GYP, tracked by https://bugs.chromium.org/p/chromium/issues/detail?id\u003d632206.",
+      "parentUuid": "cd61218a_ccd4b0e2",
+      "range": {
+        "startLine": 4,
+        "startChar": 1,
+        "endLine": 4,
+        "endChar": 0
+      },
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63bd307d_a175b9c8",
         "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation.js",
         "patchSetId": 11
@@ -42,6 +66,154 @@
         "endLine": 25,
         "endChar": 60
       },
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e10dfe9c_1b73f4f8",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-17T19:05:51Z",
+      "side": 1,
+      "message": "Is this needed (or valid)?",
+      "range": {
+        "startLine": 7,
+        "startChar": 63,
+        "endLine": 7,
+        "endChar": 70
+      },
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ac591e_00fbe18f",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-17T19:05:51Z",
+      "side": 1,
+      "message": "Why is this \u003cstyle\u003e outside the \u003ctemplate\u003e, unlike most other elements? Also is the \"is\u003dcustom-style\" part needed?",
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4fffaac_12a375b0",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-17T19:05:51Z",
+      "side": 1,
+      "message": "Can you break line after the parentheses?",
+      "range": {
+        "startLine": 71,
+        "startChar": 41,
+        "endLine": 71,
+        "endChar": 42
+      },
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "966315ce_c61265c7",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-17T19:05:51Z",
+      "side": 1,
+      "message": "Can you move this rule closer the platform-specific rule for #undoButton rule at line 13?\n\nBut also #undoButton is a paper-button, which already has a padding of 16px applied (lines 90-93). Is this rule necessary?",
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36bc302e_8c791d3b",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-17T19:05:51Z",
+      "side": 1,
+      "message": "I did not see any innerHTML or $i18nRaw{} on the HTML file. How is this link inserted? Wouldn\u0027t it currently be escaped accidantally by using $i18n{} ?",
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02117234_a0ff731a",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-17T19:05:51Z",
+      "side": 1,
+      "message": "@private {?sync.confirmation.SyncConfirmationBrowserProxy}",
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc41049b_810a33e6",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-17T19:05:51Z",
+      "side": 1,
+      "message": "80 columns?",
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc28455_1318a77e",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-17T19:05:51Z",
+      "side": 1,
+      "message": "Do you really intend to register this handler at the top-most level, as opposed to |this|? If so add a comment mentioning the reason.",
       "revId": "096060260a37cc697b41a9a07380b1d081558697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
