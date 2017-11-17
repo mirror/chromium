@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58b75b0b_59896e15",
+        "filename": "components/omnibox/browser/fake_autocomplete_provider_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-17T16:04:46Z",
+      "side": 1,
+      "message": "This friend could be avoided by adding a set_is_tab_open_with_url, similar to the existing set_in_memory_index.",
+      "revId": "711732eed56c88ee729070b4c7564f23530af3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
