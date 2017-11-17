@@ -699,6 +699,7 @@ def UpdateClang(args):
   if sys.platform.startswith('linux'):
     stripped_binaries.append('lld')
     stripped_binaries.append('llvm-ar')
+    stripped_binaries.append('llvm-objcopy')
   for f in stripped_binaries:
     if sys.platform == 'darwin':
       # See http://crbug.com/256342

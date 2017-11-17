@@ -230,6 +230,7 @@ def main():
   # This supports the same patterns that the fnmatch module understands.
   exe_ext = '.exe' if sys.platform == 'win32' else ''
   want = ['bin/llvm-symbolizer' + exe_ext,
+          'bin/llvm-objcopy' + exe_ext,
           'bin/sancov' + exe_ext,
           'lib/clang/*/asan_blacklist.txt',
           'lib/clang/*/cfi_blacklist.txt',
