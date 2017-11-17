@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d359b2b_6daeb6ec",
+        "filename": "media/mojo/services/mojo_cdm_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T00:16:10Z",
+      "side": 1,
+      "message": "As discussed offline, it\u0027s the same complexity. And I like the simplicity with EraseIf.",
+      "parentUuid": "22910860_db5f1b8c",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 15
+      },
+      "revId": "676a7ce4488047c6ca2cd08235131ab5d88eac05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5be6ba3d_61252ddd",
         "filename": "media/mojo/services/mojo_cdm_helper.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-16T21:38:23Z",
       "side": 1,
       "message": "Why a flat_set? You don\u0027t care about order, so you can always push_back() when a new one is added. Deletions are done by scanning the set, so it shouldn\u0027t be any different if it\u0027s ordered or unordered.",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "676a7ce4488047c6ca2cd08235131ab5d88eac05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c63faac_422d7378",
+        "filename": "media/mojo/services/mojo_cdm_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T00:16:10Z",
+      "side": 1,
+      "message": "Good point. Replaces with vector.",
+      "parentUuid": "5be6ba3d_61252ddd",
       "range": {
         "startLine": 75,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "088ddc64_e6062446",
+        "filename": "media/mojo/services/mojo_cdm_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T00:16:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72dc70b2_b375775a",
+      "range": {
+        "startLine": 13,
+        "startChar": 24,
+        "endLine": 13,
+        "endChar": 49
+      },
+      "revId": "676a7ce4488047c6ca2cd08235131ab5d88eac05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e18bd8f_cefe4161",
         "filename": "media/mojo/services/mojo_cdm_helper_unittest.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-16T21:38:23Z",
       "side": 1,
       "message": "Would EXPECT_TRUE/ASSERT_TRUE be better here? It may not work since we\u0027re not in a test class.",
+      "range": {
+        "startLine": 38,
+        "startChar": 21,
+        "endLine": 38,
+        "endChar": 34
+      },
+      "revId": "676a7ce4488047c6ca2cd08235131ab5d88eac05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8890300_04b89ef3",
+        "filename": "media/mojo/services/mojo_cdm_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T00:16:10Z",
+      "side": 1,
+      "message": "Updated to CHECK so that if it fails the test will crash.",
+      "parentUuid": "0e18bd8f_cefe4161",
       "range": {
         "startLine": 38,
         "startChar": 21,
@@ -114,6 +210,30 @@
       "revId": "676a7ce4488047c6ca2cd08235131ab5d88eac05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c03901_da9a5021",
+        "filename": "media/mojo/services/mojo_cdm_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T00:16:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66be0cc8_2dd6c289",
+      "range": {
+        "startLine": 117,
+        "startChar": 8,
+        "endLine": 117,
+        "endChar": 16
+      },
+      "revId": "676a7ce4488047c6ca2cd08235131ab5d88eac05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
