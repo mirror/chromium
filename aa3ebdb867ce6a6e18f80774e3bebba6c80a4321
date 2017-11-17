@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67cfdc4c_383332c7",
+        "filename": "components/arc/common/notifications.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-11-17T06:39:11Z",
+      "side": 1,
+      "message": "It might be useful to note what coordinate system is used for this rectangle.",
+      "range": {
+        "startLine": 132,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 25
+      },
+      "revId": "aa3ebdb867ce6a6e18f80774e3bebba6c80a4321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4f37dc_aae7b2eb",
+        "filename": "ui/arc/notification/arc_notification_content_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-11-17T06:39:11Z",
+      "side": 1,
+      "message": "Don\u0027t we need to filter SCROLL_UPDATE, SCROLL_END and SWIPE events?",
+      "range": {
+        "startLine": 120,
+        "startChar": 29,
+        "endLine": 120,
+        "endChar": 56
+      },
+      "revId": "aa3ebdb867ce6a6e18f80774e3bebba6c80a4321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "601ef98b_41df9e80",
+        "filename": "ui/arc/notification/arc_notification_content_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-11-17T06:39:11Z",
+      "side": 1,
+      "message": "nit: You can remove this.",
+      "range": {
+        "startLine": 128,
+        "startChar": 36,
+        "endLine": 128,
+        "endChar": 38
+      },
+      "revId": "aa3ebdb867ce6a6e18f80774e3bebba6c80a4321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
