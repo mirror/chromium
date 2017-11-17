@@ -160,9 +160,7 @@ class ProfileChooserViewExtensionsTest
       target_browser = chrome::FindAnyBrowser(guest, true);
     }
     if (name == kManageAccountLink) {
-      scoped_account_consistency =
-          std::make_unique<signin::ScopedAccountConsistency>(
-              signin::AccountConsistencyMethod::kMirror);
+      NOTREACHED();
     }
     Profile* supervised = nullptr;
     if (name == kSupervisedOwner || name == kSupervisedUser) {

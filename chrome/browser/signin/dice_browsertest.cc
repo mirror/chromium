@@ -277,7 +277,6 @@ class DiceBrowserTestBase : public InProcessBrowserTest,
         dice_method_name = signin::kAccountConsistencyFeatureMethodDice;
         break;
       case signin::AccountConsistencyMethod::kDisabled:
-      case signin::AccountConsistencyMethod::kMirror:
         NOTREACHED();
         return;
     }
