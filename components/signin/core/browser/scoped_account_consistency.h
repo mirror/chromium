@@ -27,7 +27,7 @@ class ScopedAccountConsistency {
 };
 
 // Specialized helper classes for each account consistency method:
-// ScopedAccountConsistencyDice, ScopedAccountConsistencyMirror, ...
+// ScopedAccountConsistencyDisabled, ScopedAccountConsistencyDice, ...
 
 #define SCOPED_ACCOUNT_CONSISTENCY_SPECIALIZATION(method)             \
   class ScopedAccountConsistency##method {                            \
@@ -42,8 +42,6 @@ class ScopedAccountConsistency {
 
 // ScopedAccountConsistencyDisabled:
 SCOPED_ACCOUNT_CONSISTENCY_SPECIALIZATION(Disabled);
-// ScopedAccountConsistencyMirror:
-SCOPED_ACCOUNT_CONSISTENCY_SPECIALIZATION(Mirror);
 // ScopedAccountConsistencyDiceFixAuthErrors:
 SCOPED_ACCOUNT_CONSISTENCY_SPECIALIZATION(DiceFixAuthErrors);
 // ScopedAccountConsistencyDicePrepareMigration:
