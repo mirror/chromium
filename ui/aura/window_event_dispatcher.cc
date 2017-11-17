@@ -804,6 +804,7 @@ ui::EventDispatchDetails WindowEventDispatcher::DispatchHeldEvents() {
 }
 
 void WindowEventDispatcher::PostSynthesizeMouseMove() {
+  LOG(ERROR) << "PostSynthesizeMouseMove:" << synthesize_mouse_move_;
   if (synthesize_mouse_move_)
     return;
   synthesize_mouse_move_ = true;

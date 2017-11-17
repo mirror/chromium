@@ -162,25 +162,6 @@ class CustomFrameViewAshWindowStateDelegate : public wm::WindowStateDelegate,
 
 }  // namespace
 
-////////////////////////////////////////////////////////////////////////////////
-// CustomFrameViewAshBase, public:
-
-CustomFrameViewAshBase::CustomFrameViewAshBase() {
-  Shell::Get()->AddShellObserver(this);
-}
-
-CustomFrameViewAshBase::~CustomFrameViewAshBase() {
-  Shell::Get()->RemoveShellObserver(this);
-}
-
-void CustomFrameViewAshBase::OnOverviewModeStarting() {
-  SetShouldPaintHeader(false);
-}
-
-void CustomFrameViewAshBase::OnOverviewModeEnded() {
-  SetShouldPaintHeader(true);
-}
-
 // static
 bool CustomFrameViewAsh::use_empty_minimum_size_for_test_ = false;
 
@@ -340,9 +321,12 @@ CustomFrameViewAsh::CustomFrameViewAsh(
         new CustomFrameViewAshWindowStateDelegate(window_state, this,
                                                   enable_immersive)));
   }
+  Shell::Get()->AddShellObserver(this);
 }
 
-CustomFrameViewAsh::~CustomFrameViewAsh() {}
+CustomFrameViewAsh::~CustomFrameViewAsh() {
+  Shell::Get()->RemoveShellObserver(this);
+}
 
 void CustomFrameViewAsh::InitImmersiveFullscreenControllerForView(
     ImmersiveFullscreenController* immersive_fullscreen_controller) {
@@ -493,6 +477,14 @@ const views::View* CustomFrameViewAsh::GetAvatarIconViewForTest() const {
 
 void CustomFrameViewAsh::SetShouldPaintHeader(bool paint) {
   header_view_->SetShouldPaintHeader(paint);
+}
+
+void CustomFrameViewAsh::OnOverviewModeStarting() {
+  SetShouldPaintHeader(false);
+}
+
+void CustomFrameViewAsh::OnOverviewModeEnded() {
+  SetShouldPaintHeader(true);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
