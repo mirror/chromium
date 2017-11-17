@@ -35,7 +35,9 @@ class PLATFORM_EXPORT ScopedResourceLoadTracker {
 void PLATFORM_EXPORT ResourcePrioritySet(unsigned long resource_id,
                                          blink::ResourceLoadPriority);
 
-void PLATFORM_EXPORT EndResourceLoad(unsigned long resource_id, RequestOutcome);
+void PLATFORM_EXPORT EndResourceLoad(unsigned long resource_id,
+                                     char* resourceType,
+                                     RequestOutcome);
 
 }  // namespace network_instrumentation
 }  // namespace blink
