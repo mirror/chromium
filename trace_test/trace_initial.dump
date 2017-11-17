@@ -1,0 +1,104 @@
+
+out/Official/obj/trace_test/trace_test/trace_initial.o:     file format elf32-littlearm
+
+
+Disassembly of section .text.trace_initial:
+
+00000000 <trace_initial>:
+   0:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
+   4:	b098      	sub	sp, #96	; 0x60
+
+; See relocation section '.rel.text.trace_initial' Offset 0000008c
+; This is line 4 of initial.E
+   6:	4821      	ldr	r0, [pc, #132]	; (8c <trace_initial+0x8c>)
+   8:	4478      	add	r0, pc
+   a:	6804      	ldr	r4, [r0, #0]
+
+; Line 10 of initial.E
+; __builtin_expect() changes the order of basic block
+   c:	b15c      	cbz	r4, 26 <trace_initial+0x26>
+
+; What is this?
+; Init stack for trace_event_unique_tracer8 in line 18 of initial.E ??
+   e:	2700      	movs	r7, #0
+  10:	9711      	str	r7, [sp, #68]	; 0x44
+
+; Line 19 of initial.E
+; Loads trace_event_unique_category_group_enabled8
+; Compare it with 25 (= flags of TraceCategory in line 20 ~ 22)
+  12:	7820      	ldrb	r0, [r4, #0]
+  14:	f010 0f19 	tst.w	r0, #25
+  18:	d10e      	bne.n	38 <trace_initial+0x38>
+
+; This invokes trace_event_internal::ScopedTracer::~ScopedTracer()
+  1a:	a811      	add	r0, sp, #68	; 0x44
+  1c:	f7ff fffe 	bl	0 <trace_initial>
+
+; return
+  20:	b018      	add	sp, #96	; 0x60
+  22:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
+
+; Line 12 of initial.E
+  26:	481a      	ldr	r0, [pc, #104]	; (90 <trace_initial+0x90>)
+  28:	4478      	add	r0, pc
+  2a:	f7ff fffe 	bl	0 <_ZN4base11trace_event8TraceLog23GetCategoryGroupEnabledEPKc>
+  2e:	4604      	mov	r4, r0
+  30:	4818      	ldr	r0, [pc, #96]	; (94 <trace_initial+0x94>)
+  32:	4478      	add	r0, pc
+  34:	6004      	str	r4, [r0, #0]
+  36:	e7ea      	b.n	e <trace_initial+0xe>
+
+; Line 24 of initial.E
+; Inline functions take lots of spaces .. :(
+  38:	f7ff fffe 	bl	0 <_ZN4base14PlatformThread9CurrentIdEv>
+  3c:	ae16      	add	r6, sp, #88	; 0x58
+  3e:	4605      	mov	r5, r0
+  40:	4630      	mov	r0, r6
+  42:	f7ff fffe 	bl	0 <_ZN4base9TimeTicks3NowEv>
+  46:	f7ff fffe 	bl	0 <_ZN4base11trace_event8TraceLog11GetInstanceEv>
+  4a:	f8df 804c 	ldr.w	r8, [pc, #76]	; 98 <trace_initial+0x98>
+  4e:	4601      	mov	r1, r0
+  50:	a806      	add	r0, sp, #24
+  52:	e9cd 7709 	strd	r7, r7, [sp, #36]	; 0x24
+  56:	e9cd 770b 	strd	r7, r7, [sp, #44]	; 0x2c
+  5a:	44f8      	add	r8, pc
+  5c:	970d      	str	r7, [sp, #52]	; 0x34
+  5e:	2258      	movs	r2, #88	; 0x58
+  60:	e9cd 8700 	strd	r8, r7, [sp]
+  64:	4623      	mov	r3, r4
+  66:	e9cd 7702 	strd	r7, r7, [sp, #8]
+  6a:	e9cd 7704 	strd	r7, r7, [sp, #16]
+  6e:	c0e0      	stmia	r0!, {r5, r6, r7}
+  70:	a80f      	add	r0, sp, #60	; 0x3c
+  72:	f7ff fffe 	bl	0 <_ZN4base11trace_event8TraceLog37AddTraceEventWithThreadIdAndTimestampEcPKhPKcS5_yyiRKNS_9TimeTicksEiPKS5_S3_PKyPNSt6__ndk110unique_ptrINS0_24ConvertableToTraceFormatENSD_14default_deleteISF_EEEEj>
+  76:	aa11      	add	r2, sp, #68	; 0x44
+  78:	e9dd 010f 	ldrd	r0, r1, [sp, #60]	; 0x3c
+  7c:	e9cd 4812 	strd	r4, r8, [sp, #72]	; 0x48
+  80:	3204      	adds	r2, #4
+  82:	9211      	str	r2, [sp, #68]	; 0x44
+  84:	e9cd 0114 	strd	r0, r1, [sp, #80]	; 0x50
+  88:	e7c7      	b.n	1a <trace_initial+0x1a>
+  8a:	bf00      	nop
+  8c:	00000080 	.word	0x00000080
+  90:	00000064 	.word	0x00000064
+  94:	0000005e 	.word	0x0000005e
+  98:	0000003a 	.word	0x0000003a
+
+Disassembly of section .text._ZN20trace_event_internal12ScopedTracerD2Ev:
+
+00000000 <_ZN20trace_event_internal12ScopedTracerD2Ev>:
+   0:	b51c      	push	{r2, r3, r4, lr}
+   2:	4604      	mov	r4, r0
+   4:	6820      	ldr	r0, [r4, #0]
+   6:	b160      	cbz	r0, 22 <_ZN20trace_event_internal12ScopedTracerD2Ev+0x22>
+   8:	6860      	ldr	r0, [r4, #4]
+   a:	7800      	ldrb	r0, [r0, #0]
+   c:	b148      	cbz	r0, 22 <_ZN20trace_event_internal12ScopedTracerD2Ev+0x22>
+   e:	f7ff fffe 	bl	0 <_ZN4base11trace_event8TraceLog11GetInstanceEv>
+  12:	f104 0c04 	add.w	ip, r4, #4
+  16:	e89c 100e 	ldmia.w	ip, {r1, r2, r3, ip}
+  1a:	f8cd c000 	str.w	ip, [sp]
+  1e:	f7ff fffe 	bl	0 <_ZN4base11trace_event8TraceLog24UpdateTraceEventDurationEPKhPKcNS0_16TraceEventHandleE>
+  22:	4620      	mov	r0, r4
+  24:	b002      	add	sp, #8
+  26:	bd10      	pop	{r4, pc}
