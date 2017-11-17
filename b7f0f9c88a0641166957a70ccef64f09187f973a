@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9ad87b8_94daad09",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-17T20:59:28Z",
+      "side": 1,
+      "message": "rather than having to pass the linker name, how about just accepting either full name here?",
+      "range": {
+        "startLine": 660,
+        "startChar": 51,
+        "endLine": 660,
+        "endChar": 71
+      },
+      "revId": "b7f0f9c88a0641166957a70ccef64f09187f973a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
