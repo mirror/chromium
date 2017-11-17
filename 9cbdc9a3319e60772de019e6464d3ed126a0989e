@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f042742_2bcd20d4",
+        "filename": "third_party/WebKit/LayoutTests/fast/lists/list-and-margin-collapse.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-17T10:50:29Z",
+      "side": 1,
+      "message": "I should have commented in the first review, sorry, but can you use testharness.js? Then you won\u0027t need \"-expected.html\". We generally preer using it these days.\n\nSome doc here:\nhttp://web-platform-tests.org/writing-tests/testharness-api.html\n\nand you will find several tests in our LayoutTests for reference (search for testharness.js) I believe we had some guideline document but can\u0027t find right now.",
+      "revId": "9cbdc9a3319e60772de019e6464d3ed126a0989e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
