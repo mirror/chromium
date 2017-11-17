@@ -26,10 +26,7 @@
 
 #include "core/loader/resource/XSLStyleSheetResource.h"
 
-#include "core/loader/resource/StyleSheetResourceClient.h"
-#include "platform/SharedBuffer.h"
 #include "platform/loader/fetch/FetchParameters.h"
-#include "platform/loader/fetch/ResourceClientWalker.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/TextResourceDecoderOptions.h"
 #include "platform/runtime_enabled_features.h"
@@ -78,25 +75,10 @@ XSLStyleSheetResource::XSLStyleSheetResource(
                          options,
                          decoder_options) {}
 
-void XSLStyleSheetResource::DidAddClient(ResourceClient* c) {
-  DCHECK(StyleSheetResourceClient::IsExpectedType(c));
-  Resource::DidAddClient(c);
-  if (!IsLoading()) {
-    static_cast<StyleSheetResourceClient*>(c)->SetXSLStyleSheet(
-        GetResourceRequest().Url(), GetResponse().Url(), sheet_);
-  }
-}
-
 void XSLStyleSheetResource::NotifyFinished() {
   if (Data())
     sheet_ = DecodedText();
-
-  ResourceClientWalker<StyleSheetResourceClient> w(Clients());
-  while (StyleSheetResourceClient* c = w.Next()) {
-    MarkClientFinished(c);
-    c->SetXSLStyleSheet(GetResourceRequest().Url(), GetResponse().Url(),
-                        sheet_);
-  }
+  Resource::NotifyFinished();
 }
 
 }  // namespace blink

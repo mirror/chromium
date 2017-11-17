@@ -68,7 +68,7 @@ class TextTrackLoader final : public GarbageCollectedFinalized<TextTrackLoader>,
   void Trace(blink::Visitor*) override;
 
  private:
-  // RawResourceClient
+  // ResourceClient
   bool RedirectReceived(Resource*,
                         const ResourceRequest&,
                         const ResourceResponse&) override;

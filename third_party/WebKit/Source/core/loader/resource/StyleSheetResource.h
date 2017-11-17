@@ -37,11 +37,9 @@
 
 namespace blink {
 
-class StyleSheetResourceClient;
-
 class CORE_EXPORT StyleSheetResource : public TextResource {
  public:
-  using ClientType = StyleSheetResourceClient;
+  using ClientType = ResourceClient;
 
   StyleSheetResource(const ResourceRequest& request,
                      Type type,
