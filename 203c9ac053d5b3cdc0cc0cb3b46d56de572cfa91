@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53be204f_2538e6f7",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.idl",
+        "patchSetId": 18
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-17T13:20:56Z",
+      "side": 1,
+      "message": "Do you intend to initially ship with audioLevel possibly being null, or should this be fixed before shipping? If the latter, then can this CL wait until the TODO is fixed? I realize that\u0027s an annoying thing to ask for, but small differences in our IDL compared to the specs creep in and are forgotten all the time.\n\nAlternatively, how about just changing the spec to let this be null when it\u0027s not in the header extension? Is it actually important that it\u0027s computed when it\u0027s not in the header?",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 7
+      },
+      "revId": "203c9ac053d5b3cdc0cc0cb3b46d56de572cfa91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
