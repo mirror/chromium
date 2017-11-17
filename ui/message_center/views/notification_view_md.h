@@ -13,6 +13,8 @@
 #include "ui/message_center/views/message_view.h"
 #include "ui/views/controls/button/button.h"
 #include "ui/views/controls/button/label_button.h"
+#include "ui/views/controls/textfield/textfield.h"
+#include "ui/views/controls/textfield/textfield_controller.h"
 #include "ui/views/view_targeter_delegate.h"
 
 namespace views {
@@ -22,6 +24,8 @@ class ProgressBar;
 }
 
 namespace message_center {
+
+struct ButtonInfo;
 
 class BoundedLabel;
 class NotificationHeaderView;
@@ -104,7 +108,7 @@ class LargeImageContainerView : public views::View {
 class NotificationButtonMD : public views::LabelButton {
  public:
   NotificationButtonMD(views::ButtonListener* listener,
-                       const base::string16& text);
+                       const message_center::ButtonInfo& button_info);
   ~NotificationButtonMD() override;
 
   void SetText(const base::string16& text) override;
@@ -115,8 +119,36 @@ class NotificationButtonMD : public views::LabelButton {
 
   SkColor enabled_color_for_testing() { return label()->enabled_color(); }
 
+  const message_center::ButtonInfo& button_info() const { return button_info_; }
+
  private:
+  message_center::ButtonInfo button_info_;
+
   DISALLOW_COPY_AND_ASSIGN(NotificationButtonMD);
+};
+
+class NotificationViewMD;
+
+class NotificationInputMD : public views::Textfield,
+                            public views::TextfieldController {
+ public:
+  NotificationInputMD(const std::string& id);
+  ~NotificationInputMD() override;
+
+  bool HandleKeyEvent(views::Textfield* sender,
+                      const ui::KeyEvent& key_event) override;
+
+  void set_delegate(MessageViewDelegate* delegate) { delegate_ = delegate; }
+  void set_index(size_t index) { index_ = index; }
+  void set_button_info(const message_center::ButtonInfo& button_info);
+
+ private:
+  std::string id_;
+
+  MessageViewDelegate* delegate_;
+  size_t index_;
+
+  DISALLOW_COPY_AND_ASSIGN(NotificationInputMD);
 };
 
 // View that displays all current types of notification (web, basic, image, and
@@ -222,6 +254,8 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   std::vector<ItemView*> item_views_;
   views::ProgressBar* progress_bar_view_ = nullptr;
   CompactTitleMessageView* compact_title_message_view_ = nullptr;
+  views::View* action_buttons_row_ = nullptr;
+  NotificationInputMD* inline_reply_ = nullptr;
 
   std::unique_ptr<ui::EventHandler> click_activator_;
 
