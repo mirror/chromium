@@ -67,6 +67,24 @@
       "revId": "58c02702f13ef43d1b21af02d88542035a46d3e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583e2067_1187f8d8",
+        "filename": "trace_test/trace_708990_c1.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-11-17T10:34:28Z",
+      "side": 1,
+      "message": "Ah, need to fix one definition above:\n\n  #define TEST_INTERNAL_TRACE_EVENT_GET_CATEGORY_INFO(category_group) \\\n     CategoryEnabledPtrInternal\u003cIsKnownCategory(category_group)\u003e \\\n         TRACE_EVENT_API_UUID(enabled_ptr);",
+      "parentUuid": "ed922e7d_a24d51d0",
+      "revId": "58c02702f13ef43d1b21af02d88542035a46d3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
