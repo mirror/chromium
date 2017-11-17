@@ -16,6 +16,24 @@
       "revId": "3fcec660582cf6c588fde5fd5d3cf932b280606d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a637ef2_69bfd73f",
+        "filename": "ui/platform_window/x11/x11_window_ozone.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-17T13:49:56Z",
+      "side": 0,
+      "message": "I know about the issue and this patch is based on our downstream work on the external window mode. Here is a sequence of patches - https://github.com/Igalia/chromium/pull/307\n\nthe explicit capture is handled here -  https://github.com/Igalia/chromium/pull/307/commits/efe11452f63ba60d5792a1fba99313a1e0627ecb#diff-55a067ffaffdf8cea9d2308e8e680659R110. \n\nBasically, that\u0027s identical to https://cs.chromium.org/chromium/src/ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc?q\u003ddesktop_window_tree_host_x\u0026sq\u003dpackage:chromium\u0026pv\u003d1\u0026l\u003d1766 . We have used this approach for several months and had no problems with it. All the events are dispatched properly. We have also working cases with nested menus, which work the same way as non-ozone x11. Does it make sense now?",
+      "parentUuid": "262d55df_54c9d292",
+      "revId": "3fcec660582cf6c588fde5fd5d3cf932b280606d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
