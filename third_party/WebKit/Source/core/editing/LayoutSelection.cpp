@@ -32,6 +32,7 @@
 #include "core/layout/LayoutText.h"
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/ng/inline/ng_offset_mapping.h"
 #include "core/paint/PaintLayer.h"
 
 namespace blink {
@@ -565,6 +566,25 @@ CalcSelectionRangeAndSetSelectionState(const FrameSelection& frame_selection) {
       *end_layout_object, selection.EndPosition().ToOffsetInAnchor());
 
   if (start_layout_object == end_layout_object) {
+    if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled() &&
+        start_offset.has_value() &&
+        start_layout_object->EnclosingNGBlockFlow()) {
+      const Position& start = ToPositionInDOMTree(selection.StartPosition());
+      const Position& end = ToPositionInDOMTree(selection.EndPosition());
+      DCHECK(start.AnchorNode()->IsTextNode());
+      const NGOffsetMapping* const mapping = NGOffsetMapping::GetFor(start);
+      const WTF::Optional<unsigned int>& start_offset =
+          mapping->GetTextContentOffset(start);
+      DCHECK(start_offset.has_value());
+      const WTF::Optional<unsigned int>& end_offset =
+          mapping->GetTextContentOffset(end);
+      DCHECK(end_offset.has_value());
+      MarkSelected(&selected_objects, start_layout_object,
+                   SelectionState::kStartAndEnd);
+      return {{start_layout_object, (int)start_offset.value(),
+               end_layout_object, (int)end_offset.value()},
+              std::move(selected_objects)};
+    }
     return MarkStartAndEndInOneNode(std::move(selected_objects),
                                     start_layout_object, start_offset,
                                     end_offset);

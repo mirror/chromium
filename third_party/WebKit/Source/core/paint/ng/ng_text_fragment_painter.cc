@@ -4,6 +4,8 @@
 
 #include "core/paint/ng/ng_text_fragment_painter.h"
 
+#include "core/editing/FrameSelection.h"
+#include "core/frame/LocalFrame.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
 #include "core/layout/ng/ng_text_decoration_offset.h"
@@ -46,8 +48,10 @@ void NGTextFragmentPainter::Paint(const Document& document,
 
   bool is_printing = paint_info.IsPrinting();
 
+  LayoutObject* const layout_object = fragment_.GetNode()->GetLayoutObject();
   // Determine whether or not we're selected.
-  bool have_selection = false;  // TODO(layout-dev): Implement.
+  bool have_selection = layout_object->GetSelectionState() !=
+                        SelectionState::kNone;  // TODO(layout-dev): Implement.
   if (!have_selection && paint_info.phase == PaintPhase::kSelection) {
     // When only painting the selection, don't bother to paint if there is none.
     return;
@@ -118,6 +122,34 @@ void NGTextFragmentPainter::Paint(const Document& document,
           decoration_offset, decoration_info, paint_info,
           style.AppliedTextDecorations(), text_style,
           &has_line_through_decoration);
+    }
+
+    {
+      const FrameSelection& selection = document.GetFrame()->Selection();
+      switch (layout_object->GetSelectionState()) {
+        case SelectionState::kStart: {
+          selection_start = selection.LayoutSelectionStart().value();
+          selection_end = length;
+          break;
+        }
+        case SelectionState::kEnd: {
+          selection_start = 0;
+          selection_end = selection.LayoutSelectionEnd().value();
+          break;
+        }
+        case SelectionState::kStartAndEnd: {
+          selection_start = selection.LayoutSelectionStart().value();
+          selection_end = selection.LayoutSelectionEnd().value();
+          break;
+        }
+        case SelectionState::kInside: {
+          selection_start = 0;
+          selection_end = length;
+          break;
+        }
+        default:
+          break;
+      }
     }
 
     int start_offset = 0;
