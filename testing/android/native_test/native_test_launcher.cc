@@ -67,7 +67,7 @@ void AndroidLog(int priority, const char* format, ...) {
 
 }  // namespace
 
-static void RunTests(JNIEnv* env,
+static void NativeTest__RunTests(JNIEnv* env,
                      const JavaParamRef<jobject>& obj,
                      const JavaParamRef<jstring>& jcommand_line_flags,
                      const JavaParamRef<jstring>& jcommand_line_file_path,

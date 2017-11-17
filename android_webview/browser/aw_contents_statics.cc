@@ -55,7 +55,7 @@ void SafeBrowsingWhitelistAssigned(const JavaRef<jobject>& callback,
 }  // namespace
 
 // static
-ScopedJavaLocalRef<jstring> GetSafeBrowsingPrivacyPolicyUrl(
+ScopedJavaLocalRef<jstring> AwContentsStatics__GetSafeBrowsingPrivacyPolicyUrl(
     JNIEnv* env,
     const JavaParamRef<jclass>&) {
   GURL privacy_policy_url(
@@ -66,7 +66,7 @@ ScopedJavaLocalRef<jstring> GetSafeBrowsingPrivacyPolicyUrl(
 }
 
 // static
-void ClearClientCertPreferences(JNIEnv* env,
+void AwContentsStatics__ClearClientCertPreferences(JNIEnv* env,
                                 const JavaParamRef<jclass>&,
                                 const JavaParamRef<jobject>& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -78,7 +78,7 @@ void ClearClientCertPreferences(JNIEnv* env,
 }
 
 // static
-ScopedJavaLocalRef<jstring> GetUnreachableWebDataUrl(
+ScopedJavaLocalRef<jstring> AwContentsStatics__GetUnreachableWebDataUrl(
     JNIEnv* env,
     const JavaParamRef<jclass>&) {
   return base::android::ConvertUTF8ToJavaString(
@@ -86,27 +86,27 @@ ScopedJavaLocalRef<jstring> GetUnreachableWebDataUrl(
 }
 
 // static
-ScopedJavaLocalRef<jstring> GetProductVersion(JNIEnv* env,
+ScopedJavaLocalRef<jstring> AwContentsStatics__GetProductVersion(JNIEnv* env,
                                               const JavaParamRef<jclass>&) {
   return base::android::ConvertUTF8ToJavaString(
       env, version_info::GetVersionNumber());
 }
 
 // static
-jboolean GetSafeBrowsingEnabledByManifest(JNIEnv* env,
+jboolean AwContentsStatics__GetSafeBrowsingEnabledByManifest(JNIEnv* env,
                                           const JavaParamRef<jclass>&) {
   return AwSafeBrowsingConfigHelper::GetSafeBrowsingEnabledByManifest();
 }
 
 // static
-void SetSafeBrowsingEnabledByManifest(JNIEnv* env,
+void AwContentsStatics__SetSafeBrowsingEnabledByManifest(JNIEnv* env,
                                       const JavaParamRef<jclass>&,
                                       jboolean enable) {
   AwSafeBrowsingConfigHelper::SetSafeBrowsingEnabledByManifest(enable);
 }
 
 // static
-void SetSafeBrowsingWhitelist(JNIEnv* env,
+void AwContentsStatics__SetSafeBrowsingWhitelist(JNIEnv* env,
                               const JavaParamRef<jclass>&,
                               const JavaParamRef<jobjectArray>& jrules,
                               const JavaParamRef<jobject>& callback) {
@@ -121,7 +121,7 @@ void SetSafeBrowsingWhitelist(JNIEnv* env,
 }
 
 // static
-void SetServiceWorkerIoThreadClient(
+void AwContentsStatics__SetServiceWorkerIoThreadClient(
     JNIEnv* env,
     const JavaParamRef<jclass>&,
     const base::android::JavaParamRef<jobject>& io_thread_client,
@@ -131,14 +131,14 @@ void SetServiceWorkerIoThreadClient(
 }
 
 // static
-void SetCheckClearTextPermitted(JNIEnv* env,
+void AwContentsStatics__SetCheckClearTextPermitted(JNIEnv* env,
                                 const JavaParamRef<jclass>&,
                                 jboolean permitted) {
   AwURLRequestContextGetter::set_check_cleartext_permitted(permitted);
 }
 
 // static
-ScopedJavaLocalRef<jstring> FindAddress(JNIEnv* env,
+ScopedJavaLocalRef<jstring> AwContentsStatics__FindAddress(JNIEnv* env,
                                         const JavaParamRef<jclass>& clazz,
                                         const JavaParamRef<jstring>& addr) {
   base::string16 content_16 =

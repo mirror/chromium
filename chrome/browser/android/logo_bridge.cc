@@ -34,7 +34,7 @@ using base::android::ToJavaByteArray;
 
 namespace {
 
-ScopedJavaLocalRef<jobject> MakeJavaLogo(JNIEnv* env,
+ScopedJavaLocalRef<jobject> LogoBridge__MakeJavaLogo(JNIEnv* env,
                                          const SkBitmap* bitmap,
                                          const GURL& on_click_url,
                                          const std::string& alt_text,
@@ -58,13 +58,13 @@ ScopedJavaLocalRef<jobject> MakeJavaLogo(JNIEnv* env,
 }
 
 // Converts a C++ Logo to a Java Logo.
-ScopedJavaLocalRef<jobject> ConvertLogoToJavaObject(
+ScopedJavaLocalRef<jobject> LogoBridge__ConvertLogoToJavaObject(
     JNIEnv* env,
     const search_provider_logos::Logo* logo) {
   if (!logo)
     return ScopedJavaLocalRef<jobject>();
 
-  return MakeJavaLogo(env, &logo->image, GURL(logo->metadata.on_click_url),
+  return LogoBridge__MakeJavaLogo(env, &logo->image, GURL(logo->metadata.on_click_url),
                       logo->metadata.alt_text,
                       GURL(logo->metadata.animated_url));
 }
@@ -87,7 +87,7 @@ class LogoObserverAndroid : public search_provider_logos::LogoObserver {
       return;
 
     JNIEnv* env = base::android::AttachCurrentThread();
-    ScopedJavaLocalRef<jobject> j_logo = ConvertLogoToJavaObject(env, logo);
+    ScopedJavaLocalRef<jobject> j_logo = LogoBridge__ConvertLogoToJavaObject(env, logo);
     Java_LogoObserver_onLogoAvailable(env, j_logo_observer_, j_logo,
                                       from_cache);
   }
@@ -175,7 +175,7 @@ class LogoBridge::AnimatedLogoFetcher : public net::URLFetcherDelegate {
   DISALLOW_COPY_AND_ASSIGN(AnimatedLogoFetcher);
 };
 
-static jlong Init(JNIEnv* env,
+static jlong LogoBridge__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
                   const JavaParamRef<jobject>& j_profile) {
   LogoBridge* logo_bridge = new LogoBridge(j_profile);

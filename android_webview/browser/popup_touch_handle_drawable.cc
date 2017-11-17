@@ -83,7 +83,7 @@ float PopupTouchHandleDrawable::GetDrawableHorizontalPaddingRatio() const {
   return drawable_horizontal_padding_ratio_;
 }
 
-static jlong Init(JNIEnv* env,
+static jlong PopupTouchHandleDrawable__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
                   const jfloat horizontal_padding_ratio) {
   return reinterpret_cast<intptr_t>(

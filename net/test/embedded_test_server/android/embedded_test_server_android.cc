@@ -135,7 +135,7 @@ void EmbeddedTestServerAndroid::Destroy(JNIEnv* env,
   delete this;
 }
 
-static void Init(JNIEnv* env,
+static void EmbeddedTestServerImpl__Init(JNIEnv* env,
                  const JavaParamRef<jobject>& jobj,
                  const JavaParamRef<jstring>& jtest_data_dir,
                  jboolean jhttps) {

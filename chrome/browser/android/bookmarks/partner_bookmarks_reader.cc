@@ -68,7 +68,7 @@ void SetFaviconCallback(Profile* profile,
     bookmark_added_event->Signal();
 }
 
-void PrepareAndSetFavicon(JNIEnv* env, jbyte* icon_bytes, int icon_len,
+void PartnerBookmarksReader__PrepareAndSetFavicon(JNIEnv* env, jbyte* icon_bytes, int icon_len,
                           BookmarkNode* node, Profile* profile,
                           favicon_base::IconType icon_type) {
   SkBitmap icon_bitmap;
@@ -173,7 +173,7 @@ jlong PartnerBookmarksReader::AddPartnerBookmark(
         const int icon_len = env->GetArrayLength(icon);
         jbyte* icon_bytes = env->GetByteArrayElements(icon, nullptr);
         if (icon_bytes)
-          PrepareAndSetFavicon(env, icon_bytes, icon_len, node.get(), profile_,
+          PartnerBookmarksReader__PrepareAndSetFavicon(env, icon_bytes, icon_len, node.get(), profile_,
                                icon_type);
         env->ReleaseByteArrayElements(icon, icon_bytes, JNI_ABORT);
       } else {
@@ -328,14 +328,14 @@ void PartnerBookmarksReader::OnFaviconFetched(
 }
 
 // static
-static void DisablePartnerBookmarksEditing(JNIEnv* env,
+static void PartnerBookmarksReader__DisablePartnerBookmarksEditing(JNIEnv* env,
                                            const JavaParamRef<jclass>& clazz) {
   PartnerBookmarksShim::DisablePartnerBookmarksEditing();
 }
 
 // ----------------------------------------------------------------
 
-static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+static jlong PartnerBookmarksReader__Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   Profile* profile = ProfileManager::GetActiveUserProfile();
   PartnerBookmarksShim* partner_bookmarks_shim =
       PartnerBookmarksShim::BuildForBrowserContext(profile);

@@ -14,7 +14,7 @@ extern int main(int argc, char** argv);
 namespace testing {
 namespace android {
 
-static jint RunMain(
+static jint MainRunner__RunMain(
     JNIEnv* env,
     const base::android::JavaParamRef<jclass>& jcaller,
     const base::android::JavaParamRef<jobjectArray>& command_line) {

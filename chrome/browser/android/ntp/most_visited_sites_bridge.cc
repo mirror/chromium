@@ -291,7 +291,7 @@ void MostVisitedSitesBridge::RecordOpenedMostVisitedItem(
       /*url_for_rappor=*/GURL()));
 }
 
-static jlong Init(JNIEnv* env,
+static jlong MostVisitedSitesBridge__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
                   const JavaParamRef<jobject>& jprofile) {
   MostVisitedSitesBridge* most_visited_sites =

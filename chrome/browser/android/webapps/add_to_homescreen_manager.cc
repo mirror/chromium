@@ -39,7 +39,7 @@ const int kDataTimeoutInMilliseconds = 4000;
 
 }  // namespace
 
-jlong InitializeAndStart(JNIEnv* env,
+jlong AddToHomescreenManager__InitializeAndStart(JNIEnv* env,
                          const JavaParamRef<jobject>& obj,
                          const JavaParamRef<jobject>& java_web_contents) {
   content::WebContents* web_contents =

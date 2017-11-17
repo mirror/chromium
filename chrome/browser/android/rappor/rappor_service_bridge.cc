@@ -13,7 +13,7 @@ using base::android::JavaParamRef;
 
 namespace rappor {
 
-void SampleDomainAndRegistryFromURL(JNIEnv* env,
+void RapporServiceBridge__SampleDomainAndRegistryFromURL(JNIEnv* env,
                                     const JavaParamRef<jclass>& caller,
                                     const JavaParamRef<jstring>& j_metric,
                                     const JavaParamRef<jstring>& j_url) {
@@ -25,7 +25,7 @@ void SampleDomainAndRegistryFromURL(JNIEnv* env,
                                           metric, gurl);
 }
 
-void SampleString(JNIEnv* env,
+void RapporServiceBridge__SampleString(JNIEnv* env,
                   const JavaParamRef<jclass>& caller,
                   const JavaParamRef<jstring>& j_metric,
                   const JavaParamRef<jstring>& j_value) {

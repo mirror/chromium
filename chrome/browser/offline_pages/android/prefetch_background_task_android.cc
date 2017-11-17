@@ -25,7 +25,7 @@ namespace offline_pages {
 namespace prefetch {
 
 // JNI call to start request processing in scheduled mode.
-static jboolean StartPrefetchTask(JNIEnv* env,
+static jboolean PrefetchBackgroundTask__StartPrefetchTask(JNIEnv* env,
                                   const JavaParamRef<jobject>& jcaller,
                                   const JavaParamRef<jobject>& jprofile) {
   Profile* profile = ProfileAndroid::FromProfileAndroid(jprofile);

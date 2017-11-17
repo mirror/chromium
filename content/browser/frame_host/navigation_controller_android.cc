@@ -31,7 +31,7 @@ using base::android::ScopedJavaLocalRef;
 namespace {
 
 // static
-static base::android::ScopedJavaLocalRef<jobject> CreateJavaNavigationEntry(
+static base::android::ScopedJavaLocalRef<jobject> NavigationControllerImpl__CreateJavaNavigationEntry(
     JNIEnv* env,
     content::NavigationEntry* entry,
     int index) {
@@ -56,12 +56,12 @@ static base::android::ScopedJavaLocalRef<jobject> CreateJavaNavigationEntry(
       entry->GetTransitionType());
 }
 
-static void AddNavigationEntryToHistory(JNIEnv* env,
+static void NavigationControllerImpl__AddNavigationEntryToHistory(JNIEnv* env,
                                         const JavaRef<jobject>& history,
                                         content::NavigationEntry* entry,
                                         int index) {
   content::Java_NavigationControllerImpl_addToNavigationHistory(
-      env, history, CreateJavaNavigationEntry(env, entry, index));
+      env, history, NavigationControllerImpl__CreateJavaNavigationEntry(env, entry, index));
 }
 
 }  // namespace
@@ -259,7 +259,7 @@ jint NavigationControllerAndroid::GetNavigationHistory(
   // Iterate through navigation entries to populate the list
   int count = navigation_controller_->GetEntryCount();
   for (int i = 0; i < count; ++i) {
-    AddNavigationEntryToHistory(
+    NavigationControllerImpl__AddNavigationEntryToHistory(
         env, history, navigation_controller_->GetEntryAtIndex(i), i);
   }
 
@@ -282,7 +282,7 @@ void NavigationControllerAndroid::GetDirectedNavigationHistory(
     if (num_added >= max_entries)
       break;
 
-    AddNavigationEntryToHistory(
+    NavigationControllerImpl__AddNavigationEntryToHistory(
         env, history, navigation_controller_->GetEntryAtIndex(i), i);
     num_added++;
   }
@@ -348,7 +348,7 @@ NavigationControllerAndroid::GetEntryAtIndex(JNIEnv* env,
 
   content::NavigationEntry* entry =
       navigation_controller_->GetEntryAtIndex(index);
-  return CreateJavaNavigationEntry(env, entry, index);
+  return NavigationControllerImpl__CreateJavaNavigationEntry(env, entry, index);
 }
 
 base::android::ScopedJavaLocalRef<jobject>
@@ -359,7 +359,7 @@ NavigationControllerAndroid::GetPendingEntry(JNIEnv* env,
   if (!entry)
     return base::android::ScopedJavaLocalRef<jobject>();
 
-  return CreateJavaNavigationEntry(
+  return NavigationControllerImpl__CreateJavaNavigationEntry(
       env, entry, navigation_controller_->GetPendingEntryIndex());
 }
 

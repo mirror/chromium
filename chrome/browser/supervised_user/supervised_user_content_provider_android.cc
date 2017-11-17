@@ -32,7 +32,7 @@ void SupervisedUserContentProvider::UrlFilterObserver::OnURLFilterChanged() {
       AttachCurrentThread(), java_content_provider_);
 }
 
-static jlong CreateSupervisedUserContentProvider(
+static jlong SupervisedUserContentProvider__CreateSupervisedUserContentProvider(
     JNIEnv* env,
     const JavaParamRef<jobject>& caller) {
   return reinterpret_cast<intptr_t>(

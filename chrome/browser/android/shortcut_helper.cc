@@ -312,7 +312,7 @@ void ShortcutHelper::RetrieveWebApks(const WebApkInfoCallback& callback) {
 // This callback should only ever be called when the shortcut was for a
 // webapp-capable site; otherwise, |splash_image_callback| will have never been
 // allocated and doesn't need to be run or deleted.
-void OnWebappDataStored(JNIEnv* env,
+void ShortcutHelper__OnWebappDataStored(JNIEnv* env,
                         const JavaParamRef<jclass>& clazz,
                         jlong jsplash_image_callback) {
   DCHECK(jsplash_image_callback);
@@ -322,7 +322,7 @@ void OnWebappDataStored(JNIEnv* env,
   delete splash_image_callback;
 }
 
-void OnWebApksRetrieved(JNIEnv* env,
+void ShortcutHelper__OnWebApksRetrieved(JNIEnv* env,
                         const JavaParamRef<jclass>& clazz,
                         const jlong jcallback_pointer,
                         const JavaParamRef<jobjectArray>& jnames,

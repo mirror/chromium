@@ -14,7 +14,7 @@ using base::android::ConvertUTF8ToJavaString;
 namespace base {
 namespace android {
 
-static ScopedJavaLocalRef<jstring> ToJson(JNIEnv* env,
+static ScopedJavaLocalRef<jstring> StatisticsRecorderAndroid__ToJson(JNIEnv* env,
                                           const JavaParamRef<jclass>& clazz) {
   return ConvertUTF8ToJavaString(
       env, base::StatisticsRecorder::ToJSON(std::string()));

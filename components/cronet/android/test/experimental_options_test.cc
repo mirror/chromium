@@ -48,7 +48,7 @@ void WriteToHostCacheOnNetworkThread(jlong jcontext_adapter,
 }
 }  // namespace
 
-static void WriteToHostCache(JNIEnv* env,
+static void ExperimentalOptionsTest__WriteToHostCache(JNIEnv* env,
                              const JavaParamRef<jclass>& jcaller,
                              jlong jcontext_adapter,
                              const JavaParamRef<jstring>& jaddress) {

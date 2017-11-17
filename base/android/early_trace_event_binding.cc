@@ -14,7 +14,7 @@ namespace android {
 
 const char kEarlyJavaCategory[] = "EarlyJava";
 
-static void RecordEarlyEvent(JNIEnv* env,
+static void EarlyTraceEvent__RecordEarlyEvent(JNIEnv* env,
                              const JavaParamRef<jclass>& clazz,
                              const JavaParamRef<jstring>& jname,
                              jlong begin_time_ns,

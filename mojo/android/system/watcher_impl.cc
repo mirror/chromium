@@ -72,11 +72,11 @@ class WatcherImpl {
 
 }  // namespace
 
-static jlong CreateWatcher(JNIEnv* env, const JavaParamRef<jobject>& jcaller) {
+static jlong WatcherImpl__CreateWatcher(JNIEnv* env, const JavaParamRef<jobject>& jcaller) {
   return reinterpret_cast<jlong>(new WatcherImpl);
 }
 
-static jint Start(JNIEnv* env,
+static jint WatcherImpl__Start(JNIEnv* env,
                   const JavaParamRef<jobject>& jcaller,
                   jlong watcher_ptr,
                   jint mojo_handle,
@@ -85,13 +85,13 @@ static jint Start(JNIEnv* env,
   return watcher->Start(env, jcaller, mojo_handle, signals);
 }
 
-static void Cancel(JNIEnv* env,
+static void WatcherImpl__Cancel(JNIEnv* env,
                    const JavaParamRef<jobject>& jcaller,
                    jlong watcher_ptr) {
   reinterpret_cast<WatcherImpl*>(watcher_ptr)->Cancel();
 }
 
-static void Delete(JNIEnv* env,
+static void WatcherImpl__Delete(JNIEnv* env,
                    const JavaParamRef<jobject>& jcaller,
                    jlong watcher_ptr) {
   delete reinterpret_cast<WatcherImpl*>(watcher_ptr);

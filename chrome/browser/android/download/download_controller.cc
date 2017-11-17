@@ -196,7 +196,7 @@ void OnStoragePermissionDecided(
 
 }  // namespace
 
-static void OnAcquirePermissionResult(
+static void DownloadController__OnAcquirePermissionResult(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     jlong callback_id,

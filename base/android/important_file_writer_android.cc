@@ -12,7 +12,7 @@
 namespace base {
 namespace android {
 
-static jboolean WriteFileAtomically(JNIEnv* env,
+static jboolean ImportantFileWriterAndroid__WriteFileAtomically(JNIEnv* env,
                                     const JavaParamRef<jclass>& /* clazz */,
                                     const JavaParamRef<jstring>& file_name,
                                     const JavaParamRef<jbyteArray>& data) {

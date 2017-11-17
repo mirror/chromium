@@ -15,7 +15,7 @@
 
 using base::android::JavaParamRef;
 
-static void PreconnectUrlAndSubresources(JNIEnv* env,
+static void WarmupManager__PreconnectUrlAndSubresources(JNIEnv* env,
                                          const JavaParamRef<jclass>& clazz,
                                          const JavaParamRef<jobject>& jprofile,
                                          const JavaParamRef<jstring>& url_str) {
@@ -36,7 +36,7 @@ static void PreconnectUrlAndSubresources(JNIEnv* env,
   }
 }
 
-static void WarmupSpareRenderer(JNIEnv* env,
+static void WarmupManager__WarmupSpareRenderer(JNIEnv* env,
                                 const JavaParamRef<jclass>& clazz,
                                 const JavaParamRef<jobject>& jprofile) {
   Profile* profile = ProfileAndroid::FromProfileAndroid(jprofile);

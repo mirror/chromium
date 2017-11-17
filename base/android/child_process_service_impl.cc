@@ -18,7 +18,7 @@ using base::android::JavaParamRef;
 namespace base {
 namespace android {
 
-void RegisterFileDescriptors(JNIEnv* env,
+void ChildProcessServiceImpl__RegisterFileDescriptors(JNIEnv* env,
                              const JavaParamRef<jclass>& clazz,
                              const JavaParamRef<jobjectArray>& j_keys,
                              const JavaParamRef<jintArray>& j_ids,
@@ -66,7 +66,7 @@ void RegisterFileDescriptors(JNIEnv* env,
   }
 }
 
-void ExitChildProcess(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
+void ChildProcessServiceImpl__ExitChildProcess(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
   VLOG(0) << "ChildProcessServiceImpl: Exiting child process.";
   base::android::LibraryLoaderExitHook();
   _exit(0);

@@ -47,7 +47,7 @@ std::string GetProxy(const net::HttpResponseInfo& info) {
 
 }  // namespace
 
-static jlong CreateRequestAdapter(JNIEnv* env,
+static jlong CronetUrlRequest__CreateRequestAdapter(JNIEnv* env,
                                   const JavaParamRef<jobject>& jurl_request,
                                   jlong jurl_request_context_adapter,
                                   const JavaParamRef<jstring>& jurl_string,
