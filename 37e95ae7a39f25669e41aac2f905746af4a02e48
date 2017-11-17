@@ -16,6 +16,24 @@
       "revId": "37e95ae7a39f25669e41aac2f905746af4a02e48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e17b7fa_a0797f1a",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-17T16:01:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bef1d6b_43dbac8b",
+      "revId": "37e95ae7a39f25669e41aac2f905746af4a02e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
