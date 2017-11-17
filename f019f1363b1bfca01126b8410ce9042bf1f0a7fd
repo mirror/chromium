@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30137729_725af3de",
+        "filename": "device/bluetooth/bluetooth_device_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-17T19:16:10Z",
+      "side": 1,
+      "message": "If we can\u0027t rely on connection being done until Windows decides it is necessary we should either a) move this to a point where we know Windows will have caused a connection or b) reword this comment to explain it\u0027s not testable on Windows.",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 30
+      },
+      "revId": "f019f1363b1bfca01126b8410ce9042bf1f0a7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e9daeb_422c04c7",
+        "filename": "device/bluetooth/test/bluetooth_test_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-17T19:16:10Z",
+      "side": 1,
+      "message": "let\u0027s just have FinishPendingTasks do a \n  for ( 3 ) { RunPendingTasks, RunUntilIdle }\nand have a comment explaining why.\n\nThen all call sites are much simpler to read and just presume FinishPendingTasks gets the job done.",
+      "revId": "f019f1363b1bfca01126b8410ce9042bf1f0a7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
