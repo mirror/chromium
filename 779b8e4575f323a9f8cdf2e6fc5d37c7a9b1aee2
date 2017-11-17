@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "25a879c8_b136aa51",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-11-17T13:13:23Z",
+      "side": 1,
+      "message": "I added UKM enabled check in the user of this method. You can see it in crrev.com/c/758024.\n\nThank you for raising a question about incognito windows/tabs! I\u0027m waiting for the feedback from glevin@.",
+      "parentUuid": "01e2dd8d_47aa27f9",
+      "revId": "779b8e4575f323a9f8cdf2e6fc5d37c7a9b1aee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9eac49f7_a78bacf3",
         "filename": "ui/base/ime/text_input_client.h",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "I would be interested to see where this is called from, because as msw@ mentions, there may be a better way to get this information.\n\nIt doesn\u0027t sound too bad to get this info from the TextInputClient though. But I am not sure a GURL is the best format for that. Maybe just a \u0027std::string GetClientSourceId()\u0027, or something like that, so that native textfields (e.g. omnibox) can also identify themselves.",
       "parentUuid": "9eac49f7_a78bacf3",
+      "revId": "779b8e4575f323a9f8cdf2e6fc5d37c7a9b1aee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e26de12_781fcb17",
+        "filename": "ui/base/ime/text_input_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-11-17T13:13:23Z",
+      "side": 1,
+      "message": "The controller of the Virtual Keyboard, which is KeyboardController in ui/keyboard, interacts with the window with keyboard focus only via TextInputClient interface, so I added this method to TextInputClient.\n\nI changed a return value to std::string to implement this method on native views.",
+      "parentUuid": "8ee350d5_32c5f062",
       "revId": "779b8e4575f323a9f8cdf2e6fc5d37c7a9b1aee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
