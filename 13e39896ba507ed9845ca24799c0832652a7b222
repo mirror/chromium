@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "889a2d0d_2bff6827",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.cpp.tmpl",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-17T01:18:21Z",
+      "side": 1,
+      "message": "It compiles, for some reason, when the calling constexpr is inside a function. I\u0027ve seen other examples of it elsewhere in the codebase. E.g. constexpr arrays of CSSPropertyIDs.",
+      "parentUuid": "aee48458_b92e52c9",
+      "revId": "13e39896ba507ed9845ca24799c0832652a7b222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe8195dd_1b8e3ffd",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyInline.h.tmpl",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-16T06:34:01Z",
       "side": 1,
       "message": "I\u0027m not sure \"Inline\" is the right name for this file, it\u0027s more like where the instances live. CSSPropertyInstances?\n\nWhat is your reasoning for moving it out of CSSProperty.cpp? As per my comment in CSSProperty.cpp, the current implementation of CSSProperty::Get relies on these variable definitions being in the same file.",
+      "revId": "13e39896ba507ed9845ca24799c0832652a7b222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8b6579c_7d589709",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyInline.h.tmpl",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-17T01:18:21Z",
+      "side": 1,
+      "message": "I agree that it isn\u0027t a great name. Your suggestion is better.\n\nI have moved it because I wanted to make constexpr versions of the specific getters so that I can then make constexpr arrays of them. It\u0027s used once in this change, and will be used more when we do StylePropertyShorthand. The alternative was just to put it in the CSSProperty.h, but then that file would include all of the subclass headers which is kind of a disaster. I don\u0027t love this setup though. Maybe I should do it and just change the various constexpr CSSPropertyID arrays to not be constexpr.",
+      "parentUuid": "fe8195dd_1b8e3ffd",
       "revId": "13e39896ba507ed9845ca24799c0832652a7b222",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cac3a14d_41dfb9f3",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyInline.h.tmpl",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-17T01:18:21Z",
+      "side": 1,
+      "message": "I have moved it here so that I can make Get\u003cproperty\u003e methods constexpr.",
+      "parentUuid": "f4e0210a_7fc940d3",
+      "revId": "13e39896ba507ed9845ca24799c0832652a7b222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4092fc97_0e0ea40c",
         "filename": "third_party/WebKit/Source/core/animation/PropertyHandle.h",
         "patchSetId": 14
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-16T06:34:01Z",
       "side": 1,
       "message": "Can we avoid having these almost-duplicate functions by using CSSProperty()-\u003ePropertyID() where necessary?",
+      "revId": "13e39896ba507ed9845ca24799c0832652a7b222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee3b0dd3_0da8ccfe",
+        "filename": "third_party/WebKit/Source/core/animation/PropertyHandle.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-17T01:18:21Z",
+      "side": 1,
+      "message": "Yeah, we can. I considered doing that anyway so I will go ahead with it.",
+      "parentUuid": "4092fc97_0e0ea40c",
       "revId": "13e39896ba507ed9845ca24799c0832652a7b222",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
