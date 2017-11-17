@@ -157,6 +157,24 @@
     },
     {
       "key": {
+        "uuid": "24dc8b30_3fbdfd73",
+        "filename": "device/geolocation/public/cpp/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-17T16:41:14Z",
+      "side": 1,
+      "message": "oh, do you mean that in this CL we still keep the geolocation_export.h in device/geolocation/BUILD.gn, and remove the \"DEVICE_GEOLOCATION_EXPORT\" in location_provider.h?",
+      "parentUuid": "2baa3595_a7d69100",
+      "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ade5ac16_4be23e6a",
         "filename": "services/device/device_service.h",
         "patchSetId": 6
