@@ -7,7 +7,9 @@ Before Refresh --------------
     </DIV>
     <DIV class=security-explanation-text >
         <DIV class=security-explanation-title >
+            <SPAN >
 Neutral Test Summary
+            </SPAN>
         </DIV>
         <DIV >
 Neutral Test Description
@@ -22,7 +24,9 @@ Reload the page to record requests for HTTP resources.
     </DIV>
     <DIV class=security-explanation-text >
         <DIV class=security-explanation-title >
+            <SPAN >
 Insecure Test Summary
+            </SPAN>
         </DIV>
         <DIV >
 Insecure Test Description
@@ -39,7 +43,9 @@ Refresh --------------
     </DIV>
     <DIV class=security-explanation-text >
         <DIV class=security-explanation-title >
+            <SPAN >
 Neutral Test Summary
+            </SPAN>
         </DIV>
         <DIV >
 Neutral Test Description
@@ -54,7 +60,9 @@ View 1 request in Network Panel
     </DIV>
     <DIV class=security-explanation-text >
         <DIV class=security-explanation-title >
+            <SPAN >
 Insecure Test Summary
+            </SPAN>
         </DIV>
         <DIV >
 Insecure Test Description
