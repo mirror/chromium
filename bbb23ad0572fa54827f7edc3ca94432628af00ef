@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05b3ef18_c8349bb9",
+        "filename": "net/http/transport_security_state_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1624,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-17T23:26:22Z",
+      "side": 1,
+      "message": "maybe also test that the expect-ct state wasn\u0027t saved for that host?",
+      "revId": "bbb23ad0572fa54827f7edc3ca94432628af00ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
