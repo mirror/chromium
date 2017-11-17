@@ -70,6 +70,23 @@
       "revId": "df93071be3d9e1fc687222033ea7e639da810b63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b13821aa_314cb1aa",
+        "filename": "content/common/navigation_params.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-17T13:34:07Z",
+      "side": 1,
+      "message": "This member can only be set in a renderer-initiated navigation right? Do we need it for commit? If not, it should be moved to BeginNavigationParams.",
+      "revId": "df93071be3d9e1fc687222033ea7e639da810b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
