@@ -16,6 +16,24 @@
       "revId": "7d0e41c56032d5db76c4c1d6fcd2e7fcc6186f02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3889a708_a64153e4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-11-17T07:02:55Z",
+      "side": 1,
+      "message": "Now not all PostTask via WebTaskRunner are called their task types, e.g. tests or some old WebTaskRunnerImpl creation in WebThreadImplForRendererScheduler",
+      "parentUuid": "d8e2493b_b1fb0851",
+      "revId": "7d0e41c56032d5db76c4c1d6fcd2e7fcc6186f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
