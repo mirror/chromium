@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1ceff27_5aa25cee",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-17T15:39:17Z",
+      "side": 1,
+      "message": "Nit: const std::string\u0026",
+      "range": {
+        "startLine": 760,
+        "startChar": 11,
+        "endLine": 760,
+        "endChar": 17
+      },
+      "revId": "4d80e9bf864a91d357ab09c0c1e98d8bc0e40c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b372407_1c760daa",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-17T15:39:17Z",
+      "side": 1,
+      "message": "Can GetMetricValues() takes StringPiece params so that you don\u0027t need to change the params in the outer function or call .c_str() here?",
+      "range": {
+        "startLine": 763,
+        "startChar": 47,
+        "endLine": 763,
+        "endChar": 52
+      },
+      "revId": "4d80e9bf864a91d357ab09c0c1e98d8bc0e40c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
