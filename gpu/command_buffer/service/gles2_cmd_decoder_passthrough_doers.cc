@@ -4629,5 +4629,24 @@ error::Error GLES2DecoderPassthroughImpl::DoWindowRectanglesEXT(
   return error::kNoError;
 }
 
+error::Error GLES2DecoderPassthroughImpl::DoCreateGpuFenceINTERNAL(
+    GLuint gpu_fence_id,
+    bool from_external) {
+  NOTIMPLEMENTED();
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderPassthroughImpl::DoWaitGpuFenceCHROMIUM(
+    GLuint gpu_fence_id) {
+  NOTIMPLEMENTED();
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderPassthroughImpl::DoDestroyGpuFenceCHROMIUM(
+    GLuint gpu_fence_id) {
+  NOTIMPLEMENTED();
+  return error::kNoError;
+}
+
 }  // namespace gles2
 }  // namespace gpu
