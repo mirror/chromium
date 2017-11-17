@@ -267,9 +267,6 @@ class TestPrintPreviewHandler : public PrintPreviewHandler {
     return test_printer_handler_.get();
   }
 
-  void RegisterForGaiaCookieChanges() override {}
-  void UnregisterForGaiaCookieChanges() override {}
-
   void BadMessageReceived() override { bad_messages_++; }
 
   content::WebContents* GetInitiator() const override { return initiator_; }

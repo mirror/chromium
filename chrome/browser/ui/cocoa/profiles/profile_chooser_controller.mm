@@ -60,7 +60,6 @@
 #include "chrome/grit/theme_resources.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/prefs/pref_service.h"
-#include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/browser/signin_metrics.h"
@@ -365,10 +364,8 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
     if (viewMode == profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT ||
         viewMode == profiles::BUBBLE_VIEW_MODE_GAIA_ADD_ACCOUNT ||
         viewMode == profiles::BUBBLE_VIEW_MODE_GAIA_REAUTH) {
-      [controller_ showMenuWithViewMode:
-                       signin::IsAccountConsistencyMirrorEnabled()
-                           ? profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT
-                           : profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER];
+      [controller_
+          showMenuWithViewMode:profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER];
     }
   }
 
@@ -828,11 +825,7 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
 - (void)navigateBackFromSigninPage:(id)sender {
   std::string primaryAccount = SigninManagerFactory::GetForProfile(
       browser_->profile())->GetAuthenticatedAccountId();
-  bool hasAccountManagement =
-      !primaryAccount.empty() && signin::IsAccountConsistencyMirrorEnabled();
-  [self showMenuWithViewMode:hasAccountManagement
-                                 ? profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT
-                                 : profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER];
+  [self showMenuWithViewMode:profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER];
 }
 
 - (void)showAccountRemovalView:(id)sender {
@@ -934,16 +927,6 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
 
     // Guest profiles do not have a token service.
     isGuestSession_ = browser_->profile()->IsGuestSession();
-
-    // If view mode is PROFILE_CHOOSER but there is an auth error, force
-    // ACCOUNT_MANAGEMENT mode.
-    if (viewMode_ == profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER &&
-        HasAuthError(browser_->profile()) &&
-        signin::IsAccountConsistencyMirrorEnabled() &&
-        avatarMenu_->GetItemAt(avatarMenu_->GetActiveProfileIndex())
-            .signed_in) {
-      viewMode_ = profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT;
-    }
 
     [window accessibilitySetOverrideValue:
         l10n_util::GetNSString(IDS_PROFILES_NEW_AVATAR_MENU_ACCESSIBLE_NAME)
@@ -1257,9 +1240,7 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
   SigninManagerBase* signinManager = SigninManagerFactory::GetForProfile(
       browser_->profile()->GetOriginalProfile());
   NSRect profileLinksBound = NSZeroRect;
-  if (item.signed_in && signin::IsAccountConsistencyMirrorEnabled()) {
-    profileLinksBound = NSMakeRect(0, 0, kFixedMenuWidth, kVerticalSpacing);
-  } else if (!item.signed_in && signinManager->IsSigninAllowed()) {
+  if (!item.signed_in && signinManager->IsSigninAllowed()) {
     profileLinksBound = NSMakeRect(xOffset, kRelatedControllVerticalSpacing,
                                    maxAvailableTextWidth, kVerticalSpacing);
   }
@@ -1357,7 +1338,7 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
 
   // Username, aligned to the leading edge of the  profile icon and
   // below the profile name.
-  if (item.signed_in && !signin::IsAccountConsistencyMirrorEnabled()) {
+  if (item.signed_in) {
     // Adjust the y-position of profile name to leave space for username.
     cardYOffset += kMdImageSide / 2 - [profileName frame].size.height;
     [profileName setFrameOrigin:NSMakePoint(xOffset, cardYOffset)];
@@ -1391,8 +1372,7 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
   // here.
   SigninManagerBase* signinManager = SigninManagerFactory::GetForProfile(
       browser_->profile()->GetOriginalProfile());
-  DCHECK((item.signed_in && signin::IsAccountConsistencyMirrorEnabled()) ||
-         (!item.signed_in && signinManager->IsSigninAllowed()));
+  DCHECK(!item.signed_in && signinManager->IsSigninAllowed());
 
   base::scoped_nsobject<NSView> container([[NSView alloc] initWithFrame:rect]);
 
@@ -1404,32 +1384,7 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
   rect.size.width -= kRightPadding;
 
   // The available links depend on the type of profile that is active.
-  if (item.signed_in) {
-    NSButton* link = nil;
-    if (signin::IsAccountConsistencyMirrorEnabled()) {
-      NSString* linkTitle = l10n_util::GetNSString(
-          viewMode_ == profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER ?
-              IDS_PROFILES_PROFILE_MANAGE_ACCOUNTS_BUTTON :
-              IDS_PROFILES_PROFILE_HIDE_MANAGE_ACCOUNTS_BUTTON);
-      SEL linkSelector =
-          (viewMode_ == profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER) ?
-          @selector(showAccountManagement:) : @selector(hideAccountManagement:);
-      rect.size.width += kRightPadding;  // Spans the width of the entire menu.
-      link = [self hoverButtonWithRect:NSMakeRect(0, 0, rect.size.width,
-                                                  kBlueButtonHeight)
-                                  text:linkTitle
-                                action:linkSelector];
-    }
-    if (link) {
-      // -linkButtonWithTitle sizeToFit's the link. We can use the height, but
-      // need to re-stretch the width so that the link can be centered correctly
-      // in the view.
-      rect.size.height = [link frame].size.height;
-      [link setFrame:rect];
-      [container addSubview:link];
-      [container setFrameSize:rect.size];
-    }
-  } else {
+  if (!item.signed_in) {
     rect.size.height = kBlueButtonHeight;
     NSButton* signinButton = [[BlueLabelButton alloc] initWithFrame:rect];
 

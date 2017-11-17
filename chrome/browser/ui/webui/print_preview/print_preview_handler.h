@@ -16,7 +16,6 @@
 #include "base/memory/weak_ptr.h"
 #include "base/timer/timer.h"
 #include "chrome/common/features.h"
-#include "components/signin/core/browser/gaia_cookie_manager_service.h"
 #include "content/public/browser/web_ui_message_handler.h"
 #include "printing/backend/print_backend.h"
 #include "printing/features/features.h"
@@ -48,22 +47,14 @@ enum PrinterType {
 }  // namespace printing
 
 // The handler for Javascript messages related to the print preview dialog.
-class PrintPreviewHandler
-    : public content::WebUIMessageHandler,
-      public GaiaCookieManagerService::Observer {
+class PrintPreviewHandler : public content::WebUIMessageHandler {
  public:
   PrintPreviewHandler();
   ~PrintPreviewHandler() override;
 
   // WebUIMessageHandler implementation.
   void RegisterMessages() override;
-  void OnJavascriptAllowed() override;
   void OnJavascriptDisallowed() override;
-
-  // GaiaCookieManagerService::Observer implementation.
-  void OnAddAccountToCookieCompleted(
-      const std::string& account_id,
-      const GoogleServiceAuthError& error) override;
 
   // Called when print preview failed.
   void OnPrintPreviewFailed();
@@ -125,11 +116,6 @@ class PrintPreviewHandler
 
   // Gets the initiator for the print preview dialog.
   virtual content::WebContents* GetInitiator() const;
-
-  // Register/unregister from notifications of changes done to the GAIA
-  // cookie. Protected so unit tests can override.
-  virtual void RegisterForGaiaCookieChanges();
-  virtual void UnregisterForGaiaCookieChanges();
 
  private:
   friend class PrintPreviewPdfGeneratedBrowserTest;
@@ -306,10 +292,6 @@ class PrintPreviewHandler
 
   // Holds token service to get OAuth2 access tokens.
   std::unique_ptr<AccessTokenService> token_service_;
-
-  // Pointer to cookie manager service so that print preview can listen for GAIA
-  // cookie changes.
-  GaiaCookieManagerService* gaia_cookie_manager_service_;
 
   // Handles requests for extension printers. Created lazily by calling
   // GetPrinterHandler().

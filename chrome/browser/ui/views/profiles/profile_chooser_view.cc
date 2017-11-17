@@ -36,7 +36,6 @@
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/browser/ui/profile_chooser_constants.h"
-#include "chrome/browser/ui/singleton_tabs.h"
 #include "chrome/browser/ui/user_manager.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
@@ -53,7 +52,6 @@
 #include "chrome/grit/theme_resources.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/prefs/pref_service.h"
-#include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_error_controller.h"
 #include "components/signin/core/browser/signin_header_helper.h"
@@ -132,12 +130,6 @@ views::Link* CreateLink(const base::string16& link_text,
   link_button->SetUnderline(false);
   link_button->set_listener(listener);
   return link_button;
-}
-
-bool HasAuthError(Profile* profile) {
-  const SigninErrorController* error =
-      SigninErrorControllerFactory::GetForProfile(profile);
-  return error && error->HasError();
 }
 
 std::string GetAuthErrorAccountId(Profile* profile) {
@@ -377,15 +369,6 @@ void ProfileChooserView::Init() {
   if (oauth2_token_service)
     oauth2_token_service->AddObserver(this);
 
-  // If view mode is PROFILE_CHOOSER but there is an auth error, force
-  // ACCOUNT_MANAGEMENT mode.
-  if (IsProfileChooser(view_mode_) && HasAuthError(browser_->profile()) &&
-      signin::IsAccountConsistencyMirrorEnabled() &&
-      avatar_menu_->GetItemAt(avatar_menu_->GetActiveProfileIndex())
-          .signed_in) {
-    view_mode_ = profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT;
-  }
-
   // The arrow keys can be used to tab between items.
   AddAccelerator(ui::Accelerator(ui::VKEY_DOWN, ui::EF_NONE));
   AddAccelerator(ui::Accelerator(ui::VKEY_UP, ui::EF_NONE));
@@ -418,9 +401,7 @@ void ProfileChooserView::OnRefreshTokenAvailable(
       view_mode_ == profiles::BUBBLE_VIEW_MODE_GAIA_REAUTH) {
     // The account management UI is only available through the
     // --account-consistency=mirror flag.
-    ShowViewFromMode(signin::IsAccountConsistencyMirrorEnabled()
-                         ? profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT
-                         : profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER);
+    ShowViewFromMode(profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER);
   }
 }
 
@@ -433,20 +414,6 @@ void ProfileChooserView::OnRefreshTokenRevoked(const std::string& account_id) {
 
 void ProfileChooserView::ShowView(profiles::BubbleViewMode view_to_display,
                                   AvatarMenu* avatar_menu) {
-  // The account management view should only be displayed if the active profile
-  // is signed in.
-  if (view_to_display == profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT) {
-    DCHECK(signin::IsAccountConsistencyMirrorEnabled());
-    const AvatarMenu::Item& active_item = avatar_menu->GetItemAt(
-        avatar_menu->GetActiveProfileIndex());
-    if (!active_item.signed_in) {
-      // This is the case when the user selects the sign out option in the user
-      // menu upon encountering unrecoverable errors. Afterwards, the profile
-      // chooser view is shown instead of the account management view.
-      view_to_display = profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER;
-    }
-  }
-
   if (browser_->profile()->IsSupervised() &&
       (view_to_display == profiles::BUBBLE_VIEW_MODE_GAIA_ADD_ACCOUNT ||
        view_to_display == profiles::BUBBLE_VIEW_MODE_ACCOUNT_REMOVAL)) {
@@ -586,15 +553,7 @@ void ProfileChooserView::ButtonPressed(views::Button* sender,
     account_id_to_remove_.clear();
     ShowViewFromMode(profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT);
   } else if (sender == gaia_signin_cancel_button_) {
-    // The account management view is only available with the
-    // --account-consistency=mirror flag.
-    bool account_management_available =
-        SigninManagerFactory::GetForProfile(browser_->profile())
-            ->IsAuthenticated() &&
-        signin::IsAccountConsistencyMirrorEnabled();
-    ShowViewFromMode(account_management_available ?
-        profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT :
-        profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER);
+    ShowViewFromMode(profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER);
   } else if (sender == current_profile_card_) {
     avatar_menu_->EditProfile(avatar_menu_->GetActiveProfileIndex());
     PostActionPerformed(ProfileMetrics::PROFILE_DESKTOP_MENU_EDIT_IMAGE);
@@ -837,12 +796,8 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
 
   views::View* view = new views::View();
-  bool account_consistency_enabled =
-      signin::IsAccountConsistencyMirrorEnabled();
   int content_list_vert_spacing =
-      account_consistency_enabled
-          ? provider->GetDistanceMetric(DISTANCE_CONTENT_LIST_VERTICAL_MULTI)
-          : provider->GetDistanceMetric(DISTANCE_CONTENT_LIST_VERTICAL_SINGLE);
+      provider->GetDistanceMetric(DISTANCE_CONTENT_LIST_VERTICAL_SINGLE);
   view->SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kVertical,
                            gfx::Insets(content_list_vert_spacing, 0), 0));
@@ -852,9 +807,7 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
   const base::string16 profile_name =
       profiles::GetAvatarNameForProfile(browser_->profile()->GetPath());
 
-  // Show the profile name by itself if not signed in or account consistency is
-  // disabled. Otherwise, show the email attached to the profile.
-  bool show_email = avatar_item.signed_in && !account_consistency_enabled;
+  bool show_email = avatar_item.signed_in;
   HoverButton* profile_card =
       new HoverButton(this, std::move(current_profile_photo), profile_name,
                       show_email ? avatar_item.username : base::string16());
@@ -870,15 +823,6 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
 
   // The available links depend on the type of profile that is active.
   if (avatar_item.signed_in) {
-    if (account_consistency_enabled) {
-      base::string16 button_text = l10n_util::GetStringUTF16(
-          IsProfileChooser(view_mode_)
-              ? IDS_PROFILES_PROFILE_MANAGE_ACCOUNTS_BUTTON
-              : IDS_PROFILES_PROFILE_HIDE_MANAGE_ACCOUNTS_BUTTON);
-      manage_accounts_button_ = new HoverButton(this, button_text);
-      view->AddChildView(manage_accounts_button_);
-    }
-
     current_profile_card_->SetAccessibleName(
         l10n_util::GetStringFUTF16(
             IDS_PROFILES_EDIT_SIGNED_IN_PROFILE_ACCESSIBLE_NAME,

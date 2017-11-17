@@ -15,12 +15,15 @@
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/signin/core/browser/account_reconcilor.h"
 #include "components/signin/core/browser/account_reconcilor_delegate.h"
-#include "components/signin/core/browser/mirror_account_reconcilor_delegate.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/signin_features.h"
 
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
 #include "components/signin/core/browser/dice_account_reconcilor_delegate.h"
+#endif
+
+#if BUILDFLAG(ENABLE_MIRROR)
+#include "components/signin/core/browser/mirror_account_reconcilor_delegate.h"
 #endif
 
 AccountReconcilorFactory::AccountReconcilorFactory()
@@ -70,12 +73,13 @@ void AccountReconcilorFactory::RegisterProfilePrefs(
 // static
 std::unique_ptr<signin::AccountReconcilorDelegate>
 AccountReconcilorFactory::CreateAccountReconcilorDelegate(Profile* profile) {
+#if BUILDFLAG(ENABLE_MIRROR)
+  return std::make_unique<signin::MirrorAccountReconcilorDelegate>(
+      SigninManagerFactory::GetForProfile(profile));
+#else
+
   std::unique_ptr<signin::AccountReconcilorDelegate> delegate;
   switch (signin::GetAccountConsistencyMethod()) {
-    case signin::AccountConsistencyMethod::kMirror:
-      delegate = std::make_unique<signin::MirrorAccountReconcilorDelegate>(
-          SigninManagerFactory::GetForProfile(profile));
-      break;
     case signin::AccountConsistencyMethod::kDisabled:
     case signin::AccountConsistencyMethod::kDiceFixAuthErrors:
       delegate = std::make_unique<signin::AccountReconcilorDelegate>();
@@ -92,4 +96,6 @@ AccountReconcilorFactory::CreateAccountReconcilorDelegate(Profile* profile) {
       break;
   }
   return delegate;
+
+#endif  // BUILDFLAG(ENABLE_MIRROR)
 }
