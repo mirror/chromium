@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ded6af20_5a8611b2",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-11-17T19:22:14Z",
+      "side": 1,
+      "message": "Is it customary in Chrome land to comment the name of this parameter?\n\nfalse /* name_of_parameter */\n\nMakes things easier to understand.",
+      "range": {
+        "startLine": 311,
+        "startChar": 35,
+        "endLine": 311,
+        "endChar": 40
+      },
+      "revId": "e6a793c4d6d0826e7dd08dc313fa3d1b3746603e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef7866f3_2ee9e08d",
+        "filename": "content/zygote/zygote_main_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-11-17T19:22:14Z",
+      "side": 1,
+      "message": "Same",
+      "range": {
+        "startLine": 515,
+        "startChar": 40,
+        "endLine": 515,
+        "endChar": 44
+      },
+      "revId": "e6a793c4d6d0826e7dd08dc313fa3d1b3746603e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a412155_d23f496b",
+        "filename": "services/service_manager/sandbox/linux/sandbox_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-11-17T19:22:14Z",
+      "side": 1,
+      "message": "Same",
+      "range": {
+        "startLine": 393,
+        "startChar": 27,
+        "endLine": 393,
+        "endChar": 32
+      },
+      "revId": "e6a793c4d6d0826e7dd08dc313fa3d1b3746603e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
