@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "622c2903_4d907e8f",
+        "filename": "chrome/browser/previews/previews_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T16:59:01Z",
+      "side": 1,
+      "message": "Please use NoScript capitalization when doing mixed case for consistency with what we have done so far.",
+      "range": {
+        "startLine": 126,
+        "startChar": 7,
+        "endLine": 126,
+        "endChar": 27
+      },
+      "revId": "d9752ac7bd1c27a3f71c1431eb6d06f9dbf89637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a14576ae_362a3735",
+        "filename": "components/optimization_guide/test_component_creator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T16:59:01Z",
+      "side": 1,
+      "message": "Actually looks like it creates the component data and persists it to a temp file and then returns the ComponentInfo for it.",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 27
+      },
+      "revId": "d9752ac7bd1c27a3f71c1431eb6d06f9dbf89637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
