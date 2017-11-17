@@ -255,7 +255,8 @@ gfx::RectF AXTree::RelativeToTreeBounds(const AXNode* node,
       }
     }
 
-    if (container->data().role != ui::AX_ROLE_DESKTOP && clipped.IsEmpty() &&
+    if (container->data().GetBoolAttribute(ui::AX_ATTR_CLIPS_CHILDREN) &&
+        container->data().role != ui::AX_ROLE_DESKTOP && clipped.IsEmpty() &&
         !bounds.IsEmpty()) {
       // If it is offscreen with respect to its parent, and the node itself is
       // not empty, label it offscreen.
