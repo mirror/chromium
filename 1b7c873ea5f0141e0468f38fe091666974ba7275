@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c27e360_dd011f66",
+        "filename": "content/browser/service_worker/service_worker_context_core.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-17T01:41:52Z",
+      "side": 1,
+      "message": "Can this be AdaptCallbackForRepeating(base::BindOnce()) ?\n\n(I want new code to use BindOnce as much as possible, while our existing code still must be migrated to BindOnce/OnceCallback)",
+      "revId": "1b7c873ea5f0141e0468f38fe091666974ba7275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8a1c9b5_8c161f89",
+        "filename": "content/browser/service_worker/service_worker_context_core.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-17T01:41:52Z",
+      "side": 1,
+      "message": "Add a comment like // The barrier must be executed twice for each registration: once for unregistration and once for deletion.",
+      "revId": "1b7c873ea5f0141e0468f38fe091666974ba7275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7f3763_acd7dd40",
+        "filename": "content/browser/service_worker/service_worker_context_core.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-17T01:41:52Z",
+      "side": 1,
+      "message": "I think you\u0027re right. But I wonder if this could change to !is_deleted() instead of !is_uninstalling() for clarity? is_uninstalling implies is_deleted as best I can see.",
+      "revId": "1b7c873ea5f0141e0468f38fe091666974ba7275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e09c6b_bfd6e6e4",
+        "filename": "content/browser/service_worker/service_worker_context_core.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-17T01:41:52Z",
+      "side": 1,
+      "message": "registration-\u003epattern()",
+      "revId": "1b7c873ea5f0141e0468f38fe091666974ba7275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "341e13d0_26ab407c",
+        "filename": "content/browser/service_worker/service_worker_context_core.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-17T01:41:52Z",
+      "side": 1,
+      "message": "optional: Instead of a repeating callback, you can just make this a OnceCallback\u003cvoid(ServiceWorkerStatusCode)\u003e (don\u0027t need to typedef it something like \"UnregistrationCallback\", I don\u0027t think we get much value out of those).",
+      "revId": "1b7c873ea5f0141e0468f38fe091666974ba7275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1629ea66_b2b66840",
+        "filename": "content/browser/service_worker/service_worker_registration.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-17T01:41:52Z",
+      "side": 1,
+      "message": "listener : listeners_?",
+      "revId": "1b7c873ea5f0141e0468f38fe091666974ba7275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
