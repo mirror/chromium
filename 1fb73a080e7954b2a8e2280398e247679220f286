@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2174205b_b2d5b4f9",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-17T16:23:35Z",
+      "side": 1,
+      "message": "Aw, shucks! Forgot this one. Do I know why Unretained is safe? :)\n\nIf I were to guess, it\u0027s because it\u0027s already required to last as long as the stream and the stream closes the binding when being destructed. Something like that?",
+      "parentUuid": "9d96f334_a7e1fbdd",
+      "revId": "1fb73a080e7954b2a8e2280398e247679220f286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1c17cd9_4218059b",
         "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
         "patchSetId": 2
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "eb42ac0e_3e37e502",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-17T16:23:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "61857633_44d8fee7",
+      "revId": "1fb73a080e7954b2a8e2280398e247679220f286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "901255de_db862b1e",
         "filename": "content/renderer/media/mojo_audio_input_ipc.h",
         "patchSetId": 2
@@ -68,6 +104,24 @@
       "revId": "1fb73a080e7954b2a8e2280398e247679220f286",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "868c67e5_c299d04d",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-17T16:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "901255de_db862b1e",
+      "revId": "1fb73a080e7954b2a8e2280398e247679220f286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
