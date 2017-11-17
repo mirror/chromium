@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c49f4faf_70fc7950",
+        "filename": "chrome/browser/vr/test/run_all_pixeltests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-17T23:03:56Z",
+      "side": 1,
+      "message": "Actually, this file is identical to other suite-runners.  Might as well rename it run_all_tests.cc, and link it into the top level target of unittest, pixeltest and perffest.",
+      "revId": "888d7c8fca0c84da7d3daddca1bc829377a78301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
