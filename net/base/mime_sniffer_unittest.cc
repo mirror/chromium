@@ -254,7 +254,15 @@ TEST(MimeSnifferTest, DontAllowPrivilegeEscalationTest) {
     { "<html><body>text</body></html>",
       sizeof("<html><body>text</body></html>")-1,
       "file:///C/test.nosuchextension",
-      "", "text/plain" },
+      "",
+#if defined(OS_ANDROID)
+      // Only Android may sniff HTML from file:// URIs of arbitrary extensions,
+      // for WebView back-compat.
+      "text/html"
+#else
+      "text/plain"
+#endif
+    },
   };
 
   TestArray(tests, arraysize(tests));
