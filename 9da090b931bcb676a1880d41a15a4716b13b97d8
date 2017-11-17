@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "21d8e83b_89920e13",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGPath.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-17T19:22:33Z",
+      "side": 1,
+      "message": "It\u0027s a possibility at least. I wonder if the approximation should just be a free function operating on ComputedStyle (or SVGComputedStyle.) We do end up unnecessarily setting up dashes (which is my main concern for this.) As mentioned above, I\u0027ll look more into that regression.",
+      "parentUuid": "7d532bed_29cbfdf5",
+      "revId": "9da090b931bcb676a1880d41a15a4716b13b97d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6aac2c26_f51cff89",
         "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGPath.cpp",
         "patchSetId": 4
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "To answer my own question: pointer-events!\n\nhttps://codereview.chromium.org/1048043002",
       "parentUuid": "6aac2c26_f51cff89",
+      "revId": "9da090b931bcb676a1880d41a15a4716b13b97d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18e340fd_8efdd3f7",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGPath.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-17T19:22:33Z",
+      "side": 1,
+      "message": "\u003d)",
+      "parentUuid": "e400cfd7_f98f1330",
       "revId": "9da090b931bcb676a1880d41a15a4716b13b97d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
