@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b5a7443_87bc1334",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-17T04:04:13Z",
+      "side": 1,
+      "message": "The parameter is removed.",
+      "parentUuid": "5ccca182_a5fee09d",
+      "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f69bc157_b545bf35",
         "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-16T20:20:48Z",
       "side": 1,
       "message": "Is true returned if no pref has been set?",
+      "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5da4f34_5a2ec93b",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-17T04:04:13Z",
+      "side": 1,
+      "message": "Yes. Default value is true.",
+      "parentUuid": "f69bc157_b545bf35",
       "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "a9decb6f_17dfd3f8",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-17T04:04:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51475f36_0629b45f",
+      "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f4fb215_8083e5f1",
         "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler.cc",
         "patchSetId": 4
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "1fb144fe_2f3282cf",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-17T04:04:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f4fb215_8083e5f1",
+      "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f296133b_5df7158a",
         "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler.cc",
         "patchSetId": 4
@@ -98,6 +170,24 @@
       "writtenOn": "2017-11-16T20:20:48Z",
       "side": 1,
       "message": "I\u0027m a little fuzzy on the ownership here.  What if there are multiple controllers active (multiple active routes)?",
+      "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d435d9c2_d97a0830",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-17T04:04:13Z",
+      "side": 1,
+      "message": "Mirroring session only has one route? From() is a wrapper of static_cast, and the controller is owned by |media_router_ui_|. I do not fully understand the ownership problem...but Derek should know this.",
+      "parentUuid": "f296133b_5df7158a",
       "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "117e48c1_635d174b",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-17T04:04:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b518dfe_365f92ff",
+      "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "498a1aea_5c020036",
         "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler_unittest.cc",
         "patchSetId": 4
@@ -153,6 +261,24 @@
       "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d27bbfe_ae78a8f4",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-17T04:04:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "498a1aea_5c020036",
+      "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
