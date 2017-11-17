@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6c23e039_58aca374",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2017-11-17T02:28:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33b6f2c6_e928b813",
+      "range": {
+        "startLine": 667,
+        "startChar": 0,
+        "endLine": 669,
+        "endChar": 9
+      },
+      "revId": "8c4f09ecae1345b22c20d2880d790774b8143f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe5ca621_7c984adc",
         "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "8c4f09ecae1345b22c20d2880d790774b8143f03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e4fa3d8_477c4de1",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2017-11-17T02:28:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe5ca621_7c984adc",
+      "range": {
+        "startLine": 728,
+        "startChar": 0,
+        "endLine": 730,
+        "endChar": 9
+      },
+      "revId": "8c4f09ecae1345b22c20d2880d790774b8143f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "46623470_0b780b71",
+        "filename": "media/base/android/media_codec_bridge_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2017-11-17T02:28:53Z",
+      "side": 1,
+      "message": "Check hdr_metadata as it could be nullptr or base::nullopt",
+      "parentUuid": "fce3511f_c449d7c5",
+      "range": {
+        "startLine": 278,
+        "startChar": 6,
+        "endLine": 278,
+        "endChar": 47
+      },
+      "revId": "8c4f09ecae1345b22c20d2880d790774b8143f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "505ff759_e25878b2",
         "filename": "media/base/android/media_codec_bridge_impl.cc",
         "patchSetId": 8
@@ -114,6 +186,30 @@
       "revId": "8c4f09ecae1345b22c20d2880d790774b8143f03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc9f646_6ee23250",
+        "filename": "media/base/android/media_codec_bridge_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2017-11-17T02:28:53Z",
+      "side": 1,
+      "message": "Doesn\u0027t look like android\u0027s MediaFormat has a way to make use of the color space matrix.",
+      "parentUuid": "505ff759_e25878b2",
+      "range": {
+        "startLine": 282,
+        "startChar": 77,
+        "endLine": 282,
+        "endChar": 0
+      },
+      "revId": "8c4f09ecae1345b22c20d2880d790774b8143f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
