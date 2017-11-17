@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4832e81b_e4b5622d",
+        "filename": "chrome/browser/net/errorpage_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T16:05:05Z",
+      "side": 1,
+      "message": "I don\u0027t think all this set up is needed?  I think you can just do embedded_test_server()-\u003eStart(), and it\u0027s already set up to server files from the correct directory?\n\nIf not, can still switch to using embedded_test_server() rather than creating a new one, and set its path in the test fixture\u0027s constructor, inlining the GetTestDataDirectory() method.",
+      "range": {
+        "startLine": 873,
+        "startChar": 35,
+        "endLine": 873,
+        "endChar": 40
+      },
+      "revId": "c3a108d04a85b71f4b9cb7c2c89cd45d933ea7d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
