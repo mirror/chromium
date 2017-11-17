@@ -22,6 +22,30 @@
       "revId": "721d7c58d123a3d5ea285014aaf0bcce4fe85525",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047d324e_22c63284",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-17T19:22:59Z",
+      "side": 1,
+      "message": "Done. And tested :)",
+      "parentUuid": "942cc266_b6bb9e73",
+      "range": {
+        "startLine": 202,
+        "startChar": 70,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "721d7c58d123a3d5ea285014aaf0bcce4fe85525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
