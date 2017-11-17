@@ -167,6 +167,7 @@ FormCache::~FormCache() {
 }
 
 std::vector<FormData> FormCache::ExtractNewForms() {
+  LOG(ERROR) << "ExtractNewForms";
   std::vector<FormData> forms;
   WebDocument document = frame_->GetDocument();
   if (document.IsNull())
