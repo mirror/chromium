@@ -47,8 +47,9 @@ public final class SafeBrowsingApiBridge {
         boolean initSuccesssful = handler.init(
                 ContextUtils.getApplicationContext(), new SafeBrowsingApiHandler.Observer() {
                     @Override
-                    public void onUrlCheckDone(long callbackId, int resultStatus, String metadata) {
-                        nativeOnUrlCheckDone(callbackId, resultStatus, metadata);
+                    public void onUrlCheckDone(
+                            long callbackId, int resultStatus, String metadata, long checkDelay) {
+                        nativeOnUrlCheckDone(callbackId, resultStatus, metadata, checkDelay);
                     }
                 });
         return initSuccesssful ? handler : null;
@@ -65,5 +66,5 @@ public final class SafeBrowsingApiBridge {
     }
 
     private static native void nativeOnUrlCheckDone(
-            long callbackId, int resultStatus, String metadata);
+            long callbackId, int resultStatus, String metadata, long checkDelay);
 }

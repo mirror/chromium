@@ -167,8 +167,9 @@ public class SafeBrowsingTest {
             }
 
             ThreadUtils.runOnUiThread(
-                    (Runnable) () -> mObserver.onUrlCheckDone(callbackId, STATUS_SUCCESS,
-                            metadata));
+                    (Runnable) ()
+                            -> mObserver.onUrlCheckDone(
+                                    callbackId, STATUS_SUCCESS, metadata, 10 /* checkDelay */));
         }
     }
 
