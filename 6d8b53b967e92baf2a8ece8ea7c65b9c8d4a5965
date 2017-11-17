@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b15e99d_07b9f416",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-17T05:44:08Z",
+      "side": 1,
+      "message": "nit: Let\u0027s say a major case first and an exceptional case next.\n\n// Expose the event object as |window.event|.\n// In V1 shadow tree, |window.event| must be |undefined|.\n// \u003clink to the spec if available\u003e\n\nThis is just an example.  The point is that, in this file, \"V1 shadow tree\" is not a main story.",
+      "revId": "6d8b53b967e92baf2a8ece8ea7c65b9c8d4a5965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
