@@ -166,6 +166,30 @@
       "revId": "c32db39d10b87ed5a6570b34802d3b3636fa0dab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af856d7e_efc82a41",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-17T14:32:46Z",
+      "side": 1,
+      "message": "\u003e I\u0027m coming into the conversation a little cold, so I\u0027m not sure I grok what I\u0027m trading off, sorry.\n\u003e \n\u003e Is the current solution that autofill gets notified twice? That seems like it would be OK as long as we ignore the 2nd notfication (since the ui is already visible). Or is the solution to ignore one of the events?\nSorry for the lack of context Roger. \nThe current solution is that we wait only for mouse down event (see https://chromium-review.googlesource.com/c/chromium/src/+/768811/10/content/renderer/input/render_widget_input_handler.cc#397). Either left and right click triggers MouseDown only once (FYI, the left click also triggers MouseUp. Thus, if we waited for either MouseUp and MouseDown (PatchSet 1), then the left click would trigger the handler twice which is not good). \n\nForget about WebAutofillClient\u0027s methods (DidCompleteFocusChangeInFrame, DidReceiveLeftMouseDownOrGestureTapInNode). I\u0027m happy not to change anything there. \n\nAutofillAgent::DidCompleteFocusChangeInFrame will be called not only when a user makes left click, but also right click. So, right click will also trigger |page_click_tracker_-\u003eDidCompleteFocusChangeInFrame()|. This is the only effect on autofill part. \n\nHope this manuscript makes things a bit more clear to you :)",
+      "parentUuid": "561d80ec_327805fb",
+      "range": {
+        "startLine": 398,
+        "startChar": 19,
+        "endLine": 398,
+        "endChar": 26
+      },
+      "revId": "c32db39d10b87ed5a6570b34802d3b3636fa0dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
