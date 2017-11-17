@@ -18,7 +18,11 @@ namespace blink {
 // Listens for updates made on the WebLayer by the WebSurfaceLayerBridge.
 class BLINK_PLATFORM_EXPORT WebSurfaceLayerBridgeObserver {
  public:
+  // Triggered by resizing or surface layer creation.
   virtual void OnWebLayerUpdated() = 0;
+
+  virtual void RegisterContentsLayer(WebLayer*) = 0;
+  virtual void UnregisterContentsLayer(WebLayer*) = 0;
 };
 
 // Maintains and exposes the SurfaceLayer.
