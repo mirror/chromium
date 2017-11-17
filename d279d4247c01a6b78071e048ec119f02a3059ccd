@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18596ac2_fa27d712",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/textarea/cols-attribute.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-17T13:26:52Z",
+      "side": 1,
+      "message": "Can you make sure the largest value that doesn\u0027t clamp is tested? Is it 4294967294? Applies elsewhere as well.\n\nAnd if you want to move these tests into web-platform-tests, that\u0027d be nice, but certainly optional.",
+      "range": {
+        "startLine": 46,
+        "startChar": 29,
+        "endLine": 46,
+        "endChar": 30
+      },
+      "revId": "d279d4247c01a6b78071e048ec119f02a3059ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
