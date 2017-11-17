@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30995fb3_4076a9d4",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-17T02:56:09Z",
+      "side": 1,
+      "message": "nit: we can simply assign?\n  point \u003d box-\u003eLocation();",
+      "revId": "6da5ee16c84f82b1ad0adb77a5765002f514b703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
