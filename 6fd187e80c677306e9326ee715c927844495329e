@@ -42,6 +42,29 @@
     },
     {
       "key": {
+        "uuid": "4c68cb0b_fccf4615",
+        "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T20:05:11Z",
+      "side": 1,
+      "message": "Can you assert this is main thread or does that cause issues for tests?",
+      "range": {
+        "startLine": 216,
+        "startChar": 12,
+        "endLine": 216,
+        "endChar": 26
+      },
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfe89756_4167b2ee",
         "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
         "patchSetId": 12
@@ -139,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "b088290a_ad637669",
+        "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T20:05:11Z",
+      "side": 1,
+      "message": "+1 - otherwise it just looks like a simple getter and was super confusing below :)",
+      "parentUuid": "33b6d870_55d1329f",
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e45fd1c_98a489f4",
         "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
         "patchSetId": 12
@@ -179,6 +220,47 @@
     },
     {
       "key": {
+        "uuid": "43e636ba_1455242e",
+        "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T20:05:11Z",
+      "side": 1,
+      "message": "or even a TODO since it seems like we could require the formal param of this function to have type Application",
+      "parentUuid": "86545506_23281adb",
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcf1c0cd_93eaec1c",
+        "filename": "base/android/junit/src/org/chromium/base/ApplicationStatusTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T20:05:11Z",
+      "side": 1,
+      "message": "nit: remove this line",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 31
+      },
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "552b6b00_3c7cacc9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
         "patchSetId": 12
@@ -213,6 +295,46 @@
       "writtenOn": "2017-11-17T19:09:07Z",
       "side": 1,
       "message": "let\u0027s do this after.",
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e7d5ff_cabfea7f",
+        "filename": "content/shell/android/shell_apk/src/org/chromium/content_shell_apk/ContentShellApplication.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T20:05:11Z",
+      "side": 1,
+      "message": "nit: it\u0027s idiomatic to call super first unless you have specific need to run before it. I don\u0027t think that\u0027s the case here unless I\u0027m mistaken. :)\n\nThat said, maybe just put this in |attachBaseContext| with the other \"one-time-inits\" ?",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c12e0a_c6b54bd1",
+        "filename": "testing/android/native_test/java/src/org/chromium/native_test/NativeUnitTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T20:05:11Z",
+      "side": 1,
+      "message": "nit: pout with the global nits above",
       "revId": "6fd187e80c677306e9326ee715c927844495329e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
