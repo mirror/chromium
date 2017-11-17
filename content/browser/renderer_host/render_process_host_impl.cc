@@ -1487,6 +1487,23 @@ bool RenderProcessHostImpl::Init() {
   CreateMessageFilters();
   RegisterMojoInterfaces();
 
+  if (!run_renderer_in_process()) {
+    // In in-process mode, keep_alive_ref_count_ mechanism doesn't apply.
+    IncrementKeepAliveRefCount();
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(
+            [](RenderProcessHostImpl* host) {
+              host->GetGpuClient()->PreEstablishGpuChannel();
+              BrowserThread::PostTask(
+                  BrowserThread::UI, FROM_HERE,
+                  base::BindOnce(
+                      &RenderProcessHostImpl::DecrementKeepAliveRefCount,
+                      base::Unretained(host)));
+            },
+            this));
+  }
+
   if (run_renderer_in_process()) {
     DCHECK(g_renderer_main_thread_factory);
     // Crank up a thread and run the initialization there.  With the way that
@@ -1995,9 +2012,7 @@ void RenderProcessHostImpl::GetBlobURLLoaderFactory(
 
 void RenderProcessHostImpl::CreateMusGpuRequest(ui::mojom::GpuRequest request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (!gpu_client_)
-    gpu_client_.reset(new GpuClient(GetID()));
-  gpu_client_->Add(std::move(request));
+  GetGpuClient()->Add(std::move(request));
 }
 
 void RenderProcessHostImpl::CreateOffscreenCanvasProvider(
@@ -4171,6 +4186,13 @@ void RenderProcessHostImpl::GetBrowserHistogram(
     histogram->WriteJSON(&histogram_json);
   }
   std::move(callback).Run(histogram_json);
+}
+
+GpuClient* RenderProcessHostImpl::GetGpuClient() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (!gpu_client_)
+    gpu_client_.reset(new GpuClient(GetID()));
+  return gpu_client_.get();
 }
 
 }  // namespace content
