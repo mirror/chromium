@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b930320_5f997bfe",
+        "filename": "chrome/browser/extensions/api/preference/preference_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T18:18:32Z",
+      "side": 1,
+      "message": "constexpr const?",
+      "revId": "ddf21a5f873499b119273c005d411f6d395d81b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032860e1_17814a5b",
+        "filename": "chrome/browser/extensions/api/preference/preference_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T18:18:32Z",
+      "side": 1,
+      "message": "nit: prefer std::make_unique?",
+      "revId": "ddf21a5f873499b119273c005d411f6d395d81b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aeb81422_71b25d6b",
+        "filename": "chrome/browser/extensions/api/preference/preference_helpers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T18:18:32Z",
+      "side": 0,
+      "message": "Are you sure we want to remove this?",
+      "revId": "3a0cd9f1cec9683e4bf7fe89ea955ebfba5801eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
