@@ -93,6 +93,30 @@
       "revId": "c9de95a077b07f69202d376cd7e59f79785e7733",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b8b472_102e6ec7",
+        "filename": "ui/android/java/src/org/chromium/ui/base/DeviceFormFactor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T18:28:57Z",
+      "side": 1,
+      "message": "This needs to be well tested on a tablet running N+ (Nexus 9 supports it) since the applyOverrideConfiguration isn\u0027t run on tablets \u003c N. Good manual tests would include:\n - launch in normal mode and put into MW\n - launch in mw mode (into a window with dp \u003c 600) and put back into normal mode",
+      "parentUuid": "d7a106a9_87b4020e",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 96
+      },
+      "revId": "c9de95a077b07f69202d376cd7e59f79785e7733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
