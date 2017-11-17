@@ -63,6 +63,24 @@
       "revId": "35ad5d4305d14c6cdae107f72345f68623a4028d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ccf00fe_5df5ff91",
+        "filename": "ui/events/x/events_x_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1227574
+      },
+      "writtenOn": "2017-11-17T16:45:33Z",
+      "side": 0,
+      "message": "This line has been revert.",
+      "parentUuid": "a4971fb0_5005dc6e",
+      "revId": "35ad5d4305d14c6cdae107f72345f68623a4028d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
