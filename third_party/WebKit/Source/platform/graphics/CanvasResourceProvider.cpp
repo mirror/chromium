@@ -20,6 +20,31 @@
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 
+namespace {
+
+bool CanUseGpuMemoryBuffer(
+    const WeakPtr<blink::WebGraphicsContext3DProviderWrapper>&
+        context_provider_wrapper,
+    const blink::CanvasColorParams& colorParams,
+    const blink::IntSize& size) {
+  if (!blink::RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled())
+    return false;
+  if (!blink::SharedGpuContext::IsGpuCompositingEnabled())
+    return false;
+  if (!gpu::IsImageFromGpuMemoryBufferFormatSupported(
+          colorParams.GetBufferFormat(),
+          context_provider_wrapper->ContextProvider()->GetCapabilities()))
+    return false;
+  if (!gpu::IsImageSizeValidForGpuMemoryBufferFormat(
+          gfx::Size(size), colorParams.GetBufferFormat()))
+    return false;
+  DCHECK(gpu::IsImageFormatCompatibleWithGpuMemoryBufferFormat(
+      colorParams.GLInternalFormat(), colorParams.GetBufferFormat()));
+  return true;
+}
+
+}  // unnamed namespace
+
 namespace blink {
 
 // CanvasResourceProvider_Texture
@@ -42,48 +67,16 @@ class CanvasResourceProvider_Texture : public CanvasResourceProvider {
 
   virtual ~CanvasResourceProvider_Texture() {}
 
-  bool IsValid() const final { return GetSkSurface() && !IsGpuContextLost(); }
+  bool IsValid() const override {
+    return GetSkSurface() && !IsGpuContextLost();
+  }
   bool IsAccelerated() const final { return true; }
 
-  bool CanPrepareTextureMailbox() const final { return true; }
+  bool CanPrepareTextureMailbox() const override { return true; }
 
  protected:
-  virtual bool isOverlayCandidate() { return false; }
-
-  void ResourceToMailbox(CanvasResource* resource,
-                         GLenum target,
-                         viz::TextureMailbox* out_mailbox) {
-    auto gl = ContextGL();
-    auto gr = GetGrContext();
-    DCHECK(gl && gr);
-
-    GLuint texture_id = resource->TextureId();
-
-    gl->BindTexture(target, texture_id);
-    gl->TexParameteri(target, GL_TEXTURE_MAG_FILTER, GetGLFilter());
-    gl->TexParameteri(target, GL_TEXTURE_MIN_FILTER, GetGLFilter());
-    gl->TexParameteri(target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    gl->TexParameteri(target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-    auto mailbox = resource->GpuMailbox();
-    gl->ProduceTextureDirectCHROMIUM(texture_id, target, mailbox.name);
-    const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
-    gl->ShallowFlushCHROMIUM();
-    gpu::SyncToken sync_token;
-    gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
-
-    *out_mailbox = viz::TextureMailbox(mailbox, sync_token, target,
-                                       gfx::Size(Size()), isOverlayCandidate());
-
-    gfx::ColorSpace color_space = ColorParams().GetStorageGfxColorSpace();
-    out_mailbox->set_color_space(color_space);
-    out_mailbox->set_nearest_neighbor(UseNearestNeighbor());
-
-    gl->BindTexture(target, 0);
-
-    // Because we are changing the texture binding without going through skia,
-    // we must dirty the context.
-    ResetSkiaTextureBinding();
+  static gfx::BufferUsage BufferUsageForLowLatencyMode() {
+    return gfx::BufferUsage::SCANOUT;
   }
 
   scoped_refptr<StaticBitmapImage> CreateSnapshot() override {
@@ -94,7 +87,7 @@ class CanvasResourceProvider_Texture : public CanvasResourceProvider {
     return StaticBitmapImage::Create(image, ContextProviderWrapper());
   }
 
-  std::unique_ptr<CanvasResource> DoPrepareTextureMailbox(
+  scoped_refptr<CanvasResource> DoPrepareTextureMailbox(
       viz::TextureMailbox* out_mailbox) override {
     DCHECK(GetSkSurface());
 
@@ -117,12 +110,9 @@ class CanvasResourceProvider_Texture : public CanvasResourceProvider {
       return nullptr;
     DCHECK(image->isTextureBacked());
 
-    std::unique_ptr<CanvasResource> resource =
+    scoped_refptr<CanvasResource> resource =
         CanvasResource_Skia::Create(image, ContextProviderWrapper());
-    if (!resource)
-      return nullptr;
-
-    ResourceToMailbox(resource.get(), GL_TEXTURE_2D, out_mailbox);
+    ResourceToMailbox(resource.get(), out_mailbox);
     image->getTexture()->textureParamsModified();
 
     return resource;
@@ -165,24 +155,27 @@ class CanvasResourceProvider_Texture_GpuMemoryBuffer final
                                        color_params,
                                        std::move(context_provider_wrapper)) {}
 
+  bool SupportsRecycling() const override { return true; }
+
   virtual ~CanvasResourceProvider_Texture_GpuMemoryBuffer() {}
 
  protected:
-  bool isOverlayCandidate() override { return true; }
+  bool IsOverlayCandidate() override { return true; }
 
-  std::unique_ptr<CanvasResource> CreateResource() final {
+  scoped_refptr<CanvasResource> CreateResource() final {
     return CanvasResource_GpuMemoryBuffer::Create(Size(), ColorParams(),
+                                                  gfx::BufferUsage::SCANOUT,
                                                   ContextProviderWrapper());
   }
 
-  std::unique_ptr<CanvasResource> DoPrepareTextureMailbox(
+  scoped_refptr<CanvasResource> DoPrepareTextureMailbox(
       viz::TextureMailbox* out_mailbox) final {
     DCHECK(GetSkSurface());
 
     if (IsGpuContextLost())
       return nullptr;
 
-    std::unique_ptr<CanvasResource> output_resource = NewOrRecycledResource();
+    scoped_refptr<CanvasResource> output_resource = NewOrRecycledResource();
     if (!output_resource) {
       // GpuMemoryBuffer creation failed, fallback to Texture resource
       return CanvasResourceProvider_Texture::DoPrepareTextureMailbox(
@@ -202,16 +195,14 @@ class CanvasResourceProvider_Texture_GpuMemoryBuffer final
         skia::GrBackendObjectToGrGLTextureInfo(image->getTextureHandle(true))
             ->fID;
 
-    GLenum target = GL_TEXTURE_RECTANGLE_ARB;
+    gl->CopyTextureCHROMIUM(
+        skia_texture_id, 0 /*sourceLevel*/, output_resource->TextureTarget(),
+        output_resource->TextureId(), 0 /*destLevel*/,
+        ColorParams().GLInternalFormat(), ColorParams().GLType(),
+        GL_FALSE /*unpackFlipY*/, GL_FALSE /*unpackPremultiplyAlpha*/,
+        GL_FALSE /*unpackUnmultiplyAlpha*/);
 
-    gl->CopyTextureCHROMIUM(skia_texture_id, 0 /*sourceLevel*/, target,
-                            output_resource->TextureId(), 0 /*destLevel*/,
-                            ColorParams().GLInternalFormat(),
-                            ColorParams().GLType(), false /*unpackFlipY*/,
-                            false /*unpackPremultiplyAlpha*/,
-                            false /*unpackUnmultiplyAlpha*/);
-
-    ResourceToMailbox(output_resource.get(), target, out_mailbox);
+    ResourceToMailbox(output_resource.get(), out_mailbox);
     return output_resource;
   }
 };
@@ -222,22 +213,38 @@ class CanvasResourceProvider_Texture_GpuMemoryBuffer final
 // * Renders to a skia RAM-backed bitmap
 // * Mailboxing is not supported : cannot be directly composited
 
-class CanvasResourceProvider_Bitmap final : public CanvasResourceProvider {
+class CanvasResourceProvider_Bitmap : public CanvasResourceProvider {
  public:
+  // Note : context_provider_wrapper is not required when instantiating
+  // CanvasResourceProvider_Bitmap directly. It is required by derived class
+  // CanvasResourceProvider_LowLatency.
   CanvasResourceProvider_Bitmap(const IntSize& size,
-                                const CanvasColorParams color_params)
-      : CanvasResourceProvider(size,
-                               color_params,
-                               nullptr /*context_provider_wrapper*/) {}
+                                const CanvasColorParams color_params,
+                                WeakPtr<WebGraphicsContext3DProviderWrapper>
+                                    context_provider_wrapper = nullptr)
+      : CanvasResourceProvider(size, color_params, context_provider_wrapper) {}
+
+  // For templating purposes, we need a constructor with the same args as
+  // CanvasResourceProvider_Texture.  The second arg is simply ignored.
+  CanvasResourceProvider_Bitmap(const IntSize& size,
+                                unsigned,
+                                const CanvasColorParams color_params,
+                                WeakPtr<WebGraphicsContext3DProviderWrapper>
+                                    context_provider_wrapper = nullptr)
+      : CanvasResourceProvider(size, color_params, context_provider_wrapper) {}
 
   ~CanvasResourceProvider_Bitmap() {}
 
-  bool IsValid() const final { return GetSkSurface(); }
+  bool IsValid() const override { return GetSkSurface(); }
   bool IsAccelerated() const final { return false; }
 
-  bool CanPrepareTextureMailbox() const final { return false; }
+  bool CanPrepareTextureMailbox() const override { return false; }
 
- private:
+ protected:
+  static gfx::BufferUsage BufferUsageForLowLatencyMode() {
+    return gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT;
+  }
+
   scoped_refptr<StaticBitmapImage> CreateSnapshot() override {
     sk_sp<SkImage> image = GetSkSurface()->makeImageSnapshot();
     if (!image)
@@ -245,8 +252,8 @@ class CanvasResourceProvider_Bitmap final : public CanvasResourceProvider {
     return StaticBitmapImage::Create(image);
   }
 
-  std::unique_ptr<CanvasResource> DoPrepareTextureMailbox(
-      viz::TextureMailbox* out_mailbox) final {
+  scoped_refptr<CanvasResource> DoPrepareTextureMailbox(
+      viz::TextureMailbox* out_mailbox) {
     NOTREACHED();  // Not directly compositable.
     return nullptr;
   }
@@ -257,8 +264,96 @@ class CanvasResourceProvider_Bitmap final : public CanvasResourceProvider {
         kPremul_SkAlphaType, ColorParams().GetSkColorSpaceForSkSurfaces());
     return SkSurface::MakeRaster(info, ColorParams().GetSkSurfaceProps());
   }
+};
 
-  sk_sp<SkSurface> surface_;
+// CanvasResourceProvider_LowLatency
+//==============================================================================
+//
+// * Renders to a skia surface, the type of which is determined by BaseClass
+// * BaseClass can be CanvasResourceProvider_Bitmap or
+//   CanvasResourceProvider_Texture
+// * Mailboxing uses a single-buffered GpuMemoryBuffer if GpuMemoryBuffers are
+//   enabled, otherwise it use a GL texture
+// * Presentation is subject to tearing artifacts and frame order inversion is
+//   possible when switching out of hw overlay mode.
+// * Template argument can be CanvasResourceProvider_Bitmap or
+//   CanvasResourceProvider_Texture.
+//
+
+template <class BaseClass>
+class CanvasResourceProvider_LowLatency : public BaseClass {
+ public:
+  CanvasResourceProvider_LowLatency(
+      const IntSize& size,
+      unsigned msaa_sample_count,
+      const CanvasColorParams color_params,
+      WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper)
+      : BaseClass(size,
+                  msaa_sample_count,
+                  color_params,
+                  context_provider_wrapper) {
+    // SingleBuffered means output resource is owned here
+    if (CanUseGpuMemoryBuffer(context_provider_wrapper, color_params, size)) {
+      front_buffer_ = CanvasResource_GpuMemoryBuffer::Create(
+          BaseClass::Size(), BaseClass::ColorParams(),
+          BaseClass::BufferUsageForLowLatencyMode(),
+          BaseClass::ContextProviderWrapper());
+    } else if (BaseClass::IsAccelerated()) {
+      front_buffer_ = CanvasResource_Texture::Create(
+          BaseClass::Size(), BaseClass::ColorParams(),
+          BaseClass::ContextProviderWrapper());
+    }
+  }
+
+  bool IsValid() const final {
+    return front_buffer_ && BaseClass::GetSkSurface();
+  }
+  bool IsFlipped() const final { return false; }
+  bool CanPrepareTextureMailbox() const final { return true; }
+  bool ReusesMailboxes() const final { return true; }
+  void DidDraw(const FloatRect& rect) final { dirty_rect_.Unite(rect); }
+
+ protected:
+  bool IsOverlayCandidate() override { return true; }
+
+  scoped_refptr<CanvasResource> DoPrepareTextureMailbox(
+      viz::TextureMailbox* out_mailbox) final {
+    DCHECK(BaseClass::GetSkSurface());
+
+    if (BaseClass::IsGpuContextLost() || !front_buffer_)
+      return nullptr;
+
+    BaseClass::ResourceToMailbox(front_buffer_.get(), out_mailbox);
+    // Returning the front buffer will allow the compositor to keep the
+    // resource alive after the resource provider has been destroyed.
+    return front_buffer_;
+  }
+
+  void UpdateFrontBuffer() final {
+    sk_sp<SkImage> image = BaseClass::GetSkSurface()->makeImageSnapshot();
+    if (!image || dirty_rect_.IsEmpty())
+      return;
+
+    IntRect int_dirty_rect = EnclosingIntRect(dirty_rect_);
+    int_dirty_rect.Inflate(1);
+    int_dirty_rect.Intersect(IntRect(IntPoint(0, 0), BaseClass::Size()));
+    front_buffer_->UpdateContents(image.get(), int_dirty_rect);
+    dirty_rect_ = FloatRect();
+
+    // This flush helps lower latency.  Without it, the compositor may only
+    // pull gl commands from the stream up to the SyncPoint of the frame
+    // currently being presented.  This flush pushes the stream
+    // to commit commands beyond the SyncPoints of previous frames, thus
+    // allowing content to immediately catch up to frames that have already
+    // been committed.
+    auto gl = BaseClass::ContextGL();
+    if (gl)
+      gl->Flush();
+  }
+
+ private:
+  scoped_refptr<CanvasResource> front_buffer_;
+  FloatRect dirty_rect_;
 };
 
 // CanvasResourceProvider base class implementation
@@ -268,6 +363,8 @@ enum ResourceType {
   kTextureGpuMemoryBufferResourceType,
   kTextureResourceType,
   kBitmapResourceType,
+  kLowLatencyBitmapResourceType,
+  kLowLatencyTextureResourceType,
 };
 
 ResourceType kSoftwareCompositedFallbackList[] = {
@@ -287,6 +384,13 @@ ResourceType kAcceleratedCompositedFallbackList[] = {
     kBitmapResourceType,
 };
 
+ResourceType kLowLatencyFallbackList[] = {
+#if defined(OS_CHROMEOS)
+    kLowLatencyBitmapResourceType,
+#endif
+    kLowLatencyTextureResourceType, kTextureGpuMemoryBufferResourceType,
+    kTextureResourceType, kBitmapResourceType};
+
 std::unique_ptr<CanvasResourceProvider> CanvasResourceProvider::Create(
     const IntSize& size,
     unsigned msaa_sample_count,
@@ -297,41 +401,41 @@ std::unique_ptr<CanvasResourceProvider> CanvasResourceProvider::Create(
   ResourceType* resourceTypeFallbackList = nullptr;
 
   switch (usage) {
-#define DEFINE_FALLBACK(NAME)                              \
+#define DEFINE_FALLBACK_LIST(NAME)                         \
   case NAME##ResourceUsage:                                \
     resourceTypeFallbackList = NAME##FallbackList;         \
     resourceTypeFallbackListLength =                       \
         sizeof(NAME##FallbackList) / sizeof(ResourceType); \
     break;
 
-    DEFINE_FALLBACK(kSoftware);
-    DEFINE_FALLBACK(kSoftwareComposited);
-    DEFINE_FALLBACK(kAccelerated);
-    DEFINE_FALLBACK(kAcceleratedComposited);
+    DEFINE_FALLBACK_LIST(kSoftware);
+    DEFINE_FALLBACK_LIST(kSoftwareComposited);
+    DEFINE_FALLBACK_LIST(kAccelerated);
+    DEFINE_FALLBACK_LIST(kAcceleratedComposited);
+    DEFINE_FALLBACK_LIST(kLowLatency);
   }
 
   std::unique_ptr<CanvasResourceProvider> provider;
   for (unsigned i = 0; i < resourceTypeFallbackListLength; i++) {
     switch (resourceTypeFallbackList[i]) {
+      case kLowLatencyBitmapResourceType:
+        if (!CanUseGpuMemoryBuffer(context_provider_wrapper, colorParams, size))
+          continue;
+        provider = std::make_unique<
+            CanvasResourceProvider_LowLatency<CanvasResourceProvider_Bitmap>>(
+            size, msaa_sample_count, colorParams, context_provider_wrapper);
+        break;
+      case kLowLatencyTextureResourceType:
+        provider = std::make_unique<
+            CanvasResourceProvider_LowLatency<CanvasResourceProvider_Texture>>(
+            size, msaa_sample_count, colorParams, context_provider_wrapper);
+        break;
       case kTextureGpuMemoryBufferResourceType:
-        DCHECK(SharedGpuContext::IsGpuCompositingEnabled());
-        if (RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled()) {
-          if (!gpu::IsImageFromGpuMemoryBufferFormatSupported(
-                  colorParams.GetBufferFormat(),
-                  context_provider_wrapper->ContextProvider()
-                      ->GetCapabilities()))
-            continue;
-          if (!gpu::IsImageSizeValidForGpuMemoryBufferFormat(
-                  gfx::Size(size), colorParams.GetBufferFormat()))
-            continue;
-          DCHECK(gpu::IsImageFormatCompatibleWithGpuMemoryBufferFormat(
-              colorParams.GLInternalFormat(), colorParams.GetBufferFormat()));
-
-          provider =
-              std::make_unique<CanvasResourceProvider_Texture_GpuMemoryBuffer>(
-                  size, msaa_sample_count, colorParams,
-                  context_provider_wrapper);
-        }
+        if (!CanUseGpuMemoryBuffer(context_provider_wrapper, colorParams, size))
+          continue;
+        provider =
+            std::make_unique<CanvasResourceProvider_Texture_GpuMemoryBuffer>(
+                size, msaa_sample_count, colorParams, context_provider_wrapper);
         break;
       case kTextureResourceType:
         DCHECK(SharedGpuContext::IsGpuCompositingEnabled());
@@ -357,7 +461,8 @@ CanvasResourceProvider::CanvasResourceProvider(
     : weak_ptr_factory_(this),
       context_provider_wrapper_(std::move(context_provider_wrapper)),
       size_(size),
-      color_params_(color_params) {}
+      color_params_(color_params),
+      dirty_rect_(FloatPoint(0, 0), FloatSize(size)) {}
 
 CanvasResourceProvider::~CanvasResourceProvider() {}
 
@@ -419,20 +524,21 @@ void CanvasResourceProvider::FlushSkia() const {
 
 static void ReleaseFrameResources(
     WeakPtr<CanvasResourceProvider> resource_provider,
-    std::unique_ptr<CanvasResource> resource,
+    scoped_refptr<CanvasResource> resource,
     const gpu::SyncToken& sync_token,
     bool lost_resource) {
   resource->SetSyncTokenForRelease(sync_token);
   if (lost_resource) {
     resource->Abandon();
   }
-  if (resource_provider && !lost_resource && resource->IsRecycleable()) {
+  if (resource_provider && resource_provider->SupportsRecycling() &&
+      !lost_resource) {
     resource_provider->RecycleResource(std::move(resource));
   }
 }
 
 void CanvasResourceProvider::RecycleResource(
-    std::unique_ptr<CanvasResource> resource) {
+    scoped_refptr<CanvasResource> resource) {
   if (resource_recycling_enabled_)
     recycled_resources_.push_back(std::move(resource));
 }
@@ -443,10 +549,9 @@ void CanvasResourceProvider::SetResourceRecyclingEnabled(bool value) {
     ClearRecycledResources();
 }
 
-std::unique_ptr<CanvasResource>
-CanvasResourceProvider::NewOrRecycledResource() {
+scoped_refptr<CanvasResource> CanvasResourceProvider::NewOrRecycledResource() {
   if (recycled_resources_.size()) {
-    std::unique_ptr<CanvasResource> resource =
+    scoped_refptr<CanvasResource> resource =
         std::move(recycled_resources_.back());
     recycled_resources_.pop_back();
     // Recycling implies releasing the old content
@@ -460,8 +565,7 @@ bool CanvasResourceProvider::PrepareTextureMailbox(
     viz::TextureMailbox* out_mailbox,
     std::unique_ptr<viz::SingleReleaseCallback>* out_callback) {
   DCHECK(CanPrepareTextureMailbox());
-  std::unique_ptr<CanvasResource> resource =
-      DoPrepareTextureMailbox(out_mailbox);
+  scoped_refptr<CanvasResource> resource = DoPrepareTextureMailbox(out_mailbox);
   if (!resource)
     return false;
   auto func =
@@ -470,6 +574,41 @@ bool CanvasResourceProvider::PrepareTextureMailbox(
   *out_callback = viz::SingleReleaseCallback::Create(
       ConvertToBaseCallback(std::move(func)));
   return true;
+}
+
+void CanvasResourceProvider::ResourceToMailbox(
+    CanvasResource* resource,
+    viz::TextureMailbox* out_mailbox) {
+  auto gl = ContextGL();
+  DCHECK(gl);
+
+  GLuint texture_id = resource->TextureId();
+  GLenum target = resource->TextureTarget();
+  gl->BindTexture(target, texture_id);
+  gl->TexParameteri(target, GL_TEXTURE_MAG_FILTER, GetGLFilter());
+  gl->TexParameteri(target, GL_TEXTURE_MIN_FILTER, GetGLFilter());
+  gl->TexParameteri(target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  gl->TexParameteri(target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+  auto mailbox = resource->GpuMailbox();
+  gl->ProduceTextureDirectCHROMIUM(texture_id, target, mailbox.name);
+  const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
+  gl->ShallowFlushCHROMIUM();
+  gpu::SyncToken sync_token;
+  gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+
+  *out_mailbox = viz::TextureMailbox(mailbox, sync_token, target,
+                                     gfx::Size(Size()), IsOverlayCandidate());
+
+  gfx::ColorSpace color_space = ColorParams().GetStorageGfxColorSpace();
+  out_mailbox->set_color_space(color_space);
+  out_mailbox->set_nearest_neighbor(UseNearestNeighbor());
+
+  gl->BindTexture(target, 0);
+
+  // Because we are changing the texture binding without going through skia,
+  // we must dirty the context.
+  ResetSkiaTextureBinding();
 }
 
 bool CanvasResourceProvider::IsGpuContextLost() const {
@@ -505,7 +644,7 @@ uint32_t CanvasResourceProvider::ContentUniqueID() const {
   return GetSkSurface()->generationID();
 }
 
-std::unique_ptr<CanvasResource> CanvasResourceProvider::CreateResource() {
+scoped_refptr<CanvasResource> CanvasResourceProvider::CreateResource() {
   // Needs to be implemented in subclasses that use resource recycling.
   NOTREACHED();
   return nullptr;
