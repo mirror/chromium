@@ -216,6 +216,21 @@ void WebContentsViewAndroid::RestoreFocus() {
   NOTIMPLEMENTED();
 }
 
+void WebContentsViewAndroid::FocusThroughTabTraversal(bool reverse) {
+  if (web_contents_->ShowingInterstitialPage()) {
+    web_contents_->GetInterstitialForRenderManager()
+        ->FocusThroughTabTraversal(reverse);
+    return;
+  }
+  content::RenderWidgetHostView* fullscreen_view =
+      web_contents_->GetFullscreenRenderWidgetHostView();
+  if (fullscreen_view) {
+    fullscreen_view->Focus();
+    return;
+  }
+  web_contents_->GetRenderViewHost()->SetInitialFocus(reverse);
+}
+
 DropData* WebContentsViewAndroid::GetDropData() const {
   NOTIMPLEMENTED();
   return NULL;
