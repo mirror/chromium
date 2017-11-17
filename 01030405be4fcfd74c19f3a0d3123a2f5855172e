@@ -16,6 +16,24 @@
       "revId": "01030405be4fcfd74c19f3a0d3123a2f5855172e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e19e4df_e7d156a9",
+        "filename": "cc/resources/layer_tree_resource_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-17T23:18:37Z",
+      "side": 0,
+      "message": "Oh no, that was when I thot buffer_format was not needed anymore on Resource, but it is.\n\nI guess there is no test that CreateGpuMemoryBufferResource() and checks the buffer format. I will add one.",
+      "parentUuid": "cc66f109_3b491b2a",
+      "revId": "01030405be4fcfd74c19f3a0d3123a2f5855172e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
