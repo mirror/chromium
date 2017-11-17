@@ -22,6 +22,30 @@
       "revId": "d3514bc7ca014316d528987d9b6313e7ebe0cb36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b376f8c_62412be0",
+        "filename": "third_party/WebKit/LayoutTests/svg/custom/nested-color-stop-crash.svg",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-17T15:00:59Z",
+      "side": 1,
+      "message": "\u003e ...this has me puzzled, because I don\u0027t think these \u003cstop\u003es should have been picked up in the first place [1]. At least I\u0027m assuming where hitting the DCHECK in SVGStopElement::StopColorIncludingOpacity, and then crashing?\n\nYes, that is the case.  I actually ran into this in a different context (meshrow/meshpatch/stop), and was glad I could repro using existing elements.  But you just had to point this out... :)\n\n\n\u003e So that sounds like a bug in the Traversal\u003c...\u003e::ChildrenOf implementation.\n\nAgreed.  I just assumed ChildrenOf really means DescendentsOf, but looking at the docs you are of course right.\n\nI think the bug is here: \nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/NodeTraversal.h?rcl\u003ded08e77a52d977fdb8f4c2a0b27e3d5a73019a57\u0026l\u003d247\n\nI.e. we initialize the children iterator using Traversal\u003cT\u003e::FirstWithin(), which I believe descends looking for the right type.  Should prolly be Traversal\u003cT\u003e::FirstChild() instead.\n\nI\u0027ll try to patch, see if what blows up.",
+      "parentUuid": "4c6dc96e_253e4181",
+      "range": {
+        "startLine": 4,
+        "startChar": 8,
+        "endLine": 4,
+        "endChar": 16
+      },
+      "revId": "d3514bc7ca014316d528987d9b6313e7ebe0cb36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
