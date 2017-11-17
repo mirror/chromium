@@ -12,6 +12,8 @@
 
 namespace blink {
 
+class LayoutRect;
+
 // NGPixelSnappedPhysicalRect is the position and size of a rect relative to the
 // root document snapped to device pixels.
 struct CORE_EXPORT NGPixelSnappedPhysicalRect {
@@ -36,6 +38,10 @@ struct CORE_EXPORT NGPhysicalRect {
   NGPhysicalSize size;
 
   bool operator==(const NGPhysicalRect& other) const;
+
+  // Conversions from/to existing code. New code prefers type safety for
+  // logical/physical distinctions.
+  LayoutRect ToLayoutRect() const;
 
   String ToString() const;
 };

@@ -11,15 +11,23 @@
 
 namespace blink {
 
+class LayoutPoint;
+struct NGPhysicalOffset;
+
 // NGPhysicalLocation is the position of a rect (typically a fragment) relative
 // to the root document.
 struct CORE_EXPORT NGPhysicalLocation {
   NGPhysicalLocation() {}
   NGPhysicalLocation(LayoutUnit left, LayoutUnit top) : left(left), top(top) {}
+  explicit NGPhysicalLocation(const NGPhysicalOffset&);
   LayoutUnit left;
   LayoutUnit top;
 
   bool operator==(const NGPhysicalLocation& other) const;
+
+  // Conversions from/to existing code. New code prefers type safety for
+  // logical/physical distinctions.
+  LayoutPoint ToLayoutPoint() const;
 
   String ToString() const;
 };

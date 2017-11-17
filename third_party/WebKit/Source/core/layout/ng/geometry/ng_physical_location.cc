@@ -5,12 +5,21 @@
 #include "core/layout/ng/geometry/ng_physical_location.h"
 
 #include <ostream>
+#include "core/layout/ng/geometry/ng_physical_offset.h"
+#include "platform/geometry/LayoutPoint.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
+NGPhysicalLocation::NGPhysicalLocation(const NGPhysicalOffset& offset)
+    : left(offset.left), top(offset.top) {}
+
 bool NGPhysicalLocation::operator==(const NGPhysicalLocation& other) const {
   return other.left == left && other.top == top;
+}
+
+LayoutPoint NGPhysicalLocation::ToLayoutPoint() const {
+  return {left, top};
 }
 
 String NGPhysicalLocation::ToString() const {
