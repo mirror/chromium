@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62ac168e_aebe6d59",
+        "filename": "components/sync/engine_impl/non_blocking_type_commit_contribution.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-11-17T01:01:37Z",
+      "side": 1,
+      "message": "As I moved logic into CommitContribution I wrote list of tests that would cover different scenarios. I then made sure there are unittests for ModelTypeWorker that cover these scenarios. I should have mentioned it in commit description though.",
+      "parentUuid": "b4512302_4d691c94",
+      "revId": "68ef73923b2529024ebdf667cbd3a65a4352347b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa909b22_6f1a15ed",
         "filename": "components/sync/engine_impl/non_blocking_type_commit_contribution.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "68ef73923b2529024ebdf667cbd3a65a4352347b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d24403_4a341019",
+        "filename": "components/sync/engine_impl/non_blocking_type_commit_contribution.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-11-17T01:01:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aa909b22_6f1a15ed",
+      "revId": "68ef73923b2529024ebdf667cbd3a65a4352347b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "91acf50b_80f54bd3",
+        "filename": "components/sync/engine_impl/worker_entity_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-11-17T01:01:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4822b34b_bb636bb3",
+      "revId": "68ef73923b2529024ebdf667cbd3a65a4352347b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40424dd7_b8de484d",
         "filename": "components/sync/model_impl/shared_model_type_processor.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "68ef73923b2529024ebdf667cbd3a65a4352347b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b0da16_92e405b8",
+        "filename": "components/sync/model_impl/shared_model_type_processor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-11-17T01:01:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "40424dd7_b8de484d",
+      "revId": "68ef73923b2529024ebdf667cbd3a65a4352347b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
