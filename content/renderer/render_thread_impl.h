@@ -620,6 +620,9 @@ class CONTENT_EXPORT RenderThreadImpl
   void PurgePluginListCache(bool reload_pages) override;
   void SetProcessBackgrounded(bool backgrounded) override;
   void ProcessPurgeAndSuspend() override;
+  void SetCurrentTimeOverride(
+      double time_millis,
+      const base::Optional<std::string>& timezone) override;
 
   void OnMemoryPressure(
       base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level);
