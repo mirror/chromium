@@ -369,8 +369,7 @@ SegmentID HistoryDatabase::GetSegmentID(VisitID visit_id) {
   if (s.Step()) {
     if (s.ColumnType(0) == sql::COLUMN_TYPE_NULL)
       return 0;
-    else
-      return s.ColumnInt64(0);
+    return s.ColumnInt64(0);
   }
   return 0;
 }
