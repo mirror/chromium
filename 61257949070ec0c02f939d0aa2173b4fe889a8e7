@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "048a587a_52a3041c",
+        "filename": "content/browser/device_sensors/device_sensor_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-17T00:15:53Z",
+      "side": 1,
+      "message": "does it work if you move the server initialization back into the test? What about removing the SetupCrossSiteRedirector line? (keeping the host resolver line here).\n\nI\u0027ve recently had that problem but I believe it was the other way around, no host would result in no response from the https server and adding a host fixed it :/",
+      "revId": "61257949070ec0c02f939d0aa2173b4fe889a8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
