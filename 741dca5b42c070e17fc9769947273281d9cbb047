@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e6cc5d6_32cef1df",
+        "filename": "third_party/WebKit/public/core/WebRenderTheme.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T04:32:22Z",
+      "side": 1,
+      "message": "Can you rename this file to WebLayoutTheme.h and make these methods a static method of WebLayoutTheme?\n\nclass WebLayoutThemes {\n  static void ...;\n};\n\ndcheng@, slangley@: What\u0027s your preference about how to handle static functions in public APIs? It\u0027s a bit unfortunate that we have to create WebXXX classes just for defining a couple of static functions. Would it be nicer to create WebCoreStaticFunctions and put all static functions there? Or will it be messier?\n\nWebContextFeatures.h in this CL has the same issue.",
+      "revId": "741dca5b42c070e17fc9769947273281d9cbb047",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
