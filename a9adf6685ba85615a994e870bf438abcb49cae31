@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "ae56c2ef_097a1c21",
+        "filename": "chrome/common/media_router/mojo/media_router_struct_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-17T23:24:36Z",
+      "side": 1,
+      "message": "I seem to recall that the code would not compile if this was omitted, so that means it\u0027s required by something. I just don\u0027t recall what exactly it is, maybe it\u0027s the unit tests. I thought serialization is skipped for same process communication though. The other point is that we might want to keep this logic for future out-of-process MediaRouteProviders that live in Chrome.",
+      "parentUuid": "98b0580b_21614529",
+      "revId": "a9adf6685ba85615a994e870bf438abcb49cae31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "539bea8b_59b147e2",
         "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
         "patchSetId": 7
