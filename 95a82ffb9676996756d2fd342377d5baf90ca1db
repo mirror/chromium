@@ -22,6 +22,30 @@
       "revId": "95a82ffb9676996756d2fd342377d5baf90ca1db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7d564d_8d069a82",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T23:20:56Z",
+      "side": 1,
+      "message": "Writing as received_nonce !\u003d nonce results in compile error for type mismatch.",
+      "parentUuid": "8894eb14_c2f835ae",
+      "range": {
+        "startLine": 155,
+        "startChar": 6,
+        "endLine": 155,
+        "endChar": 50
+      },
+      "revId": "95a82ffb9676996756d2fd342377d5baf90ca1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
