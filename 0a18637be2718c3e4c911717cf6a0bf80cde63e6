@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69ed50c9_87788a75",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGShape.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-17T14:07:10Z",
+      "side": 0,
+      "message": "Would it be sufficient to clear the dash array properties here instead?\n\n\"The values of the stroke-opacity, stroke-dasharray and stroke-dashoffset do not affect the calculation of the stroke bounding box.\"",
+      "revId": "0a18637be2718c3e4c911717cf6a0bf80cde63e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

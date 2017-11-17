@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09a52be7_a33fecb0",
+        "filename": "third_party/WebKit/Source/platform/graphics/StrokeData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-17T14:07:10Z",
+      "side": 1,
+      "message": "Based on https://drafts.fxtf.org/css-masking/#compute-stroke-bounding-box, it sounds like line_join and line_cap are only considered \"If element is not rect, ellipse, circle or image \"?",
+      "revId": "9da090b931bcb676a1880d41a15a4716b13b97d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
