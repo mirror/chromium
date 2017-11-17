@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73b2b2f1_66b369dc",
+        "filename": "chrome/browser/resources/settings/site_settings/protocol_handlers.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-17T06:46:26Z",
+      "side": 1,
+      "message": "This will be reused from the original file, not flagging here.",
+      "range": {
+        "startLine": 21,
+        "startChar": 1,
+        "endLine": 32,
+        "endChar": 3
+      },
+      "revId": "a12de9edb979e255293e2e04f86ed48e23e3a6af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
