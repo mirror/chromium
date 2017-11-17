@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4cd37c63_48993ecd",
+        "filename": "chrome/test/chromedriver/run_buildbot_steps.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2017-11-17T20:55:53Z",
+      "side": 1,
+      "message": "As I understand this pulls many builds of the same overall version but the different commits.\nHere for example, https://pantheon.corp.google.com/storage/browser/chromedriver-data/continuous/ we have many versions. Is there another way we can get the most recent commit position?",
+      "parentUuid": "bc910d2b_87569e24",
+      "range": {
+        "startLine": 286,
+        "startChar": 0,
+        "endLine": 300,
+        "endChar": 43
+      },
+      "revId": "3826b81d6b55f19ed06e783d3e120fe814194a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b58cec4_ee58c214",
         "filename": "chrome/test/chromedriver/run_buildbot_steps.py",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "3826b81d6b55f19ed06e783d3e120fe814194a52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cec8acdc_5f9af12d",
+        "filename": "chrome/test/chromedriver/run_buildbot_steps.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2017-11-17T20:55:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7b58cec4_ee58c214",
+      "range": {
+        "startLine": 513,
+        "startChar": 4,
+        "endLine": 513,
+        "endChar": 23
+      },
+      "revId": "3826b81d6b55f19ed06e783d3e120fe814194a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
