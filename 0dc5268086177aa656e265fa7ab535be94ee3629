@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "302f3a22_837f8abe",
+        "filename": "chrome/browser/resources/media_router/media_router_browser_api.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-17T00:54:25Z",
+      "side": 0,
+      "message": "nit: re-add blank line",
+      "revId": "0dc5268086177aa656e265fa7ab535be94ee3629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
