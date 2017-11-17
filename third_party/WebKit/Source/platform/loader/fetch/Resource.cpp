@@ -193,6 +193,8 @@ void Resource::CachedMetadataHandlerImpl::SetSerializedCachedMetadata(
 }
 
 void Resource::CachedMetadataHandlerImpl::SendToPlatform() {
+  if (!GetResponse().Url().ProtocolIsInHTTPFamily())
+    return;
   if (cached_metadata_) {
     const Vector<char>& serialized_data = cached_metadata_->SerializedData();
     Platform::Current()->CacheMetadata(
