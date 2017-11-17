@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1cc45279_c5d18d1d",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-17T00:24:47Z",
+      "side": 1,
+      "message": "I feel there are pros and cons either way: less code vs. more clarity. I felt that this was clear enough with the property comment, and enough of an edge case not to add the extra code.",
+      "parentUuid": "b2cb034a_8978718e",
+      "range": {
+        "startLine": 543,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 41
+      },
+      "revId": "aa260b8264910caabc4278aae0de4dbd72adc749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "599dfad6_326023c4",
         "filename": "chrome/browser/resources/settings/internet_page/network_summary.js",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-16T23:33:55Z",
       "side": 1,
       "message": "nit: Since we are moving the other listeners to internet-page, should this be moved as well for consistency?",
+      "range": {
+        "startLine": 125,
+        "startChar": 27,
+        "endLine": 125,
+        "endChar": 51
+      },
+      "revId": "aa260b8264910caabc4278aae0de4dbd72adc749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab3e263_f7cf0584",
+        "filename": "chrome/browser/resources/settings/internet_page/network_summary.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-17T00:24:47Z",
+      "side": 1,
+      "message": "It could be moved, but since it is only needed here I prefer to keep it here until / unless we need it elsewhere.",
+      "parentUuid": "599dfad6_326023c4",
       "range": {
         "startLine": 125,
         "startChar": 27,
