@@ -53,6 +53,57 @@
     },
     {
       "key": {
+        "uuid": "8f774519_730f782b",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-17T17:56:30Z",
+      "side": 1,
+      "message": "high-level comment: i don\u0027t understand how \"the idle period\" is defined here. how does it relate to the multiple concepts of \"activity\" defined at https://chromium.googlesource.com/chromiumos/platform2/+/master/power_manager/docs/inactivity_delays.md? it doesn\u0027t look like you\u0027re observing input events or audio or video activity, for instance.",
+      "revId": "4d53cf70bff51a26395c04ebe044a9890d87dc48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b7b80a_dcba83dd",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-17T17:56:30Z",
+      "side": 1,
+      "message": "please avoid introducing singletons whenever possible. in this case, i\u0027d assume that all of the classes that need to interact with this one can just have a pointer to it passed to them.",
+      "revId": "4d53cf70bff51a26395c04ebe044a9890d87dc48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ced5bc_9eac44e7",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-17T17:56:30Z",
+      "side": 1,
+      "message": "how many observers do you anticipate having?",
+      "revId": "4d53cf70bff51a26395c04ebe044a9890d87dc48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "166df1e6_eb61867b",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
         "patchSetId": 7
