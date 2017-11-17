@@ -34,6 +34,24 @@
       "revId": "ac49c9ec13bfa0caaf65981461434d244538c90b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee653d53_57658223",
+        "filename": "services/ui/manifest.json",
+        "patchSetId": 27
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-17T15:19:15Z",
+      "side": 1,
+      "message": "Done. I added a new arc_manager entry.\n\nBTW, ARC++ doesn\u0027t works in mash at all.",
+      "parentUuid": "926e0d9b_7293965f",
+      "revId": "ac49c9ec13bfa0caaf65981461434d244538c90b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
