@@ -166,6 +166,7 @@ void SetLibraryLoadedHook(LibraryLoadedHook* func) {
 
 static jboolean LibraryLoaded(JNIEnv* env,
                               const JavaParamRef<jobject>& jcaller) {
+  NativeLibraryPrefetcher::MadviseRandomText();
   if (g_native_initialization_hook && !g_native_initialization_hook()) {
     return false;
   }

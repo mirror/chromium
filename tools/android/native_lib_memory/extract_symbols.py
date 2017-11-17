@@ -7,7 +7,8 @@
 """Maps code pages to object files.
 
 For all pages from the native library .text section, extract all object files
-the code maps to.
+the code maps to. Outputs a web-based visualization of page -> symbol matppings,
+reached symbols and code residency.
 """
 
 import argparse
@@ -58,11 +59,13 @@ def GetSymbolNameToFilename(build_directory):
   return result
 
 
-def CodePagesToMangledSymbols(symbol_infos):
+def CodePagesToMangledSymbols(symbol_infos, offset):
   """Groups a list of symbol per code page.
 
   Args:
     symbol_infos: (symbol_extractor.SymbolInfo) List of symbols.
+    offset: (int) Offset to add to symbol offsets. This is used to account for
+                  the start of .text not being at the start of a page in memory.
 
   Returns:
     {offset: [(mangled_name, size_in_page), ...]}
@@ -78,7 +81,7 @@ def CodePagesToMangledSymbols(symbol_infos):
     if s.offset in known_offsets:
       continue
     known_offsets.add(s.offset)
-    start, end = (s.offset, (s.offset + s.size))
+    start, end = (s.offset + offset, (s.offset + s.size + offset))
     start_page, end_page = start & _PAGE_MASK, end & _PAGE_MASK
     page = start_page
     while page <= end_page:
@@ -152,7 +155,7 @@ def CodePagesToObjectFiles(symbols_to_object_files, code_pages_to_symbols):
 
   Args:
     symbols_to_object_files: (dict) as returned by GetSymbolNameToFilename()
-    code_pages_to_symbols: (dict) as returned by CodePagesToMagledSymbols()
+    code_pages_to_symbols: (dict) as returned by CodePagesToMangledSymbols()
 
   Returns:
     {page_offset: {object_filename: size_in_page}}
@@ -209,6 +212,9 @@ def CreateArgumentParser():
                       help='Path to the list of reached symbols, as generated '
                       'by tools/cygprofile/process_profiles.py',
                       required=False)
+  parser.add_argument('--residency', type=str,
+                      help='Residency data, as written by process_resdency.py',
+                      required=False)
   parser.add_argument('--build-directory', type=str, help='Build directory',
                       required=True)
   parser.add_argument('--output-directory', type=str, help='Output directory',
@@ -233,13 +239,19 @@ def main():
     logging.error('Native library not found. Did you build the APK?')
     return 1
 
-  logging.info('Extracting symbols from %s', native_lib_filename)
+  offset = 0
+  if args.residency:
+    residency = json.load(open(args.residency))
+    offset = residency['offset']
+
+    logging.info('Extracting symbols from %s', native_lib_filename)
   native_lib_symbols = symbol_extractor.SymbolInfosFromBinary(
       native_lib_filename)
   logging.info('Mapping symbols and object files to code pages')
-  page_to_symbols = CodePagesToMangledSymbols(native_lib_symbols)
+  page_to_symbols = CodePagesToMangledSymbols(native_lib_symbols, offset)
   page_to_object_files = CodePagesToObjectFiles(object_files_symbols,
                                                 page_to_symbols)
+
 
   if args.reached_symbols_file:
     logging.info('Mapping reached symbols to code pages')
@@ -257,6 +269,9 @@ def main():
   directory = os.path.dirname(__file__)
 
   for filename in ['visualize.html', 'visualize.js', 'visualize.css']:
+    if args.residency:
+      shutil.copy(args.residency,
+                  os.path.join(args.output_directory, 'residency.json'))
     shutil.copy(os.path.join(directory, filename),
                 os.path.join(args.output_directory, filename))
 
