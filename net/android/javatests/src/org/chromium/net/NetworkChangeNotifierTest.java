@@ -961,7 +961,7 @@ public class NetworkChangeNotifierTest {
     @MediumTest
     @Feature({"Android-AppBase"})
     public void testIsProcessBoundToNetwork() throws Exception {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return;
         }
         ConnectivityManager connectivityManager =
