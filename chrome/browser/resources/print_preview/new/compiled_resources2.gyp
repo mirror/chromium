@@ -25,6 +25,7 @@
     {
       'target_name': 'header',
       'dependencies': [
+        'destination_object',
         'model',
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:load_time_data',
       ],
@@ -33,7 +34,9 @@
     {
       'target_name': 'destination_settings',
       'dependencies': [
+	'destination_object',
         'model',
+        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:load_time_data',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
@@ -63,6 +66,7 @@
     {
       'target_name': 'color_settings',
       'dependencies': [
+        'model',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
@@ -115,6 +119,15 @@
     {
       'target_name': 'model',
       'dependencies': [
+        'destination_object',
+        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
+      ],
+      'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
+      'target_name': 'destination_object',
+      'dependencies': [
+        '../compiled_resources2.gyp:print_preview',
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],

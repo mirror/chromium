@@ -2,15 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/**
- * Enumeration of Google-promoted destination IDs.
- * @enum {string}
- */
-const GooglePromotedId = {
-  DOCS: '__google__docs',
-  SAVE_AS_PDF: 'Save as PDF'
-};
-
 Polymer({
   is: 'print-preview-header',
 
@@ -46,7 +37,7 @@ Polymer({
      */
     labelInfo_: {
       type: Object,
-      computed: 'getLabelInfo_(currentErrorOrState_, model.destinationId, ' +
+      computed: 'getLabelInfo_(currentErrorOrState_, model.destination.id, ' +
           'model.copies, model.pageRange, model.duplex)'
     },
   },
@@ -66,8 +57,10 @@ Polymer({
    * @private
    */
   isPdfOrDrive_: function() {
-    return this.model.destinationId == GooglePromotedId.SAVE_AS_PDF ||
-        this.model.destinationId == GooglePromotedId.DOCS;
+    return this.model.destination.id ==
+        print_preview.Destination.GooglePromotedId.SAVE_AS_PDF ||
+        this.model.destination.id ==
+        print_preview.Destination.GooglePromotedId.DOCS;
   },
 
   /**

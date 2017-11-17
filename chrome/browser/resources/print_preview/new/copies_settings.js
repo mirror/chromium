@@ -17,9 +17,41 @@ Polymer({
 
     /** @private {boolean} */
     inputValid_: Boolean,
+
+    /** @private {boolean} */
+    hasCollateCapability_: {
+      type: Boolean,
+      computed: 'computeHasCollateCapability_(model.destination.capabilities)',
+    },
+
+    /** @private {boolean} */
+    hasCopiesCapability_: {
+      type: Boolean,
+      computed: 'computeHasCopiesCapability_(model.destination.capabilities)',
+    },
   },
 
   observers: ['onCopiesChanged_(inputString_, inputValid_)'],
+
+  /**
+   * @return {boolean}
+   * @private
+   */
+  computeHasCollateCapability_: function() {
+    return !!this.model.destination.capabilities &&
+        !!this.model.destination.capabilities.printer &&
+        !!this.model.destination.capabilities.printer.collate;
+  },
+
+  /**
+   * @return {boolean}
+   * @private
+   */
+  computeHasCopiesCapability_: function() {
+    return !!this.model.destination.capabilities &&
+        !!this.model.destination.capabilities.printer &&
+        !!this.model.destination.capabilities.printer.copies;
+  },
 
   /**
    * Updates model.copies and model.copiesInvalid based on the validity
@@ -37,6 +69,7 @@ Polymer({
    * @private
    */
   collateHidden_: function() {
-    return !this.inputValid_ || parseInt(this.inputString_, 10) == 1;
+    return !this.hasCollateCapability_ ||
+        (!this.inputValid_ || parseInt(this.inputString_, 10) == 1);
   },
 });

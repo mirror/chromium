@@ -2,6 +2,7 @@
 
 <link rel="import" href="chrome://resources/cr_elements/hidden_style_css.html">
 <link rel="import" href="button_css.html">
+<link rel="import" href="destination_object.html">
 <link rel="import" href="print_preview_shared_css.html">
 <link rel="import" href="throbber_css.html">
 <link rel="import" href="settings_section.html">
@@ -63,17 +64,22 @@
           <div class="destination-throbber-name"></div>
         </div>
         <div class="destination-settings-box" hidden="[[loadingDestination_]]">
-          <img class="destination-icon"
-             src="[[model.destinationIcon]]" alt="">
+          <img class="destination-icon" src="[[icon_.src]]"
+               srcset="[[icon_.srcSet]]" alt="">
           <div class="destination-info-wrapper">
-            <div class="destination-name">[[model.destinationId]]</div>
+            <div class="destination-name">
+                [[model.destination.displayName]]</div>
             <div class="destination-location">
-                [[model.destinationLocation]]</div>
+                [[getHint_(model.destination.id, model.destination.account,
+                           model.destination.location,
+                           model.destination.extensionName,
+                           model.destination.description)]]</div>
             <div class="destination-offline-status">
-                [[model.destinationOfflineStatus]]</div>
+                [[getOfflineStatus_(model.destination.connectionStatus,
+                                    model.destination.lastAccessTime)]]</div>
           </div>
         </div>
-        <button>$i18n{changeDestination}</button>
+        <button on-click="onButtonClick_">$i18n{changeDestination}</button>
       </div>
     </print-preview-settings-section>
   </template>

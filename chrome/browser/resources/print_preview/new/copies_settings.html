@@ -1,20 +1,23 @@
 <link rel="import" href="chrome://resources/html/polymer.html">
 
+<link rel="import" href="chrome://resources/cr_elements/hidden_style_css.html">
 <link rel="import" href="checkbox_radio_css.html">
 <link rel="import" href="number_settings_section.html">
 <link rel="import" href="print_preview_shared_css.html">
 
 <dom-module id="print-preview-copies-settings">
   <template>
-    <style include="print-preview-shared checkbox-radio input">
+    <style include="print-preview-shared checkbox-radio input cr-hidden-style">
     </style>
     <print-preview-number-settings-section max-value="999" min-value=1
         default-value="1" input-label="$i18n{copiesLabel}"
         input-string="{{inputString_}}" input-valid="{{inputValid_}}"
-        hint-message="$i18n{copiesInstruction}">
+        hint-message="$i18n{copiesInstruction}"
+        hidden$="[[!hasCopiesCapability_]]">
       <div slot="opt-inside-content" class="collate-container checkbox"
           aria-live="polite"
-          hidden$="[[collateHidden_(inputString_, inputValid_)]]">
+          hidden$="[[collateHidden_(inputString_, inputValid_,
+                                    hasCollateCapability_)]]">
         <label>
           <input class="collate" type="checkbox" checked
                  aria-labelledby="copies-collate-label">
