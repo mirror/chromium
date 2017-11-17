@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2c8acef7_1e3bdbe0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T04:17:24Z",
+      "side": 1,
+      "message": "I\u0027m not very familiar with onInteractabilityChanged. When does it get called in comparison to onHidden?",
+      "parentUuid": "b3d9d9c3_af0c2e6a",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 11
+      },
+      "revId": "757d938f0ee6c2dbc65f3bc96b1510b050f6e5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8818520_db083a25",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
         "patchSetId": 13

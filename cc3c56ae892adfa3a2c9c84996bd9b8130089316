@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "442a81d0_7f839e4d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T04:17:24Z",
+      "side": 1,
+      "message": "Will you please add some comments about why we early return here? The code got quite a bit more complex between the last CL and this CL and it\u0027d be good to capture why (in code comments).",
+      "range": {
+        "startLine": 180,
+        "startChar": 15,
+        "endLine": 182,
+        "endChar": 17
+      },
+      "revId": "cc3c56ae892adfa3a2c9c84996bd9b8130089316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89017300_ba23d2db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-17T04:17:24Z",
+      "side": 1,
+      "message": "Set mSurveyInfobarTab to null after you\u0027re done using to avoid leaking the memory in this singleton object.",
+      "revId": "cc3c56ae892adfa3a2c9c84996bd9b8130089316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
