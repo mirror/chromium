@@ -14,6 +14,8 @@ namespace blink {
 class LayoutBox;
 struct ScrollSnapType;
 struct ScrollSnapAlign;
+struct SnapAreaData;
+struct SnapContainerData;
 
 // Snap Coordinator keeps track of snap containers and all of their associated
 // snap areas. It also contains the logic to generate the list of valid snap
@@ -40,6 +42,29 @@ class CORE_EXPORT SnapCoordinator final
   void SnapContainerDidChange(LayoutBox&, ScrollSnapType);
   void SnapAreaDidChange(LayoutBox&, ScrollSnapAlign);
 
+  // Calculate the SnapContainerData for the specific snap container.
+  SnapContainerData CalculateSnapContainerData(LayoutBox*);
+
+  // Calculate the SnapAreaData for the specific snap area in its snap
+  // container.
+  SnapAreaData CalculateSnapAreaData(const LayoutBox&, const LayoutBox&);
+
+  // Called by LocalFrameView::PerformPostLayoutTasks(), so that the snap data
+  // are updated whenever a layout happens.
+  void UpdateAllSnapContainerData();
+  void UpdateSnapContainerData(const LayoutBox*);
+
+  // Temporarily for debug purpose.
+  void PrintSnapData(const LayoutBox*);
+
+  // Called by ScrollManager::HandleGestureScrollEnd() to find the snap position
+  // for the current scroll on the specific direction.
+  ScrollOffset GetSnapPosition(const LayoutBox&, SnapAxis);
+  static ScrollOffset FindSnapOffsetOnX(ScrollOffset, const SnapContainerData&);
+  static ScrollOffset FindSnapOffsetOnY(ScrollOffset, const SnapContainerData&);
+  static ScrollOffset FindSnapOffsetOnBoth(ScrollOffset,
+                                           const SnapContainerData&);
+
 #ifndef NDEBUG
   void ShowSnapAreaMap();
   void ShowSnapAreasFor(const LayoutBox*);
@@ -49,7 +74,7 @@ class CORE_EXPORT SnapCoordinator final
   friend class SnapCoordinatorTest;
   explicit SnapCoordinator();
 
-  HashSet<const LayoutBox*> snap_containers_;
+  HashMap<const LayoutBox*, SnapContainerData> snap_container_map_;
 };
 
 }  // namespace blink
