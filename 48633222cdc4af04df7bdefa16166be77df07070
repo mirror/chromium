@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ff21818_8ee6592d",
+        "filename": "ash/frame/default_frame_header.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T15:16:02Z",
+      "side": 0,
+      "message": "Any idea why subpixel rendering was turned off? Are you sure you want to turn it back on? (I don\u0027t know why this was done before.)",
+      "revId": "48633222cdc4af04df7bdefa16166be77df07070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

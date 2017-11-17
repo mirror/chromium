@@ -19,6 +19,57 @@
     },
     {
       "key": {
+        "uuid": "b28cf955_acd6f36d",
+        "filename": "ash/frame/default_frame_header.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T15:16:02Z",
+      "side": 1,
+      "message": "nit: \u003d default if you can (we like that in //ash)",
+      "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8398e924_b442cd0d",
+        "filename": "ash/frame/default_frame_header.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T15:16:02Z",
+      "side": 1,
+      "message": "nit: sort",
+      "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6df889e_10350d58",
+        "filename": "ash/frame/frame_header_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T15:16:02Z",
+      "side": 1,
+      "message": "super-nit: NULL -\u003e null or nullptr since you\u0027re touching the line",
+      "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92923f7a_6392e246",
         "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.cc",
         "patchSetId": 10
