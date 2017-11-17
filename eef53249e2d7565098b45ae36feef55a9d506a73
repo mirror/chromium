@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebc7a5c5_cf00327a",
+        "filename": "third_party/WebKit/Source/core/dom/NodeTraversal.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-17T14:00:56Z",
+      "side": 1,
+      "message": "Obviously, const and non-const version can share one implementation.\nThis can be done in many ways, for example, via template impl function or via const_cast.\nWhat will be preferable?",
+      "revId": "eef53249e2d7565098b45ae36feef55a9d506a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
