@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "077f8b82_2cdd72c6",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-17T21:51:29Z",
+      "side": 1,
+      "message": "ContentView isn\u0027t really considered part of content. which public APIs does this need that\u0027s not already exposed?",
+      "revId": "bb9e8cda0477e1774ba7814ebc4685d0d4056124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d7fdea1_744c9f8a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-17T21:51:29Z",
+      "side": 1,
+      "message": "move for testing methods to the test interface?",
+      "revId": "bb9e8cda0477e1774ba7814ebc4685d0d4056124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427f5339_f9474973",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-17T21:51:29Z",
+      "side": 1,
+      "message": "how did this not show up as a move...\n\ngit cl uploa has a --similarity arg, maybe try playing with that?",
+      "revId": "bb9e8cda0477e1774ba7814ebc4685d0d4056124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
