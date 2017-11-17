@@ -142,10 +142,12 @@ class InMemoryURLIndex : public KeyedService,
   }
 
  private:
+  friend class HistoryProviderTest;
   friend class ::HistoryQuickProviderTest;
   friend class history::HQPPerfTestOnePopularURL;
   friend class InMemoryURLIndexTest;
   friend class InMemoryURLIndexCacheTest;
+  FRIEND_TEST_ALL_PREFIXES(HistoryProviderTest, ConvertsOpenTabsCorrectly);
   FRIEND_TEST_ALL_PREFIXES(InMemoryURLIndexTest, ExpireRow);
   FRIEND_TEST_ALL_PREFIXES(LimitedInMemoryURLIndexTest, Initialization);
 
