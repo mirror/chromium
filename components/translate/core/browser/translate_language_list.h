@@ -14,8 +14,10 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/time/time.h"
+#include "components/prefs/pref_service.h"
 
 class GURL;
+class PrefService;
 
 namespace translate {
 
@@ -37,7 +39,8 @@ class TranslateLanguageList {
 
   // Fills |languages| with the list of languages that the translate server can
   // translate to and from.
-  void GetSupportedLanguages(std::vector<std::string>* languages);
+  void GetSupportedLanguages(const PrefService* prefs,
+                             std::vector<std::string>* languages);
 
   // Returns the language code that can be used with the Translate method for a
   // specified |language|. (ex. GetLanguageCode("en-US") will return "en", and

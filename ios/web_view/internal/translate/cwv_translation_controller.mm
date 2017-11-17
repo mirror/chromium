@@ -247,7 +247,8 @@ const NSInteger CWVTranslationErrorScriptLoadError =
     NSMutableDictionary<NSString*, CWVTranslationLanguage*>*
         supportedLanguagesByCode = [NSMutableDictionary dictionary];
     std::vector<std::string> languageCodes;
-    translate::TranslateDownloadManager::GetSupportedLanguages(&languageCodes);
+    translate::TranslateDownloadManager::GetSupportedLanguages(
+        _translateClient->GetPrefs(), &languageCodes);
     std::string locale = translate::TranslateDownloadManager::GetInstance()
                              ->application_locale();
     for (const std::string& languageCode : languageCodes) {
