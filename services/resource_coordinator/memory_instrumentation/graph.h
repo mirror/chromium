@@ -141,6 +141,9 @@ class GlobalDumpGraph {
     double owned_coefficient = 1;
     double owning_coefficient = 1;
 
+    double cumulative_owned_coefficient = 1;
+    double cumulative_owning_coefficient = 1;
+
    private:
     GlobalDumpGraph::Process* dump_graph_;
     Node* const parent_;

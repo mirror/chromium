@@ -730,4 +730,29 @@ void GraphProcessor::CalculateDumpOwnershipCoefficient(Node* node) {
   }
 }
 
+// static
+void GraphProcessor::CalculateDumpCumulativeOwnershipCoefficient(Node* node) {
+  // Completely skip nodes with undefined size.
+  base::Optional<uint64_t> size_opt = GetSizeEntryOfNode(node);
+  if (!size_opt)
+    return;
+
+  double cumulative_owned_coefficient = node->owned_coefficient;
+  if (node->parent()) {
+    cumulative_owned_coefficient *= node->parent()->owned_coefficient;
+  }
+  node->cumulative_owned_coefficient = cumulative_owned_coefficient;
+
+  if (node->owns_edge()) {
+    node->cumulative_owning_coefficient =
+        node->owning_coefficient *
+        node->owns_edge()->target()->cumulative_owning_coefficient;
+  } else if (node->parent()) {
+    node->cumulative_owning_coefficient =
+        node->parent()->cumulative_owning_coefficient;
+  } else {
+    node->cumulative_owning_coefficient = 1;
+  }
+}
+
 }  // namespace memory_instrumentation
