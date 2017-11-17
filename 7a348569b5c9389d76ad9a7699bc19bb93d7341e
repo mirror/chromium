@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de47f206_c7753a88",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_physical_offset.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-17T10:05:39Z",
+      "side": 1,
+      "message": "Maybe make it inline, and #include LayoutPoint.h here in the header? It doesn\u0027t sound ideal to have performance and code size penalties for this one.",
+      "revId": "7a348569b5c9389d76ad9a7699bc19bb93d7341e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
