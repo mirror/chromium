@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaa48627_4318cc81",
+        "filename": "remoting/protocol/bandwidth_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-17T18:43:20Z",
+      "side": 1,
+      "message": "Is this delay measured per-frame? If so, maybe fold this into OnReceivingAck() below?",
+      "revId": "985525e50f4fb98457f953a4f4a518f36106b8fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f4969ce_e4635795",
+        "filename": "remoting/protocol/bandwidth_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-17T18:43:20Z",
+      "side": 1,
+      "message": "Instead of passing just the frame\u0027s size, why not pass a reference to the actual frame? Let the implementation decide which frame attributes to use (frame ID, is key frame, resolution, encoding scheme...)?",
+      "revId": "985525e50f4fb98457f953a4f4a518f36106b8fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e790e934_5b186716",
+        "filename": "remoting/protocol/bandwidth_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-17T18:43:20Z",
+      "side": 1,
+      "message": "Wouldn\u0027t you want to pass more information here, such as which frame (by ID or by size) was ACKed?\nBetter to use past-tense for the name: OnReceivedAck()",
+      "revId": "985525e50f4fb98457f953a4f4a518f36106b8fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f883bf24_1fa75a44",
+        "filename": "remoting/protocol/bandwidth_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-17T18:43:20Z",
+      "side": 1,
+      "message": "not",
+      "range": {
+        "startLine": 33,
+        "startChar": 69,
+        "endLine": 33,
+        "endChar": 71
+      },
+      "revId": "985525e50f4fb98457f953a4f4a518f36106b8fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3fb50c6_1a20b754",
+        "filename": "remoting/protocol/bandwidth_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-17T18:43:20Z",
+      "side": 1,
+      "message": "make a decision",
+      "range": {
+        "startLine": 34,
+        "startChar": 55,
+        "endLine": 34,
+        "endChar": 68
+      },
+      "revId": "985525e50f4fb98457f953a4f4a518f36106b8fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
