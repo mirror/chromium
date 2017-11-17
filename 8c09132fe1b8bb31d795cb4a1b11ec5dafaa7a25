@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "f961db63_0bb2f645",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-17T03:49:36Z",
+      "side": 1,
+      "message": "The ids are local to the command buffer as GpuFenceManager is owned by the GLES2CmdDecoder. Therefore, you can generate these ids on the client side, and pass the id and handle to the service in the CreateFence message. This is essentially what CreateImage does today although CreateImage is local to the gpu channel (it was command buffer local but we changed that).\n\nCreateImage uses an AtomicSequenceNumber because it can be called from any renderer context (CommandBufferProxyImpl) from any thread. Since we don\u0027t want gpu fences to be used that way, it\u0027s ok to use a per CommandBufferProxyImpl counter that\u0027s only accessed with its lock acquired.",
+      "parentUuid": "45e2ed9b_b354323a",
+      "revId": "8c09132fe1b8bb31d795cb4a1b11ec5dafaa7a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a329a2e_77f68fff",
         "filename": "gpu/command_buffer/client/gpu_control.h",
         "patchSetId": 37

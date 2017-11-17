@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "2a86bd4e_e2c93b6b",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-17T03:49:36Z",
+      "side": 1,
+      "message": "Ok, I got confused with the name CreateGpuFence when the semantics are closer to InsertFenceSync. I\u0027d prefer the latter which is what reveman@ suggested in one of his comments.",
+      "parentUuid": "69a1b8ed_a28c9b19",
+      "revId": "69d22215cb2e74c249d375a90a9382369146af8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1da461df_a5ff504c",
         "filename": "gpu/ipc/client/command_buffer_proxy_impl.h",
         "patchSetId": 39
