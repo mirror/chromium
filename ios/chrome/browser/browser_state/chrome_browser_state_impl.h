@@ -51,6 +51,7 @@ class ChromeBrowserStateImpl : public ios::ChromeBrowserState {
   // BrowserState:
   bool IsOffTheRecord() const override;
   base::FilePath GetStatePath() const override;
+  void RegisterServices(StaticServiceMap* services) override;
 
  private:
   friend class ChromeBrowserStateManagerImpl;
@@ -62,6 +63,11 @@ class ChromeBrowserStateImpl : public ios::ChromeBrowserState {
   // Sets the OffTheRecordChromeBrowserState.
   void SetOffTheRecordChromeBrowserState(
       std::unique_ptr<ios::ChromeBrowserState> otr_state);
+
+  // Creates an instance of the Identity Service for this
+  // ChromeBrowserStateImpl, populating it with the appropriate instances of
+  // its dependencies.
+  std::unique_ptr<service_manager::Service> CreateIdentityService();
 
   base::FilePath state_path_;
 
