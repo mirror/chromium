@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0cb7e8a5_0fc87bd7",
+        "filename": "media/cdm/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-17T20:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adfe7ad0_7a089c25",
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dedba626_5f355669",
         "filename": "media/cdm/cdm_proxy.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb19589_9b58b564",
+        "filename": "media/cdm/cdm_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-17T20:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dedba626_5f355669",
+      "range": {
+        "startLine": 9,
+        "startChar": 19,
+        "endLine": 9,
+        "endChar": 21
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "15e839ab_5ef28869",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-17T20:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "720df808_d0c1b5a9",
+      "range": {
+        "startLine": 22,
+        "startChar": 28,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c23833b9_7d84e2eb",
         "filename": "media/cdm/cdm_proxy.h",
         "patchSetId": 3
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "6b8f2a50_0972a3ba",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-17T20:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c23833b9_7d84e2eb",
+      "range": {
+        "startLine": 29,
+        "startChar": 20,
+        "endLine": 29,
+        "endChar": 21
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cd7629d_0fea5be7",
         "filename": "media/cdm/cdm_proxy.h",
         "patchSetId": 3
@@ -99,6 +189,24 @@
       "writtenOn": "2017-11-17T07:13:17Z",
       "side": 1,
       "message": "Q: will a boolean be sufficient? Or do you expect to add more values to this enum in the future?",
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f398176d_8a728946",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-17T20:54:00Z",
+      "side": 1,
+      "message": "I\u0027m imagining depending on the Protocol, there could be statuses like kBufferTooShort.",
+      "parentUuid": "4cd7629d_0fea5be7",
       "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "0d01757b_ac13a2e6",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-17T20:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6d32b5f_c1aba190",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 7
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "049232af_ea67356e",
         "filename": "media/cdm/cdm_proxy.h",
         "patchSetId": 3
@@ -148,6 +280,30 @@
       "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3575d7f6_bc4eba45",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-17T20:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "049232af_ea67356e",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "68cdbf2a_65b7c5f2",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-17T20:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e08e9d34_23d06de3",
+      "range": {
+        "startLine": 57,
+        "startChar": 7,
+        "endLine": 57,
+        "endChar": 17
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "615e4a65_c9f87055",
         "filename": "media/cdm/cdm_proxy.h",
         "patchSetId": 3
@@ -185,6 +365,30 @@
       "writtenOn": "2017-11-17T07:13:17Z",
       "side": 1,
       "message": "Where is this defined?",
+      "range": {
+        "startLine": 58,
+        "startChar": 43,
+        "endLine": 58,
+        "endChar": 76
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc2aade_66affe86",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-17T20:54:00Z",
+      "side": 1,
+      "message": "spelled out the whole thing",
+      "parentUuid": "615e4a65_c9f87055",
       "range": {
         "startLine": 58,
         "startChar": 43,
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "4883151f_6d8a90ef",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-17T20:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b10f6da_b626c8a4",
+      "range": {
+        "startLine": 81,
+        "startChar": 9,
+        "endLine": 81,
+        "endChar": 17
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "576a8300_e3d86b32",
         "filename": "media/cdm/cdm_proxy.h",
         "patchSetId": 3
@@ -231,6 +459,24 @@
       "writtenOn": "2017-11-17T07:13:17Z",
       "side": 1,
       "message": "Now CreateMediaCryptoSessions and CreateMediaCryptoSessionsCB are separated and it\u0027s harder to read the comments. Does it make sense to move this \"using\" and the comments right before CreateMediaCryptoSessions?\n\nditto for Initialize and Process.",
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da855fa_5011540c",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-17T20:54:00Z",
+      "side": 1,
+      "message": "Google style guide prefers grouping usings together but I\u0027m not against placing this next to the methods.",
+      "parentUuid": "576a8300_e3d86b32",
       "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -254,6 +500,24 @@
     },
     {
       "key": {
+        "uuid": "425427b6_7efb6c32",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-17T20:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4632eb26_dcf55b87",
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b461a21_368adeca",
         "filename": "media/cdm/cdm_proxy.h",
         "patchSetId": 3
@@ -265,6 +529,24 @@
       "writtenOn": "2017-11-17T07:13:17Z",
       "side": 1,
       "message": "In the mojom IDL, we don\u0027t have the equivalent of a C++ constructor, hence we need an extra call to pass the client, either in an extra factory, or in the Initliaze() call.\n\nFor the sake of simplicity, since we already have Initialize, can we pass the client in Initialize()?\n\nAlso, typically the client is the host itself (which is easy to implement). So it\u0027ll be easier to just have a raw pointer here instead of the unique pointer. You can add a comment that the client will always outlive the CdmProxy.",
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fafaf50_db471524",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-17T20:54:00Z",
+      "side": 1,
+      "message": "passed to initialize()",
+      "parentUuid": "8b461a21_368adeca",
       "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -285,6 +567,24 @@
       "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44baa99c_2d0f3d40",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-17T20:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd35317d_2bf0614a",
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -334,6 +634,54 @@
     },
     {
       "key": {
+        "uuid": "c65ddab3_c9e296fc",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-17T20:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec0e6c84_99de8b61",
+      "range": {
+        "startLine": 98,
+        "startChar": 37,
+        "endLine": 98,
+        "endChar": 40
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "596bf04a_7b06753b",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-17T20:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea92a0af_506dccd0",
+      "range": {
+        "startLine": 98,
+        "startChar": 47,
+        "endLine": 98,
+        "endChar": 70
+      },
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2b8d258_d9fbf8d1",
         "filename": "media/cdm/cdm_proxy.h",
         "patchSetId": 3
@@ -345,6 +693,24 @@
       "writtenOn": "2017-11-17T07:13:17Z",
       "side": 1,
       "message": "Is this always true?\n\ncreate_video_crypto_session \u003d\u003d !video_private_data.empty()\n\nIf so, maybe we can drop create_video_crypto_session and use the latter to indicate whether we should create video crypto session?",
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0789093a_ff331b3f",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-17T20:54:00Z",
+      "side": 1,
+      "message": "For an implementation of CdmProxy that I have in mind, that holds. But it is not necessarily true for other possible implementations. Just creating a crypto session can be done without private data. The private data is really used to configure or query the crypto session after it has been created.",
+      "parentUuid": "f2b8d258_d9fbf8d1",
       "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -368,6 +734,24 @@
     },
     {
       "key": {
+        "uuid": "5a42b03a_c81ec174",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-17T20:54:00Z",
+      "side": 1,
+      "message": "This is kinda required if Client is owned by the proxy as a unique ptr. Just exposing the unique_ptr as protected allows the subclass to give up the ownership and makes the ownership dependent on implementation, might as well go with raw pointer at that point.\nI was actually thinking of not even passing Client pointer to the constructor, and the subclass decide whether to require a Client. But was imagining most implementations would like to access the client therefore this.\n\nEither way if the pointer is better as raw and is passed into Initialize() then its really up to the subclass. But that means it is very likely that all subclasses will have a Client* member.",
+      "parentUuid": "69a9cbe7_5d059539",
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc60f5bd_9013f499",
         "filename": "media/cdm/cdm_proxy.h",
         "patchSetId": 3
@@ -382,6 +766,24 @@
       "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3ff747b_9f6a5c49",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-17T20:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc60f5bd_9013f499",
+      "revId": "f3adcbcd81370635cce188e6ff53744861e7ae0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
