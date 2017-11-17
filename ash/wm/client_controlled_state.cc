@@ -45,7 +45,7 @@ void ClientControlledState::HandleTransitionEvents(WindowState* window_state,
       return;
     }
     mojom::WindowStateType next_state_type = GetStateForTransitionEvent(event);
-    delegate_->HandleWindowStateRequest(state_type_, next_state_type);
+    delegate_->HandleWindowStateRequest(window_state, next_state_type);
     mojom::WindowStateType old_state_type = state_type_;
 
     bool was_pinned = window_state->IsPinned();
@@ -74,7 +74,7 @@ void ClientControlledState::HandleTransitionEvents(WindowState* window_state,
       VLOG(1) << "Processing State Transtion: event=" << event->type()
               << ", state=" << state_type_ << ", next_state=" << next_state;
       // Then ask delegate to handle the window state change.
-      delegate_->HandleWindowStateRequest(state_type_, next_state);
+      delegate_->HandleWindowStateRequest(window_state, next_state);
       break;
     }
     case WM_EVENT_SHOW_INACTIVE:
@@ -147,12 +147,13 @@ void ClientControlledState::HandleBoundsEvents(WindowState* window_state,
       const SetBoundsEvent* set_bounds_event =
           static_cast<const SetBoundsEvent*>(event);
       if (set_bounds_locally_) {
+        LOG(ERROR) << "SetBoundsLocally:" << set_bounds_event->requested_bounds().ToString();
         window_state->SetBoundsDirect(set_bounds_event->requested_bounds());
       } else if (window_state->IsPinned() || window_state->IsTrustedPinned()) {
         // In pinned state, it should ignore the SetBounds from window manager
         // or user.
       } else {
-        delegate_->HandleBoundsRequest(window_state->GetStateType(),
+        delegate_->HandleBoundsRequest(window_state,
                                        set_bounds_event->requested_bounds());
       }
       break;

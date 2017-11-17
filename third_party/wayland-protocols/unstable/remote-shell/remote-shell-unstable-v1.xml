@@ -180,7 +180,7 @@
     </event>
   </interface>
 
-  <interface name="zcr_remote_surface_v1" version="7">
+  <interface name="zcr_remote_surface_v1" version="8">
     <description summary="A desktop window">
       An interface that may be implemented by a wl_surface, for
       implementations that provide a desktop-style user interface
@@ -576,6 +576,49 @@
       </description>
       <arg name="type" type="uint" summary="type of the window"/>
     </request>
+
+    <!-- Version 8 additions -->
+    <enum name="bounds_change_mode">
+      <description summary="bounds chnage mode">
+        The mode of bounds change event.
+      </description>
+      <entry name="window_manager" value="1"
+	     summary="window is resized by window manager"/>
+      <entry name="drag" value="2" summary="window is being dragged"/>
+      <entry name="resize" value="3" summary="window is being resized"/>
+      <entry name="finished_resize" value="4" summary="window is being resized"/>
+      <entry name="left_snapped" value="5"
+	     summary="window is resized in left snapped"/>
+      <entry name="right_snapped" value="6"
+	     summary="window is resized in right snapped"/>
+    </enum>
+
+    <event name="bounds_changed" since="8">
+      <arg name="x" type="int"/>
+      <arg name="y" type="int"/>
+      <arg name="width" type="int"/>
+      <arg name="height" type="int"/>
+      <arg name="bounds_change_mode" type="uint"/>
+    </event>
+
+    <enum name="resize_direction">
+      <description summary="resize direction"> </description>
+      <entry name="left" value="1"/>
+      <entry name="topleft" value="2"/>
+      <entry name="top" value="3"/>
+      <entry name="topright" value="4"/>
+      <entry name="right" value="5"/>
+      <entry name="bottomright" value="6"/>
+      <entry name="bottom" value="7"/>
+      <entry name="bottomleft" value="8"/>
+    </enum>
+
+    <event name="start_resize" since="8">
+      <arg name="direction" type="uint"/>
+    </event>
+    
+    <event name="end_resize" since="8">
+    </event>
 
   </interface>
 

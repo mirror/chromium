@@ -440,6 +440,60 @@ enum zcr_remote_surface_v1_window_type {
 };
 #endif /* ZCR_REMOTE_SURFACE_V1_WINDOW_TYPE_ENUM */
 
+#ifndef ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_ENUM
+#define ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_ENUM
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ * bounds chnage mode
+ *
+ * The mode of bounds change event.
+ */
+enum zcr_remote_surface_v1_bounds_change_mode {
+	/**
+	 * window is resized by window manager
+	 */
+	ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_WINDOW_MANAGER = 1,
+	/**
+	 * window is being dragged
+	 */
+	ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_DRAG = 2,
+	/**
+	 * window is being resized
+	 */
+	ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_RESIZE = 3,
+	/**
+	 * window is being resized
+	 */
+	ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_FINISHED_RESIZE = 4,
+	/**
+	 * window is resized in left snapped
+	 */
+	ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_LEFT_SNAPPED = 5,
+	/**
+	 * window is resized in right snapped
+	 */
+	ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_RIGHT_SNAPPED = 6,
+};
+#endif /* ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_ENUM */
+
+#ifndef ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_ENUM
+#define ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_ENUM
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ * resize direction
+ */
+enum zcr_remote_surface_v1_resize_direction {
+	ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_LEFT = 1,
+	ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_TOPLEFT = 2,
+	ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_TOP = 3,
+	ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_TOPRIGHT = 4,
+	ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_RIGHT = 5,
+	ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_BOTTOMRIGHT = 6,
+	ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_BOTTOM = 7,
+	ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_BOTTOMLEFT = 8,
+};
+#endif /* ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_ENUM */
+
 /**
  * @ingroup iface_zcr_remote_surface_v1
  * @struct zcr_remote_surface_v1_interface
@@ -525,8 +579,8 @@ struct zcr_remote_surface_v1_interface {
 	/**
 	 * suggests the window's background opacity
 	 *
-	 * Suggests the window's background opacity when the shadow is
-	 * requested.
+	 * [Deprecated] Suggests the window's background opacity when the
+	 * shadow is requested.
 	 */
 	void (*set_rectangular_shadow_background_opacity)(struct wl_client *client,
 							  struct wl_resource *resource,
@@ -794,6 +848,9 @@ struct zcr_remote_surface_v1_interface {
 #define ZCR_REMOTE_SURFACE_V1_CLOSE 0
 #define ZCR_REMOTE_SURFACE_V1_STATE_TYPE_CHANGED 1
 #define ZCR_REMOTE_SURFACE_V1_CONFIGURE 2
+#define ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGED 3
+#define ZCR_REMOTE_SURFACE_V1_START_RESIZE 4
+#define ZCR_REMOTE_SURFACE_V1_END_RESIZE 5
 
 /**
  * @ingroup iface_zcr_remote_surface_v1
@@ -807,6 +864,18 @@ struct zcr_remote_surface_v1_interface {
  * @ingroup iface_zcr_remote_surface_v1
  */
 #define ZCR_REMOTE_SURFACE_V1_CONFIGURE_SINCE_VERSION 5
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ */
+#define ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGED_SINCE_VERSION 8
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ */
+#define ZCR_REMOTE_SURFACE_V1_START_RESIZE_SINCE_VERSION 8
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ */
+#define ZCR_REMOTE_SURFACE_V1_END_RESIZE_SINCE_VERSION 8
 
 /**
  * @ingroup iface_zcr_remote_surface_v1
@@ -944,6 +1013,39 @@ static inline void
 zcr_remote_surface_v1_send_configure(struct wl_resource *resource_, int32_t origin_offset_x, int32_t origin_offset_y, struct wl_array *states, uint32_t serial)
 {
 	wl_resource_post_event(resource_, ZCR_REMOTE_SURFACE_V1_CONFIGURE, origin_offset_x, origin_offset_y, states, serial);
+}
+
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ * Sends an bounds_changed event to the client owning the resource.
+ * @param resource_ The client's resource
+ */
+static inline void
+zcr_remote_surface_v1_send_bounds_changed(struct wl_resource *resource_, int32_t x, int32_t y, int32_t width, int32_t height, uint32_t bounds_change_mode)
+{
+	wl_resource_post_event(resource_, ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGED, x, y, width, height, bounds_change_mode);
+}
+
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ * Sends an start_resize event to the client owning the resource.
+ * @param resource_ The client's resource
+ */
+static inline void
+zcr_remote_surface_v1_send_start_resize(struct wl_resource *resource_, uint32_t direction)
+{
+	wl_resource_post_event(resource_, ZCR_REMOTE_SURFACE_V1_START_RESIZE, direction);
+}
+
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ * Sends an end_resize event to the client owning the resource.
+ * @param resource_ The client's resource
+ */
+static inline void
+zcr_remote_surface_v1_send_end_resize(struct wl_resource *resource_)
+{
+	wl_resource_post_event(resource_, ZCR_REMOTE_SURFACE_V1_END_RESIZE);
 }
 
 /**

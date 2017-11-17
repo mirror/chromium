@@ -17,6 +17,8 @@
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/image/canvas_image_source.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace {
 
 // The width of the resize shadow that appears on the hovered edge of the
@@ -168,6 +170,9 @@ void ResizeShadow::UpdateBoundsAndVisibility() {
   constexpr float kShadowTargetOpacity = 0.5f;
   layer_->SetOpacity(visible ? kShadowTargetOpacity : 0.f);
   layer_->SetVisible(visible);
+  if (!visible) {
+    base::debug::StackTrace().Print();
+  }
 }
 
 }  // namespace ash
