@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7a2f490_16c86558",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome_app.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-17T12:13:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b4d6b7f_9055ce0b",
+      "revId": "f3394c4790dc5b1f4684a17b1138d0cb67e8f4fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "396c6811_205912bd",
         "filename": "chrome/browser/ui/webui/welcome_ui.cc",
         "patchSetId": 10
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "aa0ff290_7be87d1f",
+        "filename": "chrome/browser/ui/webui/welcome_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-17T12:13:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "396c6811_205912bd",
+      "range": {
+        "startLine": 24,
+        "startChar": 25,
+        "endLine": 24,
+        "endChar": 26
+      },
+      "revId": "f3394c4790dc5b1f4684a17b1138d0cb67e8f4fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b6b90ce_f28d68c3",
         "filename": "chrome/browser/ui/webui/welcome_ui.cc",
         "patchSetId": 10
@@ -56,6 +98,24 @@
       "revId": "f3394c4790dc5b1f4684a17b1138d0cb67e8f4fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ced8b83c_f18618df",
+        "filename": "chrome/browser/ui/webui/welcome_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-17T12:13:00Z",
+      "side": 1,
+      "message": "No more files will be added as far as the Welcome page goes (except for maybe 1 more image file).",
+      "parentUuid": "3b6b90ce_f28d68c3",
+      "revId": "f3394c4790dc5b1f4684a17b1138d0cb67e8f4fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
