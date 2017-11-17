@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "262d55df_54c9d292",
+        "filename": "ui/platform_window/x11/x11_window_ozone.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-17T13:40:34Z",
+      "side": 0,
+      "message": "These three lines implement explicit capture. I think we might still need them? sadrul understands when explicit capture is used better than me and can hopefully answer. Does leaving these lines in CheckCanDispatchNextPlaformEvent() cause any problems for you? If so, I think that\u0027s probably the safest bet.",
+      "revId": "3fcec660582cf6c588fde5fd5d3cf932b280606d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
