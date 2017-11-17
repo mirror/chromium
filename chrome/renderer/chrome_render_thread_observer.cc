@@ -40,7 +40,6 @@
 #include "chrome/renderer/security_filter_peer.h"
 #include "components/visitedlink/renderer/visitedlink_slave.h"
 #include "content/public/child/child_thread.h"
-#include "content/public/common/associated_interface_registry.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
@@ -57,6 +56,7 @@
 #include "net/base/net_module.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/connector.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_registry.h"
 #include "third_party/WebKit/public/platform/WebCache.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
@@ -284,14 +284,14 @@ ChromeRenderThreadObserver::ChromeRenderThreadObserver()
 ChromeRenderThreadObserver::~ChromeRenderThreadObserver() {}
 
 void ChromeRenderThreadObserver::RegisterMojoInterfaces(
-    content::AssociatedInterfaceRegistry* associated_interfaces) {
+    blink::AssociatedInterfaceRegistry* associated_interfaces) {
   associated_interfaces->AddInterface(base::Bind(
       &ChromeRenderThreadObserver::OnRendererConfigurationAssociatedRequest,
       base::Unretained(this)));
 }
 
 void ChromeRenderThreadObserver::UnregisterMojoInterfaces(
-    content::AssociatedInterfaceRegistry* associated_interfaces) {
+    blink::AssociatedInterfaceRegistry* associated_interfaces) {
   associated_interfaces->RemoveInterface(
       chrome::mojom::RendererConfiguration::Name_);
 }
