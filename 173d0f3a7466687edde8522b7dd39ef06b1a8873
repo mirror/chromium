@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e03301b0_95f35258",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-17T03:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0b3eb4a_2f8f66f6",
+      "range": {
+        "startLine": 486,
+        "startChar": 2,
+        "endLine": 488,
+        "endChar": 0
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb12600a_1d6b72ee",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "739348bf_07d3f209",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-17T03:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb12600a_1d6b72ee",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 24
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3d61e634_023fff02",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-17T03:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afb8bb35_6ba250cb",
+      "range": {
+        "startLine": 100,
+        "startChar": 7,
+        "endLine": 100,
+        "endChar": 31
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b5cb0ea_a1380796",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-15T22:16:18Z",
       "side": 1,
       "message": "Should we even be able to get here if alignment is None?\nIf not then this should be UNREACHABLE()",
+      "range": {
+        "startLine": 106,
+        "startChar": 9,
+        "endLine": 106,
+        "endChar": 27
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f5048e_545c0694",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-17T03:03:10Z",
+      "side": 1,
+      "message": "Yes it\u0027s possible. A snap area may only define snap position on one axis. But I think it\u0027s safer to assign an invalid value to the other axis rather than leaving it there?",
+      "parentUuid": "5b5cb0ea_a1380796",
       "range": {
         "startLine": 106,
         "startChar": 9,
@@ -114,6 +210,30 @@
       "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f219f6b_536c74ba",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-17T03:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80228378_09729d74",
+      "range": {
+        "startLine": 133,
+        "startChar": 18,
+        "endLine": 133,
+        "endChar": 28
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "9e852945_71b05619",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-17T03:03:10Z",
+      "side": 1,
+      "message": "Thanks! That\u0027s much more clear!",
+      "parentUuid": "8ed51fa4_c19e3f4f",
+      "range": {
+        "startLine": 223,
+        "startChar": 5,
+        "endLine": 223,
+        "endChar": 9
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eaba021f_87417e83",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 5
@@ -183,6 +327,30 @@
       "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47fa9ce8_2c2efe32",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-17T03:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaba021f_87417e83",
+      "range": {
+        "startLine": 224,
+        "startChar": 36,
+        "endLine": 224,
+        "endChar": 39
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "26a554f6_38f18e22",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-17T03:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b19f999a_6a45c1b2",
+      "range": {
+        "startLine": 232,
+        "startChar": 6,
+        "endLine": 232,
+        "endChar": 27
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24337218_bc8b02b8",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 5
@@ -232,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "ee66737c_0b1e154c",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-17T03:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24337218_bc8b02b8",
+      "range": {
+        "startLine": 238,
+        "startChar": 20,
+        "endLine": 238,
+        "endChar": 26
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90fe67f2_94cb7712",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 5
@@ -243,6 +459,30 @@
       "writtenOn": "2017-11-15T22:16:18Z",
       "side": 1,
       "message": "Shouldn\u0027t this be snap_area-\u003eWidth()? So that in case it is a percent we \ncalculate it correctly. Similarly for other values here.",
+      "range": {
+        "startLine": 240,
+        "startChar": 65,
+        "endLine": 240,
+        "endChar": 77
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dafe9aff_352c15b4",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-17T03:03:10Z",
+      "side": 1,
+      "message": "The spec didn\u0027t say the percentage value is accepted. https://drafts.csswg.org/css-scroll-snap-1/#scroll-snap-margin\nOr should we assume a percentage means to take the snap_area-\u003eWidth()?",
+      "parentUuid": "90fe67f2_94cb7712",
       "range": {
         "startLine": 240,
         "startChar": 65,
@@ -272,6 +512,24 @@
     },
     {
       "key": {
+        "uuid": "109cea4a_86c445ca",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-17T03:03:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c70df0ae_b408bc92",
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e32b6bfd_61ad4f8d",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 5
@@ -292,6 +550,30 @@
       "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a32358_6584eb93",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-17T03:03:10Z",
+      "side": 1,
+      "message": "Let\u0027s do the visibility in the next patch.",
+      "parentUuid": "e32b6bfd_61ad4f8d",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 262,
+        "endChar": 36
+      },
+      "revId": "173d0f3a7466687edde8522b7dd39ef06b1a8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
