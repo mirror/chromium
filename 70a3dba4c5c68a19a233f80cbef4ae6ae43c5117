@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34b742ae_2cfff0a3",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-11-17T18:34:31Z",
+      "side": 1,
+      "message": "Is this comment still relevant? I see we\u0027re already doing this.",
+      "range": {
+        "startLine": 983,
+        "startChar": 22,
+        "endLine": 983,
+        "endChar": 23
+      },
+      "revId": "70a3dba4c5c68a19a233f80cbef4ae6ae43c5117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
