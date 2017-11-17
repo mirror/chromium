@@ -533,8 +533,8 @@ static CSSValueList* ValuesForGridShorthand(
   CSSValueList* list = CSSValueList::CreateSlashSeparated();
   for (size_t i = 0; i < shorthand.length(); ++i) {
     const CSSValue* value = ComputedStyleCSSValueMapping::Get(
-        shorthand.properties()[i], style, layout_object, styled_node,
-        allow_visited_style);
+        CSSProperty::Get(shorthand.properties()[i]), style, layout_object,
+        styled_node, allow_visited_style);
     DCHECK(value);
     list->Append(*value);
   }
@@ -550,8 +550,8 @@ static CSSValueList* ValuesForShorthandProperty(
   CSSValueList* list = CSSValueList::CreateSpaceSeparated();
   for (size_t i = 0; i < shorthand.length(); ++i) {
     const CSSValue* value = ComputedStyleCSSValueMapping::Get(
-        shorthand.properties()[i], style, layout_object, styled_node,
-        allow_visited_style);
+        CSSProperty::Get(shorthand.properties()[i]), style, layout_object,
+        styled_node, allow_visited_style);
     DCHECK(value);
     list->Append(*value);
   }
@@ -579,8 +579,8 @@ static CSSValue* ValuesForFontVariantProperty(const ComputedStyle& style,
   VariantShorthandCases shorthand_case = kAllNormal;
   for (size_t i = 0; i < fontVariantShorthand().length(); ++i) {
     const CSSValue* value = ComputedStyleCSSValueMapping::Get(
-        fontVariantShorthand().properties()[i], style, layout_object,
-        styled_node, allow_visited_style);
+        CSSProperty::Get(fontVariantShorthand().properties()[i]), style,
+        layout_object, styled_node, allow_visited_style);
 
     if (shorthand_case == kAllNormal && value->IsIdentifierValue() &&
         ToCSSIdentifierValue(value)->GetValueID() == CSSValueNone &&
@@ -603,8 +603,8 @@ static CSSValue* ValuesForFontVariantProperty(const ComputedStyle& style,
       CSSValueList* list = CSSValueList::CreateSpaceSeparated();
       for (size_t i = 0; i < fontVariantShorthand().length(); ++i) {
         const CSSValue* value = ComputedStyleCSSValueMapping::Get(
-            fontVariantShorthand().properties()[i], style, layout_object,
-            styled_node, allow_visited_style);
+            CSSProperty::Get(fontVariantShorthand().properties()[i]), style,
+            layout_object, styled_node, allow_visited_style);
         DCHECK(value);
         if (value->IsIdentifierValue() &&
             ToCSSIdentifierValue(value)->GetValueID() == CSSValueNone) {
@@ -635,7 +635,7 @@ static CSSValueList* ValuesForBackgroundShorthand(
     CSSValueList* before_slash = CSSValueList::CreateSpaceSeparated();
     if (!curr_layer->Next()) {  // color only for final layer
       const CSSValue* value = ComputedStyleCSSValueMapping::Get(
-          CSSPropertyBackgroundColor, style, layout_object, styled_node,
+          GetCSSPropertyBackgroundColor(), style, layout_object, styled_node,
           allow_visited_style);
       DCHECK(value);
       before_slash->Append(*value);
@@ -1710,17 +1710,17 @@ static CSSValueList* ValuesForSidesShorthand(
   CSSValueList* list = CSSValueList::CreateSpaceSeparated();
   // Assume the properties are in the usual order top, right, bottom, left.
   const CSSValue* top_value = ComputedStyleCSSValueMapping::Get(
-      shorthand.properties()[0], style, layout_object, styled_node,
-      allow_visited_style);
+      CSSProperty::Get(shorthand.properties()[0]), style, layout_object,
+      styled_node, allow_visited_style);
   const CSSValue* right_value = ComputedStyleCSSValueMapping::Get(
-      shorthand.properties()[1], style, layout_object, styled_node,
-      allow_visited_style);
+      CSSProperty::Get(shorthand.properties()[1]), style, layout_object,
+      styled_node, allow_visited_style);
   const CSSValue* bottom_value = ComputedStyleCSSValueMapping::Get(
-      shorthand.properties()[2], style, layout_object, styled_node,
-      allow_visited_style);
+      CSSProperty::Get(shorthand.properties()[2]), style, layout_object,
+      styled_node, allow_visited_style);
   const CSSValue* left_value = ComputedStyleCSSValueMapping::Get(
-      shorthand.properties()[3], style, layout_object, styled_node,
-      allow_visited_style);
+      CSSProperty::Get(shorthand.properties()[3]), style, layout_object,
+      styled_node, allow_visited_style);
 
   // All 4 properties must be specified.
   if (!top_value || !right_value || !bottom_value || !left_value)
@@ -1748,11 +1748,11 @@ static CSSValuePair* ValuesForInlineBlockShorthand(
     Node* styled_node,
     bool allow_visited_style) {
   const CSSValue* start_value = ComputedStyleCSSValueMapping::Get(
-      shorthand.properties()[0], style, layout_object, styled_node,
-      allow_visited_style);
+      CSSProperty::Get(shorthand.properties()[0]), style, layout_object,
+      styled_node, allow_visited_style);
   const CSSValue* end_value = ComputedStyleCSSValueMapping::Get(
-      shorthand.properties()[1], style, layout_object, styled_node,
-      allow_visited_style);
+      CSSProperty::Get(shorthand.properties()[1]), style, layout_object,
+      styled_node, allow_visited_style);
   // Both properties must be specified.
   if (!start_value || !end_value)
     return nullptr;
@@ -2015,11 +2015,12 @@ CSSValue* ComputedStyleCSSValueMapping::ValueForOffset(
       DCHECK(ToCSSIdentifierValue(position)->GetValueID() == CSSValueAuto);
   }
 
-  CSSPropertyID longhands[] = {CSSPropertyOffsetPath, CSSPropertyOffsetDistance,
-                               CSSPropertyOffsetRotate};
-  for (CSSPropertyID longhand : longhands) {
+  static const CSSProperty* longhands[3] = {&GetCSSPropertyOffsetPath(),
+                                            &GetCSSPropertyOffsetDistance(),
+                                            &GetCSSPropertyOffsetRotate()};
+  for (const CSSProperty* longhand : longhands) {
     const CSSValue* value = ComputedStyleCSSValueMapping::Get(
-        longhand, style, layout_object, styled_node, allow_visited_style);
+        *longhand, style, layout_object, styled_node, allow_visited_style);
     DCHECK(value);
     list->Append(*value);
   }
@@ -2228,17 +2229,17 @@ static bool WidthOrHeightShouldReturnUsedValue(const LayoutObject* object) {
 }
 
 const CSSValue* ComputedStyleCSSValueMapping::Get(
-    CSSPropertyID property_id,
+    const CSSProperty& property,
     const ComputedStyle& style,
     const LayoutObject* layout_object,
     Node* styled_node,
     bool allow_visited_style) {
-  if (property_id == CSSPropertyInvalid)
+  if (property.PropertyID() == CSSPropertyInvalid)
     return nullptr;
   const SVGComputedStyle& svg_style = style.SvgStyle();
-  property_id = CSSProperty::Get(property_id)
-                    .ResolveDirectionAwareProperty(style.Direction(),
-                                                   style.GetWritingMode());
+  const CSSProperty& resolved_property = property.ResolveDirectionAwareProperty(
+      style.Direction(), style.GetWritingMode());
+  CSSPropertyID property_id = resolved_property.PropertyID();
   DCHECK_NE(property_id, CSSPropertyInvalid);
   switch (property_id) {
     case CSSPropertyBackgroundColor:
@@ -3519,13 +3520,14 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return ValuesForBackgroundShorthand(style, layout_object, styled_node,
                                           allow_visited_style);
     case CSSPropertyBorder: {
-      const CSSValue* value = Get(CSSPropertyBorderTop, style, layout_object,
-                                  styled_node, allow_visited_style);
-      const CSSPropertyID kProperties[] = {CSSPropertyBorderRight,
-                                           CSSPropertyBorderBottom,
-                                           CSSPropertyBorderLeft};
+      const CSSValue* value =
+          Get(GetCSSPropertyBorderTop(), style, layout_object, styled_node,
+              allow_visited_style);
+      static const CSSProperty* kProperties[3] = {&GetCSSPropertyBorderRight(),
+                                                  &GetCSSPropertyBorderBottom(),
+                                                  &GetCSSPropertyBorderLeft()};
       for (size_t i = 0; i < WTF_ARRAY_LENGTH(kProperties); ++i) {
-        if (!DataEquivalent(value, Get(kProperties[i], style, layout_object,
+        if (!DataEquivalent(value, Get(*kProperties[i], style, layout_object,
                                        styled_node, allow_visited_style)))
           return nullptr;
       }
