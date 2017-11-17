@@ -86,7 +86,7 @@
 
     function testOverflowHidden() {
         container.style.overflow = "hidden";
-        var result = testScrollRepaint("Overflow hidden", true, container);
+        var result = testScrollRepaint("Overflow hidden", false, container);
         container.style.overflow = "scroll";
         return result;
     }
