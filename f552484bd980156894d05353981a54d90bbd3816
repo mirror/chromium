@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "21e66508_cfaadff7",
+        "filename": "third_party/WebKit/Source/core/dom/LayoutTreeBuilder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-17T15:53:23Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be predicated on (!style_) also?  Are we now ignoring the passed in style_?",
+      "revId": "f552484bd980156894d05353981a54d90bbd3816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "041331c3_92e8687f",
         "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
         "patchSetId": 3
