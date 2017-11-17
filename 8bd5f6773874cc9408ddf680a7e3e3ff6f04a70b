@@ -101,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "5b90703a_27c5619b",
+        "filename": "ios/chrome/browser/browser_state/test_chrome_browser_state_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T19:38:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9046ab0c_5f485de5",
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c961a0aa_6f7cd868",
         "filename": "ios/chrome/browser/browser_state/test_chrome_browser_state_manager.h",
         "patchSetId": 4
@@ -230,6 +248,30 @@
       "side": 1,
       "message": "No strong feeling, though I\u0027m afraid of the TestChromeBrowserStateManager outliving the ChromeBrowserState and returning pointer to a deallocated instance. Those are quite painful to debug (since DCHECK won\u0027t catch them as the pointer is not null).\n\nMaybe we can use a base::SupportsUserData::Data to listen to the destruction of the ChromeBrowserState and set browser_state_ to nullptr when this happen (or at least DCHECK). Or maybe we can have GetLastUserBrowserState() return browser_state_ and use that in the test.",
       "parentUuid": "50b9cdaa_02754991",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 42
+      },
+      "revId": "8bd5f6773874cc9408ddf680a7e3e3ff6f04a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a66979a4_7ff36c2a",
+        "filename": "ios/chrome/browser/browser_state/test_chrome_browser_state_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-17T19:38:35Z",
+      "side": 1,
+      "message": "I see your point. I think having the test manager own the instance is the cleaner of the two options. Done.",
+      "parentUuid": "9af47321_8e86978c",
       "range": {
         "startLine": 35,
         "startChar": 2,
