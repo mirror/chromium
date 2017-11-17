@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "96a91828_299c1c7c",
+        "filename": "chromecast/tracing/ftrace.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1202434
+      },
+      "writtenOn": "2017-11-17T20:09:55Z",
+      "side": 1,
+      "message": "nit: static is redundant in anonymous namespace",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "681900ff875cd08e0e7900501e9a370f2ec6defc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a2fbd0_0f355f9e",
+        "filename": "chromecast/tracing/ftrace.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1202434
+      },
+      "writtenOn": "2017-11-17T20:09:55Z",
+      "side": 1,
+      "message": "Maybe log error or warning if using unsupported category?",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 22
+      },
+      "revId": "681900ff875cd08e0e7900501e9a370f2ec6defc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4eab027_9084aa00",
         "filename": "chromecast/tracing/ftrace.h",
         "patchSetId": 1
@@ -70,6 +116,29 @@
       "writtenOn": "2017-11-17T16:37:14Z",
       "side": 1,
       "message": "nit, disallow copy/assign",
+      "revId": "681900ff875cd08e0e7900501e9a370f2ec6defc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b372f34a_9115393d",
+        "filename": "chromecast/tracing/tracing_service_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1202434
+      },
+      "writtenOn": "2017-11-17T20:09:55Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 6
+      },
       "revId": "681900ff875cd08e0e7900501e9a370f2ec6defc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
