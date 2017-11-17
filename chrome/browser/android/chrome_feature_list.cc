@@ -76,6 +76,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kContentSuggestionsSettings,
     &kContentSuggestionsThumbnailDominantColor,
     &kContextualSearchMlTapSuppression,
+    &kContextualSearchRankerQuery,
     &kContextualSuggestionsCarousel,
     &kCustomContextMenu,
     &kCustomFeedbackUi,
@@ -216,6 +217,9 @@ const base::Feature kContentSuggestionsThumbnailDominantColor{
 
 const base::Feature kContextualSearchMlTapSuppression{
     "ContextualSearchMlTapSuppression", base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kContextualSearchRankerQuery{
+    "ContextualSearchRankerQuery", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kContextualSuggestionsCarousel{
     "ContextualSuggestionsCarousel", base::FEATURE_DISABLED_BY_DEFAULT};
