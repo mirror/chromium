@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "33bcd635_c3b467f6",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T09:43:26Z",
+      "side": 1,
+      "message": "\u003e callback_.is_null() \u003d\u003d bool(origin_task_runner_)\n\nit\u0027d not be satisfied if callback is released.\nChanged to DCHECK, instead. Does it work for you?",
+      "parentUuid": "a6e3c1ad_ef1224fa",
+      "revId": "16a8d6131bcd2c8a1420944c510c5493c5b8fe9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e80c41c_a81a400e",
         "filename": "dbus/object_proxy.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-17T06:03:08Z",
       "side": 1,
       "message": "How about totally getting rid of the PendingCall class with lambdas?\n\nauto callback \u003d make_unique\u003cbase::Callback\u003cvoid(DBusPendingCall*)\u003e\u003e(base::Bind(...));\ndbus_pending_call_set_notify(\n    dbus_pending_call,\n    [](DBusPendingCall* c, void* p){ std::move(*static_cast\u003cbase::Callback\u003cvoid(DBusPendingCall*)\u003e\u003e(p)).Run(c); },\n    callback.release(),\n    [](void* p){delete static_cast\u003cbase::Callback\u003cvoid(DBusPendingCall*)\u003e\u003e(p);});",
+      "revId": "16a8d6131bcd2c8a1420944c510c5493c5b8fe9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3949311_03452cbb",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T09:43:26Z",
+      "side": 1,
+      "message": "As for using lambda for delete, I\u0027m ok so done.\n\nAs for replacing the class by Callback*, I\u0027m concerning as Callback* is very limited use in Chromium.\n\n- In gMock call for OnceCallback (as gMock does not support moveonly type arg).\n- third_party, specifically by protobuf.\n- Other than those, only a few.\n\nIt makes sense to me, because the callback is already nullable, and move/copy operation is\ncarefully implemented and designed to be used so.\nAs a result, people are not very familiar with Callback*.\nE.g. the sample code above has missing \u0027*\u0027 for Callback.\nSo, I\u0027d still prefer a wrapper class.",
+      "parentUuid": "4e80c41c_a81a400e",
       "revId": "16a8d6131bcd2c8a1420944c510c5493c5b8fe9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +92,30 @@
       "revId": "16a8d6131bcd2c8a1420944c510c5493c5b8fe9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eaf3554_a16c9341",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T09:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c84415b3_0dab4392",
+      "range": {
+        "startLine": 239,
+        "startChar": 15,
+        "endLine": 239,
+        "endChar": 24
+      },
+      "revId": "16a8d6131bcd2c8a1420944c510c5493c5b8fe9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
