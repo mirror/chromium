@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e18a615a_58d56840",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutEmbeddedContent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-17T21:36:40Z",
+      "side": 1,
+      "message": "Adding this is easier than adding explicit \"|| IsLayoutEmbeddedObject\" at all the call sites, so it stays.",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 34
+      },
+      "revId": "57e09b354fc756454157a28ce3ae1a1d862e4766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6edd30cf_6e77acb4",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-17T21:36:40Z",
+      "side": 1,
+      "message": "This could be rewritten as:\nreturn (paint_flags \u0026 kPaintLayerPaintingOverflowContents ||\n        (paint_flags \u0026 kPaintLayerPaintingChildClippingMaskPhase ?\n         layout_object.HasClipPath() : layout_object.IsLayoutEmbeddedContent()))\n\nWDYT?",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 8
+      },
+      "revId": "57e09b354fc756454157a28ce3ae1a1d862e4766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67c456f8_f7f496f6",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-17T21:36:40Z",
+      "side": 1,
+      "message": "We need to layer to be available, so make it a member rather than pass the layer in.",
+      "range": {
+        "startLine": 140,
+        "startChar": 2,
+        "endLine": 140,
+        "endChar": 18
+      },
+      "revId": "57e09b354fc756454157a28ce3ae1a1d862e4766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f5fbe34_d7a4f5a0",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-17T21:36:40Z",
+      "side": 1,
+      "message": "This fixes layer positions and sizes for the embedded content case.",
+      "range": {
+        "startLine": 1495,
+        "startChar": 1,
+        "endLine": 1495,
+        "endChar": 52
+      },
+      "revId": "57e09b354fc756454157a28ce3ae1a1d862e4766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1dc173_d8b155c9",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingRequirementsUpdater.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-17T21:36:40Z",
+      "side": 1,
+      "message": "This tells the world that this layer has composited descendants if the iframe contents are composited.",
+      "range": {
+        "startLine": 500,
+        "startChar": 1,
+        "endLine": 500,
+        "endChar": 59
+      },
+      "revId": "57e09b354fc756454157a28ce3ae1a1d862e4766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
