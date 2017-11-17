@@ -742,7 +742,11 @@ void TreeView::LayoutEditor() {
 void TreeView::SchedulePaintForNode(InternalNode* node) {
   if (!node)
     return;  // Explicitly allow NULL to be passed in.
-  SchedulePaintInRect(GetBackgroundBoundsForNode(node));
+  const gfx::Rect node_bounds = GetBoundsForNode(node);
+  // Don't damage the area of the node that's scrolled out of view.
+  const gfx::Rect visible_bounds = GetVisibleBounds();
+  SchedulePaintInRect(gfx::Rect(visible_bounds.x(), node_bounds.y(),
+                                visible_bounds.width(), node_bounds.height()));
 }
 
 void TreeView::PaintRows(gfx::Canvas* canvas,
