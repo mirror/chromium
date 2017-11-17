@@ -206,6 +206,8 @@ class ConfigSingleton {
   const std::string MatchKnownMITMSoftware(
       const scoped_refptr<net::X509Certificate> cert);
 
+  UrgentInterstitialData* MatchUrgentInterstitial(const net::SSLInfo& ssl_info);
+
   // Testing methods:
   void ResetForTesting();
   void SetInterstitialDelayForTesting(const base::TimeDelta& delay);
@@ -379,6 +381,11 @@ bool ConfigSingleton::IsKnownCaptivePortalCertificate(
 const std::string ConfigSingleton::MatchKnownMITMSoftware(
     const scoped_refptr<net::X509Certificate> cert) {
   return ssl_error_assistant_->MatchKnownMITMSoftware(cert);
+}
+
+UrgentInterstitialData* ConfigSingleton::MatchUrgentInterstitial(
+    const net::SSLInfo& ssl_info) {
+  return ssl_error_assistant_->MatchUrgentInterstitial(ssl_info);
 }
 
 class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
@@ -688,6 +695,13 @@ void SSLErrorHandler::StartHandlingError() {
     return;
   }
 
+  UrgentInterstitialData* urgent_interstitial =
+      g_config.Pointer()->MatchUrgentInterstitial(ssl_info_);
+  if (urgent_interstitial) {
+    ShowUrgentInterstitial(urgent_interstitial);
+    return;
+  }
+
   // Ideally, a captive portal interstitial should only be displayed if the only
   // SSL error is a name mismatch error. However, captive portal detector always
   // opens a new tab if it detects a portal ignoring the types of SSL errors. To
@@ -835,6 +849,29 @@ void SSLErrorHandler::ShowBadClockInterstitial(
   // Once an interstitial is displayed, no need to keep the handler around.
   // This is the equivalent of "delete this".
   web_contents_->RemoveUserData(UserDataKey());
+}
+
+void SSLErrorHandler::ShowUrgentInterstitial(
+    UrgentInterstitialData* urgent_interstitial) {
+  switch (urgent_interstitial->interstitial_type()) {
+    case UrgentInterstitialPageType::NONE:
+      NOTREACHED();
+    case UrgentInterstitialPageType::SSL:
+      // TODO: make sure this is not overridable
+      delegate_->ShowSSLInterstitial();
+      return;
+    case UrgentInterstitialPageType::CAPTIVE_PORTAL:
+      delegate_->ShowCaptivePortalInterstitial(GURL());
+      return;
+    case UrgentInterstitialPageType::BAD_CLOCK:
+      // It doesn't make sense to show a bad clock
+      // delegate_->ShowBadClockInterstitial();
+      return;
+    case UrgentInterstitialPageType::MITM_SOFTWARE:
+      return;
+    case UrgentInterstitialPageType::SERVER_MISCONFIG:
+      return;
+  }
 }
 
 void SSLErrorHandler::CommonNameMismatchHandlerCallback(

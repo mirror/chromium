@@ -35,8 +35,19 @@ message MITMSoftware {
   optional string issuer_organization_regex = 3;
 }
 
+message UrgentInterstitial {
+  repeated string sha256_hash = 1;
+
+  required int32 error_code = 2;
+
+  required int32 interstitial_type = 3;
+
+  optional string help_url = 4;
+}
+
 message SSLErrorAssistantConfig {
   optional uint32 version_id = 1;
   repeated CaptivePortalCert captive_portal_cert = 2;
   repeated MITMSoftware mitm_software = 3;
+  repeated UrgentInterstitial urgent_interstitial = 4;
 }
