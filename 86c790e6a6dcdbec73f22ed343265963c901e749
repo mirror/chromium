@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b45b881d_e91c5499",
+        "filename": "cc/paint/paint_canvas.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-17T01:50:03Z",
+      "side": 0,
+      "message": "Oh exciting that this gets removed!",
+      "revId": "86c790e6a6dcdbec73f22ed343265963c901e749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
