@@ -561,6 +561,11 @@ bool Resource::WillFollowRedirect(const ResourceRequest& new_request,
 
 void Resource::SetResponse(const ResourceResponse& response) {
   response_ = response;
+  // Currently we support the metadata caching only for HTTP family.
+  if (!GetResponse().Url().ProtocolIsInHTTPFamily()) {
+    cache_handler_.Clear();
+    return;
+  }
   if (this->GetResponse().WasFetchedViaServiceWorker()) {
     cache_handler_ = ServiceWorkerResponseCachedMetadataHandler::Create(
         this, fetcher_security_origin_.get());
