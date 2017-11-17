@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f18fad0b_0115a60d",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-17T20:58:31Z",
+      "side": 1,
+      "message": "This needs sign-off from ipc/SECURITY_OWNERS.",
+      "range": {
+        "startLine": 596,
+        "startChar": 2,
+        "endLine": 596,
+        "endChar": 47
+      },
+      "revId": "9ea55f40cc63fea784f76e2350a00e4727d78d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
