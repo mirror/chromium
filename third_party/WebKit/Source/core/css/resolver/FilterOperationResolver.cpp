@@ -170,6 +170,9 @@ FilterOperations FilterOperationResolver::CreateFilterOperations(
       }
       case CSSValueInvert:
       case CSSValueBrightness:
+        if (first_number < 0) {
+          return operations;
+        }
       case CSSValueContrast:
       case CSSValueOpacity: {
         operations.Operations().push_back(
