@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1468612_1b341d9e",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-17T22:10:09Z",
+      "side": 1,
+      "message": "drop explicit",
+      "revId": "e8bdd3c29e757dba8ddd26a60cc7beb3a119035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "611d031f_f70eb1cd",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-17T22:10:09Z",
+      "side": 1,
+      "message": "Can\u0027t find who is deleting it.",
+      "revId": "e8bdd3c29e757dba8ddd26a60cc7beb3a119035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
