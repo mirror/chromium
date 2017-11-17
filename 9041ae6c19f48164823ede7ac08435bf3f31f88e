@@ -355,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "6995574e_e2e5c463",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-17T01:39:27Z",
+      "side": 1,
+      "message": "sgtm.",
+      "parentUuid": "4b84d742_37805a86",
+      "range": {
+        "startLine": 105,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 48
+      },
+      "revId": "9041ae6c19f48164823ede7ac08435bf3f31f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4eccee6_79a574bf",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
         "patchSetId": 3
