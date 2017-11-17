@@ -663,6 +663,17 @@ chrome.networkingPrivate.ManagedThirdPartyVPNProperties;
 
 /**
  * @typedef {{
+ *   AppID: string,
+ *   PackageName: string,
+ *   ProviderName: string,
+ *   LastLaunchTime: number
+ * }}
+ * @see https://developer.chrome.com/extensions/networkingPrivate#type-ArcVPNProperties
+ */
+chrome.networkingPrivate.ArcVPNProperties;
+
+/**
+ * @typedef {{
  *   AutoConnect: (boolean|undefined),
  *   APN: (!chrome.networkingPrivate.APNProperties|undefined),
  *   APNList: (!Array<!chrome.networkingPrivate.APNProperties>|undefined),
