@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2cdaecbd_a981891a",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T19:48:19Z",
+      "side": 1,
+      "message": "Yes, will include more specific name in this CL.",
+      "parentUuid": "eadb76c2_f3a65c5f",
+      "revId": "d5801029603a6da16d71bc5acfcad5352ac138aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7df045a7_2154b2b8",
         "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "d5801029603a6da16d71bc5acfcad5352ac138aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfae68f7_4c5a16d2",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T19:48:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7df045a7_2154b2b8",
+      "revId": "d5801029603a6da16d71bc5acfcad5352ac138aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4ac53cc5_b5916140",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T19:48:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1073615_4cb64e4d",
+      "revId": "d5801029603a6da16d71bc5acfcad5352ac138aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a6ac37e_7e86dde4",
         "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-17T15:17:52Z",
       "side": 1,
       "message": "I would prefer a better way to do this if possible so we don\u0027t have to subclass the class under test.\n\nWhat if you did this:\nauto simulator \u003d content::NavigationSimulator::CreateRendererInitiated(url, main_rfh());\nsimulator-\u003eStart();\nChromeNavigationData* data \u003d static_cast\u003c...\u003e(simulator-\u003eGetNavigationHandle()-\u003eGetNavigationData());\ndata-\u003eset_previews_state(...);\nsimulator-\u003eCommit()",
+      "revId": "d5801029603a6da16d71bc5acfcad5352ac138aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1deb3b18_d45fc3d5",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T19:48:19Z",
+      "side": 1,
+      "message": "Thanks, was able to drop this subclass!",
+      "parentUuid": "0a6ac37e_7e86dde4",
       "revId": "d5801029603a6da16d71bc5acfcad5352ac138aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "d5801029603a6da16d71bc5acfcad5352ac138aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d03b3716_a962be7a",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T19:48:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96865957_f220cf82",
+      "revId": "d5801029603a6da16d71bc5acfcad5352ac138aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "d45f3027_50a155fd",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T19:48:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9789760_13ae75bb",
+      "range": {
+        "startLine": 178,
+        "startChar": 33,
+        "endLine": 178,
+        "endChar": 61
+      },
+      "revId": "d5801029603a6da16d71bc5acfcad5352ac138aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b13e424c_bcc65cc0",
         "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
         "patchSetId": 3
@@ -121,6 +235,24 @@
       "writtenOn": "2017-11-17T15:17:52Z",
       "side": 1,
       "message": "Just fyi: Unless you want to do something after Start and before Commit, Commit will call Start() internally.\n\nAlso, if you just want to NavigateAndCommit, and you use that method which should do exactly this afaik.",
+      "revId": "d5801029603a6da16d71bc5acfcad5352ac138aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c84062_d78564f6",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T19:48:19Z",
+      "side": 1,
+      "message": "Need a way to inject PreviewsState on NavigationHandle and doing that between Start() and Commit() is what I found to work.",
+      "parentUuid": "b13e424c_bcc65cc0",
       "revId": "d5801029603a6da16d71bc5acfcad5352ac138aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
