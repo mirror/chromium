@@ -22,6 +22,47 @@
       "revId": "83c88b00d5dde15f7aac56409d27d0527df6db10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3dca08_4fd46025",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-17T04:22:51Z",
+      "side": 1,
+      "message": "Could you do early return style?\n\nif (!layout_object-\u003eIsAtomicInlineLevel())\n  return InlineBoxPosition();\n\nIt may reduce patch size too.",
+      "revId": "83c88b00d5dde15f7aac56409d27d0527df6db10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0db284f8_4a18d317",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-17T04:22:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ed11893a_39d8d0af",
+      "range": {
+        "startLine": 316,
+        "startChar": 2,
+        "endLine": 316,
+        "endChar": 45
+      },
+      "revId": "83c88b00d5dde15f7aac56409d27d0527df6db10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
