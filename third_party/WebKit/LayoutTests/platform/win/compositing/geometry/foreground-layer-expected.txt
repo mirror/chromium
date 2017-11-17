@@ -31,10 +31,17 @@
       "transform": 4
     },
     {
-      "name": "Child Containment Layer",
+      "name": "Scrolling Layer",
       "position": [59, 59],
       "bounds": [200, 200],
       "drawsContent": false,
+      "transform": 4
+    },
+    {
+      "name": "Scrolling Contents Layer",
+      "position": [59, 59],
+      "bounds": [200, 205],
+      "backgroundColor": "#FF0000",
       "transform": 4
     },
     {
@@ -46,7 +53,7 @@
     {
       "name": "LayoutBlockFlow (relative positioned) DIV class='main box' (foreground) Layer",
       "position": [59, 59],
-      "bounds": [200, 200],
+      "bounds": [200, 205],
       "transform": 4
     }
   ],
