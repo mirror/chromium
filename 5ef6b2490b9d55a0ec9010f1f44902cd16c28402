@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "252bd5bc_2b27c841",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/resources/inspector-protocol-test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-11-17T01:23:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3605b34e_79a3040c",
+      "revId": "5ef6b2490b9d55a0ec9010f1f44902cd16c28402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88c8d7be_11900bc1",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/resources/inspector-protocol-test.js",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "5ef6b2490b9d55a0ec9010f1f44902cd16c28402",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33854bca_40bc5681",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/resources/inspector-protocol-test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-11-17T01:23:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88c8d7be_11900bc1",
+      "revId": "5ef6b2490b9d55a0ec9010f1f44902cd16c28402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "49b9969b_5e89a3df",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/resources/inspector-protocol-test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-11-17T01:23:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4cab870_bfad28de",
+      "revId": "5ef6b2490b9d55a0ec9010f1f44902cd16c28402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bb998bd_03777799",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/resources/inspector-protocol-test.js",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "5ef6b2490b9d55a0ec9010f1f44902cd16c28402",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f87fecdc_504471a4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/resources/inspector-protocol-test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-11-17T01:23:14Z",
+      "side": 1,
+      "message": "it is for \u0027await wc.onceProtocolEvent\u0027 calls - when test should be pause until specific event received. I think it should be enough for now, we can introduce more capabilities later.",
+      "parentUuid": "3bb998bd_03777799",
+      "revId": "5ef6b2490b9d55a0ec9010f1f44902cd16c28402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4ed52af3_f9cc5de0",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/worker/worker-constructor-async-stacks-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-11-17T01:23:14Z",
+      "side": 1,
+      "message": "It is zero based location at first statement in worker script.",
+      "parentUuid": "bcd5671c_6d675e9d",
+      "revId": "5ef6b2490b9d55a0ec9010f1f44902cd16c28402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b08273b6_b35afbda",
         "filename": "third_party/WebKit/LayoutTests/inspector-protocol/worker/worker-constructor-async-stacks.js",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "5ef6b2490b9d55a0ec9010f1f44902cd16c28402",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee5c6120_b7cc9289",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/worker/worker-constructor-async-stacks.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-11-17T01:23:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b08273b6_b35afbda",
+      "revId": "5ef6b2490b9d55a0ec9010f1f44902cd16c28402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c924d4d3_5d28b147",
+        "filename": "third_party/WebKit/Source/core/inspector/ThreadDebugger.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-11-17T01:23:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1292010b_5ee7527e",
+      "revId": "5ef6b2490b9d55a0ec9010f1f44902cd16c28402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83c4a41a_eb2c150d",
         "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
         "patchSetId": 5
@@ -135,6 +261,24 @@
       "revId": "5ef6b2490b9d55a0ec9010f1f44902cd16c28402",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d1def1_d6a2b21f",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-11-17T01:23:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83c4a41a_eb2c150d",
+      "revId": "5ef6b2490b9d55a0ec9010f1f44902cd16c28402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "70362903_0dfe25bf",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedWorkletMessagingProxy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-11-17T01:23:14Z",
+      "side": 1,
+      "message": "with new V8StackTraceId - nope.",
+      "parentUuid": "90b19910_1993d723",
+      "revId": "5ef6b2490b9d55a0ec9010f1f44902cd16c28402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "978f0060_12750214",
         "filename": "third_party/WebKit/Source/core/workers/ThreadedWorkletTest.cpp",
         "patchSetId": 5
@@ -169,6 +331,24 @@
       "revId": "5ef6b2490b9d55a0ec9010f1f44902cd16c28402",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e8aa295_4df69a2b",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedWorkletTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-11-17T01:23:14Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "978f0060_12750214",
+      "revId": "5ef6b2490b9d55a0ec9010f1f44902cd16c28402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
