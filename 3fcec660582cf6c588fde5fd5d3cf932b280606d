@@ -34,6 +34,24 @@
       "revId": "3fcec660582cf6c588fde5fd5d3cf932b280606d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea98544a_325bac4d",
+        "filename": "ui/platform_window/x11/x11_window_ozone.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-17T21:15:23Z",
+      "side": 0,
+      "message": "I was worried about it breaking drag between windows in the Chrome OS development configuration. It still works fine when I tried this patch locally though!",
+      "parentUuid": "3a637ef2_69bfd73f",
+      "revId": "3fcec660582cf6c588fde5fd5d3cf932b280606d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
