@@ -7,10 +7,11 @@
 #include "base/callback.h"
 #include "base/command_line.h"
 #include "content/public/browser/permission_type.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/shell/common/shell_switches.h"
 #include "media/base/media_switches.h"
-
+#include "services/device/public/cpp/device_features.h"
 namespace content {
 
 namespace {
@@ -87,7 +88,7 @@ blink::mojom::PermissionStatus ShellPermissionManager::GetPermissionStatus(
 
   // Generic sensor browser tests require permission to be granted.
   if (permission == PermissionType::SENSORS &&
-      command_line->HasSwitch(switches::kContentBrowserTest)) {
+      base::FeatureList::IsEnabled(features::kGenericSensor)) {
     return blink::mojom::PermissionStatus::GRANTED;
   }
 

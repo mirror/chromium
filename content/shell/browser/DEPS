@@ -3,6 +3,7 @@ include_rules = [
   "+components/keyed_service/content",
   "+components/network_session_configurator/common",
   "+device/geolocation",
+  "+services/device/public/cpp",
   "+services/service_manager/public/cpp",
   "+services/service_manager/sandbox",
 ]
