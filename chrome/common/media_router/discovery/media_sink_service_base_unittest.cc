@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/media/router/discovery/media_sink_service_base.h"
+#include "chrome/common/media_router/discovery/media_sink_service_base.h"
+#include "base/memory/ptr_util.h"
 #include "base/test/mock_callback.h"
 #include "base/timer/mock_timer.h"
-#include "chrome/browser/media/router/test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -46,44 +46,33 @@ std::vector<media_router::MediaSinkInternal> CreateDialMediaSinks() {
 
 namespace media_router {
 
-class TestMediaSinkServiceBase : public MediaSinkServiceBase {
- public:
-  explicit TestMediaSinkServiceBase(const OnSinksDiscoveredCallback& callback)
-      : MediaSinkServiceBase(callback) {}
-
-  void Start() override {}
-  void Stop() override {}
-};
-
 class MediaSinkServiceBaseTest : public ::testing::Test {
  public:
   MediaSinkServiceBaseTest()
-      :  // thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP),
-        media_sink_service_(
-            new TestMediaSinkServiceBase(mock_sink_discovered_cb_.Get())) {}
+      : media_sink_service_(mock_sink_discovered_cb_.Get()) {}
+  ~MediaSinkServiceBaseTest() override {}
 
   void SetUp() override {
     mock_timer_ =
         new base::MockTimer(true /*retain_user_task*/, false /*is_repeating*/);
-    media_sink_service_->SetTimerForTest(base::WrapUnique(mock_timer_));
+    media_sink_service_.SetTimerForTest(base::WrapUnique(mock_timer_));
   }
 
   void TestFetchCompleted(const std::vector<MediaSinkInternal>& old_sinks,
                           const std::vector<MediaSinkInternal>& new_sinks) {
-    media_sink_service_->mrp_sinks_ =
-        std::set<MediaSinkInternal>(old_sinks.begin(), old_sinks.end());
-    media_sink_service_->current_sinks_ =
-        std::set<MediaSinkInternal>(new_sinks.begin(), new_sinks.end());
+    media_sink_service_.mrp_sinks_ =
+        base::flat_set<MediaSinkInternal>(old_sinks.begin(), old_sinks.end());
+    media_sink_service_.current_sinks_ =
+        base::flat_set<MediaSinkInternal>(new_sinks.begin(), new_sinks.end());
     EXPECT_CALL(mock_sink_discovered_cb_, Run(new_sinks));
-    media_sink_service_->OnFetchCompleted();
+    media_sink_service_.OnFetchCompleted();
   }
 
  protected:
-  base::MockCallback<MediaSinkService::OnSinksDiscoveredCallback>
-      mock_sink_discovered_cb_;
+  base::MockCallback<OnSinksDiscoveredCallback> mock_sink_discovered_cb_;
   base::MockTimer* mock_timer_;
 
-  std::unique_ptr<TestMediaSinkServiceBase> media_sink_service_;
+  MediaSinkServiceBase media_sink_service_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaSinkServiceBaseTest);
 };
@@ -95,7 +84,7 @@ TEST_F(MediaSinkServiceBaseTest, TestFetchCompleted_SameSink) {
 
   // Same sink
   EXPECT_CALL(mock_sink_discovered_cb_, Run(new_sinks)).Times(0);
-  media_sink_service_->OnFetchCompleted();
+  media_sink_service_.OnFetchCompleted();
 }
 
 TEST_F(MediaSinkServiceBaseTest, TestFetchCompleted_OneNewSink) {

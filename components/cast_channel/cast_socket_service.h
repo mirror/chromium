@@ -11,16 +11,14 @@
 #include "base/macros.h"
 #include "base/memory/singleton.h"
 #include "base/observer_list.h"
-#include "base/threading/thread_checker.h"
+#include "base/sequence_checker.h"
 #include "components/cast_channel/cast_socket.h"
-#include "content/public/browser/browser_thread.h"
 
 namespace cast_channel {
 
-// This class adds, removes, and returns cast sockets created by CastChannelAPI
-// to underlying storage.
-// Instance of this class is created on the UI thread and destroyed on the IO
-// thread. All public API must be called from the IO thread.
+// Manages, opens, and closes CastSockets.
+// This class may be created on any thread. All methods, unless otherwise noted,
+// must be invoked on the SequencedTaskRunner given by |task_runner_|.
 class CastSocketService {
  public:
   static CastSocketService* GetInstance();
@@ -59,6 +57,16 @@ class CastSocketService {
   // Remove |observer| from each socket in |sockets_|
   void RemoveObserver(CastSocket::Observer* observer);
 
+  // Gets the TaskRunner for accessing this instance. Can be called from any
+  // thread.
+  scoped_refptr<base::SequencedTaskRunner> task_runner() {
+    return task_runner_;
+  }
+  void SetTaskRunnerForTest(
+      const scoped_refptr<base::SequencedTaskRunner> task_runner) {
+    task_runner_ = task_runner;
+  }
+
   // Allow test to inject a mock cast socket.
   void SetSocketForTest(std::unique_ptr<CastSocket> socket_for_test);
 
@@ -84,7 +92,10 @@ class CastSocketService {
 
   std::unique_ptr<CastSocket> socket_for_test_;
 
-  THREAD_CHECKER(thread_checker_);
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
+
+  // SequenceChecker for |task_runner_|.
+  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(CastSocketService);
 };
