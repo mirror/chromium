@@ -22,6 +22,30 @@
       "revId": "a2297d8e4af6c807d89defadf3a66439858cf689",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceb05c9d_a9d8f220",
+        "filename": "chrome/common/chrome_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-11-17T00:39:26Z",
+      "side": 1,
+      "message": "Makes sense to me, I changed it.",
+      "parentUuid": "e6bc168a_745b5647",
+      "range": {
+        "startLine": 248,
+        "startChar": 42,
+        "endLine": 248,
+        "endChar": 49
+      },
+      "revId": "a2297d8e4af6c807d89defadf3a66439858cf689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
