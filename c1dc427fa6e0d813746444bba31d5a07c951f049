@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7903a5c5_a413a329",
+        "filename": "components/offline_pages/core/downloads/offline_page_download_data.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-17T22:55:16Z",
+      "side": 1,
+      "message": "Wow, I was going to make the same suggestion as Justin on Aug 16 :)\nThen I read the style guide, then found his comment...",
+      "range": {
+        "startLine": 18,
+        "startChar": 28,
+        "endLine": 18,
+        "endChar": 38
+      },
+      "revId": "c1dc427fa6e0d813746444bba31d5a07c951f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1bb49ef4_037038c9",
+        "filename": "components/offline_pages/core/downloads/offline_page_download_data.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-17T22:55:16Z",
+      "side": 1,
+      "message": "please document, and maybe disambiguate from origin in URL request sense explicitly.",
+      "range": {
+        "startLine": 34,
+        "startChar": 14,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "c1dc427fa6e0d813746444bba31d5a07c951f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09e677ca_ddc36ad9",
+        "filename": "components/offline_pages/core/downloads/offline_page_download_data.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-17T22:55:16Z",
+      "side": 1,
+      "message": "Not sure if this is still needed with private constructor, but did you considered adding DISALLOW_COPY_AND_ASSIGN?",
+      "range": {
+        "startLine": 35,
+        "startChar": 1,
+        "endLine": 35,
+        "endChar": 2
+      },
+      "revId": "c1dc427fa6e0d813746444bba31d5a07c951f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
