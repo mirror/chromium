@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "907c82c4_aa528a5d",
+        "filename": "content/test/fuzzer/cbor_reader_fuzzer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "For some reason, ASSERT_TRUE results in compile error. Thus used EXPECT_TRUE macro and added extra condition check before proceeding to input/output check.",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 38
+      },
+      "revId": "94b45c6232db2c7ada57ccaf18231546b738806c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

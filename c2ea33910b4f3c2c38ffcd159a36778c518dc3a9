@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f1fcc2d5_e4bdd8d5",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "I was considering the case when |strict_mode| (or |option| in changed mode) is set to false and the decoder encounter an CBOR input map with out of order keys. But ah, I see your point. \n\nRemoved |strict_mode| condition check and added check for |option| when setting error code to OUT_OF_ORDER_KEY_ERROR.",
+      "parentUuid": "4e0b2b09_ff11be81",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 60
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f1bdab4_955633c7",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689b87a5_f9bee63f",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f1bdab4_955633c7",
+      "range": {
+        "startLine": 69,
+        "startChar": 49,
+        "endLine": 69,
+        "endChar": 68
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4d96490b_e725db04",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cea80930_f94800f7",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 41
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88064f10_9fd8c8d6",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce395865_6f4d6dc8",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Also included unittest for the added check.",
+      "parentUuid": "88064f10_9fd8c8d6",
+      "range": {
+        "startLine": 131,
+        "startChar": 12,
+        "endLine": 131,
+        "endChar": 20
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ebb8f245_cc9f6fd2",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Thanks for the catch! :)",
+      "parentUuid": "bafd29d7_2cd38ce2",
+      "range": {
+        "startLine": 140,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 71
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43426606_c7a32818",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 8
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-15T21:50:42Z",
       "side": 1,
       "message": "If you use `!comparator(map-\u003erbegin()-\u003efirst, new_key)`, this will subsume the duplicate-key check.",
+      "range": {
+        "startLine": 222,
+        "startChar": 23,
+        "endLine": 222,
+        "endChar": 64
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c38524fc_9008a395",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Yes, but I thought then it result in ambiguous error code. If `!comparator(map-\u003erbegin()-\u003efirst, new_key) check fails, then it is unclear whether to set error code as OUT_OF_ORDER_KEY_ERROR or as DUPLICATE_KEY_ERROR. Please let me know if you think I should combine these two error cases!",
+      "parentUuid": "43426606_c7a32818",
       "range": {
         "startLine": 222,
         "startChar": 23,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "e1ebe74a_a6607f05",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Could you clarify on what you mean by \"forget to list an enumerator?\" Sorry, I\u0027m not used to/ aware of any functional difference that comes from putting default case at the top..",
+      "parentUuid": "a504ce03_4bdb83e0",
+      "range": {
+        "startLine": 253,
+        "startChar": 0,
+        "endLine": 255,
+        "endChar": 27
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ef1106a_1b475cd2",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 8
@@ -174,6 +342,30 @@
       "writtenOn": "2017-11-15T21:50:42Z",
       "side": 1,
       "message": "Do you have a use case for non-canonical deserialization? I see maybe a need to configure the required map order, but not one to allow non-smallest encodings or indefinite-length items.",
+      "range": {
+        "startLine": 17,
+        "startChar": 59,
+        "endLine": 18,
+        "endChar": 30
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28fb4416_caed332d",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Currently, the main use case for CBOR decoder is using it as message encoding for CTAP (which enforces canonical CBOR format). However, I thought that requiring sorted map keys should not be strictly enforced for generic CBOR decoder. Please let me know if you think this constraint should be included by default!\n\nAdded |option| parameter as enum and allowed for both canonical deserialization and inputs with unsorted map keys.",
+      "parentUuid": "9ef1106a_1b475cd2",
       "range": {
         "startLine": 17,
         "startChar": 59,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "cd853e4c_d8c770cb",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf4fd344_4344a44a",
+      "range": {
+        "startLine": 32,
+        "startChar": 37,
+        "endLine": 32,
+        "endChar": 60
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e027f735_1bdbd97f",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 8
@@ -229,6 +445,30 @@
       "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "304726ca_5980f926",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e027f735_1bdbd97f",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 63
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "7bef6029_fb62cb13",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Deleted the comment, but added additional comment specifying that non-character codepoints are not supported. Please refer to comment on cbor_reader_unittest.cc (line 406~) for details!",
+      "parentUuid": "cf7baad2_0b5f0151",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 36
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c612149_a088b592",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 8
@@ -275,6 +539,30 @@
       "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "202410a1_5c8ec548",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c612149_a088b592",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 68
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "0fecc766_ac21fb86",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc5a43f0_83e06a33",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 21
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faec339f_e26e56c0",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 8
@@ -321,6 +633,30 @@
       "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b12265c7_7e4ed4d0",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "faec339f_e26e56c0",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 50
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "148c6293_5375efa1",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Deleted namespace and put |kCBORMaxDepth| as static constant. Same change applied for |kDefaultMaxNestingDepth| cbor_writer.h .",
+      "parentUuid": "a67e9597_91d3e71e",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 11
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94d07153_e899a964",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 8
@@ -358,6 +718,30 @@
       "writtenOn": "2017-11-15T21:50:42Z",
       "side": 1,
       "message": "Try to avoid boolean parameters to functions, especially when most calls will pass a literal \u0027true\u0027 or \u0027false\u0027. That makes it difficult to tell what the call means except by looking up the callee. Instead, use an enum.\n\nHowever, I suspect you should just remove this parameter: the only thing it affects is something I think you should do unconditionally.",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 95,
+        "endChar": 10
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d2e2c0_11c7f85f",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "I believe there are potential cases where we would need to support non-canonical inputs from callers. (e.g. unsorted map keys, tags with unsupported types..) Please let me know if you think this is unnecessary! \n\nChanged |strict_mode| param type to enum.",
+      "parentUuid": "94d07153_e899a964",
       "range": {
         "startLine": 95,
         "startChar": 6,
@@ -393,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "7746d66f_4e9fc752",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10a5147e_5884ad96",
+      "range": {
+        "startLine": 114,
+        "startChar": 25,
+        "endLine": 114,
+        "endChar": 36
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e911da49_c6b5cf33",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 8
@@ -413,6 +821,30 @@
       "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed39ff25_21afc085",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e911da49_c6b5cf33",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 44
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -439,6 +871,30 @@
     },
     {
       "key": {
+        "uuid": "dd11e651_bdbe94d9",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Applied SCOPED_TRACED() on all unittests with subroutines. This actually helped alot during debugging. Thanks for the tip. :)",
+      "parentUuid": "8e991c9c_068fd591",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "596c8398_1322eab3",
         "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
         "patchSetId": 8
@@ -459,6 +915,30 @@
       "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a44eb31_beba89e4",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "596c8398_1322eab3",
+      "range": {
+        "startLine": 47,
+        "startChar": 19,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -485,6 +965,30 @@
     },
     {
       "key": {
+        "uuid": "c5299ed5_388c6a98",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "638b3280_433ee67c",
+      "range": {
+        "startLine": 250,
+        "startChar": 21,
+        "endLine": 250,
+        "endChar": 48
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54aaf746_249054a5",
         "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
         "patchSetId": 8
@@ -505,6 +1009,30 @@
       "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20be19bd_68321e83",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Apologies for the mistake.. While, testing on utf8 encoding on section 2.3.4, I realized that current base::IsStringUTF8() function we use to check utf8 encoding not only checks for valid encoding format but also checks for if it doesn\u0027t contain any non-character codepoint (e.g. U+FFFE). \n\nThe particular encoding example in section 2.3.4, (U-10FFFF) therefore, fails the unittest. Therefore, I added all other character codepoint utf8 boundary case examples from the stress test, and also added comment in the header that the decoder does not support non-character codepoint for major type 3.",
+      "parentUuid": "54aaf746_249054a5",
+      "range": {
+        "startLine": 408,
+        "startChar": 5,
+        "endLine": 408,
+        "endChar": 71
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -602,6 +1130,54 @@
     },
     {
       "key": {
+        "uuid": "2a23ed38_48a4ad2a",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "It was used due to return type size_t for function GetNumUintBytes at line 90. Please let me know if you think this is unnecessary!",
+      "parentUuid": "0e628ade_ce40e3c9",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 19
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "431ec7c0_1675191c",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deb509ee_7484dd8d",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 19
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ddfc04c_d34e555a",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 8
@@ -625,6 +1201,30 @@
     },
     {
       "key": {
+        "uuid": "035cf363_c44e911e",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ddfc04c_d34e555a",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 53
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d25f0b1_dd62fb5b",
         "filename": "content/test/fuzzer/BUILD.gn",
         "patchSetId": 8
@@ -645,6 +1245,30 @@
       "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be9bcc45_25e1a7a9",
+        "filename": "content/test/fuzzer/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-17T01:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d25f0b1_dd62fb5b",
+      "range": {
+        "startLine": 111,
+        "startChar": 25,
+        "endLine": 111,
+        "endChar": 37
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
