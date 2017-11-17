@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b059bc42_5e3aba08",
+        "filename": "net/http/http_auth_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-17T20:36:52Z",
+      "side": 1,
+      "message": "Note that we can now use std::make_unique() - I suggest using that throughout this CL.",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 22
+      },
+      "revId": "fbaaafc479c4e8e76dad6f633ba36588efb0d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1e6a91_97619b27",
+        "filename": "net/http/http_network_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-17T20:36:52Z",
+      "side": 1,
+      "message": "Delete this line (the assignment on next line will have the same effect).",
+      "revId": "fbaaafc479c4e8e76dad6f633ba36588efb0d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "640d027d_9f194c16",
+        "filename": "net/http/http_network_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-17T20:36:52Z",
+      "side": 1,
+      "message": "Delete this line for same reason as above.",
+      "revId": "fbaaafc479c4e8e76dad6f633ba36588efb0d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82bc22c5_6ca629e1",
+        "filename": "net/http/url_security_manager_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-17T20:36:52Z",
+      "side": 1,
+      "message": "I don\u0027t see any corresponding changes to \"url_security_manager.h\" in this CL.\nChanging the function signature there will be necessary for this to compile",
+      "revId": "fbaaafc479c4e8e76dad6f633ba36588efb0d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
