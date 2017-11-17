@@ -52,6 +52,24 @@
       "revId": "e656f4ba7a9ad83130bb89f21383ace0fdf736fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db15751_c825512d",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwSettingsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1831,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-17T19:00:25Z",
+      "side": 1,
+      "message": "SGTM, thanks",
+      "parentUuid": "11770881_b2621459",
+      "revId": "e656f4ba7a9ad83130bb89f21383ace0fdf736fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
