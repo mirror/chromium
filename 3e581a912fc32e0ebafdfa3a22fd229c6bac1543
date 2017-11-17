@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e44b68c_36102ee6",
+        "filename": "third_party/WebKit/Source/modules/geolocation/Geolocation.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-17T21:35:00Z",
+      "side": 1,
+      "message": "This will come back regardless of whether or not we successfully create a geolocation object, but I think that\u0027s OK.  (I\u0027m not even sure a timeout would be inappropriate at that point)",
+      "revId": "3e581a912fc32e0ebafdfa3a22fd229c6bac1543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
