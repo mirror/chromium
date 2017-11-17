@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43eb5a78_ac38a8ef",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceRequest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-17T10:00:17Z",
+      "side": 1,
+      "message": "I prefer having a static method with a clearer name (e.g. CreateForRedirect) if we do this.",
+      "revId": "cff0b5fb0da5bab404b78a3a8a9c2b7b90b53377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
