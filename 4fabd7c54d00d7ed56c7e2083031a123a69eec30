@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "287d4909_67cfa4f8",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-iframe.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-17T19:49:50Z",
+      "side": 1,
+      "message": "Yes, I should have changed this back to how it was. I originally changed it to ignore the \"Ready\" message, but I should have reverted it back after removing the \"Ready\" message. Thanks!",
+      "parentUuid": "6cc31995_b2893bc0",
+      "revId": "4fabd7c54d00d7ed56c7e2083031a123a69eec30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84d0547d_e8143a61",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-sandboxed-iframe.html",
         "patchSetId": 8
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "059855b4_baa65c77",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-sandboxed-iframe.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-17T19:49:50Z",
+      "side": 1,
+      "message": "That makes sense. I merged the two sections.",
+      "parentUuid": "84d0547d_e8143a61",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "4fabd7c54d00d7ed56c7e2083031a123a69eec30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea588b1c_ebe4c404",
         "filename": "third_party/WebKit/LayoutTests/http/tests/bluetooth/https/requestDevice/cross-origin-iframe.html",
         "patchSetId": 8
@@ -56,6 +98,24 @@
       "revId": "4fabd7c54d00d7ed56c7e2083031a123a69eec30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47adac1a_43a2f42c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/bluetooth/https/requestDevice/cross-origin-iframe.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-17T19:49:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea588b1c_ebe4c404",
+      "revId": "4fabd7c54d00d7ed56c7e2083031a123a69eec30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
