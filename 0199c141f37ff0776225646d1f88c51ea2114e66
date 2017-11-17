@@ -16,6 +16,24 @@
       "revId": "0199c141f37ff0776225646d1f88c51ea2114e66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae4f55d_f38456bf",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-11-17T21:29:40Z",
+      "side": 1,
+      "message": "#1) You\u0027re absolutely right. I forgot that. I\u0027ll remove U+0237 from the new condition. Thanks for spotting it. \n\n#2) The point of this CL is that \u0027dotless i\u0027 + accent cannot be distinguished from regular i + accent and there is no reason to add an accent to \u0027dotless i\u0027 instead of a regular \u0027i\u0027.   In case of \u0027l\u0027, there\u0027s no such pair (dotless i and regular i). \n\nA more general case of LGC + U+03xx accent is considered in \nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d727092 . This CL has a narrow focus on purpose.",
+      "parentUuid": "fdd65cf3_27cbbc7f",
+      "revId": "0199c141f37ff0776225646d1f88c51ea2114e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
