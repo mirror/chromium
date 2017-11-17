@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d217c606_60200b2d",
+        "filename": "gpu/ipc/service/image_transport_surface_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-17T01:49:05Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "8433415f31857695020a46a78d00dadd5f1fe77b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
