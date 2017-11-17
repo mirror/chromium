@@ -72,23 +72,27 @@ ScopedJavaLocalRef<jstring> CPPClass::ReturnAString(
 }
 
 // Static free functions declared and called directly from java.
-static jlong Init(JNIEnv* env,
-                  const JavaParamRef<jobject>& caller,
-                  const JavaParamRef<jstring>& param) {
+static jlong JNI_SampleForTests_Init(JNIEnv* env,
+                                     const JavaParamRef<jobject>& caller,
+                                     const JavaParamRef<jstring>& param) {
   return 0;
 }
 
-static jdouble GetDoubleFunction(JNIEnv*, const JavaParamRef<jobject>&) {
+static jdouble JNI_SampleForTests_GetDoubleFunction(
+    JNIEnv*,
+    const JavaParamRef<jobject>&) {
   return 0;
 }
 
-static jfloat GetFloatFunction(JNIEnv*, const JavaParamRef<jclass>&) {
+static jfloat JNI_SampleForTests_GetFloatFunction(JNIEnv*,
+                                                  const JavaParamRef<jclass>&) {
   return 0;
 }
 
-static void SetNonPODDatatype(JNIEnv*,
-                              const JavaParamRef<jobject>&,
-                              const JavaParamRef<jobject>&) {}
+static void JNI_SampleForTests_SetNonPODDatatype(JNIEnv*,
+                                                 const JavaParamRef<jobject>&,
+                                                 const JavaParamRef<jobject>&) {
+}
 
 static ScopedJavaLocalRef<jobject> GetNonPODDatatype(
     JNIEnv*,
@@ -96,7 +100,9 @@ static ScopedJavaLocalRef<jobject> GetNonPODDatatype(
   return ScopedJavaLocalRef<jobject>();
 }
 
-static jint GetInnerIntFunction(JNIEnv*, const JavaParamRef<jclass>&) {
+static jint JNI_SampleForTests_GetInnerIntFunction(
+    JNIEnv*,
+    const JavaParamRef<jclass>&) {
   return 0;
 }
 
