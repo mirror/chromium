@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "145361c9_b58c6760",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-17T08:25:50Z",
+      "side": 1,
+      "message": "I will need more work by removing the base::ScopedMockTimeMessageLoopTaskRunner. It is deprecated recently, and according to the comments I should be able to use \n\nscoped_refptr\u003cbase::TestMockTimeTaskRunner\u003e task_runner_;\nand initialize\ntask_runner_(base::MakeRefCounted\u003cbase::TestMockTimeTaskRunner\u003e(\n            base::TestMockTimeTaskRunner::Type::kBoundToThread))\n\nHowever I keep hitting FATAL:run_loop.cc(72)] Check failed: !tls_delegate.Get().Get(). I bet I missed something, I will ask gab@ who deprecated the API tmr.\n\n#0 0x00000536675d base::debug::StackTrace::StackTrace()\n#1 0x000005364cec base::debug::StackTrace::StackTrace()\n#2 0x0000053c925a logging::LogMessage::~LogMessage()\n#3 0x00000547547c base::RunLoop::RegisterDelegateForCurrentThread()\n#4 0x000005b0878b base::TestMockTimeTaskRunner::TestMockTimeTaskRunner()\n#5 0x000005b0853d base::TestMockTimeTaskRunner::TestMockTimeTaskRunner()\n#6 0x0000026500e0 _ZN4base14MakeRefCountedINS_22TestMockTimeTaskRunnerEJNS1_4TypeEEEE13scoped_refptrIT_EDpOT0_\n#7 0x000002650095 net::test::QuicConnectivityProbingManagerTest::QuicConnectivityProbingManagerTest()\n#8 0x00000265002f net::test::QuicConnectivityProbingManagerTest_CancelProbing_Test::QuicConnectivityProbingManagerTest_CancelProbing_Test()\n#9 0x00000264fff7 testing::internal::TestFactoryImpl\u003c\u003e::CreateTest()\n#10 0x000003cb8bce testing::internal::HandleSehExceptionsInMethodIfSupported\u003c\u003e()\n#11 0x000003cb0362 testing::internal::HandleExceptionsInMethodIfSupported\u003c\u003e()\n#12 0x000003c9b6b8 testing::TestInfo::Run()\n#13 0x000003c9c13c testing::TestCase::Run()\n#14 0x000003ca7e7c testing::internal::UnitTestImpl::RunAllTests()\n#15 0x000003cb8cde testing::internal::HandleSehExceptionsInMethodIfSupported\u003c\u003e()\n#16 0x000003cb14d2 testing::internal::HandleExceptionsInMethodIfSupported\u003c\u003e()\n#17 0x000003ca7abe testing::UnitTest::Run()\n#18 0x000005b12851 RUN_ALL_TESTS()\n#19 0x000005b0f872 base::TestSuite::Run()",
+      "revId": "f1f692a82b38985bdc3c0ea072c0fd79f0056b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
