@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "1c696a38_3f7554ee",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-17T06:45:45Z",
+      "side": 1,
+      "message": "It\u0027s there for the layout-y test in browser_non_client_frame_view_ash_browsertest.cc. I figure some small layout test is better than nothing.",
+      "parentUuid": "2d241f3e_738e5aba",
+      "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15a335af_32c8aba8",
         "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.h",
         "patchSetId": 10
