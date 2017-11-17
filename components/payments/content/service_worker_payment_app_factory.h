@@ -50,6 +50,7 @@ class ServiceWorkerPaymentAppFactory {
 
  private:
   friend struct base::DefaultSingletonTraits<ServiceWorkerPaymentAppFactory>;
+  friend class PaymentRequestPaymentAppTest;
   friend class ServiceWorkerPaymentAppFactoryBrowserTest;
   friend class ServiceWorkerPaymentAppFactoryTest;
 
