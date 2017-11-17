@@ -99,10 +99,6 @@ class SignInObserver : public SigninManagerBase::Observer {
 @synthesize promoState = _promoState;
 @synthesize presenter = _presenter;
 
-+ (void)registerBrowserStatePrefs:(user_prefs::PrefRegistrySyncable*)registry {
-  registry->RegisterBooleanPref(prefs::kIosBookmarkPromoAlreadySeen, false);
-}
-
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
                             delegate:
                                 (id<BookmarkPromoControllerDelegate>)delegate
@@ -155,8 +151,6 @@ class SignInObserver : public SigninManagerBase::Observer {
   UMA_HISTOGRAM_ENUMERATION(kBookmarksPromoActionsHistogram,
                             BOOKMARKS_PROMO_ACTION_DISMISSED,
                             BOOKMARKS_PROMO_ACTION_COUNT);
-  PrefService* prefs = _browserState->GetPrefs();
-  prefs->SetBoolean(prefs::kIosBookmarkPromoAlreadySeen, true);
   self.promoState = NO;
 }
 
