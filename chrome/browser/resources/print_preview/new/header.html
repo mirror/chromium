@@ -75,7 +75,7 @@
       </button>
       <button class="print default" on-tap="onPrintButtonTap_"
           disabled$="[[printButtonDisabled_(currentErrorOrState_)]]">
-        [[getPrintButton_(model.destinationId)]]
+        [[getPrintButton_(model.destination.id)]]
       </button>
     </div>
   </template>

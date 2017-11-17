@@ -91,19 +91,19 @@
     "includes": [11860],
   },
   "chrome/browser/resources/md_extensions/extensions_resources_vulcanized.grd": {
-    "includes": [11900],
+    "includes": [11870],
   },
   "chrome/browser/resources/md_extensions/extensions_resources.grd": {
-    "structures": [11910],
+    "structures": [11880],
   },
   "chrome/browser/resources/net_internals_resources.grd": {
-    "includes": [12000],
+    "includes": [11970],
   },
   "chrome/browser/resources/print_preview/print_preview_resources.grd": {
-    "structures": [12010],
+    "structures": [11980],
   },
   "chrome/browser/resources/quota_internals_resources.grd": {
-    "includes": [12050],
+    "includes": [12060],
   },
   "chrome/browser/resources/settings/settings_resources_vulcanized.grd": {
     "includes": [12070],
