@@ -14,6 +14,7 @@ namespace {
 using base::trace_event::MemoryAllocatorDumpGuid;
 using Edge = GlobalDumpGraph::Edge;
 using PostOrderIterator = GlobalDumpGraph::PostOrderIterator;
+using PreOrderIterator = GlobalDumpGraph::PreOrderIterator;
 using Process = GlobalDumpGraph::Process;
 using Node = GlobalDumpGraph::Node;
 
@@ -102,6 +103,10 @@ Node* Process::FindNode(base::StringPiece path) {
   return current;
 }
 
+PreOrderIterator Process::VisitInDepthFirstPreOrder() {
+  return PreOrderIterator(root_);
+}
+
 PostOrderIterator Process::VisitInDepthFirstPostOrder() {
   return PostOrderIterator(root_);
 }
@@ -170,6 +175,50 @@ Node::Entry::Entry(std::string value)
 
 Edge::Edge(Node* source, Node* target, int priority)
     : source_(source), target_(target), priority_(priority) {}
+
+PreOrderIterator::PreOrderIterator(Node* root) {
+  to_visit_.push_back(root);
+}
+PreOrderIterator::PreOrderIterator(PreOrderIterator&& other) = default;
+PreOrderIterator::~PreOrderIterator() {}
+
+// Yields the next node in the DFS post-order traversal.
+Node* PreOrderIterator::next() {
+  while (!to_visit_.empty()) {
+    // Retain a pointer to the node at the top and remove it from stack.
+    Node* node = to_visit_.front();
+    to_visit_.pop_front();
+
+    // If the node has already been visited, don't visit it again.
+    if (visited_.find(node) != visited_.end())
+      continue;
+
+    // If we haven't visited the node which this node owns then wait for that.
+    if (node->owns_edge() && visited_.count(node->owns_edge()->target()) == 0)
+      continue;
+
+    // If we haven't visited the node's parent then wait for that.
+    if (node->parent() && visited_.count(node->parent()) == 0)
+      continue;
+
+    // Visit all children of this node.
+    for (auto it = node->children()->rbegin(); it != node->children()->rend();
+         it++) {
+      to_visit_.push_front(it->second);
+    }
+
+    // Visit all owners of this node.
+    for (auto it = node->owned_by_edges()->rbegin();
+         it != node->owned_by_edges()->rend(); it++) {
+      to_visit_.push_front((*it)->source());
+    }
+
+    // Add this node to the visited set.
+    visited_.insert(node);
+    return node;
+  }
+  return nullptr;
+}
 
 PostOrderIterator::PostOrderIterator(Node* root) {
   to_visit_.push_back(root);
