@@ -38,6 +38,8 @@ class CHROMEOS_EXPORT AuthPolicyLoginHelper {
   static void Restart();
 
   // See AuthPolicyClient::JoinAdDomain.
+  // This call join the device to domain. Then it calls RefreshDevicePolicy to
+  // cache the policy on the authpolicyd side.
   void JoinAdDomain(const std::string& machine_name,
                     const std::string& username,
                     const std::string& password,
@@ -55,6 +57,9 @@ class CHROMEOS_EXPORT AuthPolicyLoginHelper {
  private:
   // Called from AuthPolicyClient::JoinAdDomain.
   void OnJoinCallback(JoinCallback callback, authpolicy::ErrorType error);
+
+  void OnFirstPolicyRefreshCallback(JoinCallback callback,
+                                    authpolicy::ErrorType error);
 
   // Called from AuthPolicyClient::AuthenticateUser.
   void OnAuthCallback(
