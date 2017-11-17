@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a45ef5fb_f6f94047",
+        "filename": "ash/system/audio/volume_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-17T00:44:44Z",
+      "side": 1,
+      "message": "by my reading of Tom\u0027s comment, this should only be applied when the volume is muted.",
+      "range": {
+        "startLine": 135,
+        "startChar": 11,
+        "endLine": 135,
+        "endChar": 38
+      },
+      "revId": "41e4c883be7be4f2924e5ffb0bdaa24b6b61594c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
