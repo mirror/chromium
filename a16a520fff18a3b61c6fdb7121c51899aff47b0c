@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c5de06f_757103cd",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-17T22:47:17Z",
+      "side": 1,
+      "message": "We use the PaintImage check in prod code right now to trigger invalidations. (https://cs.chromium.org/chromium/src/cc/layers/picture_image_layer.cc?sq\u003dpackage:chromium\u0026l\u003d43) Without a generator reference comparison, that would pass. :/",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 70
+      },
+      "revId": "a16a520fff18a3b61c6fdb7121c51899aff47b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3194c1dd_8a1664b3",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-17T22:47:17Z",
+      "side": 1,
+      "message": "Could you leave a comment that records and images are missing because they are not serialized right now?",
+      "range": {
+        "startLine": 397,
+        "startChar": 18,
+        "endLine": 397,
+        "endChar": 28
+      },
+      "revId": "a16a520fff18a3b61c6fdb7121c51899aff47b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
