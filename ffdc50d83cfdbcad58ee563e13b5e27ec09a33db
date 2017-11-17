@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff01e4fe_b1d6fd23",
+        "filename": "chrome/browser/policy/configuration_policy_handler_list_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-17T08:01:39Z",
+      "side": 1,
+      "message": "If these flags are ever only checked through the TranslatePrefs methods I think you don\u0027t have to complicate the policy mapping logic by adding a separate pref handler to set both when the TranslatePrefs methods will still be relatively trivial even without it.",
+      "range": {
+        "startLine": 828,
+        "startChar": 22,
+        "endLine": 828,
+        "endChar": 54
+      },
+      "revId": "ffdc50d83cfdbcad58ee563e13b5e27ec09a33db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
