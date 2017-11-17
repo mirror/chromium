@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -127,6 +128,11 @@ public class BottomSheet
      */
     public static final long BASE_ANIMATION_DURATION_MS = 218;
 
+    /**
+     * The long duration of the settling animation of the sheet, for particularly large changes.
+     */
+    public static final long LONG_ANIMATION_DURATION_MS = 300;
+
     /** The amount of time it takes to transition sheet content in or out. */
     private static final long TRANSITION_DURATION_MS = 150;
 
@@ -163,8 +169,11 @@ public class BottomSheet
             new int[] {SHEET_STATE_PEEK, SHEET_STATE_HALF, SHEET_STATE_FULL};
     private final float[] mStateRatios = new float[3];
 
-    /** The interpolator that the height animator uses. */
-    private final Interpolator mInterpolator = new DecelerateInterpolator(1.0f);
+    /** The default interpolator that the height animator uses. */
+    private final Interpolator mBaseAnimationInterpolator = new DecelerateInterpolator();
+
+    /** The interpolator that the height animator uses for long animations. */
+    private final Interpolator mLongAnimationInterpolator = new FastOutSlowInInterpolator();
 
     /** The list of observers of this sheet. */
     private final ObserverList<BottomSheetObserver> mObservers = new ObserverList<>();
@@ -1295,8 +1304,15 @@ public class BottomSheet
         mTargetState = targetState;
         mSettleAnimator = ValueAnimator.ofFloat(
                 getSheetOffsetFromBottom(), getSheetHeightForState(targetState));
-        mSettleAnimator.setDuration(BASE_ANIMATION_DURATION_MS);
-        mSettleAnimator.setInterpolator(mInterpolator);
+
+        boolean useLongAnimation = mCurrentState == BottomSheet.SHEET_STATE_PEEK
+                && targetState == BottomSheet.SHEET_STATE_FULL
+                && reason == StateChangeReason.NEW_TAB;
+
+        mSettleAnimator.setDuration(
+                useLongAnimation ? LONG_ANIMATION_DURATION_MS : BASE_ANIMATION_DURATION_MS);
+        mSettleAnimator.setInterpolator(
+                useLongAnimation ? mLongAnimationInterpolator : mBaseAnimationInterpolator);
 
         // When the animation is canceled or ends, reset the handle to null.
         mSettleAnimator.addListener(new AnimatorListenerAdapter() {
