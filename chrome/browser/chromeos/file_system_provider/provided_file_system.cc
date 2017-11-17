@@ -142,9 +142,10 @@ ProvidedFileSystem::ProvidedFileSystem(
       file_system_info_(file_system_info),
       notification_manager_(
           new NotificationManager(profile_, file_system_info_)),
-      request_manager_(new RequestManager(profile,
-                                          file_system_info.provider_id(),
-                                          notification_manager_.get())),
+      request_manager_(
+          new RequestManager(profile,
+                             file_system_info.provider_id().GetId(),
+                             notification_manager_.get())),
       watcher_queue_(1),
       weak_ptr_factory_(this) {}
 
@@ -163,8 +164,9 @@ void ProvidedFileSystem::SetEventRouterForTesting(
 void ProvidedFileSystem::SetNotificationManagerForTesting(
     std::unique_ptr<NotificationManagerInterface> notification_manager) {
   notification_manager_ = std::move(notification_manager);
-  request_manager_.reset(new RequestManager(
-      profile_, file_system_info_.provider_id(), notification_manager_.get()));
+  request_manager_.reset(
+      new RequestManager(profile_, file_system_info_.provider_id().GetId(),
+                         notification_manager_.get()));
 }
 
 AbortCallback ProvidedFileSystem::RequestUnmount(
