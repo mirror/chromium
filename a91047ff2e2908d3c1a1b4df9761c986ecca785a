@@ -16,6 +16,24 @@
       "revId": "a91047ff2e2908d3c1a1b4df9761c986ecca785a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "797925cd_cedf7e03",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-17T21:29:13Z",
+      "side": 1,
+      "message": "Done.\n\nThe inverse will always be available if we got here. Details below:\nWhen the code is here, we know that the FindLayerThatIsHitByPointInTouchHandlerRegion() returns a layer that is not null, which means the |hit| in FindClosestMatchingLayer() is true, which indicates that the inverse is available.",
+      "parentUuid": "930aa31e_9e3adf5f",
+      "revId": "a91047ff2e2908d3c1a1b4df9761c986ecca785a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
