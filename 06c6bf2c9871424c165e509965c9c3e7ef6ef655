@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50d4a566_3a44e7c8",
+        "filename": "chrome/browser/previews/previews_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T18:36:03Z",
+      "side": 1,
+      "message": "Please fix this comment while you are here to:\n// This test class enables NoScriptPreviews but without OptimizationHints.",
+      "range": {
+        "startLine": 79,
+        "startChar": 44,
+        "endLine": 79,
+        "endChar": 69
+      },
+      "revId": "06c6bf2c9871424c165e509965c9c3e7ef6ef655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27139d1f_529df0cc",
+        "filename": "chrome/browser/previews/previews_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T18:36:03Z",
+      "side": 1,
+      "message": "// This test class enables NoScriptPreviews with OptimizationHints.",
+      "revId": "06c6bf2c9871424c165e509965c9c3e7ef6ef655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
