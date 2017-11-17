@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29607300_d3a79873",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-17T13:13:20Z",
+      "side": 1,
+      "message": "Can you document that this method implements part of https://xhr.spec.whatwg.org/#the-send()-method so that it\u0027s easier to find? I had to do some looking to verify that the spec really matches this, which it does. Linking to the spec from the commit message would also be nice.",
+      "range": {
+        "startLine": 190,
+        "startChar": 9,
+        "endLine": 190,
+        "endChar": 31
+      },
+      "revId": "c1f6345669b5ea1f9fd15daf615825cc0152558d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
