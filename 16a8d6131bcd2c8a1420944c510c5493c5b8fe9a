@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6e3c1ad_ef1224fa",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-17T06:03:08Z",
+      "side": 1,
+      "message": "When is !origin_task_runner_ needed?\nIsn\u0027t is always callback_.is_null()\u003d\u003dbool(origin_task_runner_)?",
+      "revId": "16a8d6131bcd2c8a1420944c510c5493c5b8fe9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e80c41c_a81a400e",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-17T06:03:08Z",
+      "side": 1,
+      "message": "How about totally getting rid of the PendingCall class with lambdas?\n\nauto callback \u003d make_unique\u003cbase::Callback\u003cvoid(DBusPendingCall*)\u003e\u003e(base::Bind(...));\ndbus_pending_call_set_notify(\n    dbus_pending_call,\n    [](DBusPendingCall* c, void* p){ std::move(*static_cast\u003cbase::Callback\u003cvoid(DBusPendingCall*)\u003e\u003e(p)).Run(c); },\n    callback.release(),\n    [](void* p){delete static_cast\u003cbase::Callback\u003cvoid(DBusPendingCall*)\u003e\u003e(p);});",
+      "revId": "16a8d6131bcd2c8a1420944c510c5493c5b8fe9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c84415b3_0dab4392",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-17T06:03:08Z",
+      "side": 1,
+      "message": "nit: movable",
+      "range": {
+        "startLine": 239,
+        "startChar": 15,
+        "endLine": 239,
+        "endChar": 24
+      },
+      "revId": "16a8d6131bcd2c8a1420944c510c5493c5b8fe9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

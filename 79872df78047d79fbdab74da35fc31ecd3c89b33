@@ -34,6 +34,24 @@
       "revId": "79872df78047d79fbdab74da35fc31ecd3c89b33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "972da4e7_5cc09f13",
+        "filename": "dbus/util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-17T06:03:08Z",
+      "side": 0,
+      "message": "In PS #1, DeleteOnPendingCallIsCompleteData() was doing more than a simple deleter so having a dedicated function made sense.\nIn the later patch sets, the deleter function became generic and what it does is just calling delete, so there is no difference between this template function and the dedicated deleter function.\n\nI thought maintaining this template function would be useful as DBusFreeFunction is required by libdbus in a number of places, but now we can use lambdas for this purpose so I\u0027m OK with deleting this now.",
+      "parentUuid": "7d5b9849_82c0a40f",
+      "revId": "79872df78047d79fbdab74da35fc31ecd3c89b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
