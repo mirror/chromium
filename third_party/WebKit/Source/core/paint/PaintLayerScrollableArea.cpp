@@ -1371,7 +1371,6 @@ bool PaintLayerScrollableArea::TryRemovingAutoScrollbars(
   // remove auto scrollbars for the initial layout pass.
   DCHECK(!in_overflow_relayout_);
 
-  // TODO(pdr): Extend this logic to work with all overflow boxes.
   if (Box().IsLayoutView()) {
     if (!needs_horizontal_scrollbar && !needs_vertical_scrollbar)
       return false;
@@ -1388,7 +1387,19 @@ bool PaintLayerScrollableArea::TryRemovingAutoScrollbars(
         ScrollHeight() <= visible_size_with_scrollbars.Height()) {
       return true;
     }
+  } else {
+    if (!needs_horizontal_scrollbar && !needs_vertical_scrollbar)
+      return false;
+    LayoutSize client_size_without_any_scrollbars =
+        LayoutContentRect(kIncludeScrollbars).Size();
+    if (Box().HasAutoVerticalScrollbar() &&
+        Box().HasAutoHorizontalScrollbar() &&
+        ScrollWidth() <= client_size_without_any_scrollbars.Width() &&
+        ScrollHeight() <= client_size_without_any_scrollbars.Height()) {
+      return true;
+    }
   }
+
   return false;
 }
 
