@@ -134,13 +134,16 @@ void MessagePort::close() {
   // A closed port should not be neutered, so rather than merely disconnecting
   // from the mojo message pipe, also entangle with a new dangling message pipe.
   channel_.ClearCallback();
-  if (IsEntangled())
-    channel_ = MessagePortChannel(mojo::MessagePipe().handle0);
+  if (IsEntangled()) {
+    channel_ = MessagePortChannel(mojo::MessagePipe().handle0,
+                                  task_runner_->ToSingleThreadTaskRunner());
+  }
   closed_ = true;
 }
 
 void MessagePort::Entangle(mojo::ScopedMessagePipeHandle handle) {
-  Entangle(MessagePortChannel(std::move(handle)));
+  Entangle(MessagePortChannel(std::move(handle),
+                              task_runner_->ToSingleThreadTaskRunner()));
 }
 
 void MessagePort::Entangle(MessagePortChannel channel) {

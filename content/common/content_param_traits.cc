@@ -72,7 +72,8 @@ bool ParamTraits<blink::MessagePortChannel>::Read(const base::Pickle* m,
   mojo::MessagePipeHandle handle;
   if (!ParamTraits<mojo::MessagePipeHandle>::Read(m, iter, &handle))
     return false;
-  *r = blink::MessagePortChannel(mojo::ScopedMessagePipeHandle(handle));
+  *r = blink::MessagePortChannel(mojo::ScopedMessagePipeHandle(handle),
+                                 base::ThreadTaskRunnerHandle::Get());
   return true;
 }
 
