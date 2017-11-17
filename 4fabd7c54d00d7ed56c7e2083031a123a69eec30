@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cc31995_b2893bc0",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-iframe.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-17T18:15:13Z",
+      "side": 1,
+      "message": "If an error does happen the test won\u0027t output the error message any longer after this change.  Include a mechanism (e.g. the previous assert) that will output the error should it occur.",
+      "revId": "4fabd7c54d00d7ed56c7e2083031a123a69eec30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d0547d_e8143a61",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-sandboxed-iframe.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-17T18:15:13Z",
+      "side": 1,
+      "message": "comments are a bit off here, the \u0027Go\u0027 message is what requests the device, but these two sections need merging anyway.\n\nThe onmessage handler should be assigned either before, or in the same code block that the promise is running.  Else there\u0027s a race of the Go executing in the other frame and responding before the onmessage handler is installed.",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "4fabd7c54d00d7ed56c7e2083031a123a69eec30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea588b1c_ebe4c404",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/bluetooth/https/requestDevice/cross-origin-iframe.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-17T18:15:13Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "4fabd7c54d00d7ed56c7e2083031a123a69eec30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
