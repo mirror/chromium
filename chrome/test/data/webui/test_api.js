@@ -45,7 +45,7 @@ var testing = {};
    * mimic the gtest's class names.
    * @constructor
    */
-  function Test() {};
+  function Test() {}
 
   /**
    * Make all transitions and animations take 0ms. NOTE: this will completely
@@ -342,7 +342,7 @@ var testing = {};
      */
     tearDown: function() {
       if (typeof document != 'undefined') {
-        var noAnimationStyle = document.getElementById('no-animation');
+        var noAnimationStyle = document.querySelector('#no-animation');
         if (noAnimationStyle)
           noAnimationStyle.parentNode.removeChild(noAnimationStyle);
       }

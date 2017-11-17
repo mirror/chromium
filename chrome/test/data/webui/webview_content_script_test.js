@@ -15,7 +15,7 @@ function createWebview() {
 
 function onGetBackgroundExecuted(results) {
   chrome.send('testResult', [results.length == 1 && results[0] == 'red']);
-};
+}
 
 function testExecuteScriptCode(url) {
   var webview = createWebview();
@@ -479,7 +479,7 @@ function testAddContentScriptWithCode(url) {
         run_at: 'document_end'}]);
 
   webview.addEventListener('loadstop', function() {
-    console.log('Step 2: call webview.executeScript() to check result.')
+    console.log('Step 2: call webview.executeScript() to check result.');
     webview.executeScript({
       code: 'document.body.style.backgroundColor;'
     }, onGetBackgroundExecuted);
@@ -495,7 +495,7 @@ function testDragAndDropToInput() {
   css.innerHTML = "html, body { height: 400px }";
   document.body.appendChild(css);
 
-  var contents = document.getElementById("contents");
+  var contents = document.querySelector('#contents');
   while (contents.childElementCount) {
     contents.removeChild(contents.firstChild);
   }

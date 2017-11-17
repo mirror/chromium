@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 function testLogText() {
-  var divLogs = document.getElementById('log-entries');
+  var divLogs = document.querySelector('#log-entries');
   assertNotEquals(null, divLogs, "The <div> with logs not found.");
   assertNotEquals(null,
                   divLogs.innerHTML.match(/text for testing/),
@@ -14,7 +14,7 @@ function testLogText() {
 }
 
 function testLogEmpty() {
-  var divLogs = document.getElementById('log-entries');
+  var divLogs = document.querySelector('#log-entries');
   assertNotEquals(null, divLogs, "The <div> with logs not found.");
   assertEquals(null,
                divLogs.innerHTML.match(/[^\s]/),

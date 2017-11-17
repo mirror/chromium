@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-var $ = document.getElementById.bind(document);
+var $ = (id) => document.querySelector(`#${id}`);
 
 function checkOneDevice() {
   var devices = $('register-device-list').children;
