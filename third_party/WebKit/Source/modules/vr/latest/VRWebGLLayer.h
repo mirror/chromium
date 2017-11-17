@@ -53,18 +53,20 @@ class VRWebGLLayer final : public VRLayer {
 
   void UpdateViewports();
 
-  virtual void OnFrameStart();
-  virtual void OnFrameEnd();
+  void OnFrameStart() override;
+  void OnFrameEnd() override;
+  void OnResize() override;
 
   virtual void Trace(blink::Visitor*);
 
  private:
-  VRWebGLLayer(VRSession*, VRWebGLDrawingBuffer*);
+  VRWebGLLayer(VRSession*, VRWebGLDrawingBuffer*, double framebuffer_scale);
 
   Member<VRViewport> left_viewport_;
   Member<VRViewport> right_viewport_;
   Member<VRWebGLDrawingBuffer> drawing_buffer_;
 
+  double framebuffer_scale_ = 1.0;
   double viewport_scale_ = 1.0;
   bool viewports_dirty_ = true;
 };

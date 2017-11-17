@@ -44,6 +44,8 @@ blink_modules_sources("vr") {
     "latest/VRFrameRequestCallbackCollection.h",
     "latest/VRLayer.cpp",
     "latest/VRLayer.h",
+    "latest/VRPresentationContext.cpp",
+    "latest/VRPresentationContext.h",
     "latest/VRPresentationFrame.cpp",
     "latest/VRPresentationFrame.h",
     "latest/VRSession.cpp",
@@ -60,6 +62,17 @@ blink_modules_sources("vr") {
     "latest/VRWebGLDrawingBuffer.h",
     "latest/VRWebGLLayer.cpp",
     "latest/VRWebGLLayer.h",
+    "latest/input/VRControllerElement.h",
+    "latest/input/VRControllerElementMap.cpp",
+    "latest/input/VRControllerElementMap.h",
+    "latest/input/VRControllerInputSource.cpp",
+    "latest/input/VRControllerInputSource.h",
+    "latest/input/VRGestureEvent.cpp",
+    "latest/input/VRGestureEvent.h",
+    "latest/input/VRInputPose.cpp",
+    "latest/input/VRInputPose.h",
+    "latest/input/VRInputSource.cpp",
+    "latest/input/VRInputSource.h",
   ]
 
   deps = [

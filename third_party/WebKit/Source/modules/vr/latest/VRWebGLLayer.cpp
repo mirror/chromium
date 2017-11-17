@@ -4,8 +4,10 @@
 
 #include "modules/vr/latest/VRWebGLLayer.h"
 
+#include "core/imagebitmap/ImageBitmap.h"
 #include "modules/vr/latest/VRDevice.h"
 #include "modules/vr/latest/VRFrameProvider.h"
+#include "modules/vr/latest/VRPresentationContext.h"
 #include "modules/vr/latest/VRSession.h"
 #include "modules/vr/latest/VRView.h"
 #include "modules/vr/latest/VRViewport.h"
@@ -73,13 +75,17 @@ VRWebGLLayer* VRWebGLLayer::Create(
     return nullptr;
   }
 
-  return new VRWebGLLayer(session, drawing_buffer);
+  return new VRWebGLLayer(session, drawing_buffer, framebuffer_scale);
 }
 
 VRWebGLLayer::VRWebGLLayer(VRSession* session,
-                           VRWebGLDrawingBuffer* drawing_buffer)
-    : VRLayer(session, kVRWebGLLayerType), drawing_buffer_(drawing_buffer) {
+                           VRWebGLDrawingBuffer* drawing_buffer,
+                           double framebuffer_scale)
+    : VRLayer(session, kVRWebGLLayerType),
+      drawing_buffer_(drawing_buffer),
+      framebuffer_scale_(framebuffer_scale) {
   DCHECK(drawing_buffer);
+  UpdateViewports();
 }
 
 void VRWebGLLayer::getVRWebGLRenderingContext(
@@ -95,10 +101,17 @@ void VRWebGLLayer::getVRWebGLRenderingContext(
 }
 
 void VRWebGLLayer::requestViewportScaling(double scale_factor) {
-  // Clamp the developer-requested viewport size to ensure it's not too
-  // small to see or larger than the framebuffer.
-  scale_factor =
-      ClampToRange(scale_factor, kViewportMinScale, kViewportMaxScale);
+  if (!session()->exclusive()) {
+    // TODO(bajones): For the moment we're just going to ignore viewport changes
+    // in non-exclusive mode. This is legal, but probably not what developers
+    // would like to see. Look into making viewport scale apply properly.
+    scale_factor = 1.0;
+  } else {
+    // Clamp the developer-requested viewport size to ensure it's not too
+    // small to see or larger than the framebuffer.
+    scale_factor =
+        ClampToRange(scale_factor, kViewportMinScale, kViewportMaxScale);
+  }
 
   if (viewport_scale_ != scale_factor) {
     viewport_scale_ = scale_factor;
@@ -128,12 +141,15 @@ void VRWebGLLayer::UpdateViewports() {
         new VRViewport(framebuffer_width * 0.5 * viewport_scale_, 0,
                        framebuffer_width * 0.5 * viewport_scale_,
                        framebuffer_height * viewport_scale_);
+
+    viewports_dirty_ = false;
+
+    session()->device()->frameProvider()->UpdateWebGLLayerViewports(this);
   } else {
     left_viewport_ = new VRViewport(0, 0, framebuffer_width * viewport_scale_,
                                     framebuffer_height * viewport_scale_);
+    viewports_dirty_ = false;
   }
-
-  viewports_dirty_ = false;
 }
 
 void VRWebGLLayer::OnFrameStart() {
@@ -142,6 +158,29 @@ void VRWebGLLayer::OnFrameStart() {
 
 void VRWebGLLayer::OnFrameEnd() {
   drawing_buffer_->MarkFramebufferComplete(false);
+
+  // Submit the frame to the VR compositor.
+  if (session()->exclusive()) {
+    // TODO: There's definitely a more elegant way to do this.
+    gpu::MailboxHolder mailbox_holder = drawing_buffer_->GetMailbox();
+    session()->device()->frameProvider()->SubmitFrame(mailbox_holder);
+  } else if (session()->outputContext()) {
+    ImageBitmap* image_bitmap =
+        ImageBitmap::Create(drawing_buffer_->TransferToStaticBitmapImage());
+    session()->outputContext()->transferFromImageBitmap(image_bitmap);
+  }
+
+  // TODO: Needed?
+  // drawing_buffer_->MarkCompositedAndClear();
+}
+
+void VRWebGLLayer::OnResize() {
+  DoubleSize framebuffers_size = session()->IdealFramebufferSize();
+
+  IntSize desired_size(framebuffers_size.Width() * framebuffer_scale_,
+                       framebuffers_size.Height() * framebuffer_scale_);
+  drawing_buffer_->Resize(desired_size);
+  viewports_dirty_ = true;
 }
 
 void VRWebGLLayer::Trace(blink::Visitor* visitor) {

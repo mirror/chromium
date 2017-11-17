@@ -39,9 +39,17 @@ class VRView final : public ScriptWrappable {
                                      float near_depth,
                                      float far_depth);
 
+  void UpdateProjectionMatrixFromAspect(float fovy,
+                                        float aspect,
+                                        float near_depth,
+                                        float far_depth);
+
   // TODO(bajones): Should eventually represent this as a full transform.
   const FloatPoint3D& offset() const { return offset_; }
   void UpdateOffset(float x, float y, float z);
+
+  std::unique_ptr<TransformationMatrix>
+  unprojectPointerTransform(double x, double y, double width, double height);
 
   virtual void Trace(blink::Visitor*);
 
@@ -50,6 +58,8 @@ class VRView final : public ScriptWrappable {
   String eye_string_;
   Member<VRSession> session_;
   Member<DOMFloat32Array> projection_matrix_;
+  std::unique_ptr<TransformationMatrix> inv_projection_;
+  bool inv_projection_dirty_ = true;
   FloatPoint3D offset_;
 };
 

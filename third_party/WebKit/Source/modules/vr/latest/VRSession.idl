@@ -4,10 +4,12 @@
 
 // https://w3c.github.io/webvr/spec/latest/#vrsession-interface
 [
+    SecureContext,
     RuntimeEnabled=WebVR2
 ] interface VRSession : EventTarget {
   readonly attribute VRDevice device;
   readonly attribute boolean exclusive;
+  readonly attribute VRPresentationContext outputContext;
 
   attribute double depthNear;
   attribute double depthFar;
@@ -25,4 +27,6 @@
   void cancelFrame(long handle);
 
   [CallWith=ScriptState] Promise<void> end();
+
+  FrozenArray<VRController> getControllers();
 };

@@ -407,6 +407,9 @@ const base::Feature kImageCaptureAPI{"ImageCaptureAPI",
 const base::Feature kKeepAliveRendererForKeepaliveRequests{
     "KeepAliveRendererForKeepaliveRequests", base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Enables WebXR API.
+const base::Feature kWebXr{"WebXR", base::FEATURE_ENABLED_BY_DEFAULT};
+
 // Controls whether WebVR experimental rendering optimizations is enabled.
 const base::Feature kWebVrExperimentalRendering{
     "WebVRExperimentalRendering", base::FEATURE_DISABLED_BY_DEFAULT};

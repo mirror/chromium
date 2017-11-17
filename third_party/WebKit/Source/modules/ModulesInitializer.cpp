@@ -76,6 +76,7 @@
 #include "modules/time_zone_monitor/TimeZoneMonitorClient.h"
 #include "modules/vr/NavigatorVR.h"
 #include "modules/vr/VRController.h"
+#include "modules/vr/latest/VRPresentationContext.h"
 #include "modules/webdatabase/DatabaseClient.h"
 #include "modules/webdatabase/DatabaseManager.h"
 #include "modules/webdatabase/InspectorDatabaseAgent.h"
@@ -126,6 +127,8 @@ void ModulesInitializer::Initialize() {
       std::make_unique<WebGL2RenderingContext::Factory>());
   HTMLCanvasElement::RegisterRenderingContextFactory(
       std::make_unique<ImageBitmapRenderingContext::Factory>());
+  HTMLCanvasElement::RegisterRenderingContextFactory(
+      std::make_unique<VRPresentationContext::Factory>());
 
   // OffscreenCanvas context types must be registered with the OffscreenCanvas.
   OffscreenCanvas::RegisterRenderingContextFactory(

@@ -338,6 +338,61 @@ void VRWebGLDrawingBuffer::SwapColorBuffers() {
   client->DrawingBufferClientRestoreFramebufferBinding();
 }
 
+gpu::MailboxHolder VRWebGLDrawingBuffer::GetMailbox() {
+  gpu::gles2::GLES2Interface* gl = gl_context();
+
+  if (contents_changed_) {
+    SwapColorBuffers();
+    gl->Flush();
+  }
+
+  // Contexts may be in a different share group. We must transfer the texture
+  // through a mailbox first.
+  GLenum target = GL_TEXTURE_2D;
+  gpu::Mailbox mailbox;
+  gpu::SyncToken sync_token;
+
+  gl->GenMailboxCHROMIUM(mailbox.name);
+  gl->ProduceTextureDirectCHROMIUM(front_color_buffer_, target, mailbox.name);
+  const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
+  gl->Flush();
+  gl->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+
+  if (!sync_token.HasData()) {
+    // This should only happen if the context has been lost.
+    return gpu::MailboxHolder();
+  }
+
+  return gpu::MailboxHolder(mailbox, sync_token, target);
+}
+
+scoped_refptr<StaticBitmapImage>
+VRWebGLDrawingBuffer::TransferToStaticBitmapImage() {
+  gpu::MailboxHolder mailbox_holder = GetMailbox();
+
+  if (!mailbox_holder.texture_target) {
+    // If we can't get a mailbox, return an transparent black ImageBitmap.
+    // The only situation in which this could happen is when two or more calls
+    // to transferToImageBitmap are made back-to-back, or when the context gets
+    // lost.
+    sk_sp<SkSurface> surface =
+        SkSurface::MakeRasterN32Premul(size_.Width(), size_.Height());
+    return StaticBitmapImage::Create(surface->makeImageSnapshot());
+  }
+
+  // Once we place the texture in the StaticBitmapImage it's effectively gone
+  // for good. So we'll replace the front_color_buffer_ here with a new texture
+  // to ensure that we have a valid one to swap to on the next frame.
+  // TODO(bajones): This can probably be handled in a much more performant way,
+  // since we don't actually need the transfer semantics in this case.
+  GLuint texture_id = front_color_buffer_;
+  front_color_buffer_ = CreateColorBuffer();
+
+  return AcceleratedStaticBitmapImage::CreateFromWebGLContextImage(
+      mailbox_holder.mailbox, mailbox_holder.sync_token, texture_id,
+      webgl_context_->GetDrawingBuffer()->ContextProviderWeakPtr(), size_);
+}
+
 void VRWebGLDrawingBuffer::Trace(blink::Visitor* visitor) {
   visitor->Trace(webgl_context_);
   visitor->Trace(framebuffer_);

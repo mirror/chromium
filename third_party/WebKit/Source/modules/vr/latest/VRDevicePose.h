@@ -9,6 +9,7 @@
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/transforms/TransformationMatrix.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 

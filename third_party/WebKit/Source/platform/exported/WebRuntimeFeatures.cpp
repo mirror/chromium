@@ -358,6 +358,10 @@ void WebRuntimeFeatures::EnableWebVR(bool enable) {
   RuntimeEnabledFeatures::SetWebVREnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableWebVR2(bool enable) {
+  RuntimeEnabledFeatures::SetWebVR2Enabled(enable);
+}
+
 void WebRuntimeFeatures::EnableWebVRExperimentalRendering(bool enable) {
   RuntimeEnabledFeatures::SetWebVRExperimentalRenderingEnabled(enable);
 }
