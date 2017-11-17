@@ -94,8 +94,8 @@ std::string ReplaceTemplateExpressions(
     CHECK(!key.empty());
 
     TemplateReplacements::const_iterator value = replacements.find(key);
-    CHECK(value != replacements.end()) << "$i18n replacement key \"" << key
-                                       << "\" not found";
+    CHECK(value != replacements.end())
+        << "$i18n replacement key \"" << key << "\" not found";
 
     std::string replacement = value->second;
     if (context.empty()) {

@@ -312,9 +312,6 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
   { key::kCloudPrintSubmitEnabled,
     prefs::kCloudPrintSubmitEnabled,
     base::Value::Type::BOOLEAN },
-  { key::kTranslateEnabled,
-    prefs::kEnableTranslate,
-    base::Value::Type::BOOLEAN },
   { key::kAllowOutdatedPlugins,
     prefs::kPluginsAllowOutdated,
     base::Value::Type::BOOLEAN },
@@ -809,6 +806,34 @@ class BrowsingHistoryPolicyHandler : public TypeCheckingPolicyHandler {
   }
 };
 
+class TranslateEnabledPolicyHandler : public TypeCheckingPolicyHandler {
+ public:
+  TranslateEnabledPolicyHandler()
+      : TypeCheckingPolicyHandler(key::kTranslateEnabled,
+                                  base::Value::Type::BOOLEAN) {}
+  ~TranslateEnabledPolicyHandler() override {}
+
+  // ConfigurationPolicyHandler implementation:
+  void ApplyPolicySettings(const PolicyMap& policies,
+                           PrefValueMap* prefs) override {
+    // Disabling translate by policy also disables the "offer translate"
+    // setting.
+    bool policy_enabled = true;
+    const base::Value* policy_value = policies.GetValue(policy_name());
+    if (policy_value && policy_value->GetAsBoolean(&policy_enabled) &&
+        !policy_enabled) {
+      prefs->SetBoolean(prefs::kOfferTranslateEnabled, false);
+    }
+
+    // Set a separate preference so that clients can check whether translate is
+    // allowed at all.
+    prefs->SetBoolean(prefs::kTranslatePolicyEnabled, policy_enabled);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(TranslateEnabledPolicyHandler);
+};
+
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 void GetExtensionAllowedTypesMap(
     std::vector<std::unique_ptr<StringMappingListPolicyHandler::MappingEntry>>*
@@ -902,6 +927,8 @@ std::unique_ptr<ConfigurationPolicyHandlerList> BuildHandlerList(
       certificate_transparency::prefs::kCTExcludedHosts, chrome_schema,
       SCHEMA_STRICT, SimpleSchemaValidatingPolicyHandler::RECOMMENDED_ALLOWED,
       SimpleSchemaValidatingPolicyHandler::MANDATORY_ALLOWED));
+
+  handlers->AddHandler(base::MakeUnique<TranslateEnabledPolicyHandler>());
 
 #if defined(OS_ANDROID)
   handlers->AddHandler(
