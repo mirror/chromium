@@ -13,6 +13,7 @@
 namespace data_decoder {
 
 using AttributeMap = std::map<std::string, std::string>;
+using NamespaceMap = std::map<std::string, std::string>;
 
 namespace {
 
@@ -46,14 +47,30 @@ base::Value* AddChildToElement(base::Value* element, base::Value child) {
   return &children->GetList().back();
 }
 
+void PopulateNamespaces(base::Value* node_value, XmlReader* xml_reader) {
+  DCHECK(node_value->is_dict());
+  NamespaceMap namespaces;
+  if (!xml_reader->GetAllDeclaredNamespaces(&namespaces) || namespaces.empty())
+    return;
+
+  base::Value namespace_dict(base::Value::Type::DICTIONARY);
+  for (auto ns : namespaces)
+    namespace_dict.SetKey(ns.first, base::Value(ns.second));
+
+  node_value->SetKey(mojom::XmlParser::kNamespacesKey,
+                     std::move(namespace_dict));
+}
+
 void PopulateAttributes(base::Value* node_value, XmlReader* xml_reader) {
   DCHECK(node_value->is_dict());
   AttributeMap attributes;
-  if (!xml_reader->GetAllNodeAttributes(&attributes))
+  if (!xml_reader->GetAllNodeAttributes(&attributes) || attributes.empty())
     return;
+
   base::Value attribute_dict(base::Value::Type::DICTIONARY);
-  for (const auto& attribute : attributes)
+  for (auto attribute : attributes)
     attribute_dict.SetKey(attribute.first, base::Value(attribute.second));
+
   node_value->SetKey(mojom::XmlParser::kAttributesKey,
                      std::move(attribute_dict));
 }
@@ -96,7 +113,7 @@ void XmlParser::Parse(const std::string& xml, ParseCallback callback) {
       SetElementText(current_element, text);
     } else {
       // Element node.
-      base::Value new_element = CreateNewElement(xml_reader.NodeName());
+      base::Value new_element = CreateNewElement(xml_reader.NodeFullName());
       base::Value* new_element_ptr;
       if (current_element) {
         new_element_ptr =
@@ -107,6 +124,7 @@ void XmlParser::Parse(const std::string& xml, ParseCallback callback) {
         root_element = std::move(new_element);
         new_element_ptr = &root_element;
       }
+      PopulateNamespaces(new_element_ptr, &xml_reader);
       PopulateAttributes(new_element_ptr, &xml_reader);
       // Self-closing (empty) element have no close tag (or children); don't
       // push them on the element stack.

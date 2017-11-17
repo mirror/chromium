@@ -59,8 +59,12 @@ class XmlReader {
   int Depth() { return xmlTextReaderDepth(reader_); }
 
   // Returns the "local" name of the current node.
-  // For a tag like <foo:bar>, this is the string "foo:bar".
+  // For a tag like <foo:bar>, this is the string "bar".
   std::string NodeName();
+
+  // Returns the name of the current node.
+  // For a tag like <foo:bar>, this is the string "foo:bar".
+  std::string NodeFullName();
 
   // When pointing at a tag, retrieves the value of an attribute.
   // Returns false on failure.
@@ -68,10 +72,16 @@ class XmlReader {
   // returns true and |value| is set to "a".
   bool NodeAttribute(const char* name, std::string* value);
 
-  // When pointing at a tag, populates |attributes| with all the attributes of
-  // the current tag and returns true.
-  // Returns false if there are no attributes.
+  // Populates |attributes| with all the attributes of the current tag and
+  // returns true. Note that namespace declarations are not reported.
+  // Returns false if there are no attributes in the current tag.
   bool GetAllNodeAttributes(std::map<std::string, std::string>* attributes);
+
+  // Populates |namespaces| with all the namespaces (prefix/URI pairs) declared
+  // in the current tag and returns true. Note that the default namespace, if
+  // declared in the tag, is populated with an empty prefix.
+  // Returns false if there are no namespaces declared in the current tag.
+  bool GetAllDeclaredNamespaces(std::map<std::string, std::string>* namespaces);
 
   // Sets |content| to the content of the current node if it is a #text node.
   // Returns true if the current node is a #text node, false otherwise.

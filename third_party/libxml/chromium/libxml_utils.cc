@@ -34,6 +34,41 @@ const xmlChar* stdStringToXmlString(const std::string& string) {
   return reinterpret_cast<const xmlChar*>(string.data());
 }
 
+enum GetAttributesQueryType { ATTRIBUTES, NAMESPACES_PREFIXES };
+
+// Populates |names| with the names of the attributes or prefix of namespaces
+// (depending on |query_type|) for the current node in |reader|.
+// Returns true if attribute names/namespace prefixes were retrieved, false
+// otherwise.
+// Note the strings in |names| are valid as long as |reader| is valid and should
+// not be deleted.
+bool GetNodeAttributeNames(xmlTextReaderPtr reader,
+                           GetAttributesQueryType query_type,
+                           std::vector<const xmlChar*>* names) {
+  if (xmlTextReaderHasAttributes(reader) <= 0)
+    return false;
+
+  if (!xmlTextReaderMoveToFirstAttribute(reader))
+    return false;
+
+  do {
+    bool is_namespace = xmlTextReaderIsNamespaceDecl(reader) == 1;
+    if (query_type == NAMESPACES_PREFIXES && is_namespace) {
+      // Use the local name for namespaces so we don't include 'xmlns:".
+      names->push_back(xmlTextReaderConstLocalName(reader));
+    } else if (query_type == ATTRIBUTES && !is_namespace) {
+      // Use the fully qualified name for namespaces.
+      names->push_back(xmlTextReaderConstName(reader));
+    }
+  } while (xmlTextReaderMoveToNextAttribute(reader) > 0);
+
+  // Move the reader from the attributes back to the containing element.
+  if (!xmlTextReaderMoveToElement(reader))
+    return false;
+
+  return true;
+}
+
 }  // namespace
 
 XmlReader::XmlReader() : reader_(NULL) {
@@ -64,6 +99,9 @@ bool XmlReader::LoadFile(const std::string& file_path) {
 std::string XmlReader::NodeName() {
   return XmlStringToStdString(xmlTextReaderConstLocalName(reader_));
 }
+std::string XmlReader::NodeFullName() {
+  return XmlStringToStdString(xmlTextReaderConstName(reader_));
+}
 
 bool XmlReader::NodeAttribute(const char* name, std::string* out) {
   xmlChar* value = xmlTextReaderGetAttribute(reader_, BAD_CAST name);
@@ -75,29 +113,40 @@ bool XmlReader::NodeAttribute(const char* name, std::string* out) {
 
 bool XmlReader::GetAllNodeAttributes(
     std::map<std::string, std::string>* attributes) {
-  if (xmlTextReaderHasAttributes(reader_) <= 0)
-    return false;
-
-  if (!xmlTextReaderMoveToFirstAttribute(reader_))
-    return false;
-
-  std::vector<std::string> attribute_names;
-  do {
-    attribute_names.push_back(NodeName());
-  } while (xmlTextReaderMoveToNextAttribute(reader_) > 0);
-
-  // Move the reader from the attributes back to the containing element.
-  if (!xmlTextReaderMoveToElement(reader_))
+  std::vector<const xmlChar*> attribute_names;
+  if (!GetNodeAttributeNames(reader_, ATTRIBUTES, &attribute_names))
     return false;
 
   // Retrieve the attribute values.
-  for (auto name : attribute_names) {
-    std::string value = XmlStringToStdStringWithDelete(
-        xmlTextReaderGetAttribute(reader_, stdStringToXmlString(name)));
-    if (!value.empty())
-      (*attributes)[name] = value;
+  for (const auto* name : attribute_names) {
+    (*attributes)[XmlStringToStdString(name)] = XmlStringToStdStringWithDelete(
+        xmlTextReaderGetAttribute(reader_, name));
   }
+  return true;
+}
 
+bool XmlReader::GetAllDeclaredNamespaces(
+    std::map<std::string, std::string>* namespaces) {
+  std::vector<const xmlChar*> prefixes;
+  if (!GetNodeAttributeNames(reader_, NAMESPACES_PREFIXES, &prefixes))
+    return false;
+
+  // Retrieve the namespace URIs.
+  for (const auto* prefix : prefixes) {
+    bool default_namespace = xmlStrcmp(prefix, BAD_CAST "xmlns") == 0;
+
+    std::string value = XmlStringToStdStringWithDelete(
+        xmlTextReaderLookupNamespace(reader_, prefix));
+    if (value.empty()) {
+      if (default_namespace) {
+        // Default namespace is treated as an attribute for some reason.
+        value = XmlStringToStdStringWithDelete(
+            xmlTextReaderGetAttribute(reader_, prefix));
+      }
+    }
+    (*namespaces)[default_namespace ? "" : XmlStringToStdString(prefix)] =
+        value;
+  }
   return true;
 }
 

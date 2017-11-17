@@ -151,22 +151,48 @@ TEST_F(XmlParserTest, ParseAttributes) {
       "\"children\":[{\"tag\":\"hello\", \"text\":\"bonjour\"}]}");
 }
 
+TEST_F(XmlParserTest, MultipleNamespacesDefined) {
+  TestParseXml(
+      "<a xmlns='http://a' xmlns:foo='http://foo' xmlns:bar='http://bar'></a>",
+      "{\"tag\": \"a\", \"namespaces\":{"
+      "\"\":\"http://a\",\"foo\":\"http://foo\",\"bar\":\"http://bar\"}}");
+}
+
+TEST_F(XmlParserTest, NamespacesUsed) {
+  TestParseXml(
+      "<foo:a xmlns:foo='http://foo'>"
+      "  <foo:b att1='fooless' foo:att2='fooful'>With foo</foo:b>"
+      "  <b foo:att1='fooful' att2='fooless'>No foo</b>"
+      "</foo:a>",
+      "{\"tag\": \"foo:a\","
+      " \"namespaces\":{\"foo\":\"http://foo\"},"
+      " \"children\":["
+      "   {\"tag\":\"foo:b\","
+      "    \"text\":\"With foo\","
+      "    \"attributes\":{\"att1\":\"fooless\",\"foo:att2\":\"fooful\"}},"
+      "   {\"tag\":\"b\","
+      "    \"text\":\"No foo\","
+      "    \"attributes\":{\"foo:att1\":\"fooful\",\"att2\":\"fooless\"}}"
+      " ]}");
+}
+
 TEST_F(XmlParserTest, ParseTypicalXml) {
   constexpr char kXml[] =
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
       "<!-- This is an XML sample -->"
-      "<library>"
-      "  <book id=\"k123\">"
+      "<library xmlns='http://library' xmlns:foo='http://foo.com'>"
+      "  <book foo:id=\"k123\">"
       "    <author>Isaac Newton</author>"
       "    <title>Philosophiae Naturalis Principia Mathematica</title>"
       "    <genre>Science</genre>"
       "    <price>40.95</price>"
       "    <publish_date>1947-9-03</publish_date>"
       "  </book>"
-      "  <book id=\"k456\">"
+      "  <book foo:id=\"k456\">"
       "    <author>Dr. Seuss</author>"
       "    <title>Green Eggs and Ham</title>"
       "    <genre>Kid</genre>"
-      "    <kids/>"
+      "    <foo:kids/>"
       "    <price>4.95</price>"
       "    <publish_date>1960-8-12</publish_date>"
       "  </book>"
@@ -174,9 +200,10 @@ TEST_F(XmlParserTest, ParseTypicalXml) {
 
   constexpr char kJson[] =
       "{\"tag\": \"library\","
+      " \"namespaces\":{\"\":\"http://library\",\"foo\":\"http://foo.com\"},"
       " \"children\":["
       "  {\"tag\": \"book\","
-      "   \"attributes\": {\"id\":\"k123\"},"
+      "   \"attributes\": {\"foo:id\":\"k123\"},"
       "   \"children\": ["
       "      {\"tag\": \"author\", \"text\": \"Isaac Newton\"},"
       "      {\"tag\": \"title\","
@@ -187,12 +214,12 @@ TEST_F(XmlParserTest, ParseTypicalXml) {
       "    ]"
       "  },"
       "  {\"tag\": \"book\","
-      "   \"attributes\": {\"id\":\"k456\"},"
+      "   \"attributes\": {\"foo:id\":\"k456\"},"
       "   \"children\": ["
       "      {\"tag\": \"author\", \"text\": \"Dr. Seuss\"},"
       "      {\"tag\": \"title\", \"text\": \"Green Eggs and Ham\"},"
       "      {\"tag\": \"genre\", \"text\": \"Kid\"},"
-      "      {\"tag\": \"kids\"},"
+      "      {\"tag\": \"foo:kids\"},"
       "      {\"tag\": \"price\", \"text\": \"4.95\"},"
       "      {\"tag\": \"publish_date\", \"text\": \"1960-8-12\"}"
       "   ]"
