@@ -254,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "0c5f9aaf_26dbad8a",
+        "filename": "chrome/browser/net/proxy_service_factory.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-17T17:03:16Z",
+      "side": 1,
+      "message": "Any response to this?\n\nI guess I am OK punting and doing a follow-up change to the various documentation (ProxyConfigServiceLinux explicitly refers to \"UI\" and \"IO\" thread).",
+      "parentUuid": "f39d71fa_d8bc709f",
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43555d85_62777ecd",
         "filename": "components/proxy_config/pref_proxy_config_tracker_impl.cc",
         "patchSetId": 25
