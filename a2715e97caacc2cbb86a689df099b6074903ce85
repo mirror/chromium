@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d54d681a_2b9844a9",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4571,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-11-17T14:47:58Z",
+      "side": 1,
+      "message": "Looks like setting Deprecated to true will remove that policy from ADMX templates, etc which I don\u0027t think we want to do yet.",
+      "parentUuid": "602e3424_0df22cd9",
+      "range": {
+        "startLine": 4571,
+        "startChar": 6,
+        "endLine": 4571,
+        "endChar": 59
+      },
+      "revId": "a2715e97caacc2cbb86a689df099b6074903ce85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c98655ff_7ff91231",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
@@ -60,6 +84,30 @@
       "writtenOn": "2017-11-17T09:59:18Z",
       "side": 1,
       "message": "Can you update the description? I think we don\u0027t need this anymore, and we can just mention that plugins that require additional authorization to run are not supported anymore.",
+      "range": {
+        "startLine": 4580,
+        "startChar": 17,
+        "endLine": 4582,
+        "endChar": 171
+      },
+      "revId": "a2715e97caacc2cbb86a689df099b6074903ce85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9988d046_f2d5c652",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4582,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-11-17T14:47:58Z",
+      "side": 1,
+      "message": "Don\u0027t remove the existing description. If you want to highlight the behavior post-M64, then that\u0027s fine, but leave the description of what the policy does pre-M65 intact.",
+      "parentUuid": "c98655ff_7ff91231",
       "range": {
         "startLine": 4580,
         "startChar": 17,
