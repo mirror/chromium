@@ -4220,8 +4220,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
     }
   }
 
-  decisionHandler(allowLoad ? WKNavigationActionPolicyAllow
-                            : WKNavigationActionPolicyCancel);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    decisionHandler(allowLoad ? WKNavigationActionPolicyAllow
+                              : WKNavigationActionPolicyCancel);
+  });
 }
 
 - (void)webView:(WKWebView*)webView
