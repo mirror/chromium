@@ -46,7 +46,7 @@ Polymer({
      */
     labelInfo_: {
       type: Object,
-      computed: 'getLabelInfo_(currentErrorOrState_, model.destinationId, ' +
+      computed: 'getLabelInfo_(currentErrorOrState_, model.destination.id, ' +
           'model.copies, model.pageRange, model.duplex)'
     },
   },
@@ -66,8 +66,8 @@ Polymer({
    * @private
    */
   isPdfOrDrive_: function() {
-    return this.model.destinationId == GooglePromotedId.SAVE_AS_PDF ||
-        this.model.destinationId == GooglePromotedId.DOCS;
+    return this.model.destination.id == GooglePromotedId.SAVE_AS_PDF ||
+        this.model.destination.id == GooglePromotedId.DOCS;
   },
 
   /**

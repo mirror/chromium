@@ -107,6 +107,15 @@
       <structure name="IDR_PRINT_PREVIEW_NEW_NUMBER_SETTINGS_SECTION_JS"
                  file="new/number_settings_section.js"
                  type="chrome_html" />
+      <structure name="IDR_PRINT_PREVIEW_NEW_DESTINATION_OBJECT_HTML"
+                 file="new/destination_object.html"
+                 type="chrome_html" />
+      <structure name="IDR_PRINT_PREVIEW_NEW_DESTINATION_OBJECT_JS"
+                 file="new/destination_object.js"
+                 type="chrome_html" />
+      <structure name="IDR_PRINT_PREVIEW_DATA_DESTINATION_JS"
+                 file="data/destination.js"
+                 type="chrome_html" />
       <structure name="IDR_PRINT_PREVIEW_NEW_PRINT_PREVIEW_SHARED_CSS_HTML"
                  file="new/print_preview_shared_css.html"
                  type="chrome_html"
