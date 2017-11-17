@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eadb76c2_f3a65c5f",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-17T15:17:52Z",
+      "side": 1,
+      "message": "There is a \"previews_page_load_metrics_observer\" already, does that need a more specific name or is there another reason why this preview-type is special?",
+      "revId": "d5801029603a6da16d71bc5acfcad5352ac138aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df045a7_2154b2b8",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-17T15:17:52Z",
+      "side": 1,
+      "message": "Prefer this in the header.",
+      "revId": "d5801029603a6da16d71bc5acfcad5352ac138aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1073615_4cb64e4d",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-17T15:17:52Z",
+      "side": 1,
+      "message": "Can you initialize these here and not in the cc file?",
+      "revId": "d5801029603a6da16d71bc5acfcad5352ac138aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a6ac37e_7e86dde4",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-17T15:17:52Z",
+      "side": 1,
+      "message": "I would prefer a better way to do this if possible so we don\u0027t have to subclass the class under test.\n\nWhat if you did this:\nauto simulator \u003d content::NavigationSimulator::CreateRendererInitiated(url, main_rfh());\nsimulator-\u003eStart();\nChromeNavigationData* data \u003d static_cast\u003c...\u003e(simulator-\u003eGetNavigationHandle()-\u003eGetNavigationData());\ndata-\u003eset_previews_state(...);\nsimulator-\u003eCommit()",
+      "revId": "d5801029603a6da16d71bc5acfcad5352ac138aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96865957_f220cf82",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-17T15:17:52Z",
+      "side": 1,
+      "message": "You can remove this if you remove the subclass as well.",
+      "revId": "d5801029603a6da16d71bc5acfcad5352ac138aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9789760_13ae75bb",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-17T15:17:52Z",
+      "side": 1,
+      "message": "main_rfh() should work.",
+      "range": {
+        "startLine": 178,
+        "startChar": 33,
+        "endLine": 178,
+        "endChar": 61
+      },
+      "revId": "d5801029603a6da16d71bc5acfcad5352ac138aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b13e424c_bcc65cc0",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-17T15:17:52Z",
+      "side": 1,
+      "message": "Just fyi: Unless you want to do something after Start and before Commit, Commit will call Start() internally.\n\nAlso, if you just want to NavigateAndCommit, and you use that method which should do exactly this afaik.",
+      "revId": "d5801029603a6da16d71bc5acfcad5352ac138aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
