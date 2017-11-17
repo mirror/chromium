@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "531dba2f_6da24da3",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-17T20:33:00Z",
+      "side": 1,
+      "message": "Will need to rebase this to HitTest/HitTestLocal.",
+      "revId": "053d939f842b119b0b0abeace21305440d96abc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a0c15f1_e402b0b4",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-17T20:33:00Z",
+      "side": 1,
+      "message": "Why do this here?  If it\u0027s to let scene init settle, shouldn\u0027t it be in the test class?",
+      "revId": "053d939f842b119b0b0abeace21305440d96abc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
