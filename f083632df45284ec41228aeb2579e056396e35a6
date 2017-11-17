@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c1cc85a2_98ae2269",
+        "filename": "content/browser/blob_storage/blob_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-17T19:32:03Z",
+      "side": 1,
+      "message": "hmm, not a problem with this CL, since you did in fact not add TYPE_RAW_FILE to the IPC deserialization code, but whoever added TYPE_DATA_PIPE did sort of mess up, since that case is supported in IPC deserialization, making the comment/NOTREACHED invalid for that case... \n\nAnyway, not really a problem since (as long as mojo blobs won\u0027t need to be reverted) this code can\u0027t be called anyway, but a nice example of how trying to use different subsets of the same type for different purposes is causing problems...",
+      "revId": "f083632df45284ec41228aeb2579e056396e35a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2740725d_2d648134",
         "filename": "storage/common/data_element.h",
         "patchSetId": 3
@@ -67,6 +84,24 @@
       "side": 1,
       "message": "Regarding the categorization we could probably start with something like this:\n\n// Only used for Upload with Network Service as of now:\nTYPE_RAW_FILE,\nTYPE_DATA_PIPE,\n\n// Only used for Blob:\nTYPE_BYTES_DESCRIPTION,\nTYPE_DISK_CACHE_ENTRY,  // Only used by CacheStorage\nTYPE_FILE_FILESYSTEM,\n\n// Commonly used for Blob, and also for Upload when Network Service is disabled:\nTYPE_BLOB,\nTYPE_FILE,\n\n// Commonly used in every case:\nTYPE_BYTES,",
       "parentUuid": "c7a8693b_088aeb87",
+      "revId": "f083632df45284ec41228aeb2579e056396e35a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf6307f4_5525c8c7",
+        "filename": "storage/common/data_element.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-17T19:32:03Z",
+      "side": 1,
+      "message": "Mostly accurate from a blob point of view, although TYPE_BLOB is only used for blobs in the old IPC codepath. It\u0027s not used anymore for blobs in the mojo codepath.",
+      "parentUuid": "387ac17f_fab837fa",
       "revId": "f083632df45284ec41228aeb2579e056396e35a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
