@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0960c28_a54abe13",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-iframe.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-17T21:37:32Z",
+      "side": 1,
+      "message": "I\u0027d prefer just assert_equals here",
+      "revId": "9cf1fc8fb44c6417e57524de10891aa0b16a082f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d562fefe_9644eafc",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-sandboxed-iframe.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-17T21:37:32Z",
+      "side": 1,
+      "message": "this could actually come first since you are not waiting on the promise, but I\u0027m fine with it either way.",
+      "revId": "9cf1fc8fb44c6417e57524de10891aa0b16a082f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
