@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36b53098_a93ca3fc",
+        "filename": "chrome/browser/extensions/api/chrome_extensions_api_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-17T21:11:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e045fd65_f7c2fa2b",
+      "range": {
+        "startLine": 76,
+        "startChar": 7,
+        "endLine": 76,
+        "endChar": 24
+      },
+      "revId": "44474c4fd50fbea6ddfbcd9ca095dcdee2f9ab64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fffc7d9_260766f7",
         "filename": "chromeos/dbus/fake_upstart_client.h",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ceaf76df_823d8215",
+        "filename": "chromeos/dbus/fake_upstart_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-17T21:11:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fffc7d9_260766f7",
+      "range": {
+        "startLine": 26,
+        "startChar": 59,
+        "endLine": 26,
+        "endChar": 70
+      },
+      "revId": "44474c4fd50fbea6ddfbcd9ca095dcdee2f9ab64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea36589c_e47f4fcf",
         "filename": "extensions/browser/api/extensions_api_client.cc",
         "patchSetId": 9
@@ -59,6 +107,24 @@
       "writtenOn": "2017-11-16T19:16:35Z",
       "side": 1,
       "message": "can we run the callback with an error code by default?",
+      "revId": "44474c4fd50fbea6ddfbcd9ca095dcdee2f9ab64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c692efbc_e3603e31",
+        "filename": "extensions/browser/api/extensions_api_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-17T21:11:16Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t know what you mean by this?",
+      "parentUuid": "ea36589c_e47f4fcf",
       "revId": "44474c4fd50fbea6ddfbcd9ca095dcdee2f9ab64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "8fb1802b_66b11293",
+        "filename": "extensions/browser/api/media_perception_private/conversion_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-17T21:11:16Z",
+      "side": 1,
+      "message": "This is quite a bit of work to separate this into two CLs unfortunately. A lot of the STOPPED changes modify the same files as the setAnalyticsComponent changes. Being able to stop the process is directly related to setAnalyticsComponent, because the process cant be running when you call it, so I don\u0027t think its unreasonable to have both of these changes in the same CL. Let me know if you think I should separate into two CLs.",
+      "parentUuid": "a8441fc0_9763c3d4",
+      "revId": "44474c4fd50fbea6ddfbcd9ca095dcdee2f9ab64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5720ac2_fe9b2052",
         "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
         "patchSetId": 9
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "d1b4792b_7fbafc58",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-17T21:11:16Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c5720ac2_fe9b2052",
+      "revId": "44474c4fd50fbea6ddfbcd9ca095dcdee2f9ab64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3d6a309_eb6d8202",
         "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.h",
         "patchSetId": 9
@@ -110,6 +212,30 @@
       "writtenOn": "2017-11-16T19:16:35Z",
       "side": 1,
       "message": "can you use OnceCallback?",
+      "range": {
+        "startLine": 17,
+        "startChar": 49,
+        "endLine": 17,
+        "endChar": 57
+      },
+      "revId": "44474c4fd50fbea6ddfbcd9ca095dcdee2f9ab64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2e2662_1e9cbf25",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-17T21:11:16Z",
+      "side": 1,
+      "message": "I\u0027m having trouble passing a OnceCallback through the delegate. I think it\u0027s because CrOSComponent::LoadComponent takes a OnceCallback by value instead of by reference.",
+      "parentUuid": "f3d6a309_eb6d8202",
       "range": {
         "startLine": 17,
         "startChar": 49,
