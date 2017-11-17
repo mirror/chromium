@@ -65,6 +65,10 @@ class WebExternalTextureLayer {
   // Sets whether this texture should use nearest neighbor interpolation as
   // opposed to bilinear. Defaults to false.
   virtual void SetNearestNeighbor(bool) = 0;
+
+  // Set whether it is allowed for this layer to recieve a mailbox that it
+  // already references.
+  virtual void SetAllowMailboxReuse(bool) = 0;
 };
 
 }  // namespace blink
