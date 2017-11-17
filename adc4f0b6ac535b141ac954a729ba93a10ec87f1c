@@ -16,6 +16,24 @@
       "revId": "adc4f0b6ac535b141ac954a729ba93a10ec87f1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d2e8eea_1a1189a1",
+        "filename": "ui/aura/window_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-17T14:43:30Z",
+      "side": 1,
+      "message": "Done\n\nNote: I don\u0027t trigger the OnWindowBoundsChanged() notification because:\n- The bounds don\u0027t jump to their target value when the layer is recreated https://cs.chromium.org/chromium/src/ui/compositor/layer.cc?l\u003d208\u0026rcl\u003ded08e77a52d977fdb8f4c2a0b27e3d5a73019a57 (i.e. it would be wrong to say that the window bounds \"changed\").\n- The comment on OnWindowBoundsChanged() doesn\u0027t say that it is guaranteed to be called at the end of an animation https://cs.chromium.org/chromium/src/ui/aura/window_observer.h?l\u003d89\u0026rcl\u003ded08e77a52d977fdb8f4c2a0b27e3d5a73019a57\n\nSee related CL: https://chromium-review.googlesource.com/c/chromium/src/+/775822",
+      "parentUuid": "5086f35c_a18422c1",
+      "revId": "adc4f0b6ac535b141ac954a729ba93a10ec87f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
