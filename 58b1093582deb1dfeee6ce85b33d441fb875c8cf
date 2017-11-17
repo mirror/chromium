@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c782f24f_d0488d94",
+        "filename": "ash/frame/default_frame_header.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T06:28:53Z",
+      "side": 1,
+      "message": "did you intend to delete the UpdateBackButton() call after this?",
+      "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92923f7a_6392e246",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T06:28:53Z",
+      "side": 1,
+      "message": "Crazy thought: I think you can do \n\nframe()-\u003ewidget_delegate()-\u003eGetWindowTitle()\n\nthis would allow you to remove the |app_controller_| member, but it requires adding an accessor for |DefaultHeaderPainter::frame_|. (view()-\u003eGetWidget() would probably work too.., which is already accessible)\n\nBut if you need |app_controller_| for other things later maybe no point.\n\n\nit does raise another fun issue... the titlebar text is now going to be out of sync with other things relying on WidgetDelegate::GetWindowTitle(). Like the ash shelf, and a11y things / ChromeVox / screenreader etc.\n\nFeel free to ignore this comment and panic about it later/",
+      "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3632591d_5b5159e6",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T06:28:53Z",
+      "side": 1,
+      "message": "(title_bounds.width() - app_and_domain_width) can be negative - perhaps worth a note (Size::set_width will handle it for you). E.g. ... \"the space remaining after rendering the app and domain (which may be negative and be clamped to 0).\"",
+      "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d241f3e_738e5aba",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T06:28:53Z",
+      "side": 1,
+      "message": "do these widths need to be passed in? I think it\u0027s better just to call GetStringSize inside LayoutRenderTexts()",
+      "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a335af_32c8aba8",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T06:28:53Z",
+      "side": 1,
+      "message": "// namespace extensions\n\n(or omit these around blocks of forward declares, I assume clang-format or something adds them, so don\u0027t care which way, but each file should be consistent)",
+      "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
