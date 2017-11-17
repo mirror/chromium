@@ -1399,6 +1399,9 @@ class CORE_EXPORT Document : public ContainerNode,
 
   scoped_refptr<WebTaskRunner> GetTaskRunner(TaskType) override;
 
+  bool CurrentFrameHasRAF();
+  void ResetCurrentFrameHasRAF();
+
  protected:
   Document(const DocumentInit&, DocumentClassFlags = kDefaultDocumentClass);
 
@@ -1778,6 +1781,8 @@ class CORE_EXPORT Document : public ContainerNode,
   // the document to recorde UKM.
   std::unique_ptr<ukm::UkmRecorder> ukm_recorder_;
   int64_t ukm_source_id_;
+
+  bool current_frame_has_raf_ = false;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;

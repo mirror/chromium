@@ -78,7 +78,8 @@ class CC_EXPORT CompositorTimingHistory {
                base::TimeTicks impl_frame_time,
                size_t composited_animations_count,
                size_t main_thread_animations_count,
-               size_t main_thread_compositable_animations_count);
+               size_t main_thread_compositable_animations_count,
+               bool current_frame_has_raf);
   void DidSubmitCompositorFrame();
   void DidReceiveCompositorFrameAck();
   void WillInvalidateOnImplSide();
