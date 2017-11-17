@@ -45,6 +45,30 @@
       "revId": "3914018220bbf02f1aa14f38877d8f5604e5a5be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c891952_3608b3d5",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-17T20:44:50Z",
+      "side": 1,
+      "message": "moved to BUILDFLAG(ENABLE_OPENVR), and moved inside the ENABLE_VR above.",
+      "parentUuid": "489d96a6_f3f4d73c",
+      "range": {
+        "startLine": 211,
+        "startChar": 1,
+        "endLine": 211,
+        "endChar": 6
+      },
+      "revId": "3914018220bbf02f1aa14f38877d8f5604e5a5be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
