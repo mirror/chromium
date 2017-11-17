@@ -30518,6 +30518,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="JSDialogs.Scheme" enum="NavigationScheme">
+  <owner>avi@chromium.org</owner>
+  <summary>The scheme of the URL showing a JavaScript dialog.</summary>
+</histogram>
+
 <histogram name="JSDialogs.SiteEngagementOfBeforeUnload" units="%">
   <obsolete>
     Deprecated 2017-10.
@@ -100953,6 +100958,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="Prompt"/>
   <affected-histogram name="JSDialogs.DismissalCause"/>
   <affected-histogram name="JSDialogs.IsForemost"/>
+  <affected-histogram name="JSDialogs.Scheme"/>
   <affected-histogram name="JSDialogs.SiteEngagementOfDialogs"/>
 </histogram_suffixes>
 
