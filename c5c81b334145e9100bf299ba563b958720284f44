@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "642e26fd_e412d7aa",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1118373
+      },
+      "writtenOn": "2017-11-17T16:12:13Z",
+      "side": 1,
+      "message": "This comment seems outdated. We played around with compressing the cache data, but ultimately removed it. Let\u0027s remove this comment too.",
+      "range": {
+        "startLine": 337,
+        "startChar": 13,
+        "endLine": 337,
+        "endChar": 24
+      },
+      "revId": "c5c81b334145e9100bf299ba563b958720284f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
