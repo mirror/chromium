@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d47f5112_60da088e",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-17T01:05:32Z",
+      "side": 1,
+      "message": "I think we\u0027re plumbing special touch-action logic through too many general functions. For example, only a few of the FindClosestMatchingLayer callsites need the special touch action out-param.\n\nIs it possible to build this logic using existing functions at the expense of some performance? For example, maybe do the hit test to find the closest layer, then project the point into that layer\u0027s local space, then compute the out touch action?",
+      "revId": "b5bf9f0b4ae5ef8a85a47b5d04ac5cb888b4b258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db4aed3d_4146d77c",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1917,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-17T01:05:32Z",
+      "side": 1,
+      "message": "Is this true: \"the func(layer) being true tells us that there is a touch event handler in this layer\"? For example, when this function is called from FindFirstScrollingLayerOrDrawnScrollbarThatIsHitByPoint we use FindScrollingLayerOrDrawnScrollbarFunctor which is unrelated to touch handling.",
+      "revId": "b5bf9f0b4ae5ef8a85a47b5d04ac5cb888b4b258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
