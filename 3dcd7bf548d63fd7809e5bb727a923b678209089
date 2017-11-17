@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5df5df9_8bafb40f",
+        "filename": "chrome/browser/ui/webui/signin/inline_login_handler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-11-17T16:04:03Z",
+      "side": 1,
+      "message": "Should add { and } around both blocks.\n\nShould there be a new Reason enum defined for this?  I believe the purpose of the |reason| arg is to log and collect metrics about the reason a sign in is being called for.  I don\u0027t know if want to track these sign ins with metrics.  Maybe ask Mihai.",
+      "range": {
+        "startLine": 564,
+        "startChar": 26,
+        "endLine": 564,
+        "endChar": 0
+      },
+      "revId": "3dcd7bf548d63fd7809e5bb727a923b678209089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
