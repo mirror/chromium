@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fbd76ff_530d9266",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-17T03:32:08Z",
+      "side": 1,
+      "message": "can we move some of these to an outer if, so that the check fails faster and avoid calling FirstChild()?\n\nI think \"IsAnonymous\" and \"Parent()-\u003eIsListItem()\" are fast to check, and can eliminate checking other conditions in most cases?",
+      "revId": "855cba14870a7e4cd1b813c798f60f2a1c1b99ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
