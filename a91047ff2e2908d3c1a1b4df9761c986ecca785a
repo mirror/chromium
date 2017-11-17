@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "930aa31e_9e3adf5f",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-17T21:19:22Z",
+      "side": 1,
+      "message": "Do we really want to return here or just skip the logic below? Exiting early here will be incorrect if \"!CurrentlyScrollingNode()\" which should return \"InputHandler::TouchStartOrMoveEventListenerType::HANDLER\".\n\nI\u0027m not really sure what we should do if the inverse isn\u0027t available. Maybe just skip setting the touch action? In other words:\nif (GetInverse(...)) {\n  project point\n  set touch action\n}\n\n...",
+      "revId": "a91047ff2e2908d3c1a1b4df9761c986ecca785a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
