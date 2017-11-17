@@ -45,6 +45,30 @@
       "revId": "014001c69f80dd63ee925d45c21ec0a7707cb00d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f452633_daccfd2d",
+        "filename": "gpu/command_buffer/build_gles2_cmd_buffer.py",
+        "patchSetId": 43
+      },
+      "lineNbr": 4666,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-17T19:23:05Z",
+      "side": 1,
+      "message": "reveman@, are you ok with that rename? I was originally using CHROMIUM_gpu_fence, you had requested changing it to CHROMIUM_fence earlier.",
+      "parentUuid": "dad9bc00_aa64b964",
+      "range": {
+        "startLine": 4666,
+        "startChar": 18,
+        "endLine": 4666,
+        "endChar": 32
+      },
+      "revId": "014001c69f80dd63ee925d45c21ec0a7707cb00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
