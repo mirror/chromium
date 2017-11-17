@@ -279,7 +279,7 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
   bool should_use_threading_;
   bool end_was_delayed_;
   bool have_background_parser_;
-  bool tasks_were_suspended_;
+  bool tasks_were_paused_;
   unsigned pump_session_nesting_level_;
   unsigned pump_speculations_session_nesting_level_;
   bool is_parsing_at_line_number_;
