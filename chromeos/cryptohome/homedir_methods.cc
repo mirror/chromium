@@ -129,16 +129,11 @@ class HomedirMethodsImpl : public HomedirMethods {
   }
 
   void AddKeyEx(const Identification& id,
-                const Authorization& auth,
-                const KeyDefinition& new_key,
-                bool clobber_if_exists,
+                const AuthorizationRequest& auth,
+                const AddKeyRequest& request,
                 const Callback& callback) override {
-    cryptohome::AddKeyRequest request;
-    KeyDefinitionToKey(new_key, request.mutable_key());
-    request.set_clobber_if_exists(clobber_if_exists);
-
     DBusThreadManager::Get()->GetCryptohomeClient()->AddKeyEx(
-        id, CreateAuthorizationRequest(auth.key, auth.label), request,
+        id, auth, request,
         base::BindOnce(&HomedirMethodsImpl::OnBaseReplyCallback,
                        weak_ptr_factory_.GetWeakPtr(), callback));
   }
