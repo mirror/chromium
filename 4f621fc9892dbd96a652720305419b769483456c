@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3087f608_a80aa111",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-17T13:07:44Z",
+      "side": 1,
+      "message": "not sure what to do about 80col here.",
+      "revId": "4f621fc9892dbd96a652720305419b769483456c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
