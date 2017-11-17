@@ -52,6 +52,24 @@
       "revId": "7279e07b35ea0176c8dd4d10fec70b28e285bd7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce79e61a_d99f9f0a",
+        "filename": "mojo/edk/embedder/platform_channel_utils_posix.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-17T00:31:49Z",
+      "side": 0,
+      "message": "No problem.  I\u0027ll get this landed and follow-up with the handle-type merge.\n\nHow do you feel about landing this as-is, given that M64 branches in ~2 weeks?",
+      "parentUuid": "d167cf38_d1f5497c",
+      "revId": "7279e07b35ea0176c8dd4d10fec70b28e285bd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
