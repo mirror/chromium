@@ -127,6 +127,40 @@
     },
     {
       "key": {
+        "uuid": "eb5b8c49_118af15c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T07:26:59Z",
+      "side": 1,
+      "message": "We avoid using v8::MaybeLocal directly (since it\u0027s error-prone). Use the following pattern.\n\nv8::Local\u003c8::UnboundScript\u003e unbound_script;\nif (v8::ScriptCompiler::CompileUnboundScript(...).ToLocal(\u0026unbound_script)) {\n  ...;\n  return;\n}\n...;",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97fc92cf_db892724",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T07:26:59Z",
+      "side": 1,
+      "message": "Just to confirm: Is it intentional that you get only CachedMetaData and drop the compiled script?\n\nV8 experts: Do we really need to compile everything only to get CachedMetaData?",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6929d635_6ae11ec6",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.h",
         "patchSetId": 43
