@@ -22,7 +22,6 @@ PermissionPromptAndroid::PermissionPromptAndroid(
     Delegate* delegate)
     : web_contents_(web_contents),
       delegate_(delegate),
-      persist_(true),
       weak_factory_(this) {
   DCHECK(web_contents);
 
@@ -59,41 +58,16 @@ void PermissionPromptAndroid::Closing() {
   delegate_->Closing();
 }
 
-void PermissionPromptAndroid::TogglePersist(bool value) {
-  persist_ = value;
-  delegate_->TogglePersist(value);
-}
-
 void PermissionPromptAndroid::Accept() {
-  if (ShouldShowPersistenceToggle()) {
-    for (const PermissionRequest* request : delegate_->Requests()) {
-      PermissionUmaUtil::PermissionPromptAcceptedWithPersistenceToggle(
-          request->GetContentSettingsType(), persist_);
-    }
-  }
   delegate_->Accept();
 }
 
 void PermissionPromptAndroid::Deny() {
-  if (ShouldShowPersistenceToggle()) {
-    for (const PermissionRequest* request : delegate_->Requests()) {
-      PermissionUmaUtil::PermissionPromptDeniedWithPersistenceToggle(
-          request->GetContentSettingsType(), persist_);
-    }
-  }
   delegate_->Deny();
 }
 
 size_t PermissionPromptAndroid::PermissionCount() const {
   return delegate_->Requests().size();
-}
-
-bool PermissionPromptAndroid::ShouldShowPersistenceToggle() const {
-  for (const PermissionRequest* request : delegate_->Requests()) {
-    if (!request->ShouldShowPersistenceToggle())
-      return false;
-  }
-  return true;
 }
 
 ContentSettingsType PermissionPromptAndroid::GetContentSettingType(

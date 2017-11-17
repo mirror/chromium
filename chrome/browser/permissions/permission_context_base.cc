@@ -357,7 +357,6 @@ void PermissionContextBase::PermissionDecided(
     const GURL& embedding_origin,
     bool user_gesture,
     const BrowserPermissionCallback& callback,
-    bool persist,
     ContentSetting content_setting) {
   PermissionRequestGestureType gesture_type =
       user_gesture ? PermissionRequestGestureType::GESTURE
@@ -387,6 +386,7 @@ void PermissionContextBase::PermissionDecided(
 
   UserMadePermissionDecision(id, requesting_origin, embedding_origin,
                              content_setting);
+  bool persist = content_setting != CONTENT_SETTING_DEFAULT;
   NotifyPermissionSet(id, requesting_origin, embedding_origin, callback,
                       persist, content_setting);
 }
