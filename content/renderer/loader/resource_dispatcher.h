@@ -22,6 +22,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/time/time.h"
 #include "content/common/content_export.h"
+#include "content/common/frame.mojom.h"
 #include "content/public/common/resource_type.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "content/public/common/url_loader_throttle.h"
@@ -122,7 +123,7 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
       blink::WebURLRequest::LoadingIPCType ipc_type,
       mojom::URLLoaderFactory* url_loader_factory,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
-      mojo::ScopedDataPipeConsumerHandle consumer_handle);
+      mojom::MainResourceLoaderParamsPtr main_resource_loader_params);
 
   // Removes a request from the |pending_requests_| list, returning true if the
   // request was found and removed.
@@ -266,7 +267,7 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
 
   void ContinueForNavigation(
       int request_id,
-      mojo::ScopedDataPipeConsumerHandle consumer_handle);
+      mojom::MainResourceLoaderParamsPtr main_resource_loader_params);
 
   // Returns true if the message passed in is a resource related message.
   static bool IsResourceDispatcherMessage(const IPC::Message& message);

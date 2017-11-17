@@ -41,6 +41,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/stream_handle.h"
 #include "content/public/common/appcache_info.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
@@ -721,6 +722,8 @@ void NavigationRequest::OnRequestRedirected(
 
 void NavigationRequest::OnResponseStarted(
     const scoped_refptr<ResourceResponse>& response,
+    mojom::URLLoaderPtrInfo url_loader,
+    mojom::URLLoaderClientRequest url_loader_client,
     std::unique_ptr<StreamHandle> body,
     mojo::ScopedDataPipeConsumerHandle consumer_handle,
     const SSLStatus& ssl_status,
@@ -799,6 +802,8 @@ void NavigationRequest::OnResponseStarted(
   // Store the response and the StreamHandle until checks have been processed.
   response_ = response;
   body_ = std::move(body);
+  url_loader_ = std::move(url_loader);
+  url_loader_client_ = std::move(url_loader_client);
   handle_ = std::move(consumer_handle);
   ssl_status_ = ssl_status;
   is_download_ = is_download;
@@ -1193,11 +1198,29 @@ void NavigationRequest::CommitNavigation() {
   TransferNavigationHandleOwnership(render_frame_host);
 
   render_frame_host->CommitNavigation(
-      response_.get(), std::move(body_), std::move(handle_), common_params_,
-      request_params_, is_view_source_, std::move(subresource_loader_params_),
-      devtools_navigation_token_);
+      response_.get(), TakeMainResourceLoaderParams(), std::move(body_),
+      common_params_, request_params_, is_view_source_,
+      std::move(subresource_loader_params_), devtools_navigation_token_);
 
   frame_tree_node_->ResetNavigationRequest(true, true);
+}
+
+mojom::MainResourceLoaderParamsPtr
+NavigationRequest::TakeMainResourceLoaderParams() {
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+    auto params = mojom::MainResourceLoaderParams::New();
+    params->body_data = std::move(handle_);
+    return params;
+  }
+
+  if (IsNavigationMojoResponseEnabled()) {
+    auto params = mojom::MainResourceLoaderParams::New();
+    params->url_loader = std::move(url_loader_);
+    params->url_loader_client = std::move(url_loader_client_);
+    return params;
+  }
+
+  return nullptr;
 }
 
 NavigationRequest::ContentSecurityPolicyCheckResult
