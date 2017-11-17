@@ -259,6 +259,19 @@ bool ShouldQuicAllowServerMigration(
       GetVariationParam(quic_trial_params, "allow_server_migration"), "true");
 }
 
+std::unordered_set<std::string> GetQuicHostWhitelist(
+    const VariationParameters& quic_trial_params) {
+  std::string host_whitelist =
+      GetVariationParam(quic_trial_params, "quic_host_whitelist");
+  std::vector<std::string> hosts_vector = base::SplitString(
+      host_whitelist, ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
+  std::unordered_set<std::string> hosts_set;
+  for (const std::string& host : hosts_vector) {
+    hosts_set.insert(host);
+  }
+  return hosts_set;
+}
+
 size_t GetQuicMaxPacketLength(const VariationParameters& quic_trial_params) {
   unsigned value;
   if (base::StringToUint(
@@ -343,6 +356,7 @@ void ConfigureQuicParams(base::StringPiece quic_trial_group,
         ShouldQuicMigrateSessionsEarly(quic_trial_params);
     params->quic_allow_server_migration =
         ShouldQuicAllowServerMigration(quic_trial_params);
+    params->quic_host_whitelist = GetQuicHostWhitelist(quic_trial_params);
   }
 
   size_t max_packet_length = GetQuicMaxPacketLength(quic_trial_params);
