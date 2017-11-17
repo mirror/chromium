@@ -141,6 +141,24 @@
       "revId": "86265cb6baac7dc486a5738a57a436e199729dbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60381e7_839c0813",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-17T19:55:51Z",
+      "side": 1,
+      "message": "Yeah, it looks like these checks are different enough that it might be worth having logic embedded in each function.  I\u0027m okay with reverting adding the helper function and keeping the existing logic.  Either way.  If you revert, you won\u0027t have to figure out the details about when extension_delegate_ is around... (assuming you\u0027re willing to trust the old code)",
+      "parentUuid": "af602985_64cd7a8f",
+      "revId": "86265cb6baac7dc486a5738a57a436e199729dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
