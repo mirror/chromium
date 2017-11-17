@@ -379,7 +379,8 @@ int HttpCache::Writers::DoLoop(int result) {
     callback_.Reset();
     if (all_writers_.empty()) {
       DCHECK(cache_callback_);
-      network_transaction_.reset();
+      // cache_callback_ will take care of destroying |this| and thus
+      // |network_transaction_|.
     }
 
     if (cache_callback_)

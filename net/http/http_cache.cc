@@ -942,6 +942,7 @@ void HttpCache::WritersDoneWritingToEntry(ActiveEntry* entry,
       reader->WriteModeTransactionAboutToBecomeReader();
       entry->readers.insert(reader);
     }
+
     // Reset writers here so that WriteModeTransactionAboutToBecomeReader can
     // access the network transaction.
     entry->writers.reset();
