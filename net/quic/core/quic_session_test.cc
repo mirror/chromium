@@ -859,6 +859,25 @@ TEST_P(QuicSessionTestServer, OnRstStreamStaticStreamId) {
               CloseConnection(
                   QUIC_INVALID_STREAM_ID, "Attempt to reset a static stream",
                   ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET));
+}
+
+TEST_P(QuicSessionTestServer, OnStreamFrameInvalidStreamId) {
+  // Send two bytes of payload.
+  QuicStreamFrame data1(kInvalidStreamId, true, 0, QuicStringPiece("HT"));
+  EXPECT_CALL(*connection_,
+              CloseConnection(
+                  QUIC_INVALID_STREAM_ID, "Recevied data for an invalid stream",
+                  ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET));
+  session_.OnStreamFrame(data1);
+}
+
+TEST_P(QuicSessionTestServer, OnRstStreamInvalidStreamId) {
+  // Send two bytes of payload.
+  QuicRstStreamFrame rst1(kInvalidStreamId, QUIC_ERROR_PROCESSING_STREAM, 0);
+  EXPECT_CALL(*connection_,
+              CloseConnection(
+                  QUIC_INVALID_STREAM_ID, "Recevied data for an invalid stream",
+                  ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET));
   session_.OnRstStream(rst1);
 }
 
