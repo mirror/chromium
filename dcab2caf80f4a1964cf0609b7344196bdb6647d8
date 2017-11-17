@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "27f1cc8d_6f57dd95",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-17T21:04:50Z",
+      "side": 1,
+      "message": "There is DevToolsAgentHost::IsDebuggerAttached(WebContents), and we can make a more specific one for RFH if needed.",
+      "parentUuid": "04769369_306fa184",
+      "revId": "dcab2caf80f4a1964cf0609b7344196bdb6647d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3ae30ac_09bd2b7f",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 2
