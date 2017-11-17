@@ -57,7 +57,6 @@
 #include "skia/public/interfaces/image_filter_struct_traits.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkString.h"
-#include "third_party/skia/include/effects/SkDropShadowImageFilter.h"
 #include "ui/gfx/geometry/mojo/geometry_struct_traits.h"
 #include "ui/gfx/ipc/color/gfx_param_traits.h"
 #include "ui/gfx/mojo/buffer_types_struct_traits.h"
@@ -170,9 +169,9 @@ void ExpectEqual(const cc::FilterOperation& input,
       break;
     case cc::FilterOperation::REFERENCE: {
       SkString input_str;
-      input.image_filter()->toString(&input_str);
+      input.image_filter()->to_string(&input_str);
       SkString output_str;
-      output.image_filter()->toString(&output_str);
+      output.image_filter()->to_string(&output_str);
       EXPECT_EQ(input_str, output_str);
       break;
     }
@@ -202,8 +201,8 @@ TEST_F(StructTraitsTest, FilterOperationDropShadow) {
 }
 
 TEST_F(StructTraitsTest, FilterOperationReferenceFilter) {
-  cc::FilterOperation input =
-      cc::FilterOperation::CreateReferenceFilter(SkDropShadowImageFilter::Make(
+  cc::FilterOperation input = cc::FilterOperation::CreateReferenceFilter(
+      sk_make_sp<cc::DropShadowPaintFilter>(
           SkIntToScalar(3), SkIntToScalar(8), SkIntToScalar(4),
           SkIntToScalar(9), SK_ColorBLACK,
           SkDropShadowImageFilter::kDrawShadowAndForeground_ShadowMode,
