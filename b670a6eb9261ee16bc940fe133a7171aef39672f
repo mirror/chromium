@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9600de05_3574d2cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-17T20:27:36Z",
+      "side": 1,
+      "message": "End-to-end test for payment handlers",
+      "range": {
+        "startLine": 7,
+        "startChar": 11,
+        "endLine": 7,
+        "endChar": 62
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a9e6d6_5eb75db7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-17T20:27:36Z",
+      "side": 1,
+      "message": "Please update this description?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 34
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41317457_ccd2d8d9",
+        "filename": "chrome/browser/payments/service_worker_payment_app_factory_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-17T20:27:36Z",
+      "side": 1,
+      "message": "Would you mind using this pattern at least a few times in your new browser test? The first block will make sure that downloaded manifests are used correctly. The second block will make sure that cached manifests are used correctly. You will be surprised how many bugs this pattern can find :-)",
+      "range": {
+        "startLine": 323,
+        "startChar": 0,
+        "endLine": 336,
+        "endChar": 3
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7392c3a5_e8a6fcbb",
+        "filename": "chrome/browser/ui/views/payments/payment_request_payment_app_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-17T20:27:36Z",
+      "side": 1,
+      "message": "Can you put the common code shared with ServiceWorkerPaymentAppFactoryTest into a common base class?",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 34
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f17ef06_aa8ad76d",
+        "filename": "components/payments/content/service_worker_payment_app_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-17T20:27:36Z",
+      "side": 1,
+      "message": "Can we reduce the layer of abstraction by one? I would prefer that ServiceWorkerPaymentAppFactoryImpl deletes itself after running |finished_using_resources_callback|, so we don\u0027t need this extra class here.",
+      "range": {
+        "startLine": 187,
+        "startChar": 6,
+        "endLine": 187,
+        "endChar": 48
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef0380ec_b789bd90",
+        "filename": "components/payments/content/service_worker_payment_app_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-17T20:27:36Z",
+      "side": 1,
+      "message": "To make reading the header and the source file side-by-side easier, please keep the order of the methods in the header and the source file identical.",
+      "range": {
+        "startLine": 234,
+        "startChar": 37,
+        "endLine": 234,
+        "endChar": 54
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f2fead_23bf6dbf",
+        "filename": "components/payments/content/service_worker_payment_app_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-17T20:27:36Z",
+      "side": 1,
+      "message": "This pattern is a little weird. We strive to test as much of production code as possible and use as little test-only code as possible. Can we improve this in any way?",
+      "range": {
+        "startLine": 258,
+        "startChar": 2,
+        "endLine": 258,
+        "endChar": 71
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f3217de_9cf85b47",
+        "filename": "components/payments/content/service_worker_payment_app_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-17T20:27:36Z",
+      "side": 1,
+      "message": "// Exposed for testing.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 42
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2aa7b04_8318e10c",
+        "filename": "components/payments/content/service_worker_payment_app_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-17T20:27:36Z",
+      "side": 1,
+      "message": "Please mention that this function should be called before every call to GetAllPaymentApps() (because the test downloader is moved into the Impl class).",
+      "range": {
+        "startLine": 70,
+        "startChar": 5,
+        "endLine": 70,
+        "endChar": 34
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f343fb3d_091ba815",
+        "filename": "components/payments/content/service_worker_payment_app_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-17T20:27:36Z",
+      "side": 1,
+      "message": "Let\u0027s combine these two methods, because they are always used together. For example:\n\nSetDownloaderAndIgnorePortNumbersForTesting(downloader);\n\nMethod naming is very taste-dependent, so feel free to come up with something that feels betters to you.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 51
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
