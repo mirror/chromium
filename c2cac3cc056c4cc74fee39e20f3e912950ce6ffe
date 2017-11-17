@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1d5da17_d914a44a",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T00:45:33Z",
+      "side": 1,
+      "message": "nit: this is not necessary as this will be nested in the MojoCdmFileIO::DoRead trace event which already logged the |bytes_to_read|",
+      "range": {
+        "startLine": 196,
+        "startChar": 17,
+        "endLine": 196,
+        "endChar": 30
+      },
+      "revId": "c2cac3cc056c4cc74fee39e20f3e912950ce6ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc568689_6118f169",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T00:45:33Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c2cac3cc056c4cc74fee39e20f3e912950ce6ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
