@@ -44,17 +44,12 @@ class CONTENT_EXPORT AuthenticatorImpl : public webauth::mojom::Authenticator {
                       MakeCredentialCallback callback) override;
 
   // Callback to handle the async response from a U2fDevice.
-  void OnDeviceResponse(MakeCredentialCallback callback,
-                        std::unique_ptr<CollectedClientData> client_data,
-                        device::U2fReturnCode status_code,
+  void OnDeviceResponse(device::U2fReturnCode status_code,
                         const std::vector<uint8_t>& data,
                         const std::vector<uint8_t>& key_handle);
 
   // Runs when timer expires and cancels all issued requests to a U2fDevice.
-  void OnTimeout(
-      base::OnceCallback<void(webauth::mojom::AuthenticatorStatus,
-                              webauth::mojom::PublicKeyCredentialInfoPtr)>
-          callback);
+  void OnTimeout();
 
   // As a result of a browser-side error or renderer-initiated mojo channel
   // closure (e.g. there was an error on the renderer side, or the request was
@@ -62,10 +57,12 @@ class CONTENT_EXPORT AuthenticatorImpl : public webauth::mojom::Authenticator {
   void OnConnectionTerminated();
 
   std::unique_ptr<device::U2fRequest> u2f_request_;
+  base::OnceCallback<void(webauth::mojom::AuthenticatorStatus,
+                          webauth::mojom::PublicKeyCredentialInfoPtr)>
+      callback_;
+  std::unique_ptr<CollectedClientData> client_data_;
   base::OneShotTimer timer_;
-
   RenderFrameHost* render_frame_host_;
-
   base::WeakPtrFactory<AuthenticatorImpl> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(AuthenticatorImpl);
