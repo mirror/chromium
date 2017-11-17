@@ -64,6 +64,13 @@ const char kPermissionBlockedFeaturePolicyMessage[] =
     "%s permission has been blocked because of a Feature Policy applied to the "
     "current document. See https://goo.gl/EuHzyv for more details.";
 
+const char kPermissionBlockedFileUrlMessage[] =
+    "%s permission has been blocked because it was requested from a file:// "
+    "URL.";
+
+const char kPermissionBlockedInPopupsMessage[] =
+    "%s permission has been blocked because it is not supported in popups.";
+
 void LogPermissionBlockedMessage(content::WebContents* web_contents,
                                  const char* message,
                                  ContentSettingsType type) {
@@ -109,15 +116,19 @@ void PermissionContextBase::RequestPermission(
   GURL embedding_origin = web_contents->GetLastCommittedURL().GetOrigin();
 
   if (!requesting_origin.is_valid() || !embedding_origin.is_valid()) {
-    std::string type_name =
-        PermissionUtil::GetPermissionString(content_settings_type_);
-
-    DVLOG(1) << "Attempt to use " << type_name
-             << " from an invalid URL: " << requesting_origin << ","
-             << embedding_origin << " (" << type_name
-             << " is not supported in popups)";
+    LogPermissionBlockedMessage(web_contents, kPermissionBlockedInPopupsMessage,
+                                content_settings_type_);
     NotifyPermissionSet(id, requesting_origin, embedding_origin, callback,
                         false /* persist */, CONTENT_SETTING_BLOCK);
+    return;
+  }
+
+  if (embedding_origin.SchemeIsFile() || requesting_origin.SchemeIsFile()) {
+    // Block all permissions from file:// URLs. Don't update the tab context as
+    // this would provide misleading UI implying that reactivation is possible.
+    LogPermissionBlockedMessage(web_contents, kPermissionBlockedFileUrlMessage,
+                                content_settings_type_);
+    callback.Run(CONTENT_SETTING_BLOCK);
     return;
   }
 
