@@ -658,7 +658,7 @@ QuicChromiumClientSession::QuicChromiumClientSession(
     base::TimeTicks dns_resolution_end_time,
     QuicClientPushPromiseIndex* push_promise_index,
     ServerPushDelegate* push_delegate,
-    base::TaskRunner* task_runner,
+    base::SequencedTaskRunner* task_runner,
     std::unique_ptr<SocketPerformanceWatcher> socket_performance_watcher,
     NetLog* net_log)
     : QuicSpdyClientSessionBase(connection, push_promise_index, config),
@@ -2014,7 +2014,7 @@ MigrationResult QuicChromiumClientSession::Migrate(
                                    yield_after_packets_, yield_after_duration_,
                                    net_log_));
   std::unique_ptr<QuicChromiumPacketWriter> new_writer(
-      new QuicChromiumPacketWriter(socket.get()));
+      new QuicChromiumPacketWriter(socket.get(), task_runner_));
   new_writer->set_delegate(this);
 
   // Migrate to the new socket.
