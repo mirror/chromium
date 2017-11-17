@@ -87,7 +87,6 @@ class ContentSettingsPref {
   // preference changes.
   void UpdatePref(const ContentSettingsPattern& primary_pattern,
                   const ContentSettingsPattern& secondary_pattern,
-                  const ResourceIdentifier& resource_identifier,
                   const base::Time last_modified,
                   const base::Value* value);
 
@@ -98,6 +97,11 @@ class ContentSettingsPref {
   // ok if some other thread holds |lock_|, as long as it will eventually
   // release it.
   void AssertLockNotHeld() const;
+
+  // Migrate any general plugin settings to not be stored with the resource
+  // identifier.
+  void MigrateResourceIdentifierSettings(
+      prefs::DictionaryValueUpdate* mutable_settings);
 
   // The type of content settings stored in this pref.
   ContentSettingsType content_type_;

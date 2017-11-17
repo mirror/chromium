@@ -352,27 +352,111 @@ TEST_F(PrefProviderTest, ResourceIdentifier) {
                                               false /* incognito */,
                                               true /* store_last_modified */);
 
-  GURL host("http://example.com/");
+  const GURL host("http://example.com/");
+  const char kFlashPluginId[] = "adobe-flash-player";
   ContentSettingsPattern pattern =
       ContentSettingsPattern::FromString("[*.]example.com");
-  std::string resource1("someplugin");
-  std::string resource2("otherplugin");
 
   EXPECT_EQ(CONTENT_SETTING_DEFAULT,
             TestUtils::GetContentSetting(&pref_content_settings_provider, host,
                                          host, CONTENT_SETTINGS_TYPE_PLUGINS,
-                                         resource1, false));
+                                         kFlashPluginId, false));
   pref_content_settings_provider.SetWebsiteSetting(
-      pattern, pattern, CONTENT_SETTINGS_TYPE_PLUGINS, resource1,
+      pattern, pattern, CONTENT_SETTINGS_TYPE_PLUGINS, kFlashPluginId,
       new base::Value(CONTENT_SETTING_BLOCK));
   EXPECT_EQ(CONTENT_SETTING_BLOCK,
             TestUtils::GetContentSetting(&pref_content_settings_provider, host,
                                          host, CONTENT_SETTINGS_TYPE_PLUGINS,
-                                         resource1, false));
-  EXPECT_EQ(CONTENT_SETTING_DEFAULT,
-            TestUtils::GetContentSetting(&pref_content_settings_provider, host,
-                                         host, CONTENT_SETTINGS_TYPE_PLUGINS,
-                                         resource2, false));
+                                         kFlashPluginId, false));
+
+  pref_content_settings_provider.ShutdownOnUIThread();
+}
+
+TEST_F(PrefProviderTest, MigrateResourceIdentifierSettings) {
+  TestingProfile testing_profile;
+  PrefService* prefs = testing_profile.GetPrefs();
+  const char kPerResourceIdentifierPrefName[] = "per_resource";
+  const char kFlashPluginId[] = "adobe-flash-player";
+
+  const GURL flash_host("http://www.flash.com/");
+  const GURL other_host("http://www.other.com/");
+  const GURL both_host("http://www.both.com/");
+
+  const std::string flash_pattern_string("[*.]flash.com,[*.]flash.com");
+  const std::string other_pattern_string("[*.]other.com,*");
+  const std::string both_pattern_string("[*.]both.com,*");
+
+  // First set up some plugin settings in the old format.
+  std::string pref_name =
+      content_settings::WebsiteSettingsRegistry::GetInstance()
+          ->Get(CONTENT_SETTINGS_TYPE_PLUGINS)
+          ->pref_name();
+  {
+    DictionaryPrefUpdate update(prefs, pref_name);
+    base::DictionaryValue* all_settings_dictionary = update.Get();
+    base::Value flash_dictionary(base::Value::Type::DICTIONARY);
+    base::Value other_dictionary(base::Value::Type::DICTIONARY);
+    base::Value both_dictionary(base::Value::Type::DICTIONARY);
+    base::Value flash_plugin_dictionary(base::Value::Type::DICTIONARY);
+    base::Value other_plugin_dictionary(base::Value::Type::DICTIONARY);
+    base::Value both_plugin_dictionary(base::Value::Type::DICTIONARY);
+
+    flash_dictionary.SetKey(kFlashPluginId, base::Value(CONTENT_SETTING_ALLOW));
+    other_dictionary.SetKey("other-plugin", base::Value(CONTENT_SETTING_BLOCK));
+    both_dictionary.SetKey(kFlashPluginId, base::Value(CONTENT_SETTING_ALLOW));
+    both_dictionary.SetKey("other-plugin", base::Value(CONTENT_SETTING_BLOCK));
+
+    flash_plugin_dictionary.SetKey(kPerResourceIdentifierPrefName,
+                                   std::move(flash_dictionary));
+    other_plugin_dictionary.SetKey(kPerResourceIdentifierPrefName,
+                                   std::move(other_dictionary));
+    both_plugin_dictionary.SetKey(kPerResourceIdentifierPrefName,
+                                  std::move(both_dictionary));
+
+    all_settings_dictionary->SetKey(flash_pattern_string,
+                                    std::move(flash_plugin_dictionary));
+    all_settings_dictionary->SetKey(other_pattern_string,
+                                    std::move(other_plugin_dictionary));
+    all_settings_dictionary->SetKey(both_pattern_string,
+                                    std::move(both_plugin_dictionary));
+  }
+
+  PrefProvider pref_content_settings_provider(prefs, false /* incognito */,
+                                              true /* store_last_modified */);
+
+  // First test that the underlying migration was done correctly.
+  const base::DictionaryValue* all_settings_dictionary =
+      prefs->GetDictionary(pref_name);
+  const base::DictionaryValue* result;
+
+  //  The site without flash settings should have their setting removed.
+  EXPECT_FALSE(all_settings_dictionary->GetDictionaryWithoutPathExpansion(
+      other_pattern_string, &result));
+
+  // The other sites should have the per plugin key gone.
+  EXPECT_TRUE(all_settings_dictionary->GetDictionaryWithoutPathExpansion(
+      flash_pattern_string, &result));
+  EXPECT_FALSE(
+      result->GetDictionaryWithoutPathExpansion("per_resource", nullptr));
+
+  EXPECT_TRUE(all_settings_dictionary->GetDictionaryWithoutPathExpansion(
+      both_pattern_string, &result));
+  EXPECT_FALSE(
+      result->GetDictionaryWithoutPathExpansion("per_resource", nullptr));
+
+  // Now test that the provider returns the correct values.
+  EXPECT_EQ(TestUtils::GetContentSetting(
+                &pref_content_settings_provider, flash_host, flash_host,
+                CONTENT_SETTINGS_TYPE_PLUGINS, kFlashPluginId, false),
+            CONTENT_SETTING_ALLOW);
+  EXPECT_EQ(TestUtils::GetContentSetting(
+                &pref_content_settings_provider, other_host, other_host,
+                CONTENT_SETTINGS_TYPE_PLUGINS, kFlashPluginId, false),
+            CONTENT_SETTING_DEFAULT);
+  EXPECT_EQ(TestUtils::GetContentSetting(
+                &pref_content_settings_provider, both_host, both_host,
+                CONTENT_SETTINGS_TYPE_PLUGINS, kFlashPluginId, false),
+            CONTENT_SETTING_ALLOW);
 
   pref_content_settings_provider.ShutdownOnUIThread();
 }
@@ -477,7 +561,6 @@ TEST_F(PrefProviderTest, ClearAllContentSettingsRules) {
   ContentSettingsPattern wildcard =
       ContentSettingsPattern::FromString("*");
   std::unique_ptr<base::Value> value(new base::Value(CONTENT_SETTING_ALLOW));
-  ResourceIdentifier res_id("abcde");
 
   PrefProvider provider(&prefs, false /* incognito */,
                         true /* store_last_modified */);
@@ -494,11 +577,11 @@ TEST_F(PrefProviderTest, ClearAllContentSettingsRules) {
 #if BUILDFLAG(ENABLE_PLUGINS)
   // Non-empty pattern, plugins, non-empty resource identifier.
   provider.SetWebsiteSetting(pattern, wildcard, CONTENT_SETTINGS_TYPE_PLUGINS,
-                             res_id, value->DeepCopy());
+                             "adobe-flash-player", value->DeepCopy());
 
   // Empty pattern, plugins, non-empty resource identifier.
   provider.SetWebsiteSetting(wildcard, wildcard, CONTENT_SETTINGS_TYPE_PLUGINS,
-                             res_id, value->DeepCopy());
+                             "adobe-flash-player", value->DeepCopy());
 #endif
   // Non-empty pattern, syncable, empty resource identifier.
   provider.SetWebsiteSetting(pattern, wildcard, CONTENT_SETTINGS_TYPE_COOKIES,
