@@ -13,12 +13,26 @@ import os
 import sys
 
 SCRIPT_DIR = os.path.dirname(__file__)
-SRC_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, '..', '..', '..', '..'))
+SRC_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, *[os.path.pardir] * 4))
 
-sys.path.insert(
-    1, os.path.join(SRC_DIR, 'third_party', 'protobuf', 'python'))
-sys.path.insert(
-    1, os.path.join(SRC_DIR, 'third_party', 'protobuf', 'third_party', 'six'))
+# Setting third_party/protobuf/python in sys.path doesn't work because
+# __init__.py in //third_party/protobuf/python does
+# __import__('pkg_resources').declare_namespace(__name__)
+# Reference: crbug.com/764774
+PYPROTO_DIR = os.path.abspath('pyproto')
+sys.path.insert(1, PYPROTO_DIR)
+
+import google.protobuf
+reload(google)
+reload(google.protobuf)
+
+IMPORTED_DIR = os.path.abspath( \
+  os.path.join(os.path.dirname(google.protobuf.__file__), '..', '..'))
+if PYPROTO_DIR != IMPORTED_DIR:
+  print >> sys.stderr, 'PYPROTO_DIR = ' + PYPROTO_DIR
+  print >> sys.stderr, 'IMPORTED_DIR = ' + IMPORTED_DIR
+  assert False
+
 from google.protobuf.descriptor_pb2 import FieldDescriptorProto
 
 from . import types
