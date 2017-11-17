@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f2a7bde_029819a4",
+        "filename": "media/gpu/android/android_video_encode_accelerator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-17T20:50:43Z",
+      "side": 1,
+      "message": "maybe dcheck that the size of |frame_timestamp_map_| is equal to |num_buffers_at_codec_|.\n\nit seems like it would always be true now.  however, for example, if somebody calls Flush() and forgets to clear |frame_timestamp_map_|, then it might not be.",
+      "revId": "7f1ef58a724a116c63c3921efdf047b7de241161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
