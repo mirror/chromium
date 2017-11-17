@@ -36,6 +36,52 @@
     },
     {
       "key": {
+        "uuid": "e37b9976_51fa3339",
+        "filename": "net/quic/chromium/crypto/proof_verifier_chromium_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-17T03:02:08Z",
+      "side": 1,
+      "message": "It looks like there are no tests for the other members of CTVerifyResult, should they be added too? (Same for ssl_client_socket_unittest.cc)",
+      "range": {
+        "startLine": 802,
+        "startChar": 71,
+        "endLine": 803,
+        "endChar": 45
+      },
+      "revId": "9921a19889d75960823264667c6db1c1e0320110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d9f39d_57438fe7",
+        "filename": "net/quic/chromium/crypto/proof_verifier_chromium_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-17T03:02:08Z",
+      "side": 1,
+      "message": "typo: should\n\n(also below)",
+      "range": {
+        "startLine": 837,
+        "startChar": 14,
+        "endLine": 837,
+        "endChar": 20
+      },
+      "revId": "9921a19889d75960823264667c6db1c1e0320110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f5bf5d9_8ab54067",
         "filename": "net/socket/ssl_client_socket_impl.cc",
         "patchSetId": 7
@@ -64,6 +110,63 @@
       "writtenOn": "2017-11-15T17:53:18Z",
       "side": 1,
       "message": "Alternative: ct_cert_policy_compliance_required?\n\n(Dropping the compliance bit - or some other verb - is unclear. There is a ct policy, but it just wasn\u0027t compliant)",
+      "revId": "9921a19889d75960823264667c6db1c1e0320110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719cc3bd_9014820b",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-17T03:02:08Z",
+      "side": 1,
+      "message": "Doesn\u0027t this record both compliant and non-compliant?",
+      "range": {
+        "startLine": 109,
+        "startChar": 15,
+        "endLine": 109,
+        "endChar": 26
+      },
+      "revId": "9921a19889d75960823264667c6db1c1e0320110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fa8581b_dc0c3f1d",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7081,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-17T03:02:08Z",
+      "side": 1,
+      "message": "also check that Net.CertificateTransparency.CTRequiredRequestComplianceStatus was not recorded?",
+      "revId": "9921a19889d75960823264667c6db1c1e0320110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74dc34bb_9305496b",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7147,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-17T03:02:08Z",
+      "side": 1,
+      "message": "also check that Net.CertificateTransparency.RequestComplianceStatus is 1?",
       "revId": "9921a19889d75960823264667c6db1c1e0320110",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
