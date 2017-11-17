@@ -758,7 +758,7 @@ void BrowserMainLoop::PostMainMessageLoopStart() {
   {
     system_stats_monitor_.reset(
         new base::trace_event::TraceEventSystemStatsMonitor(
-            base::ThreadTaskRunnerHandle::Get()));
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   }
 
   {
@@ -886,7 +886,8 @@ int BrowserMainLoop::PreCreateThreads() {
   // The WindowResizeHelper allows the UI thread to wait on specific renderer
   // and GPU messages from the IO thread. Initializing it before the IO thread
   // starts ensures the affected IO thread messages always have somewhere to go.
-  ui::WindowResizeHelperMac::Get()->Init(base::ThreadTaskRunnerHandle::Get());
+  ui::WindowResizeHelperMac::Get()->Init(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 #endif
 
   GpuDataManagerImpl* gpu_data_manager = GpuDataManagerImpl::GetInstance();
@@ -936,10 +937,12 @@ void BrowserMainLoop::CreateStartupTasks() {
   DCHECK(!startup_task_runner_);
 #if defined(OS_ANDROID)
   startup_task_runner_ = std::make_unique<StartupTaskRunner>(
-      base::Bind(&BrowserStartupComplete), base::ThreadTaskRunnerHandle::Get());
+      base::Bind(&BrowserStartupComplete),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 #else
   startup_task_runner_ = std::make_unique<StartupTaskRunner>(
-      base::Callback<void(int)>(), base::ThreadTaskRunnerHandle::Get());
+      base::Callback<void(int)>(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 #endif
   StartupTask pre_create_threads =
       base::Bind(&BrowserMainLoop::PreCreateThreads, base::Unretained(this));
@@ -975,9 +978,10 @@ BrowserMainLoop::GetResizeTaskRunner() {
   scoped_refptr<base::SingleThreadTaskRunner> task_runner =
       ui::WindowResizeHelperMac::Get()->task_runner();
   // In tests, WindowResizeHelperMac task runner might not be initialized.
-  return task_runner ? task_runner : base::ThreadTaskRunnerHandle::Get();
+  return task_runner ? task_runner
+                     : base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 #else
-  return base::ThreadTaskRunnerHandle::Get();
+  return base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 #endif
 }
 
@@ -1750,8 +1754,8 @@ void BrowserMainLoop::MainMessageLoopRun() {
 #else
   DCHECK(base::MessageLoopForUI::IsCurrent());
   if (parameters_.ui_task) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  *parameters_.ui_task);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, *parameters_.ui_task);
   }
 
   base::RunLoop run_loop;

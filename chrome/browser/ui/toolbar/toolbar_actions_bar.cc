@@ -343,7 +343,7 @@ void ToolbarActionsBar::CreateActions() {
     should_check_extension_bubble_ = false;
     // CreateActions() can be called as part of the browser window set up, which
     // we need to let finish before showing the actions.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&ToolbarActionsBar::MaybeShowExtensionBubble,
                                   weak_ptr_factory_.GetWeakPtr()));
   }
@@ -489,7 +489,7 @@ void ToolbarActionsBar::PopOutAction(ToolbarActionViewController* controller,
   ResizeDelegate(gfx::Tween::LINEAR);
   if (!delegate_->IsAnimating()) {
     // Don't call the closure re-entrantly.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, closure);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, closure);
   } else {
     popped_out_closure_ = closure;
   }
@@ -553,7 +553,7 @@ void ToolbarActionsBar::ShowToolbarActionBubble(
 
 void ToolbarActionsBar::ShowToolbarActionBubbleAsync(
     std::unique_ptr<ToolbarActionsBarBubbleDelegate> bubble) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ToolbarActionsBar::ShowToolbarActionBubble,
                                 weak_ptr_factory_.GetWeakPtr(),
                                 base::Passed(std::move(bubble))));
@@ -578,7 +578,7 @@ void ToolbarActionsBar::MaybeShowExtensionBubble() {
   // startup).
   std::unique_ptr<ToolbarActionsBarBubbleDelegate> delegate(
       new ExtensionMessageBubbleBridge(std::move(controller)));
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&ToolbarActionsBar::ShowToolbarActionBubble,
                      weak_ptr_factory_.GetWeakPtr(),

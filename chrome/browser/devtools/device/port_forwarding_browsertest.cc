@@ -63,7 +63,7 @@ class PortForwardingTest: public InProcessBrowserTest {
     void PortStatusChanged(const ForwardingStatus& status) override {
       if (status.empty() && skip_empty_devices_)
         return;
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
     }
 
@@ -182,7 +182,7 @@ IN_PROC_BROWSER_TEST_F(PortForwardingDisconnectTest, DisconnectOnRelease) {
 
   self_provider->set_release_callback_for_test(
       base::Bind(base::IgnoreResult(&base::SingleThreadTaskRunner::PostTask),
-                 base::ThreadTaskRunnerHandle::Get(), FROM_HERE,
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE), FROM_HERE,
                  run_loop.QuitWhenIdleClosure()));
   wait_for_port_forwarding.reset();
 

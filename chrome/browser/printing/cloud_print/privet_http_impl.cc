@@ -154,7 +154,7 @@ void PrivetRegisterOperationImpl::Cancel() {
     // Owned by the message loop.
     Cancelation* cancelation = new Cancelation(privet_client_, user_);
 
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&PrivetRegisterOperationImpl::Cancelation::Cleanup,
                        base::Owned(cancelation)),
@@ -567,7 +567,7 @@ void PrivetLocalPrintOperationImpl::OnSubmitdocResponse(
 
       timeout = std::max(timeout, kPrivetMinimumTimeout);
 
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE,
           base::BindOnce(&PrivetLocalPrintOperationImpl::DoCreatejob,
                          weak_factory_.GetWeakPtr()),

@@ -302,7 +302,7 @@ void FullscreenController::ExitExclusiveAccessIfNecessary() {
 
 void FullscreenController::PostFullscreenChangeNotification(
     bool is_fullscreen) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&FullscreenController::NotifyFullscreenChange,
                                 ptr_factory_.GetWeakPtr(), is_fullscreen));
 }

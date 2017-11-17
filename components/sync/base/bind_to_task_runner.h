@@ -31,7 +31,8 @@
 // is always posted to the target TaskRunner.
 //
 // As a convenience, you can use BindToCurrentThread() to bind to the
-// TaskRunner for the current thread (ie, base::ThreadTaskRunnerHandle::Get()).
+// TaskRunner for the current thread (ie,
+// base::ThreadTaskRunnerHandle::Get(FROM_HERE)).
 
 namespace syncer {
 namespace bind_helpers {
@@ -61,7 +62,7 @@ base::Callback<T> BindToTaskRunner(
 
 template <typename T>
 base::Callback<T> BindToCurrentThread(const base::Callback<T>& cb) {
-  return BindToTaskRunner(base::ThreadTaskRunnerHandle::Get(), cb);
+  return BindToTaskRunner(base::ThreadTaskRunnerHandle::Get(FROM_HERE), cb);
 }
 
 }  // namespace syncer

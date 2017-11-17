@@ -631,7 +631,7 @@ class RemoveOnTouchCancelHandler : public TestEventHandler {
 void DelayByLongPressTimeout() {
   ui::GestureProvider::Config config;
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, run_loop.QuitClosure(),
       config.gesture_detector_config.longpress_timeout * 2);
   run_loop.Run();
@@ -640,7 +640,7 @@ void DelayByLongPressTimeout() {
 void DelayByShowPressTimeout() {
   ui::GestureProvider::Config config;
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, run_loop.QuitClosure(),
       config.gesture_detector_config.showpress_timeout * 2);
   run_loop.Run();

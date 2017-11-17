@@ -136,7 +136,7 @@ void PhysicalWebPageSuggestionsProvider::FetchSuggestionImage(
   ui::ResourceBundle& resource_bundle = ui::ResourceBundle::GetSharedInstance();
   base::StringPiece raw_data = resource_bundle.GetRawDataResourceForScale(
       IDR_PHYSICAL_WEB_LOGO_WITH_PADDING, resource_bundle.GetMaxScaleFactor());
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(
           std::move(callback),
@@ -154,7 +154,7 @@ void PhysicalWebPageSuggestionsProvider::Fetch(
       GetMostRecentPhysicalWebPagesWithFilter(kMaxSuggestionsCount,
                                               known_suggestion_ids);
   AppendToShownScannedUrls(suggestions);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), Status::Success(),
                                 std::move(suggestions)));
 }

@@ -25,7 +25,7 @@ void FakeVirtualFileProviderClient::OpenFile(int64_t size,
     id = result_id_;
     fd = std::move(result_fd_);
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), id, std::move(fd)));
 }
 

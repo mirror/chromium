@@ -326,7 +326,8 @@ class BattOrAgentTest : public testing::Test, public BattOrAgent::Listener {
 
  private:
   scoped_refptr<base::TestMockTimeTaskRunner> task_runner_;
-  // Needed to support ThreadTaskRunnerHandle::Get() in code under test.
+  // Needed to support ThreadTaskRunnerHandle::Get(FROM_HERE) in code under
+  // test.
   base::ThreadTaskRunnerHandle thread_task_runner_handle_;
 
   std::unique_ptr<TestableBattOrAgent> agent_;

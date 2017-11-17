@@ -259,7 +259,7 @@ void CrxUpdateService::OnDemandUpdate(const std::string& id,
 
   if (!GetComponent(id)) {
     if (!callback.is_null()) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(std::move(callback),
                                     update_client::Error::INVALID_ARGUMENT));
     }
@@ -391,7 +391,7 @@ void CrxUpdateService::OnUpdateComplete(Callback callback,
   }
 
   if (!callback.is_null()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), error));
   }
 }

@@ -508,7 +508,7 @@ bool HostProcess::InitWithCommandLine(const base::CommandLine* cmd_line) {
           ->ExtractMessagePipe(cmd_line->GetSwitchValueASCII(kMojoPipeToken))
           .release(),
       IPC::Channel::MODE_CLIENT, this, context_->network_task_runner(),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
 #else  // !defined(REMOTING_MULTI_PROCESS)
   if (cmd_line->HasSwitch(kHostConfigSwitchName)) {

@@ -393,7 +393,7 @@ class FailingVideoDecoder : public VideoDecoder {
   }
   void Decode(const scoped_refptr<DecoderBuffer>& buffer,
               const DecodeCB& decode_cb) override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(decode_cb, DecodeStatus::DECODE_ERROR));
   }
   void Reset(const base::Closure& closure) override { closure.Run(); }

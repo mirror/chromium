@@ -272,7 +272,7 @@ Coordinator* Coordinator::GetInstance() {
 
 Coordinator::Coordinator()
     : binding_(this),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       agent_registry_(AgentRegistry::GetInstance()),
       weak_ptr_factory_(this) {
   DCHECK(!g_coordinator);

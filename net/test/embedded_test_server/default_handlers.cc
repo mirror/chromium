@@ -578,7 +578,7 @@ class DelayedHttpResponse : public BasicHttpResponse {
 
   void SendResponse(const SendBytesCallback& send,
                     const SendCompleteCallback& done) override {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, base::Bind(send, ToResponseString(), done),
         base::TimeDelta::FromSecondsD(delay_));
   }

@@ -177,7 +177,8 @@ void QuitMessageLoopAndStart(const Closure& quit_closure) {
   quit_closure.Run();
 
   RunLoop runloop(RunLoop::Type::kNestableTasksAllowed);
-  ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, runloop.QuitClosure());
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                   runloop.QuitClosure());
   runloop.Run();
 }
 
@@ -188,7 +189,7 @@ class NestedPumpWatcher : public MessagePumpLibevent::Watcher {
 
   void OnFileCanReadWithoutBlocking(int /* fd */) override {
     RunLoop runloop;
-    ThreadTaskRunnerHandle::Get()->PostTask(
+    ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, BindOnce(&QuitMessageLoopAndStart, runloop.QuitClosure()));
     runloop.Run();
   }
@@ -219,7 +220,8 @@ class QuitWatcher : public BaseWatcher {
 
   void OnFileCanReadWithoutBlocking(int /* fd */) override {
     // Post a fatal closure to the MessageLoop before we quit it.
-    ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, BindOnce(&FatalClosure));
+    ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                     BindOnce(&FatalClosure));
 
     quit_closure_.Run();
   }

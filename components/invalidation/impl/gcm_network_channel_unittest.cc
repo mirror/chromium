@@ -138,7 +138,7 @@ class GCMNetworkChannelTest
 
   void SetUp() override {
     request_context_getter_ = new net::TestURLRequestContextGetter(
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     // Ownership of delegate goes to GCNMentworkChannel but test needs pointer
     // to it.
     delegate_ = new TestGCMNetworkChannelDelegate();

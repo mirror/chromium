@@ -577,7 +577,7 @@ void NetworkConnectionHandlerImpl::QueueConnectRequest(
   // Post a delayed task to check to see if certificates have loaded. If they
   // haven't, and queued_connect_ has not been cleared (e.g. by a successful
   // connect request), cancel the request and notify the user.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&NetworkConnectionHandlerImpl::CheckCertificatesLoaded,
                  AsWeakPtr()),

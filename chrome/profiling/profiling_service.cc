@@ -39,7 +39,7 @@ void ProfilingService::OnBindInterface(
 void ProfilingService::MaybeRequestQuitDelayed() {
   // TODO(ajwong): What does this and the MaybeRequestQuit() function actually
   // do? This is just cargo-culted from another mojo service.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&ProfilingService::MaybeRequestQuit,
                  weak_factory_.GetWeakPtr()),

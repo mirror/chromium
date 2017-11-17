@@ -293,8 +293,8 @@ RENDERING_TEST_F(CompositorNoFrameTest);
 
 class ClientIsVisibleOnConstructionTest : public RenderingTest {
   void SetUpTestHarness() override {
-    browser_view_renderer_.reset(
-        new BrowserViewRenderer(this, base::ThreadTaskRunnerHandle::Get()));
+    browser_view_renderer_.reset(new BrowserViewRenderer(
+        this, base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   }
 
   void StartTest() override {
@@ -499,9 +499,10 @@ class RenderThreadManagerSwitchTest : public ResourceRenderingTest {
       case 1: {
         // Switch to new RTM.
         std::unique_ptr<FakeFunctor> functor(new FakeFunctor);
-        functor->Init(window_.get(),
-                      base::MakeUnique<RenderThreadManager>(
-                          functor.get(), base::ThreadTaskRunnerHandle::Get()));
+        functor->Init(
+            window_.get(),
+            base::MakeUnique<RenderThreadManager>(
+                functor.get(), base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
         browser_view_renderer_->SetCurrentCompositorFrameConsumer(
             functor->GetCompositorFrameConsumer());
         saved_functor_ = std::move(functor_);

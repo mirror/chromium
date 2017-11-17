@@ -267,7 +267,7 @@ void InstanceIDImpl::RunWhenReady(base::Closure task) {
   if (!delayed_task_controller_.CanRunTaskWithoutDelay())
     delayed_task_controller_.AddTask(task);
   else
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, task);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, task);
 }
 
 }  // namespace instance_id

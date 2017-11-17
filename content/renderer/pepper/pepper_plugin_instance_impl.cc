@@ -1732,7 +1732,7 @@ void PepperPluginInstanceImpl::UpdateWheelEventRequest() {
 void PepperPluginInstanceImpl::ScheduleAsyncDidChangeView() {
   if (view_change_weak_ptr_factory_.HasWeakPtrs())
     return;  // Already scheduled.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&PepperPluginInstanceImpl::SendAsyncDidChangeView,
                      view_change_weak_ptr_factory_.GetWeakPtr()));
@@ -2964,7 +2964,7 @@ void PepperPluginInstanceImpl::SelectionChanged(PP_Instance instance) {
   // uses a weak pointer rather than exploiting the fact that this class is
   // refcounted because we don't actually want this operation to affect the
   // lifetime of the instance.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&PepperPluginInstanceImpl::RequestSurroundingText,
                      weak_factory_.GetWeakPtr(),
@@ -3260,7 +3260,7 @@ bool PepperPluginInstanceImpl::FlashSetFullscreen(bool fullscreen,
     if (!delay_report) {
       ReportGeometry();
     } else {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(&PepperPluginInstanceImpl::ReportGeometry, this));
     }

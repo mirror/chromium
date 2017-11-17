@@ -218,7 +218,7 @@ void DecodeImage(
     const std::string* data,
     bool data_is_ready) {
   if (!data_is_ready) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(
             image_info.loaded_cb,

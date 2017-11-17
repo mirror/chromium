@@ -173,7 +173,7 @@ CloudPrintProxyBackend::CloudPrintProxyBackend(
     const gaia::OAuthClientInfo& oauth_client_info,
     bool enable_job_poll)
     : core_thread_("Chrome_CloudPrintProxyCoreThread"),
-      frontend_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      frontend_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       frontend_(frontend) {
   DCHECK(frontend_);
   core_ = new Core(this, settings, oauth_client_info, enable_job_poll);
@@ -452,7 +452,7 @@ void CloudPrintProxyBackend::Core::ScheduleJobPoll() {
   if (!job_poll_scheduled_) {
     base::TimeDelta interval = base::TimeDelta::FromSeconds(
         base::RandInt(kMinJobPollIntervalSecs, kMaxJobPollIntervalSecs));
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&CloudPrintProxyBackend::Core::PollForJobs, this),
         interval);
@@ -471,7 +471,7 @@ void CloudPrintProxyBackend::Core::PingXmppServer() {
   pending_xmpp_pings_++;
   if (pending_xmpp_pings_ >= kMaxFailedXmppPings) {
     // Check ping status when we close to the limit.
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&CloudPrintProxyBackend::Core::CheckXmppPingStatus,
                        this),
@@ -490,7 +490,7 @@ void CloudPrintProxyBackend::Core::ScheduleXmppPing() {
     base::TimeDelta interval = base::TimeDelta::FromSeconds(
       base::RandInt(settings_.xmpp_ping_timeout_sec() * 0.9,
                     settings_.xmpp_ping_timeout_sec() * 1.1));
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&CloudPrintProxyBackend::Core::PingXmppServer, this),
         interval);

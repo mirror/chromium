@@ -284,7 +284,7 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
     ServiceWorkerDispatcher* dispatcher =
         ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
             ChildThreadImpl::current()->thread_safe_sender(),
-            base::ThreadTaskRunnerHandle::Get().get());
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
     context_ = base::MakeRefCounted<ServiceWorkerProviderContext>(
         browser_provider_id, provider_type, std::move(client_request),
         std::move(host_ptr_info), dispatcher, default_loader_factory_getter);
@@ -307,7 +307,7 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
   ThreadSafeSender* sender = ChildThreadImpl::current()->thread_safe_sender();
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
-          sender, base::ThreadTaskRunnerHandle::Get().get());
+          sender, base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
   // TODO(kinuko): Split ServiceWorkerProviderContext ctor for
   // controller and controllee.
   context_ = base::MakeRefCounted<ServiceWorkerProviderContext>(

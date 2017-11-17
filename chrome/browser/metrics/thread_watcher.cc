@@ -91,7 +91,7 @@ void ThreadWatcher::ActivateThreadWatching() {
   active_ = true;
   ping_count_ = unresponsive_threshold_;
   ResetHangCounters();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ThreadWatcher::PostPingMessage,
                                 weak_ptr_factory_.GetWeakPtr()));
 }
@@ -145,7 +145,7 @@ void ThreadWatcher::PostPingMessage() {
           FROM_HERE, base::BindOnce(&ThreadWatcher::OnPingMessage, thread_id_,
                                     callback))) {
     // Post a task to check the responsiveness of watched thread.
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&ThreadWatcher::OnCheckResponsiveness,
                        weak_ptr_factory_.GetWeakPtr(), ping_sequence_number_),
@@ -191,7 +191,7 @@ void ThreadWatcher::OnPongMessage(uint64_t ping_sequence_number) {
   if (!active_ || --ping_count_ <= 0)
     return;
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&ThreadWatcher::PostPingMessage,
                      weak_ptr_factory_.GetWeakPtr()),
@@ -220,7 +220,7 @@ void ThreadWatcher::OnCheckResponsiveness(uint64_t ping_sequence_number) {
   GotNoResponse();
 
   // Post a task to check the responsiveness of watched thread.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&ThreadWatcher::OnCheckResponsiveness,
                      weak_ptr_factory_.GetWeakPtr(), ping_sequence_number_),
@@ -898,7 +898,7 @@ void StartupTimeBomb::DeleteStartupWatchdog(
     delete startup_watchdog;
     return;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&StartupTimeBomb::DeleteStartupWatchdog, thread_id,
                      base::Unretained(startup_watchdog)),

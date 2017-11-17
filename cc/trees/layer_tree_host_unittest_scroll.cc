@@ -1360,7 +1360,7 @@ TEST(LayerTreeHostFlingTest, DidStopFlingingThread) {
   params.client = &layer_tree_host_client;
   params.task_graph_runner = &task_graph_runner;
   params.settings = &settings;
-  params.main_task_runner = base::ThreadTaskRunnerHandle::Get();
+  params.main_task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   params.mutator_host = animation_host.get();
   params.ukm_recorder_factory = std::make_unique<TestUkmRecorderFactory>();
   std::unique_ptr<LayerTreeHost> layer_tree_host =

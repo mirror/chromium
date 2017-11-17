@@ -59,7 +59,7 @@ IpcNetworkManager::~IpcNetworkManager() {
 void IpcNetworkManager::StartUpdating() {
   if (network_list_received_) {
     // Post a task to avoid reentrancy.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&IpcNetworkManager::SendNetworksChangedSignal,
                                   weak_factory_.GetWeakPtr()));
   } else {

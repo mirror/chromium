@@ -561,7 +561,7 @@ void ImeMenuTray::OnKeyboardHidden() {
     return;
 
   // Posts a task to disable the virtual keyboard.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&ImeMenuTray::DisableVirtualKeyboard,
                             weak_ptr_factory_.GetWeakPtr()));
 }

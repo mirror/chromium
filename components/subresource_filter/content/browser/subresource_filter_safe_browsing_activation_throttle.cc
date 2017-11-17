@@ -41,7 +41,7 @@ SubresourceFilterSafeBrowsingActivationThrottle::
                                  std::move(database_manager),
                                  AsWeakPtr(),
                                  io_task_runner_,
-                                 base::ThreadTaskRunnerHandle::Get())
+                                 base::ThreadTaskRunnerHandle::Get(FROM_HERE))
                            : nullptr,
                        base::OnTaskRunnerDeleter(io_task_runner_)),
       client_(client) {

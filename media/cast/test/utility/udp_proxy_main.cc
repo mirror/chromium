@@ -125,9 +125,8 @@ void CheckByteCounters() {
 
     counter->last_printout = now;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE,
-      base::Bind(&CheckByteCounters),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE, base::Bind(&CheckByteCounters),
       base::TimeDelta::FromMilliseconds(100));
 }
 

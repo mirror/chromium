@@ -50,7 +50,7 @@ ServiceWorkerRegistration::ServiceWorkerRegistration(
       should_activate_when_ready_(false),
       resources_total_size_bytes_(0),
       context_(context),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK_NE(blink::mojom::kInvalidServiceWorkerRegistrationId, registration_id);
   DCHECK(context_);

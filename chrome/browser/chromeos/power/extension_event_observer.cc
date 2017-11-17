@@ -258,7 +258,7 @@ void ExtensionEventObserver::OnSuspendImminent(bool dark_suspend) {
   // to report suspend readiness.  If there is a push message pending, we should
   // receive it within that time and increment |suspend_keepalive_count_| to
   // prevent this callback from reporting ready.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, suspend_readiness_callback_.callback(),
       dark_suspend ? base::TimeDelta::FromMilliseconds(kDarkSuspendDelayMs)
                    : base::TimeDelta());

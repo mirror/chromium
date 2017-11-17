@@ -129,7 +129,7 @@ class AppCacheResponseTest : public testing::Test {
     // We unwind the stack prior to finishing up to let stack
     // based objects get deleted.
     DCHECK(io_thread_->task_runner()->BelongsToCurrentThread());
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&AppCacheResponseTest::TestFinishedUnwound,
                                   base::Unretained(this)));
   }
@@ -160,7 +160,8 @@ class AppCacheResponseTest : public testing::Test {
     if (immediate)
       std::move(task).Run();
     else
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, std::move(task));
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                             std::move(task));
   }
 
   // Wrappers to call AppCacheResponseReader/Writer Read and Write methods
@@ -758,7 +759,7 @@ class AppCacheResponseTest : public testing::Test {
     reader_.reset();
 
     // Wait a moment to verify no callbacks.
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&AppCacheResponseTest::VerifyNoCallbacks,
                        base::Unretained(this)),

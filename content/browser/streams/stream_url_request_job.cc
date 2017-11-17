@@ -81,7 +81,7 @@ void StreamURLRequestJob::OnDataAvailable(Stream* stream) {
 // net::URLRequestJob methods.
 void StreamURLRequestJob::Start() {
   // Continue asynchronously.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&StreamURLRequestJob::DidStart,
                                 weak_factory_.GetWeakPtr()));
 }

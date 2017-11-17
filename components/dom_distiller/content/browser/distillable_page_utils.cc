@@ -41,8 +41,8 @@ void IsOpenGraphArticle(content::WebContents* web_contents,
                         base::Callback<void(bool)> callback) {
   content::RenderFrameHost* main_frame = web_contents->GetMainFrame();
   if (!main_frame) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  base::Bind(callback, false));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, base::Bind(callback, false));
     return;
   }
   std::string og_article_js = ui::ResourceBundle::GetSharedInstance()
@@ -57,8 +57,8 @@ void IsDistillablePage(content::WebContents* web_contents,
                        base::Callback<void(bool)> callback) {
   switch (GetDistillerHeuristicsType()) {
     case DistillerHeuristicsType::ALWAYS_TRUE:
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                    base::Bind(callback, true));
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+          FROM_HERE, base::Bind(callback, true));
       return;
     case DistillerHeuristicsType::OG_ARTICLE:
       IsOpenGraphArticle(web_contents, callback);
@@ -66,7 +66,7 @@ void IsDistillablePage(content::WebContents* web_contents,
     case DistillerHeuristicsType::ADABOOST_MODEL:
       // The adaboost model is only applied to non-mobile pages.
       if (is_mobile_optimized) {
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE, base::Bind(callback, false));
         return;
       }
@@ -75,7 +75,7 @@ void IsDistillablePage(content::WebContents* web_contents,
       return;
     case DistillerHeuristicsType::NONE:
     default:
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(callback, false));
       return;
   }
@@ -86,8 +86,8 @@ void IsDistillablePageForDetector(content::WebContents* web_contents,
                                   base::Callback<void(bool)> callback) {
   content::RenderFrameHost* main_frame = web_contents->GetMainFrame();
   if (!main_frame) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  base::Bind(callback, false));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, base::Bind(callback, false));
     return;
   }
   std::string extract_features_js =

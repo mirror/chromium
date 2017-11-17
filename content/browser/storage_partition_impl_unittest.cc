@@ -655,7 +655,8 @@ class StoragePartitionShaderClearTest : public testing::Test {
   StoragePartitionShaderClearTest()
       : thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP),
         browser_context_(new TestBrowserContext()) {
-    InitShaderCacheFactorySingleton(base::ThreadTaskRunnerHandle::Get());
+    InitShaderCacheFactorySingleton(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     GetShaderCacheFactorySingleton()->SetCacheInfo(
         kDefaultClientId,
         BrowserContext::GetDefaultStoragePartition(browser_context())
@@ -702,7 +703,7 @@ TEST_F(StoragePartitionShaderClearTest, ClearShaderCache) {
   EXPECT_EQ(1u, Size());
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ClearData,
                                 BrowserContext::GetDefaultStoragePartition(
                                     browser_context()),
@@ -774,7 +775,7 @@ TEST_F(StoragePartitionImplTest, RemoveQuotaManagedDataForeverBoth) {
       GetMockManager());
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ClearQuotaData, partition, &run_loop));
   run_loop.Run();
 
@@ -801,7 +802,7 @@ TEST_F(StoragePartitionImplTest, RemoveQuotaManagedDataForeverOnlyTemporary) {
       GetMockManager());
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ClearQuotaData, partition, &run_loop));
   run_loop.Run();
 
@@ -828,7 +829,7 @@ TEST_F(StoragePartitionImplTest, RemoveQuotaManagedDataForeverOnlyPersistent) {
       GetMockManager());
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ClearQuotaData, partition, &run_loop));
   run_loop.Run();
 
@@ -853,7 +854,7 @@ TEST_F(StoragePartitionImplTest, RemoveQuotaManagedDataForeverNeither) {
       GetMockManager());
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ClearQuotaData, partition, &run_loop));
   run_loop.Run();
 
@@ -880,7 +881,7 @@ TEST_F(StoragePartitionImplTest, RemoveQuotaManagedDataForeverSpecificOrigin) {
       GetMockManager());
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ClearQuotaDataForOrigin, partition, kOrigin1,
                                 base::Time(), &run_loop));
   run_loop.Run();
@@ -908,7 +909,7 @@ TEST_F(StoragePartitionImplTest, RemoveQuotaManagedDataForLastHour) {
       GetMockManager());
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&ClearQuotaDataForOrigin, partition, GURL(),
                      base::Time::Now() - base::TimeDelta::FromHours(1),
@@ -937,7 +938,7 @@ TEST_F(StoragePartitionImplTest, RemoveQuotaManagedDataForLastWeek) {
       BrowserContext::GetDefaultStoragePartition(browser_context()));
   partition->OverrideQuotaManagerForTesting(
       GetMockManager());
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&ClearQuotaDataForNonPersistent, partition,
                      base::Time::Now() - base::TimeDelta::FromDays(7),
@@ -973,7 +974,7 @@ TEST_F(StoragePartitionImplTest, RemoveQuotaManagedUnprotectedOrigins) {
   partition->OverrideSpecialStoragePolicyForTesting(mock_policy.get());
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&ClearQuotaDataWithOriginMatcher, partition, GURL(),
                      base::Bind(&DoesOriginMatchForUnprotectedWeb),
@@ -1010,7 +1011,7 @@ TEST_F(StoragePartitionImplTest, RemoveQuotaManagedProtectedSpecificOrigin) {
 
   // Try to remove kOrigin1. Expect failure.
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&ClearQuotaDataWithOriginMatcher, partition, kOrigin1,
                      base::Bind(&DoesOriginMatchForUnprotectedWeb),
@@ -1046,7 +1047,7 @@ TEST_F(StoragePartitionImplTest, RemoveQuotaManagedProtectedOrigins) {
   partition->OverrideQuotaManagerForTesting(
       GetMockManager());
   partition->OverrideSpecialStoragePolicyForTesting(mock_policy.get());
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(
           &ClearQuotaDataWithOriginMatcher, partition, GURL(),
@@ -1076,7 +1077,7 @@ TEST_F(StoragePartitionImplTest, RemoveQuotaManagedIgnoreDevTools) {
       BrowserContext::GetDefaultStoragePartition(browser_context()));
   partition->OverrideQuotaManagerForTesting(
       GetMockManager());
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ClearQuotaDataWithOriginMatcher, partition,
                                 GURL(), base::Bind(&DoesOriginMatchUnprotected),
                                 base::Time(), &run_loop));
@@ -1100,7 +1101,7 @@ TEST_F(StoragePartitionImplTest, RemoveCookieForever) {
   partition->SetURLRequestContext(browser_context()->GetRequestContext());
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ClearCookies, partition, base::Time(),
                                 base::Time::Max(), &run_loop));
   run_loop.Run();
@@ -1120,7 +1121,7 @@ TEST_F(StoragePartitionImplTest, RemoveCookieLastHour) {
   partition->SetURLRequestContext(browser_context()->GetRequestContext());
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ClearCookies, partition, an_hour_ago,
                                 base::Time::Max(), &run_loop));
   run_loop.Run();
@@ -1145,7 +1146,7 @@ TEST_F(StoragePartitionImplTest, RemoveCookieWithMatcher) {
 
   // Return false from our predicate, and make sure the cookies is still around.
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&ClearCookiesWithMatcher, partition, base::Time(),
                      base::Time::Max(), false_predicate, &run_loop));
@@ -1154,7 +1155,7 @@ TEST_F(StoragePartitionImplTest, RemoveCookieWithMatcher) {
 
   // Now we return true from our predicate.
   base::RunLoop run_loop2;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&ClearCookiesWithMatcher, partition, base::Time(),
                      base::Time::Max(), true_predicate, &run_loop2));
@@ -1180,7 +1181,7 @@ TEST_F(StoragePartitionImplTest, RemoveUnprotectedLocalStorageForever) {
   partition->OverrideSpecialStoragePolicyForTesting(mock_policy.get());
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&ClearStuff,
                      StoragePartitionImpl::REMOVE_DATA_MASK_LOCAL_STORAGE,
@@ -1215,7 +1216,7 @@ TEST_F(StoragePartitionImplTest, RemoveProtectedLocalStorageForever) {
   partition->OverrideSpecialStoragePolicyForTesting(mock_policy.get());
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(
           &ClearStuff, StoragePartitionImpl::REMOVE_DATA_MASK_LOCAL_STORAGE,
@@ -1248,7 +1249,7 @@ TEST_F(StoragePartitionImplTest, RemoveLocalStorageForLastWeek) {
   base::Time a_week_ago = base::Time::Now() - base::TimeDelta::FromDays(7);
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(
           &ClearStuff, StoragePartitionImpl::REMOVE_DATA_MASK_LOCAL_STORAGE,
@@ -1278,7 +1279,7 @@ TEST_F(StoragePartitionImplTest, RemovePluginPrivateDataForever) {
   EXPECT_TRUE(tester.DataExistsForOrigin(kOrigin2));
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ClearPluginPrivateData, partition, GURL(),
                                 base::Time(), base::Time::Max(), &run_loop));
   run_loop.Run();
@@ -1298,7 +1299,7 @@ TEST_F(StoragePartitionImplTest, RemovePluginPrivateDataLastWeek) {
   EXPECT_TRUE(tester.DataExistsForOrigin(kOrigin2));
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ClearPluginPrivateData, partition, GURL(),
                                 a_week_ago, base::Time::Max(), &run_loop));
   run_loop.Run();
@@ -1320,7 +1321,7 @@ TEST_F(StoragePartitionImplTest, RemovePluginPrivateDataForOrigin) {
   EXPECT_TRUE(tester.DataExistsForOrigin(kOrigin2));
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ClearPluginPrivateData, partition, kOrigin1,
                                 base::Time(), base::Time::Max(), &run_loop));
   run_loop.Run();
@@ -1346,7 +1347,7 @@ TEST_F(StoragePartitionImplTest, RemovePluginPrivateDataWhileWriting) {
             file.Write(0, test_data, arraysize(test_data)));
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ClearPluginPrivateData, partition, GURL(),
                                 base::Time(), base::Time::Max(), &run_loop));
   run_loop.Run();
@@ -1379,7 +1380,7 @@ TEST_F(StoragePartitionImplTest, RemovePluginPrivateDataAfterDeletion) {
   EXPECT_TRUE(tester.DataExistsForOrigin(kOrigin2));
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ClearPluginPrivateData, partition, GURL(),
                                 base::Time(), base::Time::Max(), &run_loop));
   run_loop.Run();

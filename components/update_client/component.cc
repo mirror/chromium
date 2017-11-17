@@ -191,7 +191,7 @@ void Component::ChangeState(std::unique_ptr<State> next_state) {
   if (next_state)
     state_ = std::move(next_state);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, std::move(callback_handle_complete_));
 }
 
@@ -257,7 +257,7 @@ void Component::UpdateCheckComplete() {
 
   DCHECK_EQ(ComponentState::kChecking, state());
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, std::move(update_check_complete_));
 }
 
@@ -307,7 +307,7 @@ void Component::State::TransitionState(std::unique_ptr<State> next_state) {
   if (!next_state)
     is_final_ = true;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(std::move(callback_), base::Passed(&next_state)));
 }
@@ -607,7 +607,7 @@ void Component::StateUpdatingDiff::DoHandle() {
           FROM_HERE,
           base::BindOnce(
               &update_client::StartInstallOnBlockingTaskRunner,
-              base::ThreadTaskRunnerHandle::Get(),
+              base::ThreadTaskRunnerHandle::Get(FROM_HERE),
               component.crx_component_.pk_hash, component.crx_path_,
               component.next_fp_, component.crx_component_.installer,
               base::Passed(&connector),
@@ -670,7 +670,7 @@ void Component::StateUpdating::DoHandle() {
       ->PostTask(FROM_HERE,
                  base::BindOnce(
                      &update_client::StartInstallOnBlockingTaskRunner,
-                     base::ThreadTaskRunnerHandle::Get(),
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                      component.crx_component_.pk_hash, component.crx_path_,
                      component.next_fp_, component.crx_component_.installer,
                      base::Passed(&connector),

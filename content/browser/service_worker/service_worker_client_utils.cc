@@ -96,7 +96,7 @@ class OpenURLObserver : public WebContentsObserver {
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(callback_, render_process_id, render_frame_id));
     Observe(nullptr);
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
   }
 
   int frame_tree_node_id_;

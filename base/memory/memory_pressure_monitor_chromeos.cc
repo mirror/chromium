@@ -128,7 +128,7 @@ MemoryPressureMonitor::~MemoryPressureMonitor() {
 }
 
 void MemoryPressureMonitor::ScheduleEarlyCheck() {
-  ThreadTaskRunnerHandle::Get()->PostTask(
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, BindOnce(&MemoryPressureMonitor::CheckMemoryPressure,
                           weak_ptr_factory_.GetWeakPtr()));
 }

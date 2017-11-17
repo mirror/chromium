@@ -139,7 +139,7 @@ class PollingProxyConfigService::Core
     //               UI thread so we can't cache the IO thread for the purpose
     //               of DCHECKs until the first call is made.
     if (!have_initialized_origin_runner_) {
-      origin_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+      origin_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
       have_initialized_origin_runner_ = true;
     }
   }

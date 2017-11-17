@@ -84,7 +84,7 @@ void TopIconAnimationView::OnImplicitAnimationsCompleted() {
   SetVisible(false);
   for (auto& observer : observers_)
     observer.OnTopIconAnimationsComplete();
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 bool TopIconAnimationView::RequiresNotificationWhenAnimatorDestroyed() const {

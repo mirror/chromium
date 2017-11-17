@@ -95,7 +95,7 @@ void ServerBackedStateKeysBroker::StoreStateKeys(
       callback->Run(state_keys_);
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&ServerBackedStateKeysBroker::FetchStateKeys,
                      weak_factory_.GetWeakPtr()),

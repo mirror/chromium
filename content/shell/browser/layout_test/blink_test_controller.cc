@@ -598,7 +598,7 @@ void BlinkTestController::PluginCrashed(const base::FilePath& plugin_path,
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   printer_->AddErrorMessage(
       base::StringPrintf("#CRASHED - plugin (pid %" CrPRIdPid ")", plugin_pid));
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(base::IgnoreResult(
                                     &BlinkTestController::DiscardMainWindow),
                                 base::Unretained(this)));
@@ -702,7 +702,7 @@ void BlinkTestController::DiscardMainWindow() {
   WebContentsObserver::Observe(nullptr);
   if (test_phase_ != BETWEEN_TESTS) {
     Shell::CloseAllWindows();
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
     test_phase_ = CLEAN_UP;
   } else if (main_window_) {
@@ -1017,14 +1017,14 @@ void BlinkTestController::OnResetDone() {
     return;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
 }
 
 void BlinkTestController::OnLeakDetectionDone(
     const LeakDetectionResult& result) {
   if (!result.leaked) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
     return;
   }

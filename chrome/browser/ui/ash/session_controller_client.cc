@@ -512,7 +512,7 @@ void SessionControllerClient::OnLoginUserProfilePrepared(Profile* profile) {
 
   // Needed because the user-to-profile mapping isn't available until later,
   // which is needed in UserToUserSession().
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&SessionControllerClient::SendUserSessionForProfile,
                      weak_ptr_factory_.GetWeakPtr(), profile));

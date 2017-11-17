@@ -628,9 +628,10 @@ class UpdateEngineClientFakeImpl : public UpdateEngineClientStubImpl {
     last_status_.download_progress = 0.0;
     last_status_.last_checked_time = 0;
     last_status_.new_size = 0;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE, base::Bind(&UpdateEngineClientFakeImpl::StateTransition,
-                              weak_factory_.GetWeakPtr()),
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&UpdateEngineClientFakeImpl::StateTransition,
+                   weak_factory_.GetWeakPtr()),
         base::TimeDelta::FromMilliseconds(kStateTransitionDefaultDelayMs));
   }
 
@@ -675,9 +676,10 @@ class UpdateEngineClientFakeImpl : public UpdateEngineClientStubImpl {
     for (auto& observer : observers_)
       observer.UpdateStatusChanged(last_status_);
     if (last_status_.status != UPDATE_STATUS_IDLE) {
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-          FROM_HERE, base::Bind(&UpdateEngineClientFakeImpl::StateTransition,
-                                weak_factory_.GetWeakPtr()),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+          FROM_HERE,
+          base::Bind(&UpdateEngineClientFakeImpl::StateTransition,
+                     weak_factory_.GetWeakPtr()),
           base::TimeDelta::FromMilliseconds(delay_ms));
     }
   }

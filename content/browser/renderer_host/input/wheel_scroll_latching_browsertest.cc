@@ -24,7 +24,7 @@ using blink::WebMouseWheelEvent;
 namespace {
 void GiveItSomeTime() {
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, run_loop.QuitClosure(), base::TimeDelta::FromMilliseconds(20));
   run_loop.Run();
 }

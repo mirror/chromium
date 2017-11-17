@@ -80,8 +80,8 @@ class GpuJpegDecodeAcceleratorTest : public ::testing::Test {
   base::SharedMemory output_frame_memory_;
 
  private:
-  // This is required to allow base::ThreadTaskRunnerHandle::Get() from the
-  // test execution thread.
+  // This is required to allow base::ThreadTaskRunnerHandle::Get(FROM_HERE) from
+  // the test execution thread.
   base::test::ScopedTaskEnvironment scoped_task_environment_;
 };
 
@@ -90,7 +90,7 @@ class GpuJpegDecodeAcceleratorTest : public ::testing::Test {
 TEST_F(GpuJpegDecodeAcceleratorTest, DecodeFrameCallArrivesAtDecoder) {
   static const int32_t kArbitraryRouteId = 123;
   auto io_task_runner = io_thread_.task_runner();
-  auto main_task_runner = base::ThreadTaskRunnerHandle::Get();
+  auto main_task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   auto decoder = base::MakeUnique<MockJpegDecodeAccelerator>();
   auto* decoder_ptr = decoder.get();
   ON_CALL(*decoder, Initialize(_)).WillByDefault(Return(true));

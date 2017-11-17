@@ -43,7 +43,7 @@ HtmlAudioElementCapturerSource::~HtmlAudioElementCapturerSource() {
 bool HtmlAudioElementCapturerSource::EnsureSourceIsStarted() {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (audio_source_ && !is_started_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&HtmlAudioElementCapturerSource::SetAudioCallback,
                               weak_factory_.GetWeakPtr()));
     is_started_ = true;

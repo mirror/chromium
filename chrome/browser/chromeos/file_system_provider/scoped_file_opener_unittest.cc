@@ -96,7 +96,7 @@ TEST(ScopedFileOpenerTest, CloseWhileOpening) {
     // Complete opening asynchronously, so after trying to abort.
     const ProvidedFileSystemInterface::OpenFileCallback open_callback =
         file_system.open_callback();
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(open_callback, 123, base::File::FILE_OK));
   }
 

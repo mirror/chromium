@@ -111,7 +111,7 @@ void TCPDeviceProvider::QueryDeviceInfo(const std::string& serial,
     device_info.browser_info.push_back(browser_info);
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, device_info));
 }
 

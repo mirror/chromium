@@ -104,7 +104,7 @@ void MockPersistentStore::Load(const LoadedCallback& loaded_callback) {
         std::make_unique<DefaultChannelIDStore::ChannelID>(it->second));
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(loaded_callback, base::Passed(&channel_ids)));
 }
 

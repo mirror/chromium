@@ -46,7 +46,7 @@ QuicSimpleServer::QuicSimpleServer(
       helper_(
           new QuicChromiumConnectionHelper(&clock_, QuicRandom::GetInstance())),
       alarm_factory_(new QuicChromiumAlarmFactory(
-          base::ThreadTaskRunnerHandle::Get().get(),
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
           &clock_)),
       config_(config),
       crypto_config_options_(crypto_config_options),
@@ -169,7 +169,7 @@ void QuicSimpleServer::StartReading() {
     synchronous_read_count_ = 0;
     if (dispatcher_->HasChlosBuffered()) {
       // No more packets to read, so yield before processing buffered packets.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(&QuicSimpleServer::StartReading,
                                 weak_factory_.GetWeakPtr()));
     }
@@ -180,7 +180,7 @@ void QuicSimpleServer::StartReading() {
     synchronous_read_count_ = 0;
     // Schedule the processing through the message loop to 1) prevent infinite
     // recursion and 2) avoid blocking the thread for too long.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&QuicSimpleServer::OnReadComplete,
                               weak_factory_.GetWeakPtr(), result));
   } else {

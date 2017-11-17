@@ -12,7 +12,7 @@ namespace binder {
 
 RemoteObject::RemoteObject(CommandBroker* command_broker, int32_t handle)
     : release_closure_(command_broker->GetReleaseReferenceClosure(handle)),
-      release_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      release_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       handle_(handle) {
   command_broker->AddReference(handle_);
 }

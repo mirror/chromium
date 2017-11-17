@@ -88,7 +88,8 @@ void PepperPlatformAudioInput::OnStreamCreated(
 #endif
   DCHECK(handle.GetSize());
 
-  if (base::ThreadTaskRunnerHandle::Get().get() != main_task_runner_.get()) {
+  if (base::ThreadTaskRunnerHandle::Get(FROM_HERE).get() !=
+      main_task_runner_.get()) {
     // If shutdown has occurred, |client_| will be NULL and the handles will be
     // cleaned up on the main thread.
     main_task_runner_->PostTask(
@@ -128,7 +129,7 @@ PepperPlatformAudioInput::~PepperPlatformAudioInput() {
 
 PepperPlatformAudioInput::PepperPlatformAudioInput()
     : client_(nullptr),
-      main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       io_task_runner_(ChildProcess::current()->io_task_runner()),
       render_frame_id_(MSG_ROUTING_NONE),
       create_stream_sent_(false),

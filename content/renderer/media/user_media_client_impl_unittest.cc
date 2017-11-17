@@ -299,7 +299,7 @@ class UserMediaProcessorUnderTest : public UserMediaProcessor {
             base::BindRepeating(
                 &UserMediaProcessorUnderTest::media_devices_dispatcher,
                 base::Unretained(this)),
-            base::ThreadTaskRunnerHandle::Get()),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         factory_(dependency_factory),
         media_devices_dispatcher_(std::move(media_devices_dispatcher)),
         state_(state) {}
@@ -364,7 +364,7 @@ class UserMediaProcessorUnderTest : public UserMediaProcessor {
 
     if (!create_source_that_fails_) {
       // RunUntilIdle is required for this task to complete.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(&UserMediaProcessorUnderTest::SignalSourceReady,
                          source_ready, source));

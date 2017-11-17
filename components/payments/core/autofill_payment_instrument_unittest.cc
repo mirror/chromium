@@ -63,7 +63,7 @@ class FakePaymentRequestDelegate
         last_committed_url_("https://shop.com"),
         personal_data_("en-US"),
         request_context_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))),
         payments_client_(request_context_.get(),
                          nullptr,
                          nullptr,

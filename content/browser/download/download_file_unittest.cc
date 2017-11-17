@@ -782,7 +782,7 @@ TEST_P(DownloadFileTestWithRename, RenameWithErrorRetry) {
     // Rename() will be in front of the QuitClosure(). Running the message loop
     // now causes the just the first retry task to be run. The rename still
     // fails, so another retry task would get queued behind the QuitClosure().
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, first_failing_run.QuitClosure());
     first_failing_run.Run();
     EXPECT_FALSE(did_run_callback);
@@ -790,7 +790,7 @@ TEST_P(DownloadFileTestWithRename, RenameWithErrorRetry) {
     // Running another loop should have the same effect as the above as long as
     // kMaxRenameRetries is greater than 2.
     base::RunLoop second_failing_run;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, second_failing_run.QuitClosure());
     second_failing_run.Run();
     EXPECT_FALSE(did_run_callback);

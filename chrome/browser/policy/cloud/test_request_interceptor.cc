@@ -286,11 +286,9 @@ size_t TestRequestInterceptor::GetPendingSize() {
 
 void TestRequestInterceptor::AddRequestServicedCallback(
     const base::Closure& callback) {
-  base::Closure post_callback =
-      base::Bind(base::IgnoreResult(&base::TaskRunner::PostTask),
-                 base::ThreadTaskRunnerHandle::Get(),
-                 FROM_HERE,
-                 callback);
+  base::Closure post_callback = base::Bind(
+      base::IgnoreResult(&base::TaskRunner::PostTask),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), FROM_HERE, callback);
   PostToIOAndWait(base::Bind(&Delegate::AddRequestServicedCallback,
                              base::Unretained(delegate_),
                              post_callback));
@@ -337,8 +335,8 @@ void TestRequestInterceptor::PostToIOAndWait(const base::Closure& task) {
   base::RunLoop run_loop;
   io_task_runner_->PostTask(
       FROM_HERE, base::BindOnce(base::IgnoreResult(&base::TaskRunner::PostTask),
-                                base::ThreadTaskRunnerHandle::Get(), FROM_HERE,
-                                run_loop.QuitClosure()));
+                                base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                                FROM_HERE, run_loop.QuitClosure()));
   run_loop.Run();
 }
 

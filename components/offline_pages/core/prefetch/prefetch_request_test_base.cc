@@ -21,7 +21,7 @@ PrefetchRequestTestBase::PrefetchRequestTestBase()
     : task_runner_(new base::TestSimpleTaskRunner),
       task_runner_handle_(task_runner_),
       request_context_(new net::TestURLRequestContextGetter(
-          base::ThreadTaskRunnerHandle::Get())) {}
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE))) {}
 
 PrefetchRequestTestBase::~PrefetchRequestTestBase() {}
 

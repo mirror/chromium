@@ -112,9 +112,8 @@ void WiFiDisplayMediaManager::Play() {
   is_playing_ = true;
   if (!player_) {
     auto service_callback = base::Bind(
-        &WiFiDisplayMediaManager::RegisterMediaService,
-        base::Unretained(this),
-        base::ThreadTaskRunnerHandle::Get());
+        &WiFiDisplayMediaManager::RegisterMediaService, base::Unretained(this),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     base::PostTaskAndReplyWithResult(io_task_runner_.get(), FROM_HERE,
         base::Bind(
             &WiFiDisplayMediaPipeline::Create,

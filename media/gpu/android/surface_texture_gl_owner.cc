@@ -32,8 +32,8 @@ struct FrameAvailableEvent
 
 SurfaceTextureGLOwner::SurfaceTextureGLOwner()
     : base::RefCountedDeleteOnSequence<SurfaceTextureGLOwner>(
-          base::ThreadTaskRunnerHandle::Get()),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 SurfaceTextureGLOwner::~SurfaceTextureGLOwner() = default;
 

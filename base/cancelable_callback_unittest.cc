@@ -175,12 +175,14 @@ TEST(CancelableCallbackTest, PostTask) {
   CancelableClosure cancelable(base::Bind(&Increment,
                                            base::Unretained(&count)));
 
-  ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, cancelable.callback());
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                   cancelable.callback());
   RunLoop().RunUntilIdle();
 
   EXPECT_EQ(1, count);
 
-  ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, cancelable.callback());
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                   cancelable.callback());
 
   // Cancel before running the message loop.
   cancelable.Cancel();

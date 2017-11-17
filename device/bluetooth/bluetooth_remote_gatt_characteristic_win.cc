@@ -237,7 +237,7 @@ void BluetoothRemoteGattCharacteristicWin::UnsubscribeFromNotifications(
     const base::Closure& callback,
     const ErrorCallback& error_callback) {
   // TODO(crbug.com/735828): Implement this method.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback);
 }
 
 void BluetoothRemoteGattCharacteristicWin::OnGetIncludedDescriptorsCallback(

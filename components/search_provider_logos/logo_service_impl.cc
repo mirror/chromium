@@ -46,7 +46,7 @@ class ImageDecodedHandlerWithTimeout {
   static base::Callback<void(const gfx::Image&)> Wrap(
       const base::Callback<void(const SkBitmap&)>& image_decoded_callback) {
     auto* handler = new ImageDecodedHandlerWithTimeout(image_decoded_callback);
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&ImageDecodedHandlerWithTimeout::OnImageDecoded,
                    handler->weak_ptr_factory_.GetWeakPtr(), gfx::Image()),

@@ -308,7 +308,7 @@ void BufferFeeder::Start() {
   }
   last_pushed_pts_ = std::numeric_limits<int64_t>::min();
   buffers_copy_ = buffers_;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&BufferFeeder::FeedBuffer, base::Unretained(this)));
 }
 
@@ -417,7 +417,7 @@ void BufferFeeder::OnPushBufferComplete(BufferStatus status) {
   if (feeding_completed_)
     return;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&BufferFeeder::FeedBuffer, base::Unretained(this)));
 }
 
@@ -732,7 +732,7 @@ void AudioVideoPipelineDeviceTest::Start() {
               current_pts == std::numeric_limits<int64_t>::min());
   last_pts_ = current_pts;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&AudioVideoPipelineDeviceTest::MonitorLoop,
                             base::Unretained(this)));
 }
@@ -825,17 +825,19 @@ void AudioVideoPipelineDeviceTest::MonitorLoop() {
         pause_pattern_[pause_pattern_idx_].length.InMilliseconds() << "ms";
 
     // Wait for pause finish
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE, base::Bind(&AudioVideoPipelineDeviceTest::OnPauseCompleted,
-                              base::Unretained(this)),
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&AudioVideoPipelineDeviceTest::OnPauseCompleted,
+                   base::Unretained(this)),
         pause_pattern_[pause_pattern_idx_].length);
     return;
   }
 
   // Check state again in a little while
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&AudioVideoPipelineDeviceTest::MonitorLoop,
-                            base::Unretained(this)),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&AudioVideoPipelineDeviceTest::MonitorLoop,
+                 base::Unretained(this)),
       kMonitorLoopDelay);
 }
 

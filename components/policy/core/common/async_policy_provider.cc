@@ -37,10 +37,9 @@ void AsyncPolicyProvider::Init(SchemaRegistry* registry) {
   if (!loader_)
     return;
 
-  AsyncPolicyLoader::UpdateCallback callback =
-      base::Bind(&AsyncPolicyProvider::LoaderUpdateCallback,
-                 base::ThreadTaskRunnerHandle::Get(),
-                 weak_factory_.GetWeakPtr());
+  AsyncPolicyLoader::UpdateCallback callback = base::Bind(
+      &AsyncPolicyProvider::LoaderUpdateCallback,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), weak_factory_.GetWeakPtr());
   bool post = loader_->task_runner()->PostTask(
       FROM_HERE,
       base::Bind(&AsyncPolicyLoader::Init,

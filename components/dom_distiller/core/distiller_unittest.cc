@@ -243,7 +243,7 @@ class TestDistillerURLFetcher : public DistillerURLFetcher {
   void PostCallbackTask() {
     ASSERT_TRUE(base::MessageLoop::current());
     ASSERT_FALSE(callback_.is_null());
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback_, responses_[url_]));
   }
 

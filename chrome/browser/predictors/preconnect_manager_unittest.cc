@@ -75,7 +75,7 @@ PreconnectManagerTest::PreconnectManagerTest()
     : mock_delegate_(
           base::MakeUnique<StrictMock<MockPreconnectManagerDelegate>>()),
       context_getter_(base::MakeRefCounted<net::TestURLRequestContextGetter>(
-          base::ThreadTaskRunnerHandle::Get())),
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE))),
       preconnect_manager_(base::MakeUnique<StrictMock<MockPreconnectManager>>(
           mock_delegate_->AsWeakPtr(),
           context_getter_)) {}

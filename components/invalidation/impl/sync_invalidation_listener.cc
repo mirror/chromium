@@ -140,7 +140,7 @@ void SyncInvalidationListener::Invalidate(
 
   ObjectIdInvalidationMap invalidations;
   Invalidation inv = Invalidation::Init(id, invalidation.version(), payload);
-  inv.SetAckHandler(AsWeakPtr(), base::ThreadTaskRunnerHandle::Get());
+  inv.SetAckHandler(AsWeakPtr(), base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   invalidations.Insert(inv);
 
   DispatchInvalidations(invalidations);
@@ -158,7 +158,7 @@ void SyncInvalidationListener::InvalidateUnknownVersion(
   ObjectIdInvalidationMap invalidations;
   Invalidation unknown_version = Invalidation::InitUnknownVersion(object_id);
   unknown_version.SetAckHandler(AsWeakPtr(),
-                                base::ThreadTaskRunnerHandle::Get());
+                                base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   invalidations.Insert(unknown_version);
 
   DispatchInvalidations(invalidations);
@@ -179,7 +179,7 @@ void SyncInvalidationListener::InvalidateAll(
        it != registered_ids_.end(); ++it) {
     Invalidation unknown_version = Invalidation::InitUnknownVersion(*it);
     unknown_version.SetAckHandler(AsWeakPtr(),
-                                  base::ThreadTaskRunnerHandle::Get());
+                                  base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     invalidations.Insert(unknown_version);
   }
 
@@ -361,9 +361,9 @@ void SyncInvalidationListener::DoRegistrationUpdate() {
     if (registered_ids_.find(map_it->first) == registered_ids_.end()) {
       continue;
     }
-    map_it->second.ExportInvalidations(AsWeakPtr(),
-                                       base::ThreadTaskRunnerHandle::Get(),
-                                       &object_id_invalidation_map);
+    map_it->second.ExportInvalidations(
+        AsWeakPtr(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+        &object_id_invalidation_map);
   }
 
   // There's no need to run these through DispatchInvalidations(); they've

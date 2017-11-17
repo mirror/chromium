@@ -56,7 +56,7 @@ class QuotaPolicyChannelIDStoreTest : public testing::Test {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
     store_ = new QuotaPolicyChannelIDStore(
         temp_dir_.GetPath().Append(kTestChannelIDFilename),
-        base::ThreadTaskRunnerHandle::Get(), NULL);
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), NULL);
     std::vector<std::unique_ptr<net::DefaultChannelIDStore::ChannelID>>
         channel_ids;
     Load(&channel_ids);
@@ -95,7 +95,7 @@ TEST_F(QuotaPolicyChannelIDStoreTest, TestPersistence) {
   base::RunLoop().RunUntilIdle();
   store_ = new QuotaPolicyChannelIDStore(
       temp_dir_.GetPath().Append(kTestChannelIDFilename),
-      base::ThreadTaskRunnerHandle::Get(), NULL);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), NULL);
 
   // Reload and test for persistence
   Load(&channel_ids);
@@ -125,7 +125,7 @@ TEST_F(QuotaPolicyChannelIDStoreTest, TestPersistence) {
   channel_ids.clear();
   store_ = new QuotaPolicyChannelIDStore(
       temp_dir_.GetPath().Append(kTestChannelIDFilename),
-      base::ThreadTaskRunnerHandle::Get(), NULL);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), NULL);
 
   // Reload and check if the channel ID has been removed.
   Load(&channel_ids);
@@ -157,7 +157,7 @@ TEST_F(QuotaPolicyChannelIDStoreTest, TestPolicy) {
   // Reload store, it should still have both channel IDs.
   store_ = new QuotaPolicyChannelIDStore(
       temp_dir_.GetPath().Append(kTestChannelIDFilename),
-      base::ThreadTaskRunnerHandle::Get(), storage_policy);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), storage_policy);
   Load(&channel_ids);
   ASSERT_EQ(2U, channel_ids.size());
 
@@ -181,7 +181,7 @@ TEST_F(QuotaPolicyChannelIDStoreTest, TestPolicy) {
   channel_ids.clear();
   store_ = new QuotaPolicyChannelIDStore(
       temp_dir_.GetPath().Append(kTestChannelIDFilename),
-      base::ThreadTaskRunnerHandle::Get(), NULL);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), NULL);
 
   // Reload and check that the nonpersistent.com channel IDs have been removed.
   Load(&channel_ids);

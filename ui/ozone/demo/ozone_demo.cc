@@ -140,7 +140,7 @@ class DemoWindow : public ui::PlatformWindowDelegate {
   gfx::Size GetSize() { return platform_window_->GetBounds().size(); }
 
   void Start() {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&DemoWindow::StartOnGpu, weak_ptr_factory_.GetWeakPtr()));
   }
@@ -209,7 +209,7 @@ bool RendererFactory::Initialize() {
 
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   if (!command_line->HasSwitch(kDisableGpu) && gl::init::InitializeGLOneOff() &&
-      gpu_helper_.Initialize(base::ThreadTaskRunnerHandle::Get())) {
+      gpu_helper_.Initialize(base::ThreadTaskRunnerHandle::Get(FROM_HERE))) {
     type_ = GL;
   } else {
     type_ = SOFTWARE;
@@ -313,7 +313,7 @@ void WindowManager::OnDisplaysAquired(
 
   if (should_configure_) {
     should_configure_ = false;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&WindowManager::OnConfigurationChanged,
                               base::Unretained(this)));
   }

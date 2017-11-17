@@ -668,7 +668,7 @@ class DnsConfigServiceWin::ConfigReader : public SerialWorker {
     } else {
       LOG(WARNING) << "Failed to read DnsConfig.";
       // Try again in a while in case DnsConfigWatcher missed the signal.
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE, base::Bind(&ConfigReader::WorkNow, this),
           base::TimeDelta::FromSeconds(kRetryIntervalSeconds));
     }

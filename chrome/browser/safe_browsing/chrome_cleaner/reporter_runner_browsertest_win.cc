@@ -131,7 +131,7 @@ class ReporterRunnerTest : public InProcessBrowserTest,
     // message loop. Since the test calls LaunchReporter instead of actually
     // doing a blocking reporter launch, it doesn't matter that the task runner
     // doesn't have the MayBlock trait.
-    return base::ThreadTaskRunnerHandle::Get().get();
+    return base::ThreadTaskRunnerHandle::Get(FROM_HERE).get();
   }
 
   void ResetReporterRuns(int exit_code_to_report) {

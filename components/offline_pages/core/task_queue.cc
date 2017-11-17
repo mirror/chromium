@@ -18,7 +18,7 @@ TaskQueue::~TaskQueue() {}
 
 void TaskQueue::AddTask(std::unique_ptr<Task> task) {
   task->SetTaskCompletionCallback(
-      base::ThreadTaskRunnerHandle::Get(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::Bind(&TaskQueue::TaskCompleted, weak_ptr_factory_.GetWeakPtr()));
   tasks_.push(std::move(task));
   StartTaskIfAvailable();
@@ -39,7 +39,7 @@ void TaskQueue::StartTaskIfAvailable() {
     return;
 
   if (!HasPendingTasks()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&TaskQueue::InformTaskQueueIsIdle,
                               weak_ptr_factory_.GetWeakPtr()));
     return;

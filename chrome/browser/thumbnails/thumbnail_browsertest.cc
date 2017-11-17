@@ -88,7 +88,7 @@ std::string MakeHtmlDocument(const std::string& background_color) {
 
 void Sleep(base::TimeDelta delta) {
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, run_loop.QuitClosure(), delta);
   run_loop.Run();
 }

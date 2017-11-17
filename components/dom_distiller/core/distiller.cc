@@ -323,7 +323,8 @@ void DistillerImpl::OnFetchImageDone(int page_num,
   // callback is invoked by the |url_fetcher|.
   fetcher_it->release();
   page_data->image_fetchers_.erase(fetcher_it);
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, url_fetcher);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE,
+                                                           url_fetcher);
 
   DistilledPageProto_Image* image =
       page_data->distilled_page_proto->data.add_image();

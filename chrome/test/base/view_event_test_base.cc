@@ -151,7 +151,7 @@ void ViewEventTestBase::StartMessageLoopAndRunTest() {
 
   // Schedule a task that starts the test. Need to do this as we're going to
   // run the message loop.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&ViewEventTestBase::DoTestOnMessageLoop, this));
 
   content::RunThisRunLoop(&run_loop_);

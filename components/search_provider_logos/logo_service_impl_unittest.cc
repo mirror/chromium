@@ -266,8 +266,8 @@ class FakeImageDecoder : public image_fetcher::ImageDecoder {
       const image_fetcher::ImageDecodedCallback& callback) override {
     gfx::Image image = gfx::Image::CreateFrom1xPNGBytes(
         reinterpret_cast<const uint8_t*>(image_data.data()), image_data.size());
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  base::Bind(callback, image));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, base::Bind(callback, image));
   }
 };
 
@@ -295,7 +295,7 @@ class LogoServiceImplTest : public ::testing::Test {
         base::FilePath(), &template_url_service_,
         std::make_unique<FakeImageDecoder>(),
         new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get()),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         base::BindRepeating(&LogoServiceImplTest::use_gray_background,
                             base::Unretained(this)));
     logo_service_->SetClockForTests(base::WrapUnique(test_clock_));
@@ -876,7 +876,7 @@ void EnqueueCallbacks(LogoServiceImpl* logo_service,
   callbacks.on_fresh_decoded_logo_available =
       std::move((*fresh_callbacks)[start_index]);
   logo_service->GetLogo(std::move(callbacks));
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&EnqueueCallbacks, logo_service, cached_callbacks,
                             fresh_callbacks, start_index + 1));
 }

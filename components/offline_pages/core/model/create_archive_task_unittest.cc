@@ -155,9 +155,9 @@ void CreateArchiveTaskTest::OnCreateArchiveDone(OfflinePageItem offline_page,
 std::unique_ptr<OfflinePageTestArchiver> CreateArchiveTaskTest::BuildArchiver(
     const GURL& url,
     ArchiverResult result) {
-  return std::unique_ptr<OfflinePageTestArchiver>(
-      new OfflinePageTestArchiver(this, url, result, kTestTitle, kTestFileSize,
-                                  base::ThreadTaskRunnerHandle::Get()));
+  return std::unique_ptr<OfflinePageTestArchiver>(new OfflinePageTestArchiver(
+      this, url, result, kTestTitle, kTestFileSize,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 }
 
 void CreateArchiveTaskTest::CreateArchiveWithParams(

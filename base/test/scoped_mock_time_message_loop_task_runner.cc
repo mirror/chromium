@@ -23,7 +23,7 @@ void RunOnceClosure(OnceClosure closure) {
 
 ScopedMockTimeMessageLoopTaskRunner::ScopedMockTimeMessageLoopTaskRunner()
     : task_runner_(new TestMockTimeTaskRunner),
-      previous_task_runner_(ThreadTaskRunnerHandle::Get()) {
+      previous_task_runner_(ThreadTaskRunnerHandle::Get(FROM_HERE)) {
   DCHECK(MessageLoop::current());
   // To ensure that we process any initialization tasks posted to the
   // MessageLoop by a test fixture before replacing its TaskRunner.
@@ -33,7 +33,7 @@ ScopedMockTimeMessageLoopTaskRunner::ScopedMockTimeMessageLoopTaskRunner()
 
 ScopedMockTimeMessageLoopTaskRunner::~ScopedMockTimeMessageLoopTaskRunner() {
   DCHECK(previous_task_runner_->RunsTasksInCurrentSequence());
-  DCHECK_EQ(task_runner_, ThreadTaskRunnerHandle::Get());
+  DCHECK_EQ(task_runner_, ThreadTaskRunnerHandle::Get(FROM_HERE));
   for (auto& pending_task : task_runner_->TakePendingTasks()) {
     // TODO(tzik): Remove RunOnceClosure once TaskRunner migrates from Closure
     // to OnceClosure.

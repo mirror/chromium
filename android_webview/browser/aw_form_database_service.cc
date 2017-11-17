@@ -33,7 +33,7 @@ AwFormDatabaseService::AwFormDatabaseService(const base::FilePath path)
       has_form_data_completion_(
           base::WaitableEvent::ResetPolicy::AUTOMATIC,
           base::WaitableEvent::InitialState::NOT_SIGNALED) {
-  auto ui_task_runner = base::ThreadTaskRunnerHandle::Get();
+  auto ui_task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   // TODO(pkasting): http://crbug.com/740773 This should likely be sequenced,
   // not single-threaded; it's also possible these objects can each use their
   // own sequences instead of sharing this one.

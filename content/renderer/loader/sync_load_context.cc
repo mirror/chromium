@@ -47,7 +47,7 @@ SyncLoadContext::SyncLoadContext(
 
   // Constructs a new ResourceDispatcher specifically for this request.
   resource_dispatcher_ = std::make_unique<ResourceDispatcher>(
-      nullptr, base::ThreadTaskRunnerHandle::Get());
+      nullptr, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   // Initialize the final URL with the original request URL. It will be
   // overwritten on redirects.

@@ -100,7 +100,7 @@ GpuVideoEncodeAccelerator::GpuVideoEncodeAccelerator(
       filter_removed_(base::WaitableEvent::ResetPolicy::MANUAL,
                       base::WaitableEvent::InitialState::NOT_SIGNALED),
       encoder_worker_thread_("EncoderWorkerThread"),
-      main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       io_task_runner_(io_task_runner),
       encode_task_runner_(main_task_runner_),
       weak_this_factory_for_encoder_worker_(this),

@@ -196,7 +196,7 @@ class QuicProxyClientSocketTest
         QuicTime::Delta::FromMilliseconds(kQuicYieldAfterDurationMilliseconds),
         /*cert_verify_flags=*/0, DefaultQuicConfig(), &crypto_config_,
         "CONNECTION_UNKNOWN", dns_start, dns_end, &push_promise_index_, nullptr,
-        base::ThreadTaskRunnerHandle::Get().get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
         /*socket_performance_watcher=*/nullptr, net_log_.bound().net_log()));
 
     writer->set_delegate(session_.get());

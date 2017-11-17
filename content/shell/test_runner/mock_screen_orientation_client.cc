@@ -117,14 +117,14 @@ bool MockScreenOrientationClient::IsOrientationAllowedByCurrentLock(
 void MockScreenOrientationClient::LockOrientation(
     blink::WebScreenOrientationLockType orientation,
     std::unique_ptr<blink::WebLockOrientationCallback> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&MockScreenOrientationClient::UpdateLockSync,
                                 base::Unretained(this), orientation,
                                 base::Passed(&callback)));
 }
 
 void MockScreenOrientationClient::UnlockOrientation() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&MockScreenOrientationClient::ResetLockSync,
                                 base::Unretained(this)));
 }

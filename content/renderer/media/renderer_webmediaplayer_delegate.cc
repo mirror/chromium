@@ -338,7 +338,7 @@ void RendererWebMediaPlayerDelegate::OnMediaDelegateBecamePersistentVideo(
 
 void RendererWebMediaPlayerDelegate::ScheduleUpdateTask() {
   if (!pending_update_task_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&RendererWebMediaPlayerDelegate::UpdateTask,
                                   AsWeakPtr()));
     pending_update_task_ = true;

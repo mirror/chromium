@@ -22,8 +22,7 @@ StubAuthenticator::StubAuthenticator(AuthStatusConsumer* consumer,
                                      const UserContext& expected_user_context)
     : Authenticator(consumer),
       expected_user_context_(expected_user_context),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()) {
-}
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 void StubAuthenticator::CompleteLogin(content::BrowserContext* context,
                                       const UserContext& user_context) {

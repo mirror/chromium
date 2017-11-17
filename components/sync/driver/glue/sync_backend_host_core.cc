@@ -118,7 +118,7 @@ void SyncBackendHostCore::OnInitializationComplete(
 
   // Sync manager initialization is complete, so we can schedule recurring
   // SaveChanges.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&SyncBackendHostCore::StartSavingChanges,
                             weak_ptr_factory_.GetWeakPtr()));
 
@@ -330,7 +330,7 @@ void SyncBackendHostCore::DoInitialize(SyncEngine::InitParams params) {
   args.saved_nigori_state = std::move(params.saved_nigori_state);
   sync_manager_->Init(&args);
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-      this, "SyncDirectory", base::ThreadTaskRunnerHandle::Get());
+      this, "SyncDirectory", base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 void SyncBackendHostCore::DoUpdateCredentials(

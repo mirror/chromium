@@ -74,7 +74,7 @@ class MockOfflinePageModel : public StubOfflinePageModel {
   void CompleteSavingAsArchiveCreationFailed() {
     DCHECK(mock_saving_);
     mock_saving_ = false;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(save_page_callback_,
                               SavePageResult::ARCHIVE_CREATION_FAILED, 0));
   }
@@ -82,7 +82,7 @@ class MockOfflinePageModel : public StubOfflinePageModel {
   void CompleteSavingAsSuccess() {
     DCHECK(mock_saving_);
     mock_saving_ = false;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(save_page_callback_, SavePageResult::SUCCESS, 123456));
   }
@@ -90,7 +90,7 @@ class MockOfflinePageModel : public StubOfflinePageModel {
   void CompleteSavingAsAlreadyExists() {
     DCHECK(mock_saving_);
     mock_saving_ = false;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(save_page_callback_,
                               SavePageResult::ALREADY_EXISTS, 123456));
   }
@@ -200,7 +200,7 @@ class BackgroundLoaderOfflinerTest : public testing::Test {
   void CompleteLoading() {
     // Reset snapshot controller.
     std::unique_ptr<SnapshotController> snapshot_controller(
-        new SnapshotController(base::ThreadTaskRunnerHandle::Get(),
+        new SnapshotController(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                                offliner_.get(),
                                0L /* DelayAfterDocumentAvailable */,
                                0L /* DelayAfterDocumentOnLoad */,

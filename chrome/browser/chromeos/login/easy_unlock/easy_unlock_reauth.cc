@@ -100,7 +100,7 @@ class ReauthHandler : public content::NotificationObserver,
     DCHECK(base::MessageLoopForUI::IsCurrent());
     callback_.Run(user_context);
     // Schedule deletion.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&EndReauthAttempt));
   }
 

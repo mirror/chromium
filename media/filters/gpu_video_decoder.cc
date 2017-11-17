@@ -101,14 +101,14 @@ void GpuVideoDecoder::Reset(const base::Closure& closure)  {
   DCheckGpuVideoAcceleratorFactoriesTaskRunnerIsCurrent();
 
   if (state_ == kDrainingDecoder) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&GpuVideoDecoder::Reset,
                               weak_factory_.GetWeakPtr(), closure));
     return;
   }
 
   if (!vda_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, closure);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, closure);
     return;
   }
 

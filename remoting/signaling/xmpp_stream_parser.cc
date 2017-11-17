@@ -158,7 +158,8 @@ XmppStreamParser::~XmppStreamParser() {
   // Set null callbacks and delete |core_| asynchronously to make sure it's not
   // deleted from a callback.
   core_->SetCallbacks(OnStanzaCallback(), base::Closure());
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, core_.release());
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE,
+                                                           core_.release());
 }
 
 void XmppStreamParser::SetCallbacks(const OnStanzaCallback& on_stanza_callback,

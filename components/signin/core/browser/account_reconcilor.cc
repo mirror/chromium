@@ -696,7 +696,7 @@ void AccountReconcilor::ScheduleStartReconcileIfChromeAccountsChanged() {
   VLOG(1) << "AccountReconcilor::StartReconcileIfChromeAccountsChanged";
   if (chrome_accounts_changed_) {
     chrome_accounts_changed_ = false;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&AccountReconcilor::StartReconcile, base::Unretained(this)));
   }

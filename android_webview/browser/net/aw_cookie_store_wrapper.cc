@@ -70,7 +70,7 @@ class SubscriptionWrapper {
         : base::RefCountedDeleteOnSequence<NestedSubscription>(
               GetCookieStoreTaskRunner()),
           subscription_wrapper_(subscription_wrapper),
-          client_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+          client_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
       PostTaskToCookieStoreTaskRunner(
           base::Bind(&NestedSubscription::Subscribe, this, url, name));
     }
@@ -220,7 +220,7 @@ void SetForceKeepSessionStateOnCookieThread() {
 }  // namespace
 
 AwCookieStoreWrapper::AwCookieStoreWrapper()
-    : client_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : client_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       weak_factory_(this) {}
 
 AwCookieStoreWrapper::~AwCookieStoreWrapper() {}

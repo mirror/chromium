@@ -23,11 +23,11 @@ const int64_t SyncTaskToken::kMinimumBackgroundTaskTokenID = 1;
 // static
 std::unique_ptr<SyncTaskToken> SyncTaskToken::CreateForTesting(
     const SyncStatusCallback& callback) {
-  return base::WrapUnique(new SyncTaskToken(base::WeakPtr<SyncTaskManager>(),
-                                            base::ThreadTaskRunnerHandle::Get(),
-                                            kTestingTaskTokenID,
-                                            nullptr,  // task_blocker
-                                            callback));
+  return base::WrapUnique(new SyncTaskToken(
+      base::WeakPtr<SyncTaskManager>(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), kTestingTaskTokenID,
+      nullptr,  // task_blocker
+      callback));
 }
 
 // static

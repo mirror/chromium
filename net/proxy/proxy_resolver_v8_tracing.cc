@@ -344,7 +344,7 @@ class ProxyResolverV8TracingImpl : public ProxyResolverV8Tracing {
 
 Job::Job(const Job::Params* params,
          std::unique_ptr<ProxyResolverV8Tracing::Bindings> bindings)
-    : origin_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : origin_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       params_(params),
       bindings_(std::move(bindings)),
       event_(base::WaitableEvent::ResetPolicy::MANUAL,

@@ -90,7 +90,7 @@ void SearchResultContainerView::ScheduleUpdate() {
   // When search results are added one by one, each addition generates an update
   // request. Consolidates those update requests into one Update call.
   if (!update_factory_.HasWeakPtrs()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&SearchResultContainerView::Update,
                               update_factory_.GetWeakPtr()));
   }

@@ -17,7 +17,7 @@ void FakeArcMidisClient::Init(dbus::Bus* bus) {}
 void FakeArcMidisClient::BootstrapMojoConnection(
     base::ScopedFD fd,
     VoidDBusMethodCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), false));
 }
 

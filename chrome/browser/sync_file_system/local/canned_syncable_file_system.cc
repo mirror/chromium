@@ -69,9 +69,10 @@ R RunOnThread(base::SingleThreadTaskRunner* task_runner,
       location,
       base::BindOnce(
           std::move(task),
-          base::Bind(&AssignAndQuit<R>,
-                     base::RetainedRef(base::ThreadTaskRunnerHandle::Get()),
-                     run_loop.QuitClosure(), base::Unretained(&result))));
+          base::Bind(
+              &AssignAndQuit<R>,
+              base::RetainedRef(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+              run_loop.QuitClosure(), base::Unretained(&result))));
   run_loop.Run();
   return result;
 }
@@ -84,7 +85,7 @@ void RunOnThread(base::SingleThreadTaskRunner* task_runner,
       location, std::move(task),
       base::BindOnce(
           base::IgnoreResult(&base::SingleThreadTaskRunner::PostTask),
-          base::ThreadTaskRunnerHandle::Get(), FROM_HERE,
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE), FROM_HERE,
           run_loop.QuitClosure()));
   run_loop.Run();
 }
@@ -164,7 +165,7 @@ class WriteHelper {
 
   ~WriteHelper() {
     if (request_context_) {
-      base::ThreadTaskRunnerHandle::Get()->DeleteSoon(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
           FROM_HERE, request_context_.release());
     }
   }
@@ -292,10 +293,11 @@ File::Error CannedSyncableFileSystem::OpenFileSystem() {
       FROM_HERE,
       base::BindOnce(
           &CannedSyncableFileSystem::DoOpenFileSystem, base::Unretained(this),
-          base::Bind(&CannedSyncableFileSystem::DidOpenFileSystem,
-                     base::Unretained(this),
-                     base::RetainedRef(base::ThreadTaskRunnerHandle::Get()),
-                     run_loop.QuitClosure())));
+          base::Bind(
+              &CannedSyncableFileSystem::DidOpenFileSystem,
+              base::Unretained(this),
+              base::RetainedRef(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+              run_loop.QuitClosure())));
   run_loop.Run();
 
   if (backend()->sync_context()) {

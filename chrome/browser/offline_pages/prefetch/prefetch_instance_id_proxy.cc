@@ -41,7 +41,7 @@ void PrefetchInstanceIDProxy::GetGCMToken(
     InstanceID::GetTokenCallback callback) {
   DCHECK(IsPrefetchingOfflinePagesEnabled());
   if (!token_.empty()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&PrefetchInstanceIDProxy::GotGCMToken,
                               weak_factory_.GetWeakPtr(), callback, token_,
                               InstanceID::SUCCESS));

@@ -68,7 +68,7 @@ bool TracingManager::GetTraceData(int id, const TraceDataCallback& callback) {
       return false;
 
     // Always return the data asychronously, so the behavior is consistant.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, data->second));
     return true;
   }
@@ -119,7 +119,7 @@ void TracingManager::OnTraceDataCollected(
 
   // Tracing has to be restarted asynchronous, so the TracingController can
   // clean up.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&TracingManager::StartTracing,
                             weak_ptr_factory_.GetWeakPtr()));
 }

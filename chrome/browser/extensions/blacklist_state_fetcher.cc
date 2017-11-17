@@ -37,7 +37,7 @@ void BlacklistStateFetcher::Request(const std::string& id,
       SetSafeBrowsingConfig(
           g_browser_process->safe_browsing_service()->GetProtocolConfig());
     } else {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(callback, BLACKLISTED_UNKNOWN));
       return;
     }

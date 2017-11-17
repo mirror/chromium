@@ -134,7 +134,7 @@ class FakeSocket : public P2PDatagramSocket {
            const net::CompletionCallback& callback) override {
     DCHECK(buf);
     if (peer_socket_) {
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE,
           base::Bind(&FakeSocket::AppendInputPacket,
                      base::Unretained(peer_socket_),
@@ -329,7 +329,7 @@ TEST_F(PseudoTcpAdapterTest, DataTransfer) {
   ASSERT_EQ(net::OK, rv2);
 
   scoped_refptr<TCPChannelTester> tester =
-      new TCPChannelTester(base::ThreadTaskRunnerHandle::Get(),
+      new TCPChannelTester(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                            host_pseudotcp_.get(), client_pseudotcp_.get());
 
   tester->Start();
@@ -364,7 +364,7 @@ TEST_F(PseudoTcpAdapterTest, LimitedChannel) {
   ASSERT_EQ(net::OK, rv2);
 
   scoped_refptr<TCPChannelTester> tester =
-      new TCPChannelTester(base::ThreadTaskRunnerHandle::Get(),
+      new TCPChannelTester(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                            host_pseudotcp_.get(), client_pseudotcp_.get());
 
   tester->Start();
@@ -390,7 +390,7 @@ TEST_F(PseudoTcpAdapterTest, DeleteOnConnected) {
   // to deleted structures being touched as the stack unrolls, so the failure
   // mode is a crash rather than a normal test failure.
   net::TestCompletionCallback client_connect_cb;
-  DeleteOnConnected host_delete(base::ThreadTaskRunnerHandle::Get(),
+  DeleteOnConnected host_delete(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                                 &host_pseudotcp_);
 
   host_pseudotcp_->Connect(base::Bind(&DeleteOnConnected::OnConnected,
@@ -425,7 +425,7 @@ TEST_F(PseudoTcpAdapterTest, WriteWaitsForSendLetsDataThrough) {
   ASSERT_EQ(net::OK, rv2);
 
   scoped_refptr<TCPChannelTester> tester =
-      new TCPChannelTester(base::ThreadTaskRunnerHandle::Get(),
+      new TCPChannelTester(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                            host_pseudotcp_.get(), client_pseudotcp_.get());
 
   tester->Start();

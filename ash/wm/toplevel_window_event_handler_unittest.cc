@@ -132,7 +132,7 @@ TEST_F(ToplevelWindowEventHandlerTest, WindowPositionAutoManagement) {
   generator.PressLeftButton();
   ::wm::WindowMoveClient* move_client =
       ::wm::GetWindowMoveClient(w1->GetRootWindow());
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&ContinueAndCompleteDrag, base::Unretained(&generator),
                  base::Unretained(window_state), base::Unretained(w1.get())));
@@ -150,7 +150,7 @@ TEST_F(ToplevelWindowEventHandlerTest, WindowPositionAutoManagement) {
   // restored after drag completes.
   window_state->SetWindowPositionManaged(false);
   generator.PressLeftButton();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&ContinueAndCompleteDrag, base::Unretained(&generator),
                  base::Unretained(window_state), base::Unretained(w1.get())));
@@ -951,7 +951,7 @@ TEST_F(ToplevelWindowEventHandlerTest, CaptureLossAfterMouseRelease) {
 
   ::wm::WindowMoveClient* move_client =
       ::wm::GetWindowMoveClient(window->GetRootWindow());
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&SendMouseReleaseAndReleaseCapture,
                  base::Unretained(&generator), base::Unretained(window.get())));
@@ -978,7 +978,7 @@ TEST_F(ToplevelWindowEventHandlerTest, GestureDragCaptureLoss) {
 
   ::wm::WindowMoveClient* move_client =
       ::wm::GetWindowMoveClient(window->GetRootWindow());
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&CheckHasCaptureAndReleaseCapture,
                             base::Unretained(window.get())));
   EXPECT_EQ(::wm::MOVE_SUCCESSFUL,

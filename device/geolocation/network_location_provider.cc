@@ -170,9 +170,10 @@ void NetworkLocationProvider::StartProvider(bool high_accuracy) {
   wifi_data_provider_manager_ =
       WifiDataProviderManager::Register(&wifi_data_update_callback_);
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&NetworkLocationProvider::RequestPosition,
-                            weak_factory_.GetWeakPtr()),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&NetworkLocationProvider::RequestPosition,
+                 weak_factory_.GetWeakPtr()),
       base::TimeDelta::FromSeconds(kDataCompleteWaitSeconds));
 
   OnWifiDataUpdate();

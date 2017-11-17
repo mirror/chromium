@@ -181,7 +181,7 @@ class SpeechRecognitionBrowserTest :
 
     const int n_buffers = duration_ms / ms_per_buffer;
     for (int i = 0; i < n_buffers; ++i) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(
               &FeedSingleBufferToAudioController,

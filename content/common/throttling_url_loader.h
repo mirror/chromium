@@ -44,9 +44,17 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
       uint32_t options,
       const ResourceRequest& url_request,
       mojom::URLLoaderClient* client,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation);
+  static std::unique_ptr<ThrottlingURLLoader> CreateLoaderAndStart(
+      mojom::URLLoaderFactory* factory,
+      std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
+      int32_t routing_id,
+      int32_t request_id,
+      uint32_t options,
+      const ResourceRequest& url_request,
+      mojom::URLLoaderClient* client,
       const net::NetworkTrafficAnnotationTag& traffic_annotation,
-      scoped_refptr<base::SingleThreadTaskRunner> task_runner =
-          base::ThreadTaskRunnerHandle::Get());
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
   using StartLoaderCallback =
       base::OnceCallback<void(mojom::URLLoaderRequest request,
@@ -61,9 +69,15 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
       int32_t routing_id,
       const ResourceRequest& url_request,
       mojom::URLLoaderClient* client,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation);
+  static std::unique_ptr<ThrottlingURLLoader> CreateLoaderAndStart(
+      StartLoaderCallback start_loader_callback,
+      std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
+      int32_t routing_id,
+      const ResourceRequest& url_request,
+      mojom::URLLoaderClient* client,
       const net::NetworkTrafficAnnotationTag& traffic_annotation,
-      scoped_refptr<base::SingleThreadTaskRunner> task_runner =
-          base::ThreadTaskRunnerHandle::Get());
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
   ~ThrottlingURLLoader() override;
 

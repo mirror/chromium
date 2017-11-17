@@ -97,13 +97,12 @@ PrinterJobHandler::PrinterJobHandler(
       next_json_data_handler_(NULL),
       next_data_handler_(NULL),
       print_thread_("Chrome_CloudPrintJobPrintThread"),
-      job_handler_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      job_handler_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       shutting_down_(false),
       job_check_pending_(false),
       printer_update_pending_(true),
       task_in_progress_(false),
-      weak_ptr_factory_(this) {
-}
+      weak_ptr_factory_(this) {}
 
 bool PrinterJobHandler::Initialize() {
   if (!print_system_->IsValidPrinter(printer_info_.printer_name))
@@ -130,7 +129,7 @@ void PrinterJobHandler::CheckForJobs(const std::string& reason) {
   job_fetch_reason_ = reason;
   job_check_pending_ = true;
   if (!task_in_progress_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&PrinterJobHandler::Start, this));
   }
 }
@@ -159,7 +158,7 @@ CloudPrintURLFetcher::ResponseAction PrinterJobHandler::HandleRawResponse(
   if (next_data_handler_ == (&PrinterJobHandler::HandlePrintDataResponse) &&
       response_code == net::HTTP_UNSUPPORTED_MEDIA_TYPE) {
     VLOG(1) << "CP_CONNECTOR: Job failed (unsupported media type)";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&PrinterJobHandler::JobFailed, this,
                                   JOB_DOWNLOAD_FAILED));
     return CloudPrintURLFetcher::STOP_PROCESSING;
@@ -190,12 +189,12 @@ void PrinterJobHandler::OnRequestGiveUp() {
   if (job_queue_handler_.JobFetchFailed(job_details_.job_id_)) {
     VLOG(1) << "CP_CONNECTOR: Job failed to load (scheduling retry)";
     CheckForJobs(kJobFetchReasonFailure);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&PrinterJobHandler::Stop, this));
   } else {
     VLOG(1) << "CP_CONNECTOR: Job failed (giving up after " <<
         kNumRetriesBeforeAbandonJob << " retries)";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&PrinterJobHandler::JobFailed, this,
                                   JOB_DOWNLOAD_FAILED));
   }
@@ -234,7 +233,7 @@ bool PrinterJobHandler::OnJobCompleted(JobStatusUpdater* updater) {
 }
 
 void PrinterJobHandler::OnAuthError() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&PrinterJobHandler::Stop, this));
   if (delegate_)
     delegate_->OnAuthError();
@@ -248,7 +247,7 @@ void PrinterJobHandler::OnPrinterDeleted() {
 void PrinterJobHandler::OnPrinterChanged() {
   printer_update_pending_ = true;
   if (!task_in_progress_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&PrinterJobHandler::Start, this));
   }
 }
@@ -257,7 +256,7 @@ void PrinterJobHandler::OnJobChanged() {
   // Some job on the printer changed. Loop through all our JobStatusUpdaters
   // and have them check for updates.
   for (const auto& it : job_status_updater_list_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&JobStatusUpdater::UpdateStatus, it));
   }
 }
@@ -309,7 +308,7 @@ PrinterJobHandler::HandlePrinterUpdateResponse(
   // We are done here. Go to the Stop state
   VLOG(1) << "CP_CONNECTOR: Stopping printer job handler"
           << ", printer id: " << printer_info_cloud_.printer_id;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&PrinterJobHandler::Stop, this));
   return CloudPrintURLFetcher::STOP_PROCESSING;
 }
@@ -350,7 +349,7 @@ PrinterJobHandler::HandleJobMetadataResponse(
         }
       } else {
         job_available = false;
-        base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
             FROM_HERE,
             base::BindOnce(&PrinterJobHandler::RunScheduledJobCheck, this),
             jobs[0].time_remaining_);
@@ -362,7 +361,7 @@ PrinterJobHandler::HandleJobMetadataResponse(
     // If no jobs are available, go to the Stop state.
     VLOG(1) << "CP_CONNECTOR: Stopping printer job handler"
             << ", printer id: " << printer_info_cloud_.printer_id;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&PrinterJobHandler::Stop, this));
   }
   return CloudPrintURLFetcher::STOP_PROCESSING;
@@ -423,7 +422,7 @@ PrinterJobHandler::HandlePrintDataResponse(const net::URLFetcher* source,
   // here.
   VLOG(1) << "CP_CONNECTOR: Error saving print data"
           << ", printer id: " << printer_info_cloud_.printer_id;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&PrinterJobHandler::JobFailed, this, JOB_DOWNLOAD_FAILED));
   return CloudPrintURLFetcher::STOP_PROCESSING;
@@ -437,7 +436,7 @@ PrinterJobHandler::HandleInProgressStatusUpdateResponse(
     bool succeeded) {
   VLOG(1) << "CP_CONNECTOR: Handling success status update response"
           << ", printer id: " << printer_info_cloud_.printer_id;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&PrinterJobHandler::StartPrinting, this));
   return CloudPrintURLFetcher::STOP_PROCESSING;
 }
@@ -450,7 +449,7 @@ PrinterJobHandler::HandleFailureStatusUpdateResponse(
     bool succeeded) {
   VLOG(1) << "CP_CONNECTOR: Handling failure status update response"
           << ", printer id: " << printer_info_cloud_.printer_id;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&PrinterJobHandler::Stop, this));
   return CloudPrintURLFetcher::STOP_PROCESSING;
 }
@@ -519,7 +518,7 @@ void PrinterJobHandler::Stop() {
           << ", task in progress: " << task_in_progress_;
   Reset();
   if (HavePendingTasks()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&PrinterJobHandler::Start, this));
   }
 }
@@ -639,7 +638,7 @@ void PrinterJobHandler::JobSpooled(PlatformJobId local_job_id) {
       cloud_print_server_url_, print_system_.get(), this,
       kPartialTrafficAnnotation));
   job_status_updater_list_.push_back(job_status_updater);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&JobStatusUpdater::UpdateStatus, job_status_updater));
 
@@ -647,7 +646,7 @@ void PrinterJobHandler::JobSpooled(PlatformJobId local_job_id) {
 
   VLOG(1) << "CP_CONNECTOR: Stopping printer job handler"
           << ", printer id: " << printer_info_cloud_.printer_id;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&PrinterJobHandler::Stop, this));
 }
 
@@ -784,7 +783,7 @@ void PrinterJobHandler::OnReceivePrinterCaps(
     // We are done here. Go to the Stop state
     VLOG(1) << "CP_CONNECTOR: Stopping printer job handler"
             << ", printer name: " << printer_name;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&PrinterJobHandler::Stop, this));
   }
 }

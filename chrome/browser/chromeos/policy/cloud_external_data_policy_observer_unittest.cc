@@ -188,10 +188,10 @@ void CloudExternalDataPolicyObserverTest::SetUp() {
       new DeviceLocalAccountPolicyService(
           &session_manager_client_, &device_settings_service_, &cros_settings_,
           &affiliated_invalidation_service_provider_,
-          base::ThreadTaskRunnerHandle::Get(),
-          base::ThreadTaskRunnerHandle::Get(),
-          base::ThreadTaskRunnerHandle::Get(),
-          base::ThreadTaskRunnerHandle::Get(), nullptr));
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE), nullptr));
   url_fetcher_factory_.set_remove_fetcher_on_delete(true);
 
   EXPECT_CALL(user_policy_provider_, IsInitializationComplete(_))

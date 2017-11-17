@@ -121,7 +121,7 @@ const uint8_t kEncryptedMediaInitData[] = {
 static void EosOnReadDone(bool* got_eos_buffer,
                           DemuxerStream::Status status,
                           const scoped_refptr<DecoderBuffer>& buffer) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
 
   EXPECT_EQ(status, DemuxerStream::kOk);
@@ -245,7 +245,7 @@ class FFmpegDemuxerTest : public testing::Test {
       EXPECT_EQ(read_expectation.is_key_frame, buffer->is_key_frame());
     }
     OnReadDoneCalled(read_expectation.size, read_expectation.timestamp_us);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
   }
 
@@ -348,7 +348,7 @@ class FFmpegDemuxerTest : public testing::Test {
         &FFmpegDemuxerTest::OnMediaTracksUpdated, base::Unretained(this));
 
     demuxer_.reset(new FFmpegDemuxer(
-        base::ThreadTaskRunnerHandle::Get(), data_source_.get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), data_source_.get(),
         encrypted_media_init_data_cb, tracks_updated_cb, media_log));
   }
 
@@ -1325,7 +1325,7 @@ static void ValidateAnnexB(DemuxerStream* stream,
   EXPECT_EQ(status, DemuxerStream::kOk);
 
   if (buffer->end_of_stream()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
     return;
   }
@@ -1342,7 +1342,7 @@ static void ValidateAnnexB(DemuxerStream* stream,
 
   if (!is_valid) {
     LOG(ERROR) << "Buffer contains invalid Annex B data.";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
     return;
   }

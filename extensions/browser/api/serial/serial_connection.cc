@@ -257,7 +257,7 @@ bool SerialConnection::Receive(ReceiveCompleteCallback callback) {
   if (receive_timeout_ > 0) {
     receive_timeout_task_.Reset(base::Bind(&SerialConnection::OnReceiveTimeout,
                                            weak_factory_.GetWeakPtr()));
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, receive_timeout_task_.callback(),
         base::TimeDelta::FromMilliseconds(receive_timeout_));
   }
@@ -282,7 +282,7 @@ bool SerialConnection::Send(const std::vector<char>& data,
   if (send_timeout_ > 0) {
     send_timeout_task_.Reset(base::Bind(&SerialConnection::OnSendTimeout,
                                         weak_factory_.GetWeakPtr()));
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, send_timeout_task_.callback(),
         base::TimeDelta::FromMilliseconds(send_timeout_));
   }

@@ -33,9 +33,10 @@ ExpectCanceledFetcher::~ExpectCanceledFetcher() {
 }
 
 void ExpectCanceledFetcher::Start() {
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&ExpectCanceledFetcher::CompleteFetch,
-                            weak_factory_.GetWeakPtr()),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&ExpectCanceledFetcher::CompleteFetch,
+                 weak_factory_.GetWeakPtr()),
       base::TimeDelta::FromMilliseconds(100));
 }
 

@@ -64,7 +64,7 @@ IceTransportChannel::~IceTransportChannel() {
 
   delegate_->OnChannelDeleted(this);
 
-  auto task_runner = base::ThreadTaskRunnerHandle::Get();
+  auto task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   if (channel_)
     task_runner->DeleteSoon(FROM_HERE, channel_.release());
   if (port_allocator_)
@@ -130,7 +130,7 @@ void IceTransportChannel::Connect(const std::string& name,
                          transport_context_->network_settings().ice_timeout,
                          this, &IceTransportChannel::TryReconnect);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&IceTransportChannel::NotifyConnected,
                             weak_factory_.GetWeakPtr()));
 }

@@ -692,7 +692,7 @@ void SyncSchedulerImpl::TryCanaryJob() {
 void SyncSchedulerImpl::TrySyncCycleJob() {
   // Post call to TrySyncCycleJobImpl on current thread. Later request for
   // access token will be here.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&SyncSchedulerImpl::TrySyncCycleJobImpl,
                             weak_ptr_factory_.GetWeakPtr()));
 }

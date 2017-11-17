@@ -669,7 +669,7 @@ void DataTypeManagerImpl::OnSingleDataTypeWillStop(ModelType type,
       // Do this asynchronously so the ModelAssociationManager has a chance to
       // finish stopping this type, otherwise DeactivateDataType() and Stop()
       // end up getting called twice on the controller.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(&DataTypeManagerImpl::ProcessReconfigure,
                                 weak_ptr_factory_.GetWeakPtr()));
     }

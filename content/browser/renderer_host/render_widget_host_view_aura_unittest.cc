@@ -1924,7 +1924,7 @@ TEST_F(RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest,
 
   // Let the MouseWheelPhaseHandler::mouse_wheel_end_dispatch_timer_ fire. A
   // synthetic wheel event with zero deltas and kPhaseEnded will be sent.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       base::TimeDelta::FromMilliseconds(
           kDefaultMouseWheelLatchingTransactionMs));
@@ -1988,7 +1988,7 @@ TEST_F(RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest,
   // Wait for some time and resume scrolling. The second scroll will latch since
   // the user hasn't lifted their fingers, yet.
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, run_loop.QuitClosure(),
       base::TimeDelta::FromMilliseconds(
           2 * kDefaultMouseWheelLatchingTransactionMs));
@@ -2315,8 +2315,8 @@ TEST_F(RenderWidgetHostViewAuraTest, AutoResizeWithScale) {
   // RenderWidgetHostImpl has delayed auto-resize processing. Yield here to
   // let it complete.
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                run_loop.QuitClosure());
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, run_loop.QuitClosure());
   run_loop.Run();
 
   EXPECT_EQ(1u, sink_->message_count());
@@ -4897,7 +4897,7 @@ TEST_F(RenderWidgetHostViewAuraOverscrollTest,
   // enough overscroll to complete the gesture, the overscroll controller
   // will reset the state. The scroll-end should therefore be dispatched to the
   // renderer, and the gesture-event-filter should await an ACK for it.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       base::TimeDelta::FromMilliseconds(15));
   base::RunLoop().Run();
@@ -5021,7 +5021,7 @@ TEST_F(RenderWidgetHostViewAuraOverscrollTest, OverscrollWithTouchEvents) {
 
   SimulateGestureEvent(blink::WebInputEvent::kGestureScrollEnd,
                        blink::kWebGestureDeviceTouchscreen);
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       base::TimeDelta::FromMilliseconds(10));
   base::RunLoop().Run();
@@ -5075,7 +5075,7 @@ TEST_F(RenderWidgetHostViewAuraOverscrollTest,
                        blink::kWebGestureDeviceTouchscreen);
   events = GetAndResetDispatchedMessages();
   EXPECT_EQ(0U, events.size());
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       base::TimeDelta::FromMilliseconds(10));
   base::RunLoop().Run();
@@ -5118,7 +5118,7 @@ TEST_F(RenderWidgetHostViewAuraOverscrollTest,
                        blink::kWebGestureDeviceTouchscreen);
   events = GetAndResetDispatchedMessages();
   EXPECT_EQ(0U, events.size());
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       base::TimeDelta::FromMilliseconds(10));
   base::RunLoop().Run();

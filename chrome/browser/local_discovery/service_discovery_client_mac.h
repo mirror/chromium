@@ -81,7 +81,7 @@ class ServiceWatcherImplMac : public ServiceWatcher {
     void DiscoverOnDiscoveryThread();
 
     bool IsOnServiceDiscoveryThread() {
-      return base::ThreadTaskRunnerHandle::Get() ==
+      return base::ThreadTaskRunnerHandle::Get(FROM_HERE) ==
              service_discovery_runner_.get();
     }
 
@@ -147,7 +147,7 @@ class ServiceResolverImplMac : public ServiceResolver {
     void StartResolvingOnDiscoveryThread();
 
     bool IsOnServiceDiscoveryThread() {
-      return base::ThreadTaskRunnerHandle::Get() ==
+      return base::ThreadTaskRunnerHandle::Get(FROM_HERE) ==
              service_discovery_runner_.get();
     }
 

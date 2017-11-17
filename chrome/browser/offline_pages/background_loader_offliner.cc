@@ -229,7 +229,8 @@ bool BackgroundLoaderOffliner::LoadAndSave(
   loader_.get()->LoadPage(request.url());
 
   snapshot_controller_ = SnapshotController::CreateForBackgroundOfflining(
-      base::ThreadTaskRunnerHandle::Get(), this, (bool)page_renovator_);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), this,
+      (bool)page_renovator_);
 
   return true;
 }
@@ -251,7 +252,7 @@ bool BackgroundLoaderOffliner::Cancel(const CancelCallback& callback) {
   }
 
   // Post the cancel callback right after this call concludes.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback, *pending_request_.get()));
   ResetState();
   return true;
@@ -549,7 +550,7 @@ void BackgroundLoaderOffliner::ResetState() {
   // corrupt stack in some edge cases. Deleting it soon should be safe because
   // we check against pending_request_ with every action, and snapshot
   // controller is configured to only call StartSnapshot once for BGL.
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
       FROM_HERE, snapshot_controller_.release());
   page_load_state_ = SUCCESS;
   network_bytes_ = 0LL;

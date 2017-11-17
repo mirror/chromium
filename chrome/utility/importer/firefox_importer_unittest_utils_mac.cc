@@ -186,7 +186,7 @@ void FFUnitTestDecryptorProxy::WaitForClientResponse() {
   // This relies on the IPC listener class to quit the message loop itself when
   // a message comes in.
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, run_loop.QuitWhenIdleClosure(),
       TestTimeouts::action_max_timeout());
   run_loop.Run();

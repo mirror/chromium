@@ -145,7 +145,7 @@ void ChildrenDeleter::DeleteChildren() {
   children_map_.Set(child_id, false);
 
   // Post a task to delete the next child.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&ChildrenDeleter::DeleteChildren, this));
 }
 
@@ -371,11 +371,11 @@ void SparseControl::DeleteChildren(EntryImpl* entry) {
   deleter->AddRef();
 
   if (buffer) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&ChildrenDeleter::Start, deleter, buffer, data_len));
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&ChildrenDeleter::ReadData, deleter, address, data_len));
   }

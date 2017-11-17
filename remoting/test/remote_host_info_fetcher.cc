@@ -54,8 +54,8 @@ bool RemoteHostInfoFetcher::RetrieveRemoteHostInfo(
   remote_host_info_callback_ = callback;
 
   request_context_getter_ = new remoting::URLRequestContextGetter(
-      base::ThreadTaskRunnerHandle::Get(),   // network_runner
-      base::ThreadTaskRunnerHandle::Get());  // file_runner
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE),   // network_runner
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));  // file_runner
 
   request_ = net::URLFetcher::Create(GURL(service_url), net::URLFetcher::POST,
                                      this, TRAFFIC_ANNOTATION_FOR_TESTS);

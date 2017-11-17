@@ -175,7 +175,7 @@ MediaStreamVideoWebRtcSink::WebRtcVideoSourceAdapter::WebRtcVideoSourceAdapter(
     const scoped_refptr<WebRtcVideoSource>& source,
     base::TimeDelta refresh_interval,
     const base::Closure& refresh_callback)
-    : render_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : render_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       libjingle_worker_thread_(libjingle_worker_thread),
       video_source_(source),
       capture_adapter_(source->capture_adapter()) {

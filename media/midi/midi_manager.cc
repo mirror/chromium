@@ -149,7 +149,7 @@ void MidiManager::StartSession(MidiManagerClient* client) {
       // Set fields protected by |lock_| here and call StartInitialization()
       // later.
       needs_initialization = true;
-      session_thread_runner_ = base::ThreadTaskRunnerHandle::Get();
+      session_thread_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
       initialization_state_ = InitializationState::STARTED;
     }
 

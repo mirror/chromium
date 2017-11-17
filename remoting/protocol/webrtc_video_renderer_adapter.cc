@@ -60,7 +60,7 @@ WebrtcVideoRendererAdapter::WebrtcVideoRendererAdapter(
     VideoRenderer* video_renderer)
     : label_(label),
       video_renderer_(video_renderer),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       weak_factory_(this) {}
 
 WebrtcVideoRendererAdapter::~WebrtcVideoRendererAdapter() {

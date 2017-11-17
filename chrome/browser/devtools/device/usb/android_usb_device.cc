@@ -331,8 +331,8 @@ void AndroidUsbDevice::CountDevices(const base::Callback<void(int)>& callback) {
   if (service != NULL) {
     service->GetDevices(base::Bind(&CountAndroidDevices, callback));
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  base::BindOnce(callback, 0));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, base::BindOnce(callback, 0));
   }
 }
 
@@ -353,7 +353,7 @@ void AndroidUsbDevice::Enumerate(crypto::RSAPrivateKey* rsa_key,
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(&EnumerateOnUIThread, rsa_key, callback,
-                     base::ThreadTaskRunnerHandle::Get()));
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 }
 
 AndroidUsbDevice::AndroidUsbDevice(crypto::RSAPrivateKey* rsa_key,
@@ -379,7 +379,7 @@ AndroidUsbDevice::AndroidUsbDevice(crypto::RSAPrivateKey* rsa_key,
 void AndroidUsbDevice::InitOnCallerThread() {
   if (task_runner_)
     return;
-  task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   Queue(base::MakeUnique<AdbMessage>(AdbMessage::kCommandCNXN, kVersion,
                                      kMaxPayload, kHostConnectMessage));
   ReadHeader();

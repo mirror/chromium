@@ -75,7 +75,7 @@ void CallTask(const base::Closure& task) {
 
 void PostTask(const base::Closure& task) {
   if (!task.is_null())
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, task);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, task);
 }
 
 void MockServiceProcessControl::SetConnectSuccessMockExpectations(

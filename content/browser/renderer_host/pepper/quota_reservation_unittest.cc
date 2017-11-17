@@ -48,7 +48,7 @@ class FakeBackend : public QuotaReservationManager::QuotaBackend {
       storage::FileSystemType type,
       int64_t delta,
       const QuotaReservationManager::ReserveQuotaCallback& callback) override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(base::IgnoreResult(callback),
                                   base::File::FILE_OK, delta));
   }

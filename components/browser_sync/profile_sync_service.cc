@@ -832,7 +832,7 @@ void ProfileSyncService::OnUnrecoverableErrorImpl(
              << " -- ProfileSyncService unusable: " << message;
 
   // Shut all data types down.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&ProfileSyncService::ShutdownImpl,
                             sync_enabled_weak_factory_.GetWeakPtr(),
                             delete_sync_database ? syncer::DISABLE_SYNC
@@ -975,7 +975,7 @@ void ProfileSyncService::OnSyncCycleCompleted(
       !syncer::HasSyncerError(snapshot.model_neutral_state())) {
     // Trigger garbage collection of old sessions now that we've downloaded
     // any new session data.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&SessionsSyncManager::DoGarbageCollection,
                               base::AsWeakPtr(sessions_sync_manager_.get())));
   }

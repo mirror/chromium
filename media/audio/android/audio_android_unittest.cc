@@ -517,11 +517,11 @@ class AudioAndroidOutputTest : public testing::Test {
     base::RunLoop run_loop;
     EXPECT_CALL(source, OnMoreData(_, _, 0, NotNull()))
         .Times(AtLeast(num_callbacks))
-        .WillRepeatedly(
-            DoAll(CheckCountAndPostQuitTask(&count, num_callbacks,
-                                            base::ThreadTaskRunnerHandle::Get(),
-                                            run_loop.QuitWhenIdleClosure()),
-                  Invoke(RealOnMoreData)));
+        .WillRepeatedly(DoAll(CheckCountAndPostQuitTask(
+                                  &count, num_callbacks,
+                                  base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                                  run_loop.QuitWhenIdleClosure()),
+                              Invoke(RealOnMoreData)));
     EXPECT_CALL(source, OnError()).Times(0);
 
     OpenAndStartAudioOutputStreamOnAudioThread(&source);
@@ -663,7 +663,7 @@ class AudioAndroidInputTest : public AudioAndroidOutputTest,
     EXPECT_CALL(sink, OnData(NotNull(), _, _))
         .Times(AtLeast(num_callbacks))
         .WillRepeatedly(CheckCountAndPostQuitTask(
-            &count, num_callbacks, base::ThreadTaskRunnerHandle::Get(),
+            &count, num_callbacks, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
             run_loop.QuitWhenIdleClosure()));
     EXPECT_CALL(sink, OnError()).Times(0);
 

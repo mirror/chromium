@@ -19,7 +19,8 @@ namespace chromeos {
 
 ChromeCryptohomeAuthenticator::ChromeCryptohomeAuthenticator(
     AuthStatusConsumer* consumer)
-    : CryptohomeAuthenticator(base::ThreadTaskRunnerHandle::Get(), consumer) {}
+    : CryptohomeAuthenticator(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                              consumer) {}
 
 ChromeCryptohomeAuthenticator::~ChromeCryptohomeAuthenticator() {}
 

@@ -332,7 +332,7 @@ void OAuth2TokenService::Fetcher::InformWaitingRequestsAndDelete() {
   // be added when it calls back the waiting requests.
   oauth2_token_service_->OnFetchComplete(this);
   InformWaitingRequests();
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 void OAuth2TokenService::Fetcher::AddWaitingRequest(
@@ -485,7 +485,7 @@ OAuth2TokenService::StartRequestForClientWithContext(
                                           error, base::Time());
     }
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&RequestImpl::InformConsumer, request->AsWeakPtr(), error,
                    std::string(), base::Time()));
@@ -555,7 +555,7 @@ void OAuth2TokenService::StartCacheLookupRequest(
         request_parameters.scopes, GoogleServiceAuthError::AuthErrorNone(),
         cache_entry->expiration_date);
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&RequestImpl::InformConsumer, request->AsWeakPtr(),
                  GoogleServiceAuthError(GoogleServiceAuthError::NONE),

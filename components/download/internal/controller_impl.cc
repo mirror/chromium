@@ -429,7 +429,7 @@ void ControllerImpl::OnDownloadFailed(const DriverEntry& download,
     // Because the network offline signal comes later than actual download
     // failure, retry the download after a delay to avoid the retry to fail
     // immediately again.
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&ControllerImpl::UpdateDriverStateWithGuid,
                    weak_ptr_factory_.GetWeakPtr(), download.guid),
@@ -465,7 +465,7 @@ void ControllerImpl::OnDownloadUpdated(const DriverEntry& download) {
   DCHECK_EQ(download.state, DriverEntry::State::IN_PROGRESS);
 
   log_sink_->OnServiceDownloadChanged(entry->guid);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&ControllerImpl::SendOnDownloadUpdated,
                             weak_ptr_factory_.GetWeakPtr(), entry->client,
                             download.guid, download.bytes_downloaded));
@@ -641,7 +641,7 @@ void ControllerImpl::HandleUnrecoverableSetup() {
   controller_state_ = State::UNAVAILABLE;
 
   // If we cannot recover, notify Clients that the service is unavailable.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&ControllerImpl::SendOnServiceUnavailable,
                             weak_ptr_factory_.GetWeakPtr()));
 }
@@ -940,7 +940,7 @@ void ControllerImpl::NotifyClientsOfStartup(bool state_lost) {
       clients_->GetRegisteredClients(), model_->PeekEntries());
 
   for (auto client_id : clients_->GetRegisteredClients()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&ControllerImpl::SendOnServiceInitialized,
                               weak_ptr_factory_.GetWeakPtr(), client_id,
                               state_lost, categorized[client_id]));
@@ -951,7 +951,7 @@ void ControllerImpl::NotifyServiceOfStartup() {
   if (init_callback_.is_null())
     return;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::ResetAndReturn(&init_callback_));
 }
 
@@ -983,7 +983,7 @@ void ControllerImpl::HandleStartDownloadResponse(
 
   if (callback.is_null())
     return;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback, guid, result));
 }
 
@@ -1012,14 +1012,14 @@ void ControllerImpl::HandleCompleteDownload(CompletionType type,
     CompletionInfo completion_info(driver_entry->current_file_path,
                                    driver_entry->bytes_downloaded);
     entry->last_cleanup_check_time = driver_entry->completion_time;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&ControllerImpl::SendOnDownloadSucceeded,
                               weak_ptr_factory_.GetWeakPtr(), entry->client,
                               guid, completion_info));
     TransitTo(entry, Entry::State::COMPLETE, model_.get());
     ScheduleCleanupTask();
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&ControllerImpl::SendOnDownloadFailed,
                               weak_ptr_factory_.GetWeakPtr(), entry->client,
                               guid, FailureReasonFromCompletionType(type)));
@@ -1088,7 +1088,7 @@ void ControllerImpl::ScheduleKillDownloadTaskIfNecessary() {
 
   cancel_downloads_callback_.Reset(base::Bind(
       &ControllerImpl::KillTimedOutDownloads, weak_ptr_factory_.GetWeakPtr()));
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, cancel_downloads_callback_.callback(), time_to_cancel);
 }
 

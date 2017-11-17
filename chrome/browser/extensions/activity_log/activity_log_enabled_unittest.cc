@@ -27,7 +27,7 @@ class ActivityLogEnabledTest : public ChromeRenderViewHostTestHarness {
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
     SetActivityLogTaskRunnerForTesting(
-        base::ThreadTaskRunnerHandle::Get().get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
   }
 
   void TearDown() override {

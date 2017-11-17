@@ -35,7 +35,7 @@ extern std::unique_ptr<VideoEncodeAccelerator> CreateAndInitializeFakeVEA(
     const gpu::GpuPreferences& gpu_preferences) {
   // Use FakeVEA as scoped_ptr to guarantee proper destruction via Destroy().
   auto vea = base::MakeUnique<FakeVideoEncodeAccelerator>(
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   const bool result = vea->Initialize(input_format, input_visible_size,
                                       output_profile, initial_bitrate, client);
 

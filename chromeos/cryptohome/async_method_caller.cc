@@ -215,7 +215,7 @@ class AsyncMethodCallerImpl : public AsyncMethodCaller,
     CallbackElement() {}
     explicit CallbackElement(const AsyncMethodCaller::Callback& callback)
         : callback(callback),
-          task_runner(base::ThreadTaskRunnerHandle::Get()) {}
+          task_runner(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
     AsyncMethodCaller::Callback callback;
     scoped_refptr<base::SingleThreadTaskRunner> task_runner;
   };
@@ -225,7 +225,7 @@ class AsyncMethodCallerImpl : public AsyncMethodCaller,
     explicit DataCallbackElement(
         const AsyncMethodCaller::DataCallback& callback)
         : data_callback(callback),
-          task_runner(base::ThreadTaskRunnerHandle::Get()) {}
+          task_runner(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
     AsyncMethodCaller::DataCallback data_callback;
     scoped_refptr<base::SingleThreadTaskRunner> task_runner;
   };
@@ -275,7 +275,7 @@ class AsyncMethodCallerImpl : public AsyncMethodCaller,
                              const char* error,
                              base::Optional<int> async_id) {
     if (!async_id.has_value()) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(callback,
                                     false,  // return status
                                     cryptohome::MOUNT_ERROR_FATAL));
@@ -297,7 +297,7 @@ class AsyncMethodCallerImpl : public AsyncMethodCaller,
                                  const char* error,
                                  base::Optional<int> async_id) {
     if (!async_id.has_value()) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(callback,
                                     false,  // return status
                                     std::string()));

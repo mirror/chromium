@@ -83,7 +83,7 @@ int FuzzedSocket::Read(IOBuffer* buf,
   }
 
   read_pending_ = true;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&FuzzedSocket::OnReadComplete,
                             weak_factory_.GetWeakPtr(), callback, result));
   return ERR_IO_PENDING;
@@ -123,7 +123,7 @@ int FuzzedSocket::Write(IOBuffer* buf,
   }
 
   write_pending_ = true;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&FuzzedSocket::OnWriteComplete,
                             weak_factory_.GetWeakPtr(), callback, result));
   return ERR_IO_PENDING;
@@ -165,7 +165,7 @@ int FuzzedSocket::Connect(const CompletionCallback& callback) {
   connect_pending_ = true;
   if (result != OK)
     error_pending_ = true;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&FuzzedSocket::OnConnectComplete,
                             weak_factory_.GetWeakPtr(), callback, result));
   return ERR_IO_PENDING;

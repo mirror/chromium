@@ -488,7 +488,7 @@ void FastUnloadController::ClearUnloadState(content::WebContents* contents) {
 }
 
 void FastUnloadController::PostTaskForProcessPendingTabs() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&FastUnloadController::ProcessPendingTabs,
                                 weak_factory_.GetWeakPtr(), false));
 }

@@ -66,7 +66,7 @@ V4L2ImageProcessor::V4L2ImageProcessor(const scoped_refptr<V4L2Device>& device)
       output_format_fourcc_(0),
       input_planes_count_(0),
       output_planes_count_(0),
-      child_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      child_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       device_(device),
       device_thread_("V4L2ImageProcessorThread"),
       device_poll_thread_("V4L2ImageProcessorDevicePollThread"),

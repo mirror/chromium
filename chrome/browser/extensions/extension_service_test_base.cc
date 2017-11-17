@@ -53,8 +53,8 @@ std::unique_ptr<TestingProfile> BuildTestingProfile(
   // If pref_file is empty, TestingProfile automatically creates
   // sync_preferences::TestingPrefServiceSyncable instance.
   if (!params.pref_file.empty()) {
-    factory.SetUserPrefsFile(params.pref_file,
-                             base::ThreadTaskRunnerHandle::Get().get());
+    factory.SetUserPrefsFile(
+        params.pref_file, base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
     scoped_refptr<user_prefs::PrefRegistrySyncable> registry(
         new user_prefs::PrefRegistrySyncable);
     std::unique_ptr<sync_preferences::PrefServiceSyncable> prefs(

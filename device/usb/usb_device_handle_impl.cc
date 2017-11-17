@@ -432,7 +432,7 @@ UsbDeviceHandleImpl::Transfer::Transfer(
       length_(length),
       callback_task_runner_(callback_task_runner),
       callback_(std::move(callback)) {
-  task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 UsbDeviceHandleImpl::Transfer::Transfer(
@@ -447,7 +447,7 @@ UsbDeviceHandleImpl::Transfer::Transfer(
       claimed_interface_(claimed_interface),
       callback_task_runner_(callback_task_runner),
       iso_callback_(std::move(callback)) {
-  task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 UsbDeviceHandleImpl::Transfer::~Transfer() {
@@ -725,11 +725,12 @@ void UsbDeviceHandleImpl::ControlTransfer(UsbTransferDirection direction,
                             std::move(callback));
   } else {
     task_runner_->PostTask(
-        FROM_HERE, base::BindOnce(&UsbDeviceHandleImpl::ControlTransferInternal,
-                                  this, direction, request_type, recipient,
-                                  request, value, index, buffer, length,
-                                  timeout, base::ThreadTaskRunnerHandle::Get(),
-                                  std::move(callback)));
+        FROM_HERE,
+        base::BindOnce(&UsbDeviceHandleImpl::ControlTransferInternal, this,
+                       direction, request_type, recipient, request, value,
+                       index, buffer, length, timeout,
+                       base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                       std::move(callback)));
   }
 }
 
@@ -748,7 +749,7 @@ void UsbDeviceHandleImpl::IsochronousTransferIn(
         FROM_HERE,
         base::BindOnce(&UsbDeviceHandleImpl::IsochronousTransferInInternal,
                        this, endpoint_address, packet_lengths, timeout,
-                       base::ThreadTaskRunnerHandle::Get(),
+                       base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                        std::move(callback)));
   }
 }
@@ -770,7 +771,7 @@ void UsbDeviceHandleImpl::IsochronousTransferOut(
         FROM_HERE,
         base::BindOnce(&UsbDeviceHandleImpl::IsochronousTransferOutInternal,
                        this, endpoint_address, buffer, packet_lengths, timeout,
-                       base::ThreadTaskRunnerHandle::Get(),
+                       base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                        std::move(callback)));
   }
 }
@@ -788,10 +789,11 @@ void UsbDeviceHandleImpl::GenericTransfer(UsbTransferDirection direction,
                             task_runner_, std::move(callback));
   } else {
     task_runner_->PostTask(
-        FROM_HERE, base::BindOnce(&UsbDeviceHandleImpl::GenericTransferInternal,
-                                  this, endpoint_address, buffer, length,
-                                  timeout, base::ThreadTaskRunnerHandle::Get(),
-                                  std::move(callback)));
+        FROM_HERE,
+        base::BindOnce(&UsbDeviceHandleImpl::GenericTransferInternal, this,
+                       endpoint_address, buffer, length, timeout,
+                       base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                       std::move(callback)));
   }
 }
 
@@ -812,7 +814,7 @@ UsbDeviceHandleImpl::UsbDeviceHandleImpl(
     : device_(device),
       handle_(handle),
       context_(context),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       blocking_task_runner_(blocking_task_runner) {
   DCHECK(handle) << "Cannot create device with NULL handle.";
 }

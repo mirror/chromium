@@ -74,7 +74,7 @@ void WebContentDecryptionModuleAccessImpl::CreateContentDecryptionModule(
   // gets garbage-collected.
   std::unique_ptr<blink::WebContentDecryptionModuleResult> result_copy(
       new blink::WebContentDecryptionModuleResult(result));
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&CreateCdm, client_, key_system_, security_origin_,
                             cdm_config_, base::Passed(&result_copy)));
 }

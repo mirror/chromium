@@ -121,7 +121,7 @@ class LoaderDestroyingCertStore : public net::ClientCertStore {
       const net::SSLCertRequestInfo& cert_request_info,
       const ClientCertListCallback& cert_selected_callback) override {
     // Don't destroy |loader_| while it's on the stack.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&LoaderDestroyingCertStore::DoCallback,
                        base::Unretained(loader_), cert_selected_callback,
@@ -163,7 +163,7 @@ class MockClientCertURLRequestJob : public net::URLRequestTestJob {
     scoped_refptr<net::SSLCertRequestInfo> cert_request_info(
         new net::SSLCertRequestInfo);
     cert_request_info->cert_authorities = test_authorities();
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&MockClientCertURLRequestJob::NotifyCertificateRequested,
                        weak_factory_.GetWeakPtr(),

@@ -364,56 +364,56 @@ class OfflinePageMetadataStoreFactory {
  public:
   OfflinePageMetadataStore* BuildStore(const base::FilePath& file_path) {
     OfflinePageMetadataStoreSQL* store = new OfflinePageMetadataStoreSQL(
-        base::ThreadTaskRunnerHandle::Get(), file_path);
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), file_path);
     return store;
   }
 
   OfflinePageMetadataStore* BuildStoreM52(const base::FilePath& file_path) {
     BuildTestStoreWithSchemaFromM52(file_path);
     OfflinePageMetadataStoreSQL* store = new OfflinePageMetadataStoreSQL(
-        base::ThreadTaskRunnerHandle::Get(), file_path);
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), file_path);
     return store;
   }
 
   OfflinePageMetadataStore* BuildStoreM53(const base::FilePath& file_path) {
     BuildTestStoreWithSchemaFromM53(file_path);
     OfflinePageMetadataStoreSQL* store = new OfflinePageMetadataStoreSQL(
-        base::ThreadTaskRunnerHandle::Get(), file_path);
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), file_path);
     return store;
   }
 
   OfflinePageMetadataStore* BuildStoreM54(const base::FilePath& file_path) {
     BuildTestStoreWithSchemaFromM54(file_path);
     OfflinePageMetadataStoreSQL* store = new OfflinePageMetadataStoreSQL(
-        base::ThreadTaskRunnerHandle::Get(), file_path);
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), file_path);
     return store;
   }
 
   OfflinePageMetadataStore* BuildStoreM55(const base::FilePath& file_path) {
     BuildTestStoreWithSchemaFromM55(file_path);
     OfflinePageMetadataStoreSQL* store = new OfflinePageMetadataStoreSQL(
-        base::ThreadTaskRunnerHandle::Get(), file_path);
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), file_path);
     return store;
   }
 
   OfflinePageMetadataStore* BuildStoreM56(const base::FilePath& file_path) {
     BuildTestStoreWithSchemaFromM56(file_path);
     OfflinePageMetadataStoreSQL* store = new OfflinePageMetadataStoreSQL(
-        base::ThreadTaskRunnerHandle::Get(), file_path);
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), file_path);
     return store;
   }
 
   OfflinePageMetadataStore* BuildStoreM57(const base::FilePath& file_path) {
     BuildTestStoreWithSchemaFromM57(file_path);
     OfflinePageMetadataStoreSQL* store = new OfflinePageMetadataStoreSQL(
-        base::ThreadTaskRunnerHandle::Get(), file_path);
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), file_path);
     return store;
   }
 
   OfflinePageMetadataStore* BuildStoreM61(const base::FilePath& file_path) {
     BuildTestStoreWithSchemaFromM61(file_path);
     OfflinePageMetadataStoreSQL* store = new OfflinePageMetadataStoreSQL(
-        base::ThreadTaskRunnerHandle::Get(), file_path);
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), file_path);
     return store;
   }
 };

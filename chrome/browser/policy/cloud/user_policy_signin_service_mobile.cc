@@ -141,7 +141,7 @@ void UserPolicySigninService::OnInitializationCompleted(
   if (now > last_check_time && now < next_check_time)
     try_registration_delay = next_check_time - now;
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&UserPolicySigninService::RegisterCloudPolicyService,
                  weak_factory_.GetWeakPtr()),

@@ -33,7 +33,7 @@ TransferBufferManager::TransferBufferManager(
   if (memory_tracker_) {
     base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
         this, "gpu::TransferBufferManager",
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 }
 

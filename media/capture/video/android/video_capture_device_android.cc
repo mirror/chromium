@@ -98,7 +98,7 @@ PhotoCapabilities::AndroidFillLightMode ToAndroidFillLightMode(
 
 VideoCaptureDeviceAndroid::VideoCaptureDeviceAndroid(
     const VideoCaptureDeviceDescriptor& device_descriptor)
-    : main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       device_descriptor_(device_descriptor),
       weak_ptr_factory_(this) {}
 

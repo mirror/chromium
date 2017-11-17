@@ -25,11 +25,10 @@ base::LazyInstance<base::Lock>::Leaky g_log_message_handler_lock =
 LogMessageHandler* g_log_message_handler = nullptr;
 }  // namespace
 
-LogMessageHandler::LogMessageHandler(
-    const Delegate& delegate)
+LogMessageHandler::LogMessageHandler(const Delegate& delegate)
     : delegate_(delegate),
       suppress_logging_(false),
-      caller_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      caller_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       weak_ptr_factory_(this) {
   base::AutoLock lock(g_log_message_handler_lock.Get());
   if (g_log_message_handler) {

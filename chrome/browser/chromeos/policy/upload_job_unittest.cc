@@ -117,7 +117,7 @@ void MockOAuth2TokenService::FetchOAuth2Token(
     access_token = token_replies_.front();
     token_replies_.pop();
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&OAuth2TokenService::RequestImpl::InformConsumer,
                      request->AsWeakPtr(), response_error, access_token,
@@ -181,7 +181,7 @@ class UploadJobTestBase : public testing::Test, public UploadJob::Delegate {
   // testing::Test:
   void SetUp() override {
     request_context_getter_ = new net::TestURLRequestContextGetter(
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     oauth2_service_.AddAccount("robot@gmail.com");
     ASSERT_TRUE(test_server_.Start());
     // Set retry delay to prevent timeouts
@@ -200,7 +200,7 @@ class UploadJobTestBase : public testing::Test, public UploadJob::Delegate {
     std::unique_ptr<UploadJob> upload_job(new UploadJobImpl(
         GetServerURL(), kRobotAccountId, &oauth2_service_,
         request_context_getter_.get(), this, std::move(mime_boundary_generator),
-        base::ThreadTaskRunnerHandle::Get()));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 
     std::map<std::string, std::string> header_entries;
     header_entries.insert(std::make_pair(kCustomField1, "CUSTOM1"));

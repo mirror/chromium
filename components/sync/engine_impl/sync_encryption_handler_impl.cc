@@ -639,7 +639,7 @@ void SyncEncryptionHandlerImpl::ApplyNigoriUpdate(
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(trans);
   if (!ApplyNigoriUpdateImpl(nigori, trans)) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&SyncEncryptionHandlerImpl::RewriteNigori,
                               weak_ptr_factory_.GetWeakPtr()));
   }
@@ -721,7 +721,7 @@ bool SyncEncryptionHandlerImpl::SetKeystoreKeys(
   // properly migrated with the newest keystore keys.
   if (ShouldTriggerMigration(nigori, *cryptographer,
                              GetPassphraseType(trans))) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&SyncEncryptionHandlerImpl::RewriteNigori,
                               weak_ptr_factory_.GetWeakPtr()));
   }

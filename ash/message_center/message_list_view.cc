@@ -568,7 +568,7 @@ void MessageListView::AnimateClearingOneNotification() {
 
   // Schedule to start sliding out next notification after a short delay.
   if (!clearing_all_views_.empty()) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&MessageListView::AnimateClearingOneNotification,
                    weak_ptr_factory_.GetWeakPtr()),

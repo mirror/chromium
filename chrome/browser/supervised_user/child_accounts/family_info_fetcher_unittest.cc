@@ -112,7 +112,7 @@ class FamilyInfoFetcherTest : public testing::Test,
  public:
   FamilyInfoFetcherTest()
       : request_context_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))),
         fetcher_(this, kAccountId, &token_service_, request_context_.get()) {}
 
   MOCK_METHOD1(OnGetFamilyProfileSuccess,

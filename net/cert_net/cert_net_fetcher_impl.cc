@@ -708,7 +708,8 @@ class CertNetFetcherRequestImpl : public CertNetFetcher::Request {
 class CertNetFetcherImpl : public CertNetFetcher {
  public:
   explicit CertNetFetcherImpl(URLRequestContext* context)
-      : task_runner_(base::ThreadTaskRunnerHandle::Get()), context_(context) {}
+      : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+        context_(context) {}
 
   void Shutdown() override {
     DCHECK(task_runner_->RunsTasksInCurrentSequence());

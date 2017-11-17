@@ -140,7 +140,7 @@ V4L2JpegDecodeAccelerator::V4L2JpegDecodeAccelerator(
     const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner)
     : output_buffer_pixelformat_(0),
       output_buffer_num_planes_(0),
-      child_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      child_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       io_task_runner_(io_task_runner),
       client_(nullptr),
       device_(device),

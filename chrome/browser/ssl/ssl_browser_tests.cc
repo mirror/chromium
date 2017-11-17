@@ -3985,7 +3985,7 @@ class DelayableNetworkTimeURLRequestJob : public net::URLRequestJob {
     }
 
     // Start reading asynchronously as would a normal network request.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(
             &DelayableNetworkTimeURLRequestJob::NotifyHeadersComplete,

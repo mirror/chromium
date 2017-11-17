@@ -47,7 +47,7 @@ MediaPermissionDispatcher::MediaPermissionDispatcher(
     const IsEncryptedMediaEnabledCB& is_encrypted_media_enabled_cb)
     : connect_to_service_cb_(connect_to_service_cb),
       is_encrypted_media_enabled_cb_(is_encrypted_media_enabled_cb),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       next_request_id_(0),
       weak_factory_(this) {
   DCHECK(!connect_to_service_cb_.is_null());

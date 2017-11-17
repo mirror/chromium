@@ -241,7 +241,7 @@ void AutoEnrollmentCheckScreen::SignalCompletion() {
 
   // Calling Finish() can cause |this| destruction, so let other methods finish
   // their work before.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(
           &AutoEnrollmentCheckScreen::Finish, weak_ptr_factory_.GetWeakPtr(),

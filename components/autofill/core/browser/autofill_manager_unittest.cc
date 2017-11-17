@@ -790,7 +790,7 @@ class AutofillManagerTest : public testing::Test {
     personal_data_.SetPrefService(autofill_client_.GetPrefs());
     autofill_driver_.reset(new testing::NiceMock<MockAutofillDriver>());
     request_context_ = new net::TestURLRequestContextGetter(
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     autofill_driver_->SetURLRequestContext(request_context_.get());
     autofill_manager_.reset(new TestAutofillManager(
         autofill_driver_.get(), &autofill_client_, &personal_data_));

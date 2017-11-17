@@ -24,12 +24,12 @@ PpapiGlobals* ppapi_globals = NULL;
 PpapiGlobals::PpapiGlobals() {
   DCHECK(!ppapi_globals);
   ppapi_globals = this;
-  main_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  main_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 PpapiGlobals::PpapiGlobals(PerThreadForTest) {
   DCHECK(!ppapi_globals);
-  main_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  main_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 PpapiGlobals::~PpapiGlobals() {
@@ -59,7 +59,7 @@ base::SingleThreadTaskRunner* PpapiGlobals::GetMainThreadMessageLoop() {
 }
 
 void PpapiGlobals::ResetMainThreadMessageLoopForTesting() {
-  main_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  main_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 bool PpapiGlobals::IsHostGlobals() const { return false; }

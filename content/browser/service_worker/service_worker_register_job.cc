@@ -115,7 +115,7 @@ void ServiceWorkerRegisterJob::AddCallback(
       provider_host->AddScopedProcessReferenceToPattern(pattern_);
     return;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(callback, promise_resolved_status_,
                      promise_resolved_status_message_,
@@ -124,7 +124,7 @@ void ServiceWorkerRegisterJob::AddCallback(
 
 void ServiceWorkerRegisterJob::Start() {
   BrowserThread::PostAfterStartupTask(
-      FROM_HERE, base::ThreadTaskRunnerHandle::Get(),
+      FROM_HERE, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::BindOnce(&ServiceWorkerRegisterJob::StartImpl,
                      weak_factory_.GetWeakPtr()));
 }
@@ -145,7 +145,7 @@ void ServiceWorkerRegisterJob::StartImpl() {
   scoped_refptr<ServiceWorkerRegistration> registration =
       context_->storage()->GetUninstallingRegistration(pattern_);
   if (registration.get())
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(next_step, SERVICE_WORKER_OK, registration));
   else
     context_->storage()->FindRegistrationForPattern(pattern_, next_step);

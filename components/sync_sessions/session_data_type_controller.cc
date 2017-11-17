@@ -20,11 +20,12 @@ SessionDataTypeController::SessionDataTypeController(
     syncer::SyncClient* sync_client,
     syncer::LocalDeviceInfoProvider* local_device,
     const char* history_disabled_pref_name)
-    : AsyncDirectoryTypeController(syncer::SESSIONS,
-                                   dump_stack,
-                                   sync_client,
-                                   syncer::GROUP_UI,
-                                   base::ThreadTaskRunnerHandle::Get()),
+    : AsyncDirectoryTypeController(
+          syncer::SESSIONS,
+          dump_stack,
+          sync_client,
+          syncer::GROUP_UI,
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       sync_client_(sync_client),
       local_device_(local_device),
       history_disabled_pref_name_(history_disabled_pref_name),

@@ -80,8 +80,8 @@ void AllocationTracker::OnBarrier(const BarrierPacket& barrier_packet) {
 }
 
 void AllocationTracker::OnComplete() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                std::move(complete_callback_));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, std::move(complete_callback_));
 }
 
 void AllocationTracker::SnapshotOnBarrier(

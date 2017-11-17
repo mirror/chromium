@@ -208,7 +208,7 @@ RequestCore::RequestCore(
     const OAuth2TokenService::ScopeSet& scopes)
     : OAuth2TokenServiceRequest::Core(owner, provider),
       OAuth2TokenService::Consumer("oauth2_token_service"),
-      owner_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      owner_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       consumer_(consumer),
       account_id_(account_id),
       scopes_(scopes) {

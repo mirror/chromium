@@ -773,7 +773,7 @@ void RenderWidget::OnClose() {
     // If there is a Send call on the stack, then it could be dangerous to close
     // now.  Post a task that only gets invoked when there are no nested message
     // loops.
-    base::ThreadTaskRunnerHandle::Get()->PostNonNestableTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostNonNestableTask(
         FROM_HERE, base::BindOnce(&RenderWidget::Close, this));
   }
 
@@ -1602,7 +1602,7 @@ void RenderWidget::CloseWidgetSoon() {
   // could be closed before the JS finishes executing.  So instead, post a
   // message back to the message loop, which won't run until the JS is
   // complete, and then the Close message can be sent.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&RenderWidget::DoDeferredClose, this));
 }
 

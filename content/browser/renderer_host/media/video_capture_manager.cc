@@ -175,7 +175,7 @@ int VideoCaptureManager::Open(const MediaStreamDevice& device) {
   // Notify our listener asynchronously; this ensures that we return
   // |capture_session_id| to the caller of this function before using that
   // same id in a listener event.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&VideoCaptureManager::OnOpened, this,
                                 device.type, capture_session_id));
   return capture_session_id;
@@ -208,7 +208,7 @@ void VideoCaptureManager::Close(int capture_session_id) {
   }
 
   // Notify listeners asynchronously, and forget the session.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&VideoCaptureManager::OnClosed, this,
                                 session_it->second.type, capture_session_id));
   sessions_.erase(session_it);

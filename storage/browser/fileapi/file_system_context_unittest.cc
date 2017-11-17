@@ -59,18 +59,20 @@ class FileSystemContextTest : public testing::Test {
 
     storage_policy_ = new MockSpecialStoragePolicy();
 
-    mock_quota_manager_ = new MockQuotaManager(
-        false /* is_incognito */, data_dir_.GetPath(),
-        base::ThreadTaskRunnerHandle::Get().get(), storage_policy_.get());
+    mock_quota_manager_ =
+        new MockQuotaManager(false /* is_incognito */, data_dir_.GetPath(),
+                             base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+                             storage_policy_.get());
   }
 
  protected:
   FileSystemContext* CreateFileSystemContextForTest(
       storage::ExternalMountPoints* external_mount_points) {
     return new FileSystemContext(
-        base::ThreadTaskRunnerHandle::Get().get(),
-        base::ThreadTaskRunnerHandle::Get().get(), external_mount_points,
-        storage_policy_.get(), mock_quota_manager_->proxy(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+        external_mount_points, storage_policy_.get(),
+        mock_quota_manager_->proxy(),
         std::vector<std::unique_ptr<FileSystemBackend>>(),
         std::vector<storage::URLRequestAutoMountHandler>(), data_dir_.GetPath(),
         CreateAllowFileAccessOptions());

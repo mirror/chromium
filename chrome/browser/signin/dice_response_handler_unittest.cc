@@ -123,7 +123,7 @@ class DiceResponseHandlerTest : public testing::Test,
         reconcilor_blocked_count_(0),
         reconcilor_unblocked_count_(0) {
     loop_.SetTaskRunner(task_runner_);
-    DCHECK_EQ(task_runner_, base::ThreadTaskRunnerHandle::Get());
+    DCHECK_EQ(task_runner_, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     signin_client_.SetURLRequestContext(request_context_getter_.get());
     AccountReconcilor::RegisterProfilePrefs(pref_service_.registry());
     AccountTrackerService::RegisterPrefs(pref_service_.registry());

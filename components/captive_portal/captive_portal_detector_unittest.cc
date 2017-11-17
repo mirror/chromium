@@ -60,7 +60,7 @@ class CaptivePortalDetectorTest : public testing::Test,
   void SetUp() override {
     scoped_refptr<net::URLRequestContextGetter> request_context_getter(
         new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get()));
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 
     detector_.reset(new CaptivePortalDetector(request_context_getter.get()));
     set_detector(detector_.get());

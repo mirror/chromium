@@ -467,7 +467,7 @@ class HDMIRediscoverWaiter {
 
   void WaitUntilTimeOut(int wait_duration_in_ms) {
     base::RunLoop run_loop;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop.QuitClosure(),
         base::TimeDelta::FromMilliseconds(wait_duration_in_ms));
     run_loop.Run();
@@ -478,7 +478,7 @@ class HDMIRediscoverWaiter {
       quit_loop_func.Run();
       return;
     }
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&HDMIRediscoverWaiter::CheckHDMIRediscoverGracePeriodEnd,
                    base::Unretained(this), quit_loop_func),

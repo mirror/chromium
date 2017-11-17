@@ -189,7 +189,7 @@ void BluetoothLowEnergyConnectionFinder::OnDiscoverySessionStarted(
 void BluetoothLowEnergyConnectionFinder::OnStartDiscoverySessionError() {
   PA_LOG(WARNING) << "Error starting discovery session, restarting in "
                   << kRestartDiscoveryOnErrorDelaySeconds << " seconds.";
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(
           &BluetoothLowEnergyConnectionFinder::RestartDiscoverySessionAsync,
@@ -249,7 +249,7 @@ void BluetoothLowEnergyConnectionFinder::OnConnectionStatusChanged(
     // callstack, this new observer will receive this connection event.
     // Therefore, we need to invoke the callback or restart discovery
     // asynchronously.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&BluetoothLowEnergyConnectionFinder::InvokeCallbackAsync,
                    weak_ptr_factory_.GetWeakPtr()));
@@ -257,7 +257,7 @@ void BluetoothLowEnergyConnectionFinder::OnConnectionStatusChanged(
     PA_LOG(WARNING) << "Connection failed. Retrying.";
     connection_->RemoveObserver(this);
     connection_.reset();
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(
             &BluetoothLowEnergyConnectionFinder::RestartDiscoverySessionAsync,

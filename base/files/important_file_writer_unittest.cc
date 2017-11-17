@@ -130,7 +130,7 @@ class ImportantFileWriterTest : public testing::Test {
 };
 
 TEST_F(ImportantFileWriterTest, Basic) {
-  ImportantFileWriter writer(file_, ThreadTaskRunnerHandle::Get());
+  ImportantFileWriter writer(file_, ThreadTaskRunnerHandle::Get(FROM_HERE));
   EXPECT_FALSE(PathExists(writer.path()));
   EXPECT_EQ(NOT_CALLED, write_callback_observer_.GetAndResetObservationState());
   writer.WriteNow(std::make_unique<std::string>("foo"));
@@ -142,7 +142,7 @@ TEST_F(ImportantFileWriterTest, Basic) {
 }
 
 TEST_F(ImportantFileWriterTest, WriteWithObserver) {
-  ImportantFileWriter writer(file_, ThreadTaskRunnerHandle::Get());
+  ImportantFileWriter writer(file_, ThreadTaskRunnerHandle::Get(FROM_HERE));
   EXPECT_FALSE(PathExists(writer.path()));
   EXPECT_EQ(NOT_CALLED, write_callback_observer_.GetAndResetObservationState());
 
@@ -182,7 +182,7 @@ TEST_F(ImportantFileWriterTest, FailedWriteWithObserver) {
   // Use an invalid file path (relative paths are invalid) to get a
   // FILE_ERROR_ACCESS_DENIED error when trying to write the file.
   ImportantFileWriter writer(FilePath().AppendASCII("bad/../path"),
-                             ThreadTaskRunnerHandle::Get());
+                             ThreadTaskRunnerHandle::Get(FROM_HERE));
   EXPECT_FALSE(PathExists(writer.path()));
   EXPECT_EQ(NOT_CALLED, write_callback_observer_.GetAndResetObservationState());
   write_callback_observer_.ObserveNextWriteCallbacks(&writer);
@@ -231,7 +231,7 @@ TEST_F(ImportantFileWriterTest, CallbackRunsOnWriterThread) {
 TEST_F(ImportantFileWriterTest, ScheduleWrite) {
   constexpr TimeDelta kCommitInterval = TimeDelta::FromSeconds(12345);
   MockTimer timer(true, false);
-  ImportantFileWriter writer(file_, ThreadTaskRunnerHandle::Get(),
+  ImportantFileWriter writer(file_, ThreadTaskRunnerHandle::Get(FROM_HERE),
                              kCommitInterval);
   writer.SetTimerForTesting(&timer);
   EXPECT_FALSE(writer.HasPendingWrite());
@@ -250,7 +250,7 @@ TEST_F(ImportantFileWriterTest, ScheduleWrite) {
 
 TEST_F(ImportantFileWriterTest, DoScheduledWrite) {
   MockTimer timer(true, false);
-  ImportantFileWriter writer(file_, ThreadTaskRunnerHandle::Get());
+  ImportantFileWriter writer(file_, ThreadTaskRunnerHandle::Get(FROM_HERE));
   writer.SetTimerForTesting(&timer);
   EXPECT_FALSE(writer.HasPendingWrite());
   DataSerializer serializer("foo");
@@ -265,7 +265,7 @@ TEST_F(ImportantFileWriterTest, DoScheduledWrite) {
 
 TEST_F(ImportantFileWriterTest, BatchingWrites) {
   MockTimer timer(true, false);
-  ImportantFileWriter writer(file_, ThreadTaskRunnerHandle::Get());
+  ImportantFileWriter writer(file_, ThreadTaskRunnerHandle::Get(FROM_HERE));
   writer.SetTimerForTesting(&timer);
   DataSerializer foo("foo"), bar("bar"), baz("baz");
   writer.ScheduleWrite(&foo);
@@ -280,7 +280,7 @@ TEST_F(ImportantFileWriterTest, BatchingWrites) {
 
 TEST_F(ImportantFileWriterTest, ScheduleWrite_FailToSerialize) {
   MockTimer timer(true, false);
-  ImportantFileWriter writer(file_, ThreadTaskRunnerHandle::Get());
+  ImportantFileWriter writer(file_, ThreadTaskRunnerHandle::Get(FROM_HERE));
   writer.SetTimerForTesting(&timer);
   EXPECT_FALSE(writer.HasPendingWrite());
   FailingDataSerializer serializer;
@@ -295,7 +295,7 @@ TEST_F(ImportantFileWriterTest, ScheduleWrite_FailToSerialize) {
 
 TEST_F(ImportantFileWriterTest, ScheduleWrite_WriteNow) {
   MockTimer timer(true, false);
-  ImportantFileWriter writer(file_, ThreadTaskRunnerHandle::Get());
+  ImportantFileWriter writer(file_, ThreadTaskRunnerHandle::Get(FROM_HERE));
   writer.SetTimerForTesting(&timer);
   EXPECT_FALSE(writer.HasPendingWrite());
   DataSerializer serializer("foo");
@@ -312,7 +312,7 @@ TEST_F(ImportantFileWriterTest, ScheduleWrite_WriteNow) {
 
 TEST_F(ImportantFileWriterTest, DoScheduledWrite_FailToSerialize) {
   MockTimer timer(true, false);
-  ImportantFileWriter writer(file_, ThreadTaskRunnerHandle::Get());
+  ImportantFileWriter writer(file_, ThreadTaskRunnerHandle::Get(FROM_HERE));
   writer.SetTimerForTesting(&timer);
   EXPECT_FALSE(writer.HasPendingWrite());
   FailingDataSerializer serializer;

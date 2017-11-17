@@ -179,7 +179,7 @@ void ArcAppDeferredLauncherController::UpdateApps() {
 }
 
 void ArcAppDeferredLauncherController::RegisterNextUpdate() {
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&ArcAppDeferredLauncherController::UpdateApps,
                      weak_ptr_factory_.GetWeakPtr()),

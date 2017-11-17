@@ -785,7 +785,7 @@ class AsyncFailingChannelIDStore : public ChannelIDStore {
   int GetChannelID(const std::string& server_identifier,
                    std::unique_ptr<crypto::ECPrivateKey>* key_result,
                    const GetChannelIDCallback& callback) override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(callback, ERR_UNEXPECTED, server_identifier, nullptr));
     return ERR_IO_PENDING;
@@ -1659,7 +1659,7 @@ TEST_F(SSLClientSocketTest, Write_WithSynchronousErrorNoRead) {
   // TODO(davidben): Avoid the arbitrary timeout?
   int old_write_count = raw_counting_socket->write_count();
   base::RunLoop loop;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, loop.QuitClosure(), base::TimeDelta::FromMilliseconds(100));
   loop.Run();
   EXPECT_EQ(old_write_count, raw_counting_socket->write_count());

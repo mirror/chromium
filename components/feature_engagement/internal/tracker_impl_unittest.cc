@@ -139,7 +139,7 @@ class TestAvailabilityModel : public AvailabilityModel {
 
   void Initialize(AvailabilityModel::OnInitializedCallback callback,
                   uint32_t current_day) override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), ready_));
   }
 

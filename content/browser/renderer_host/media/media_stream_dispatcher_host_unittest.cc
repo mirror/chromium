@@ -257,7 +257,8 @@ class MediaStreamDispatcherHostTest : public testing::Test {
         std::move(mock_video_capture_provider));
 
     host_ = std::make_unique<MockMediaStreamDispatcherHost>(
-        base::ThreadTaskRunnerHandle::Get(), media_stream_manager_.get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+        media_stream_manager_.get());
     host_->set_salt_and_origin_callback_for_testing(
         base::BindRepeating(&MediaStreamDispatcherHostTest::GetSaltAndOrigin,
                             base::Unretained(this)));

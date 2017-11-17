@@ -51,7 +51,7 @@ class DelayedCallbackRunnerTest : public testing::Test {
 
   void SetUp() override {
     instance_.reset(new safe_browsing::DelayedCallbackRunner(
-        base::TimeDelta(), base::ThreadTaskRunnerHandle::Get()));
+        base::TimeDelta(), base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   }
 
   void TearDown() override { instance_.reset(); }
@@ -128,7 +128,7 @@ TEST_F(DelayedCallbackRunnerTest, AddWhileRunningRun) {
   const std::string name2("two");
 
   // Post a task to register a new callback after Start() is called.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&DelayedCallbackRunnerTest::RegisterTestCallback,
                      base::Unretained(this), name2));

@@ -37,7 +37,7 @@ class LayerPerfTest : public testing::Test {
     layer_tree_host_ = FakeLayerTreeHost::Create(
         &fake_client_, &task_graph_runner_, animation_host_.get());
     layer_tree_host_->InitializeSingleThreaded(
-        &single_thread_client_, base::ThreadTaskRunnerHandle::Get());
+        &single_thread_client_, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 
   void TearDown() override {

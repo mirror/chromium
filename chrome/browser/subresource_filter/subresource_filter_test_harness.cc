@@ -77,9 +77,9 @@ void SubresourceFilterTestHarness::SetUp() {
       pref_service_.registry());
   auto content_service =
       base::MakeUnique<subresource_filter::ContentRulesetService>(
-          base::ThreadTaskRunnerHandle::Get());
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   auto ruleset_service = base::MakeUnique<subresource_filter::RulesetService>(
-      &pref_service_, base::ThreadTaskRunnerHandle::Get(),
+      &pref_service_, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       content_service.get(), ruleset_service_dir_.GetPath());
   content_service->set_ruleset_service(std::move(ruleset_service));
   TestingBrowserProcess::GetGlobal()->SetRulesetService(

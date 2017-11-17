@@ -170,7 +170,7 @@ HostContentSettingsMap::HostContentSettingsMap(PrefService* prefs,
                                                bool is_incognito_profile,
                                                bool is_guest_profile,
                                                bool store_last_modified)
-    : RefcountedKeyedService(base::ThreadTaskRunnerHandle::Get()),
+    : RefcountedKeyedService(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
 #ifndef NDEBUG
       used_from_thread_id_(base::PlatformThread::CurrentId()),
 #endif

@@ -173,7 +173,7 @@ bool GetHubDevicePath(const std::string& instance_id,
 class UsbServiceWin::BlockingTaskHelper {
  public:
   explicit BlockingTaskHelper(base::WeakPtr<UsbServiceWin> service)
-      : service_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      : service_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         service_(service) {}
   ~BlockingTaskHelper() {}
 

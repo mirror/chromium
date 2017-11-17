@@ -23,8 +23,8 @@ void InMemoryContentStore::SaveContent(
     InMemoryContentStore::SaveCallback callback) {
   InjectContent(entry, proto);
   if (!callback.is_null()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  base::Bind(callback, true));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, base::Bind(callback, true));
   }
 }
 
@@ -55,7 +55,7 @@ void InMemoryContentStore::LoadContent(
   } else {
     distilled_article.reset(new DistilledArticleProto());
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(callback, success, base::Passed(&distilled_article)));
 }

@@ -51,7 +51,7 @@ void PpapiDecryptor::Create(
     std::string message =
         "Unable to create the CDM for the key system " + key_system + ".";
     DLOG(ERROR) << message;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(cdm_created_cb, nullptr, message));
     return;
   }
@@ -79,7 +79,7 @@ PpapiDecryptor::PpapiDecryptor(
       session_closed_cb_(session_closed_cb),
       session_keys_change_cb_(session_keys_change_cb),
       session_expiration_update_cb_(session_expiration_update_cb),
-      render_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      render_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       weak_ptr_factory_(this) {
   DCHECK(pepper_cdm_wrapper_.get());
   DCHECK(!session_message_cb_.is_null());

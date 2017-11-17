@@ -170,8 +170,8 @@ class ObfuscatedFileUtilTest : public testing::Test {
 
     quota_manager_ = new storage::QuotaManager(
         false /* is_incognito */, data_dir_.GetPath(),
-        base::ThreadTaskRunnerHandle::Get().get(), storage_policy_.get(),
-        storage::GetQuotaSettingsFunc());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+        storage_policy_.get(), storage::GetQuotaSettingsFunc());
     storage::QuotaSettings settings;
     settings.per_host_quota = 25 * 1024 * 1024;
     settings.pool_size = settings.per_host_quota * 5;
@@ -250,7 +250,7 @@ class ObfuscatedFileUtilTest : public testing::Test {
     return std::unique_ptr<ObfuscatedFileUtil>(
         ObfuscatedFileUtil::CreateForTesting(
             storage_policy, data_dir_path(), NULL,
-            base::ThreadTaskRunnerHandle::Get().get()));
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE).get()));
   }
 
   ObfuscatedFileUtil* ofu() {

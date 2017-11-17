@@ -18,7 +18,7 @@ namespace device {
 PlatformSensor::PlatformSensor(mojom::SensorType type,
                                mojo::ScopedSharedBufferMapping mapping,
                                PlatformSensorProvider* provider)
-    : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       shared_buffer_mapping_(std::move(mapping)),
       type_(type),
       provider_(provider),

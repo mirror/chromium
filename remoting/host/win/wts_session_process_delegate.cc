@@ -169,7 +169,7 @@ WtsSessionProcessDelegate::Core::Core(
     std::unique_ptr<base::CommandLine> target_command,
     bool launch_elevated,
     const std::string& channel_security)
-    : caller_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : caller_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       io_task_runner_(io_task_runner),
       channel_security_(channel_security),
       event_handler_(nullptr),
@@ -397,7 +397,7 @@ void WtsSessionProcessDelegate::Core::DoLaunchProcess() {
   std::unique_ptr<IPC::ChannelProxy> channel = IPC::ChannelProxy::Create(
       broker_client_invitation_->AttachMessagePipe(mojo_pipe_token).release(),
       IPC::Channel::MODE_SERVER, this, io_task_runner_,
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   command_line.AppendSwitchASCII(kMojoPipeToken, mojo_pipe_token);
 
   std::unique_ptr<mojo::edk::PlatformChannelPair> normal_mojo_channel;

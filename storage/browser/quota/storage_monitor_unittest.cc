@@ -68,7 +68,7 @@ class UsageMockQuotaManager : public QuotaManager {
   UsageMockQuotaManager(SpecialStoragePolicy* special_storage_policy)
       : QuotaManager(false,
                      base::FilePath(),
-                     base::ThreadTaskRunnerHandle::Get().get(),
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
                      special_storage_policy,
                      storage::GetQuotaSettingsFunc()),
         callback_usage_(0),
@@ -639,7 +639,8 @@ class StorageMonitorIntegrationTest : public testing::Test {
     ASSERT_TRUE(data_dir_.CreateUniqueTempDir());
     storage_policy_ = new MockSpecialStoragePolicy();
     quota_manager_ = new QuotaManager(
-        false, data_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get().get(),
+        false, data_dir_.GetPath(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
         storage_policy_.get(), storage::GetQuotaSettingsFunc());
 
     client_ = new MockStorageClient(quota_manager_->proxy(),

@@ -390,7 +390,7 @@ class SupervisedUserServiceExtensionTestBase
 
     SupervisedUserURLFilter* url_filter = service->GetURLFilter();
     url_filter->SetBlockingTaskRunnerForTesting(
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     url_filter_observer_.Init(url_filter);
 
     // Wait for the initial update to finish.

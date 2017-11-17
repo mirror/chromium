@@ -454,9 +454,10 @@ void PreviewsOptOutStoreSQL::LoadBlackList(LoadBlackListCallback callback) {
   std::unique_ptr<PreviewsTypeList> enabled_previews =
       base::MakeUnique<PreviewsTypeList>(*enabled_previews_);
   background_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&LoadBlackListSync, db_.get(), db_file_path_,
-                            base::Passed(std::move(enabled_previews)),
-                            base::ThreadTaskRunnerHandle::Get(), callback));
+      FROM_HERE,
+      base::Bind(&LoadBlackListSync, db_.get(), db_file_path_,
+                 base::Passed(std::move(enabled_previews)),
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE), callback));
 }
 
 }  // namespace previews

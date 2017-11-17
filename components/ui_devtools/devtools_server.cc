@@ -52,7 +52,7 @@ UiDevToolsServer::UiDevToolsServer(
     scoped_refptr<base::SingleThreadTaskRunner> io_thread_task_runner)
     : io_thread_task_runner_(io_thread_task_runner) {
   DCHECK(!devtools_server_);
-  main_thread_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  main_thread_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   devtools_server_ = this;
   if (io_thread_task_runner_)
     return;

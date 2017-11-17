@@ -21,7 +21,7 @@ namespace offline_pages {
 std::unique_ptr<KeyedService> BuildTestOfflinePageModel(
     content::BrowserContext* context) {
   scoped_refptr<base::SingleThreadTaskRunner> task_runner =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
   std::unique_ptr<OfflinePageTestStore> metadata_store(
       new OfflinePageTestStore(task_runner));

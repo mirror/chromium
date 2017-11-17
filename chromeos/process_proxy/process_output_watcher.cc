@@ -92,7 +92,8 @@ void ProcessOutputWatcher::ReadFromFd(int fd) {
   if (bytes_read > 0) {
     ReportOutput(
         PROCESS_OUTPUT_TYPE_OUT, bytes_read,
-        base::Bind(&RelayToTaskRunner, base::ThreadTaskRunnerHandle::Get(),
+        base::Bind(&RelayToTaskRunner,
+                   base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                    base::Bind(&ProcessOutputWatcher::WatchProcessOutput,
                               weak_factory_.GetWeakPtr())));
     return;

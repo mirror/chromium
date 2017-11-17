@@ -150,7 +150,7 @@ void ExpectProcessedEvents(EventInjector* injector, int count) {
 
 // Posts a task on the current message loop.
 void PostMessageLoopTask(const Location& from_here, OnceClosure task) {
-  ThreadTaskRunnerHandle::Get()->PostTask(from_here, std::move(task));
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(from_here, std::move(task));
 }
 
 // Test fixture.
@@ -307,7 +307,7 @@ class ConcurrentHelper : public RefCounted<ConcurrentHelper>  {
     if (task_count_ == 0 && event_count_ == 0) {
       RunLoop::QuitCurrentWhenIdleDeprecated();
     } else {
-      ThreadTaskRunnerHandle::Get()->PostTask(
+      ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, BindOnce(&ConcurrentHelper::FromTask, this));
     }
   }
@@ -376,8 +376,10 @@ void AddEventsAndDrainGLib(EventInjector* injector) {
   injector->AddEvent(0, MessageLoop::QuitWhenIdleClosure());
 
   // Post a couple of dummy tasks
-  ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, BindOnce(&DoNothing));
-  ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, BindOnce(&DoNothing));
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                   BindOnce(&DoNothing));
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                   BindOnce(&DoNothing));
 
   // Drain the events
   while (g_main_context_pending(nullptr)) {
@@ -441,18 +443,18 @@ void TestGLibLoopInternal(EventInjector* injector) {
   injector->AddDummyEvent(0);
   injector->AddDummyEvent(0);
   // Post a couple of dummy tasks
-  ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                          BindOnce(&IncrementInt, &task_count));
-  ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                          BindOnce(&IncrementInt, &task_count));
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, BindOnce(&IncrementInt, &task_count));
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, BindOnce(&IncrementInt, &task_count));
   // Delayed events
   injector->AddDummyEvent(10);
   injector->AddDummyEvent(10);
   // Delayed work
-  ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, BindOnce(&IncrementInt, &task_count),
       TimeDelta::FromMilliseconds(30));
-  ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, BindOnce(&GLibLoopRunner::Quit, runner),
       TimeDelta::FromMilliseconds(40));
 
@@ -474,18 +476,18 @@ void TestGtkLoopInternal(EventInjector* injector) {
   injector->AddDummyEvent(0);
   injector->AddDummyEvent(0);
   // Post a couple of dummy tasks
-  ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                          BindOnce(&IncrementInt, &task_count));
-  ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                          BindOnce(&IncrementInt, &task_count));
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, BindOnce(&IncrementInt, &task_count));
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, BindOnce(&IncrementInt, &task_count));
   // Delayed events
   injector->AddDummyEvent(10);
   injector->AddDummyEvent(10);
   // Delayed work
-  ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, BindOnce(&IncrementInt, &task_count),
       TimeDelta::FromMilliseconds(30));
-  ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, BindOnce(&GLibLoopRunner::Quit, runner),
       TimeDelta::FromMilliseconds(40));
 

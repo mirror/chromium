@@ -160,7 +160,7 @@ void RemoteDeviceLifeCycleImpl::OnAuthenticationResult(
   // an observer of |connection_|, so creating it synchronously would trigger
   // |OnSendCompleted()| as an observer call for |messenger_|.
   secure_context_ = std::move(secure_context);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&RemoteDeviceLifeCycleImpl::CreateMessenger,
                             weak_ptr_factory_.GetWeakPtr()));
 }

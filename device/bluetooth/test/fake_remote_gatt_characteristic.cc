@@ -140,7 +140,7 @@ FakeRemoteGattCharacteristic::GetDescriptor(
 void FakeRemoteGattCharacteristic::ReadRemoteCharacteristic(
     const ValueCallback& callback,
     const ErrorCallback& error_callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&FakeRemoteGattCharacteristic::DispatchReadResponse,
                  weak_ptr_factory_.GetWeakPtr(), callback, error_callback));
@@ -155,11 +155,11 @@ void FakeRemoteGattCharacteristic::WriteRemoteCharacteristic(
   // run the callback because that's the guarantee the API makes.
   if (properties_ & PROPERTY_WRITE_WITHOUT_RESPONSE) {
     last_written_value_ = value;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback);
     return;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&FakeRemoteGattCharacteristic::DispatchWriteResponse,
                  weak_ptr_factory_.GetWeakPtr(), callback, error_callback,
@@ -170,7 +170,7 @@ void FakeRemoteGattCharacteristic::SubscribeToNotifications(
     device::BluetoothRemoteGattDescriptor* ccc_descriptor,
     const base::Closure& callback,
     const ErrorCallback& error_callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&FakeRemoteGattCharacteristic::
                      DispatchSubscribeToNotificationsResponse,

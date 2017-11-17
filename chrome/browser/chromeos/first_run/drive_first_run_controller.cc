@@ -236,7 +236,7 @@ void DriveWebContentsManager::OnOfflineInit(
   if (started_) {
     // We postpone notifying the controller as we may be in the middle
     // of a call stack for some routine of the contained WebContents.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&DriveWebContentsManager::RunCompletionCallback,
                    weak_ptr_factory_.GetWeakPtr(), success, outcome));
@@ -435,7 +435,7 @@ void DriveFirstRunController::CleanUp() {
   if (web_contents_manager_)
     web_contents_manager_->StopLoad();
   web_contents_timer_.Stop();
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 void DriveFirstRunController::OnOfflineInit(bool success, UMAOutcome outcome) {

@@ -143,7 +143,7 @@ IqRequest::~IqRequest() {
 }
 
 void IqRequest::SetTimeout(base::TimeDelta timeout) {
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::Bind(&IqRequest::OnTimeout, weak_factory_.GetWeakPtr()),
       timeout);
 }
@@ -161,7 +161,7 @@ void IqRequest::OnResponse(const buzz::XmlElement* stanza) {
   // It's unsafe to delete signal strategy here, and the callback may
   // want to do that, so we post task to invoke the callback later.
   std::unique_ptr<buzz::XmlElement> stanza_copy(new buzz::XmlElement(*stanza));
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&IqRequest::DeliverResponse, weak_factory_.GetWeakPtr(),
                  base::Passed(&stanza_copy)));

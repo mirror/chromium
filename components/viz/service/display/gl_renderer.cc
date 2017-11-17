@@ -3404,7 +3404,7 @@ void GLRenderer::ScheduleRenderPassDrawQuad(
 
   if (!overlay_resource_pool_) {
     overlay_resource_pool_ = cc::ResourcePool::Create(
-        resource_provider_, base::ThreadTaskRunnerHandle::Get().get(),
+        resource_provider_, base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
         ResourceTextureHint::kOverlay, base::TimeDelta::FromSeconds(3),
         settings_->disallow_non_exact_resource_reuse);
   }

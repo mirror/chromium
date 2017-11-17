@@ -210,7 +210,7 @@ void BufferFeeder::Start(float playback_rate) {
   original_playback_rate_ = playback_rate_ = playback_rate;
   ASSERT_TRUE(backend_->Start(kStartPts));
   ASSERT_TRUE(backend_->SetPlaybackRate(playback_rate));
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&BufferFeeder::FeedBuffer, base::Unretained(this)));
 }
@@ -304,7 +304,7 @@ void BufferFeeder::OnPushBufferComplete(BufferStatus status) {
   if (feeding_completed_)
     return;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&BufferFeeder::FeedBuffer, base::Unretained(this)));
 }

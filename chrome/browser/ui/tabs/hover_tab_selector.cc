@@ -37,7 +37,7 @@ void HoverTabSelector::StartTabTransition(int index) {
     const base::TimeDelta kHoverTransitionDelay =
         base::TimeDelta::FromMilliseconds(500);
     tab_transition_tab_index_ = index;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&HoverTabSelector::PerformTabTransition,
                        weak_factory_.GetWeakPtr()),

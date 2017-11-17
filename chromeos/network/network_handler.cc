@@ -29,7 +29,7 @@ namespace chromeos {
 static NetworkHandler* g_network_handler = NULL;
 
 NetworkHandler::NetworkHandler()
-    : task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+    : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
   CHECK(DBusThreadManager::IsInitialized());
 
   network_state_handler_.reset(new NetworkStateHandler());

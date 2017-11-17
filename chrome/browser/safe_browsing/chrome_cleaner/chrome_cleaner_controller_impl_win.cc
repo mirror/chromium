@@ -454,7 +454,7 @@ void ChromeCleanerControllerImpl::OnChromeCleanerFetchedAndVerified(
       base::Bind(&ChromeCleanerControllerImpl::OnCleanerProcessDone,
                  weak_factory_.GetWeakPtr()),
       // Our callbacks should be dispatched to the UI thread only.
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   time_scanning_started_ = base::Time::Now();
 }

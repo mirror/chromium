@@ -262,7 +262,7 @@ class HistoryBackendTestBase : public testing::Test {
       return;
     backend_ = new HistoryBackend(new HistoryBackendTestDelegate(this),
                                   history_client_.CreateBackendClient(),
-                                  base::ThreadTaskRunnerHandle::Get());
+                                  base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     backend_->Init(false, TestHistoryDatabaseParamsForPath(test_dir_));
   }
 
@@ -1694,7 +1694,7 @@ TEST_F(HistoryBackendTest, MigrationVisitSource) {
 
   backend_ = new HistoryBackend(new HistoryBackendTestDelegate(this),
                                 history_client_.CreateBackendClient(),
-                                base::ThreadTaskRunnerHandle::Get());
+                                base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   backend_->Init(false, TestHistoryDatabaseParamsForPath(new_history_path));
   backend_->Closing();
   backend_ = nullptr;
@@ -3563,7 +3563,7 @@ TEST_F(HistoryBackendTest, MigrationVisitDuration) {
 
   backend_ = new HistoryBackend(new HistoryBackendTestDelegate(this),
                                 history_client_.CreateBackendClient(),
-                                base::ThreadTaskRunnerHandle::Get());
+                                base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   backend_->Init(false, TestHistoryDatabaseParamsForPath(new_history_path));
   backend_->Closing();
   backend_ = nullptr;

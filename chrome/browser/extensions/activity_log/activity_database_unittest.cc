@@ -106,7 +106,7 @@ class ActivityDatabaseTest : public ChromeRenderViewHostTestHarness {
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
     SetActivityLogTaskRunnerForTesting(
-        base::ThreadTaskRunnerHandle::Get().get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
     base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kEnableExtensionActivityLogTesting);

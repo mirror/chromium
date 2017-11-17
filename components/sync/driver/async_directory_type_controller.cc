@@ -260,7 +260,7 @@ std::unique_ptr<DataTypeErrorHandler>
 AsyncDirectoryTypeController::CreateErrorHandler() {
   DCHECK(CalledOnValidThread());
   return std::make_unique<DataTypeErrorHandlerImpl>(
-      base::ThreadTaskRunnerHandle::Get(), dump_stack_,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), dump_stack_,
       base::Bind(&AsyncDirectoryTypeController::DisableImpl,
                  base::AsWeakPtr(this)));
 }

@@ -378,7 +378,7 @@ void ChannelMultiplexer::DoCreatePendingChannels() {
   // separate task to connect other channels. This is necessary because the
   // callback may destroy the multiplexer or somehow else modify
   // |pending_channels_| list (e.g. call CancelChannelCreation()).
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&ChannelMultiplexer::DoCreatePendingChannels,
                             weak_factory_.GetWeakPtr()));
 
@@ -405,7 +405,7 @@ ChannelMultiplexer::MuxChannel* ChannelMultiplexer::GetOrCreateChannel(
 
 void ChannelMultiplexer::OnBaseChannelError(int error) {
   for (auto it = channels_.begin(); it != channels_.end(); ++it) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&ChannelMultiplexer::NotifyBaseChannelError,
                    weak_factory_.GetWeakPtr(), it->second->name(), error));

@@ -246,7 +246,7 @@ void URLRequestFtpJob::OnStartCompleted(int result) {
 }
 
 void URLRequestFtpJob::OnStartCompletedAsync(int result) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&URLRequestFtpJob::OnStartCompleted,
                             weak_factory_.GetWeakPtr(), result));
 }

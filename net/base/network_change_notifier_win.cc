@@ -276,9 +276,10 @@ void NetworkChangeNotifierWin::WatchForAddressChange() {
                                  sequential_failures_);
     }
 
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE, base::Bind(&NetworkChangeNotifierWin::WatchForAddressChange,
-                              weak_factory_.GetWeakPtr()),
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&NetworkChangeNotifierWin::WatchForAddressChange,
+                   weak_factory_.GetWeakPtr()),
         base::TimeDelta::FromMilliseconds(
             kWatchForAddressChangeRetryIntervalMs));
     return;

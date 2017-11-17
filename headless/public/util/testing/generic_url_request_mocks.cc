@@ -18,7 +18,7 @@ namespace headless {
 
 // MockGenericURLRequestJobDelegate
 MockGenericURLRequestJobDelegate::MockGenericURLRequestJobDelegate()
-    : main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+    : main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 MockGenericURLRequestJobDelegate::~MockGenericURLRequestJobDelegate() {}
 
@@ -80,7 +80,7 @@ void MockCookieStore::GetCookieListWithOptionsAsync(
     const GURL& url,
     const net::CookieOptions& options,
     GetCookieListCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&MockCookieStore::SendCookies, base::Unretained(this), url,
                      options, std::move(callback)));

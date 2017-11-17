@@ -88,7 +88,7 @@ std::unique_ptr<ViewerHandle> TaskTracker::AddViewer(
   if (content_ready_) {
     // Distillation for this task has already completed, and so the delegate can
     // be immediately told of the result.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&TaskTracker::NotifyViewer,
                               weak_ptr_factory_.GetWeakPtr(), delegate));
   }
@@ -134,7 +134,7 @@ void TaskTracker::MaybeCancel() {
 void TaskTracker::CancelSaveCallbacks() { ScheduleSaveCallbacks(false); }
 
 void TaskTracker::ScheduleSaveCallbacks(bool distillation_succeeded) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&TaskTracker::DoSaveCallbacks, weak_ptr_factory_.GetWeakPtr(),
                  distillation_succeeded));
@@ -153,16 +153,16 @@ void TaskTracker::OnDistillerFinished(
 
   // 'distiller_ != null' is used as a signal that distillation is in progress,
   // so it needs to be released so that we know distillation is done.
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE,
-                                                  distiller_.release());
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
+      FROM_HERE, distiller_.release());
 
   ContentSourceFinished();
 }
 
 void TaskTracker::CancelPendingSources() {
   if (distiller_) {
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE,
-                                                    distiller_.release());
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
+        FROM_HERE, distiller_.release());
   }
 }
 

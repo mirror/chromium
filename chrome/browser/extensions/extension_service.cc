@@ -1980,7 +1980,7 @@ void ExtensionService::Observe(int type,
       // access to the Extension and ExtensionHost.
       extensions::ExtensionHost* host =
           content::Details<extensions::ExtensionHost>(details).ptr();
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(&ExtensionService::TerminateExtension,
                                     AsWeakPtr(), host->extension_id()));
       break;
@@ -2023,7 +2023,7 @@ void ExtensionService::Observe(int type,
         for (std::set<std::string>::const_iterator it = extension_ids.begin();
              it != extension_ids.end(); ++it) {
           if (delayed_installs_.Contains(*it)) {
-            base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
                 FROM_HERE,
                 base::BindOnce(
                     &ExtensionService::MaybeFinishDelayedInstallation,

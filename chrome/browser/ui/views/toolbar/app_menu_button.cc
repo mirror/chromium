@@ -301,7 +301,7 @@ bool AppMenuButton::CanDrop(const ui::OSExchangeData& data) {
 void AppMenuButton::OnDragEntered(const ui::DropTargetEvent& event) {
   DCHECK(!weak_factory_.HasWeakPtrs());
   if (!g_open_app_immediately_for_testing) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&AppMenuButton::ShowMenu, weak_factory_.GetWeakPtr(),
                        true),

@@ -45,7 +45,7 @@ void MessagePropertyProvider::GetChannelID(
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&MessagePropertyProvider::GetChannelIDOnIOThread,
-                     base::ThreadTaskRunnerHandle::Get(),
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                      request_context_getter, source_url.host(), reply));
 }
 

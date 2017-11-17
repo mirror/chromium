@@ -473,7 +473,7 @@ void SpdyHttpStream::OnRequestBodyReadCompleted(int status) {
     // from |status|.
     MaybePostRequestCallback(status);
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&SpdyHttpStream::ResetStreamInternal,
                               weak_factory_.GetWeakPtr()));
 
@@ -505,9 +505,10 @@ void SpdyHttpStream::ScheduleBufferedReadCallback() {
   more_read_data_pending_ = false;
   buffered_read_callback_pending_ = true;
   const base::TimeDelta kBufferTime = base::TimeDelta::FromMilliseconds(1);
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&SpdyHttpStream::DoBufferedReadCallback,
-                            weak_factory_.GetWeakPtr()),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&SpdyHttpStream::DoBufferedReadCallback,
+                 weak_factory_.GetWeakPtr()),
       kBufferTime);
 }
 
@@ -572,7 +573,7 @@ void SpdyHttpStream::MaybeDoRequestCallback(int rv) {
 void SpdyHttpStream::MaybePostRequestCallback(int rv) {
   CHECK_NE(ERR_IO_PENDING, rv);
   if (request_callback_)
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&SpdyHttpStream::MaybeDoRequestCallback,
                               weak_factory_.GetWeakPtr(), rv));
 }

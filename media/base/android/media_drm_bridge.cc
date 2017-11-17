@@ -866,7 +866,7 @@ MediaDrmBridge::MediaDrmBridge(
       session_closed_cb_(session_closed_cb),
       session_keys_change_cb_(session_keys_change_cb),
       session_expiration_update_cb_(session_expiration_update_cb),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       media_drm_bridge_cdm_context_(this),
       weak_factory_(this) {
   DVLOG(1) << __func__;

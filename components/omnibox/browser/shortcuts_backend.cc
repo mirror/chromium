@@ -77,7 +77,7 @@ ShortcutsBackend::ShortcutsBackend(
       search_terms_data_(std::move(search_terms_data)),
       current_state_(NOT_INITIALIZED),
       history_service_observer_(this),
-      main_runner_(base::ThreadTaskRunnerHandle::Get()),
+      main_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       db_runner_(base::CreateSequencedTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::BACKGROUND,
            base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})),

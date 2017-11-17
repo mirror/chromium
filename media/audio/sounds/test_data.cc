@@ -10,7 +10,7 @@
 namespace media {
 
 TestObserver::TestObserver(const base::Closure& quit)
-    : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       quit_(quit),
       num_play_requests_(0),
       num_stop_requests_(0),

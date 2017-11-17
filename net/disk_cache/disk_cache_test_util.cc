@@ -63,7 +63,7 @@ bool CheckCacheIntegrity(const base::FilePath& path,
                          bool new_eviction,
                          uint32_t mask) {
   std::unique_ptr<disk_cache::BackendImpl> cache(new disk_cache::BackendImpl(
-      path, mask, base::ThreadTaskRunnerHandle::Get(), NULL));
+      path, mask, base::ThreadTaskRunnerHandle::Get(FROM_HERE), NULL));
   if (!cache.get())
     return false;
   if (new_eviction)

@@ -44,7 +44,7 @@ void OnStorePolicy(chromeos::AuthPolicyClient::RefreshPolicyCallback callback,
 // Posts |closure| on the ThreadTaskRunner with |delay|.
 void PostDelayedClosure(base::OnceClosure closure,
                         const base::TimeDelta& delay) {
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, std::move(closure), delay);
 }
 

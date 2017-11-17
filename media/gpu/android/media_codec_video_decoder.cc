@@ -616,7 +616,7 @@ void MediaCodecVideoDecoder::OnCodecDrained() {
 
   if (drain_type == DrainType::kForDestroy) {
     // Post the delete in case the caller uses |this| after we return.
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
     return;
   }
 

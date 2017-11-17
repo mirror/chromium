@@ -140,7 +140,7 @@ void SpdyStream::SetDelegate(Delegate* delegate) {
 
   if (io_state_ == STATE_HALF_CLOSED_LOCAL_UNCLAIMED) {
     DCHECK_EQ(type_, SPDY_PUSH_STREAM);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&SpdyStream::PushedStreamReplay, GetWeakPtr()));
   }
 }

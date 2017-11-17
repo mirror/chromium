@@ -22,7 +22,7 @@ void FakeLorgnetteManagerClient::Init(dbus::Bus* bus) {}
 
 void FakeLorgnetteManagerClient::ListScanners(
     const ListScannersCallback& callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(callback, !scanner_table_.empty(), scanner_table_));
 }
@@ -36,7 +36,8 @@ void FakeLorgnetteManagerClient::ScanImageToString(
   auto task = it != scan_data_.end()
                   ? base::BindOnce(callback, true, it->second)
                   : base::BindOnce(callback, false, std::string());
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, std::move(task));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                         std::move(task));
 }
 
 void FakeLorgnetteManagerClient::AddScannerTableEntry(

@@ -67,7 +67,7 @@ TEST_F(InstantProcessNavigationTest, ForkForNavigationsToNewTabURLs) {
   ChromeContentRendererClient* client =
       static_cast<ChromeContentRendererClient*>(content_renderer_client_.get());
   chrome_render_thread_->set_io_task_runner(
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   client->RenderThreadStarted();
   SearchBouncer::GetInstance()->SetNewTabPageURL(
       GURL("http://example.com/newtab"));

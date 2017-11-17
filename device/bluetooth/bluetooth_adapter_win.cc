@@ -325,7 +325,7 @@ void BluetoothAdapterWin::SetDiscoveryFilter(
 }
 
 void BluetoothAdapterWin::Init() {
-  ui_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  ui_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   socket_thread_ = BluetoothSocketThread::Get();
   task_manager_ =
       new BluetoothTaskManagerWin(ui_task_runner_);
@@ -338,7 +338,7 @@ void BluetoothAdapterWin::InitForTest(
     scoped_refptr<base::SequencedTaskRunner> bluetooth_task_runner) {
   ui_task_runner_ = ui_task_runner;
   if (!ui_task_runner_)
-    ui_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    ui_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   task_manager_ =
       new BluetoothTaskManagerWin(ui_task_runner_);
   task_manager_->AddObserver(this);

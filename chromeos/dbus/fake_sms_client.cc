@@ -40,7 +40,7 @@ void FakeSMSClient::GetAll(const std::string& service_name,
   // Run callback asynchronously.
   if (callback.is_null())
     return;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&FakeSMSClient::OnGetAll, weak_ptr_factory_.GetWeakPtr(),
                  base::Owned(sms), callback));

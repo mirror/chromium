@@ -54,7 +54,7 @@ ResourceManagerImpl::ResourceManagerImpl(gfx::NativeWindow native_window)
   DCHECK(!java_obj_.is_null());
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
       this, "android::ResourceManagerImpl",
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 ResourceManagerImpl::~ResourceManagerImpl() {

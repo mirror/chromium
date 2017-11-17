@@ -61,7 +61,8 @@ WebRtcMediaStreamTrackAdapterMap::AdapterRef::Copy() const {
 
 WebRtcMediaStreamTrackAdapterMap::WebRtcMediaStreamTrackAdapterMap(
     PeerConnectionDependencyFactory* const factory)
-    : factory_(factory), main_thread_(base::ThreadTaskRunnerHandle::Get()) {
+    : factory_(factory),
+      main_thread_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
   DCHECK(factory_);
   DCHECK(main_thread_);
 }

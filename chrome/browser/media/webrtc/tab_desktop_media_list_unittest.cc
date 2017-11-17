@@ -104,7 +104,7 @@ ACTION_P2(CheckListSize, list, expected_list_size) {
 }
 
 ACTION(QuitMessageLoop) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
 }
 

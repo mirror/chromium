@@ -258,7 +258,7 @@ void ServiceWatcherImpl::DeferUpdate(ServiceWatcher::UpdateType update_type,
   ServiceListenersMap::iterator it = services_.find(service_name);
   if (it != services_.end() && !it->second->update_pending()) {
     it->second->set_update_pending(true);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&ServiceWatcherImpl::DeliverDeferredUpdate,
                                   AsWeakPtr(), update_type, service_name));
   }
@@ -310,7 +310,7 @@ void ServiceWatcherImpl::OnNsecRecord(const std::string& name,
 
 void ServiceWatcherImpl::ScheduleQuery(int timeout_seconds) {
   if (timeout_seconds <= kMaxRequeryTimeSeconds) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&ServiceWatcherImpl::SendQuery, AsWeakPtr(),
                        timeout_seconds * 2 /*next_timeout_seconds*/),
@@ -536,7 +536,7 @@ void LocalDomainResolverImpl::OnTransactionComplete(
         &LocalDomainResolverImpl::SendResolvedAddresses,
         base::Unretained(this)));
 
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, timeout_callback_.callback(),
         base::TimeDelta::FromMilliseconds(kLocalDomainSecondAddressTimeoutMs));
   } else if (transactions_finished_ == 2
