@@ -138,6 +138,9 @@ class GlobalDumpGraph {
     uint64_t not_owning_sub_size = 0;
     uint64_t not_owned_sub_size = 0;
 
+    double owned_coefficient = 1;
+    double owning_coefficient = 1;
+
    private:
     GlobalDumpGraph::Process* dump_graph_;
     Node* const parent_;
