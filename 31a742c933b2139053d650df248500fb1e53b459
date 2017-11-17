@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "f6a52868_ec4e7a27",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-17T15:47:16Z",
+      "side": 1,
+      "message": "nit: does \"vr/gvr/capi/include/gvr_keyboard.h\" work? Given that you included the kb_config in BUILD.gn, you may not need everything before vr/ in the file path.",
+      "revId": "31a742c933b2139053d650df248500fb1e53b459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccdfd875_9b9119f6",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-17T15:47:16Z",
+      "side": 1,
+      "message": "we should probably call gvr_keyboard_destroy somewhere? It might worth wrap gvr keyboard related things in a new class instead of in vr_shell_gl",
+      "revId": "31a742c933b2139053d650df248500fb1e53b459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50d4d655_b1966ed4",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 12
@@ -19,6 +53,23 @@
         "endLine": 1053,
         "endChar": 24
       },
+      "revId": "31a742c933b2139053d650df248500fb1e53b459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4718afc7_83517053",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-17T15:47:16Z",
+      "side": 1,
+      "message": "Do we need to call gvr_keyboard_set_frame_time and gvr_keyboard_advance_frame even when we don\u0027t want to show keyboard? If not, perhaps move this check to line 1053?",
       "revId": "31a742c933b2139053d650df248500fb1e53b459",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
