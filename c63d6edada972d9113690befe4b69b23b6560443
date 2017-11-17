@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8d256db_4780109c",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-17T18:30:42Z",
+      "side": 1,
+      "message": "This conflicts with https://cs.chromium.org/chromium/src/content/browser/renderer_host/compositor_impl_android.cc?rcl\u003d740a58fe5be72d088743717ebd58883a4e6eb5ee\u0026l\u003d594\n\nI thought VR already has a way to override things on the window? Or is that TODO actually important, that CompositorImpl needs to listen to density changes?",
+      "revId": "c63d6edada972d9113690befe4b69b23b6560443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
