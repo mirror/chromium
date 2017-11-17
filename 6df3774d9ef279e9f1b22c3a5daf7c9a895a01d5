@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffb1c358_2b95558b",
+        "filename": "ui/views/controls/slider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-17T17:26:59Z",
+      "side": 1,
+      "message": "there are three constants added here. Surely we don\u0027t need to add that many and/or they should be shared with other focus border code. Should we not be using FocusableBorder?",
+      "range": {
+        "startLine": 318,
+        "startChar": 8,
+        "endLine": 318,
+        "endChar": 9
+      },
+      "revId": "6df3774d9ef279e9f1b22c3a5daf7c9a895a01d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
