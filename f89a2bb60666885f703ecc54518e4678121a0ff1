@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68693bfc_2fd2e5e0",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-17T09:09:22Z",
+      "side": 1,
+      "message": "Please add a comment explaining this.",
+      "revId": "f89a2bb60666885f703ecc54518e4678121a0ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
