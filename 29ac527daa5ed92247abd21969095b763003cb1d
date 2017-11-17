@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a27651a_bfa2744a",
+        "filename": "components/autofill/core/browser/credit_card.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-11-17T18:43:21Z",
+      "side": 1,
+      "message": "Is obfuscated_cc_number variable name still makes sense ?",
+      "range": {
+        "startLine": 706,
+        "startChar": 1,
+        "endLine": 706,
+        "endChar": 2
+      },
+      "revId": "29ac527daa5ed92247abd21969095b763003cb1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
