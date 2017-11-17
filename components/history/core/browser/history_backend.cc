@@ -1568,6 +1568,8 @@ void HistoryBackend::GetFaviconsForURL(
   if (desired_sizes.size() == 1)
     bitmap_results->assign(1, favicon_base::ResizeFaviconBitmapResult(
                                   *bitmap_results, desired_sizes[0]));
+
+  LOG(INFO) << "GetFaviconsForURL() done for " << page_url;
 }
 
 void HistoryBackend::GetFaviconForID(

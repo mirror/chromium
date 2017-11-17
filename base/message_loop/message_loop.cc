@@ -348,6 +348,7 @@ void MessageLoop::Run(bool application_tasks_allowed) {
 
 void MessageLoop::Quit() {
   DCHECK_EQ(this, current());
+  LOG(INFO) << "MessageLoop::Quit() for loop " << this << " pump " << pump_.get();
   pump_->Quit();
 }
 

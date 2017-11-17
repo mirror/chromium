@@ -152,6 +152,7 @@ class SyncServerStatusChecker : public net::URLFetcherDelegate {
         (source->GetStatus().status() == net::URLRequestStatus::SUCCESS &&
          source->GetResponseCode() == 200 &&
          base::StartsWith(data, "ok", base::CompareCase::SENSITIVE));
+    LOG(INFO) << "QuitCurrent() due to URLFetchComplete()";
     base::RunLoop::QuitCurrentWhenIdleDeprecated();
   }
 
