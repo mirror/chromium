@@ -130,4 +130,11 @@ void SoftwareBrowserCompositorOutputSurface::SetSurfaceSuspendedForRecycle(
 }
 #endif
 
+#if BUILDFLAG(ENABLE_VULKAN)
+gpu::VulkanSurface* SoftwareBrowserCompositorOutputSurface::GetVulkanSurface() {
+  NOTIMPLEMENTED();
+  return nullptr;
+}
+#endif
+
 }  // namespace content

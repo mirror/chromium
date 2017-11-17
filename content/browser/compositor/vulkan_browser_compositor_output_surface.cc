@@ -118,4 +118,8 @@ void VulkanBrowserCompositorOutputSurface::SwapBuffersAck() {
   client_->DidReceiveSwapBuffersAck();
 }
 
+gpu::VulkanSurface* VulkanBrowserCompositorOutputSurface::GetVulkanSurface() {
+  return surface_.get();
+}
+
 }  // namespace content
