@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e860e78a_5a3e9852",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-17T12:57:04Z",
+      "side": 1,
+      "message": "Nit: Let\u0027s make this timestamp_value (or just timestamp if that works.) Or, well, maybe we should just try to be consistent within the file... in which case time_stamp... would be fine but timestamp... would not.\n(Looks like \"time stamp\", i.e as two words, is the common form here ATM. I think that \"timestamp\" [one word] is the more common form in the codebase as a whole. Let\u0027s not do more than needed for this change though.)",
+      "range": {
+        "startLine": 493,
+        "startChar": 31,
+        "endLine": 493,
+        "endChar": 41
+      },
+      "revId": "760c009134d676a6a3147d61d7fc5844cd5f69d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9619d393_5347530c",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-17T12:57:04Z",
+      "side": 1,
+      "message": "Maybe move this so that it is right next to CollectTimeStamp. (Makes it easier to tie deserialize/parse with serialize.)",
+      "range": {
+        "startLine": 493,
+        "startChar": 5,
+        "endLine": 493,
+        "endChar": 23
+      },
+      "revId": "760c009134d676a6a3147d61d7fc5844cd5f69d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6158271c_896728be",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-17T12:57:04Z",
+      "side": 1,
+      "message": "One other option here could be to do:\n\nuint64_t time_stamp_millis \u003d time_stamp_value * 1000;\n\nand then process that (deconstructing the value in the reverse order presumably too.) If you like this way better though I don\u0027t have a strong opinion (all these implicit conversion makes me a bit nervous that\u0027s all \u003d))",
+      "range": {
+        "startLine": 495,
+        "startChar": 2,
+        "endLine": 500,
+        "endChar": 57
+      },
+      "revId": "760c009134d676a6a3147d61d7fc5844cd5f69d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b316f7_99110709",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-17T12:57:04Z",
+      "side": 1,
+      "message": "Nit: milliseconds",
+      "range": {
+        "startLine": 500,
+        "startChar": 6,
+        "endLine": 500,
+        "endChar": 18
+      },
+      "revId": "760c009134d676a6a3147d61d7fc5844cd5f69d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e86075_6de3df7f",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-17T12:57:04Z",
+      "side": 1,
+      "message": "I think String::Format could be put to good use here.",
+      "range": {
+        "startLine": 501,
+        "startChar": 2,
+        "endLine": 515,
+        "endChar": 3
+      },
+      "revId": "760c009134d676a6a3147d61d7fc5844cd5f69d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae28c56_918481c2",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-17T12:57:04Z",
+      "side": 1,
+      "message": "Nit: With this new structure, we can just remove this variable and pass token_.Characters() directly.",
+      "range": {
+        "startLine": 588,
+        "startChar": 6,
+        "endLine": 588,
+        "endChar": 52
+      },
+      "revId": "760c009134d676a6a3147d61d7fc5844cd5f69d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c70b8334_bd2b92b2",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-17T12:57:04Z",
+      "side": 1,
+      "message": "Let\u0027s make this:\n\nString SerializeTimestamp(double); // ...or SerializeTimeStamp per above...\n\npassing a StringBuilder can be nice if we intend/have multiple uses of it, which we don\u0027t ATM.",
+      "range": {
+        "startLine": 591,
+        "startChar": 8,
+        "endLine": 594,
+        "endChar": 62
+      },
+      "revId": "760c009134d676a6a3147d61d7fc5844cd5f69d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
