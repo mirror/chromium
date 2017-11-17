@@ -70,6 +70,30 @@
       "revId": "a1890ae04e2f1398ea08fd04b61e5a9d2b616f01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df937ba5_5dede2ba",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-17T22:27:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a505402c_f4ba521c",
+      "range": {
+        "startLine": 292,
+        "startChar": 5,
+        "endLine": 292,
+        "endChar": 54
+      },
+      "revId": "a1890ae04e2f1398ea08fd04b61e5a9d2b616f01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
