@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c028a157_2f8d9569",
+        "filename": "ash/session/test_session_controller_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-17T20:58:45Z",
+      "side": 1,
+      "message": "nit: associates",
+      "revId": "9f749719ee57f30b4f9d7c1c2a5ad0a2659bb358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa8af265_d0805823",
+        "filename": "ash/system/web_notification/login_state_notification_blocker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-17T20:58:45Z",
+      "side": 1,
+      "message": "PrefService",
+      "revId": "9f749719ee57f30b4f9d7c1c2a5ad0a2659bb358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
