@@ -34,6 +34,29 @@
       "revId": "d6cd466292f5c75f57939db7a9459ca0d481e30a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1aec360_04c70101",
+        "filename": "content/public/test/render_view_test.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-17T20:23:03Z",
+      "side": 0,
+      "message": "The removal of this function doesn\u0027t seem to be related to the positioning of the selection menu. If this is indeed dead code, can you move its removal to its own CL?",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 72
+      },
+      "revId": "d6cd466292f5c75f57939db7a9459ca0d481e30a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
