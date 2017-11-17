@@ -27,6 +27,9 @@ class ServiceWorkerEventTimerTest : public testing::Test {
 };
 
 TEST_F(ServiceWorkerEventTimerTest, IdleTimer) {
+  base::RepeatingCallback<void(int)> do_nothing_callback =
+      base::BindRepeating([](int) {});
+
   bool is_idle = false;
   ServiceWorkerEventTimer timer(base::BindRepeating(
       [](bool* out_is_idle) { *out_is_idle = true; }, &is_idle));
@@ -36,25 +39,25 @@ TEST_F(ServiceWorkerEventTimerTest, IdleTimer) {
   EXPECT_TRUE(is_idle);
 
   is_idle = false;
-  timer.StartEvent();
+  int event_id_1 = timer.StartEvent(do_nothing_callback);
   task_runner()->FastForwardBy(ServiceWorkerEventTimer::kIdleDelay +
                                base::TimeDelta::FromSeconds(1));
   // Nothing happens since there is an inflight event.
   EXPECT_FALSE(is_idle);
 
-  timer.StartEvent();
+  int event_id_2 = timer.StartEvent(do_nothing_callback);
   task_runner()->FastForwardBy(ServiceWorkerEventTimer::kIdleDelay +
                                base::TimeDelta::FromSeconds(1));
   // Nothing happens since there are two inflight events.
   EXPECT_FALSE(is_idle);
 
-  timer.EndEvent();
+  timer.EndEvent(event_id_2);
   task_runner()->FastForwardBy(ServiceWorkerEventTimer::kIdleDelay +
                                base::TimeDelta::FromSeconds(1));
   // Nothing happens since there is an inflight event.
   EXPECT_FALSE(is_idle);
 
-  timer.EndEvent();
+  timer.EndEvent(event_id_1);
   task_runner()->FastForwardBy(ServiceWorkerEventTimer::kIdleDelay +
                                base::TimeDelta::FromSeconds(1));
   // |idle_callback| should be fired.

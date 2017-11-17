@@ -909,6 +909,11 @@ void ServiceWorkerVersion::OnStarted() {
     observer.OnRunningStateChanged(this);
 }
 
+void ServiceWorkerVersion::OnTerminationRequested() {
+  DCHECK_EQ(EmbeddedWorkerStatus::RUNNING, running_status());
+  StopWorkerIfIdle();
+}
+
 void ServiceWorkerVersion::OnStopping() {
   DCHECK(stop_time_.is_null());
   RestartTick(&stop_time_);

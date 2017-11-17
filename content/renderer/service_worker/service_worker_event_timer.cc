@@ -4,9 +4,20 @@
 
 #include "content/renderer/service_worker/service_worker_event_timer.h"
 
+#include "base/stl_util.h"
 #include "base/time/time.h"
 
 namespace content {
+
+namespace {
+
+int NextEventId() {
+  static int s_next_event_id = 0;
+  DCHECK_LT(s_next_event_id, std::numeric_limits<int>::max());
+  return s_next_event_id++;
+}
+
+}  // namespace
 
 // static
 constexpr base::TimeDelta ServiceWorkerEventTimer::kIdleDelay;
@@ -18,17 +29,27 @@ ServiceWorkerEventTimer::ServiceWorkerEventTimer(
   idle_timer_.Start(FROM_HERE, kIdleDelay, idle_callback_);
 }
 
-ServiceWorkerEventTimer::~ServiceWorkerEventTimer() = default;
+ServiceWorkerEventTimer::~ServiceWorkerEventTimer() {
+  // Abort all callbacks.
+  for (auto& it : abort_callbacks_)
+    std::move(it.second).Run();
+};
 
-void ServiceWorkerEventTimer::StartEvent() {
+int ServiceWorkerEventTimer::StartEvent(
+    base::OnceCallback<void(int /* event_id */)> abort_callback) {
   idle_timer_.Stop();
-  ++num_inflight_events_;
+  const int next_event_id = NextEventId();
+
+  DCHECK(!base::ContainsKey(abort_callbacks_, next_event_id));
+  abort_callbacks_[next_event_id] =
+      base::BindOnce(std::move(abort_callback), next_event_id);
+  return next_event_id;
 }
 
-void ServiceWorkerEventTimer::EndEvent() {
-  DCHECK_GT(num_inflight_events_, 0u);
-  --num_inflight_events_;
-  if (num_inflight_events_ == 0) {
+void ServiceWorkerEventTimer::EndEvent(int event_id) {
+  DCHECK(base::ContainsKey(abort_callbacks_, event_id));
+  abort_callbacks_.erase(event_id);
+  if (abort_callbacks_.empty()) {
     idle_timer_.Start(FROM_HERE, kIdleDelay, idle_callback_);
   }
 }
