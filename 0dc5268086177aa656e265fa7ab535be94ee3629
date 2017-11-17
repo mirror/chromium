@@ -16,6 +16,24 @@
       "revId": "0dc5268086177aa656e265fa7ab535be94ee3629",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "735a2250_cea1ffe6",
+        "filename": "chrome/browser/resources/media_router/media_router_browser_api.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-17T06:25:42Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "302f3a22_837f8abe",
+      "revId": "0dc5268086177aa656e265fa7ab535be94ee3629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
