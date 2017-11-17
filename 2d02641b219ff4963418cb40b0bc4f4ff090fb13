@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d524d326_bda417b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-17T18:27:13Z",
+      "side": 1,
+      "message": "Is it only for localStorage?  Since CanAccessDataForOrigin is used for cookies and passwords as well, it seems we will automatically do the citadel enforcement for those resources also, which is great.  In fact, it might be worth including a test that a cookie request from bar.com for isolated.foo.com kills the bar.com renderer.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 69
+      },
+      "revId": "2d02641b219ff4963418cb40b0bc4f4ff090fb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d11614f8_5fb92327",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-17T18:27:13Z",
+      "side": 1,
+      "message": "Is https://crbug.com/509125 also relevant to reference here?",
+      "revId": "2d02641b219ff4963418cb40b0bc4f4ff090fb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea093652_c890f998",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-17T18:27:13Z",
+      "side": 1,
+      "message": "Maybe include a high-level comment about how this now handles both jail-style and citadel-style enforcement for isolated origins?",
+      "range": {
+        "startLine": 1055,
+        "startChar": 0,
+        "endLine": 1055,
+        "endChar": 53
+      },
+      "revId": "2d02641b219ff4963418cb40b0bc4f4ff090fb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b21a7c_e7406584",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-17T18:27:13Z",
+      "side": 1,
+      "message": "nit: can just use IsIsolatedOrigin(url::Origin::Create(site_url) here, since is_isolated is only used here.",
+      "range": {
+        "startLine": 1057,
+        "startChar": 20,
+        "endLine": 1057,
+        "endChar": 31
+      },
+      "revId": "2d02641b219ff4963418cb40b0bc4f4ff090fb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b546202_78916d2d",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-17T18:27:13Z",
+      "side": 1,
+      "message": "I suppose this also works in --site-per-process for the cases that aren\u0027t locked to origin according to ShouldLockToOrigin (chrome-guest://, chrome://, hosted apps, etc).  Since those cases aren\u0027t going to be on the isolated origin list, we\u0027ll still grant them access, as before.\n\nI also think this will be compatible with SafeBrowsing isolation -- isolated origins we add there will be maintained by BrowsingInstances, and so will still be allowed here.  This is what we want, I think, as we don\u0027t care about preventing regular sites from accessing data from malicious sites; we only care about the reverse jail-type protection.\n\nIs the only remaining work here to ensure that for --isolate-extensions, web pages can\u0027t request resources belonging to extensions?  (Since extensions also aren\u0027t origin-locked.)  Might be worth adding a TODO about this somewhere.",
+      "revId": "2d02641b219ff4963418cb40b0bc4f4ff090fb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e59ff0_40ea8612",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-17T18:27:13Z",
+      "side": 1,
+      "message": "Can we now remove this TODO from SiteInstanceImpl::LockToOriginIfNeeded?\n\n        // TODO(nick): When all sites are isolated, this operation provides\n        // strong protection. If only some sites are isolated, we need\n        // additional logic to prevent the non-isolated sites from requesting\n        // resources for isolated sites. https://crbug.com/509125\n        policy-\u003eLockToOrigin(process_-\u003eGetID(), site_);",
+      "revId": "2d02641b219ff4963418cb40b0bc4f4ff090fb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
