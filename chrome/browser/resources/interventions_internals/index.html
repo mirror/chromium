@@ -18,7 +18,7 @@
       <label class="active-tab">
         <input type="radio" id="statuses-tab" name="tabs"
             value="previews-statuses" checked="checked">
-        <span>Previews Modes</span>
+        <span>General</span>
       </label>
       <label class="inactive-tab">
         <input type="radio" id="logs-tab" name="tabs" value="message-logs">
@@ -36,6 +36,22 @@
     </nav>
 
     <div class="tab-content" id="previews-statuses">
+      <div id="previews-statuses-modes">
+        <div class="section-header">
+          Previews Modes Statuses
+        </div>
+      </div>
+      <div id="previews-statuses-flags">
+        <div class="section-header">
+          Previews Related Flags
+        </div>
+        <table id="previews-flags-table">
+          <tr>
+            <th class="flag-name" id="flag-name-header">Flag</th>
+            <th class="flag-value" id="flag-value-header">Value</th>
+          </tr>
+        </table>
+      </div>
     </div>
 
     <div class="tab-content" id="message-logs">
