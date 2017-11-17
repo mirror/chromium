@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c3b4ec14_15925c4e",
+        "filename": "build/android/gyp/util/build_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-17T19:48:32Z",
+      "side": 1,
+      "message": "I think this pattern is for processing resources like images and to generate R.java for the resources. Since this .py .pyc files are not resources, they shouldn\u0027t be added to this process.\n\nJohn@ - correct me if that\u0027s not the case",
+      "parentUuid": "82092b47_e2c43a7a",
+      "range": {
+        "startLine": 35,
+        "startChar": 33,
+        "endLine": 35,
+        "endChar": 46
+      },
+      "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85d76a32_56c54220",
         "filename": "chrome/android/java/res/PRESUBMIT.py",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "0fae236c_8377d530",
+        "filename": "chrome/android/java/res/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-17T19:48:32Z",
+      "side": 1,
+      "message": "Yes that\u0027s what I\u0027ve been thinking about that too. Since content/ and ui/ also have colors.xml, we might need to move this to possibly src/PRESUBMIT.py, but then I also want to keep these xml file checks separate to other checks. Another place I think would be good for long term may be src/tools/android. We can create something similar to the checkstyle.py for xml files (https://cs.chromium.org/chromium/src/tools/android/checkstyle/checkstyle.py?q\u003dRunCheckstyle\u0026dr\u003dCSs) and have only one function for xml checks in src/PRESUBMIT.py.\n\nI put this is chrome/ because I feel it\u0027s better to first add the checks in chrome/ directory and see how they work out, and then migrate them to check more directories. But maybe we can go with adding them is src/PRESUBMIT.py and limit the checks to be in chrome/?\n\nJohn@ - Do you have any suggestions where we should put this?",
+      "parentUuid": "85d76a32_56c54220",
+      "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92f60c9a_db393d48",
         "filename": "chrome/android/java/res/PRESUBMIT.py",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-11-17T03:41:51Z",
       "side": 1,
       "message": "Can this be simplified to [0-9A-F]{6,8}, which would require at least 6 repetitions and at most 8 repetitions?",
+      "range": {
+        "startLine": 22,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 55
+      },
+      "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3bbb67a_b099abd4",
+        "filename": "chrome/android/java/res/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-17T19:48:32Z",
+      "side": 1,
+      "message": "Hm.. I restrict the format to be 6 for opaque color and 8 for translucent color, so FFCCCCCC would not be valid, however, we can make this valid if using [0-9A-F]{6,8}. \n\nI think it is a matter of choice. I made them different so that it\u0027s clear CCCCCC and FFCCCCCC are the same color. Or alternatively, we can just restrict all hex values to be 8 digits.",
+      "parentUuid": "92f60c9a_db393d48",
       "range": {
         "startLine": 22,
         "startChar": 9,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "1ab1707c_9e5dbe0a",
+        "filename": "chrome/android/java/res/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-17T19:48:32Z",
+      "side": 1,
+      "message": "In this test, #RGB is not OK. I removed #RGB to make checks easier and to make the format more consistent.",
+      "parentUuid": "c84b6229_a4fd8a9a",
+      "range": {
+        "startLine": 64,
+        "startChar": 54,
+        "endLine": 64,
+        "endChar": 61
+      },
+      "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "878d65c8_23069743",
         "filename": "chrome/android/java/res/PRESUBMIT.py",
         "patchSetId": 2
@@ -99,6 +189,30 @@
       "writtenOn": "2017-11-17T03:41:51Z",
       "side": 1,
       "message": "Why does this also check VALID_COLOR_PATTERN? Can you give me an example of when COLOR_PATTERN  would match but VALID_COLOR_PATTERN wouldn\u0027t?",
+      "range": {
+        "startLine": 86,
+        "startChar": 18,
+        "endLine": 86,
+        "endChar": 60
+      },
+      "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db91f625_cb7f3bea",
+        "filename": "chrome/android/java/res/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-17T19:48:32Z",
+      "side": 1,
+      "message": "Good point! Actually this should be simplified to just check if COLOR_PATTERN exists, since if this should be removed no matter what format of hex value it is...",
+      "parentUuid": "878d65c8_23069743",
       "range": {
         "startLine": 86,
         "startChar": 18,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "e0c04a00_792a6ed9",
+        "filename": "chrome/android/java/res/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-17T19:48:32Z",
+      "side": 1,
+      "message": "Yes thanks for catching!",
+      "parentUuid": "231383bd_d2309b1c",
+      "range": {
+        "startLine": 109,
+        "startChar": 35,
+        "endLine": 109,
+        "endChar": 44
+      },
+      "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9252a836_957129fd",
         "filename": "chrome/android/java/res/PRESUBMIT_test.py",
         "patchSetId": 2
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "f68f1f81_20abdbf3",
+        "filename": "chrome/android/java/res/PRESUBMIT_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-17T19:48:32Z",
+      "side": 1,
+      "message": "Same to the above comment, I made the format RRGGBB for opaque color and AARRGGBB for translucent color.",
+      "parentUuid": "9252a836_957129fd",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 28
+      },
+      "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "636538bf_9b3b508c",
         "filename": "chrome/android/java/res/PRESUBMIT_test.py",
         "patchSetId": 2
@@ -168,6 +330,30 @@
       "writtenOn": "2017-11-17T03:41:51Z",
       "side": 1,
       "message": "This wouldn\u0027t trip any of the presubmit checks. Let\u0027s use a hex color instead of an @color",
+      "range": {
+        "startLine": 70,
+        "startChar": 40,
+        "endLine": 70,
+        "endChar": 55
+      },
+      "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec1d5ba8_caea8eef",
+        "filename": "chrome/android/java/res/PRESUBMIT_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-17T19:48:32Z",
+      "side": 1,
+      "message": "Ahhh right, this actually should be a hex value and the test was failing... Fixed the check.",
+      "parentUuid": "636538bf_9b3b508c",
       "range": {
         "startLine": 70,
         "startChar": 40,
