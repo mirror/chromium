@@ -7,7 +7,7 @@ function test() {
   LayersTestRunner.requestLayers(onGotLayers);
 
   async function onGotLayers() {
-    var layer = LayersTestRunner.findLayerByNodeIdAttribute('a');
+    var layer = LayersTestRunner.findLayerByNodeIdAttribute("layer");
     var snapshotWithRect = await layer.snapshots()[0];
     await testImageForSnapshot(snapshotWithRect.snapshot, undefined);
     await testImageForSnapshot(snapshotWithRect.snapshot, 0.5);
@@ -30,14 +30,15 @@ function test() {
 <p>
 Tests that when layer snapshots are replayed with scaling applied the image dimensions are properly scaled.
 </p>
-<div id="a" style="background-color:blue; transform: translateZ(0px); overflow: hidden;">
+<div id="layer" style="background-color:blue; transform: translateZ(0px); position: absolute">
+  <div id="clip" style="overflow: hidden">
     <script>
 (function()
 {
-    var a = document.getElementById("a");
+    var clip = document.getElementById("clip");
     var size = (180 / window.devicePixelRatio) + "px";
-    a.style.width = size;
-    a.style.height = size;
+    clip.style.width = size;
+    clip.style.height = size;
 })();
     </script>
     <div style="width:50px; height:50px; background-color:red;"></div>
@@ -46,5 +47,6 @@ Tests that when layer snapshots are replayed with scaling applied the image dime
         <rect x="0" y="0" width="10" height="10" style="opacity:0.5"/>
     </svg>
   </div>
+</div>
 </body>
 </html>
