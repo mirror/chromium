@@ -34,7 +34,7 @@
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebVector.h"
-#include "WebFileChooserCompletion.h"
+#include "public/web/WebFileChooserCompletion.h"
 
 namespace blink {
 

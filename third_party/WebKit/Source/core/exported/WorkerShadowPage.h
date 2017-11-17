@@ -6,7 +6,7 @@
 #define WorkerShadowPage_h
 
 #include "core/frame/WebLocalFrameImpl.h"
-#include "public/web/WebDevToolsAgentClient.h"
+#include "public/core/WebDevToolsAgentClient.h"
 #include "public/web/WebDocumentLoader.h"
 #include "public/web/WebFrameClient.h"
 #include "public/web/WebView.h"

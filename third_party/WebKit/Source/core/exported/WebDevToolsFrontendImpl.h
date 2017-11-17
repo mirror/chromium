@@ -37,7 +37,7 @@
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/text/WTFString.h"
-#include "public/web/WebDevToolsFrontend.h"
+#include "public/core/WebDevToolsFrontend.h"
 
 namespace blink {
 

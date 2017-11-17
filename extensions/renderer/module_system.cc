@@ -25,7 +25,7 @@
 #include "extensions/renderer/v8_helpers.h"
 #include "gin/converter.h"
 #include "gin/modules/module_registry.h"
-#include "third_party/WebKit/public/web/WebContextFeatures.h"
+#include "third_party/WebKit/public/core/WebContextFeatures.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
 
 namespace extensions {

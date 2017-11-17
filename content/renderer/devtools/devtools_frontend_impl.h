@@ -14,7 +14,7 @@
 #include "content/common/devtools.mojom.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
-#include "third_party/WebKit/public/web/WebDevToolsFrontendClient.h"
+#include "third_party/WebKit/public/core/WebDevToolsFrontendClient.h"
 
 namespace blink {
 class WebDevToolsFrontend;

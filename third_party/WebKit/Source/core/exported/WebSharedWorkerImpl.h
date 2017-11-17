@@ -34,6 +34,7 @@
 #include "public/web/WebSharedWorker.h"
 
 #include <memory>
+
 #include "base/memory/scoped_refptr.h"
 #include "core/CoreExport.h"
 #include "core/exported/WorkerShadowPage.h"
@@ -41,9 +42,10 @@
 #include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerThread.h"
 #include "platform/WebTaskRunner.h"
+#include "platform/wtf/RefPtr.h"
+#include "public/core/WebDevToolsAgentClient.h"
 #include "public/platform/WebAddressSpace.h"
 #include "public/platform/WebContentSecurityPolicy.h"
-#include "public/web/WebDevToolsAgentClient.h"
 #include "public/web/WebSharedWorkerClient.h"
 #include "public/web/worker_content_settings_proxy.mojom-blink.h"
 #include "services/service_manager/public/interfaces/interface_provider.mojom-blink.h"
