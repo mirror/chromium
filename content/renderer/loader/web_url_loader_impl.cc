@@ -366,7 +366,7 @@ std::unique_ptr<blink::WebURLLoader> WebURLLoaderFactoryImpl::CreateURLLoader(
     // available. These tests can still use data URLs to bypass the
     // ResourceDispatcher.
     if (!task_runner)
-      task_runner = base::ThreadTaskRunnerHandle::Get();
+      task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
     return std::make_unique<WebURLLoaderImpl>(resource_dispatcher_.get(),
                                               std::move(task_runner),
                                               nullptr /* factory */);

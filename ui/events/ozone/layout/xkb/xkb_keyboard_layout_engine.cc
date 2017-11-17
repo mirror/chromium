@@ -688,8 +688,8 @@ bool XkbKeyboardLayoutEngine::SetCurrentLayoutByName(
   base::PostTaskWithTraits(
       FROM_HERE,
       {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
-      base::Bind(&LoadKeymap, layout_name, base::ThreadTaskRunnerHandle::Get(),
-                 reply_callback));
+      base::Bind(&LoadKeymap, layout_name,
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE), reply_callback));
 #else
   NOTIMPLEMENTED();
 #endif  // defined(OS_CHROMEOS)

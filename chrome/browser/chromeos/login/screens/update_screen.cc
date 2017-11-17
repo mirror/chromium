@@ -356,7 +356,7 @@ void UpdateScreen::OnPortalDetectionCompleted(
        state.status == NetworkPortalDetector::CAPTIVE_PORTAL_STATUS_OFFLINE) &&
       is_first_detection_notification_) {
     is_first_detection_notification_ = false;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(
             base::IgnoreResult(&NetworkPortalDetector::StartDetectionIfIdle),

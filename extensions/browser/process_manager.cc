@@ -503,7 +503,7 @@ void ProcessManager::OnShouldSuspendAck(const std::string& extension_id,
 void ProcessManager::OnSuspendAck(const std::string& extension_id) {
   background_page_data_[extension_id].is_closing = true;
   uint64_t sequence_id = background_page_data_[extension_id].close_sequence_id;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&ProcessManager::CloseLazyBackgroundPageNow,
                  weak_ptr_factory_.GetWeakPtr(), extension_id, sequence_id),
@@ -732,10 +732,11 @@ void ProcessManager::DecrementLazyKeepaliveCount(
   if (--count == 0 && !background_page_data_[extension_id].is_closing) {
     background_page_data_[extension_id].close_sequence_id =
         ++last_background_close_sequence_id_;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE, base::Bind(&ProcessManager::OnLazyBackgroundPageIdle,
-                              weak_ptr_factory_.GetWeakPtr(), extension_id,
-                              last_background_close_sequence_id_),
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&ProcessManager::OnLazyBackgroundPageIdle,
+                   weak_ptr_factory_.GetWeakPtr(), extension_id,
+                   last_background_close_sequence_id_),
         base::TimeDelta::FromMilliseconds(g_event_page_idle_time_msec));
   }
 }

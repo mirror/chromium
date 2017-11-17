@@ -34,7 +34,7 @@ class BrowserProcessImplTest : public ::testing::Test {
         io_thread_(new content::TestBrowserThread(content::BrowserThread::IO)),
         command_line_(base::CommandLine::NO_PROGRAM),
         browser_process_impl_(std::make_unique<BrowserProcessImpl>(
-            base::ThreadTaskRunnerHandle::Get().get())) {
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE).get())) {
     // Create() and StartWithDefaultParams() TaskScheduler in seperate steps to
     // properly simulate the browser process' lifecycle.
     base::TaskScheduler::Create("BrowserProcessImplTest");

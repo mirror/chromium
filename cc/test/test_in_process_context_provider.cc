@@ -54,8 +54,8 @@ std::unique_ptr<gpu::GLInProcessContext> CreateTestInProcessContext(
 }
 
 std::unique_ptr<gpu::GLInProcessContext> CreateTestInProcessContext() {
-  return CreateTestInProcessContext(nullptr, nullptr, nullptr,
-                                    base::ThreadTaskRunnerHandle::Get());
+  return CreateTestInProcessContext(
+      nullptr, nullptr, nullptr, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 TestInProcessContextProvider::TestInProcessContextProvider(
@@ -63,9 +63,10 @@ TestInProcessContextProvider::TestInProcessContextProvider(
   context_ = CreateTestInProcessContext(
       &gpu_memory_buffer_manager_, &image_factory_,
       (shared_context ? shared_context->context_.get() : nullptr),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   cache_controller_.reset(new viz::ContextCacheController(
-      context_->GetImplementation(), base::ThreadTaskRunnerHandle::Get()));
+      context_->GetImplementation(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 
   capabilities_.texture_rectangle = true;
   capabilities_.sync_query = true;

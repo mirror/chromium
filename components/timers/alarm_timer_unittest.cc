@@ -44,7 +44,7 @@ class OneShotAlarmTimerTester {
   void Run() {
     *did_run_ = true;
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
   }
 
@@ -72,7 +72,7 @@ class OneShotSelfDeletingAlarmTimerTester {
     *did_run_ = true;
     timer_.reset();
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
   }
 
@@ -101,7 +101,7 @@ class RepeatingAlarmTimerTester {
       *did_run_ = true;
       timer_->Stop();
 
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
     }
   }
@@ -142,7 +142,7 @@ TEST(AlarmTimerTest, OneShotAlarmTimer_Cancel) {
       new OneShotAlarmTimerTester(&did_run_a, kTenMilliseconds);
 
   // This should run before the timer expires.
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, a);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, a);
 
   // Now start the timer.
   a->Start();
@@ -194,7 +194,7 @@ TEST(AlarmTimerTest, RepeatingAlarmTimer_Cancel) {
       new RepeatingAlarmTimerTester(&did_run_a, kTenMilliseconds);
 
   // This should run before the timer expires.
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, a);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, a);
 
   // Now start the timer.
   a->Start();
@@ -231,7 +231,7 @@ TEST(AlarmTimerTest, RepeatingAlarmTimerZeroDelay_Cancel) {
       new RepeatingAlarmTimerTester(&did_run_a, base::TimeDelta());
 
   // This should run before the timer expires.
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, a);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, a);
 
   // Now start the timer.
   a->Start();
@@ -375,13 +375,13 @@ void ClearAllCallbackHappened() {
 
 void SetCallbackHappened1() {
   g_callback_happened1 = true;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
 }
 
 void SetCallbackHappened2() {
   g_callback_happened2 = true;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
 }
 

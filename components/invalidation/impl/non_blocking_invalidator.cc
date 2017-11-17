@@ -79,7 +79,7 @@ class CallbackProxy {
 CallbackProxy::CallbackProxy(
     base::Callback<void(const base::DictionaryValue&)> callback)
     : callback_(callback),
-      running_thread_(base::ThreadTaskRunnerHandle::Get()) {}
+      running_thread_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 CallbackProxy::~CallbackProxy() {}
 
@@ -226,19 +226,20 @@ NonBlockingInvalidator::NonBlockingInvalidator(
     const std::string& client_info,
     const scoped_refptr<net::URLRequestContextGetter>& request_context_getter)
     : invalidation_state_tracker_(invalidation_state_tracker),
-      parent_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      parent_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       network_task_runner_(request_context_getter->GetNetworkTaskRunner()),
       weak_ptr_factory_(this) {
   base::WeakPtr<NonBlockingInvalidator> weak_ptr_this =
       weak_ptr_factory_.GetWeakPtr();
   weak_ptr_this.get();  // Bind to this thread.
 
-  core_ = new Core(weak_ptr_this, base::ThreadTaskRunnerHandle::Get());
+  core_ = new Core(weak_ptr_this, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   InitializeOptions initialize_options(
       network_channel_creator, invalidator_client_id, saved_invalidations,
       invalidation_bootstrap_data, weak_ptr_this,
-      base::ThreadTaskRunnerHandle::Get(), client_info, request_context_getter);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), client_info,
+      request_context_getter);
 
   if (!network_task_runner_->PostTask(
           FROM_HERE,

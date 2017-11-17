@@ -16,7 +16,7 @@ ScreenObserverDelegate::ScreenObserverDelegate(
     scoped_refptr<base::SingleThreadTaskRunner> display_task_runner)
     : observer_(observer),
       display_task_runner_(std::move(display_task_runner)),
-      delegate_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+      delegate_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
   display_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&ScreenObserverDelegate::AddObserverOnDisplayThread, this));

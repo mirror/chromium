@@ -26,8 +26,8 @@ class FileDownloaderTest : public testing::Test {
  public:
   FileDownloaderTest()
       : request_context_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())),
-            url_fetcher_factory_(nullptr) {}
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))),
+        url_fetcher_factory_(nullptr) {}
 
   void SetUp() override {
     ASSERT_TRUE(dir_.CreateUniqueTempDir());

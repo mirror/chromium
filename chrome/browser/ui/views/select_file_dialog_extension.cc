@@ -218,7 +218,7 @@ void SelectFileDialogExtension::ExtensionTerminated(
   // extensions::ProcessManager::CreateViewHost. Once that is fixed, remove
   // this.
   if (profile_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&ExtensionService::ReloadExtension,
                    base::Unretained(extensions::ExtensionSystem::Get(profile_)

@@ -87,7 +87,7 @@ void TestSimpleTaskRunner::RunPendingTasks() {
   // unit tests. Make sure this TestSimpleTaskRunner's tasks run in its scope.
   ScopedClosureRunner undo_override;
   if (!ThreadTaskRunnerHandle::IsSet() ||
-      ThreadTaskRunnerHandle::Get() != this) {
+      ThreadTaskRunnerHandle::Get(FROM_HERE) != this) {
     undo_override = ThreadTaskRunnerHandle::OverrideForTesting(this);
   }
 

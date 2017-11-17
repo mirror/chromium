@@ -575,7 +575,7 @@ class CreditCardSaveManagerTest : public testing::Test {
     personal_data_.SetPrefService(autofill_client_.GetPrefs());
     autofill_driver_.reset(new TestAutofillDriver());
     request_context_ = new net::TestURLRequestContextGetter(
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     autofill_driver_->SetURLRequestContext(request_context_.get());
     payments_client_ = new TestPaymentsClient(
         autofill_driver_->GetURLRequestContext(), autofill_client_.GetPrefs(),

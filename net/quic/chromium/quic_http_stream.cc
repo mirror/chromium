@@ -666,7 +666,7 @@ int QuicHttpStream::ProcessResponseHeaders(const SpdyHeaderBlock& headers) {
   // take care of 0-RTT where request is sent before handshake is confirmed.
   connect_timing_ = quic_session()->GetConnectTiming();
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&QuicHttpStream::ReadTrailingHeaders,
                             weak_factory_.GetWeakPtr()));
 

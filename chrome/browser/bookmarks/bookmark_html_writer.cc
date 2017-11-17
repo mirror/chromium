@@ -427,7 +427,8 @@ void BookmarkFaviconFetcher::Observe(
     const content::NotificationDetails& details) {
   DCHECK_EQ(chrome::NOTIFICATION_PROFILE_DESTROYED, type);
   if (g_fetcher) {
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, g_fetcher);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE,
+                                                             g_fetcher);
     g_fetcher = nullptr;
   }
 }
@@ -457,7 +458,8 @@ void BookmarkFaviconFetcher::ExecuteWriter() {
                          BookmarkModelFactory::GetForBrowserContext(profile_)),
                      path_, favicons_map_.release(), observer_)));
   if (g_fetcher) {
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, g_fetcher);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE,
+                                                             g_fetcher);
     g_fetcher = nullptr;
   }
 }

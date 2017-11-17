@@ -155,7 +155,7 @@ void ContentSuggestionsService::FetchSuggestionImage(
   if (!providers_by_category_.count(suggestion_id.category())) {
     LOG(WARNING) << "Requested image for suggestion " << suggestion_id
                  << " for unavailable category " << suggestion_id.category();
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), gfx::Image()));
     return;
   }
@@ -171,7 +171,7 @@ void ContentSuggestionsService::FetchSuggestionFavicon(
     ImageFetchedCallback callback) {
   const GURL& domain_with_favicon = GetFaviconDomain(suggestion_id);
   if (!domain_with_favicon.is_valid() || !large_icon_service_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), gfx::Image()));
     RecordFaviconFetchResult(FaviconFetchResult::FAILURE);
     return;

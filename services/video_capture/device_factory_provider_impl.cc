@@ -52,7 +52,7 @@ void DeviceFactoryProviderImpl::LazyInitializeDeviceFactory() {
   // Chrome OS.
   std::unique_ptr<media::VideoCaptureDeviceFactory> media_device_factory =
       media::VideoCaptureDeviceFactory::CreateFactory(
-          base::ThreadTaskRunnerHandle::Get(),
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE),
           // TODO(jcliang): Create a GpuMemoryBufferManager from GpuService
           // here.
           nullptr);

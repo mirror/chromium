@@ -41,7 +41,7 @@ void AddTiling(float scale,
 class PictureLayerImplPerfTest : public testing::Test {
  public:
   PictureLayerImplPerfTest()
-      : task_runner_provider_(base::ThreadTaskRunnerHandle::Get()),
+      : task_runner_provider_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         layer_tree_frame_sink_(FakeLayerTreeFrameSink::Create3d()),
         host_impl_(LayerTreeSettings(),
                    &task_runner_provider_,

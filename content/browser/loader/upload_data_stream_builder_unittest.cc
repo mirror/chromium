@@ -65,7 +65,7 @@ TEST(UploadDataStreamBuilderTest, CreateUploadDataStream) {
     std::unique_ptr<net::UploadDataStream> upload(
         UploadDataStreamBuilder::Build(
             request_body.get(), &context, nullptr,
-            base::ThreadTaskRunnerHandle::Get().get()));
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE).get()));
 
     EXPECT_EQ(kIdentifier, upload->identifier());
     ASSERT_TRUE(upload->GetElementReaders());
@@ -123,7 +123,7 @@ TEST(UploadDataStreamBuilderTest,
     std::unique_ptr<net::UploadDataStream> upload(
         UploadDataStreamBuilder::Build(
             request_body.get(), &blob_storage_context, nullptr,
-            base::ThreadTaskRunnerHandle::Get().get()));
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE).get()));
 
     request_body = new ResourceRequestBody();
     request_body->AppendBlob(blob_id);
@@ -132,7 +132,7 @@ TEST(UploadDataStreamBuilderTest,
 
     upload = UploadDataStreamBuilder::Build(
         request_body.get(), &blob_storage_context, nullptr,
-        base::ThreadTaskRunnerHandle::Get().get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
     ASSERT_TRUE(upload->GetElementReaders());
     const auto& readers = *upload->GetElementReaders();
     ASSERT_EQ(3U, readers.size());
@@ -183,7 +183,7 @@ TEST(UploadDataStreamBuilderTest, ResetUploadStreamWithBlob) {
     std::unique_ptr<net::UploadDataStream> upload(
         UploadDataStreamBuilder::Build(
             request_body.get(), &blob_storage_context, nullptr,
-            base::ThreadTaskRunnerHandle::Get().get()));
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE).get()));
 
     net::TestCompletionCallback init_callback;
     ASSERT_EQ(net::OK,

@@ -31,7 +31,7 @@ void EventTargeter::FindTargetForLocation(EventSource event_source,
   // part should be moved to after sync viz-hit-test call.
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kUseAsyncEventTargeting)) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&EventTargeter::FindTargetForLocationNow,
                                   weak_ptr_factory_.GetWeakPtr(), event_source,
                                   event_location, base::Passed(&callback)));

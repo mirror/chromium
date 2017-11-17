@@ -273,7 +273,7 @@ class VideoDecodeAcceleratorTestEnvironment : public ::testing::Environment {
     //
     // This also needs to be done in the test environment since this shouldn't
     // be initialized multiple times for the same Ozone platform.
-    gpu_helper_->Initialize(base::ThreadTaskRunnerHandle::Get());
+    gpu_helper_->Initialize(base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 #endif
   }
 
@@ -640,7 +640,7 @@ void GLRenderingVDAClient::CreateAndStartDecoder() {
   LOG_ASSERT(decoder_) << "Failed creating a VDA";
 
   decoder_->TryToSetupDecodeOnSeparateThread(
-      weak_this_, base::ThreadTaskRunnerHandle::Get());
+      weak_this_, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   weak_vda_ptr_factory_.reset(
       new base::WeakPtrFactory<VideoDecodeAccelerator>(decoder_.get()));
@@ -787,9 +787,10 @@ void GLRenderingVDAClient::ReturnPicture(int32_t picture_buffer_id) {
   }
 
   if (num_decoded_frames_ > delay_reuse_after_frame_num_) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE, base::Bind(&VideoDecodeAccelerator::ReusePictureBuffer,
-                              weak_vda_, picture_buffer_id),
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&VideoDecodeAccelerator::ReusePictureBuffer, weak_vda_,
+                   picture_buffer_id),
         kReuseDelay);
   } else {
     decoder_->ReusePictureBuffer(picture_buffer_id);
@@ -1082,7 +1083,7 @@ void GLRenderingVDAClient::DecodeNextFragment() {
   }
 
   if (decode_calls_per_second_ > 0) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&GLRenderingVDAClient::DecodeNextFragment, AsWeakPtr()),
         base::TimeDelta::FromSeconds(1) / decode_calls_per_second_);

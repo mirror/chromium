@@ -392,7 +392,7 @@ bool VideoTrackAdapterSettings::operator==(
 VideoTrackAdapter::VideoTrackAdapter(
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner)
     : io_task_runner_(io_task_runner),
-      renderer_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      renderer_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       monitoring_frame_rate_(false),
       muted_state_(false),
       frame_counter_(0),

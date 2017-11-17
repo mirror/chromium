@@ -167,7 +167,7 @@ void InputDispatcher::InstallHook() {
     if (message_waiting_for_ == WM_MOUSEMOVE) {
       // Things don't go well with move events sometimes. Bail out if it takes
       // too long.
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE,
           base::Bind(&InputDispatcher::OnTimeout, weak_factory_.GetWeakPtr()),
           TestTimeouts::action_timeout());
@@ -237,8 +237,8 @@ void InputDispatcher::MatchingMessageFound() {
   UninstallHook();
   // The hook proc is invoked before the message is process. Post a task to run
   // the callback so that handling of this event completes first.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                std::move(callback_));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                         std::move(callback_));
   Release();
 }
 
@@ -434,7 +434,7 @@ bool SendMouseMoveImpl(long screen_x,
   ::GetCursorPos(&current_pos);
   if (screen_x == current_pos.x && screen_y == current_pos.y) {
     if (task)
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, task);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, task);
     return true;
   }
 

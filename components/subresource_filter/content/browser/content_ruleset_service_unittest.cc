@@ -139,7 +139,7 @@ class SubresourceFilterContentRulesetServiceTest : public ::testing::Test {
 
 TEST_F(SubresourceFilterContentRulesetServiceTest, NoRuleset_NoIPCMessages) {
   NotifyingMockRenderProcessHost existing_renderer(browser_context());
-  ContentRulesetService service(base::ThreadTaskRunnerHandle::Get());
+  ContentRulesetService service(base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   NotifyingMockRenderProcessHost new_renderer(browser_context());
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(0u, existing_renderer.sink().message_count());
@@ -157,7 +157,7 @@ TEST_F(SubresourceFilterContentRulesetServiceTest,
                   base::File::FLAG_OPEN | base::File::FLAG_READ);
 
   NotifyingMockRenderProcessHost existing_renderer(browser_context());
-  ContentRulesetService service(base::ThreadTaskRunnerHandle::Get());
+  ContentRulesetService service(base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   MockClosureTarget publish_callback_target;
   service.SetRulesetPublishedCallbackForTesting(base::Bind(
       &MockClosureTarget::Call, base::Unretained(&publish_callback_target)));
@@ -179,7 +179,7 @@ TEST_F(SubresourceFilterContentRulesetServiceTest,
 }
 
 TEST_F(SubresourceFilterContentRulesetServiceTest, PostAfterStartupTask) {
-  ContentRulesetService service(base::ThreadTaskRunnerHandle::Get());
+  ContentRulesetService service(base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   MockClosureTarget mock_closure_target;
   service.PostAfterStartupTask(base::Bind(

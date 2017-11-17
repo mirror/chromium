@@ -126,7 +126,7 @@ void BluetoothRemoteGattCharacteristicAndroid::ReadRemoteCharacteristic(
     const ValueCallback& callback,
     const ErrorCallback& error_callback) {
   if (read_pending_ || write_pending_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(error_callback,
                    BluetoothRemoteGattService::GATT_ERROR_IN_PROGRESS));
@@ -135,7 +135,7 @@ void BluetoothRemoteGattCharacteristicAndroid::ReadRemoteCharacteristic(
 
   if (!Java_ChromeBluetoothRemoteGattCharacteristic_readRemoteCharacteristic(
           AttachCurrentThread(), j_characteristic_)) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(error_callback,
                               BluetoothRemoteGattService::GATT_ERROR_FAILED));
     return;
@@ -151,7 +151,7 @@ void BluetoothRemoteGattCharacteristicAndroid::WriteRemoteCharacteristic(
     const base::Closure& callback,
     const ErrorCallback& error_callback) {
   if (read_pending_ || write_pending_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(error_callback,
                    BluetoothRemoteGattService::GATT_ERROR_IN_PROGRESS));
@@ -161,7 +161,7 @@ void BluetoothRemoteGattCharacteristicAndroid::WriteRemoteCharacteristic(
   JNIEnv* env = AttachCurrentThread();
   if (!Java_ChromeBluetoothRemoteGattCharacteristic_writeRemoteCharacteristic(
           env, j_characteristic_, base::android::ToJavaByteArray(env, value))) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(error_callback,
                               BluetoothRemoteGattService::GATT_ERROR_FAILED));
     return;
@@ -249,7 +249,7 @@ void BluetoothRemoteGattCharacteristicAndroid::SubscribeToNotifications(
   if (!Java_ChromeBluetoothRemoteGattCharacteristic_setCharacteristicNotification(
           AttachCurrentThread(), j_characteristic_, true)) {
     LOG(ERROR) << "Error enabling characteristic notification";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(error_callback,
                               BluetoothRemoteGattService::GATT_ERROR_FAILED));
     return;
@@ -269,7 +269,7 @@ void BluetoothRemoteGattCharacteristicAndroid::UnsubscribeFromNotifications(
   if (!Java_ChromeBluetoothRemoteGattCharacteristic_setCharacteristicNotification(
           AttachCurrentThread(), j_characteristic_, false)) {
     LOG(ERROR) << "Error disabling characteristic notification";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(error_callback,
                    device::BluetoothRemoteGattService::GATT_ERROR_FAILED));

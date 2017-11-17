@@ -141,7 +141,7 @@ void PolicyServiceImpl::RefreshPolicies(const base::Closure& callback) {
     // Refresh is immediately complete if there are no providers. See the note
     // on OnUpdatePolicy() about why this is a posted task.
     update_task_ptr_factory_.InvalidateWeakPtrs();
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&PolicyServiceImpl::MergeAndTriggerUpdates,
                               update_task_ptr_factory_.GetWeakPtr()));
   } else {
@@ -167,7 +167,7 @@ void PolicyServiceImpl::OnUpdatePolicy(ConfigurationPolicyProvider* provider) {
   // MergeAndTriggerUpdates. Also, cancel a pending update if there is any,
   // since both will produce the same PolicyBundle.
   update_task_ptr_factory_.InvalidateWeakPtrs();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&PolicyServiceImpl::MergeAndTriggerUpdates,
                             update_task_ptr_factory_.GetWeakPtr()));
 }

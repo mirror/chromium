@@ -21,7 +21,7 @@ static base::LazyInstance<scoped_refptr<StorageDeviceList>>::DestructorAtExit
 void RemovableStorageProvider::GetAllDevices(DeviceListReadyCallback callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   if (g_test_device_list.Get().get() != nullptr) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(std::move(callback), g_test_device_list.Get()));
     return;

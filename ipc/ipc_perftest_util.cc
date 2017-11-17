@@ -114,7 +114,7 @@ int MojoPerfTestClient::Run(MojoHandle handle) {
   base::RunLoop run_loop;
   std::unique_ptr<ChannelProxy> channel = IPC::ChannelProxy::Create(
       handle_.release(), Channel::MODE_CLIENT, listener_.get(),
-      GetIOThreadTaskRunner(), base::ThreadTaskRunnerHandle::Get());
+      GetIOThreadTaskRunner(), base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   listener_->Init(channel.get(), run_loop.QuitWhenIdleClosure());
   run_loop.Run();
   return 0;

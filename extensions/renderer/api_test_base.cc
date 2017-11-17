@@ -55,7 +55,8 @@ class TestNatives : public gin::Wrappable<TestNatives> {
   }
 
   void FinishTesting() {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_closure_);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           quit_closure_);
   }
 
   static gin::WrapperInfo kWrapperInfo;
@@ -202,11 +203,11 @@ void ApiTestEnvironment::RunTest(const std::string& file_name,
       env()->isolate(),
       "testNatives",
       TestNatives::Create(env()->isolate(), run_loop.QuitClosure()).ToV8());
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&ApiTestEnvironment::RunTestInner, base::Unretained(this),
                  test_name, run_loop.QuitClosure()));
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&ApiTestEnvironment::RunPromisesAgain,
                             base::Unretained(this)));
   run_loop.Run();
@@ -223,7 +224,8 @@ void ApiTestEnvironment::RunTestInner(const std::string& test_name,
                      const std::vector<v8::Local<v8::Value>>& result) {
     *did_run = true;
     if (result.empty() || result[0].IsEmpty() || !result[0]->IsTrue()) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_closure);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                             quit_closure);
       FAIL() << "Failed to run test \"" << test_name << "\"";
     }
   };

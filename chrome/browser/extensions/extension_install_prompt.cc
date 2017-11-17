@@ -80,12 +80,12 @@ bool AutoConfirmPrompt(ExtensionInstallPrompt::DoneCallback* callback) {
     // pumping a few times before the user clicks accept or cancel.
     case extensions::ScopedTestDialogAutoConfirm::ACCEPT:
     case extensions::ScopedTestDialogAutoConfirm::ACCEPT_AND_OPTION:
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(base::ResetAndReturn(callback),
                                     ExtensionInstallPrompt::Result::ACCEPTED));
       return true;
     case extensions::ScopedTestDialogAutoConfirm::CANCEL:
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(base::ResetAndReturn(callback),
                          ExtensionInstallPrompt::Result::USER_CANCELED));

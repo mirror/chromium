@@ -46,12 +46,12 @@ void MockFrameProvider::Read(const ReadCB& read_cb) {
   pattern_idx_ = (pattern_idx_ + 1) % delayed_task_pattern_.size();
 
   if (delayed) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&MockFrameProvider::DoRead, base::Unretained(this), read_cb),
         base::TimeDelta::FromMilliseconds(1));
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&MockFrameProvider::DoRead,
                               base::Unretained(this), read_cb));
   }
@@ -59,7 +59,7 @@ void MockFrameProvider::Read(const ReadCB& read_cb) {
 
 void MockFrameProvider::Flush(const base::Closure& flush_cb) {
   if (delay_flush_) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, flush_cb, base::TimeDelta::FromMilliseconds(10));
   } else {
     flush_cb.Run();

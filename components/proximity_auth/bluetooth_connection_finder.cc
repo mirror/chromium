@@ -64,7 +64,7 @@ void BluetoothConnectionFinder::SeekDeviceByAddress(
     const bluetooth_util::ErrorCallback& error_callback) {
   bluetooth_util::SeekDeviceByAddress(
       bluetooth_address, callback, error_callback,
-      base::ThreadTaskRunnerHandle::Get().get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
 }
 
 bool BluetoothConnectionFinder::IsReadyToPoll() {
@@ -120,9 +120,10 @@ void BluetoothConnectionFinder::PostDelayedPoll() {
 
   PA_LOG(INFO) << "Posting delayed poll..";
   has_delayed_poll_scheduled_ = true;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&BluetoothConnectionFinder::OnDelayedPoll,
-                            weak_ptr_factory_.GetWeakPtr()),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&BluetoothConnectionFinder::OnDelayedPoll,
+                 weak_ptr_factory_.GetWeakPtr()),
       polling_interval_);
 }
 
@@ -194,7 +195,7 @@ void BluetoothConnectionFinder::OnConnectionStatusChanged(
     // cryptauth::ConnectionObserver
     // callstack, this new observer will receive this connection event.
     // Therefore, we need to invoke the callback asynchronously.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&BluetoothConnectionFinder::InvokeCallbackAsync,
                               weak_ptr_factory_.GetWeakPtr()));
   } else if (old_status == cryptauth::Connection::IN_PROGRESS) {

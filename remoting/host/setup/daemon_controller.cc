@@ -22,7 +22,7 @@ namespace remoting {
 const char kDaemonControllerThreadName[] = "Daemon Controller thread";
 
 DaemonController::DaemonController(std::unique_ptr<Delegate> delegate)
-    : caller_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : caller_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       delegate_(std::move(delegate)) {
   // Launch the delegate thread.
   delegate_thread_.reset(new AutoThread(kDaemonControllerThreadName));

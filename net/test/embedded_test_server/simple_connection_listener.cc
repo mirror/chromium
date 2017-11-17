@@ -17,7 +17,7 @@ SimpleConnectionListener::SimpleConnectionListener(
     AllowAdditionalConnections allow_additional_connections)
     : expected_connections_(expected_connections),
       allow_additional_connections_(allow_additional_connections),
-      run_loop_task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+      run_loop_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 SimpleConnectionListener::~SimpleConnectionListener() {}
 

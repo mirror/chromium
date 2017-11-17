@@ -34,7 +34,7 @@ DefaultBrowserInfoBarDelegate::DefaultBrowserInfoBarDelegate(Profile* profile)
       weak_factory_(this) {
   // We want the info-bar to stick-around for few seconds and then be hidden
   // on the next navigation after that.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&DefaultBrowserInfoBarDelegate::AllowExpiry,
                      weak_factory_.GetWeakPtr()),

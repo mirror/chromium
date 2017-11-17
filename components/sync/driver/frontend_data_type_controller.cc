@@ -69,7 +69,7 @@ void FrontendDataTypeController::StartAssociating(
   start_callback_ = start_callback;
   state_ = ASSOCIATING;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&FrontendDataTypeController::Associate,
                             base::AsWeakPtr(this)));
 }
@@ -209,7 +209,7 @@ void FrontendDataTypeController::StartDone(
 std::unique_ptr<DataTypeErrorHandler>
 FrontendDataTypeController::CreateErrorHandler() {
   return std::make_unique<DataTypeErrorHandlerImpl>(
-      base::ThreadTaskRunnerHandle::Get(), dump_stack_,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), dump_stack_,
       base::Bind(&FrontendDataTypeController::OnUnrecoverableError,
                  base::AsWeakPtr(this)));
 }

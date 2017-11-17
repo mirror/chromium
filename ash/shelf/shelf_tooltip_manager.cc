@@ -249,7 +249,7 @@ void ShelfTooltipManager::OnAutoHideStateChanged(ShelfAutoHideState new_state) {
     // AutoHide state change happens during an event filter, so immediate close
     // may cause a crash in the HandleMouseEvent() after the filter.  So we just
     // schedule the Close here.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&ShelfTooltipManager::Close, weak_factory_.GetWeakPtr()));
   }

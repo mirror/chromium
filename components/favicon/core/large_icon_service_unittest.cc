@@ -54,18 +54,18 @@ const char kDummyIconUrl[] = "http://www.example.com/touch_icon.png";
 const SkColor kTestColor = SK_ColorRED;
 
 ACTION_P(PostFetchReply, p0) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(arg2, arg0, p0, image_fetcher::RequestMetadata()));
 }
 
 ACTION_P2(PostFetchReplyWithMetadata, p0, p1) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                base::Bind(arg2, arg0, p0, p1));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, base::Bind(arg2, arg0, p0, p1));
 }
 
 ACTION_P(PostBoolReply, p0) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                base::Bind(arg4, p0));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                         base::Bind(arg4, p0));
 }
 
 SkBitmap CreateTestSkBitmap(int w, int h, SkColor color) {

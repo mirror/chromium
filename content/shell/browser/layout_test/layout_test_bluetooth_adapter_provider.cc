@@ -315,7 +315,7 @@ LayoutTestBluetoothAdapterProvider::GetScanFilterCheckingAdapter() {
           _, _))
       .WillRepeatedly(
           RunCallbackWithResult<1 /* success_callback */>([adapter_ptr]() {
-            base::ThreadTaskRunnerHandle::Get()->PostTask(
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
                 FROM_HERE, base::BindOnce(&NotifyDevicesAdded,
                                           base::RetainedRef(adapter_ptr)));
 
@@ -353,7 +353,7 @@ LayoutTestBluetoothAdapterProvider::GetEmptyAdapter() {
   ON_CALL(*adapter, StartDiscoverySessionWithFilterRaw(_, _, _))
       .WillByDefault(
           RunCallbackWithResult<1 /* success_callback */>([adapter_ptr]() {
-            base::ThreadTaskRunnerHandle::Get()->PostTask(
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
                 FROM_HERE, base::BindOnce(&NotifyDevicesAdded,
                                           base::RetainedRef(adapter_ptr)));
 
@@ -404,7 +404,7 @@ LayoutTestBluetoothAdapterProvider::GetSecondDiscoveryFindsHeartRateAdapter() {
           RunCallbackWithResult<1 /* success_callback */>([adapter_ptr]() {
             // In the second discovery session, have the adapter discover a new
             // device, shortly after the session starts.
-            base::ThreadTaskRunnerHandle::Get()->PostTask(
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
                 FROM_HERE,
                 base::BindOnce(&AddDevice, base::WrapRefCounted(adapter_ptr),
                                base::Passed(GetHeartRateDevice(adapter_ptr))));
@@ -462,14 +462,14 @@ LayoutTestBluetoothAdapterProvider::GetDeviceEventAdapter() {
                   adapter_ptr, "New Glucose Device",
                   {BluetoothUUID(kGlucoseServiceUUID)}, makeMACAddress(0x4)));
 
-              base::ThreadTaskRunnerHandle::Get()->PostTask(
+              base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
                   FROM_HERE,
                   base::BindOnce(&AddDevice, base::WrapRefCounted(adapter_ptr),
                                  base::Passed(&glucose_device)));
 
               // Add uuid and notify of device changed.
               changing_battery_ptr->AddUUID(BluetoothUUID(kBatteryServiceUUID));
-              base::ThreadTaskRunnerHandle::Get()->PostTask(
+              base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
                   FROM_HERE, base::BindOnce(&NotifyDeviceChanged,
                                             base::RetainedRef(adapter_ptr),
                                             changing_battery_ptr));
@@ -477,7 +477,7 @@ LayoutTestBluetoothAdapterProvider::GetDeviceEventAdapter() {
               // Add uuid and notify of services discovered.
               discovery_generic_access_ptr->AddUUID(
                   BluetoothUUID(kGenericAccessServiceUUID));
-              base::ThreadTaskRunnerHandle::Get()->PostTask(
+              base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
                   FROM_HERE, base::BindOnce(&NotifyServicesDiscovered,
                                             base::RetainedRef(adapter_ptr),
                                             discovery_generic_access_ptr));
@@ -513,19 +513,19 @@ LayoutTestBluetoothAdapterProvider::GetDevicesRemovedAdapter() {
 
               std::string glucose_address = glucose_device->GetAddress();
 
-              base::ThreadTaskRunnerHandle::Get()->PostTask(
+              base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
                   FROM_HERE,
                   base::BindOnce(&AddDevice, base::WrapRefCounted(adapter_ptr),
                                  base::Passed(&glucose_device)));
 
               // Post task to remove ConnectedHeartRateDevice.
-              base::ThreadTaskRunnerHandle::Get()->PostTask(
+              base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
                   FROM_HERE, base::BindOnce(&RemoveDevice,
                                             base::WrapRefCounted(adapter_ptr),
                                             connected_hr_address));
 
               // Post task to remove NewGlucoseDevice.
-              base::ThreadTaskRunnerHandle::Get()->PostTask(
+              base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
                   FROM_HERE, base::BindOnce(&RemoveDevice,
                                             base::WrapRefCounted(adapter_ptr),
                                             glucose_address));
@@ -591,7 +591,7 @@ LayoutTestBluetoothAdapterProvider::GetDelayedServicesDiscoveryAdapter() {
                                              kHeartRateServiceUUID));
 
           device_ptr->AddMockService(std::move(heart_rate));
-          base::ThreadTaskRunnerHandle::Get()->PostTask(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
               FROM_HERE,
               base::BindOnce(&NotifyServicesDiscovered,
                              base::RetainedRef(adapter_ptr), device_ptr));
@@ -869,7 +869,7 @@ scoped_refptr<NiceMockBluetoothAdapter> LayoutTestBluetoothAdapterProvider::
                 device_ptr->GetMockServices();
 
             if (services.size() != 0) {
-              base::ThreadTaskRunnerHandle::Get()->PostTask(
+              base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
                   FROM_HERE,
                   base::BindOnce(&NotifyServicesDiscovered,
                                  base::RetainedRef(adapter_ptr), device_ptr));
@@ -899,7 +899,7 @@ scoped_refptr<NiceMockBluetoothAdapter> LayoutTestBluetoothAdapterProvider::
 
           if (disconnect) {
             device_ptr->SetConnected(false);
-            base::ThreadTaskRunnerHandle::Get()->PostTask(
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
                 FROM_HERE,
                 base::BindOnce(&NotifyDeviceChanged,
                                base::RetainedRef(adapter_ptr), device_ptr));
@@ -970,7 +970,7 @@ scoped_refptr<NiceMockBluetoothAdapter> LayoutTestBluetoothAdapterProvider::
         device_ptr->PushPendingCallback(pending);
         if (disconnect) {
           device_ptr->SetConnected(false);
-          base::ThreadTaskRunnerHandle::Get()->PostTask(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
               FROM_HERE,
               base::BindOnce(&NotifyDeviceChanged,
                              base::RetainedRef(adapter_ptr), device_ptr));
@@ -992,7 +992,7 @@ scoped_refptr<NiceMockBluetoothAdapter> LayoutTestBluetoothAdapterProvider::
         device_ptr->PushPendingCallback(pending);
         if (disconnect) {
           device_ptr->SetConnected(false);
-          base::ThreadTaskRunnerHandle::Get()->PostTask(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
               FROM_HERE,
               base::BindOnce(&NotifyDeviceChanged,
                              base::RetainedRef(adapter_ptr), device_ptr));
@@ -1017,7 +1017,7 @@ scoped_refptr<NiceMockBluetoothAdapter> LayoutTestBluetoothAdapterProvider::
         device_ptr->PushPendingCallback(pending);
         if (disconnect) {
           device_ptr->SetConnected(false);
-          base::ThreadTaskRunnerHandle::Get()->PostTask(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
               FROM_HERE,
               base::BindOnce(&NotifyDeviceChanged,
                              base::RetainedRef(adapter_ptr), device_ptr));
@@ -1045,7 +1045,7 @@ scoped_refptr<NiceMockBluetoothAdapter> LayoutTestBluetoothAdapterProvider::
         device_ptr->PushPendingCallback(pending);
         if (disconnect) {
           device_ptr->SetConnected(false);
-          base::ThreadTaskRunnerHandle::Get()->PostTask(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
               FROM_HERE,
               base::BindOnce(&NotifyDeviceChanged,
                              base::RetainedRef(adapter_ptr), device_ptr));
@@ -1066,7 +1066,7 @@ scoped_refptr<NiceMockBluetoothAdapter> LayoutTestBluetoothAdapterProvider::
         device_ptr->PushPendingCallback(pending);
         if (disconnect) {
           device_ptr->SetConnected(false);
-          base::ThreadTaskRunnerHandle::Get()->PostTask(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
               FROM_HERE,
               base::BindOnce(&NotifyDeviceChanged,
                              base::RetainedRef(adapter_ptr), device_ptr));
@@ -1132,7 +1132,7 @@ scoped_refptr<NiceMockBluetoothAdapter> LayoutTestBluetoothAdapterProvider::
 
                   if (disconnect) {
                     device_ptr->SetConnected(false);
-                    base::ThreadTaskRunnerHandle::Get()->PostTask(
+                    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
                         FROM_HERE,
                         base::BindOnce(&NotifyDeviceChanged,
                                        base::RetainedRef(adapter_ptr),

@@ -34,8 +34,9 @@ class WebFileWriterImpl::WriterBridge
   WriterBridge(WebFileWriterImpl::Type type)
       : request_id_(0),
         running_on_worker_(WorkerThread::GetCurrentId() > 0),
-        task_runner_(running_on_worker_ ? base::ThreadTaskRunnerHandle::Get()
-                                        : nullptr),
+        task_runner_(running_on_worker_
+                         ? base::ThreadTaskRunnerHandle::Get(FROM_HERE)
+                         : nullptr),
         written_bytes_(0) {
     if (type == WebFileWriterImpl::TYPE_SYNC) {
       waitable_event_.reset(new base::WaitableEvent(

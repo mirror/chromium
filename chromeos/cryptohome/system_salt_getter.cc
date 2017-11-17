@@ -33,7 +33,7 @@ SystemSaltGetter::~SystemSaltGetter() {
 void SystemSaltGetter::GetSystemSalt(
     const GetSystemSaltCallback& callback) {
   if (!system_salt_.empty()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, system_salt_));
     return;
   }

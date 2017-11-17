@@ -107,7 +107,7 @@ class TestVideoRenderer::Core {
 };
 
 TestVideoRenderer::Core::Core()
-    : main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       save_frame_data_to_disk_(false) {
   thread_checker_.DetachFromThread();
 }

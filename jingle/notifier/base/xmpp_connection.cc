@@ -86,8 +86,8 @@ XmppConnection::~XmppConnection() {
   // of a signal from XmppClient.  If we delete |task_pump_| here, bad
   // things happen when the stack pops back up to the XmppClient's
   // (which is deleted by |task_pump_|) function.
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE,
-                                                  task_pump_.release());
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
+      FROM_HERE, task_pump_.release());
 }
 
 void XmppConnection::OnStateChange(buzz::XmppEngine::State state) {

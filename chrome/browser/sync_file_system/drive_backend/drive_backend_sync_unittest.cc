@@ -116,7 +116,7 @@ class DriveBackendSyncTest : public testing::Test,
         kSyncRootFolderTitle));
 
     remote_sync_service_.reset(new SyncEngine(
-        base::ThreadTaskRunnerHandle::Get(),  // ui_task_runner
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE),  // ui_task_runner
         worker_task_runner_.get(), drive_task_runner.get(), base_dir_.GetPath(),
         nullptr,  // task_logger
         nullptr,  // notification_manager

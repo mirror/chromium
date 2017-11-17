@@ -18,7 +18,7 @@ namespace binder {
 
 TransactionDataFromDriver::TransactionDataFromDriver(
     const BufferDeleter& buffer_deleter)
-    : delete_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : delete_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       buffer_deleter_(buffer_deleter) {
   memset(&data_, 0, sizeof(data_));
 }

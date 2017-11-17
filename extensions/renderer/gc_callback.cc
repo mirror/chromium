@@ -37,7 +37,7 @@ void GCCallback::OnObjectGC(const v8::WeakCallbackInfo<GCCallback>& data) {
   // code is RunCallback.
   GCCallback* self = data.GetParameter();
   self->object_.Reset();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&GCCallback::RunCallback,
                             self->weak_ptr_factory_.GetWeakPtr()));
 }

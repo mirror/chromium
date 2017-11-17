@@ -137,7 +137,7 @@ class PendingTaskWaiter : public content::WebContentsObserver {
 
   void CheckStopWaitingPeriodically() {
     EndLoopIfCanStopWaiting();
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&PendingTaskWaiter::CheckStopWaitingPeriodically,
                        weak_factory_.GetWeakPtr()),

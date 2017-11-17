@@ -58,18 +58,19 @@ class SearchMetadataTest : public testing::Test {
     fake_free_disk_space_getter_.reset(new FakeFreeDiskSpaceGetter);
 
     metadata_storage_.reset(new ResourceMetadataStorage(
-        temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get().get()));
+        temp_dir_.GetPath(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get()));
     ASSERT_TRUE(metadata_storage_->Initialize());
 
-    cache_.reset(new FileCache(metadata_storage_.get(), temp_dir_.GetPath(),
-                               base::ThreadTaskRunnerHandle::Get().get(),
-                               fake_free_disk_space_getter_.get()));
+    cache_.reset(
+        new FileCache(metadata_storage_.get(), temp_dir_.GetPath(),
+                      base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+                      fake_free_disk_space_getter_.get()));
     ASSERT_TRUE(cache_->Initialize());
 
-    resource_metadata_.reset(
-        new ResourceMetadata(metadata_storage_.get(),
-                             cache_.get(),
-                             base::ThreadTaskRunnerHandle::Get().get()));
+    resource_metadata_.reset(new ResourceMetadata(
+        metadata_storage_.get(), cache_.get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get()));
     ASSERT_EQ(FILE_ERROR_OK, resource_metadata_->Initialize());
 
     AddEntriesToMetadata();
@@ -193,7 +194,7 @@ TEST_F(SearchMetadataTest, SearchMetadata_ZeroMatches) {
   std::unique_ptr<MetadataSearchResultVector> result;
 
   SearchMetadata(
-      base::ThreadTaskRunnerHandle::Get(), resource_metadata_.get(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), resource_metadata_.get(),
       "NonExistent", base::Bind(&MatchesType, SEARCH_METADATA_ALL),
       kDefaultAtMostNumMatches, MetadataSearchOrder::LAST_ACCESSED,
       google_apis::test_util::CreateCopyResultCallback(&error, &result));
@@ -208,7 +209,7 @@ TEST_F(SearchMetadataTest, SearchMetadata_RegularFile) {
   std::unique_ptr<MetadataSearchResultVector> result;
 
   SearchMetadata(
-      base::ThreadTaskRunnerHandle::Get(), resource_metadata_.get(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), resource_metadata_.get(),
       "SubDirectory File 1.txt", base::Bind(&MatchesType, SEARCH_METADATA_ALL),
       kDefaultAtMostNumMatches, MetadataSearchOrder::LAST_ACCESSED,
       google_apis::test_util::CreateCopyResultCallback(&error, &result));
@@ -228,7 +229,7 @@ TEST_F(SearchMetadataTest, SearchMetadata_CaseInsensitiveSearch) {
 
   // The query is all in lower case.
   SearchMetadata(
-      base::ThreadTaskRunnerHandle::Get(), resource_metadata_.get(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), resource_metadata_.get(),
       "subdirectory file 1.txt", base::Bind(&MatchesType, SEARCH_METADATA_ALL),
       kDefaultAtMostNumMatches, MetadataSearchOrder::LAST_ACCESSED,
       google_apis::test_util::CreateCopyResultCallback(&error, &result));
@@ -245,9 +246,9 @@ TEST_F(SearchMetadataTest, SearchMetadata_RegularFiles) {
   std::unique_ptr<MetadataSearchResultVector> result;
 
   SearchMetadata(
-      base::ThreadTaskRunnerHandle::Get(), resource_metadata_.get(), "SubDir",
-      base::Bind(&MatchesType, SEARCH_METADATA_ALL), kDefaultAtMostNumMatches,
-      MetadataSearchOrder::LAST_ACCESSED,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), resource_metadata_.get(),
+      "SubDir", base::Bind(&MatchesType, SEARCH_METADATA_ALL),
+      kDefaultAtMostNumMatches, MetadataSearchOrder::LAST_ACCESSED,
       google_apis::test_util::CreateCopyResultCallback(&error, &result));
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(FILE_ERROR_OK, error);
@@ -269,8 +270,8 @@ TEST_F(SearchMetadataTest, SearchMetadata_AtMostOneFile_LastAccessed) {
   // There are two files matching "SubDir" but only one file should be
   // returned. Results are ordered by last accessed time.
   SearchMetadata(
-      base::ThreadTaskRunnerHandle::Get(), resource_metadata_.get(), "SubDir",
-      base::Bind(&MatchesType, SEARCH_METADATA_ALL),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), resource_metadata_.get(),
+      "SubDir", base::Bind(&MatchesType, SEARCH_METADATA_ALL),
       1,  // at_most_num_matches
       MetadataSearchOrder::LAST_ACCESSED,
       google_apis::test_util::CreateCopyResultCallback(&error, &result));
@@ -289,8 +290,8 @@ TEST_F(SearchMetadataTest, SearchMetadata_AtMostOneFile_LastModified) {
   // There are two files matching "SubDir" but only one file should be
   // returned. Results are ordered by last modified time.
   SearchMetadata(
-      base::ThreadTaskRunnerHandle::Get(), resource_metadata_.get(), "SubDir",
-      base::Bind(&MatchesType, SEARCH_METADATA_ALL),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), resource_metadata_.get(),
+      "SubDir", base::Bind(&MatchesType, SEARCH_METADATA_ALL),
       1,  // at_most_num_matches
       MetadataSearchOrder::LAST_MODIFIED,
       google_apis::test_util::CreateCopyResultCallback(&error, &result));
@@ -307,7 +308,7 @@ TEST_F(SearchMetadataTest, SearchMetadata_Directory) {
   std::unique_ptr<MetadataSearchResultVector> result;
 
   SearchMetadata(
-      base::ThreadTaskRunnerHandle::Get(), resource_metadata_.get(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), resource_metadata_.get(),
       "Directory-1", base::Bind(&MatchesType, SEARCH_METADATA_ALL),
       kDefaultAtMostNumMatches, MetadataSearchOrder::LAST_ACCESSED,
       google_apis::test_util::CreateCopyResultCallback(&error, &result));
@@ -323,9 +324,9 @@ TEST_F(SearchMetadataTest, SearchMetadata_HostedDocument) {
   std::unique_ptr<MetadataSearchResultVector> result;
 
   SearchMetadata(
-      base::ThreadTaskRunnerHandle::Get(), resource_metadata_.get(), "Document",
-      base::Bind(&MatchesType, SEARCH_METADATA_ALL), kDefaultAtMostNumMatches,
-      MetadataSearchOrder::LAST_ACCESSED,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), resource_metadata_.get(),
+      "Document", base::Bind(&MatchesType, SEARCH_METADATA_ALL),
+      kDefaultAtMostNumMatches, MetadataSearchOrder::LAST_ACCESSED,
       google_apis::test_util::CreateCopyResultCallback(&error, &result));
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(FILE_ERROR_OK, error);
@@ -341,7 +342,8 @@ TEST_F(SearchMetadataTest, SearchMetadata_ExcludeHostedDocument) {
   std::unique_ptr<MetadataSearchResultVector> result;
 
   SearchMetadata(
-      base::ThreadTaskRunnerHandle::Get(), resource_metadata_.get(), "Document",
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), resource_metadata_.get(),
+      "Document",
       base::Bind(&MatchesType, SEARCH_METADATA_EXCLUDE_HOSTED_DOCUMENTS),
       kDefaultAtMostNumMatches, MetadataSearchOrder::LAST_ACCESSED,
       google_apis::test_util::CreateCopyResultCallback(&error, &result));
@@ -356,8 +358,8 @@ TEST_F(SearchMetadataTest, SearchMetadata_SharedWithMe) {
   std::unique_ptr<MetadataSearchResultVector> result;
 
   SearchMetadata(
-      base::ThreadTaskRunnerHandle::Get(), resource_metadata_.get(), "",
-      base::Bind(&MatchesType, SEARCH_METADATA_SHARED_WITH_ME),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), resource_metadata_.get(),
+      "", base::Bind(&MatchesType, SEARCH_METADATA_SHARED_WITH_ME),
       kDefaultAtMostNumMatches, MetadataSearchOrder::LAST_ACCESSED,
       google_apis::test_util::CreateCopyResultCallback(&error, &result));
   base::RunLoop().RunUntilIdle();
@@ -373,7 +375,7 @@ TEST_F(SearchMetadataTest, SearchMetadata_FileAndDirectory) {
   std::unique_ptr<MetadataSearchResultVector> result;
 
   SearchMetadata(
-      base::ThreadTaskRunnerHandle::Get(), resource_metadata_.get(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), resource_metadata_.get(),
       "excludeDir-test", base::Bind(&MatchesType, SEARCH_METADATA_ALL),
       kDefaultAtMostNumMatches, MetadataSearchOrder::LAST_ACCESSED,
       google_apis::test_util::CreateCopyResultCallback(&error, &result));
@@ -394,7 +396,7 @@ TEST_F(SearchMetadataTest, SearchMetadata_ExcludeDirectory) {
   std::unique_ptr<MetadataSearchResultVector> result;
 
   SearchMetadata(
-      base::ThreadTaskRunnerHandle::Get(), resource_metadata_.get(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), resource_metadata_.get(),
       "excludeDir-test",
       base::Bind(&MatchesType, SEARCH_METADATA_EXCLUDE_DIRECTORIES),
       kDefaultAtMostNumMatches, MetadataSearchOrder::LAST_ACCESSED,
@@ -418,9 +420,9 @@ TEST_F(SearchMetadataTest, SearchMetadata_ExcludeSpecialDirectories) {
 
     const std::string query = kQueries[i];
     SearchMetadata(
-        base::ThreadTaskRunnerHandle::Get(), resource_metadata_.get(), query,
-        base::Bind(&MatchesType, SEARCH_METADATA_ALL), kDefaultAtMostNumMatches,
-        MetadataSearchOrder::LAST_ACCESSED,
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), resource_metadata_.get(),
+        query, base::Bind(&MatchesType, SEARCH_METADATA_ALL),
+        kDefaultAtMostNumMatches, MetadataSearchOrder::LAST_ACCESSED,
         google_apis::test_util::CreateCopyResultCallback(&error, &result));
 
     base::RunLoop().RunUntilIdle();
@@ -435,8 +437,8 @@ TEST_F(SearchMetadataTest, SearchMetadata_Offline) {
   std::unique_ptr<MetadataSearchResultVector> result;
 
   SearchMetadata(
-      base::ThreadTaskRunnerHandle::Get(), resource_metadata_.get(), "",
-      base::Bind(&MatchesType, SEARCH_METADATA_OFFLINE),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), resource_metadata_.get(),
+      "", base::Bind(&MatchesType, SEARCH_METADATA_OFFLINE),
       kDefaultAtMostNumMatches, MetadataSearchOrder::LAST_ACCESSED,
       google_apis::test_util::CreateCopyResultCallback(&error, &result));
   base::RunLoop().RunUntilIdle();
@@ -458,7 +460,7 @@ TEST_F(SearchMetadataTest, SearchMetadata_MultipleKeywords) {
   std::unique_ptr<MetadataSearchResultVector> result;
 
   SearchMetadata(
-      base::ThreadTaskRunnerHandle::Get(), resource_metadata_.get(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), resource_metadata_.get(),
       "Directory 1", base::Bind(&MatchesType, SEARCH_METADATA_ALL),
       kDefaultAtMostNumMatches, MetadataSearchOrder::LAST_ACCESSED,
       google_apis::test_util::CreateCopyResultCallback(&error, &result));
@@ -480,7 +482,7 @@ TEST_F(SearchMetadataTest,
 
   // \xE3\x80\x80 is ideographic space.
   SearchMetadata(
-      base::ThreadTaskRunnerHandle::Get(), resource_metadata_.get(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), resource_metadata_.get(),
       "Directory\xE3\x80\x80"
       "1",
       base::Bind(&MatchesType, SEARCH_METADATA_ALL), kDefaultAtMostNumMatches,

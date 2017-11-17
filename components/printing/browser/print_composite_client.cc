@@ -39,7 +39,7 @@ void PrintCompositeClient::DoComposite(
   if (!connector_)
     CreateConnectorRequest();
   Composite(connector_.get(), handle, data_size, std::move(callback),
-            base::ThreadTaskRunnerHandle::Get());
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 std::unique_ptr<base::SharedMemory> PrintCompositeClient::GetShmFromMojoHandle(

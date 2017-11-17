@@ -24,7 +24,7 @@ class HSTSQueryTest : public testing::Test {
  public:
   HSTSQueryTest()
       : request_context_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())) {}
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))) {}
 
   const scoped_refptr<net::TestURLRequestContextGetter>& request_context() {
     return request_context_;

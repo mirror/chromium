@@ -900,8 +900,8 @@ bool NaClProcessHost::StartPPAPIProxy(
 
   ipc_proxy_channel_ = IPC::ChannelProxy::Create(
       channel_handle.release(), IPC::Channel::MODE_CLIENT, NULL,
-      base::ThreadTaskRunnerHandle::Get().get(),
-      base::ThreadTaskRunnerHandle::Get().get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
   // Create the browser ppapi host and enable PPAPI message dispatching to the
   // browser process.
   ppapi_host_.reset(content::BrowserPpapiHost::CreateExternalPluginProcess(
@@ -1128,7 +1128,7 @@ bool NaClProcessHost::AttachDebugExceptionHandler(const std::string& info,
                info);
   } else {
     NaClStartDebugExceptionHandlerThread(
-        std::move(process), info, base::ThreadTaskRunnerHandle::Get(),
+        std::move(process), info, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
         base::Bind(&NaClProcessHost::OnDebugExceptionHandlerLaunchedByBroker,
                    weak_factory_.GetWeakPtr()));
     return true;

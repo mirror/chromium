@@ -217,7 +217,7 @@ void EnsureDirectoryExists(Profile* profile,
                                  true /* is_exclusive */,
                                  true /* is_recursive */, callback);
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, FILE_ERROR_OK));
   }
 }

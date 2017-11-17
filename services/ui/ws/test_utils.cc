@@ -59,7 +59,7 @@ class TestThreadedImageCursorsFactory : public ThreadedImageCursorsFactory {
   // ThreadedImageCursorsFactory:
   std::unique_ptr<ThreadedImageCursors> CreateCursors() override {
     if (!resource_runner_) {
-      resource_runner_ = base::ThreadTaskRunnerHandle::Get();
+      resource_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
       image_cursors_set_ = std::make_unique<ui::ImageCursorsSet>();
     }
     return std::make_unique<ws::ThreadedImageCursors>(

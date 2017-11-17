@@ -82,13 +82,13 @@ void FakeUpdateEngineClient::SetChannel(const std::string& target_channel,
 
 void FakeUpdateEngineClient::GetChannel(bool get_current_channel,
                                         const GetChannelCallback& callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback, std::string()));
 }
 
 void FakeUpdateEngineClient::GetEolStatus(
     const GetEolStatusCallback& callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(callback, update_engine::EndOfLifeStatus::kSupported));
 }
@@ -96,7 +96,7 @@ void FakeUpdateEngineClient::GetEolStatus(
 void FakeUpdateEngineClient::SetUpdateOverCellularPermission(
     bool allowed,
     const base::Closure& callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback);
 }
 
 void FakeUpdateEngineClient::SetUpdateOverCellularOneTimePermission(

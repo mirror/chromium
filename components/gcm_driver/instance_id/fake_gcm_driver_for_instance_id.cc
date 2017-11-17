@@ -15,7 +15,7 @@
 namespace instance_id {
 
 FakeGCMDriverForInstanceID::FakeGCMDriverForInstanceID()
-    : gcm::FakeGCMDriver(base::ThreadTaskRunnerHandle::Get()) {}
+    : gcm::FakeGCMDriver(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 FakeGCMDriverForInstanceID::FakeGCMDriverForInstanceID(
     const scoped_refptr<base::SequencedTaskRunner>& blocking_task_runner)
@@ -51,7 +51,7 @@ void FakeGCMDriverForInstanceID::GetInstanceIDData(
     instance_id = iter->second.first;
     extra_data = iter->second.second;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback, instance_id, extra_data));
 }
 
@@ -74,7 +74,7 @@ void FakeGCMDriverForInstanceID::GetToken(
   last_gettoken_app_id_ = app_id;
   last_gettoken_authorized_entity_ = authorized_entity;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback, token, gcm::GCMClient::SUCCESS));
 }
 
@@ -84,7 +84,7 @@ void FakeGCMDriverForInstanceID::ValidateToken(
     const std::string& scope,
     const std::string& token,
     const ValidateTokenCallback& callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback, true /* is_valid */));
 }
 
@@ -98,7 +98,7 @@ void FakeGCMDriverForInstanceID::DeleteToken(
 
   last_deletetoken_app_id_ = app_id;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback, gcm::GCMClient::SUCCESS));
 }
 

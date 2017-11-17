@@ -292,7 +292,7 @@ void InterstitialPageImpl::Hide() {
   // Delete this and call Shutdown on the RVH asynchronously, as we may have
   // been called from a RVH delegate method, and we can't delete the RVH out
   // from under itself.
-  base::ThreadTaskRunnerHandle::Get()->PostNonNestableTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostNonNestableTask(
       FROM_HERE, base::BindOnce(&InterstitialPageImpl::Shutdown,
                                 weak_ptr_factory_.GetWeakPtr()));
   bool has_focus = render_view_host_->GetWidget()->GetView() &&

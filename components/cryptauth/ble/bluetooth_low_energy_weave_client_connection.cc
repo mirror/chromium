@@ -153,7 +153,7 @@ BluetoothLowEnergyWeaveClientConnection::
           {device::BluetoothUUID(kTXCharacteristicUUID), std::string()}),
       rx_characteristic_(
           {device::BluetoothUUID(kRXCharacteristicUUID), std::string()}),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       timer_(base::MakeUnique<base::OneShotTimer>()),
       sub_status_(SubStatus::DISCONNECTED),
       weak_ptr_factory_(this) {

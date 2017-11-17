@@ -120,7 +120,7 @@ void QuicChromiumClientStream::Handle::OnError(int error) {
   // Post a task to invoke the callbacks to ensure that there is no reentrancy.
   // A ScopedPacketFlusher might cause an error which closes the stream under
   // the call stack of the owner of the handle.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&QuicChromiumClientStream::Handle::InvokeCallbacksOnClose,
                  weak_factory_.GetWeakPtr(), error));
@@ -606,7 +606,7 @@ int QuicChromiumClientStream::Read(IOBuffer* buf, int buf_len) {
 
 void QuicChromiumClientStream::NotifyHandleOfInitialHeadersAvailableLater() {
   DCHECK(handle_);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(
           &QuicChromiumClientStream::NotifyHandleOfInitialHeadersAvailable,
@@ -623,7 +623,7 @@ void QuicChromiumClientStream::NotifyHandleOfInitialHeadersAvailable() {
 
 void QuicChromiumClientStream::NotifyHandleOfTrailingHeadersAvailableLater() {
   DCHECK(handle_);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(
           &QuicChromiumClientStream::NotifyHandleOfTrailingHeadersAvailable,
@@ -673,7 +673,7 @@ bool QuicChromiumClientStream::DeliverTrailingHeaders(SpdyHeaderBlock* headers,
 
 void QuicChromiumClientStream::NotifyHandleOfDataAvailableLater() {
   DCHECK(handle_);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&QuicChromiumClientStream::NotifyHandleOfDataAvailable,
                  weak_factory_.GetWeakPtr()));

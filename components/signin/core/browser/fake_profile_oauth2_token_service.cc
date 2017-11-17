@@ -122,7 +122,7 @@ void FakeProfileOAuth2TokenService::FetchOAuth2Token(
   pending_requests_.push_back(pending_request);
 
   if (auto_post_fetch_response_on_message_loop_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&FakeProfileOAuth2TokenService::IssueAllTokensForAccount,
                    weak_ptr_factory_.GetWeakPtr(), account_id, "access_token",

@@ -269,7 +269,7 @@ class LocalStorageContextMojo::LevelDBWrapperHolder final
           FROM_HERE, DOMStorageTaskRunner::PRIMARY_SEQUENCE,
           base::BindOnce(
               &MigrateStorageHelper, sql_db_path(),
-              base::ThreadTaskRunnerHandle::Get(),
+              base::ThreadTaskRunnerHandle::Get(FROM_HERE),
               base::Bind(&CallMigrationCalback, base::Passed(&callback))));
       return;
     }

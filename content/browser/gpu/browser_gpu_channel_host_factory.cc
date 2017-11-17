@@ -109,7 +109,7 @@ BrowserGpuChannelHostFactory::EstablishRequest::EstablishRequest(
       gpu_client_id_(gpu_client_id),
       gpu_client_tracing_id_(gpu_client_tracing_id),
       finished_(false),
-      main_task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 void BrowserGpuChannelHostFactory::EstablishRequest::RestartTimeout() {
   BrowserGpuChannelHostFactory* factory =

@@ -252,7 +252,7 @@ TEST_F(SSLErrorClassificationTest, GetClockState) {
       base::MakeUnique<base::DefaultClock>(),
       base::MakeUnique<base::DefaultTickClock>(), &pref_service,
       new net::TestURLRequestContextGetter(
-          base::ThreadTaskRunnerHandle::Get()));
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 
   ssl_errors::SetBuildTimeForTesting(base::Time::Now());
   EXPECT_EQ(

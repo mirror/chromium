@@ -122,7 +122,7 @@ AudioManagerCras::AudioManagerCras(std::unique_ptr<AudioThread> audio_thread,
     : AudioManagerBase(std::move(audio_thread), audio_log_factory),
       on_shutdown_(base::WaitableEvent::ResetPolicy::MANUAL,
                    base::WaitableEvent::InitialState::NOT_SIGNALED),
-      main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       weak_ptr_factory_(this) {
   weak_this_ = weak_ptr_factory_.GetWeakPtr();
   SetMaxOutputStreamsAllowed(kMaxOutputStreams);

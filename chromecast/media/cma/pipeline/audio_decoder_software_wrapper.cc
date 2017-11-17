@@ -123,7 +123,7 @@ bool AudioDecoderSoftwareWrapper::CreateSoftwareDecoder(
   }
   // TODO(kmackay) Consider using planar float instead.
   software_decoder_ = media::CastAudioDecoder::Create(
-      base::ThreadTaskRunnerHandle::Get(), config,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), config,
       media::CastAudioDecoder::kOutputSigned16,
       base::Bind(&AudioDecoderSoftwareWrapper::OnDecoderInitialized,
                  weak_factory_.GetWeakPtr()));

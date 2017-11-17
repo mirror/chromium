@@ -856,7 +856,7 @@ class ResourceDispatcherHostTest : public testing::Test, public IPC::Sender {
   ResourceDispatcherHostTest()
       : thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP),
         host_(base::Bind(&DownloadResourceHandler::Create),
-              base::ThreadTaskRunnerHandle::Get(),
+              base::ThreadTaskRunnerHandle::Get(FROM_HERE),
               /* enable_resource_scheduler */ true),
         use_test_ssl_certificate_(false),
         send_data_received_acks_(false),
@@ -1046,7 +1046,7 @@ class ResourceDispatcherHostTest : public testing::Test, public IPC::Sender {
     std::unique_ptr<IPC::Message> ack(
         new ResourceHostMsg_DataReceived_ACK(request_id));
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&GenerateIPCMessage,
                                   scoped_refptr<ResourceRequesterInfo>(
                                       filter_->requester_info_for_test()),

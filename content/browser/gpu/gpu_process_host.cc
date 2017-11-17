@@ -599,7 +599,7 @@ bool GpuProcessHost::Init() {
     GpuDataManagerImpl::GetInstance()->UpdateGpuPreferences(&gpu_preferences);
     in_process_gpu_thread_.reset(GetGpuMainThreadFactory()(
         InProcessChildThreadParams(
-            base::ThreadTaskRunnerHandle::Get(),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE),
             process_->GetInProcessBrokerClientInvitation(),
             process_->child_connection()->service_token()),
         gpu_preferences));
@@ -634,7 +634,7 @@ bool GpuProcessHost::Init() {
       ->GetGpuPlatformSupportHost()
       ->OnGpuProcessLaunched(
           host_id_, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
-          base::ThreadTaskRunnerHandle::Get(),
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE),
           base::Bind(&SendGpuProcessMessage, weak_ptr_factory_.GetWeakPtr()));
 #endif
 

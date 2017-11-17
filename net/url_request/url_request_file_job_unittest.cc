@@ -116,8 +116,9 @@ class TestJobFactory : public URLRequestJobFactory {
     CHECK(done_reading_);
     CHECK(observed_content_);
     URLRequestJob* job = new TestURLRequestFileJob(
-        request, network_delegate, path_, base::ThreadTaskRunnerHandle::Get(),
-        open_result_, seek_position_, done_reading_, observed_content_);
+        request, network_delegate, path_,
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), open_result_,
+        seek_position_, done_reading_, observed_content_);
     open_result_ = nullptr;
     seek_position_ = nullptr;
     done_reading_ = nullptr;

@@ -1614,14 +1614,15 @@ void RenderProcessHostImpl::InitializeChannelProxy() {
   // See crbug.com/526842 for details.
 #if defined(OS_ANDROID)
   if (GetContentClient()->UsingSynchronousCompositing()) {
-    channel_ = IPC::SyncChannel::Create(this, io_task_runner.get(),
-                                        base::ThreadTaskRunnerHandle::Get(),
-                                        &never_signaled_);
+    channel_ = IPC::SyncChannel::Create(
+        this, io_task_runner.get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), &never_signaled_);
   }
 #endif  // OS_ANDROID
   if (!channel_)
-    channel_.reset(new IPC::ChannelProxy(this, io_task_runner.get(),
-                                         base::ThreadTaskRunnerHandle::Get()));
+    channel_.reset(
+        new IPC::ChannelProxy(this, io_task_runner.get(),
+                              base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   channel_->Init(std::move(channel_factory), true /* create_pipe_now */);
 
   // Note that Channel send is effectively paused and unpaused at various points
@@ -3063,7 +3064,7 @@ void RenderProcessHostImpl::Cleanup() {
 #ifndef NDEBUG
   is_self_deleted_ = true;
 #endif
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
   deleting_soon_ = true;
 
   // It's important not to wait for the DeleteTask to delete the channel

@@ -353,7 +353,7 @@ class TestConnectJob : public ConnectJob {
         // abstract time for the purpose of unittests. Unfortunately, we have
         // a lot of third-party components that directly call the various
         // time functions, so this change would be rather invasive.
-        base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
             FROM_HERE,
             base::Bind(base::IgnoreResult(&TestConnectJob::DoConnect),
                        weak_factory_.GetWeakPtr(), true /* successful */,
@@ -362,7 +362,7 @@ class TestConnectJob : public ConnectJob {
         return ERR_IO_PENDING;
       case kMockPendingFailingJob:
         set_load_state(LOAD_STATE_CONNECTING);
-        base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
             FROM_HERE,
             base::Bind(base::IgnoreResult(&TestConnectJob::DoConnect),
                        weak_factory_.GetWeakPtr(), false /* error */,
@@ -379,7 +379,7 @@ class TestConnectJob : public ConnectJob {
                          true /* recoverable */);
       case kMockPendingRecoverableJob:
         set_load_state(LOAD_STATE_CONNECTING);
-        base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
             FROM_HERE,
             base::Bind(base::IgnoreResult(&TestConnectJob::DoConnect),
                        weak_factory_.GetWeakPtr(), false /* error */,
@@ -393,7 +393,7 @@ class TestConnectJob : public ConnectJob {
       case kMockPendingAdditionalErrorStateJob:
         set_load_state(LOAD_STATE_CONNECTING);
         store_additional_error_state_ = true;
-        base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
             FROM_HERE,
             base::Bind(base::IgnoreResult(&TestConnectJob::DoConnect),
                        weak_factory_.GetWeakPtr(), false /* error */,
@@ -3616,7 +3616,7 @@ TEST_F(ClientSocketPoolBaseTest, PreconnectWithoutBackupJob) {
   // the backup job a pending job instead of a waiting job, so it
   // *would* complete if it were created.
   connect_job_factory_->set_job_type(TestConnectJob::kMockPendingJob);
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       base::TimeDelta::FromSeconds(1));
   base::RunLoop().Run();

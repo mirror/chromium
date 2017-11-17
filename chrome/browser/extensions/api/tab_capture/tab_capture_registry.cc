@@ -66,7 +66,7 @@ class WindowAdoptionAgent : protected aura::WindowObserver {
     // Post a task to return to the event loop before finding a new parent, to
     // avoid clashing with the currently-in-progress window tree hierarchy
     // changes.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&WindowAdoptionAgent::FindNewParent,
                                   weak_ptr_factory_.GetWeakPtr()));
   }

@@ -126,7 +126,7 @@ class TestPreviewsOptOutStore : public PreviewsOptOutStore {
       host_indifferent_black_list_item_ =
           PreviewsBlackList::CreateHostIndifferentBlackListItem();
     }
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&RunLoadCallback, callback,
                    base::Passed(&black_list_item_map_),

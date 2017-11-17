@@ -180,7 +180,7 @@ FakePacketSocketFactory::PendingPacket::~PendingPacket() {}
 
 FakePacketSocketFactory::FakePacketSocketFactory(
     FakeNetworkDispatcher* dispatcher)
-    : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       dispatcher_(dispatcher),
       address_(dispatcher_->AllocateAddress()),
       out_of_order_rate_(0.0),

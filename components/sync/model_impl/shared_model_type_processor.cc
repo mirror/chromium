@@ -115,7 +115,7 @@ void SharedModelTypeProcessor::ConnectIfReady() {
     activation_context->type_processor =
         std::make_unique<ModelTypeProcessorProxy>(
             weak_ptr_factory_.GetWeakPtr(),
-            base::ThreadTaskRunnerHandle::Get());
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     start_callback_.Run(std::move(activation_context));
   }
 

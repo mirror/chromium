@@ -60,7 +60,7 @@ LocalWebRtcMediaStreamAdapter::LocalWebRtcMediaStreamAdapter(
     PeerConnectionDependencyFactory* factory,
     scoped_refptr<WebRtcMediaStreamTrackAdapterMap> track_adapter_map,
     const blink::WebMediaStream& web_stream)
-    : WebRtcMediaStreamAdapter(base::ThreadTaskRunnerHandle::Get(),
+    : WebRtcMediaStreamAdapter(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                                std::move(track_adapter_map),
                                nullptr,
                                web_stream),

@@ -186,7 +186,7 @@ void ScriptInjectionManager::RFOHelper::DidFinishDocumentLoad() {
   // particularly slow subresource, so we set a delayed task from here - but if
   // we finish everything before that point (i.e., DidFinishLoad() is
   // triggered), then there's no reason to keep waiting.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&ScriptInjectionManager::RFOHelper::RunIdle,
                  weak_factory_.GetWeakPtr()),
@@ -204,7 +204,7 @@ void ScriptInjectionManager::RFOHelper::DidFinishLoad() {
   DCHECK(content::RenderThread::Get());
   if (!FeatureSwitch::yield_between_content_script_runs()->IsEnabled()) {
     // Ensure that we don't block any UI progress by running scripts.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&ScriptInjectionManager::RFOHelper::RunIdle,
                               weak_factory_.GetWeakPtr()));
   }

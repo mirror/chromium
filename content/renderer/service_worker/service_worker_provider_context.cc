@@ -111,7 +111,7 @@ ServiceWorkerProviderContext::ServiceWorkerProviderContext(
     scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter)
     : provider_type_(provider_type),
       provider_id_(provider_id),
-      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       binding_(this, std::move(request)),
       weak_factory_(this) {
   container_host_.Bind(std::move(host_ptr_info));

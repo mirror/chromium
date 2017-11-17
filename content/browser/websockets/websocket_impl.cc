@@ -411,7 +411,7 @@ void WebSocketImpl::AddChannelRequest(
 
   DCHECK(!channel_);
   if (delay_ > base::TimeDelta()) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&WebSocketImpl::AddChannel,
                        weak_ptr_factory_.GetWeakPtr(), socket_url,

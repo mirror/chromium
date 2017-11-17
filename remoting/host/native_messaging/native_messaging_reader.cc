@@ -149,7 +149,8 @@ NativeMessagingReader::NativeMessagingReader(base::File file)
       base::Thread::Options(base::MessageLoop::TYPE_IO, /*size=*/0));
 
   read_task_runner_ = reader_thread_.task_runner();
-  core_.reset(new Core(std::move(file), base::ThreadTaskRunnerHandle::Get(),
+  core_.reset(new Core(std::move(file),
+                       base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                        read_task_runner_, weak_factory_.GetWeakPtr()));
 }
 

@@ -23,7 +23,7 @@ class TestCompositorHostWin : public TestCompositorHost,
     Init(NULL, bounds);
     compositor_.reset(new ui::Compositor(
         context_factory_private->AllocateFrameSinkId(), context_factory,
-        context_factory_private, base::ThreadTaskRunnerHandle::Get(),
+        context_factory_private, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
         false /* enable_surface_synchronization */,
         false /* enable_pixel_canvas */));
     compositor_->SetAcceleratedWidget(hwnd());

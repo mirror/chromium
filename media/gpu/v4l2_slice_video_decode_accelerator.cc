@@ -471,7 +471,7 @@ V4L2SliceVideoDecodeAccelerator::V4L2SliceVideoDecodeAccelerator(
     const MakeGLContextCurrentCallback& make_context_current_cb)
     : input_planes_count_(0),
       output_planes_count_(0),
-      child_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      child_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       device_(device),
       decoder_thread_("V4L2SliceVideoDecodeAcceleratorThread"),
       device_poll_thread_("V4L2SliceVideoDecodeAcceleratorDevicePollThread"),

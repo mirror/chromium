@@ -73,8 +73,8 @@ class MockQuotaClient : public QuotaClient {
                       const GetUsageCallback& callback) override {
     EXPECT_EQ(kStorageTypeTemporary, type);
     int64_t usage = GetUsage(origin);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  base::Bind(callback, usage));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, base::Bind(callback, usage));
   }
 
   void GetOriginsForType(StorageType type,
@@ -85,7 +85,7 @@ class MockQuotaClient : public QuotaClient {
          itr != usage_map_.end(); ++itr) {
       origins.insert(itr->first);
     }
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, origins));
   }
 
@@ -99,7 +99,7 @@ class MockQuotaClient : public QuotaClient {
       if (net::GetHostOrSpecFromURL(itr->first) == host)
         origins.insert(itr->first);
     }
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, origins));
   }
 
@@ -108,7 +108,7 @@ class MockQuotaClient : public QuotaClient {
                         const DeletionCallback& callback) override {
     EXPECT_EQ(kStorageTypeTemporary, type);
     usage_map_.erase(origin);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, kQuotaStatusOk));
   }
 

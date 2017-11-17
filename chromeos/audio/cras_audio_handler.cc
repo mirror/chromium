@@ -697,7 +697,7 @@ CrasAudioHandler::CrasAudioHandler(
   InitializeAudioState();
   // Unittest may not have the task runner for the current thread.
   if (base::ThreadTaskRunnerHandle::IsSet())
-    main_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    main_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 CrasAudioHandler::~CrasAudioHandler() {

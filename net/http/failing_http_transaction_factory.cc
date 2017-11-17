@@ -87,8 +87,8 @@ FailingHttpTransaction::~FailingHttpTransaction() {}
 int FailingHttpTransaction::Start(const HttpRequestInfo* request_info,
                                   const CompletionCallback& callback,
                                   const NetLogWithSource& net_log) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                base::Bind(callback, error_));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, base::Bind(callback, error_));
   return ERR_IO_PENDING;
 }
 

@@ -153,7 +153,7 @@ void OfflineContentAggregator::GetVisualsForItem(
   auto it = providers_.find(id.name_space);
 
   if (it == providers_.end()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, id, nullptr));
     return;
   }
@@ -170,7 +170,7 @@ void OfflineContentAggregator::AddObserver(
   observers_.AddObserver(observer);
 
   if (sent_on_items_available_ || providers_.empty()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&OfflineContentAggregator::CheckAndNotifyItemsAvailable,
                    weak_ptr_factory_.GetWeakPtr()));

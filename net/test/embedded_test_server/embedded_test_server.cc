@@ -466,11 +466,11 @@ HttpConnection* EmbeddedTestServer::FindConnection(StreamSocket* socket) {
 bool EmbeddedTestServer::PostTaskToIOThreadAndWait(
     const base::Closure& closure) {
   // Note that PostTaskAndReply below requires
-  // base::ThreadTaskRunnerHandle::Get() to return a task runner for posting
-  // the reply task. However, in order to make EmbeddedTestServer universally
-  // usable, it needs to cope with the situation where it's running on a thread
-  // on which a message loop is not (yet) available or as has been destroyed
-  // already.
+  // base::ThreadTaskRunnerHandle::Get(FROM_HERE) to return a task runner for
+  // posting the reply task. However, in order to make EmbeddedTestServer
+  // universally usable, it needs to cope with the situation where it's running
+  // on a thread on which a message loop is not (yet) available or as has been
+  // destroyed already.
   //
   // To handle this situation, create temporary message loop to support the
   // PostTaskAndReply operation if the current thread as no message loop.

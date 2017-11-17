@@ -106,7 +106,7 @@ CrxDownloaderTest::CrxDownloaderTest()
       scoped_task_environment_(
           base::test::ScopedTaskEnvironment::MainThreadType::IO),
       context_(base::MakeRefCounted<net::TestURLRequestContextGetter>(
-          base::ThreadTaskRunnerHandle::Get())) {}
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE))) {}
 
 CrxDownloaderTest::~CrxDownloaderTest() {
   context_ = nullptr;
@@ -127,7 +127,8 @@ void CrxDownloaderTest::SetUp() {
   crx_downloader_->set_progress_callback(progress_callback_);
 
   get_interceptor_ = std::make_unique<GetInterceptor>(
-      base::ThreadTaskRunnerHandle::Get(), base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 void CrxDownloaderTest::TearDown() {

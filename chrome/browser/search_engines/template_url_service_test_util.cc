@@ -68,14 +68,14 @@ TemplateURLServiceTestUtil::TemplateURLServiceTestUtil()
 
   scoped_refptr<WebDatabaseService> web_database_service =
       new WebDatabaseService(temp_dir_.GetPath().AppendASCII("webdata"),
-                             base::ThreadTaskRunnerHandle::Get(),
-                             base::ThreadTaskRunnerHandle::Get());
+                             base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                             base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   web_database_service->AddTable(
       std::unique_ptr<WebDatabaseTable>(new KeywordTable()));
   web_database_service->LoadDatabase();
 
   web_data_service_ = new KeywordWebDataService(
-      web_database_service.get(), base::ThreadTaskRunnerHandle::Get(),
+      web_database_service.get(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       KeywordWebDataService::ProfileErrorCallback());
   web_data_service_->Init();
 

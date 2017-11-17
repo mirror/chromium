@@ -150,8 +150,8 @@ class MediaStreamManagerTest : public ::testing::Test {
                         const MediaStreamDevices& devices,
                         std::unique_ptr<MediaStreamUIProxy> ui_proxy) {
     Response(index);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  run_loop_.QuitClosure());
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, run_loop_.QuitClosure());
   }
 
  protected:

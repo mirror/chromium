@@ -224,7 +224,7 @@ class IncidentReportingServiceTest : public testing::Test {
         safe_browsing::kIncidentReportingEnableUpload);
 
     instance_.reset(new TestIncidentReportingService(
-        base::ThreadTaskRunnerHandle::Get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE),
         base::Bind(&IncidentReportingServiceTest::PreProfileAdd,
                    base::Unretained(this)),
         base::Bind(&IncidentReportingServiceTest::CollectEnvironmentData,
@@ -371,7 +371,7 @@ class IncidentReportingServiceTest : public testing::Test {
           on_deleted_(on_deleted),
           result_(result) {
       // Post a task that will provide the response.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(&FakeUploader::FinishUpload, base::Unretained(this)));
     }
@@ -403,7 +403,7 @@ class IncidentReportingServiceTest : public testing::Test {
         const safe_browsing::LastDownloadFinder::LastDownloadCallback&
             callback) {
       // Post a task to run the callback.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(callback, base::Passed(&binary_download),
                                     base::Passed(&non_binary_download)));
       return std::unique_ptr<safe_browsing::LastDownloadFinder>(
@@ -473,7 +473,7 @@ class IncidentReportingServiceTest : public testing::Test {
 
   // Posts a task to delete the profile.
   void DelayedDeleteProfile(Profile* profile) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&TestingProfileManager::DeleteTestingProfile,
                                   base::Unretained(&profile_manager_),
                                   profile->GetProfileUserName()));

@@ -60,7 +60,7 @@ class DnsConfigServiceTest : public testing::Test {
 
   void WaitForConfig(base::TimeDelta timeout) {
     base::CancelableClosure closure(base::MessageLoop::QuitWhenIdleClosure());
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, closure.callback(), timeout);
     quit_on_config_ = true;
     base::RunLoop().Run();

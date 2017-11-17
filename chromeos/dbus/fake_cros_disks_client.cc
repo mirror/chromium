@@ -49,11 +49,11 @@ void DidMount(const CrosDisksClient::MountCompletedHandler&
               const base::FilePath& mounted_path,
               MountError mount_error) {
   // Tell the caller of Mount() that the mount request was accepted.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback);
 
   // Tell the caller of Mount() that the mount completed.
   if (!mount_completed_handler.is_null()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(mount_completed_handler,
                               MountEntry(mount_error, source_path, type,
                                          mounted_path.AsUTF8Unsafe())));
@@ -135,7 +135,7 @@ void FakeCrosDisksClient::Unmount(const std::string& device_path,
   unmount_call_count_++;
   last_unmount_device_path_ = device_path;
   last_unmount_options_ = options;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, unmount_success_ ? callback : error_callback);
   if (!unmount_listener_.is_null())
     unmount_listener_.Run();
@@ -162,9 +162,10 @@ void FakeCrosDisksClient::Format(const std::string& device_path,
   last_format_device_path_ = device_path;
   last_format_filesystem_ = filesystem;
   if (format_success_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback);
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, error_callback);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           error_callback);
   }
 }
 
@@ -179,9 +180,10 @@ void FakeCrosDisksClient::Rename(const std::string& device_path,
   last_rename_device_path_ = device_path;
   last_rename_volume_name_ = volume_name;
   if (rename_success_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback);
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, error_callback);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           error_callback);
   }
 }
 

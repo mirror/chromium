@@ -173,11 +173,11 @@ void EnrollmentHandlerChromeOS::HandleAvailableLicensesResult(
     bool success,
     const CloudPolicyClient::LicenseMap& license_map) {
   if (!success) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&EnrollmentHandlerChromeOS::ReportResult,
-            weak_ptr_factory_.GetWeakPtr(),
-            EnrollmentStatus::ForStatus(
-                EnrollmentStatus::LICENSE_REQUEST_FAILED)));
+                              weak_ptr_factory_.GetWeakPtr(),
+                              EnrollmentStatus::ForStatus(
+                                  EnrollmentStatus::LICENSE_REQUEST_FAILED)));
     return;
   }
   if (available_licenses_callback_)
@@ -590,7 +590,7 @@ void EnrollmentHandlerChromeOS::HandleLockDeviceResult(
         // InstallAttributes not ready yet, retry later.
         LOG(WARNING) << "Install Attributes not ready yet will retry in "
                      << kLockRetryIntervalMs << "ms.";
-        base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
             FROM_HERE,
             base::BindOnce(&EnrollmentHandlerChromeOS::StartLockDevice,
                            weak_ptr_factory_.GetWeakPtr()),

@@ -226,7 +226,7 @@ void ScreenshotGrabber::GrabWindowSnapshotAsyncCallback(
       &ScreenshotGrabber::NotifyScreenshotCompleted, factory_.GetWeakPtr()));
   client_->PrepareFileAndRunOnBlockingPool(
       screenshot_path,
-      base::Bind(&SaveScreenshot, base::ThreadTaskRunnerHandle::Get(),
+      base::Bind(&SaveScreenshot, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                  notification_callback, screenshot_path, png_data));
 }
 

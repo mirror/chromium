@@ -365,7 +365,7 @@ class ServiceWorkerURLRequestJobTest
     // Simulate another worker kicking out the incumbent worker.  PostTask since
     // it might respond synchronously, and the TestDelegate would complain that
     // the message loop isn't being run.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&ServiceWorkerVersion::SetStatus, version_,
                                   ServiceWorkerVersion::REDUNDANT));
     base::RunLoop().RunUntilIdle();

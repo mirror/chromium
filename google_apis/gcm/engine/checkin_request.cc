@@ -198,7 +198,7 @@ void CheckinRequest::RetryWithBackoff() {
   recorder_->RecordCheckinDelayedDueToBackoff(
       backoff_entry_.GetTimeUntilRelease().InMilliseconds());
   DCHECK(!weak_ptr_factory_.HasWeakPtrs());
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&CheckinRequest::Start, weak_ptr_factory_.GetWeakPtr()),
       backoff_entry_.GetTimeUntilRelease());

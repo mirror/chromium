@@ -143,7 +143,7 @@ void InputEventFilter::SetWhiteListedTouchAction(int routing_id,
 }
 
 void InputEventFilter::OnFilterAdded(IPC::Channel* channel) {
-  io_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  io_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   sender_ = channel;
 }
 

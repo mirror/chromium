@@ -113,7 +113,8 @@ void ImageDownloaderBase::DidFetchImage(
     if (iter->get() == fetcher) {
       iter->release();
       image_fetchers_.erase(iter);
-      base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, fetcher);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE,
+                                                               fetcher);
       break;
     }
   }

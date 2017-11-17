@@ -20,7 +20,7 @@ V8IsolateMemoryDumpProvider::V8IsolateMemoryDumpProvider(
     IsolateHolder* isolate_holder)
     : isolate_holder_(isolate_holder) {
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-      this, "V8Isolate", base::ThreadTaskRunnerHandle::Get());
+      this, "V8Isolate", base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 V8IsolateMemoryDumpProvider::~V8IsolateMemoryDumpProvider() {

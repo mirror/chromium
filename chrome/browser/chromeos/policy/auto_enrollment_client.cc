@@ -213,7 +213,7 @@ bool AutoEnrollmentClient::RetryStep() {
 void AutoEnrollmentClient::ReportProgress(AutoEnrollmentState state) {
   state_ = state;
   if (progress_callback_.is_null()) {
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
   } else {
     progress_callback_.Run(state_);
   }
@@ -300,7 +300,7 @@ void AutoEnrollmentClient::HandleRequestCompletion(
 
     // Abort if CancelAndDeleteSoon has been called meanwhile.
     if (progress_callback_.is_null()) {
-      base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
     } else {
       ReportProgress(status == DM_STATUS_REQUEST_FAILED
                          ? AUTO_ENROLLMENT_STATE_CONNECTION_ERROR

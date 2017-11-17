@@ -63,7 +63,7 @@ void DeviceCommandRebootJob::RunImpl(
   if (delta > base::TimeDelta()) {
     SYSLOG(WARNING) << "Ignoring reboot command issued " << delta
                     << " before current boot time";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(succeeded_callback, nullptr));
     return;
   }

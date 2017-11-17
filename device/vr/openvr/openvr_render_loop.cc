@@ -14,7 +14,7 @@
 namespace device {
 OpenVRRenderLoop::OpenVRRenderLoop()
     : base::Thread("OpenVRRenderLoop"),
-      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       binding_(this),
       weak_ptr_factory_(this) {
   DCHECK(main_thread_task_runner_);

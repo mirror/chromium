@@ -134,7 +134,7 @@ void DeviceOAuth2TokenService::FailRequest(
     RequestImpl* request,
     GoogleServiceAuthError::State error) {
   GoogleServiceAuthError auth_error(error);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&RequestImpl::InformConsumer, request->AsWeakPtr(),
                             auth_error, std::string(), base::Time()));
 }

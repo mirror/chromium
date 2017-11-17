@@ -35,7 +35,7 @@ class TestRLZTrackerDelegate : public RLZTrackerDelegate {
  public:
   TestRLZTrackerDelegate()
       : request_context_getter_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())) {}
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))) {}
 
   void set_brand(const char* brand) { brand_override_ = brand; }
 

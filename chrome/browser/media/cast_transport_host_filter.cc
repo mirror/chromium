@@ -177,7 +177,7 @@ void CastTransportHostFilter::OnNew(int32_t channel_id,
   std::unique_ptr<media::cast::UdpTransport> udp_transport(
       new media::cast::UdpTransport(
           url_request_context_getter_->GetURLRequestContext()->net_log(),
-          base::ThreadTaskRunnerHandle::Get(), local_end_point,
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE), local_end_point,
           remote_end_point,
           base::Bind(&CastTransportHostFilter::OnStatusChanged,
                      weak_factory_.GetWeakPtr(), channel_id)));
@@ -186,7 +186,8 @@ void CastTransportHostFilter::OnNew(int32_t channel_id,
       media::cast::CastTransport::Create(
           &clock_, kSendEventsInterval,
           base::MakeUnique<TransportClient>(channel_id, this),
-          std::move(udp_transport), base::ThreadTaskRunnerHandle::Get());
+          std::move(udp_transport),
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   transport->SetOptions(options);
   id_map_.AddWithID(std::move(transport), channel_id);
 }

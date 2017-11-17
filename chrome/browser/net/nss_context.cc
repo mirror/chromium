@@ -52,6 +52,6 @@ void GetNSSCertDatabaseForProfile(
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&GetCertDBOnIOThread, profile->GetResourceContext(),
-                     base::ThreadTaskRunnerHandle::Get(), callback));
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE), callback));
 }
 

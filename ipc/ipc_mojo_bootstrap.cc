@@ -46,7 +46,7 @@ class ChannelAssociatedGroupController
       bool set_interface_id_namespace_bit,
       const scoped_refptr<base::SingleThreadTaskRunner>& ipc_task_runner)
       : task_runner_(ipc_task_runner),
-        proxy_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+        proxy_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         set_interface_id_namespace_bit_(set_interface_id_namespace_bit),
         filters_(this),
         control_message_handler_(this),

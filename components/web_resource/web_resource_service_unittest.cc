@@ -82,7 +82,7 @@ class WebResourceServiceTest : public testing::Test {
 
   void SetUp() override {
     request_context_getter_ = new net::TestURLRequestContextGetter(
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     local_state_.reset(new TestingPrefServiceSimple());
     local_state_->registry()->RegisterStringPref(kCacheUpdatePath, "0");
     test_web_resource_service_.reset(new TestWebResourceService(

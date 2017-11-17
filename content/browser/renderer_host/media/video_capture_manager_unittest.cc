@@ -208,7 +208,7 @@ class VideoCaptureManagerTest : public testing::Test {
     auto video_capture_provider =
         std::make_unique<InProcessVideoCaptureProvider>(
             std::move(video_capture_system),
-            base::ThreadTaskRunnerHandle::Get(), kIgnoreLogMessageCB);
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE), kIgnoreLogMessageCB);
     vcm_ =
         new VideoCaptureManager(std::move(video_capture_provider),
                                 base::BindRepeating([](const std::string&) {}));

@@ -278,7 +278,7 @@ class AppCacheRequestHandlerTest
     // We unwind the stack prior to finishing up to let stack
     // based objects get deleted.
     DCHECK(io_thread_->task_runner()->BelongsToCurrentThread());
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&AppCacheRequestHandlerTest::TestFinishedUnwound,
                        base::Unretained(this)));
@@ -299,8 +299,8 @@ class AppCacheRequestHandlerTest
       TestFinished();
       return;
     }
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  std::move(task_stack_.top()));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, std::move(task_stack_.top()));
     task_stack_.pop();
   }
 

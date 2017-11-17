@@ -80,7 +80,7 @@ UsbService::UsbService(
     scoped_refptr<base::SequencedTaskRunner> blocking_task_runner)
     : blocking_task_runner_(std::move(blocking_task_runner)) {
   if (base::ThreadTaskRunnerHandle::IsSet())
-    task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 scoped_refptr<UsbDevice> UsbService::GetDevice(const std::string& guid) {

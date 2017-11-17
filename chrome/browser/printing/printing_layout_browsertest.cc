@@ -83,7 +83,7 @@ class PrintingLayoutTest : public PrintingTest<InProcessBrowserTest>,
     switch (content::Details<printing::JobEventDetails>(details)->type()) {
       case printing::JobEventDetails::JOB_DONE: {
         // Succeeded.
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
         break;
       }
@@ -91,7 +91,7 @@ class PrintingLayoutTest : public PrintingTest<InProcessBrowserTest>,
       case printing::JobEventDetails::FAILED: {
         // Failed.
         ASSERT_TRUE(false);
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
         break;
       }

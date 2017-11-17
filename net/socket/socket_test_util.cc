@@ -427,7 +427,7 @@ MockRead SequencedSocketData::OnRead() {
         run_until_paused_run_loop_->Quit();
       return MockRead(SYNCHRONOUS, ERR_IO_PENDING);
     }
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&SequencedSocketData::OnReadComplete,
                               weak_factory_.GetWeakPtr()));
     CHECK_NE(COMPLETING, write_state_);
@@ -478,7 +478,7 @@ MockWriteResult SequencedSocketData::OnWrite(const std::string& data) {
     }
 
     NET_TRACE(1, " *** ") << "Posting task to complete write";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&SequencedSocketData::OnWriteComplete,
                               weak_factory_.GetWeakPtr()));
     CHECK_NE(COMPLETING, read_state_);
@@ -594,7 +594,7 @@ void SequencedSocketData::MaybePostReadCompleteTask() {
 
   NET_TRACE(1, " ****** ") << "Posting task to complete read: "
                            << sequence_number_;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&SequencedSocketData::OnReadComplete,
                             weak_factory_.GetWeakPtr()));
   CHECK_NE(COMPLETING, write_state_);
@@ -625,7 +625,7 @@ void SequencedSocketData::MaybePostWriteCompleteTask() {
 
   NET_TRACE(1, " ****** ") << "Posting task to complete write: "
                            << sequence_number_;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&SequencedSocketData::OnWriteComplete,
                             weak_factory_.GetWeakPtr()));
   CHECK_NE(COMPLETING, read_state_);
@@ -863,7 +863,7 @@ MockClientSocket::~MockClientSocket() {}
 
 void MockClientSocket::RunCallbackAsync(const CompletionCallback& callback,
                                         int result) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&MockClientSocket::RunCallback,
                             weak_factory_.GetWeakPtr(), callback, result));
 }
@@ -1521,7 +1521,7 @@ int MockUDPClientSocket::CompleteRead() {
 
 void MockUDPClientSocket::RunCallbackAsync(const CompletionCallback& callback,
                                            int result) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&MockUDPClientSocket::RunCallback,
                             weak_factory_.GetWeakPtr(), callback, result));
 }

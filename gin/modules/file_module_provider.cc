@@ -66,7 +66,7 @@ void FileModuleProvider::AttempToLoadModules(
     if (attempted_ids_.count(id))
       continue;
     attempted_ids_.insert(id);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(AttempToLoadModule, runner->GetWeakPtr(),
                               search_paths_, id));
   }

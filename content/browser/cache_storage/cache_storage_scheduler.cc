@@ -29,7 +29,8 @@ void CacheStorageScheduler::ScheduleOperation(base::OnceClosure closure) {
                               pending_operations_.size());
 
   pending_operations_.push_back(std::make_unique<CacheStorageOperation>(
-      std::move(closure), client_type_, base::ThreadTaskRunnerHandle::Get()));
+      std::move(closure), client_type_,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   RunOperationIfIdle();
 }
 
@@ -54,7 +55,7 @@ void CacheStorageScheduler::RunOperationIfIdle() {
         TIMES, "QueueDuration", client_type_,
         base::TimeTicks::Now() - running_operation_->creation_ticks());
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&CacheStorageOperation::Run,
                                   running_operation_->AsWeakPtr()));
   }

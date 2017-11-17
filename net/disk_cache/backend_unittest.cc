@@ -3345,7 +3345,8 @@ TEST_F(DiskCacheTest, Backend_UsageStatsTimer) {
   // Want to use our thread since we call SyncInit ourselves.
   std::unique_ptr<disk_cache::BackendImpl> cache(
       std::make_unique<disk_cache::BackendImpl>(
-          cache_path_, nullptr, base::ThreadTaskRunnerHandle::Get(), nullptr));
+          cache_path_, nullptr, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+          nullptr));
   ASSERT_TRUE(NULL != cache.get());
   cache->SetUnitTestMode();
   ASSERT_THAT(cache->SyncInit(), IsOk());
@@ -3361,7 +3362,8 @@ TEST_F(DiskCacheBackendTest, TimerNotCreated) {
   // Want to use our thread since we call SyncInit ourselves.
   std::unique_ptr<disk_cache::BackendImpl> cache(
       std::make_unique<disk_cache::BackendImpl>(
-          cache_path_, nullptr, base::ThreadTaskRunnerHandle::Get(), nullptr));
+          cache_path_, nullptr, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+          nullptr));
   ASSERT_TRUE(NULL != cache.get());
   cache->SetUnitTestMode();
   ASSERT_NE(net::OK, cache->SyncInit());

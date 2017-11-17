@@ -65,7 +65,7 @@ class ExabyteResponse : public net::test_server::BasicHttpResponse {
   // limit the response to exactly an exabyte, but it shouldn't be necessary
   // for the purpose of testing.
   static void SendExabyte(const net::test_server::SendBytesCallback& send) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(send, "echo",
                               base::Bind(&ExabyteResponse::SendExabyte, send)));
   }

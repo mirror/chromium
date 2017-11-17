@@ -33,7 +33,7 @@ static const unsigned int kNumBuffers =
 FakeVideoDecodeAccelerator::FakeVideoDecodeAccelerator(
     const gfx::Size& size,
     const MakeGLContextCurrentCallback& make_context_current_cb)
-    : child_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : child_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       client_(NULL),
       make_context_current_cb_(make_context_current_cb),
       frame_buffer_size_(size),

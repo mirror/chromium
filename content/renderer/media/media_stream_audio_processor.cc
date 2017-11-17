@@ -312,7 +312,7 @@ MediaStreamAudioProcessor::MediaStreamAudioProcessor(
     : render_delay_ms_(0),
       has_echo_cancellation_(false),
       playout_data_source_(playout_data_source),
-      main_thread_runner_(base::ThreadTaskRunnerHandle::Get()),
+      main_thread_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       audio_mirroring_(false),
       typing_detected_(false),
       stopped_(false) {

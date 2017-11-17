@@ -93,7 +93,7 @@ DelayNavigationThrottle::MaybeCreateThrottleFor(
     return nullptr;
 
   return base::MakeUnique<DelayNavigationThrottle>(
-      handle, base::ThreadTaskRunnerHandle::Get(), navigation_delay);
+      handle, base::ThreadTaskRunnerHandle::Get(FROM_HERE), navigation_delay);
 }
 
 DelayNavigationThrottle::DelayNavigationThrottle(

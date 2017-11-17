@@ -259,7 +259,7 @@ void WebBluetoothServiceImpl::GattCharacteristicValueChanged(
   // On Chrome OS and Linux, GattCharacteristicValueChanged is called before the
   // success callback for ReadRemoteCharacteristic is called, which could result
   // in an event being fired before the readValue promise is resolved.
-  if (!base::ThreadTaskRunnerHandle::Get()->PostTask(
+  if (!base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(
               &WebBluetoothServiceImpl::NotifyCharacteristicValueChanged,

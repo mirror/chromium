@@ -130,10 +130,10 @@ void WindowEventDispatcher::RepostEvent(const ui::LocatedEvent* event) {
   }
 
   if (held_repostable_event_) {
-    base::ThreadTaskRunnerHandle::Get()->PostNonNestableTask(
-        FROM_HERE, base::Bind(
-            base::IgnoreResult(&WindowEventDispatcher::DispatchHeldEvents),
-            repost_event_factory_.GetWeakPtr()));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostNonNestableTask(
+        FROM_HERE, base::Bind(base::IgnoreResult(
+                                  &WindowEventDispatcher::DispatchHeldEvents),
+                              repost_event_factory_.GetWeakPtr()));
   }
 }
 
@@ -209,10 +209,10 @@ void WindowEventDispatcher::ReleasePointerMoves() {
     // called from a deep stack while another event, in which case dispatching
     // another one may not be safe/expected.  Instead we post a task, that we
     // may cancel if HoldPointerMoves is called again before it executes.
-    base::ThreadTaskRunnerHandle::Get()->PostNonNestableTask(
-        FROM_HERE, base::Bind(
-          base::IgnoreResult(&WindowEventDispatcher::DispatchHeldEvents),
-          held_event_factory_.GetWeakPtr()));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostNonNestableTask(
+        FROM_HERE, base::Bind(base::IgnoreResult(
+                                  &WindowEventDispatcher::DispatchHeldEvents),
+                              held_event_factory_.GetWeakPtr()));
   }
   TRACE_EVENT_ASYNC_END0("ui", "WindowEventDispatcher::HoldPointerMoves", this);
 }
@@ -807,10 +807,10 @@ void WindowEventDispatcher::PostSynthesizeMouseMove() {
   if (synthesize_mouse_move_)
     return;
   synthesize_mouse_move_ = true;
-  base::ThreadTaskRunnerHandle::Get()->PostNonNestableTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostNonNestableTask(
       FROM_HERE,
-      base::Bind(base::IgnoreResult(
-          &WindowEventDispatcher::SynthesizeMouseMoveEvent),
+      base::Bind(
+          base::IgnoreResult(&WindowEventDispatcher::SynthesizeMouseMoveEvent),
           held_event_factory_.GetWeakPtr()));
 }
 

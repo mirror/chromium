@@ -96,7 +96,8 @@ UserCloudPolicyManager* BuildCloudPolicyManager(
   return new UserCloudPolicyManager(
       std::unique_ptr<UserCloudPolicyStore>(store), base::FilePath(),
       std::unique_ptr<CloudExternalDataManager>(),
-      base::ThreadTaskRunnerHandle::Get(), base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 class UserPolicySigninServiceTest : public testing::Test {
@@ -142,7 +143,7 @@ class UserPolicySigninServiceTest : public testing::Test {
     local_state_.reset(new TestingPrefServiceSimple);
     chrome::RegisterLocalState(local_state_->registry());
     system_request_context_getter_ = new net::TestURLRequestContextGetter(
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     TestingBrowserProcess::GetGlobal()->SetSystemRequestContext(
         system_request_context_getter_.get());
     TestingBrowserProcess::GetGlobal()->SetLocalState(local_state_.get());

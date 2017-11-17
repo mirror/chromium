@@ -51,7 +51,7 @@ static void RunLoop(JNIEnv* env,
                     jlong timeout_ms) {
   base::RunLoop run_loop;
   if (timeout_ms) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop.QuitWhenIdleClosure(),
         base::TimeDelta::FromMilliseconds(timeout_ms));
     run_loop.Run();

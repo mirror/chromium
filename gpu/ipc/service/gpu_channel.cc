@@ -314,13 +314,14 @@ SyncChannelFilteredSender::SyncChannelFilteredSender(
     IPC::Listener* listener,
     scoped_refptr<base::SingleThreadTaskRunner> ipc_task_runner,
     base::WaitableEvent* shutdown_event)
-    : channel_(IPC::SyncChannel::Create(channel_handle,
-                                        IPC::Channel::MODE_SERVER,
-                                        listener,
-                                        ipc_task_runner,
-                                        base::ThreadTaskRunnerHandle::Get(),
-                                        false,
-                                        shutdown_event)) {}
+    : channel_(
+          IPC::SyncChannel::Create(channel_handle,
+                                   IPC::Channel::MODE_SERVER,
+                                   listener,
+                                   ipc_task_runner,
+                                   base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                                   false,
+                                   shutdown_event)) {}
 
 SyncChannelFilteredSender::~SyncChannelFilteredSender() = default;
 

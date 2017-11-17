@@ -87,7 +87,7 @@ class FakeDesktopMediaPicker : public DesktopMediaPicker {
 
     if (!expectation_->cancelled) {
       // Post a task to call the callback asynchronously.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(&FakeDesktopMediaPicker::CallCallback,
                                     weak_factory_.GetWeakPtr(), done_callback));
     } else {

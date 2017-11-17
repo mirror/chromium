@@ -691,7 +691,7 @@ void SigninScreenHandler::UpdateStateInternal(NetworkError::ErrorReason reason,
                    weak_factory_.GetWeakPtr(),
                    reason,
                    true));
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, update_state_closure_.callback(),
         is_offline_timeout_for_test_set_
             ? offline_timeout_for_test_
@@ -708,7 +708,7 @@ void SigninScreenHandler::UpdateStateInternal(NetworkError::ErrorReason reason,
                      weak_factory_.GetWeakPtr(),
                      reason,
                      true));
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE, connecting_closure_.callback(),
           base::TimeDelta::FromSeconds(kConnectingTimeoutSec));
     }

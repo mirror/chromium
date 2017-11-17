@@ -20,7 +20,7 @@ QueuedTaskPoster::~QueuedTaskPoster() {}
 
 void QueuedTaskPoster::AddTask(const base::Closure& closure) {
   if (!source_task_runner_) {
-    source_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    source_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   }
   DCHECK(source_task_runner_->BelongsToCurrentThread());
   task_queue_.push(closure);

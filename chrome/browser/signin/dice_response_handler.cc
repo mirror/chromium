@@ -155,7 +155,7 @@ DiceResponseHandler::DiceTokenFetcher::DiceTokenFetcher(
       signin_client->GetURLRequestContext());
   VLOG(1) << "Start fetching token for account: " << email;
   gaia_auth_fetcher_->StartAuthCodeForOAuth2TokenExchange(authorization_code_);
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, timeout_closure_.callback(),
       base::TimeDelta::FromSeconds(kDiceTokenFetchTimeoutSeconds));
 }

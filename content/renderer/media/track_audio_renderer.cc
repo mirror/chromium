@@ -125,7 +125,7 @@ TrackAudioRenderer::TrackAudioRenderer(
     : audio_track_(audio_track),
       playout_render_frame_id_(playout_render_frame_id),
       session_id_(session_id),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       num_samples_rendered_(0),
       playing_(false),
       output_device_id_(device_id),

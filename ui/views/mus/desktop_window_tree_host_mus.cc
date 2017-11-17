@@ -395,7 +395,7 @@ void DesktopWindowTreeHostMus::Close() {
 
   // Close doesn't delete this immediately, as 'this' may still be on the stack
   // resulting in possible crashes when the stack unwindes.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&DesktopWindowTreeHostMus::CloseNow,
                             close_widget_factory_.GetWeakPtr()));
 }

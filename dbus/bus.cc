@@ -172,7 +172,7 @@ Bus::Bus(const Options& options)
   // The origin message loop is unnecessary if the client uses synchronous
   // functions only.
   if (base::ThreadTaskRunnerHandle::IsSet())
-    origin_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    origin_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 Bus::~Bus() {

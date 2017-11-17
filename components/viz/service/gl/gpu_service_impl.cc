@@ -100,7 +100,7 @@ GpuServiceImpl::GpuServiceImpl(
     scoped_refptr<base::SingleThreadTaskRunner> io_runner,
     const gpu::GpuFeatureInfo& gpu_feature_info,
     const gpu::GpuPreferences& gpu_preferences)
-    : main_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : main_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       io_runner_(std::move(io_runner)),
       watchdog_thread_(std::move(watchdog_thread)),
       gpu_memory_buffer_factory_(
@@ -189,7 +189,7 @@ void GpuServiceImpl::InitializeWithHost(
   }
 
   scheduler_ = base::MakeUnique<gpu::Scheduler>(
-      base::ThreadTaskRunnerHandle::Get(), sync_point_manager_);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), sync_point_manager_);
 
   // Defer creation of the render thread. This is to prevent it from handling
   // IPC messages before the sandbox has been enabled and all other necessary

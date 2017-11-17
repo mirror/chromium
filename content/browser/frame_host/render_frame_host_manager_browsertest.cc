@@ -119,7 +119,7 @@ class RenderFrameHostDestructionObserver : public WebContentsObserver {
     }
 
     if (deleted_ && message_loop_runner_->loop_running()) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, message_loop_runner_->QuitClosure());
     }
   }

@@ -143,7 +143,7 @@ class MockUrlRequestJobWithTiming : public net::URLRequestFileJob {
                          base::TimeDelta::FromMilliseconds(100);
     }
 
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&MockUrlRequestJobWithTiming::DelayedStart,
                        weak_factory_.GetWeakPtr()),

@@ -172,7 +172,7 @@ class ContextMenuCallCountObserver {
                    const content::NotificationDetails& details) {
     ++num_times_shown_;
     auto* context_menu = content::Source<RenderViewContextMenu>(source).ptr();
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&RenderViewContextMenuBase::Cancel,
                                   base::Unretained(context_menu)));
     return true;
@@ -317,7 +317,7 @@ class LeftMouseClick {
     web_contents_->GetRenderViewHost()->GetWidget()->ForwardMouseEvent(
         mouse_event_);
 
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&LeftMouseClick::SendMouseUp, base::Unretained(this)),
         base::TimeDelta::FromMilliseconds(duration_ms));
@@ -2378,7 +2378,7 @@ static bool ContextMenuNotificationCallback(
     const content::NotificationSource& source,
     const content::NotificationDetails& details) {
   auto* context_menu = content::Source<RenderViewContextMenu>(source).ptr();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&RenderViewContextMenuBase::Cancel,
                                 base::Unretained(context_menu)));
   return true;
@@ -4379,7 +4379,7 @@ class WebViewFocusTest : public WebViewTest {
       // RequestFrame failed because we were waiting on an ack ... wait a short
       // time and retry.
       base::RunLoop run_loop;
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE, run_loop.QuitClosure(),
           base::TimeDelta::FromMilliseconds(10));
       run_loop.Run();

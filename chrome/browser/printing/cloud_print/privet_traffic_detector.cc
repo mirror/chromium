@@ -67,7 +67,7 @@ PrivetTrafficDetector::PrivetTrafficDetector(
     net::AddressFamily address_family,
     const base::Closure& on_traffic_detected)
     : on_traffic_detected_(on_traffic_detected),
-      callback_runner_(base::ThreadTaskRunnerHandle::Get()),
+      callback_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       address_family_(address_family),
       io_buffer_(
           new net::IOBufferWithSize(net::dns_protocol::kMaxMulticastSize)),

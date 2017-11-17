@@ -162,7 +162,7 @@ BookmarkModelTypeController::PrepareActivationContext() {
   activation_context->type_processor =
       std::make_unique<syncer::ModelTypeProcessorProxy>(
           model_type_processor_->GetWeakPtr(),
-          base::ThreadTaskRunnerHandle::Get());
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   return activation_context;
 }
 

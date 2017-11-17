@@ -152,7 +152,8 @@ void ReplayProcess::OpenChannel() {
   channel_ = IPC::ChannelProxy::Create(
       IPC::ChannelMojo::CreateClientFactory(std::move(ipc_pipe.handle1),
                                             io_thread_.task_runner()),
-      this, io_thread_.task_runner(), base::ThreadTaskRunnerHandle::Get());
+      this, io_thread_.task_runner(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 bool ReplayProcess::OpenTestcase() {

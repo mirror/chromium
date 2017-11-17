@@ -480,7 +480,7 @@ void SupervisedUserWhitelistInstallerImpl::OnRawWhitelistReady(
       FROM_HERE,
       base::BindOnce(
           &CheckForSanitizedWhitelistOnTaskRunner, crx_id, whitelist_path,
-          base::ThreadTaskRunnerHandle::Get(),
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE),
           base::Bind(
               &SupervisedUserWhitelistInstallerImpl::OnSanitizedWhitelistReady,
               weak_ptr_factory_.GetWeakPtr(), crx_id, title, large_icon_path)));

@@ -54,7 +54,7 @@ class MenuManagerTest : public testing::Test {
       : profile_(new TestingProfile()),
         manager_(profile_.get(),
                  ExtensionSystem::Get(profile_.get())->state_store()),
-        prefs_(base::ThreadTaskRunnerHandle::Get()),
+        prefs_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         next_id_(1) {}
 
   void TearDown() override {

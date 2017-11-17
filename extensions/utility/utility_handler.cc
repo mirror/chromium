@@ -210,9 +210,9 @@ void ExposeInterfacesToBrowser(service_manager::BinderRegistry* registry,
     return;
 
   registry->AddInterface(base::Bind(&ExtensionUnpackerImpl::Create),
-                         base::ThreadTaskRunnerHandle::Get());
+                         base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   registry->AddInterface(base::Bind(&ManifestParserImpl::Create),
-                         base::ThreadTaskRunnerHandle::Get());
+                         base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 }  // namespace utility_handler

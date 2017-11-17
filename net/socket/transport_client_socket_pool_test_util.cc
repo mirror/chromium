@@ -199,8 +199,8 @@ class MockTriggerableClientSocket : public StreamSocket {
       net::NetLog* net_log) {
     std::unique_ptr<MockTriggerableClientSocket> socket(
         new MockTriggerableClientSocket(addrlist, should_connect, net_log));
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  socket->GetConnectCallback());
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, socket->GetConnectCallback());
     return std::move(socket);
   }
 
@@ -211,7 +211,7 @@ class MockTriggerableClientSocket : public StreamSocket {
       net::NetLog* net_log) {
     std::unique_ptr<MockTriggerableClientSocket> socket(
         new MockTriggerableClientSocket(addrlist, should_connect, net_log));
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, socket->GetConnectCallback(), delay);
     return std::move(socket);
   }

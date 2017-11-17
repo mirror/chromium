@@ -36,7 +36,7 @@ void DownloadTaskSchedulerImpl::ScheduleTask(
   scheduled_tasks_[task_type].Reset(
       base::Bind(&DownloadTaskSchedulerImpl::RunScheduledTask,
                  weak_factory_.GetWeakPtr(), task_type));
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, scheduled_tasks_[task_type].callback(),
       base::TimeDelta::FromSeconds(window_start_time_seconds));
 }

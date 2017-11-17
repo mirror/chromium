@@ -482,7 +482,7 @@ void ProfilingProcessHost::RequestProcessReport(base::ProcessId pid,
       base::Unretained(content::TracingController::GetInstance()), sink);
 
   // Wait 10 seconds, then end the trace.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, std::move(stop_tracing_closure),
       base::TimeDelta::FromSeconds(10));
 }

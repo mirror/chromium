@@ -199,9 +199,9 @@ void AndroidDeviceManager::AndroidWebSocket::Connected(
     OnSocketClosed();
     return;
   }
-  socket_impl_.reset(new WebSocketImpl(base::ThreadTaskRunnerHandle::Get(),
-                                       weak_factory_.GetWeakPtr(), extensions,
-                                       body_head, std::move(socket)));
+  socket_impl_.reset(new WebSocketImpl(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), weak_factory_.GetWeakPtr(),
+      extensions, body_head, std::move(socket)));
   device_->task_runner_->PostTask(FROM_HERE,
                                   base::BindOnce(&WebSocketImpl::StartListening,
                                                  socket_impl_->GetWeakPtr()));

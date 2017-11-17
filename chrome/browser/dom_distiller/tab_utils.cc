@@ -71,18 +71,18 @@ void SelfDeletingRequestDelegate::DidFinishNavigation(
     return;
 
   Observe(NULL);
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 void SelfDeletingRequestDelegate::RenderProcessGone(
     base::TerminationStatus status) {
   Observe(NULL);
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 void SelfDeletingRequestDelegate::WebContentsDestroyed() {
   Observe(NULL);
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 SelfDeletingRequestDelegate::SelfDeletingRequestDelegate(

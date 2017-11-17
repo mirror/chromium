@@ -89,10 +89,9 @@ void PrefMemberBase::InvokeUnnamedCallback(const base::Closure& callback,
 }
 
 PrefMemberBase::Internal::Internal()
-    : thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       is_managed_(false),
-      is_user_modifiable_(false) {
-}
+      is_user_modifiable_(false) {}
 PrefMemberBase::Internal::~Internal() { }
 
 bool PrefMemberBase::Internal::IsOnCorrectThread() const {

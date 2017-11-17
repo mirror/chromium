@@ -342,7 +342,7 @@ void CacheStorageDispatcherHost::OnCacheStorageOpenCallback(
 
   // Hang on to the cache for a few seconds. This way if the user quickly closes
   // and reopens it the cache backend won't have to be reinitialized.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&StopPreservingCache, base::Passed(cache_handle.Clone())),
       base::TimeDelta::FromSeconds(kCachePreservationSeconds));

@@ -114,7 +114,7 @@ ThreadedImageCursors::ThreadedImageCursors(
       image_cursors_set_weak_ptr_(image_cursors_set_weak_ptr),
       weak_ptr_factory_(this) {
   DCHECK(resource_task_runner_);
-  ui_service_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  ui_service_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
   // Create and initialize the ImageCursors object here and then set it on
   // |image_cursors_set_weak_ptr_|. Note that it is essential to initialize

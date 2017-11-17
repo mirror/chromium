@@ -585,7 +585,7 @@ void WebSocketTransportClientSocketPool::InvokeUserCallbackLater(
     int rv) {
   DCHECK(!pending_callbacks_.count(handle));
   pending_callbacks_.insert(handle);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&WebSocketTransportClientSocketPool::InvokeUserCallback,
                  weak_factory_.GetWeakPtr(), handle, callback, rv));

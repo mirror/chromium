@@ -653,7 +653,8 @@ class ExtensionUpdaterTest : public testing::Test {
   }
 
   void SetUp() override {
-    prefs_.reset(new TestExtensionPrefs(base::ThreadTaskRunnerHandle::Get()));
+    prefs_.reset(
+        new TestExtensionPrefs(base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   }
 
   void TearDown() override {
@@ -1683,7 +1684,8 @@ class ExtensionUpdaterTest : public testing::Test {
 
     // Set up 2 mock extensions, one with a google.com update url and one
     // without.
-    prefs_.reset(new TestExtensionPrefs(base::ThreadTaskRunnerHandle::Get()));
+    prefs_.reset(
+        new TestExtensionPrefs(base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
     ServiceForManifestTests service(prefs_.get());
     ExtensionList tmp;
     GURL url1("http://clients2.google.com/service/update2/crx");

@@ -57,7 +57,7 @@ std::unique_ptr<CrxDownloader> CrxDownloader::Create(
 }
 
 CrxDownloader::CrxDownloader(std::unique_ptr<CrxDownloader> successor)
-    : main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       successor_(std::move(successor)) {}
 
 CrxDownloader::~CrxDownloader() {}

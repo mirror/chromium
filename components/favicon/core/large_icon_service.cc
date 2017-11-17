@@ -194,8 +194,8 @@ void ProcessIconOnBackgroundThread(
 void FinishServerRequestAsynchronously(
     const favicon_base::GoogleFaviconServerCallback& callback,
     favicon_base::GoogleFaviconServerRequestStatus status) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                base::Bind(callback, status));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, base::Bind(callback, status));
 }
 
 // Singleton map keyed by organization-identifying domain (excludes registrar

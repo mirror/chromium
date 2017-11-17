@@ -88,7 +88,7 @@ TEST(NetworkDelegateErrorObserverTest, CallOnThread) {
   thread.Start();
   TestNetworkDelegate network_delegate;
   NetworkDelegateErrorObserver observer(
-      &network_delegate, base::ThreadTaskRunnerHandle::Get().get());
+      &network_delegate, base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
   thread.task_runner()->PostTask(
       FROM_HERE, base::Bind(&NetworkDelegateErrorObserver::OnPACScriptError,
                             base::Unretained(&observer), 42, base::string16()));
@@ -102,7 +102,7 @@ TEST(NetworkDelegateErrorObserverTest, NoDelegate) {
   base::Thread thread("test_thread");
   thread.Start();
   NetworkDelegateErrorObserver observer(
-      NULL, base::ThreadTaskRunnerHandle::Get().get());
+      NULL, base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
   thread.task_runner()->PostTask(
       FROM_HERE, base::Bind(&NetworkDelegateErrorObserver::OnPACScriptError,
                             base::Unretained(&observer), 42, base::string16()));

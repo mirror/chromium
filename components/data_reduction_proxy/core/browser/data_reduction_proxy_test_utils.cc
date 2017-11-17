@@ -409,7 +409,7 @@ DataReductionProxyTestContext::Builder::Build() {
 
   unsigned int test_context_flags = 0;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   scoped_refptr<net::URLRequestContextGetter> request_context_getter;
   std::unique_ptr<TestingPrefServiceSimple> pref_service(
       new TestingPrefServiceSimple());

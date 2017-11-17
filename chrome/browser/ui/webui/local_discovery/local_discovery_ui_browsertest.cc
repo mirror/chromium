@@ -454,7 +454,7 @@ class LocalDiscoveryUITest : public WebUIBrowserTest {
   void RunFor(base::TimeDelta time_period) {
     base::CancelableCallback<void()> callback(
         base::Bind(&base::RunLoop::QuitCurrentWhenIdleDeprecated));
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, callback.callback(), time_period);
 
     base::RunLoop().Run();

@@ -4522,7 +4522,7 @@ void RenderFrameImpl::ShowContextMenu(const blink::WebContextMenuData& data) {
   // The Samsung Email app relies on the context menu being shown after the
   // javascript onselectionchanged is triggered.
   // See crbug.com/729488
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&RenderFrameImpl::ShowDeferredContextMenu,
                             weak_factory_.GetWeakPtr(), params));
 #else

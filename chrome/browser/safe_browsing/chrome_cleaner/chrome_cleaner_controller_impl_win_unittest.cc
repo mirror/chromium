@@ -265,7 +265,7 @@ class ChromeCleanerControllerTest
   // ChromeCleanerControllerDelegate overrides.
 
   void FetchAndVerifyChromeCleaner(FetchedCallback fetched_callback) override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(
             std::move(fetched_callback),

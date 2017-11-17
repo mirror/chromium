@@ -114,7 +114,7 @@ void VaapiJpegDecodeAccelerator::VideoFrameReady(int32_t bitstream_buffer_id) {
 
 VaapiJpegDecodeAccelerator::VaapiJpegDecodeAccelerator(
     const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner)
-    : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       io_task_runner_(io_task_runner),
       decoder_thread_("VaapiJpegDecoderThread"),
       va_surface_id_(VA_INVALID_SURFACE),

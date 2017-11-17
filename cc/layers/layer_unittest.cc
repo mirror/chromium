@@ -94,7 +94,7 @@ class MockLayerTreeHost : public LayerTreeHost {
                     LayerTreeHost::InitParams* params)
       : LayerTreeHost(params, CompositorMode::SINGLE_THREADED) {
     InitializeSingleThreaded(single_thread_client,
-                             base::ThreadTaskRunnerHandle::Get());
+                             base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 
   MOCK_METHOD0(SetNeedsCommit, void());
@@ -1034,7 +1034,7 @@ class LayerTreeHostFactory {
     params.client = &client_;
     params.task_graph_runner = &task_graph_runner_;
     params.settings = &settings;
-    params.main_task_runner = base::ThreadTaskRunnerHandle::Get();
+    params.main_task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
     params.mutator_host = mutator_host;
 
     return LayerTreeHost::CreateSingleThreaded(&single_thread_client_, &params);

@@ -428,8 +428,8 @@ class RenderViewContextMenuPrefsTest : public ChromeRenderViewHostTestHarness {
         drp_test_context_->io_data(), drp_test_context_->pref_service(),
         drp_test_context_->request_context_getter(),
         base::MakeUnique<data_reduction_proxy::DataStore>(),
-        base::ThreadTaskRunnerHandle::Get(),
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 
   // Force destruction of |DataReductionProxySettings| so that objects on DB

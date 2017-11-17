@@ -29,7 +29,7 @@ void FakeAttachmentDownloader::DownloadAttachment(
   scoped_refptr<base::RefCountedMemory> data(new base::RefCountedBytes());
   std::unique_ptr<Attachment> attachment = std::make_unique<Attachment>(
       Attachment::CreateFromParts(attachment_id, data));
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(callback, DOWNLOAD_SUCCESS, base::Passed(&attachment)));
 }

@@ -100,7 +100,7 @@ void PPAPITestBase::InfoBarObserver::Observe(
   // It's not safe to remove the infobar here, since other observers (e.g. the
   // InfoBarContainer) may still need to access it.  Instead, post a task to
   // do all necessary infobar manipulation as soon as this call stack returns.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&InfoBarObserver::VerifyInfoBarState, base::Unretained(this)));
 }

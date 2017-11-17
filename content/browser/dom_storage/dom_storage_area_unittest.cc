@@ -54,7 +54,7 @@ class DOMStorageAreaTest : public testing::Test {
     // At this point the StartCommitTimer task has run and
     // the OnCommitTimer task is queued. We want to inject after
     // that.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&DOMStorageAreaTest::InjectedCommitSequencingTask2,
                        base::Unretained(this), area));
@@ -200,10 +200,10 @@ TEST_F(DOMStorageAreaTest, BackingDatabaseOpened) {
 
   // This should set up a DOMStorageArea that is correctly backed to disk.
   {
-    scoped_refptr<DOMStorageArea> area(
-        new DOMStorageArea(kOrigin, temp_dir.GetPath(),
-                           new MockDOMStorageTaskRunner(
-                               base::ThreadTaskRunnerHandle::Get().get())));
+    scoped_refptr<DOMStorageArea> area(new DOMStorageArea(
+        kOrigin, temp_dir.GetPath(),
+        new MockDOMStorageTaskRunner(
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE).get())));
 
     EXPECT_TRUE(area->backing_.get());
     DOMStorageDatabase* database = static_cast<LocalStorageDatabaseAdapter*>(
@@ -245,7 +245,8 @@ TEST_P(DOMStorageAreaParamTest, ShallowCopyWithBacking) {
       new SessionStorageDatabase(temp_dir.GetPath());
   scoped_refptr<DOMStorageArea> area(new DOMStorageArea(
       1, kNamespaceId, nullptr, kOrigin, db.get(),
-      new MockDOMStorageTaskRunner(base::ThreadTaskRunnerHandle::Get().get())));
+      new MockDOMStorageTaskRunner(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE).get())));
   EXPECT_TRUE(area->backing_.get());
   EXPECT_TRUE(area->session_storage_backing_);
   const bool values_cached = GetParam();
@@ -335,7 +336,8 @@ TEST_F(DOMStorageAreaTest, SetCacheOnlyKeysWithBacking) {
       DOMStorageArea::DatabaseFileNameFromOrigin(kOrigin));
   scoped_refptr<DOMStorageArea> area(new DOMStorageArea(
       kOrigin, temp_dir.GetPath(),
-      new MockDOMStorageTaskRunner(base::ThreadTaskRunnerHandle::Get().get())));
+      new MockDOMStorageTaskRunner(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE).get())));
 
   EXPECT_TRUE(area->backing_.get());
   EXPECT_EQ(DOMStorageArea::LOAD_STATE_UNLOADED, area->load_state_);
@@ -408,7 +410,8 @@ TEST_P(DOMStorageAreaParamTest, CommitTasks) {
 
   scoped_refptr<DOMStorageArea> area(new DOMStorageArea(
       kOrigin, temp_dir.GetPath(),
-      new MockDOMStorageTaskRunner(base::ThreadTaskRunnerHandle::Get().get())));
+      new MockDOMStorageTaskRunner(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE).get())));
   // Inject an in-memory db to speed up the test.
   area->backing_.reset(new LocalStorageDatabaseAdapter());
   area->SetCacheOnlyKeys(GetParam());
@@ -466,7 +469,7 @@ TEST_P(DOMStorageAreaParamTest, CommitTasks) {
   // injected task, we'll make an additional SetItem() call and verify
   // that a new commit batch is created for that additional change.
   BrowserThread::PostAfterStartupTask(
-      FROM_HERE, base::ThreadTaskRunnerHandle::Get(),
+      FROM_HERE, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::BindOnce(&DOMStorageAreaTest::InjectedCommitSequencingTask1,
                      base::Unretained(this), area));
   base::RunLoop().RunUntilIdle();
@@ -485,7 +488,8 @@ TEST_P(DOMStorageAreaParamTest, CommitChangesAtShutdown) {
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   scoped_refptr<DOMStorageArea> area(new DOMStorageArea(
       kOrigin, temp_dir.GetPath(),
-      new MockDOMStorageTaskRunner(base::ThreadTaskRunnerHandle::Get().get())));
+      new MockDOMStorageTaskRunner(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE).get())));
 
   // Inject an in-memory db to speed up the test and also to verify
   // the final changes are commited in it's dtor.
@@ -515,7 +519,8 @@ TEST_P(DOMStorageAreaParamTest, DeleteOrigin) {
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   scoped_refptr<DOMStorageArea> area(new DOMStorageArea(
       kOrigin, temp_dir.GetPath(),
-      new MockDOMStorageTaskRunner(base::ThreadTaskRunnerHandle::Get().get())));
+      new MockDOMStorageTaskRunner(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE).get())));
   area->SetCacheOnlyKeys(GetParam());
 
   // This test puts files on disk.
@@ -579,7 +584,8 @@ TEST_P(DOMStorageAreaParamTest, PurgeMemory) {
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   scoped_refptr<DOMStorageArea> area(new DOMStorageArea(
       kOrigin, temp_dir.GetPath(),
-      new MockDOMStorageTaskRunner(base::ThreadTaskRunnerHandle::Get().get())));
+      new MockDOMStorageTaskRunner(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE).get())));
   area->SetCacheOnlyKeys(GetParam());
 
   // Inject an in-memory db to speed up the test.

@@ -1241,7 +1241,7 @@ void FetchHistogramsFromChildProcesses() {
   scoped_refptr<content::MessageLoopRunner> runner = new MessageLoopRunner;
 
   FetchHistogramsAsynchronously(
-      base::ThreadTaskRunnerHandle::Get(), runner->QuitClosure(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), runner->QuitClosure(),
       // If this call times out, it means that a child process is not
       // responding, which is something we should not ignore.  The timeout is
       // set to be longer than the normal browser test timeout so that it will
@@ -1527,7 +1527,7 @@ void SurfaceHitTestReadyNotifier::WaitForSurfaceReady(
     // every compositor frame might be generally undesirable for performance,
     // however.
     base::RunLoop run_loop;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop.QuitClosure(), TestTimeouts::tiny_timeout());
     run_loop.Run();
   }

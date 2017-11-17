@@ -164,7 +164,7 @@ class FileSystemURLRequestJobTest : public testing::Test {
     std::vector<std::unique_ptr<storage::FileSystemBackend>>
         additional_providers;
     additional_providers.push_back(base::MakeUnique<TestFileSystemBackend>(
-        base::ThreadTaskRunnerHandle::Get().get(), mnt_point));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), mnt_point));
 
     std::vector<storage::URLRequestAutoMountHandler> handlers;
     handlers.push_back(base::BindRepeating(&TestAutoMountForURLRequest));
@@ -394,8 +394,8 @@ TEST_F(FileSystemURLRequestJobTest, Cancel) {
   TestRequestNoRun(CreateFileSystemURL("file1.dat"));
 
   // Run StartAsync() and only StartAsync().
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE,
-                                                  request_.release());
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE,
+                                                           request_.release());
   base::RunLoop().RunUntilIdle();
   // If we get here, success! we didn't crash!
 }

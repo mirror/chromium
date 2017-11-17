@@ -101,7 +101,7 @@ class SelfDeleterHelper {
 
   SelfDeleterHelper(T* self_deleting_object,
                     const DeletionCallback& deletion_callback)
-      : construction_runner_(base::ThreadTaskRunnerHandle::Get()),
+      : construction_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         self_deleting_object_(self_deleting_object),
         deletion_callback_(deletion_callback),
         weak_ptr_factory_(this) {}

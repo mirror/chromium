@@ -68,7 +68,7 @@ WebDatabaseObserverImpl::WebDatabaseObserverImpl(
     scoped_refptr<blink::mojom::ThreadSafeWebDatabaseHostPtr> web_database_host)
     : web_database_host_(std::move(web_database_host)),
       open_connections_(new storage::DatabaseConnectionsWrapper),
-      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
   DCHECK(main_thread_task_runner_);
 }
 

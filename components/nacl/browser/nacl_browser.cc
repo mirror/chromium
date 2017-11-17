@@ -422,7 +422,7 @@ void NaClBrowser::CheckWaiting() {
     // process host.
     for (std::vector<base::Closure>::iterator iter = waiting_.begin();
          iter != waiting_.end(); ++iter) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, *iter);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, *iter);
     }
     waiting_.clear();
   }
@@ -558,9 +558,10 @@ void NaClBrowser::MarkValidationCacheAsModified() {
   if (!validation_cache_is_modified_) {
     // Wait before persisting to disk.  This can coalesce multiple cache
     // modifications info a single disk write.
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE, base::Bind(&NaClBrowser::PersistValidationCache,
-                              base::Unretained(this)),
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&NaClBrowser::PersistValidationCache,
+                   base::Unretained(this)),
         base::TimeDelta::FromMilliseconds(kValidationCacheCoalescingTimeMS));
     validation_cache_is_modified_ = true;
   }

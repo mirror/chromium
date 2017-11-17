@@ -217,7 +217,7 @@ webrtc::EncodedImageCallback::Result WebrtcDummyVideoEncoder::SendEncodedFrame(
 }
 
 WebrtcDummyVideoEncoderFactory::WebrtcDummyVideoEncoderFactory()
-    : main_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+    : main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
   // TODO(isheriff): These do not really affect anything internally
   // in webrtc.
   codecs_.push_back(cricket::VideoCodec("VP8"));

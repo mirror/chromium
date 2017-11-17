@@ -60,10 +60,9 @@ class SyncClientTestDriveService : public ::drive::FakeDriveService {
       const google_apis::ProgressCallback& progress_callback) override {
     ++download_file_count_;
     if (resource_id == resource_id_to_be_cancelled_) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
-          base::Bind(download_action_callback,
-                     google_apis::DRIVE_CANCELLED,
+          base::Bind(download_action_callback, google_apis::DRIVE_CANCELLED,
                      base::FilePath()));
       return google_apis::CancelCallback();
     }
@@ -118,37 +117,36 @@ class SyncClientTest : public testing::Test {
 
     scheduler_.reset(new JobScheduler(
         pref_service_.get(), logger_.get(), drive_service_.get(),
-        base::ThreadTaskRunnerHandle::Get().get(), nullptr));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), nullptr));
 
     metadata_storage_.reset(new ResourceMetadataStorage(
-        temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get().get()));
+        temp_dir_.GetPath(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get()));
     ASSERT_TRUE(metadata_storage_->Initialize());
 
-    cache_.reset(new FileCache(metadata_storage_.get(), temp_dir_.GetPath(),
-                               base::ThreadTaskRunnerHandle::Get().get(),
-                               NULL /* free_disk_space_getter */));
+    cache_.reset(
+        new FileCache(metadata_storage_.get(), temp_dir_.GetPath(),
+                      base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+                      NULL /* free_disk_space_getter */));
     ASSERT_TRUE(cache_->Initialize());
 
     metadata_.reset(new internal::ResourceMetadata(
         metadata_storage_.get(), cache_.get(),
-        base::ThreadTaskRunnerHandle::Get()));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
     ASSERT_EQ(FILE_ERROR_OK, metadata_->Initialize());
 
     about_resource_loader_.reset(new AboutResourceLoader(scheduler_.get()));
     loader_controller_.reset(new LoaderController);
     change_list_loader_.reset(new ChangeListLoader(
-        logger_.get(),
-        base::ThreadTaskRunnerHandle::Get().get(),
-        metadata_.get(),
-        scheduler_.get(),
-        about_resource_loader_.get(),
+        logger_.get(), base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+        metadata_.get(), scheduler_.get(), about_resource_loader_.get(),
         loader_controller_.get()));
     ASSERT_NO_FATAL_FAILURE(SetUpTestData());
 
-    sync_client_.reset(
-        new SyncClient(base::ThreadTaskRunnerHandle::Get().get(), &delegate_,
-                       scheduler_.get(), metadata_.get(), cache_.get(),
-                       loader_controller_.get(), temp_dir_.GetPath()));
+    sync_client_.reset(new SyncClient(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), &delegate_,
+        scheduler_.get(), metadata_.get(), cache_.get(),
+        loader_controller_.get(), temp_dir_.GetPath()));
 
     // Disable delaying so that DoSyncLoop() starts immediately.
     sync_client_->set_delay_for_testing(base::TimeDelta::FromSeconds(0));
@@ -216,8 +214,8 @@ class SyncClientTest : public testing::Test {
 
     // Prepare a removed file.
     file_system::RemoveOperation remove_operation(
-        base::ThreadTaskRunnerHandle::Get().get(), &delegate_, metadata_.get(),
-        cache_.get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), &delegate_,
+        metadata_.get(), cache_.get());
     remove_operation.Remove(
         util::GetDriveMyDriveRootPath().AppendASCII("removed"),
         false,  // is_recursive
@@ -227,7 +225,8 @@ class SyncClientTest : public testing::Test {
 
     // Prepare a moved file.
     file_system::MoveOperation move_operation(
-        base::ThreadTaskRunnerHandle::Get().get(), &delegate_, metadata_.get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), &delegate_,
+        metadata_.get());
     move_operation.Move(
         util::GetDriveMyDriveRootPath().AppendASCII("moved"),
         util::GetDriveMyDriveRootPath().AppendASCII("moved_new_title"),
@@ -386,7 +385,7 @@ TEST_F(SyncClientTest, RetryOnDisconnection) {
   // FILE_ERROR_NO_CONNECTION is handled by SyncClient correctly.
   // Without this delay, JobScheduler will keep the jobs unrun and SyncClient
   // will receive no error.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&test_util::FakeNetworkChangeNotifier::SetConnectionType,
                  base::Unretained(fake_network_change_notifier_.get()),

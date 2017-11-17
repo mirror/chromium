@@ -43,7 +43,7 @@ void MockHandleSSLError(
                               0, base::Time::NowFromSystemTime(), nullptr,
                               false /* is superfish */, decision_callback));
   if (async) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(blocking_page_ready_callback),
                                   std::move(blocking_page)));
   } else {

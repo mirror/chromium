@@ -22,7 +22,7 @@ namespace content {
 class FileSystemUsageCacheTest : public testing::Test {
  public:
   FileSystemUsageCacheTest()
-      : usage_cache_(base::ThreadTaskRunnerHandle::Get().get()) {}
+      : usage_cache_(base::ThreadTaskRunnerHandle::Get(FROM_HERE).get()) {}
 
   void SetUp() override { ASSERT_TRUE(data_dir_.CreateUniqueTempDir()); }
 

@@ -504,7 +504,7 @@ void EncryptionMigrationScreenHandler::UpdateUIState(UIState state) {
   // Record which screen is visible to the user.
   // We record it after delay to make sure that the user was actually able
   // to see the screen (i.e. the screen is not just a flash).
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(
           &EncryptionMigrationScreenHandler::OnDelayedRecordVisibleScreen,

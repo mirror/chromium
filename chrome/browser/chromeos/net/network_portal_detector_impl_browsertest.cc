@@ -84,16 +84,16 @@ class TestObserver : public MessageCenterObserver {
       const std::string& notification_id,
       const message_center::DisplaySource source) override {
     if (notification_id == kNotificationId) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                    run_loop_->QuitClosure());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+          FROM_HERE, run_loop_->QuitClosure());
     }
   }
 
   void OnNotificationRemoved(const std::string& notification_id,
                              bool by_user) override {
     if (notification_id == kNotificationId && by_user) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                    run_loop_->QuitClosure());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+          FROM_HERE, run_loop_->QuitClosure());
     }
   }
 

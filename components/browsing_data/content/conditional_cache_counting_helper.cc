@@ -75,7 +75,7 @@ void ConditionalCacheCountingHelper::Finished() {
   DCHECK(!is_finished_);
   is_finished_ = true;
   result_callback_.Run(is_upper_limit_, calculation_result_);
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 void ConditionalCacheCountingHelper::CountHttpCacheOnIOThread() {

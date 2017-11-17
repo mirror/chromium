@@ -39,7 +39,7 @@ class HidConnectionLinux::BlockingTaskHelper {
                      base::WeakPtr<HidConnectionLinux> connection)
       : fd_(std::move(fd)),
         connection_(connection),
-        origin_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+        origin_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
     DETACH_FROM_SEQUENCE(sequence_checker_);
     // Report buffers must always have room for the report ID.
     report_buffer_size_ = device_info->max_input_report_size() + 1;

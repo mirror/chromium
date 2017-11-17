@@ -30,7 +30,8 @@ class SequencedTaskRunnerNoDelay : public base::SequencedTaskRunner {
   bool PostDelayedTask(const base::Location& from_here,
                        base::OnceClosure task,
                        base::TimeDelta delay) override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(from_here, std::move(task));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(from_here,
+                                                           std::move(task));
     return true;
   }
 
@@ -86,8 +87,8 @@ class SystemTimeChangeNotifierTest : public testing::Test {
   // Runs pending tasks. It doesn't run tasks schedule after this call.
   void RunPendingTasks() {
     base::RunLoop run_loop;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  run_loop.QuitClosure());
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, run_loop.QuitClosure());
     run_loop.Run();
   }
 

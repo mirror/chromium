@@ -624,7 +624,7 @@ void ProximityAuthWebUIHandler::OnLifeCycleStateChanged(
       new_state == RemoteDeviceLifeCycle::State::AUTHENTICATION_FAILED) {
     // Clean up the life cycle asynchronously, because we are currently in the
     // call stack of |life_cycle_|.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&ProximityAuthWebUIHandler::CleanUpRemoteDeviceLifeCycle,
                    weak_ptr_factory_.GetWeakPtr()));

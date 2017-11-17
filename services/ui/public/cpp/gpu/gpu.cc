@@ -154,7 +154,7 @@ class Gpu::EstablishRequest
 
 Gpu::Gpu(GpuPtrFactory factory,
          scoped_refptr<base::SingleThreadTaskRunner> task_runner)
-    : main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       io_task_runner_(std::move(task_runner)),
       gpu_memory_buffer_manager_(
           std::make_unique<ClientGpuMemoryBufferManager>(factory.Run())),

@@ -228,7 +228,7 @@ WindowSelector::~WindowSelector() {
   // using it.
   if (window_drag_controller_) {
     window_drag_controller_->ResetWindowSelector();
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
         FROM_HERE, window_drag_controller_.release());
   }
 }

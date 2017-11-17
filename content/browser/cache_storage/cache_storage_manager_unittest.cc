@@ -223,19 +223,21 @@ class CacheStorageManagerTest : public testing::Test {
       temp_dir_path = temp_dir_.GetPath();
 
     quota_policy_ = new MockSpecialStoragePolicy;
-    mock_quota_manager_ = new MockQuotaManager(
-        MemoryOnly(), temp_dir_path, base::ThreadTaskRunnerHandle::Get().get(),
-        quota_policy_.get());
+    mock_quota_manager_ =
+        new MockQuotaManager(MemoryOnly(), temp_dir_path,
+                             base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+                             quota_policy_.get());
     mock_quota_manager_->SetQuota(
         GURL(origin1_), storage::kStorageTypeTemporary, 1024 * 1024 * 100);
     mock_quota_manager_->SetQuota(
         GURL(origin2_), storage::kStorageTypeTemporary, 1024 * 1024 * 100);
 
     quota_manager_proxy_ = new MockQuotaManagerProxy(
-        mock_quota_manager_.get(), base::ThreadTaskRunnerHandle::Get().get());
+        mock_quota_manager_.get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
 
     cache_manager_ = CacheStorageManager::Create(
-        temp_dir_path, base::ThreadTaskRunnerHandle::Get(),
+        temp_dir_path, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
         quota_manager_proxy_);
 
     cache_manager_->SetBlobParametersForCache(
@@ -544,7 +546,7 @@ class CacheStorageManagerTest : public testing::Test {
     int64_t usage(CacheStorage::kSizeUnknown);
     base::RunLoop loop;
     quota_manager_proxy_->GetUsageAndQuota(
-        base::ThreadTaskRunnerHandle::Get().get(), origin,
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), origin,
         StorageType::kStorageTypeTemporary,
         base::Bind(&CacheStorageManagerTest::DidGetQuotaOriginUsage,
                    base::Unretained(this), base::Unretained(&usage), &loop));

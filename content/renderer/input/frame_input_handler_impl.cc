@@ -27,9 +27,8 @@ FrameInputHandlerImpl::FrameInputHandlerImpl(
     : binding_(this),
       render_frame_(render_frame),
       input_event_queue_(render_frame->GetRenderWidget()->GetInputEventQueue()),
-      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      weak_ptr_factory_(this)
-{
+      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+      weak_ptr_factory_(this) {
   weak_this_ = weak_ptr_factory_.GetWeakPtr();
   // If we have created an input event queue move the mojo request over to the
   // compositor thread.

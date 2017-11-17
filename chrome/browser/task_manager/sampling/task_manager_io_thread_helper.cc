@@ -115,7 +115,7 @@ void TaskManagerIoThreadHelper::OnNetworkBytesTransferred(
     // per second so we collect as many requests during one seconds before the
     // below delayed TaskManagerIoThreadHelper::OnMultipleBytesReadIO() process
     // them after one second from now.
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&TaskManagerIoThreadHelper::OnMultipleBytesTransferredIO,
                    weak_factory_.GetWeakPtr()),

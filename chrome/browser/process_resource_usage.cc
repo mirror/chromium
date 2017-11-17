@@ -27,7 +27,7 @@ ProcessResourceUsage::~ProcessResourceUsage() {
 
 void ProcessResourceUsage::RunPendingRefreshCallbacks() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  auto task_runner = base::ThreadTaskRunnerHandle::Get();
+  auto task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   for (const auto& callback : refresh_callbacks_)
     task_runner->PostTask(FROM_HERE, callback);
   refresh_callbacks_.clear();
@@ -37,7 +37,8 @@ void ProcessResourceUsage::Refresh(const base::Closure& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (!service_ || service_.encountered_error()) {
     if (!callback.is_null())
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                             callback);
     return;
   }
 

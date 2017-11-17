@@ -27,7 +27,7 @@ class DelegateThreadSafeReceivedData final
   explicit DelegateThreadSafeReceivedData(
       std::unique_ptr<RequestPeer::ReceivedData> data)
       : data_(std::move(data)),
-        task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+        task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
   ~DelegateThreadSafeReceivedData() override {
     if (!task_runner_->BelongsToCurrentThread()) {
       // Delete the data on the original thread.
@@ -58,7 +58,7 @@ class SharedMemoryDataConsumerHandle::Context final
       : result_(kOk),
         first_offset_(0),
         client_(nullptr),
-        writer_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+        writer_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         on_reader_detached_(on_reader_detached),
         is_on_reader_detached_valid_(!on_reader_detached_.is_null()),
         is_handle_active_(true),
@@ -111,7 +111,7 @@ class SharedMemoryDataConsumerHandle::Context final
     // TODO(yhirano): Turn these CHECKs to DCHECKs once the crash is fixed.
     CHECK(!notification_task_runner_);
     CHECK(!client_);
-    notification_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    notification_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
     client_ = client;
     if (client && !(IsEmpty() && result() == kOk)) {
       // We cannot notify synchronously because the user doesn't have the reader

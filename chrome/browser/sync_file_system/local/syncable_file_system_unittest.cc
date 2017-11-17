@@ -40,18 +40,18 @@ class SyncableFileSystemTest : public testing::Test {
       : in_memory_env_(leveldb_chrome::NewMemEnv(leveldb::Env::Default())),
         file_system_(GURL("http://example.com/"),
                      in_memory_env_.get(),
-                     base::ThreadTaskRunnerHandle::Get().get(),
-                     base::ThreadTaskRunnerHandle::Get().get()),
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE).get()),
         weak_factory_(this) {}
 
   void SetUp() override {
     ASSERT_TRUE(data_dir_.CreateUniqueTempDir());
     file_system_.SetUp(CannedSyncableFileSystem::QUOTA_ENABLED);
 
-    sync_context_ =
-        new LocalFileSyncContext(data_dir_.GetPath(), in_memory_env_.get(),
-                                 base::ThreadTaskRunnerHandle::Get().get(),
-                                 base::ThreadTaskRunnerHandle::Get().get());
+    sync_context_ = new LocalFileSyncContext(
+        data_dir_.GetPath(), in_memory_env_.get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
     ASSERT_EQ(
         sync_file_system::SYNC_STATUS_OK,
         file_system_.MaybeInitializeFileSystemContext(sync_context_.get()));

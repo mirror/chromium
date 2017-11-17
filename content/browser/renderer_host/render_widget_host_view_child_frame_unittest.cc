@@ -122,8 +122,8 @@ class RenderWidgetHostViewChildFrameTest : public testing::Test {
 
     browser_context_.reset();
 
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE,
-                                                    browser_context_.release());
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
+        FROM_HERE, browser_context_.release());
     base::RunLoop().RunUntilIdle();
 #if !defined(OS_ANDROID)
     ImageTransportFactory::Terminate();

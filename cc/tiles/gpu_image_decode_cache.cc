@@ -479,7 +479,8 @@ GpuImageDecodeCache::GpuImageDecodeCache(viz::ContextProvider* context,
   // Don't register a dump provider in these cases.
   if (base::ThreadTaskRunnerHandle::IsSet()) {
     base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-        this, "cc::GpuImageDecodeCache", base::ThreadTaskRunnerHandle::Get());
+        this, "cc::GpuImageDecodeCache",
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
   // Register this component with base::MemoryCoordinatorClientRegistry.
   base::MemoryCoordinatorClientRegistry::GetInstance()->Register(this);

@@ -103,7 +103,7 @@ void ExtensionToolbarMenuView::OnToolbarActionDragDone() {
   // drop.
   if (app_menu_->for_drop() ||
       container_->toolbar_actions_bar()->GetIconCount() == 0) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&ExtensionToolbarMenuView::CloseAppMenu,
                        weak_factory_.GetWeakPtr()),

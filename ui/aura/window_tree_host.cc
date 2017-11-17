@@ -290,9 +290,9 @@ void WindowTreeHost::CreateCompositor(const viz::FrameSinkId& frame_sink_id,
           ? frame_sink_id
           : context_factory_private->AllocateFrameSinkId(),
       context_factory, context_factory_private,
-      base::ThreadTaskRunnerHandle::Get(), enable_surface_synchronization,
-      ui::IsPixelCanvasRecordingEnabled(), external_begin_frames_enabled,
-      force_software_compositor));
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+      enable_surface_synchronization, ui::IsPixelCanvasRecordingEnabled(),
+      external_begin_frames_enabled, force_software_compositor));
   compositor_->AddObserver(this);
   if (!dispatcher()) {
     window()->Init(ui::LAYER_NOT_DRAWN);

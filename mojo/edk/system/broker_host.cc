@@ -35,7 +35,7 @@ BrokerHost::BrokerHost(base::ProcessHandle client_process,
   channel_ = Channel::Create(
       this,
       ConnectionParams(TransportProtocol::kLegacy, std::move(platform_handle)),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   channel_->Start();
 }
 

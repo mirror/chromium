@@ -421,7 +421,7 @@ TEST_F(LastDownloadFinderTest, AddProfileAfterStarting) {
   base::RunLoop run_loop;
 
   // Post a task that will create a second profile once the main loop is run.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&LastDownloadFinderTest::CreateProfileWithDownload,
                      base::Unretained(this)));

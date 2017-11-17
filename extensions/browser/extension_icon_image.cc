@@ -200,7 +200,7 @@ void IconImage::LoadImageForScaleAsync(float scale) {
     // If there is no resource found, update from the default icon.
     const gfx::ImageSkiaRep& rep = default_icon_.GetRepresentation(scale);
     if (!rep.is_null()) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(&IconImage::OnImageRepLoaded,
                                 weak_ptr_factory_.GetWeakPtr(), rep));
     }

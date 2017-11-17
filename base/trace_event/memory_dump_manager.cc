@@ -921,7 +921,7 @@ MemoryDumpManager::ProcessMemoryDumpAsyncState::ProcessMemoryDumpAsyncState(
       heap_profiler_serialization_state(
           std::move(heap_profiler_serialization_state_in)),
       callback(callback),
-      callback_task_runner(ThreadTaskRunnerHandle::Get()),
+      callback_task_runner(ThreadTaskRunnerHandle::Get(FROM_HERE)),
       dump_thread_task_runner(std::move(dump_thread_task_runner)) {
   pending_dump_providers.reserve(dump_providers.size());
   pending_dump_providers.assign(dump_providers.rbegin(), dump_providers.rend());

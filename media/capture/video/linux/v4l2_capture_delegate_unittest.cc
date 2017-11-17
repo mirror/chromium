@@ -220,7 +220,7 @@ class V4L2CaptureDelegateTest : public ::testing::Test {
       : device_descriptor_("Device 0", "/dev/video0"),
         delegate_(base::MakeUnique<V4L2CaptureDelegate>(
             device_descriptor_,
-            base::ThreadTaskRunnerHandle::Get(),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE),
             50)) {}
   ~V4L2CaptureDelegateTest() override = default;
 

@@ -18,7 +18,7 @@ SilentSinkSuspender::SilentSinkSuspender(
     : callback_(callback),
       params_(params),
       sink_(sink),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       silence_timeout_(silence_timeout),
       fake_sink_(worker, params_),
       sink_transition_callback_(

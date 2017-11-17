@@ -243,7 +243,7 @@ void BrowserFeatureExtractor::ExtractFeatures(const BrowseInfo* info,
   std::unique_ptr<ClientPhishingRequest> req(request);
 
   ExtractBrowseInfoFeatures(*info, request);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&BrowserFeatureExtractor::StartExtractFeatures,
                      weak_factory_.GetWeakPtr(), base::Passed(&req), callback));

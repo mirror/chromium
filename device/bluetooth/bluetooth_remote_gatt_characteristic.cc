@@ -95,14 +95,14 @@ void BluetoothRemoteGattCharacteristic::ExecuteStartNotifySession(
   // this command should be resolved with the same result.
   if (previous_command_type == NotifySessionCommand::COMMAND_START) {
     if (previous_command_result == NotifySessionCommand::RESULT_SUCCESS) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::Bind(
               &BluetoothRemoteGattCharacteristic::OnStartNotifySessionSuccess,
               GetWeakPtr(), callback));
       return;
     } else {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::Bind(
               &BluetoothRemoteGattCharacteristic::OnStartNotifySessionError,
@@ -119,7 +119,7 @@ void BluetoothRemoteGattCharacteristic::ExecuteStartNotifySession(
 
   if (!hasNotify && !hasIndicate) {
     LOG(ERROR) << "Characteristic needs NOTIFY or INDICATE";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(
             &BluetoothRemoteGattCharacteristic::OnStartNotifySessionError,
@@ -132,7 +132,7 @@ void BluetoothRemoteGattCharacteristic::ExecuteStartNotifySession(
   // subscribe again. All we need to do is call the success callback, which
   // will create and return a session object to the caller.
   if (IsNotifying()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(
             &BluetoothRemoteGattCharacteristic::OnStartNotifySessionSuccess,
@@ -148,7 +148,7 @@ void BluetoothRemoteGattCharacteristic::ExecuteStartNotifySession(
   if (ccc_descriptor.size() != 1u) {
     LOG(ERROR) << "Found " << ccc_descriptor.size()
                << " client characteristic configuration descriptors.";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(
             &BluetoothRemoteGattCharacteristic::OnStartNotifySessionError,
@@ -241,7 +241,7 @@ void BluetoothRemoteGattCharacteristic::ExecuteStopNotifySession(
   // If the session does not even belong to this characteristic, we return an
   // error right away.
   if (session_iterator == notify_sessions_.end()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&BluetoothRemoteGattCharacteristic::OnStopNotifySessionError,
                    GetWeakPtr(), session, callback,
@@ -251,7 +251,7 @@ void BluetoothRemoteGattCharacteristic::ExecuteStopNotifySession(
 
   // If there are more active sessions, then we return right away.
   if (notify_sessions_.size() > 1) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(
             &BluetoothRemoteGattCharacteristic::OnStopNotifySessionSuccess,
@@ -267,7 +267,7 @@ void BluetoothRemoteGattCharacteristic::ExecuteStopNotifySession(
   if (ccc_descriptor.size() != 1u) {
     LOG(ERROR) << "Found " << ccc_descriptor.size()
                << " client characteristic configuration descriptors.";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&BluetoothRemoteGattCharacteristic::OnStopNotifySessionError,
                    GetWeakPtr(), session, callback,

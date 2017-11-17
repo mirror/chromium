@@ -30,7 +30,8 @@ void V8Test::SetUp() {
                                  gin::IsolateHolder::kStableV8Extras,
                                  gin::ArrayBufferAllocator::SharedInstance());
 
-  instance_.reset(new gin::IsolateHolder(base::ThreadTaskRunnerHandle::Get()));
+  instance_.reset(
+      new gin::IsolateHolder(base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   instance_->isolate()->Enter();
   HandleScope handle_scope(instance_->isolate());
   context_.Reset(instance_->isolate(), Context::New(instance_->isolate()));

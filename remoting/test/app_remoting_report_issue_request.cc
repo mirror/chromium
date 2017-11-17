@@ -50,8 +50,8 @@ bool AppRemotingReportIssueRequest::Start(
   request_complete_callback_ = done_callback;
 
   request_context_getter_ = new remoting::URLRequestContextGetter(
-      base::ThreadTaskRunnerHandle::Get(),   // network_runner
-      base::ThreadTaskRunnerHandle::Get());  // file_runner
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE),   // network_runner
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));  // file_runner
 
   std::string upload_data = abandon_host ? "{ 'abandonHost': 'true' }" : "{}";
 

@@ -330,15 +330,15 @@ std::unique_ptr<OfflinePageTestArchiver>
 OfflinePageModelImplTest::BuildArchiver(
     const GURL& url,
     OfflinePageArchiver::ArchiverResult result) {
-  return std::unique_ptr<OfflinePageTestArchiver>(
-      new OfflinePageTestArchiver(this, url, result, kTestTitle, kTestFileSize,
-                                  base::ThreadTaskRunnerHandle::Get()));
+  return std::unique_ptr<OfflinePageTestArchiver>(new OfflinePageTestArchiver(
+      this, url, result, kTestTitle, kTestFileSize,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 }
 
 std::unique_ptr<OfflinePageMetadataStore>
 OfflinePageModelImplTest::BuildStore() {
   return std::unique_ptr<OfflinePageMetadataStore>(
-      new OfflinePageTestStore(base::ThreadTaskRunnerHandle::Get()));
+      new OfflinePageTestStore(base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 }
 
 std::unique_ptr<OfflinePageModelImpl> OfflinePageModelImplTest::BuildModel(
@@ -346,10 +346,10 @@ std::unique_ptr<OfflinePageModelImpl> OfflinePageModelImplTest::BuildModel(
   std::unique_ptr<ArchiveManager> archive_manager = nullptr;
   archive_manager = base::MakeUnique<ArchiveManager>(
       temporary_dir_path(), persistent_dir_path(),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   return std::unique_ptr<OfflinePageModelImpl>(
       new OfflinePageModelImpl(std::move(store), std::move(archive_manager),
-                               base::ThreadTaskRunnerHandle::Get()));
+                               base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 }
 
 void OfflinePageModelImplTest::ResetModel() {

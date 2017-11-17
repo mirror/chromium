@@ -157,7 +157,7 @@ class NetworkQualitiesPrefDelegateImpl
     // does not affect the startup performance.
     static const int32_t kUpdatePrefsDelaySeconds = 10;
 
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(
             &NetworkQualitiesPrefDelegateImpl::SchedulePendingLossyWrites,

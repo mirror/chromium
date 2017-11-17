@@ -395,7 +395,7 @@ WebServiceWorkerRegistrationImpl::WebServiceWorkerRegistrationImpl(
     : registration_id_(info->registration_id),
       proxy_(nullptr),
       binding_(this),
-      creation_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      creation_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       state_(LifecycleState::kInitial),
       provider_context_for_client_(std::move(provider_context)) {
   Attach(std::move(info));

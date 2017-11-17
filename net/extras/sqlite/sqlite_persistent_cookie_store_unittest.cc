@@ -361,12 +361,13 @@ TEST_F(SQLitePersistentCookieStoreTest, TestLoadCookiesForKey) {
   // |client_task_runner_| on the same thread. Therefore, when a
   // |background_task_runner_| task is blocked, |client_task_runner_| tasks
   // can't run. To allow precise control of |background_task_runner_| without
-  // preventing client tasks to run, use base::ThreadTaskRunnerHandle::Get()
-  // instead of |client_task_runner_| for this test.
+  // preventing client tasks to run, use
+  // base::ThreadTaskRunnerHandle::Get(FROM_HERE) instead of
+  // |client_task_runner_| for this test.
   store_ = new SQLitePersistentCookieStore(
       temp_dir_.GetPath().Append(kCookieFilename),
-      base::ThreadTaskRunnerHandle::Get(), background_task_runner_, false,
-      nullptr);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), background_task_runner_,
+      false, nullptr);
 
   // Posting a blocking task to db_thread_ makes sure that the DB thread waits
   // until both Load and LoadCookiesForKey have been posted to its task queue.

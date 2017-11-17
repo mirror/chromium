@@ -148,7 +148,7 @@ V4L2VideoDecodeAccelerator::V4L2VideoDecodeAccelerator(
     const GetGLContextCallback& get_gl_context_cb,
     const MakeGLContextCurrentCallback& make_context_current_cb,
     const scoped_refptr<V4L2Device>& device)
-    : child_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : child_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       decoder_thread_("V4L2DecoderThread"),
       decoder_state_(kUninitialized),
       output_mode_(Config::OutputMode::ALLOCATE),

@@ -541,7 +541,7 @@ void URLRequestJob::OnDone(const URLRequestStatus& status, bool notify_done) {
   if (notify_done) {
     // Complete this notification later.  This prevents us from re-entering the
     // delegate if we're done because of a synchronous call.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&URLRequestJob::NotifyDone, weak_factory_.GetWeakPtr()));
   }

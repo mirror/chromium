@@ -38,7 +38,7 @@ void SyncedExtensionInstaller::Observe(
   // a signal that it's time to asynchronously fake the installation of these
   // extensions.
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&SyncedExtensionInstaller::DoInstallSyncedExtensions,
                      weak_ptr_factory_.GetWeakPtr()));

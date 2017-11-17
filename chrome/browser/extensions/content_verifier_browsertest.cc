@@ -351,7 +351,7 @@ class DownloaderTestDelegate : public ExtensionDownloaderTestDelegate {
         // immeditately, because the calling code isn't expecting a synchronous
         // response (in non-test situations there are at least 2 network
         // requests needed before a file could be returned).
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE,
             base::BindOnce(
                 &ExtensionDownloaderDelegate::OnExtensionDownloadFinished,

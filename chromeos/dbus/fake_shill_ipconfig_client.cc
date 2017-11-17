@@ -52,7 +52,7 @@ void FakeShillIPConfigClient::GetProperties(
   if (!ipconfigs_.GetDictionaryWithoutPathExpansion(ipconfig_path.value(),
                                                     &dict))
     return;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&FakeShillIPConfigClient::PassProperties,
                             weak_ptr_factory_.GetWeakPtr(), dict, callback));
 }
@@ -69,7 +69,7 @@ void FakeShillIPConfigClient::SetProperty(const dbus::ObjectPath& ipconfig_path,
   }
   // Update existing ip config stub object's properties.
   dict->SetKey(name, value.Clone());
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 
@@ -77,13 +77,13 @@ void FakeShillIPConfigClient::ClearProperty(
     const dbus::ObjectPath& ipconfig_path,
     const std::string& name,
     VoidDBusMethodCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 
 void FakeShillIPConfigClient::Remove(const dbus::ObjectPath& ipconfig_path,
                                      VoidDBusMethodCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 

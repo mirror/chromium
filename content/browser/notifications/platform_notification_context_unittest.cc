@@ -114,7 +114,8 @@ class PlatformNotificationContextTest : public ::testing::Test {
   // Overrides the task runner in |context| with the current message loop
   // proxy, to reduce the number of threads involved in the tests.
   void OverrideTaskRunnerForTesting(PlatformNotificationContextImpl* context) {
-    context->SetTaskRunnerForTesting(base::ThreadTaskRunnerHandle::Get());
+    context->SetTaskRunnerForTesting(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 
   // Returns the testing browsing context that can be used for this test.

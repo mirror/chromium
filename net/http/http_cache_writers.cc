@@ -600,7 +600,7 @@ void HttpCache::Writers::ProcessWaitingForReadTransactions(int result) {
     }
 
     // Post task to notify transaction.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(it->second.callback, callback_result));
 
     it = waiting_for_read_.erase(it);

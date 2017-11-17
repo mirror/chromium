@@ -146,7 +146,7 @@ bool BackgroundTracingManagerImpl::SetActiveScenario(
       return false;
     }
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&BackgroundTracingManagerImpl::ValidateStartupScenario,
                        base::Unretained(this)));

@@ -3085,7 +3085,7 @@ void ChromeContentBrowserClient::RegisterInProcessServices(
     service_manager::EmbeddedServiceInfo info;
     info.factory =
         g_browser_process->pref_service_factory()->CreatePrefServiceFactory();
-    info.task_runner = base::ThreadTaskRunnerHandle::Get();
+    info.task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
     services->insert(
         std::make_pair(prefs::mojom::kLocalStateServiceName, info));
   }

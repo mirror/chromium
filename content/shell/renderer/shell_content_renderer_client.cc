@@ -109,11 +109,12 @@ void ShellContentRendererClient::RenderThreadStarted() {
 
   auto registry = std::make_unique<service_manager::BinderRegistry>();
   registry->AddInterface<mojom::TestService>(
-      base::Bind(&CreateTestService), base::ThreadTaskRunnerHandle::Get());
+      base::Bind(&CreateTestService),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   registry->AddInterface<mojom::PowerMonitorTest>(
       base::Bind(&PowerMonitorTestImpl::MakeStrongBinding,
                  base::Passed(std::make_unique<PowerMonitorTestImpl>())),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   content::ChildThread::Get()
       ->GetServiceManagerConnection()
       ->AddConnectionFilter(

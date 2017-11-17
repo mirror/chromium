@@ -327,22 +327,16 @@ void CrashHandlerHostLinux::FindCrashingThreadAndDump(
       attempt <= kNumAttemptsTranslatingTid) {
     LOG(WARNING) << "Could not translate tid, attempt = " << attempt
                  << " retry ...";
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE,
-      base::Bind(&CrashHandlerHostLinux::FindCrashingThreadAndDump,
-                 base::Unretained(this),
-                 crashing_pid,
-                 expected_syscall_data,
-                 base::Passed(&crash_context),
-                 base::Passed(&crash_keys),
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&CrashHandlerHostLinux::FindCrashingThreadAndDump,
+                   base::Unretained(this), crashing_pid, expected_syscall_data,
+                   base::Passed(&crash_context), base::Passed(&crash_keys),
 #if defined(ADDRESS_SANITIZER)
-                 base::Passed(&asan_report),
+                   base::Passed(&asan_report),
 #endif
-                 uptime,
-                 oom_size,
-                 signal_fd,
-                 attempt),
-      base::TimeDelta::FromMilliseconds(kRetryIntervalTranslatingTidInMs));
+                   uptime, oom_size, signal_fd, attempt),
+        base::TimeDelta::FromMilliseconds(kRetryIntervalTranslatingTidInMs));
     return;
   }
 

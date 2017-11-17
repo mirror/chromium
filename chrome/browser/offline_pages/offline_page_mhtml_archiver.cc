@@ -189,7 +189,7 @@ void OfflinePageMHTMLArchiver::OnComputeDigestDone(
                                ArchiverResult::ERROR_DIGEST_CALCULATION_FAILED);
     return;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(callback_, this, ArchiverResult::SUCCESSFULLY_CREATED, url,
                  file_path, title, file_size, digest));
@@ -220,7 +220,7 @@ void OfflinePageMHTMLArchiver::DeleteFileAndReportFailure(
 
 void OfflinePageMHTMLArchiver::ReportFailure(ArchiverResult result) {
   DCHECK(result != ArchiverResult::SUCCESSFULLY_CREATED);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback_, this, result, GURL(), base::FilePath(),
                             base::string16(), 0, std::string()));
 }
