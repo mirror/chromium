@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c62fd36d_3496b8fc",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-17T06:48:09Z",
+      "side": 1,
+      "message": "No real reason :). But CALL is short, and the impl is not always null, e.g. line 105 does: CALL(fn) success \u0026\u003d LoadFunction(sdk_handle, #fn, \u0026impl_##fn)\n\n:)",
+      "parentUuid": "bc05f860_94aa60eb",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 12
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52ab6f1e_bdd19a29",
         "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fef2a84_6a397769",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-17T06:48:09Z",
+      "side": 1,
+      "message": "Done for load_sdk and close_sdk. The rest are kept the same for consistency with the gvr_keyboard header which doesn\u0027t seem to follow that format :(",
+      "parentUuid": "52ab6f1e_bdd19a29",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 14
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "801cacf2_7c0399b9",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-17T06:48:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3bffa5e_6aa5dd0a",
+      "range": {
+        "startLine": 72,
+        "startChar": 58,
+        "endLine": 72,
+        "endChar": 65
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c43f98e_c148702e",
         "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
         "patchSetId": 8
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-16T21:20:34Z",
       "side": 1,
       "message": "Might be another dumb question: but can\u0027t we have a race condition here and in `close_sdk`. E.g. one thread is executing line #72, while other is passing check on line #83 successfully?\n\nI\u0027d guess that all of that can be called from a single GL thread only, but not sure...",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 16
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451d31fd_85395b22",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-17T06:48:09Z",
+      "side": 1,
+      "message": "Yes, all of this can only be called from the GL thread.",
+      "parentUuid": "3c43f98e_c148702e",
       "range": {
         "startLine": 83,
         "startChar": 6,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e24ab668_e34ca69b",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-17T06:48:09Z",
+      "side": 1,
+      "message": "Turns out that you don\u0027t need any of this, as this should be done by the implementation :)",
+      "parentUuid": "d56bd840_7a8d40dd",
+      "range": {
+        "startLine": 128,
+        "startChar": 12,
+        "endLine": 129,
+        "endChar": 4
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8f8694b_95600203",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 8
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "7e8ebb0c_dea1cb43",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-17T06:48:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8f8694b_95600203",
+      "range": {
+        "startLine": 107,
+        "startChar": 28,
+        "endLine": 107,
+        "endChar": 41
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e85ebf4c_b44d9ede",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 8
@@ -160,6 +304,30 @@
       "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b192fd1_38467ad5",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1089,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-17T06:48:09Z",
+      "side": 1,
+      "message": "You absolutely don\u0027t :).",
+      "parentUuid": "e85ebf4c_b44d9ede",
+      "range": {
+        "startLine": 1089,
+        "startChar": 33,
+        "endLine": 1089,
+        "endChar": 50
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +374,54 @@
       "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf85e018_8f3dbeb1",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2721,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-17T06:48:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "049ff0c5_c142c27d",
+      "range": {
+        "startLine": 2721,
+        "startChar": 11,
+        "endLine": 2721,
+        "endChar": 12
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11c4389c_7bfec700",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2721,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-17T06:48:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8292d2a9_65b5de74",
+      "range": {
+        "startLine": 2721,
+        "startChar": 43,
+        "endLine": 2721,
+        "endChar": 44
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
