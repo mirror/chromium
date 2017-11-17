@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "44153327_4ba5fd88",
+        "filename": "components/arc/instance_holder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T10:44:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a87d195_44a9b510",
+      "range": {
+        "startLine": 97,
+        "startChar": 18,
+        "endLine": 97,
+        "endChar": 20
+      },
+      "revId": "42c45ecc89770867120b32fde6b7cb9e39625c7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a500f27_efacb873",
         "filename": "components/arc/mojo_connection_notifier.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "42c45ecc89770867120b32fde6b7cb9e39625c7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb9fe849_bd109a5e",
+        "filename": "components/arc/mojo_connection_notifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T10:44:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a500f27_efacb873",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 10
+      },
+      "revId": "42c45ecc89770867120b32fde6b7cb9e39625c7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
