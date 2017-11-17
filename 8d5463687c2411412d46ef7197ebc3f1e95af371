@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "b4e648f0_f76a55b7",
+        "filename": "ui/events/event.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-17T15:58:41Z",
+      "side": 1,
+      "message": "Another cleanup request: please remove this misleading comment.\n\nDitto for the one in TouchEvent below.",
+      "range": {
+        "startLine": 600,
+        "startChar": 2,
+        "endLine": 600,
+        "endChar": 55
+      },
+      "revId": "8d5463687c2411412d46ef7197ebc3f1e95af371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71a751d3_6a28c633",
+        "filename": "ui/events/event.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-17T15:58:41Z",
+      "side": 1,
+      "message": "This method is only called from tests.  Please rename to \"SetPointerDetailsForTest\".",
+      "range": {
+        "startLine": 724,
+        "startChar": 7,
+        "endLine": 724,
+        "endChar": 26
+      },
+      "revId": "8d5463687c2411412d46ef7197ebc3f1e95af371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b093e87_469889da",
         "filename": "ui/events/mojo/event_struct_traits.cc",
         "patchSetId": 2
@@ -13,6 +59,23 @@
       "writtenOn": "2017-11-17T12:27:39Z",
       "side": 1,
       "message": "Just remove the TODO instead of adding another comment.",
+      "revId": "8d5463687c2411412d46ef7197ebc3f1e95af371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf67bfc_e5f16ffc",
+        "filename": "ui/events/x/events_x.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-17T15:58:41Z",
+      "side": 1,
+      "message": "Pass GetTouchAngleFromXEvent(*native_event) to set PointerDetails::twist.",
       "revId": "8d5463687c2411412d46ef7197ebc3f1e95af371",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
