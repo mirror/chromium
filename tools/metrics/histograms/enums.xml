@@ -3740,6 +3740,9 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="BooleanPersisted">
+  <obsolete>
+    Persist toggle experiments ran from M56 to M59.
+  </obsolete>
   <int value="0" label="Not persisted"/>
   <int value="1" label="Persisted"/>
 </enum>
