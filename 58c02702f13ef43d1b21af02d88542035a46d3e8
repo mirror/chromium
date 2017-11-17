@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4db7d42_ff4a8d4c",
+        "filename": "trace_test/trace_708990_c1.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-11-17T10:32:14Z",
+      "side": 1,
+      "message": "One possibility is to use what I call \"smart macro lists\", e.g.:\n\n  // List of known categories. Parameter |X| must be a *macro* that takes\n  // a single |name| string argument, denoting a category name.\n  #define LIST_KNOWN_CATEGORIES(X) \\\n     X(\"foo\") \\\n     X(\"bar\") \\\n     X(\"toplevel\") \\\n     X(\"cc\") \\\n\n  #define INIT_CATEGORY_NAME(name)  name,\n  #define INIT_CATEGORY(name) { name, false },\n\n  constexpr const char* kKnownCategoryNames[] \u003d {\n    LIST_KNOWN_CATEGORIES(INIT_CATEGORY_NAME)\n    nullptr  // No need to allocate N entries here.\n  };\n\n  Category g_categories[N] \u003d {\n    LIST_KNOWN_CATEGORIES(INIT_CATEGORY)\n  };\n\n  constexpr uint8_t* GetEnabledPtrConstexpr(const char* category, uint32_t i \u003d 0) {\n    return kKnownCategories[i] \u003d\u003d nullptr\n        ? nullptr\n        : (ConstexprStrcmp(category, kKnownCategories[i])\n            ? \u0026g_categories[i].is_enabled\n            : GetEnabledPtrConstexpr(category, i + 1);  \n  }",
+      "revId": "58c02702f13ef43d1b21af02d88542035a46d3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cd9959c_2232fdd1",
+        "filename": "trace_test/trace_708990_c1.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-11-17T10:32:14Z",
+      "side": 1,
+      "message": "nit: I\u0027d suggest naming this ConstexprStrEq() instead, since strcmp() has a different result value.",
+      "revId": "58c02702f13ef43d1b21af02d88542035a46d3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "829d27d0_0647bbfb",
+        "filename": "trace_test/trace_708990_c1.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-11-17T10:32:14Z",
+      "side": 1,
+      "message": "nit: please remove tabs :)",
+      "revId": "58c02702f13ef43d1b21af02d88542035a46d3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed922e7d_a24d51d0",
+        "filename": "trace_test/trace_708990_c1.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-11-17T10:32:14Z",
+      "side": 1,
+      "message": "It seems strange that you still define and use an atomic pointer variable for known categories. It would probably be a better idea to provide a templated type to deal with this, e.g. something like:\n\n   // Returns true at compile time if |category| is part of kKnownCategories.\n   constexpr bool IsKnownCategory(const char* category, uint32_t i \u003d 0) {\n     return (kKnownCategories[i] \u003d\u003d nullptr)\n         ? false\n         : (ConstexprStrComp(category, kKnownCategories[i])\n             ? true\n             : IsKnownCategory(category, i + 1));\n   }   \n\n   // A special internal template. Used internally by CategoryEnabledPtr below.\n   // Specializations should provide a static value(const char*) method that\n   // returns the address of the \"enabled bit set\" for a given |category| parameter.\n   template \u003cbool IS_KNOWN_CATEGORY\u003e struct CategoryEnabledPtrInternal;\n\n   // The template specialization for known categories. This directly returns\n   // the address of the corresponding |enabled| entry in the matching |g_categories|\n   // array.\n   template \u003c\u003e struct CategoryEnabledPtrInternal\u003ctrue\u003e {\n     constexpr static uint8_t* value(const char* category) {\n       return GetEnabledPtrAtCompileTime(category);\n     }\n   }\n  \n   // The template specialization for unknown categories. This uses an atomic variable\n   // to store a pointer to the |enabled| entry, lazily initialized by calling the\n   // TRACE_EVENT_API_GET_CATEGORY_GROUP() function at runtime.\n   template \u003c\u003e struct CategoryEnabledPtrInternal\u003cfalse\u003e {\n     static TRACE_EVENT_API_ATOMIC_WORD sAtomic \u003d 0;\n     static uint8_t* value(const char* category) {\n        auto enabled_ptr \u003d reinterpret_cast\u003cuint8_t*\u003e(TRACE_EVENT_API_ATOMIC_LOAD(sAtomic));\n        if (UNLIKELY(enabled_ptr \u003d\u003d nullptr)) {\n           enabled_ptr \u003d TRACE_EVENT_API_GET_CATEGORY_GROUP_ENABLED(category);\n           TRACE_EVENT_API_ATOMIC_STORE(\n               sAtomic, reinterpret_cast\u003cTRACE_EVENT_API_ATOMIC_WORD\u003e(enabled_ptr));\n        }\n        return enabled_ptr;\n     }\n   }\n\n   // Defines an |enabled_ptr| local variable that can access the enabled bit set\n   // for |category_group| by calling |enabled_ptr.value(category_group)|.\n   #define TEST_INTERNAL_TRACE_EVENT_GET_CATEGORY_INFO(category_group) \\\n     CategoryEnabledPtr TRACE_EVENT_API_UUID(enabled_ptr);\n\n   #define TEST_INTERNAL_TRACE_EVENT_CATEGORY_GROUP_ENABLED(category_group) \\\n     UNLIKELY(*TRACE_EVENT_API_UUID(enabled_ptr).value(category_group) \u0026 \\\n       (base::trace_event::TraceCategory::ENABLED_FOR_RECORDING | \\\n        base::trace_event::TraceCategory::ENABLED_FOR_ETW_EXPORT | \\\n        base::trace_event::TraceCategory::ENABLED_FOR_FILTERING))",
+      "revId": "58c02702f13ef43d1b21af02d88542035a46d3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
