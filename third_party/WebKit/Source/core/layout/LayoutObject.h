@@ -224,6 +224,8 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
 
   // DisplayItemClient methods.
 
+  LayoutUnit VisualRectOutsetForRasterEffects() const override;
+
   // Do not call VisualRect directly outside of the DisplayItemClient
   // interface, use a per-fragment one on FragmentData instead.
  private:
