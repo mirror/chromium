@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "397b5db0_6aa65cb4",
+        "filename": "content/renderer/mus/mus_embedded_frame.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-17T15:21:23Z",
+      "side": 1,
+      "message": "This is only called once, and never before OnTreeWillChange. If the MusEmbeddedFrame is created before the tree is available, then this function is called once the tree is available. Added DCHECK and comment.",
+      "parentUuid": "cf8040a7_33f648b9",
+      "revId": "6d7cac17050f223f63cec8ab8ad1d50a291c73dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "279e23e6_ec8c8fc8",
         "filename": "content/renderer/mus/mus_embedded_frame.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-17T13:07:25Z",
       "side": 1,
       "message": "Return the tree only if |tree_changed_| is false?",
+      "revId": "6d7cac17050f223f63cec8ab8ad1d50a291c73dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5fedd8f_266c1817",
+        "filename": "content/renderer/mus/mus_embedded_frame.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-17T15:21:23Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "279e23e6_ec8c8fc8",
       "revId": "6d7cac17050f223f63cec8ab8ad1d50a291c73dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
