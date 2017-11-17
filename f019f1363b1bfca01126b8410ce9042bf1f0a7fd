@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3372e337_f7088b38",
+        "filename": "device/bluetooth/bluetooth_device_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-17T19:49:43Z",
+      "side": 1,
+      "message": "I\u0027ll address this in Ida256d4b233cc4de5ae592b8e9578ad01f8220ad",
+      "parentUuid": "30137729_725af3de",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 30
+      },
+      "revId": "f019f1363b1bfca01126b8410ce9042bf1f0a7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84e9daeb_422c04c7",
         "filename": "device/bluetooth/test/bluetooth_test_win.cc",
         "patchSetId": 7
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-17T19:16:10Z",
       "side": 1,
       "message": "let\u0027s just have FinishPendingTasks do a \n  for ( 3 ) { RunPendingTasks, RunUntilIdle }\nand have a comment explaining why.\n\nThen all call sites are much simpler to read and just presume FinishPendingTasks gets the job done.",
+      "revId": "f019f1363b1bfca01126b8410ce9042bf1f0a7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd36bd4_040fad30",
+        "filename": "device/bluetooth/test/bluetooth_test_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-17T19:49:43Z",
+      "side": 1,
+      "message": "Actually, this complicates the matter a bit since we poll on windows (and running this multiple times actually triggers multiple loops through relevant code).  I tried doing something akin to this and ended up with more mess than I bargained for.",
+      "parentUuid": "84e9daeb_422c04c7",
       "revId": "f019f1363b1bfca01126b8410ce9042bf1f0a7fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
