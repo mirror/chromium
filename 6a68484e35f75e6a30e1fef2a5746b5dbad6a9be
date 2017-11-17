@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f7486ed3_71f3c5dd",
+        "filename": "third_party/WebKit/Source/core/animation/Keyframe.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-17T02:49:21Z",
+      "side": 1,
+      "message": "Tried, but V8ObjectBuilder chokes on trying to add a StringView. Maybe I misunderstand what you\u0027re suggesting; I just changed the return type here to StringView and nothing else different.",
+      "parentUuid": "a5e170a8_760fc0a0",
+      "revId": "6a68484e35f75e6a30e1fef2a5746b5dbad6a9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cffc22d_f73dd5b5",
         "filename": "third_party/WebKit/Source/core/animation/Keyframe.cpp",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "6a68484e35f75e6a30e1fef2a5746b5dbad6a9be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9779335b_a54eae15",
+        "filename": "third_party/WebKit/Source/core/animation/Keyframe.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-17T02:49:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cffc22d_f73dd5b5",
+      "revId": "6a68484e35f75e6a30e1fef2a5746b5dbad6a9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "18b75b89_d135b1d7",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-17T02:49:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "001a53d0_3ce4cb2b",
+      "revId": "6a68484e35f75e6a30e1fef2a5746b5dbad6a9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dbb1ad1_f67c148d",
         "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "6a68484e35f75e6a30e1fef2a5746b5dbad6a9be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63105b2_69093638",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-17T02:49:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8dbb1ad1_f67c148d",
+      "revId": "6a68484e35f75e6a30e1fef2a5746b5dbad6a9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +228,24 @@
       "revId": "6a68484e35f75e6a30e1fef2a5746b5dbad6a9be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c26c10_82371fab",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-17T02:49:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aab82a7c_6885c70e",
+      "revId": "6a68484e35f75e6a30e1fef2a5746b5dbad6a9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
