@@ -16,6 +16,24 @@
       "revId": "19d5de995efd94a86e02f81d863874c7f90f2c31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "202f1075_c2557d62",
+        "filename": "content/browser/accessibility/browser_accessibility_atk_hyperlink.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-17T18:22:19Z",
+      "side": 0,
+      "message": "It is incompatible classes, it should already fail at compile time.\n\nIn general, we could strengthen the type checks adding asserts to the GTK runtime checks. I\u0027ll think about it.",
+      "parentUuid": "8b39fefc_ee1ee72a",
+      "revId": "19d5de995efd94a86e02f81d863874c7f90f2c31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
