@@ -56,6 +56,7 @@
     { "name": "audits2", "condition": "!v8only" },
     { "name": "devices" },
     { "name": "security", "condition": "!v8only" },
+    { "name": "sha1", "type": "autostart" },
     { "name": "console" },
     { "name": "source_frame" },
     { "name": "text_editor" },

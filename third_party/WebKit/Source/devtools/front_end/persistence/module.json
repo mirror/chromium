@@ -3,7 +3,8 @@
         "bindings",
         "workspace",
         "components",
-        "sdk"
+        "sdk",
+        "sha1"
     ],
     "extensions": [
         {

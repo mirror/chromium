@@ -80,7 +80,7 @@ ProductRegistryImpl.Registry = class {
  * @return {string}
  */
 ProductRegistryImpl._hashForDomain = function(domain) {
-  return ProductRegistryImpl.sha1(domain).substr(0, 16);
+  return Sha1.sha1(domain).substr(0, 16);
 };
 
 /**

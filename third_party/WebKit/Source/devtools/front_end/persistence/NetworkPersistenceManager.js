@@ -176,9 +176,9 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
 
   /**
    * @param {string} urlPath
-   * @return {string}
+   * @return {!Array<string>}
    */
-  _encodeUrlPathToLocalPath(urlPath) {
+  _encodeUrlPathToLocalPathParts(urlPath) {
     var encodedParts = [];
     for (var pathPart of fileNamePartsFromUrlPath(urlPath)) {
       if (!pathPart)
@@ -194,7 +194,7 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
         encodedName = encodedName.substr(0, encodedName.length - 1) + '%2e';
       encodedParts.push(encodedName);
     }
-    return encodedParts.join('/');
+    return encodedParts;
 
     /**
      * @param {string} urlPath
@@ -204,7 +204,7 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
       urlPath = Common.ParsedURL.urlWithoutHash(urlPath);
       var queryIndex = urlPath.indexOf('?');
       if (queryIndex === -1)
-        return urlPath.split(/[\/\\]/g);
+        return urlPath.split(/\//g);
       if (queryIndex === 0)
         return [urlPath];
       var endSection = urlPath.substr(queryIndex);
@@ -275,6 +275,8 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
     this.saveUISourceCodeForOverrides(uiSourceCode);
   }
 
+
+
   /**
    * @param {!Workspace.UISourceCode} uiSourceCode
    */
@@ -289,18 +291,25 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
   async saveUISourceCodeForOverrides(uiSourceCode) {
     if (!this.canSaveUISourceCodeForOverrides(uiSourceCode))
       return;
-    var urlDomain = uiSourceCode.url().replace(/^https?:\/\//, '');
-    var fileName = urlDomain.substr(urlDomain.lastIndexOf('/') + 1);
-    var relativeFolderPath = urlDomain.substr(0, urlDomain.length - fileName.length);
-    if (relativeFolderPath.endsWith('/'))
-      relativeFolderPath = relativeFolderPath.substr(0, relativeFolderPath.length - 1);
-    if (!fileName)
-      fileName = 'index.html';
+    var urlPath = uiSourceCode.url().replace(/^https?:\/\//, '');
+    if (urlPath.endsWith('/'))
+      urlPath = urlPath + 'index.html';
+    var encodedPathParts = this._encodeUrlPathToLocalPathParts(urlPath);
+    var projectPath = Persistence.FileSystemWorkspaceBinding.fileSystemPath(uiSourceCode.project().id());
+    var encodedPath = encodedPathParts.join('/');
+    if (projectPath.length + encodedPath.length > 200) {
+      //Hash mode
+      var domain = encodedPathParts[0];
+      var encodedFileName = encodedPathParts[encodedPathParts.length - 1];
+      var shortFileName = encodedFileName ? encodedFileName.substr(0, 10) + '.' : '';
+      var extension = Common.ParsedURL.extractExtension(urlPath);
+      var extensionPart = extension ? '.' + extension.substr(0, 10) : '';
+      encodedPathParts = [domain, 'longurls', shortFileName + Sha1.sha1(encodedPath) + extensionPart];
+    }
     var content = await uiSourceCode.requestContent();
     var encoded = await uiSourceCode.contentEncoded();
-    var encodedPath = this._encodeUrlPathToLocalPath(relativeFolderPath);
-    var encodedFileName = this._encodeUrlPathToLocalPath(fileName);
-    this._activeProject.createFile(encodedPath, encodedFileName, content, encoded);
+    var encodedFileName = encodedPathParts.pop();
+    this._activeProject.createFile('/' + encodedPathParts.join('/'), encodedFileName, content, encoded);
     this._fileCreatedForTest(encodedPath, encodedFileName);
   }
 
@@ -352,8 +361,10 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
       uiSourceCode[this._boundInterceptingURLs].push(url);
       this._fileSystemUISourceCodeForUrlMap.set(url, uiSourceCode);
     }
-    SDK.multitargetNetworkManager.setInterceptionHandlerForPatterns(
-        Array.from(this._fileSystemUISourceCodeForUrlMap.keys()), this._interceptionHandlerBound);
+    var patterns =
+        Array.from(this._fileSystemUISourceCodeForUrlMap.keys())
+            .map(pattern => ({urlPattern: pattern.replace(/([\\?*])/g, '\\$1'), interceptionStage: 'HeadersReceived'}));
+    SDK.multitargetNetworkManager.setInterceptionHandlerForPatterns(patterns, this._interceptionHandlerBound);
 
     var networkUISourceCode = this._networkUISourceCode(uiSourceCode);
     if (networkUISourceCode)
@@ -390,8 +401,12 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
       for (var url of boundURLs)
         this._fileSystemUISourceCodeForUrlMap.delete(url);
       delete uiSourceCode[this._boundInterceptingURLs];
-      SDK.multitargetNetworkManager.setInterceptionHandlerForPatterns(
-          Array.from(this._fileSystemUISourceCodeForUrlMap.keys()), this._interceptionHandlerBound);
+      var patterns =
+          Array.from(this._fileSystemUISourceCodeForUrlMap.keys())
+              .map(
+                  pattern =>
+                      ({urlPattern: pattern.replace(/([\\?*])/g, '\\$1'), interceptionStage: 'HeadersReceived'}));
+      SDK.multitargetNetworkManager.setInterceptionHandlerForPatterns(patterns, this._interceptionHandlerBound);
     }
     this._unbind(uiSourceCode);
   }
@@ -426,16 +441,22 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
    * @return {!Promise}
    */
   async _interceptionHandler(interceptedRequest) {
-    var fileSystemUISourceCode = this._fileSystemUISourceCodeForUrlMap.get(interceptedRequest.request.url);
-    if (!fileSystemUISourceCode)
-      return;
     if (interceptedRequest.request.method !== 'GET' && interceptedRequest.request.method !== 'POST')
       return;
-
-    var expectedResourceType = Common.resourceTypes[interceptedRequest.resourceType] || Common.resourceTypes.Other;
-    var mimeType = fileSystemUISourceCode.mimeType();
-    if (Common.ResourceType.fromMimeType(mimeType) !== expectedResourceType)
-      mimeType = expectedResourceType.canonicalMimeType();
+    var fileSystemUISourceCode = this._fileSystemUISourceCodeForUrlMap.get(interceptedRequest.request.url);
+    if (!fileSystemUISourceCode || !interceptedRequest.isResponseInterception())
+      return;
+    var responseHeaders = interceptedRequest.responseHeaders ?
+        SDK.NetworkManager.lowercaseHeaders(interceptedRequest.responseHeaders) :
+        {};
+    var mimeType = responseHeaders['content-type'] || '';
+    mimeType = mimeType.split(';', 2)[0];  // Extracts just the mime-type and no encodings or other params.
+    if (!mimeType) {
+      var expectedResourceType = Common.resourceTypes[interceptedRequest.resourceType] || Common.resourceTypes.Other;
+      mimeType = fileSystemUISourceCode.mimeType();
+      if (Common.ResourceType.fromMimeType(mimeType) !== expectedResourceType)
+        mimeType = expectedResourceType.canonicalMimeType();
+    }
     var project = /** @type {!Persistence.FileSystemWorkspaceBinding.FileSystem} */ (fileSystemUISourceCode.project());
     var blob = await project.requestFileBlob(fileSystemUISourceCode);
     interceptedRequest.continueRequestWithContent(new Blob([blob], {type: mimeType}));

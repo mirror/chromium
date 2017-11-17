@@ -1033,7 +1033,7 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
     for (var agent of this._agents) {
       // We do not allow '?' as a single character wild card for now and do not support '*' either.
       var patterns =
-          this._requestInterceptorMap.keysArray().map(pattern => ({urlPattern: pattern.replace(/([\\?*])/g, '\\$1')}));
+          this._requestInterceptorMap.keysArray().map(pattern => ({urlPattern: pattern.urlPattern.replace(/([\\?*])/g, '\\$1')}));
       promises.push(agent.setRequestInterception(this.isIntercepting() ? patterns : []));
     }
     this.dispatchEventToListeners(SDK.MultitargetNetworkManager.Events.InterceptorsChanged);

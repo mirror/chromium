@@ -7,11 +7,11 @@
     ],
     "dependencies": [
         "common",
-        "product_registry"
+        "product_registry",
+        "sha1"
     ],
     "scripts": [
         "ProductRegistryImpl.js",
-        "ProductRegistryData.js",
-        "sha1/sha1.js"
+        "ProductRegistryData.js"
     ]
 }
