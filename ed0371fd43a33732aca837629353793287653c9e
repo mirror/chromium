@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38c25f30_2ab68156",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-17T19:16:59Z",
+      "side": 1,
+      "message": "Is this necessary?",
+      "revId": "ed0371fd43a33732aca837629353793287653c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
