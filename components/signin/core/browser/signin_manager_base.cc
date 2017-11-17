@@ -42,6 +42,7 @@ SigninManagerBase::~SigninManagerBase() {}
 // static
 void SigninManagerBase::RegisterProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry) {
+  registry->RegisterBooleanPref(prefs::kAccountConsistencyRequired, false);
   registry->RegisterStringPref(prefs::kGoogleServicesHostedDomain,
                                std::string());
   registry->RegisterStringPref(prefs::kGoogleServicesLastAccountId,
