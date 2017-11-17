@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ab88ab48_d083f605",
+        "filename": "content/browser/devtools/devtools_session.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-17T18:29:09Z",
+      "side": 1,
+      "message": "Probably.",
+      "parentUuid": "1b45e0eb_28677a82",
+      "revId": "459377529e87880fdd5a7d9145aa0c39886da6a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eefba985_1b53ca9c",
         "filename": "content/common/devtools.mojom",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "459377529e87880fdd5a7d9145aa0c39886da6a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7782272c_0f073bd6",
+        "filename": "content/common/devtools.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-17T18:29:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eefba985_1b53ca9c",
+      "revId": "459377529e87880fdd5a7d9145aa0c39886da6a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b6e498d3_0e7b94ef",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-17T18:29:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fdf13ff_0e6ca2e2",
+      "revId": "459377529e87880fdd5a7d9145aa0c39886da6a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bd93453_f321c014",
         "filename": "content/renderer/devtools/devtools_agent.cc",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "459377529e87880fdd5a7d9145aa0c39886da6a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0878af43_c53c9220",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-17T18:29:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bd93453_f321c014",
+      "revId": "459377529e87880fdd5a7d9145aa0c39886da6a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
