@@ -16,6 +16,24 @@
       "revId": "c0ad413cb6564bb8a27a185baf3584ae63621727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee416281_5add792e",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-17T18:12:29Z",
+      "side": 1,
+      "message": "Well, it\u0027s meant to be replaced by whatever UX wants to do before the flag is flipped.",
+      "parentUuid": "f3cf7fda_fd48a4c1",
+      "revId": "c0ad413cb6564bb8a27a185baf3584ae63621727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
