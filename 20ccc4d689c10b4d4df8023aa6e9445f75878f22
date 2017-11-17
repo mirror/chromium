@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8d2aa09_46c03636",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-17T22:58:42Z",
+      "side": 1,
+      "message": "can these three go into a small helper function...this ternary is getting...tern-crazy!!!\n\nOk...I\u0027ll be quiet now.",
+      "range": {
+        "startLine": 284,
+        "startChar": 56,
+        "endLine": 284,
+        "endChar": 85
+      },
+      "revId": "20ccc4d689c10b4d4df8023aa6e9445f75878f22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
