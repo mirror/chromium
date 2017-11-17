@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ea40123e_5d2f2eb3",
+        "filename": "chrome/test/chromedriver/run_buildbot_steps.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-11-17T21:44:12Z",
+      "side": 1,
+      "message": "All the builds at https://pantheon.corp.google.com/storage/browser/chromedriver-data/continuous/ are created by ChromeDriver waterfall. Since there is only one build bot per architecture, and the commit position always increases monotonically, the chromedriver binary that has just being created by this build is guaranteed to be the latest one. This loop would simply find that build that had just been uploaded by _ArchiveGooldBuild.\n\nThe latest commit position is in variable commit_position in main. You can pass it to here as an argument.",
+      "parentUuid": "4cd37c63_48993ecd",
+      "range": {
+        "startLine": 286,
+        "startChar": 0,
+        "endLine": 300,
+        "endChar": 43
+      },
+      "revId": "3826b81d6b55f19ed06e783d3e120fe814194a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b58cec4_ee58c214",
         "filename": "chrome/test/chromedriver/run_buildbot_steps.py",
         "patchSetId": 1
