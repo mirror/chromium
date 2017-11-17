@@ -23,6 +23,7 @@ class GlobalDumpGraph {
  public:
   class Node;
   class Edge;
+  class PreOrderIterator;
   class PostOrderIterator;
 
   // Graph of dumps either associated with a process or with
@@ -42,6 +43,11 @@ class GlobalDumpGraph {
     // Returns the node in the graph at the given |path| or nullptr
     // if no such node exists in the provided |graph|.
     GlobalDumpGraph::Node* FindNode(base::StringPiece path);
+
+    // Returns an iterator which yields nodes in the nodes in this graph in
+    // pre-order. That is, children and owners of nodes are returned after the
+    // node itself.
+    GlobalDumpGraph::PreOrderIterator VisitInDepthFirstPreOrder();
 
     // Returns an iterator which yields nodes in the nodes in this graph in
     // post-order. That is, children and owners of nodes are returned before the
@@ -141,6 +147,9 @@ class GlobalDumpGraph {
     double owned_coefficient = 1;
     double owning_coefficient = 1;
 
+    double cumulative_owned_coefficient = 1;
+    double cumulative_owning_coefficient = 1;
+
    private:
     GlobalDumpGraph::Process* dump_graph_;
     Node* const parent_;
@@ -173,6 +182,21 @@ class GlobalDumpGraph {
     const int priority_;
   };
 
+  // An iterator-esque class which yields nodes in a depth-first pre order.
+  class PreOrderIterator {
+   public:
+    PreOrderIterator(Node* root);
+    PreOrderIterator(PreOrderIterator&& other);
+    ~PreOrderIterator();
+
+    // Yields the next node in the DFS post-order traversal.
+    Node* next();
+
+   private:
+    std::deque<Node*> to_visit_;
+    std::set<const Node*> visited_;
+  };
+
   // An iterator-esque class which yields nodes in a depth-first post order.
   class PostOrderIterator {
    public:
@@ -185,8 +209,8 @@ class GlobalDumpGraph {
 
    private:
     std::deque<Node*> to_visit_;
-    std::set<Node*> visited_;
-    std::deque<Node*> path_;
+    std::set<const Node*> visited_;
+    std::deque<const Node*> path_;
   };
 
   using ProcessDumpGraphMap =
