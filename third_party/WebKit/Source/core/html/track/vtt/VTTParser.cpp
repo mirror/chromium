@@ -39,6 +39,7 @@
 #include "platform/loader/fetch/TextResourceDecoderOptions.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/text/SegmentedString.h"
+#include "platform/wtf/DateMath.h"
 #include "platform/wtf/text/CharacterNames.h"
 #include "platform/wtf/text/WTFString.h"
 
@@ -402,6 +403,27 @@ bool VTTParser::CollectTimeStamp(const String& line, double& time_stamp) {
   return CollectTimeStamp(input, time_stamp);
 }
 
+void AppendTimeValue(StringBuilder& timestamp_string, int time_value) {
+  if (!time_value) {
+    timestamp_string.Append("00");
+  } else {
+    if (time_value < 10)
+      timestamp_string.Append('0');
+    timestamp_string.AppendNumber(time_value);
+  }
+}
+
+String SerializeTimeStamp(double time_stamp) {
+  uint64_t time_stamp_millis = static_cast<uint64_t>(time_stamp * kMsPerSecond);
+  int millseconds = static_cast<int>(fmod(time_stamp_millis, kMsPerSecond));
+  int seconds = static_cast<int>(fmod(time_stamp, kSecondsPerMinute));
+  int value = static_cast<int>(time_stamp / kSecondsPerMinute);
+  int minutes = static_cast<int>(fmod(value, kMinutesPerHour));
+  int hours = static_cast<int>(value / kMinutesPerHour);
+  return String::Format("%02u:%02u:%02u.%03u", hours, minutes, seconds,
+                        millseconds);
+}
+
 bool VTTParser::CollectTimeStamp(VTTScanner& input, double& time_stamp) {
   // Collect a WebVTT timestamp (5.3 WebVTT cue timings and settings parsing.)
   // Steps 1 - 4 - Initial checks, let most significant units be minutes.
@@ -442,11 +464,9 @@ bool VTTParser::CollectTimeStamp(VTTScanner& input, double& time_stamp) {
     return false;
 
   // Steps 18 - 19 - Calculate result.
-  const double kSecondsPerHour = 3600;
-  const double kSecondsPerMinute = 60;
-  const double kSecondsPerMillisecond = 0.001;
-  time_stamp = (value1 * kSecondsPerHour) + (value2 * kSecondsPerMinute) +
-               value3 + (value4 * kSecondsPerMillisecond);
+  time_stamp = (value1 * kMinutesPerHour * kSecondsPerMinute) +
+               (value2 * kSecondsPerMinute) + value3 +
+               (value4 * (1 / kMsPerSecond));
   return true;
 }
 
@@ -550,11 +570,11 @@ void VTTTreeBuilder::ConstructTreeFromToken(Document& document) {
       break;
     }
     case VTTTokenTypes::kTimestampTag: {
-      String characters_string = token_.Characters();
       double parsed_time_stamp;
-      if (VTTParser::CollectTimeStamp(characters_string, parsed_time_stamp))
+      if (VTTParser::CollectTimeStamp(token_.Characters(), parsed_time_stamp)) {
         current_node_->ParserAppendChild(ProcessingInstruction::Create(
-            document, "timestamp", characters_string));
+            document, "timestamp", SerializeTimeStamp(parsed_time_stamp)));
+      }
       break;
     }
     default:
