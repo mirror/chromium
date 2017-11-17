@@ -22,6 +22,30 @@
       "revId": "fa1a13c250351d7cc7585dd3f5e1e65870ec7df4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5513ae08_9e803840",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-17T22:16:27Z",
+      "side": 1,
+      "message": "Hrm, I tried it and it ends up being the same number of lines (if I remove both \"testing::\" references), it just has GREYAssert( on it\u0027s own line at the start.\n\nI think there isn\u0027t any significant improvement, so I\u0027ll leave it as is.\n\nThanks for the suggestion!",
+      "parentUuid": "631bb52e_652575f9",
+      "range": {
+        "startLine": 244,
+        "startChar": 13,
+        "endLine": 244,
+        "endChar": 20
+      },
+      "revId": "fa1a13c250351d7cc7585dd3f5e1e65870ec7df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
