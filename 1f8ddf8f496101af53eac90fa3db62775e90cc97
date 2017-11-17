@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22bf770f_88574d5b",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_buttons_updater.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-17T15:38:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db372b36_728f8b73",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 32
+      },
+      "revId": "1f8ddf8f496101af53eac90fa3db62775e90cc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f545f8d3_bd12cf50",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_buttons_updater.mm",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "1f8ddf8f496101af53eac90fa3db62775e90cc97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9447faa7_2ddc23f5",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_buttons_updater.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-17T15:38:41Z",
+      "side": 1,
+      "message": "Clearly too much work for this CL.\nThe refactoring needs to happen in the TabHistoryPopupController. My only concerns for this to not be straight forward is the fact that it is using the y origin of the position to calculate a height.\n\nI guess it makes sense to change it if we will keep this feature once we have the adaptive toolbar.",
+      "parentUuid": "f545f8d3_bd12cf50",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "1f8ddf8f496101af53eac90fa3db62775e90cc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
