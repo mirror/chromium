@@ -74,7 +74,6 @@ class SelectionEditor final : public GarbageCollectedFinalized<SelectionEditor>,
   void AssertSelectionValid() const;
   void ClearVisibleSelection();
   void MarkCacheDirty();
-  bool ShouldAlwaysUseDirectionalSelection() const;
 
   // VisibleSelection cache related
   bool NeedsUpdateVisibleSelection() const;
