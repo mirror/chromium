@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9b0307d0_ad04217c",
+        "filename": "chrome/browser/resources/discards/discards.css",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-17T21:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb506f5e_566d0156",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6409c6e2_13bc2a8f",
         "filename": "chrome/browser/resources/discards/discards.js",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3ce0829f_75a1a334",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-17T21:17:37Z",
+      "side": 1,
+      "message": "It was taking so long I canceled and uploaded with --bypass-hooks. Indeed it does find it when running the presubmits locally :)",
+      "parentUuid": "6409c6e2_13bc2a8f",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fa86e62_b94ac70e",
         "filename": "chrome/browser/resources/discards/discards.js",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5aaba5b_17c21062",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-17T21:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fa86e62_b94ac70e",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "78c5d928_b3b8487d",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-17T21:17:37Z",
+      "side": 1,
+      "message": "Yeah, I was going for the \"expressed-in\" meaning. Even worse, I just realized I was inconsistent in my use. Changed to a clear _PER_ as suggested by Rachel.",
+      "parentUuid": "d4032bf6_359b3ee2",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75829efe_e2ab1c4a",
         "filename": "chrome/browser/resources/discards/discards.js",
         "patchSetId": 6
@@ -102,6 +174,24 @@
       "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d823074_0eb08767",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-17T21:17:37Z",
+      "side": 1,
+      "message": "Indeed, this could use some tests (which I\u0027ve added).\n\nOn that topic, is there a way to get JS tests to run as part of an automated test suite?",
+      "parentUuid": "75829efe_e2ab1c4a",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "b2495605_f70acc80",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-17T21:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22501df6_25f2c4db",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea2b166b_63e7d99b",
         "filename": "chrome/browser/resources/discards/discards.js",
         "patchSetId": 6
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "520e179e_019eab74",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-17T21:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea2b166b_63e7d99b",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03bff8a4_b224a81b",
         "filename": "chrome/browser/resources/discards/discards.js",
         "patchSetId": 6
@@ -153,6 +279,24 @@
       "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cb66390_762a2c89",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-17T21:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03bff8a4_b224a81b",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +323,30 @@
     },
     {
       "key": {
+        "uuid": "a23e0185_24d78e5d",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-17T21:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a482391_e52f6026",
+      "range": {
+        "startLine": 216,
+        "startChar": 17,
+        "endLine": 216,
+        "endChar": 25
+      },
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35aefb10_4df05046",
         "filename": "chrome/browser/resources/discards/discards.js",
         "patchSetId": 6
@@ -193,6 +361,24 @@
       "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c5f18f_cffe9d8d",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-17T21:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35aefb10_4df05046",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +399,24 @@
     },
     {
       "key": {
+        "uuid": "c7773943_63ac5889",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-17T21:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e3a42ac_b66e72a3",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29a91053_948525a5",
         "filename": "chrome/browser/resources/discards/discards.js",
         "patchSetId": 6
@@ -230,6 +434,24 @@
     },
     {
       "key": {
+        "uuid": "7866db4e_57690a40",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-17T21:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29a91053_948525a5",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5518303b_a235a072",
         "filename": "chrome/browser/resources/discards/discards.js",
         "patchSetId": 6
@@ -244,6 +466,24 @@
       "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1b455d_da352cf1",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-17T21:17:37Z",
+      "side": 1,
+      "message": "You\u0027re right, it\u0027s not necessary. It\u0027s a remnant from when I wasn\u0027t using action-link. Removed.",
+      "parentUuid": "5518303b_a235a072",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -267,6 +507,30 @@
       "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a870786c_33665b66",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-17T21:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16138f90_5e8a495d",
+      "range": {
+        "startLine": 423,
+        "startChar": 38,
+        "endLine": 423,
+        "endChar": 46
+      },
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
