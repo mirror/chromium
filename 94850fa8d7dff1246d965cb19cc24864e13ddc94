@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7be2b02_e01f6b01",
+        "filename": "chrome/browser/permissions/grouped_permission_infobar_delegate_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-17T04:22:06Z",
+      "side": 0,
+      "message": "Nit: remove the braces for inter-file consistency.",
+      "range": {
+        "startLine": 55,
+        "startChar": 27,
+        "endLine": 55,
+        "endChar": 0
+      },
+      "revId": "94850fa8d7dff1246d965cb19cc24864e13ddc94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7680db0_7b3e3237",
+        "filename": "chrome/browser/permissions/grouped_permission_infobar_delegate_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-17T04:22:06Z",
+      "side": 0,
+      "message": "Nit: remove the braces for inter-file consistency.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 27
+      },
+      "revId": "94850fa8d7dff1246d965cb19cc24864e13ddc94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
