@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b4a6a5b9_343cf9d7",
+        "filename": "ash/app_list/model/search/tokenized_string_char_iterator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-17T20:29:20Z",
+      "side": 1,
+      "message": "Yes. I didn\u0027t touch this manually.",
+      "parentUuid": "c914b9ab_f2c9edbd",
+      "revId": "2225fdec82ba9ec38ef52bfd7d4e7009d5464165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac595380_15b35f88",
         "filename": "ash/public/cpp/BUILD.gn",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-17T19:39:26Z",
       "side": 1,
       "message": "Let\u0027s keep AppListItem with other files.\n\nWe would need to have something to represent AppListItem and SearchResult in ash/public/cpp. But AppListItem does not look ready without refactoring it a bit. AppListItemObserver should not be here because it would look like we would provide an observer as ash public interface but we probably don\u0027t want to support that over mojo.",
+      "revId": "2225fdec82ba9ec38ef52bfd7d4e7009d5464165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4813c48_3036d1f6",
+        "filename": "ash/public/cpp/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-17T20:29:20Z",
+      "side": 1,
+      "message": "I see. Then in this CL I think we won\u0027t have anything in //ash/public/cpp. And those classes will be defined in mojo with the interfaces.",
+      "parentUuid": "ac595380_15b35f88",
       "revId": "2225fdec82ba9ec38ef52bfd7d4e7009d5464165",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
