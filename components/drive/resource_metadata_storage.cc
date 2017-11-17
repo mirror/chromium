@@ -289,11 +289,11 @@ bool ResourceMetadataStorage::UpgradeOldDB(
   UMA_HISTOGRAM_SPARSE_SLOWLY("Drive.MetadataDBVersionBeforeUpgradeCheck",
                               header.version());
 
-  if (header.version() == kDBVersion) {
+  if (header.version() == kDBVersion)
     return true;
-  } else if (header.version() < 6) {  // Too old, nothing can be done.
+  if (header.version() < 6)  // Too old, nothing can be done.
     return false;
-  } else if (header.version() < 11) {  // Cache entries can be reused.
+  if (header.version() < 11) {  // Cache entries can be reused.
     leveldb::ReadOptions options;
     options.verify_checksums = true;
     std::unique_ptr<leveldb::Iterator> it(resource_map->NewIterator(options));
@@ -345,7 +345,8 @@ bool ResourceMetadataStorage::UpgradeOldDB(
     batch.Put(GetHeaderDBKey(), serialized_header);
 
     return resource_map->Write(leveldb::WriteOptions(), &batch).ok();
-  } else if (header.version() < 12) {  // Cache and ID map entries are reusable.
+  }
+  if (header.version() < 12) {  // Cache and ID map entries are reusable.
     leveldb::ReadOptions options;
     options.verify_checksums = true;
     std::unique_ptr<leveldb::Iterator> it(resource_map->NewIterator(options));
@@ -415,7 +416,8 @@ bool ResourceMetadataStorage::UpgradeOldDB(
     batch.Put(GetHeaderDBKey(), serialized_header);
 
     return resource_map->Write(leveldb::WriteOptions(), &batch).ok();
-  } else if (header.version() < 13) {  // Reuse all entries.
+  }
+  if (header.version() < 13) {  // Reuse all entries.
     leveldb::ReadOptions options;
     options.verify_checksums = true;
     std::unique_ptr<leveldb::Iterator> it(resource_map->NewIterator(options));
@@ -487,7 +489,8 @@ bool ResourceMetadataStorage::UpgradeOldDB(
     batch.Put(GetHeaderDBKey(), serialized_header);
 
     return resource_map->Write(leveldb::WriteOptions(), &batch).ok();
-  } else if (header.version() < 14) {
+  }
+  if (header.version() < 14) {
     // Before r272134, UpgradeOldDB() was not deleting unused ID entries.
     // Delete unused ID entries to fix crbug.com/374648.
     std::set<std::string> used_ids;
@@ -522,7 +525,8 @@ bool ResourceMetadataStorage::UpgradeOldDB(
     batch.Put(GetHeaderDBKey(), serialized_header);
 
     return resource_map->Write(leveldb::WriteOptions(), &batch).ok();
-  } else if (header.version() < 15) {
+  }
+  if (header.version() < 15) {
     // Just need to clear largest_changestamp.
     // Put header with the latest version number.
     std::string serialized_header;

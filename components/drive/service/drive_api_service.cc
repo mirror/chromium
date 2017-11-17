@@ -836,16 +836,13 @@ CancelCallback DriveAPIService::AuthorizeApp(
     request->set_file_id(resource_id);
     request->set_fields(kFileResourceOpenWithLinksFields);
     return sender_->StartRequestWithAuthRetry(std::move(request));
-  } else {
-    std::unique_ptr<FilesGetRequest> request =
-        base::MakeUnique<FilesGetRequest>(
-            sender_.get(), url_generator_,
-            google_apis::IsGoogleChromeAPIKeyUsed(),
-            base::Bind(&ExtractOpenUrlAndRun, app_id, callback));
-    request->set_file_id(resource_id);
-    request->set_fields(kFileResourceOpenWithLinksFields);
-    return sender_->StartRequestWithAuthRetry(std::move(request));
   }
+  std::unique_ptr<FilesGetRequest> request = base::MakeUnique<FilesGetRequest>(
+      sender_.get(), url_generator_, google_apis::IsGoogleChromeAPIKeyUsed(),
+      base::Bind(&ExtractOpenUrlAndRun, app_id, callback));
+  request->set_file_id(resource_id);
+  request->set_fields(kFileResourceOpenWithLinksFields);
+  return sender_->StartRequestWithAuthRetry(std::move(request));
 }
 
 CancelCallback DriveAPIService::UninstallApp(

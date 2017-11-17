@@ -86,7 +86,7 @@ const char kConversionErrorMessage[] =
     "Internal error: Stored value for preference '*' cannot be converted "
     "properly.";
 
-PrefMappingEntry kPrefMapping[] = {
+const PrefMappingEntry kPrefMapping[] = {
     {"spdy_proxy.enabled", prefs::kDataSaverEnabled,
      APIPermission::kDataReductionProxy, APIPermission::kDataReductionProxy},
     {"data_reduction.daily_original_length",
