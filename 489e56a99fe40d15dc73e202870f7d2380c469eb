@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7100b90e_474c1058",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-11-17T16:12:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93dcc857_2bd86a28",
+      "revId": "489e56a99fe40d15dc73e202870f7d2380c469eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4255de0_b600e6d3",
         "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "489e56a99fe40d15dc73e202870f7d2380c469eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15ffefb3_cbb873f2",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-11-17T16:12:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4255de0_b600e6d3",
+      "revId": "489e56a99fe40d15dc73e202870f7d2380c469eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
