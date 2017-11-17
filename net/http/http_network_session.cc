@@ -5,7 +5,7 @@
 #include "net/http/http_network_session.h"
 
 #include <inttypes.h>
-
+#include <memory>
 #include <utility>
 
 #include "base/atomic_sequence_num.h"
@@ -13,6 +13,7 @@
 #include "base/debug/stack_trace.h"
 #include "base/logging.h"
 #include "base/memory/memory_coordinator_client_registry.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -45,13 +46,13 @@ namespace {
 
 base::AtomicSequenceNumber g_next_shard_id;
 
-ClientSocketPoolManager* CreateSocketPoolManager(
+std::unique_ptr<ClientSocketPoolManager> CreateSocketPoolManager(
     HttpNetworkSession::SocketPoolType pool_type,
     const HttpNetworkSession::Context& context,
     const std::string& ssl_session_cache_shard) {
   // TODO(yutak): Differentiate WebSocket pool manager and allow more
   // simultaneous connections for WebSockets.
-  return new ClientSocketPoolManagerImpl(
+  return base::MakeUnique<ClientSocketPoolManagerImpl>(
       context.net_log,
       context.client_socket_factory ? context.client_socket_factory
                                     : ClientSocketFactory::GetDefaultFactory(),
@@ -221,10 +222,12 @@ HttpNetworkSession::HttpNetworkSession(const Params& params,
 
   const std::string ssl_session_cache_shard =
       "http_network_session/" + base::IntToString(g_next_shard_id.GetNext());
-  normal_socket_pool_manager_.reset(CreateSocketPoolManager(
-      NORMAL_SOCKET_POOL, context, ssl_session_cache_shard));
-  websocket_socket_pool_manager_.reset(CreateSocketPoolManager(
-      WEBSOCKET_SOCKET_POOL, context, ssl_session_cache_shard));
+  normal_socket_pool_manager_.reset();
+  normal_socket_pool_manager_ = CreateSocketPoolManager(
+      NORMAL_SOCKET_POOL, context, ssl_session_cache_shard);
+  websocket_socket_pool_manager_.reset();
+  websocket_socket_pool_manager_ = CreateSocketPoolManager(
+      WEBSOCKET_SOCKET_POOL, context, ssl_session_cache_shard);
 
   if (params_.enable_http2) {
     next_protos_.push_back(kProtoHTTP2);
