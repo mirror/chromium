@@ -57,7 +57,7 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
     const FrameSinkId& frame_sink_id,
     gpu::SurfaceHandle surface_handle,
     const RendererSettings& renderer_settings,
-    std::unique_ptr<BeginFrameSource>* begin_frame_source) {
+    std::unique_ptr<SyntheticBeginFrameSource>* out_begin_frame_source) {
   // TODO(kylechar): Get process restart id from host process.
   auto synthetic_begin_frame_source =
       base::MakeUnique<DelayBasedBeginFrameSource>(
@@ -99,7 +99,7 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
       max_frames_pending);
 
   // The ownership of the BeginFrameSource is transfered to the caller.
-  *begin_frame_source = std::move(synthetic_begin_frame_source);
+  *out_begin_frame_source = std::move(synthetic_begin_frame_source);
 
   return base::MakeUnique<Display>(
       ServerSharedBitmapManager::current(), gpu_memory_buffer_manager_.get(),
