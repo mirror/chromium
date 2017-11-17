@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f635bb14_0a7c3dcd",
+        "filename": "chrome/common/media_router/mojo/media_router.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-17T07:00:19Z",
+      "side": 1,
+      "message": "What does \"UNKNOWN\" mean? It seems like it\u0027s a valid value to pass--but what does it actually indicate? Maybe we could call this something else that better describes the third possibility?\n\n(Also, a minor terminology nit: I would traditionally think of this as more of something named \u0027enum Type\u0027 rather than \u0027enum Id\u0027: to me, they indicate slightly different things. But I guess it might be annoying to change that, and maybe that\u0027s how the rest of cast / media router code treats this)",
+      "revId": "77e7082178aafe1fcbedd5780a263d053d253855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
