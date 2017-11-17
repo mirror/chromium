@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4a7b871_bf56913e",
+        "filename": "components/autofill/core/browser/field_filler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-17T15:06:55Z",
+      "side": 1,
+      "message": "Class comment?",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "c1eb893c8ae16bc0a9c357f141831aaa49e70a51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
