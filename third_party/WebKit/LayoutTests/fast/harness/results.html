@@ -1376,6 +1376,11 @@ class ImageResultsToolbar extends TXToolbar {
       if (ev.target.tagName == "A") {
         this.selectAnchor(ev.target);
         ev.preventDefault();
+        if (this.animationIntervalId) {
+          // Restart animation to show the clicked view for one second.
+          this.setAnimation(false);
+          window.setTimeout(_ => this.setAnimation(true), 1000);
+        }
       }
     });
 
