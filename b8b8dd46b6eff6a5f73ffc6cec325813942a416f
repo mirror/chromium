@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45c4e65d_4022e9ed",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-17T07:28:47Z",
+      "side": 1,
+      "message": "Does this need to be wrapped in a repeating callback? It looks like it might already be a once callback?",
+      "revId": "b8b8dd46b6eff6a5f73ffc6cec325813942a416f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4032a976_e8b7c562",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-17T07:28:47Z",
+      "side": 1,
+      "message": "caller_origin here as well?",
+      "revId": "b8b8dd46b6eff6a5f73ffc6cec325813942a416f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a121ca4_4cd1f7fd",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-17T07:28:47Z",
+      "side": 1,
+      "message": "Mind changing this to use a TypeConverter in a followup, to follow the guidance in https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#Do-not-write-one_off-functions-to-convert-to_from-Mojo-types ?",
+      "revId": "b8b8dd46b6eff6a5f73ffc6cec325813942a416f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
