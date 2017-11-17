@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d7f0590_3561a802",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-17T21:13:49Z",
+      "side": 1,
+      "message": "Done. Recording just the available device count.",
+      "parentUuid": "1a20fb63_795f4071",
+      "revId": "2383fda3d0ddf5c7bb8fcdb2a18f1138198eba90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a145799_9ef9e3a7",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "2383fda3d0ddf5c7bb8fcdb2a18f1138198eba90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36660269_b7dae2d8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 35596,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-17T21:13:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a145799_9ef9e3a7",
+      "range": {
+        "startLine": 35596,
+        "startChar": 18,
+        "endLine": 35596,
+        "endChar": 0
+      },
+      "revId": "2383fda3d0ddf5c7bb8fcdb2a18f1138198eba90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
