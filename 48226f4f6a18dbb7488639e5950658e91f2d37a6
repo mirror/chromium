@@ -22,6 +22,30 @@
       "revId": "48226f4f6a18dbb7488639e5950658e91f2d37a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d4d2f5_0394cd24",
+        "filename": "net/base/upload_file_element_reader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T21:20:03Z",
+      "side": 1,
+      "message": "Done.  I actually meant \"First state\" not \"file state\".  Don\u0027t ask me why 80% of my typos are the wrong word, rather than the wrong key.  Decided to remove the comment, as it\u0027s implied by the comment on OPEN.\n\nThe state is only skipped if the previous state was OPEN_COMPLETE (i.e., we just opened the file), so think the conditionals are a bit too much to get into here.",
+      "parentUuid": "26fbb4ed_8e4421f4",
+      "range": {
+        "startLine": 86,
+        "startChar": 64,
+        "endLine": 86,
+        "endChar": 69
+      },
+      "revId": "48226f4f6a18dbb7488639e5950658e91f2d37a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
