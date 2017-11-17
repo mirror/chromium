@@ -6,12 +6,12 @@
   TestRunner.addResult(`Tests SHA-1 hashes.\n`);
   await TestRunner.loadModule('product_registry_impl');
 
-  TestRunner.addResult('foobar : ' + ProductRegistryImpl.sha1('foobar'));
-  TestRunner.addResult('hello : ' + ProductRegistryImpl.sha1('hello'));
-  TestRunner.addResult('abcdefghijklmnopqrstuvwxyz : ' + ProductRegistryImpl.sha1('abcdefghijklmnopqrstuvwxyz'));
-  TestRunner.addResult('ABCDEFGHIJKLMNOPQRSTUVWXYZ : ' + ProductRegistryImpl.sha1('ABCDEFGHIJKLMNOPQRSTUVWXYZ'));
-  TestRunner.addResult('a : ' + ProductRegistryImpl.sha1('a'));
-  TestRunner.addResult('A : ' + ProductRegistryImpl.sha1('A'));
-  TestRunner.addResult('A1 : ' + ProductRegistryImpl.sha1('A1'));
+  TestRunner.addResult('foobar : ' + Sha1.sha1('foobar'));
+  TestRunner.addResult('hello : ' + Sha1.sha1('hello'));
+  TestRunner.addResult('abcdefghijklmnopqrstuvwxyz : ' + Sha1.sha1('abcdefghijklmnopqrstuvwxyz'));
+  TestRunner.addResult('ABCDEFGHIJKLMNOPQRSTUVWXYZ : ' + Sha1.sha1('ABCDEFGHIJKLMNOPQRSTUVWXYZ'));
+  TestRunner.addResult('a : ' + Sha1.sha1('a'));
+  TestRunner.addResult('A : ' + Sha1.sha1('A'));
+  TestRunner.addResult('A1 : ' + Sha1.sha1('A1'));
   TestRunner.completeTest();
 })();

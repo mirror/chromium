@@ -20,6 +20,7 @@ Loaded modules:
     protocol
     sdk
     services
+    sha1
     text_utils
     ui
     workspace

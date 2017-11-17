@@ -5,12 +5,13 @@
 (async function() {
   TestRunner.addResult(`To make sure that filenames are encoded safely for Network Persistence.\n`);
 
-  await TestRunner.loadModule('persistence');
+  await TestRunner.loadModule('bindings_test_runner');
 
+  var project = await BindingsTestRunner.createOverrideProject('file:///tmp/');
+  Persistence.networkPersistenceManager.addFileSystemOverridesProject(Persistence.NetworkPersistenceManager.inspectedPageDomain(), project);
+  BindingsTestRunner.setOverridesEnabled(true);
 
-  var manager = new Persistence.NetworkPersistenceManager();
   // Simple tests.
-  log('www.example.com');
   log('www.example.com/');
   log('www.example.com/simple');
   log('www.example.com/hello/foo/bar');
@@ -68,6 +69,6 @@
   TestRunner.completeTest();
 
   function log(url) {
-    TestRunner.addResult(url + ' -> ' + manager._encodeUrlPathToLocalPath(url));
+    TestRunner.addResult(url + ' -> ' + Persistence.networkPersistenceManager._encodedPathFromUrl(url));
   }
 })();
