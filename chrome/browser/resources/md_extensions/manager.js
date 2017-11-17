@@ -118,6 +118,10 @@ cr.define('extensions', function() {
       // </if>
     },
 
+    listeners: {
+      'view-exit-finish': 'onViewExitFinish_',
+    },
+
     /**
      * The current page being shown. Default to null, and initPage_ will figure
      * out the initial page based on url.
@@ -474,6 +478,22 @@ cr.define('extensions', function() {
     /** @private */
     onPackDialogClose_: function() {
       this.showPackDialog_ = false;
+    },
+
+    /** @private */
+    onViewExitFinish_: function(e) {
+      const viewType = e.path[0].tagName;
+      if (viewType == 'EXTENSIONS-ITEM-LIST' ||
+          viewType == 'EXTENSIONS-KEYBOARD-SHORTCUT') {
+        return;
+      }
+
+      const extensionId = e.path[0].data.id;
+      const list = this.$$('extensions-item-list');
+      const button = viewType == 'EXTENSIONS-DETAIL-VIEW' ?
+          list.getDetailsButton(extensionId) :
+          list.getErrorsButton(extensionId);
+      button.focus();
     },
 
     // <if expr="chromeos">
