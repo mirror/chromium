@@ -217,10 +217,15 @@ void TranslateInternalsHandler::SendPrefsToJs() {
 }
 
 void TranslateInternalsHandler::SendSupportedLanguagesToJs() {
+  content::WebContents* web_contents = web_ui()->GetWebContents();
+  Profile* profile =
+      Profile::FromBrowserContext(web_contents->GetBrowserContext());
+  PrefService* prefs = profile->GetOriginalProfile()->GetPrefs();
+
   base::DictionaryValue dict;
 
   std::vector<std::string> languages;
-  translate::TranslateDownloadManager::GetSupportedLanguages(&languages);
+  translate::TranslateDownloadManager::GetSupportedLanguages(prefs, &languages);
   base::Time last_updated =
       translate::TranslateDownloadManager::GetSupportedLanguagesLastUpdated();
 

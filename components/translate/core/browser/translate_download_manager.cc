@@ -47,6 +47,7 @@ void TranslateDownloadManager::RequestLanguageList(PrefService* prefs) {
 
 // static
 void TranslateDownloadManager::GetSupportedLanguages(
+    PrefService* prefs,
     std::vector<std::string>* languages) {
   TranslateLanguageList* language_list = GetInstance()->language_list();
   if (!language_list) {
@@ -54,7 +55,7 @@ void TranslateDownloadManager::GetSupportedLanguages(
     return;
   }
 
-  language_list->GetSupportedLanguages(languages);
+  language_list->GetSupportedLanguages(prefs, languages);
 }
 
 // static

@@ -174,6 +174,7 @@ class TranslatePrefs {
   // The list returned in |languages| is sorted alphabetically based on the
   // display names in the given locale.
   static void GetLanguageInfoList(
+      PrefService* prefs,
       const std::string& app_locale,
       std::vector<TranslateLanguageInfo>* languages);
 

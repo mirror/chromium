@@ -353,6 +353,7 @@ void TranslatePrefs::RearrangeLanguage(
 
 // static
 void TranslatePrefs::GetLanguageInfoList(
+    PrefService* prefs,
     const std::string& app_locale,
     std::vector<TranslateLanguageInfo>* language_list) {
   DCHECK(language_list != nullptr);
@@ -395,7 +396,7 @@ void TranslatePrefs::GetLanguageInfoList(
   // Get the list of translatable languages and convert to a set.
   std::vector<std::string> translate_languages;
   translate::TranslateDownloadManager::GetSupportedLanguages(
-      &translate_languages);
+      prefs, &translate_languages);
   const std::set<std::string> translate_language_set(
       translate_languages.begin(), translate_languages.end());
 
