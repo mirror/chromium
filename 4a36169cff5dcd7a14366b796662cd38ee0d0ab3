@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "95d02683_e54aa302",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-11-17T03:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33118987_9a43ed85",
+      "range": {
+        "startLine": 10,
+        "startChar": 4,
+        "endLine": 10,
+        "endChar": 11
+      },
+      "revId": "4a36169cff5dcd7a14366b796662cd38ee0d0ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a61b828_793bd548",
         "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animator.mm",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "4a36169cff5dcd7a14366b796662cd38ee0d0ab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5159632_9f40cfc3",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-11-17T03:14:10Z",
+      "side": 1,
+      "message": "AFAICT, UIBezierPath doesn\u0027t allow for reading arbitrary points in the curve.  This is necessary to implement the |currentProgress| property, which is necessary to have smooth animations if a drag event begins while the scroll end adjustment animation occurs.",
+      "parentUuid": "4a61b828_793bd548",
+      "range": {
+        "startLine": 22,
+        "startChar": 23,
+        "endLine": 22,
+        "endChar": 34
+      },
+      "revId": "4a36169cff5dcd7a14366b796662cd38ee0d0ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "709d2353_121ff5c4",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-11-17T03:14:10Z",
+      "side": 1,
+      "message": "Are we no longer following the MD spec?  We could use the UIKit version, but I figured we should continue following the spec.",
+      "parentUuid": "448df265_59f33ec8",
+      "range": {
+        "startLine": 50,
+        "startChar": 39,
+        "endLine": 50,
+        "endChar": 51
+      },
+      "revId": "4a36169cff5dcd7a14366b796662cd38ee0d0ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10ac8777_fea05224",
         "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_ui_element.h",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "4a36169cff5dcd7a14366b796662cd38ee0d0ab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53768165_e957a49d",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_ui_element.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-11-17T03:14:10Z",
+      "side": 1,
+      "message": "Yeah when we were having animation discussions in Paris, we decided that using an observer pattern and aggregating all the animations in a single object was preferable to having a broadcasted \"scroll end\" event and assume that all resulting animations are synchronized.  Also, I feel like these values have a slightly different semantic meaning than other broadcasted values.  Currently all broadcast values describe the current state of the UI on the screen, and are unidirectional from the UI \u003d\u003e coordinator/service layers.  These values represent \"fullscreen state\", which has a semantic meaning that is not directly describing UI as it exists on the screen.  Of course, the values provided by the FullscreenControllerObserver API ultimately are passed through this protocol to change the UI.  That being said, I feel like keeping the broadcasted values specific to describing the actual state of UI would allow the broadcaster to have a clearly defined semantic purpose.",
+      "parentUuid": "10ac8777_fea05224",
+      "range": {
+        "startLine": 29,
+        "startChar": 34,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "4a36169cff5dcd7a14366b796662cd38ee0d0ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
