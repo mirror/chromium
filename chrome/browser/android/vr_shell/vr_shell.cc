@@ -146,6 +146,8 @@ VrShell::VrShell(JNIEnv* env,
   g_instance = this;
   j_vr_shell_.Reset(env, obj);
 
+  compositor_->SetDeferCommits(true);
+
   gl_thread_ = base::MakeUnique<VrGLThread>(
       weak_ptr_factory_.GetWeakPtr(), main_thread_task_runner_, gvr_api,
       ui_initial_state, reprojected_rendering_, HasDaydreamSupport(env));
@@ -547,7 +549,7 @@ void VrShell::ContentPhysicalBoundsChanged(JNIEnv* env,
   PostToGlThread(FROM_HERE,
                  base::Bind(&VrShellGl::ContentPhysicalBoundsChanged,
                             gl_thread_->GetVrShellGl(), width, height));
-  compositor_->SetWindowBounds(gfx::Size(width, height));
+  compositor_->SetWindowBounds(gfx::Size(width, height), dpr);
 }
 
 // Note that the following code is obsolete and is here as reference for the
@@ -722,6 +724,7 @@ void VrShell::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_VrShellImpl_setContentCssSize(env, j_vr_shell_, window_size.width(),
                                      window_size.height(), dpr);
+  compositor_->SetDeferCommits(false);
 }
 
 void VrShell::SetVoiceSearchActive(bool active) {

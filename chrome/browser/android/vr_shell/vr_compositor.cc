@@ -52,8 +52,14 @@ void VrCompositor::SurfaceDestroyed() {
   compositor_->SetSurface(nullptr);
 }
 
-void VrCompositor::SetWindowBounds(gfx::Size size) {
+void VrCompositor::SetWindowBounds(gfx::Size size,
+  float dpr) {
   compositor_->SetWindowBounds(size);
+  compositor_->SetPaintedDeviceScaleFactor(dpr);
+}
+
+void VrCompositor::SetDeferCommits(bool defer_commits) {
+  compositor_->SetDeferCommits(defer_commits);
 }
 
 void VrCompositor::SurfaceChanged(jobject surface) {

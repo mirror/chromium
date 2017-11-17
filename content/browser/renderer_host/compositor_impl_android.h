@@ -80,6 +80,8 @@ class CONTENT_EXPORT CompositorImpl
   void SetSurface(jobject surface) override;
   void SetBackgroundColor(int color) override;
   void SetWindowBounds(const gfx::Size& size) override;
+  void SetPaintedDeviceScaleFactor(float painted_device_scale_factor) override;
+  void SetDeferCommits(bool defer_commits) override;
   void SetRequiresAlphaChannel(bool flag) override;
   void SetNeedsComposite() override;
   ui::UIResourceProvider& GetUIResourceProvider() override;
