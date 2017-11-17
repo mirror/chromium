@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8bc43f81_65f71848",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-17T03:33:12Z",
+      "side": 1,
+      "message": "hi Colin, I added the destroying logic (and I\u0027m not sure how to test it :(), but the more I think about it the more I feel like it is not the right thing to do:\n\nthis is the following cl that Andrew has: https://chromium-review.googlesource.com/c/chromium/src/+/754255\n\nI assume since we\u0027re not strongly binding PublicIpAddressGeolocator to the mojo interface, which means we need to store it in PublicIpAddressGeolocationProvider(in Andrew\u0027s following cl), so if PublicIpAddressLocationNofier is destructed which cause the destruction of PublicIpAddressGeolocator (because of the destruction callback) but the PublicIpAddressGeolocationProvider isn\u0027t aware of it and can still make mojo request (causing danger).\n\nI\u0027m not sure about how mojo works but how about: we still keep the weak binding, but store PublicIpAddressGeolocator on PublicIpAddressGeolocationProvider as a unique_ptr, the PublicIpAddressGeolocationProvider will subscribe to PublicIpAddressLocationNofier\u0027s destruction callback, and once it\u0027s destructed, the  PublicIpAddressGeolocationProvider will reset PublicIpAddressGeolocator and unbind the mojo request?\n\n+amoylan, what do you guys think?",
+      "parentUuid": "4d31c71f_af7125cd",
+      "revId": "a1822bee06f9dcb3dc58893112190b148c7152c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5e1ef75_5433c508",
         "filename": "services/device/geolocation/public_ip_address_geolocator.h",
         "patchSetId": 5
@@ -59,6 +77,48 @@
     },
     {
       "key": {
+        "uuid": "2d82755c_b2eeb266",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-17T03:33:12Z",
+      "side": 1,
+      "message": "thanks for the suggestion, I have changed the binding to follow others\u0027 pattern. :)",
+      "parentUuid": "1d85a946_68bfd358",
+      "range": {
+        "startLine": 24,
+        "startChar": 40,
+        "endLine": 24,
+        "endChar": 48
+      },
+      "revId": "a1822bee06f9dcb3dc58893112190b148c7152c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84cdac73_ed922f81",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-17T03:33:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5e1ef75_5433c508",
+      "revId": "a1822bee06f9dcb3dc58893112190b148c7152c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d15e6670_f5b63102",
         "filename": "services/device/geolocation/public_ip_address_geolocator.h",
         "patchSetId": 5
@@ -73,6 +133,24 @@
       "revId": "a1822bee06f9dcb3dc58893112190b148c7152c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b3cdef_a4c49237",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-17T03:33:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d15e6670_f5b63102",
+      "revId": "a1822bee06f9dcb3dc58893112190b148c7152c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
