@@ -22,28 +22,36 @@ NGPhysicalOffsetRect NGPhysicalTextFragment::SelfVisualRect() const {
   // have to keep these two steps separated.
 
   // Glyph bounds is in logical coordinate, origin at the baseline.
-  FloatRect visual_float_rect = shape_result_->Bounds();
+  LayoutRect visual_rect = EnclosingLayoutRect(shape_result_->Bounds());
 
   // Make the origin at the logical top of this fragment.
   // ShapeResult::Bounds() is in logical coordinate with alphabetic baseline.
   const ComputedStyle& style = Style();
   const SimpleFontData* font_data = style.GetFont().PrimaryFont();
-  visual_float_rect.SetY(
-      visual_float_rect.Y() +
-      font_data->GetFontMetrics().FixedAscent(kAlphabeticBaseline));
+  visual_rect.SetY(visual_rect.Y() + font_data->GetFontMetrics().FixedAscent(
+                                         kAlphabeticBaseline));
 
   // TODO(kojii): Copying from AddTextBoxVisualOverflow()
   if (float stroke_width = style.TextStrokeWidth()) {
-    visual_float_rect.Inflate(stroke_width / 2.0f);
+    visual_rect.Inflate(LayoutUnit::FromFloatCeil(stroke_width / 2.0f));
   }
 
   // TODO(kojii): Implement emphasis marks.
 
   if (ShadowList* text_shadow = style.TextShadow()) {
-    // TODO(kojii): Implement text shadow.
+    LayoutRectOutsets text_shadow_logical_outsets =
+        LayoutRectOutsets(text_shadow->RectOutsetsIncludingOriginal())
+            .LineOrientationOutsets(style.GetWritingMode());
+    text_shadow_logical_outsets.ClampNegativeToZero();
+    visual_rect.Expand(text_shadow_logical_outsets);
   }
 
-  LayoutRect visual_rect = EnclosingLayoutRect(visual_float_rect);
+#if 0
+  LayoutRect frame_rect = {{}, Size().ToLayoutSize()};
+  visual_rect.Unite(frame_rect);
+#endif
+  visual_rect = LayoutRect(EnclosingIntRect(visual_rect));
+
   switch (LineOrientation()) {
     case NGLineOrientation::kHorizontal:
       return NGPhysicalOffsetRect(visual_rect);
