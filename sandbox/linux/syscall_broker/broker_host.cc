@@ -113,6 +113,27 @@ void AccessFileForIPC(const BrokerPolicy& policy,
   }
 }
 
+// Perform stat(2) on |requested_filename| and marshal the result to
+// |write_pickle|.
+void StatFileForIPC(const BrokerPolicy& policy,
+                    const std::string& requested_filename,
+                    base::Pickle* write_pickle) {
+  DCHECK(write_pickle);
+  const char* file_to_access = NULL;
+  if (!policy.GetFileNameIfAllowedToAccess(requested_filename.c_str(), R_OK,
+                                           &file_to_access)) {
+    write_pickle->WriteInt(-policy.denied_errno());
+    return;
+  }
+  struct stat sb;
+  if (stat(file_to_access, &sb) < 0) {
+    write_pickle->WriteInt(-errno);
+    return;
+  }
+  write_pickle->WriteInt(0);
+  write_pickle->WriteData(reinterpret_cast<char*>(&sb), sizeof(sb));
+}
+
 // Handle a |command_type| request contained in |iter| and send the reply
 // on |reply_ipc|.
 // Currently COMMAND_OPEN and COMMAND_ACCESS are supported.
@@ -120,23 +141,34 @@ bool HandleRemoteCommand(const BrokerPolicy& policy,
                          IPCCommand command_type,
                          int reply_ipc,
                          base::PickleIterator iter) {
-  // Currently all commands have two arguments: filename and flags.
+  // Currently all commands have filename as the first arg.
   std::string requested_filename;
-  int flags = 0;
-  if (!iter.ReadString(&requested_filename) || !iter.ReadInt(&flags))
+  if (!iter.ReadString(&requested_filename))
     return false;
 
   base::Pickle write_pickle;
   std::vector<int> opened_files;
 
   switch (command_type) {
-    case COMMAND_ACCESS:
+    case COMMAND_ACCESS: {
+      int flags = 0;
+      if (!iter.ReadInt(&flags))
+        return false;
       AccessFileForIPC(policy, requested_filename, flags, &write_pickle);
       break;
-    case COMMAND_OPEN:
+    }
+    case COMMAND_OPEN: {
+      int flags = 0;
+      if (!iter.ReadInt(&flags))
+        return false;
       OpenFileForIPC(
           policy, requested_filename, flags, &write_pickle, &opened_files);
       break;
+    }
+    case COMMAND_STAT: {
+      StatFileForIPC(policy, requested_filename, &write_pickle);
+      break;
+    }
     default:
       LOG(ERROR) << "Invalid IPC command";
       break;

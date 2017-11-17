@@ -42,12 +42,18 @@ class BrokerClient {
   // It's similar to the access() system call and will return -errno on errors.
   // This is async signal safe.
   int Access(const char* pathname, int mode) const;
+
   // Can be used in place of open().
   // The implementation only supports certain white listed flags and will
   // return -EPERM on other flags.
   // It's similar to the open() system call and will return -errno on errors.
   // This is async signal safe.
   int Open(const char* pathname, int flags) const;
+
+  // Can be used in place of stat().
+  // It's similar to the stat() system call and will return -errno on errors.
+  // This is async signal safe.
+  int Stat(const char* pathname, struct stat* sb);
 
   // Get the file descriptor used for IPC. This is used for tests.
   int GetIPCDescriptor() const { return ipc_channel_.get(); }
