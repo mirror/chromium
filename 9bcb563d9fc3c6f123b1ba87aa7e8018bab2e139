@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6f94425b_9e238a68",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-17T00:01:31Z",
+      "side": 1,
+      "message": "Ah... This just shows the issue I said...\n\nObsolete though...",
+      "parentUuid": "b76129ac_7ab378e0",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 3
+      },
+      "revId": "9bcb563d9fc3c6f123b1ba87aa7e8018bab2e139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68ca9007_76fcc77f",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1651bc2a_009291a7",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-17T00:01:31Z",
+      "side": 1,
+      "message": "This actually comes from OnGestureEvent()...\n\nGiven that they don\u0027t share much common logic, I think it\u0027s better to just inline them in the On*Event() functions...\n\nAlso inlined HandleMouseEvent.",
+      "parentUuid": "68ca9007_76fcc77f",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 35
+      },
+      "revId": "9bcb563d9fc3c6f123b1ba87aa7e8018bab2e139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26589abb_f19c4815",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "9bcb563d9fc3c6f123b1ba87aa7e8018bab2e139",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69554032_76220b23",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-17T00:01:31Z",
+      "side": 1,
+      "message": "Done. Reverted.",
+      "parentUuid": "26589abb_f19c4815",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 31
+      },
+      "revId": "9bcb563d9fc3c6f123b1ba87aa7e8018bab2e139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
