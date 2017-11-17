@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "820886cc_2251613c",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-17T02:04:46Z",
+      "side": 1,
+      "message": "It just happens to line up, so it is certainly a bit more fragile than a proper interface. If you are concerned about either resolver changing, I can undo it and look into doing something better later.",
+      "parentUuid": "c9d2fe53_34db4377",
+      "range": {
+        "startLine": 186,
+        "startChar": 14,
+        "endLine": 186,
+        "endChar": 15
+      },
+      "revId": "f3d86b2f942b4bda8f21c080a0efd8e528c74d7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f92fcf40_5a14a3fb",
         "filename": "chrome/browser/io_thread.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-26T15:03:06Z",
       "side": 1,
       "message": "did I miss a thread on where this was being introduced for non-Blink types?\n\nIn particular, the header documentation implies this is Start-From-One, but is this true here?",
+      "range": {
+        "startLine": 430,
+        "startChar": 14,
+        "endLine": 430,
+        "endChar": 28
+      },
+      "revId": "f3d86b2f942b4bda8f21c080a0efd8e528c74d7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf1d586a_e491de1b",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-17T02:04:46Z",
+      "side": 1,
+      "message": "It has not been announced on its own, but on https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/qH5swrLHPmg dcheng@ said \"it\u0027s probably best to prefer base::MakeRefCounted where possible.\"\n\nMakeRefCounted does the right thing internally and calls AdoptRefIfNeeded(). So the scoped_refptr it returns has refcount \u003d 1, whether the object uses REQUIRE_ADOPTION_FOR_REFCOUNTED_TYPE or not. See RefCountedUnitTest.TestInitialRefCountIsOne. I put up another CL to add some basic test coverage there to show MakeRefCounted does what we want. https://chromium-review.googlesource.com/776234",
+      "parentUuid": "f92fcf40_5a14a3fb",
       "range": {
         "startLine": 430,
         "startChar": 14,
