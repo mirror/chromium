@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92803663_419f5727",
+        "filename": "ios/web/public/test/fakes/test_native_content_provider.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-11-17T02:25:24Z",
+      "side": 1,
+      "message": "Any reason why you\u0027re comparing \"!\u003d end()\" instead of comparing \"\u003d\u003d end()\" and switching the order of the return values in the ternary operator?  Not really sure if either is a solid readability win over the other, but I feel like generally we like to check equality rather than inequality if possible.",
+      "revId": "81c2f23a0e3ab81f7bd62f921d8f2d3772fdbe15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
