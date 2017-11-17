@@ -180,6 +180,11 @@ void WindowTree::Init(std::unique_ptr<WindowTreeBinding> binding,
                     drawn, root->current_local_surface_id());
 }
 
+void WindowTree::X(gfx::AcceleratedWidget widget) {
+  // XXX(sad): Send the display id here too.
+  client()->X(reinterpret_cast<int>(widget));
+}
+
 void WindowTree::ConfigureWindowManager(
     bool automatically_create_display_roots) {
   // ConfigureWindowManager() should be called early on, before anything

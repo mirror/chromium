@@ -55,6 +55,7 @@ WindowTreeHostMus::WindowTreeHostMus(WindowTreeHostMusInitParams init_params)
   // seems them at the time the window is created.
   for (auto& pair : init_params.properties)
     window_mus->SetPropertyFromServer(pair.first, &pair.second);
+  LOG(ERROR) << "Creating WindowTreeHostMus";
   CreateCompositor(viz::FrameSinkId());
   gfx::AcceleratedWidget accelerated_widget;
 // We need accelerated widget numbers to be different for each
@@ -93,6 +94,10 @@ WindowTreeHostMus::WindowTreeHostMus(WindowTreeHostMusInitParams init_params)
     compositor()->SetLocalSurfaceId(
         window_mus->GetOrAllocateLocalSurfaceId(bounds_in_pixels.size()));
   }
+}
+
+void WindowTreeHostMus::X(gfx::AcceleratedWidget widget) {
+  OnAcceleratedWidgetAvailable(widget, GetDisplay().device_scale_factor());
 }
 
 WindowTreeHostMus::~WindowTreeHostMus() {

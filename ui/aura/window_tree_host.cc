@@ -314,9 +314,12 @@ void WindowTreeHost::InitCompositor() {
 }
 
 void WindowTreeHost::OnAcceleratedWidgetAvailable() {
+  compositor_->SetVisible(false);
+  compositor_->ReleaseAcceleratedWidget();
   compositor_->SetAcceleratedWidget(GetAcceleratedWidget());
   prop_.reset(new ui::ViewProp(GetAcceleratedWidget(),
                                kWindowTreeHostForAcceleratedWidget, this));
+  compositor_->SetVisible(true);
 }
 
 void WindowTreeHost::OnHostMovedInPixels(
