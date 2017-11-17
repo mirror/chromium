@@ -18,6 +18,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/proxy_config/ios/proxy_service_factory.h"
 #include "components/proxy_config/pref_proxy_config_tracker.h"
+#include "components/signin/core/browser/signin_manager.h"
 #include "components/sync_preferences/pref_service_syncable.h"
 #include "components/user_prefs/user_prefs.h"
 #include "ios/chrome/browser/application_context.h"
@@ -31,7 +32,12 @@
 #include "ios/chrome/browser/pref_names.h"
 #include "ios/chrome/browser/prefs/browser_prefs.h"
 #include "ios/chrome/browser/prefs/ios_chrome_pref_service_factory.h"
+#include "ios/chrome/browser/signin/account_tracker_service_factory.h"
+#include "ios/chrome/browser/signin/oauth2_token_service_factory.h"
+#include "ios/chrome/browser/signin/signin_manager_factory.h"
 #include "ios/web/public/web_thread.h"
+#include "services/identity/identity_service.h"
+#include "services/identity/public/interfaces/constants.mojom.h"
 
 namespace {
 
@@ -174,6 +180,21 @@ base::FilePath ChromeBrowserStateImpl::GetStatePath() const {
   return state_path_;
 }
 
+void ChromeBrowserStateImpl::RegisterServices(StaticServiceMap* services) {
+  service_manager::EmbeddedServiceInfo identity_service_info;
+
+  // The Identity Service must run on the UI thread.
+  identity_service_info.task_runner = base::ThreadTaskRunnerHandle::Get();
+
+  // NOTE: The dependencies of the Identity Service have not yet been created,
+  // so it is not possible to bind them here. Instead, bind them at the time
+  // of the actual request to create the Identity Service.
+  identity_service_info.factory = base::Bind(
+      &ChromeBrowserStateImpl::CreateIdentityService, base::Unretained(this));
+  services->insert(
+      std::make_pair(identity::mojom::kServiceName, identity_service_info));
+}
+
 void ChromeBrowserStateImpl::SetOffTheRecordChromeBrowserState(
     std::unique_ptr<ios::ChromeBrowserState> otr_state) {
   DCHECK(!otr_state_);
@@ -232,4 +253,16 @@ net::SSLConfigService* ChromeBrowserStateImpl::GetSSLConfigService() {
   DCHECK(ssl_config_service_manager_)
       << "SSLConfigServiceManager is not initialized yet";
   return ssl_config_service_manager_->Get();
+}
+
+std::unique_ptr<service_manager::Service>
+ChromeBrowserStateImpl::CreateIdentityService() {
+  AccountTrackerService* account_tracker =
+      ios::AccountTrackerServiceFactory::GetForBrowserState(this);
+  SigninManagerBase* signin_manager =
+      ios::SigninManagerFactory::GetForBrowserState(this);
+  ProfileOAuth2TokenService* token_service =
+      OAuth2TokenServiceFactory::GetForBrowserState(this);
+  return base::MakeUnique<identity::IdentityService>(
+      account_tracker, signin_manager, token_service);
 }
