@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "7d532bed_29cbfdf5",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGPath.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-17T18:00:36Z",
+      "side": 1,
+      "message": "Is the hittest regression related to creating this temp StrokeData?\n\nIf so, maybe it\u0027s worth refactoring to avoid that.",
+      "revId": "9da090b931bcb676a1880d41a15a4716b13b97d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aac2c26_f51cff89",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGPath.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-17T18:00:36Z",
+      "side": 1,
+      "message": "Also, not new to this CL but if the path doesn\u0027t have a stroke (StyleRef().SvgStyle().HasStroke() test above), what exactly are we computing here?\n\nPer https://drafts.fxtf.org/css-masking/#compute-stroke-bounding-box #2, we should skip all this, no?",
+      "revId": "9da090b931bcb676a1880d41a15a4716b13b97d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09a52be7_a33fecb0",
         "filename": "third_party/WebKit/Source/platform/graphics/StrokeData.cpp",
         "patchSetId": 4
