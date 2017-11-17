@@ -755,6 +755,7 @@ class SafeBrowsingServiceTest : public InProcessBrowserTest {
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingServiceTest);
 };
 
+#if defined(ENABLE_FLAKY_PVER3_TESTS)
 class SafeBrowsingServiceMetadataTest
     : public SafeBrowsingServiceTest,
       public ::testing::WithParamInterface<ThreatPatternType> {
@@ -1169,6 +1170,7 @@ IN_PROC_BROWSER_TEST_F(SafeBrowsingServiceTest, SubResourceHitOnFreshTab) {
   content::WaitForInterstitialDetach(new_tab_contents);
   EXPECT_FALSE(ShowingInterstitialPage());
 }
+#endif  // defined(ENABLE_FLAKY_PVER3_TESTS)
 
 namespace {
 
@@ -1285,6 +1287,7 @@ class TestSBClient : public base::RefCountedThreadSafe<TestSBClient>,
 
 }  // namespace
 
+#if defined(ENABLE_FLAKY_PVER3_TESTS)
 // These tests use SafeBrowsingService::Client to directly interact with
 // SafeBrowsingService.
 IN_PROC_BROWSER_TEST_F(SafeBrowsingServiceTest, CheckDownloadUrl) {
@@ -1652,6 +1655,7 @@ INSTANTIATE_TEST_CASE_P(
     /* no prefix */,
     SafeBrowsingServiceWebSocketSafeTest,
     ::testing::Values("window", "worker", "shared-worker", "service-worker"));
+#endif  // defined(ENABLE_FLAKY_PVER3_TESTS)
 
 class SafeBrowsingServiceShutdownTest : public SafeBrowsingServiceTest {
  public:
