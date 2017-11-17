@@ -116,14 +116,7 @@ void HQPPerfTestOnePopularURL::SetUp() {
 
 void HQPPerfTestOnePopularURL::TearDown() {
   provider_ = nullptr;
-  // The InMemoryURLIndex must be explicitly shut down or it will DCHECK() in
-  // its destructor.
-  client_->GetInMemoryURLIndex()->Shutdown();
-  client_->set_in_memory_url_index(nullptr);
-  // History index rebuild task is created from main thread during SetUp,
-  // performed on DB thread and must be deleted on main thread.
-  // Run main loop to process delete task, to prevent leaks.
-  base::RunLoop().RunUntilIdle();
+  client_.reset();
 }
 
 void HQPPerfTestOnePopularURL::PrepareData() {

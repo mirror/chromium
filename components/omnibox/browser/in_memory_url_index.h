@@ -142,6 +142,7 @@ class InMemoryURLIndex : public KeyedService,
   }
 
  private:
+  friend class FakeAutocompleteProviderClient;
   friend class ::HistoryQuickProviderTest;
   friend class history::HQPPerfTestOnePopularURL;
   friend class InMemoryURLIndexTest;
