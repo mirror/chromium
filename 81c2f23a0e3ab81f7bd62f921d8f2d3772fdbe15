@@ -16,6 +16,24 @@
       "revId": "81c2f23a0e3ab81f7bd62f921d8f2d3772fdbe15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "880f219d_861ab666",
+        "filename": "ios/web/public/test/fakes/test_native_content_provider.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-17T02:38:00Z",
+      "side": 1,
+      "message": "I have no opinion on this and don\u0027t mind changing :)",
+      "parentUuid": "92803663_419f5727",
+      "revId": "81c2f23a0e3ab81f7bd62f921d8f2d3772fdbe15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
