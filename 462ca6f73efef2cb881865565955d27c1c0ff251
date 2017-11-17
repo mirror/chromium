@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d57dba0e_b11564f3",
+        "filename": "net/spdy/chromium/spdy_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-17T17:56:58Z",
+      "side": 1,
+      "message": "It seems like you can remove this line.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 37
+      },
+      "revId": "462ca6f73efef2cb881865565955d27c1c0ff251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
