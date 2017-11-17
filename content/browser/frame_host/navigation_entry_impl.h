@@ -13,6 +13,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "content/browser/frame_host/frame_navigation_entry.h"
@@ -146,6 +147,9 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   int GetHttpStatusCode() const override;
   void SetRedirectChain(const std::vector<GURL>& redirects) override;
   const std::vector<GURL>& GetRedirectChain() const override;
+  void SetReplacedEntryData(const ReplacedEntryData& data) override;
+  const base::Optional<ReplacedEntryData>& GetReplacedEntryData()
+      const override;
   bool IsRestored() const override;
   std::string GetExtraHeaders() const override;
   void AddExtraHeaders(const std::string& extra_headers) override;
@@ -553,6 +557,11 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   // Set to true if the navigation controller gets notified about a SSL error
   // for a pending navigation. Defaults to false.
   bool ssl_error_;
+
+  // Stores information about the entry prior to being replaced (e.g.
+  // history.replaceState()). It is preserved after commit (session sync for
+  // offline analysis) but should not be persisted.
+  base::Optional<ReplacedEntryData> replaced_entry_data_;
 
   DISALLOW_COPY_AND_ASSIGN(NavigationEntryImpl);
 };

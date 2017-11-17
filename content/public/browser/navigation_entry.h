@@ -11,6 +11,7 @@
 #include <string>
 
 #include "base/memory/ref_counted_memory.h"
+#include "base/optional.h"
 #include "base/strings/string16.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -216,6 +217,22 @@ class NavigationEntry {
   // redirecting URL to the final non-redirecting current URL.
   virtual void SetRedirectChain(const std::vector<GURL>& redirects) = 0;
   virtual const std::vector<GURL>& GetRedirectChain() const = 0;
+
+  // When a history entry is replaced (e.g. history.replaceState()), some
+  // information of the entry prior to being replaced. Even if an entry is
+  // replaced multiple times, it represents data prior to the *first* replace.
+  struct ReplacedEntryData {
+    // This URL represents what GetURL() above would have returned prior to the
+    // first replacement.
+    GURL url;
+    // Analogous for GetTimestamp() above.
+    base::Time timestamp;
+    // Analogous for GetTransitionType() above.
+    ui::PageTransition transition_type;
+  };
+  virtual void SetReplacedEntryData(const ReplacedEntryData& data) = 0;
+  virtual const base::Optional<ReplacedEntryData>& GetReplacedEntryData()
+      const = 0;
 
   // True if this entry is restored and hasn't been loaded.
   virtual bool IsRestored() const = 0;

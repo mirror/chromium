@@ -160,6 +160,19 @@ bool ShouldTreatNavigationAsReload(const NavigationEntry* entry) {
   return false;
 }
 
+void CopyReplacedEntryDataIfPreviouslyEmpty(
+    const NavigationEntryImpl& replaced_entry,
+    NavigationEntryImpl* output_entry) {
+  if (output_entry->GetReplacedEntryData().has_value())
+    return;
+
+  NavigationEntry::ReplacedEntryData data;
+  data.url = replaced_entry.GetURL();
+  data.timestamp = replaced_entry.GetTimestamp();
+  data.transition_type = replaced_entry.GetTransitionType();
+  output_entry->SetReplacedEntryData(data);
+}
+
 }  // namespace
 
 // NavigationControllerImpl ----------------------------------------------------
@@ -1326,6 +1339,12 @@ void NavigationControllerImpl::RendererDidNavigateToExistingPage(
     // which land us at the last committed entry.
     entry = GetLastCommittedEntry();
 
+    // TODO(mastiz): Set page transition type to LINK to avoid misleading
+    // interpretations (e.g. for TYPED) as well as to fixed the inconsistency
+    // with what we report to observers (LINK).
+
+    CopyReplacedEntryDataIfPreviouslyEmpty(*entry, entry);
+
     // If this is a same document navigation, then there's no SSLStatus in the
     // NavigationHandle so don't overwrite the existing entry's SSLStatus.
     if (!is_same_document)
@@ -1869,6 +1888,8 @@ void NavigationControllerImpl::InsertOrReplaceEntry(
 
   // When replacing, don't prune the forward history.
   if (replace && current_size > 0) {
+    CopyReplacedEntryDataIfPreviouslyEmpty(
+        *entries_[last_committed_entry_index_], entry.get());
     entries_[last_committed_entry_index_] = std::move(entry);
     return;
   }
