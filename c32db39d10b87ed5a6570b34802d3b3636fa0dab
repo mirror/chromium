@@ -190,6 +190,30 @@
       "revId": "c32db39d10b87ed5a6570b34802d3b3636fa0dab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8563f26_2b4a82df",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-17T15:13:41Z",
+      "side": 1,
+      "message": "Thanks. That\u0027s much clearer.\n\nYou need to listen for mkMouseDown not kMouseUp...\n\n... which I see is what the latest patchset does.\n\nLGTM",
+      "parentUuid": "af856d7e_efc82a41",
+      "range": {
+        "startLine": 398,
+        "startChar": 19,
+        "endLine": 398,
+        "endChar": 26
+      },
+      "revId": "c32db39d10b87ed5a6570b34802d3b3636fa0dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
