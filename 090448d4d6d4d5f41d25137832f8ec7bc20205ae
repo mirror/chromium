@@ -87,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "e78b9408_37f6e3f4",
+        "filename": "device/geolocation/location_arbitrator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-17T10:58:00Z",
+      "side": 1,
+      "message": "Oh, I think it is likely to be called more than once. Thanks point out this bug!\n\nLocationArbitrator shouldn\u0027t own the unique_ptr of customLocationProvider, It should take a GetCustomLocationProviderCallback, so it can get a new unique_ptr\u003ccustomLocationProvider\u003e instance every time this function runs.\nThe ServiceManagerContext has to pass the callback to DeviceService instead of the unique_ptr too.\nWDYT?",
+      "parentUuid": "54bd6673_652c03fc",
+      "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e944f45_fd4de095",
         "filename": "device/geolocation/location_arbitrator.h",
         "patchSetId": 6
@@ -115,6 +133,24 @@
       "writtenOn": "2017-11-17T08:41:53Z",
       "side": 1,
       "message": "I\u0027m pretty sure this isn\u0027t doing anything now, unless I\u0027m missing something. Since this target is a source_set, it seems wrong that we would be putting anything about exports in files that are listed in this target? If you remove this entirely, do any builds fail? I\u0027d like to look at them if so.",
+      "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2baa3595_a7d69100",
+        "filename": "device/geolocation/public/cpp/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-17T10:58:00Z",
+      "side": 1,
+      "message": "My understanding is the \"export\" is allowed and still meaningful in a \"source_set\" target when the source_set is depended by a \"component\" target, right?\nI move the \"//device/geolocation/geolocation_export.h\" from the //device/geolocation (which is a component target) to here because the location_provider.h is exported. There are some \"DEVICE_GEOLOCATION_EXPORT\" in //device/geolocation/ so I let the //device/geolocation target depends this cpp target.\n\nI plan to remove all the \"DEVICE_GEOLOCATION_EXPORT\" and the \"geolocation_export.h\" when we move the whole geolocation_core to //service/device folder.\nDo you mean that we should remove all the \"DEVICE_GEOLOCATION_EXPORT\" and the \"geolocation_export.h\" immediately in this CL?\n\nThank:)",
+      "parentUuid": "f8dc7922_b6359933",
       "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
