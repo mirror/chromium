@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "76dc5fc1_c1726d2d",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-17T00:52:28Z",
+      "side": 1,
+      "message": "A follow-up CL is OK.",
+      "parentUuid": "2aea836c_fc2ad501",
+      "revId": "f45f5f3c386d1d99c98a7a4c3a39c00d3326163f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7787fe24_388ff863",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.cpp",
         "patchSetId": 18

@@ -22,6 +22,30 @@
       "revId": "98937916d5119850eda4c612f16f31b6ccbe9a9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec1aea0d_88eb97e5",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerOrWorkletGlobalScope.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-17T00:52:28Z",
+      "side": 1,
+      "message": "Is this still necessary? I can run message-port.html without this change.",
+      "parentUuid": "b49f8757_46705182",
+      "range": {
+        "startLine": 172,
+        "startChar": 2,
+        "endLine": 174,
+        "endChar": 31
+      },
+      "revId": "98937916d5119850eda4c612f16f31b6ccbe9a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
