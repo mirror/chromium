@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b596b73_5849b0c3",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-17T17:11:13Z",
+      "side": 1,
+      "message": "should we return false by default here? if we don\u0027t have a Client() and don\u0027t know it seems safest to assume we should not track. do we know the cases where Client() will be null?",
+      "revId": "1dd1c2f07f70cb311333384a7fd7ea1b597bdf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5958f2d_87259582",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SchemeRegistry.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-17T17:11:13Z",
+      "side": 1,
+      "message": "looks like the comment got chopped up a bit in a previous change - \"pages and Chrome does use it internally...\" looks like it should be moved up to be part of the data comment, after \"top-level\", I think.",
+      "revId": "1dd1c2f07f70cb311333384a7fd7ea1b597bdf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
