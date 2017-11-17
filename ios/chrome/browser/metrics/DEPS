@@ -1,0 +1,5 @@
+specific_include_rules = {
+  "^ios_chrome_stability_metrics_provider_unittest\.mm$": [
+    "+ios/web/web_state/navigation_context_impl.h",
+  ],
+}
