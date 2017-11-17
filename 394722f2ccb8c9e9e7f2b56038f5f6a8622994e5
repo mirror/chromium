@@ -22,6 +22,30 @@
       "revId": "394722f2ccb8c9e9e7f2b56038f5f6a8622994e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "775db4a2_801e350f",
+        "filename": "components/metrics/net/net_metrics_log_uploader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-17T21:30:53Z",
+      "side": 1,
+      "message": "Oh, forgot \"git cl format\" doesn\u0027t touch comments.",
+      "parentUuid": "5f32ddaf_382e221b",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 13
+      },
+      "revId": "394722f2ccb8c9e9e7f2b56038f5f6a8622994e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
