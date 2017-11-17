@@ -16,6 +16,24 @@
       "revId": "d6f7efddd401be75fd4843c74b28be371e03fcca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca3c5c7_a77c8a12",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-17T03:20:11Z",
+      "side": 1,
+      "message": "rockot@, nverne@ and I discussed this offline and figured that longer-term we\u0027ll probably end up with some need for interfaces to be FIFO with navigation IPCs (even after the legacy IPC channel is removed), so inside blink we\u0027ll describe these as navigation-associated interfaces. This avoids needing to introduce the legacy IPC channel concept here and hopefully is logically at least somewhat forwards-compatible.\n\nI\u0027ve put more detail about this at LocalFrame::GetRemoteNavigationAssociatedInterfaces() since people are likely to look there first.",
+      "parentUuid": "2f06c3c0_110cf5ba",
+      "revId": "d6f7efddd401be75fd4843c74b28be371e03fcca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
