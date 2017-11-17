@@ -22,6 +22,30 @@
       "revId": "2370b5967804e157614d459bd1f4f09b663705d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc28ae44_6f10d147",
+        "filename": "ios/chrome/browser/ui/toolbar/legacy_toolbar_ui_updater.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-11-17T01:43:34Z",
+      "side": 1,
+      "message": "whoops! changed to DidFinishNavigation() and reverted the TestWebState changes that allowed spoofing this callback.",
+      "parentUuid": "a162a89b_2b7b3327",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 34
+      },
+      "revId": "2370b5967804e157614d459bd1f4f09b663705d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
