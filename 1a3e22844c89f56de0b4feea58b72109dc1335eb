@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6862b70_1efcc019",
+        "filename": "ios/chrome/browser/tabs/tab_model_list.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-17T13:31:12Z",
+      "side": 1,
+      "message": "nit: this class only has static methods, so there is no need to create any instance; I would remove the constructor/destructor/DISALLOW_COPY_AND_ASSIGN and instead use DISALLOW_IMPLICIT_CONSTRUCTOR to mark it as non-constructible.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "1a3e22844c89f56de0b4feea58b72109dc1335eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
