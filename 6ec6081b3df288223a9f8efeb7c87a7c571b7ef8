@@ -16,6 +16,24 @@
       "revId": "6ec6081b3df288223a9f8efeb7c87a7c571b7ef8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e9593f3_2210400f",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1599,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-17T21:07:31Z",
+      "side": 1,
+      "message": "We currently don\u0027t protect recently used tabs on ChromeOS because running out of memory leads to a kernel panic. However, I think we should apply the protection when the discard request comes from an extension, for cross-platform consistency. I made that change in my latest patch set.\n\nchrisha@: wdyt?",
+      "parentUuid": "3bd5c2e0_78510157",
+      "revId": "6ec6081b3df288223a9f8efeb7c87a7c571b7ef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
