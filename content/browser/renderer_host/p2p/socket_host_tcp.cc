@@ -132,7 +132,7 @@ bool P2PSocketHostTcpBase::Init(const net::IPEndPoint& local_address,
     // directly here as the caller may not expect an error/close to
     // happen here.  This is okay, as from the caller's point of view,
     // the connect always happens asynchronously.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&P2PSocketHostTcpBase::OnConnected,
                                   base::Unretained(this), status));
   }

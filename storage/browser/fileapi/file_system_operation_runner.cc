@@ -558,7 +558,7 @@ void FileSystemOperationRunner::DidFinish(
     base::File::Error rv) {
   if (handle.scope) {
     finished_operations_.insert(handle.id);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&FileSystemOperationRunner::DidFinish,
                               AsWeakPtr(), handle, callback, rv));
     return;
@@ -574,7 +574,7 @@ void FileSystemOperationRunner::DidGetMetadata(
     const base::File::Info& file_info) {
   if (handle.scope) {
     finished_operations_.insert(handle.id);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&FileSystemOperationRunner::DidGetMetadata,
                               AsWeakPtr(), handle, callback, rv, file_info));
     return;
@@ -591,7 +591,7 @@ void FileSystemOperationRunner::DidReadDirectory(
     bool has_more) {
   if (handle.scope) {
     finished_operations_.insert(handle.id);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&FileSystemOperationRunner::DidReadDirectory,
                                   AsWeakPtr(), handle, callback, rv,
                                   std::move(entries), has_more));
@@ -609,7 +609,7 @@ void FileSystemOperationRunner::DidWrite(const OperationHandle& handle,
                                          bool complete) {
   if (handle.scope) {
     finished_operations_.insert(handle.id);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&FileSystemOperationRunner::DidWrite, AsWeakPtr(),
                               handle, callback, rv, bytes, complete));
     return;
@@ -626,10 +626,10 @@ void FileSystemOperationRunner::DidOpenFile(
     const base::Closure& on_close_callback) {
   if (handle.scope) {
     finished_operations_.insert(handle.id);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(&FileSystemOperationRunner::DidOpenFile,
-                              AsWeakPtr(), handle, callback, Passed(&file),
-                              on_close_callback));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE,
+        base::Bind(&FileSystemOperationRunner::DidOpenFile, AsWeakPtr(), handle,
+                   callback, Passed(&file), on_close_callback));
     return;
   }
   callback.Run(std::move(file), on_close_callback);
@@ -645,7 +645,7 @@ void FileSystemOperationRunner::DidCreateSnapshot(
     scoped_refptr<storage::ShareableFileReference> file_ref) {
   if (handle.scope) {
     finished_operations_.insert(handle.id);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&FileSystemOperationRunner::DidCreateSnapshot,
                               AsWeakPtr(), handle, callback, rv, file_info,
                               platform_path, std::move(file_ref)));
@@ -663,10 +663,10 @@ void FileSystemOperationRunner::OnCopyProgress(
     const FileSystemURL& dest_url,
     int64_t size) {
   if (handle.scope) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(
-            &FileSystemOperationRunner::OnCopyProgress,
-            AsWeakPtr(), handle, callback, type, source_url, dest_url, size));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE,
+        base::Bind(&FileSystemOperationRunner::OnCopyProgress, AsWeakPtr(),
+                   handle, callback, type, source_url, dest_url, size));
     return;
   }
   callback.Run(type, source_url, dest_url, size);

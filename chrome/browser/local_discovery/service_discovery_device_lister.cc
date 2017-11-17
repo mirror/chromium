@@ -97,7 +97,7 @@ void ServiceDiscoveryDeviceLister::OnResolveComplete(
     // On Mac, the Bonjour service does not seem to ever evict a service if a
     // device is unplugged, so we need to continuously try to resolve the
     // service to detect non-graceful shutdowns.
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&ServiceDiscoveryDeviceLister::OnServiceUpdated,
                    weak_factory_.GetWeakPtr(), ServiceWatcher::UPDATE_CHANGED,

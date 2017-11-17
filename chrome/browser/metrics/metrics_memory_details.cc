@@ -75,7 +75,7 @@ void MetricsMemoryDetails::OnDetailsAvailable() {
   if (generate_histograms_)
     UpdateHistograms();
   AnalyzeMemoryGrowth();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback_);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback_);
 }
 
 void MetricsMemoryDetails::UpdateHistograms() {

@@ -47,7 +47,7 @@ NaClBrokerListener::~NaClBrokerListener() = default;
 void NaClBrokerListener::Listen() {
   mojo::ScopedMessagePipeHandle channel_handle;
   std::unique_ptr<service_manager::ServiceContext> service_context =
-      CreateNaClServiceContext(base::ThreadTaskRunnerHandle::Get(),
+      CreateNaClServiceContext(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                                &channel_handle);
 
   channel_ = IPC::Channel::CreateClient(channel_handle.release(), this);
@@ -168,7 +168,7 @@ void NaClBrokerListener::OnLaunchDebugExceptionHandler(
     const std::string& startup_info) {
   NaClStartDebugExceptionHandlerThread(
       base::Process(process_handle), startup_info,
-      base::ThreadTaskRunnerHandle::Get(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::Bind(SendReply, channel_.get(), pid));
 }
 

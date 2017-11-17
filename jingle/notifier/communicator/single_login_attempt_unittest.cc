@@ -84,7 +84,7 @@ class SingleLoginAttemptTest : public ::testing::Test {
       : login_settings_(
             buzz::XmppClientSettings(),
             new net::TestURLRequestContextGetter(
-                base::ThreadTaskRunnerHandle::Get(),
+                base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                 std::unique_ptr<net::TestURLRequestContext>(
                     new MyTestURLRequestContext())),
             ServerList(1,

@@ -233,7 +233,7 @@ class TabManagerTest : public ChromeRenderViewHostTestHarness {
 
  private:
   scoped_refptr<base::SingleThreadTaskRunner> original_task_runner_ =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
  protected:
   std::unique_ptr<NavigationHandle> CreateTabAndNavigation(const char* url) {

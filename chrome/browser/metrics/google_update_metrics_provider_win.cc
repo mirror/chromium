@@ -50,7 +50,8 @@ GoogleUpdateMetricsProviderWin::~GoogleUpdateMetricsProviderWin() {
 void GoogleUpdateMetricsProviderWin::AsyncInit(
     const base::Closure& done_callback) {
   if (!IsOfficialBuild()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, done_callback);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           done_callback);
     return;
   }
 

@@ -17,7 +17,7 @@ namespace midi {
 
 MidiScheduler::MidiScheduler(MidiManager* manager)
     : manager_(manager),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       weak_factory_(this) {}
 
 MidiScheduler::~MidiScheduler() {

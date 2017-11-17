@@ -67,7 +67,7 @@ class ServiceManagerConnectionImpl::IOThreadContext
     DCHECK(!started_);
 
     started_ = true;
-    callback_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    callback_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
     stop_callback_ = stop_callback;
     io_task_runner_->PostTask(
         FROM_HERE, base::BindOnce(&IOThreadContext::StartOnIOThread, this));

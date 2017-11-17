@@ -14,11 +14,12 @@ ThemeDataTypeController::ThemeDataTypeController(
     const base::Closure& dump_stack,
     syncer::SyncClient* sync_client,
     Profile* profile)
-    : AsyncDirectoryTypeController(syncer::THEMES,
-                                   dump_stack,
-                                   sync_client,
-                                   syncer::GROUP_UI,
-                                   base::ThreadTaskRunnerHandle::Get()),
+    : AsyncDirectoryTypeController(
+          syncer::THEMES,
+          dump_stack,
+          sync_client,
+          syncer::GROUP_UI,
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       profile_(profile) {}
 
 ThemeDataTypeController::~ThemeDataTypeController() {}

@@ -178,7 +178,7 @@ void ExtensionGarbageCollector::GarbageCollectExtensions() {
     // Don't garbage collect while there are installations in progress,
     // which may be using the temporary installation directory. Try to garbage
     // collect again later.
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&ExtensionGarbageCollector::GarbageCollectExtensions,
                        weak_factory_.GetWeakPtr()),

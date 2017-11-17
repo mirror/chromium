@@ -96,7 +96,7 @@ void ExtendedUserFlow::HandleOAuthTokenStatusChange(
     user_manager::User::OAuthTokenStatus status) {}
 
 void ExtendedUserFlow::UnregisterFlowSoon() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&ChromeUserManager::ResetUserFlow,
                      base::Unretained(ChromeUserManager::Get()), account_id()));

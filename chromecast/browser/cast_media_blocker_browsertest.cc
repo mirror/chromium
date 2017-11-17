@@ -54,7 +54,7 @@ class CastMediaBlockerBrowserTest : public CastBrowserTest {
     // Changing states is not instant, but should be timely (< 0.5s).
     for (size_t i = 0; i < 5; i++) {
       base::RunLoop run_loop(base::RunLoop::Type::kNestableTasksAllowed);
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE, run_loop.QuitClosure(),
           base::TimeDelta::FromMilliseconds(50));
       run_loop.Run();

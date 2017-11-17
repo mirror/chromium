@@ -194,7 +194,7 @@ CertificateProviderService::CertificateProviderImpl::
 void CertificateProviderService::CertificateProviderImpl::GetCertificates(
     const base::Callback<void(net::ClientCertIdentityList)>& callback) {
   const scoped_refptr<base::TaskRunner> source_task_runner =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   const base::Callback<void(net::ClientCertIdentityList)>
       callback_from_service_thread =
           base::Bind(&PostIdentitiesToTaskRunner, source_task_runner, callback);
@@ -266,7 +266,7 @@ void CertificateProviderService::SSLPrivateKey::Sign(
     const SignCallback& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   const scoped_refptr<base::TaskRunner> source_task_runner =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
   // The extension expects the input to be hashed ahead of time.
   const EVP_MD* md = SSL_get_signature_algorithm_digest(algorithm);
@@ -382,7 +382,7 @@ CertificateProviderService::CreateCertificateProvider() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   return base::MakeUnique<CertificateProviderImpl>(
-      base::ThreadTaskRunnerHandle::Get(), weak_factory_.GetWeakPtr());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), weak_factory_.GetWeakPtr());
 }
 
 void CertificateProviderService::OnExtensionUnloaded(
@@ -442,7 +442,7 @@ void CertificateProviderService::UpdateCertificatesAndRun(
   for (const auto& entry : extension_to_certificates) {
     for (const CertificateInfo& cert_info : entry.second)
       all_certs.push_back(base::MakeUnique<ClientCertIdentity>(
-          cert_info.certificate, base::ThreadTaskRunnerHandle::Get(),
+          cert_info.certificate, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
           weak_factory_.GetWeakPtr()));
   }
 

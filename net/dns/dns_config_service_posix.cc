@@ -265,9 +265,10 @@ class DnsConfigServicePosix::Watcher {
 #endif  // defined(OS_ANDROID)
     // Ignore transient flutter of resolv.conf by delaying the signal a bit.
     const base::TimeDelta kDelay = base::TimeDelta::FromMilliseconds(50);
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE, base::Bind(&Watcher::OnConfigChangedDelayed,
-                              weak_factory_.GetWeakPtr(), succeeded),
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&Watcher::OnConfigChangedDelayed, weak_factory_.GetWeakPtr(),
+                   succeeded),
         kDelay);
   }
 
@@ -370,7 +371,7 @@ class DnsConfigServicePosix::HostsReader
         hosts_size_(0) {
     base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
         this, "DnsConfigServicePosix::HostsReader",
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 
   bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,

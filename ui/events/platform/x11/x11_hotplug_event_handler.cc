@@ -490,7 +490,7 @@ void X11HotplugEventHandler::OnHotplugEvent() {
       FROM_HERE,
       {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
       base::BindOnce(&HandleHotplugEventInWorker, device_infos, display_state,
-                     base::ThreadTaskRunnerHandle::Get(), callbacks));
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE), callbacks));
 }
 
 }  // namespace ui

@@ -26,7 +26,7 @@ ScopedChildProcessReference::~ScopedChildProcessReference() {
 void ScopedChildProcessReference::ReleaseWithDelay(
     const base::TimeDelta& delay) {
   DCHECK(has_reference_);
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&ChildProcess::ReleaseProcess,
                      base::Unretained(ChildProcess::current())),

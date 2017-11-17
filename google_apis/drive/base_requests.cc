@@ -389,7 +389,7 @@ void UrlFetchRequestBase::StartAfterPrepare(
     // to connect to the server.  We need to call CompleteRequestWithError
     // asynchronously because client code does not assume result callback is
     // called synchronously.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&UrlFetchRequestBase::CompleteRequestWithError,
                               weak_ptr_factory_.GetWeakPtr(), error_code));
     return;

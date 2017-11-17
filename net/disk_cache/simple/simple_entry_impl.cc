@@ -139,8 +139,8 @@ int PostToCallbackIfNeeded(bool sync_possible,
                            const net::CompletionCallback& callback,
                            int rv) {
   if (!sync_possible && !callback.is_null()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  base::Bind(callback, rv));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, base::Bind(callback, rv));
     return net::ERR_IO_PENDING;
   } else {
     return rv;
@@ -624,7 +624,7 @@ void SimpleEntryImpl::PostClientCallback(const CompletionCallback& callback,
     return;
   // Note that the callback is posted rather than directly invoked to avoid
   // reentrancy issues.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&InvokeCallbackIfBackendIsAlive, backend_, callback, result));
 }
@@ -980,7 +980,7 @@ void SimpleEntryImpl::WriteDataInternal(int stream_index,
                         CreateNetLogReadWriteCompleteCallback(net::ERR_FAILED));
     }
     if (!callback.is_null()) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(callback, net::ERR_FAILED));
     }
     // |this| may be destroyed after return here.
@@ -993,7 +993,7 @@ void SimpleEntryImpl::WriteDataInternal(int stream_index,
   if (stream_index == 0) {
     int ret_value = SetStream0Data(buf, offset, buf_len, truncate);
     if (!callback.is_null()) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(callback, ret_value));
     }
     return;
@@ -1005,8 +1005,8 @@ void SimpleEntryImpl::WriteDataInternal(int stream_index,
     if (truncate ? (offset == data_size) : (offset <= data_size)) {
       RecordWriteResult(cache_type_, WRITE_RESULT_FAST_EMPTY_RETURN);
       if (!callback.is_null()) {
-        base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                      base::Bind(callback, 0));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+            FROM_HERE, base::Bind(callback, 0));
       }
       return;
     }
@@ -1078,7 +1078,7 @@ void SimpleEntryImpl::ReadSparseDataInternal(
           CreateNetLogReadWriteCompleteCallback(net::ERR_FAILED));
     }
     if (!callback.is_null()) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(callback, net::ERR_FAILED));
     }
     // |this| may be destroyed after return here.
@@ -1124,7 +1124,7 @@ void SimpleEntryImpl::WriteSparseDataInternal(
           CreateNetLogReadWriteCompleteCallback(net::ERR_FAILED));
     }
     if (!callback.is_null()) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(callback, net::ERR_FAILED));
     }
     // |this| may be destroyed after return here.
@@ -1170,7 +1170,7 @@ void SimpleEntryImpl::GetAvailableRangeInternal(
 
   if (state_ == STATE_FAILURE || state_ == STATE_UNINITIALIZED) {
     if (!callback.is_null()) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(callback, net::ERR_FAILED));
     }
     // |this| may be destroyed after return here.
@@ -1308,7 +1308,7 @@ void SimpleEntryImpl::EntryOperationComplete(
   }
 
   if (!completion_callback.is_null()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(completion_callback, *result));
   }
   RunNextOperationIfNeeded();

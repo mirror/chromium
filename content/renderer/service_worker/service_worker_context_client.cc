@@ -657,7 +657,7 @@ ServiceWorkerContextClient::ServiceWorkerContextClient(
       service_worker_scope_(service_worker_scope),
       script_url_(script_url),
       sender_(ChildThreadImpl::current()->thread_safe_sender()),
-      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       io_thread_task_runner_(ChildThreadImpl::current()->GetIOTaskRunner()),
       proxy_(nullptr),
       pending_dispatcher_request_(std::move(dispatcher_request)),
@@ -795,7 +795,7 @@ void ServiceWorkerContextClient::WorkerContextStarted(
     blink::WebServiceWorkerContextProxy* proxy) {
   DCHECK(!worker_task_runner_.get());
   DCHECK_NE(0, WorkerThread::GetCurrentId());
-  worker_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  worker_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   // g_worker_client_tls.Pointer()->Get() could return nullptr if this context
   // gets deleted before workerContextStarted() is called.
   DCHECK(g_worker_client_tls.Pointer()->Get() == nullptr);

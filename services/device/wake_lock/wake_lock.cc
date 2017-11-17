@@ -25,7 +25,7 @@ WakeLock::WakeLock(mojom::WakeLockRequest request,
       context_id_(context_id),
       native_view_getter_(native_view_getter),
 #endif
-      main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       file_task_runner_(std::move(file_task_runner)) {
   AddClient(std::move(request));
   binding_set_.set_connection_error_handler(
@@ -157,7 +157,7 @@ void WakeLock::OnConnectionError() {
   }
 
   if (binding_set_.empty()) {
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
   }
 }
 

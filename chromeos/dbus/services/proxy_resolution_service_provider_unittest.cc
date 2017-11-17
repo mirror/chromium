@@ -68,7 +68,7 @@ class TestProxyResolver : public net::ProxyResolver {
     if (!async_)
       return result_;
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, result_));
     return net::ERR_IO_PENDING;
   }

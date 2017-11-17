@@ -46,7 +46,7 @@ OneClickSigninSyncObserver::OneClickSigninSyncObserver(
     // important to pass a weak pointer rather than base::Unretained(this)
     // because it's possible for e.g. WebContentsDestroyed() to be called
     // before this task has a chance to run.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&OneClickSigninSyncObserver::DeleteObserver,
                                   weak_ptr_factory_.GetWeakPtr()));
   }
@@ -74,7 +74,7 @@ void OneClickSigninSyncObserver::OnStateChanged(syncer::SyncService* sync) {
   if (signin::IsAutoCloseEnabledInURL(continue_url_)) {
     // Close the Gaia sign-in tab via a task to make sure we aren't in the
     // middle of any WebUI handler code.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&CloseTab, base::Unretained(web_contents())));
   } else {
     if (sync_service->IsFirstSetupInProgress()) {

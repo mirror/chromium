@@ -203,8 +203,9 @@ EventFactoryEvdev::CreateSystemInputInjector() {
   // directly. We cannot assume it is safe to (re-)enter ui::Event dispatch
   // synchronously from the injection point.
   std::unique_ptr<DeviceEventDispatcherEvdev> proxy_dispatcher(
-      new ProxyDeviceEventDispatcher(base::ThreadTaskRunnerHandle::Get(),
-                                     weak_ptr_factory_.GetWeakPtr()));
+      new ProxyDeviceEventDispatcher(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+          weak_ptr_factory_.GetWeakPtr()));
   return std::make_unique<InputInjectorEvdev>(std::move(proxy_dispatcher),
                                               cursor_);
 }
@@ -444,7 +445,7 @@ void EventFactoryEvdev::WarpCursorTo(gfx::AcceleratedWidget widget,
 
   cursor_->MoveCursorTo(widget, location);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&EventFactoryEvdev::DispatchMouseMoveEvent,
                  weak_ptr_factory_.GetWeakPtr(),
@@ -461,8 +462,9 @@ int EventFactoryEvdev::NextDeviceId() {
 void EventFactoryEvdev::StartThread() {
   // Set up device factory.
   std::unique_ptr<DeviceEventDispatcherEvdev> proxy_dispatcher(
-      new ProxyDeviceEventDispatcher(base::ThreadTaskRunnerHandle::Get(),
-                                     weak_ptr_factory_.GetWeakPtr()));
+      new ProxyDeviceEventDispatcher(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+          weak_ptr_factory_.GetWeakPtr()));
   thread_.Start(std::move(proxy_dispatcher), cursor_,
                 base::Bind(&EventFactoryEvdev::OnThreadStarted,
                            weak_ptr_factory_.GetWeakPtr()));

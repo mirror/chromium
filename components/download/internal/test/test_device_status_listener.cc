@@ -33,7 +33,7 @@ void TestDeviceStatusListener::Start(DeviceStatusListener::Observer* observer) {
   observer_ = observer;
 
   // Simulates the delay after start up.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&TestDeviceStatusListener::StartAfterDelay,
                             weak_ptr_factory_.GetWeakPtr()));
 }

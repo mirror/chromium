@@ -37,7 +37,8 @@ MockAckHandler::~MockAckHandler() {}
 
 void MockAckHandler::RegisterInvalidation(Invalidation* invalidation) {
   unacked_invalidations_.push_back(*invalidation);
-  invalidation->SetAckHandler(AsWeakPtr(), base::ThreadTaskRunnerHandle::Get());
+  invalidation->SetAckHandler(AsWeakPtr(),
+                              base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 void MockAckHandler::RegisterUnsentInvalidation(Invalidation* invalidation) {

@@ -79,7 +79,7 @@ void RetryDataLoadOnError(
     return;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&LoadDataForUser, account_id, next_backoff_ms, callback),
       base::TimeDelta::FromMilliseconds(next_backoff_ms));

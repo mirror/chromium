@@ -23,7 +23,8 @@ class RtcDtmfSenderHandler::Observer :
     public webrtc::DtmfSenderObserverInterface {
  public:
   explicit Observer(const base::WeakPtr<RtcDtmfSenderHandler>& handler)
-      : main_thread_(base::ThreadTaskRunnerHandle::Get()), handler_(handler) {}
+      : main_thread_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+        handler_(handler) {}
 
  private:
   friend class base::RefCountedThreadSafe<Observer>;

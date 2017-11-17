@@ -30,7 +30,8 @@
 // Note that the callback is always posted to the target TaskRunner.
 //
 // As a convenience, you can use BindToCurrentThread() to bind to the
-// TaskRunner for the current thread (ie, base::ThreadTaskRunnerHandle::Get()).
+// TaskRunner for the current thread (ie,
+// base::ThreadTaskRunnerHandle::Get(FROM_HERE)).
 
 namespace chromecast {
 namespace bind_helpers {
@@ -71,14 +72,14 @@ base::RepeatingCallback<T> BindToTaskRunner(
 
 template <typename T>
 base::OnceCallback<T> BindToCurrentThread(base::OnceCallback<T> callback) {
-  return BindToTaskRunner(base::ThreadTaskRunnerHandle::Get(),
+  return BindToTaskRunner(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                           std::move(callback));
 }
 
 template <typename T>
 base::RepeatingCallback<T> BindToCurrentThread(
     base::RepeatingCallback<T> callback) {
-  return BindToTaskRunner(base::ThreadTaskRunnerHandle::Get(),
+  return BindToTaskRunner(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                           std::move(callback));
 }
 

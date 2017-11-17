@@ -103,7 +103,7 @@ LoaderImpl::LoaderImpl(const BuildSettings* build_settings)
   // There may not be an active TaskRunner at this point. When that's the case,
   // the calling code is expected to call set_task_runner().
   if (base::ThreadTaskRunnerHandle::IsSet())
-    task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 LoaderImpl::~LoaderImpl() {

@@ -435,7 +435,7 @@ URLBlacklistManager::URLBlacklistManager(
       background_task_runner_(background_task_runner),
       io_task_runner_(io_task_runner),
       override_blacklist_(override_blacklist),
-      ui_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      ui_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       blacklist_(new URLBlacklist),
       ui_weak_ptr_factory_(this),
       io_weak_ptr_factory_(this) {

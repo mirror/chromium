@@ -442,7 +442,7 @@ IN_PROC_BROWSER_TEST_P(MemlogBrowserTest, TracingControllerEndToEnd) {
       base::Unretained(content::TracingController::GetInstance()), sink);
   base::OnceClosure stop_tracing_ui_thread_closure =
       base::BindOnce(base::IgnoreResult(&base::TaskRunner::PostTask),
-                     base::ThreadTaskRunnerHandle::Get(), FROM_HERE,
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE), FROM_HERE,
                      std::move(stop_tracing_closure));
   profiling::ProfilingProcessHost::GetInstance()
       ->SetDumpProcessForTracingCallback(

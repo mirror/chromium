@@ -85,7 +85,7 @@ void ServiceImpl::SetShutdownDelayInSeconds(float seconds) {
 
 void ServiceImpl::MaybeRequestQuitDelayed() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&ServiceImpl::MaybeRequestQuit, weak_factory_.GetWeakPtr()),
       base::TimeDelta::FromSeconds(shutdown_delay_in_seconds_));

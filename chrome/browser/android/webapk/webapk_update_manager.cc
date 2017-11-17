@@ -145,7 +145,7 @@ static void UpdateWebApkFromFile(
 
   Profile* profile = ProfileManager::GetLastUsedProfile();
   if (profile == nullptr) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&OnUpdated, callback_ref, WebApkInstallResult::FAILURE,
                    false /* relax_updates */, "" /* webapk_package */));

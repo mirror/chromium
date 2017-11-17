@@ -67,7 +67,7 @@ void IsDirectoryCollector::CollectForEntriesPaths(
 
   if (!left_) {
     // Nothing to process.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback_, base::Passed(&result_)));
     callback_ = CompletionCallback();
     return;
@@ -85,7 +85,7 @@ void IsDirectoryCollector::OnIsDirectoryCollected(size_t index,
   if (is_directory)
     result_->insert(paths_[index]);
   if (!--left_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback_, base::Passed(&result_)));
     // Release the callback to avoid a circullar reference in case an instance
     // of this class is a member of a ref counted class, which instance is bound

@@ -143,18 +143,20 @@ class ResourceMetadataTest : public testing::Test {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
 
     metadata_storage_.reset(new ResourceMetadataStorage(
-        temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get().get()));
+        temp_dir_.GetPath(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get()));
     ASSERT_TRUE(metadata_storage_->Initialize());
 
     fake_free_disk_space_getter_.reset(new FakeFreeDiskSpaceGetter);
-    cache_.reset(new FileCache(metadata_storage_.get(), temp_dir_.GetPath(),
-                               base::ThreadTaskRunnerHandle::Get().get(),
-                               fake_free_disk_space_getter_.get()));
+    cache_.reset(
+        new FileCache(metadata_storage_.get(), temp_dir_.GetPath(),
+                      base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+                      fake_free_disk_space_getter_.get()));
     ASSERT_TRUE(cache_->Initialize());
 
-    resource_metadata_.reset(new ResourceMetadata(
-        metadata_storage_.get(), cache_.get(),
-        base::ThreadTaskRunnerHandle::Get()));
+    resource_metadata_.reset(
+        new ResourceMetadata(metadata_storage_.get(), cache_.get(),
+                             base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 
     ASSERT_EQ(FILE_ERROR_OK, resource_metadata_->Initialize());
 

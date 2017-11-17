@@ -417,7 +417,7 @@ std::vector<display::Display> DesktopScreenX11::BuildDisplaysFromXRandRInfo() {
 void DesktopScreenX11::RestartDelayedConfigurationTask() {
   delayed_configuration_task_.Reset(base::Bind(
       &DesktopScreenX11::UpdateDisplays, weak_factory_.GetWeakPtr()));
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, delayed_configuration_task_.callback());
 }
 

@@ -50,7 +50,7 @@ TEST_F(CommandLinePrefStoreSSLManagerTest, CommandLinePrefs) {
 
   std::unique_ptr<SSLConfigServiceManager> config_manager(
       SSLConfigServiceManager::CreateDefaultManager(
-          local_state.get(), base::ThreadTaskRunnerHandle::Get()));
+          local_state.get(), base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   ASSERT_TRUE(config_manager.get());
   scoped_refptr<SSLConfigService> config_service(config_manager->Get());
   ASSERT_TRUE(config_service.get());
@@ -104,7 +104,7 @@ TEST_F(CommandLinePrefStoreSSLManagerTest, TLS13VariantEnabled) {
 
   std::unique_ptr<SSLConfigServiceManager> config_manager(
       SSLConfigServiceManager::CreateDefaultManager(
-          local_state.get(), base::ThreadTaskRunnerHandle::Get()));
+          local_state.get(), base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   ASSERT_TRUE(config_manager.get());
   scoped_refptr<SSLConfigService> config_service(config_manager->Get());
   ASSERT_TRUE(config_service.get());
@@ -135,7 +135,7 @@ TEST_F(CommandLinePrefStoreSSLManagerTest, TLS13VariantDisabled) {
 
   std::unique_ptr<SSLConfigServiceManager> config_manager(
       SSLConfigServiceManager::CreateDefaultManager(
-          local_state.get(), base::ThreadTaskRunnerHandle::Get()));
+          local_state.get(), base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   ASSERT_TRUE(config_manager.get());
   scoped_refptr<SSLConfigService> config_service(config_manager->Get());
   ASSERT_TRUE(config_service.get());

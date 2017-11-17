@@ -322,7 +322,7 @@ void DiskCacheTestWithCache::InitDiskCache() {
 void DiskCacheTestWithCache::CreateBackend(uint32_t flags) {
   scoped_refptr<base::SingleThreadTaskRunner> runner;
   if (use_current_thread_)
-    runner = base::ThreadTaskRunnerHandle::Get();
+    runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   else
     runner = nullptr;  // let the backend sort it out.
 

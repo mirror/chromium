@@ -136,6 +136,22 @@ std::unique_ptr<ThrottlingURLLoader> ThrottlingURLLoader::CreateLoaderAndStart(
     uint32_t options,
     const ResourceRequest& url_request,
     mojom::URLLoaderClient* client,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
+  return CreateLoaderAndStart(factory, std::move(throttles), routing_id,
+                              request_id, options, url_request, client,
+                              traffic_annotation,
+                              base::ThreadTaskRunnerHandle::Get(FROM_HERE));
+}
+
+// static
+std::unique_ptr<ThrottlingURLLoader> ThrottlingURLLoader::CreateLoaderAndStart(
+    mojom::URLLoaderFactory* factory,
+    std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
+    int32_t routing_id,
+    int32_t request_id,
+    uint32_t options,
+    const ResourceRequest& url_request,
+    mojom::URLLoaderClient* client,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   std::unique_ptr<ThrottlingURLLoader> loader(new ThrottlingURLLoader(
@@ -143,6 +159,20 @@ std::unique_ptr<ThrottlingURLLoader> ThrottlingURLLoader::CreateLoaderAndStart(
   loader->Start(factory, routing_id, request_id, options, StartLoaderCallback(),
                 url_request, std::move(task_runner));
   return loader;
+}
+
+// static
+std::unique_ptr<ThrottlingURLLoader> ThrottlingURLLoader::CreateLoaderAndStart(
+    StartLoaderCallback start_loader_callback,
+    std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
+    int32_t routing_id,
+    const ResourceRequest& url_request,
+    mojom::URLLoaderClient* client,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
+  return CreateLoaderAndStart(std::move(start_loader_callback),
+                              std::move(throttles), routing_id, url_request,
+                              client, traffic_annotation,
+                              base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 // static
@@ -172,8 +202,8 @@ ThrottlingURLLoader::~ThrottlingURLLoader() {
 
     auto throttles =
         std::make_unique<std::vector<ThrottleEntry>>(std::move(throttles_));
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE,
-                                                    std::move(throttles));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
+        FROM_HERE, std::move(throttles));
   }
 }
 

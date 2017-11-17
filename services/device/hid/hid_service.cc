@@ -51,7 +51,7 @@ void HidService::GetDevices(GetDevicesCallback callback) {
   bool was_empty = pending_enumerations_.empty();
   pending_enumerations_.push_back(std::move(callback));
   if (enumeration_ready_ && was_empty) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&HidService::RunPendingEnumerations, GetWeakPtr()));
   }

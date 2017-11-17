@@ -38,8 +38,8 @@ class TestingURLBlacklistManager : public URLBlacklistManager {
  public:
   explicit TestingURLBlacklistManager(PrefService* pref_service)
       : URLBlacklistManager(pref_service,
-                            base::ThreadTaskRunnerHandle::Get(),
-                            base::ThreadTaskRunnerHandle::Get(),
+                            base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                            base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                             base::Bind(OverrideBlacklistForURL)),
         update_called_(0),
         set_blacklist_called_(false) {}
@@ -227,8 +227,8 @@ TEST_F(URLBlacklistManagerTest, LoadBlacklistOnCreate) {
   list->AppendString("example.com");
   pref_service_.SetManagedPref(policy_prefs::kUrlBlacklist, std::move(list));
   auto manager = base::MakeUnique<URLBlacklistManager>(
-      &pref_service_, base::ThreadTaskRunnerHandle::Get(),
-      base::ThreadTaskRunnerHandle::Get(),
+      &pref_service_, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       URLBlacklistManager::OverrideBlacklistCallback());
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(URLBlacklist::URL_IN_BLACKLIST,
@@ -240,8 +240,8 @@ TEST_F(URLBlacklistManagerTest, LoadWhitelistOnCreate) {
   list->AppendString("example.com");
   pref_service_.SetManagedPref(policy_prefs::kUrlWhitelist, std::move(list));
   auto manager = base::MakeUnique<URLBlacklistManager>(
-      &pref_service_, base::ThreadTaskRunnerHandle::Get(),
-      base::ThreadTaskRunnerHandle::Get(),
+      &pref_service_, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       URLBlacklistManager::OverrideBlacklistCallback());
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(URLBlacklist::URL_IN_WHITELIST,

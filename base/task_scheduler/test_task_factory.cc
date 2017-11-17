@@ -71,7 +71,7 @@ void TestTaskFactory::RunTaskCallback(size_t task_index,
       // both are expected to be "set" in the SINGLE_THREADED case.
       EXPECT_TRUE(ThreadTaskRunnerHandle::IsSet());
       EXPECT_TRUE(SequencedTaskRunnerHandle::IsSet());
-      EXPECT_EQ(task_runner_, ThreadTaskRunnerHandle::Get());
+      EXPECT_EQ(task_runner_, ThreadTaskRunnerHandle::Get(FROM_HERE));
       EXPECT_EQ(task_runner_, SequencedTaskRunnerHandle::Get());
       break;
   }

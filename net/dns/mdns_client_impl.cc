@@ -178,7 +178,7 @@ void MDnsConnection::PostOnError(SocketHandler* loop, int rv) {
   }
   VLOG(1) << "Socket error. id=" << id << ", error=" << rv;
   // Post to allow deletion of this object by delegate.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&MDnsConnection::OnError, weak_ptr_factory_.GetWeakPtr(), rv));
 }
@@ -367,7 +367,7 @@ void MDnsClientImpl::Core::RemoveListener(MDnsListenerImpl* listener) {
   if (!observer_list_iterator->second->might_have_observers()) {
     // Schedule the actual removal for later in case the listener removal
     // happens while iterating over the observer list.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&MDnsClientImpl::Core::CleanupObserverList,
                               AsWeakPtr(), key));
   }
@@ -584,10 +584,10 @@ void MDnsListenerImpl::ScheduleNextRefresh() {
       static_cast<int>(base::Time::kMillisecondsPerSecond *
                        kListenerRefreshRatio2 * ttl_));
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, next_refresh_.callback(), next_refresh1 - clock_->Now());
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, next_refresh_.callback(), next_refresh2 - clock_->Now());
 }
 
@@ -730,7 +730,7 @@ bool MDnsTransactionImpl::QueryAndListen() {
 
   timeout_.Reset(base::Bind(&MDnsTransactionImpl::SignalTransactionOver,
                             AsWeakPtr()));
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, timeout_.callback(),
       base::TimeDelta::FromSeconds(MDnsTransactionTimeoutSeconds));
 

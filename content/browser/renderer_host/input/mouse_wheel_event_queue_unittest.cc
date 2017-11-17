@@ -351,7 +351,7 @@ class MouseWheelEventQueueTest
   }
 
   static void RunTasksAndWait(base::TimeDelta delay) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(), delay);
     base::RunLoop().Run();
   }

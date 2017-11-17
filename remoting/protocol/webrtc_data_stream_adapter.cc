@@ -34,7 +34,8 @@ WebrtcDataStreamAdapter::~WebrtcDataStreamAdapter() {
 
     // Destroy |channel_| asynchronously as it may be on stack.
     channel_->AddRef();
-    base::ThreadTaskRunnerHandle::Get()->ReleaseSoon(FROM_HERE, channel_.get());
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->ReleaseSoon(FROM_HERE,
+                                                              channel_.get());
     channel_ = nullptr;
   }
 }

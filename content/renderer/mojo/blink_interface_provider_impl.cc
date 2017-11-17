@@ -34,7 +34,7 @@ void BindInterface(base::WeakPtr<service_manager::Connector> connector,
 BlinkInterfaceProviderImpl::BlinkInterfaceProviderImpl(
     service_manager::Connector* connector)
     : connector_(connector->GetWeakPtr()),
-      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 BlinkInterfaceProviderImpl::~BlinkInterfaceProviderImpl() = default;
 

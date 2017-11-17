@@ -103,7 +103,7 @@ ACTION_P3(NotifyStateAndCallback,
           mock_remote_service, service_state, operation_status) {
   mock_remote_service->NotifyRemoteServiceStateUpdated(
       service_state, "Test event.");
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(arg1, operation_status));
 }
 
@@ -112,17 +112,17 @@ ACTION_P(RecordState, states) {
 }
 
 ACTION_P(MockStatusCallback, status) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                base::BindOnce(arg4, status));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, base::BindOnce(arg4, status));
 }
 
 ACTION_P2(MockSyncFileCallback, status, url) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(arg0, status, url));
 }
 
 ACTION(InvokeCompletionClosure) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, arg0);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, arg0);
 }
 
 class SyncFileSystemServiceTest : public testing::Test {

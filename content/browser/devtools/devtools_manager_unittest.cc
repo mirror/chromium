@@ -148,7 +148,7 @@ TEST_F(DevToolsManagerTest, NoUnresponsiveDialogInInspectedContents) {
   inspected_rvh->GetWidget()->StartHangMonitorTimeout(
       TimeDelta::FromMilliseconds(10), blink::WebInputEvent::kUndefined);
   // Wait long enough for first timeout and see if it fired.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       TimeDelta::FromMilliseconds(10));
   base::RunLoop().Run();
@@ -160,7 +160,7 @@ TEST_F(DevToolsManagerTest, NoUnresponsiveDialogInInspectedContents) {
   inspected_rvh->GetWidget()->StartHangMonitorTimeout(
       TimeDelta::FromMilliseconds(10), blink::WebInputEvent::kUndefined);
   // Wait long enough for first timeout and see if it fired.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       TimeDelta::FromMilliseconds(10));
   base::RunLoop().Run();

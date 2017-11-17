@@ -110,7 +110,7 @@ void BookmarkSuggestionsProvider::DismissSuggestion(
 void BookmarkSuggestionsProvider::FetchSuggestionImage(
     const ContentSuggestion::ID& suggestion_id,
     ImageFetchedCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), gfx::Image()));
 }
 
@@ -119,7 +119,7 @@ void BookmarkSuggestionsProvider::Fetch(
     const std::set<std::string>& known_suggestion_ids,
     FetchDoneCallback callback) {
   LOG(DFATAL) << "BookmarkSuggestionsProvider has no |Fetch| functionality!";
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(
           std::move(callback),

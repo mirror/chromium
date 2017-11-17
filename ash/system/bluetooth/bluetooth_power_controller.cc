@@ -183,7 +183,7 @@ void BluetoothPowerController::AdapterPresentChanged(
     //
     // TODO(sonnysasaka): Replace this delay hack with a signal from bluez when
     // it has "initialized" signal in the future (http://crbug.com/765390).
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&BluetoothPowerController::TriggerRunPendingBluetoothTasks,
                    weak_ptr_factory_.GetWeakPtr()),

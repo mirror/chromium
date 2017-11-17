@@ -202,7 +202,7 @@ class CastVideoSink : public base::SupportsWeakPtr<CastVideoSink>,
   class Deliverer : public base::RefCountedThreadSafe<Deliverer> {
    public:
     explicit Deliverer(const CastRtpStream::ErrorCallback& error_callback)
-        : main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+        : main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
           error_callback_(error_callback) {}
 
     void WillConnectToTrack(
@@ -582,6 +582,6 @@ void CastRtpStream::DidEncounterError(const std::string& message) {
   // Save the WeakPtr first because the error callback might delete this object.
   base::WeakPtr<CastRtpStream> ptr = weak_factory_.GetWeakPtr();
   error_callback_.Run(message);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&CastRtpStream::Stop, ptr));
 }

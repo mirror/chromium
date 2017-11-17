@@ -16,7 +16,7 @@ namespace ntp_tiles {
 void JsonUnsafeParser::Parse(const std::string& unsafe_json,
                              const SuccessCallback& success_callback,
                              const ErrorCallback& error_callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(
           [](const std::string& unsafe_json,

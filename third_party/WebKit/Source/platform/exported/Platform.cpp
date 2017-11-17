@@ -130,7 +130,7 @@ void Platform::Initialize(Platform* platform) {
     options.supports_heap_profiling = true;
     base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
         BlinkGCMemoryDumpProvider::Instance(), "BlinkGC",
-        base::ThreadTaskRunnerHandle::Get(), options);
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), options);
   }
 
   ThreadState::AttachMainThread();
@@ -149,16 +149,16 @@ void Platform::Initialize(Platform* platform) {
     heap_profiling_options.supports_heap_profiling = true;
     base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
         PartitionAllocMemoryDumpProvider::Instance(), "PartitionAlloc",
-        base::ThreadTaskRunnerHandle::Get(), heap_profiling_options);
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), heap_profiling_options);
     base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
         FontCacheMemoryDumpProvider::Instance(), "FontCaches",
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
         MemoryCacheDumpProvider::Instance(), "MemoryCache",
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
         InstanceCountersMemoryDumpProvider::Instance(), "BlinkObjectCounters",
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 
   // Pre-create the File thread so multiple threads can call FileTaskRunner() in

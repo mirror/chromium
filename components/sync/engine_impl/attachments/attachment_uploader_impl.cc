@@ -295,10 +295,10 @@ void AttachmentUploaderImpl::UploadState::StopAndReportResult(
   UploadCallbackList::const_iterator iter = user_callbacks_.begin();
   UploadCallbackList::const_iterator end = user_callbacks_.end();
   for (; iter != end; ++iter) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(*iter, result, attachment_id));
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&AttachmentUploaderImpl::OnUploadStateStopped,
                             owner_, attachment_id.GetProto().unique_id()));
 }

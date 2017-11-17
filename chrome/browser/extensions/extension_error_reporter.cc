@@ -38,7 +38,7 @@ ExtensionErrorReporter* ExtensionErrorReporter::GetInstance() {
 ExtensionErrorReporter::ExtensionErrorReporter(bool enable_noisy_errors)
     : enable_noisy_errors_(enable_noisy_errors) {
   if (base::ThreadTaskRunnerHandle::IsSet())
-    ui_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    ui_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 ExtensionErrorReporter::~ExtensionErrorReporter() {}

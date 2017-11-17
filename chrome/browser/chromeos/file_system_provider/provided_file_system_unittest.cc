@@ -163,8 +163,8 @@ class Observer : public ProvidedFileSystemObserver {
   // Completes handling the OnWatcherChanged event.
   void CompleteOnWatcherChanged() {
     DCHECK(!complete_callback_.is_null());
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  complete_callback_);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           complete_callback_);
     complete_callback_ = base::Closure();
   }
 
@@ -288,11 +288,13 @@ TEST_F(FileSystemProviderProvidedFileSystemTest, AutoUpdater) {
   // callbacks.
   EXPECT_EQ(0u, log.size());
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, firstCallback);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                         firstCallback);
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(0u, log.size());
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, secondCallback);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                         secondCallback);
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(1u, log.size());
 }

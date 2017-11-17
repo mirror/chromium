@@ -72,7 +72,7 @@ class FuzzedHostResolverProc : public HostResolverProc {
       base::WeakPtr<base::FuzzedDataProvider> data_provider)
       : HostResolverProc(nullptr),
         data_provider_(data_provider),
-        network_task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+        network_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
   int Resolve(const std::string& host,
               AddressFamily address_family,

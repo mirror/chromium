@@ -73,7 +73,7 @@ void FakeSyncManager::WaitForSyncThread() {
 }
 
 void FakeSyncManager::Init(InitArgs* args) {
-  sync_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  sync_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   PurgePartiallySyncedTypes();
 
   test_user_share_.SetUp();

@@ -370,24 +370,28 @@ void ZipReader::ExtractCurrentEntryToFilePathAsync(
   // If this is a directory, just create it and return.
   if (current_entry_info()->is_directory()) {
     if (base::CreateDirectory(output_file_path)) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, success_callback);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                             success_callback);
     } else {
       DVLOG(1) << "Unzip failed: unable to create directory.";
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, failure_callback);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                             failure_callback);
     }
     return;
   }
 
   if (unzOpenCurrentFile(zip_file_) != UNZ_OK) {
     DVLOG(1) << "Unzip failed: unable to open current zip entry.";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, failure_callback);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           failure_callback);
     return;
   }
 
   base::FilePath output_dir_path = output_file_path.DirName();
   if (!base::CreateDirectory(output_dir_path)) {
     DVLOG(1) << "Unzip failed: unable to create containing directory.";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, failure_callback);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           failure_callback);
     return;
   }
 
@@ -397,11 +401,12 @@ void ZipReader::ExtractCurrentEntryToFilePathAsync(
   if (!output_file.IsValid()) {
     DVLOG(1) << "Unzip failed: unable to create platform file at "
              << output_file_path.value();
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, failure_callback);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           failure_callback);
     return;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&ZipReader::ExtractChunk, weak_ptr_factory_.GetWeakPtr(),
                  Passed(std::move(output_file)), success_callback,
@@ -523,7 +528,7 @@ void ZipReader::ExtractChunk(base::File output_file,
 
     progress_callback.Run(current_progress);
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&ZipReader::ExtractChunk, weak_ptr_factory_.GetWeakPtr(),
                    Passed(std::move(output_file)), success_callback,

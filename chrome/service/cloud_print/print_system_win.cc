@@ -423,10 +423,10 @@ class JobSpoolerWin : public PrintSystem::JobSpooler {
       int dc_width = GetDeviceCaps(printer_dc_.Get(), PHYSICALWIDTH);
       int dc_height = GetDeviceCaps(printer_dc_.Get(), PHYSICALHEIGHT);
       gfx::Rect render_area(0, 0, dc_width, dc_height);
-      PostIOThreadTask(FROM_HERE,
-                       base::Bind(&JobSpoolerWin::Core::RenderPDFPagesInSandbox,
-                                  this, pdf_path, render_area, printer_dpi,
-                                  base::ThreadTaskRunnerHandle::Get()));
+      PostIOThreadTask(
+          FROM_HERE, base::Bind(&JobSpoolerWin::Core::RenderPDFPagesInSandbox,
+                                this, pdf_path, render_area, printer_dpi,
+                                base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
     }
 
     void RenderPDFPagesInSandbox(
@@ -576,14 +576,14 @@ class PrinterCapsHandler : public ServiceUtilityProcessHost::Client {
     PostIOThreadTask(
         FROM_HERE,
         base::Bind(&PrinterCapsHandler::GetPrinterCapsAndDefaultsImpl, this,
-                   base::ThreadTaskRunnerHandle::Get()));
+                   base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   }
 
   void StartGetPrinterSemanticCapsAndDefaults() {
     PostIOThreadTask(
         FROM_HERE,
         base::Bind(&PrinterCapsHandler::GetPrinterSemanticCapsAndDefaultsImpl,
-                   this, base::ThreadTaskRunnerHandle::Get()));
+                   this, base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   }
 
  private:

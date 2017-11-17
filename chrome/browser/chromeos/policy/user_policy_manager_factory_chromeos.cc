@@ -271,7 +271,7 @@ UserPolicyManagerFactoryChromeOS::CreateManagerForProfile(
         base::MakeUnique<UserCloudPolicyManagerChromeOS>(
             std::move(store), std::move(external_data_manager),
             component_policy_cache_dir, initial_policy_fetch_timeout,
-            base::ThreadTaskRunnerHandle::Get(), io_task_runner);
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE), io_task_runner);
 
     // TODO(tnagel): Enable whitelist for Active Directory.
     bool wildcard_match = false;

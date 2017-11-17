@@ -245,7 +245,7 @@ void PrefetchDispatcherImpl::DisposeTask() {
     return;
 
   // Delay the deletion till the caller finishes.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&DeleteBackgroundTaskHelper,
                             base::Passed(std::move(background_task_))));
 }

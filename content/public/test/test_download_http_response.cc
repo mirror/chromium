@@ -77,11 +77,12 @@ void PauseResponsesAndWaitForResumption(
   params.on_pause_handler.Reset();
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::Bind(parameters.on_pause_handler,
-                 base::Bind(&OnResume, base::ThreadTaskRunnerHandle::Get(),
-                            base::Bind(&SendResponses, header, body,
-                                       starting_body_offset, std::move(params),
-                                       completion_callback, send))));
+      base::Bind(
+          parameters.on_pause_handler,
+          base::Bind(
+              &OnResume, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+              base::Bind(&SendResponses, header, body, starting_body_offset,
+                         std::move(params), completion_callback, send))));
 }
 
 void OnResponseSentOnServerIOThread(

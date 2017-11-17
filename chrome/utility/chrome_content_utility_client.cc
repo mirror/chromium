@@ -166,10 +166,10 @@ void ChromeContentUtilityClient::UtilityThreadStarted() {
   if (!utility_process_running_elevated_) {
 #if !defined(OS_ANDROID)
     registry->AddInterface(base::Bind(CreateResourceUsageReporter),
-                           base::ThreadTaskRunnerHandle::Get());
+                           base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     registry->AddInterface(
         base::Bind(&media_router::DialDeviceDescriptionParserImpl::Create),
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 #endif  // !defined(OS_ANDROID)
   }
 

@@ -19,7 +19,7 @@ DelegatingSignalStrategy::DelegatingSignalStrategy(
     scoped_refptr<base::SingleThreadTaskRunner> client_task_runner,
     const IqCallback& send_iq_callback)
     : local_address_(local_address),
-      delegate_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      delegate_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       client_task_runner_(client_task_runner),
       send_iq_callback_(send_iq_callback),
       weak_factory_(this) {

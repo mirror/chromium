@@ -158,7 +158,7 @@ class MockUsbDeviceHandle : public UsbDeviceHandle {
       success = true;
     }
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), success));
   }
 
@@ -170,7 +170,7 @@ class MockUsbDeviceHandle : public UsbDeviceHandle {
       success = false;
 
     device_->claimed_interfaces_.erase(interface_number);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), success));
   }
 
@@ -229,7 +229,7 @@ class MockUsbDeviceHandle : public UsbDeviceHandle {
       device::UsbTransferStatus status = broken_
                                              ? UsbTransferStatus::TRANSFER_ERROR
                                              : UsbTransferStatus::COMPLETED;
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(std::move(callback), status, nullptr, 0));
       ProcessQueries();
     } else if (direction == device::UsbTransferDirection::INBOUND) {
@@ -342,7 +342,7 @@ class MockUsbDeviceHandle : public UsbDeviceHandle {
     if (broken_) {
       Query query = std::move(queries_.front());
       queries_.pop();
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(std::move(query.callback),
                          UsbTransferStatus::TRANSFER_ERROR, nullptr, 0));
@@ -359,7 +359,7 @@ class MockUsbDeviceHandle : public UsbDeviceHandle {
               query.buffer->data());
     output_buffer_.erase(output_buffer_.begin(),
                          output_buffer_.begin() + query.size);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(std::move(query.callback), UsbTransferStatus::COMPLETED,
                        query.buffer, query.size));
@@ -432,7 +432,7 @@ class MockUsbDevice : public UsbDevice {
     // connections are more likely to cause problems. https://crbug.com/725320
     EXPECT_FALSE(open_);
     open_ = true;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(std::move(callback),
                        base::WrapRefCounted(new MockUsbDeviceHandle<T>(this))));
@@ -668,7 +668,7 @@ class MockCountListenerWithReAddWhileQueued : public MockCountListener {
     ++invoked_;
     if (!readded_) {
       readded_ = true;
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(&MockCountListenerWithReAddWhileQueued::ReAdd,
                          base::Unretained(this)));

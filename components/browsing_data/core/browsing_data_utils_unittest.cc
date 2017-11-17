@@ -24,8 +24,8 @@ namespace {
 class FakeWebDataService : public autofill::AutofillWebDataService {
  public:
   FakeWebDataService()
-      : AutofillWebDataService(base::ThreadTaskRunnerHandle::Get(),
-                               base::ThreadTaskRunnerHandle::Get()) {}
+      : AutofillWebDataService(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                               base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
  protected:
   ~FakeWebDataService() override {}

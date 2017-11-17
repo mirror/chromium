@@ -239,7 +239,7 @@ void DeviceService::BindSerialIoHandlerRequest(
     io_task_runner_->PostTask(
         FROM_HERE,
         base::Bind(&SerialIoHandlerImpl::Create, base::Passed(&request),
-                   base::ThreadTaskRunnerHandle::Get()));
+                   base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   }
 #endif
 }

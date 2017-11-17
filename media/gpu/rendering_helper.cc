@@ -129,7 +129,7 @@ void RenderingHelper::Initialize(const RenderingHelperParams& params,
                         : base::TimeDelta();
 
   render_as_thumbnails_ = params.render_as_thumbnails;
-  task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
   gl_surface_ = gl::init::CreateOffscreenGLSurface(gfx::Size());
   gl_context_ = gl::init::CreateGLContext(nullptr, gl_surface_.get(),

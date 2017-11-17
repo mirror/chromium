@@ -69,7 +69,7 @@ bool ToolbarButton::OnMousePressed(const ui::MouseEvent& event) {
 
     // Schedule a task that will show the menu.
     const int kMenuTimerDelay = 500;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&ToolbarButton::ShowDropDownMenu,
                        show_menu_factory_.GetWeakPtr(),

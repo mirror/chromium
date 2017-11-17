@@ -37,7 +37,7 @@ ServerGpuMemoryBufferManager::ServerGpuMemoryBufferManager(
     : gpu_service_(gpu_service),
       client_id_(client_id),
       native_configurations_(gpu::GetNativeGpuMemoryBufferConfigurations()),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       weak_factory_(this) {
   weak_ptr_ = weak_factory_.GetWeakPtr();
 }

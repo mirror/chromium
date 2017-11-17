@@ -37,7 +37,7 @@ BlackHoleRequestJob::BlackHoleRequestJob(net::URLRequest* request,
 BlackHoleRequestJob::~BlackHoleRequestJob() {}
 
 void BlackHoleRequestJob::Start() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&BlackHoleRequestJob::StartAsync, weak_factory_.GetWeakPtr()));
 }

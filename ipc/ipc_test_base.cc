@@ -38,9 +38,9 @@ void IPCChannelMojoTestBase::TearDown() {
 }
 
 void IPCChannelMojoTestBase::CreateChannel(IPC::Listener* listener) {
-  channel_ =
-      IPC::ChannelMojo::Create(TakeHandle(), IPC::Channel::MODE_SERVER,
-                               listener, base::ThreadTaskRunnerHandle::Get());
+  channel_ = IPC::ChannelMojo::Create(
+      TakeHandle(), IPC::Channel::MODE_SERVER, listener,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 bool IPCChannelMojoTestBase::ConnectChannel() {
@@ -64,9 +64,9 @@ void IpcChannelMojoTestClient::Init(mojo::ScopedMessagePipeHandle handle) {
 }
 
 void IpcChannelMojoTestClient::Connect(IPC::Listener* listener) {
-  channel_ =
-      IPC::ChannelMojo::Create(std::move(handle_), IPC::Channel::MODE_CLIENT,
-                               listener, base::ThreadTaskRunnerHandle::Get());
+  channel_ = IPC::ChannelMojo::Create(
+      std::move(handle_), IPC::Channel::MODE_CLIENT, listener,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   CHECK(channel_->Connect());
 }
 
@@ -74,7 +74,7 @@ void IpcChannelMojoTestClient::Close() {
   channel_->Close();
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                run_loop.QuitClosure());
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, run_loop.QuitClosure());
   run_loop.Run();
 }

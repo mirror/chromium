@@ -336,7 +336,7 @@ VaapiVideoDecodeAccelerator::VaapiVideoDecodeAccelerator(
       input_ready_(&lock_),
       create_vaapi_picture_callback_(base::Bind(&VaapiPicture::CreatePicture)),
       surfaces_available_(&lock_),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       decoder_thread_("VaapiDecoderThread"),
       num_frames_at_client_(0),
       finish_flush_pending_(false),

@@ -107,7 +107,7 @@ V4L2VideoEncodeAccelerator::ImageProcessorInputRecord::
 
 V4L2VideoEncodeAccelerator::V4L2VideoEncodeAccelerator(
     const scoped_refptr<V4L2Device>& device)
-    : child_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : child_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       output_buffer_byte_size_(0),
       device_input_format_(PIXEL_FORMAT_UNKNOWN),
       input_planes_count_(0),

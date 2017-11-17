@@ -88,8 +88,7 @@ class TestGoogleURLTrackerClient : public GoogleURLTrackerClient {
 TestGoogleURLTrackerClient::TestGoogleURLTrackerClient(PrefService* prefs)
     : prefs_(prefs),
       request_context_(new net::TestURLRequestContextGetter(
-          base::ThreadTaskRunnerHandle::Get())) {
-}
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE))) {}
 
 TestGoogleURLTrackerClient::~TestGoogleURLTrackerClient() {
 }

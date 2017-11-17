@@ -44,7 +44,7 @@ static void AddPattern(URLPatternSet* extent, const std::string& pattern) {
 }
 
 ExtensionPrefsTest::ExtensionPrefsTest()
-    : prefs_(base::ThreadTaskRunnerHandle::Get()) {}
+    : prefs_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 ExtensionPrefsTest::~ExtensionPrefsTest() {
 }

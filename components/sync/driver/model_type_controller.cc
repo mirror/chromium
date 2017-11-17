@@ -101,7 +101,7 @@ void ModelTypeController::LoadModels(
                                      base::AsWeakPtr(this)));
 
   ModelErrorHandler error_handler = base::BindRepeating(
-      &ReportError, type(), base::ThreadTaskRunnerHandle::Get(),
+      &ReportError, type(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::Bind(&ModelTypeController::ReportModelError,
                  base::AsWeakPtr(this)));
 

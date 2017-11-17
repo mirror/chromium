@@ -81,8 +81,9 @@ class MockAudioHistoryHandler : public HotwordAudioHistoryHandler {
  public:
   MockAudioHistoryHandler(content::BrowserContext* context,
                           history::WebHistoryService* web_history)
-      : HotwordAudioHistoryHandler(context,
-                                   base::ThreadTaskRunnerHandle::Get()),
+      : HotwordAudioHistoryHandler(
+            context,
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         web_history_(web_history) {}
   ~MockAudioHistoryHandler() override {}
 

@@ -761,10 +761,10 @@ class UDPProxyImpl : public UDPProxy {
     socket_.reset(new net::UDPServerSocket(net_log, net::NetLogSource()));
     BuildPipe(&to_dest_pipe_, new PacketSender(this, &destination_));
     BuildPipe(&from_dest_pipe_, new PacketSender(this, &return_address_));
-    to_dest_pipe_->InitOnIOThread(base::ThreadTaskRunnerHandle::Get(),
+    to_dest_pipe_->InitOnIOThread(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                                   &tick_clock_);
-    from_dest_pipe_->InitOnIOThread(base::ThreadTaskRunnerHandle::Get(),
-                                    &tick_clock_);
+    from_dest_pipe_->InitOnIOThread(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), &tick_clock_);
 
     VLOG(0) << "From:" << local_port_.ToString();
     if (!destination_is_mutable_)

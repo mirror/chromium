@@ -256,7 +256,8 @@ GpuVideoDecodeAcceleratorFactory::CreateAndroidVDA(
     const gpu::GpuPreferences& gpu_preferences) const {
   std::unique_ptr<VideoDecodeAccelerator> decoder;
   decoder.reset(new AndroidVideoDecodeAccelerator(
-      AVDACodecAllocator::GetInstance(base::ThreadTaskRunnerHandle::Get()),
+      AVDACodecAllocator::GetInstance(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       base::MakeUnique<AndroidVideoSurfaceChooserImpl>(
           DeviceInfo::GetInstance()->IsSetOutputSurfaceSupported()),
       make_context_current_cb_, get_gles2_decoder_cb_, overlay_factory_cb_,

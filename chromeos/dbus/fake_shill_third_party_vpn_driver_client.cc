@@ -48,7 +48,7 @@ void FakeShillThirdPartyVpnDriverClient::SetParameters(
     const base::DictionaryValue& parameters,
     const ShillClientHelper::StringCallback& callback,
     const ShillClientHelper::ErrorCallback& error_callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback, std::string()));
 }
 
@@ -57,7 +57,7 @@ void FakeShillThirdPartyVpnDriverClient::UpdateConnectionState(
     const uint32_t connection_state,
     const base::Closure& callback,
     const ShillClientHelper::ErrorCallback& error_callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback);
 }
 
 void FakeShillThirdPartyVpnDriverClient::SendPacket(
@@ -65,7 +65,7 @@ void FakeShillThirdPartyVpnDriverClient::SendPacket(
     const std::vector<char>& ip_packet,
     const base::Closure& callback,
     const ShillClientHelper::ErrorCallback& error_callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback);
 }
 
 void FakeShillThirdPartyVpnDriverClient::OnPacketReceived(

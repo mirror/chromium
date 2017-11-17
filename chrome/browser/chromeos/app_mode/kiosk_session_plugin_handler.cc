@@ -125,7 +125,8 @@ void KioskSessionPluginHandler::OnWebContentsDestroyed(Observer* observer) {
 
       // Schedule the delete later after |observer|'s WebContentsDestroyed
       // finishes.
-      base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, observer);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE,
+                                                               observer);
 
       return;
     }

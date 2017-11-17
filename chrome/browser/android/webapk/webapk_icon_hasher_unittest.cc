@@ -33,7 +33,7 @@ class WebApkIconHasherRunner {
  public:
   WebApkIconHasherRunner()
       : url_request_context_getter_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())) {}
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))) {}
   ~WebApkIconHasherRunner() {}
 
   void Run(const GURL& icon_url) {

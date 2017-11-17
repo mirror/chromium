@@ -275,7 +275,7 @@ UsbDeviceHandleWin::UsbDeviceHandleWin(
     scoped_refptr<base::SequencedTaskRunner> blocking_task_runner)
     : device_(std::move(device)),
       hub_handle_(std::move(handle)),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       blocking_task_runner_(std::move(blocking_task_runner)),
       weak_factory_(this) {}
 

@@ -134,7 +134,7 @@ class QuotaBackendImplTest : public testing::Test {
   }
 
   base::SequencedTaskRunner* file_task_runner() {
-    return base::ThreadTaskRunnerHandle::Get().get();
+    return base::ThreadTaskRunnerHandle::Get(FROM_HERE).get();
   }
 
   base::FilePath GetUsageCachePath(const GURL& origin,

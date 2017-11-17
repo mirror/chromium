@@ -128,7 +128,7 @@ void ArcFileSystemOperationRunner::GetFileSize(const GURL& url,
   auto* file_system_instance = ARC_GET_INSTANCE_FOR_METHOD(
       arc_bridge_service_->file_system(), GetFileSize);
   if (!file_system_instance) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), -1));
     return;
   }
@@ -147,7 +147,7 @@ void ArcFileSystemOperationRunner::GetMimeType(const GURL& url,
   auto* file_system_instance = ARC_GET_INSTANCE_FOR_METHOD(
       arc_bridge_service_->file_system(), GetMimeType);
   if (!file_system_instance) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), base::nullopt));
     return;
   }
@@ -167,7 +167,7 @@ void ArcFileSystemOperationRunner::OpenFileToRead(
   auto* file_system_instance = ARC_GET_INSTANCE_FOR_METHOD(
       arc_bridge_service_->file_system(), OpenFileToRead);
   if (!file_system_instance) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback),
                                   base::Passed(mojo::ScopedHandle())));
     return;
@@ -189,7 +189,7 @@ void ArcFileSystemOperationRunner::GetDocument(const std::string& authority,
   auto* file_system_instance = ARC_GET_INSTANCE_FOR_METHOD(
       arc_bridge_service_->file_system(), GetDocument);
   if (!file_system_instance) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback),
                                   base::Passed(mojom::DocumentPtr())));
     return;
@@ -213,7 +213,7 @@ void ArcFileSystemOperationRunner::GetChildDocuments(
   auto* file_system_instance = ARC_GET_INSTANCE_FOR_METHOD(
       arc_bridge_service_->file_system(), GetChildDocuments);
   if (!file_system_instance) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), base::nullopt));
     return;
   }
@@ -236,7 +236,7 @@ void ArcFileSystemOperationRunner::GetRecentDocuments(
   auto* file_system_instance = ARC_GET_INSTANCE_FOR_METHOD(
       arc_bridge_service_->file_system(), GetRecentDocuments);
   if (!file_system_instance) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), base::nullopt));
     return;
   }
@@ -260,7 +260,7 @@ void ArcFileSystemOperationRunner::AddWatcher(
   auto* file_system_instance = ARC_GET_INSTANCE_FOR_METHOD(
       arc_bridge_service_->file_system(), AddWatcher);
   if (!file_system_instance) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), -1));
     return;
   }
@@ -278,7 +278,7 @@ void ArcFileSystemOperationRunner::RemoveWatcher(
   // RemoveWatcher() is never deferred since watchers do not persist across
   // container reboots.
   if (should_defer_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), false));
     return;
   }
@@ -288,7 +288,7 @@ void ArcFileSystemOperationRunner::RemoveWatcher(
   // users must not assume registered callbacks are immediately invalidated.
   auto iter = watcher_callbacks_.find(watcher_id);
   if (iter == watcher_callbacks_.end()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), false));
     return;
   }
@@ -297,7 +297,7 @@ void ArcFileSystemOperationRunner::RemoveWatcher(
   auto* file_system_instance = ARC_GET_INSTANCE_FOR_METHOD(
       arc_bridge_service_->file_system(), AddWatcher);
   if (!file_system_instance) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), false));
     return;
   }

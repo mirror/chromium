@@ -154,7 +154,7 @@ class FakeDelegate : public ProtocolHandlerRegistry::Delegate {
       ProtocolHandlerRegistry* registry) override {
     // Do as-if the registration has to run on another sequence and post back
     // the result with a task to the current thread.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(registry->GetDefaultWebClientCallback(protocol),
                    force_os_failure_ ? shell_integration::NOT_DEFAULT

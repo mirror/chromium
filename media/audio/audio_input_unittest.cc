@@ -210,7 +210,7 @@ TEST_F(AudioInputTest, MAYBE_Record) {
   OpenAndStartAudioInputStreamOnAudioThread(&test_callback);
 
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, run_loop.QuitClosure(),
       base::TimeDelta::FromMilliseconds(500));
   run_loop.Run();

@@ -335,7 +335,7 @@ class ProtocolPerfTest
 
     // Initialize client.
     client_context_.reset(
-        new ClientContext(base::ThreadTaskRunnerHandle::Get()));
+        new ClientContext(base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
     client_context_->Start();
 
     std::unique_ptr<FakePortAllocatorFactory> port_allocator_factory(

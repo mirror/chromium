@@ -1395,7 +1395,7 @@ void BrowserProcessImpl::Unpin() {
   CHECK(base::RunLoop::IsRunningOnCurrentThread());
 
 #if defined(OS_MACOSX)
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(ChromeBrowserMainPartsMac::DidEndMainMessageLoop));
 #endif
   base::RunLoop::QuitCurrentWhenIdleDeprecated();

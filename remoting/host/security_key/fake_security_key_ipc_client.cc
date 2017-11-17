@@ -51,7 +51,7 @@ bool FakeSecurityKeyIpcClient::SendSecurityKeyRequest(
     const std::string& request_payload,
     const ResponseCallback& response_callback) {
   if (send_security_request_should_succeed_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(response_callback, security_key_response_payload_));
   }

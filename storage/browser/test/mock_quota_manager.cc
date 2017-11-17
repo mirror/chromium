@@ -95,7 +95,7 @@ void MockQuotaManager::GetOriginsModifiedSince(
       origins_to_return->insert(current->origin);
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&MockQuotaManager::DidGetModifiedSince,
                             weak_factory_.GetWeakPtr(), callback,
                             base::Owned(origins_to_return), type));
@@ -118,7 +118,7 @@ void MockQuotaManager::DeleteOriginData(
     }
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&MockQuotaManager::DidDeleteOriginData,
                  weak_factory_.GetWeakPtr(), callback, kQuotaStatusOk));

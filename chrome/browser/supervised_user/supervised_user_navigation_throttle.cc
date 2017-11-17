@@ -171,7 +171,7 @@ void SupervisedUserNavigationThrottle::ShowInterstitial(
   // NavigationThrottle. This also lets OnInterstitialResult to be invoked
   // synchronously, once a callback is passed into the
   // SupervisedUserNavigationObserver.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&SupervisedUserNavigationThrottle::ShowInterstitialAsync,
                  weak_ptr_factory_.GetWeakPtr(), reason));

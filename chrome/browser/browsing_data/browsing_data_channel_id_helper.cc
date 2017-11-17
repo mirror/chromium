@@ -170,7 +170,7 @@ void CannedBrowsingDataChannelIDHelper::StartFetching(
   if (callback.is_null())
     return;
   // We post a task to emulate async fetching behavior.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&CannedBrowsingDataChannelIDHelper::FinishFetching, this,
                      callback));

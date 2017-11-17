@@ -192,7 +192,7 @@ ChannelState ConnectTestingEventInterface::OnSSLCertificateError(
     const GURL& url,
     const SSLInfo& ssl_info,
     bool fatal) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&SSLErrorCallbacks::CancelSSLRequest,
                             base::Owned(ssl_error_callbacks.release()),
                             ERR_SSL_PROTOCOL_ERROR, &ssl_info));

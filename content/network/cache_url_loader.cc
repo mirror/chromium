@@ -67,7 +67,7 @@ class CacheURLLoader {
     client_->OnComplete(status);
 
     // So we don't delete |this| in the constructor.
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
   }
 
   std::string data_;

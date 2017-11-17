@@ -417,7 +417,7 @@ void BackgroundFetchDelegateImpl::GetVisualsForItem(
   // GetVisualsForItem mustn't be called directly since offline_items_collection
   // is not re-entrant and it must be called even if there are no visuals.
   // TODO(delphick): Call with an image when that becomes available.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, id, nullptr));
 }
 
@@ -427,7 +427,7 @@ void BackgroundFetchDelegateImpl::AddObserver(Observer* observer) {
   observers_.insert(observer);
   // OnItemsAvailable mustn't be called directly since offline_items_collection
   // is not re-entrant.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(
                      [](Observer* observer,
                         base::WeakPtr<BackgroundFetchDelegateImpl> provider) {

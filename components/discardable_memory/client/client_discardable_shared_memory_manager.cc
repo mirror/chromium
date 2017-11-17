@@ -105,7 +105,7 @@ ClientDiscardableSharedMemoryManager::ClientDiscardableSharedMemoryManager(
       heap_(new DiscardableSharedMemoryHeap(base::GetPageSize())) {
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
       this, "ClientDiscardableSharedMemoryManager",
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   mojom::DiscardableSharedMemoryManagerPtrInfo info = manager.PassInterface();
   io_task_runner_->PostTask(
       FROM_HERE, base::Bind(&InitManagerMojoOnIO, manager_mojo_.get(),

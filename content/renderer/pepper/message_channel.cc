@@ -446,7 +446,7 @@ void MessageChannel::DrainJSMessageQueueSoon() {
   if (drain_js_message_queue_scheduled_)
     return;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&MessageChannel::DrainJSMessageQueue,
                                 weak_ptr_factory_.GetWeakPtr()));
   drain_js_message_queue_scheduled_ = true;

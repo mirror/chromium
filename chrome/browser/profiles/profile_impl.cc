@@ -1121,7 +1121,8 @@ void ProfileImpl::RegisterInProcessServices(StaticServiceMap* services) {
   service_manager::EmbeddedServiceInfo identity_service_info;
 
   // The Identity Service must run on the UI thread.
-  identity_service_info.task_runner = base::ThreadTaskRunnerHandle::Get();
+  identity_service_info.task_runner =
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
   // NOTE: The dependencies of the Identity Service have not yet been created,
   // so it is not possible to bind them here. Instead, bind them at the time

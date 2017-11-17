@@ -71,7 +71,7 @@ class ProfileDataRemover : public content::BrowsingDataRemover::Observer {
       : profile_(profile),
         all_data_(all_data),
         callback_(callback),
-        origin_runner_(base::ThreadTaskRunnerHandle::Get()),
+        origin_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         remover_(content::BrowserContext::GetBrowsingDataRemover(profile)) {
     remover_->AddObserver(this);
 

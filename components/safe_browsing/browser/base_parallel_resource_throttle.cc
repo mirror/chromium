@@ -95,7 +95,7 @@ BaseParallelResourceThrottle::~BaseParallelResourceThrottle() {
     // synchronously.
     url_loader_throttle_holder_->Detach();
 
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
         FROM_HERE, std::move(url_loader_throttle_holder_));
   }
 }

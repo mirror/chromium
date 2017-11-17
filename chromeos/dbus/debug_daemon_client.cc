@@ -303,7 +303,7 @@ class DebugDaemonClientImpl : public DebugDaemonClient {
         base::BindOnce(&DebugDaemonClientImpl::OnStartMethod,
                        weak_ptr_factory_.GetWeakPtr()));
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(callback, GetTracingAgentName(), true /* success */));
   }

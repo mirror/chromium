@@ -128,7 +128,7 @@ TEST_F(DesktopSessionAgentTest, StartProcessStatsReport) {
   proxy = IPC::ChannelProxy::Create(
       agent_->Start(delegate->GetWeakPtr()).release(),
       IPC::Channel::MODE_CLIENT, &listener, task_runner_,
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   ASSERT_TRUE(proxy->Send(new ChromotingNetworkDesktopMsg_StartSessionAgent(
       "jid", ScreenResolution(), DesktopEnvironmentOptions())));
   ASSERT_TRUE(proxy->Send(new ChromotingNetworkToAnyMsg_StartProcessStatsReport(
@@ -143,7 +143,7 @@ TEST_F(DesktopSessionAgentTest, StartProcessStatsReportWithInvalidInterval) {
   proxy = IPC::ChannelProxy::Create(
       agent_->Start(delegate->GetWeakPtr()).release(),
       IPC::Channel::MODE_CLIENT, &listener, task_runner_,
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   ASSERT_TRUE(proxy->Send(new ChromotingNetworkDesktopMsg_StartSessionAgent(
       "jid", ScreenResolution(), DesktopEnvironmentOptions())));
   ASSERT_TRUE(proxy->Send(new ChromotingNetworkToAnyMsg_StartProcessStatsReport(
@@ -172,7 +172,7 @@ TEST_F(DesktopSessionAgentTest, StartThenStopProcessStatsReport) {
   proxy = IPC::ChannelProxy::Create(
       agent_->Start(delegate->GetWeakPtr()).release(),
       IPC::Channel::MODE_CLIENT, &listener, task_runner_,
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   ASSERT_TRUE(proxy->Send(new ChromotingNetworkDesktopMsg_StartSessionAgent(
       "jid", ScreenResolution(), DesktopEnvironmentOptions())));
   ASSERT_TRUE(proxy->Send(new ChromotingNetworkToAnyMsg_StartProcessStatsReport(
@@ -202,9 +202,9 @@ TEST_F(DesktopSessionAgentTest, SendAggregatedProcessResourceUsage) {
           std::unique_ptr<IPC::Channel>* receiver,
           std::unique_ptr<IPC::Channel>* sender) {
         test->Shutdown();
-        base::ThreadTaskRunnerHandle::Get()->DeleteSoon(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
             FROM_HERE, receiver->release());
-        base::ThreadTaskRunnerHandle::Get()->DeleteSoon(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
             FROM_HERE, sender->release());
       },
       base::Unretained(this),
@@ -238,9 +238,9 @@ TEST_F(DesktopSessionAgentTest, SendEmptyAggregatedProcessResourceUsage) {
           std::unique_ptr<IPC::Channel>* receiver,
           std::unique_ptr<IPC::Channel>* sender) {
         test->Shutdown();
-        base::ThreadTaskRunnerHandle::Get()->DeleteSoon(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
             FROM_HERE, receiver->release());
-        base::ThreadTaskRunnerHandle::Get()->DeleteSoon(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
             FROM_HERE, sender->release());
       },
       base::Unretained(this),

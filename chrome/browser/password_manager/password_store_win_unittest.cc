@@ -131,14 +131,14 @@ class PasswordStoreWinTest : public testing::Test {
     // not single-threaded.
     auto db_task_runner =
         base::CreateSingleThreadTaskRunnerWithTraits({base::MayBlock()});
-    wdbs_ = new WebDatabaseService(path, base::ThreadTaskRunnerHandle::Get(),
-                                   db_task_runner);
+    wdbs_ = new WebDatabaseService(
+        path, base::ThreadTaskRunnerHandle::Get(FROM_HERE), db_task_runner);
     // Need to add at least one table so the database gets created.
     wdbs_->AddTable(std::unique_ptr<WebDatabaseTable>(new LoginsTable()));
     wdbs_->LoadDatabase();
-    wds_ =
-        new PasswordWebDataService(wdbs_, base::ThreadTaskRunnerHandle::Get(),
-                                   WebDataServiceBase::ProfileErrorCallback());
+    wds_ = new PasswordWebDataService(
+        wdbs_, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+        WebDataServiceBase::ProfileErrorCallback());
     wds_->Init();
   }
 

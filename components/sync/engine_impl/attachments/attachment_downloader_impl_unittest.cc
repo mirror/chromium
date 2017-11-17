@@ -78,7 +78,7 @@ void MockOAuth2TokenService::RespondToAccessTokenRequest(
     access_token = kAccessToken;
     expiration_time = base::Time::Max();
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&OAuth2TokenService::RequestImpl::InformConsumer,
                  last_request_, error, access_token, expiration_time));
@@ -124,7 +124,7 @@ class TokenServiceProvider
 };
 
 TokenServiceProvider::TokenServiceProvider(OAuth2TokenService* token_service)
-    : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       token_service_(token_service) {
   DCHECK(token_service_);
 }

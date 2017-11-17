@@ -50,7 +50,7 @@ class UbertokenFetcherTest : public testing::Test {
  public:
   void SetUp() override {
     request_context_getter_ = new net::TestURLRequestContextGetter(
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     fetcher_.reset(new UbertokenFetcher(&token_service_,
                                         &consumer_,
                                         GaiaConstants::kChromeSource,

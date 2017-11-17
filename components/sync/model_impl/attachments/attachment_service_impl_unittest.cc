@@ -104,7 +104,7 @@ class MockAttachmentStoreBackend
                                          ? AttachmentStore::SUCCESS
                                          : AttachmentStore::UNSPECIFIED_ERROR;
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, result, base::Passed(&attachments),
                               base::Passed(&unavailable_attachments)));
   }
@@ -114,8 +114,8 @@ class MockAttachmentStoreBackend
     AttachmentStore::WriteCallback callback = write_callbacks.back();
     write_callbacks.pop_back();
     write_attachments.pop_back();
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  base::Bind(callback, result));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, base::Bind(callback, result));
   }
 
   std::vector<AttachmentIdList> read_ids;
@@ -152,7 +152,7 @@ class MockAttachmentDownloader
       attachment =
           std::make_unique<Attachment>(Attachment::CreateFromParts(id, data));
     }
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(download_requests[id], result, base::Passed(&attachment)));
 
@@ -181,7 +181,7 @@ class MockAttachmentUploader
 
   void RespondToUpload(const AttachmentId& id, const UploadResult& result) {
     ASSERT_TRUE(upload_requests.find(id) != upload_requests.end());
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(upload_requests[id], result, id));
     upload_requests.erase(id);
   }
@@ -225,7 +225,7 @@ class AttachmentServiceImplTest : public testing::Test,
       AttachmentService::Delegate* delegate) {
     // Initialize mock attachment store
     scoped_refptr<base::SingleThreadTaskRunner> runner =
-        base::ThreadTaskRunnerHandle::Get();
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE);
     std::unique_ptr<MockAttachmentStoreBackend> attachment_store_backend(
         new MockAttachmentStoreBackend(runner));
     attachment_store_backend_ = attachment_store_backend->AsWeakPtr();

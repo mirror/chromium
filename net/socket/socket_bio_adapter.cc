@@ -235,7 +235,7 @@ int SocketBIOAdapter::BIOWrite(const char* in, int len) {
   // reentrancy by deferring it to a later event loop iteration.
   if (write_error_ != OK && write_error_ != ERR_IO_PENDING &&
       read_result_ == ERR_IO_PENDING) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&SocketBIOAdapter::CallOnReadReady,
                               weak_factory_.GetWeakPtr()));
   }

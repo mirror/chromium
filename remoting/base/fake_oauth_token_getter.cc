@@ -19,7 +19,7 @@ FakeOAuthTokenGetter::FakeOAuthTokenGetter(Status status,
 FakeOAuthTokenGetter::~FakeOAuthTokenGetter() {}
 
 void FakeOAuthTokenGetter::CallWithToken(const TokenCallback& on_access_token) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(on_access_token, status_, user_email_, access_token_));
 }

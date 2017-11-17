@@ -251,7 +251,7 @@ void ParseJson(const std::string& json,
 void ParseJsonDelayed(const std::string& json,
                       const SuccessCallback& success_callback,
                       const ErrorCallback& error_callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&ParseJson, json, std::move(success_callback),
                  std::move(error_callback)),

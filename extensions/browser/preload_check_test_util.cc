@@ -68,7 +68,7 @@ void PreloadCheckStub::Start(ResultCallback callback) {
   if (is_async_) {
     // TODO(michaelpg): Bind the callback directly and remove RunCallback
     // once crbug.com/704027 is addressed.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&PreloadCheckStub::RunCallback,
                    weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback)));

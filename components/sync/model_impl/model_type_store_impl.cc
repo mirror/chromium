@@ -155,7 +155,7 @@ void ModelTypeStoreImpl::CreateInMemoryStoreForTest(
 
   // In-memory store backend works on the same thread as test.
   scoped_refptr<base::SequencedTaskRunner> task_runner =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
   std::unique_ptr<Result> result(new Result());
 

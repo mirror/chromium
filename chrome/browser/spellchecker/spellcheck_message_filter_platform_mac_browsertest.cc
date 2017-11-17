@@ -35,7 +35,7 @@ class TestingSpellCheckMessageFilter : public SpellCheckMessageFilterPlatform {
 
   std::vector<std::unique_ptr<IPC::Message>> sent_messages_;
   const scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_ =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   const base::Closure quit_closure_;
 
  private:

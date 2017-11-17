@@ -138,7 +138,7 @@ StreamMixer::StreamMixer()
       check_close_timer_(new base::Timer(false, false)),
       filter_frame_alignment_(kDefaultFilterFrameAlignment) {
   if (single_threaded_for_test_) {
-    mixer_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    mixer_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   } else {
     base::Thread::Options options;
     options.priority = base::ThreadPriority::REALTIME_AUDIO;
@@ -237,7 +237,7 @@ void StreamMixer::CreatePostProcessors(
 }
 
 void StreamMixer::ResetTaskRunnerForTest() {
-  mixer_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  mixer_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 void StreamMixer::ResetPostProcessorsForTest(

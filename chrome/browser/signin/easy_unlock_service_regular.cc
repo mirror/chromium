@@ -217,7 +217,7 @@ void EasyUnlockServiceRegular::StartPromotionManager() {
       local_device_data_provider_.get(), notification_controller_.get(),
       pref_manager_.get(), service->CreateCryptAuthClientFactory(),
       base::MakeUnique<base::DefaultClock>(),
-      base::ThreadTaskRunnerHandle::Get()));
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   promotion_manager_->Start();
 }
 
@@ -279,7 +279,7 @@ void EasyUnlockServiceRegular::HandleUserReauth(
   short_lived_user_context_.reset(new chromeos::ShortLivedUserContext(
       user_context,
       apps::AppLifetimeMonitorFactory::GetForBrowserContext(profile()),
-      base::ThreadTaskRunnerHandle::Get().get()));
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE).get()));
 }
 
 void EasyUnlockServiceRegular::OpenSetupAppAfterReauth(

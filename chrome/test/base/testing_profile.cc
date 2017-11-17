@@ -323,7 +323,7 @@ TestingProfile::TestingProfile(const base::FilePath& path, Delegate* delegate)
       profile_name_(kTestingProfile) {
   Init();
   if (delegate_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&TestingProfile::FinishInit, base::Unretained(this)));
   } else {
@@ -383,7 +383,7 @@ TestingProfile::TestingProfile(
   // TODO(atwilson): See if this is still required once we convert the current
   // users of the constructor that takes a Delegate* param.
   if (delegate_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&TestingProfile::FinishInit, base::Unretained(this)));
   } else {
@@ -671,7 +671,7 @@ TestingProfile::CreateZoomLevelDelegate(const base::FilePath& partition_path) {
 #endif  // !defined(OS_ANDROID)
 
 scoped_refptr<base::SequencedTaskRunner> TestingProfile::GetIOTaskRunner() {
-  return base::ThreadTaskRunnerHandle::Get();
+  return base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 sync_preferences::TestingPrefServiceSyncable*

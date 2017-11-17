@@ -64,7 +64,7 @@ void UsbDeviceAndroid::RequestPermission(ResultCallback callback) {
     request_permission_callbacks_.push_back(std::move(callback));
     service_->RequestDevicePermission(j_object_, device_id_);
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), permission_granted_));
   }
 }
@@ -80,7 +80,7 @@ void UsbDeviceAndroid::Open(OpenCallback callback) {
       handles().push_back(device_handle.get());
     }
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), device_handle));
 }
 

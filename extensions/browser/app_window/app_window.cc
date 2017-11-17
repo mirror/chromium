@@ -477,7 +477,7 @@ void AppWindow::OnReadyToCommitFirstNavigation() {
   // CommitNavigation IPC that will properly set up the renderer will only be
   // sent after these, and it must be sent before the callback gets to run,
   // hence the use of PostTask.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::ResetAndReturn(&on_first_commit_callback_));
 }
 

@@ -149,9 +149,8 @@ class VideoEncoderShim::EncoderImpl {
 VideoEncoderShim::EncoderImpl::EncoderImpl(
     const base::WeakPtr<VideoEncoderShim>& shim)
     : shim_(shim),
-      renderer_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      initialized_(false) {
-}
+      renderer_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+      initialized_(false) {}
 
 VideoEncoderShim::EncoderImpl::~EncoderImpl() {
   if (initialized_)

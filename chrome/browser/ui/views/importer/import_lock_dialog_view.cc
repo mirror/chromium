@@ -82,7 +82,7 @@ base::string16 ImportLockDialogView::GetWindowTitle() const {
 
 bool ImportLockDialogView::Accept() {
   if (callback_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback_, true));
   }
   return true;
@@ -90,7 +90,7 @@ bool ImportLockDialogView::Accept() {
 
 bool ImportLockDialogView::Cancel() {
   if (callback_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback_, false));
   }
   return true;

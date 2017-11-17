@@ -104,7 +104,6 @@ void IndexedDBCallbacksImpl::ConvertValue(
   web_value->web_blob_info.Swap(local_blob_info);
 }
 
-
 IndexedDBCallbacksImpl::IndexedDBCallbacksImpl(
     std::unique_ptr<WebIDBCallbacks> callbacks,
     int64_t transaction_id,
@@ -114,7 +113,7 @@ IndexedDBCallbacksImpl::IndexedDBCallbacksImpl(
                                         transaction_id,
                                         cursor,
                                         std::move(io_runner))),
-      callback_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+      callback_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 IndexedDBCallbacksImpl::~IndexedDBCallbacksImpl() {
   callback_runner_->DeleteSoon(FROM_HERE, internal_state_);

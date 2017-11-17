@@ -601,7 +601,7 @@ class CanSwitchUserTest : public AshTestBase {
   // The passed |action| type parameter defines the outcome (which will be
   // checked) and the action the user will choose.
   void SwitchUser(ActionType action) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&CloseMessageBox, action));
     Shell::Get()->session_controller()->CanSwitchActiveUser(
         base::Bind(&CanSwitchUserTest::SwitchCallback, base::Unretained(this)));

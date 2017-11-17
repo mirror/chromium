@@ -110,7 +110,7 @@ void U2fRequest::IterateDevice() {
     // After trying every device, wait 200ms before trying again
     delay_callback_.Reset(
         base::Bind(&U2fRequest::OnWaitComplete, weak_factory_.GetWeakPtr()));
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, delay_callback_.callback(),
         base::TimeDelta::FromMilliseconds(200));
   }

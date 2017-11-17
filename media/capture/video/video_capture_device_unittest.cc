@@ -128,7 +128,8 @@ class MockVideoCaptureClient : public VideoCaptureDevice::Client {
 
   explicit MockVideoCaptureClient(
       base::Callback<void(const VideoCaptureFormat&)> frame_cb)
-      : main_thread_(base::ThreadTaskRunnerHandle::Get()), frame_cb_(frame_cb) {
+      : main_thread_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+        frame_cb_(frame_cb) {
     ON_CALL(*this, OnError(_, _)).WillByDefault(Invoke(DumpError));
   }
 
@@ -273,7 +274,7 @@ class VideoCaptureDeviceTest : public testing::TestWithParam<gfx::Size> {
         local_gpu_memory_buffer_manager_(new LocalGpuMemoryBufferManager()),
 #endif
         video_capture_device_factory_(VideoCaptureDeviceFactory::CreateFactory(
-            base::ThreadTaskRunnerHandle::Get(),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE),
 #if defined(OS_CHROMEOS)
             local_gpu_memory_buffer_manager_.get()
 #else

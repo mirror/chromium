@@ -25,7 +25,8 @@ PlatformEventWaiter::~PlatformEventWaiter() {
 
 void PlatformEventWaiter::WillProcessEvent(const PlatformEvent& event) {
   if (event_matcher_.Run(event)) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, success_callback_);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           success_callback_);
     delete this;
   }
 }

@@ -592,8 +592,8 @@ void OfflinePageMetadataStoreSQL::RemoveOfflinePages(
 // Note is potentially contains user-saved data.
 void OfflinePageMetadataStoreSQL::Reset(const ResetCallback& callback) {
   bool success = true;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                base::Bind(callback, success));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, base::Bind(callback, success));
   return;
 }
 

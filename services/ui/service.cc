@@ -102,7 +102,7 @@ class ThreadedImageCursorsFactoryImpl : public ws::ThreadedImageCursorsFactory {
     // the local |image_cursors_set_| and make |image_cursors_set_weak_ptr_|
     // point to it.
     if (!resource_runner_) {
-      resource_runner_ = base::ThreadTaskRunnerHandle::Get();
+      resource_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
       image_cursors_set_ = std::make_unique<ui::ImageCursorsSet>();
       image_cursors_set_weak_ptr_ = image_cursors_set_->GetWeakPtr();
     }

@@ -305,7 +305,8 @@ RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
         RenderThreadImpl::current()->shared_bitmap_manager();
     blob_registry_.reset(new WebBlobRegistryImpl(
         RenderThreadImpl::current()->GetIOTaskRunner().get(),
-        base::ThreadTaskRunnerHandle::Get(), thread_safe_sender_.get()));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+        thread_safe_sender_.get()));
     web_idb_factory_.reset(new WebIDBFactoryImpl(
         sync_message_filter_,
         RenderThreadImpl::current()->GetIOTaskRunner().get()));
@@ -1333,7 +1334,7 @@ void RendererBlinkPlatformImpl::SendFakeDeviceEventDataForTesting(
   if (!data)
     return;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&PlatformEventObserverBase::SendFakeDataForTesting,
                      base::Unretained(observer), data));

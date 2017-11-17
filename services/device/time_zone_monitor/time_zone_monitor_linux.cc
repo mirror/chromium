@@ -56,7 +56,7 @@ class TimeZoneMonitorLinuxImpl
       TimeZoneMonitorLinux* owner,
       scoped_refptr<base::SequencedTaskRunner> file_task_runner)
       : base::RefCountedThreadSafe<TimeZoneMonitorLinuxImpl>(),
-        main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+        main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         file_task_runner_(file_task_runner),
         owner_(owner) {
     DCHECK(main_task_runner_->RunsTasksInCurrentSequence());

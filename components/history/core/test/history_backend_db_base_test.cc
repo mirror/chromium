@@ -82,14 +82,14 @@ void HistoryBackendDBBaseTest::TearDown() {
 
   // Make sure we don't have any event pending that could disrupt the next
   // test.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
   base::RunLoop().Run();
 }
 
 void HistoryBackendDBBaseTest::CreateBackendAndDatabase() {
   backend_ = new HistoryBackend(new BackendDelegate(this), nullptr,
-                                base::ThreadTaskRunnerHandle::Get());
+                                base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   backend_->Init(false,
                  TestHistoryDatabaseParamsForPath(history_dir_));
   db_ = backend_->db_.get();
@@ -99,7 +99,7 @@ void HistoryBackendDBBaseTest::CreateBackendAndDatabase() {
 
 void HistoryBackendDBBaseTest::CreateBackendAndDatabaseAllowFail() {
   backend_ = new HistoryBackend(new BackendDelegate(this), nullptr,
-                                base::ThreadTaskRunnerHandle::Get());
+                                base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   backend_->Init(false,
                  TestHistoryDatabaseParamsForPath(history_dir_));
   db_ = backend_->db_.get();

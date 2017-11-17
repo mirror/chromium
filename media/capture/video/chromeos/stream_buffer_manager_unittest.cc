@@ -124,7 +124,8 @@ class StreamBufferManagerTest : public ::testing::Test {
     stream_buffer_manager_ = base::MakeUnique<StreamBufferManager>(
         std::move(callback_ops_request),
         base::MakeUnique<MockStreamCaptureInterface>(), device_context_.get(),
-        CreateMockCameraBufferFactory(), base::ThreadTaskRunnerHandle::Get());
+        CreateMockCameraBufferFactory(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 
   void TearDown() override { stream_buffer_manager_.reset(); }

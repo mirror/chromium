@@ -293,7 +293,7 @@ void IndexedDBDispatcherHost::AbortTransactionsAndCompactDatabase(
 
   base::OnceCallback<void(leveldb::Status)> callback_on_io = base::BindOnce(
       &CallCompactionStatusCallbackOnIOThread,
-      base::ThreadTaskRunnerHandle::Get(), std::move(mojo_callback));
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), std::move(mojo_callback));
   IDBTaskRunner()->PostTask(
       FROM_HERE,
       base::BindOnce(
@@ -313,8 +313,8 @@ void IndexedDBDispatcherHost::AbortTransactionsForDatabase(
   }
 
   base::OnceCallback<void(leveldb::Status)> callback_on_io = base::BindOnce(
-      &CallAbortStatusCallbackOnIOThread, base::ThreadTaskRunnerHandle::Get(),
-      std::move(mojo_callback));
+      &CallAbortStatusCallbackOnIOThread,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), std::move(mojo_callback));
   IDBTaskRunner()->PostTask(
       FROM_HERE,
       base::BindOnce(

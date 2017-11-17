@@ -74,7 +74,7 @@ class AutofillDownloadManagerTest : public AutofillDownloadManager::Observer,
  public:
   AutofillDownloadManagerTest()
       : request_context_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))),
         download_manager_(&driver_, this) {
     driver_.SetURLRequestContext(request_context_.get());
   }
@@ -369,7 +369,7 @@ TEST_F(AutofillDownloadManagerTest, BackoffLogic_Query) {
   EXPECT_EQ(1U, responses_.size());
   EXPECT_LT(download_manager_.fetcher_backoff_.GetTimeUntilRelease(),
             base::TimeDelta::FromMilliseconds(1100));
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       base::TimeDelta::FromMilliseconds(1100));
   base::RunLoop().Run();
@@ -425,7 +425,7 @@ TEST_F(AutofillDownloadManagerTest, BackoffLogic_Upload) {
   EXPECT_EQ(1U, responses_.size());
   EXPECT_LT(download_manager_.fetcher_backoff_.GetTimeUntilRelease(),
             base::TimeDelta::FromMilliseconds(1100));
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       base::TimeDelta::FromMilliseconds(1100));
   base::RunLoop().Run();

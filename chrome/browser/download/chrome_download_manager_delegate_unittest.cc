@@ -92,7 +92,7 @@ class MockWebContentsDelegate : public content::WebContentsDelegate {
 //      .WillOnce(ScheduleCallback2(false, "hello"));
 //
 ACTION_P2(ScheduleCallback2, result0, result1) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(arg0, result0, result1));
 }
 
@@ -155,7 +155,7 @@ class TestChromeDownloadManagerDelegate : public ChromeDownloadManagerDelegate {
     PathValidationResult result = PathValidationResult::SUCCESS;
     base::FilePath path_to_return = MockReserveVirtualPath(
         download, virtual_path, create_directory, conflict_action, &result);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, result, path_to_return));
   }
 

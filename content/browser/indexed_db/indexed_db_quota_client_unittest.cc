@@ -49,7 +49,7 @@ class IndexedDBQuotaClientTest : public testing::Test {
 
     scoped_refptr<storage::QuotaManager> quota_manager =
         new MockQuotaManager(false /*in_memory*/, browser_context_->GetPath(),
-                             base::ThreadTaskRunnerHandle::Get(),
+                             base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                              browser_context_->GetSpecialStoragePolicy());
 
     idb_context_ = new IndexedDBContextImpl(

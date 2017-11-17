@@ -66,7 +66,7 @@ class SMSReceiveHandler {
       // Move |callback_| to the task to ensure that |callback_| is only called
       // once. Since |callback_| may destruct this object, schedule it to the
       // task runner to run after this method returns.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(std::move(callback_), std::move(sms)));
       return;
     }

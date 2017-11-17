@@ -86,7 +86,7 @@ class PrefProxyConfigTrackerImplTest : public testing::Test {
     delegate_service_ =
         new TestProxyConfigService(fixed_config_, delegate_config_availability);
     proxy_config_tracker_.reset(new PrefProxyConfigTrackerImpl(
-        pref_service_.get(), base::ThreadTaskRunnerHandle::Get()));
+        pref_service_.get(), base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
     proxy_config_service_ =
         proxy_config_tracker_->CreateTrackingProxyConfigService(
             std::unique_ptr<net::ProxyConfigService>(delegate_service_));

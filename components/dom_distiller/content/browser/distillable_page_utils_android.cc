@@ -42,7 +42,7 @@ static void IsPageDistillable(JNIEnv* env,
       content::WebContents::FromJavaWebContents(webContents));
 
   if (!web_contents) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(OnIsPageDistillableResult,
                    ScopedJavaGlobalRef<jobject>(env, callback), false));

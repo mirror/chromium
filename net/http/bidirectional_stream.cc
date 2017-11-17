@@ -108,7 +108,7 @@ BidirectionalStream::BidirectionalStream(
   session->GetAlpnProtos(&server_ssl_config.alpn_protos);
 
   if (!request_info_->url.SchemeIs(url::kHttpsScheme)) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&BidirectionalStream::NotifyFailed,
                    weak_factory_.GetWeakPtr(), ERR_DISALLOWED_URL_SCHEME));

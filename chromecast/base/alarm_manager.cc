@@ -68,7 +68,7 @@ AlarmManager::AlarmManager(
 
 AlarmManager::AlarmManager()
     : AlarmManager(base::MakeUnique<base::DefaultClock>(),
-                   base::ThreadTaskRunnerHandle::Get()) {}
+                   base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 AlarmManager::~AlarmManager() {}
 
@@ -78,7 +78,7 @@ std::unique_ptr<AlarmHandle> AlarmManager::PostAlarmTask(base::OnceClosure task,
   std::unique_ptr<AlarmHandle> handle = base::MakeUnique<AlarmHandle>();
   AddAlarm(base::BindOnce(&VerifyHandleCallback, std::move(task),
                           handle->AsWeakPtr()),
-           time, base::ThreadTaskRunnerHandle::Get());
+           time, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   return handle;
 }
 

@@ -55,14 +55,14 @@ void MockU2fDiscovery::StartFailure() {
 
 // static
 void MockU2fDiscovery::StartSuccessAsync() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&MockU2fDiscovery::StartSuccess, base::Unretained(this)));
 }
 
 // static
 void MockU2fDiscovery::StartFailureAsync() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&MockU2fDiscovery::StartFailure, base::Unretained(this)));
 }

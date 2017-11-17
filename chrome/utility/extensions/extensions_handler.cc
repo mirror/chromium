@@ -71,14 +71,14 @@ void ExposeInterfacesToBrowser(service_manager::BinderRegistry* registry,
   if (running_elevated) {
 #if defined(OS_WIN)
     registry->AddInterface(base::Bind(&RemovableStorageWriterImpl::Create),
-                           base::ThreadTaskRunnerHandle::Get());
+                           base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 #endif
     return;
   }
 
 #if !defined(OS_WIN)
   registry->AddInterface(base::Bind(&RemovableStorageWriterImpl::Create),
-                         base::ThreadTaskRunnerHandle::Get());
+                         base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 #endif
 }
 

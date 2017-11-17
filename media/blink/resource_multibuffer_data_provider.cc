@@ -70,7 +70,7 @@ ResourceMultiBufferDataProvider::~ResourceMultiBufferDataProvider() {}
 void ResourceMultiBufferDataProvider::Start() {
   DVLOG(1) << __func__ << " @ " << byte_pos();
   if (url_data_->length() > 0 && byte_pos() >= url_data_->length()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&ResourceMultiBufferDataProvider::Terminate,
                               weak_factory_.GetWeakPtr()));
     return;
@@ -430,7 +430,7 @@ void ResourceMultiBufferDataProvider::DidFinishLoading(double finishTime) {
     if (retries_ < kMaxRetries) {
       DVLOG(1) << " Partial data received.... @ pos = " << size;
       retries_++;
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE,
           base::Bind(&ResourceMultiBufferDataProvider::Start,
                      weak_factory_.GetWeakPtr()),
@@ -462,7 +462,7 @@ void ResourceMultiBufferDataProvider::DidFail(const WebURLError& error) {
 
   if (retries_ < kMaxRetries && pos_ != 0) {
     retries_++;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&ResourceMultiBufferDataProvider::Start,
                    weak_factory_.GetWeakPtr()),

@@ -132,7 +132,7 @@ void ArcAndroidManagementChecker::ScheduleRetry() {
   DCHECK(!callback_.is_null());
   VLOG(2) << "Schedule next android management check in " << retry_delay_;
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&ArcAndroidManagementChecker::StartCheckInternal,
                      weak_ptr_factory_.GetWeakPtr()),

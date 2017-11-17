@@ -64,7 +64,7 @@ void RegisterKeyCallbackTrue(
     const cryptohome::Identification& user_id,
     const std::string& key_name,
     const cryptohome::AsyncMethodCaller::Callback& callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, true, cryptohome::MOUNT_ERROR_NONE));
 }
 
@@ -73,7 +73,7 @@ void RegisterKeyCallbackFalse(
     const cryptohome::Identification& user_id,
     const std::string& key_name,
     const cryptohome::AsyncMethodCaller::Callback& callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, false, cryptohome::MOUNT_ERROR_NONE));
 }
 
@@ -86,7 +86,7 @@ void SignChallengeCallbackTrue(
     chromeos::attestation::AttestationChallengeOptions options,
     const std::string& challenge,
     const cryptohome::AsyncMethodCaller::DataCallback& callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, true, "response"));
 }
 
@@ -99,7 +99,7 @@ void SignChallengeCallbackFalse(
     chromeos::attestation::AttestationChallengeOptions options,
     const std::string& challenge,
     const cryptohome::AsyncMethodCaller::DataCallback& callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, false, ""));
 }
 
@@ -110,7 +110,7 @@ void GetCertificateCallbackTrue(
     bool force_new_key,
     const chromeos::attestation::AttestationFlow::CertificateCallback&
         callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, true, "certificate"));
 }
 
@@ -121,7 +121,7 @@ void GetCertificateCallbackFalse(
     bool force_new_key,
     const chromeos::attestation::AttestationFlow::CertificateCallback&
         callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, false, ""));
 }
 

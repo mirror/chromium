@@ -116,7 +116,7 @@ class PrerenderManager::OnCloseWebContentsDeleter
                             std::unique_ptr<WebContents> tab)
       : manager_(manager), tab_(std::move(tab)), suppressed_dialog_(false) {
     tab_->SetDelegate(this);
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(
             &OnCloseWebContentsDeleter::ScheduleWebContentsForDeletion,
@@ -1025,7 +1025,7 @@ void PrerenderManager::PeriodicCleanup() {
 
 void PrerenderManager::PostCleanupTask() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&PrerenderManager::PeriodicCleanup,
                                 weak_factory_.GetWeakPtr()));
 }

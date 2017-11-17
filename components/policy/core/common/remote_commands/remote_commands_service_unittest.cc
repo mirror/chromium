@@ -134,7 +134,7 @@ class TestingCloudPolicyClientForRemoteCommands : public CloudPolicyClient {
     expected_fetch_commands_calls_.pop();
 
     // Simulate delay from client to DMServer.
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(
             &TestingCloudPolicyClientForRemoteCommands::DoFetchRemoteCommands,
@@ -161,7 +161,7 @@ class TestingCloudPolicyClientForRemoteCommands : public CloudPolicyClient {
       fetch_call_expectation.commands_fetched_callback.Run();
 
     // Simulate delay from DMServer back to client.
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, base::Bind(callback, DM_STATUS_SUCCESS, fetched_commands),
         base::TimeDelta::FromSeconds(
             kTestClientServerCommunicationDelayInSeconds));

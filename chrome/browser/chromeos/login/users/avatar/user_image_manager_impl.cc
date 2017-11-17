@@ -972,7 +972,8 @@ void UserImageManagerImpl::OnJobChangedUserImage() {
 
 void UserImageManagerImpl::OnJobDone() {
   if (job_.get())
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, job_.release());
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE,
+                                                             job_.release());
   else
     NOTREACHED();
 }

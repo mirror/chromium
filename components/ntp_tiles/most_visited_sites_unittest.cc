@@ -279,7 +279,7 @@ class PopularSitesFactoryForTest {
       : prefs_(pref_service),
         url_fetcher_factory_(/*default_factory=*/nullptr),
         url_request_context_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())) {
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))) {
     PopularSitesImpl::RegisterProfilePrefs(pref_service->registry());
     if (enabled) {
       prefs_->SetString(prefs::kPopularSitesOverrideCountry, "IN");

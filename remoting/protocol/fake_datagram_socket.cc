@@ -21,9 +21,8 @@ namespace protocol {
 
 FakeDatagramSocket::FakeDatagramSocket()
     : input_pos_(0),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      weak_factory_(this) {
-}
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+      weak_factory_(this) {}
 
 FakeDatagramSocket::~FakeDatagramSocket() {
   EXPECT_TRUE(task_runner_->BelongsToCurrentThread());
@@ -128,11 +127,10 @@ int FakeDatagramSocket::CopyReadData(const scoped_refptr<net::IOBuffer>& buf,
 }
 
 FakeDatagramChannelFactory::FakeDatagramChannelFactory()
-    : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       asynchronous_create_(false),
       fail_create_(false),
-      weak_factory_(this) {
-}
+      weak_factory_(this) {}
 
 FakeDatagramChannelFactory::~FakeDatagramChannelFactory() {
   for (ChannelsMap::iterator it = channels_.begin(); it != channels_.end();

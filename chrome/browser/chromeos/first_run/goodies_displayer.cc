@@ -139,7 +139,8 @@ void GoodiesDisplayer::OnBrowserSetLastActive(Browser* browser) {
   }
 
   // Regardless of how we got here, we don't henceforth need to show Goodies.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, base::Bind(&Delete));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                         base::Bind(&Delete));
 }
 
 GoodiesDisplayerTestInfo::GoodiesDisplayerTestInfo()

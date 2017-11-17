@@ -48,7 +48,7 @@ class GCDApiFlowTest : public testing::Test {
  public:
   GCDApiFlowTest()
       : request_context_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))),
         account_id_(kAccountId) {}
 
   ~GCDApiFlowTest() override {}

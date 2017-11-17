@@ -130,9 +130,10 @@ void OnScreenKeyboardDetector::DetectKeyboard(HWND main_window) {
   // OnScreenKeyboardDisplayManager::DisplayVirtualKeyboard() function. We use
   // a delayed task to check if the keyboard is visible because of the possible
   // delay between the ShellExecute call and the keyboard becoming visible.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&OnScreenKeyboardDetector::CheckIfKeyboardVisible,
-                            keyboard_detector_factory_.GetWeakPtr()),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&OnScreenKeyboardDetector::CheckIfKeyboardVisible,
+                 keyboard_detector_factory_.GetWeakPtr()),
       base::TimeDelta::FromMilliseconds(kCheckOSKDelayMs));
 }
 
@@ -151,10 +152,11 @@ bool OnScreenKeyboardDetector::DismissKeyboard() {
       keyboard_dismiss_retry_count_++;
       // Please refer to the comments in the DetectKeyboard() function for more
       // information as to why we need a delayed task here.
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-          FROM_HERE, base::Bind(base::IgnoreResult(
-                                    &OnScreenKeyboardDetector::DismissKeyboard),
-                                keyboard_detector_factory_.GetWeakPtr()),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+          FROM_HERE,
+          base::Bind(
+              base::IgnoreResult(&OnScreenKeyboardDetector::DismissKeyboard),
+              keyboard_detector_factory_.GetWeakPtr()),
           base::TimeDelta::FromMilliseconds(kDismissKeyboardRetryTimeoutMs));
     } else {
       keyboard_dismiss_retry_count_ = 0;
@@ -220,9 +222,10 @@ void OnScreenKeyboardDetector::HideIfNecessary() {
       DismissKeyboard();
     }
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE, base::Bind(&OnScreenKeyboardDetector::HideIfNecessary,
-                              keyboard_detector_factory_.GetWeakPtr()),
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&OnScreenKeyboardDetector::HideIfNecessary,
+                   keyboard_detector_factory_.GetWeakPtr()),
         base::TimeDelta::FromMilliseconds(kCheckOSKDelayMs));
   }
 }
@@ -235,9 +238,10 @@ void OnScreenKeyboardDetector::HandleKeyboardVisible() {
     observer.OnKeyboardVisible(osk_rect_pixels_);
 
   // Now that the keyboard is visible, run the task to detect if it was hidden.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&OnScreenKeyboardDetector::HideIfNecessary,
-                            keyboard_detector_factory_.GetWeakPtr()),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&OnScreenKeyboardDetector::HideIfNecessary,
+                 keyboard_detector_factory_.GetWeakPtr()),
       base::TimeDelta::FromMilliseconds(kCheckOSKDelayMs));
 }
 

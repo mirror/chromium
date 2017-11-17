@@ -162,7 +162,7 @@ void MojoCdmFileIO::Read() {
   // Do the actual read asynchronously so that we don't need to copy the
   // data when calling |client_|.
   state_ = State::kReading;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&MojoCdmFileIO::DoRead,
                                 weak_factory_.GetWeakPtr(), num_bytes));
 }
@@ -314,7 +314,7 @@ void MojoCdmFileIO::Close() {
 void MojoCdmFileIO::OnError(ErrorType error) {
   DVLOG(3) << __func__ << " file: " << file_name_ << ", error: " << (int)error;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&MojoCdmFileIO::NotifyClientOfError,
                                 weak_factory_.GetWeakPtr(), error));
 }

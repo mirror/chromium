@@ -85,7 +85,7 @@ AudioSinkAndroidAudioTrackImpl::AudioSinkAndroidAudioTrackImpl(
       limiter_volume_multiplier_(1.0f),
       feeder_thread_("AudioTrack feeder thread"),
       feeder_task_runner_(nullptr),
-      caller_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      caller_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       direct_pcm_buffer_address_(nullptr),
       direct_rendering_delay_address_(nullptr),
       state_(kStateUninitialized),

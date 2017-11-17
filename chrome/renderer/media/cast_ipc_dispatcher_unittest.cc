@@ -16,7 +16,8 @@ namespace {
 class CastIPCDispatcherTest : public testing::Test {
  public:
   CastIPCDispatcherTest() {
-    dispatcher_ = new CastIPCDispatcher(base::ThreadTaskRunnerHandle::Get());
+    dispatcher_ =
+        new CastIPCDispatcher(base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 
  protected:

@@ -78,7 +78,7 @@ BleScannerImpl::BleScannerImpl(
       ble_synchronizer_(ble_synchronizer),
       service_data_provider_(base::MakeUnique<ServiceDataProviderImpl>()),
       eid_generator_(base::MakeUnique<cryptauth::ForegroundEidGenerator>()),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       weak_ptr_factory_(this) {
   adapter_->AddObserver(this);
 }

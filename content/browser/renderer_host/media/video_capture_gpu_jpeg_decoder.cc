@@ -71,7 +71,7 @@ void VideoCaptureGpuJpegDecoder::Initialize() {
   }
 
   const scoped_refptr<base::SingleThreadTaskRunner> current_task_runner(
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                           base::BindOnce(&EstablishGpuChannelOnUIThread,
                                          current_task_runner, AsWeakPtr()));

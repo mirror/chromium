@@ -17,7 +17,7 @@ namespace content {
 MediaInterfaceFactory::MediaInterfaceFactory(
     service_manager::InterfaceProvider* remote_interfaces)
     : remote_interfaces_(remote_interfaces), weak_factory_(this) {
-  task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   weak_this_ = weak_factory_.GetWeakPtr();
 }
 

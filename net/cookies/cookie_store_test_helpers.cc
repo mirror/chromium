@@ -69,7 +69,7 @@ void DelayedCookieMonster::SetCookieWithOptionsAsync(
       base::Bind(&DelayedCookieMonster::SetCookiesInternalCallback,
                  base::Unretained(this)));
   DCHECK_EQ(did_run_, true);
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&DelayedCookieMonster::InvokeSetCookiesCallback,
                      base::Unretained(this), std::move(callback)),
@@ -111,7 +111,7 @@ void DelayedCookieMonster::GetCookiesWithOptionsAsync(
       base::Bind(&DelayedCookieMonster::GetCookiesWithOptionsInternalCallback,
                  base::Unretained(this)));
   DCHECK_EQ(did_run_, true);
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&DelayedCookieMonster::InvokeGetCookieStringCallback,
                      base::Unretained(this), std::move(callback)),
@@ -129,7 +129,7 @@ void DelayedCookieMonster::GetCookieListWithOptionsAsync(
           &DelayedCookieMonster::GetCookieListWithOptionsInternalCallback,
           base::Unretained(this)));
   DCHECK_EQ(did_run_, true);
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&DelayedCookieMonster::InvokeGetCookieListCallback,
                      base::Unretained(this), std::move(callback)),

@@ -45,7 +45,7 @@ class DummyNotificationDelegate : public message_center::NotificationDelegate {
       : id_(id), profile_(profile) {}
 
   void Display() override {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&CloseBalloon, id_,
                    NotificationUIManager::GetProfileID(profile_)),

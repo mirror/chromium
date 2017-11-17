@@ -365,8 +365,7 @@ CloudExternalDataManagerBase::CloudExternalDataManagerBase(
       io_task_runner_(io_task_runner),
       backend_(new Backend(get_policy_details,
                            backend_task_runner_,
-                           base::ThreadTaskRunnerHandle::Get())) {
-}
+                           base::ThreadTaskRunnerHandle::Get(FROM_HERE))) {}
 
 CloudExternalDataManagerBase::~CloudExternalDataManagerBase() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);

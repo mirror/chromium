@@ -70,8 +70,8 @@ class MojoDOMStorageBrowserTest : public DOMStorageBrowserTest {
             &LocalStorageContextMojo::RunWhenConnected,
             base::Unretained(context()),
             base::BindOnce(base::IgnoreResult(&base::TaskRunner::PostTask),
-                           base::ThreadTaskRunnerHandle::Get(), FROM_HERE,
-                           run_loop.QuitClosure())));
+                           base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                           FROM_HERE, run_loop.QuitClosure())));
     run_loop.Run();
   }
 };

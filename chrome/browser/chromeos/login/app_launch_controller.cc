@@ -113,7 +113,7 @@ class AppLaunchController::AppWindowWatcher
             extensions::AppWindowRegistry::Get(controller->profile_)),
         weak_factory_(this) {
     if (!window_registry_->GetAppWindowsForApp(app_id).empty()) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(&AppWindowWatcher::NotifyAppWindowCreated,
                                     weak_factory_.GetWeakPtr()));
       return;

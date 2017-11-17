@@ -47,11 +47,12 @@ class IPC_EXPORT ChannelMojo : public Channel,
  public:
   // Creates a ChannelMojo.
   static std::unique_ptr<ChannelMojo>
-  Create(mojo::ScopedMessagePipeHandle handle,
-         Mode mode,
-         Listener* listener,
-         const scoped_refptr<base::SingleThreadTaskRunner>& ipc_task_runner =
-            base::ThreadTaskRunnerHandle::Get());
+  Create(mojo::ScopedMessagePipeHandle handle, Mode mode, Listener* listener);
+  static std::unique_ptr<ChannelMojo> Create(
+      mojo::ScopedMessagePipeHandle handle,
+      Mode mode,
+      Listener* listener,
+      const scoped_refptr<base::SingleThreadTaskRunner>& ipc_task_runner);
 
   // Create a factory object for ChannelMojo.
   // The factory is used to create Mojo-based ChannelProxy family.

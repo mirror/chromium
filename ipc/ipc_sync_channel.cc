@@ -279,7 +279,7 @@ class SyncChannel::ReceivedSyncMsgQueue :
       : message_queue_version_(0),
         dispatch_event_(base::WaitableEvent::ResetPolicy::MANUAL,
                         base::WaitableEvent::InitialState::NOT_SIGNALED),
-        listener_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+        listener_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         sync_dispatch_watcher_(std::make_unique<mojo::SyncEventWatcher>(
             &dispatch_event_,
             base::Bind(&ReceivedSyncMsgQueue::OnDispatchEventReady,
@@ -574,7 +574,8 @@ SyncChannel::SyncChannel(
       sync_handle_registry_(mojo::SyncHandleRegistry::current()) {
   // The current (listener) thread must be distinct from the IPC thread, or else
   // sending synchronous messages will deadlock.
-  DCHECK_NE(ipc_task_runner.get(), base::ThreadTaskRunnerHandle::Get().get());
+  DCHECK_NE(ipc_task_runner.get(),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
   StartWatching();
 }
 

@@ -63,7 +63,7 @@ class FakeBackend : public QuotaReservationManager::QuotaBackend {
     EXPECT_EQ(GURL(kOrigin), origin);
     EXPECT_EQ(kType, type);
     on_memory_usage_ += delta;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(base::IgnoreResult(callback), base::File::FILE_OK, delta));
   }

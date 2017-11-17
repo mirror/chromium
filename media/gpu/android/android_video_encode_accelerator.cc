@@ -211,7 +211,7 @@ bool AndroidVideoEncodeAccelerator::Initialize(
   // Conservative upper bound for output buffer size: decoded size + 2KB.
   const size_t output_buffer_capacity =
       VideoFrame::AllocationSize(format, input_visible_size) + 2048;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&VideoEncodeAccelerator::Client::RequireBitstreamBuffers,
                  client_ptr_factory_->GetWeakPtr(), frame_input_count,
@@ -423,7 +423,7 @@ void AndroidVideoEncodeAccelerator::DequeueOutput() {
   media_codec_->ReleaseOutputBuffer(buf_index, false);
   --num_buffers_at_codec_;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&VideoEncodeAccelerator::Client::BitstreamBufferReady,
                  client_ptr_factory_->GetWeakPtr(), bitstream_buffer.id(), size,

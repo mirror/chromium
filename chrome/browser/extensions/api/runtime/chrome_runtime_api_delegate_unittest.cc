@@ -107,7 +107,7 @@ class DownloaderTestDelegate : public ExtensionDownloaderTestDelegate {
       auto no_update = no_updates_.find(id);
       if (no_update != no_updates_.end()) {
         no_updates_.erase(no_update);
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE,
             base::BindOnce(
                 &ExtensionDownloaderDelegate::OnExtensionDownloadFailed,
@@ -122,7 +122,7 @@ class DownloaderTestDelegate : public ExtensionDownloaderTestDelegate {
         CRXFileInfo info(id, update->second.path, "" /* no hash */);
         std::string version = update->second.version;
         updates_.erase(update);
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE,
             base::BindOnce(
                 &ExtensionDownloaderDelegate::OnExtensionDownloadFinished,

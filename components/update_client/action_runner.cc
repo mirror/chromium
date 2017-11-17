@@ -26,7 +26,7 @@ ActionRunner::ActionRunner(const Component& component,
                            const std::vector<uint8_t>& key_hash)
     : component_(component),
       key_hash_(key_hash),
-      main_task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 ActionRunner::~ActionRunner() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);

@@ -75,7 +75,7 @@ void FakeShillProfileClient::GetProperties(
   properties->SetWithoutPathExpansion(shill::kEntriesProperty,
                                       std::move(entry_paths));
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&PassDictionary, callback, base::Owned(properties.release())));
 }
@@ -96,7 +96,7 @@ void FakeShillProfileClient::GetEntry(
     return;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&PassDictionary, callback, base::Owned(entry->DeepCopy())));
 }
@@ -120,7 +120,7 @@ void FakeShillProfileClient::DeleteEntry(const dbus::ObjectPath& profile_path,
                          shill::kProfileProperty,
                          profile_path_value);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback);
 }
 
 ShillProfileClient::TestInterface* FakeShillProfileClient::GetTestInterface() {

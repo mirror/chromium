@@ -30,7 +30,7 @@ void InfoBarResponder::OnInfoBarAdded(infobars::InfoBar* infobar) {
       infobar->delegate()->AsConfirmInfoBarDelegate();
   DCHECK(delegate);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&InfoBarResponder::Respond,
                                 base::Unretained(this), delegate));
 }

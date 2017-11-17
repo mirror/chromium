@@ -86,8 +86,8 @@ RequestSenderTest::~RequestSenderTest() {}
 
 void RequestSenderTest::SetUp() {
   config_ = base::MakeRefCounted<TestConfigurator>();
-  interceptor_factory_ =
-      base::MakeUnique<InterceptorFactory>(base::ThreadTaskRunnerHandle::Get());
+  interceptor_factory_ = base::MakeUnique<InterceptorFactory>(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   post_interceptor_1_ =
       interceptor_factory_->CreateInterceptorForPath(kUrlPath1);
   post_interceptor_2_ =

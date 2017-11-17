@@ -19,7 +19,7 @@ const char kUserAgent[] = "Chrome/57.0.2987.133";
 
 TestPrefetchNetworkRequestFactory::TestPrefetchNetworkRequestFactory()
     : TestPrefetchNetworkRequestFactory(new net::TestURLRequestContextGetter(
-          base::ThreadTaskRunnerHandle::Get())) {}
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE))) {}
 
 TestPrefetchNetworkRequestFactory::TestPrefetchNetworkRequestFactory(
     net::TestURLRequestContextGetter* request_context_getter)

@@ -111,7 +111,7 @@ ClientCertIdentityList GetClientCertsImpl(HCERTSTORE cert_store,
   ClientCertIdentityList selected_identities;
 
   scoped_refptr<base::SingleThreadTaskRunner> current_thread =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
   const size_t auth_count = request.cert_authorities.size();
   std::vector<CERT_NAME_BLOB> issuers(auth_count);

@@ -25,7 +25,7 @@ class AttachmentService;
 SharedChangeProcessor::SharedChangeProcessor(ModelType type)
     : disconnected_(false),
       type_(type),
-      frontend_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      frontend_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       generic_change_processor_(nullptr) {
   DCHECK_NE(type_, UNSPECIFIED);
 }

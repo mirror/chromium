@@ -164,7 +164,7 @@ bool ChannelNacl::Connect() {
       pipe_,
       base::Bind(&ChannelNacl::DidRecvMsg, weak_ptr_factory_.GetWeakPtr()),
       base::Bind(&ChannelNacl::ReadDidFail, weak_ptr_factory_.GetWeakPtr()),
-      base::ThreadTaskRunnerHandle::Get()));
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   reader_thread_.reset(
       new base::DelegateSimpleThread(reader_thread_runner_.get(),
                                      "ipc_channel_nacl reader thread"));
@@ -172,7 +172,7 @@ bool ChannelNacl::Connect() {
   waiting_connect_ = false;
   // If there were any messages queued before connection, send them.
   ProcessOutgoingMessages();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&ChannelNacl::CallOnChannelConnected,
                             weak_ptr_factory_.GetWeakPtr()));
 

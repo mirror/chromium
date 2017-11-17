@@ -48,7 +48,7 @@ void TestNativeDisplayDelegate::GetDisplays(
     observer.OnDisplaySnapshotsInvalidated();
 
   if (run_async_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, outputs_));
   } else {
     callback.Run(outputs_);
@@ -75,8 +75,8 @@ void TestNativeDisplayDelegate::Configure(const DisplaySnapshot& output,
                                           const ConfigureCallback& callback) {
   bool result = Configure(output, mode, origin);
   if (run_async_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  base::Bind(callback, result));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, base::Bind(callback, result));
   } else {
     callback.Run(result);
   }

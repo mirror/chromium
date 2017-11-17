@@ -59,7 +59,8 @@ class DesktopCapturerProxy::Core : public webrtc::DesktopCapturer::Callback {
 };
 
 DesktopCapturerProxy::Core::Core(base::WeakPtr<DesktopCapturerProxy> proxy)
-    : proxy_(proxy), caller_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+    : proxy_(proxy),
+      caller_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
   thread_checker_.DetachFromThread();
 }
 

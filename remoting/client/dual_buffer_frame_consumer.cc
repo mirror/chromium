@@ -156,9 +156,11 @@ void DualBufferFrameConsumer::RunRenderCallback(
   }
 
   task_runner_->PostTask(
-      FROM_HERE, base::Bind(callback_, base::Passed(&frame), base::Bind(
-          base::IgnoreResult(&base::TaskRunner::PostTask),
-          base::ThreadTaskRunnerHandle::Get(), FROM_HERE, done)));
+      FROM_HERE,
+      base::Bind(callback_, base::Passed(&frame),
+                 base::Bind(base::IgnoreResult(&base::TaskRunner::PostTask),
+                            base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                            FROM_HERE, done)));
 }
 
 }  // namespace remoting

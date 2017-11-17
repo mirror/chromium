@@ -354,7 +354,7 @@ void ExtensionActionRunner::ShowBlockedActionBubble(
         base::Bind(&ExtensionActionRunner::OnBlockedActionBubbleClosed,
                    weak_factory_.GetWeakPtr(), extension->id());
     if (default_bubble_close_action_for_testing_) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(callback, *default_bubble_close_action_for_testing_));
     } else {

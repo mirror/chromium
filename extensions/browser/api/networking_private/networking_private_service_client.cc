@@ -59,7 +59,7 @@ NetworkingPrivateServiceClient::NetworkingPrivateServiceClient(
       base::Bind(
           &WiFiService::SetEventObservers,
           base::Unretained(wifi_service_.get()),
-          base::ThreadTaskRunnerHandle::Get(),
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE),
           base::Bind(
               &NetworkingPrivateServiceClient::OnNetworksChangedEventOnUIThread,
               weak_factory_.GetWeakPtr()),

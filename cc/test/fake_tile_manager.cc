@@ -36,7 +36,7 @@ FakeRasterBufferProviderImpl* GetGlobalRasterBufferProvider() {
 FakeTileManager::FakeTileManager(TileManagerClient* client,
                                  ResourcePool* resource_pool)
     : TileManager(client,
-                  base::ThreadTaskRunnerHandle::Get().get(),
+                  base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
                   nullptr,
                   std::numeric_limits<size_t>::max(),
                   TileManagerSettings()),

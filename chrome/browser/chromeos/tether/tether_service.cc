@@ -135,7 +135,7 @@ TetherService::TetherService(
   // GetAdapter may call OnBluetoothAdapterFetched immediately which can cause
   // problems with the Fake implementation since the class is not fully
   // constructed yet. Post the GetAdapter call to avoid this.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(device::BluetoothAdapterFactory::GetAdapter,
                  base::Bind(&TetherService::OnBluetoothAdapterFetched,

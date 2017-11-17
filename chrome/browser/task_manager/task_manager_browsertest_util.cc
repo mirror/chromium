@@ -77,8 +77,8 @@ class ResourceChangeObserver {
     if (!IsSatisfied())
       return;
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  run_loop_.QuitClosure());
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, run_loop_.QuitClosure());
   }
 
   bool IsSatisfied() { return CountMatches() == required_count_; }
@@ -131,8 +131,8 @@ class ResourceChangeObserver {
   }
 
   void OnTimeout() {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  run_loop_.QuitClosure());
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, run_loop_.QuitClosure());
     FAIL() << "Timed out.\n" << DumpTaskManagerModel();
   }
 

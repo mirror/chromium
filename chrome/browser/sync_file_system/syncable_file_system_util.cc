@@ -110,7 +110,7 @@ base::FilePath GetSyncFileSystemDir(const base::FilePath& profile_base_dir) {
 }
 
 void RunSoon(const base::Location& from_here, const base::Closure& callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(from_here, callback);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(from_here, callback);
 }
 
 base::Closure NoopClosure() {

@@ -51,7 +51,7 @@ bool FakeLayerTreeFrameSink::BindToClient(LayerTreeFrameSinkClient* client) {
     return false;
   begin_frame_source_ = std::make_unique<viz::BackToBackBeginFrameSource>(
       std::make_unique<viz::DelayBasedTimeSource>(
-          base::ThreadTaskRunnerHandle::Get().get()));
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE).get()));
   client_->SetBeginFrameSource(begin_frame_source_.get());
   return true;
 }
@@ -73,7 +73,7 @@ void FakeLayerTreeFrameSink::SubmitCompositorFrame(viz::CompositorFrame frame) {
                                    last_sent_frame_->resource_list.begin(),
                                    last_sent_frame_->resource_list.end());
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&FakeLayerTreeFrameSink::DidReceiveCompositorFrameAck,
                      weak_ptr_factory_.GetWeakPtr()));

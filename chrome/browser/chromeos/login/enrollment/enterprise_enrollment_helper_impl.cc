@@ -58,7 +58,7 @@ void TokenRevoker::Start(const std::string& token) {
 }
 
 void TokenRevoker::OnOAuth2RevokeTokenCompleted() {
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 }  // namespace

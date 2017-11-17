@@ -43,7 +43,7 @@ void InMemoryEventStore::DeleteEvent(const std::string& event_name) {
 
 void InMemoryEventStore::HandleLoadResult(const OnLoadedCallback& callback,
                                           bool success) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback, success, base::Passed(&events_)));
   ready_ = success;
 }

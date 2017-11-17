@@ -267,7 +267,7 @@ class ManifestServiceProxy : public ManifestServiceChannel::Delegate {
     if (process_type_ != kNativeNaClProcessType &&
         process_type_ != kPNaClTranslatorProcessType) {
       // Return an error.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(callback, base::Passed(base::File()), 0, 0));
       return;
     }
@@ -283,7 +283,7 @@ class ManifestServiceProxy : public ManifestServiceChannel::Delegate {
     bool is_helper_process = process_type_ == kPNaClTranslatorProcessType;
     if (!ManifestResolveKey(pp_instance_, is_helper_process, key, &url,
                             &pnacl_options)) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(callback, base::Passed(base::File()), 0, 0));
       return;
     }
@@ -525,7 +525,7 @@ void PPBNaClPrivate::LaunchSelLdr(
       *translator_channel = IPC::SyncChannel::Create(
           instance_info.channel_handle, IPC::Channel::MODE_CLIENT,
           new NoOpListener, content::RenderThread::Get()->GetIOTaskRunner(),
-          base::ThreadTaskRunnerHandle::Get(), true,
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE), true,
           content::RenderThread::Get()->GetShutdownEvent());
     } else {
       // Save the channel handle for when StartPpapiProxy() is called.
@@ -1466,7 +1466,7 @@ void DownloadFile(PP_Instance instance,
   NexeLoadManager* load_manager = GetNexeLoadManager(instance);
   DCHECK(load_manager);
   if (!load_manager) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, static_cast<int32_t>(PP_ERROR_FAILED),
                               kInvalidNaClFileInfo));
     return;
@@ -1482,13 +1482,13 @@ void DownloadFile(PP_Instance instance,
                                               &file_info.token_lo,
                                               &file_info.token_hi);
     if (handle == PP_kInvalidFileHandle) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(callback, static_cast<int32_t>(PP_ERROR_FAILED),
                                 kInvalidNaClFileInfo));
       return;
     }
     file_info.handle = handle;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(callback, static_cast<int32_t>(PP_OK), file_info));
     return;
@@ -1498,7 +1498,7 @@ void DownloadFile(PP_Instance instance,
   // before downloading it.
   const GURL& test_gurl = load_manager->plugin_base_url().Resolve(url);
   if (!test_gurl.is_valid()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, static_cast<int32_t>(PP_ERROR_FAILED),
                               kInvalidNaClFileInfo));
     return;
@@ -1516,7 +1516,7 @@ void DownloadFile(PP_Instance instance,
     file_info.handle = file_handle;
     file_info.token_lo = file_token_lo;
     file_info.token_hi = file_token_hi;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(callback, static_cast<int32_t>(PP_OK), file_info));
     return;
@@ -1530,7 +1530,7 @@ void DownloadFile(PP_Instance instance,
   content::PepperPluginInstance* plugin_instance =
       content::PepperPluginInstance::Get(instance);
   if (!plugin_instance) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, static_cast<int32_t>(PP_ERROR_FAILED),
                               kInvalidNaClFileInfo));
     return;
@@ -1730,7 +1730,7 @@ void PPBNaClPrivate::StreamPexe(PP_Instance instance,
   content::PepperPluginInstance* plugin_instance =
       content::PepperPluginInstance::Get(instance);
   if (!plugin_instance) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(handler->DidFinishStream, handler_user_data,
                               static_cast<int32_t>(PP_ERROR_FAILED)));
     return;

@@ -84,7 +84,7 @@ MemoryPressureMonitor::~MemoryPressureMonitor() {
 void MemoryPressureMonitor::CheckMemoryPressureSoon() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  ThreadTaskRunnerHandle::Get()->PostTask(
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, Bind(&MemoryPressureMonitor::CheckMemoryPressure,
                       weak_ptr_factory_.GetWeakPtr()));
 }

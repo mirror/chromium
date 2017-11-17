@@ -581,7 +581,7 @@ void CompositorImpl::CreateLayerTreeHost() {
   cc::LayerTreeHost::InitParams params;
   params.client = this;
   params.task_graph_runner = &g_compositor_dependencies.Get().task_graph_runner;
-  params.main_task_runner = base::ThreadTaskRunnerHandle::Get();
+  params.main_task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   params.settings = &settings;
   params.mutator_host = animation_host_.get();
   host_ = cc::LayerTreeHost::CreateSingleThreaded(this, &params);
@@ -713,7 +713,7 @@ void CompositorImpl::CreateVulkanOutputSurface() {
 
   // TODO(crbug.com/582558): Need to match GL and implement DidSwapBuffers.
   auto vulkan_surface = std::make_unique<VulkanOutputSurface>(
-      vulkan_context_provider, base::ThreadTaskRunnerHandle::Get());
+      vulkan_context_provider, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   if (!vulkan_surface->Initialize(window_))
     return;
 
@@ -797,7 +797,7 @@ void CompositorImpl::InitializeDisplay(
   }
 
   viz::FrameSinkManagerImpl* manager = GetFrameSinkManager();
-  auto* task_runner = base::ThreadTaskRunnerHandle::Get().get();
+  auto* task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE).get();
   auto scheduler = std::make_unique<viz::DisplayScheduler>(
       root_window_->GetBeginFrameSource(), task_runner,
       display_output_surface->capabilities().max_frames_pending);

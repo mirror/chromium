@@ -237,7 +237,7 @@ void SiteDataCountingHelper::Done(const std::vector<GURL>& origins) {
   }
   if (--tasks_ > 0)
     return;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(completion_callback_, unique_origins_.size()));
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }

@@ -105,7 +105,7 @@ void AttachmentServiceImpl::GetOrDownloadState::
     // All requests completed. Let's notify consumer.
     GetOrDownloadResult result =
         unavailable_attachments_.empty() ? GET_SUCCESS : GET_UNSPECIFIED_ERROR;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(callback_, result, base::Passed(&retrieved_attachments_)));
   }

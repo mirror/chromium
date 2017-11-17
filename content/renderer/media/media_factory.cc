@@ -297,7 +297,7 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
     video_frame_compositor_task_runner =
         render_thread->compositor_task_runner()
             ? render_thread->compositor_task_runner()
-            : base::ThreadTaskRunnerHandle::Get();
+            : base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   }
 
   DCHECK(layer_tree_view);
@@ -386,7 +386,7 @@ MediaFactory::CreateRendererFactorySelector(
           base::Bind(&StreamTextureWrapperImpl::Create,
                      render_thread->EnableStreamTextureCopy(),
                      render_thread->GetStreamTexureFactory(),
-                     base::ThreadTaskRunnerHandle::Get())));
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE))));
 
   factory_selector->SetUseMediaPlayer(use_media_player);
 #endif  // defined(OS_ANDROID)
@@ -466,7 +466,7 @@ blink::WebMediaPlayer* MediaFactory::CreateWebMediaPlayerForMediaStream(
   scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner =
       render_thread->compositor_task_runner();
   if (!compositor_task_runner.get())
-    compositor_task_runner = base::ThreadTaskRunnerHandle::Get();
+    compositor_task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
   return new WebMediaPlayerMS(
       frame, client, GetWebMediaPlayerDelegate(),

@@ -133,7 +133,7 @@ BookmarkAppNavigationThrottle::ProcessNavigation() {
     // TODO(crbug.com/774895): Stop bouncing back to the browser once the
     // experience for out-of-scope navigations improves.
     DVLOG(1) << "Open in new tab.";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&BookmarkAppNavigationThrottle::OpenInNewTab,
                               weak_ptr_factory_.GetWeakPtr()));
     return content::NavigationThrottle::DEFER;
@@ -164,7 +164,7 @@ BookmarkAppNavigationThrottle::OpenInAppWindowAndCloseTabIfNecessary(
     // the original WebContents. To avoid this we open the app asynchronously.
     if (!source->HasOpener()) {
       DVLOG(1) << "Deferring opening app.";
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(&BookmarkAppNavigationThrottle::OpenBookmarkApp,
                                 weak_ptr_factory_.GetWeakPtr(), target_app));
     } else {
@@ -174,7 +174,7 @@ BookmarkAppNavigationThrottle::OpenInAppWindowAndCloseTabIfNecessary(
     // According to NavigationThrottle::WillStartRequest's documentation closing
     // a WebContents should be done asynchronously to avoid UAFs. Closing the
     // WebContents will cancel the navigation.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&BookmarkAppNavigationThrottle::CloseWebContents,
                               weak_ptr_factory_.GetWeakPtr()));
     return content::NavigationThrottle::DEFER;

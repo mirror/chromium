@@ -60,7 +60,7 @@ void RegionDataLoaderImpl::OnRegionDataLoaded(bool success,
   }
   // The deletion must be asynchronous since the caller is not quite done with
   // the preload supplier.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&RegionDataLoaderImpl::DeleteThis, base::Unretained(this)));
 }
