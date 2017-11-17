@@ -8,6 +8,9 @@ import("//mojo/public/tools/bindings/mojom.gni")
 component("ash_public_cpp") {
   sources = [
     "accessibility_types.h",
+    "app_list/app_list_item.cc",
+    "app_list/app_list_item.h",
+    "app_list/app_list_item_observer.h",
     "app_types.h",
     "ash_pref_names.cc",
     "ash_pref_names.h",
@@ -64,6 +67,7 @@ component("ash_public_cpp") {
 
   deps = [
     "//components/prefs",
+    "//components/sync",
     "//mojo/common:common_custom_types",
     "//skia/public/interfaces",
     "//ui/aura",
