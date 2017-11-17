@@ -656,4 +656,21 @@ TEST_F(AuthenticatorImplTest, TestRegisterResponseData) {
             response->GetCBOREncodedAttestationObject());
 }
 
+TEST_F(AuthenticatorImplTest, TestTimeout) {
+  AuthenticatorPtr authenticator = ConnectToAuthenticator();
+  MakePublicKeyCredentialOptionsPtr options =
+      GetTestMakePublicKeyCredentialOptions();
+
+  // Timeout will fire immediately.
+  options->adjusted_timeout = base::TimeDelta::FromMilliseconds(1);
+  TestMakeCredentialCallback cb;
+  authenticator->MakeCredential(std::move(options), cb.callback());
+
+  std::pair<webauth::mojom::AuthenticatorStatus,
+            webauth::mojom::PublicKeyCredentialInfoPtr>& response =
+      cb.WaitForCallback();
+  EXPECT_EQ(webauth::mojom::AuthenticatorStatus::NOT_ALLOWED_ERROR,
+            response.first);
+}
+
 }  // namespace content
