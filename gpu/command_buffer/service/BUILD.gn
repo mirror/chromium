@@ -200,6 +200,10 @@ target(link_target_type, "service_sources") {
     configs -= [ "//build/config/compiler:default_optimization" ]
     configs += [ "//build/config/compiler:optimize_max" ]
   }
+
+  if (use_ozone) {
+    deps += [ "//ui/ozone" ]
+  }
 }
 
 proto_library("disk_cache_proto") {
