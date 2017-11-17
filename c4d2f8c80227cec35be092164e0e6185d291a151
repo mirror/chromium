@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2d7b250e_47a9dde8",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-17T10:30:33Z",
+      "side": 1,
+      "message": "Similarly to https://chromium-review.googlesource.com/658157, in addition to enforcing 4.1.3.6., we will want to prevent browsing contexts with URL schemes `about:` and `data:` from using the API. So we will also need to check the URL like so:\n\nif (url.SchemeIs(url::kAboutScheme) || url.SchemeIs(url::kDataScheme))\n  throw NotAllowedError",
+      "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8967d601_02b68ca7",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 2
@@ -13,6 +30,47 @@
       "writtenOn": "2017-11-17T10:04:11Z",
       "side": 1,
       "message": "You\u0027re checking this on the caller side in `CredentialManagerClient`. Can you change this validation on the browser-side into a DCHECK?",
+      "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac00716_819c8285",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-17T10:30:33Z",
+      "side": 1,
+      "message": "If the browser-process-side check fails after we already checked it on the renderer side, doesn\u0027t that indicate a compromised renderer?\n\nI\u0027d argue that in case the check fails, we should handle that by killing the renderer, by calling either bad_message::ReceivedBadMessage() or mojo::ReportBadMessage.",
+      "parentUuid": "8967d601_02b68ca7",
+      "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37cab089_9466feb9",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-17T10:30:33Z",
+      "side": 1,
+      "message": "nit: std::string() to avoid a constant string literal and potentially allocating a buffer consisting merely of a terminating zero. (Same below.)",
+      "range": {
+        "startLine": 33,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 13
+      },
       "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +94,24 @@
     },
     {
       "key": {
+        "uuid": "b0e5a6bb_047e2186",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-17T10:30:33Z",
+      "side": 1,
+      "message": "For effective domain\u003dfoo.bar.google.com, can the RPID be bar.google.com?\n\nThe definition of the algorithm at https://html.spec.whatwg.org/multipage/origin.html#is-a-registrable-domain-suffix-of-or-is-equal-to seems to allow that, but a \"registerable domain suffix\" should not include subdomains.",
+      "parentUuid": "38962005_74154b02",
+      "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "756b0a0a_45066ab0",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 2
@@ -53,6 +129,24 @@
     },
     {
       "key": {
+        "uuid": "f38a46ae_a223e954",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-17T10:30:33Z",
+      "side": 1,
+      "message": "At any rate, we should probably do steps 6--8 and 9 in two parts:\n\nstd::string GetValidEffectiveDomain(RenderFrameHost);\n -\u003e Check that rfh-\u003eGetLastCommittedURL() is not (empty, about:, data:)\n -\u003e Check that rfh-\u003eGetLastCommittedOrigin() is not (empty, unique) and its host has HostHasRegistryControlledDomain.\n\nstd::string GetValidatedRelyingPartyID(effective_domain, Optional\u003cpossibly_invalid_relying_party_id\u003e)\n -\u003e You can calculate registerable_domain \u003d GetDomainAndRegistry(effective_domain)\n\nAnd as Mike mentions, it probably makes sense to only expose any WebAuthN functionality to browsing contexts where GetValidEffectiveDomain() returns a valid domain -- i.e., do that for all CM and WebAuthN API calls.\n\nOrthogonally, we can do each of the two checks:\na) only in the browser process, and return SecurityErrors if those checks fail.\nb) first in the renderer process, which return SecurityErrors on failure. Then do the check again on the browser side, and kill the renderer if the check fails.\n\nWe should also make sure to have unittests covering the pathological cases listed in:\nhttps://html.spec.whatwg.org/multipage/origin.html#is-a-registrable-domain-suffix-of-or-is-equal-to",
+      "parentUuid": "756b0a0a_45066ab0",
+      "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9739536d_ac5455a1",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 2
@@ -64,6 +158,23 @@
       "writtenOn": "2017-11-17T10:04:11Z",
       "side": 1,
       "message": "Step 4 of https://w3c.github.io/webauthn/#createCredential returns a `NotAllowedError` for opaque origins, while steps 5 and 6 returning a `SecurityError` for domain mismatch. Does this `NOT_ALLOWED_ERRROR` response turn into a `SecurityError` on the blink side? If not, can you poke it? :)",
+      "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96700ab8_15d07533",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-17T10:30:33Z",
+      "side": 1,
+      "message": "For step 4.1.3.9., we need to throw a SecurityError, right?",
       "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
