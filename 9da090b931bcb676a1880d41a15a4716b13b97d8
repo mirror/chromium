@@ -16,6 +16,24 @@
       "revId": "9da090b931bcb676a1880d41a15a4716b13b97d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bce4ca4_c5fcdbd1",
+        "filename": "third_party/WebKit/Source/platform/graphics/StrokeData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-17T14:22:11Z",
+      "side": 1,
+      "message": "Yes, this is the general form. Those other elements largely implement the simpler version already, but we could possibly be slightly better there. (I guess this could take a \"geometry hint\" as an argument - closed_convex_shape_without_miters or whatever that would be called \u003d).)",
+      "parentUuid": "09a52be7_a33fecb0",
+      "revId": "9da090b931bcb676a1880d41a15a4716b13b97d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
