@@ -16,6 +16,24 @@
       "revId": "3d4ff825bbadce2aebb274807e5371c9b1ba3e71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404e47bc_0b7e847a",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-17T18:43:09Z",
+      "side": 1,
+      "message": "Yes, we are replicating the structure we have in BrowserAccessibility. As we don\u0027t know the object class that will be created first, then we need to add the g_type_init call on any of the initializers.\n\nThe bool check we have on the dynamic gtype initialization is because that object is the one that will be more frequently instantiated, so the g_type_init check for initializing only once, that is thread safe, is too much expensive.\n\nI\u0027ll send a follow up patch for simplifying the g_type_init both on BrowserAccessibilityAuralinux objects and here.",
+      "parentUuid": "231baaf3_d1dfef53",
+      "revId": "3d4ff825bbadce2aebb274807e5371c9b1ba3e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
