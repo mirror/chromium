@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d92e5229_0907a121",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_broadcast_forwarder.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-17T11:26:32Z",
+      "side": 1,
+      "message": "Is the only purpose of this object to prevent having to implement the ChromeBroadcastObserver methods on the receiver? \n\nIf it makes sense for the broadcaseter to support different use cases better by (for example) having property groups (so you can just broadcast/observe all four of these properties together), or expressing the ChromeBroadcastObserver protocol in terms of properties instead of setter methods, I\u0027d rather do that than creating intermediate management classes and protocols.",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "28ef64c58c011d161214b09e4d6bcfbd20cbe22f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
