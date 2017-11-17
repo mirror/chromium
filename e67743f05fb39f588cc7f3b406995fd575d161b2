@@ -16,6 +16,24 @@
       "revId": "e67743f05fb39f588cc7f3b406995fd575d161b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e8b32c4_c0cc7c3b",
+        "filename": "ash/wm/default_state.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-17T18:37:57Z",
+      "side": 1,
+      "message": "I feel |pre_auto_manage_window_bounds| is not needed. SetPreAutoManageWindowBounds is called after window_state-\u003eOnWMEvent: [1]. And they got reset both in set_bounds_changed_by_user().\n\nI don\u0027t know whether there is a case that !window_state-\u003epre_added_to_workspace_window_bounds() \u0026\u0026 window_state-\u003epre_auto_manage_window_bounds()?\n\n[1] https://cs.chromium.org/chromium/src/ash/wm/workspace/workspace_layout_manager.cc?sq\u003dpackage:chromium\u0026l\u003d90",
+      "parentUuid": "922e1669_87db5856",
+      "revId": "e67743f05fb39f588cc7f3b406995fd575d161b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
