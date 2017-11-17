@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c116b11_25d632df",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2617,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-17T14:34:13Z",
+      "side": 0,
+      "message": "This line is moved to CloseActiveStreamIterator().",
+      "range": {
+        "startLine": 2617,
+        "startChar": 0,
+        "endLine": 2617,
+        "endChar": 73
+      },
+      "revId": "4dbfbc2bc6953e8336c20ed42f4fe41502182a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22da8400_459afcf6",
+        "filename": "net/spdy/chromium/spdy_session_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-17T14:34:13Z",
+      "side": 0,
+      "message": "Turns out some of these tests do not need this line, so I\u0027m removing them (without fully understanding what this is doing).",
+      "range": {
+        "startLine": 1286,
+        "startChar": 0,
+        "endLine": 1286,
+        "endChar": 58
+      },
+      "revId": "4dbfbc2bc6953e8336c20ed42f4fe41502182a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16e08fb5_2aec0d6b",
+        "filename": "net/spdy/chromium/spdy_session_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1563,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-17T14:34:13Z",
+      "side": 0,
+      "message": "This test is redundant with CancelPushAfterExpired.",
+      "range": {
+        "startLine": 1563,
+        "startChar": 24,
+        "endLine": 1563,
+        "endChar": 48
+      },
+      "revId": "4dbfbc2bc6953e8336c20ed42f4fe41502182a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b1bb543_4f286f3b",
+        "filename": "net/spdy/chromium/spdy_session_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1649,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-17T14:34:13Z",
+      "side": 0,
+      "message": "The tests above check for histograms and should cover all cases, making this test redundant.",
+      "range": {
+        "startLine": 1649,
+        "startChar": 24,
+        "endLine": 1649,
+        "endChar": 54
+      },
+      "revId": "4dbfbc2bc6953e8336c20ed42f4fe41502182a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
