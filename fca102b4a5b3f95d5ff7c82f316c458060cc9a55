@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "e73b88b2_9cc69bb7",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T07:12:15Z",
+      "side": 1,
+      "message": "Who guarantees that client_ is alive until CompositorMutatorClient::SetMutationUpdate gets called?\n\nIn general would you help me understand who owns client_? CompositorMutatorImpl is not owning...",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cad9a6e6_057716cd",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
         "patchSetId": 36
@@ -71,6 +88,23 @@
     },
     {
       "key": {
+        "uuid": "a3d00cb9_1fc7c0fd",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T07:12:15Z",
+      "side": 1,
+      "message": "Why do we need to convert it to base:: callback?\n\nAnimationWorkletProxyClientImpl::MutateWithEvent is a Blink\u0027s method.",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af072ec7_02d43f5a",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
         "patchSetId": 36
@@ -88,6 +122,40 @@
         "endLine": 52,
         "endChar": 43
       },
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34062acb_b5863ec3",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T07:12:15Z",
+      "side": 1,
+      "message": "I\u0027m a bit concerned that this CL introduces a bunch of raw pointers to CompositorMutatorImpl*, but is it guaranteed that the owning objects get destructed when LayoutTreeHostImpl releases the CompositorMutator?",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e8007d2_c2bebc92",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T07:12:15Z",
+      "side": 1,
+      "message": "Why do we need to make it weak?",
       "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
