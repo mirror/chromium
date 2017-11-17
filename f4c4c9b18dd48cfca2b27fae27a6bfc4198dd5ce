@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1ba9760_a21152e7",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-17T00:15:02Z",
+      "side": 1,
+      "message": "oh that\u0027s dangerous, return 1 instead",
+      "range": {
+        "startLine": 802,
+        "startChar": 64,
+        "endLine": 802,
+        "endChar": 65
+      },
+      "revId": "f4c4c9b18dd48cfca2b27fae27a6bfc4198dd5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2c4e742_8f8a8878",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-17T00:15:02Z",
+      "side": 1,
+      "message": "is this change related?",
+      "revId": "f4c4c9b18dd48cfca2b27fae27a6bfc4198dd5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
