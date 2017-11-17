@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "d4032bf6_359b3ee2",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-11-17T03:07:12Z",
+      "side": 1,
+      "message": "Totally random drive-by, sorry: \n\nBoth naming schemes make sense, in seconds-contained-in-minute vs minute-expressed-in-seconds. To avoid any ambiguity, lets follow the naming in base/time? I.e. SECONDS_PER_MINUTE, MINUTES_PER_HOUR, etc. No more question of directionality AND consistent naming scheme. What could be better? ;)",
+      "parentUuid": "bd0e8f3b_f0a7294e",
+      "revId": "10492b0dec58ca7049825b0888a8aa26a9b05dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75829efe_e2ab1c4a",
         "filename": "chrome/browser/resources/discards/discards.js",
         "patchSetId": 6
