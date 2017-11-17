@@ -1040,11 +1040,9 @@ bool ContainerNode::GetUpperLeftCorner(FloatPoint& point) const {
     }
 
     if (o->IsAtomicInlineLevel()) {
-      point = FloatPoint();
       DCHECK(o->IsBox());
       LayoutBox* box = ToLayoutBox(o);
-      point.MoveBy(box->Location());
-      point = o->Container()->LocalToAbsolute(point, kUseTransforms);
+      point = o->Container()->LocalToAbsolute(box->Location(), kUseTransforms);
       return true;
     }
   }
