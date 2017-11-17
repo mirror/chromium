@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f516785e_2b599a76",
+        "filename": "content/network/proxy_config_service_mojo_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T01:05:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b671d1e_dd12d27d",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "205817371c98672900f1ec32cb7ae83ee81bcfc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f8d8415_8bddd8a3",
         "filename": "content/network/proxy_config_service_mojo_unittest.cc",
         "patchSetId": 16
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7a30e2de_3f47e0ba",
+        "filename": "content/network/proxy_config_service_mojo_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T01:05:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f8d8415_8bddd8a3",
+      "range": {
+        "startLine": 64,
+        "startChar": 21,
+        "endLine": 64,
+        "endChar": 34
+      },
+      "revId": "205817371c98672900f1ec32cb7ae83ee81bcfc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51c09bab_6a84426f",
         "filename": "content/network/proxy_config_service_mojo_unittest.cc",
         "patchSetId": 16
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "a8247297_393ed2a2",
+        "filename": "content/network/proxy_config_service_mojo_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T01:05:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51c09bab_6a84426f",
+      "revId": "205817371c98672900f1ec32cb7ae83ee81bcfc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29564705_9bac5577",
         "filename": "content/public/common/proxy_config_traits.cc",
         "patchSetId": 16
@@ -79,6 +145,24 @@
       "revId": "205817371c98672900f1ec32cb7ae83ee81bcfc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1f424de_dc49ac26",
+        "filename": "content/public/common/proxy_config_traits.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T01:05:37Z",
+      "side": 1,
+      "message": "Done.  Doesn\u0027t look testable, without poking a hole to allow adding invalid rules.  :(",
+      "parentUuid": "29564705_9bac5577",
+      "revId": "205817371c98672900f1ec32cb7ae83ee81bcfc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "b4d884aa_d35d7e4d",
+        "filename": "content/public/common/proxy_config_traits.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T01:05:37Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "cd1e7d00_4d3c5c1e",
+      "range": {
+        "startLine": 53,
+        "startChar": 53,
+        "endLine": 53,
+        "endChar": 73
+      },
+      "revId": "205817371c98672900f1ec32cb7ae83ee81bcfc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca6137e2_ca8853ee",
         "filename": "content/public/common/proxy_config_traits.cc",
         "patchSetId": 16
@@ -116,6 +224,24 @@
       "writtenOn": "2017-11-16T22:31:07Z",
       "side": 1,
       "message": "how does this work? What is ProxyConfigDataView, how is ReadProxyRules generated?",
+      "revId": "205817371c98672900f1ec32cb7ae83ee81bcfc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db61db19_8f2043c3",
+        "filename": "content/public/common/proxy_config_traits.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T01:05:37Z",
+      "side": 1,
+      "message": "My understanding is that DataViews wrap the binary data received over a mojo pipe, and correspond to mojo classes that aren\u0027t simple native mojo types.  So instead of creating a mojom::ProxyConfig directly (The mojo class generated from the interface file) and then converting it to a net::ProxyConfig, we extract fields one at a time from the raw data and use them to populate the corresponding ProxyConfig fields.\n\nThe ReadProxyRules call here applies the Read method higher up in this file that takes in a ProxyRulesDataView object to convert the ProxyRules portion of the IPC ProxyConfig object to a net::ProxyRules object, and returns false if it fails.\n\nI don\u0027t know the details of the generation logic itself",
+      "parentUuid": "ca6137e2_ca8853ee",
       "revId": "205817371c98672900f1ec32cb7ae83ee81bcfc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
