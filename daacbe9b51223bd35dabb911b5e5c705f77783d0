@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43e8b449_31609c19",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-17T21:55:24Z",
+      "side": 1,
+      "message": "sp: \"Encodeded\"",
+      "range": {
+        "startLine": 138,
+        "startChar": 26,
+        "endLine": 138,
+        "endChar": 35
+      },
+      "revId": "daacbe9b51223bd35dabb911b5e5c705f77783d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af9a6682_dc517cda",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-17T21:55:24Z",
+      "side": 1,
+      "message": "You can do this without going to floating point, but it probably doesn\u0027t matter.",
+      "range": {
+        "startLine": 141,
+        "startChar": 19,
+        "endLine": 141,
+        "endChar": 58
+      },
+      "revId": "daacbe9b51223bd35dabb911b5e5c705f77783d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f25201_57b5e8e0",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-17T21:55:24Z",
+      "side": 1,
+      "message": "This is a non-minimal encoding, not extra data after the end of a CBOR item.",
+      "range": {
+        "startLine": 142,
+        "startChar": 18,
+        "endLine": 142,
+        "endChar": 39
+      },
+      "revId": "daacbe9b51223bd35dabb911b5e5c705f77783d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb71633_b15d34c3",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-17T21:55:24Z",
+      "side": 1,
+      "message": "If you include this (and I still suspect you shouldn\u0027t), definitely add some tests for it.",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 27
+      },
+      "revId": "daacbe9b51223bd35dabb911b5e5c705f77783d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c541085_806dcc2c",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-17T21:55:24Z",
+      "side": 1,
+      "message": "Please check:\n{0x18, 23}\n{0x19, 0x00, 0xff}\n{0x1a, 0x00, 0x00, 0xff, 0xff}\n{0x1b, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff}",
+      "range": {
+        "startLine": 49,
+        "startChar": 57,
+        "endLine": 49,
+        "endChar": 75
+      },
+      "revId": "daacbe9b51223bd35dabb911b5e5c705f77783d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c29d1993_41272ecd",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-17T21:55:24Z",
+      "side": 1,
+      "message": "EXPECT_FALSE",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 11
+      },
+      "revId": "daacbe9b51223bd35dabb911b5e5c705f77783d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

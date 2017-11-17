@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "61f3704f_487ac008",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-17T21:55:24Z",
+      "side": 1,
+      "message": "I prefer to avoid generalizing until there\u0027s a need. If nobody ever turns up with some non-canonical CBOR to parse, we\u0027ll be left with this extra code and its potential bugs forever. If you take out the non-canonical parsing, it\u0027s not that difficult for whoever needs it to add it then.",
+      "parentUuid": "28fb4416_caed332d",
+      "range": {
+        "startLine": 17,
+        "startChar": 59,
+        "endLine": 18,
+        "endChar": 30
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf4fd344_4344a44a",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 8
@@ -1260,6 +1284,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "4d25f0b1_dd62fb5b",
+      "range": {
+        "startLine": 111,
+        "startChar": 25,
+        "endLine": 111,
+        "endChar": 37
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f5f9453c_41e5bc89",
+        "filename": "content/test/fuzzer/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-17T21:55:24Z",
+      "side": 1,
+      "message": "It turns out that the default is only 64, which is definitely too short: https://chromium.googlesource.com/chromium/src/+/master/testing/libfuzzer/getting_started.md#improving-your-fuzzer. So, you should specify this, and maybe remove the recursion check while testing the fuzzer to find the minimum max_len that\u0027ll find stack overflows. Or just decide that finding stack overflows isn\u0027t worth the slowdown in fuzzer runtime.",
+      "parentUuid": "be9bcc45_25e1a7a9",
       "range": {
         "startLine": 111,
         "startChar": 25,

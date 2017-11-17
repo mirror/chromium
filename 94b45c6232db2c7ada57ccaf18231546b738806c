@@ -22,6 +22,53 @@
       "revId": "94b45c6232db2c7ada57ccaf18231546b738806c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c61e91_a381bb1a",
+        "filename": "content/test/fuzzer/cbor_reader_fuzzer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-17T21:55:24Z",
+      "side": 1,
+      "message": "Yeah, ASSERT_TRUE includes a `return;` statement, which doesn\u0027t work in a function returning \u0027int\u0027. https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#assertion-placement\n\nI\u0027m not sure the fuzzer will handle EXPECT (or ASSERT) failures correctly. I\u0027m more confident it\u0027ll treat CHECK() failures as \"interesting\" inputs.",
+      "parentUuid": "907c82c4_aa528a5d",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 38
+      },
+      "revId": "94b45c6232db2c7ada57ccaf18231546b738806c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61067ea2_625665cb",
+        "filename": "content/test/fuzzer/cbor_reader_fuzzer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-17T21:55:24Z",
+      "side": 1,
+      "message": "Also check that the sizes are equal.",
+      "range": {
+        "startLine": 27,
+        "startChar": 63,
+        "endLine": 27,
+        "endChar": 75
+      },
+      "revId": "94b45c6232db2c7ada57ccaf18231546b738806c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
