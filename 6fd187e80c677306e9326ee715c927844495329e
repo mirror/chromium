@@ -1,0 +1,221 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9698e15_d64da7fb",
+        "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-17T19:09:07Z",
+      "side": 1,
+      "message": "nit: move this up to go beside the other ObserverLists",
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c87636_aeb04947",
+        "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-17T19:09:07Z",
+      "side": 1,
+      "message": "nit: don\u0027t explicitly initialize to false (bytecodes get inserted to explicitly set it).\nAlso move it up with other fields.",
+      "range": {
+        "startLine": 143,
+        "startChar": 44,
+        "endLine": 143,
+        "endChar": 49
+      },
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe89756_4167b2ee",
+        "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-17T19:09:07Z",
+      "side": 1,
+      "message": "nit: don\u0027t need this extra qualifier",
+      "range": {
+        "startLine": 218,
+        "startChar": 20,
+        "endLine": 218,
+        "endChar": 37
+      },
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27eccac_c4f6ce10",
+        "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-17T19:09:07Z",
+      "side": 1,
+      "message": "nit: static",
+      "range": {
+        "startLine": 278,
+        "startChar": 12,
+        "endLine": 278,
+        "endChar": 19
+      },
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2da4b6c_f918db91",
+        "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-17T19:09:07Z",
+      "side": 1,
+      "message": "nit: set this right after checking it so that it\u0027s easier to see",
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a8f24c_dd2a0711",
+        "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-17T19:09:07Z",
+      "side": 1,
+      "message": "nit: delete blank line",
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b6d870_55d1329f",
+        "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-17T19:09:07Z",
+      "side": 1,
+      "message": "nit: call this \"assertInitialized\"",
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e45fd1c_98a489f4",
+        "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-17T19:09:07Z",
+      "side": 1,
+      "message": "nit: remove classname",
+      "range": {
+        "startLine": 383,
+        "startChar": 8,
+        "endLine": 383,
+        "endChar": 25
+      },
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86545506_23281adb",
+        "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-17T19:09:07Z",
+      "side": 1,
+      "message": "nit: add a comment that this happens here to avoid having to update a multitude of tests.",
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "552b6b00_3c7cacc9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-17T19:09:07Z",
+      "side": 1,
+      "message": "nit: revert this file since it\u0027s just whitespace changes",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 18
+      },
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d96ebad_b83a5748",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastApplication.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-17T19:09:07Z",
+      "side": 1,
+      "message": "let\u0027s do this after.",
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
