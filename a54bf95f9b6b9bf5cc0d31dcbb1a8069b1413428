@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07cd2807_25adad47",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-17T08:07:05Z",
+      "side": 1,
+      "message": "It might be a good idea to file a ticket in crbug.com (type Task, UI\u003eBrowser\u003eAutofill, Pri-3, Hotlist-TechnicalDebt) for this. \nLooking quickly at AutofillAgent, some of the inner-state-reading could be perhaps done by listening to the messages to AutofillDriver send from AutofillAgent::QueryAutofillSuggestions. You might have other suggestions to mention on the ticket.",
+      "range": {
+        "startLine": 23,
+        "startChar": 38,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "a54bf95f9b6b9bf5cc0d31dcbb1a8069b1413428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e806376_846bc5dd",
+        "filename": "chrome/renderer/autofill/form_control_click_detection_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-17T08:07:05Z",
+      "side": 1,
+      "message": "nit: No \"(c)\" and 2011-\u003e2017.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "a54bf95f9b6b9bf5cc0d31dcbb1a8069b1413428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "718b4ea5_1efc89c5",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-17T08:07:05Z",
+      "side": 1,
+      "message": "From this line on below the code looks pasted by accident.",
+      "range": {
+        "startLine": 302,
+        "startChar": 0,
+        "endLine": 302,
+        "endChar": 60
+      },
+      "revId": "a54bf95f9b6b9bf5cc0d31dcbb1a8069b1413428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
