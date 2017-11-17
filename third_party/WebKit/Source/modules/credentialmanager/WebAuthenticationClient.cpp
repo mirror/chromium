@@ -29,6 +29,9 @@ WebCredentialManagerError GetWebCredentialManagerErrorFromStatus(
   switch (status) {
     case webauth::mojom::blink::AuthenticatorStatus::NOT_ALLOWED_ERROR:
       return WebCredentialManagerError::kWebCredentialManagerNotAllowedError;
+    case webauth::mojom::blink::AuthenticatorStatus::PENDING_REQUEST:
+      return WebCredentialManagerError::
+          kWebCredentialManagerPendingRequestError;
     case webauth::mojom::blink::AuthenticatorStatus::NOT_SUPPORTED_ERROR:
       return WebCredentialManagerError::kWebCredentialManagerNotSupportedError;
     case webauth::mojom::blink::AuthenticatorStatus::SECURITY_ERROR:
