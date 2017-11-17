@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dece0360_adf7b607",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-17T00:42:52Z",
+      "side": 1,
+      "message": "This allows space bar to open the focused expectation (which may have been changed by J, K keys).",
+      "revId": "143fde1cd9239f1f70c2752accde5699a5ae2f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "759cbf77_8f8d3ab1",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-17T00:42:52Z",
+      "side": 1,
+      "message": "This allows us to find the open expectation when the focus is on the toolbars.",
+      "revId": "143fde1cd9239f1f70c2752accde5699a5ae2f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c268a465_5a1a0195",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/repaint_overlay.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-17T00:42:52Z",
+      "side": 1,
+      "message": "I changed \"show-test\" to off by default to prevent some test setting focus stealing focus from test-expectations.html document, to make keyboard navigation more smooth.",
+      "revId": "143fde1cd9239f1f70c2752accde5699a5ae2f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
