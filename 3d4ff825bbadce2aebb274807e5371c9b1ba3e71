@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "231baaf3_d1dfef53",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-17T17:57:52Z",
+      "side": 1,
+      "message": "It looks like we\u0027re calling g_type_init more than once now?\nBelow there\u0027s a bool to only call it once.\n\nIf it\u0027s really needed here too, maybe a EnsureGTypeInitCalledOnce() helper\nfunction might be the cleanest solution.",
+      "revId": "3d4ff825bbadce2aebb274807e5371c9b1ba3e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
