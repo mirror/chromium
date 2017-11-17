@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bab09696_74320caa",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 7071,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-11-17T23:18:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "798a18b6_ea38a876",
+      "revId": "db25c79c0db15c049531b078310ad2f26c67365e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b33d793d_eb1f7a3c",
         "filename": "third_party/WebKit/Source/core/editing/EditingStyle.h",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-17T02:00:48Z",
       "side": 1,
       "message": "Can we make EditingStyle to have Document? And verify callers to use\nsame Document? EditingStyle is valid only for using in created document.\n\nI\u0027m OK to land this patch with passing around SecureContextMode in\nEditingStyle. We\u0027ll change EditingStyle to have Document in later.",
+      "revId": "db25c79c0db15c049531b078310ad2f26c67365e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2754c71b_cd739a7d",
+        "filename": "third_party/WebKit/Source/core/editing/EditingStyle.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-11-17T23:18:28Z",
+      "side": 1,
+      "message": "Do you mind if I (or editing-team) does this in a follow up? \n\n(mainly just want to keep this patch minimal-ish) :)",
+      "parentUuid": "b33d793d_eb1f7a3c",
       "revId": "db25c79c0db15c049531b078310ad2f26c67365e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "f63af3b1_9596b849",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-11-17T23:18:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa02215a_c142f7fe",
+      "range": {
+        "startLine": 873,
+        "startChar": 2,
+        "endLine": 873,
+        "endChar": 20
+      },
+      "revId": "db25c79c0db15c049531b078310ad2f26c67365e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "096b195c_52ac0862",
         "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
         "patchSetId": 13
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "24e6374b_5f932642",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-11-17T23:18:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "096b195c_52ac0862",
+      "range": {
+        "startLine": 888,
+        "startChar": 2,
+        "endLine": 888,
+        "endChar": 20
+      },
+      "revId": "db25c79c0db15c049531b078310ad2f26c67365e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34d61b34_204792ac",
         "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
         "patchSetId": 13
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "b4efb794_8f5415c6",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-11-17T23:18:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34d61b34_204792ac",
+      "revId": "db25c79c0db15c049531b078310ad2f26c67365e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f25dbeaa_34ea5b14",
         "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
         "patchSetId": 13
@@ -113,6 +215,24 @@
       "revId": "db25c79c0db15c049531b078310ad2f26c67365e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f45de2f_d6508e9e",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-11-17T23:18:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f25dbeaa_34ea5b14",
+      "revId": "db25c79c0db15c049531b078310ad2f26c67365e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
