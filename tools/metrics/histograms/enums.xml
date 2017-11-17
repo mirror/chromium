@@ -16973,6 +16973,12 @@ Called by update_net_error_codes.py.-->
   <int value="2230" label="ReplaceCharsetInXHR"/>
   <int value="2231" label="RespondToSameOriginRequestWithCrossOriginResponse"/>
   <int value="2232" label="LinkRelModulePreload"/>
+  <int value="2233" label="V8MediaCapabilities_DecodingInfo_Method"/>
+  <int value="2234" label="V8MediaCapabilities_EncodingInfo_Method"/>
+  <int value="2235" label="V8MediaCapabilitiesInfo_Supported_AttributeGetter"/>
+  <int value="2236" label="V8MediaCapabilitiesInfo_Smooth_AttributeGetter"/>
+  <int value="2237"
+      label="V8MediaCapabilitiesInfo_PowerEfficient_AttributeGetter"/>
 </enum>
 
 <enum name="FeedbackSource">

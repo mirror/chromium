@@ -1758,6 +1758,11 @@ enum WebFeature {
   kReplaceCharsetInXHR = 2230,
   kRespondToSameOriginRequestWithCrossOriginResponse = 2231,
   kLinkRelModulePreload = 2232,
+  kV8MediaCapabilities_DecodingInfo_Method = 2233,
+  kV8MediaCapabilities_EncodingInfo_Method = 2234,
+  kV8MediaCapabilitiesInfo_Supported_AttributeGetter = 2235,
+  kV8MediaCapabilitiesInfo_Smooth_AttributeGetter = 2236,
+  kV8MediaCapabilitiesInfo_PowerEfficient_AttributeGetter = 2237,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.
