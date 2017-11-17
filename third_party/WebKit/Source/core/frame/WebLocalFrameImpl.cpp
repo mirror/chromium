@@ -2473,7 +2473,7 @@ WebFrameScheduler* WebLocalFrameImpl::Scheduler() const {
 
 scoped_refptr<base::SingleThreadTaskRunner> WebLocalFrameImpl::GetTaskRunner(
     TaskType task_type) {
-  return GetFrame()->GetTaskRunner(task_type)->ToSingleThreadTaskRunner();
+  return GetFrame()->GetTaskRunner(task_type);
 }
 
 WebInputMethodController* WebLocalFrameImpl::GetInputMethodController() {
