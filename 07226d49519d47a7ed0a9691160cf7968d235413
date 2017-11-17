@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e5d3a8a_cf1fa01d",
+        "filename": "components/omnibox/browser/history_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-17T21:29:50Z",
+      "side": 1,
+      "message": "If you add a matches() method to the fake history provider that provides access to matches_, I think you could get rid of this.",
+      "revId": "07226d49519d47a7ed0a9691160cf7968d235413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa3a79d_12424942",
+        "filename": "components/omnibox/browser/history_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-17T21:29:50Z",
+      "side": 1,
+      "message": "Enclose this fake in an unnamed namespace. Also, rename it to TestHistoryProvider, for consistency with other test classes.",
+      "revId": "07226d49519d47a7ed0a9691160cf7968d235413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3513a8b7_1c890d44",
+        "filename": "components/omnibox/browser/history_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-17T21:29:50Z",
+      "side": 1,
+      "message": "I know this is just copied from the existing code but would you mind making these return types pointers instead? I don\u0027t think it\u0027s covered by the style guide but all of the accessors I\u0027ve seen like this in test files return either const references or non-const pointers, similar to the rule about parameters.",
+      "revId": "07226d49519d47a7ed0a9691160cf7968d235413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a05bf7_cf564e7a",
+        "filename": "components/omnibox/browser/history_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-17T21:29:50Z",
+      "side": 1,
+      "message": "Remove this.",
+      "revId": "07226d49519d47a7ed0a9691160cf7968d235413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a669fee1_2a5bf96b",
+        "filename": "components/omnibox/browser/history_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-17T21:29:50Z",
+      "side": 1,
+      "message": "Why not unique_ptr?",
+      "revId": "07226d49519d47a7ed0a9691160cf7968d235413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cabc77c_d6373627",
+        "filename": "components/omnibox/browser/history_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-17T21:29:50Z",
+      "side": 1,
+      "message": "Could this be moved to the FakeAutocompleteProviderClient destructor to avoid having to repeat it here and in HistoryQuickProviderTest::TearDown()?",
+      "revId": "07226d49519d47a7ed0a9691160cf7968d235413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
