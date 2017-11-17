@@ -1,0 +1,214 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d293669_8374fac7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/resources/v8-cache-worker.js",
+        "patchSetId": 43
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-17T06:42:19Z",
+      "side": 1,
+      "message": "const",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "190cceee_d7c63550",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-17T06:42:19Z",
+      "side": 1,
+      "message": "Would you document why you are making this change?",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99080c5c_b078243f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-17T06:42:19Z",
+      "side": 1,
+      "message": "Would you document why you are making this change?",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ed8901_78f7b5a4",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-17T06:42:19Z",
+      "side": 1,
+      "message": "Would you document why you are making this change?",
+      "range": {
+        "startLine": 321,
+        "startChar": 56,
+        "endLine": 321,
+        "endChar": 0
+      },
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c018caa_f248d9b4",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-17T06:42:19Z",
+      "side": 1,
+      "message": "Would you document why you are making this change?",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873411e0_ef205c0d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-17T06:42:19Z",
+      "side": 1,
+      "message": "V8 experts: Would you check if this origin is respected in the final script exec?\n\nDevtools + dynamic module imports depends on v8::ScriptOrigin to be correct.\nWhen we compile code in ScriptCompiler::Compile, is ScriptOrigin passed at that time takes preference, or is this |origin| going to be used?",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd8cdaac_056868c4",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-17T06:42:19Z",
+      "side": 1,
+      "message": "I think this breaks devtools debugger",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6929d635_6ae11ec6",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-17T06:42:19Z",
+      "side": 1,
+      "message": "argname script_string",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feca1e9f_2c4cf1b8",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-17T06:42:19Z",
+      "side": 1,
+      "message": "use named enum",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d1231cc_1940e178",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/Cache.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-17T06:42:19Z",
+      "side": 1,
+      "message": "Looking at other classes, I think FetchDataLoader::Client should be GCFinalized. Please consider a separate CL to fix.",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "badc86cd_3093401c",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/Cache.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-17T06:42:19Z",
+      "side": 1,
+      "message": "Is this intended?",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c790d6_44a38297",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/Cache.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-17T06:42:19Z",
+      "side": 1,
+      "message": "override",
+      "revId": "e0a7102d4b457e1984148a733b371914b80daf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
