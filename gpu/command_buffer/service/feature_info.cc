@@ -27,6 +27,11 @@
 #include "ui/gl/gl_fence_egl.h"
 #endif
 
+#if defined(USE_OZONE)
+#include "ui/ozone/public/ozone_platform.h"
+#include "ui/ozone/public/surface_factory_ozone.h"
+#endif
+
 namespace gpu {
 namespace gles2 {
 
@@ -1051,9 +1056,18 @@ void FeatureInfo::InitializeFeatures() {
   }
 
 #if defined(OS_MACOSX) || (defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY))
-  // TODO(dcastagna): Determine ycbcr_420v_image on CrOS at runtime
-  // querying minigbm. crbug.com/646148
-  if (gl::GetGLImplementation() != gl::kGLImplementationOSMesaGL) {
+  bool can_ycbcr_420v_image = true;
+#if defined(USE_OZONE)
+  ui::OzonePlatform* platform = ui::OzonePlatform::GetInstance();
+  ui::SurfaceFactoryOzone* factory = platform->GetSurfaceFactoryOzone();
+  std::vector<gfx::BufferFormat> formats =
+      factory->GetScanoutFormats(gfx::kNullAcceleratedWidget);
+  can_ycbcr_420v_image =
+      std::find(formats.begin(), formats.end(),
+                gfx::BufferFormat::YUV_420_BIPLANAR) != formats.end();
+#endif
+  if (can_ycbcr_420v_image &&
+      gl::GetGLImplementation() != gl::kGLImplementationOSMesaGL) {
     AddExtensionString("GL_CHROMIUM_ycbcr_420v_image");
     feature_flags_.chromium_image_ycbcr_420v = true;
   }
