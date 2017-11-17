@@ -650,12 +650,16 @@ TEST_F(VideoResourceUpdaterTest, GenerateReleaseSyncToken) {
     scoped_refptr<media::VideoFrame> video_frame =
         CreateTestRGBAHardwareVideoFrame();
 
-    VideoFrameExternalResources resources =
+    // Ensure |video_frame| has valid SyncToken first.
+    VideoFrameExternalResources resources1 =
         updater.CreateExternalResourcesFromVideoFrame(video_frame);
+    ASSERT_EQ(resources1.release_callbacks.size(), 1u);
+    std::move(resources1.release_callbacks[0]).Run(sync_token1, false);
 
-    ASSERT_EQ(resources.release_callbacks.size(), 1u);
-    resources.release_callbacks[0].Run(sync_token1, false);
-    resources.release_callbacks[0].Run(sync_token2, false);
+    VideoFrameExternalResources resources2 =
+        updater.CreateExternalResourcesFromVideoFrame(video_frame);
+    ASSERT_EQ(resources2.release_callbacks.size(), 1u);
+    std::move(resources2.release_callbacks[0]).Run(sync_token2, false);
   }
 
   EXPECT_TRUE(release_sync_token_.HasData());
