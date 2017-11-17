@@ -61,7 +61,7 @@ MediaRouterBase::AddPresentationConnectionStateChangedCallback(
 
   auto& callbacks = presentation_connection_state_callbacks_[route_id];
   if (!callbacks) {
-    callbacks = base::MakeUnique<PresentationConnectionStateChangedCallbacks>();
+    callbacks = std::make_unique<PresentationConnectionStateChangedCallbacks>();
     callbacks->set_removal_callback(base::Bind(
         &MediaRouterBase::OnPresentationConnectionStateCallbackRemoved,
         base::Unretained(this), route_id));
@@ -139,11 +139,22 @@ const MediaRoute* MediaRouterBase::GetRoute(
   return it == routes.end() ? nullptr : &*it;
 }
 
+const MediaRoute* MediaRouterBase::GetRouteByPresentationId(
+    const std::string& presentation_id) const {
+  const auto& routes = internal_routes_observer_->current_routes;
+  auto it = std::find_if(routes.begin(), routes.end(),
+                         [&presentation_id](const MediaRoute& route) {
+                           return route.presentation_id() == presentation_id;
+                         });
+  return it == routes.end() ? nullptr : &*it;
+}
+
 void MediaRouterBase::Initialize() {
   DCHECK(!initialized_);
   // The observer calls virtual methods on MediaRouter; it must be created
-  // outside of the ctor
-  internal_routes_observer_.reset(new InternalMediaRoutesObserver(this));
+  // outside of the ctor.
+  internal_routes_observer_ =
+      std::make_unique<InternalMediaRoutesObserver>(this);
   initialized_ = true;
 }
 

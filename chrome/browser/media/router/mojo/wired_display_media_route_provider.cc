@@ -56,9 +56,8 @@ bool CompareDisplayBounds(const Display& display1, const Display& display2) {
 }  // namespace
 
 // static
-const mojom::MediaRouteProvider::Id
-    WiredDisplayMediaRouteProvider::kProviderId =
-        mojom::MediaRouteProvider::Id::WIRED_DISPLAY;
+const MediaRouteProviderId WiredDisplayMediaRouteProvider::kProviderId =
+    MediaRouteProviderId::WIRED_DISPLAY;
 
 // static
 const char WiredDisplayMediaRouteProvider::kSinkPrefix[] = "wired_display_";
@@ -91,6 +90,7 @@ void WiredDisplayMediaRouteProvider::CreateRoute(
   MediaRoute route(presentation_id, MediaSource(media_source), sink_id, "",
                    true, "", true);
   route.set_local_presentation(true);
+  route.set_provider_id(kProviderId);
 
   // TODO(crbug.com/777654): Create a presentation receiver window.
   std::move(callback).Run(route, base::nullopt, RouteRequestResult::OK);
