@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8270c1f_9d6ace89",
+        "filename": "tools/gritsettings/resource_ids",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-17T21:34:12Z",
+      "side": 1,
+      "message": "I would leave this alone, and just keep growing downwards.",
+      "revId": "b54d793910f4bbe370d11905d683fc89125951c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b971362f_827dff4d",
+        "filename": "tools/gritsettings/resource_ids",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-17T21:34:12Z",
+      "side": 1,
+      "message": "i.e. This should stay at 12010. To get 80 IDs, change quota_internals_resources to 12130, and increment everything accordingly until \"END chrome/browser section.\"",
+      "revId": "b54d793910f4bbe370d11905d683fc89125951c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
