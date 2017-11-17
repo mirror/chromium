@@ -45,6 +45,7 @@ extern const char kStabilityExtensionRendererCrashCount[];
 extern const char kStabilityExtensionRendererFailedLaunchCount[];
 extern const char kStabilityExtensionRendererLaunchCount[];
 extern const char kStabilityExitedCleanly[];
+extern const char kStabilityGmsCoreVersion[];
 extern const char kStabilityIncompleteSessionEndCount[];
 extern const char kStabilityLaunchCount[];
 extern const char kStabilityPageLoadCount[];
