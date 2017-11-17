@@ -2707,6 +2707,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kIpcDumpDirectory,
     switches::kIpcFuzzerTestcase,
 #endif
+    "mash"
   };
   renderer_cmd->CopySwitchesFrom(browser_cmd, kSwitchNames,
                                  arraysize(kSwitchNames));

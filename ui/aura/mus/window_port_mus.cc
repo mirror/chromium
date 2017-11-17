@@ -4,6 +4,7 @@
 
 #include "ui/aura/mus/window_port_mus.h"
 
+#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "components/viz/client/local_surface_id_provider.h"
 #include "ui/aura/client/aura_constants.h"
@@ -21,6 +22,14 @@
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/gfx/geometry/dip_util.h"
+
+namespace {
+
+bool IsMusHostingViz() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch("mash");
+}
+
+}  // namespace
 
 namespace aura {
 
@@ -591,6 +600,8 @@ void WindowPortMus::UpdatePrimarySurfaceId() {
 }
 
 void WindowPortMus::UpdateClientSurfaceEmbedder() {
+  if (!IsMusHostingViz())
+    return;
   if (window_mus_type() != WindowMusType::TOP_LEVEL_IN_WM &&
       window_mus_type() != WindowMusType::EMBED_IN_OWNER &&
       window_mus_type() != WindowMusType::DISPLAY_MANUALLY_CREATED &&

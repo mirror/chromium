@@ -19,6 +19,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/threading/thread.h"
+#include "build/build_config.h"
 #include "cc/base/switches.h"
 #include "components/discardable_memory/client/client_discardable_shared_memory_manager.h"
 #include "mojo/public/cpp/bindings/map.h"
@@ -72,10 +73,22 @@ inline uint16_t HiWord(uint32_t id) {
   return static_cast<uint16_t>((id >> 16) & 0xFFFF);
 }
 
+gfx::AcceleratedWidget TransportIdToAcceleratedWidget(uint32_t widget_id) {
+#if defined(OS_WIN)
+  return reinterpret_cast<gfx::AcceleratedWidget>(widget_id);
+#else
+  return static_cast<gfx::AcceleratedWidget>(widget_id);
+#endif
+}
+
 struct WindowPortPropertyDataMus : public ui::PropertyData {
   std::string transport_name;
   std::unique_ptr<std::vector<uint8_t>> transport_value;
 };
+
+bool IsMusHostingViz() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch("mash");
+}
 
 // Handles acknowledgment of an input event, either immediately when a nested
 // message loop starts, or upon destruction.
@@ -222,11 +235,15 @@ WindowTreeClient::WindowTreeClient(
       io_task_runner = io_thread_->task_runner();
     }
 
-    gpu_ = ui::Gpu::Create(connector, ui::mojom::kServiceName, io_task_runner);
-    compositor_context_factory_ =
-        std::make_unique<MusContextFactory>(gpu_.get());
-    initial_context_factory_ = Env::GetInstance()->context_factory();
-    Env::GetInstance()->set_context_factory(compositor_context_factory_.get());
+    if (IsMusHostingViz()) {
+      gpu_ =
+          ui::Gpu::Create(connector, ui::mojom::kServiceName, io_task_runner);
+      compositor_context_factory_ =
+          std::make_unique<MusContextFactory>(gpu_.get());
+      initial_context_factory_ = Env::GetInstance()->context_factory();
+      Env::GetInstance()->set_context_factory(
+          compositor_context_factory_.get());
+    }
 
     // WindowServerTest will create more than one WindowTreeClient. We will not
     // create the discardable memory manager for those tests.
@@ -1712,6 +1729,15 @@ void WindowTreeClient::OnConnect() {
   got_initial_displays_ = true;
   if (window_manager_delegate_)
     window_manager_delegate_->OnWmConnected();
+}
+
+void WindowTreeClient::WmOnAcceleratedWidgetForDisplay(int64_t display,
+                                                       uint32_t widget_id) {
+  if (window_manager_delegate_) {
+    gfx::AcceleratedWidget widget = TransportIdToAcceleratedWidget(widget_id);
+    window_manager_delegate_->OnWmAcceleratedWidgetAvailableForDisplay(display,
+                                                                       widget);
+  }
 }
 
 void WindowTreeClient::WmNewDisplayAdded(

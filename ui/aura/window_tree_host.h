@@ -192,6 +192,10 @@ class AURA_EXPORT WindowTreeHost : public ui::internal::InputMethodDelegate,
   // Releases OS capture of the root window.
   virtual void ReleaseCapture() = 0;
 
+  // Forces WindowTreeHost to re-setup the compositor to use the provided
+  // |widget|.
+  virtual void OverrideAcceleratedWidget(gfx::AcceleratedWidget widget) {}
+
  protected:
   friend class TestScreen;  // TODO(beng): see if we can remove/consolidate.
 

@@ -266,7 +266,8 @@ BrowserGpuChannelHostFactory::AllocateSharedMemory(size_t size) {
 void BrowserGpuChannelHostFactory::EstablishGpuChannel(
     const gpu::GpuChannelEstablishedCallback& callback) {
 #if defined(USE_AURA)
-  DCHECK_EQ(aura::Env::Mode::LOCAL, aura::Env::GetInstance()->mode());
+// XXX(sad): This should check for the --mash flag before it DCHECK()s.
+// DCHECK_EQ(aura::Env::Mode::LOCAL, aura::Env::GetInstance()->mode());
 #endif
   DCHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
   if (gpu_channel_.get() && gpu_channel_->IsLost()) {
