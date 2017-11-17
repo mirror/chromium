@@ -57,6 +57,30 @@
       "revId": "d6cd466292f5c75f57939db7a9459ca0d481e30a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72044919_4af95c9e",
+        "filename": "content/public/test/render_view_test.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-11-17T21:20:25Z",
+      "side": 0,
+      "message": "The only call site of this function is in the test RenderViewImplTest.AndroidContextMenuSelectionOrdering and this CL removes that test. So this CL makes this function dead code.",
+      "parentUuid": "d1aec360_04c70101",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 72
+      },
+      "revId": "d6cd466292f5c75f57939db7a9459ca0d481e30a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
