@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "017f9d71_0d81bff6",
+        "filename": "ui/gfx/swap_result.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-17T20:22:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6666c808_aa461305",
+      "revId": "df8e95a35bd127fb61c9a34015989bdfb5d88eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d001be26_65c0f998",
         "filename": "ui/gfx/swap_result.h",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "df8e95a35bd127fb61c9a34015989bdfb5d88eeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5014124e_733f28cc",
+        "filename": "ui/gfx/swap_result.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-17T20:22:03Z",
+      "side": 1,
+      "message": "It\u0027ll make more sense in followup patches that add timestamps that aren\u0027t supported by all platforms. Removed this comment for now, but added comments for all other arguments.",
+      "parentUuid": "d001be26_65c0f998",
+      "revId": "df8e95a35bd127fb61c9a34015989bdfb5d88eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
