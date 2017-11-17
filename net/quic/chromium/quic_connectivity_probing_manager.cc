@@ -18,10 +18,16 @@ QuicConnectivityProbingManager::QuicConnectivityProbingManager(
     : delegate_(delegate),
       retry_count_(0),
       initial_timeout_ms_(0),
+      is_running_(true),
       weak_factory_(this) {}
 
 QuicConnectivityProbingManager::~QuicConnectivityProbingManager() {
   CancelProbing();
+}
+
+void QuicConnectivityProbingManager::ShutDown() {
+  CancelProbing();
+  is_running_ = false;
 }
 
 void QuicConnectivityProbingManager::CancelProbing() {
@@ -42,6 +48,11 @@ void QuicConnectivityProbingManager::StartProbing(
     std::unique_ptr<QuicChromiumPacketWriter> writer,
     std::unique_ptr<QuicChromiumPacketReader> reader,
     base::TimeDelta initial_timeout) {
+  if (!is_running_) {
+    delegate_->OnProbeNetworkFailed(network);
+    return;
+  }
+
   // Start a new probe will always cancel the previous one.
   CancelProbing();
 
