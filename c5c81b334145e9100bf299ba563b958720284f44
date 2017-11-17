@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "efe19d04_eb261010",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-worker-v8-cache.html",
+        "patchSetId": 44
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-17T21:39:31Z",
+      "side": 1,
+      "message": "Here and everywhere, do not hesitate to use async/await. It makes the code much cleaner.",
+      "revId": "c5c81b334145e9100bf299ba563b958720284f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d60ec97d_c43dc865",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-worker-v8-cache.html",
+        "patchSetId": 44
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-17T21:39:31Z",
+      "side": 1,
+      "message": "nit:\n\u003d\u003e { return X; }\ncan be written as\n\u003d\u003e X",
+      "revId": "c5c81b334145e9100bf299ba563b958720284f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5531686d_2e23c86a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-worker-v8-cache.html",
+        "patchSetId": 44
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-17T21:39:31Z",
+      "side": 1,
+      "message": "ditto: () \u003d\u003e TestRunner.addIframe ...",
+      "revId": "c5c81b334145e9100bf299ba563b958720284f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "642e26fd_e412d7aa",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
         "patchSetId": 44
@@ -19,6 +70,57 @@
         "endLine": 337,
         "endChar": 24
       },
+      "revId": "c5c81b334145e9100bf299ba563b958720284f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c27aec_cf568095",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-17T21:39:31Z",
+      "side": 1,
+      "message": "The canonical way is to use TRACE_EVENT_CATEGORY_GROUP_ENABLED",
+      "revId": "c5c81b334145e9100bf299ba563b958720284f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab04c94_b54c5bb5",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-17T21:39:31Z",
+      "side": 1,
+      "message": "Consider passing cached_data to InspectorCompileScriptEvent::Data and move cache_result construction there. This way you won\u0027t need a conditional block and generally reduce amount of instrumentation code at the call site.",
+      "revId": "c5c81b334145e9100bf299ba563b958720284f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952eafcb_0a8ee593",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/Cache.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-17T21:39:31Z",
+      "side": 1,
+      "message": "typo",
       "revId": "c5c81b334145e9100bf299ba563b958720284f44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
