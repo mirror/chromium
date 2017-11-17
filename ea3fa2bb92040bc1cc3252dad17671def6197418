@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e3f66bd_ed660a12",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-17T15:50:55Z",
+      "side": 1,
+      "message": "Should we ever have the case that moved_network_transaction_to_writers_ is true and entry_-\u003ewriters-\u003enetwork_transaction() is false? Can we DCHECK(entry_-\u003ewriters-\u003enetwork_transaction()) instead?",
+      "range": {
+        "startLine": 642,
+        "startChar": 6,
+        "endLine": 642,
+        "endChar": 44
+      },
+      "revId": "ea3fa2bb92040bc1cc3252dad17671def6197418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e087048b_c602e25e",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-17T15:50:55Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 659,
+        "startChar": 5,
+        "endLine": 659,
+        "endChar": 44
+      },
+      "revId": "ea3fa2bb92040bc1cc3252dad17671def6197418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a46653_68ff918e",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-17T15:50:55Z",
+      "side": 1,
+      "message": "Probably best to not talk about what the consumer will or won\u0027t do with this object. If we need to ensure that the consumer won\u0027t use this object again after this point, then we need to document that fact in the header as well as enforce it with DCHECKS.",
+      "range": {
+        "startLine": 382,
+        "startChar": 0,
+        "endLine": 383,
+        "endChar": 34
+      },
+      "revId": "ea3fa2bb92040bc1cc3252dad17671def6197418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
