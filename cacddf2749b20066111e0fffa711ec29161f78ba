@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef6ff92f_4c6a9347",
+        "filename": "cc/raster/gpu_raster_buffer_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-11-17T02:05:24Z",
+      "side": 1,
+      "message": "Is it worth using gl-\u003eFinish() to reduce possible residue impact between warmup and tests?  Same below?",
+      "revId": "cacddf2749b20066111e0fffa711ec29161f78ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
