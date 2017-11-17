@@ -827,6 +827,24 @@
     },
     {
       "key": {
+        "uuid": "ff53615c_b7db7189",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-17T12:37:26Z",
+      "side": 1,
+      "message": "Parsing somewhere outside the browser process is safer than parsing in the browser process, for fairly obvious reasons. It seems to me that parsing it in a process that lives somewhere alongside //device/u2f is a reasonable way of dealing with that problem that would keep code together in a hopefully helpful manner.\n\nThat said, if there are challenges to doing so in a way that will let you evolve the `//device` code going forward, then I agree that passing an opaque blob down to the renderer, and doing the work there would be a better solution than what\u0027s in this CL today.\n\nFWIW, I\u0027d also be fine with doing that in a separate CL with a TODO, as I\u0027m confident that you\u0027ll get to it (and that we\u0027d block shipping it until that was the case :) ).",
+      "parentUuid": "bd658dc0_ebf398f3",
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "713ecdc1_e5ff2ba3",
         "filename": "content/browser/webauth/register_response_data.cc",
         "patchSetId": 20

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00d273b7_be1550f7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/credential-management/credentialscontainer-create-basics.https.html",
+        "patchSetId": 20
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-17T12:37:26Z",
+      "side": 0,
+      "message": "Why remove this test? It doesn\u0027t look like you have any other end-to-end tests that show that a request from Blink actually gets back to Blink as a valid response. Ideally, we\u0027d do that in layout tests that we could theoretically share, but failing that, I\u0027d expect to see browser tests showing the integration (the test in `credential_manager_browsertest.cc` that this patch removes, for example. :) ).",
+      "revId": "02293324e7f177e246fae2a920a58669c53593a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e77ca61_c71737e0",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-17T12:37:26Z",
+      "side": 0,
+      "message": "Honestly, I\u0027d leave this in place. I\u0027m 100% sure that we\u0027ll end up with more not-yet-implemented features in the future, and I\u0027d suggest that we just avoid redoing all the ductwork to add a new error type.",
+      "revId": "02293324e7f177e246fae2a920a58669c53593a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
