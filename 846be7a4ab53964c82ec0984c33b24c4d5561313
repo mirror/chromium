@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3e59e47_feb9d894",
+        "filename": "ui/gl/gl_bindings.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-17T16:07:35Z",
+      "side": 1,
+      "message": "Is it worth guarding these #undefs with #ifdef USE_GLX?",
+      "revId": "846be7a4ab53964c82ec0984c33b24c4d5561313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
