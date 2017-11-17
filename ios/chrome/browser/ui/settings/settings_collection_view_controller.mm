@@ -188,7 +188,6 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
                                                SettingsMainPageCommands,
                                                SigninPresenter,
                                                SigninPromoViewConsumer,
-                                               SigninPromoViewDelegate,
                                                SyncObserverModelBridge> {
   // The current browser state that hold the settings. Never off the record.
   ios::ChromeBrowserState* _browserState;  // weak
@@ -320,11 +319,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 }
 
 - (void)signinPromoCloseButtonAction {
-  PrefService* prefs = _browserState->GetPrefs();
-  prefs->SetBoolean(prefs::kIosSettingsPromoAlreadySeen, true);
-  UMA_HISTOGRAM_COUNTS_100(
-      "MobileSignInPromo.SettingsManager.ImpressionsTilXButton",
-      prefs->GetInteger(prefs::kIosSettingsSigninPromoDisplayedCount));
+  [_signinPromoViewMediator signinPromoViewClosed];
   [self reloadData];
 }
 
@@ -460,6 +455,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
         [[SigninPromoItem alloc] initWithType:ItemTypeSigninPromo];
     signinPromoItem.configurator =
         [_signinPromoViewMediator createConfigurator];
+    [_signinPromoViewMediator signinPromoViewVisible];
     return signinPromoItem;
   }
   AccountSignInItem* signInTextItem =
@@ -694,7 +690,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
     case ItemTypeSigninPromo: {
       SigninPromoCell* signinPromoCell =
           base::mac::ObjCCast<SigninPromoCell>(cell);
-      signinPromoCell.signinPromoView.delegate = self;
+      signinPromoCell.signinPromoView.delegate = _signinPromoViewMediator;
       __weak SettingsCollectionViewController* weakSelf = self;
       signinPromoCell.signinPromoView.closeButtonAction = ^() {
         [weakSelf signinPromoCloseButtonAction];
@@ -764,9 +760,11 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 
   switch (itemType) {
     case ItemTypeSignInButton:
+      base::RecordAction(base::UserMetricsAction("Signin_Signin_FromSettings"));
       [self showSignInWithIdentity:nil
                        promoAction:signin_metrics::PromoAction::
-                                       PROMO_ACTION_NO_SIGNIN_PROMO];
+                                       PROMO_ACTION_NO_SIGNIN_PROMO
+                        completion:nil];
       break;
     case ItemTypeAccount:
       controller = [[AccountsCollectionViewController alloc]
@@ -1012,8 +1010,8 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 #pragma mark Sign in
 
 - (void)showSignInWithIdentity:(ChromeIdentity*)identity
-                   promoAction:(signin_metrics::PromoAction)promoAction {
-  base::RecordAction(base::UserMetricsAction("Signin_Signin_FromSettings"));
+                   promoAction:(signin_metrics::PromoAction)promoAction
+                    completion:(ShowSigninCommandCompletionCallback)completion {
   DCHECK(!self.signinInteractionCoordinator.isActive);
   if (!self.signinInteractionCoordinator) {
     self.signinInteractionCoordinator = [[SigninInteractionCoordinator alloc]
@@ -1029,6 +1027,8 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
                    promoAction:promoAction
       presentingViewController:self.navigationController
                     completion:^(BOOL success) {
+                      if (completion)
+                        completion(success);
                       [weakSelf didFinishSignin:success];
                     }];
 }
@@ -1068,14 +1068,6 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 - (void)settingsWillBeDismissed {
   DCHECK(!_settingsHasBeenDismissed);
   _settingsHasBeenDismissed = YES;
-  if (!_signinStarted && _signinPromoViewMediator) {
-    PrefService* prefs = _browserState->GetPrefs();
-    int displayedCount =
-        prefs->GetInteger(prefs::kIosSettingsSigninPromoDisplayedCount);
-    UMA_HISTOGRAM_COUNTS_100(
-        "MobileSignInPromo.SettingsManager.ImpressionsTilDismiss",
-        displayedCount);
-  }
   [_signinPromoViewMediator signinPromoViewRemoved];
   _signinPromoViewMediator = nil;
   [self.signinInteractionCoordinator cancel];
@@ -1220,52 +1212,16 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   }
 }
 
-#pragma mark - SigninPromoViewDelegate
-
-- (void)signinPromoViewDidTapSigninWithNewAccount:
-    (SigninPromoView*)signinPromoView {
-  [self sendImpressionsTilSigninButtonsHistogram];
-  DCHECK(!_signinPromoViewMediator.defaultIdentity);
-  base::RecordAction(
-      base::UserMetricsAction("Signin_SigninNewAccount_FromSettings"));
-  [self showSignInWithIdentity:nil
-                   promoAction:signin_metrics::PromoAction::
-                                   PROMO_ACTION_NEW_ACCOUNT];
-}
-
-- (void)signinPromoViewDidTapSigninWithDefaultAccount:
-    (SigninPromoView*)signinPromoView {
-  [self sendImpressionsTilSigninButtonsHistogram];
-  ChromeIdentity* identity = _signinPromoViewMediator.defaultIdentity;
-  DCHECK(identity);
-  base::RecordAction(
-      base::UserMetricsAction("Signin_SigninWithDefault_FromSettings"));
+- (void)signinPromoViewMediator:(SigninPromoViewMediator*)mediator
+    shouldOpenSigninWithIdentity:(ChromeIdentity*)identity
+                     promoAction:(signin_metrics::PromoAction)promoAction
+                      completion:
+                          (ShowSigninCommandCompletionCallback)completion {
   [self showSignInWithIdentity:identity
-                   promoAction:signin_metrics::PromoAction::
-                                   PROMO_ACTION_WITH_DEFAULT];
-}
-
-- (void)signinPromoViewDidTapSigninWithOtherAccount:
-    (SigninPromoView*)signinPromoView {
-  [self sendImpressionsTilSigninButtonsHistogram];
-  DCHECK(_signinPromoViewMediator.defaultIdentity);
-  base::RecordAction(
-      base::UserMetricsAction("Signin_SigninNotDefault_FromSettings"));
-  [self showSignInWithIdentity:nil
-                   promoAction:signin_metrics::PromoAction::
-                                   PROMO_ACTION_NOT_DEFAULT];
+                   promoAction:promoAction
+                    completion:completion];
 }
 
 #pragma mark - Metrics
-
-- (void)sendImpressionsTilSigninButtonsHistogram {
-  _signinStarted = YES;
-  PrefService* prefs = _browserState->GetPrefs();
-  int displayedCount =
-      prefs->GetInteger(prefs::kIosSettingsSigninPromoDisplayedCount);
-  UMA_HISTOGRAM_COUNTS_100(
-      "MobileSignInPromo.SettingsManager.ImpressionsTilSigninButtons",
-      displayedCount);
-}
 
 @end
