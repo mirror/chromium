@@ -1454,8 +1454,9 @@ int BrowserMainLoop::BrowserThreadsStarted() {
 
 #if defined(USE_AURA)
   if (IsUsingMus()) {
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        switches::kIsRunningInMash);
+    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+        switches::kMus,
+        IsMusHostingViz() ? switches::kMusHostVizValue : std::string());
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kEnableSurfaceSynchronization);
   }

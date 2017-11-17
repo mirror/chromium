@@ -2609,7 +2609,6 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kIgnoreAutoplayRestrictionsForTests,
     switches::kIPCConnectionTimeout,
     switches::kIsolateOrigins,
-    switches::kIsRunningInMash,
     switches::kJavaScriptFlags,
     switches::kLoggingLevel,
     switches::kMainFrameResizesAreOrientationChanges,
@@ -2618,6 +2617,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kDisableMojoLocalStorage,
     switches::kMSEAudioBufferSizeLimit,
     switches::kMSEVideoBufferSizeLimit,
+    switches::kMus,
     switches::kNoReferrers,
     switches::kNoSandbox,
     switches::kNoZygote,
@@ -2747,7 +2747,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
   // optimizes the common case to avoid wasted work.
   // Note: There is no ImageTransportFactory with Mash or Viz.
   // TODO(danakj): Get this info somewhere for viz mode.
-  if (!browser_cmd.HasSwitch(switches::kIsRunningInMash) &&
+  if (!browser_cmd.HasSwitch(switches::kMus) &&
       !browser_cmd.HasSwitch(switches::kEnableViz) &&
       ImageTransportFactory::GetInstance()->IsGpuCompositingDisabled())
     renderer_cmd->AppendSwitch(switches::kDisableGpuCompositing);
