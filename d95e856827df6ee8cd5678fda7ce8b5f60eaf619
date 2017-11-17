@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dce7f005_964d7899",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-17T21:40:14Z",
+      "side": 1,
+      "message": "might want to comment why this is nullptr instead of |web_layer|.",
+      "revId": "d95e856827df6ee8cd5678fda7ce8b5f60eaf619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
