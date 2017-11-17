@@ -22,6 +22,92 @@
       "revId": "70a3dba4c5c68a19a233f80cbef4ae6ae43c5117",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ffb8f11_ad3bfd75",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-17T18:37:13Z",
+      "side": 1,
+      "message": "Is this a TODO (\"To be changed to\" sounds like in the future you will do this)?\nOr if this is what the method does, you should convert to pydoc: \"\"\"$DESCRIPTION\"\"\"\nAlso, __ -\u003e _?",
+      "range": {
+        "startLine": 983,
+        "startChar": 58,
+        "endLine": 983,
+        "endChar": 60
+      },
+      "revId": "70a3dba4c5c68a19a233f80cbef4ae6ae43c5117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc6a7d66_45421a21",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-17T18:37:13Z",
+      "side": 1,
+      "message": "Inner classes are often less unique sounding. Might be better to prefix both outer and inner class names. Up to you.",
+      "revId": "70a3dba4c5c68a19a233f80cbef4ae6ae43c5117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15071537_cbe5d9ec",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-17T18:37:13Z",
+      "side": 1,
+      "message": "\" -\u003e \u0027",
+      "range": {
+        "startLine": 988,
+        "startChar": 12,
+        "endLine": 988,
+        "endChar": 16
+      },
+      "revId": "70a3dba4c5c68a19a233f80cbef4ae6ae43c5117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06dcdd51_710a762e",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-17T18:37:13Z",
+      "side": 1,
+      "message": "Either change the name of this method to something like \"GetCalledByJavaWrapperFunctionName\", or have it just return the class name.",
+      "range": {
+        "startLine": 988,
+        "startChar": 38,
+        "endLine": 988,
+        "endChar": 49
+      },
+      "revId": "70a3dba4c5c68a19a233f80cbef4ae6ae43c5117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
