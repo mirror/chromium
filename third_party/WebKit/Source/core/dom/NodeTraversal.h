@@ -108,6 +108,7 @@ class NodeTraversal {
   CORE_EXPORT static Node* NextAncestorSibling(const Node&,
                                                const Node* stay_within);
   static Node& HighestAncestorOrSelf(Node&);
+  static const Node& HighestAncestorOrSelf(const Node&);
 
   // Children traversal.
   static Node* ChildAt(const Node& parent, unsigned index) {
@@ -386,6 +387,13 @@ inline Node* NodeTraversal::NextSkippingChildren(const Node& current,
 
 inline Node& NodeTraversal::HighestAncestorOrSelf(Node& current) {
   Node* highest = &current;
+  while (highest->parentNode())
+    highest = highest->parentNode();
+  return *highest;
+}
+
+inline const Node& NodeTraversal::HighestAncestorOrSelf(const Node& current) {
+  const Node* highest = &current;
   while (highest->parentNode())
     highest = highest->parentNode();
   return *highest;

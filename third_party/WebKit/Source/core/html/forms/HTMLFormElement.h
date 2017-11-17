@@ -129,8 +129,9 @@ class CORE_EXPORT HTMLFormElement final : public HTMLElement {
 
   void ScheduleFormSubmission(FormSubmission*);
 
-  void CollectListedElements(Node& root, ListedElement::List&) const;
-  void CollectImageElements(Node& root, HeapVector<Member<HTMLImageElement>>&);
+  void CollectListedElements(const Node& root, ListedElement::List&) const;
+  void CollectImageElements(const Node& root,
+                            HeapVector<Member<HTMLImageElement>>&);
 
   // Returns true if the submission should proceed.
   bool ValidateInteractively();

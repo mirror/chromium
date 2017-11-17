@@ -144,7 +144,7 @@ Node::InsertionNotificationRequest HTMLFormElement::InsertedInto(
 }
 
 template <class T>
-void NotifyFormRemovedFromTree(const T& elements, Node& root) {
+void NotifyFormRemovedFromTree(const T& elements, const Node& root) {
   for (const auto& element : elements)
     element->FormRemovedFromTree(root);
 }
@@ -153,7 +153,7 @@ void HTMLFormElement::RemovedFrom(ContainerNode* insertion_point) {
   // We don't need to take care of form association by 'form' content
   // attribute becuse IdTargetObserver handles it.
   if (has_elements_associated_by_parser_) {
-    Node& root = NodeTraversal::HighestAncestorOrSelf(*this);
+    const Node& root = NodeTraversal::HighestAncestorOrSelf(*this);
     if (!listed_elements_are_dirty_) {
       ListedElement::List elements(ListedElements());
       NotifyFormRemovedFromTree(elements, root);
@@ -590,7 +590,7 @@ HTMLFormControlsCollection* HTMLFormElement::elements() {
 }
 
 void HTMLFormElement::CollectListedElements(
-    Node& root,
+    const Node& root,
     ListedElement::List& elements) const {
   elements.clear();
   for (HTMLElement& element : Traversal<HTMLElement>::StartsAfter(root)) {
@@ -612,9 +612,9 @@ const ListedElement::List& HTMLFormElement::ListedElements() const {
   if (!listed_elements_are_dirty_)
     return listed_elements_;
   HTMLFormElement* mutable_this = const_cast<HTMLFormElement*>(this);
-  Node* scope = mutable_this;
+  const Node* scope = this;
   if (has_elements_associated_by_parser_)
-    scope = &NodeTraversal::HighestAncestorOrSelf(*mutable_this);
+    scope = &NodeTraversal::HighestAncestorOrSelf(*this);
   if (isConnected() && has_elements_associated_by_form_attribute_)
     scope = &GetTreeScope().RootNode();
   DCHECK(scope);
@@ -624,7 +624,7 @@ const ListedElement::List& HTMLFormElement::ListedElements() const {
 }
 
 void HTMLFormElement::CollectImageElements(
-    Node& root,
+    const Node& root,
     HeapVector<Member<HTMLImageElement>>& elements) {
   elements.clear();
   for (HTMLImageElement& image :
