@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "bce6b6ab_b3262554",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-17T22:03:36Z",
+      "side": 1,
+      "message": "For each WebAPK we will have both a corresponding notification channel in Chrome settings and a notification channel in the WebAPK\u0027s settings. I am unsure if we care about this.\n\nA notification channel is created for the website in NotificationSettingsBridge#createChannel() as a result of the permission prompt being shown.",
+      "revId": "ec432c01dd5698396e720d0e794078eed23fb8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1150b1_278482cc",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-17T22:03:36Z",
+      "side": 1,
+      "message": "HostBrowserClassLoader#getClassLoaderInstance() does not always return the same value.\n\nPerhaps we should have a\nboolean WebApkServiceImplWrapper#onBind()\nmethod which instantiates mIBinderDelegate. WebApkServiceImplWrapper#onBind() would be called each time that WebApkServiceFactory#onBind() is called.\nWebApkServiceFactory#onBind() will return null if WebApkServiceImplWrapper#onBind() returns false\n\nI think that WebApkServiceFactory#onBind() always creates a new WebApkServiceImplWrapper because only a single app binds to the service.",
+      "revId": "ec432c01dd5698396e720d0e794078eed23fb8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4679e96a_ef591150",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-17T22:03:36Z",
+      "side": 1,
+      "message": "This block on 82-91 should be in its own function. This early return is scary if we want to add more things to the constructor.",
+      "revId": "ec432c01dd5698396e720d0e794078eed23fb8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61f25713_fcf8f2c2",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
         "patchSetId": 3
