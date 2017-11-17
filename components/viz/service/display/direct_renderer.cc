@@ -281,15 +281,18 @@ void DirectRenderer::DrawFrame(RenderPassList* render_passes_in_draw_order,
     current_frame()->overlay_list.push_back(output_surface_plane);
   }
 
-  // Attempt to replace some or all of the quads of the root render pass with
-  // overlays.
-  overlay_processor_->ProcessForOverlays(
-      resource_provider_, render_passes_in_draw_order, render_pass_filters_,
-      render_pass_background_filters_, &current_frame()->overlay_list,
-      &current_frame()->ca_layer_overlay_list,
-      &current_frame()->dc_layer_overlay_list,
-      &current_frame()->root_damage_rect,
-      &current_frame()->root_content_bounds);
+  // For now, overlays are not compatible with output color matrices.
+  if (output_surface_->color_matrix().isIdentity()) {
+    // Attempt to replace some or all of the quads of the root render pass with
+    // overlays.
+    overlay_processor_->ProcessForOverlays(
+        resource_provider_, render_passes_in_draw_order, render_pass_filters_,
+        render_pass_background_filters_, &current_frame()->overlay_list,
+        &current_frame()->ca_layer_overlay_list,
+        &current_frame()->dc_layer_overlay_list,
+        &current_frame()->root_damage_rect,
+        &current_frame()->root_content_bounds);
+  }
 
   // Draw all non-root render passes except for the root render pass.
   for (const auto& pass : *render_passes_in_draw_order) {

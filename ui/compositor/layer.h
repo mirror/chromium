@@ -561,9 +561,6 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // layer blue and green colors scales. 0.0f is least warm (default), and 1.0f
   // is most warm.
   float layer_temperature_;
-  // The calculated layer blue and green color scales (0.0f ~ 1.0f).
-  float layer_blue_scale_;
-  float layer_green_scale_;
 
   // The associated mask layer with this layer.
   Layer* layer_mask_;
