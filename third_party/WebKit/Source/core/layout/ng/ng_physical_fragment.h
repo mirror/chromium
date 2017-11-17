@@ -105,7 +105,9 @@ class CORE_EXPORT NGPhysicalFragment
 
   // Returns the offset relative to the parent fragment's content-box.
   NGPhysicalOffset Offset() const {
-    DCHECK(is_placed_);
+    if (!is_placed_)
+      return NGPhysicalOffset(LayoutUnit(-1), LayoutUnit(-1));
+    // DCHECK(is_placed_);
     return offset_;
   }
 
@@ -151,10 +153,10 @@ class CORE_EXPORT NGPhysicalFragment
   };
   typedef int DumpFlags;
 
-  String DumpFragmentTree(DumpFlags) const;
+  String DumpFragmentTree(DumpFlags, unsigned indent = 2) const;
 
 #ifndef NDEBUG
-  void ShowFragmentTree() const;
+  virtual void ShowFragmentTree() const;
 #endif
 
  protected:

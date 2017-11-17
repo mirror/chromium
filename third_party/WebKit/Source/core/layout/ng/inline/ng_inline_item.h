@@ -54,7 +54,8 @@ class CORE_EXPORT NGInlineItem {
                unsigned start,
                unsigned end,
                const ComputedStyle* style = nullptr,
-               LayoutObject* layout_object = nullptr);
+               LayoutObject* layout_object = nullptr,
+               LayoutObject* inline_containing_block = nullptr);
   ~NGInlineItem();
 
   NGInlineItemType Type() const { return static_cast<NGInlineItemType>(type_); }
@@ -82,7 +83,9 @@ class CORE_EXPORT NGInlineItem {
   UScriptCode GetScript() const { return script_; }
   const ComputedStyle* Style() const { return style_.get(); }
   LayoutObject* GetLayoutObject() const { return layout_object_; }
-
+  LayoutObject* InlineContainingBlock() const {
+    return inline_containing_block_;
+  }
   void SetOffset(unsigned start, unsigned end);
   void SetEndOffset(unsigned);
 
@@ -107,6 +110,7 @@ class CORE_EXPORT NGInlineItem {
   scoped_refptr<const ShapeResult> shape_result_;
   scoped_refptr<const ComputedStyle> style_;
   LayoutObject* layout_object_;
+  LayoutObject* inline_containing_block_;
 
   unsigned type_ : 4;
   unsigned bidi_level_ : 8;  // UBiDiLevel is defined as uint8_t.

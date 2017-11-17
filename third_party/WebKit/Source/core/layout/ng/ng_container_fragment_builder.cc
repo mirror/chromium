@@ -4,8 +4,10 @@
 
 #include "core/layout/ng/ng_container_fragment_builder.h"
 
+#include "core/layout/LayoutObject.h"
 #include "core/layout/ng/ng_exclusion_space.h"
 #include "core/layout/ng/ng_layout_result.h"
+#include "core/layout/ng/ng_physical_container_fragment.h"
 #include "core/layout/ng/ng_physical_fragment.h"
 #include "core/layout/ng/ng_unpositioned_float.h"
 #include "core/style/ComputedStyle.h"
@@ -125,12 +127,15 @@ NGContainerFragmentBuilder&
 NGContainerFragmentBuilder::AddInlineOutOfFlowChildCandidate(
     NGBlockNode child,
     const NGLogicalOffset& child_offset,
-    TextDirection line_direction) {
+    TextDirection line_direction,
+    LayoutObject* inline_container) {
   DCHECK(child);
   oof_positioned_candidates_.push_back(NGOutOfFlowPositionedCandidate(
-      NGOutOfFlowPositionedDescendant{
-          child, NGStaticPosition::Create(GetWritingMode(), line_direction,
-                                          NGPhysicalOffset())},
+      NGOutOfFlowPositionedDescendant(
+          child,
+          NGStaticPosition::Create(GetWritingMode(), line_direction,
+                                   NGPhysicalOffset()),
+          inline_container),
       child_offset, line_direction));
 
   child.SaveStaticOffsetForLegacy(child_offset);
@@ -165,8 +170,9 @@ void NGContainerFragmentBuilder::GetAndClearOutOfFlowDescendantCandidates(
     builder_relative_position.offset =
         child_offset + candidate.descendant.static_position.offset;
 
-    descendant_candidates->push_back(NGOutOfFlowPositionedDescendant{
-        candidate.descendant.node, builder_relative_position});
+    descendant_candidates->push_back(NGOutOfFlowPositionedDescendant(
+        candidate.descendant.node, builder_relative_position,
+        candidate.descendant.inline_container));
   }
 
   // Clear our current canidate list. This may get modified again if the
@@ -178,5 +184,70 @@ void NGContainerFragmentBuilder::GetAndClearOutOfFlowDescendantCandidates(
   // fixed descendant).
   oof_positioned_candidates_.clear();
 }
+
+void NGContainerFragmentBuilder::ComputeInlineContainerFragments(
+    HashMap<const LayoutObject*, FragmentPair>* inline_container_fragments) {
+  // This routine has detailed knowledge of inline fragment tree structure,
+  // and will break if this changes.
+  bool is_empty = false;
+  for (auto& child : children_) {
+    if (child->IsLineBox()) {
+      if (ToNGPhysicalContainerFragment(*child).Children().size() == 0) {
+        is_empty = true;
+        LOG(INFO) << "LineBox without children";
+        // LineBoxFragment has no LayoutObject
+        // How can abspos inside empty inline container find its parent
+        // fragment?
+      }
+      for (auto& line_box_child :
+           ToNGPhysicalContainerFragment(*child).Children()) {
+        LayoutObject* key = nullptr;
+        if (line_box_child->IsText()) {
+          key = line_box_child->GetLayoutObject();
+          DCHECK(key);
+          key = key->Parent();
+          DCHECK(key);
+        } else if (line_box_child->IsBox()) {
+          key = line_box_child->GetLayoutObject();
+        }
+        if (inline_container_fragments->Contains(key)) {
+          NGContainerFragmentBuilder::FragmentPair value =
+              inline_container_fragments->at(key);
+          if (!value.first)
+            value.first = line_box_child;
+          value.second = line_box_child;
+          inline_container_fragments->Set(key, value);
+        }
+      }
+    }
+  }
+#if DCHECK_IS_ON()
+  // DCHECK that each key has assigned fragments.
+  if (!is_empty) {
+    // Empty boxes size can be deduced from containing block?
+    for (auto fragments = inline_container_fragments->begin();
+         fragments != inline_container_fragments->end(); ++fragments) {
+      DCHECK(fragments->value.first);
+      DCHECK(fragments->value.second);
+    }
+  }
+#endif
+}
+
+#ifndef NDEBUG
+
+String NGContainerFragmentBuilder::ToString() const {
+  StringBuilder builder;
+  builder.Append(String::Format("ContainerFragment %.2fx%.2f, Children %lu\n",
+                                inline_size_.ToFloat(), block_size_.ToFloat(),
+                                children_.size()));
+  for (auto& child : children_) {
+    builder.Append(child->DumpFragmentTree(
+        NGPhysicalFragment::DumpAll & ~NGPhysicalFragment::DumpHeaderText));
+  }
+  return builder.ToString();
+}
+
+#endif
 
 }  // namespace blink
