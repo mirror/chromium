@@ -16,6 +16,7 @@
 #include "base/observer_list.h"
 #include "components/exo/layer_tree_frame_sink_holder.h"
 #include "components/exo/surface_delegate.h"
+#include "components/exo/tracker.h"
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
 #include "components/viz/common/resources/transferable_resource.h"
 #include "third_party/skia/include/core/SkBlendMode.h"
@@ -393,6 +394,11 @@ class Surface final : public ui::PropertyHandler {
 
   DISALLOW_COPY_AND_ASSIGN(Surface);
 };
+
+using SurfaceTracker = Tracker<Surface,
+                               SurfaceObserver,
+                               &Surface::AddSurfaceObserver,
+                               &Surface::RemoveSurfaceObserver>;
 
 }  // namespace exo
 
