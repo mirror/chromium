@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27d9026d_2349efc8",
+        "filename": "media/gpu/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-11-17T05:56:07Z",
+      "side": 1,
+      "message": "From your description to the issue, it sounds to me we should handle the resolution change first and when it get finished. It will schdule the DevicePollTask. So, how about just moving l.1229 to here.\n\nif (resolution_change_pending) {\n  StartResolutionChange();\n  return;\n}",
+      "revId": "83b3d3c2fa087be62d6bbe37e190289ac380459d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
