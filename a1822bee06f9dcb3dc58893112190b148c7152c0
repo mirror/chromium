@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d2106c3e_a6b6751c",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-17T08:54:52Z",
+      "side": 1,
+      "message": "I\u0027m not sure I\u0027m understanding your concern here. When PublicIpAddressGeolocationProvider receives a request to bind a Geolocation, it passes that on to PublicIpAddressGeolocator. From that point, PublicIpAddressGeolocationProvider is no longer involved in the connection between that PublicIpAddressGeolocator instance and its client.\n\nAlso, PublicIpAddressLocationNotifier is owned by PublicIpAddressGeolocationProvider, so it would seem that the only way the former could be destroyed is if the latter is destroyed? If that\u0027s actually the case, maybe it just makes the most sense for PublicIpAddressGeolocationProvider to own the PublicIpAddressGeolocator instances via a StrongBindingSet? That way it would be in control of everything\u0027s lifetime and there actually shouldn\u0027t be a need for either WeakPtrs or for objects observing each others\u0027 destruction. PublicIpAddressLocationNotifier could just make sure that the StrongBindingSet is destroyed before the PublicIpAddressLocationNotifier.\n\nPlease let me know if I\u0027m misunderstanding something here though!",
+      "parentUuid": "8bc43f81_65f71848",
+      "revId": "a1822bee06f9dcb3dc58893112190b148c7152c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5e1ef75_5433c508",
         "filename": "services/device/geolocation/public_ip_address_geolocator.h",
         "patchSetId": 5
