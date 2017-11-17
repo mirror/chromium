@@ -597,8 +597,13 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, HTMLDetectorCache) {
 
   // No signals from HTML attributes. The classifier found nothing and cached
   // it.
+  //  base::HistogramTester histogram_tester;
   std::unique_ptr<PasswordForm> password_form = CreatePasswordFormFromWebForm(
       form, nullptr, nullptr, &username_detector_cache);
+  // TODO: move to a separate test.
+  //  histogram_tester. ExpectTotalCount(
+  //         "PasswordManager.UsernameDetectionMethod", 0);
+
   EXPECT_TRUE(password_form);
   ASSERT_EQ(1u, username_detector_cache.size());
   EXPECT_EQ(form, username_detector_cache.begin()->first);
