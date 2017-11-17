@@ -22,6 +22,30 @@
       "revId": "d279d4247c01a6b78071e048ec119f02a3059ccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21495fa3_d2891ff3",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/textarea/cols-attribute.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-17T13:31:34Z",
+      "side": 1,
+      "message": "Oh, wait, the clamping is at 2^31. But I guess the previous behavior was because of integer wrapping at the IDL level. In any case, finding the number around 2^32 that results in \u00272147483647\u0027 would be interesting. Or if I\u0027m wrong, there still has to be something interesting happening around 2^32 for it to be worth testing.",
+      "parentUuid": "18596ac2_fa27d712",
+      "range": {
+        "startLine": 46,
+        "startChar": 29,
+        "endLine": 46,
+        "endChar": 30
+      },
+      "revId": "d279d4247c01a6b78071e048ec119f02a3059ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
