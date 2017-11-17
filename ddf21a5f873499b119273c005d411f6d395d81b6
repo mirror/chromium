@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b6de48f4_010dfdbc",
+        "filename": "chrome/browser/extensions/api/preference/preference_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-17T19:32:13Z",
+      "side": 1,
+      "message": "Same error.",
+      "parentUuid": "fc7f5e6e_f8defeb2",
+      "revId": "ddf21a5f873499b119273c005d411f6d395d81b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "032860e1_17814a5b",
         "filename": "chrome/browser/extensions/api/preference/preference_api.cc",
         "patchSetId": 2
