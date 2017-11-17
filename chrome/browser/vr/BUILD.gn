@@ -231,24 +231,14 @@ test("vr_common_unittests") {
     "pose_util_unittest.cc",
     "service/vr_device_manager_unittest.cc",
     "speech_recognizer_unittest.cc",
-    "test/animation_utils.cc",
-    "test/animation_utils.h",
     "test/fake_ui_element_renderer.cc",
     "test/fake_ui_element_renderer.h",
-    "test/gl_test_environment_unittest.cc",
-    "test/mock_browser_interface.cc",
-    "test/mock_browser_interface.h",
-    "test/mock_content_input_delegate.cc",
-    "test/mock_content_input_delegate.h",
     "test/paths.cc",
     "test/paths.h",
-    "test/run_all_unittests.cc",
-    "test/ui_pixel_test.cc",
-    "test/ui_pixel_test.h",
+    "test/run_all_gtests.cc",
     "test/ui_scene_manager_test.cc",
     "test/ui_scene_manager_test.h",
     "ui_input_manager_unittest.cc",
-    "ui_pixeltest.cc",
     "ui_renderer_unittest.cc",
     "ui_scene_manager_unittest.cc",
     "ui_scene_unittest.cc",
@@ -277,12 +267,38 @@ test("vr_common_unittests") {
   }
 }
 
+test("vr_pixeltests") {
+  testonly = true
+
+  sources = [
+    "test/run_all_gtests.cc",
+    "test/ui_pixel_test.cc",
+    "test/ui_pixel_test.h",
+    "ui_pixeltest.cc",
+  ]
+
+  deps = [
+    ":vr_gl_test_support",
+    ":vr_test_support",
+  ]
+
+  # Needed for isolate script to execute
+  data = [
+    "//testing/scripts/common.py",
+    "//testing/xvfb.py",
+    "//testing/scripts/run_gold_test.py",
+    "//third_party/catapult/third_party/gsutil/",
+    "//tools/perf/generate_legacy_perf_dashboard_json.py",
+  ]
+}
+
 test("vr_common_perftests") {
   sources = [
-    "test/run_all_perftests.cc",
+    "test/run_all_gtests.cc",
     "text_perftest.cc",
   ]
   deps = [
+    ":vr_gl_test_support",
     ":vr_test_support",
     "//testing/perf",
   ]
@@ -304,11 +320,15 @@ source_set("vr_test_support") {
   testonly = true
 
   sources = [
+    "test/animation_utils.cc",
+    "test/animation_utils.h",
     "test/constants.h",
-    "test/gl_test_environment.cc",
-    "test/gl_test_environment.h",
-    "test/vr_common_test_suite.cc",
-    "test/vr_common_test_suite.h",
+    "test/mock_browser_interface.cc",
+    "test/mock_browser_interface.h",
+    "test/mock_content_input_delegate.cc",
+    "test/mock_content_input_delegate.h",
+    "test/vr_test_suite.cc",
+    "test/vr_test_suite.h",
   ]
 
   if (!enable_gvr_services) {
@@ -328,7 +348,6 @@ source_set("vr_test_support") {
     "//skia",
     "//testing/gtest",
     "//ui/accessibility:ax_gen",
-    "//ui/gl:test_support",
 
     # TODO(mthiesse, crbug.com/769373): Remove dependency on device/vr:fakes.
     "//device/vr:fakes",
@@ -337,6 +356,21 @@ source_set("vr_test_support") {
   data = [
     "test/data/",
     "$root_out_dir/vr_test.pak",
+  ]
+}
+
+source_set("vr_gl_test_support") {
+  testonly = true
+
+  sources = [
+    "test/gl_test_environment.cc",
+    "test/gl_test_environment.h",
+    "test/gl_test_environment_unittest.cc",
+  ]
+
+  public_deps = [
+    "//base/test:test_support",
+    "//skia",
   ]
 }
 
