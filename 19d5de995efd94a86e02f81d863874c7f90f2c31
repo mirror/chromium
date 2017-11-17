@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b39fefc_ee1ee72a",
+        "filename": "content/browser/accessibility/browser_accessibility_atk_hyperlink.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-17T17:54:06Z",
+      "side": 0,
+      "message": "Could we also add an ASSERT to ToBrowserAccessibilityAuraLinux so that\nit won\u0027t accept an AtkAction, to prevent future accidental regressions?",
+      "revId": "19d5de995efd94a86e02f81d863874c7f90f2c31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
