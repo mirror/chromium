@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "2c8e1021_81151f77",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksFaviconThrottle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-17T06:18:04Z",
+      "side": 1,
+      "message": "getExpiryOf in the conditional essentially calls get(url) right?  getExpiry of does null checks but since we call .contains() this is the same.  I wonder if there is a way we can cache this to avoid the duplicate work.",
+      "range": {
+        "startLine": 90,
+        "startChar": 49,
+        "endLine": 90,
+        "endChar": 64
+      },
+      "revId": "ccb21d3590d54ac82396d1252bce1fbf13f78c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b48b8134_ef38c45e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
         "patchSetId": 7
