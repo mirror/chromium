@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.content.browser.test.util.Criteria;
@@ -212,6 +213,7 @@ public class ThumbnailDiskStorageTest {
     /**
      * Verify that retrieveThumbnail makes the called entry the most recent entry in cache.
      */
+    @DisabledTest(message = "crbug.com/786212")
     @Test
     @SmallTest
     public void testRetrieveThumbnailShouldMakeEntryMostRecent() throws Throwable {
