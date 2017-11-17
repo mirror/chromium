@@ -52,6 +52,24 @@
       "revId": "5e1ce553e066e887adc068c9cb2ff2727748135c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "558e8f32_3e96fedc",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-17T18:25:46Z",
+      "side": 1,
+      "message": "Excellent questions! Let me provide as much background as possible and provide some recommendations.\n\nOn the browser side, PaymentRequest objects are created with RenderFrameHost. You can get the top-level frame by calling content::WebContents::FromRenderFrameHost(render_frame_host):\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/payments/payment_request_factory.cc?rcl\u003d659149262f92954038e0317a5f372aee0ab57565\u0026l\u003d19\n\nYou can get the URL of the iframe via render_frame_host-\u003eGetLastCommittedURL(). The URL of the top-level document is web_contents-\u003eGetLastCommittedURL().\n\nThe reason for doing that in the browser process is because renderers crash frequently, especially when under attack. An attacker that knows how to crash a renderer can gain the ability to execute arbitrary code with arbitrary data. That is, an attacker can lie about the URL of the renderer. This may or may not be a concern for you. Keep this mind and use your own judgement.\n\nAs Roger mentioned, out-of-process-iframes are tricky beasts. The idea is that an iframe from origin A will live in a different process from the top-level document from origin B. If an attacker can get the renderer process for origin A to crash, the top-level document from origin B will not be affected, because it\u0027s in a different process. Unfortunately, out-of-process iframes means that a child iframe may not be able to synchronously access the top-level document. If your code tries to do that, that\u0027s a bug that will crash the renderer. To prevent such bugs, we have a browser test that I recommend you to have as well:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/payments/site_per_process_payments_browsertest.cc\n\nChecking iframe and top-level URLs in the browser process would be simpler and safer. Do you have to determine these URLs on the renderer side?\n\nThings get a bit tricky in the renderer. As far as I understand, Blink copies some information about the parent frame into the child iframe at creation time to enable site-per-process. Thus the child iframe can know such things as, for example, whether the parent iframe has \"allowpaymentrequest\" attribute:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/payments/PaymentRequest.cpp?rcl\u003dc35af225d5bb6fefe50fdbdae6dd1bc8a9c0a3a9\u0026l\u003d758\n\nA lot of that code was changed by lunalu@ since I wrote it. I have not looked into this deeply, but my first hunch would be to add FrameOwner::RootOrigin() method in Blink. That\u0027s just something from the top of my head. Your work with this code more closely and will likely find a better solution. If you decide to change Blink, I recommend to reach out to lunalu@ and mek@ for advice.",
+      "parentUuid": "c49e174a_e8a4423f",
+      "revId": "5e1ce553e066e887adc068c9cb2ff2727748135c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
