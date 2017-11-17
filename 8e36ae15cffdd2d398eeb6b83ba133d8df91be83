@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c77e282f_ac8a190a",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-17T15:52:49Z",
+      "side": 1,
+      "message": "You can probably replace the |safeArea*| by |self.safeArea*|?",
+      "range": {
+        "startLine": 187,
+        "startChar": 4,
+        "endLine": 187,
+        "endChar": 52
+      },
+      "revId": "8e36ae15cffdd2d398eeb6b83ba133d8df91be83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
