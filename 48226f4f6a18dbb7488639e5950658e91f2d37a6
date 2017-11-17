@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26fbb4ed_8e4421f4",
+        "filename": "net/base/upload_file_element_reader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-17T21:08:02Z",
+      "side": 1,
+      "message": "nit: Second sentence doesn\u0027t make sense?  I suspect you meant \"State is skipped if range_offset is zero\"?",
+      "range": {
+        "startLine": 86,
+        "startChar": 64,
+        "endLine": 86,
+        "endChar": 69
+      },
+      "revId": "48226f4f6a18dbb7488639e5950658e91f2d37a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

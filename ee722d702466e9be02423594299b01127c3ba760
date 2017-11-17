@@ -689,6 +689,30 @@
     },
     {
       "key": {
+        "uuid": "24ab4642_e3b63d3f",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-17T21:08:02Z",
+      "side": 1,
+      "message": "*nod*  I agree with you about the temporaries, I\u0027m just more allergic to races in state machines.  Thank you for indulging me.",
+      "parentUuid": "d00d7f94_ec4f8199",
+      "range": {
+        "startLine": 279,
+        "startChar": 30,
+        "endLine": 279,
+        "endChar": 52
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb6dab62_f3ad5986",
         "filename": "net/base/upload_file_element_reader.h",
         "patchSetId": 3

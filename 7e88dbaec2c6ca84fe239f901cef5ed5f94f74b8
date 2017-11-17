@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "e2bcf473_57303c4d",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-17T21:08:02Z",
+      "side": 1,
+      "message": "Right!  Nice catch.",
+      "parentUuid": "19fa7553_a9522554",
+      "range": {
+        "startLine": 85,
+        "startChar": 10,
+        "endLine": 85,
+        "endChar": 46
+      },
+      "revId": "7e88dbaec2c6ca84fe239f901cef5ed5f94f74b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d5746bc_9c3f8080",
         "filename": "net/base/upload_file_element_reader.cc",
         "patchSetId": 4
@@ -319,6 +343,30 @@
       "side": 1,
       "message": "That\u0027s not true, actually - it\u0027s used in all paths.  The issue is that we should be using base/task_scheduler.h instead.  Updated comment to be clearer.  I may actually remove it fairly shorting in a followup CL (And switch to using OnceCallbacks?)",
       "parentUuid": "8d0a9b5d_e64a2ac9",
+      "range": {
+        "startLine": 39,
+        "startChar": 19,
+        "endLine": 39,
+        "endChar": 25
+      },
+      "revId": "7e88dbaec2c6ca84fe239f901cef5ed5f94f74b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc536d59_297ac604",
+        "filename": "net/base/upload_file_element_reader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-17T21:08:02Z",
+      "side": 1,
+      "message": "Whoops, right, used for FileStream construction on both paths in different places.",
+      "parentUuid": "73afda15_9777e713",
       "range": {
         "startLine": 39,
         "startChar": 19,
