@@ -72,6 +72,8 @@ void LockScreen::Show() {
       ash::Shell::Get()->tray_action()->GetLockScreenNoteState(),
       data_dispatcher.get());
 
+  instance_->view_ = static_cast<LockContentsView*>(contents);
+
   auto* window = instance_->window_ = new LockWindow(Shell::GetAshConfig());
   window->SetBounds(display::Screen::GetScreen()->GetPrimaryDisplay().bounds());
   window->SetContentsView(contents);

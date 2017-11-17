@@ -346,6 +346,7 @@ void Scheduler::BeginImplFrameWithDeadline(const viz::BeginFrameArgs& args) {
   if (adjusted_args.type == viz::BeginFrameArgs::MISSED &&
       now > adjusted_args.deadline &&
       !settings_.wait_for_all_pipeline_stages_before_draw) {
+    LOG(ERROR) << "FRAME EXCEEDED DEADLINE";
     skipped_last_frame_missed_exceeded_deadline_ = true;
     SendBeginFrameAck(adjusted_args, kBeginFrameSkipped);
     return;

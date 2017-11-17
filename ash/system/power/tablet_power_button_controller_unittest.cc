@@ -4,16 +4,21 @@
 
 #include "ash/system/power/tablet_power_button_controller.h"
 
+#include <vector>
+
 #include "ash/accessibility/accessibility_controller.h"
 #include "ash/accessibility/test_accessibility_controller_client.h"
 #include "ash/media_controller.h"
 #include "ash/public/cpp/ash_switches.h"
+#include "ash/public/interfaces/tray_action.mojom.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/system/power/power_button_test_base.h"
 #include "ash/system/power/tablet_power_button_controller_test_api.h"
 #include "ash/test_media_client.h"
 #include "ash/touch/touch_devices_controller.h"
+#include "ash/tray_action/test_tray_action_client.h"
+#include "ash/tray_action/tray_action.h"
 #include "ash/wm/lock_state_controller_test_api.h"
 #include "ash/wm/test_session_state_animator.h"
 #include "base/command_line.h"
@@ -41,6 +46,7 @@ class TabletPowerButtonControllerTest : public PowerButtonTestBase {
   void SetUp() override {
     PowerButtonTestBase::SetUp();
     InitPowerButtonControllerMembers(true /* send_accelerometer_update */);
+    power_manager_client_->set_screen_brightness_percent(kNonZeroBrightness);
     power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, true);
     EXPECT_FALSE(power_manager_client_->backlights_forced_off());
 
@@ -523,6 +529,150 @@ TEST_F(TabletPowerButtonControllerTest, SuspendMediaSessions) {
   base::RunLoop().RunUntilIdle();
   ASSERT_TRUE(power_manager_client_->backlights_forced_off());
   EXPECT_TRUE(client.media_sessions_suspended());
+}
+
+// Tests that when backlights get forced off due to tablet power button, lock
+// screen notes are closed (if any are active).
+TEST_F(TabletPowerButtonControllerTest, CloseLockScreenNoteOnDisplayOff) {
+  TestTrayActionClient client;
+  Shell::Get()->tray_action()->SetClient(client.CreateInterfacePtrAndBind(),
+                                         mojom::TrayActionState::kActive);
+
+  PressPowerButton();
+  ReleasePowerButton();
+  ASSERT_TRUE(power_manager_client_->backlights_forced_off());
+  power_manager_client_->SendBrightnessChanged(0, true);
+
+  // Run the event loop for PowerButtonDisplayController to get backlight state.
+  base::RunLoop().RunUntilIdle();
+  ASSERT_TRUE(power_manager_client_->backlights_forced_off());
+
+  Shell::Get()->tray_action()->FlushMojoForTesting();
+  EXPECT_EQ(std::vector<mojom::CloseLockScreenNoteReason>(
+                {mojom::CloseLockScreenNoteReason::kScreenDimmed}),
+            client.close_note_reasons());
+}
+
+// Tests that backlights are not turned back on when stylus is ejected while
+// backlights are forced off until a lock screen note action launch finishes.
+TEST_F(TabletPowerButtonControllerTest, DelayBacklightsOnDuringNoteLaunch) {
+  TestTrayActionClient client;
+  Shell::Get()->tray_action()->SetClient(client.CreateInterfacePtrAndBind(),
+                                         mojom::TrayActionState::kAvailable);
+
+  PressPowerButton();
+  ReleasePowerButton();
+  ASSERT_TRUE(power_manager_client_->backlights_forced_off());
+  power_manager_client_->SendBrightnessChanged(0, true);
+
+  RemoveStylus();
+
+  Shell::Get()->tray_action()->FlushMojoForTesting();
+  EXPECT_EQ(std::vector<mojom::LockScreenNoteOrigin>(
+                {mojom::LockScreenNoteOrigin::kStylusEject}),
+            client.note_origins());
+  EXPECT_TRUE(power_manager_client_->backlights_forced_off());
+
+  Shell::Get()->tray_action()->UpdateLockScreenNoteState(
+      mojom::TrayActionState::kActive);
+  EXPECT_FALSE(power_manager_client_->backlights_forced_off());
+}
+
+// Tests that launching note action on stylus eject will not delay turning
+// backlights off indefinitely - i. e. that the backlights will stop being
+// forced off if the note action launch does not finish in reasonable amount of
+// time.
+TEST_F(TabletPowerButtonControllerTest,
+       BacklightsNotDelayedIndefinitelyOnDuringNoteLaunch) {
+  TestTrayActionClient client;
+  Shell::Get()->tray_action()->SetClient(client.CreateInterfacePtrAndBind(),
+                                         mojom::TrayActionState::kAvailable);
+
+  PressPowerButton();
+  ReleasePowerButton();
+  ASSERT_TRUE(power_manager_client_->backlights_forced_off());
+  power_manager_client_->SendBrightnessChanged(0, true);
+
+  base::RunLoop().RunUntilIdle();
+  RemoveStylus();
+
+  Shell::Get()->tray_action()->FlushMojoForTesting();
+  EXPECT_EQ(std::vector<mojom::LockScreenNoteOrigin>(
+                {mojom::LockScreenNoteOrigin::kStylusEject}),
+            client.note_origins());
+  EXPECT_TRUE(power_manager_client_->backlights_forced_off());
+
+  ASSERT_TRUE(TriggerLockScreenNoteLaunchTimeout());
+  EXPECT_FALSE(power_manager_client_->backlights_forced_off());
+
+  Shell::Get()->tray_action()->UpdateLockScreenNoteState(
+      mojom::TrayActionState::kActive);
+  EXPECT_FALSE(power_manager_client_->backlights_forced_off());
+}
+
+// Tests that pressing power button while launching lock screen note due to
+// stylus eject does not turn the backlights on (if the backlights are kept off
+// due to note launch).
+TEST_F(TabletPowerButtonControllerTest, PowerButtonPressedDuringStylusLaunch) {
+  TestTrayActionClient client;
+  Shell::Get()->tray_action()->SetClient(client.CreateInterfacePtrAndBind(),
+                                         mojom::TrayActionState::kAvailable);
+
+  PressPowerButton();
+  ReleasePowerButton();
+  ASSERT_TRUE(power_manager_client_->backlights_forced_off());
+  power_manager_client_->SendBrightnessChanged(0, true);
+  AdvanceClockToAvoidIgnoring();
+
+  Shell::Get()->tray_action()->FlushMojoForTesting();
+  client.ClearRecordedRequests();
+
+  RemoveStylus();
+  Shell::Get()->tray_action()->FlushMojoForTesting();
+
+  ASSERT_TRUE(power_manager_client_->backlights_forced_off());
+
+  EXPECT_EQ(std::vector<mojom::LockScreenNoteOrigin>(
+                {mojom::LockScreenNoteOrigin::kStylusEject}),
+            client.note_origins());
+
+  PressPowerButton();
+  ReleasePowerButton();
+
+  EXPECT_TRUE(power_manager_client_->backlights_forced_off());
+  Shell::Get()->tray_action()->FlushMojoForTesting();
+  EXPECT_TRUE(client.close_note_reasons().empty());
+
+  // Finish the note launch.
+  Shell::Get()->tray_action()->UpdateLockScreenNoteState(
+      mojom::TrayActionState::kActive);
+  EXPECT_FALSE(power_manager_client_->backlights_forced_off());
+  power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, true);
+
+  // Turning backlight back off should not be deffered if power button is
+  // presesd again.
+  Shell::Get()->tray_action()->UpdateLockScreenNoteState(
+      mojom::TrayActionState::kAvailable);
+
+  AdvanceClockToAvoidIgnoring();
+  PressPowerButton();
+  ReleasePowerButton();
+
+  EXPECT_TRUE(power_manager_client_->backlights_forced_off());
+  power_manager_client_->SendBrightnessChanged(0, true);
+}
+
+// Tests that ejecting stylus stops forcing backlights off, provided that lock
+// screen notes are not available.
+TEST_F(TabletPowerButtonControllerTest, StylusRemoveStopsForcingOff) {
+  PressPowerButton();
+  ReleasePowerButton();
+  ASSERT_TRUE(power_manager_client_->backlights_forced_off());
+  power_manager_client_->SendBrightnessChanged(0, true);
+
+  RemoveStylus();
+
+  EXPECT_FALSE(power_manager_client_->backlights_forced_off());
 }
 
 // Tests that when system is suspended with backlights forced off, and then

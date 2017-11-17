@@ -101,6 +101,13 @@ class PowerButtonTestBase : public AshTestBase {
   // Triggers a unlock screen operation.
   void UnlockScreen();
 
+  // Simulates stylus removal event.
+  void RemoveStylus();
+
+  // If timer for launching lock screen note is running, it stops is, runs its
+  // tasks and returns true. Otherwise, returns false.
+  bool TriggerLockScreenNoteLaunchTimeout() WARN_UNUSED_RESULT;
+
   // Enables or disables tablet mode based on |enable|.
   void EnableTabletMode(bool enable);
 

@@ -20,6 +20,7 @@ class Layer;
 namespace ash {
 
 class LockWindow;
+class LockContentsView;
 class LoginDataDispatcher;
 class TrayAction;
 
@@ -45,6 +46,8 @@ class LockScreen : public TrayActionObserver, public SessionObserver {
   // Returns the active data dispatcher.
   LoginDataDispatcher* data_dispatcher();
 
+  LockContentsView* view() { return view_; }
+
   // TrayActionObserver:
   void OnLockScreenNoteStateChanged(mojom::TrayActionState state) override;
 
@@ -57,6 +60,8 @@ class LockScreen : public TrayActionObserver, public SessionObserver {
 
   // Unowned pointer to the window which hosts the lock screen.
   LockWindow* window_ = nullptr;
+
+  LockContentsView* view_ = nullptr;
 
   // The wallpaper bluriness before entering lock_screen.
   std::unordered_map<ui::Layer*, float> initial_blur_;
