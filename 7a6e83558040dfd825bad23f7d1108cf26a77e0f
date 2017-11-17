@@ -16,6 +16,24 @@
       "revId": "7a6e83558040dfd825bad23f7d1108cf26a77e0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a3feeca_f0a9b8c7",
+        "filename": "chrome/browser/ui/cocoa/profiles/user_manager_mac_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-17T18:15:38Z",
+      "side": 1,
+      "message": "thanks a ton. DeleteSystemProfile/DeleteGuestProfile not removing from the list is a mystery indeed, I would suspect it\u0027s an oversight but one I\u0027m happy to punt investigating for now.",
+      "parentUuid": "64b66b08_b156e4b3",
+      "revId": "7a6e83558040dfd825bad23f7d1108cf26a77e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
