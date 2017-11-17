@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60c463f2_e13b38ea",
+        "filename": "ui/android/java/res/values-sw600dp/values.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-17T18:25:43Z",
+      "side": 1,
+      "message": "Weird! Fixed (as well as in the file I copied it from)",
+      "parentUuid": "af2eed3c_657afd2d",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 3
+      },
+      "revId": "c9de95a077b07f69202d376cd7e59f79785e7733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f78929f4_5f8ed1be",
         "filename": "ui/android/java/src/org/chromium/ui/base/DeviceFormFactor.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-17T01:08:17Z",
       "side": 1,
       "message": "This worries me, because applyOverrideConfiguration \"can only be called once, and must be called before any calls to getResources() or getAssets() are made.\"\n\nSince the application context is being used instead of the activity context, it may be okay.. The application context should also be using the full device size to load resources but I\u0027d have to test to confirm.\n\nWhat sort of manual testing have you done?",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 96
+      },
+      "revId": "c9de95a077b07f69202d376cd7e59f79785e7733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7a106a9_87b4020e",
+        "filename": "ui/android/java/src/org/chromium/ui/base/DeviceFormFactor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-17T18:25:43Z",
+      "side": 1,
+      "message": "All I\u0027ve done to test is loaded it on my 5x running O to make sure it didn\u0027t crash, and run it on my N7 running M to make sure isTablet \u003d\u003d true (just logged it out).\n\nI think you\u0027re right about ApplicationContext being okay, there\u0027s an explicit check for applyOverrideConfiguration() being called first here:\nhttps://cs.chromium.org/chromium/src/third_party/android_tools/sdk/sources/android-25/android/view/ContextThemeWrapper.java?rcl\u003d9914c5704717424998c69e837be3631914d787cc\u0026l\u003d95",
+      "parentUuid": "f78929f4_5f8ed1be",
       "range": {
         "startLine": 31,
         "startChar": 8,
