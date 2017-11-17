@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cc71a3d1_fccd449e",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-17T17:24:03Z",
+      "side": 1,
+      "message": "ping?",
+      "parentUuid": "50d8870d_2bc85eaf",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "363c86c0_1067a3fa",
         "filename": "chromeos/dbus/fake_session_manager_client.cc",
         "patchSetId": 1
@@ -427,6 +445,30 @@
       "side": 1,
       "message": "It is the same with here\nhttps://cs.chromium.org/chromium/src/chromeos/dbus/session_manager_client.h?q\u003dSessionManagerClient\u0026dr\u003dCSs\u0026l\u003d73\nand AFAIK, in \"clean\" is used in session_manager implementation, too.\n\nSo, I prefer the consistency for now.\nI\u0027m fine to change it of course, but I believe it is separate topic.",
       "parentUuid": "485323b9_478a3651",
+      "range": {
+        "startLine": 190,
+        "startChar": 31,
+        "endLine": 190,
+        "endChar": 37
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f970dce_a6964946",
+        "filename": "components/arc/arc_session_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-17T17:24:03Z",
+      "side": 1,
+      "message": "I was proposing changing everywhere. Would you mind doing it?",
+      "parentUuid": "ac956b7f_81b96186",
       "range": {
         "startLine": 190,
         "startChar": 31,
