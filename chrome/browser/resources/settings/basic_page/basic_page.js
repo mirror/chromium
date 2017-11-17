@@ -111,24 +111,17 @@ Polymer({
   attached: function() {
     this.currentRoute_ = settings.getCurrentRoute();
 
-    // <if expr="is_win">
-    this.addEventListener('chrome-cleanup-dismissed', () => {
+    this.addEventListener('chrome-cleanup-dismissed', e => {
       this.showChromeCleanup = false;
     });
     // </if>
 
-    this.addEventListener('change-password-dismissed', () => {
+    this.addEventListener('change-password-dismissed', e => {
       this.showChangePassword = false;
     });
 
-    settings.ChangePasswordBrowserProxyImpl.getInstance()
-        .initializeChangePasswordHandler();
-    this.addWebUIListener('change-password-on-show', () => {
-      this.showChangePassword = true;
-    });
-
     if (settings.AndroidAppsBrowserProxyImpl) {
-      this.addWebUIListener(
+      cr.addWebUIListener(
           'android-apps-info-update', this.androidAppsInfoUpdate_.bind(this));
       settings.AndroidAppsBrowserProxyImpl.getInstance()
           .requestAndroidAppsInfo();
