@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06f23dc0_fe920147",
+        "filename": "chrome/browser/vr/elements/ui_element_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-17T20:05:36Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "60197154ab66929fb0f2103860cacebadb1dadbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
