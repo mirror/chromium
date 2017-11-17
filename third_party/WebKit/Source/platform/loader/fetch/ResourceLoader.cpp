@@ -227,35 +227,13 @@ bool ResourceLoader::WillFollowRedirect(
     return false;
   }
 
-  // TODO(toyoshim): Move following object copy logic to
-  // ResourceRequest::CreateRedirectRequest() in order to centralize object
-  // clone-ish code.
   const ResourceRequest& last_request = resource_->LastResourceRequest();
-  ResourceRequest new_request(new_url);
-  new_request.SetSiteForCookies(new_site_for_cookies);
-  new_request.SetDownloadToFile(last_request.DownloadToFile());
-  new_request.SetUseStreamOnResponse(last_request.UseStreamOnResponse());
-  new_request.SetRequestContext(last_request.GetRequestContext());
-  new_request.SetFrameType(last_request.GetFrameType());
-  new_request.SetServiceWorkerMode(
+  ResourceRequest new_request(
+      last_request, new_url, new_method, new_site_for_cookies, new_referrer,
+      static_cast<ReferrerPolicy>(new_referrer_policy),
       passed_redirect_response.WasFetchedViaServiceWorker()
           ? WebURLRequest::ServiceWorkerMode::kAll
           : WebURLRequest::ServiceWorkerMode::kNone);
-  new_request.SetShouldResetAppCache(last_request.ShouldResetAppCache());
-  new_request.SetFetchRequestMode(last_request.GetFetchRequestMode());
-  new_request.SetFetchCredentialsMode(last_request.GetFetchCredentialsMode());
-  new_request.SetKeepalive(last_request.GetKeepalive());
-  String referrer =
-      new_referrer.IsEmpty() ? Referrer::NoReferrer() : String(new_referrer);
-  new_request.SetHTTPReferrer(
-      Referrer(referrer, static_cast<ReferrerPolicy>(new_referrer_policy)));
-  new_request.SetPriority(last_request.Priority());
-  new_request.SetHTTPMethod(new_method);
-  if (new_request.HttpMethod() == last_request.HttpMethod())
-    new_request.SetHTTPBody(last_request.HttpBody());
-  new_request.SetCheckForBrowserSideNavigation(
-      last_request.CheckForBrowserSideNavigation());
-  new_request.SetCORSPreflightPolicy(last_request.CORSPreflightPolicy());
 
   Resource::Type resource_type = resource_->GetType();
 
@@ -273,9 +251,6 @@ bool ResourceLoader::WillFollowRedirect(
 
   const ResourceResponse& redirect_response(
       passed_redirect_response.ToResourceResponse());
-
-  new_request.SetRedirectStatus(
-      ResourceRequest::RedirectStatus::kFollowedRedirect);
 
   if (!IsManualRedirectFetchRequest(initial_request)) {
     bool unused_preload = resource_->IsUnusedPreload();

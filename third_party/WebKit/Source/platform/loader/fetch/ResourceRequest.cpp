@@ -130,6 +130,40 @@ ResourceRequest::ResourceRequest(const ResourceRequest&) = default;
 
 ResourceRequest& ResourceRequest::operator=(const ResourceRequest&) = default;
 
+ResourceRequest::ResourceRequest(
+    const ResourceRequest& last_request,
+    const KURL& new_url,
+    const AtomicString& new_method,
+    const KURL& new_site_for_cookies,
+    const String& new_referrer,
+    ReferrerPolicy new_referrer_policy,
+    WebURLRequest::ServiceWorkerMode service_worker_mode)
+    : ResourceRequest(new_url) {
+  SetHTTPMethod(new_method);
+  SetSiteForCookies(new_site_for_cookies);
+  String referrer =
+      new_referrer.IsEmpty() ? Referrer::NoReferrer() : String(new_referrer);
+  SetHTTPReferrer(
+      Referrer(referrer, static_cast<ReferrerPolicy>(new_referrer_policy)));
+  SetServiceWorkerMode(service_worker_mode);
+
+  SetDownloadToFile(last_request.DownloadToFile());
+  SetUseStreamOnResponse(last_request.UseStreamOnResponse());
+  SetRequestContext(last_request.GetRequestContext());
+  SetFrameType(last_request.GetFrameType());
+  SetShouldResetAppCache(last_request.ShouldResetAppCache());
+  SetFetchRequestMode(last_request.GetFetchRequestMode());
+  SetFetchCredentialsMode(last_request.GetFetchCredentialsMode());
+  SetKeepalive(last_request.GetKeepalive());
+  SetPriority(last_request.Priority());
+  if (HttpMethod() == last_request.HttpMethod())
+    SetHTTPBody(last_request.HttpBody());
+  SetCheckForBrowserSideNavigation(
+      last_request.CheckForBrowserSideNavigation());
+  SetCORSPreflightPolicy(last_request.CORSPreflightPolicy());
+  SetRedirectStatus(RedirectStatus::kFollowedRedirect);
+}
+
 std::unique_ptr<CrossThreadResourceRequestData> ResourceRequest::CopyData()
     const {
   std::unique_ptr<CrossThreadResourceRequestData> data =
