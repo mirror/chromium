@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2addee7_12b696e7",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T21:38:27Z",
+      "side": 1,
+      "message": "Nit: Maybe this shouldn\u0027t say \"or dotless i\" since the code doesn\u0027t (and doesn\u0027t need to) check that (it\u0027s already been checked in the previous condition).",
+      "revId": "e5780f1ae255e5fe296c7f752d9e5f9c8653fee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
