@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09718c13_a4480cc5",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_fence.txt",
+        "patchSetId": 39
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-17T03:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "421c7e59_52f0ffda",
+      "revId": "69d22215cb2e74c249d375a90a9382369146af8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8af82d63_6bfc6971",
         "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_fence.txt",
         "patchSetId": 39
@@ -33,6 +51,24 @@
       "revId": "69d22215cb2e74c249d375a90a9382369146af8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5790ef4_f23fd335",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_fence.txt",
+        "patchSetId": 39
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-17T03:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8af82d63_6bfc6971",
+      "revId": "69d22215cb2e74c249d375a90a9382369146af8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "69a1b8ed_a28c9b19",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-17T03:03:10Z",
+      "side": 1,
+      "message": "Actually this behavior is exactly what I want - SendGpuFence will register the client_id as a side effect, and the CreateGpuFenceINTERNAL(client_id, /*is_external\u003d*/true) call here is basically just a no-op with a DCHECK to confirm that it\u0027s already registered, and could be omitted entirely.\n\nThe important bit is that any following helper_-\u003eWaitGpuFenceCHROMIUM on this client_id will happen after the SendGpuFence got processed, and it sounds like that\u0027s the case.",
+      "parentUuid": "85212000_730bf706",
+      "revId": "69d22215cb2e74c249d375a90a9382369146af8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1da461df_a5ff504c",
         "filename": "gpu/ipc/client/command_buffer_proxy_impl.h",
         "patchSetId": 39
@@ -67,6 +121,24 @@
       "revId": "69d22215cb2e74c249d375a90a9382369146af8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b0aa8f2_1214f5bd",
+        "filename": "gpu/ipc/client/command_buffer_proxy_impl.h",
+        "patchSetId": 39
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-17T03:03:10Z",
+      "side": 1,
+      "message": "Done. I also replaced hash_map with flat_map for SignalTaskMap which does roughly the same thing (that was the example I was following.) Let me know if I should put that change into a separate CL.",
+      "parentUuid": "1da461df_a5ff504c",
+      "revId": "69d22215cb2e74c249d375a90a9382369146af8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
