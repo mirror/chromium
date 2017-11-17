@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63132c98_7edb0479",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-17T21:40:08Z",
+      "side": 1,
+      "message": "Please explain more context in changes of this nature about what the situation was, how it\u0027s changing, and why.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "0dbeaba5a70ee598011971dab5f4d600bac6de54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc5ca571_0db486be",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/doesnt-consume-user-gesture.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-17T21:40:08Z",
+      "side": 1,
+      "message": "update test description; when doing so please use our new convention of a string variable at top of file that is used here, see e.g. https://cs.chromium.org/search/?q\u003df:bluetooth+%5Cbtest_desc%5Cb\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "0dbeaba5a70ee598011971dab5f4d600bac6de54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
