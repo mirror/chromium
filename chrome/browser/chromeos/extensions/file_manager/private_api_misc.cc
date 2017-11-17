@@ -561,9 +561,11 @@ FileManagerPrivateAddProvidedFileSystemFunction::Run() {
 
   using chromeos::file_system_provider::Service;
   using chromeos::file_system_provider::ProvidingExtensionInfo;
+  using chromeos::file_system_provider::ProviderId;
   Service* const service = Service::Get(chrome_details_.GetProfile());
 
-  if (!service->RequestMount(params->extension_id))
+  ProviderId provider_id(params->extension_id, ProviderId::EXTENSION);
+  if (!service->RequestMount(provider_id))
     return RespondNow(Error("Failed to request a new mount."));
 
   return RespondNow(NoArguments());

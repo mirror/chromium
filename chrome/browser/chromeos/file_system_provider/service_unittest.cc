@@ -41,9 +41,11 @@ namespace chromeos {
 namespace file_system_provider {
 namespace {
 
-const char kProviderId[] = "mbflcebpggnecokmikipoihdbecnjfoj";
+const ProviderId kProviderId =
+    ProviderId("mbflcebpggnecokmikipoihdbecnjfoj", ProviderId::EXTENSION);
 const char kDisplayName[] = "Camera Pictures";
-const char kCustomProviderId[] = "custom_provider_id";
+const ProviderId kCustomProviderId =
+    ProviderId("custom_provider_id", ProviderId::NATIVE);
 
 // The dot in the file system ID is there in order to check that saving to
 // preferences works correctly. File System ID is used as a key in
@@ -103,7 +105,7 @@ class FileSystemProviderServiceTest : public testing::Test {
     service_.reset(new Service(profile_, extension_registry_.get()));
     service_->SetDefaultFileSystemFactoryForTesting(
         base::Bind(&FakeProvidedFileSystem::Create));
-    extension_ = CreateFakeExtension(kProviderId);
+    extension_ = CreateFakeExtension(kProviderId.GetId());
 
     registry_ = new FakeRegistry;
     // Passes ownership to the service instance.
@@ -169,7 +171,7 @@ TEST_F(FileSystemProviderServiceTest, MountFileSystem) {
   EXPECT_EQ(kFileSystemId,
             observer.mounts[0].file_system_info().file_system_id());
   base::FilePath expected_mount_path =
-      util::GetMountPath(profile_, kProviderId, kFileSystemId);
+      util::GetMountPath(profile_, kProviderId.GetId(), kFileSystemId);
   EXPECT_EQ(expected_mount_path.AsUTF8Unsafe(),
             observer.mounts[0].file_system_info().mount_path().AsUTF8Unsafe());
   EXPECT_EQ(kDisplayName, observer.mounts[0].file_system_info().display_name());
@@ -317,7 +319,8 @@ TEST_F(FileSystemProviderServiceTest, UnmountFileSystem_WrongExtensionId) {
   LoggingObserver observer;
   service_->AddObserver(&observer);
 
-  const std::string kWrongExtensionId = "helloworldhelloworldhelloworldhe";
+  const ProviderId kWrongProviderId =
+      ProviderId("helloworldhelloworldhelloworldhe", ProviderId::EXTENSION);
 
   EXPECT_EQ(base::File::FILE_OK,
             service_->MountFileSystem(
@@ -326,7 +329,7 @@ TEST_F(FileSystemProviderServiceTest, UnmountFileSystem_WrongExtensionId) {
   ASSERT_EQ(1u, service_->GetProvidedFileSystemInfoList().size());
 
   EXPECT_EQ(base::File::FILE_ERROR_NOT_FOUND,
-            service_->UnmountFileSystem(kWrongExtensionId, kFileSystemId,
+            service_->UnmountFileSystem(kWrongProviderId, kFileSystemId,
                                         Service::UNMOUNT_REASON_USER));
   ASSERT_EQ(1u, observer.unmounts.size());
   EXPECT_EQ(base::File::FILE_ERROR_NOT_FOUND, observer.unmounts[0].error());
