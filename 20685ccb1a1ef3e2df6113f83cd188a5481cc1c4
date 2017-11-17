@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cbab834_b1caeb28",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-17T17:57:17Z",
+      "side": 1,
+      "message": "this is weird. don\u0027t do void*.\nIt seems that all your use case inside assumes it\u0027s a unsigned char *\nmake it so and then change the call sites to adapt to it.",
+      "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f64bc0b8_d460cc6b",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-17T17:57:17Z",
+      "side": 1,
+      "message": "can you rename this to something else? IsImagePremul()?",
+      "range": {
+        "startLine": 225,
+        "startChar": 19,
+        "endLine": 225,
+        "endChar": 40
+      },
+      "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "752d7e4e_bd9fafbd",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-17T17:57:17Z",
+      "side": 1,
+      "message": "add a comment here saying that, since we are premul, we can depend on skia doing the right, thing etc.",
+      "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23bea748_85ccc774",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-17T17:57:17Z",
+      "side": 1,
+      "message": "\"alpha_disposition \u003d\u003d kDontPremultiplyAlpha ? :\"",
+      "range": {
+        "startLine": 269,
+        "startChar": 27,
+        "endLine": 269,
+        "endChar": 46
+      },
+      "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c951bdf9_ad26fbcc",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-17T17:57:17Z",
+      "side": 1,
+      "message": "can you split the comments and move this part after the if?",
+      "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c0e0613_2f143579",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-17T17:57:17Z",
+      "side": 1,
+      "message": "ewww. Add DCHECKs?",
+      "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5488e7fd_83cb6113",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-17T17:57:17Z",
+      "side": 1,
+      "message": "or",
+      "range": {
+        "startLine": 380,
+        "startChar": 67,
+        "endLine": 380,
+        "endChar": 70
+      },
+      "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15223461_8f259628",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-17T17:57:17Z",
+      "side": 1,
+      "message": "why? Is ImageData always unpremul? Write a comment maybe?",
+      "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff40f8b9_d82542d1",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-17T17:57:17Z",
+      "side": 1,
+      "message": "why is this different than premultiply_alpha?",
+      "revId": "20685ccb1a1ef3e2df6113f83cd188a5481cc1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
