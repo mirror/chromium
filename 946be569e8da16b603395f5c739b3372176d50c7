@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d0804c89_3679fe97",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-17T19:42:48Z",
+      "side": 1,
+      "message": "Thanks for the catch.",
+      "parentUuid": "8e70ba5a_fa1f88b3",
+      "revId": "946be569e8da16b603395f5c739b3372176d50c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "077bb202_7878943e",
         "filename": "components/omnibox/browser/keyword_provider.cc",
         "patchSetId": 8

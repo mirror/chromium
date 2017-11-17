@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "95cb74c7_b2916b5d",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-17T19:42:48Z",
+      "side": 1,
+      "message": "Ah, I understand this now. If we just had IsKeywordEnabled() check alone, it\u0027s possible that the \n!\u003d TemplateURL::OMNIBOX_API_EXTENSION passes first, so we need the outer \u003d\u003d TemplateURL::OMNIBOX_API_EXTENSION).",
+      "parentUuid": "411f832e_587a8864",
+      "revId": "86265cb6baac7dc486a5738a57a436e199729dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc294067_a6d57bc7",
         "filename": "components/omnibox/browser/keyword_provider.cc",
         "patchSetId": 7
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Thanks for pointing this out. In short, I think this should be okay, but I\u0027ll have Istiaque double check. \n\nThe check before:\n\nextension_delegate_ \u0026\u0026 !extensions_delegate_-\u003eIsEnabledExtension(..)\n\nis essentially the same now as:\n\n!(extension_delegate_ \u0026\u0026 extensions_delegate_-\u003eIsEnabledExtension(..)) which is\n\n!extension_delegate_ || !extensions_delegate_-\u003eIsEnabledExtension(..)).\n\nIf |extension_delegate| is false and doesn\u0027t exist, then IsKeywordEnabled() should still return false.",
       "parentUuid": "acf2dc46_23cbabc0",
+      "revId": "86265cb6baac7dc486a5738a57a436e199729dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af602985_64cd7a8f",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-17T19:42:48Z",
+      "side": 1,
+      "message": "Btw, I don\u0027t feel strongly about just using !IsKeywordEnabled(template_url). I did the refactor to avoid repeating checks. If it\u0027s safer and more correct to expand this check out to avoid the !extension_delegate_ check, I\u0027m fine doing that.\n\nwdyt Mark?",
+      "parentUuid": "62595652_3803f0f0",
       "revId": "86265cb6baac7dc486a5738a57a436e199729dbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
