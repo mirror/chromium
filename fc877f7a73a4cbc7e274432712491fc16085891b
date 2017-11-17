@@ -22,6 +22,30 @@
       "revId": "fc877f7a73a4cbc7e274432712491fc16085891b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0155662_2556d0a3",
+        "filename": "third_party/WebKit/Source/core/dom/AccessibleNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-17T17:42:35Z",
+      "side": 1,
+      "message": "Shouldn\u0027t matter because now we only set document_ if element_ is null.",
+      "parentUuid": "e02c23a1_cb74043f",
+      "range": {
+        "startLine": 226,
+        "startChar": 6,
+        "endLine": 226,
+        "endChar": 14
+      },
+      "revId": "fc877f7a73a4cbc7e274432712491fc16085891b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
