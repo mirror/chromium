@@ -175,8 +175,6 @@ public class VrShellDelegate
     // presentation experience.
     private boolean mVrBrowserUsed;
 
-    private boolean mWaitingForVrTimeout;
-
     private boolean mDensityChanged;
 
     // Gets run when the user exits VR mode by clicking the 'x' button or system UI back button.
@@ -1087,7 +1085,6 @@ public class VrShellDelegate
     private int enterVrInternal() {
         if (mPaused) return ENTER_VR_CANCELLED;
         if (mInVr) return ENTER_VR_NOT_NECESSARY;
-        if (mWaitingForVrTimeout) return ENTER_VR_CANCELLED;
 
         // Update VR support level as it can change at runtime
         maybeUpdateVrSupportLevel();
@@ -1198,13 +1195,6 @@ public class VrShellDelegate
             maybeSetPresentResult(false, mDonSucceeded);
 
             shutdownVr(true, false);
-            mWaitingForVrTimeout = true;
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mWaitingForVrTimeout = false;
-                }
-            }, ENTER_VR_FAILED_TIMEOUT_MS);
         }
 
         mProbablyInDon = false;
