@@ -11,6 +11,7 @@
 
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "chrome/browser/notifications/notification_common.h"
 
 class GURL;
 class XmlWriter;
@@ -37,6 +38,7 @@ class NotificationTemplateBuilder {
  public:
   // Builds the notification template for the given |notification|.
   static std::unique_ptr<NotificationTemplateBuilder> Build(
+      NotificationCommon::Type notification_type,
       NotificationImageRetainer* notification_image_retainer,
       const std::string& profile_id,
       const message_center::Notification& notification);
@@ -90,6 +92,9 @@ class NotificationTemplateBuilder {
                          const GURL& origin,
                          const std::string& placement,
                          const std::string& hint_crop);
+
+  // Adds a progress bar to the notification XML.
+  void WriteProgressElement(const message_center::Notification& notification);
 
   // Writes the <actions> element.
   void StartActionsElement();

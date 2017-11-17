@@ -282,7 +282,8 @@ class NotificationPlatformBridgeWinImpl
     }
 
     std::unique_ptr<NotificationTemplateBuilder> notification_template =
-        NotificationTemplateBuilder::Build(image_retainer_.get(), profile_id,
+        NotificationTemplateBuilder::Build(notification_type,
+                                           image_retainer_.get(), profile_id,
                                            *notification);
     mswr::ComPtr<winui::Notifications::IToastNotification> toast;
     HRESULT hr =
