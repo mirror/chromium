@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "acc120d1_66dfc784",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-17T16:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5956da06_aacc3c8b",
+      "revId": "31a742c933b2139053d650df248500fb1e53b459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccdfd875_9b9119f6",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 12
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Good catch, added to destructor gvr_keyboard_destroy.\n\nRE new class, all the changes in here are pretty temporary, and will move out of here when we make KB an element :)",
       "parentUuid": "ccdfd875_9b9119f6",
+      "revId": "31a742c933b2139053d650df248500fb1e53b459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "861144a4_cdd4e8e3",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-17T16:41:16Z",
+      "side": 1,
+      "message": "Does that mean we are going to move these code to chrome/browser/vr? gvr keyboard is pretty platform specific and we probably shouldn\u0027t do that unless we plan to add platform specific folder in it? I am fine with it in vr_shell_gl temporary, just want to get a better idea.",
+      "parentUuid": "84c5ca6f_2cefa540",
       "revId": "31a742c933b2139053d650df248500fb1e53b459",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -148,6 +184,24 @@
       "side": 1,
       "message": "According to the API, we do need to call set_frame_time and advance_frame every frame after we create the keyboard. This is because there may still be events to process after the kb hides.",
       "parentUuid": "4718afc7_83517053",
+      "revId": "31a742c933b2139053d650df248500fb1e53b459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5341ea41_cf9e57c0",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-17T16:41:16Z",
+      "side": 1,
+      "message": "I see. Can you add a comment here as it is not very obvious?",
+      "parentUuid": "fad2ff0a_903ce95a",
       "revId": "31a742c933b2139053d650df248500fb1e53b459",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
