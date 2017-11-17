@@ -39,6 +39,10 @@ class NavigationHandle;
 class WebContents;
 }
 
+namespace tabs {
+class TabLogger;
+}
+
 namespace resource_coordinator {
 
 class BackgroundTabNavigationThrottle;
@@ -149,6 +153,8 @@ class TabManager : public TabStripModelObserver,
   TabStatsList GetUnsortedTabStats(
       const std::vector<gfx::NativeWindow>& windows_sorted_by_z_index =
           std::vector<gfx::NativeWindow>()) const;
+
+  void LogTab(const WebContentsData* web_contents_data);
 
   void AddObserver(TabLifetimeObserver* observer);
   void RemoveObserver(TabLifetimeObserver* observer);
@@ -560,6 +566,8 @@ class TabManager : public TabStripModelObserver,
   // Records UMAs for tab and system-related events and properties during
   // session restore.
   std::unique_ptr<TabManagerStatsCollector> stats_collector_;
+
+  std::unique_ptr<tabs::TabLogger> tab_logger_;
 
   // Weak pointer factory used for posting delayed tasks.
   base::WeakPtrFactory<TabManager> weak_ptr_factory_;
