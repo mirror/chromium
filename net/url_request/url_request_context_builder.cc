@@ -59,8 +59,10 @@
 #endif
 
 #if BUILDFLAG(ENABLE_REPORTING)
+#include "net/network_error_logging/network_error_logging_service.h"
 #include "net/reporting/reporting_policy.h"
 #include "net/reporting/reporting_service.h"
+#include "net/url_request/network_error_logging_delegate.h"
 #endif  // BUILDFLAG(ENABLE_REPORTING)
 
 namespace net {
@@ -205,7 +207,12 @@ URLRequestContextBuilder::URLRequestContextBuilder()
       pac_quick_check_enabled_(true),
       pac_sanitize_url_policy_(ProxyService::SanitizeUrlPolicy::SAFE),
       shared_proxy_delegate_(nullptr),
-      shared_http_auth_handler_factory_(nullptr) {
+#if BUILDFLAG(ENABLE_REPORTING)
+      shared_http_auth_handler_factory_(nullptr),
+      network_error_logging_enabled_(true) {
+#else   // !BUILDFLAG(ENABLE_REPORTING)
+      shared_http_auth_handler_factory_(nullptr){
+#endif  // !BUILDFLAG(ENABLE_REPORTING)
 }
 
 URLRequestContextBuilder::~URLRequestContextBuilder() {}
@@ -619,6 +626,16 @@ std::unique_ptr<URLRequestContext> URLRequestContextBuilder::Build() {
   if (reporting_policy_) {
     storage->set_reporting_service(
         ReportingService::Create(*reporting_policy_, context.get()));
+  }
+
+  if (network_error_logging_enabled_) {
+    storage->set_network_error_logging_delegate(
+        NetworkErrorLoggingService::Create());
+  }
+
+  if (context->network_error_logging_delegate()) {
+    context->network_error_logging_delegate()->SetReportingService(
+        context->reporting_service());
   }
 #endif  // BUILDFLAG(ENABLE_REPORTING)
 
