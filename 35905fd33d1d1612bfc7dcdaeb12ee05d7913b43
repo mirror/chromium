@@ -16,6 +16,24 @@
       "revId": "35905fd33d1d1612bfc7dcdaeb12ee05d7913b43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3b3b3c8_9f883b37",
+        "filename": "cc/paint/paint_filter.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-17T21:21:10Z",
+      "side": 1,
+      "message": "Sure, done. The aim was to make it look nicer, so no point if it does the opposite. :)",
+      "parentUuid": "f8e91cbf_1501a6ca",
+      "revId": "35905fd33d1d1612bfc7dcdaeb12ee05d7913b43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
