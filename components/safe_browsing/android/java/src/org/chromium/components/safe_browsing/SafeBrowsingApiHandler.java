@@ -21,7 +21,8 @@ public interface SafeBrowsingApiHandler {
      * Observer to be notified when the SafeBrowsingApiHandler determines the verdict for a url.
      */
     public interface Observer {
-        void onUrlCheckDone(long callbackId, @SafeBrowsingResult int resultStatus, String metadata);
+        void onUrlCheckDone(long callbackId, @SafeBrowsingResult int resultStatus, String metadata,
+                long checkDelta);
     }
 
     // Possible values for resultStatus. Native side has the same definitions.
