@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2878764d_9ce6e214",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-17T17:08:50Z",
+      "side": 1,
+      "message": "Why fire TextFieldDidChange here?",
+      "range": {
+        "startLine": 230,
+        "startChar": 27,
+        "endLine": 230,
+        "endChar": 45
+      },
+      "revId": "3800901a2d14e19d9d6e33ce9766ce80497b8243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ff71641_ba6ed771",
+        "filename": "components/autofill/content/renderer/page_click_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-17T17:08:50Z",
+      "side": 1,
+      "message": "document why this is needed.",
+      "range": {
+        "startLine": 57,
+        "startChar": 30,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "3800901a2d14e19d9d6e33ce9766ce80497b8243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
