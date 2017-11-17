@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa258948_fbf82cf3",
+        "filename": "chrome/browser/resources/media_router/media_router_common.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-17T18:29:39Z",
+      "side": 1,
+      "message": "This makes the route description font larger than the route title in the controller view. Is that intended?",
+      "revId": "f43e2cab2e01d9c83ba5bd0a79821bbccdd5568a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fbc719d_81c9eefe",
+        "filename": "chrome/common/media_router/mojo/media_status.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-17T18:29:39Z",
+      "side": 1,
+      "message": "Mention the deprecation in chrome/common/media_router/media_status.h as well?",
+      "revId": "f43e2cab2e01d9c83ba5bd0a79821bbccdd5568a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
