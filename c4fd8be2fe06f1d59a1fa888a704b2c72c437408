@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f2ba568_3b0d7869",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 58009,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-17T20:39:55Z",
+      "side": 1,
+      "message": "It looks like this is intended as a temporary metric, for verifying that a change is safe.  If that\u0027s accurate, would you mind adding a target milestone for removal, i.e. something like \"This metric is intended to be temporary, for helping to understand the impact of https://crbug.com/NNNNNN, and can likely be removed in M68.\"  (or whatever milestone is appropriate)",
+      "range": {
+        "startLine": 58007,
+        "startChar": 0,
+        "endLine": 58009,
+        "endChar": 35
+      },
+      "revId": "c4fd8be2fe06f1d59a1fa888a704b2c72c437408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
