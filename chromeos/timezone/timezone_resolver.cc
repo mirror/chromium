@@ -263,7 +263,7 @@ TimeZoneResolver::TimeZoneResolverImpl::TimeZoneResolverImpl(
       geolocation_provider_(
           resolver->context().get(),
           SimpleGeolocationProvider::DefaultGeolocationProviderURL()),
-      timezone_provider_(resolver->context().get(),
+      timezone_provider_(resolver->loader_factory().get(),
                          DefaultTimezoneProviderURL()),
       requests_count_(0),
       weak_ptr_factory_(this) {
@@ -399,12 +399,14 @@ TimeZoneResolver::Delegate::~Delegate() {}
 TimeZoneResolver::TimeZoneResolver(
     Delegate* delegate,
     scoped_refptr<net::URLRequestContextGetter> context,
+    scoped_refptr<content::mojom::URLLoaderFactory> loader_factory,
     const GURL& url,
     const ApplyTimeZoneCallback& apply_timezone,
     const DelayNetworkCallClosure& delay_network_call,
     PrefService* local_state)
     : delegate_(delegate),
       context_(context),
+      loader_factory_(loader_factory),
       url_(url),
       apply_timezone_(apply_timezone),
       delay_network_call_(delay_network_call),

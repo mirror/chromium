@@ -53,12 +53,14 @@ class CHROMEOS_EXPORT TimeZoneResolver {
   // request. It is used to limit request rate on browser restart.
   static const char kLastTimeZoneRefreshTime[];
 
-  TimeZoneResolver(Delegate* delegate,
-                   scoped_refptr<net::URLRequestContextGetter> context,
-                   const GURL& url,
-                   const ApplyTimeZoneCallback& apply_timezone,
-                   const DelayNetworkCallClosure& delay_network_call,
-                   PrefService* local_state);
+  TimeZoneResolver(
+      Delegate* delegate,
+      scoped_refptr<net::URLRequestContextGetter> context,
+      scoped_refptr<content::mojom::URLLoaderFactory> loader_factory,
+      const GURL& url,
+      const ApplyTimeZoneCallback& apply_timezone,
+      const DelayNetworkCallClosure& delay_network_call,
+      PrefService* local_state);
   ~TimeZoneResolver();
 
   // Starts periodic timezone refresh.
@@ -72,6 +74,9 @@ class CHROMEOS_EXPORT TimeZoneResolver {
 
   scoped_refptr<net::URLRequestContextGetter> context() const {
     return context_;
+  }
+  scoped_refptr<content::mojom::URLLoaderFactory> loader_factory() const {
+    return loader_factory_;
   }
 
   DelayNetworkCallClosure delay_network_call() const {
@@ -97,6 +102,7 @@ class CHROMEOS_EXPORT TimeZoneResolver {
   Delegate* delegate_;
 
   scoped_refptr<net::URLRequestContextGetter> context_;
+  scoped_refptr<content::mojom::URLLoaderFactory> loader_factory_;
   const GURL url_;
 
   const ApplyTimeZoneCallback apply_timezone_;
