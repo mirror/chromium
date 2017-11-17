@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08501b31_39ab77f7",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T02:28:19Z",
+      "side": 1,
+      "message": "this shouldn\u0027t start with InvokeDialog_ -- that puts it in a suite of tests that are expected to just invoke `RunDialog` (with some optional setup).\n\nAny other name is fine though, and it\u0027s fine to call ShowDialog(\"Local\") still.",
+      "range": {
+        "startLine": 92,
+        "startChar": 57,
+        "endLine": 92,
+        "endChar": 70
+      },
+      "revId": "dda8bea29ee6e13e2949ac0389d49558e60ddc42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6862d274_94550ff1",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T02:28:19Z",
+      "side": 1,
+      "message": "optional: there\u0027s also InProcessBrowserTest::AddTabAtIndex which is slightly less wordy. this is fine though.",
+      "revId": "dda8bea29ee6e13e2949ac0389d49558e60ddc42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
