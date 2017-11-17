@@ -93,6 +93,30 @@
       "revId": "6a8a311726298c1559830c3d0037cdf8d5c98d04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39d31f53_381dd16e",
+        "filename": "device/bluetooth/bluetooth_adapter_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-17T20:54:53Z",
+      "side": 1,
+      "message": "You\u0027ve updated the comment but not explained why Windows needs to be different and not use BluetoothTestBase::DeleteDevice.  I still don\u0027t see why BluetoothTestBase::DeleteDevice isn\u0027t sufficient.",
+      "parentUuid": "667afd68_be621d7c",
+      "range": {
+        "startLine": 291,
+        "startChar": 38,
+        "endLine": 291,
+        "endChar": 61
+      },
+      "revId": "6a8a311726298c1559830c3d0037cdf8d5c98d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
