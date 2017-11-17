@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5769e975_65da52db",
+        "filename": "content/public/test/content_browser_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-17T21:13:50Z",
+      "side": 0,
+      "message": "Should this DCHECK be moved into the InProcessBrowserTest code?",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 60
+      },
+      "revId": "40aac4941ab2e7cef89c2028dc1b12cf78041543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

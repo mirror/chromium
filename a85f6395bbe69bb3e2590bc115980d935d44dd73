@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f70ab02_a550f410",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-17T21:13:50Z",
+      "side": 1,
+      "message": "Should we skip this as well for the content_browsertests?",
+      "range": {
+        "startLine": 290,
+        "startChar": 0,
+        "endLine": 292,
+        "endChar": 47
+      },
+      "revId": "a85f6395bbe69bb3e2590bc115980d935d44dd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "914db6e4_258f6c24",
+        "filename": "content/public/test/browser_test_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-17T21:13:50Z",
+      "side": 1,
+      "message": "Please add documentation for this function.  Something like,\n\n  // Whether the test harness should clear out the current set of field trial\n  // params just before runnning BrowserMain. The params need to be cleared iff\n  // BrowserMain creates a new FeatureList.",
+      "range": {
+        "startLine": 83,
+        "startChar": 69,
+        "endLine": 83,
+        "endChar": 0
+      },
+      "revId": "a85f6395bbe69bb3e2590bc115980d935d44dd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
