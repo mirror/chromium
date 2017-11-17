@@ -1,14 +1,15 @@
 include_rules = [
+  "-chrome/browser/ui/views",
   "+components/bubble",
   "+components/favicon/core",
+  "+components/feature_engagement/features.h",
   "+components/flags_ui",
+  "+components/navigation_metrics",
   "+components/toolbar",
   "+components/ui_metrics",
   "+components/url_formatter",
   "+components/version_ui",
   "+components/webapks_ui",
-  "+components/feature_engagement/features.h",
-  "-chrome/browser/ui/views",
   "+mash/public/interfaces",
   "+services/device/public/interfaces",
 ]
