@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d2d5dcc_0f63e665",
+        "filename": "content/browser/top_document_isolation_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-17T22:51:39Z",
+      "side": 1,
+      "message": "The CL changes B -\u003e D in the expectations.  This is okay - these are the same expectations, with just a different legend.  The legend changes, because after the CL FrameTreeVisualizer::GetName starts encountering more site instances.",
+      "range": {
+        "startLine": 194,
+        "startChar": 13,
+        "endLine": 194,
+        "endChar": 14
+      },
+      "revId": "9d5ca5c7231aa2b87c257f1159404971ce536757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

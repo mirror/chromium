@@ -46,6 +46,30 @@
       "revId": "1ca9deae687820d75cfdb01ef45959b30cb2a2dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1973ab18_02be0cf4",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-17T22:51:39Z",
+      "side": 1,
+      "message": "Yes.  I meant to, but forgot to include the callstack that triggers destruction of FTNs in the scenario exercised by the new PruningOfEntriesForDynamicFrames_MainFrameNavigatedAway test.  Here it is:\n\n#8 0x7f22612cdd92 content::FrameTreeNode::ResetForNewProcess()\n#9 0x7f226139ad1d content::RenderFrameHostManager::CommitPending()\n#10 0x7f2261399fc4 content::RenderFrameHostManager::CommitPendingIfNecessary()\n#11 0x7f2261399d3e content::RenderFrameHostManager::DidNavigateFrame()\n#12 0x7f226133a0c5 content::NavigatorImpl::DidNavigate()\n#13 0x7f2261357cef content::RenderFrameHostImpl::DidCommitProvisionalLoad()",
+      "parentUuid": "06acab59_c00bb0f4",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 39
+      },
+      "revId": "1ca9deae687820d75cfdb01ef45959b30cb2a2dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
