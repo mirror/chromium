@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39572431_b51434c3",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-11-17T18:43:57Z",
+      "side": 1,
+      "message": "optional nit: this is similar to the logic in download_resource_throttle, could this be possible to share logic?",
+      "range": {
+        "startLine": 242,
+        "startChar": 5,
+        "endLine": 242,
+        "endChar": 38
+      },
+      "revId": "7354a592f7a13a728c4bfc2d6d5b205d5862a17b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f5d310_33105504",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-11-17T18:43:57Z",
+      "side": 1,
+      "message": "I think in the old code, DownloadURL code path also has this check from DownloadResourceThrottle.",
+      "range": {
+        "startLine": 238,
+        "startChar": 43,
+        "endLine": 238,
+        "endChar": 64
+      },
+      "revId": "7354a592f7a13a728c4bfc2d6d5b205d5862a17b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
