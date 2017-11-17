@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49057309_70a0a2b9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-17T20:30:01Z",
+      "side": 1,
+      "message": "nit: No need to static_cast for the UMA_HISTOGRAM_ENUMERATION macro.",
+      "range": {
+        "startLine": 380,
+        "startChar": 0,
+        "endLine": 381,
+        "endChar": 65
+      },
+      "revId": "7cef091c826f14f05d4670b5d2c50c19e3c48879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe3c7be_013d335b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 68826,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-17T20:30:01Z",
+      "side": 1,
+      "message": "Optional: It might be nice to keep track of how many tasks are discarded based on this heuristic, just as a sanity check.  Have you thought about doing that / are we already doing that?",
+      "range": {
+        "startLine": 68825,
+        "startChar": 0,
+        "endLine": 68826,
+        "endChar": 52
+      },
+      "revId": "7cef091c826f14f05d4670b5d2c50c19e3c48879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
