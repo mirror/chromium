@@ -234,13 +234,20 @@ void ChromePasswordProtectionService::ShowModalWarning(
   if (IsModalWarningShowingInWebContents(web_contents))
     return;
 
+  // Exit fullscreen if this |web_contents| is showing in fullscreen mode.
+  if (web_contents->IsFullscreenForCurrentTab())
+    web_contents->ExitFullscreen(true);
+
   UpdateSecurityState(SB_THREAT_TYPE_PASSWORD_REUSE, web_contents);
   ShowPasswordReuseModalWarningDialog(
       web_contents, this,
       base::BindOnce(&ChromePasswordProtectionService::OnUserAction,
                      base::Unretained(this), web_contents,
                      PasswordProtectionService::MODAL_DIALOG));
-  OnWarningShown(web_contents, PasswordProtectionService::MODAL_DIALOG);
+  RecordWarningAction(PasswordProtectionService::MODAL_DIALOG,
+                      PasswordProtectionService::SHOWN);
+
+  // Updates prefs.
   GURL trigger_url = web_contents->GetLastCommittedURL();
   DCHECK(trigger_url.is_valid());
   DictionaryPrefUpdate update(profile_->GetPrefs(),
@@ -692,6 +699,8 @@ void ChromePasswordProtectionService::HandleUserActionOnModalWarning(
         navigation_id, PasswordReuseDialogInteraction::WARNING_ACTION_TAKEN);
     // Opens chrome://settings page in a new tab.
     OpenUrlInNewTab(GURL(chrome::kChromeUISettingsURL), web_contents);
+    RecordWarningAction(PasswordProtectionService::CHROME_SETTINGS,
+                        PasswordProtectionService::SHOWN);
   } else if (action == PasswordProtectionService::IGNORE_WARNING) {
     // No need to change state.
     LogPasswordReuseDialogInteraction(
@@ -723,6 +732,8 @@ void ChromePasswordProtectionService::HandleUserActionOnPageInfo(
 
     // Opens chrome://settings page in a new tab.
     OpenUrlInNewTab(GURL(chrome::kChromeUISettingsURL), web_contents);
+    RecordWarningAction(PasswordProtectionService::CHROME_SETTINGS,
+                        PasswordProtectionService::SHOWN);
     return;
   }
 
