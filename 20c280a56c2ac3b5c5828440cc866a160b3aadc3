@@ -285,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "667cf760_e6b69554",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-17T02:31:15Z",
+      "side": 1,
+      "message": "It makes a lot of sense. Since the same mechanism is used in all consistency checks, I\u0027ve opened a bug and will address the issue soon. crbug.com/786240",
+      "parentUuid": "5c05aa59_c95ea46d",
+      "range": {
+        "startLine": 139,
+        "startChar": 8,
+        "endLine": 139,
+        "endChar": 20
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67f2885f_8c77ce86",
         "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
         "patchSetId": 1
@@ -746,6 +770,30 @@
       "side": 1,
       "message": "How about \"IsPageRemovedFromBothPlaces() ?",
       "parentUuid": "538e98e1_5553dd15",
+      "range": {
+        "startLine": 120,
+        "startChar": 46,
+        "endLine": 120,
+        "endChar": 59
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d375b76_6d21ce69",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-17T02:31:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a32d1eb_a2059464",
       "range": {
         "startLine": 120,
         "startChar": 46,
