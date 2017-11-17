@@ -20,6 +20,8 @@
 #include "chrome/browser/chromeos/language_preferences.h"
 #include "chrome/browser/chromeos/login/lock_screen_utils.h"
 #include "chrome/browser/chromeos/login/screens/network_error.h"
+#include "chrome/browser/chromeos/login/signin_partition_manager.h"
+#include "chrome/browser/chromeos/login/signin_partition_manager_factory.h"
 #include "chrome/browser/chromeos/login/ui/user_adding_screen.h"
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/chromeos/net/network_portal_detector_impl.h"
@@ -371,7 +373,13 @@ void GaiaScreenHandler::LoadGaiaWithVersion(
     // (see https://crbug.com/709244 ).
     params.SetString("chromeOSApiVersion", "2");
   }
+  login::SigninPartitionManager* signin_partition_manager =
+      login::SigninPartitionManagerFactory::GetForBrowserContext(
+          Profile::FromWebUI(web_ui()));
+  signin_partition_manager->StartSigninSession(web_ui()->GetWebContents());
   params.SetString("lsbReleaseBoard", base::SysInfo::GetLsbReleaseBoard());
+  params.SetString("webviewPartitionName",
+                   signin_partition_manager->GetCurrentStoragePartitionName());
 
   frame_state_ = FRAME_STATE_LOADING;
   CallJS("loadAuthExtension", params);
