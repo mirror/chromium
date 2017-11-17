@@ -16,6 +16,24 @@
       "revId": "711732eed56c88ee729070b4c7564f23530af3e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5759d7_02ca8fb0",
+        "filename": "components/omnibox/browser/fake_autocomplete_provider_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-17T19:25:37Z",
+      "side": 1,
+      "message": "Done, and removed one other friend declaration.",
+      "parentUuid": "58b75b0b_59896e15",
+      "revId": "711732eed56c88ee729070b4c7564f23530af3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
