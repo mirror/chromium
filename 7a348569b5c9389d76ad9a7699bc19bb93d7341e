@@ -16,6 +16,24 @@
       "revId": "7a348569b5c9389d76ad9a7699bc19bb93d7341e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e7dbbd_eca4b007",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_physical_offset.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-17T10:41:38Z",
+      "side": 1,
+      "message": "I\u0027m not opposed to it, but most modern compiler should inline small functions at link time regardless it\u0027s in header or not, no?",
+      "parentUuid": "de47f206_c7753a88",
+      "revId": "7a348569b5c9389d76ad9a7699bc19bb93d7341e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
