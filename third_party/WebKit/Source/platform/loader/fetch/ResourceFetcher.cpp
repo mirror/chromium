@@ -642,6 +642,17 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
 
 Resource* ResourceFetcher::RequestResource(
     FetchParameters& params,
+    ResourceClient* client,
+    const ResourceFactory& factory,
+    const SubstituteData& substitute_data) {
+  Resource* resource = RequestResource(params, factory, substitute_data);
+  if (resource && client)
+    client->SetResource(resource, Context().GetLoadingTaskRunner().get());
+  return resource;
+}
+
+Resource* ResourceFetcher::RequestResource(
+    FetchParameters& params,
     const ResourceFactory& factory,
     const SubstituteData& substitute_data) {
   unsigned long identifier = CreateUniqueIdentifier();

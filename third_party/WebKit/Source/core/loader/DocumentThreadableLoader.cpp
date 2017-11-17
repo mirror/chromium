@@ -528,7 +528,7 @@ void DocumentThreadableLoader::MakeCrossOriginAccessRequestBlinkCORS(
 
 DocumentThreadableLoader::~DocumentThreadableLoader() {
   CHECK(!client_);
-  DCHECK(!resource_);
+  DCHECK(!GetResource());
 }
 
 void DocumentThreadableLoader::OverrideTimeout(
@@ -578,7 +578,7 @@ void DocumentThreadableLoader::Detach() {
 
 void DocumentThreadableLoader::SetDefersLoading(bool value) {
   if (GetResource())
-    GetResource()->SetDefersLoading(value);
+    ToRawResource(GetResource())->SetDefersLoading(value);
 }
 
 void DocumentThreadableLoader::Clear() {
@@ -615,8 +615,6 @@ bool DocumentThreadableLoader::RedirectReceivedBlinkCORS(
   DCHECK(async_);
 
   suborigin_force_credentials_ = false;
-
-  checker_.RedirectReceived();
 
   const KURL& new_url = new_request.Url();
   const KURL& original_url = redirect_response.Url();
@@ -770,8 +768,6 @@ bool DocumentThreadableLoader::RedirectReceivedBlinkCORS(
 }
 
 void DocumentThreadableLoader::RedirectBlocked() {
-  checker_.RedirectBlocked();
-
   // Tells the client that a redirect was received but not followed (for an
   // unknown reason).
   ThreadableLoaderClient* client = client_;
@@ -786,8 +782,6 @@ void DocumentThreadableLoader::DataSent(
   DCHECK(client_);
   DCHECK_EQ(resource, this->GetResource());
   DCHECK(async_);
-
-  checker_.DataSent();
   client_->DidSendData(bytes_sent, total_bytes_to_be_sent);
 }
 
@@ -797,8 +791,6 @@ void DocumentThreadableLoader::DataDownloaded(Resource* resource,
   DCHECK_EQ(resource, this->GetResource());
   DCHECK(actual_request_.IsNull());
   DCHECK(async_);
-
-  checker_.DataDownloaded();
   client_->DidDownloadData(data_length);
 }
 
@@ -818,8 +810,6 @@ void DocumentThreadableLoader::ResponseReceived(
     std::unique_ptr<WebDataConsumerHandle> handle) {
   DCHECK_EQ(resource, this->GetResource());
   DCHECK(async_);
-
-  checker_.ResponseReceived();
 
   if (handle)
     is_using_data_consumer_handle_ = true;
@@ -1013,8 +1003,6 @@ void DocumentThreadableLoader::HandleResponseBlinkCORS(
 void DocumentThreadableLoader::SetSerializedCachedMetadata(Resource*,
                                                            const char* data,
                                                            size_t size) {
-  checker_.SetSerializedCachedMetadata();
-
   if (!actual_request_.IsNull())
     return;
   client_->DidReceiveCachedMetadata(data, size);
@@ -1025,8 +1013,6 @@ void DocumentThreadableLoader::DataReceived(Resource* resource,
                                             size_t data_length) {
   DCHECK_EQ(resource, this->GetResource());
   DCHECK(async_);
-
-  checker_.DataReceived();
 
   if (is_using_data_consumer_handle_)
     return;
@@ -1053,8 +1039,6 @@ void DocumentThreadableLoader::NotifyFinished(Resource* resource) {
   DCHECK(client_);
   DCHECK_EQ(resource, this->GetResource());
   DCHECK(async_);
-
-  checker_.NotifyFinished(resource);
 
   if (resource->ErrorOccurred()) {
     DispatchDidFail(resource->GetResourceError());
@@ -1170,12 +1154,12 @@ void DocumentThreadableLoader::LoadRequestAsync(
   ResourceFetcher* fetcher = loading_context_->GetResourceFetcher();
   if (request.GetRequestContext() == WebURLRequest::kRequestContextVideo ||
       request.GetRequestContext() == WebURLRequest::kRequestContextAudio) {
-    SetResource(RawResource::FetchMedia(new_params, fetcher));
+    RawResource::FetchMedia(new_params, fetcher, this);
   } else if (request.GetRequestContext() ==
              WebURLRequest::kRequestContextManifest) {
-    SetResource(RawResource::FetchManifest(new_params, fetcher));
+    RawResource::FetchManifest(new_params, fetcher, this);
   } else {
-    SetResource(RawResource::Fetch(new_params, fetcher));
+    RawResource::Fetch(new_params, fetcher, this);
   }
 
   if (!GetResource()) {
@@ -1183,7 +1167,7 @@ void DocumentThreadableLoader::LoadRequestAsync(
         GetExecutionContext(), client_);
     ThreadableLoaderClient* client = client_;
     Clear();
-    // setResource() might call notifyFinished() and thus clear()
+    // Fetching might call NotifyFinished() and thus clear()
     // synchronously, and in such cases ThreadableLoaderClient is already
     // notified and |client| is null.
     if (!client)
@@ -1342,7 +1326,6 @@ ExecutionContext* DocumentThreadableLoader::GetExecutionContext() const {
 }
 
 void DocumentThreadableLoader::Trace(blink::Visitor* visitor) {
-  visitor->Trace(resource_);
   visitor->Trace(loading_context_);
   ThreadableLoader::Trace(visitor);
   RawResourceClient::Trace(visitor);

@@ -12,8 +12,10 @@
 namespace blink {
 
 class CSSFontFace;
+class CSSFontFaceSrcValue;
 class FontSelector;
 class FontCustomPlatformData;
+class ExecutionContext;
 
 enum FontDisplay {
   kFontDisplayAuto,
@@ -32,7 +34,11 @@ class RemoteFontFaceSource final : public CSSFontFaceSource,
  public:
   enum DisplayPeriod { kBlockPeriod, kSwapPeriod, kFailurePeriod };
 
-  RemoteFontFaceSource(CSSFontFace*, FontResource*, FontSelector*, FontDisplay);
+  RemoteFontFaceSource(CSSFontFace*,
+                       const CSSFontFaceSrcValue&,
+                       ExecutionContext*,
+                       FontSelector*,
+                       FontDisplay);
   ~RemoteFontFaceSource() override;
   void Dispose();
 
@@ -85,11 +91,11 @@ class RemoteFontFaceSource final : public CSSFontFaceSource,
       kFromNetwork
     };
 
-    FontLoadHistograms(DataSource data_source)
+    FontLoadHistograms()
         : load_start_time_(0),
           blank_paint_time_(0),
           is_long_limit_exceeded_(false),
-          data_source_(data_source) {}
+          data_source_(kFromUnknown) {}
     void LoadStarted();
     void FallbackFontPainted(DisplayPeriod);
     void LongLimitExceeded();
@@ -98,6 +104,12 @@ class RemoteFontFaceSource final : public CSSFontFaceSource,
     bool HadBlankText() { return blank_paint_time_; }
     DataSource GetDataSource() { return data_source_; }
     void MaySetDataSource(DataSource);
+
+    static DataSource DataSourceForLoadFinish(const FontResource* font) {
+      if (font->Url().ProtocolIsData())
+        return kFromDataURL;
+      return font->GetResponse().WasCached() ? kFromDiskCache : kFromNetwork;
+    }
 
    private:
     void RecordLoadTimeHistogram(const FontResource*, int duration);
@@ -116,7 +128,6 @@ class RemoteFontFaceSource final : public CSSFontFaceSource,
   // Our owning font face.
   Member<CSSFontFace> face_;
   // Cleared once load is finished.
-  Member<FontResource> font_;
   Member<FontSelector> font_selector_;
 
   // |nullptr| if font is not loaded or failed to decode.

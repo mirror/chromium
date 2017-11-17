@@ -60,8 +60,9 @@ void HTMLImportLoader::Dispose() {
   ClearResource();
 }
 
-void HTMLImportLoader::StartLoading(RawResource* resource) {
-  SetResource(resource);
+void HTMLImportLoader::StartLoading(FetchParameters& params,
+                                    ResourceFetcher* fetcher) {
+  RawResource::FetchImport(params, fetcher, this);
 }
 
 void HTMLImportLoader::ResponseReceived(
@@ -210,7 +211,7 @@ void HTMLImportLoader::Trace(blink::Visitor* visitor) {
   visitor->Trace(document_);
   visitor->Trace(microtask_queue_);
   DocumentParserClient::Trace(visitor);
-  ResourceOwner<RawResource>::Trace(visitor);
+  RawResourceClient::Trace(visitor);
 }
 
 }  // namespace blink

@@ -28,13 +28,15 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/heap/Handle.h"
+#include "platform/loader/fetch/Resource.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
-class Resource;
 
 class PLATFORM_EXPORT ResourceClient : public GarbageCollectedMixin {
+  USING_PRE_FINALIZER(ResourceClient, ClearResource);
+
  public:
   enum ResourceClientType {
     kBaseResourceType,
@@ -53,13 +55,41 @@ class PLATFORM_EXPORT ResourceClient : public GarbageCollectedMixin {
     return kBaseResourceType;
   }
 
+  Resource* GetResource() const { return resource_; }
+
   // Name for debugging, e.g. shown in memory-infra.
   virtual String DebugName() const = 0;
 
-  void Trace(blink::Visitor* visitor) override {}
+  void Trace(blink::Visitor* visitor) override { visitor->Trace(resource_); }
 
  protected:
   ResourceClient() {}
+  void ClearResource() { SetResource(nullptr, nullptr); }
+
+ private:
+  // ResourceFetcher::RequestResource() is the primary case.
+  // CSSStyleSheetResource and ScriptResource both have CreateForTest() methods
+  //    that want to set up clients.
+  // CSSFontFaceSrcValue has a quasi-cache for fonts and short-circuits the
+  //    usual fetch process when it is triggered.
+  friend class CSSFontFaceSrcValue;
+  friend class CSSStyleSheetResource;
+  friend class ResourceFetcher;
+  friend class ScriptResource;
+  void SetResource(Resource* new_resource, WebTaskRunner* task_runner) {
+    if (new_resource == resource_)
+      return;
+
+    // Some ResourceClient implementations reenter this so
+    // we need to prevent double removal.
+    if (Resource* old_resource = resource_.Release())
+      old_resource->RemoveClient(this);
+    resource_ = new_resource;
+    if (resource_)
+      resource_->AddClient(this, task_runner);
+  }
+
+  Member<Resource> resource_;
 };
 
 }  // namespace blink

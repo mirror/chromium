@@ -107,7 +107,7 @@ void LinkStyle::SetCSSStyleSheet(
     sheet_->SetMediaQueries(MediaQuerySet::Create(owner_->Media()));
     if (owner_->IsInDocumentTree())
       SetSheetTitle(owner_->title());
-    SetCrossOriginStylesheetStatus(sheet_.Get());
+    SetCrossOriginStylesheetStatus(sheet_.Get(), cached_style_sheet);
 
     loading_ = false;
     parsed_sheet->CheckLoaded();
@@ -125,7 +125,7 @@ void LinkStyle::SetCSSStyleSheet(
   sheet_->SetMediaQueries(MediaQuerySet::Create(owner_->Media()));
   if (owner_->IsInDocumentTree())
     SetSheetTitle(owner_->title());
-  SetCrossOriginStylesheetStatus(sheet_.Get());
+  SetCrossOriginStylesheetStatus(sheet_.Get(), cached_style_sheet);
 
   style_sheet->ParseAuthorStyleSheet(cached_style_sheet,
                                      GetDocument().GetSecurityOrigin());
@@ -245,9 +245,11 @@ void LinkStyle::SetDisabledState(bool disabled) {
     Process();
 }
 
-void LinkStyle::SetCrossOriginStylesheetStatus(CSSStyleSheet* sheet) {
-  if (fetch_following_cors_ && GetResource() &&
-      !GetResource()->ErrorOccurred()) {
+void LinkStyle::SetCrossOriginStylesheetStatus(
+    CSSStyleSheet* sheet,
+    const CSSStyleSheetResource* resource) {
+  DCHECK(resource);
+  if (fetch_following_cors_ && !resource->ErrorOccurred()) {
     // Record the security origin the CORS access check succeeded at, if cross
     // origin.  Only origins that are script accessible to it may access the
     // stylesheet's rules.
@@ -332,14 +334,13 @@ LinkStyle::LoadReturnValue LinkStyle::LoadStylesheetIfNeeded(
     params.SetIntegrityMetadata(metadata_set);
     params.MutableResourceRequest().SetFetchIntegrity(integrity_attr);
   }
-  SetResource(CSSStyleSheetResource::Fetch(params, GetDocument().Fetcher()));
+  CSSStyleSheetResource::Fetch(params, GetDocument().Fetcher(), this);
 
   if (loading_ && !GetResource()) {
+    // Fetch() synchronous failure case.
     // The request may have been denied if (for example) the stylesheet is
     // local and the document is remote, or if there was a Content Security
-    // Policy Failure.  setCSSStyleSheet() can be called synchronuosly in
-    // setResource() and thus resource() is null and |m_loading| is false in
-    // such cases even if the request succeeds.
+    // Policy Failure.
     loading_ = false;
     RemovePendingSheet();
     NotifyLoadedSheetAndAllCriticalSubresources(
@@ -409,7 +410,7 @@ void LinkStyle::OwnerRemoved() {
 void LinkStyle::Trace(blink::Visitor* visitor) {
   visitor->Trace(sheet_);
   LinkResource::Trace(visitor);
-  ResourceOwner<StyleSheetResource>::Trace(visitor);
+  StyleSheetResourceClient::Trace(visitor);
 }
 
 }  // namespace blink

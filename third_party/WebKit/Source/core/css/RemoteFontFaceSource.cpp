@@ -6,6 +6,7 @@
 
 #include "core/css/CSSCustomFontData.h"
 #include "core/css/CSSFontFace.h"
+#include "core/css/CSSFontFaceSrcValue.h"
 #include "core/dom/Document.h"
 #include "core/frame/LocalFrameClient.h"
 #include "core/inspector/ConsoleMessage.h"
@@ -26,78 +27,64 @@
 namespace blink {
 
 RemoteFontFaceSource::RemoteFontFaceSource(CSSFontFace* css_font_face,
-                                           FontResource* font,
+                                           const CSSFontFaceSrcValue& src_value,
+                                           ExecutionContext* context,
                                            FontSelector* font_selector,
                                            FontDisplay display)
     : face_(css_font_face),
-      font_(font),
       font_selector_(font_selector),
       display_(display),
       period_(display == kFontDisplaySwap ? kSwapPeriod : kBlockPeriod),
-      histograms_(font->Url().ProtocolIsData()
-                      ? FontLoadHistograms::kFromDataURL
-                      : font->IsLoaded() ? FontLoadHistograms::kFromMemoryCache
-                                         : FontLoadHistograms::kFromUnknown),
       is_intervention_triggered_(false) {
   DCHECK(face_);
   if (ShouldTriggerWebFontsIntervention()) {
     is_intervention_triggered_ = true;
     period_ = kSwapPeriod;
   }
-
-  // Note: this may call notifyFinished() and clear font_.
-  font_->AddClient(this);
+  src_value.Fetch(context, this);
 }
 
 RemoteFontFaceSource::~RemoteFontFaceSource() {}
 
 void RemoteFontFaceSource::Dispose() {
-  if (font_) {
-    font_->RemoveClient(this);
-    font_ = nullptr;
-  }
+  ClearResource();
   PruneTable();
 }
 
 bool RemoteFontFaceSource::IsLoading() const {
-  return font_ && font_->IsLoading();
+  return GetResource() && GetResource()->IsLoading();
 }
 
 bool RemoteFontFaceSource::IsLoaded() const {
-  return !font_;
+  return !GetResource();
 }
 
 bool RemoteFontFaceSource::IsValid() const {
-  return font_ || custom_font_data_;
+  return GetResource() || custom_font_data_;
 }
 
-void RemoteFontFaceSource::NotifyFinished(Resource* unused_resource) {
-  DCHECK_EQ(unused_resource, font_);
-  histograms_.MaySetDataSource(font_->GetResponse().WasCached()
-                                   ? FontLoadHistograms::kFromDiskCache
-                                   : FontLoadHistograms::kFromNetwork);
-  histograms_.RecordRemoteFont(font_.Get());
+void RemoteFontFaceSource::NotifyFinished(Resource* resource) {
+  FontResource* font = ToFontResource(resource);
+  histograms_.RecordRemoteFont(font);
 
-  custom_font_data_ = font_->GetCustomFontData();
+  custom_font_data_ = font->GetCustomFontData();
 
   // FIXME: Provide more useful message such as OTS rejection reason.
   // See crbug.com/97467
-  if (font_->GetStatus() == ResourceStatus::kDecodeError) {
+  if (font->GetStatus() == ResourceStatus::kDecodeError) {
     font_selector_->GetExecutionContext()->AddConsoleMessage(
-        ConsoleMessage::Create(kOtherMessageSource, kWarningMessageLevel,
-                               "Failed to decode downloaded font: " +
-                                   font_->Url().ElidedString()));
-    if (font_->OtsParsingMessage().length() > 1) {
+        ConsoleMessage::Create(
+            kOtherMessageSource, kWarningMessageLevel,
+            "Failed to decode downloaded font: " + font->Url().ElidedString()));
+    if (font->OtsParsingMessage().length() > 1) {
       font_selector_->GetExecutionContext()->AddConsoleMessage(
           ConsoleMessage::Create(
               kOtherMessageSource, kWarningMessageLevel,
-              "OTS parsing error: " + font_->OtsParsingMessage()));
+              "OTS parsing error: " + font->OtsParsingMessage()));
     }
   }
 
-  font_->RemoveClient(this);
-  font_ = nullptr;
-
+  ClearResource();
   PruneTable();
   if (face_->FontLoaded(this))
     font_selector_->FontFaceInvalidated();
@@ -212,20 +199,21 @@ RemoteFontFaceSource::CreateLoadingFallbackFontData(
 void RemoteFontFaceSource::BeginLoadIfNeeded() {
   if (IsLoaded())
     return;
-  DCHECK(font_);
+  DCHECK(GetResource());
 
-  if (font_->StillNeedsLoad()) {
-    if (!font_->Url().ProtocolIsData() && !font_->IsLoaded() &&
+  FontResource* font = ToFontResource(GetResource());
+  if (font->StillNeedsLoad()) {
+    if (!font->Url().ProtocolIsData() && !font->IsLoaded() &&
         display_ == kFontDisplayAuto &&
-        font_->IsLowPriorityLoadingAllowedForRemoteFont()) {
+        font->IsLowPriorityLoadingAllowedForRemoteFont()) {
       // Set the loading priority to VeryLow since this font is not required
       // for painting the text.
-      font_->DidChangePriority(kResourceLoadPriorityVeryLow, 0);
+      font->DidChangePriority(kResourceLoadPriorityVeryLow, 0);
     }
-    if (font_selector_->GetExecutionContext()->Fetcher()->StartLoad(font_)) {
+    if (font_selector_->GetExecutionContext()->Fetcher()->StartLoad(font)) {
       // Start timers only when load is actually started asynchronously.
-      if (!font_->IsLoaded()) {
-        font_->StartLoadLimitTimers(
+      if (!font->IsLoaded()) {
+        font->StartLoadLimitTimers(
             font_selector_->GetExecutionContext()
                 ->GetTaskRunner(TaskType::kUnspecedLoading)
                 .get());
@@ -237,7 +225,7 @@ void RemoteFontFaceSource::BeginLoadIfNeeded() {
           ConsoleMessage::Create(kOtherMessageSource, kInfoMessageLevel,
                                  "Slow network is detected. Fallback font will "
                                  "be used while loading: " +
-                                     font_->Url().ElidedString()));
+                                     font->Url().ElidedString()));
     }
   }
 
@@ -246,7 +234,6 @@ void RemoteFontFaceSource::BeginLoadIfNeeded() {
 
 void RemoteFontFaceSource::Trace(blink::Visitor* visitor) {
   visitor->Trace(face_);
-  visitor->Trace(font_);
   visitor->Trace(font_selector_);
   CSSFontFaceSource::Trace(visitor);
   FontResourceClient::Trace(visitor);
@@ -280,6 +267,8 @@ void RemoteFontFaceSource::FontLoadHistograms::RecordFallbackTime() {
 
 void RemoteFontFaceSource::FontLoadHistograms::RecordRemoteFont(
     const FontResource* font) {
+  MaySetDataSource(DataSourceForLoadFinish(font));
+
   DEFINE_STATIC_LOCAL(EnumerationHistogram, cache_hit_histogram,
                       ("WebFont.CacheHit", kCacheHitEnumMax));
   cache_hit_histogram.Count(DataSourceMetricsValue());

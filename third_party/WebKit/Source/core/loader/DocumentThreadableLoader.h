@@ -39,7 +39,6 @@
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/RawResource.h"
 #include "platform/loader/fetch/ResourceError.h"
-#include "platform/loader/fetch/ResourceOwner.h"
 #include "platform/network/HTTPHeaderMap.h"
 #include "platform/weborigin/Referrer.h"
 #include "platform/wtf/Forward.h"
@@ -203,32 +202,6 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   void LoadRequest(ResourceRequest&, ResourceLoaderOptions);
   bool IsAllowedRedirect(network::mojom::FetchRequestMode, const KURL&) const;
 
-  // TODO(hiroshige): After crbug.com/633696 is fixed,
-  // - Remove RawResourceClientStateChecker logic,
-  // - Make DocumentThreadableLoader to be a ResourceOwner and remove this
-  //   re-implementation of ResourceOwner, and
-  // - Consider re-applying RawResourceClientStateChecker in a more
-  //   general fashion (crbug.com/640291).
-  RawResource* GetResource() const { return resource_.Get(); }
-  void ClearResource() { SetResource(nullptr); }
-  void SetResource(RawResource* new_resource) {
-    if (new_resource == resource_)
-      return;
-
-    if (RawResource* old_resource = resource_.Release()) {
-      checker_.WillRemoveClient();
-      old_resource->RemoveClient(this);
-    }
-
-    if (new_resource) {
-      resource_ = new_resource;
-      checker_.WillAddClient();
-      resource_->AddClient(this);
-    }
-  }
-  Member<RawResource> resource_;
-  // End of ResourceOwner re-implementation, see above.
-
   SecurityOrigin* GetSecurityOrigin() const;
 
   // Returns null if the loader is not associated with Document.
@@ -296,8 +269,6 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   // used to populate the HTTP Referer header when following the redirect.
   bool override_referrer_;
   Referrer referrer_after_redirect_;
-
-  RawResourceClientStateChecker checker_;
 };
 
 }  // namespace blink

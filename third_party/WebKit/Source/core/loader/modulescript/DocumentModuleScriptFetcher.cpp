@@ -75,20 +75,8 @@ DocumentModuleScriptFetcher::DocumentModuleScriptFetcher(
 void DocumentModuleScriptFetcher::Fetch(FetchParameters& fetch_params,
                                         ModuleScriptFetcher::Client* client) {
   SetClient(client);
-  ScriptResource* resource = ScriptResource::Fetch(fetch_params, fetcher_);
-  if (was_fetched_) {
-    // ScriptResource::Fetch() has succeeded synchronously,
-    // ::NotifyFinished() already took care of the |resource|.
-    return;
-  }
-  if (!resource) {
-    // ScriptResource::Fetch() has failed synchronously.
+  if (!ScriptResource::Fetch(fetch_params, fetcher_, this))
     NotifyFinished(nullptr /* resource */);
-    return;
-  }
-
-  // ScriptResource::Fetch() is processed asynchronously.
-  SetResource(resource);
 }
 
 void DocumentModuleScriptFetcher::NotifyFinished(Resource* resource) {
@@ -118,7 +106,7 @@ void DocumentModuleScriptFetcher::Finalize(
 
 void DocumentModuleScriptFetcher::Trace(blink::Visitor* visitor) {
   visitor->Trace(fetcher_);
-  ResourceOwner<ScriptResource>::Trace(visitor);
+  ScriptResourceClient::Trace(visitor);
   ModuleScriptFetcher::Trace(visitor);
 }
 

@@ -32,7 +32,6 @@
 #include "core/loader/resource/CSSStyleSheetResource.h"
 #include "core/loader/resource/StyleSheetResourceClient.h"
 #include "platform/heap/Handle.h"
-#include "platform/loader/fetch/ResourceOwner.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
@@ -105,7 +104,7 @@ class CORE_EXPORT CSSPreloaderResourceClient
   USING_GARBAGE_COLLECTED_MIXIN(CSSPreloaderResourceClient);
 
  public:
-  CSSPreloaderResourceClient(Resource*, HTMLResourcePreloader*);
+  explicit CSSPreloaderResourceClient(HTMLResourcePreloader*);
   ~CSSPreloaderResourceClient() override;
   void SetCSSStyleSheet(const String& href,
                         const KURL& base_url,
@@ -133,7 +132,6 @@ class CORE_EXPORT CSSPreloaderResourceClient
 
   const PreloadPolicy policy_;
   WeakMember<HTMLResourcePreloader> preloader_;
-  WeakMember<CSSStyleSheetResource> resource_;
 };
 
 }  // namespace blink

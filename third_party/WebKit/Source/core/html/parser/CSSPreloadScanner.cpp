@@ -257,17 +257,13 @@ void CSSPreloadScanner::EmitRule(const SegmentedString& source) {
 }
 
 CSSPreloaderResourceClient::CSSPreloaderResourceClient(
-    Resource* resource,
     HTMLResourcePreloader* preloader)
     : policy_(preloader->GetDocument()
                       ->GetSettings()
                       ->GetCSSExternalScannerPreload()
                   ? kScanAndPreload
                   : kScanOnly),
-      preloader_(preloader),
-      resource_(ToCSSStyleSheetResource(resource)) {
-  resource_->AddClient(this);
-}
+      preloader_(preloader) {}
 
 CSSPreloaderResourceClient::~CSSPreloaderResourceClient() {}
 
@@ -284,7 +280,9 @@ void CSSPreloaderResourceClient::SetCSSStyleSheet(
 // be (according to spec).
 void CSSPreloaderResourceClient::DidAppendFirstData(
     const CSSStyleSheetResource* resource) {
-  if (preloader_)
+  // if IsLoaded() is true, this is a cache hit. Don't scan, lest it trigger an
+  // infinite loop. See http://crbug.com/667753
+  if (preloader_ && !resource->IsLoaded())
     ScanCSS(resource);
   ClearResource();
 }
@@ -353,19 +351,15 @@ void CSSPreloaderResourceClient::ClearResource() {
   // Note: Speculative preloads which remain unused for their lifetime will
   // never have this client removed. This should be fine because we only hold
   // weak references to the resource.
-  if (resource_ && resource_->IsUnusedPreload() &&
-      !resource_->IsLinkPreload()) {
+  if (GetResource() && GetResource()->IsUnusedPreload() &&
+      !GetResource()->IsLinkPreload()) {
     return;
   }
-
-  if (resource_)
-    resource_->RemoveClient(this);
-  resource_.Clear();
+  StyleSheetResourceClient::ClearResource();
 }
 
 void CSSPreloaderResourceClient::Trace(blink::Visitor* visitor) {
   visitor->Trace(preloader_);
-  visitor->Trace(resource_);
   StyleSheetResourceClient::Trace(visitor);
 }
 

@@ -10,7 +10,6 @@
 #include "core/html/LinkResource.h"
 #include "core/loader/resource/StyleSheetResource.h"
 #include "core/loader/resource/StyleSheetResourceClient.h"
-#include "platform/loader/fetch/ResourceOwner.h"
 #include "platform/wtf/Forward.h"
 
 namespace blink {
@@ -25,7 +24,7 @@ class KURL;
 // types might better be handled by a separate class, but dynamically
 // changing @rel makes it harder to move such a design so we are
 // sticking current way so far.
-class LinkStyle final : public LinkResource, ResourceOwner<StyleSheetResource> {
+class LinkStyle final : public LinkResource, StyleSheetResourceClient {
   USING_GARBAGE_COLLECTED_MIXIN(LinkStyle);
 
  public:
@@ -79,7 +78,8 @@ class LinkStyle final : public LinkResource, ResourceOwner<StyleSheetResource> {
   void AddPendingSheet(PendingSheetType);
   void RemovePendingSheet();
 
-  void SetCrossOriginStylesheetStatus(CSSStyleSheet*);
+  void SetCrossOriginStylesheetStatus(CSSStyleSheet*,
+                                      const CSSStyleSheetResource*);
   void SetFetchFollowingCORS() {
     DCHECK(!fetch_following_cors_);
     fetch_following_cors_ = true;

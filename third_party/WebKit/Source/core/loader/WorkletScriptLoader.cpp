@@ -26,13 +26,8 @@ void WorkletScriptLoader::FetchScript(const KURL& module_url_record) {
   ResourceLoaderOptions options;
   options.initiator_info.name = FetchInitiatorTypeNames::internal;
   FetchParameters params(resource_request, options);
-  ScriptResource* resource = ScriptResource::Fetch(params, fetcher_);
-  if (!resource) {
+  if (!ScriptResource::Fetch(params, fetcher_, this))
     NotifyFinished(nullptr);
-    return;
-  }
-  SetResource(resource);
-  // notifyFinished() will be called later.
 }
 
 void WorkletScriptLoader::Cancel() {
@@ -66,7 +61,7 @@ bool WorkletScriptLoader::WasScriptLoadSuccessful() const {
 void WorkletScriptLoader::Trace(blink::Visitor* visitor) {
   visitor->Trace(fetcher_);
   visitor->Trace(client_);
-  ResourceOwner<ScriptResource, ScriptResourceClient>::Trace(visitor);
+  ScriptResourceClient::Trace(visitor);
 }
 
 }  // namespace blink
