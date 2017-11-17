@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ceca5255_19ae719e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-17T17:06:07Z",
+      "side": 1,
+      "message": "Yeah, I\u0027ll just leave it.",
+      "parentUuid": "c6176e4b_302820a2",
+      "range": {
+        "startLine": 421,
+        "startChar": 57,
+        "endLine": 421,
+        "endChar": 62
+      },
+      "revId": "d0beaa984c6c967a286278db3aa7a35f2a3b5d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a58ad9a2_a57be082",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "d0beaa984c6c967a286278db3aa7a35f2a3b5d70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45065456_52906570",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1627,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-17T17:06:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a58ad9a2_a57be082",
+      "range": {
+        "startLine": 1627,
+        "startChar": 17,
+        "endLine": 1627,
+        "endChar": 41
+      },
+      "revId": "d0beaa984c6c967a286278db3aa7a35f2a3b5d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
