@@ -360,13 +360,16 @@ NavigationRequest::NavigationRequest(
       Referrer::SanitizeForRequest(common_params_.url, common_params_.referrer);
 
   if (from_begin_navigation_) {
-    // This is needed to have data URLs commit in the same SiteInstance as the
-    // initiating renderer.
+    // This is a renderer-initiated navigation coming from the current document,
+    // so its source SiteInstance is the current one.
     source_site_instance_ =
         frame_tree_node->current_frame_host()->GetSiteInstance();
   } else {
     FrameNavigationEntry* frame_entry = entry->GetFrameEntry(frame_tree_node);
     if (frame_entry) {
+      // Other navigations will have gone through the NavigationController,
+      // which may have created a FrameNavigationEntry for them. In that case,
+      // the frame entry has the SiteInstance information.
       source_site_instance_ = frame_entry->source_site_instance();
       dest_site_instance_ = frame_entry->site_instance();
     }
@@ -380,7 +383,6 @@ NavigationRequest::NavigationRequest(
                                 common_params_.navigation_type,
                                 common_params_.method == "POST");
 
-  // Add necessary headers that may not be present in the BeginNavigationParams.
   if (entry)
     nav_entry_id_ = entry->GetUniqueID();
 
@@ -391,6 +393,7 @@ NavigationRequest::NavigationRequest(
         frame_tree_node_->navigator()->GetDelegate()->GetUserAgentOverride();
   }
 
+  // Add necessary headers that may not be present in the BeginNavigationParams.
   net::HttpRequestHeaders headers;
   headers.AddHeadersFromString(begin_params_.headers);
   AddAdditionalRequestHeaders(

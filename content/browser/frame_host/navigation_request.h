@@ -301,9 +301,10 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
 
   std::unique_ptr<NavigationURLLoader> loader_;
 
-  // These next items are used in browser-initiated navigations to store
-  // information from the NavigationEntryImpl that is required after request
-  // creation time.
+  // The next items hold information needed to make a decision about which
+  // RenderFrameHost should commit this navigation when it is ready to commit.
+  // Since this information is only available at request start time, but needs
+  // to be used at ready to commit time, we store it in the navigationHandle.
   scoped_refptr<SiteInstanceImpl> source_site_instance_;
   scoped_refptr<SiteInstanceImpl> dest_site_instance_;
   RestoreType restore_type_;
