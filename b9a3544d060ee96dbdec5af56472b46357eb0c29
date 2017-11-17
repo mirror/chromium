@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "11e993a6_4ad78c9f",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2300,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-17T17:25:01Z",
+      "side": 1,
+      "message": "I\u0027ve opened https://crbug.com/786411.  Good point that this is really a separate issue (since https://crbug.com/718489 is about the general, open web, and this new issue is more about extensions and avoiding extension-specific special-casing).\n\nI\u0027ve referred to the new bug 1) in the comment above and 2) in ExtensionFrameHelper::FindFrame and 3) in the TODO comment you asked for in https://chromium-review.googlesource.com/c/chromium/src/+/764487/10/extensions/renderer/extension_frame_helper.h#56.  \n\nI\u0027ve also realized that the new FindingUnrelatedExtensionFramesFromAboutBlank will have to change once we fix the new bug (https://crbug.com/786411) - I\u0027ve added a comment explaining this to the test.  I think the test is still okay to land as-is - the test is still helpful as-is: 1) it verifies that the CL under review doesn\u0027t change the old behavior and 2) it verifies the about:blank/parent-hopping done by GetExtensionFromFrame function.",
+      "parentUuid": "18874941_2fb80db5",
+      "revId": "b9a3544d060ee96dbdec5af56472b46357eb0c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ca5329f_88fc7753",
         "filename": "chrome/browser/extensions/process_management_browsertest.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "b9a3544d060ee96dbdec5af56472b46357eb0c29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "607a682a_e01b6ce7",
+        "filename": "chrome/browser/extensions/process_management_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-17T17:25:01Z",
+      "side": 1,
+      "message": "Ooops.  I thought I\u0027ve moved the include to the new test location, but apparently I forgot to remove it here.  Removed / done.",
+      "parentUuid": "8ca5329f_88fc7753",
+      "revId": "b9a3544d060ee96dbdec5af56472b46357eb0c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "5f46d448_f38a0a78",
+        "filename": "content/browser/renderer_host/render_process_host_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-17T17:25:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "81b47ea9_2bdd23cc",
+      "revId": "b9a3544d060ee96dbdec5af56472b46357eb0c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5418970f_08c338de",
         "filename": "extensions/renderer/extension_frame_helper.h",
         "patchSetId": 10
@@ -85,6 +139,24 @@
       "revId": "b9a3544d060ee96dbdec5af56472b46357eb0c29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1655be5_0a00746d",
+        "filename": "extensions/renderer/extension_frame_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-17T17:25:01Z",
+      "side": 1,
+      "message": "Done.  Note that we are piercing *browsing* instance boundary (set of related browsing contexts - i.e. set of frames in the same frame tree + whatever this set opened via either window.open or links with target\u003d_blank, etc.), not *site* instance boundary (set of frames that should share a renderer process).",
+      "parentUuid": "5418970f_08c338de",
+      "revId": "b9a3544d060ee96dbdec5af56472b46357eb0c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
