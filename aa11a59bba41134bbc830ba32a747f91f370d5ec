@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45b1da3b_ba4f4741",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-17T05:02:13Z",
+      "side": 1,
+      "message": "The previous approach which only passed the local bounds didn\u0027t account for the space for padding and icons, so I had to add |taken_width_| to compensate for that, LMK if you think of a better name? :/",
+      "revId": "aa11a59bba41134bbc830ba32a747f91f370d5ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

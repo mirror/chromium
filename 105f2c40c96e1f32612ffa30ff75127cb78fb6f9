@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "059f3713_2d8bfe4e",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-17T05:02:13Z",
+      "side": 1,
+      "message": "Done (in HB::Layout())",
+      "parentUuid": "9ea2e145_3148f164",
+      "revId": "105f2c40c96e1f32612ffa30ff75127cb78fb6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52fce279_8ff1638a",
         "filename": "chrome/browser/ui/views/hover_button.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7fb75236_c4117c7a",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-17T05:02:13Z",
+      "side": 1,
+      "message": "I realised there was an easier way to do it without subclassing \u0026 touching views::StyledLabel, maybe the next patchset is better.",
+      "parentUuid": "52fce279_8ff1638a",
+      "revId": "105f2c40c96e1f32612ffa30ff75127cb78fb6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "455b56bc_3f62a174",
         "filename": "ui/views/controls/styled_label.h",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "105f2c40c96e1f32612ffa30ff75127cb78fb6f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69dacd3e_f2ebdef0",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-17T05:02:13Z",
+      "side": 1,
+      "message": "N/A, reverted!",
+      "parentUuid": "455b56bc_3f62a174",
+      "revId": "105f2c40c96e1f32612ffa30ff75127cb78fb6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
