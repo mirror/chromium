@@ -2,6 +2,125 @@
   "comments": [
     {
       "key": {
+        "uuid": "c9a1cede_488dc7e3",
+        "filename": "content/browser/background_sync/background_sync_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-17T03:16:19Z",
+      "side": 1,
+      "message": "Don\u0027t need this new part of the comment? It follows from line 465.",
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee05c3e_0fa7a477",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-17T03:16:19Z",
+      "side": 1,
+      "message": "\"hosting the worker\u0027s context\" doesn\u0027t seem right. They are hosting the .installing, .waiting, .active service worker objects.",
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb281d0_10629149",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-17T03:16:19Z",
+      "side": 1,
+      "message": "\"a registration object host for ServiceWorkerGlobalScope#registration has been created\"",
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d538b01_623101c8",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-17T03:16:19Z",
+      "side": 1,
+      "message": "can remove this blank line",
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8392fdd4_d7125075",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-17T03:16:19Z",
+      "side": 1,
+      "message": "ditto\n\n\"this provider host for the worker\u0027s context\" is a bit unwieldy.",
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddbf1e0f_19e6005b",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-17T03:16:19Z",
+      "side": 1,
+      "message": "Should this function just take scoped_refptr, since it either takes ownership by craeting a new object host, or it finds an existing host which already has ownership?",
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ae38a65_8d0f7aa6",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-17T03:16:19Z",
+      "side": 1,
+      "message": "Probably don\u0027t need to mention the private member in the public comment.",
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1b8a25f_1ffb30d0",
         "filename": "content/browser/service_worker/service_worker_provider_host.h",
         "patchSetId": 5
@@ -13,6 +132,30 @@
       "writtenOn": "2017-11-17T01:08:42Z",
       "side": 1,
       "message": "Expose this function to SWRegistrationObjectHost. Then SWRegistrationObjectHost can remove dependency on SWDispatcherHost\u0027s resource_context().",
+      "range": {
+        "startLine": 322,
+        "startChar": 7,
+        "endLine": 322,
+        "endChar": 25
+      },
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74f9fb96_1633c8bf",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-17T03:16:19Z",
+      "side": 1,
+      "message": "I think it makes sense. Can we have some sort of comment:\n\n// Calls ContentBrowserClient::AllowServiceWorker(). Returns true if content settings allows service workers to run at |scope|. If this this provider is for a window client, the check involves the topmost frame url as well as scope, and may display tab-level UI.",
+      "parentUuid": "a1b8a25f_1ffb30d0",
       "range": {
         "startLine": 322,
         "startChar": 7,
@@ -42,6 +185,47 @@
         "endLine": 508,
         "endChar": 72
       },
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9ae4e2_2907ecf2",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-17T03:16:19Z",
+      "side": 1,
+      "message": "That does sound like good simplification. The lifetime of WebSWRegistrationImpl is complex so would like to simplify it.",
+      "parentUuid": "a493dd04_5a2074b9",
+      "range": {
+        "startLine": 508,
+        "startChar": 20,
+        "endLine": 508,
+        "endChar": 72
+      },
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8abe1ada_0bcdec04",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-17T03:16:19Z",
+      "side": 1,
+      "message": "what is this friend for? is it just for AllowServiceWorker? we could make that a public function.",
       "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
