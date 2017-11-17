@@ -124,6 +124,24 @@
       "revId": "bfc61493d554af7ddf3e1b326e1d83313e87dbf8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e371ee5a_adabc35c",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-17T05:21:18Z",
+      "side": 1,
+      "message": "Interesting.  Yes, if it was just a matter of the PageTransition being stale due to RendererDidNavigateToExistingPage, then I would expect my CL to change it for client redirects and location.replace.  If the value stays the same, then maybe that\u0027s what Blink is reporting?",
+      "parentUuid": "769a349d_148220fe",
+      "revId": "bfc61493d554af7ddf3e1b326e1d83313e87dbf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
