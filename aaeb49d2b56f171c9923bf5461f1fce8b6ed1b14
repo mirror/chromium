@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fb534cc_316a5856",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-17T14:37:22Z",
+      "side": 1,
+      "message": "Just thought of this yesterday evening: this will create the objects in the current context, but the array in the holder\u0027s context (this is because of one remaining subtlety of V8ObjectBuilder, which is that it just uses the current context, despite a ScriptState being passed to it).\n\nDebatably this ought to be fixed in V8ObjectBuilder (though doing so isn\u0027t free), but it\u0027d probably be easier to fix it here by just adding a\n\nScriptState::Scope scope(script_state);\n\noutside the loop to make the appropriate ScriptState current while constructing these keyframes. The difference is which Object.prototype will get used if apply the getKeyframes method from one frame to a KeyframeEffectReadOnly object from another.",
+      "revId": "aaeb49d2b56f171c9923bf5461f1fce8b6ed1b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
