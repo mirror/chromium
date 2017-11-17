@@ -22,6 +22,30 @@
       "revId": "e42c8b5c4c85409987c83e138296fddb7f04fca5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11515545_ee0a3646",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-17T04:09:06Z",
+      "side": 1,
+      "message": "Done.  I felt like I was missing something, but did\u0027t see it.",
+      "parentUuid": "dd0798ce_10efbfe8",
+      "range": {
+        "startLine": 57,
+        "startChar": 11,
+        "endLine": 57,
+        "endChar": 15
+      },
+      "revId": "e42c8b5c4c85409987c83e138296fddb7f04fca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
