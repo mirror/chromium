@@ -25,6 +25,7 @@
 #include "chrome/browser/chromeos/system/system_clock.h"
 #include "chrome/browser/chromeos/system/timezone_resolver_manager.h"
 #include "chrome/browser/chromeos/system/timezone_util.h"
+#include "chrome/browser/net/system_network_context_manager.h"
 #include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
@@ -35,6 +36,7 @@
 #include "components/session_manager/core/session_manager.h"
 #include "components/user_manager/user_manager.h"
 #include "content/public/common/service_manager_connection.h"
+#include "content/public/common/url_loader_factory.mojom.h"
 #include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -138,6 +140,8 @@ chromeos::TimeZoneResolver* BrowserProcessPlatformPart::GetTimezoneResolver() {
     timezone_resolver_.reset(new chromeos::TimeZoneResolver(
         GetTimezoneResolverManager(),
         g_browser_process->system_request_context(),
+        g_browser_process->system_network_context_manager()
+            ->GetURLLoaderFactory(),
         chromeos::SimpleGeolocationProvider::DefaultGeolocationProviderURL(),
         base::Bind(&chromeos::system::ApplyTimeZone),
         base::Bind(&chromeos::DelayNetworkCall,

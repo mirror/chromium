@@ -1,3 +1,6 @@
 include_rules = [
+  "+content/public/common/resource_request.h",
+  "+content/public/common/simple_url_loader.h",
+  "+content/public/common/url_loader_factory.mojom.h",
   "+google_apis",
 ]
