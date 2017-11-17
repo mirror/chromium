@@ -35,12 +35,6 @@ TabManager::WebContentsData::WebContentsData(content::WebContents* web_contents)
 
 TabManager::WebContentsData::~WebContentsData() {}
 
-void TabManager::WebContentsData::DidStartLoading() {
-  // Marks the tab as no longer discarded if it has been reloaded from another
-  // source (ie: context menu).
-  SetDiscardState(false);
-}
-
 void TabManager::WebContentsData::DidStopLoading() {
   if (IsPageAlmostIdleSignalEnabled())
     return;
@@ -90,17 +84,6 @@ void TabManager::WebContentsData::WebContentsDestroyed() {
   if (g_browser_process->IsShuttingDown())
     return;
 
-  // If the tab has been previously discarded but is not currently discarded
-  // (ie. it has been reloaded), we want to record the time it took between the
-  // reload event and the closing of the tab.
-  if (tab_data_.discard_count > 0 && !tab_data_.is_discarded) {
-    auto delta = NowTicks() - tab_data_.last_reload_time;
-    // Capped to one day for now, will adjust if necessary.
-    UMA_HISTOGRAM_CUSTOM_TIMES("TabManager.Discarding.ReloadToCloseTime", delta,
-                               base::TimeDelta::FromSeconds(1),
-                               base::TimeDelta::FromDays(1), 100);
-  }
-
   ReportUKMWhenTabIsClosed();
 
   if (!web_contents()->IsVisible() &&
@@ -120,85 +103,6 @@ void TabManager::WebContentsData::NotifyTabIsLoaded() {
     SetTabLoadingState(TAB_IS_LOADED);
     g_browser_process->GetTabManager()->OnTabIsLoaded(web_contents());
   }
-}
-
-bool TabManager::WebContentsData::IsDiscarded() {
-  return tab_data_.is_discarded;
-}
-
-void TabManager::WebContentsData::SetDiscardState(bool state) {
-  if (tab_data_.is_discarded == state)
-    return;
-
-  if (!state) {
-    static int reload_count = 0;
-    tab_data_.last_reload_time = NowTicks();
-    UMA_HISTOGRAM_CUSTOM_COUNTS("TabManager.Discarding.ReloadCount",
-                                ++reload_count, 1, 1000, 50);
-    auto delta = tab_data_.last_reload_time - tab_data_.last_discard_time;
-    // Capped to one day for now, will adjust if necessary.
-    UMA_HISTOGRAM_CUSTOM_TIMES("TabManager.Discarding.DiscardToReloadTime",
-                               delta, base::TimeDelta::FromSeconds(1),
-                               base::TimeDelta::FromDays(1), 100);
-
-    // Record the site engagement score if available.
-    if (tab_data_.engagement_score >= 0.0) {
-      UMA_HISTOGRAM_COUNTS_100("TabManager.Discarding.ReloadedEngagementScore",
-                               tab_data_.engagement_score);
-    }
-    if (tab_data_.last_inactive_time != base::TimeTicks::UnixEpoch()) {
-      delta = tab_data_.last_reload_time - tab_data_.last_inactive_time;
-      UMA_HISTOGRAM_CUSTOM_TIMES("TabManager.Discarding.InactiveToReloadTime",
-                                 delta, base::TimeDelta::FromSeconds(1),
-                                 base::TimeDelta::FromDays(1), 100);
-    }
-
-  } else {
-    static int discard_count = 0;
-    UMA_HISTOGRAM_CUSTOM_COUNTS("TabManager.Discarding.DiscardCount",
-                                ++discard_count, 1, 1000, 50);
-    tab_data_.last_discard_time = NowTicks();
-    // Record the site engagement score if available.
-    if (SiteEngagementService::IsEnabled()) {
-      SiteEngagementService* service = SiteEngagementService::Get(
-          Profile::FromBrowserContext(web_contents()->GetBrowserContext()));
-      if (service) {
-        tab_data_.engagement_score =
-            service->GetScore(web_contents()->GetLastCommittedURL());
-        UMA_HISTOGRAM_COUNTS_100(
-            "TabManager.Discarding.DiscardedEngagementScore",
-            tab_data_.engagement_score);
-      }
-    }
-  }
-
-  tab_data_.is_discarded = state;
-  g_browser_process->GetTabManager()->OnDiscardedStateChange(web_contents(),
-                                                             state);
-}
-
-int TabManager::WebContentsData::DiscardCount() {
-  return tab_data_.discard_count;
-}
-
-void TabManager::WebContentsData::IncrementDiscardCount() {
-  tab_data_.discard_count++;
-}
-
-bool TabManager::WebContentsData::IsRecentlyAudible() {
-  return tab_data_.is_recently_audible;
-}
-
-void TabManager::WebContentsData::SetRecentlyAudible(bool state) {
-  tab_data_.is_recently_audible = state;
-}
-
-TimeTicks TabManager::WebContentsData::LastAudioChangeTime() {
-  return tab_data_.last_audio_change_time;
-}
-
-void TabManager::WebContentsData::SetLastAudioChangeTime(TimeTicks timestamp) {
-  tab_data_.last_audio_change_time = timestamp;
 }
 
 TimeTicks TabManager::WebContentsData::LastInactiveTime() {
@@ -242,28 +146,14 @@ void TabManager::WebContentsData::
 }
 
 TabManager::WebContentsData::Data::Data()
-    : is_discarded(false),
-      discard_count(0),
-      is_recently_audible(false),
-      navigation_time(TimeTicks::UnixEpoch()),
-      last_audio_change_time(TimeTicks::UnixEpoch()),
-      last_discard_time(TimeTicks::UnixEpoch()),
-      last_reload_time(TimeTicks::UnixEpoch()),
+    : navigation_time(TimeTicks::UnixEpoch()),
       last_inactive_time(TimeTicks::UnixEpoch()),
-      engagement_score(-1.0),
-      is_auto_discardable(true),
       tab_loading_state(TAB_IS_NOT_LOADING),
       is_in_session_restore(false),
       is_restored_in_foreground(false) {}
 
 bool TabManager::WebContentsData::Data::operator==(const Data& right) const {
-  return is_discarded == right.is_discarded &&
-         is_recently_audible == right.is_recently_audible &&
-         last_audio_change_time == right.last_audio_change_time &&
-         last_discard_time == right.last_discard_time &&
-         last_reload_time == right.last_reload_time &&
-         last_inactive_time == right.last_inactive_time &&
-         engagement_score == right.engagement_score &&
+  return last_inactive_time == right.last_inactive_time &&
          tab_loading_state == right.tab_loading_state &&
          is_in_session_restore == right.is_in_session_restore &&
          is_restored_in_foreground == right.is_restored_in_foreground;
@@ -271,19 +161,6 @@ bool TabManager::WebContentsData::Data::operator==(const Data& right) const {
 
 bool TabManager::WebContentsData::Data::operator!=(const Data& right) const {
   return !(*this == right);
-}
-
-void TabManager::WebContentsData::SetAutoDiscardableState(bool state) {
-  if (tab_data_.is_auto_discardable == state)
-    return;
-
-  tab_data_.is_auto_discardable = state;
-  g_browser_process->GetTabManager()->OnAutoDiscardableStateChange(
-      web_contents(), state);
-}
-
-bool TabManager::WebContentsData::IsAutoDiscardable() {
-  return tab_data_.is_auto_discardable;
 }
 
 }  // namespace resource_coordinator

@@ -19,7 +19,6 @@
 #include "base/timer/timer.h"
 #include "chrome/browser/chromeos/arc/process/arc_process.h"
 #include "chrome/browser/resource_coordinator/tab_manager.h"
-#include "chrome/browser/resource_coordinator/tab_stats.h"
 #include "chrome/browser/ui/browser_list_observer.h"
 #include "chromeos/dbus/debug_daemon_client.h"
 #include "components/arc/common/process.mojom.h"
@@ -82,7 +81,7 @@ class TabManagerDelegate : public wm::ActivationChangeObserver,
   int GetCachedOomScore(base::ProcessHandle process_handle);
 
   // Called when the timer fires, sets oom_adjust_score for all renderers.
-  void AdjustOomPriorities(const TabStatsList& tab_list);
+  void AdjustOomPriorities(const LifetimeUnitSet& lifetime_units);
 
   // Returns true if the process has recently been killed.
   // Virtual for unit testing.
@@ -96,7 +95,7 @@ class TabManagerDelegate : public wm::ActivationChangeObserver,
 
   // Kills a tab. Returns true if the tab is killed successfully.
   // Virtual for unit testing.
-  virtual bool KillTab(const TabStats& tab_stats, DiscardCondition condition);
+  virtual bool KillTab(LifetimeUnit* lifetime_unit, DiscardCondition condition);
 
   // Get debugd client instance. Virtual for unit testing.
   virtual chromeos::DebugDaemonClient* GetDebugDaemonClient();
@@ -133,7 +132,7 @@ class TabManagerDelegate : public wm::ActivationChangeObserver,
 
   // Get the list of candidates to kill, sorted by descending importance.
   static std::vector<Candidate> GetSortedCandidates(
-      const TabStatsList& tab_list,
+      const LifetimeUnitSet& lifetime_units,
       const std::vector<arc::ArcProcess>& arc_processes);
 
   // Sets OOM score for the focused tab.
@@ -141,18 +140,17 @@ class TabManagerDelegate : public wm::ActivationChangeObserver,
 
   // Kills a process after getting all info of tabs and apps.
   void LowMemoryKillImpl(DiscardCondition condition,
-                         const TabStatsList& tab_list,
-                         const std::vector<arc::ArcProcess>& arc_processes);
+                         std::vector<arc::ArcProcess> arc_processes);
 
   // Public interface to adjust OOM scores.
-  void AdjustOomPriorities(const TabStatsList& tab_list,
+  void AdjustOomPriorities(const LifetimeUnitSet& lifetime_units,
                            const std::vector<arc::ArcProcess>& arc_processes);
 
   // Sets a newly focused tab the highest priority process if it wasn't.
   void AdjustFocusedTabScore(base::ProcessHandle pid);
 
   // Called by AdjustOomPriorities. Runs on the main thread.
-  void AdjustOomPrioritiesImpl(const TabStatsList& tab_list,
+  void AdjustOomPrioritiesImpl(const LifetimeUnitSet& lifetime_units,
                                std::vector<arc::ArcProcess> arc_processes);
 
   // Sets OOM score for processes in the range [|rbegin|, |rend|) to integers
@@ -219,12 +217,17 @@ class TabManagerDelegate : public wm::ActivationChangeObserver,
 // victims.
 class TabManagerDelegate::Candidate {
  public:
-  explicit Candidate(const TabStats* tab)
-      : tab_(tab), app_(nullptr), process_type_(GetProcessTypeInternal()) {
-    DCHECK(tab_);
+  explicit Candidate(LifetimeUnit* lifetime_unit)
+      : lifetime_unit_(lifetime_unit),
+        lifetime_unit_sort_key_(lifetime_unit_->GetSortKey()),
+        app_(nullptr),
+        process_type_(GetProcessTypeInternal()) {
+    DCHECK(lifetime_unit_);
   }
   explicit Candidate(const arc::ArcProcess* app)
-      : tab_(nullptr), app_(app), process_type_(GetProcessTypeInternal()) {
+      : lifetime_unit_(nullptr),
+        app_(app),
+        process_type_(GetProcessTypeInternal()) {
     DCHECK(app_);
   }
 
@@ -235,7 +238,8 @@ class TabManagerDelegate::Candidate {
   // Higher priority first.
   bool operator<(const Candidate& rhs) const;
 
-  const TabStats* tab() const { return tab_; }
+  LifetimeUnit* lifetime_unit() { return lifetime_unit_; }
+  const LifetimeUnit* lifetime_unit() const { return lifetime_unit_; }
   const arc::ArcProcess* app() const { return app_; }
   ProcessType process_type() const { return process_type_; }
 
@@ -243,7 +247,8 @@ class TabManagerDelegate::Candidate {
   // Derive process type for this candidate. Used to initialize |process_type_|.
   ProcessType GetProcessTypeInternal() const;
 
-  const TabStats* tab_;
+  LifetimeUnit* lifetime_unit_;
+  LifetimeUnit::SortKey lifetime_unit_sort_key_;
   const arc::ArcProcess* app_;
   ProcessType process_type_;
   DISALLOW_COPY_AND_ASSIGN(Candidate);

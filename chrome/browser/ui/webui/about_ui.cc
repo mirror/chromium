@@ -43,7 +43,6 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/resource_coordinator/tab_manager.h"
-#include "chrome/browser/resource_coordinator/tab_stats.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/url_constants.h"
@@ -378,6 +377,8 @@ std::string BuildAboutDiscardsRunPage() {
 }
 
 std::vector<std::string> GetHtmlTabDescriptorsForDiscardPage() {
+  return std::vector<std::string>();
+  /*
   resource_coordinator::TabManager* tab_manager =
       g_browser_process->GetTabManager();
   resource_coordinator::TabStatsList stats = tab_manager->GetTabStats();
@@ -417,6 +418,7 @@ std::vector<std::string> GetHtmlTabDescriptorsForDiscardPage() {
     titles.push_back(str);
   }
   return titles;
+  */
 }
 
 std::string AboutDiscards(const std::string& path) {
