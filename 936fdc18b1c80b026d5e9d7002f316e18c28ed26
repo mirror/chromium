@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db5a81c1_fe9d4f8f",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-backwards-at-start.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-17T14:51:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8714551_9f924d74",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56742253_c23ed3c3",
         "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-backwards.html",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ab9183_c843d260",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-backwards.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-17T14:51:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56742253_c23ed3c3",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5769591b_a2282305",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-backwards.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-17T14:51:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75d5c380_76e2b5c4",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1801a343_880cc4a6",
         "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-backwards.html",
         "patchSetId": 16
@@ -67,6 +121,42 @@
       "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6f8748b_9fbaa8b1",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-backwards.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-17T14:51:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1801a343_880cc4a6",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3eb9f7_12e98021",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-backwards.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-17T14:51:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1801a343_880cc4a6",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "299fb6a3_414cb689",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-backwards.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-17T14:51:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3da95e4_416609aa",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a935bc8e_0dca46d4",
         "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-forwards.html",
         "patchSetId": 16
@@ -101,6 +209,24 @@
       "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e17e7b4_7a0d7e99",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-forwards.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-17T14:51:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a935bc8e_0dca46d4",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "0847125b_5cc6bbc0",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-forwards.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-17T14:51:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f8098cb_3e96bae6",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73ea36a8_23346010",
         "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-toggle-fullscreen.html",
         "patchSetId": 16
@@ -135,6 +279,24 @@
       "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882aed38_e80b8a64",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-toggle-fullscreen.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-17T14:51:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73ea36a8_23346010",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "db8dabf7_4d7535b8",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-17T14:51:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c363a3e_25037eff",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92be44d8_0bf9fc77",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
         "patchSetId": 16
@@ -172,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "c4d2f078_e064ef35",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-17T14:51:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92be44d8_0bf9fc77",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bc788bf_a7dd55db",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
         "patchSetId": 16
@@ -186,6 +384,24 @@
       "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7def3d8f_5a0f45a1",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-17T14:51:54Z",
+      "side": 1,
+      "message": "I tried swapping it out but it wasn\u0027t always picking up events.",
+      "parentUuid": "5bc788bf_a7dd55db",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
