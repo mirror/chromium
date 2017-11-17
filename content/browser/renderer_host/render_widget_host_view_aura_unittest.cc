@@ -605,11 +605,6 @@ class FullscreenLayoutManager : public aura::LayoutManager {
   DISALLOW_COPY_AND_ASSIGN(FullscreenLayoutManager);
 };
 
-class MockWindowObserver : public aura::WindowObserver {
- public:
-  MOCK_METHOD2(OnDelegatedFrameDamage, void(aura::Window*, const gfx::Rect&));
-};
-
 class MockRenderWidgetHostImpl : public RenderWidgetHostImpl {
  public:
   ~MockRenderWidgetHostImpl() override {}
@@ -2629,39 +2624,6 @@ TEST_F(RenderWidgetHostViewAuraTest, DISABLED_FullscreenResize) {
     ui::DrawWaiterForTest::WaitForCommit(
         root_window->GetHost()->compositor());
   }
-}
-
-// Swapping a frame should notify the window.
-TEST_F(RenderWidgetHostViewAuraTest, SwapNotifiesWindow) {
-  gfx::Size view_size(100, 100);
-  gfx::Rect view_rect(view_size);
-
-  view_->InitAsChild(nullptr);
-  aura::client::ParentWindowWithContext(
-      view_->GetNativeView(),
-      parent_view_->GetNativeView()->GetRootWindow(),
-      gfx::Rect());
-  view_->SetSize(view_size);
-  view_->Show();
-
-  MockWindowObserver observer;
-  view_->window_->AddObserver(&observer);
-
-  // Delegated renderer path
-  EXPECT_CALL(observer, OnDelegatedFrameDamage(view_->window_, view_rect));
-  view_->SubmitCompositorFrame(kArbitraryLocalSurfaceId,
-                               MakeDelegatedFrame(1.f, view_size, view_rect),
-                               nullptr);
-  testing::Mock::VerifyAndClearExpectations(&observer);
-
-  EXPECT_CALL(observer, OnDelegatedFrameDamage(view_->window_,
-                                               gfx::Rect(5, 5, 5, 5)));
-  view_->SubmitCompositorFrame(
-      kArbitraryLocalSurfaceId,
-      MakeDelegatedFrame(1.f, view_size, gfx::Rect(5, 5, 5, 5)), nullptr);
-  testing::Mock::VerifyAndClearExpectations(&observer);
-
-  view_->window_->RemoveObserver(&observer);
 }
 
 // If the view size is larger than the compositor frame then extra layers
