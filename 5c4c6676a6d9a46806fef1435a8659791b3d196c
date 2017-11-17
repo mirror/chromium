@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd5bd003_c9ac31bc",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-11-17T20:21:36Z",
+      "side": 1,
+      "message": "Can we use similar functions as IsArchitectureX86_64() below?\n\nI.e.:\n\nbool IsVaMajorVersion1() {\n#if VA_MAJOR_VERSION \u003d\u003d 1\n  return true;\n#else\n  return false;\n}\n\nIdeally we\u0027d use this for Ozone as well to prevent #ifdef soup in security-critical code, but we already had those so it\u0027s oK to leave them there.",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 255,
+        "endChar": 25
+      },
+      "revId": "5c4c6676a6d9a46806fef1435a8659791b3d196c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ba042c_dfdfa00e",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-11-17T20:21:36Z",
+      "side": 1,
+      "message": "I\u0027m confused, this is inside the \u003d\u003d 1 branch.",
+      "range": {
+        "startLine": 262,
+        "startChar": 6,
+        "endLine": 262,
+        "endChar": 40
+      },
+      "revId": "5c4c6676a6d9a46806fef1435a8659791b3d196c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
