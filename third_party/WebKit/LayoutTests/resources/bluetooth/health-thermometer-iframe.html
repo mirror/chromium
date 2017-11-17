@@ -1,8 +1,29 @@
 <!DOCTYPE html>
 <script>
+let device;
 window.onmessage = messageEvent => {
-  if (messageEvent.data.type === 'DiscoverServices') {
-    navigator.bluetooth.requestDevice(messageEvent.data.options)
+  // Check message data
+  switch (messageEvent.data) {
+    case 'RequestAndConnect':
+      navigator.bluetooth.requestDevice({
+        filters: [{services: ['health_thermometer']}]
+      })
+      .then(device => device.gatt.connect())
+      .then(gattServer => {
+        device = gattServer.device;
+        parent.postMessage('Connected', '*');
+      }).catch(err => {
+        console.error(err);
+        parent.postMessage('FAIL: ' + err, '*');
+      });
+      break;
+    default:
+      break;
+  }
+  // Check message data type.
+  switch (messageEvent.data.type) {
+    case 'DiscoverServices':
+      navigator.bluetooth.requestDevice(messageEvent.data.options)
       .then(device => device.gatt.connect())
       .then(gatt => {
         return gatt.getPrimaryServices()
@@ -20,7 +41,7 @@ window.onmessage = messageEvent => {
         console.error(err);
         parent.postMessage('FAIL: ' + err, '*');
       });
+      break;
   }
 };
-parent.postMessage("Ready", "*");
 </script>
