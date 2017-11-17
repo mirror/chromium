@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97ece45b_63fdc820",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-17T21:55:44Z",
+      "side": 1,
+      "message": "promise_test as opposed to an async_test",
+      "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e4885ee_a5cb5993",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-17T21:55:44Z",
+      "side": 1,
+      "message": "Chromium-specific",
+      "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b939dc44_2813f6f0",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/detach-gc.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-17T21:55:44Z",
+      "side": 1,
+      "message": "runGarbageCollection().then(resolve);",
+      "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea533f1b_8d013181",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/detach-gc.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-17T21:55:44Z",
+      "side": 1,
+      "message": "This can go first since you aren\u0027t waiting on the promise. (It\u0027s a little easier to read if the click comes before the message handler).",
+      "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf72d63_71423583",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/gc-detach.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-17T21:55:44Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b093ab0b_d8f63907",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-17T21:55:44Z",
+      "side": 1,
+      "message": "hm, addEventListener is probably a safer route (doesn\u0027t overwrite other listeners).  I would stick with that.",
+      "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56985942_ef612677",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-17T21:55:44Z",
+      "side": 1,
+      "message": "No break on default.",
+      "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0cbb3f_0498fb22",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-17T21:55:44Z",
+      "side": 1,
+      "message": "this can come first",
+      "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b31438_5e2fcfd3",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-17T21:55:44Z",
+      "side": 1,
+      "message": "We should probably make this consistent with the one below and just take a type and options.\n\nThen these will both be in the same switch statement.",
+      "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7900e6c6_189cb698",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-17T21:55:44Z",
+      "side": 1,
+      "message": "no break on default",
+      "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
