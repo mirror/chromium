@@ -42,6 +42,23 @@
     },
     {
       "key": {
+        "uuid": "e2270cb8_608f75eb",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-17T14:55:50Z",
+      "side": 1,
+      "message": "From our discussion, we should be setting the update synchronously for now to ensure that when we signal the waitable event the compositor thread has already received the update. Otherwise, we could not receive the posted task before the compositor draws the frame after returning from the mutate call.\n\nIn a future CL when we implement the scheduling logic we\u0027ll need to use a posted task again since the compositor will not be waiting for the animator to finish.",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e73b88b2_9cc69bb7",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
         "patchSetId": 36
