@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5038fdea_c43578de",
+        "filename": "net/android/javatests/src/org/chromium/net/NetworkChangeNotifierTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-17T21:17:14Z",
+      "side": 1,
+      "message": "It\u0027s considered better style to use annotations to disable tests based on SDK level. It makes it obvious that tests are not running on certain bots.\n \n@MinAndroidSdkLevel(\n    // The minimum SDK level at which this test should be executed. Checks\n    // against Build.VERSION.SDK_INT.\n    value \u003d 0\n)",
+      "range": {
+        "startLine": 964,
+        "startChar": 26,
+        "endLine": 964,
+        "endChar": 33
+      },
+      "revId": "0511d9786022395adbf1bd4f0af78c8dc077ceb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
