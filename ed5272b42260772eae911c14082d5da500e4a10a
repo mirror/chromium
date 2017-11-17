@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0014bd3_8a6f1ed4",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-17T03:25:18Z",
+      "side": 1,
+      "message": "Let\u0027s move this TODO comment into V8WindowCustom.cpp (in a separate patch as you\u0027ll focus on V1 in this patch).",
+      "revId": "ed5272b42260772eae911c14082d5da500e4a10a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a918fb2e_ba04f0da",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8WindowCustom.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-17T03:25:18Z",
+      "side": 1,
+      "message": "As we talked offline, let\u0027s do this in a separate patch.",
+      "revId": "ed5272b42260772eae911c14082d5da500e4a10a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e094a6_2838c900",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 16964,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-17T03:25:18Z",
+      "side": 1,
+      "message": "I vaguely remember that there is some place to describe what this counts (what this histogram is for).  Maybe, I\u0027m wrong, but we should have it, I think.\n\nAnyway, let\u0027s add this in a separate patch.",
+      "revId": "ed5272b42260772eae911c14082d5da500e4a10a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
