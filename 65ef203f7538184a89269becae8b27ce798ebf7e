@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e64d4a76_f628fdde",
+        "filename": "chrome/test/data/webrtc/peerconnection_getstats.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-17T09:12:53Z",
+      "side": 1,
+      "message": "nit: Can you use the same order as in the spec? (Between isRemote and ip)",
+      "revId": "65ef203f7538184a89269becae8b27ce798ebf7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
