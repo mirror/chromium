@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0a05f7e1_575f502e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 24
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-17T18:19:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57ac643b_b86cffd1",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7dd2224_95e255f6",
         "filename": "/COMMIT_MSG",
         "patchSetId": 24
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "07e07f5f_d5a5527e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 24
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-17T18:19:52Z",
+      "side": 1,
+      "message": "At begin I would like to have a workable implementation, so I can test the\nthe plumbing. So I uploaded this CL includes ozone implementation.\n\nSince you already reviewed the ozone implementation and added many comments.\nThose comments will be lost, if I split it now.\n\nDo you still want me to split?",
+      "parentUuid": "c7dd2224_95e255f6",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13fd2d64_6397dd52",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 24
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-17T15:36:11Z",
       "side": 1,
       "message": "base::TimeTicks::Now()? If not, why?",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c34370_57fdabb3",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-17T18:19:52Z",
+      "side": 1,
+      "message": "It is a lambda callback passed into SwapBuffers() as the presentation callback. and we don\u0027t care the presentation feedback here for now.",
+      "parentUuid": "13fd2d64_6397dd52",
       "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "504ac2f3_ac49a7fb",
+        "filename": "components/viz/service/display_embedder/display_output_surface.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-17T18:19:52Z",
+      "side": 1,
+      "message": "We have an enum PresentationFlags in gl_surface.h for all bits of the flags.\n\nBut here, flags is a combination of PresentationFlags. It has to be an integer, otherwise the compilers will complain.",
+      "parentUuid": "3be1a36e_21d1ccd7",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d262f61_6ffdacf5",
         "filename": "content/browser/compositor/gpu_browser_compositor_output_surface.h",
         "patchSetId": 24
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-17T15:36:11Z",
       "side": 1,
       "message": "why did you rename this function?",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c59443_98da4465",
+        "filename": "content/browser/compositor/gpu_browser_compositor_output_surface.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-17T18:19:52Z",
+      "side": 1,
+      "message": "The previous implementation uses VSyncProvider to run update_vsync_parameters_callback_ and client_-\u003eDidUpdateVSyncParameters().\n\nWith this CL, client_-\u003eDidUpdateVSyncParameters() is renamed to DidPresentation(), we will use the GetCommandBufferProxy()-\u003eSetPresentationCallback() to call client_-\u003eDidPresentation() and use\nGetCommandBufferProxy()-\u003eSetUpdateVSyncParametersCallback() to call\nupdate_vsync_parameters_callback_ directly.\n\nSo I renamed this function.",
+      "parentUuid": "5d262f61_6ffdacf5",
       "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "9fc40b01_4d0e0c40",
+        "filename": "gpu/ipc/client/command_buffer_proxy_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-17T18:19:52Z",
+      "side": 1,
+      "message": "I feel it is better to have explicit callback for SwapBuffers, SwapBuffersWithBoundsCHROMIUM etc. and the callback will be called for\nevery SwapBuffers() calls. The UpdateVSyncParameters callback is not \ndesigned for this purpose.\n\nBTW I think when the presentation callback are supported for all platforms,\nthe SetUpdateVSyncParameters could be removed. We can use the\npresentation callback to adjust the begin frame.\n\nWDYT?",
+      "parentUuid": "64772b8c_225bf4d6",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b11f2eb_c2791302",
         "filename": "ui/gl/gl_surface.h",
         "patchSetId": 24
@@ -118,6 +226,24 @@
       "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55687b69_6eabfa45",
+        "filename": "ui/gl/gl_surface.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-17T18:19:52Z",
+      "side": 1,
+      "message": "See reply in display_embedder/display_output_surface.h",
+      "parentUuid": "0b11f2eb_c2791302",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "010d52ea_5b6f2b3f",
+        "filename": "ui/gl/gl_surface.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-17T18:19:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afee3978_d6bd2a60",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6c55592_39f4c417",
         "filename": "ui/gl/gl_surface.h",
         "patchSetId": 24
@@ -149,6 +293,24 @@
       "writtenOn": "2017-11-17T15:36:11Z",
       "side": 1,
       "message": "For refresh, is it time to the vblank or scanout start?\n\ntimestamp is the time when scanout started on the buffer?",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed3a9ec_d14cbb3b",
+        "filename": "ui/gl/gl_surface.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-17T18:19:52Z",
+      "side": 1,
+      "message": "The refresh is from the timestamp to the next scanout start.\nThe timestamp is the time when scanout started.\n\nFor ozone drm, can we get the accurate timestamp and the refresh?",
+      "parentUuid": "d6c55592_39f4c417",
       "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "649e9306_8f3257ac",
+        "filename": "ui/gl/gl_surface.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-17T18:19:52Z",
+      "side": 1,
+      "message": "See reply in display_embedder/display_output_surface.h",
+      "parentUuid": "d62919a7_51ea2bba",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80664f12_7f485cf8",
         "filename": "ui/gl/gl_surface.h",
         "patchSetId": 24
@@ -186,6 +366,24 @@
       "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe8b7c0_3e756b12",
+        "filename": "ui/gl/gl_surface.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-17T18:19:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80664f12_7f485cf8",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "993c913e_9f0075dc",
+        "filename": "ui/ozone/demo/gl_renderer.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-17T18:19:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25a401d8_defeab8d",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9eccf68_0f7abf06",
         "filename": "ui/ozone/platform/drm/gpu/gbm_surface.cc",
         "patchSetId": 24
@@ -217,6 +433,24 @@
       "writtenOn": "2017-11-17T15:36:11Z",
       "side": 1,
       "message": "This seems wrong to me. Can you explain?",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f158004_5f67750d",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surface.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-17T18:19:52Z",
+      "side": 1,
+      "message": "When swap failed, we run presentation_callback with null timestamp to tell callers the buffer will not be presented on screen. \nWDYT?",
+      "parentUuid": "f9eccf68_0f7abf06",
       "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "f25df67b_3af90453",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-17T18:19:52Z",
+      "side": 1,
+      "message": "See previous reply.",
+      "parentUuid": "6e473497_df783c7a",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8abf253_4db99a66",
         "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.h",
         "patchSetId": 24
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "bb6fc6af_dd7932c7",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-17T18:19:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8abf253_4db99a66",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ba15112_92eb92da",
         "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.cc",
         "patchSetId": 24
@@ -268,6 +538,24 @@
       "writtenOn": "2017-11-17T15:36:11Z",
       "side": 1,
       "message": "TODO who? Needs a bug",
+      "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a04bdcd_2e8ad371",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-17T18:19:52Z",
+      "side": 1,
+      "message": "I added a TODO here as a reminder when I was implementing this CL. But after I did below change, I forgot to remove this TODO.",
+      "parentUuid": "8ba15112_92eb92da",
       "revId": "d0471845e50dbc8367d4f08d8bb4272d9fb7ea93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
