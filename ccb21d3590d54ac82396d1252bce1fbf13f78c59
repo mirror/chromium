@@ -255,6 +255,24 @@
     },
     {
       "key": {
+        "uuid": "7b6d3543_68fba999",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 30703,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-17T21:17:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b897bac2_13de8584",
+      "revId": "ccb21d3590d54ac82396d1252bce1fbf13f78c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdd5b190_489672e2",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
@@ -269,6 +287,24 @@
       "revId": "ccb21d3590d54ac82396d1252bce1fbf13f78c59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d574470_d99cdff9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57499,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-17T21:17:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdd5b190_489672e2",
+      "revId": "ccb21d3590d54ac82396d1252bce1fbf13f78c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -289,6 +325,24 @@
     },
     {
       "key": {
+        "uuid": "a04811ea_2ebe05a9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57521,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-17T21:17:14Z",
+      "side": 1,
+      "message": "Oops, fixed.",
+      "parentUuid": "b9d6c9ab_7bb5b2f5",
+      "revId": "ccb21d3590d54ac82396d1252bce1fbf13f78c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39e79c01_adada3e6",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
@@ -300,6 +354,24 @@
       "writtenOn": "2017-11-17T20:29:06Z",
       "side": 1,
       "message": "This is always recorded, or only recorded when there may be some partner bookmarks?",
+      "revId": "ccb21d3590d54ac82396d1252bce1fbf13f78c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4773c54a_b7bdf0fe",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57525,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-17T21:17:14Z",
+      "side": 1,
+      "message": "Only recorded when there may be/we attempt to load partner bookmarks.",
+      "parentUuid": "39e79c01_adada3e6",
       "revId": "ccb21d3590d54ac82396d1252bce1fbf13f78c59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
