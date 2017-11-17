@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "610d6b0c_0790063a",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-17T19:45:51Z",
+      "side": 1,
+      "message": "The valid values are either an empty string or a string loaded from load time data. See https://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/data/destination.js?l\u003d429\n\nI could add an enum for the argument to load time data and a function to convert from the enum to the string, but not sure this is worth doing in this CL, as I am working on https://chromium-review.googlesource.com/c/chromium/src/+/777545 which will modify this section to use destination-dependent information (instead of just setting the strings to some dummy values). If we want an enum for the arguments to load time data it might make more sense to do it there. What do you think?",
+      "parentUuid": "21196110_39a027f6",
+      "range": {
+        "startLine": 16,
+        "startChar": 31,
+        "endLine": 16,
+        "endChar": 37
+      },
+      "revId": "f57665e1005715f2cd7bc14aacc4fbc165958841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "addb5cb0_3db0d756",
         "filename": "chrome/browser/resources/print_preview/new/print_preview_shared_css.html",
         "patchSetId": 6
@@ -65,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d52f7ee9_5cb3355d",
+        "filename": "chrome/browser/resources/print_preview/new/print_preview_shared_css.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-17T19:45:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "addb5cb0_3db0d756",
+      "revId": "f57665e1005715f2cd7bc14aacc4fbc165958841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7be9fe1_e55eb06f",
         "filename": "chrome/browser/resources/print_preview/new/print_preview_shared_css.html",
         "patchSetId": 6
@@ -79,6 +121,24 @@
       "revId": "f57665e1005715f2cd7bc14aacc4fbc165958841",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8011718e_571634a6",
+        "filename": "chrome/browser/resources/print_preview/new/print_preview_shared_css.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-17T19:45:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7be9fe1_e55eb06f",
+      "revId": "f57665e1005715f2cd7bc14aacc4fbc165958841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
