@@ -106,16 +106,6 @@ static bool ShouldRemoveNewline(const StringBuilder& before,
                                  after_style);
 }
 
-static void AppendItem(Vector<NGInlineItem>* items,
-                       NGInlineItem::NGInlineItemType type,
-                       unsigned start,
-                       unsigned end,
-                       const ComputedStyle* style = nullptr,
-                       LayoutObject* layout_object = nullptr) {
-  DCHECK(items->IsEmpty() || items->back().EndOffset() == start);
-  items->push_back(NGInlineItem(type, start, end, style, layout_object));
-}
-
 static inline bool IsCollapsibleSpace(UChar c) {
   return c == kSpaceCharacter || c == kTabulationCharacter ||
          c == kNewlineCharacter;
@@ -125,6 +115,19 @@ static inline bool IsCollapsibleSpace(UChar c) {
 // It makes the line breaker easier to handle.
 static inline bool IsControlItemCharacter(UChar c) {
   return c == kTabulationCharacter || c == kNewlineCharacter;
+}
+
+template <typename OffsetMappingBuilder>
+void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::AppendItem(
+    Vector<NGInlineItem>* items,
+    NGInlineItem::NGInlineItemType type,
+    unsigned start,
+    unsigned end,
+    const ComputedStyle* style,
+    LayoutObject* layout_object) {
+  DCHECK(items->IsEmpty() || items->back().EndOffset() == start);
+  items->push_back(NGInlineItem(type, start, end, style, layout_object,
+                                InlineContainingBlock()));
 }
 
 template <typename OffsetMappingBuilder>
@@ -521,8 +524,9 @@ void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::EnterInline(
         break;
     }
   }
-
   AppendOpaque(NGInlineItem::kOpenTag, style, node);
+  if (node->CanContainAbsolutePositionObjects())
+    inline_containing_blocks_.push_back(node);
 }
 
 template <typename OffsetMappingBuilder>
@@ -548,6 +552,10 @@ void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::ExitInline(
   Exit(node);
 
   mapping_builder_.ExitInline(*node);
+  if (node->CanContainAbsolutePositionObjects()) {
+    DCHECK_EQ(node, inline_containing_blocks_.back());
+    inline_containing_blocks_.pop_back();
+  }
 }
 
 template <typename OffsetMappingBuilder>
@@ -557,6 +565,13 @@ void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::Exit(
     AppendOpaque(NGInlineItem::kBidiControl, exits_.back().character);
     exits_.pop_back();
   }
+}
+
+template <typename OffsetMappingBuilder>
+LayoutObject*
+NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::InlineContainingBlock() {
+  return inline_containing_blocks_.IsEmpty() ? nullptr
+                                             : inline_containing_blocks_.back();
 }
 
 template class CORE_TEMPLATE_EXPORT
