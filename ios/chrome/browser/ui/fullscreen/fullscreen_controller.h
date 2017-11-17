@@ -5,10 +5,14 @@
 #ifndef IOS_CLEAN_CHROME_BROWSER_UI_FULLSCREEN_FULLSCREEN_CONTROLLER_H_
 #define IOS_CLEAN_CHROME_BROWSER_UI_FULLSCREEN_FULLSCREEN_CONTROLLER_H_
 
+#import <Foundation/Foundation.h>
 #include <memory>
 
 #include "base/macros.h"
 
+@class ChromeBroadcaster;
+@class FullscreenBroadcastForwarder;
+@protocol FullscreenBroadcastReceiving;
 class FullscreenControllerObserver;
 class FullscreenModel;
 
@@ -18,7 +22,7 @@ class FullscreenModel;
 // the page's content to be visible.
 class FullscreenController {
  public:
-  explicit FullscreenController();
+  explicit FullscreenController(ChromeBroadcaster* broadcaster);
   ~FullscreenController();
 
   // Adds and removes FullscreenControllerObservers.
@@ -38,8 +42,14 @@ class FullscreenController {
   void DecrementDisabledCounter();
 
  private:
+  // The broadcaster whose fullscreen broadcast values that drives the model.
+  __weak ChromeBroadcaster* broadcaster_ = nil;
   // The model used to calculate fullscreen state.
   std::unique_ptr<FullscreenModel> model_;
+  // The reciever for fullscreen broadcast values.
+  __strong id<FullscreenBroadcastReceiving> receiver_ = nil;
+  // An object that forwards broadcasted UI values to |model_|.
+  __strong FullscreenBroadcastForwarder* forwarder_ = nil;
 
   DISALLOW_COPY_AND_ASSIGN(FullscreenController);
 };
