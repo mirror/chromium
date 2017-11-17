@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e5e200d_5787a2be",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-17T02:44:30Z",
+      "side": 1,
+      "message": "Could you move this into its own android_library target that both chrome_test_java and chrome_public_apk_for_test depend on?",
+      "revId": "559c8c82e1045d0953d0d2475ce19209c44131dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
