@@ -22,6 +22,30 @@
       "revId": "40aac4941ab2e7cef89c2028dc1b12cf78041543",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be3daca6_71d78045",
+        "filename": "content/public/test/content_browser_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-11-17T21:47:55Z",
+      "side": 0,
+      "message": "No, with this CL InProcessBrowserTest and ContentBrowserTest can both accept FieldTrial change.",
+      "parentUuid": "5769e975_65da52db",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 60
+      },
+      "revId": "40aac4941ab2e7cef89c2028dc1b12cf78041543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
