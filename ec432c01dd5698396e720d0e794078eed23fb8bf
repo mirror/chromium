@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61f25713_fcf8f2c2",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T19:18:10Z",
+      "side": 1,
+      "message": "i think you\u0027d want to default this -1 to avoid clashing with something real",
+      "range": {
+        "startLine": 96,
+        "startChar": 19,
+        "endLine": 96,
+        "endChar": 20
+      },
+      "revId": "ec432c01dd5698396e720d0e794078eed23fb8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939230eb_d6a8dbed",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T19:18:10Z",
+      "side": 1,
+      "message": "Please extract this to a helper function so the purpose is more clear within this function. Ditto for the other reflection call before (I think it\u0027s a particularly helpful pattern for reflection :)",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 13
+      },
+      "revId": "ec432c01dd5698396e720d0e794078eed23fb8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "466680e0_29de84aa",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T19:18:10Z",
+      "side": 1,
+      "message": "if reflecting the runtime dex failed above, this will NPE",
+      "range": {
+        "startLine": 98,
+        "startChar": 22,
+        "endLine": 98,
+        "endChar": 38
+      },
+      "revId": "ec432c01dd5698396e720d0e794078eed23fb8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d411904b_b1181dfd",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T19:18:10Z",
+      "side": 1,
+      "message": "// This is a notifyNotification call, so defer to our parent\u0027s onTransact which will eventually dispatch it to our notifyNotification",
+      "range": {
+        "startLine": 109,
+        "startChar": 25,
+        "endLine": 109,
+        "endChar": 35
+      },
+      "revId": "ec432c01dd5698396e720d0e794078eed23fb8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef369b4_ae9038b5",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T19:18:10Z",
+      "side": 1,
+      "message": "Can we only do this if the notification isn\u0027t already set? It\u0027s not immediately clear to me that we want to override the channel if chrome is setting it - or was that intentional?",
+      "range": {
+        "startLine": 142,
+        "startChar": 27,
+        "endLine": 142,
+        "endChar": 28
+      },
+      "revId": "ec432c01dd5698396e720d0e794078eed23fb8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e924a682_3b254ad6",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-17T19:18:10Z",
+      "side": 1,
+      "message": "can you still pass through the notification to IBinderDelegate? Not doing that effectively breaks the runtime library cause you can never override this behaviour.\n\nYou also currently aren\u0027t enforcing the security guarantee and any app can call this function to show a notification",
+      "range": {
+        "startLine": 156,
+        "startChar": 16,
+        "endLine": 156,
+        "endChar": 22
+      },
+      "revId": "ec432c01dd5698396e720d0e794078eed23fb8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
