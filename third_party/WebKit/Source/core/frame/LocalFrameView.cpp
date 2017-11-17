@@ -88,6 +88,7 @@
 #include "core/page/PrintContext.h"
 #include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
+#include "core/page/scrolling/SnapCoordinator.h"
 #include "core/page/scrolling/TopDocumentRootScrollerController.h"
 #include "core/paint/BlockPaintInvalidator.h"
 #include "core/paint/FramePainter.h"
@@ -2633,6 +2634,10 @@ void LocalFrameView::PerformPostLayoutTasks() {
   if (ScrollingCoordinator* scrolling_coordinator =
           this->GetScrollingCoordinator())
     scrolling_coordinator->NotifyGeometryChanged();
+
+  if (SnapCoordinator* snap_coordinator =
+          frame_->GetDocument()->GetSnapCoordinator())
+    snap_coordinator->UpdateAllSnapContainerData();
 
   ScrollToFragmentAnchor();
   SendResizeEventIfNeeded();
