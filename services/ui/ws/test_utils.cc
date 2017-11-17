@@ -221,6 +221,9 @@ void TestWindowManager::OnConnect() {
   connect_count_++;
 }
 
+void TestWindowManager::WmOnAcceleratedWidgetForDisplay(int64_t display,
+                                                        uint32_t widget) {}
+
 void TestWindowManager::WmNewDisplayAdded(
     const display::Display& display,
     ui::mojom::WindowDataPtr root,
