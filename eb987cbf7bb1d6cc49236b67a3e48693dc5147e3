@@ -16,6 +16,24 @@
       "revId": "eb987cbf7bb1d6cc49236b67a3e48693dc5147e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea14fd66_da1dacc6",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-17T18:58:41Z",
+      "side": 1,
+      "message": "I suspect this is a way to enforce that the value isn\u0027t modified during the function\u0027s execution.  It\u0027s not common but I don\u0027t think it\u0027s harmful or prohibited either.",
+      "parentUuid": "783f46a1_c847c7fb",
+      "revId": "eb987cbf7bb1d6cc49236b67a3e48693dc5147e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
