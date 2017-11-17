@@ -34,6 +34,10 @@ void UpdateEnabledStateUMA(bool enabled) {
   UMA_STABILITY_HISTOGRAM_ENUMERATION("Arc.State", enabled ? 1 : 0, 2);
 }
 
+void UpdateNativeBridgeExperimentEnabledUMA(bool enabled) {
+  UMA_HISTOGRAM_BOOLEAN("Arc.NativeBridgeExperiment", enabled);
+}
+
 void UpdateOptInFlowResultUMA(OptInFlowResult result) {
   UMA_HISTOGRAM_ENUMERATION("Arc.OptInResult", static_cast<int>(result),
                             static_cast<int>(OptInFlowResult::SIZE));
