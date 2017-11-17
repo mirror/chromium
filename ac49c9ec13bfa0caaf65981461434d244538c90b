@@ -16,6 +16,24 @@
       "revId": "ac49c9ec13bfa0caaf65981461434d244538c90b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "926e0d9b_7293965f",
+        "filename": "services/ui/manifest.json",
+        "patchSetId": 27
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-17T15:05:26Z",
+      "side": 1,
+      "message": "SGTM. But this interface is not related to exo. Maybe we should name it arc or arc_manager.",
+      "parentUuid": "1407d40d_a7878347",
+      "revId": "ac49c9ec13bfa0caaf65981461434d244538c90b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
