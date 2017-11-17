@@ -256,6 +256,52 @@ void CrxInstaller::InstallWebApp(const WebApplicationInfo& web_app) {
     NOTREACHED();
 }
 
+void CrxInstaller::UpdateExtensionFromUnpackedCrx(
+    const std::string& extension_id,
+    const std::string& public_key,
+    const base::FilePath& unpacked_dir) {
+  ExtensionService* service = service_weak_.get();
+  if (!service || service->browser_terminating())
+    return;
+
+  const Extension* extension = service->GetInstalledExtension(extension_id);
+  if (!extension) {
+    LOG(WARNING) << "Will not update extension " << extension_id
+                 << " because it is not installed";
+    temp_dir_ = unpacked_dir;
+    if (installer_callback_.is_null()) {
+      installer_task_runner_->PostTask(
+          FROM_HERE, base::BindOnce(&CrxInstaller::CleanupTempFiles, this));
+    } else {
+      installer_task_runner_->PostTaskAndReply(
+          FROM_HERE, base::BindOnce(&CrxInstaller::CleanupTempFiles, this),
+          base::BindOnce(
+              base::BindOnce(std::move(installer_callback_), false)));
+    }
+    return;
+  }
+
+  int creation_flags = Extension::NO_FLAGS;
+  if (extension->from_webstore() || ManifestURL::UpdatesFromGallery(extension))
+    creation_flags |= Extension::FROM_WEBSTORE;
+  if (extension->from_bookmark())
+    creation_flags |= Extension::FROM_BOOKMARK;
+  if (extension->was_installed_by_default())
+    creation_flags |= Extension::WAS_INSTALLED_BY_DEFAULT;
+  if (extension->was_installed_by_oem())
+    creation_flags |= Extension::WAS_INSTALLED_BY_OEM;
+
+  set_expected_id(extension_id);
+  set_install_source(extension->location());
+  set_creation_flags(creation_flags);
+  set_install_cause(extension_misc::INSTALL_CAUSE_UPDATE);
+  const ExtensionPrefs* extension_prefs =
+      ExtensionPrefs::Get(service->GetBrowserContext());
+  if (extension_prefs)
+    set_do_not_sync(extension_prefs->DoNotSync(extension_id));
+  InstallUnpackedCrx(extension_id, public_key, unpacked_dir);
+}
+
 void CrxInstaller::ConvertWebAppOnFileThread(
     const WebApplicationInfo& web_app) {
   scoped_refptr<Extension> extension(ConvertWebAppToExtension(
