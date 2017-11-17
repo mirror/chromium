@@ -73,6 +73,29 @@
     },
     {
       "key": {
+        "uuid": "88ca9fa0_ba625fc2",
+        "filename": "chrome/test/chromedriver/run_buildbot_steps.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-11-17T21:50:46Z",
+      "side": 1,
+      "message": "We should use a different step name for the canary. Maybe append \" (canary)\"",
+      "range": {
+        "startLine": 314,
+        "startChar": 26,
+        "endLine": 314,
+        "endChar": 55
+      },
+      "revId": "3826b81d6b55f19ed06e783d3e120fe814194a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b58cec4_ee58c214",
         "filename": "chrome/test/chromedriver/run_buildbot_steps.py",
         "patchSetId": 1
