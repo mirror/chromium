@@ -1342,6 +1342,8 @@ jumbo_source_set("browser") {
     "renderer_host/media/media_stream_track_metrics_host.h",
     "renderer_host/media/media_stream_ui_proxy.cc",
     "renderer_host/media/media_stream_ui_proxy.h",
+    "renderer_host/media/render_frame_audio_input_stream_factory.cc",
+    "renderer_host/media/render_frame_audio_input_stream_factory.h",
     "renderer_host/media/render_frame_audio_output_stream_factory.cc",
     "renderer_host/media/render_frame_audio_output_stream_factory.h",
     "renderer_host/media/renderer_audio_output_stream_factory_context.h",

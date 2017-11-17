@@ -21,6 +21,7 @@ interface AudioInputStream {
 // An interface for receiving notifications of state changes of an
 // AudioInputStream.
 interface AudioInputStreamClient {
+  OnStreamCreated(handle<shared_buffer> shared_buffer, handle socket_descriptor, bool initially_muted);
   OnError();
   OnMutedStateChanged(bool is_muted);
 };

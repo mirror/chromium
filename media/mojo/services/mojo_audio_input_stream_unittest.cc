@@ -89,16 +89,16 @@ class MockDelegateFactory {
 
 class MockDeleter {
  public:
-  MOCK_METHOD0(Finished, void());
+  MOCK_METHOD1(Finished, void(mojom::AudioInputStream*));
 };
 
 class MockClient : public mojom::AudioInputStreamClient {
  public:
   MockClient() {}
 
-  void Initialized(mojo::ScopedSharedBufferHandle shared_buffer,
-                   mojo::ScopedHandle socket_handle,
-                   bool initially_muted) {
+  void OnStreamCreated(mojo::ScopedSharedBufferHandle shared_buffer,
+                       mojo::ScopedHandle socket_handle,
+                       bool initially_muted) {
     ASSERT_TRUE(shared_buffer.is_valid());
     ASSERT_TRUE(socket_handle.is_valid());
 
@@ -138,13 +138,6 @@ std::unique_ptr<AudioInputDelegate> CreateNoDelegate(
   return nullptr;
 }
 
-void NotCalled(mojo::ScopedSharedBufferHandle shared_buffer,
-               mojo::ScopedHandle socket_handle,
-               bool initially_muted) {
-  EXPECT_TRUE(false) << "The StreamCreated callback was called despite the "
-                        "test expecting it not to.";
-}
-
 }  // namespace
 
 class MojoAudioInputStreamTest : public Test {
@@ -160,7 +153,6 @@ class MojoAudioInputStreamTest : public Test {
         mojo::MakeRequest(&p), std::move(client_ptr_),
         base::BindOnce(&MockDelegateFactory::CreateDelegate,
                        base::Unretained(&mock_delegate_factory_)),
-        base::BindOnce(&MockClient::Initialized, base::Unretained(&client_)),
         base::BindOnce(&MockDeleter::Finished, base::Unretained(&deleter_)));
     EXPECT_TRUE(p.is_bound());
     return p;
@@ -200,8 +192,9 @@ TEST_F(MojoAudioInputStreamTest, NoDelegate_SignalsError) {
   mojom::AudioInputStreamPtr stream_ptr;
   MojoAudioInputStream stream(
       mojo::MakeRequest(&stream_ptr), std::move(client_ptr_),
-      base::BindOnce(&CreateNoDelegate), base::BindOnce(&NotCalled),
-      base::BindOnce([](bool* p) { *p = true; }, &deleter_called));
+      base::BindOnce(&CreateNoDelegate),
+      base::BindOnce([](bool* p, mojom::AudioInputStream*) { *p = true; },
+                     &deleter_called));
   EXPECT_FALSE(deleter_called)
       << "Stream shouldn't call the deleter from its constructor.";
   base::RunLoop().RunUntilIdle();
@@ -254,7 +247,7 @@ TEST_F(MojoAudioInputStreamTest, Created_NotifiesClient) {
 
 TEST_F(MojoAudioInputStreamTest, SetVolumeTooLarge_Error) {
   AudioInputStreamPtr audio_input_ptr = CreateAudioInput();
-  EXPECT_CALL(deleter_, Finished());
+  EXPECT_CALL(deleter_, Finished(impl_.get()));
   EXPECT_CALL(client_, OnError());
 
   audio_input_ptr->SetVolume(15);
@@ -264,7 +257,7 @@ TEST_F(MojoAudioInputStreamTest, SetVolumeTooLarge_Error) {
 
 TEST_F(MojoAudioInputStreamTest, SetVolumeNegative_Error) {
   AudioInputStreamPtr audio_input_ptr = CreateAudioInput();
-  EXPECT_CALL(deleter_, Finished());
+  EXPECT_CALL(deleter_, Finished(impl_.get()));
   EXPECT_CALL(client_, OnError());
 
   audio_input_ptr->SetVolume(-0.5);
@@ -274,7 +267,7 @@ TEST_F(MojoAudioInputStreamTest, SetVolumeNegative_Error) {
 
 TEST_F(MojoAudioInputStreamTest, DelegateErrorBeforeCreated_PropagatesError) {
   AudioInputStreamPtr audio_input_ptr = CreateAudioInput();
-  EXPECT_CALL(deleter_, Finished());
+  EXPECT_CALL(deleter_, Finished(impl_.get()));
   EXPECT_CALL(client_, OnError());
 
   ASSERT_NE(nullptr, delegate_event_handler_);
@@ -287,7 +280,7 @@ TEST_F(MojoAudioInputStreamTest, DelegateErrorBeforeCreated_PropagatesError) {
 TEST_F(MojoAudioInputStreamTest, DelegateErrorAfterCreated_PropagatesError) {
   AudioInputStreamPtr audio_input_ptr = CreateAudioInput();
   EXPECT_CALL(client_, GotNotification(kInitiallyNotMuted));
-  EXPECT_CALL(deleter_, Finished());
+  EXPECT_CALL(deleter_, Finished(impl_.get()));
   EXPECT_CALL(client_, OnError());
   base::RunLoop().RunUntilIdle();
 
@@ -303,7 +296,7 @@ TEST_F(MojoAudioInputStreamTest, DelegateErrorAfterCreated_PropagatesError) {
 
 TEST_F(MojoAudioInputStreamTest, RemoteEndGone_Error) {
   AudioInputStreamPtr audio_input_ptr = CreateAudioInput();
-  EXPECT_CALL(deleter_, Finished());
+  EXPECT_CALL(deleter_, Finished(impl_.get()));
   audio_input_ptr.reset();
   base::RunLoop().RunUntilIdle();
   Mock::VerifyAndClear(&deleter_);

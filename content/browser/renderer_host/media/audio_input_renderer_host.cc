@@ -175,9 +175,9 @@ void AudioInputRendererHost::DoCreateStream(
           media_stream_manager_->audio_input_device_manager(),
           MediaInternals::GetInstance()->CreateAudioLog(
               media::AudioLogFactory::AUDIO_INPUT_CONTROLLER),
-          std::move(keyboard_mic_registration),
-          config.shared_memory_count, stream_id, session_id, render_process_id_,
-          render_frame_id, config.automatic_gain_control, config.params);
+          render_process_id_, render_frame_id,
+          std::move(keyboard_mic_registration), config.shared_memory_count,
+          stream_id, session_id, config.automatic_gain_control, config.params);
 
   if (!delegate) {
     // Error was logged by AudioInputDelegateImpl::Create.

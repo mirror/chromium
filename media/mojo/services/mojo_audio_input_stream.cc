@@ -18,15 +18,12 @@ MojoAudioInputStream::MojoAudioInputStream(
     mojom::AudioInputStreamRequest request,
     mojom::AudioInputStreamClientPtr client,
     CreateDelegateCallback create_delegate_callback,
-    StreamCreatedCallback stream_created_callback,
-    base::OnceClosure deleter_callback)
-    : stream_created_callback_(std::move(stream_created_callback)),
-      deleter_callback_(std::move(deleter_callback)),
+    DeleterCallback deleter_callback)
+    : deleter_callback_(std::move(deleter_callback)),
       binding_(this, std::move(request)),
       client_(std::move(client)),
       weak_factory_(this) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  DCHECK(stream_created_callback_);
   DCHECK(deleter_callback_);
   // |this| owns |binding_|, so unretained is safe.
   binding_.set_connection_error_handler(
@@ -71,7 +68,6 @@ void MojoAudioInputStream::OnStreamCreated(
     std::unique_ptr<base::CancelableSyncSocket> foreign_socket,
     bool initially_muted) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  DCHECK(stream_created_callback_);
   DCHECK(shared_memory);
   DCHECK(foreign_socket);
 
@@ -90,8 +86,8 @@ void MojoAudioInputStream::OnStreamCreated(
   DCHECK(buffer_handle.is_valid());
   DCHECK(socket_handle.is_valid());
 
-  base::ResetAndReturn(&stream_created_callback_)
-      .Run(std::move(buffer_handle), std::move(socket_handle), initially_muted);
+  client_->OnStreamCreated(std::move(buffer_handle), std::move(socket_handle),
+                           initially_muted);
 }
 
 void MojoAudioInputStream::OnMuted(int stream_id, bool is_muted) {
@@ -108,7 +104,7 @@ void MojoAudioInputStream::OnStreamError(int stream_id) {
 void MojoAudioInputStream::OnError() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(deleter_callback_);
-  std::move(deleter_callback_).Run();  // Deletes |this|.
+  std::move(deleter_callback_).Run(this);  // Deletes |this|.
 }
 
 }  // namespace media
