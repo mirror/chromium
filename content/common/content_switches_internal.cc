@@ -40,16 +40,6 @@ const base::Feature kUseZoomForDsfEnabledByDefault {
 };
 #endif
 
-bool IsUseZoomForDSFEnabledByDefault() {
-#if defined(OS_LINUX)
-  return true;
-#elif defined(OS_WIN)
-  return base::FeatureList::IsEnabled(kUseZoomForDsfEnabledByDefault);
-#else
-  return false;
-#endif
-}
-
 #if defined(ANDROID)
 const base::Feature kProgressBarCompletionResourcesBeforeDOMContentLoaded {
     "progress-bar-completion-resources-before-domContentLoaded",
@@ -107,16 +97,7 @@ V8CacheOptions GetV8CacheOptions() {
 }
 
 bool IsUseZoomForDSFEnabled() {
-  static bool use_zoom_for_dsf_enabled_by_default =
-      IsUseZoomForDSFEnabledByDefault();
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  bool enabled =
-      (command_line->HasSwitch(switches::kEnableUseZoomForDSF) ||
-       use_zoom_for_dsf_enabled_by_default) &&
-      command_line->GetSwitchValueASCII(
-          switches::kEnableUseZoomForDSF) != "false";
-
-  return enabled;
+  return switches::UseZoomForDSFEnabled();
 }
 
 ProgressBarCompletion GetProgressBarCompletionPolicy() {

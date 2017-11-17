@@ -4,6 +4,7 @@
 
 #include "content/public/common/content_switches.h"
 
+#include "base/command_line.h"
 #include "build/build_config.h"
 #include "media/media_features.h"
 
@@ -1102,6 +1103,28 @@ const char kEnableV2Sandbox[] = "v2-sandbox";
 // processes will be assumed to run under the V2 sandbox.
 const char kV2SandboxedEnabled[] = "v2-sandbox-enabled";
 #endif  // defined(OS_MACOSX)
+
+bool IsUseZoomForDSFEnabledByDefault() {
+#if defined(OS_LINUX)
+  return true;
+#elif defined(OS_WIN)
+  return base::FeatureList::IsEnabled(kUseZoomForDsfEnabledByDefault);
+#else
+  return false;
+#endif
+}
+
+bool UseZoomForDSFEnabled() {
+  static bool use_zoom_for_dsf_enabled_by_default =
+      IsUseZoomForDSFEnabledByDefault();
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  bool enabled =
+      (command_line->HasSwitch(kEnableUseZoomForDSF) ||
+       use_zoom_for_dsf_enabled_by_default) &&
+      command_line->GetSwitchValueASCII(kEnableUseZoomForDSF) != "false";
+
+  return enabled;
+}
 
 // Don't dump stuff here, follow the same order as the header.
 
