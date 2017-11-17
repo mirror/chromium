@@ -1235,7 +1235,9 @@ bool DirectCompositionSurfaceWin::Resize(const gfx::Size& size,
   return RecreateRootSurface();
 }
 
-gfx::SwapResult DirectCompositionSurfaceWin::SwapBuffers() {
+gfx::SwapResponse DirectCompositionSurfaceWin::SwapBuffers() {
+  gfx::SwapResponse response(base::TimeTicks::Now(),
+                             gfx::SwapResult::SWAP_FAILED);
   {
     ui::ScopedReleaseCurrent release_current(this);
     root_surface_->SwapBuffers();
@@ -1243,13 +1245,13 @@ gfx::SwapResult DirectCompositionSurfaceWin::SwapBuffers() {
     layer_tree_->CommitAndClearPendingOverlays();
   }
   child_window_.ClearInvalidContents();
-  return gfx::SwapResult::SWAP_ACK;
+  return response.Finalize(base::TimeTicks::Now(), gfx::SwapResult::SWAP_ACK);
 }
 
-gfx::SwapResult DirectCompositionSurfaceWin::PostSubBuffer(int x,
-                                                           int y,
-                                                           int width,
-                                                           int height) {
+gfx::SwapResponse DirectCompositionSurfaceWin::PostSubBuffer(int x,
+                                                             int y,
+                                                             int width,
+                                                             int height) {
   // The arguments are ignored because SetDrawRectangle specified the area to
   // be swapped.
   return SwapBuffers();

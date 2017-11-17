@@ -199,7 +199,7 @@ void ImageTransportSurfaceOverlayMac::ApplyBackpressure(
   }
 }
 
-gfx::SwapResult ImageTransportSurfaceOverlayMac::SwapBuffersInternal(
+gfx::SwapResponse ImageTransportSurfaceOverlayMac::SwapBuffersInternal(
     const gfx::Rect& pixel_damage_rect) {
   TRACE_EVENT0("gpu", "ImageTransportSurfaceOverlayMac::SwapBuffersInternal");
 
@@ -222,6 +222,12 @@ gfx::SwapResult ImageTransportSurfaceOverlayMac::SwapBuffersInternal(
 
   // Populate the swap-complete parameters to send to the browser.
   SwapBuffersCompleteParams params;
+
+  // TODO(brianderson): Tie swap_start to before_flush_time.
+  gfx::SwapResponse response = {swap_id++, gfx::SwapResult::SWAP_ACK,
+                                after_flush_before_commit_time,
+                                after_flush_before_commit_time};
+
   {
     TRACE_EVENT_INSTANT2("test_gpu", "SwapBuffers", TRACE_EVENT_SCOPE_THREAD,
                          "GLImpl", static_cast<int>(gl::GetGLImplementation()),
@@ -241,11 +247,7 @@ gfx::SwapResult ImageTransportSurfaceOverlayMac::SwapBuffersInternal(
     }
     params.pixel_size = pixel_size_;
     params.scale_factor = scale_factor_;
-    params.response.swap_id = swap_id_++;
-    params.response.result = gfx::SwapResult::SWAP_ACK;
-    // TODO(brianderson): Tie swap_start to before_flush_time.
-    params.response.swap_start = after_flush_before_commit_time;
-    params.response.swap_end = after_flush_before_commit_time;
+    params.response = response;
     for (auto& query : ca_layer_in_use_queries_) {
       gpu::TextureInUseResponse response;
       response.texture = query.texture;
@@ -265,18 +267,18 @@ gfx::SwapResult ImageTransportSurfaceOverlayMac::SwapBuffersInternal(
   // Send the swap parameters to the browser.
   delegate_->DidSwapBuffersComplete(std::move(params));
 
-  return gfx::SwapResult::SWAP_ACK;
+  return response;
 }
 
-gfx::SwapResult ImageTransportSurfaceOverlayMac::SwapBuffers() {
+gfx::SwapResponse ImageTransportSurfaceOverlayMac::SwapBuffers() {
   return SwapBuffersInternal(
       gfx::Rect(0, 0, pixel_size_.width(), pixel_size_.height()));
 }
 
-gfx::SwapResult ImageTransportSurfaceOverlayMac::PostSubBuffer(int x,
-                                                               int y,
-                                                               int width,
-                                                               int height) {
+gfx::SwapResponse ImageTransportSurfaceOverlayMac::PostSubBuffer(int x,
+                                                                 int y,
+                                                                 int width,
+                                                                 int height) {
   return SwapBuffersInternal(gfx::Rect(x, y, width, height));
 }
 

@@ -6,7 +6,8 @@
 
 namespace gpu {
 
-SwapBuffersCompleteParams::SwapBuffersCompleteParams() = default;
+SwapBuffersCompleteParams::SwapBuffersCompleteParams(gfx::SwapResponse response)
+    : response(std::move(response)) {}
 
 SwapBuffersCompleteParams::SwapBuffersCompleteParams(
     SwapBuffersCompleteParams&& other) = default;

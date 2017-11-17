@@ -61,7 +61,7 @@ bool GLSurfaceOSMesaWin::IsOffscreen() {
   return false;
 }
 
-gfx::SwapResult GLSurfaceOSMesaWin::SwapBuffers() {
+gfx::SwapResponse GLSurfaceOSMesaWin::SwapBuffers() {
   DCHECK(device_context_);
 
   gfx::Size size = GetSize();
@@ -72,12 +72,13 @@ bool GLSurfaceOSMesaWin::SupportsPostSubBuffer() {
   return true;
 }
 
-gfx::SwapResult GLSurfaceOSMesaWin::PostSubBuffer(int x,
-                                                  int y,
-                                                  int width,
-                                                  int height) {
+gfx::SwapResponse GLSurfaceOSMesaWin::PostSubBuffer(int x,
+                                                    int y,
+                                                    int width,
+                                                    int height) {
   DCHECK(device_context_);
-
+  gfx::SwapResponse response(base::TimeTicks::Now(),
+                             gfx::SwapResult::SWAP_FAILED);
   gfx::Size size = GetSize();
 
   // Note: negating the height below causes GDI to treat the bitmap data as row
@@ -104,7 +105,7 @@ gfx::SwapResult GLSurfaceOSMesaWin::PostSubBuffer(int x,
                 x, y, width, height, GetHandle(),
                 reinterpret_cast<BITMAPINFO*>(&info), DIB_RGB_COLORS, SRCCOPY);
 
-  return gfx::SwapResult::SWAP_ACK;
+  return response.Finalize(base::TimeTicks::Now(), gfx::SwapResult::SWAP_ACK);
 }
 
 }  // namespace gl

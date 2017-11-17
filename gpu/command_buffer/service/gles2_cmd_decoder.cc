@@ -944,8 +944,8 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
                                        const volatile GLint* rects);
 
   // Callback for async SwapBuffers.
-  void FinishAsyncSwapBuffers(gfx::SwapResult result);
-  void FinishSwapBuffers(gfx::SwapResult result);
+  void FinishAsyncSwapBuffers(gfx::SwapResponse response);
+  void FinishSwapBuffers(gfx::SwapResponse response);
 
   void DoCommitOverlayPlanes();
 
@@ -16002,17 +16002,17 @@ void GLES2DecoderImpl::DoSwapBuffers() {
   ExitCommandProcessingEarly();
 }
 
-void GLES2DecoderImpl::FinishAsyncSwapBuffers(gfx::SwapResult result) {
+void GLES2DecoderImpl::FinishAsyncSwapBuffers(gfx::SwapResponse response) {
   DCHECK_NE(0u, pending_swaps_);
   uint32_t async_swap_id = next_async_swap_id_ - pending_swaps_;
   --pending_swaps_;
   TRACE_EVENT_ASYNC_END0("gpu", "AsyncSwapBuffers", async_swap_id);
 
-  FinishSwapBuffers(result);
+  FinishSwapBuffers(response);
 }
 
-void GLES2DecoderImpl::FinishSwapBuffers(gfx::SwapResult result) {
-  if (result == gfx::SwapResult::SWAP_FAILED) {
+void GLES2DecoderImpl::FinishSwapBuffers(gfx::SwapResponse response) {
+  if (response.result == gfx::SwapResult::SWAP_FAILED) {
     LOG(ERROR) << "Context lost because SwapBuffers failed.";
     if (!CheckResetStatus()) {
       MarkContextLost(error::kUnknown);

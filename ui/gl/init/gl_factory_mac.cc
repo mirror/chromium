@@ -35,9 +35,10 @@ class NoOpGLSurface : public GLSurface {
   bool Initialize(GLSurfaceFormat format) override { return true; }
   void Destroy() override {}
   bool IsOffscreen() override { return true; }
-  gfx::SwapResult SwapBuffers() override {
+  gfx::SwapResponse SwapBuffers() override {
     NOTREACHED() << "Cannot call SwapBuffers on a NoOpGLSurface.";
-    return gfx::SwapResult::SWAP_FAILED;
+    return gfx::SwapResponse(base::TimeTicks::Now(),
+                             gfx::SwapResult::SWAP_FAILED);
   }
   gfx::Size GetSize() override { return size_; }
   void* GetHandle() override { return nullptr; }

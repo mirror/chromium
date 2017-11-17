@@ -45,8 +45,8 @@ class ImageTransportSurfaceOverlayMac : public gl::GLSurface,
               ColorSpace color_space,
               bool has_alpha) override;
   bool IsOffscreen() override;
-  gfx::SwapResult SwapBuffers() override;
-  gfx::SwapResult PostSubBuffer(int x, int y, int width, int height) override;
+  gfx::SwapResponse SwapBuffers() override;
+  gfx::SwapResponse PostSubBuffer(int x, int y, int width, int height) override;
   bool SupportsPostSubBuffer() override;
   gfx::Size GetSize() override;
   void* GetHandle() override;
@@ -71,7 +71,7 @@ class ImageTransportSurfaceOverlayMac : public gl::GLSurface,
   void SetSnapshotRequested();
   bool GetAndResetSnapshotRequested();
 
-  gfx::SwapResult SwapBuffersInternal(const gfx::Rect& pixel_damage_rect);
+  gfx::SwapResponse SwapBuffersInternal(const gfx::Rect& pixel_damage_rect);
   void ApplyBackpressure(base::TimeTicks* before_flush_time,
                          base::TimeTicks* after_flush_before_commit_time);
 

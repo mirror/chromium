@@ -297,28 +297,35 @@ bool NativeViewGLSurfaceWGL::IsOffscreen() {
   return false;
 }
 
-gfx::SwapResult NativeViewGLSurfaceWGL::SwapBuffers() {
+gfx::SwapResponse NativeViewGLSurfaceWGL::SwapBuffers() {
   TRACE_EVENT2("gpu", "NativeViewGLSurfaceWGL:RealSwapBuffers",
       "width", GetSize().width(),
       "height", GetSize().height());
+  gfx::SwapResponse response(base::TimeTicks::Now(),
+                             gfx::SwapResult::SWAP_FAILED);
 
   // Resize the child window to match the parent before swapping. Do not repaint
   // it as it moves.
   RECT rect;
-  if (!GetClientRect(window_, &rect))
-    return gfx::SwapResult::SWAP_FAILED;
+  if (!GetClientRect(window_, &rect)) {
+    return response.Finalize(base::TimeTicks::Now(),
+                             gfx::SwapResult::SWAP_FAILED;
+  }
   if (!MoveWindow(child_window_,
                   0,
                   0,
                   rect.right - rect.left,
                   rect.bottom - rect.top,
                   FALSE)) {
-    return gfx::SwapResult::SWAP_FAILED;
+    return response.Finalize(base::TimeTicks::Now(),
+                             gfx::SwapResult::SWAP_FAILED;
   }
 
   DCHECK(device_context_);
-  return ::SwapBuffers(device_context_) == TRUE ? gfx::SwapResult::SWAP_ACK
-                                                : gfx::SwapResult::SWAP_FAILED;
+  gfx::SwapResult result = ::SwapBuffers(device_context_) == TRUE
+                               ? gfx::SwapResult::SWAP_ACK
+                               : gfx::SwapResult::SWAP_FAILED;
+  return response.Finalize(base::TimeTicks::Now(), result);
 }
 
 gfx::Size NativeViewGLSurfaceWGL::GetSize() {
@@ -397,9 +404,10 @@ bool PbufferGLSurfaceWGL::IsOffscreen() {
   return true;
 }
 
-gfx::SwapResult PbufferGLSurfaceWGL::SwapBuffers() {
+gfx::SwapResponse PbufferGLSurfaceWGL::SwapBuffers() {
   NOTREACHED() << "Attempted to call SwapBuffers on a pbuffer.";
-  return gfx::SwapResult::SWAP_FAILED;
+  return gfx::SwapResponse(base::TimeTicks::Now(),
+                           gfx::SwapResult::SWAP_FAILED);
 }
 
 gfx::Size PbufferGLSurfaceWGL::GetSize() {
