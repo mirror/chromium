@@ -5,6 +5,8 @@
 source_set("test") {
   testonly = true
   sources = [
+    "test_fullscreen_broadcast_receiver.h",
+    "test_fullscreen_broadcast_receiver.mm",
     "test_fullscreen_model_observer.h",
     "test_fullscreen_model_observer.mm",
   ]
