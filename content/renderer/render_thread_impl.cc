@@ -333,6 +333,13 @@ void AddHistogramSample(void* hist, int sample) {
   histogram->Add(sample);
 }
 
+bool IsMusHostingViz() {
+  if (!IsRunningWithMus())
+    return false;
+  const auto* cmdline = base::CommandLine::ForCurrentProcess();
+  return cmdline->GetSwitchValueASCII(switches::kIsRunningWithMus) == "viz";
+}
+
 class FrameFactoryImpl : public mojom::FrameFactory {
  public:
   explicit FrameFactoryImpl(const service_manager::BindSourceInfo& source_info)
@@ -690,7 +697,7 @@ void RenderThreadImpl::Init(
 
   gpu_ = ui::Gpu::Create(
       GetConnector(),
-      IsRunningWithMus() ? ui::mojom::kServiceName : mojom::kBrowserServiceName,
+      IsMusHostingViz() ? ui::mojom::kServiceName : mojom::kBrowserServiceName,
       GetIOTaskRunner());
 
   viz::mojom::SharedBitmapAllocationNotifierPtr
@@ -2043,7 +2050,7 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   }
 
 #if defined(USE_AURA)
-  if (IsRunningWithMus()) {
+  if (IsMusHostingViz()) {
     if (!RendererWindowTreeClient::Get(routing_id)) {
       callback.Run(nullptr);
       return;
