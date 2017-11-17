@@ -7,6 +7,9 @@
 #include <algorithm>
 #include <string>
 
+#include "ash/app_list/model/app_list_model.h"
+#include "ash/app_list/model/search_result.h"
+#include "ash/public/cpp/app_list/app_list_item.h"
 #include "base/i18n/rtl.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
@@ -14,11 +17,8 @@
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
-#include "ui/app_list/app_list_item.h"
-#include "ui/app_list/app_list_model.h"
 #include "ui/app_list/app_list_switches.h"
 #include "ui/app_list/app_list_view_delegate.h"
-#include "ui/app_list/search_result.h"
 #include "ui/app_list/views/app_list_main_view.h"
 #include "ui/app_list/views/app_list_view.h"
 #include "ui/app_list/views/contents_view.h"
