@@ -5,6 +5,7 @@
 #include "core/paint/PaintPropertyTreeBuilder.h"
 
 #include <memory>
+#include "build/build_config.h"
 #include "core/dom/DOMNodeIds.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
@@ -1648,6 +1649,10 @@ void UpdatePaintingLayer(const LayoutObject& object,
   DCHECK(context.painting_layer == object.PaintingLayer());
 }
 
+#if defined(COMPILER_MSVC) && !defined(__clang__)
+// Work around PGO-only stack overflow bug 781301.
+NOINLINE
+#endif
 void PaintPropertyTreeBuilder::UpdatePropertiesForSelf(
     const LayoutObject& object,
     PaintPropertyTreeBuilderContext& full_context) {
@@ -1730,6 +1735,10 @@ void PaintPropertyTreeBuilder::UpdateFragmentPropertiesForSelf(
   }
 }
 
+#if defined(COMPILER_MSVC) && !defined(__clang__)
+// Work around PGO-only stack overflow bug 781301.
+NOINLINE
+#endif
 void PaintPropertyTreeBuilder::UpdatePropertiesForChildren(
     const LayoutObject& object,
     PaintPropertyTreeBuilderContext& context) {
