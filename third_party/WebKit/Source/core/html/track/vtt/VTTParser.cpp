@@ -47,6 +47,9 @@ namespace blink {
 using namespace HTMLNames;
 
 const unsigned kFileIdentifierLength = 6;
+const double kSecondsPerHour = 3600;
+const double kSecondsPerMinute = 60;
+const double kSecondsPerMillisecond = 0.001;
 
 bool VTTParser::ParseFloatPercentageValue(VTTScanner& value_scanner,
                                           float& percentage) {
@@ -442,9 +445,6 @@ bool VTTParser::CollectTimeStamp(VTTScanner& input, double& time_stamp) {
     return false;
 
   // Steps 18 - 19 - Calculate result.
-  const double kSecondsPerHour = 3600;
-  const double kSecondsPerMinute = 60;
-  const double kSecondsPerMillisecond = 0.001;
   time_stamp = (value1 * kSecondsPerHour) + (value2 * kSecondsPerMinute) +
                value3 + (value4 * kSecondsPerMillisecond);
   return true;
@@ -478,6 +478,41 @@ static VTTNodeType TokenToNodeType(VTTToken& token) {
       break;
   }
   return kVTTNodeTypeNone;
+}
+
+void AppendTimeValue(StringBuilder& timestamp_string, int time_value) {
+  if (!time_value) {
+    timestamp_string.Append("00");
+  } else {
+    if (time_value < 10)
+      timestamp_string.Append('0');
+    timestamp_string.AppendNumber(time_value);
+  }
+}
+
+void SerializeTimestamp(double time_stamp_value,
+                        StringBuilder& timestamp_string) {
+  int hours = time_stamp_value / kSecondsPerHour;
+  time_stamp_value -= hours * kSecondsPerHour;
+  int minutes = time_stamp_value / kSecondsPerMinute;
+  time_stamp_value -= minutes * kSecondsPerMinute;
+  int seconds = time_stamp_value;
+  int mill_seconds = (time_stamp_value - seconds) * 1000;
+  AppendTimeValue(timestamp_string, hours);
+  timestamp_string.Append(':');
+  AppendTimeValue(timestamp_string, minutes);
+  timestamp_string.Append(':');
+  AppendTimeValue(timestamp_string, seconds);
+  timestamp_string.Append('.');
+  if (!mill_seconds) {
+    timestamp_string.Append("000");
+  } else {
+    if (mill_seconds < 10)
+      timestamp_string.Append("00");
+    else if (mill_seconds < 100)
+      timestamp_string.Append("0");
+    timestamp_string.AppendNumber(mill_seconds);
+  }
 }
 
 void VTTTreeBuilder::ConstructTreeFromToken(Document& document) {
@@ -552,9 +587,12 @@ void VTTTreeBuilder::ConstructTreeFromToken(Document& document) {
     case VTTTokenTypes::kTimestampTag: {
       String characters_string = token_.Characters();
       double parsed_time_stamp;
-      if (VTTParser::CollectTimeStamp(characters_string, parsed_time_stamp))
+      if (VTTParser::CollectTimeStamp(characters_string, parsed_time_stamp)) {
+        StringBuilder timestamp_string;
+        SerializeTimestamp(parsed_time_stamp, timestamp_string);
         current_node_->ParserAppendChild(ProcessingInstruction::Create(
-            document, "timestamp", characters_string));
+            document, "timestamp", timestamp_string.ToString()));
+      }
       break;
     }
     default:
