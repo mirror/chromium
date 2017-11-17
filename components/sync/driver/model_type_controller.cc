@@ -52,10 +52,9 @@ base::WeakPtr<ModelTypeSyncBridge> ReturnCapturedBridge(
   return arg;
 }
 
-void RunBridgeTask(const BridgeProvider& bridge_provider,
-                   const BridgeTask& task) {
+void RunBridgeTask(const BridgeProvider& bridge_provider, BridgeTask task) {
   if (base::WeakPtr<ModelTypeSyncBridge> bridge = bridge_provider.Run()) {
-    task.Run(bridge.get());
+    std::move(task).Run(bridge.get());
   }
 }
 
@@ -263,10 +262,11 @@ BridgeProvider ModelTypeController::GetBridgeProvider() {
 }
 
 void ModelTypeController::PostBridgeTask(const base::Location& location,
-                                         const BridgeTask& task) {
+                                         BridgeTask task) {
   DCHECK(model_thread_);
-  model_thread_->PostTask(
-      location, base::Bind(&RunBridgeTask, GetBridgeProvider(), task));
+  model_thread_->PostTask(location,
+                          base::Bind(&RunBridgeTask, GetBridgeProvider(),
+                                     base::Passed(std::move(task))));
 }
 
 }  // namespace syncer
