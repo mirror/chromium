@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc66f109_3b491b2a",
+        "filename": "cc/resources/layer_tree_resource_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-17T23:16:25Z",
+      "side": 0,
+      "message": "Why does this go away?",
+      "revId": "01030405be4fcfd74c19f3a0d3123a2f5855172e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
