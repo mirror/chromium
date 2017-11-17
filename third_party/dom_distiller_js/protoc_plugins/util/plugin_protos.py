@@ -15,10 +15,21 @@ import sys
 SCRIPT_DIR = os.path.dirname(__file__)
 SRC_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, '..', '..', '..', '..'))
 
-sys.path.insert(
-    1, os.path.join(SRC_DIR, 'third_party', 'protobuf', 'python'))
-sys.path.insert(
-    1, os.path.join(SRC_DIR, 'third_party', 'protobuf', 'third_party', 'six'))
+PYPROTO_DIR = os.path.abspath('pyproto')
+sys.path.insert(0, PYPROTO_DIR)
+
+import google.protobuf
+reload(google)
+reload(google.protobuf)
+
+FOO = os.path.abspath( \
+  os.path.join(os.path.dirname(google.protobuf.__file__), '..', '..'))
+if PYPROTO_DIR != FOO:
+  print >> sys.stderr, 'PYPROTO_DIR = ' + PYPROTO_DIR
+  print >> sys.stderr, 'FOO = ' + FOO
+  assert False
+
+#from google.protobuf.compiler import plugin_pb2
 from google.protobuf.descriptor_pb2 import FieldDescriptorProto
 
 from . import types

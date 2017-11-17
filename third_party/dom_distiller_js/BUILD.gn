@@ -39,6 +39,10 @@ proto_library("dom_distiller_proto") {
   generator_plugin_script_deps = protoc_plugin_files
   generator_plugin_suffixes = [ "_json_converter.h" ]
   generator_plugin_options = "output_dir=:"
+
+  deps = [
+    "//third_party/protobuf:py_proto",
+  ]
 }
 
 # The purpose of json_values_converter_test_proto is to test the
@@ -54,6 +58,10 @@ proto_library("json_values_converter_test_proto") {
   generator_plugin_script_deps = protoc_plugin_files
   generator_plugin_suffixes = [ "_json_converter.h" ]
   generator_plugin_options = "output_dir=:"
+
+  deps = [
+    "//third_party/protobuf:py_proto",
+  ]
 }
 
 action("json_values_converter_tests") {
