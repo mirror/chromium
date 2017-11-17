@@ -104,6 +104,52 @@
     },
     {
       "key": {
+        "uuid": "221a1c49_36b55dfe",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-17T05:22:46Z",
+      "side": 1,
+      "message": "Could we take the ownership of the |registration| here instead of taking a raw pointer and taking the ownership later?",
+      "range": {
+        "startLine": 1216,
+        "startChar": 4,
+        "endLine": 1216,
+        "endChar": 31
+      },
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43594e75_84eb611c",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1223,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-17T05:22:46Z",
+      "side": 1,
+      "message": "What do you think of making this ctor public and use std::unique_ptr\u003c\u003e explicitly?\nI slightly prefer managing the map on SWProviderHost side over calling Add/Remove from the ctor/(kind of) dtor in the entries of the map since I sometimes get lost at understanding who is having the ownership, while I agree that ctor/dtor pairing seems clean.\n\nSo it\u0027d look like something as follows:\n\u003d\u003d\n\nstd::unique_ptr\u003cHost\u003e new_host \u003d std::make_unique\u003cHost\u003e(...);\nmap_.Add(std::move(new_host));\n\n~Host() {\n  provider_host_-\u003eOnSWRHostRemoved(id_);\n}",
+      "range": {
+        "startLine": 1223,
+        "startChar": 19,
+        "endLine": 1223,
+        "endChar": 58
+      },
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ae38a65_8d0f7aa6",
         "filename": "content/browser/service_worker/service_worker_provider_host.h",
         "patchSetId": 5
@@ -202,6 +248,30 @@
       "writtenOn": "2017-11-17T03:16:19Z",
       "side": 1,
       "message": "That does sound like good simplification. The lifetime of WebSWRegistrationImpl is complex so would like to simplify it.",
+      "parentUuid": "a493dd04_5a2074b9",
+      "range": {
+        "startLine": 508,
+        "startChar": 20,
+        "endLine": 508,
+        "endChar": 72
+      },
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e40bfdd_3fed5e6b",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-17T05:22:46Z",
+      "side": 1,
+      "message": "I may be missing something, but how does the relationship of pipes look like?\nFor example, what happens if the registration object is responded as a result of  GetRegistration() and the renderer triggers the GC just before that?",
       "parentUuid": "a493dd04_5a2074b9",
       "range": {
         "startLine": 508,
