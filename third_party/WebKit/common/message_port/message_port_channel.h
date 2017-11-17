@@ -54,6 +54,9 @@ class BLINK_COMMON_EXPORT MessagePortChannel {
 
   explicit MessagePortChannel(mojo::ScopedMessagePipeHandle handle);
 
+  MessagePortChannel(mojo::ScopedMessagePipeHandle handle,
+                     scoped_refptr<base::SingleThreadTaskRunner> task_runner);
+
   const mojo::ScopedMessagePipeHandle& GetHandle() const;
   mojo::ScopedMessagePipeHandle ReleaseHandle() const;
 
@@ -91,8 +94,9 @@ class BLINK_COMMON_EXPORT MessagePortChannel {
  private:
   class State : public base::RefCountedThreadSafe<State> {
    public:
-    State();
-    explicit State(mojo::ScopedMessagePipeHandle handle);
+    explicit State(scoped_refptr<base::SingleThreadTaskRunner> task_runner);
+    State(mojo::ScopedMessagePipeHandle handle,
+          scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
     void StartWatching(const base::Closure& callback);
     void StopWatching();
@@ -123,6 +127,8 @@ class BLINK_COMMON_EXPORT MessagePortChannel {
     // Callback to invoke when the State is notified about a change to
     // |handle_|'s signaling state.
     base::Closure callback_;
+
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
   };
   mutable scoped_refptr<State> state_;
 };
