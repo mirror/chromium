@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83ebc996_09484e44",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 68806,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-17T01:12:19Z",
+      "side": 1,
+      "message": "nit: Please list one owner per line, i.e. use two \u003cowner\u003e tags.  Please fix this for other histograms that you own as well, such as the one immediately above (probably in a separate CL).",
+      "range": {
+        "startLine": 68806,
+        "startChar": 2,
+        "endLine": 68806,
+        "endChar": 62
+      },
+      "revId": "5c45e06400bcade33b8df9c8d3d132761adf29cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d96bed_cc46c6db",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 68809,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-17T01:12:19Z",
+      "side": 1,
+      "message": "nit: Probably omit this – or am I misreading the sentence somehow?",
+      "range": {
+        "startLine": 68809,
+        "startChar": 35,
+        "endLine": 68809,
+        "endChar": 44
+      },
+      "revId": "5c45e06400bcade33b8df9c8d3d132761adf29cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
