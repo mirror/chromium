@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b6527ee_4af31e28",
+        "filename": "remoting/protocol/bandwidth_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-17T19:47:34Z",
+      "side": 1,
+      "message": "I do not think webrtc update the RTT per-frame.",
+      "parentUuid": "eaa48627_4318cc81",
+      "revId": "985525e50f4fb98457f953a4f4a518f36106b8fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f4969ce_e4635795",
         "filename": "remoting/protocol/bandwidth_estimator.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "45e2b930_f6dceebf",
+        "filename": "remoting/protocol/bandwidth_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-17T19:47:34Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9f4969ce_e4635795",
+      "revId": "985525e50f4fb98457f953a4f4a518f36106b8fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e790e934_5b186716",
         "filename": "remoting/protocol/bandwidth_estimator.h",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "985525e50f4fb98457f953a4f4a518f36106b8fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4b3e94_a25c4a1a",
+        "filename": "remoting/protocol/bandwidth_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-17T19:47:34Z",
+      "side": 1,
+      "message": "Talked offline, we cannot get the frame-id / size from WebRTC. We may consider to export these information later. But for now, as an experimental feature, I would avoid changing WebRTC without evidence of positive impacts.\n\nFunction name has been updated.",
+      "parentUuid": "e790e934_5b186716",
+      "revId": "985525e50f4fb98457f953a4f4a518f36106b8fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "127e11ce_20077f48",
+        "filename": "remoting/protocol/bandwidth_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-17T19:47:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f883bf24_1fa75a44",
+      "range": {
+        "startLine": 33,
+        "startChar": 69,
+        "endLine": 33,
+        "endChar": 71
+      },
+      "revId": "985525e50f4fb98457f953a4f4a518f36106b8fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3fb50c6_1a20b754",
         "filename": "remoting/protocol/bandwidth_estimator.h",
         "patchSetId": 2
@@ -96,6 +174,30 @@
       "revId": "985525e50f4fb98457f953a4f4a518f36106b8fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1895b7d1_d17cc640",
+        "filename": "remoting/protocol/bandwidth_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-17T19:47:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3fb50c6_1a20b754",
+      "range": {
+        "startLine": 34,
+        "startChar": 55,
+        "endLine": 34,
+        "endChar": 68
+      },
+      "revId": "985525e50f4fb98457f953a4f4a518f36106b8fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
