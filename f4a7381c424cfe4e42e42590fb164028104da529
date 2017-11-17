@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "465a65ea_1577705e",
+        "filename": "build/android/gyp/util/build_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-17T22:05:11Z",
+      "side": 1,
+      "message": "yeah, this is correct.",
+      "parentUuid": "c3b4ec14_15925c4e",
+      "range": {
+        "startLine": 35,
+        "startChar": 33,
+        "endLine": 35,
+        "endChar": 46
+      },
+      "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85d76a32_56c54220",
         "filename": "chrome/android/java/res/PRESUBMIT.py",
         "patchSetId": 2
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "Yes that\u0027s what I\u0027ve been thinking about that too. Since content/ and ui/ also have colors.xml, we might need to move this to possibly src/PRESUBMIT.py, but then I also want to keep these xml file checks separate to other checks. Another place I think would be good for long term may be src/tools/android. We can create something similar to the checkstyle.py for xml files (https://cs.chromium.org/chromium/src/tools/android/checkstyle/checkstyle.py?q\u003dRunCheckstyle\u0026dr\u003dCSs) and have only one function for xml checks in src/PRESUBMIT.py.\n\nI put this is chrome/ because I feel it\u0027s better to first add the checks in chrome/ directory and see how they work out, and then migrate them to check more directories. But maybe we can go with adding them is src/PRESUBMIT.py and limit the checks to be in chrome/?\n\nJohn@ - Do you have any suggestions where we should put this?",
       "parentUuid": "85d76a32_56c54220",
+      "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0aafc6e_a50ba3d3",
+        "filename": "chrome/android/java/res/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-17T22:05:11Z",
+      "side": 1,
+      "message": "How long do these take to run?\n\nI think //PRESUBMIT.py could be ok if these are sufficiently fast and if we can narrow down more than just files matching .*\\.xml.\n\nAs for where the implementation lives, I don\u0027t have a strong opinion between //tools/android and inline in //PRESUBMIT.py (though one of the //PRESUBMIT.py owners may).",
+      "parentUuid": "0fae236c_8377d530",
       "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
