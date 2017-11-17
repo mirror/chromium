@@ -85,7 +85,8 @@ function Viewport(
 Viewport.FittingType = {
   NONE: 'none',
   FIT_TO_PAGE: 'fit-to-page',
-  FIT_TO_WIDTH: 'fit-to-width'
+  FIT_TO_WIDTH: 'fit-to-width',
+  FIT_TO_HEIGHT: 'fit-to-height'
 };
 
 /**
@@ -246,6 +247,8 @@ Viewport.prototype = {
       this.fitToPageInternal_(false);
     else if (this.fittingType_ == Viewport.FittingType.FIT_TO_WIDTH)
       this.fitToWidth();
+    else if (this.fittingType_ == Viewport.FittingType.FIT_TO_HEIGHT)
+      this.fitToHeightInternal_(false);
     else
       this.updateViewport_();
   },
@@ -523,17 +526,15 @@ Viewport.prototype = {
    *     fit-to-width should be computed.
    * @return {number} the internal zoom to set
    */
-  computeFittingZoom_: function(pageDimensions, widthOnly) {
+  computeFittingZoom_: function(pageDimensions, fitWidth, fitHeight) {
+    if (!fitWidth && !fitHeight)
+      return;
+
     // First compute the zoom without scrollbars.
-    var zoomWidth = this.window_.innerWidth / pageDimensions.width;
-    var zoom;
-    var zoomHeight;
-    if (widthOnly) {
-      zoom = zoomWidth;
-    } else {
-      zoomHeight = this.window_.innerHeight / pageDimensions.height;
-      zoom = Math.min(zoomWidth, zoomHeight);
-    }
+    var zoom = this.computeFittingZoomGivenDimensions_(
+        fitWidth, fitHeight, this.window_.innerWidth, this.window_.innerHeight,
+        pageDimensions.width, pageDimensions.height);
+
     // Check if there needs to be any scrollbars.
     var needsScrollbars = this.documentNeedsScrollbars_(zoom);
 
@@ -565,18 +566,33 @@ Viewport.prototype = {
       windowWithScrollbars.width -= scrollbarWidth;
 
     // Recompute the zoom.
-    zoomWidth = windowWithScrollbars.width / pageDimensions.width;
-    if (widthOnly) {
-      zoom = zoomWidth;
-    } else {
-      zoomHeight = windowWithScrollbars.height / pageDimensions.height;
-      zoom = Math.min(zoomWidth, zoomHeight);
-    }
+    zoom = this.computeFittingZoomGivenDimensions_(
+        fitWidth, fitHeight, windowWithScrollbars.width,
+        windowWithScrollbars.height, pageDimensions.width,
+        pageDimensions.height);
+
     return this.zoomManager_.internalZoomComponent(zoom);
   },
 
+  computeFittingZoomGivenDimensions_: function(
+      fitWidth, fitHeight, windowWidth, windowHeight, pageWidth, pageHeight) {
+    // Assumes at least one of {fitWidth, fitHeight} is set.
+    var zoomWidth = windowWidth / pageWidth;
+    if (fitHeight) {
+      var zoomHeight = windowHeight / pageHeight;
+      if (fitWidth)
+        return Math.min(zoomWidth, zoomHeight);
+      else
+        return zoomHeight;
+    } else {
+      // fitWidth is guaranteed to be true due to the check at the beginning
+      // of the method.
+      return zoomWidth;
+    }
+  },
+
   /**
-   * Zoom the viewport so that the page-width consumes the entire viewport.
+   * Zoom the viewport so that the page width consumes the entire viewport.
    */
   fitToWidth: function() {
     this.mightZoom_(() => {
@@ -586,15 +602,48 @@ Viewport.prototype = {
       // When computing fit-to-width, the maximum width of a page in the
       // document is used, which is equal to the size of the document width.
       this.setZoomInternal_(
-          this.computeFittingZoom_(this.documentDimensions_, true));
-      var page = this.getMostVisiblePage();
+          this.computeFittingZoom_(this.documentDimensions_, true, false));
       this.updateViewport_();
     });
   },
 
   /**
    * @private
-   * Zoom the viewport so that a page consumes the entire viewport.
+   * Zoom the viewport so that the page height consumes the entire viewport.
+   * @param {boolean} scrollToTopOfPage Set to true if the viewport should be
+   *     scrolled to the top of the current page. Set to false if the viewport
+   *     should remain at the current scroll position.
+   */
+  fitToHeightInternal_: function(scrollToTopOfPage) {
+    this.mightZoom_(() => {
+      this.fittingType_ = Viewport.FittingType.FIT_TO_HEIGHT;
+      if (!this.documentDimensions_)
+        return;
+      var page = this.getMostVisiblePage();
+      // When computing fit-to-height, the maximum height of the current page
+      // is used.
+      var dimensions = {
+        width: this.documentDimensions_.width,
+        height: this.pageDimensions_[page].height,
+      };
+      this.setZoomInternal_(this.computeFittingZoom_(dimensions, false, true));
+      if (scrollToTopOfPage) {
+        this.position = {x: 0, y: this.pageDimensions_[page].y * this.zoom};
+      }
+      this.updateViewport_();
+    });
+  },
+
+  /**
+   * Zoom the viewport so that the page height consumes the entire viewport.
+   */
+  fitToHeight: function() {
+    this.fitToHeightInternal_(true);
+  },
+
+  /**
+   * @private
+   * Zoom the viewport so that a page consumes as much as possible of the it.
    * @param {boolean} scrollToTopOfPage Set to true if the viewport should be
    *     scrolled to the top of the current page. Set to false if the viewport
    *     should remain at the current scroll position.
@@ -610,7 +659,7 @@ Viewport.prototype = {
         width: this.documentDimensions_.width,
         height: this.pageDimensions_[page].height,
       };
-      this.setZoomInternal_(this.computeFittingZoom_(dimensions, false));
+      this.setZoomInternal_(this.computeFittingZoom_(dimensions, true, true));
       if (scrollToTopOfPage) {
         this.position = {x: 0, y: this.pageDimensions_[page].y * this.zoom};
       }
@@ -756,7 +805,8 @@ Viewport.prototype = {
       // Unless we're in fit to page mode, scroll above the page by
       // |this.topToolbarHeight_| so that the toolbar isn't covering it
       // initially.
-      if (this.fittingType_ != Viewport.FittingType.FIT_TO_PAGE)
+      if (this.fittingType_ != Viewport.FittingType.FIT_TO_PAGE &&
+          this.fittingType_ != Viewport.FittingType.FIT_TO_HEIGHT)
         toolbarOffset = this.topToolbarHeight_;
       this.position = {
         x: dimensions.x * this.zoom,
@@ -778,7 +828,7 @@ Viewport.prototype = {
       if (initialDimensions) {
         this.setZoomInternal_(Math.min(
             this.defaultZoom_,
-            this.computeFittingZoom_(this.documentDimensions_, true)));
+            this.computeFittingZoom_(this.documentDimensions_, true, false)));
         this.position = {x: 0, y: -this.topToolbarHeight_};
       }
       this.contentSizeChanged_();
