@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a232bed_82559e37",
+        "filename": "net/url_request/url_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T19:02:27Z",
+      "side": 1,
+      "message": "We should exclude the NetworkErrorLoggingDelegate cc files and the like when ENABLE_REPORTING is false.  Otherwise, there\u0027s no need for all the #ifs.",
+      "range": {
+        "startLine": 1175,
+        "startChar": 2,
+        "endLine": 1175,
+        "endChar": 29
+      },
+      "revId": "dd2f924ecd56c3a977e0de7f49e17c12537401ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82219285_620fbd69",
+        "filename": "net/url_request/url_request_context_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T19:02:27Z",
+      "side": 1,
+      "message": "What happens if reporting_service() is nullptr here?  Does it even make any sense to create a reporting policy if NEL is disabled?",
+      "range": {
+        "startLine": 634,
+        "startChar": 17,
+        "endLine": 634,
+        "endChar": 34
+      },
+      "revId": "dd2f924ecd56c3a977e0de7f49e17c12537401ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f4faa0_b0f8d724",
+        "filename": "net/url_request/url_request_context_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T19:02:27Z",
+      "side": 1,
+      "message": "Are consumers going to want to disable it?  If so, should check URLRequestContextBuilder consumers in this CL, and make sure that they all want it.  If not, do we need this setter?",
+      "range": {
+        "startLine": 301,
+        "startChar": 7,
+        "endLine": 301,
+        "endChar": 40
+      },
+      "revId": "dd2f924ecd56c3a977e0de7f49e17c12537401ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ced707_b7e9ea03",
+        "filename": "net/url_request/url_request_context_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T19:02:27Z",
+      "side": 1,
+      "message": "I don\u0027t think this order is right.  The service depends on the delegate, so should be destroyed first.",
+      "range": {
+        "startLine": 134,
+        "startChar": 47,
+        "endLine": 134,
+        "endChar": 78
+      },
+      "revId": "dd2f924ecd56c3a977e0de7f49e17c12537401ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
