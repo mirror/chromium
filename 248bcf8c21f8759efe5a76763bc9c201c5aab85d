@@ -22,6 +22,30 @@
       "revId": "248bcf8c21f8759efe5a76763bc9c201c5aab85d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec677ae6_f30f23dc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2017-11-17T00:41:58Z",
+      "side": 1,
+      "message": "My original thought is since the notification is cleared, we don\u0027t show it again. Because this call will also update the SharePreference, so if we do it in the if block, then it does not only show the notification but also makes the next tab creation notification for multiple links.",
+      "parentUuid": "169b0c87_5ef86102",
+      "range": {
+        "startLine": 221,
+        "startChar": 16,
+        "endLine": 221,
+        "endChar": 34
+      },
+      "revId": "248bcf8c21f8759efe5a76763bc9c201c5aab85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

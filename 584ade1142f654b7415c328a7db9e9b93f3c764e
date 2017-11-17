@@ -345,6 +345,24 @@
       "revId": "584ade1142f654b7415c328a7db9e9b93f3c764e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2674027_5c98673e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2017-11-17T00:41:58Z",
+      "side": 1,
+      "message": "Per offline discussion, problem happens for browser actions tab merging that processUrlViewIntent comes before merging. So right tab is not available to be shown in the front. It is trivial to fix it, so add a TODO to fix later.",
+      "parentUuid": "0e8cd7b4_82b41b40",
+      "revId": "584ade1142f654b7415c328a7db9e9b93f3c764e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
