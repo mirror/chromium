@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "148a69e9_d9b84292",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-17T00:23:35Z",
+      "side": 1,
+      "message": "I believe this should be controlled by the WebappBrowserControlsDelegate. I think something along the lines of:\n\nif (isTwa \u0026\u0026 didVerificationFail())\n  // show browser controls\n\nshould do the trick in or around WebappBrowserControlsDelegate#shouldShowBrowserControls. You may need to ensure that the verification happens before the browser controls delegate is first called to check the visibility of the toolbar.",
+      "range": {
+        "startLine": 162,
+        "startChar": 16,
+        "endLine": 162,
+        "endChar": 28
+      },
+      "revId": "a0b4102bf7371aa5463953dab87d6df809c056be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8c0fa0e_ddabe6e3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 1
