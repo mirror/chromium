@@ -1002,9 +1002,8 @@ const GUI = {
 
   showNextExpectation: function(backward) {
     let nextExpectation;
-    let openDetails = document.querySelector(".details.open");
-    let openExpectation = openDetails && GUI.getExpectation(openDetails);
     let activeExpectation = GUI.activeExpectation();
+    let openExpectation = GUI.openExpectation();
     if (openExpectation)
       GUI.hideResults(openExpectation);
     if (openExpectation && openExpectation == activeExpectation) {
@@ -1024,12 +1023,13 @@ const GUI = {
     }
   },
 
+  openExpectation: function() {
+    let openDetails = document.querySelector(".details.open");
+    return openDetails && GUI.getExpectation(openDetails);
+  },
+
   activeExpectation: function() {
-    let result = GUI.closest(document.activeElement, "expect");
-    if (result)
-      return result;
-    result = GUI.closest(document.activeElement, "result-frame");
-    return result ? result.previousElementSibling : null;
+    return GUI.getExpectation(document.activeElement) || GUI.openExpectation();
   },
 
   initEvents: function() {
@@ -1160,7 +1160,11 @@ const GUI = {
   },
 
   getExpectation: function(el) {
-    return GUI.closest(el, "expect");
+    let result = GUI.closest(el, "expect");
+    if (result)
+      return result;
+    result = GUI.closest(document.activeElement, "result-frame");
+    return result ? result.previousElementSibling : null;
   },
 
   isFlag: function(el) {
@@ -1376,6 +1380,11 @@ class ImageResultsToolbar extends TXToolbar {
       if (ev.target.tagName == "A") {
         this.selectAnchor(ev.target);
         ev.preventDefault();
+        if (this.animationIntervalId) {
+          // Restart animation to show the clicked view for one second.
+          this.setAnimation(false);
+          window.setTimeout(_ => this.setAnimation(true), 1000);
+        }
       }
     });
 
