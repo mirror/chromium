@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b00bd050_be536155",
+        "filename": "media/mojo/services/cdm_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-17T19:06:28Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "bd0fff8e5c32b219d5faac018181b93a5d7db07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca1cd0fe_99ecb720",
+        "filename": "media/mojo/services/cdm_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-17T19:06:28Z",
+      "side": 1,
+      "message": "Note that there is also MojoCdmHelper in the same directory, which is rather confusing.",
+      "range": {
+        "startLine": 18,
+        "startChar": 3,
+        "endLine": 18,
+        "endChar": 23
+      },
+      "revId": "bd0fff8e5c32b219d5faac018181b93a5d7db07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
