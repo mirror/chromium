@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21105c04_2260bdc2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-17T20:57:33Z",
+      "side": 1,
+      "message": "Use https://chromium-review.googlesource.com/c/chromium/src/+/730653 that will work from locations outside of gerrit",
+      "range": {
+        "startLine": 14,
+        "startChar": 1,
+        "endLine": 14,
+        "endChar": 42
+      },
+      "revId": "c952c5943377b7fb3d86225a4492a2f78d08ac35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
