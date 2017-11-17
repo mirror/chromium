@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d16c7e47_a756e72e",
+        "filename": "chrome/browser/devtools/devtools_targets_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-17T23:30:56Z",
+      "side": 1,
+      "message": "do you still need all these notification headers?",
+      "revId": "a31367124a776e2906370be0fb3c99da680b2bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a6d972_57f4c950",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-17T23:30:56Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "a31367124a776e2906370be0fb3c99da680b2bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
