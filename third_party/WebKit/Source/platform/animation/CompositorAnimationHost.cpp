@@ -39,9 +39,11 @@ void CompositorAnimationHost::TakeOverImplOnlyScrollOffsetAnimation(
 
 void CompositorAnimationHost::SetAnimationCounts(
     size_t total_animations_count,
-    size_t main_thread_compositable_animations_count) {
-  animation_host_->SetAnimationCounts(
-      total_animations_count, main_thread_compositable_animations_count);
+    size_t main_thread_compositable_animations_count,
+    bool current_frame_has_raf) {
+  animation_host_->SetAnimationCounts(total_animations_count,
+                                      main_thread_compositable_animations_count,
+                                      current_frame_has_raf);
 }
 
 size_t CompositorAnimationHost::GetMainThreadAnimationsCountForTesting() {
