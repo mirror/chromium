@@ -98,7 +98,7 @@ URLRequestFailedJob::URLRequestFailedJob(URLRequest* request,
 }
 
 void URLRequestFailedJob::Start() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&URLRequestFailedJob::StartAsync, weak_factory_.GetWeakPtr()));
 }
@@ -108,7 +108,7 @@ int URLRequestFailedJob::ReadRawData(IOBuffer* buf, int buf_size) {
   if (net_error_ == ERR_IO_PENDING || phase_ == READ_SYNC)
     return net_error_;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&URLRequestFailedJob::ReadRawDataComplete,
                             weak_factory_.GetWeakPtr(), net_error_));
   return ERR_IO_PENDING;

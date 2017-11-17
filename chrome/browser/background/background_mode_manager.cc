@@ -702,7 +702,7 @@ void BackgroundModeManager::ReleaseStartupKeepAlive() {
     // keep-alive (which can shutdown Chrome) before the message loop has
     // started. This object reference is safe because it's going to be kept
     // alive by the browser process until after the callback is called.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&BackgroundModeManager::ReleaseStartupKeepAliveCallback,
                        base::Unretained(this)));

@@ -37,7 +37,8 @@ class ManageCertificatesDialog : public ui::BaseShellDialogImpl {
   // must ensure the ManageCertificatesDialog remains valid until then.
   void Show(HWND parent, const base::Closure& callback) {
     if (IsRunningDialogForOwner(parent)) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                             callback);
       return;
     }
 

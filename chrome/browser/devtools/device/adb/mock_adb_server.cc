@@ -332,7 +332,7 @@ void SimpleHttpServer::Connection::OnDataRead(int count) {
     }
   } while (bytes_processed);
   // Posting to avoid deep recursion in case of synchronous IO
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&Connection::ReadData, weak_factory_.GetWeakPtr()));
 }
@@ -366,7 +366,7 @@ void SimpleHttpServer::Connection::OnDataWritten(int count) {
 
   if (bytes_to_write_ != 0)
     // Posting to avoid deep recursion in case of synchronous IO
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&Connection::WriteData, weak_factory_.GetWeakPtr()));
   else if (read_closed_)
@@ -380,7 +380,7 @@ void SimpleHttpServer::OnConnect() {
       base::Bind(&SimpleHttpServer::OnAccepted, base::Unretained(this)));
 
   if (accept_result != net::ERR_IO_PENDING)
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&SimpleHttpServer::OnAccepted,
                                   weak_factory_.GetWeakPtr(), accept_result));
 }

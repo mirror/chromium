@@ -58,7 +58,7 @@ int FuzzedSourceStream::Read(IOBuffer* buf,
 
   read_pending_ = true;
   // |this| is owned by the caller so use base::Unretained is safe.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&FuzzedSourceStream::OnReadComplete, base::Unretained(this),
                  callback, data, pending_read_buf, result));

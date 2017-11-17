@@ -267,7 +267,7 @@ void AboutResourceLoader::GetAboutResource(
   }
 
   if (cached_about_resource_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(
             callback, google_apis::HTTP_NO_CONTENT,
@@ -499,9 +499,8 @@ void ChangeListLoader::OnChangeListLoadComplete(FileError error) {
   }
 
   for (size_t i = 0; i < pending_load_callback_.size(); ++i) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE,
-        base::Bind(pending_load_callback_[i], error));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, base::Bind(pending_load_callback_[i], error));
   }
   pending_load_callback_.clear();
 

@@ -749,7 +749,7 @@ blink::WebMediaStreamSource UserMediaProcessor::InitializeAudioSourceObject(
 
   MediaStreamSource::ConstraintsCallback source_ready = base::Bind(
       &UserMediaProcessor::OnAudioSourceStartedOnAudioThread,
-      base::ThreadTaskRunnerHandle::Get(), weak_factory_.GetWeakPtr());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), weak_factory_.GetWeakPtr());
 
   bool has_sw_echo_cancellation = false;
   MediaStreamAudioSource* const audio_source = CreateAudioSource(
@@ -918,7 +918,7 @@ void UserMediaProcessor::GetUserMediaRequestSucceeded(
   // the UserMediaClientImpl/UserMediaProcessor are destroyed if the JavaScript
   // code request the frame to be destroyed within the scope of the callback.
   // Therefore, post a task to complete the request with a clean stack.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&UserMediaProcessor::DelayedGetUserMediaRequestSucceeded,
                      weak_factory_.GetWeakPtr(), stream, web_request));
@@ -945,7 +945,7 @@ void UserMediaProcessor::GetUserMediaRequestFailed(
   // the UserMediaClientImpl/UserMediaProcessor are destroyed if the JavaScript
   // code request the frame to be destroyed within the scope of the callback.
   // Therefore, post a task to complete the request with a clean stack.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&UserMediaProcessor::DelayedGetUserMediaRequestFailed,
                      weak_factory_.GetWeakPtr(),

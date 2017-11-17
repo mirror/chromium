@@ -37,7 +37,7 @@ struct TestingRemoteCommandsServer::RemoteCommandWithCallback {
 
 TestingRemoteCommandsServer::TestingRemoteCommandsServer()
     : clock_(new base::DefaultTickClock()),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       weak_factory_(this) {
   weak_ptr_to_this_ = weak_factory_.GetWeakPtr();
 }

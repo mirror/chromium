@@ -957,7 +957,7 @@ void ChromeLauncherController::OnIsSyncingChanged() {
 }
 
 void ChromeLauncherController::ScheduleUpdateAppLaunchersFromPref() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&ChromeLauncherController::UpdateAppLaunchersFromPref,
                      weak_ptr_factory_.GetWeakPtr()));

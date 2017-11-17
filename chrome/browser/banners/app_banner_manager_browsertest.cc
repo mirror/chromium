@@ -92,7 +92,7 @@ class AppBannerManagerTest : public AppBannerManager {
     AppBannerManager::Stop(code);
     ASSERT_FALSE(banner_shown_.get());
     banner_shown_.reset(new bool(false));
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, on_done_);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, on_done_);
   }
 
   void ShowBannerUi() override {
@@ -103,7 +103,7 @@ class AppBannerManagerTest : public AppBannerManager {
 
     ASSERT_FALSE(banner_shown_.get());
     banner_shown_.reset(new bool(true));
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, on_done_);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, on_done_);
   }
 
   void UpdateState(AppBannerManager::State state) override {
@@ -112,7 +112,8 @@ class AppBannerManagerTest : public AppBannerManager {
     if (state == AppBannerManager::State::PENDING_ENGAGEMENT ||
         (AppBannerManager::IsExperimentalAppBannersEnabled() &&
          state == AppBannerManager::State::PENDING_PROMPT)) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, on_done_);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                             on_done_);
     }
   }
 
@@ -120,8 +121,8 @@ class AppBannerManagerTest : public AppBannerManager {
                            const std::string& referrer) override {
     AppBannerManager::OnBannerPromptReply(reply, referrer);
     if (on_banner_prompt_reply_) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                    on_banner_prompt_reply_);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+          FROM_HERE, on_banner_prompt_reply_);
     }
   }
 

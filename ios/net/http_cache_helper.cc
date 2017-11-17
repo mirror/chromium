@@ -91,8 +91,8 @@ void ClearHttpCache(const scoped_refptr<net::URLRequestContextGetter>& getter,
   DCHECK(delete_end != base::Time());
   network_task_runner->PostTask(
       FROM_HERE, base::Bind(&ClearHttpCacheOnIOThread, getter,
-                            base::ThreadTaskRunnerHandle::Get(), delete_begin,
-                            delete_end, callback));
+                            base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                            delete_begin, delete_end, callback));
 }
 
 }  // namespace net

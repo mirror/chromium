@@ -363,7 +363,7 @@ void FileSystemContext::ResolveURL(const FileSystemURL& url,
   // If not on IO thread, forward before passing the task to the backend.
   if (!io_task_runner_->RunsTasksInCurrentSequence()) {
     ResolveURLCallback relay_callback = base::BindOnce(
-        &RelayResolveURLCallback, base::ThreadTaskRunnerHandle::Get(),
+        &RelayResolveURLCallback, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
         std::move(callback));
     io_task_runner_->PostTask(
         FROM_HERE, base::BindOnce(&FileSystemContext::ResolveURL, this, url,

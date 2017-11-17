@@ -555,7 +555,7 @@ std::unique_ptr<BlobDataHandle> BlobStorageContext::BuildBlobInternal(
     DCHECK(previous_building_state->copies.empty());
     std::swap(building_state->build_completion_callbacks,
               previous_building_state->build_completion_callbacks);
-    auto runner = base::ThreadTaskRunnerHandle::Get();
+    auto runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
     for (const auto& callback :
          previous_building_state->build_started_callbacks)
       runner->PostTask(FROM_HERE, base::BindOnce(callback, entry->status()));
@@ -706,7 +706,7 @@ std::unique_ptr<BlobDataHandle> BlobStorageContext::CreateHandle(
     BlobEntry* entry) {
   return base::WrapUnique(new BlobDataHandle(
       uuid, entry->content_type_, entry->content_disposition_, entry->size_,
-      this, base::ThreadTaskRunnerHandle::Get().get()));
+      this, base::ThreadTaskRunnerHandle::Get(FROM_HERE).get()));
 }
 
 void BlobStorageContext::NotifyTransportCompleteInternal(BlobEntry* entry) {
@@ -734,7 +734,7 @@ void BlobStorageContext::CancelBuildingBlobInternal(BlobEntry* entry,
   }
   if (entry->building_state_ &&
       entry->status() == BlobStatus::PENDING_CONSTRUCTION) {
-    auto runner = base::ThreadTaskRunnerHandle::Get();
+    auto runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
     for (const auto& callback : entry->building_state_->build_started_callbacks)
       runner->PostTask(FROM_HERE, base::BindOnce(callback, reason));
   }
@@ -816,7 +816,7 @@ void BlobStorageContext::FinishBuilding(BlobEntry* entry) {
 
   memory_controller_.NotifyMemoryItemsUsed(entry->items());
 
-  auto runner = base::ThreadTaskRunnerHandle::Get();
+  auto runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   for (const auto& callback : callbacks)
     runner->PostTask(FROM_HERE, base::Bind(callback, entry->status()));
 

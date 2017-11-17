@@ -63,9 +63,10 @@ void SerialExtensionHostQueue::Remove(DeferredStartRenderHost* host) {
 
 void SerialExtensionHostQueue::PostTask() {
   if (!pending_create_) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE, base::Bind(&SerialExtensionHostQueue::ProcessOneHost,
-                              ptr_factory_.GetWeakPtr()),
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&SerialExtensionHostQueue::ProcessOneHost,
+                   ptr_factory_.GetWeakPtr()),
         base::TimeDelta::FromMilliseconds(GetDelayMs()));
     pending_create_ = true;
   }

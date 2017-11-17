@@ -108,9 +108,9 @@ class RequestContext : public URLRequestContext {
     std::unique_ptr<URLRequestJobFactoryImpl> job_factory =
         std::make_unique<URLRequestJobFactoryImpl>();
 #if !BUILDFLAG(DISABLE_FILE_SUPPORT)
-    job_factory->SetProtocolHandler("file",
-                                    std::make_unique<FileProtocolHandler>(
-                                        base::ThreadTaskRunnerHandle::Get()));
+    job_factory->SetProtocolHandler(
+        "file", std::make_unique<FileProtocolHandler>(
+                    base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 #endif
     storage_.set_job_factory(std::move(job_factory));
   }

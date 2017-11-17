@@ -213,7 +213,7 @@ gpu::ContextResult ContextProviderCommandBuffer::BindToCurrentThread() {
   scoped_refptr<base::SingleThreadTaskRunner> task_runner =
       default_task_runner_;
   if (!task_runner)
-    task_runner = base::ThreadTaskRunnerHandle::Get();
+    task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
   // It's possible to be running BindToCurrentThread on two contexts
   // on different threads at the same time, but which will be in the same share

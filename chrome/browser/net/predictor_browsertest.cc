@@ -126,7 +126,7 @@ class ConnectionListener
     : public net::test_server::EmbeddedTestServerConnectionListener {
  public:
   ConnectionListener()
-      : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         num_accepted_connections_needed_(0),
         num_accepted_connections_loop_(nullptr) {}
 
@@ -535,7 +535,7 @@ class PredictorBrowserTest : public InProcessBrowserTest {
 
   void SetUpOnMainThread() override {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
-    task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
     cross_site_test_server()->ServeFilesFromSourceDirectory(
         "chrome/test/data/");
 
@@ -881,7 +881,7 @@ IN_PROC_BROWSER_TEST_F(PredictorBrowserTest,
 
   // Flood with delayed requests, then wait.
   FloodResolveRequestsOnUIThread(names);
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       base::TimeDelta::FromMilliseconds(500));
   base::RunLoop().Run();

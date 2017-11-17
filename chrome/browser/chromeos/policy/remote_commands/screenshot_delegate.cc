@@ -63,7 +63,7 @@ std::unique_ptr<UploadJob> ScreenshotDelegate::CreateUploadJob(
       upload_url, robot_account_id, device_oauth2_token_service,
       system_request_context, delegate,
       base::WrapUnique(new UploadJobImpl::RandomMimeBoundaryGenerator),
-      base::ThreadTaskRunnerHandle::Get()));
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 }
 
 void ScreenshotDelegate::StoreScreenshot(

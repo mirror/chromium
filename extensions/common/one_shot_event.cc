@@ -45,7 +45,7 @@ OneShotEvent::~OneShotEvent() {}
 
 void OneShotEvent::Post(const base::Location& from_here,
                         const base::Closure& task) const {
-  PostImpl(from_here, task, base::ThreadTaskRunnerHandle::Get(),
+  PostImpl(from_here, task, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
            base::TimeDelta());
 }
 
@@ -59,7 +59,8 @@ void OneShotEvent::Post(
 void OneShotEvent::PostDelayed(const base::Location& from_here,
                                const base::Closure& task,
                                const base::TimeDelta& delay) const {
-  PostImpl(from_here, task, base::ThreadTaskRunnerHandle::Get(), delay);
+  PostImpl(from_here, task, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+           delay);
 }
 
 void OneShotEvent::Signal() {

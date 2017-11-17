@@ -202,7 +202,7 @@ ChromeUserManagerImpl::CreateChromeUserManager() {
 
 ChromeUserManagerImpl::ChromeUserManagerImpl()
     : ChromeUserManager(base::ThreadTaskRunnerHandle::IsSet()
-                            ? base::ThreadTaskRunnerHandle::Get()
+                            ? base::ThreadTaskRunnerHandle::Get(FROM_HERE)
                             : scoped_refptr<base::TaskRunner>()),
       cros_settings_(CrosSettings::Get()),
       device_local_account_policy_service_(NULL),
@@ -224,7 +224,7 @@ ChromeUserManagerImpl::ChromeUserManagerImpl()
 
   // Since we're in ctor postpone any actions till this is fully created.
   if (base::ThreadTaskRunnerHandle::IsSet()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&ChromeUserManagerImpl::RetrieveTrustedDevicePolicies,
                        weak_factory_.GetWeakPtr()));
@@ -542,7 +542,7 @@ void ChromeUserManagerImpl::Observe(
         // ProfileManager::GetProfile before the profile gets registered
         // in ProfileManager. It happens in case of sync profile load when
         // NOTIFICATION_PROFILE_CREATED is called synchronously.
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE, base::BindOnce(&ChromeUserManagerImpl::SwitchActiveUser,
                                       weak_factory_.GetWeakPtr(),
                                       GetPendingUserSwitchID()));

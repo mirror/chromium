@@ -89,7 +89,8 @@ void MockFileStream::ReleaseCallbacks() {
   if (!throttled_task_.is_null()) {
     base::Closure throttled_task = throttled_task_;
     throttled_task_.Reset();
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, throttled_task);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           throttled_task);
   }
 }
 
@@ -116,7 +117,7 @@ void MockFileStream::DoCallback64(const Int64CompletionCallback& callback,
 int MockFileStream::ErrorCallback(const CompletionCallback& callback) {
   CHECK_NE(OK, forced_error_);
   if (async_error_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, forced_error_));
     clear_forced_error();
     return ERR_IO_PENDING;
@@ -130,7 +131,7 @@ int64_t MockFileStream::ErrorCallback64(
     const Int64CompletionCallback& callback) {
   CHECK_NE(OK, forced_error_);
   if (async_error_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, forced_error_));
     clear_forced_error();
     return ERR_IO_PENDING;

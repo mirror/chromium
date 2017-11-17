@@ -106,7 +106,7 @@ struct MediaFoundationVideoEncodeAccelerator::BitstreamBufferRef {
 MediaFoundationVideoEncodeAccelerator::MediaFoundationVideoEncodeAccelerator(
     bool compatible_with_win7)
     : compatible_with_win7_(compatible_with_win7),
-      main_client_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      main_client_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       encoder_thread_("MFEncoderThread"),
       encoder_task_weak_factory_(this) {}
 

@@ -128,8 +128,8 @@ class UserCloudPolicyStoreChromeOSTest : public testing::Test {
         std::make_unique<FakeSessionManagerClient>(user_policy_dir());
     store_.reset(new UserCloudPolicyStoreChromeOS(
         &cryptohome_client_, session_manager_client_.get(),
-        base::ThreadTaskRunnerHandle::Get(), account_id_, user_policy_dir(),
-        false /* is_active_directory */));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), account_id_,
+        user_policy_dir(), false /* is_active_directory */));
     store_->AddObserver(&observer_);
 
     // Install the initial public key, so that by default the validation of

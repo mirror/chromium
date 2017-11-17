@@ -92,8 +92,8 @@ void PolicyExtensionReinstaller::ScheduleNextReinstallAttempt() {
   if (g_reinstall_action_for_test) {
     g_reinstall_action_for_test->Run(callback, reinstall_delay);
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(FROM_HERE, callback,
-                                                         reinstall_delay);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+        FROM_HERE, callback, reinstall_delay);
   }
 }
 

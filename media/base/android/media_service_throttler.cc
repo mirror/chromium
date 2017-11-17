@@ -85,7 +85,8 @@ MediaServiceThrottler::~MediaServiceThrottler() {}
 MediaServiceThrottler::MediaServiceThrottler()
     : clock_(new base::DefaultTickClock()),
       current_crashes_(0),
-      crash_listener_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+      crash_listener_task_runner_(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
   // base::Unretained is safe because the MediaServiceThrottler is supposed to
   // live until the process dies.
   release_crash_listener_cb_ = base::Bind(

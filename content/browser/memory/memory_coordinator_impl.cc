@@ -120,7 +120,7 @@ MemoryCoordinatorImpl* MemoryCoordinatorImpl::GetInstance() {
   if (!base::FeatureList::IsEnabled(features::kMemoryCoordinator))
     return nullptr;
   static MemoryCoordinatorImpl* instance = new MemoryCoordinatorImpl(
-      base::ThreadTaskRunnerHandle::Get(), CreateMemoryMonitor());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), CreateMemoryMonitor());
   return instance;
 }
 

@@ -46,7 +46,7 @@ class DragDropControllerMusTest : public test::AuraMusWmTestBase {
   void PostDragMoveAndDrop() {
     // Posted task will be run when the inner loop runs in StartDragAndDrop.
     ASSERT_TRUE(base::ThreadTaskRunnerHandle::IsSet());
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&DragDropControllerMusTest::DragMoveAndDrop,
                                   base::Unretained(this)));
   }

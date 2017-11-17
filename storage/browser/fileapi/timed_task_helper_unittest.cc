@@ -22,7 +22,7 @@ namespace {
 class Embedder {
  public:
   Embedder()
-      : timer_(base::ThreadTaskRunnerHandle::Get().get()),
+      : timer_(base::ThreadTaskRunnerHandle::Get(FROM_HERE).get()),
         timer_fired_(false) {}
 
   void OnTimerFired() {

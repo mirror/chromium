@@ -112,7 +112,7 @@ void FakeBluetoothGattServiceClient::ExposeHeartRateService(
 
   NotifyServiceAdded(GetHeartRateServicePath());
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(
           &FakeBluetoothGattServiceClient::ExposeHeartRateCharacteristics,

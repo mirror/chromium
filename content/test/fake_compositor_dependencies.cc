@@ -64,7 +64,7 @@ FakeCompositorDependencies::GetBufferToTextureTargetMap() {
 
 scoped_refptr<base::SingleThreadTaskRunner>
 FakeCompositorDependencies::GetCompositorMainThreadTaskRunner() {
-  return base::ThreadTaskRunnerHandle::Get();
+  return base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 scoped_refptr<base::SingleThreadTaskRunner>

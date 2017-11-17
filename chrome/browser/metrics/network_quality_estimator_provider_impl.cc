@@ -51,7 +51,7 @@ void NetworkQualityEstimatorProviderImpl::PostReplyNetworkQualityEstimator(
   if (!content::BrowserThread::IsThreadInitialized(
           content::BrowserThread::IO)) {
     // IO thread is not yet initialized. Try again in the next message pump.
-    bool task_posted = base::ThreadTaskRunnerHandle::Get()->PostTask(
+    bool task_posted = base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&NetworkQualityEstimatorProviderImpl::
                                   PostReplyNetworkQualityEstimator,
                               weak_ptr_factory_.GetWeakPtr(), io_callback));

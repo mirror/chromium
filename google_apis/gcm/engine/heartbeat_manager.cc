@@ -193,7 +193,7 @@ void HeartbeatManager::RestartTimer() {
   // Windows, Mac, Android, iOS, and Chrome OS all provide a way to be notified
   // when the system is suspending or resuming.  The only one that does not is
   // Linux so we need to poll to check for missed heartbeats.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&HeartbeatManager::CheckForMissedHeartbeat,
                  weak_ptr_factory_.GetWeakPtr()),
@@ -216,7 +216,7 @@ void HeartbeatManager::CheckForMissedHeartbeat() {
 
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
   // Otherwise check again later.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&HeartbeatManager::CheckForMissedHeartbeat,
                  weak_ptr_factory_.GetWeakPtr()),

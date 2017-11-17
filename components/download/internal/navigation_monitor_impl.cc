@@ -62,7 +62,7 @@ void NavigationMonitorImpl::NotifyNavigationFinished() {
   navigation_finished_callback_.Reset(
       base::Bind(&NavigationMonitorImpl::OnNavigationFinished,
                  weak_ptr_factory_.GetWeakPtr()));
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, navigation_finished_callback_.callback(),
       navigation_completion_delay_);
 }
@@ -78,7 +78,7 @@ void NavigationMonitorImpl::ScheduleBackupTask() {
   backup_navigation_finished_callback_.Reset(
       base::Bind(&NavigationMonitorImpl::OnNavigationFinished,
                  weak_ptr_factory_.GetWeakPtr()));
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, backup_navigation_finished_callback_.callback(),
       navigation_timeout_delay_);
 }

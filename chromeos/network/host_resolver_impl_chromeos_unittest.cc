@@ -95,7 +95,8 @@ class HostResolverImplChromeOSTest : public testing::Test {
   void InitializeHostResolver() {
     net::HostResolver::Options options;
     host_resolver_ = HostResolverImplChromeOS::CreateHostResolverForTest(
-        base::ThreadTaskRunnerHandle::Get(), network_state_handler_.get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+        network_state_handler_.get());
   }
 
   // Run from the main thread loop.

@@ -89,7 +89,7 @@ class RendererResourceDelegate : public content::ResourceDispatcherDelegate {
     // Update the browser about our cache.
     // Rate limit informing the host of our cache stats.
     if (!weak_factory_.HasWeakPtrs()) {
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE,
           base::Bind(&RendererResourceDelegate::InformHostOfCacheStats,
                      weak_factory_.GetWeakPtr()),
@@ -205,16 +205,18 @@ class ResourceUsageReporterImpl : public chrome::mojom::ResourceUsageReporter {
       usage_data_->v8_bytes_allocated = heap_stats.total_heap_size();
       usage_data_->v8_bytes_used = heap_stats.used_heap_size();
     }
-    base::Closure collect = base::Bind(
-        &ResourceUsageReporterImpl::CollectOnWorkerThread,
-        base::ThreadTaskRunnerHandle::Get(), weak_factory_.GetWeakPtr());
+    base::Closure collect =
+        base::Bind(&ResourceUsageReporterImpl::CollectOnWorkerThread,
+                   base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                   weak_factory_.GetWeakPtr());
     workers_to_go_ = RenderThread::Get()->PostTaskToAllWebWorkers(collect);
     if (workers_to_go_) {
       // The guard task to send out partial stats
       // in case some workers are not responsive.
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-          FROM_HERE, base::Bind(&ResourceUsageReporterImpl::SendResults,
-                                weak_factory_.GetWeakPtr()),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+          FROM_HERE,
+          base::Bind(&ResourceUsageReporterImpl::SendResults,
+                     weak_factory_.GetWeakPtr()),
           base::TimeDelta::FromMilliseconds(kWaitForWorkersStatsTimeoutMS));
     } else {
       // No worker threads so just send out the main thread data right away.
@@ -270,9 +272,9 @@ ChromeRenderThreadObserver::ChromeRenderThreadObserver()
   auto registry = base::MakeUnique<service_manager::BinderRegistry>();
   registry->AddInterface(
       base::Bind(CreateResourceUsageReporter, weak_factory_.GetWeakPtr()),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   registry->AddInterface(visited_link_slave_->GetBindCallback(),
-                         base::ThreadTaskRunnerHandle::Get());
+                         base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   if (content::ChildThread::Get()) {
     content::ChildThread::Get()
         ->GetServiceManagerConnection()

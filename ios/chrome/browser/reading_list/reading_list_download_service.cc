@@ -186,7 +186,7 @@ void ReadingListDownloadService::ScheduleDownloadEntry(const GURL& url) {
       entry->DistilledState() == ReadingListEntry::PROCESSED || entry->IsRead())
     return;
   GURL local_url(url);
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&ReadingListDownloadService::DownloadEntry,
                  weak_ptr_factory_.GetWeakPtr(), local_url),

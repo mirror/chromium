@@ -77,7 +77,7 @@ class CancelableTimer {
   CancelableTimer(base::Closure callback, base::TimeDelta delay)
       : callback_(callback),
         weak_factory_(this) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&CancelableTimer::Fire, weak_factory_.GetWeakPtr()),
         delay);

@@ -198,7 +198,7 @@ void GpuChildThread::Init(const base::Time& process_start_time) {
   auto registry = std::make_unique<service_manager::BinderRegistry>();
   registry->AddInterface(base::Bind(&GpuChildThread::BindServiceFactoryRequest,
                                     weak_factory_.GetWeakPtr()),
-                         base::ThreadTaskRunnerHandle::Get());
+                         base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   if (GetContentClient()->gpu())  // nullptr in tests.
     GetContentClient()->gpu()->InitializeRegistry(registry.get());
 
@@ -245,7 +245,7 @@ void GpuChildThread::OnGpuServiceConnection(viz::GpuServiceImpl* gpu_service) {
   media::AndroidOverlayMojoFactoryCB overlay_factory_cb;
 #if defined(OS_ANDROID)
   overlay_factory_cb = base::Bind(&GpuChildThread::CreateAndroidOverlay,
-                                  base::ThreadTaskRunnerHandle::Get());
+                                  base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   gpu_service->media_gpu_channel_manager()->SetOverlayFactory(
       overlay_factory_cb);
 #endif

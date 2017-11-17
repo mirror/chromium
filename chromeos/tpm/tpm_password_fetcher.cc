@@ -65,7 +65,7 @@ void TpmPasswordFetcher::OnTpmGetPassword(
 }
 
 void TpmPasswordFetcher::RescheduleFetch() {
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&TpmPasswordFetcher::Fetch, weak_factory_.GetWeakPtr()),
       base::TimeDelta::FromMilliseconds(kTpmCheckIntervalMs));

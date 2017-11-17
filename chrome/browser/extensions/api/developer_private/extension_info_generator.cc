@@ -259,7 +259,7 @@ void ExtensionInfoGenerator::CreateExtensionInfo(
 
   if (pending_image_loads_ == 0) {
     // Don't call the callback re-entrantly.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, base::Passed(&list_)));
     list_.clear();
   } else {
@@ -297,7 +297,7 @@ void ExtensionInfoGenerator::CreateExtensionsInfo(
 
   if (pending_image_loads_ == 0) {
     // Don't call the callback re-entrantly.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, base::Passed(&list_)));
     list_.clear();
   } else {

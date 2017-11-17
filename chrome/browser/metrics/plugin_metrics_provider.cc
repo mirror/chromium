@@ -367,7 +367,7 @@ bool PluginMetricsProvider::RecordCurrentStateWithDelay(int delay_sec) {
   if (weak_ptr_factory_.HasWeakPtrs())
     return false;
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&PluginMetricsProvider::RecordCurrentState,
                      weak_ptr_factory_.GetWeakPtr()),

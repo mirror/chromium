@@ -29,8 +29,8 @@ PerIsolateData::PerIsolateData(
     : isolate_(isolate),
       allocator_(allocator),
       access_mode_(access_mode),
-      task_runner_(
-          task_runner ? task_runner : base::ThreadTaskRunnerHandle::Get()) {
+      task_runner_(task_runner ? task_runner
+                               : base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
   isolate_->SetData(kEmbedderNativeGin, this);
 }
 

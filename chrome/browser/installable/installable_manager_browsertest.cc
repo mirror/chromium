@@ -68,7 +68,8 @@ class LazyWorkerInstallableManager : public InstallableManager {
 
  protected:
   void OnWaitingForServiceWorker() override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_closure_);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           quit_closure_);
   };
 
  private:
@@ -92,7 +93,8 @@ class CallbackTester {
       badge_icon_.reset(new SkBitmap(*data.badge_icon));
     valid_manifest_ = data.valid_manifest;
     has_worker_ = data.has_worker;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_closure_);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           quit_closure_);
   }
 
   InstallableStatusCode error_code() const { return error_code_; }
@@ -159,7 +161,8 @@ class NestedCallbackTester {
     EXPECT_EQ(manifest_.name, data.manifest->name);
     EXPECT_EQ(manifest_.short_name, data.manifest->short_name);
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_closure_);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           quit_closure_);
   }
 
  private:

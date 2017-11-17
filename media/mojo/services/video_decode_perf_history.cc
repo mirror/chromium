@@ -58,8 +58,8 @@ void VideoDecodePerfHistory::OnDatabaseInit(bool success) {
   // avoids subtle issues with deferred calls that may otherwise re-enter and
   // potentially reinitialize the DB (e.g. ClearHistory).
   for (auto& deferred_call : init_deferred_api_calls_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  std::move(deferred_call));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, std::move(deferred_call));
   }
   init_deferred_api_calls_.clear();
 }

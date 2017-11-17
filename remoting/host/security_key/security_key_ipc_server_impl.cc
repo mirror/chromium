@@ -166,7 +166,7 @@ void SecurityKeyIpcServerImpl::OnChannelConnected(int32_t peer_pid) {
     ipc_channel_->Send(
         new ChromotingNetworkToRemoteSecurityKeyMsg_InvalidSession());
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&SecurityKeyIpcServerImpl::OnChannelError,
                               weak_factory_.GetWeakPtr()));
     return;

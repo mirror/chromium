@@ -146,7 +146,7 @@ void RecursiveOperationDelegate::ProcessPendingFiles() {
 
   // Run ProcessFile.
   scoped_refptr<base::SingleThreadTaskRunner> current_task_runner =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   if (!pending_files_.empty()) {
     current_task_runner->PostTask(
         FROM_HERE,

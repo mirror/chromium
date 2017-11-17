@@ -20,7 +20,8 @@ namespace remoting {
 namespace protocol {
 
 FakeStreamSocket::FakeStreamSocket()
-    : task_runner_(base::ThreadTaskRunnerHandle::Get()), weak_factory_(this) {}
+    : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+      weak_factory_(this) {}
 
 FakeStreamSocket::~FakeStreamSocket() {
   EXPECT_TRUE(task_runner_->BelongsToCurrentThread());
@@ -149,9 +150,8 @@ void FakeStreamSocket::DoWrite(const scoped_refptr<net::IOBuffer>& buf,
 }
 
 FakeStreamChannelFactory::FakeStreamChannelFactory()
-    : task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      weak_factory_(this) {
-}
+    : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+      weak_factory_(this) {}
 
 FakeStreamChannelFactory::~FakeStreamChannelFactory() {}
 

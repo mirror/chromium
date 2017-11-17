@@ -74,7 +74,7 @@ void UpdateEngine::Update(bool is_foreground,
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (IsThrottled(is_foreground)) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), Error::RETRY_LATER));
     return;
   }
@@ -143,7 +143,7 @@ void UpdateEngine::ComponentCheckingForUpdatesStart(
     return;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&UpdateEngine::DoUpdateCheck, base::Unretained(this), it));
 }
@@ -210,7 +210,7 @@ void UpdateEngine::ComponentCheckingForUpdatesComplete(
     return;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&UpdateEngine::UpdateCheckComplete,
                                 base::Unretained(this), it));
 }
@@ -224,7 +224,7 @@ void UpdateEngine::UpdateCheckComplete(const UpdateContextIterator it) {
   for (const auto& id : update_context->ids)
     update_context->component_queue.push(id);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&UpdateEngine::HandleComponent,
                                 base::Unretained(this), it));
 }
@@ -242,7 +242,7 @@ void UpdateEngine::HandleComponent(const UpdateContextIterator it) {
                             ? Error::UPDATE_CHECK_ERROR
                             : Error::NONE;
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&UpdateEngine::UpdateComplete,
                                   base::Unretained(this), it, error));
     return;
@@ -255,7 +255,7 @@ void UpdateEngine::HandleComponent(const UpdateContextIterator it) {
 
   auto& next_update_delay = (*it)->next_update_delay;
   if (!next_update_delay.is_zero() && component->IsUpdateAvailable()) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&UpdateEngine::HandleComponent, base::Unretained(this),
                        it),
@@ -295,7 +295,7 @@ void UpdateEngine::HandleComponentComplete(const UpdateContextIterator it) {
     queue.pop();
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&UpdateEngine::HandleComponent,
                                 base::Unretained(this), it));
 }
@@ -306,7 +306,7 @@ void UpdateEngine::UpdateComplete(const UpdateContextIterator it, Error error) {
   const auto& update_context = *it;
   DCHECK(update_context);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(update_context->callback), error));
 
   update_contexts_.erase(it);
@@ -363,7 +363,7 @@ void UpdateEngine::SendUninstallPing(const std::string& id,
 
   update_context->component_queue.push(id);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&UpdateEngine::HandleComponent,
                                 base::Unretained(this), it));
 }

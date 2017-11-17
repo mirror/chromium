@@ -413,7 +413,7 @@ UsbDeviceHandleUsbfs::UsbDeviceHandleUsbfs(
     scoped_refptr<base::SequencedTaskRunner> blocking_task_runner)
     : device_(device),
       fd_(fd.get()),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       blocking_task_runner_(blocking_task_runner) {
   DCHECK(device_);
   DCHECK(fd.is_valid());
@@ -662,7 +662,7 @@ void UsbDeviceHandleUsbfs::GenericTransfer(UsbTransferDirection direction,
         base::BindOnce(&UsbDeviceHandleUsbfs::GenericTransferInternal, this,
                        direction, endpoint_number, buffer, length, timeout,
                        std::move(callback),
-                       base::ThreadTaskRunnerHandle::Get()));
+                       base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   }
 }
 

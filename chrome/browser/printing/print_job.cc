@@ -189,7 +189,7 @@ bool PrintJob::FlushJob(base::TimeDelta timeout) {
   // Make sure the object outlive this message loop.
   scoped_refptr<PrintJob> handle(this);
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::BindOnce(&PrintJob::Quit, quit_factory_.GetWeakPtr()),
       timeout);
 
@@ -381,7 +381,7 @@ void PrintJob::OnNotifyPrintJobEvent(const JobEventDetails& event_details) {
     }
     case JobEventDetails::DOC_DONE: {
       // This will call Stop() and broadcast a JOB_DONE message.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(&PrintJob::OnDocumentDone, this));
       break;
     }
@@ -436,7 +436,7 @@ void PrintJob::ControlledWorkerShutdown() {
   // Delay shutdown until the worker terminates.  We want this code path
   // to wait on the thread to quit before continuing.
   if (worker_->IsRunning()) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, base::Bind(&PrintJob::ControlledWorkerShutdown, this),
         base::TimeDelta::FromMilliseconds(100));
     return;

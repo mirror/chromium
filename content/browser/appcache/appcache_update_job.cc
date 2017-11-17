@@ -273,7 +273,7 @@ void AppCacheUpdateJob::StartUpdate(AppCacheHost* host,
   }
 
   BrowserThread::PostAfterStartupTask(
-      FROM_HERE, base::ThreadTaskRunnerHandle::Get(),
+      FROM_HERE, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::BindOnce(&AppCacheUpdateJob::FetchManifest,
                      weak_factory_.GetWeakPtr(), true));
 }
@@ -1477,7 +1477,7 @@ void AppCacheUpdateJob::DeleteSoon() {
     group_ = nullptr;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 }  // namespace content

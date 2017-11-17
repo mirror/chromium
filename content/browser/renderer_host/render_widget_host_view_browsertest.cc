@@ -194,7 +194,7 @@ class RenderWidgetHostViewBrowserTest : public ContentBrowserTest {
   // call stack.
   static void GiveItSomeTime() {
     base::RunLoop run_loop;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop.QuitClosure(),
         base::TimeDelta::FromMilliseconds(10));
     run_loop.Run();
@@ -412,7 +412,7 @@ IN_PROC_BROWSER_TEST_P(CompositingRenderWidgetHostViewBrowserTest,
   std::unique_ptr<RenderWidgetHostViewFrameSubscriber> subscriber(
       new FakeFrameSubscriber(base::Bind(
           &RenderWidgetHostViewBrowserTest::FrameDelivered,
-          base::Unretained(this), base::ThreadTaskRunnerHandle::Get(),
+          base::Unretained(this), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
           run_loop.QuitClosure())));
   view->BeginFrameSubscription(std::move(subscriber));
   run_loop.Run();
@@ -437,13 +437,15 @@ IN_PROC_BROWSER_TEST_P(CompositingRenderWidgetHostViewBrowserTest, CopyTwice) {
   view->CopyFromSurfaceToVideoFrame(
       gfx::Rect(), first_output,
       base::Bind(&RenderWidgetHostViewBrowserTest::FrameDelivered,
-                 base::Unretained(this), base::ThreadTaskRunnerHandle::Get(),
-                 closure, base::TimeTicks::Now()));
+                 base::Unretained(this),
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE), closure,
+                 base::TimeTicks::Now()));
   view->CopyFromSurfaceToVideoFrame(
       gfx::Rect(), second_output,
       base::Bind(&RenderWidgetHostViewBrowserTest::FrameDelivered,
-                 base::Unretained(this), base::ThreadTaskRunnerHandle::Get(),
-                 closure, base::TimeTicks::Now()));
+                 base::Unretained(this),
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE), closure,
+                 base::TimeTicks::Now()));
   run_loop.Run();
 
   EXPECT_EQ(2, callback_invoke_count());

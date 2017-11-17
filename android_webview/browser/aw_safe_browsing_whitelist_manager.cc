@@ -182,7 +182,7 @@ AwSafeBrowsingWhitelistManager::AwSafeBrowsingWhitelistManager(
     const scoped_refptr<base::SequencedTaskRunner>& io_task_runner)
     : background_task_runner_(background_task_runner),
       io_task_runner_(io_task_runner),
-      ui_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      ui_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       whitelist_(base::MakeUnique<TrieNode>()) {}
 
 AwSafeBrowsingWhitelistManager::~AwSafeBrowsingWhitelistManager() {}

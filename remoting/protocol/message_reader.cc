@@ -106,7 +106,7 @@ void MessageReader::OnDataReceived(net::IOBuffer* data, int data_size) {
     CompoundBuffer* buffer = message_decoder_.GetNextMessage();
     if (!buffer)
       break;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&MessageReader::RunCallback, weak_factory_.GetWeakPtr(),
                    base::Passed(base::WrapUnique(buffer))));

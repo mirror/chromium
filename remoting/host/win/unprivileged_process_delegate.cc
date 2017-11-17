@@ -288,7 +288,7 @@ void UnprivilegedProcessDelegate::LaunchProcess(
   std::unique_ptr<IPC::ChannelProxy> server = IPC::ChannelProxy::Create(
       invitation.AttachMessagePipe(mojo_message_pipe_token).release(),
       IPC::Channel::MODE_SERVER, this, io_task_runner_,
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   base::CommandLine command_line(target_command_->argv());
   command_line.AppendSwitchASCII(kMojoPipeToken, mojo_message_pipe_token);
 

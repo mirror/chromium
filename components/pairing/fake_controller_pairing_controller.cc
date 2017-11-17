@@ -238,9 +238,10 @@ void FakeControllerPairingController::ChangeStage(Stage new_stage) {
 }
 
 void FakeControllerPairingController::ChangeStageLater(Stage new_stage) {
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&FakeControllerPairingController::ChangeStage,
-                            base::Unretained(this), new_stage),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&FakeControllerPairingController::ChangeStage,
+                 base::Unretained(this), new_stage),
       async_duration_);
 }
 
@@ -267,7 +268,7 @@ void FakeControllerPairingController::ExecuteDiscoveryEvent(
   if (++event_position == discovery_scenario_.size()) {
     return;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&FakeControllerPairingController::ExecuteDiscoveryEvent,
                  base::Unretained(this), event_position),
@@ -294,7 +295,7 @@ void FakeControllerPairingController::PairingStageChanged(Stage new_stage) {
   switch (new_stage) {
     case STAGE_DEVICES_DISCOVERY: {
       discovered_devices_.clear();
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE,
           base::Bind(&FakeControllerPairingController::ExecuteDiscoveryEvent,
                      base::Unretained(this), 0),

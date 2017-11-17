@@ -118,7 +118,7 @@ void UserPolicySigninServiceBase::OnClientError(CloudPolicyClient* client) {
 
       // Can't shutdown now because we're in the middle of a callback from
       // the CloudPolicyClient, so queue up a task to do the shutdown.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(
               &UserPolicySigninServiceBase::ShutdownUserCloudPolicyManager,

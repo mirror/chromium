@@ -493,7 +493,7 @@ void TestDownloadRequestHandler::PartialResponseJob::
          parameters_->injected_errors.front().offset <= requested_range_begin_)
     parameters_->injected_errors.pop();
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&PartialResponseJob::NotifyHeadersComplete,
                                 weak_factory_.GetWeakPtr()));
 }

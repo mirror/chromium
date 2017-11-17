@@ -22,7 +22,8 @@ MockFileChangeObserver::~MockFileChangeObserver() {}
 ChangeObserverList MockFileChangeObserver::CreateList(
     MockFileChangeObserver* observer) {
   ChangeObserverList list;
-  return list.AddObserver(observer, base::ThreadTaskRunnerHandle::Get().get());
+  return list.AddObserver(observer,
+                          base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
 }
 
 void MockFileChangeObserver::OnCreateFile(const FileSystemURL& url) {

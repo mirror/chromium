@@ -57,7 +57,7 @@ class TestSingleLogSource : public SystemLogsSource {
     // Do not directly pass the result to the callback, because that's not how
     // log sources actually work. Instead, simulate the asynchronous operation
     // of a SystemLogsSource by invoking the callback separately.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, base::Owned(result_map)));
   }
 

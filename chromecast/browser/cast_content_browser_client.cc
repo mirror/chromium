@@ -557,7 +557,7 @@ void CastContentBrowserClient::ExposeInterfacesToRenderer(
   registry->AddInterface(
       base::Bind(&media::MediaCapsImpl::AddBinding,
                  base::Unretained(cast_browser_main_parts_->media_caps())),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
 #if !defined(OS_ANDROID) && !defined(OS_FUCHSIA)
   if (!memory_pressure_controller_) {
@@ -567,7 +567,7 @@ void CastContentBrowserClient::ExposeInterfacesToRenderer(
   registry->AddInterface(
       base::Bind(&MemoryPressureControllerImpl::AddBinding,
                  base::Unretained(memory_pressure_controller_.get())),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 #endif  // !defined(OS_ANDROID) && !defined(OS_FUCHSIA)
 }
 

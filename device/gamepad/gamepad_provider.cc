@@ -176,7 +176,7 @@ void GamepadProvider::Resume() {
 void GamepadProvider::RegisterForUserGesture(const base::Closure& closure) {
   base::AutoLock lock(user_gesture_lock_);
   user_gesture_observers_.push_back(
-      ClosureAndThread(closure, base::ThreadTaskRunnerHandle::Get()));
+      ClosureAndThread(closure, base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 }
 
 void GamepadProvider::OnDevicesChanged(base::SystemMonitor::DeviceType type) {
@@ -364,7 +364,7 @@ void GamepadProvider::ScheduleDoPoll() {
       return;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::Bind(&GamepadProvider::DoPoll, Unretained(this)),
       base::TimeDelta::FromMilliseconds(kDesiredSamplingIntervalMs));
   have_scheduled_do_poll_ = true;

@@ -580,7 +580,7 @@ void HttpStreamFactoryImpl::Job::RunLoop(int result) {
   }
 
   if (job_type_ == PRECONNECT) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&HttpStreamFactoryImpl::Job::OnPreconnectsComplete,
                    ptr_factory_.GetWeakPtr()));
@@ -593,7 +593,7 @@ void HttpStreamFactoryImpl::Job::RunLoop(int result) {
     GetSSLInfo(&ssl_info);
 
     next_state_ = STATE_WAITING_USER_ACTION;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&HttpStreamFactoryImpl::Job::OnCertificateErrorCallback,
                    ptr_factory_.GetWeakPtr(), result, ssl_info));
@@ -605,7 +605,7 @@ void HttpStreamFactoryImpl::Job::RunLoop(int result) {
       UMA_HISTOGRAM_BOOLEAN("Net.ProxyAuthRequested.HasConnection",
                             connection_.get() != NULL);
       if (!connection_.get()) {
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE,
             base::Bind(&Job::OnStreamFailedCallback, ptr_factory_.GetWeakPtr(),
                        ERR_PROXY_AUTH_REQUESTED_WITH_NO_CONNECTION));
@@ -617,7 +617,7 @@ void HttpStreamFactoryImpl::Job::RunLoop(int result) {
       next_state_ = STATE_WAITING_USER_ACTION;
       ProxyClientSocket* proxy_socket =
           static_cast<ProxyClientSocket*>(connection_->socket());
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::Bind(&Job::OnNeedsProxyAuthCallback, ptr_factory_.GetWeakPtr(),
                      *proxy_socket->GetConnectResponseInfo(),
@@ -626,7 +626,7 @@ void HttpStreamFactoryImpl::Job::RunLoop(int result) {
     }
 
     case ERR_SSL_CLIENT_AUTH_CERT_NEEDED:
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::Bind(
               &Job::OnNeedsClientAuthCallback, ptr_factory_.GetWeakPtr(),
@@ -641,7 +641,7 @@ void HttpStreamFactoryImpl::Job::RunLoop(int result) {
 
       ProxyClientSocket* proxy_socket =
           static_cast<ProxyClientSocket*>(connection_->socket());
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::Bind(
               &Job::OnHttpsProxyTunnelResponseCallback,
@@ -654,35 +654,35 @@ void HttpStreamFactoryImpl::Job::RunLoop(int result) {
     case OK:
       next_state_ = STATE_DONE;
       if (new_spdy_session_.get()) {
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE, base::Bind(&Job::OnNewSpdySessionReadyCallback,
                                   ptr_factory_.GetWeakPtr()));
       } else if (delegate_->for_websockets()) {
         DCHECK(websocket_stream_);
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE, base::Bind(&Job::OnWebSocketHandshakeStreamReadyCallback,
                                   ptr_factory_.GetWeakPtr()));
       } else if (stream_type_ == HttpStreamRequest::BIDIRECTIONAL_STREAM) {
         if (!bidirectional_stream_impl_) {
-          base::ThreadTaskRunnerHandle::Get()->PostTask(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
               FROM_HERE, base::Bind(&Job::OnStreamFailedCallback,
                                     ptr_factory_.GetWeakPtr(), ERR_FAILED));
         } else {
-          base::ThreadTaskRunnerHandle::Get()->PostTask(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
               FROM_HERE,
               base::Bind(&Job::OnBidirectionalStreamImplReadyCallback,
                          ptr_factory_.GetWeakPtr()));
         }
       } else {
         DCHECK(stream_.get());
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE,
             base::Bind(&Job::OnStreamReadyCallback, ptr_factory_.GetWeakPtr()));
       }
       return;
 
     default:
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(&Job::OnStreamFailedCallback,
                                 ptr_factory_.GetWeakPtr(), result));
       return;
@@ -823,7 +823,7 @@ int HttpStreamFactoryImpl::Job::DoEvaluateThrottle() {
                                                   callback)) {
     return OK;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, callback, base::TimeDelta::FromMilliseconds(kHTTP2ThrottleMs));
   net_log_.AddEvent(NetLogEventType::HTTP_STREAM_JOB_THROTTLED);
   return ERR_IO_PENDING;

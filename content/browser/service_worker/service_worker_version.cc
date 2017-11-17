@@ -85,8 +85,8 @@ const char kForceUpdateInfoMessage[] =
 
 void RunSoon(base::OnceClosure callback) {
   if (!callback.is_null())
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  std::move(callback));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           std::move(callback));
 }
 
 template <typename CallbackArray, typename Arg>

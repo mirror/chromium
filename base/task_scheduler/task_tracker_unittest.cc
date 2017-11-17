@@ -560,7 +560,7 @@ static void VerifyThreadTaskRunnerHandle(
   EXPECT_TRUE(ThreadTaskRunnerHandle::IsSet());
   // SequencedTaskRunnerHandle inherits ThreadTaskRunnerHandle for thread.
   EXPECT_TRUE(SequencedTaskRunnerHandle::IsSet());
-  EXPECT_EQ(expected_task_runner, ThreadTaskRunnerHandle::Get());
+  EXPECT_EQ(expected_task_runner, ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 TEST_P(TaskSchedulerTaskTrackerTest,

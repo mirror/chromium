@@ -108,7 +108,7 @@ WebRtcAudioSink::Adapter::Adapter(
     : webrtc::MediaStreamTrack<webrtc::AudioTrackInterface>(label),
       source_(std::move(source)),
       signaling_task_runner_(std::move(signaling_task_runner)),
-      main_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
   DCHECK(signaling_task_runner_);
 }
 

@@ -56,7 +56,7 @@ void NonSfiListener::Listen() {
   channel_ = IPC::SyncChannel::Create(
       channel_handle.release(), IPC::Channel::MODE_CLIENT,
       this,  // As a Listener.
-      io_thread_.task_runner(), base::ThreadTaskRunnerHandle::Get(),
+      io_thread_.task_runner(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       true,  // Create pipe now.
       &shutdown_event_);
   base::RunLoop().Run();

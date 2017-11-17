@@ -225,7 +225,7 @@ class OzonePlatformGbm : public OzonePlatform {
     // complete.
     // TODO(rjk): Make it possible to turn this on.
     // using_mojo_ = args.connector != nullptr;
-    gpu_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    gpu_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
     if (!single_process_)
       gl_api_loader_.reset(new GlApiLoader());

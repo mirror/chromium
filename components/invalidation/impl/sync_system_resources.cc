@@ -68,7 +68,7 @@ void SyncLogger::SetSystemResources(invalidation::SystemResources* resources) {
 }
 
 SyncInvalidationScheduler::SyncInvalidationScheduler()
-    : created_on_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : created_on_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       is_started_(false),
       is_stopped_(false),
       weak_factory_(this) {
@@ -107,9 +107,10 @@ void SyncInvalidationScheduler::Schedule(invalidation::TimeDelta delay,
   }
 
   posted_tasks_.insert(base::WrapUnique(task));
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&SyncInvalidationScheduler::RunPostedTask,
-                            weak_factory_.GetWeakPtr(), task),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&SyncInvalidationScheduler::RunPostedTask,
+                 weak_factory_.GetWeakPtr(), task),
       delay);
 }
 

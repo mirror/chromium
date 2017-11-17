@@ -90,7 +90,7 @@ class PrivetNotificationsListenerTest : public testing::Test {
  public:
   PrivetNotificationsListenerTest()
       : request_context_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())) {
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))) {
     notification_listener_.reset(new PrivetNotificationsListener(
         std::unique_ptr<PrivetHTTPAsynchronousFactory>(
             new MockPrivetHttpFactory(request_context_.get())),

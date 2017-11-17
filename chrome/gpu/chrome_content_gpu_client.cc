@@ -63,15 +63,15 @@ void ChromeContentGpuClient::InitializeRegistry(
   registry->AddInterface(
       base::Bind(&ChromeContentGpuClient::CreateArcVideoDecodeAccelerator,
                  base::Unretained(this)),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   registry->AddInterface(
       base::Bind(&ChromeContentGpuClient::CreateArcVideoEncodeAccelerator,
                  base::Unretained(this)),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   registry->AddInterface(
       base::Bind(&ChromeContentGpuClient::CreateProtectedBufferManager,
                  base::Unretained(this)),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 #endif
 }
 

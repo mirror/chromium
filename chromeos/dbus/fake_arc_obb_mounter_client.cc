@@ -22,13 +22,13 @@ void FakeArcObbMounterClient::MountObb(const std::string& obb_file,
                                        const std::string& mount_path,
                                        int32_t owner_gid,
                                        VoidDBusMethodCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), false));
 }
 
 void FakeArcObbMounterClient::UnmountObb(const std::string& mount_path,
                                          VoidDBusMethodCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), false));
 }
 

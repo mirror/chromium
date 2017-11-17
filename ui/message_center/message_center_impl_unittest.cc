@@ -248,7 +248,8 @@ class MockPopupTimersController : public PopupTimersController {
   ~MockPopupTimersController() override {}
 
   void TimerFinished(const std::string& id) override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_closure_);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           quit_closure_);
     timer_finished_++;
     last_id_ = id;
   }
@@ -334,7 +335,7 @@ TEST_F(MessageCenterImplTest, PopupTimersControllerStartMultipleTimers) {
 
 TEST_F(MessageCenterImplTest, PopupTimersControllerRestartOnUpdate) {
   scoped_refptr<base::SingleThreadTaskRunner> old_task_runner =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
   scoped_refptr<base::TestMockTimeTaskRunner> task_runner(
       new base::TestMockTimeTaskRunner(base::Time::Now(),

@@ -102,7 +102,7 @@ void CaptivePortalTabReloader::OnLoadCommitted(int net_error) {
   // If the tab needs to reload, do so asynchronously, to avoid reentrancy
   // issues.
   if (state_ == STATE_NEEDS_RELOAD) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&CaptivePortalTabReloader::ReloadTabIfNeeded,
                                   weak_factory_.GetWeakPtr()));
   }

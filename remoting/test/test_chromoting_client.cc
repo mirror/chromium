@@ -84,10 +84,11 @@ void TestChromotingClient::StartConnection(
 
   scoped_refptr<URLRequestContextGetter> request_context_getter;
   request_context_getter = new URLRequestContextGetter(
-      base::ThreadTaskRunnerHandle::Get(),   // network_runner
-      base::ThreadTaskRunnerHandle::Get());  // file_runner
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE),   // network_runner
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));  // file_runner
 
-  client_context_.reset(new ClientContext(base::ThreadTaskRunnerHandle::Get()));
+  client_context_.reset(
+      new ClientContext(base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 
   // Check to see if the user passed in a customized video renderer.
   if (!video_renderer_) {

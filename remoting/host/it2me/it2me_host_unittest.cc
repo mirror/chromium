@@ -93,7 +93,7 @@ void FakeIt2MeConfirmationDialog::Show(const std::string& remote_user_email,
                                        const ResultCallback& callback) {
   EXPECT_STREQ(remote_user_email_.c_str(), remote_user_email.c_str());
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback, dialog_result_));
 }
 
@@ -208,7 +208,7 @@ void It2MeHostTest::SetUp() {
   run_loop_.reset(new base::RunLoop());
 
   host_context_ = ChromotingHostContext::Create(new AutoThreadTaskRunner(
-      base::ThreadTaskRunnerHandle::Get(), run_loop_->QuitClosure()));
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), run_loop_->QuitClosure()));
   network_task_runner_ = host_context_->network_task_runner();
   ui_task_runner_ = host_context_->ui_task_runner();
   fake_bot_signal_strategy_.reset(
@@ -324,7 +324,7 @@ void It2MeHostTest::OnStateChanged(It2MeHostState state, ErrorCode error_code) {
   last_host_state_ = state;
 
   if (state_change_callback_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::ResetAndReturn(&state_change_callback_));
   }
 }

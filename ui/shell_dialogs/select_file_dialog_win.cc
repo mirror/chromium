@@ -204,7 +204,7 @@ class SelectFileDialogImpl : public ui::SelectFileDialog,
           file_type_index(file_type_index),
           default_extension(default_extension),
           run_state(run_state),
-          ui_task_runner(base::ThreadTaskRunnerHandle::Get()),
+          ui_task_runner(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
           owner(owner),
           params(params) {
       DCHECK(base::MessageLoopForUI::IsCurrent());

@@ -20,7 +20,7 @@ TestAudioThread::TestAudioThread(bool use_real_thread) {
     CHECK(thread_->Start());
     task_runner_ = thread_->task_runner();
   } else {
-    task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   }
 }
 

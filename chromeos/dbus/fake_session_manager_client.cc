@@ -133,13 +133,13 @@ void FakeSessionManagerClient::NotifyLockScreenDismissed() {
 
 void FakeSessionManagerClient::RetrieveActiveSessions(
     ActiveSessionsCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), user_sessions_));
 }
 
 void FakeSessionManagerClient::RetrieveDevicePolicy(
     RetrievePolicyCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(std::move(callback), RetrievePolicyResponseType::SUCCESS,
                      device_policy_));
@@ -155,7 +155,7 @@ FakeSessionManagerClient::BlockingRetrieveDevicePolicy(
 void FakeSessionManagerClient::RetrievePolicyForUser(
     const cryptohome::Identification& cryptohome_id,
     RetrievePolicyCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(std::move(callback), RetrievePolicyResponseType::SUCCESS,
                      user_policies_[cryptohome_id]));
@@ -180,13 +180,14 @@ void FakeSessionManagerClient::RetrievePolicyForUserWithoutSession(
                            std::string())
           : base::BindOnce(std::move(callback),
                            RetrievePolicyResponseType::SUCCESS, iter->second);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, std::move(task));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                         std::move(task));
 }
 
 void FakeSessionManagerClient::RetrieveDeviceLocalAccountPolicy(
     const std::string& account_id,
     RetrievePolicyCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(std::move(callback), RetrievePolicyResponseType::SUCCESS,
                      device_local_account_policy_[account_id]));
@@ -206,13 +207,13 @@ void FakeSessionManagerClient::StoreDevicePolicy(
   enterprise_management::PolicyFetchResponse policy;
   if (!policy.ParseFromString(policy_blob)) {
     LOG(ERROR) << "Unable to parse policy protobuf";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), false /* success */));
     return;
   }
 
   if (!store_device_policy_success_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), false /* success */));
     return;
   }
@@ -222,7 +223,7 @@ void FakeSessionManagerClient::StoreDevicePolicy(
     owner_key_store_success = StoreOwnerKey(policy.new_public_key());
   device_policy_ = policy_blob;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true /* success */));
   if (policy.has_new_public_key()) {
     for (auto& observer : observers_)
@@ -241,7 +242,7 @@ void FakeSessionManagerClient::StorePolicyForUser(
     user_policies_[cryptohome_id] = policy_blob;
     result = true;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), result));
 }
 
@@ -250,7 +251,7 @@ void FakeSessionManagerClient::StoreDeviceLocalAccountPolicy(
     const std::string& policy_blob,
     VoidDBusMethodCallback callback) {
   device_local_account_policy_[account_id] = policy_blob;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 
@@ -264,7 +265,7 @@ void FakeSessionManagerClient::SetFlagsForUser(
 
 void FakeSessionManagerClient::GetServerBackedStateKeys(
     StateKeysCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(std::move(callback), server_backed_state_keys_));
 }
@@ -284,34 +285,34 @@ void FakeSessionManagerClient::StartArcInstance(
   } else {
     result = StartArcInstanceResult::UNKNOWN_ERROR;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), result,
                                 container_instance_id, base::ScopedFD()));
 }
 
 void FakeSessionManagerClient::StopArcInstance(
     VoidDBusMethodCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), arc_available_));
 }
 
 void FakeSessionManagerClient::SetArcCpuRestriction(
     login_manager::ContainerCpuRestrictionState restriction_state,
     VoidDBusMethodCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), arc_available_));
 }
 
 void FakeSessionManagerClient::EmitArcBooted(
     const cryptohome::Identification& cryptohome_id,
     VoidDBusMethodCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), arc_available_));
 }
 
 void FakeSessionManagerClient::GetArcStartTime(
     DBusMethodCallback<base::TimeTicks> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback),
                                 arc_available_ ? base::make_optional(
                                                      base::TimeTicks::Now())
@@ -322,7 +323,7 @@ void FakeSessionManagerClient::RemoveArcData(
     const cryptohome::Identification& cryptohome_id,
     VoidDBusMethodCallback callback) {
   if (!callback.is_null()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), arc_available_));
   }
 }

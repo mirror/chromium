@@ -244,8 +244,9 @@ bool DownloadRequestCore::OnResponseStarted(
 
   // Create the ByteStream for sending data to the download sink.
   std::unique_ptr<ByteStreamReader> stream_reader;
-  CreateByteStream(base::ThreadTaskRunnerHandle::Get(), GetDownloadTaskRunner(),
-                   kDownloadByteStreamSize, &stream_writer_, &stream_reader);
+  CreateByteStream(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                   GetDownloadTaskRunner(), kDownloadByteStreamSize,
+                   &stream_writer_, &stream_reader);
   stream_writer_->RegisterCallback(
       base::Bind(&DownloadRequestCore::ResumeRequest, AsWeakPtr()));
 

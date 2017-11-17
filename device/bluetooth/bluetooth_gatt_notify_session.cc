@@ -44,7 +44,7 @@ void BluetoothGattNotifySession::Stop(const base::Closure& callback) {
   if (characteristic_ != nullptr) {
     characteristic_->StopNotifySession(this, callback);
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback);
   }
 }
 

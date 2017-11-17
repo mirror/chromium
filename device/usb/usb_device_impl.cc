@@ -60,10 +60,10 @@ void UsbDeviceImpl::Open(OpenCallback callback) {
   scoped_refptr<base::SequencedTaskRunner> blocking_task_runner =
       UsbService::CreateBlockingTaskRunner();
   blocking_task_runner->PostTask(
-      FROM_HERE,
-      base::BindOnce(&UsbDeviceImpl::OpenOnBlockingThread, this,
-                     std::move(callback), base::ThreadTaskRunnerHandle::Get(),
-                     blocking_task_runner));
+      FROM_HERE, base::BindOnce(&UsbDeviceImpl::OpenOnBlockingThread, this,
+                                std::move(callback),
+                                base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                                blocking_task_runner));
 }
 
 void UsbDeviceImpl::ReadAllConfigurations() {

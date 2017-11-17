@@ -126,7 +126,7 @@ void SpellcheckHunspellDictionary::Load() {
       spellcheck_platform::PlatformSupportsLanguage(language_)) {
     use_browser_spellchecker_ = true;
     spellcheck_platform::SetLanguage(language_);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(
             &SpellcheckHunspellDictionary::InformListenersOfInitialization,

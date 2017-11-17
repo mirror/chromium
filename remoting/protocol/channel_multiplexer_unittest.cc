@@ -40,7 +40,7 @@ const char kTestChannelName2[] = "test2";
 
 
 void QuitCurrentThread() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
 }
 

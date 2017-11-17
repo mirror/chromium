@@ -80,7 +80,7 @@ class ReadErrorUploadDataStream : public UploadDataStream {
 
   int ReadInternal(IOBuffer* buf, int buf_len) override {
     if (async_ == FailureMode::ASYNC) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(&ReadErrorUploadDataStream::CompleteRead,
                                 weak_factory_.GetWeakPtr()));
       return ERR_IO_PENDING;
@@ -201,7 +201,7 @@ class InitAsyncUploadDataStream : public ChunkedUploadDataStream {
   void CompleteInit() { UploadDataStream::OnInitCompleted(OK); }
 
   int InitInternal(const NetLogWithSource& net_log) override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&InitAsyncUploadDataStream::CompleteInit,
                               weak_factory_.GetWeakPtr()));
     return ERR_IO_PENDING;
@@ -372,8 +372,8 @@ TEST(HttpStreamParser, ShouldMergeRequestHeadersAndBody_FileBody) {
     std::vector<std::unique_ptr<UploadElementReader>> element_readers;
 
     element_readers.push_back(std::make_unique<UploadFileElementReader>(
-        base::ThreadTaskRunnerHandle::Get().get(), temp_file_path, 0, 0,
-        base::Time()));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), temp_file_path, 0,
+        0, base::Time()));
 
     std::unique_ptr<UploadDataStream> body(
         new ElementsUploadDataStream(std::move(element_readers), 0));

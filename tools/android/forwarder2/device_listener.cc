@@ -67,7 +67,7 @@ DeviceListener::DeviceListener(std::unique_ptr<Socket> listener_socket,
       listener_socket_(std::move(listener_socket)),
       host_socket_(std::move(host_socket)),
       listener_port_(port),
-      deletion_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      deletion_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       thread_("DeviceListener") {
   CHECK(host_socket_.get());
   DCHECK(deletion_task_runner_.get());

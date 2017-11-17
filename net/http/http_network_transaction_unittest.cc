@@ -10105,7 +10105,7 @@ TEST_F(HttpNetworkTransactionTest, UploadFileSmallerThanLength) {
 
   std::vector<std::unique_ptr<UploadElementReader>> element_readers;
   element_readers.push_back(std::make_unique<UploadFileElementReader>(
-      base::ThreadTaskRunnerHandle::Get().get(), temp_file_path, 0,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), temp_file_path, 0,
       std::numeric_limits<uint64_t>::max(), base::Time()));
   ElementsUploadDataStream upload_data_stream(std::move(element_readers), 0);
 
@@ -10152,7 +10152,7 @@ TEST_F(HttpNetworkTransactionTest, UploadUnreadableFile) {
 
   std::vector<std::unique_ptr<UploadElementReader>> element_readers;
   element_readers.push_back(std::make_unique<UploadFileElementReader>(
-      base::ThreadTaskRunnerHandle::Get().get(), temp_file, 0,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), temp_file, 0,
       std::numeric_limits<uint64_t>::max(), base::Time()));
   ElementsUploadDataStream upload_data_stream(std::move(element_readers), 0);
 

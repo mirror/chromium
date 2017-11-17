@@ -376,7 +376,7 @@ std::unique_ptr<SyncEncryptionHandler::Observer>
 SyncServiceCrypto::GetEncryptionObserverProxy() {
   DCHECK(thread_checker_.CalledOnValidThread());
   return std::make_unique<SyncEncryptionObserverProxy>(
-      weak_factory_.GetWeakPtr(), base::ThreadTaskRunnerHandle::Get());
+      weak_factory_.GetWeakPtr(), base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 std::unique_ptr<SyncEncryptionHandler::NigoriState>

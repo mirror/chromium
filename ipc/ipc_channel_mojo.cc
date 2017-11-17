@@ -14,6 +14,7 @@
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
 #include "base/lazy_instance.h"
+#include "base/location.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/process/process_handle.h"
@@ -75,6 +76,15 @@ base::ProcessId GetSelfPID() {
 }  // namespace
 
 //------------------------------------------------------------------------------
+
+// static
+std::unique_ptr<ChannelMojo> ChannelMojo::Create(
+    mojo::ScopedMessagePipeHandle handle,
+    Mode mode,
+    Listener* listener) {
+  return Create(std::move(handle), mode, listener,
+                base::ThreadTaskRunnerHandle::Get(FROM_HERE));
+}
 
 // static
 std::unique_ptr<ChannelMojo> ChannelMojo::Create(

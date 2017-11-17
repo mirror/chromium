@@ -32,7 +32,7 @@ void RunUntilIdleTest(
       ScopedTaskEnvironment::MainThreadType::DEFAULT, execution_control_mode);
 
   AtomicFlag first_main_thread_task_ran;
-  ThreadTaskRunnerHandle::Get()->PostTask(
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, BindOnce(&VerifyRunUntilIdleDidNotReturnAndSetFlag,
                           Unretained(&run_until_idle_returned),
                           Unretained(&first_main_thread_task_ran)));

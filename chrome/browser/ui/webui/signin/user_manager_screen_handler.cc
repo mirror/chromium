@@ -958,7 +958,7 @@ void UserManagerScreenHandler::OnBrowserWindowReady(Browser* browser) {
   }
 
   if (!url_hash_.empty()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&UrlHashHelper::ExecuteUrlHash,
                        base::Owned(new UrlHashHelper(browser, url_hash_))));

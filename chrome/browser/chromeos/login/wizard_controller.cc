@@ -285,7 +285,7 @@ WizardController::~WizardController() {
   // |remora_controller| has to be reset after |screen_manager_| is reset.
   remora_controller_.reset();
   if (shark_connection_listener_.get()) {
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
         FROM_HERE, shark_connection_listener_.release());
   }
   if (default_controller_ == this) {
@@ -1675,7 +1675,7 @@ void WizardController::OnSharkConnected(
         remora_controller) {
   VLOG(1) << "OnSharkConnected";
   remora_controller_ = std::move(remora_controller);
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
       FROM_HERE, shark_connection_listener_.release());
   SetControllerDetectedPref(true);
   ShowHostPairingScreen();

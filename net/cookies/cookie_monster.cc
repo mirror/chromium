@@ -473,8 +473,8 @@ void CookieMonster::FlushStore(base::OnceClosure callback) {
   if (initialized_ && store_.get()) {
     store_->Flush(std::move(callback));
   } else if (callback) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  std::move(callback));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           std::move(callback));
   }
 }
 
@@ -670,8 +670,9 @@ CookieMonster::AddCallbackForCookie(const GURL& gurl,
 
   std::unique_ptr<CookieMonsterCookieChangedSubscription> sub(
       std::make_unique<CookieMonsterCookieChangedSubscription>(callback));
-  sub->SetCallbackSubscription(hook_map_[key]->Add(base::Bind(
-      &RunAsync, base::ThreadTaskRunnerHandle::Get(), sub->WeakCallback())));
+  sub->SetCallbackSubscription(hook_map_[key]->Add(
+      base::Bind(&RunAsync, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                 sub->WeakCallback())));
 
   return std::move(sub);
 }
@@ -682,8 +683,9 @@ CookieMonster::AddCallbackForAllChanges(const CookieChangedCallback& callback) {
 
   std::unique_ptr<CookieMonsterCookieChangedSubscription> sub(
       std::make_unique<CookieMonsterCookieChangedSubscription>(callback));
-  sub->SetCallbackSubscription(global_hook_map_->Add(base::Bind(
-      &RunAsync, base::ThreadTaskRunnerHandle::Get(), sub->WeakCallback())));
+  sub->SetCallbackSubscription(global_hook_map_->Add(
+      base::Bind(&RunAsync, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                 sub->WeakCallback())));
   return std::move(sub);
 }
 

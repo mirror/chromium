@@ -225,12 +225,13 @@ class ChannelSteadyPingPongTest : public IPCChannelMojoTestBase {
           base::WaitableEvent::InitialState::NOT_SIGNALED);
       channel_proxy = IPC::SyncChannel::Create(
           TakeHandle().release(), IPC::Channel::MODE_SERVER, &listener,
-          GetIOThreadTaskRunner(), base::ThreadTaskRunnerHandle::Get(), false,
-          shutdown_event.get());
+          GetIOThreadTaskRunner(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+          false, shutdown_event.get());
     } else {
       channel_proxy = IPC::ChannelProxy::Create(
           TakeHandle().release(), IPC::Channel::MODE_SERVER, &listener,
-          GetIOThreadTaskRunner(), base::ThreadTaskRunnerHandle::Get());
+          GetIOThreadTaskRunner(),
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     }
     listener.Init(channel_proxy.get());
 

@@ -43,9 +43,10 @@ std::unique_ptr<MicroBenchmark> CreateBenchmark(
 
 MicroBenchmarkController::MicroBenchmarkController(LayerTreeHost* host)
     : host_(host),
-      main_controller_task_runner_(base::ThreadTaskRunnerHandle::IsSet()
-                                       ? base::ThreadTaskRunnerHandle::Get()
-                                       : nullptr) {
+      main_controller_task_runner_(
+          base::ThreadTaskRunnerHandle::IsSet()
+              ? base::ThreadTaskRunnerHandle::Get(FROM_HERE)
+              : nullptr) {
   DCHECK(host_);
 }
 

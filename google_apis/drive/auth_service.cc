@@ -145,7 +145,7 @@ void AuthService::StartAuthentication(const AuthStatusCallback& callback) {
 
   if (HasAccessToken()) {
     // We already have access token. Give it back to the caller asynchronously.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, HTTP_SUCCESS, access_token_));
   } else if (HasRefreshToken()) {
     // We have refresh token, let's get an access token.
@@ -157,7 +157,7 @@ void AuthService::StartAuthentication(const AuthStatusCallback& callback) {
                                callback),
                     scopes_);
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, DRIVE_NOT_READY, std::string()));
   }
 }

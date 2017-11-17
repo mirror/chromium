@@ -132,7 +132,7 @@ void OobeBaseTest::SetUpOnMainThread() {
 void OobeBaseTest::TearDownOnMainThread() {
   // If the login display is still showing, exit gracefully.
   if (LoginDisplayHost::default_host()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&chrome::AttemptExit));
     content::RunMessageLoop();
   }

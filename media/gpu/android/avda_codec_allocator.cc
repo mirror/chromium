@@ -228,8 +228,9 @@ void AVDACodecAllocator::CreateMediaCodecAsync(
     task_runner_->PostTask(
         FROM_HERE,
         base::Bind(&AVDACodecAllocator::CreateMediaCodecAsyncInternal,
-                   base::Unretained(this), base::ThreadTaskRunnerHandle::Get(),
-                   client, codec_config));
+                   base::Unretained(this),
+                   base::ThreadTaskRunnerHandle::Get(FROM_HERE), client,
+                   codec_config));
     return;
   }
 

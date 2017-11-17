@@ -365,7 +365,7 @@ HotwordService::HotwordService(Profile* profile)
 // on other platforms.
 #if defined(OS_CHROMEOS)
   SetAudioHistoryHandler(new HotwordAudioHistoryHandler(
-      profile_, base::ThreadTaskRunnerHandle::Get()));
+      profile_, base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 #endif
 
   if (HotwordServiceFactory::IsAlwaysOnAvailable() &&
@@ -375,14 +375,14 @@ HotwordService::HotwordService(Profile* profile)
     // for the hotword extension to be installed.
     base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
     if (command_line->HasSwitch(switches::kEnableExperimentalHotwordHardware)) {
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE,
           base::BindOnce(&HotwordService::ShowHotwordNotification,
                          weak_factory_.GetWeakPtr()),
           base::TimeDelta::FromSeconds(5));
     } else if (!profile_->GetPrefs()->GetBoolean(
                    prefs::kHotwordAlwaysOnNotificationSeen)) {
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE,
           base::BindOnce(&HotwordService::ShowHotwordNotification,
                          weak_factory_.GetWeakPtr()),

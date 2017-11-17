@@ -69,10 +69,9 @@ void CertificateImporterImpl::ImportCertificates(
                  done_callback);
 
   // |done_callback| must be called on the origin thread.
-  DoneCallback callback_on_origin_loop =
-      base::Bind(&CallBackOnOriginLoop,
-                 base::ThreadTaskRunnerHandle::Get(),
-                 callback_to_this);
+  DoneCallback callback_on_origin_loop = base::Bind(
+      &CallBackOnOriginLoop, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+      callback_to_this);
 
   // This is the actual function that imports the certificates.
   base::Closure import_certs_callback =

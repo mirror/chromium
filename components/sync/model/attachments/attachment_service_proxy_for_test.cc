@@ -43,13 +43,13 @@ AttachmentServiceProxy AttachmentServiceProxyForTest::Create() {
 
   scoped_refptr<base::SequencedTaskRunner> runner;
   if (base::ThreadTaskRunnerHandle::IsSet()) {
-    runner = base::ThreadTaskRunnerHandle::Get();
+    runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   } else {
     // Dummy runner for tests that don't have MessageLoop.
     DVLOG(1) << "Creating dummy MessageLoop for AttachmentServiceProxy.";
     base::MessageLoop loop;
     // This works because |runner| takes a ref to the proxy.
-    runner = base::ThreadTaskRunnerHandle::Get();
+    runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   }
   return AttachmentServiceProxyForTest(runner, core_for_test);
 }

@@ -21,7 +21,7 @@ namespace {
 class BlacklistCheckTest : public testing::Test {
  public:
   BlacklistCheckTest()
-      : test_prefs_(base::ThreadTaskRunnerHandle::Get()),
+      : test_prefs_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         blacklist_(test_prefs_.prefs()) {}
 
  protected:

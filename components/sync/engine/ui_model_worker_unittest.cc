@@ -33,7 +33,8 @@ SyncerError DoWork(
 // Converts |work| to a WorkCallback that will verify that it's run on the
 // thread it was constructed on.
 WorkCallback ClosureToWorkCallback(base::Closure work) {
-  return base::Bind(&DoWork, base::ThreadTaskRunnerHandle::Get(), work);
+  return base::Bind(&DoWork, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                    work);
 }
 
 // Increments |counter|.
@@ -45,7 +46,7 @@ class SyncUIModelWorkerTest : public testing::Test {
  public:
   SyncUIModelWorkerTest() : sync_thread_("SyncThreadForTest") {
     sync_thread_.Start();
-    worker_ = new UIModelWorker(base::ThreadTaskRunnerHandle::Get());
+    worker_ = new UIModelWorker(base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 
   void PostWorkToSyncThread(base::Closure work) {

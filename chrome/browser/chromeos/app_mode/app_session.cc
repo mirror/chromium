@@ -174,7 +174,7 @@ class AppSession::BrowserWindowHandler : public chrome::BrowserListObserver {
 
   // chrome::BrowserListObserver overrides:
   void OnBrowserAdded(Browser* browser) override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&BrowserWindowHandler::HandleBrowser,
                        base::Unretained(this),  // LazyInstance, always valid

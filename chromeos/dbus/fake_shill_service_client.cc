@@ -94,7 +94,7 @@ void FakeShillServiceClient::GetProperties(
     call_status = DBUS_METHOD_CALL_FAILURE;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&PassStubServiceProperties, callback, call_status,
                             base::Owned(result_properties.release())));
 }
@@ -109,7 +109,7 @@ void FakeShillServiceClient::SetProperty(const dbus::ObjectPath& service_path,
     error_callback.Run("Error.InvalidService", "Invalid Service");
     return;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback);
 }
 
 void FakeShillServiceClient::SetProperties(
@@ -125,7 +125,7 @@ void FakeShillServiceClient::SetProperties(
       return;
     }
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback);
 }
 
 void FakeShillServiceClient::ClearProperty(
@@ -141,7 +141,7 @@ void FakeShillServiceClient::ClearProperty(
   }
   dict->RemoveWithoutPathExpansion(name, NULL);
   // Note: Shill does not send notifications when properties are cleared.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback);
 }
 
 void FakeShillServiceClient::ClearProperties(
@@ -161,7 +161,7 @@ void FakeShillServiceClient::ClearProperties(
     // Note: Shill does not send notifications when properties are cleared.
     result.AppendBoolean(dict->RemoveKey(name));
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, std::move(result)));
 }
 
@@ -191,13 +191,13 @@ void FakeShillServiceClient::Connect(const dbus::ObjectPath& service_path,
                      associating_value);
 
   // Stay Associating until the state is changed again after a delay.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&FakeShillServiceClient::ContinueConnect,
                  weak_ptr_factory_.GetWeakPtr(), service_path.value()),
       base::TimeDelta::FromSeconds(GetInteractiveDelay()));
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback);
 }
 
 void FakeShillServiceClient::Disconnect(const dbus::ObjectPath& service_path,
@@ -209,7 +209,7 @@ void FakeShillServiceClient::Disconnect(const dbus::ObjectPath& service_path,
     return;
   }
   // Set Idle after a delay
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&FakeShillServiceClient::SetProperty,
                  weak_ptr_factory_.GetWeakPtr(), service_path,
@@ -222,7 +222,7 @@ void FakeShillServiceClient::Disconnect(const dbus::ObjectPath& service_path,
 void FakeShillServiceClient::Remove(const dbus::ObjectPath& service_path,
                                     const base::Closure& callback,
                                     const ErrorCallback& error_callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback);
 }
 
 void FakeShillServiceClient::ActivateCellularModem(
@@ -239,20 +239,20 @@ void FakeShillServiceClient::ActivateCellularModem(
   SetServiceProperty(service_path.value(), shill::kActivationStateProperty,
                      base::Value(shill::kActivationStateActivating));
   // Set Activated after a delay
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&FakeShillServiceClient::SetCellularActivated,
                  weak_ptr_factory_.GetWeakPtr(), service_path, error_callback),
       base::TimeDelta::FromSeconds(GetInteractiveDelay()));
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback);
 }
 
 void FakeShillServiceClient::CompleteCellularActivation(
     const dbus::ObjectPath& service_path,
     const base::Closure& callback,
     const ErrorCallback& error_callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback);
 }
 
 void FakeShillServiceClient::GetLoadableProfileEntries(
@@ -273,7 +273,7 @@ void FakeShillServiceClient::GetLoadableProfileEntries(
   }
 
   DBusMethodCallStatus call_status = DBUS_METHOD_CALL_SUCCESS;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&PassStubServiceProperties, callback, call_status,
                             base::Owned(result_properties.release())));
 }
@@ -461,12 +461,12 @@ bool FakeShillServiceClient::SetServiceProperty(const std::string& service_path,
   // change and the DefaultService property may change.
   if (property == shill::kStateProperty ||
       property == shill::kVisibleProperty) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&CallSortManagerServices));
   }
 
   // Notifiy Chrome of the property change.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&FakeShillServiceClient::NotifyObserversPropertyChanged,
                  weak_ptr_factory_.GetWeakPtr(), dbus::ObjectPath(service_path),
@@ -599,7 +599,7 @@ void FakeShillServiceClient::ContinueConnect(const std::string& service_path) {
                        base::Value(shill::kErrorBadPassphrase));
     SetServiceProperty(service_path, shill::kStateProperty,
                        base::Value(shill::kStateFailure));
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(
             base::IgnoreResult(&FakeShillServiceClient::SetServiceProperty),

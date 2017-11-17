@@ -178,7 +178,7 @@ class Worker : public Listener, public Sender {
   virtual SyncChannel* CreateChannel() {
     std::unique_ptr<SyncChannel> channel = SyncChannel::Create(
         TakeChannelHandle(), mode_, this, ipc_thread_.task_runner(),
-        base::ThreadTaskRunnerHandle::Get(), true, &shutdown_event_);
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), true, &shutdown_event_);
     return channel.release();
   }
 
@@ -367,7 +367,7 @@ class TwoStepServer : public Worker {
     SyncChannel* channel =
         SyncChannel::Create(TakeChannelHandle(), mode(), this,
                             ipc_thread().task_runner(),
-                            base::ThreadTaskRunnerHandle::Get(),
+                            base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                             create_pipe_now_, shutdown_event())
             .release();
     return channel;
@@ -394,7 +394,7 @@ class TwoStepClient : public Worker {
     SyncChannel* channel =
         SyncChannel::Create(TakeChannelHandle(), mode(), this,
                             ipc_thread().task_runner(),
-                            base::ThreadTaskRunnerHandle::Get(),
+                            base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                             create_pipe_now_, shutdown_event())
             .release();
     return channel;
@@ -1019,9 +1019,9 @@ class DoneEventRaceServer : public Worker {
                std::move(channel_handle)) {}
 
   void Run() override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&NestedCallback, base::Unretained(this)));
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, base::Bind(&TimeoutCallback),
         base::TimeDelta::FromSeconds(9));
     // Even though we have a timeout on the Send, it will succeed since for this
@@ -1282,8 +1282,8 @@ class RestrictedDispatchClient : public Worker {
 
     non_restricted_channel_ = SyncChannel::Create(
         non_restricted_channel_handle_.release(), IPC::Channel::MODE_CLIENT,
-        this, ipc_thread().task_runner(), base::ThreadTaskRunnerHandle::Get(),
-        true, shutdown_event());
+        this, ipc_thread().task_runner(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), true, shutdown_event());
 
     server_->ListenerThread()->task_runner()->PostTask(
         FROM_HERE, base::Bind(&RestrictedDispatchServer::OnDoPing,
@@ -1689,8 +1689,8 @@ class RestrictedDispatchPipeWorker : public Worker {
     event2_->Wait();
     other_channel_ = SyncChannel::Create(
         other_channel_handle_.release(), IPC::Channel::MODE_CLIENT, this,
-        ipc_thread().task_runner(), base::ThreadTaskRunnerHandle::Get(), true,
-        shutdown_event());
+        ipc_thread().task_runner(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), true, shutdown_event());
     other_channel_->SetRestrictDispatchChannelGroup(group_);
     if (!is_first()) {
       event1_->Signal();
@@ -1784,8 +1784,8 @@ class ReentrantReplyServer1 : public Worker {
   void Run() override {
     server2_channel_ = SyncChannel::Create(
         other_channel_handle_.release(), IPC::Channel::MODE_CLIENT, this,
-        ipc_thread().task_runner(), base::ThreadTaskRunnerHandle::Get(), true,
-        shutdown_event());
+        ipc_thread().task_runner(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), true, shutdown_event());
     server_ready_->Signal();
     Message* msg = new SyncChannelTestMsg_Reentrant1();
     server2_channel_->Send(msg);

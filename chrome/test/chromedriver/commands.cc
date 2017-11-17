@@ -132,7 +132,7 @@ void ExecuteGetSessions(const Command& session_capabilities_command,
                                                run_loop.QuitClosure(),
                                                session_list.get()));
   }
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, run_loop.QuitClosure(), base::TimeDelta::FromSeconds(10));
   base::MessageLoop::current()->SetNestableTasksAllowed(true);
   run_loop.Run();
@@ -182,7 +182,7 @@ void ExecuteQuitAll(
                                 weak_ptr_factory.GetWeakPtr(),
                                 run_loop.QuitClosure()));
   }
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, run_loop.QuitClosure(), base::TimeDelta::FromSeconds(10));
   // Uses a nested run loop to block this thread until all the quit
   // commands have executed, or the timeout expires.
@@ -320,7 +320,7 @@ void ExecuteSessionCommand(
         base::BindOnce(&ExecuteSessionCommandOnSessionThread, command_name,
                        command, return_ok_without_session,
                        base::Passed(base::WrapUnique(params.DeepCopy())),
-                       base::ThreadTaskRunnerHandle::Get(), callback,
+                       base::ThreadTaskRunnerHandle::Get(FROM_HERE), callback,
                        base::Bind(&TerminateSessionThreadOnCommandThread,
                                   session_thread_map, session_id)));
   }

@@ -118,7 +118,8 @@ DeviceCapabilities::Data::Data(
 DeviceCapabilitiesImpl::Data::~Data() {}
 
 DeviceCapabilitiesImpl::ValidatorInfo::ValidatorInfo(Validator* validator)
-    : validator_(validator), task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+    : validator_(validator),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
   DCHECK(validator_);
   DCHECK(task_runner_.get());
 }
@@ -141,7 +142,7 @@ void DeviceCapabilitiesImpl::ValidatorInfo::Validate(
 DeviceCapabilitiesImpl::DeviceCapabilitiesImpl()
     : all_data_(CreateData()),
       public_data_(CreateData()),
-      task_runner_for_writes_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_for_writes_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       observer_list_(new base::ObserverListThreadSafe<Observer>) {
   DCHECK(task_runner_for_writes_.get());
 }

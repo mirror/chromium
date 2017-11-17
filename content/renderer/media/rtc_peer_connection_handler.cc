@@ -537,7 +537,7 @@ class StatsResponse : public webrtc::StatsObserver {
  public:
   explicit StatsResponse(const scoped_refptr<LocalRTCStatsRequest>& request)
       : request_(request.get()),
-        main_thread_(base::ThreadTaskRunnerHandle::Get()) {
+        main_thread_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
     // Measure the overall time it takes to satisfy a getStats request.
     TRACE_EVENT_ASYNC_BEGIN0("webrtc", "getStats_Native", this);
     signaling_thread_checker_.DetachFromThread();
@@ -986,7 +986,7 @@ class RTCPeerConnectionHandler::Observer
  public:
   Observer(const base::WeakPtr<RTCPeerConnectionHandler>& handler)
       : handler_(handler),
-        main_thread_(base::ThreadTaskRunnerHandle::Get()),
+        main_thread_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         stream_adapter_map_(handler_->stream_adapter_map_),
         native_peer_connection_(nullptr) {
     DCHECK(stream_adapter_map_);
@@ -1292,7 +1292,7 @@ void RTCPeerConnectionHandler::CreateOffer(
 
   scoped_refptr<CreateSessionDescriptionRequest> description_request(
       new rtc::RefCountedObject<CreateSessionDescriptionRequest>(
-          base::ThreadTaskRunnerHandle::Get(), request,
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE), request,
           weak_factory_.GetWeakPtr(), peer_connection_tracker_,
           PeerConnectionTracker::ACTION_CREATE_OFFER));
 
@@ -1314,7 +1314,7 @@ void RTCPeerConnectionHandler::CreateOffer(
 
   scoped_refptr<CreateSessionDescriptionRequest> description_request(
       new rtc::RefCountedObject<CreateSessionDescriptionRequest>(
-          base::ThreadTaskRunnerHandle::Get(), request,
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE), request,
           weak_factory_.GetWeakPtr(), peer_connection_tracker_,
           PeerConnectionTracker::ACTION_CREATE_OFFER));
 
@@ -1335,7 +1335,7 @@ void RTCPeerConnectionHandler::CreateAnswer(
   TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::createAnswer");
   scoped_refptr<CreateSessionDescriptionRequest> description_request(
       new rtc::RefCountedObject<CreateSessionDescriptionRequest>(
-          base::ThreadTaskRunnerHandle::Get(), request,
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE), request,
           weak_factory_.GetWeakPtr(), peer_connection_tracker_,
           PeerConnectionTracker::ACTION_CREATE_ANSWER));
   webrtc::PeerConnectionInterface::RTCOfferAnswerOptions webrtc_options;
@@ -1355,7 +1355,7 @@ void RTCPeerConnectionHandler::CreateAnswer(
   TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::createAnswer");
   scoped_refptr<CreateSessionDescriptionRequest> description_request(
       new rtc::RefCountedObject<CreateSessionDescriptionRequest>(
-          base::ThreadTaskRunnerHandle::Get(), request,
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE), request,
           weak_factory_.GetWeakPtr(), peer_connection_tracker_,
           PeerConnectionTracker::ACTION_CREATE_ANSWER));
   // TODO(tommi): Do this asynchronously via e.g. PostTaskAndReply.
@@ -1418,7 +1418,7 @@ void RTCPeerConnectionHandler::SetLocalDescription(
 
   scoped_refptr<SetSessionDescriptionRequest> set_request(
       new rtc::RefCountedObject<SetSessionDescriptionRequest>(
-          base::ThreadTaskRunnerHandle::Get(), request,
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE), request,
           weak_factory_.GetWeakPtr(), peer_connection_tracker_,
           PeerConnectionTracker::ACTION_SET_LOCAL_DESCRIPTION));
 
@@ -1476,7 +1476,7 @@ void RTCPeerConnectionHandler::SetRemoteDescription(
 
   scoped_refptr<SetSessionDescriptionRequest> set_request(
       new rtc::RefCountedObject<SetSessionDescriptionRequest>(
-          base::ThreadTaskRunnerHandle::Get(), request,
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE), request,
           weak_factory_.GetWeakPtr(), peer_connection_tracker_,
           PeerConnectionTracker::ACTION_SET_REMOTE_DESCRIPTION));
   signaling_thread()->PostTask(
@@ -1559,7 +1559,7 @@ bool RTCPeerConnectionHandler::AddICECandidate(
   // TODO(tommi): Instead of calling addICECandidate here, we can do a
   // PostTaskAndReply kind of a thing.
   bool result = AddICECandidate(std::move(candidate));
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&RTCPeerConnectionHandler::OnaddICECandidateResult,
                      weak_factory_.GetWeakPtr(), request, result));
@@ -1729,7 +1729,7 @@ void RTCPeerConnectionHandler::GetStats(
   signaling_thread()->PostTask(
       FROM_HERE,
       base::BindOnce(&GetRTCStatsOnSignalingThread,
-                     base::ThreadTaskRunnerHandle::Get(),
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                      native_peer_connection_, base::Passed(&callback)));
 }
 
@@ -1880,7 +1880,7 @@ blink::WebRTCDataChannelHandler* RTCPeerConnectionHandler::CreateDataChannel(
 
   ++num_data_channels_created_;
 
-  return new RtcDataChannelHandler(base::ThreadTaskRunnerHandle::Get(),
+  return new RtcDataChannelHandler(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                                    webrtc_channel);
 }
 

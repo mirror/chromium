@@ -134,8 +134,9 @@ void ArchiveManager::EnsureArchivesDirCreated(const base::Closure& callback) {
 void ArchiveManager::ExistsArchive(const base::FilePath& archive_path,
                                    const base::Callback<void(bool)>& callback) {
   task_runner_->PostTask(
-      FROM_HERE, base::Bind(ExistsArchiveImpl, archive_path,
-                            base::ThreadTaskRunnerHandle::Get(), callback));
+      FROM_HERE,
+      base::Bind(ExistsArchiveImpl, archive_path,
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE), callback));
 }
 
 void ArchiveManager::DeleteArchive(const base::FilePath& archive_path,
@@ -148,8 +149,9 @@ void ArchiveManager::DeleteMultipleArchives(
     const std::vector<base::FilePath>& archive_paths,
     const base::Callback<void(bool)>& callback) {
   task_runner_->PostTask(
-      FROM_HERE, base::Bind(DeleteArchivesImpl, archive_paths,
-                            base::ThreadTaskRunnerHandle::Get(), callback));
+      FROM_HERE,
+      base::Bind(DeleteArchivesImpl, archive_paths,
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE), callback));
 }
 
 void ArchiveManager::GetAllArchives(
@@ -159,16 +161,18 @@ void ArchiveManager::GetAllArchives(
   if (!temporary_archives_dir_.empty())
     archives_dirs.push_back(temporary_archives_dir_);
   task_runner_->PostTask(
-      FROM_HERE, base::Bind(GetAllArchivesImpl, archives_dirs,
-                            base::ThreadTaskRunnerHandle::Get(), callback));
+      FROM_HERE,
+      base::Bind(GetAllArchivesImpl, archives_dirs,
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE), callback));
 }
 
 void ArchiveManager::GetStorageStats(
     const StorageStatsCallback& callback) const {
   task_runner_->PostTask(
-      FROM_HERE, base::Bind(GetStorageStatsImpl, temporary_archives_dir_,
-                            persistent_archives_dir_,
-                            base::ThreadTaskRunnerHandle::Get(), callback));
+      FROM_HERE,
+      base::Bind(GetStorageStatsImpl, temporary_archives_dir_,
+                 persistent_archives_dir_,
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE), callback));
 }
 
 const base::FilePath& ArchiveManager::GetTemporaryArchivesDir() const {

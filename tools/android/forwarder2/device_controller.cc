@@ -48,13 +48,13 @@ DeviceController::DeviceController(std::unique_ptr<Socket> host_socket,
                                    int exit_notifier_fd)
     : host_socket_(std::move(host_socket)),
       exit_notifier_fd_(exit_notifier_fd),
-      construction_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      construction_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       weak_ptr_factory_(this) {
   host_socket_->AddEventFd(exit_notifier_fd);
 }
 
 void DeviceController::AcceptHostCommandSoon() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&DeviceController::AcceptHostCommandInternal,
                             base::Unretained(this)));
 }

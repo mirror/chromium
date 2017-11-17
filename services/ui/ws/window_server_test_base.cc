@@ -47,7 +47,7 @@ bool WindowServerTestBase::DoRunLoopWithTimeout() {
 
   bool timeout = false;
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::Bind(&TimeoutRunLoop, run_loop.QuitClosure(), &timeout),
       TestTimeouts::action_timeout());
 

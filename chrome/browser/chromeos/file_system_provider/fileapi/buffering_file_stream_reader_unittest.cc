@@ -54,7 +54,7 @@ class FakeFileStreamReader : public storage::FileStreamReader {
     log_->push_back(buf_len);
 
     if (return_error_ != net::OK) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(callback, return_error_));
       return net::ERR_IO_PENDING;
     }
@@ -62,14 +62,14 @@ class FakeFileStreamReader : public storage::FileStreamReader {
     const std::string fake_data('X', buf_len);
     memcpy(buf->data(), fake_data.c_str(), buf_len);
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, buf_len));
     return net::ERR_IO_PENDING;
   }
 
   int64_t GetLength(const net::Int64CompletionCallback& callback) override {
     DCHECK_EQ(net::OK, return_error_);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, kFileSize));
     return net::ERR_IO_PENDING;
   }

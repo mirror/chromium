@@ -276,7 +276,7 @@ void AttachmentDownloaderImpl::ReportResult(
           download_state.attachment_id, attachment_data));
     }
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(*iter, result, base::Passed(&attachment)));
   }
 }

@@ -82,7 +82,7 @@ void GaiaAuthExtensionLoader::LoadIfNeeded() {
 }
 
 void GaiaAuthExtensionLoader::UnloadIfNeededAsync() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&GaiaAuthExtensionLoader::UnloadIfNeeded,
                                 weak_ptr_factory_.GetWeakPtr()));
 }

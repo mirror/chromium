@@ -861,7 +861,7 @@ void OfflinePageModelImpl::OnStoreInitialized(const base::TimeTicks& start_time,
   // The DB failed to load. If this is a transient condition (locks not
   // yet released etc) chances are that a retry with a delay will succeed.
   const base::TimeDelta delay = base::TimeDelta::FromMilliseconds(100);
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&OfflinePageModelImpl::RetryDbInitialization,
                  weak_ptr_factory_.GetWeakPtr(), start_time,
@@ -1159,11 +1159,12 @@ void OfflinePageModelImpl::OnStorageCleared(size_t deleted_page_count,
 void OfflinePageModelImpl::PostClearStorageIfNeededTask(bool delayed) {
   base::TimeDelta delay =
       delayed ? kStorageManagerStartingDelay : base::TimeDelta();
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&OfflinePageModelImpl::ClearStorageIfNeeded,
-                            weak_ptr_factory_.GetWeakPtr(),
-                            base::Bind(&OfflinePageModelImpl::OnStorageCleared,
-                                       weak_ptr_factory_.GetWeakPtr())),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&OfflinePageModelImpl::ClearStorageIfNeeded,
+                 weak_ptr_factory_.GetWeakPtr(),
+                 base::Bind(&OfflinePageModelImpl::OnStorageCleared,
+                            weak_ptr_factory_.GetWeakPtr())),
       delay);
 }
 
@@ -1173,7 +1174,7 @@ void OfflinePageModelImpl::RunWhenLoaded(const base::Closure& task) {
     return;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, task);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, task);
 }
 
 base::Time OfflinePageModelImpl::GetCurrentTime() const {

@@ -147,7 +147,7 @@ class RasterBufferProviderTest
 
   RasterBufferProviderTest()
       : all_tile_tasks_finished_(
-            base::ThreadTaskRunnerHandle::Get().get(),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
             base::Bind(&RasterBufferProviderTest::AllTileTasksFinished,
                        base::Unretained(this))),
         timeout_seconds_(5),
@@ -164,18 +164,18 @@ class RasterBufferProviderTest
       case RASTER_BUFFER_PROVIDER_TYPE_ONE_COPY:
         Create3dResourceProvider();
         raster_buffer_provider_ = std::make_unique<OneCopyRasterBufferProvider>(
-            base::ThreadTaskRunnerHandle::Get().get(), context_provider_.get(),
-            worker_context_provider_.get(), resource_provider_.get(),
-            kMaxBytesPerCopyOperation, false, kMaxStagingBuffers,
-            viz::PlatformColor::BestTextureFormat(), false);
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+            context_provider_.get(), worker_context_provider_.get(),
+            resource_provider_.get(), kMaxBytesPerCopyOperation, false,
+            kMaxStagingBuffers, viz::PlatformColor::BestTextureFormat(), false);
         break;
       case RASTER_BUFFER_PROVIDER_TYPE_ASYNC_ONE_COPY:
         Create3dResourceProvider();
         raster_buffer_provider_ = std::make_unique<OneCopyRasterBufferProvider>(
-            base::ThreadTaskRunnerHandle::Get().get(), context_provider_.get(),
-            worker_context_provider_.get(), resource_provider_.get(),
-            kMaxBytesPerCopyOperation, false, kMaxStagingBuffers,
-            viz::PlatformColor::BestTextureFormat(), true);
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+            context_provider_.get(), worker_context_provider_.get(),
+            resource_provider_.get(), kMaxBytesPerCopyOperation, false,
+            kMaxStagingBuffers, viz::PlatformColor::BestTextureFormat(), true);
         break;
       case RASTER_BUFFER_PROVIDER_TYPE_GPU:
         Create3dResourceProvider();

@@ -58,7 +58,7 @@ class TestAuthPolicyClient : public chromeos::AuthPolicyClient {
 
   void RefreshUserPolicy(const AccountId& account_id,
                          RefreshPolicyCallback callback) override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback),
                                   refresh_user_policy_callback_success_));
   }

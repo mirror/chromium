@@ -26,7 +26,7 @@ void RequestQueueInMemoryStore::Initialize(const InitializeCallback& callback) {
     state_ = StoreState::LOADED;
   else
     state_ = StoreState::FAILED_LOADING;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback, state_ == StoreState::LOADED));
 }
 
@@ -39,7 +39,7 @@ void RequestQueueInMemoryStore::GetRequests(
         new SavePageRequest(id_request_pair.second));
     result_requests.push_back(std::move(request));
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(callback, true, base::Passed(std::move(result_requests))));
 }
@@ -68,7 +68,7 @@ void RequestQueueInMemoryStore::GetRequestsByIds(
     result->item_statuses.push_back(std::make_pair(request_id, status));
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback, base::Passed(&result)));
 }
 
@@ -84,8 +84,8 @@ void RequestQueueInMemoryStore::AddRequest(const SavePageRequest& request,
     status = ItemActionStatus::ALREADY_EXISTS;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                base::Bind(callback, status));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, base::Bind(callback, status));
 }
 
 void RequestQueueInMemoryStore::UpdateRequests(
@@ -109,7 +109,7 @@ void RequestQueueInMemoryStore::UpdateRequests(
         std::make_pair(request.request_id(), status));
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback, base::Passed(&result)));
 }
 
@@ -135,7 +135,7 @@ void RequestQueueInMemoryStore::RemoveRequests(
     result->item_statuses.push_back(std::make_pair(request_id, status));
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback, base::Passed(&result)));
 }
 
@@ -147,7 +147,7 @@ void RequestQueueInMemoryStore::Reset(const ResetCallback& callback) {
   } else {
     state_ = StoreState::FAILED_RESET;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback, state_ == StoreState::NOT_LOADED));
 }
 

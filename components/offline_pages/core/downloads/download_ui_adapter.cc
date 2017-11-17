@@ -113,7 +113,7 @@ void DownloadUIAdapter::AddObserver(
   // If the items are already loaded, post the notification right away.
   // Don't just invoke it from here to avoid reentrancy in the client.
   if (state_ == State::LOADED) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&DownloadUIAdapter::NotifyItemsLoaded,
                    weak_ptr_factory_.GetWeakPtr(), base::Unretained(observer)));

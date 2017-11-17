@@ -225,8 +225,8 @@ WindowSelectorController::GetWindowsListInOverviewGridsForTesting() {
 void WindowSelectorController::OnSelectionEnded() {
   window_selector_->Shutdown();
   // Don't delete |window_selector_| yet since the stack is still using it.
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE,
-                                                  window_selector_.release());
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
+      FROM_HERE, window_selector_.release());
   last_selection_time_ = base::Time::Now();
   Shell::Get()->NotifyOverviewModeEnded();
 }

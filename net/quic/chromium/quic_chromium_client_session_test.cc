@@ -138,7 +138,7 @@ class QuicChromiumClientSessionTest
         /*cert_verify_flags=*/0, DefaultQuicConfig(), &crypto_config_,
         "CONNECTION_UNKNOWN", base::TimeTicks::Now(), base::TimeTicks::Now(),
         &push_promise_index_, &test_push_delegate_,
-        base::ThreadTaskRunnerHandle::Get().get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
         /*socket_performance_watcher=*/nullptr, &net_log_));
 
     scoped_refptr<X509Certificate> cert(

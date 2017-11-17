@@ -49,7 +49,7 @@ Logging::Logging()
       enabled_color_(false),
       queue_invoke_later_pending_(false),
       sender_(NULL),
-      main_thread_(base::ThreadTaskRunnerHandle::Get()),
+      main_thread_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       consumer_(NULL) {
 #if defined(OS_WIN)
   // getenv triggers an unsafe warning. Simply check how big of a buffer
@@ -233,7 +233,7 @@ void Logging::Log(const LogData& data) {
       queued_logs_.push_back(data);
       if (!queue_invoke_later_pending_) {
         queue_invoke_later_pending_ = true;
-        base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
             FROM_HERE, base::Bind(&Logging::OnSendLogs, base::Unretained(this)),
             base::TimeDelta::FromMilliseconds(kLogSendDelayMs));
       }

@@ -53,7 +53,7 @@ URLRequestHangingReadJob::URLRequestHangingReadJob(
 void URLRequestHangingReadJob::Start() {
   // Start reading asynchronously so that all error reporting and data
   // callbacks happen as they would for network requests.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&URLRequestHangingReadJob::StartAsync,
                             weak_factory_.GetWeakPtr()));
 }

@@ -150,7 +150,7 @@ void AutoConnectHandler::ScanCompleted(const DeviceState* device) {
   }
   connect_to_best_services_after_scan_ = false;
   // Request ConnectToBestServices after processing any pending DBus calls.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&AutoConnectHandler::CallShillConnectToBestServices,
                             weak_ptr_factory_.GetWeakPtr()));
 }

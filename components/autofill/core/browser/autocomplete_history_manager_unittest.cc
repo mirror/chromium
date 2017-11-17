@@ -36,8 +36,8 @@ namespace {
 class MockWebDataService : public AutofillWebDataService {
  public:
   MockWebDataService()
-      : AutofillWebDataService(base::ThreadTaskRunnerHandle::Get(),
-                               base::ThreadTaskRunnerHandle::Get()) {}
+      : AutofillWebDataService(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                               base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
   MOCK_METHOD1(AddFormFields, void(const std::vector<FormFieldData>&));
 

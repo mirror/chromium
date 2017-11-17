@@ -54,7 +54,7 @@ class ProxyRunner : public IPC::Listener {
     }
     channel_ =
         IPC::ChannelProxy::Create(std::move(factory), this, ipc_task_runner,
-                                  base::ThreadTaskRunnerHandle::Get());
+                                  base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 
   void ShutDown() { channel_.reset(); }

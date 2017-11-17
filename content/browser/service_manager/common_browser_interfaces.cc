@@ -26,7 +26,7 @@ namespace {
 class ConnectionFilterImpl : public ConnectionFilter {
  public:
   ConnectionFilterImpl()
-      : main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+      : main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
     RegisterMainThreadInterface(base::Bind(&device::GeolocationConfig::Create));
 
     auto* browser_main_loop = BrowserMainLoop::GetInstance();

@@ -189,9 +189,10 @@ void TDLSSuccessCallback(
   if (!DBusThreadManager::Get()->GetShillDeviceClient()->GetTestInterface())
     request_delay = base::TimeDelta::FromMilliseconds(request_delay_ms);
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&CallPerformTDLSOperation, device_path, new_params,
-                            callback, error_callback),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&CallPerformTDLSOperation, device_path, new_params, callback,
+                 error_callback),
       request_delay);
 }
 
@@ -217,9 +218,10 @@ void TDLSErrorCallback(
     if (!DBusThreadManager::Get()->GetShillDeviceClient()->GetTestInterface())
       request_delay = base::TimeDelta::FromMilliseconds(kReRequestDelayMs);
 
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE, base::Bind(&CallPerformTDLSOperation, device_path,
-                              retry_params, callback, error_callback),
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&CallPerformTDLSOperation, device_path, retry_params,
+                   callback, error_callback),
         request_delay);
     return;
   }

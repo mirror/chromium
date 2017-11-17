@@ -82,7 +82,7 @@ HostController::HostController(
       adb_port_(adb_port),
       adb_control_socket_(std::move(adb_control_socket)),
       delete_controller_notifier_(std::move(delete_controller_notifier)),
-      deletion_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      deletion_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       thread_("HostControllerThread") {}
 
 void HostController::ReadNextCommandSoon() {

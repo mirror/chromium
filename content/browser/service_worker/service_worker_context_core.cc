@@ -385,7 +385,7 @@ void ServiceWorkerContextCore::HasMainFrameProviderHost(
       providers_.get(), base::Bind(IsSameOriginWindowProviderHost, origin));
 
   if (provider_host_iterator.IsAtEnd()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, false));
     return;
   }
@@ -685,7 +685,7 @@ int ServiceWorkerContextCore::GetNewRegistrationHandleId() {
 
 void ServiceWorkerContextCore::ScheduleDeleteAndStartOver() const {
   storage_->Disable();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&ServiceWorkerContextWrapper::DeleteAndStartOver,
                      wrapper_));

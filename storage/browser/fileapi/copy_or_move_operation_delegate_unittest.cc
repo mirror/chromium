@@ -86,7 +86,7 @@ class TestValidatorFactory : public storage::CopyOrMoveFileValidatorFactory {
     void StartPreWriteValidation(
         const ResultCallback& result_callback) override {
       // Post the result since a real validator must do work asynchronously.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(result_callback, result_));
     }
 
@@ -99,7 +99,7 @@ class TestValidatorFactory : public storage::CopyOrMoveFileValidatorFactory {
         result = base::File::FILE_ERROR_SECURITY;
       }
       // Post the result since a real validator must do work asynchronously.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(result_callback, result));
     }
 
@@ -203,10 +203,11 @@ class CopyOrMoveOperationTestHelper {
     base::FilePath base_dir = base_.GetPath();
     quota_manager_ =
         new MockQuotaManager(false /* is_incognito */, base_dir,
-                             base::ThreadTaskRunnerHandle::Get().get(),
+                             base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
                              NULL /* special storage policy */);
     quota_manager_proxy_ = new MockQuotaManagerProxy(
-        quota_manager_.get(), base::ThreadTaskRunnerHandle::Get().get());
+        quota_manager_.get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
     file_system_context_ =
         CreateFileSystemContextForTesting(quota_manager_proxy_.get(), base_dir);
 
@@ -866,7 +867,7 @@ TEST(LocalFileSystemCopyOrMoveOperationTest, StreamCopyHelper_Cancel) {
       base::TimeDelta());  // For testing, we need all the progress.
 
   // Call Cancel() later.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&CopyOrMoveOperationDelegate::StreamCopyHelper::Cancel,
                  base::Unretained(&helper)));

@@ -512,7 +512,7 @@ const net::HttpResponseInfo* ServiceWorkerURLRequestJob::http_info() const {
 void ServiceWorkerURLRequestJob::MaybeStartRequest() {
   if (is_started_ && response_type_ != ResponseType::NOT_DETERMINED) {
     // Start asynchronously.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&ServiceWorkerURLRequestJob::StartRequest,
                                   weak_factory_.GetWeakPtr()));
   }

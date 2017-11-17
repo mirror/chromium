@@ -44,7 +44,7 @@ bool TaskService::BindInstance() {
   bound_instance_id_ = next_instance_id_++;
 
   DCHECK(!default_task_runner_);
-  default_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  default_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   return true;
 }
 

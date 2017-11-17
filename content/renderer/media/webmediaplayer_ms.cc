@@ -63,7 +63,7 @@ class WebMediaPlayerMS::FrameDeliverer {
       : last_frame_opaque_(true),
         last_frame_rotation_(media::VIDEO_ROTATION_0),
         received_first_frame_(false),
-        main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+        main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         player_(player),
         enqueue_frame_cb_(enqueue_frame_cb),
         weak_factory_(this) {

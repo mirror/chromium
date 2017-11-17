@@ -78,7 +78,7 @@ class LeakDetectorTest : public ::testing::Test {
         kDefaultCallStackSuspicionThreshold);
 
     EXPECT_TRUE(base::ThreadTaskRunnerHandle::IsSet());
-    detector_->Init(params, base::ThreadTaskRunnerHandle::Get());
+    detector_->Init(params, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 
  protected:

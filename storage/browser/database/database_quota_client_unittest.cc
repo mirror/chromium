@@ -41,7 +41,7 @@ class MockDatabaseTracker : public DatabaseTracker {
       : DatabaseTracker(base::FilePath(), false, nullptr, nullptr),
         delete_called_count_(0),
         async_delete_(false) {
-    set_task_runner_for_testing(base::ThreadTaskRunnerHandle::Get());
+    set_task_runner_for_testing(base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 
   bool GetOriginInfo(const std::string& origin_identifier,
@@ -78,7 +78,7 @@ class MockDatabaseTracker : public DatabaseTracker {
                           const net::CompletionCallback& callback) override {
     ++delete_called_count_;
     if (async_delete()) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(&MockDatabaseTracker::AsyncDeleteDataForOrigin, this,
                          callback));

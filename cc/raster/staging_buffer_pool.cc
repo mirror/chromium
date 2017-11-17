@@ -144,7 +144,8 @@ StagingBufferPool::StagingBufferPool(
       weak_ptr_factory_(this) {
   DCHECK(worker_context_provider_);
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-      this, "cc::StagingBufferPool", base::ThreadTaskRunnerHandle::Get());
+      this, "cc::StagingBufferPool",
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   reduce_memory_usage_callback_ = base::Bind(
       &StagingBufferPool::ReduceMemoryUsage, weak_ptr_factory_.GetWeakPtr());
 

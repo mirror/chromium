@@ -80,7 +80,7 @@ void FakeSpeechRecognitionManager::StartSession(int session_id) {
 
   if (should_send_fake_response_) {
     // Give the fake result in a short while.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(
             &FakeSpeechRecognitionManager::SetFakeRecognitionResult,

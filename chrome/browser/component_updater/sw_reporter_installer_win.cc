@@ -130,7 +130,7 @@ void RunSwReportersAfterStartup(
     const safe_browsing::SwReporterQueue& invocations,
     const base::Version& version) {
   content::BrowserThread::PostAfterStartupTask(
-      FROM_HERE, base::ThreadTaskRunnerHandle::Get(),
+      FROM_HERE, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::Bind(&safe_browsing::RunSwReporters, invocations, version));
 }
 

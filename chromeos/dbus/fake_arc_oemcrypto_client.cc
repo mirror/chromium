@@ -21,7 +21,7 @@ void FakeArcOemCryptoClient::Init(dbus::Bus* bus) {}
 void FakeArcOemCryptoClient::BootstrapMojoConnection(
     base::ScopedFD fd,
     VoidDBusMethodCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), false));
 }
 

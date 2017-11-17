@@ -55,7 +55,7 @@ std::unique_ptr<PrefService> CreatePrefService() {
 
   PrefServiceFactory prefServiceFactory;
   prefServiceFactory.SetUserPrefsFile(
-      prefs_path, base::ThreadTaskRunnerHandle::Get().get());
+      prefs_path, base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
   return prefServiceFactory.Create(registry);
 }
 

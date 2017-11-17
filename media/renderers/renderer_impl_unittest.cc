@@ -45,11 +45,11 @@ ACTION_P2(SetError, renderer_client, error) {
 }
 
 ACTION(PostCallback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, arg0);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, arg0);
 }
 
 ACTION(PostQuitWhenIdle) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
 }
 

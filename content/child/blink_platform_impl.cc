@@ -311,7 +311,7 @@ static int ToMessageID(WebLocalizedString::Name name) {
 // constructing the platform.
 BlinkPlatformImpl::BlinkPlatformImpl()
     : BlinkPlatformImpl(base::ThreadTaskRunnerHandle::IsSet()
-                            ? base::ThreadTaskRunnerHandle::Get()
+                            ? base::ThreadTaskRunnerHandle::Get(FROM_HERE)
                             : nullptr,
                         nullptr) {}
 

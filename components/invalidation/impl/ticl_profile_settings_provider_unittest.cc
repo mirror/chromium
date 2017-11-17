@@ -59,8 +59,8 @@ void TiclProfileSettingsProviderTest::SetUp() {
   gcm::GCMChannelStatusSyncer::RegisterProfilePrefs(pref_service_.registry());
   ProfileInvalidationProvider::RegisterProfilePrefs(pref_service_.registry());
 
-  request_context_getter_ =
-      new net::TestURLRequestContextGetter(base::ThreadTaskRunnerHandle::Get());
+  request_context_getter_ = new net::TestURLRequestContextGetter(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   invalidation_service_.reset(new TiclInvalidationService(
       "TestUserAgent", std::unique_ptr<IdentityProvider>(

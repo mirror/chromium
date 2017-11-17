@@ -65,8 +65,8 @@ QuicChromiumConnectionHelper* QuicSimpleClient::CreateQuicConnectionHelper() {
 }
 
 QuicChromiumAlarmFactory* QuicSimpleClient::CreateQuicAlarmFactory() {
-  return new QuicChromiumAlarmFactory(base::ThreadTaskRunnerHandle::Get().get(),
-                                      &clock_);
+  return new QuicChromiumAlarmFactory(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), &clock_);
 }
 
 }  // namespace net

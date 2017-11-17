@@ -148,7 +148,7 @@ class BattOrAgentBin : public BattOrAgent::Listener {
                 << endl;
     }
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&BattOrAgentBin::RunNextCommand, base::Unretained(this)));
     ui_thread_run_loop_.Run();
@@ -175,7 +175,7 @@ class BattOrAgentBin : public BattOrAgent::Listener {
     io_thread_.task_runner()->PostTask(
         FROM_HERE,
         base::Bind(&BattOrAgentBin::CreateAgent, base::Unretained(this), path,
-                   base::ThreadTaskRunnerHandle::Get(), &done));
+                   base::ThreadTaskRunnerHandle::Get(FROM_HERE), &done));
     done.Wait();
   }
 

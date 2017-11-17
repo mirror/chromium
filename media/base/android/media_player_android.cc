@@ -37,8 +37,9 @@ MediaPlayerAndroid::MediaPlayerAndroid(
       manager_(manager),
       frame_url_(frame_url),
       weak_factory_(this) {
-  listener_.reset(new MediaPlayerListener(base::ThreadTaskRunnerHandle::Get(),
-                                          weak_factory_.GetWeakPtr()));
+  listener_.reset(
+      new MediaPlayerListener(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                              weak_factory_.GetWeakPtr()));
 }
 
 MediaPlayerAndroid::~MediaPlayerAndroid() {}

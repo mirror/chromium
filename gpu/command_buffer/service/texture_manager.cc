@@ -2056,7 +2056,8 @@ void TextureManager::Initialize() {
   // so don't register a dump provider.
   if (memory_tracker_) {
     base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-        this, "gpu::TextureManager", base::ThreadTaskRunnerHandle::Get());
+        this, "gpu::TextureManager",
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 }
 

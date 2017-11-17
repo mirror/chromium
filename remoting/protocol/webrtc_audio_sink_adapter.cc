@@ -15,7 +15,7 @@ namespace protocol {
 WebrtcAudioSinkAdapter::WebrtcAudioSinkAdapter(
     scoped_refptr<webrtc::MediaStreamInterface> stream,
     base::WeakPtr<AudioStub> audio_stub)
-    : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       audio_stub_(audio_stub),
       media_stream_(std::move(stream)) {
   webrtc::AudioTrackVector audio_tracks = media_stream_->GetAudioTracks();

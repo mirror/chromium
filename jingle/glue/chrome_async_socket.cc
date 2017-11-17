@@ -117,7 +117,7 @@ bool ChromeAsyncSocket::Connect(const rtc::SocketAddress& address) {
     // directly here as the caller may not expect an error/close to
     // happen here.  This is okay, as from the caller's point of view,
     // the connect always happens asynchronously.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&ChromeAsyncSocket::ProcessConnectDone,
                               weak_ptr_factory_.GetWeakPtr(), status));
   }
@@ -151,7 +151,7 @@ void ChromeAsyncSocket::PostDoRead() {
   DCHECK_EQ(read_state_, IDLE);
   DCHECK_EQ(read_start_, 0U);
   DCHECK_EQ(read_end_, 0U);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&ChromeAsyncSocket::DoRead, weak_ptr_factory_.GetWeakPtr()));
   read_state_ = POSTED;
@@ -282,7 +282,7 @@ void ChromeAsyncSocket::PostDoWrite() {
   DCHECK(IsOpen());
   DCHECK_EQ(write_state_, IDLE);
   DCHECK_GT(write_end_, 0U);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&ChromeAsyncSocket::DoWrite, weak_ptr_factory_.GetWeakPtr()));
   write_state_ = POSTED;
@@ -402,7 +402,7 @@ bool ChromeAsyncSocket::StartTls(const std::string& domain_name) {
       base::Bind(&ChromeAsyncSocket::ProcessSSLConnectDone,
                  weak_ptr_factory_.GetWeakPtr()));
   if (status != net::ERR_IO_PENDING) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&ChromeAsyncSocket::ProcessSSLConnectDone,
                               weak_ptr_factory_.GetWeakPtr(), status));
   }

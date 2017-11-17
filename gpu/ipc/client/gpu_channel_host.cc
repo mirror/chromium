@@ -155,7 +155,7 @@ void GpuChannelHost::DestroyChannel() {
 void GpuChannelHost::AddRoute(int route_id,
                               base::WeakPtr<IPC::Listener> listener) {
   AddRouteWithTaskRunner(route_id, listener,
-                         base::ThreadTaskRunnerHandle::Get());
+                         base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 void GpuChannelHost::AddRouteWithTaskRunner(

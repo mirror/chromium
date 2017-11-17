@@ -234,7 +234,7 @@ class EndToEndInterfacePtrTest : public InterfacePtrTest {
   void RunTest(const scoped_refptr<base::SequencedTaskRunner> runner) {
     base::RunLoop run_loop;
     done_closure_ = run_loop.QuitClosure();
-    done_runner_ = base::ThreadTaskRunnerHandle::Get();
+    done_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
     runner->PostTask(FROM_HERE,
                      base::Bind(&EndToEndInterfacePtrTest::RunTestImpl,
                                 base::Unretained(this)));
@@ -270,7 +270,7 @@ class EndToEndInterfacePtrTest : public InterfacePtrTest {
 };
 
 TEST_P(EndToEndInterfacePtrTest, EndToEnd) {
-  RunTest(base::ThreadTaskRunnerHandle::Get());
+  RunTest(base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 TEST_P(EndToEndInterfacePtrTest, EndToEndOnSequence) {

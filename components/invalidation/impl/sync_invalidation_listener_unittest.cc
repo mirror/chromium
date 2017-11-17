@@ -292,7 +292,7 @@ class SyncInvalidationListenerTest : public testing::Test {
     listener_.Start(
         base::Bind(&CreateFakeInvalidationClient, &fake_invalidation_client_),
         kClientId, kClientInfo, kState, fake_tracker_.GetSavedInvalidations(),
-        fake_tracker_.AsWeakPtr(), base::ThreadTaskRunnerHandle::Get(),
+        fake_tracker_.AsWeakPtr(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
         &fake_delegate_);
     DCHECK(fake_invalidation_client_);
   }

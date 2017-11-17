@@ -88,7 +88,7 @@ class KioskProfileLoader::CryptohomedChecker
     }
 
     const int retry_delay_in_milliseconds = 500 * (1 << retry_count_);
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, base::BindOnce(&CryptohomedChecker::StartCheck, AsWeakPtr()),
         base::TimeDelta::FromMilliseconds(retry_delay_in_milliseconds));
   }

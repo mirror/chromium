@@ -103,7 +103,7 @@ OAuthTokenGetterProxy::~OAuthTokenGetterProxy() {
 void OAuthTokenGetterProxy::CallWithToken(
     const OAuthTokenGetter::TokenCallback& on_access_token) {
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_to_reply =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
   if (task_runner_->BelongsToCurrentThread()) {
     core_->RequestToken(on_access_token, task_runner_to_reply);

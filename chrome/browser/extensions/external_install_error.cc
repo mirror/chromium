@@ -330,7 +330,7 @@ void ExternalInstallError::OnInstallPromptDone(
   // If the error isn't removed and deleted as part of handling the user's
   // response (which can happen, e.g., if an uninstall fails), be sure to remove
   // the error directly in order to ensure it's not called twice.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ExternalInstallError::RemoveError,
                                 weak_factory_.GetWeakPtr()));
 

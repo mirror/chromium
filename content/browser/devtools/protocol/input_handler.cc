@@ -869,7 +869,7 @@ void InputHandler::OnScrollFinished(
   }
 
   if (repeat_count > 0) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&InputHandler::SynthesizeRepeatingScroll,
                        weak_factory_.GetWeakPtr(), gesture_params,

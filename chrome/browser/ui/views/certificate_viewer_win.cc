@@ -36,7 +36,8 @@ class CertificateViewerDialog : public ui::BaseShellDialogImpl {
             net::X509Certificate* cert,
             const base::Closure& callback) {
     if (IsRunningDialogForOwner(parent)) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                             callback);
       return;
     }
 

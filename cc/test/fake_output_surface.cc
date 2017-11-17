@@ -48,7 +48,7 @@ void FakeOutputSurface::SwapBuffers(viz::OutputSurfaceFrame frame) {
       std::make_unique<viz::OutputSurfaceFrame>(std::move(frame));
   ++num_sent_frames_;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&FakeOutputSurface::SwapBuffersAck,
                                 weak_ptr_factory_.GetWeakPtr()));
 }

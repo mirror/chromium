@@ -129,7 +129,7 @@ void WebSocketEndpointLockManager::UnlockEndpointAfterDelay(
   DVLOG(3) << "Delaying " << unlock_delay_.InMilliseconds()
            << "ms before unlocking endpoint " << endpoint.ToString();
   ++pending_unlock_count_;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&WebSocketEndpointLockManager::DelayedUnlockEndpoint,
                  base::Unretained(this), endpoint),

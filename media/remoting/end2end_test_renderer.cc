@@ -157,8 +157,9 @@ End2EndTestRenderer::End2EndTestRenderer(std::unique_ptr<Renderer> renderer)
                           base::Bind(&End2EndTestRenderer::SendFrameToSink,
                                      weak_factory_.GetWeakPtr()));
   controller_.reset(new RendererController(shared_session_));
-  courier_renderer_.reset(new CourierRenderer(
-      base::ThreadTaskRunnerHandle::Get(), controller_->GetWeakPtr(), nullptr));
+  courier_renderer_.reset(
+      new CourierRenderer(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                          controller_->GetWeakPtr(), nullptr));
 }
 
 End2EndTestRenderer::~End2EndTestRenderer() {}

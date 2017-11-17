@@ -2310,7 +2310,7 @@ class TriggerNestedLoopOnRightMousePress : public ui::test::TestEventHandler {
         mouse->IsOnlyRightMouseButton()) {
       base::RunLoop run_loop(base::RunLoop::Type::kNestableTasksAllowed);
       scoped_refptr<base::TaskRunner> task_runner =
-          base::ThreadTaskRunnerHandle::Get();
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE);
       if (!callback_.is_null())
         task_runner->PostTask(FROM_HERE, callback_);
       task_runner->PostTask(FROM_HERE, run_loop.QuitClosure());

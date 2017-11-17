@@ -337,7 +337,7 @@ void FakeBluetoothAdapterClient::OnPropertyChanged(
 
 void FakeBluetoothAdapterClient::PostDelayedTask(
     const base::Closure& callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, callback,
       base::TimeDelta::FromMilliseconds(simulation_interval_ms_));
 }

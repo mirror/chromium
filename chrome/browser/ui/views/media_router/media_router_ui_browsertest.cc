@@ -72,7 +72,7 @@ class MediaRouterUIBrowserTest : public InProcessBrowserTest {
 
     // When the Media Router Action executes, it opens a dialog with web
     // contents to chrome://media-router.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&MediaRouterUIBrowserTest::ExecuteMediaRouterAction,
                        base::Unretained(this), app_menu_button));

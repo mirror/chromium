@@ -33,14 +33,14 @@ void CdmAdapterFactory::Create(
 
   if (security_origin.unique()) {
     LOG(ERROR) << "Invalid Origin: " << security_origin;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(cdm_created_cb, nullptr, "Invalid origin."));
     return;
   }
 
   std::unique_ptr<CdmAuxiliaryHelper> cdm_helper = helper_creation_cb_.Run();
   if (!cdm_helper) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(cdm_created_cb, nullptr, "CDM helper creation failed."));
     return;

@@ -78,7 +78,7 @@ class MockFileStream : public net::FileStream {
     CompletionMode completion_mode;
   };
 
-  MockFileStream() : FileStream(base::ThreadTaskRunnerHandle::Get()) {}
+  MockFileStream() : FileStream(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
   ~MockFileStream() override {
     EXPECT_EQ(expect_closed_, closed_);
@@ -183,7 +183,7 @@ class MockFileStream : public net::FileStream {
                    const net::CompletionCallback& callback) {
     if (result.completion_mode == CompletionMode::SYNC)
       return result.result;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, result.result));
     return net::ERR_IO_PENDING;
   }
@@ -300,7 +300,7 @@ class RedirectToFileResourceHandlerTest
              storage::ShareableFileReference::GetOrCreate(
                  temp_file_path_,
                  storage::ShareableFileReference::DELETE_ON_FINAL_RELEASE,
-                 base::ThreadTaskRunnerHandle::Get().get())
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE).get())
                  .get());
   }
 

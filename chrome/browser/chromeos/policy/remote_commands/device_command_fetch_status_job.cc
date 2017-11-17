@@ -61,12 +61,12 @@ void DeviceCommandFetchStatusJob::RunImpl(
       manager->GetSystemLogUploader()) {
     manager->GetStatusUploader()->ScheduleNextStatusUploadImmediately();
     manager->GetSystemLogUploader()->ScheduleNextSystemLogUploadImmediately();
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(succeeded_callback, nullptr));
     return;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(failed_callback, nullptr));
 }
 

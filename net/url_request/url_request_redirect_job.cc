@@ -64,7 +64,7 @@ void URLRequestRedirectJob::Start() {
   request()->net_log().AddEvent(
       NetLogEventType::URL_REQUEST_REDIRECT_JOB,
       NetLog::StringCallback("reason", &redirect_reason_));
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&URLRequestRedirectJob::StartAsync,
                             weak_factory_.GetWeakPtr()));
 }

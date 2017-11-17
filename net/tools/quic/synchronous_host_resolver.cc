@@ -90,7 +90,7 @@ int ResolverThread::Resolve(const std::string& host, AddressList* addresses) {
 
 void ResolverThread::OnResolutionComplete(int rv) {
   rv_ = rv;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
 }
 

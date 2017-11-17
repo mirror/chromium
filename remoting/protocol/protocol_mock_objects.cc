@@ -86,7 +86,7 @@ bool MockPairingRegistryDelegate::Delete(const std::string& client_id) {
 
 SynchronousPairingRegistry::SynchronousPairingRegistry(
     std::unique_ptr<Delegate> delegate)
-    : PairingRegistry(base::ThreadTaskRunnerHandle::Get(),
+    : PairingRegistry(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                       std::move(delegate)) {}
 SynchronousPairingRegistry::~SynchronousPairingRegistry() {}
 

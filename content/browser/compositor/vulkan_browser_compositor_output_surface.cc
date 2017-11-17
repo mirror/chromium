@@ -107,7 +107,7 @@ void VulkanBrowserCompositorOutputSurface::SwapBuffers(
     viz::OutputSurfaceFrame frame) {
   surface_->SwapBuffers();
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&VulkanBrowserCompositorOutputSurface::SwapBuffersAck,
                  weak_ptr_factory_.GetWeakPtr()));

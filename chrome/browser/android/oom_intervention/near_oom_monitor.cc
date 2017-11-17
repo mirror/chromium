@@ -51,7 +51,7 @@ NearOomMonitor* NearOomMonitor::Create() {
       kDefaultSwapFreeThresholdRatio);
   int64_t swapfree_threshold =
       static_cast<int64_t>(memory_info.swap_total * threshold_ratio);
-  return new NearOomMonitor(base::ThreadTaskRunnerHandle::Get(),
+  return new NearOomMonitor(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                             swapfree_threshold);
 }
 

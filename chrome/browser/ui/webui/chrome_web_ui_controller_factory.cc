@@ -619,7 +619,7 @@ WebUIFactoryFunction GetWebUIFactoryFunction(WebUI* web_ui,
 void RunFaviconCallbackAsync(
     const favicon_base::FaviconResultsCallback& callback,
     const std::vector<favicon_base::FaviconRawBitmapResult>* results) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&favicon::FaviconService::FaviconResultsCallbackRunner,
                      callback, base::Owned(results)));

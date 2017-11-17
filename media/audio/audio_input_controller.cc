@@ -178,7 +178,7 @@ AudioInputController::AudioInputController(
     UserInputMonitor* user_input_monitor,
     const AudioParameters& params,
     StreamType type)
-    : creator_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : creator_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       task_runner_(std::move(task_runner)),
       handler_(handler),
       stream_(nullptr),

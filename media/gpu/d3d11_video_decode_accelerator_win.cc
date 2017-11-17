@@ -115,7 +115,7 @@ bool D3D11VideoDecodeAccelerator::Initialize(const Config& config,
 void D3D11VideoDecodeAccelerator::Decode(
     const BitstreamBuffer& bitstream_buffer) {
   input_buffer_queue_.push_back(bitstream_buffer);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&D3D11VideoDecodeAccelerator::DoDecode,
                             base::Unretained(this)));
 }
@@ -157,7 +157,7 @@ void D3D11VideoDecodeAccelerator::DoDecode() {
     }
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&D3D11VideoDecodeAccelerator::DoDecode,
                             base::Unretained(this)));
 }
@@ -195,7 +195,7 @@ void D3D11VideoDecodeAccelerator::AssignPictureBuffers(
                          picture_buffers_[i]->gl_image(), true);
     }
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&D3D11VideoDecodeAccelerator::DoDecode,
                             base::Unretained(this)));
 }
@@ -210,7 +210,7 @@ void D3D11VideoDecodeAccelerator::ReusePictureBuffer(
       break;
     }
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&D3D11VideoDecodeAccelerator::DoDecode,
                             base::Unretained(this)));
 }

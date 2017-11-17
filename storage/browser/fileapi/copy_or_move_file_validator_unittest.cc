@@ -229,7 +229,7 @@ class TestCopyOrMoveFileValidatorFactory
     void StartPreWriteValidation(
         const ResultCallback& result_callback) override {
       // Post the result since a real validator must do work asynchronously.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(result_callback, result_));
     }
 
@@ -237,7 +237,7 @@ class TestCopyOrMoveFileValidatorFactory
         const base::FilePath& dest_platform_path,
         const ResultCallback& result_callback) override {
       // Post the result since a real validator must do work asynchronously.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(result_callback, write_result_));
     }
 

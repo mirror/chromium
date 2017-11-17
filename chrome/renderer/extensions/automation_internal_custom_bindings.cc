@@ -319,7 +319,7 @@ class AutomationMessageFilter : public IPC::MessageFilter {
         removed_(false) {
     DCHECK(owner);
     content::RenderThread::Get()->AddFilter(this);
-    task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   }
 
   void Detach() {

@@ -66,7 +66,7 @@ class RedirectTest : public InProcessBrowserTest {
   void OnRedirectQueryComplete(std::vector<GURL>* rv,
                                const history::RedirectList* redirects) {
     rv->insert(rv->end(), redirects->begin(), redirects->end());
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
   }
 

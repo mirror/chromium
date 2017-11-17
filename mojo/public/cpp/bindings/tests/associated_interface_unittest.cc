@@ -97,7 +97,7 @@ class IntegerSenderConnectionImpl : public IntegerSenderConnection {
 class AssociatedInterfaceTest : public testing::Test {
  public:
   AssociatedInterfaceTest()
-      : main_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+      : main_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
   ~AssociatedInterfaceTest() override { base::RunLoop().RunUntilIdle(); }
 
   void PumpMessages() { base::RunLoop().RunUntilIdle(); }

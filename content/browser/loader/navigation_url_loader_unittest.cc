@@ -117,7 +117,7 @@ class NavigationURLLoaderTest : public testing::Test {
       : thread_bundle_(TestBrowserThreadBundle::IO_MAINLOOP),
         browser_context_(new TestBrowserContext),
         host_(base::Bind(&CreateDownloadResourceHandler),
-              base::ThreadTaskRunnerHandle::Get(),
+              base::ThreadTaskRunnerHandle::Get(FROM_HERE),
               /* enable_resource_scheduler */ true) {
     host_.SetLoaderDelegate(&loader_delegate_);
     BrowserContext::EnsureResourceContextInitialized(browser_context_.get());

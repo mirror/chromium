@@ -40,7 +40,7 @@ GenericURLRequestJob::GenericURLRequestJob(
                                    network_delegate,
                                    url_request_dispatcher),
       url_fetcher_(std::move(url_fetcher)),
-      origin_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      origin_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       delegate_(delegate),
       headless_browser_context_(headless_browser_context),
       request_resource_info_(

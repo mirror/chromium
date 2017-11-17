@@ -109,7 +109,7 @@ void RecentTabSuggestionsProvider::FetchSuggestionImage(
     ImageFetchedCallback callback) {
   // TODO(vitaliii): Fetch proper thumbnail from OfflinePageModel once it's
   // available there.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), gfx::Image()));
 }
 
@@ -118,7 +118,7 @@ void RecentTabSuggestionsProvider::Fetch(
     const std::set<std::string>& known_suggestion_ids,
     FetchDoneCallback callback) {
   LOG(DFATAL) << "RecentTabSuggestionsProvider has no |Fetch| functionality!";
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(
           std::move(callback),

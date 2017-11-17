@@ -51,7 +51,7 @@ RenderingTest::RenderingTest() : message_loop_(new base::MessageLoop) {
   // TODO(boliu): Update unit tests to async code path.
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kSyncOnDrawHardware);
-  ui_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  ui_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 RenderingTest::~RenderingTest() {
@@ -67,16 +67,17 @@ ui::TouchHandleDrawable* RenderingTest::CreateDrawable() {
 void RenderingTest::SetUpTestHarness() {
   DCHECK(!browser_view_renderer_.get());
   DCHECK(!functor_.get());
-  browser_view_renderer_.reset(
-      new TestBrowserViewRenderer(this, base::ThreadTaskRunnerHandle::Get()));
+  browser_view_renderer_.reset(new TestBrowserViewRenderer(
+      this, base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   browser_view_renderer_->SetActiveCompositorID(CompositorID(0, 0));
   InitializeCompositor();
   std::unique_ptr<FakeWindow> window(
       new FakeWindow(browser_view_renderer_.get(), this, gfx::Rect(100, 100)));
   functor_.reset(new FakeFunctor);
-  functor_->Init(window.get(),
-                 base::MakeUnique<RenderThreadManager>(
-                     functor_.get(), base::ThreadTaskRunnerHandle::Get()));
+  functor_->Init(
+      window.get(),
+      base::MakeUnique<RenderThreadManager>(
+          functor_.get(), base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   browser_view_renderer_->SetCurrentCompositorFrameConsumer(
       functor_->GetCompositorFrameConsumer());
   window_ = std::move(window);

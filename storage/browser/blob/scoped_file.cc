@@ -41,7 +41,7 @@ void ScopedFile::AddScopeOutCallback(
     const ScopeOutCallback& callback,
     base::TaskRunner* callback_runner) {
   if (!callback_runner)
-    callback_runner = base::ThreadTaskRunnerHandle::Get().get();
+    callback_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE).get();
   scope_out_callbacks_.push_back(std::make_pair(callback, callback_runner));
 }
 

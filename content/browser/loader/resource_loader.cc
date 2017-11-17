@@ -516,7 +516,7 @@ void ResourceLoader::Resume(bool called_from_resource_controller) {
     case DEFERRED_ON_WILL_READ:
       // Always post a task, as synchronous resumes don't go through this
       // method.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(&ResourceLoader::ReadMore,
                                     weak_ptr_factory_.GetWeakPtr(),
                                     false /* handle_result_asynchronously */));
@@ -527,7 +527,7 @@ void ResourceLoader::Resume(bool called_from_resource_controller) {
         // the only case which calls different methods, depending on the path.
         // ResumeReading does check for cancellation. Should other paths do that
         // as well?
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE, base::BindOnce(&ResourceLoader::ResumeReading,
                                       weak_ptr_factory_.GetWeakPtr()));
       } else {
@@ -539,7 +539,7 @@ void ResourceLoader::Resume(bool called_from_resource_controller) {
       break;
     case DEFERRED_RESPONSE_COMPLETE:
       if (called_from_resource_controller) {
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE, base::BindOnce(&ResourceLoader::ResponseCompleted,
                                       weak_ptr_factory_.GetWeakPtr()));
       } else {
@@ -549,7 +549,7 @@ void ResourceLoader::Resume(bool called_from_resource_controller) {
     case DEFERRED_FINISH:
       if (called_from_resource_controller) {
         // Delay self-destruction since we don't know how we were reached.
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE, base::BindOnce(&ResourceLoader::CallDidFinishLoading,
                                       weak_ptr_factory_.GetWeakPtr()));
       } else {
@@ -631,7 +631,7 @@ void ResourceLoader::CancelRequestInternal(int error, bool from_renderer) {
     // If the request isn't in flight, then we won't get an asynchronous
     // notification from the request, so we have to signal ourselves to finish
     // this request.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&ResourceLoader::ResponseCompleted,
                                   weak_ptr_factory_.GetWeakPtr()));
   }
@@ -718,7 +718,7 @@ void ResourceLoader::ReadMore(bool handle_result_async) {
   } else {
     // Else, trigger OnReadCompleted asynchronously to avoid starving the IO
     // thread in case the URLRequest can provide data synchronously.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&ResourceLoader::OnReadCompleted,
                        weak_ptr_factory_.GetWeakPtr(), request_.get(), result));

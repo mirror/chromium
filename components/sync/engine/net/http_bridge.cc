@@ -392,8 +392,8 @@ void HttpBridge::OnURLFetchComplete(const net::URLFetcher* source) {
   // End of the line for url_poster_. It lives only on the IO loop.
   // We defer deletion because we're inside a callback from a component of the
   // URLFetcher, so it seems most natural / "polite" to let the stack unwind.
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE,
-                                                  fetch_state_.url_poster);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
+      FROM_HERE, fetch_state_.url_poster);
   fetch_state_.url_poster = nullptr;
 
   // Wake the blocked syncer thread in MakeSynchronousPost.

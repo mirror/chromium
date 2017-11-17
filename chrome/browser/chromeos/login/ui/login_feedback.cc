@@ -259,7 +259,7 @@ void LoginFeedback::EnsureFeedbackUI() {
       extensions::api::feedback_private::FeedbackFlow::FEEDBACK_FLOW_LOGIN);
 
   // Make sure there is a feedback app window opened.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&LoginFeedback::EnsureFeedbackUI,
                      weak_factory_.GetWeakPtr()),

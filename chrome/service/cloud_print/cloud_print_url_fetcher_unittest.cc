@@ -120,7 +120,7 @@ class CloudPrintURLFetcherTest : public testing::Test,
   void SetUp() override {
     testing::Test::SetUp();
 
-    io_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    io_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   }
 
   void TearDown() override {

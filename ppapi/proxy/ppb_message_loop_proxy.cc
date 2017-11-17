@@ -58,7 +58,7 @@ MessageLoopResource::MessageLoopResource(ForMainThread for_main_thread)
 
   slot->Set(this);
 
-  task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 
@@ -92,7 +92,7 @@ int32_t MessageLoopResource::AttachToCurrentThread() {
   slot->Set(this);
 
   loop_.reset(new base::MessageLoop);
-  task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
   // Post all pending work to the message loop.
   for (size_t i = 0; i < pending_tasks_.size(); i++) {

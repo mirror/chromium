@@ -59,7 +59,7 @@ class MediaServiceThrottlerTest : public testing::Test {
 
   scoped_refptr<FakeSingleThreadTaskRunner> test_task_runner_;
 
-  // Necessary, or else base::ThreadTaskRunnerHandle::Get() fails.
+  // Necessary, or else base::ThreadTaskRunnerHandle::Get(FROM_HERE) fails.
   base::MessageLoop message_loop_;
 
  private:

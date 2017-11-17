@@ -290,11 +290,11 @@ ComponentCloudPolicyService::ComponentCloudPolicyService(
   external_policy_data_fetcher_backend_.reset(
       new ExternalPolicyDataFetcherBackend(io_task_runner_, request_context));
 
-  backend_.reset(
-      new Backend(weak_ptr_factory_.GetWeakPtr(), backend_task_runner_,
-                  base::ThreadTaskRunnerHandle::Get(), std::move(cache),
-                  external_policy_data_fetcher_backend_->CreateFrontend(
-                      backend_task_runner_)));
+  backend_.reset(new Backend(
+      weak_ptr_factory_.GetWeakPtr(), backend_task_runner_,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), std::move(cache),
+      external_policy_data_fetcher_backend_->CreateFrontend(
+          backend_task_runner_)));
 
   // Observe the schema registry for keeping |current_schema_map_| up to date.
   schema_registry_->AddObserver(this);

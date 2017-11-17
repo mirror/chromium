@@ -1235,7 +1235,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ScrollBubblingFromOOPIFTest) {
   update_rect = filter->last_rect();
   while (update_rect.y() > initial_y) {
     base::RunLoop run_loop;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop.QuitClosure(), TestTimeouts::tiny_timeout());
     run_loop.Run();
     update_rect = filter->last_rect();
@@ -1327,7 +1327,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ScrollBubblingFromOOPIFTest) {
   // with scroll bubbling.
   while (update_rect.y() > initial_y) {
     base::RunLoop run_loop;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop.QuitClosure(), TestTimeouts::tiny_timeout());
     run_loop.Run();
     update_rect = filter->last_rect();
@@ -1346,7 +1346,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ScrollBubblingFromOOPIFTest) {
   // so flakiness implies this test is failing.
   {
     base::RunLoop run_loop;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop.QuitClosure(), TestTimeouts::action_timeout());
     run_loop.Run();
   }
@@ -1611,7 +1611,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ScrollElementIntoView) {
   // Wait until <iframe> 'b' is not visible (in main frame).
   while (are_intersecting_views(main_frame, child_frame_b)) {
     base::RunLoop run_loop;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop.QuitClosure(), TestTimeouts::tiny_timeout());
     run_loop.Run();
   }
@@ -1626,7 +1626,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ScrollElementIntoView) {
   // visible.
   while (!are_intersecting_views(main_frame, child_frame_c)) {
     base::RunLoop run_loop;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop.QuitClosure(), TestTimeouts::tiny_timeout());
     run_loop.Run();
   }
@@ -2306,7 +2306,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
     // TODO(lazyboy): Find a better way to avoid sleeping like this. See
     // http://crbug.com/405282 for details.
     base::RunLoop run_loop;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop.QuitClosure(),
         base::TimeDelta::FromMilliseconds(10));
     run_loop.Run();
@@ -6056,8 +6056,8 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   // handler.
   {
     base::RunLoop loop;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  loop.QuitClosure());
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           loop.QuitClosure());
     loop.Run();
   }
 
@@ -7178,8 +7178,8 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, PopupMenuTest) {
   // This loop ensures that the initialization completes before proceeding.
   while (!popup_view->window()) {
     base::RunLoop loop;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  loop.QuitClosure());
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           loop.QuitClosure());
     loop.Run();
   }
 
@@ -7296,7 +7296,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, MAYBE_NestedPopupMenuTest) {
          last_b_node_bounds_rect.y() ==
              b_node->current_frame_host()->GetView()->GetViewBounds().y()) {
     base::RunLoop run_loop;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop.QuitClosure(), TestTimeouts::tiny_timeout());
     run_loop.Run();
   }
@@ -7765,7 +7765,7 @@ class ChildFrameCompositorFrameSwapCounter {
   void WaitForNewFrames(size_t count) {
     while (counter_ < count) {
       base::RunLoop loop;
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE, loop.QuitClosure(), TestTimeouts::tiny_timeout());
       loop.Run();
     }
@@ -11250,8 +11250,8 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, CrossProcessInertSubframe) {
   // renderer process before the script below.
   {
     base::RunLoop loop;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  loop.QuitClosure());
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           loop.QuitClosure());
     loop.Run();
   }
 
@@ -11802,7 +11802,7 @@ class TouchSelectionControllerClientAndroidSiteIsolationTest
  protected:
   void DelayBy(base::TimeDelta delta) {
     base::RunLoop run_loop;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop.QuitClosure(), delta);
     run_loop.Run();
   }
@@ -11837,7 +11837,7 @@ class FrameStableObserver {
 
     do {
       base::RunLoop run_loop;
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE, run_loop.QuitClosure(), delta_);
       run_loop.Run();
       previous_frame_number = current_frame_number;

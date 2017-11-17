@@ -680,9 +680,8 @@ class VideoDecoderShim::DecoderImpl {
 VideoDecoderShim::DecoderImpl::DecoderImpl(
     const base::WeakPtr<VideoDecoderShim>& proxy)
     : shim_(proxy),
-      main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      weak_ptr_factory_(this) {
-}
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+      weak_ptr_factory_(this) {}
 
 VideoDecoderShim::DecoderImpl::~DecoderImpl() {
   DCHECK(pending_decodes_.empty());

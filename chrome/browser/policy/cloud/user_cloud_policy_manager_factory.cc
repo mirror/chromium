@@ -152,7 +152,7 @@ UserCloudPolicyManagerFactory::CreateManagerForOriginalBrowserContext(
   manager.reset(new UserCloudPolicyManager(
       std::move(store), component_policy_cache_dir,
       std::unique_ptr<CloudExternalDataManager>(),
-      base::ThreadTaskRunnerHandle::Get(), io_task_runner));
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), io_task_runner));
   manager->Init(
       SchemaRegistryServiceFactory::GetForContext(context)->registry());
   manager_wrappers_[context] = new ManagerWrapper(manager.get());

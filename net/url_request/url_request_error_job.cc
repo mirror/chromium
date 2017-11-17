@@ -23,7 +23,7 @@ URLRequestErrorJob::URLRequestErrorJob(
 URLRequestErrorJob::~URLRequestErrorJob() {}
 
 void URLRequestErrorJob::Start() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&URLRequestErrorJob::StartAsync, weak_factory_.GetWeakPtr()));
 }

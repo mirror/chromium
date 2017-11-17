@@ -94,7 +94,7 @@ VTVideoEncodeAccelerator::VTVideoEncodeAccelerator()
     : target_bitrate_(0),
       h264_profile_(H264PROFILE_BASELINE),
       bitrate_adjuster_(webrtc::Clock::GetRealTimeClock(), .5, .95),
-      client_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      client_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       encoder_thread_("VTEncoderThread"),
       encoder_task_weak_factory_(this) {
   encoder_weak_ptr_ = encoder_task_weak_factory_.GetWeakPtr();

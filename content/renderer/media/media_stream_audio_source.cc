@@ -16,7 +16,7 @@ namespace content {
 MediaStreamAudioSource::MediaStreamAudioSource(bool is_local_source)
     : is_local_source_(is_local_source),
       is_stopped_(false),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       weak_factory_(this) {
   DVLOG(1) << "MediaStreamAudioSource@" << this << "::MediaStreamAudioSource("
            << (is_local_source_ ? "local" : "remote") << " source)";

@@ -163,7 +163,7 @@ void TranslateScript::OnScriptFetchComplete(
     // We'll expire the cached script after some time, to make sure long
     // running browsers still get fixes that might get pushed with newer
     // scripts.
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&TranslateScript::Clear, weak_method_factory_.GetWeakPtr()),
         expiration_delay_);

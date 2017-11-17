@@ -61,7 +61,8 @@ ScriptContext* ScriptContextSet::Register(
 void ScriptContextSet::Remove(ScriptContext* context) {
   if (contexts_.erase(context)) {
     context->Invalidate();
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, context);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE,
+                                                             context);
   }
 }
 

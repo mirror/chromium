@@ -151,7 +151,7 @@ class WebNotificationItem : public views::View, public gfx::AnimationDelegate {
     if (!visible() && !animation_->is_animating()) {
       if (parent())
         parent()->RemoveChildView(this);
-      base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
     } else {
       delete_after_animation_ = true;
     }
@@ -204,7 +204,7 @@ class WebNotificationItem : public views::View, public gfx::AnimationDelegate {
     if (delete_after_animation_) {
       if (parent())
         parent()->RemoveChildView(this);
-      base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
     }
   }
   void AnimationCanceled(const gfx::Animation* animation) override {
@@ -505,7 +505,7 @@ void WebNotificationTray::OnMessageCenterContentsChanged() {
   // consecutively, and calling Update in the middle of those events will show
   // intermediate unread counts for a moment.
   should_update_tray_content_ = true;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&WebNotificationTray::UpdateTrayContent, AsWeakPtr()));
 }

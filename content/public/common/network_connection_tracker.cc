@@ -33,7 +33,7 @@ static const int32_t kConnectionTypeInvalid = -1;
 }  // namespace
 
 NetworkConnectionTracker::NetworkConnectionTracker()
-    : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       connection_type_(kConnectionTypeInvalid),
       network_change_observer_list_(
           new base::ObserverListThreadSafe<NetworkConnectionObserver>(
@@ -83,7 +83,7 @@ bool NetworkConnectionTracker::GetConnectionType(
   }
   if (!task_runner_->RunsTasksInCurrentSequence()) {
     connection_type_callbacks_.push_back(base::BindOnce(
-        &OnGetConnectionType, base::ThreadTaskRunnerHandle::Get(),
+        &OnGetConnectionType, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
         std::move(callback)));
   } else {
     connection_type_callbacks_.push_back(std::move(callback));

@@ -115,7 +115,7 @@ class PrivetLocalPrinterListerTest : public testing::Test {
     test_service_discovery_client_ = new TestServiceDiscoveryClient();
     test_service_discovery_client_->Start();
     url_request_context_ = new net::TestURLRequestContextGetter(
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     local_printer_lister_.reset(new PrivetLocalPrinterLister(
         test_service_discovery_client_.get(),
         url_request_context_.get(),

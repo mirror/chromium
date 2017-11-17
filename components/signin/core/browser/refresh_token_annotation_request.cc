@@ -124,7 +124,8 @@ void RefreshTokenAnnotationRequest::OnGetTokenFailure(
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DVLOG(2) << "Failed to get access token";
   RecordRequestStatusHistogram(false);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, request_callback_);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                         request_callback_);
   request_callback_.Reset();
 }
 
@@ -160,7 +161,8 @@ void RefreshTokenAnnotationRequest::ProcessApiCallSuccess(
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DVLOG(2) << "Request succeeded";
   RecordRequestStatusHistogram(true);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, request_callback_);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                         request_callback_);
   request_callback_.Reset();
 }
 
@@ -169,7 +171,8 @@ void RefreshTokenAnnotationRequest::ProcessApiCallFailure(
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DVLOG(2) << "Request failed";
   RecordRequestStatusHistogram(false);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, request_callback_);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                         request_callback_);
   request_callback_.Reset();
 }
 

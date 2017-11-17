@@ -22,7 +22,7 @@ namespace extensions {
 class StandardManagementPolicyProviderTest : public testing::Test {
  public:
   StandardManagementPolicyProviderTest()
-      : prefs_(base::ThreadTaskRunnerHandle::Get()),
+      : prefs_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         settings_(new ExtensionManagement(prefs()->pref_service(), false)),
         provider_(settings_.get()) {}
 

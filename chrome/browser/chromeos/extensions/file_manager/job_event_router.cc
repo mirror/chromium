@@ -103,7 +103,7 @@ void JobEventRouter::ScheduleDriveFileTransferEvent(
   if (immediate) {
     SendDriveFileTransferEvent();
   } else if (no_pending_task) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&JobEventRouter::SendDriveFileTransferEvent,
                        weak_factory_.GetWeakPtr()),

@@ -132,7 +132,7 @@ class BaseScrollbarLayerTest : public testing::Test {
     layer_tree_host_->SetUIResourceManagerForTesting(
         std::move(fake_ui_resource_manager));
     layer_tree_host_->InitializeSingleThreaded(
-        &single_thread_client_, base::ThreadTaskRunnerHandle::Get());
+        &single_thread_client_, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     layer_tree_host_->SetVisible(true);
     fake_client_.SetLayerTreeHost(layer_tree_host_.get());
   }

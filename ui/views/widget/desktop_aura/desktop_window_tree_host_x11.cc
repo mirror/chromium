@@ -462,7 +462,7 @@ void DesktopWindowTreeHostX11::Close() {
     // we don't destroy the window before the callback returned (as the caller
     // may delete ourselves on destroy and the ATL callback would still
     // dereference us when the callback returns).
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&DesktopWindowTreeHostX11::CloseNow,
                               close_widget_factory_.GetWeakPtr()));
   }
@@ -985,10 +985,9 @@ void DesktopWindowTreeHostX11::FrameTypeChanged() {
   // TODO(varkha, sadrul): Investigate removing this (and instead expecting the
   // NonClientView::UpdateFrame() to update the frame-view when theme changes,
   // like all other views).
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&DesktopWindowTreeHostX11::DelayedChangeFrameType,
-                            weak_factory_.GetWeakPtr(),
-                            new_type));
+                            weak_factory_.GetWeakPtr(), new_type));
 }
 
 void DesktopWindowTreeHostX11::SetFullscreen(bool fullscreen) {
@@ -2322,7 +2321,7 @@ void DesktopWindowTreeHostX11::RestartDelayedResizeTask() {
   delayed_resize_task_.Reset(
       base::Bind(&DesktopWindowTreeHostX11::DelayedResize,
                  close_widget_factory_.GetWeakPtr(), bounds_in_pixels_.size()));
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, delayed_resize_task_.callback());
 }
 

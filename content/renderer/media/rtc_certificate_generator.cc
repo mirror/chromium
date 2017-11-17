@@ -67,8 +67,8 @@ class RTCCertificateGeneratorRequest
     DCHECK(observer);
 
     CertificateCallbackPtr transition(
-        observer.release(),
-        base::OnTaskRunnerDeleter(base::ThreadTaskRunnerHandle::Get()));
+        observer.release(), base::OnTaskRunnerDeleter(
+                                base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
     worker_thread_->PostTask(
         FROM_HERE,
         base::BindOnce(
@@ -139,7 +139,7 @@ void RTCCertificateGenerator::generateCertificateWithOptionalExpiration(
   DCHECK(IsSupportedKeyParams(key_params));
 #if BUILDFLAG(ENABLE_WEBRTC)
   const scoped_refptr<base::SingleThreadTaskRunner> main_thread =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   PeerConnectionDependencyFactory* pc_dependency_factory =
       RenderThreadImpl::current()->GetPeerConnectionDependencyFactory();
   pc_dependency_factory->EnsureInitialized();

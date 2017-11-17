@@ -87,7 +87,7 @@ void AwContentRendererClient::RenderThreadStarted() {
 
   auto registry = base::MakeUnique<service_manager::BinderRegistry>();
   registry->AddInterface(visited_link_slave_->GetBindCallback(),
-                         base::ThreadTaskRunnerHandle::Get());
+                         base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   content::ChildThread::Get()
       ->GetServiceManagerConnection()
       ->AddConnectionFilter(base::MakeUnique<content::SimpleConnectionFilter>(

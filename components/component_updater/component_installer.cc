@@ -52,7 +52,7 @@ ComponentInstaller::RegistrationInfo::~RegistrationInfo() = default;
 ComponentInstaller::ComponentInstaller(
     std::unique_ptr<ComponentInstallerPolicy> installer_policy)
     : current_version_(kNullVersion),
-      main_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
   installer_policy_ = std::move(installer_policy);
 }
 

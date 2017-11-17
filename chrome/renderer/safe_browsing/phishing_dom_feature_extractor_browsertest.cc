@@ -183,7 +183,7 @@ class PhishingDOMFeatureExtractorTest : public ChromeRenderViewTest {
   // Helper for the SubframeRemoval test that posts a message to remove
   // the iframe "frame1" from the document.
   void ScheduleRemoveIframe() {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&PhishingDOMFeatureExtractorTest::RemoveIframe,
                        weak_factory_.GetWeakPtr()));

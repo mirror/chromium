@@ -26,7 +26,7 @@ class SafeSearchURLReporterTest : public testing::Test {
  public:
   SafeSearchURLReporterTest()
       : request_context_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))),
         report_url_(&token_service_, kAccountId, request_context_.get()) {
     token_service_.UpdateCredentials(kAccountId, "refresh_token");
   }

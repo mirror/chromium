@@ -213,7 +213,7 @@ class EasyUnlockService::PowerMonitor
   void SuspendDone(const base::TimeDelta& sleep_duration) override {
     waking_up_ = true;
     wake_up_time_ = base::Time::Now();
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&PowerMonitor::ResetWakingUp,
                        weak_ptr_factory_.GetWeakPtr()),

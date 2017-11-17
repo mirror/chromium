@@ -218,7 +218,7 @@ class StaleHostResolverTest : public testing::Test {
 
     // Run until resolve completes or timeout.
     resolve_closure_ = run_loop.QuitWhenIdleClosure();
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop.QuitWhenIdleClosure(),
         base::TimeDelta::FromSeconds(kWaitTimeoutSec));
     run_loop.Run();
@@ -227,7 +227,7 @@ class StaleHostResolverTest : public testing::Test {
   void WaitForIdle() {
     base::RunLoop run_loop;
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, run_loop.QuitWhenIdleClosure());
     run_loop.Run();
   }
