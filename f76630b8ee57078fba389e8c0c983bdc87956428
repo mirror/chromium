@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "58cb3003_8c081a82",
+        "filename": "ios/chrome/browser/ui/browser_view_controller_dependency_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-17T10:22:44Z",
+      "side": 1,
+      "message": "OK. I\u0027d like to move to having something like the Browser object that existed in clean/, but we can live with this implementation for now.",
+      "parentUuid": "2e14e174_0dbdcd52",
+      "range": {
+        "startLine": 40,
+        "startChar": 42,
+        "endLine": 40,
+        "endChar": 54
+      },
+      "revId": "f76630b8ee57078fba389e8c0c983bdc87956428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61540018_4e90592c",
         "filename": "ios/chrome/browser/ui/browser_view_controller_unittest.mm",
         "patchSetId": 6
