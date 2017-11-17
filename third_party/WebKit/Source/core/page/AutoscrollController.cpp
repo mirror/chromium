@@ -333,8 +333,14 @@ void AutoscrollController::Animate(double) {
         return;
       }
       event_handler.UpdateSelectionForMouseDrag();
-      ScheduleMainThreadAnimation();
-      autoscroll_layout_object_->Autoscroll(selection_point);
+
+      // UpdateSelectionForMouseDrag may call layout to cancel auto scroll
+      // animation.
+      if (autoscroll_type_ != kNoAutoscroll) {
+        DCHECK(autoscroll_layout_object_);
+        ScheduleMainThreadAnimation();
+        autoscroll_layout_object_->Autoscroll(selection_point);
+      }
       break;
     case kNoAutoscroll:
     case kAutoscrollForMiddleClick:
