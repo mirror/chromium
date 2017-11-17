@@ -249,9 +249,10 @@ bool SchemeRegistry::ShouldTrackUsageMetricsForScheme(const String& scheme) {
   // "chrome-extension" is not included because they have a single deployment
   // point (the webstore) and are designed specifically for Chrome.
   // "data" is not included because real sites shouldn't be using it for
-  // top-level
-  // pages and Chrome does use it internally (eg. PluginPlaceholder).
-  return scheme == "http" || scheme == "https" || scheme == "file";
+  // top-level pages and Chrome does use it internally (eg. PluginPlaceholder).
+  // "file" is not included because file:// navigations have different loading
+  // behaviors.
+  return scheme == "http" || scheme == "https";
 }
 
 void SchemeRegistry::RegisterURLSchemeAsAllowingServiceWorkers(
