@@ -15,6 +15,7 @@
 
 namespace blink {
 
+class StaticBitmapImage;
 class WebGLFramebuffer;
 
 class VRWebGLDrawingBuffer final
@@ -43,6 +44,9 @@ class VRWebGLDrawingBuffer final
   void Resize(const IntSize&);
 
   void MarkFramebufferComplete(bool complete);
+
+  gpu::MailboxHolder GetMailbox();
+  scoped_refptr<StaticBitmapImage> TransferToStaticBitmapImage();
 
   virtual void Trace(blink::Visitor*);
   virtual void TraceWrappers(const ScriptWrappableVisitor*) const;

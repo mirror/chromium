@@ -6,6 +6,7 @@
 #define VRPresentationFrame_h
 
 #include "device/vr/vr_service.mojom-blink.h"
+#include "modules/vr/latest/VRView.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
@@ -16,6 +17,8 @@ namespace blink {
 
 class VRCoordinateSystem;
 class VRDevicePose;
+class VRInputPose;
+class VRInputSource;
 class VRSession;
 class VRView;
 
@@ -29,13 +32,17 @@ class VRPresentationFrame final : public ScriptWrappable {
 
   const HeapVector<Member<VRView>>& views() const;
   VRDevicePose* getDevicePose(VRCoordinateSystem*) const;
+  VRInputPose* getInputPose(VRInputSource*, VRCoordinateSystem*) const;
 
-  void UpdateBasePose(std::unique_ptr<TransformationMatrix>);
+  void SetBasePoseMatrix(const TransformationMatrix&);
+
+  void InFrameCallback(bool value) { in_frame_callback_ = value; }
 
   virtual void Trace(blink::Visitor*);
 
  private:
   const Member<VRSession> session_;
+  bool in_frame_callback_ = false;
   std::unique_ptr<TransformationMatrix> base_pose_matrix_;
 };
 

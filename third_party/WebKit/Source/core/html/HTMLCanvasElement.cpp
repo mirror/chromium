@@ -443,8 +443,10 @@ void HTMLCanvasElement::DoDeferredPaintInvalidation() {
   }
 
   if (context_ &&
-      context_->GetContextType() ==
-          CanvasRenderingContext::kContextImageBitmap &&
+      (context_->GetContextType() ==
+           CanvasRenderingContext::kContextImageBitmap ||
+       context_->GetContextType() ==
+           CanvasRenderingContext::kContextVRPresent) &&
       context_->PlatformLayer()) {
     context_->PlatformLayer()->Invalidate();
   }
@@ -1179,7 +1181,9 @@ PaintCanvas* HTMLCanvasElement::ExistingDrawingCanvas() const {
 ImageBuffer* HTMLCanvasElement::GetOrCreateImageBuffer() {
   DCHECK(context_);
   DCHECK(context_->GetContextType() !=
-         CanvasRenderingContext::kContextImageBitmap);
+             CanvasRenderingContext::kContextImageBitmap &&
+         context_->GetContextType() !=
+             CanvasRenderingContext::kContextVRPresent);
   if (!image_buffer_ && !did_fail_to_create_image_buffer_)
     CreateImageBuffer();
   return image_buffer_.get();
@@ -1218,7 +1222,8 @@ scoped_refptr<Image> HTMLCanvasElement::CopiedImage(
     return CreateTransparentImage(Size());
 
   if (context_->GetContextType() ==
-      CanvasRenderingContext::kContextImageBitmap) {
+          CanvasRenderingContext::kContextImageBitmap ||
+      context_->GetContextType() == CanvasRenderingContext::kContextVRPresent) {
     scoped_refptr<Image> image = context_->GetImage(hint, snapshot_reason);
     // TODO(fserb): return image?
     if (image)
@@ -1334,7 +1339,8 @@ scoped_refptr<Image> HTMLCanvasElement::GetSourceImageForCanvas(
   }
 
   if (context_->GetContextType() ==
-      CanvasRenderingContext::kContextImageBitmap) {
+          CanvasRenderingContext::kContextImageBitmap ||
+      context_->GetContextType() == CanvasRenderingContext::kContextVRPresent) {
     *status = kNormalSourceImageStatus;
     scoped_refptr<Image> result = context_->GetImage(hint, reason);
     if (!result)
@@ -1382,8 +1388,10 @@ bool HTMLCanvasElement::WouldTaintOrigin(SecurityOrigin*) const {
 }
 
 FloatSize HTMLCanvasElement::ElementSize(const FloatSize&) const {
-  if (context_ && context_->GetContextType() ==
-                      CanvasRenderingContext::kContextImageBitmap) {
+  if (context_ && (context_->GetContextType() ==
+                       CanvasRenderingContext::kContextImageBitmap ||
+                   context_->GetContextType() ==
+                       CanvasRenderingContext::kContextVRPresent)) {
     scoped_refptr<Image> image =
         context_->GetImage(kPreferNoAcceleration, kSnapshotReasonDrawImage);
     if (image)

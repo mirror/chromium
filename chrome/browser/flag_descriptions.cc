@@ -1604,6 +1604,11 @@ const char kWebvrDescription[] =
     "content on insecure origins to access these powerful APIs, and may pose a "
     "security risk.";
 
+const char kWebXrName[] = "WebXR";
+const char kWebXrDescription[] =
+    "Enabling this option allows web applications to access to the latest "
+    "version of experimental Virtual Reality and Augmented Reality APIs.";
+
 const char kWebVrExperimentalRenderingName[] =
     "WebVR experimental rendering optimizations";
 const char kWebVrExperimentalRenderingDescription[] =

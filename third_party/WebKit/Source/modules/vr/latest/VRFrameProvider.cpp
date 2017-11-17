@@ -12,6 +12,8 @@
 #include "modules/vr/latest/VR.h"
 #include "modules/vr/latest/VRDevice.h"
 #include "modules/vr/latest/VRSession.h"
+#include "modules/vr/latest/VRViewport.h"
+#include "modules/vr/latest/VRWebGLLayer.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/transforms/TransformationMatrix.h"
@@ -29,12 +31,7 @@ class VRFrameProviderRequestCallback
       : frame_provider_(frame_provider) {}
   ~VRFrameProviderRequestCallback() override {}
   void Invoke(double high_res_time_ms) override {
-    // TODO(bajones): Eventually exclusive vsyncs won't be handled here.
-    if (frame_provider_->exclusive_session()) {
-      frame_provider_->OnExclusiveVSync(high_res_time_ms / 1000.0);
-    } else {
-      frame_provider_->OnNonExclusiveVSync(high_res_time_ms / 1000.0);
-    }
+    frame_provider_->OnNonExclusiveVSync(high_res_time_ms / 1000.0);
   }
 
   virtual void Trace(blink::Visitor* visitor) {
@@ -84,7 +81,8 @@ std::unique_ptr<TransformationMatrix> getPoseMatrix(
 
 }  // namespace
 
-VRFrameProvider::VRFrameProvider(VRDevice* device) : device_(device) {}
+VRFrameProvider::VRFrameProvider(VRDevice* device)
+    : device_(device), submit_frame_client_binding_(this) {}
 
 void VRFrameProvider::BeginExclusiveSession(VRSession* session,
                                             ScriptPromiseResolver* resolver) {
@@ -98,13 +96,28 @@ void VRFrameProvider::BeginExclusiveSession(VRSession* session,
 
   pending_exclusive_session_resolver_ = resolver;
 
-  // TODO(bajones): Request a VRPresentationProviderPtr to use for presenting
-  // frames, delay call to OnPresentComplete till the connection is established.
-  OnPresentComplete(true);
+  // Establish the connection with the VSyncProvider if needed.
+  if (!presentation_provider_.is_bound()) {
+    device::mojom::blink::VRSubmitFrameClientPtr submit_frame_client;
+    submit_frame_client_binding_.Close();
+    submit_frame_client_binding_.Bind(mojo::MakeRequest(&submit_frame_client));
+
+    device_->vrDisplayHostPtr()->RequestPresent(
+        std::move(submit_frame_client),
+        mojo::MakeRequest(&presentation_provider_),
+        ConvertToBaseCallback(WTF::Bind(&VRFrameProvider::OnPresentComplete,
+                                        WrapPersistent(this))));
+
+    presentation_provider_.set_connection_error_handler(ConvertToBaseCallback(
+        WTF::Bind(&VRFrameProvider::OnPresentationProviderConnectionError,
+                  WrapWeakPersistent(this))));
+  }
 }
 
 void VRFrameProvider::OnPresentComplete(bool success) {
   if (success) {
+    presentation_provider_->SetSessionClient(
+        exclusive_session_->GetSessionClientPtr());
     pending_exclusive_session_resolver_->Resolve(exclusive_session_);
   } else {
     exclusive_session_->ForceEnd();
@@ -119,16 +132,38 @@ void VRFrameProvider::OnPresentComplete(bool success) {
   pending_exclusive_session_resolver_ = nullptr;
 }
 
+void VRFrameProvider::OnPresentationProviderConnectionError() {
+  if (pending_exclusive_session_resolver_) {
+    DOMException* exception = DOMException::Create(
+        kNotAllowedError,
+        "Error occured while requesting exclusive VRSession.");
+    pending_exclusive_session_resolver_->Reject(exception);
+    pending_exclusive_session_resolver_ = nullptr;
+  }
+
+  presentation_provider_.reset();
+  if (vsync_connection_failed_)
+    return;
+  exclusive_session_->ForceEnd();
+  vsync_connection_failed_ = true;
+}
+
 // Called by the exclusive session when it is ended.
 void VRFrameProvider::OnExclusiveSessionEnded() {
   if (!exclusive_session_)
     return;
 
-  // TODO(bajones): Call device_->vrDisplayHostPtr()->ExitPresent();
+  device_->vrDisplayHostPtr()->ExitPresent();
 
   exclusive_session_ = nullptr;
   pending_exclusive_vsync_ = false;
+  pending_previous_frame_render_ = false;
+  pending_submit_frame_ = false;
   frame_id_ = -1;
+
+  if (presentation_provider_.is_bound()) {
+    presentation_provider_.reset();
+  }
 
   // When we no longer have an active exclusive session schedule all the
   // outstanding frames that were requested while the exclusive session was
@@ -161,21 +196,10 @@ void VRFrameProvider::ScheduleExclusiveFrame() {
   if (pending_exclusive_vsync_)
     return;
 
-  // TODO(bajones): This should acquire frames through a VRPresentationProvider
-  // instead of duplicating the non-exclusive path.
-  LocalFrame* frame = device_->vr()->GetFrame();
-  if (!frame)
-    return;
-
-  Document* doc = frame->GetDocument();
-  if (!doc)
-    return;
-
   pending_exclusive_vsync_ = true;
 
-  device_->vrMagicWindowProviderPtr()->GetPose(ConvertToBaseCallback(WTF::Bind(
-      &VRFrameProvider::OnNonExclusivePose, WrapWeakPersistent(this))));
-  doc->RequestAnimationFrame(new VRFrameProviderRequestCallback(this));
+  presentation_provider_->GetVSync(ConvertToBaseCallback(
+      WTF::Bind(&VRFrameProvider::OnExclusiveVSync, WrapWeakPersistent(this))));
 }
 
 void VRFrameProvider::ScheduleNonExclusiveFrame() {
@@ -197,23 +221,46 @@ void VRFrameProvider::ScheduleNonExclusiveFrame() {
   doc->RequestAnimationFrame(new VRFrameProviderRequestCallback(this));
 }
 
-void VRFrameProvider::OnExclusiveVSync(double timestamp) {
+void VRFrameProvider::OnExclusiveVSync(
+    device::mojom::blink::VRPosePtr pose,
+    WTF::TimeDelta time_delta,
+    int16_t frame_id,
+    device::mojom::blink::VRPresentationProvider::VSyncStatus status) {
   DVLOG(2) << __FUNCTION__;
-
-  pending_exclusive_vsync_ = false;
+  vsync_connection_failed_ = false;
+  switch (status) {
+    case device::mojom::blink::VRPresentationProvider::VSyncStatus::SUCCESS:
+      break;
+    case device::mojom::blink::VRPresentationProvider::VSyncStatus::CLOSING:
+      return;
+  }
 
   // We may have lost the exclusive session since the last VSync request.
-  if (!exclusive_session_)
+  if (!exclusive_session_) {
     return;
+  }
+
+  // Ensure a consistent timebase with document rAF.
+  if (timebase_ < 0) {
+    timebase_ = WTF::MonotonicallyIncreasingTime() - time_delta.InSecondsF();
+  }
+
+  frame_pose_ = std::move(pose);
+  frame_id_ = frame_id;
+  pending_exclusive_vsync_ = false;
 
   // Post a task to handle scheduled animations after the current
   // execution context finishes, so that we yield to non-mojo tasks in
   // between frames. Executing mojo tasks back to back within the same
   // execution context caused extreme input delay due to processing
-  // multiple frames without yielding, see crbug.com/701444.
+  // multiple frames without yielding, see crbug.com/701444. I suspect
+  // this is due to WaitForIncomingMethodCall receiving the OnVSync
+  // but queueing it for immediate execution since it doesn't match
+  // the interface being waited on.
   Platform::Current()->CurrentThread()->GetWebTaskRunner()->PostTask(
-      BLINK_FROM_HERE, WTF::Bind(&VRFrameProvider::ProcessScheduledFrame,
-                                 WrapWeakPersistent(this), timestamp));
+      BLINK_FROM_HERE,
+      WTF::Bind(&VRFrameProvider::ProcessScheduledFrame,
+                WrapWeakPersistent(this), timebase_ + time_delta.InSecondsF()));
 }
 
 void VRFrameProvider::OnNonExclusiveVSync(double timestamp) {
@@ -260,6 +307,114 @@ void VRFrameProvider::ProcessScheduledFrame(double timestamp) {
       session->OnFrame(std::move(pose_matrix));
     }
   }
+
+  // For GVR, we shut down normal vsync processing during VR presentation.
+  // Trigger any callbacks on window.rAF manually so that they run after
+  // completing the vrDisplay.rAF processing.
+  /*if (is_presenting_ && !capabilities_->hasExternalDisplay()) {
+    Platform::Current()->CurrentThread()->GetWebTaskRunner()->PostTask(
+        BLINK_FROM_HERE, WTF::Bind(&VRDisplay::ProcessScheduledWindowAnimations,
+                                   WrapWeakPersistent(this), timestamp));
+  }*/
+}
+
+void VRFrameProvider::SubmitFrame(gpu::MailboxHolder mailbox) {
+  // Invalid mailbox
+  if (!mailbox.texture_target)
+    return;
+
+  if (!presentation_provider_)
+    return;
+
+  // There's two types of synchronization needed for submitting frames:
+  //
+  // - Before submitting, need to wait for the previous frame to be
+  //   pulled off the transfer surface to avoid lost frames. This
+  //   is currently a compile-time option, normally we always want
+  //   to defer this wait to increase parallelism.
+  //
+  // - After submitting, need to wait for the mailbox to be consumed,
+  //   and the image object must remain alive during this time.
+  //   We keep a reference to the image so that we can defer this
+  //   wait. Here, we wait for the previous transfer to complete.
+  {
+    TRACE_EVENT0("gpu", "VRFrameProvider::waitForPreviousTransferToFinish");
+    while (pending_submit_frame_) {
+      if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
+        DLOG(ERROR) << "Failed to receive SubmitFrame response";
+        break;
+      }
+    }
+  }
+
+  // TODO: Would be nice to have some work done in here.
+
+  // Wait for the previous render to finish, to avoid losing frames in the
+  // Android Surface / GLConsumer pair. TODO(klausw): make this tunable?
+  // Other devices may have different preferences. Do this step as late
+  // as possible before SubmitFrame to ensure we can do as much work as
+  // possible in parallel with the previous frame's rendering.
+  {
+    TRACE_EVENT0("gpu", "VRFrameProvider::waitForPreviousRenderToFinish");
+    while (pending_previous_frame_render_) {
+      if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
+        DLOG(ERROR) << "Failed to receive SubmitFrame response";
+        break;
+      }
+    }
+  }
+
+  pending_previous_frame_render_ = true;
+  pending_submit_frame_ = true;
+
+  TRACE_EVENT_BEGIN0("gpu", "VRFrameProvider::SubmitFrame");
+  presentation_provider_->SubmitFrame(frame_id_, mailbox);
+  TRACE_EVENT_END0("gpu", "VRFrameProvider::SubmitFrame");
+
+  // Reset our frame id, since anything we'd want to do (resizing/etc) can
+  // no-longer happen to this frame.
+  frame_id_ = -1;
+}
+
+// TODO(bajones): This only works because we're restricted to a single layer at
+// the moment. Will need an overhaul when we get more robust layering support.
+void VRFrameProvider::UpdateWebGLLayerViewports(VRWebGLLayer* layer) {
+  if (layer->session() != exclusive_session_)
+    return;
+
+  VRViewport* left = layer->GetViewport(VRView::kEyeLeft);
+  VRViewport* right = layer->GetViewport(VRView::kEyeRight);
+  float width = layer->framebufferWidth();
+  float height = layer->framebufferHeight();
+
+  WebFloatRect left_coords(
+      static_cast<float>(left->x()) / width,
+      static_cast<float>(height - (left->y() + left->height())) / height,
+      static_cast<float>(left->width()) / width,
+      static_cast<float>(left->height()) / height);
+  WebFloatRect right_coords(
+      static_cast<float>(right->x()) / width,
+      static_cast<float>(height - (right->y() + right->height())) / height,
+      static_cast<float>(right->width()) / width,
+      static_cast<float>(right->height()) / height);
+
+  presentation_provider_->UpdateLayerBounds(
+      frame_id_, left_coords, right_coords, WebSize(width, height));
+}
+
+void VRFrameProvider::OnSubmitFrameTransferred() {
+  DVLOG(3) << __FUNCTION__;
+  pending_submit_frame_ = false;
+}
+
+void VRFrameProvider::OnSubmitFrameRendered() {
+  DVLOG(3) << __FUNCTION__;
+  pending_previous_frame_render_ = false;
+}
+
+void VRFrameProvider::Dispose() {
+  presentation_provider_.reset();
+  // TODO(bajones): Do something for outstanding frame requests?
 }
 
 void VRFrameProvider::Trace(blink::Visitor* visitor) {

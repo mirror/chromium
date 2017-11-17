@@ -6,6 +6,7 @@
 #define VRFrameProvider_h
 
 #include "device/vr/vr_service.mojom-blink.h"
+#include "gpu/command_buffer/common/mailbox_holder.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
@@ -16,35 +17,49 @@ namespace blink {
 class ScriptPromiseResolver;
 class VRDevice;
 class VRSession;
+class VRWebGLLayer;
 
 // This class manages requesting and dispatching frame updates, which includes
 // pose information for a given VRDevice.
-class VRFrameProvider final
-    : public GarbageCollectedFinalized<VRFrameProvider> {
+class VRFrameProvider final : public GarbageCollectedFinalized<VRFrameProvider>,
+                              public device::mojom::blink::VRSubmitFrameClient {
  public:
   explicit VRFrameProvider(VRDevice*);
 
   VRSession* exclusive_session() const { return exclusive_session_; }
 
   void BeginExclusiveSession(VRSession*, ScriptPromiseResolver*);
+
   void OnExclusiveSessionEnded();
 
   void RequestFrame(VRSession*);
 
-  void OnExclusiveVSync(double timestamp);
   void OnNonExclusiveVSync(double timestamp);
 
   void SubmitFrame(gpu::MailboxHolder);
+  void UpdateWebGLLayerViewports(VRWebGLLayer*);
+
+  // VRSubmitFrameClient
+  void OnSubmitFrameTransferred();
+  void OnSubmitFrameRendered();
+
+  void Dispose();
 
   virtual void Trace(blink::Visitor*);
 
  private:
+  void OnExclusiveVSync(
+      device::mojom::blink::VRPosePtr,
+      WTF::TimeDelta,
+      int16_t frame_id,
+      device::mojom::blink::VRPresentationProvider::VSyncStatus);
   void OnNonExclusivePose(device::mojom::blink::VRPosePtr);
 
   void ScheduleExclusiveFrame();
   void ScheduleNonExclusiveFrame();
 
   void OnPresentComplete(bool success);
+  void OnPresentationProviderConnectionError();
   void ProcessScheduledFrame(double timestamp);
 
   const Member<VRDevice> device_;
@@ -54,6 +69,9 @@ class VRFrameProvider final
   // Non-exclusive Sessions which have requested a frame update.
   HeapVector<Member<VRSession>> requesting_sessions_;
 
+  mojo::Binding<device::mojom::blink::VRSubmitFrameClient>
+      submit_frame_client_binding_;
+  device::mojom::blink::VRPresentationProviderPtr presentation_provider_;
   device::mojom::blink::VRMagicWindowProviderPtr magic_window_provider_;
   device::mojom::blink::VRPosePtr frame_pose_;
 

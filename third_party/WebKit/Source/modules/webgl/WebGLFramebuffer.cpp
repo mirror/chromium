@@ -374,6 +374,7 @@ GLenum WebGLFramebuffer::CheckDepthStencilStatus(const char** reason) const {
     *reason = "cannot render to a WebVR layer outside of a frame callback";
     return GL_FRAMEBUFFER_UNSUPPORTED;
   }
+
   if (Context()->IsWebGL2OrHigher() || web_gl1_depth_stencil_consistent_)
     return GL_FRAMEBUFFER_COMPLETE;
   *reason = "conflicting DEPTH/STENCIL/DEPTH_STENCIL attachments";

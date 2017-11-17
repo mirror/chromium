@@ -983,6 +983,9 @@ extern const char kWebrtcStunOriginDescription[];
 extern const char kWebvrName[];
 extern const char kWebvrDescription[];
 
+extern const char kWebXrName[];
+extern const char kWebXrDescription[];
+
 extern const char kWebVrExperimentalRenderingName[];
 extern const char kWebVrExperimentalRenderingDescription[];
 
