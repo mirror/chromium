@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76d6e060_75dc8f53",
+        "filename": "chromeos/cryptohome/homedir_methods.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T14:59:41Z",
+      "side": 1,
+      "message": "nit/style: Often you can skip doc-style comment for the function definition, if it has corresponding comment for its declaration.",
+      "revId": "b767656e066e8b04f55a94990a04cef09a1c19d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59135e34_7a788c40",
+        "filename": "chromeos/cryptohome/homedir_methods.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T14:59:41Z",
+      "side": 1,
+      "message": "To be consistent with the AuthorizationRequest\u0027s member order, how about declaring as\nCreateAuthorizationRequest(label, secret)?",
+      "revId": "b767656e066e8b04f55a94990a04cef09a1c19d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746c7ee9_e414545c",
+        "filename": "chromeos/cryptohome/homedir_methods.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T14:59:41Z",
+      "side": 1,
+      "message": "nit/style: Could you elide braces?",
+      "revId": "b767656e066e8b04f55a94990a04cef09a1c19d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283fdbf5_d24b979a",
+        "filename": "chromeos/cryptohome/homedir_methods.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-17T14:59:41Z",
+      "side": 1,
+      "message": "nit/style: could you add empty line just above?",
+      "revId": "b767656e066e8b04f55a94990a04cef09a1c19d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
