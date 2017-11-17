@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5458a4f9_0fa76d5b",
+        "filename": "chromeos/dbus/fake_shill_ipconfig_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-17T21:11:39Z",
+      "side": 1,
+      "message": "Out of scope, but I\u0027ve seen this pattern enough that it would be handy to have a FindOrCreateKeyOfType(key, type) method.",
+      "revId": "f6d11c137efb4547ca11057ffe9b0ea7a3401694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77db8f7a_fb8f6a92",
+        "filename": "chromeos/network/device_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-17T21:11:39Z",
+      "side": 1,
+      "message": "nit: The update vs. add isn\u0027t that interesting, this can just be:\nNET_LOG(EVENT) \u003c\u003c \"IPConfig for: \" \u003c\u003c path() \u003c\u003c \" Changed: \" \u003c\u003c ip_config_path;",
+      "revId": "f6d11c137efb4547ca11057ffe9b0ea7a3401694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
