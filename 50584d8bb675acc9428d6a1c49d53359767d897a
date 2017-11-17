@@ -34,6 +34,24 @@
       "revId": "50584d8bb675acc9428d6a1c49d53359767d897a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "033acf95_07fa0eab",
+        "filename": "base/observer_list.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-17T15:25:34Z",
+      "side": 1,
+      "message": "Can\u0027t GetCurrent() do the DCHECK() directly?",
+      "parentUuid": "4fb416cb_95621cf0",
+      "revId": "50584d8bb675acc9428d6a1c49d53359767d897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
