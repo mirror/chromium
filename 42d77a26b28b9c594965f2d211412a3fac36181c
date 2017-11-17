@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6bca72c8_7238328b",
+        "filename": "components/feature_engagement/internal/android/java/src/org/chromium/components/feature_engagement/internal/TrackerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-17T21:02:48Z",
+      "side": 1,
+      "message": "Great idea! Done.",
+      "parentUuid": "6667b76d_4bffc7f4",
+      "range": {
+        "startLine": 48,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 9
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04f42080_8fc260de",
         "filename": "components/feature_engagement/internal/android/tracker_impl_android.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "470d5044_c45d00fd",
+        "filename": "components/feature_engagement/internal/android/tracker_impl_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-17T21:02:48Z",
+      "side": 1,
+      "message": "Yeah, those two constructors both exist and do the same thing:\n\n  ScopedJavaLocalRef() : env_(nullptr) {}\n  ScopedJavaLocalRef(std::nullptr_t) : env_(nullptr) {}\n\nWhich is quite neat :-)",
+      "parentUuid": "04f42080_8fc260de",
+      "range": {
+        "startLine": 141,
+        "startChar": 11,
+        "endLine": 141,
+        "endChar": 18
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0f35ef8f_21d82bfa",
+        "filename": "components/feature_engagement/internal/android/tracker_impl_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-17T21:02:48Z",
+      "side": 1,
+      "message": "Yeah. Thought about it earlier and decided against it. But, I looked at it again now, and I do think it looks cleaner. So thanks! Done :-)",
+      "parentUuid": "e119c488_ea197a3d",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 50
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8968b5bf_4d7e1c2a",
         "filename": "components/feature_engagement/internal/android/tracker_impl_android.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5567d12_321312a5",
+        "filename": "components/feature_engagement/internal/android/tracker_impl_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-17T21:02:48Z",
+      "side": 1,
+      "message": "Sure. It was used twice below, which is why I had it here originally. But yeah, shouldn\u0027t matter.",
+      "parentUuid": "8968b5bf_4d7e1c2a",
+      "range": {
+        "startLine": 175,
+        "startChar": 16,
+        "endLine": 175,
+        "endChar": 52
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6a5bf282_ea674872",
+        "filename": "components/feature_engagement/internal/android/tracker_impl_android.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-17T21:02:48Z",
+      "side": 1,
+      "message": "Sadly, yes. If you put it in the .cc file the generated JNI header file gets sad. A forward declare in this header file is sadly not enough either, as it can\u0027t deal with an incomplete type.\n\nAdded a comment here to make that clear.",
+      "parentUuid": "8f43209e_ecf524aa",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 32
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "368aec89_035ee9aa",
         "filename": "components/feature_engagement/internal/display_lock_controller_impl.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef80129_cab96cbc",
+        "filename": "components/feature_engagement/internal/display_lock_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-17T21:02:48Z",
+      "side": 1,
+      "message": "That is an awesome idea! Done.",
+      "parentUuid": "368aec89_035ee9aa",
+      "range": {
+        "startLine": 30,
+        "startChar": 40,
+        "endLine": 30,
+        "endChar": 41
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "135528cc_ebc5755e",
+        "filename": "components/feature_engagement/internal/display_lock_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-17T21:02:48Z",
+      "side": 1,
+      "message": "Ooops :-/ Done.",
+      "parentUuid": "4c23142b_1b049af7",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 33,
+        "endChar": 16
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7992023_afb52503",
         "filename": "components/feature_engagement/internal/display_lock_controller_impl_unittest.cc",
         "patchSetId": 5
@@ -183,6 +351,30 @@
       "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d506f28_95d1ab02",
+        "filename": "components/feature_engagement/internal/display_lock_controller_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-17T21:02:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7992023_afb52503",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 35
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "a589621e_7262e815",
+        "filename": "components/feature_engagement/internal/noop_display_lock_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-17T21:02:48Z",
+      "side": 1,
+      "message": "It\u0027s used in the demo-mode, which is kind of prod, so I figured I\u0027d just ensure that it does what I think it does.\n\nBut I\u0027ve made the tests as TEST instead of TEST_F though.",
+      "parentUuid": "842015cb_4ab299db",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 35
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "961ade2b_7d171c55",
         "filename": "components/feature_engagement/public/tracker.h",
         "patchSetId": 5
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "858c820a_e74882fb",
+        "filename": "components/feature_engagement/public/tracker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-17T21:02:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "961ade2b_7d171c55",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 32
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b5667a9_32c5adec",
         "filename": "components/feature_engagement/public/tracker.h",
         "patchSetId": 5
@@ -252,6 +492,30 @@
       "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6356af46_97ba98b0",
+        "filename": "components/feature_engagement/public/tracker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-17T21:02:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b5667a9_32c5adec",
+      "range": {
+        "startLine": 32,
+        "startChar": 29,
+        "endLine": 32,
+        "endChar": 44
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
