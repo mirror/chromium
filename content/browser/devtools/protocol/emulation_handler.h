@@ -8,7 +8,7 @@
 #include "base/macros.h"
 #include "content/browser/devtools/protocol/devtools_domain_handler.h"
 #include "content/browser/devtools/protocol/emulation.h"
-#include "third_party/WebKit/public/web/WebDeviceEmulationParams.h"
+#include "third_party/WebKit/public/core/WebDeviceEmulationParams.h"
 
 namespace content {
 

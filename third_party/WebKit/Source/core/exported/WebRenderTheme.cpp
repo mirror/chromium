@@ -28,7 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "public/web/WebRenderTheme.h"
+#include "public/core/WebRenderTheme.h"
 
 #include "core/layout/LayoutTheme.h"
 #include "core/layout/LayoutThemeDefault.h"

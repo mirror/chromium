@@ -62,6 +62,7 @@
 #include "platform/weborigin/SecurityPolicy.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/PtrUtil.h"
+#include "public/core/WebDevToolsAgent.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebContentSettingsClient.h"
 #include "public/platform/WebString.h"
@@ -69,7 +70,6 @@
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebWorkerFetchContext.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
-#include "public/web/WebDevToolsAgent.h"
 #include "public/web/WebSettings.h"
 #include "services/network/public/interfaces/fetch_api.mojom-blink.h"
 

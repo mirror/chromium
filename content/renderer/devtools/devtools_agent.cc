@@ -24,10 +24,10 @@
 #include "content/renderer/render_frame_impl.h"
 #include "content/renderer/render_widget.h"
 #include "ipc/ipc_channel.h"
+#include "third_party/WebKit/public/core/WebDevToolsAgent.h"
 #include "third_party/WebKit/public/platform/WebFloatRect.h"
 #include "third_party/WebKit/public/platform/WebPoint.h"
 #include "third_party/WebKit/public/platform/WebString.h"
-#include "third_party/WebKit/public/web/WebDevToolsAgent.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 
 using blink::WebDevToolsAgent;

@@ -14,7 +14,7 @@
 #include "base/memory/weak_ptr.h"
 #include "content/common/content_export.h"
 #include "content/public/renderer/render_frame_observer.h"
-#include "third_party/WebKit/public/web/WebDevToolsAgentClient.h"
+#include "third_party/WebKit/public/core/WebDevToolsAgentClient.h"
 
 namespace blink {
 class WebDevToolsAgent;

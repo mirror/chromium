@@ -83,11 +83,11 @@
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/WTFString.h"
+#include "public/core/WebDevToolsAgentClient.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebLayerTreeView.h"
 #include "public/platform/WebRect.h"
 #include "public/platform/WebString.h"
-#include "public/web/WebDevToolsAgentClient.h"
 #include "public/web/WebSettings.h"
 
 namespace blink {

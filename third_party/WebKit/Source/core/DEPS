@@ -15,6 +15,7 @@ include_rules = [
     "+platform",
     "+public/platform",
     "+public/web",
+    "+public/core",
     "+services/metrics/public",
     "+services/network/public/interfaces",
     "+services/resource_coordinator/public/cpp/resource_coordinator_features.h",

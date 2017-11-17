@@ -10,10 +10,10 @@
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Optional.h"
+#include "public/core/WebDeviceEmulationParams.h"
 #include "public/platform/PointerProperties.h"
 #include "public/platform/WebFloatPoint.h"
 #include "public/platform/WebViewportStyle.h"
-#include "public/web/WebDeviceEmulationParams.h"
 
 namespace blink {
 
