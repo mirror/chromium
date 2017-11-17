@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bef1d6b_43dbac8b",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-17T07:51:44Z",
+      "side": 1,
+      "message": "should be TODO(kpaulhaumus): Add extensions support. https://crbug.com/757502",
+      "revId": "37e95ae7a39f25669e41aac2f905746af4a02e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
