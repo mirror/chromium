@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61e00458_205ed3a0",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 2707,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-17T03:38:59Z",
+      "side": 1,
+      "message": "not really true anymore, the circular include is just because WebContentsData is inside resource_coordinator, and resource_coordinator triggers TabLogger.",
+      "range": {
+        "startLine": 2707,
+        "startChar": 6,
+        "endLine": 2707,
+        "endChar": 54
+      },
+      "revId": "52b9a33397f9259782e806d95fd19d689c686c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
