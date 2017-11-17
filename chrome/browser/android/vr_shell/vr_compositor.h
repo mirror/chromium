@@ -36,6 +36,8 @@ class VrCompositor : public content::CompositorClient {
 
   void SurfaceDestroyed();
   void SetWindowBounds(gfx::Size size);
+  void SetPaintedDeviceScaleFactor(float painted_device_scale_factor);
+  void SetDeferCommits(bool defer_commits);
   void SurfaceChanged(jobject surface);
   void SetLayer(content::WebContents* web_contents);
 

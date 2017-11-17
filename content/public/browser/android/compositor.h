@@ -68,6 +68,12 @@ class CONTENT_EXPORT Compositor {
   // Set the output surface bounds.
   virtual void SetWindowBounds(const gfx::Size& size) = 0;
 
+  // Set the painted device's scale factor used by the layer tree host.
+  virtual void SetPaintedDeviceScaleFactor(float painted_device_scale_factor);
+
+  // Defer commits of the layer tree host.
+  virtual void SetDeferCommits(bool defer_commits) = 0;
+
   // Set the output surface which the compositor renders into.
   virtual void SetSurface(jobject surface) = 0;
 
