@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28d42fd5_b07807ae",
+        "filename": "chrome/browser/metrics/oom/out_of_memory_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-17T21:43:36Z",
+      "side": 1,
+      "message": "Nit: Just inline this on line 54.",
+      "range": {
+        "startLine": 49,
+        "startChar": 55,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "0234748647383846d2a12041afed97e5b82a32a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9271112f_1fc7f4b6",
+        "filename": "chrome/browser/metrics/oom/out_of_memory_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-17T21:43:36Z",
+      "side": 1,
+      "message": "Can you add a DCHECK(!last_navigation_timestamp_.is_null()); before this line?",
+      "range": {
+        "startLine": 51,
+        "startChar": 59,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "0234748647383846d2a12041afed97e5b82a32a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
