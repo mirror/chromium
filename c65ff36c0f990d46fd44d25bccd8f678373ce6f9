@@ -22,6 +22,30 @@
       "revId": "c65ff36c0f990d46fd44d25bccd8f678373ce6f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94b49a0_4d30d683",
+        "filename": "components/autofill/core/browser/validation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-11-17T19:02:34Z",
+      "side": 1,
+      "message": "I think it was tested by TEST(AutofillValidation, IsValidCreditCardNumber)",
+      "parentUuid": "1fd2ad7c_1b2aa52a",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 4
+      },
+      "revId": "c65ff36c0f990d46fd44d25bccd8f678373ce6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
