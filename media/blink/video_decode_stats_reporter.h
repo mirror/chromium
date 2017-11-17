@@ -210,6 +210,10 @@ class MEDIA_BLINK_EXPORT VideoDecodeStatsReporter {
   // |stats_cb_timer_| when player is backgrounded.
   bool is_backgrounded_ = false;
 
+  // Set false by UpdateStats() if an IPC error is encountered. Assumed true
+  // until an error is found.
+  bool is_ipc_connected_ = true;
+
   DISALLOW_COPY_AND_ASSIGN(VideoDecodeStatsReporter);
 };
 

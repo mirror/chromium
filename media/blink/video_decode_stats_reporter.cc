@@ -202,7 +202,7 @@ void VideoDecodeStatsReporter::ResetFrameRateState() {
 
 bool VideoDecodeStatsReporter::ShouldBeReporting() const {
   return is_playing_ && !is_backgrounded_ && !fps_stabilization_failed_ &&
-         !natural_size_.IsEmpty();
+         !natural_size_.IsEmpty() && is_ipc_connected_;
 }
 
 bool VideoDecodeStatsReporter::UpdateDecodeProgress(
@@ -308,8 +308,14 @@ bool VideoDecodeStatsReporter::UpdateFrameRateStability(
 void VideoDecodeStatsReporter::UpdateStats() {
   DCHECK(ShouldBeReporting());
 
-  DVLOG(2) << __func__ << " error encountered? "
-           << recorder_ptr_.encountered_error();
+  // Double check the IPC connection before going further. For incognito, the
+  // IPC will fail to connect because the recording service is unavailable.
+  if (recorder_ptr_.encountered_error()) {
+    DVLOG(2) << __func__ << " IPC not connected. Stopping reporting.";
+    is_ipc_connected_ = false;
+    stats_cb_timer_.AbandonAndStop();
+    return;
+  }
 
   PipelineStatistics stats = get_pipeline_stats_cb_.Run();
   DVLOG(2) << __func__ << " Raw stats -- dropped:" << stats.video_frames_dropped
