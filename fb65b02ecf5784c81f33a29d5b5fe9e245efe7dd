@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6417b0f_5459cee2",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-17T04:22:42Z",
+      "side": 1,
+      "message": "nit: it seems GetTargetLanguage() is already wrapping the logic?",
+      "revId": "fb65b02ecf5784c81f33a29d5b5fe9e245efe7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
