@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7bbdab6c_330c3666",
+        "filename": "chrome/browser/extensions/api/preference/preference_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-17T18:27:17Z",
+      "side": 1,
+      "message": "I tried in patch set 1. Didn\u0027t work on Windows. I\u0027m not sure why the platforms can\u0027t agree on the constness. The failed Windows trybot is using Clang as well.",
+      "parentUuid": "3b930320_5f997bfe",
+      "revId": "ddf21a5f873499b119273c005d411f6d395d81b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "032860e1_17814a5b",
         "filename": "chrome/browser/extensions/api/preference/preference_api.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-17T18:18:32Z",
       "side": 1,
       "message": "nit: prefer std::make_unique?",
+      "revId": "ddf21a5f873499b119273c005d411f6d395d81b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b528960_924f029b",
+        "filename": "chrome/browser/extensions/api/preference/preference_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-17T18:27:17Z",
+      "side": 1,
+      "message": "Meh. It\u0027ll be gone soon. I have a follow up CL chained to this CL to rewrite this with new base::Value APIs.",
+      "parentUuid": "032860e1_17814a5b",
       "revId": "ddf21a5f873499b119273c005d411f6d395d81b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
