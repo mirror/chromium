@@ -2691,6 +2691,7 @@ split_static_library("browser") {
       "//chrome/browser/profile_resetter:profile_reset_report_proto",
       "//chrome/browser/resources:component_extension_resources",
       "//chrome/browser/search:generated",
+      "//chrome/browser/tabs",
       "//chrome/common/importer:interfaces",
       "//components/cryptauth",
       "//components/cryptauth/proto",
@@ -2701,6 +2702,10 @@ split_static_library("browser") {
       "//components/zoom",
       "//net:net",
     ]
+
+    # TODO(michaelpg): This circular include is necessary because
+    # WebContentsData is an inner class of TabManager. Ideally it wouldn't be.
+    allow_circular_includes_from += [ "//chrome/browser/tabs" ]
   }
 
   if (is_chromeos) {

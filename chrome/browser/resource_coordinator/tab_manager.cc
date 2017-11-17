@@ -39,6 +39,7 @@
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
 #include "chrome/browser/resource_coordinator/time.h"
 #include "chrome/browser/sessions/session_restore.h"
+#include "chrome/browser/tabs/tab_logger.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window.h"
@@ -226,8 +227,9 @@ TabManager::TabManager()
       browser_tab_strip_tracker_(this, nullptr, this),
       is_session_restore_loading_tabs_(false),
       background_tab_loading_mode_(BackgroundTabLoadingMode::kStaggered),
-      force_load_timer_(base::MakeUnique<base::OneShotTimer>(GetTickClock())),
+      force_load_timer_(std::make_unique<base::OneShotTimer>(GetTickClock())),
       loading_slots_(kNumOfLoadingSlots),
+      tab_logger_(std::make_unique<tabs::TabLogger>()),
       weak_ptr_factory_(this) {
 #if defined(OS_CHROMEOS)
   delegate_.reset(new TabManagerDelegate(weak_ptr_factory_.GetWeakPtr()));
@@ -488,6 +490,18 @@ TabStatsList TabManager::GetUnsortedTabStats(
   }
 
   return stats_list;
+}
+
+void TabManager::LogTab(const WebContentsData* web_contents_data) {
+  TabStripModel* model = nullptr;
+  int tab_index = g_browser_process->GetTabManager()->FindTabStripModelById(
+      resource_coordinator::TabManager::IdFromWebContents(
+          web_contents_data->web_contents()),
+      &model);
+  if (!model)
+    return;
+
+  tab_logger_->LogTab(web_contents_data, model, tab_index);
 }
 
 void TabManager::AddObserver(TabLifetimeObserver* observer) {

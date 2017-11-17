@@ -1,0 +1,40 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+syntax = "proto2";
+
+option optimize_for = LITE_RUNTIME;
+option java_outer_classname = "ContentTypeProtos";
+option java_package = "org.chromium.components.metrics";
+
+package metrics;
+
+// Represents the MIME type of content.
+// MIME type strings have the format "<type>/<subtype>". The values for
+// ContentType reflect just the top-level type (e.g., AUDIO is used for both
+// "audio/mp3" and "audio/ogg").
+// The exception is "text/html", which is treated differently than other text.
+enum ContentType {
+  // Not one of the types below.
+  OTHER = 0;
+
+  // The "application/*" type. Supported application sub-types are enumerated
+  // in Chrome's PluginType.
+  APPLICATION = 1;
+
+  // The "audio/*" type.
+  AUDIO = 2;
+
+  // The "image/*" type.
+  IMAGE = 3;
+
+  // The "text/*" type. For "text/html", TEXT_HTML is used instead.
+  TEXT = 4;
+
+  // The "text/html" type, representing web pages.
+  TEXT_HTML = 5;
+
+  // The "video/*" type.
+  VIDEO = 6;
+}

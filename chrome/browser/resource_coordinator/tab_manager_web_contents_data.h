@@ -146,6 +146,8 @@ class TabManager::WebContentsData
     return tab_data_.is_restored_in_foreground;
   }
 
+  const ukm::SourceId& ukm_source_id() const { return ukm_source_id_; }
+
  private:
   // Needed to access tab_data_.
   FRIEND_TEST_ALL_PREFIXES(TabManagerWebContentsDataTest, CopyState);
