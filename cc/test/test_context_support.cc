@@ -41,6 +41,10 @@ void TestContextSupport::SignalQuery(uint32_t query,
                                 weak_ptr_factory_.GetWeakPtr()));
 }
 
+void TestContextSupport::GetGpuFenceHandle(
+    uint32_t gpu_fence_id,
+    const base::Callback<void(const gfx::GpuFenceHandle&)>& callback) {}
+
 void TestContextSupport::SetAggressivelyFreeResources(
     bool aggressively_free_resources) {}
 
