@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "34bc12a7_eac0923c",
+        "filename": "ui/events/platform/x11/x11_event_source_libevent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-17T08:11:47Z",
+      "side": 1,
+      "message": "Oh, right. Dispatch must always be called. \n\nThanks, this works.",
+      "parentUuid": "0fe0d6cb_6c047386",
+      "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f224181_ff4d7dab",
         "filename": "ui/events/platform/x11/x11_event_source_libevent.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c8afe5_548c91ef",
+        "filename": "ui/events/platform/x11/x11_event_source_libevent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-17T08:11:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f224181_ff4d7dab",
+      "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7b87f7b8_27ecfc9a",
+        "filename": "ui/events/platform/x11/x11_event_source_libevent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-17T08:11:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d80b580_9b78f9b5",
+      "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc51cb4a_3b0d0e63",
         "filename": "ui/platform_window/x11/x11_window_ozone.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-16T15:13:04Z",
       "side": 1,
       "message": "If CanDispatchPlatformEvent() \u003d\u003d true then you call WillDispatchPlatformEvent() I think? Why not just have one function CheckCanDispatchNextPlatformEvent() that sets handle_next_event_ \u003d true.",
+      "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d3239d1_91adf86f",
+        "filename": "ui/platform_window/x11/x11_window_ozone.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-17T08:11:47Z",
+      "side": 1,
+      "message": "Makes sense. Done",
+      "parentUuid": "cc51cb4a_3b0d0e63",
       "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "90bc41f6_601b2e5a",
+        "filename": "ui/platform_window/x11/x11_window_ozone.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-17T08:11:47Z",
+      "side": 1,
+      "message": "This is now explicitly reset in XEventDispatcher::PlatformEventDispatchFinished. Done",
+      "parentUuid": "7ad0b1cd_aaa37a8d",
+      "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc5a769c_4ae28784",
         "filename": "ui/platform_window/x11/x11_window_ozone.h",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-16T14:56:30Z",
       "side": 1,
       "message": "Maybe CanDispatchXEvent (for consistency)?",
+      "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d741fb2_9a5fb8db",
+        "filename": "ui/platform_window/x11/x11_window_ozone.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-17T08:11:47Z",
+      "side": 1,
+      "message": "Well, that\u0027s not an XEvent that\u0027s going to be dispatched next. XEventDispatchers are used to check if some of them can dispatch next event translated from the XEvent.",
+      "parentUuid": "fc5a769c_4ae28784",
       "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "09ff016d_4a351d9d",
+        "filename": "ui/platform_window/x11/x11_window_ozone.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-17T08:11:47Z",
+      "side": 1,
+      "message": "This method has been removed.",
+      "parentUuid": "ba325bd4_8a69111f",
+      "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "656fb23d_11bdf598",
         "filename": "ui/platform_window/x11/x11_window_ozone.h",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc1cea0_fdb68c92",
+        "filename": "ui/platform_window/x11/x11_window_ozone.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-17T08:11:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "656fb23d_11bdf598",
+      "revId": "b0ee30cf9a8231409159404f2180280af1286db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
