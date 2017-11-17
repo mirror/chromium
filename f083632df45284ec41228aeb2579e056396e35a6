@@ -34,6 +34,24 @@
       "revId": "f083632df45284ec41228aeb2579e056396e35a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a8693b_088aeb87",
+        "filename": "storage/common/data_element.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-17T01:13:23Z",
+      "side": 1,
+      "message": "Hm, yeah this is getting a bit exploded. At least we should probably split this to Blob and loading related ones. And for uploading I\u0027m not too sure if base::File is the right abstraction we want to go with... so in the current code the renderer uses a file path (that is allowed to read by the browser process) if not a blob, and tend to convert it to a blob when we need to read it.  Should we start passing base::File (mojo.common.mojom.File) for blink::File, say, when a user grabs a file and drop it on a page?",
+      "parentUuid": "92977831_4c4d2f65",
+      "revId": "f083632df45284ec41228aeb2579e056396e35a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
