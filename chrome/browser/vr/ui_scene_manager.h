@@ -214,7 +214,6 @@ class UiSceneManager {
   ExitPrompt* exit_prompt_ = nullptr;
   AudioPermissionPrompt* audio_permission_prompt_ = nullptr;
   UiElement* exit_prompt_backplane_ = nullptr;
-  UiElement* speech_recognition_prompt_backplane_ = nullptr;
   UiElement* exit_warning_ = nullptr;
   ContentElement* main_content_ = nullptr;
   UiElement* audio_capture_indicator_ = nullptr;
