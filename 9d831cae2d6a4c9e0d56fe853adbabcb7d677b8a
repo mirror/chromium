@@ -22,6 +22,30 @@
       "revId": "9d831cae2d6a4c9e0d56fe853adbabcb7d677b8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78cfb273_9332d102",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-17T15:49:52Z",
+      "side": 1,
+      "message": "Subjectively, using less casts would probably be nice. The DateMath constants being double was kind of a bummer there \u003d/.\n\nI\u0027ll let you pick what you prefer though. Let me know if want any further input on it.\n\nIn my head it looked something like this:\n\nuint64_t value \u003d clampTo\u003cuint64_t\u003e(time_stamp * 1000);\nunsigned millis \u003d value % 1000;\nvalue /\u003d 1000;\nunsigned seconds \u003d value % 60;\nvalue /\u003d 60;\nunsigned minutes \u003d value % 60;\nunsigned hours \u003d value / 60;",
+      "parentUuid": "d6063e95_06d8c75f",
+      "range": {
+        "startLine": 417,
+        "startChar": 31,
+        "endLine": 417,
+        "endChar": 37
+      },
+      "revId": "9d831cae2d6a4c9e0d56fe853adbabcb7d677b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
