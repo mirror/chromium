@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "d618f7b5_dbd7e849",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-17T23:42:33Z",
+      "side": 1,
+      "message": "Why not just return MediaSink* ?",
+      "revId": "77e7082178aafe1fcbedd5780a263d053d253855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e110f220_6f8c17cf",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-17T23:42:33Z",
+      "side": 1,
+      "message": "Why is it no longer using source_id? It seems a bit weird that it has to iterate through all sink queries.",
+      "revId": "77e7082178aafe1fcbedd5780a263d053d253855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283627da_f15a647a",
+        "filename": "chrome/common/media_router/discovery/media_sink_internal.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-17T23:42:33Z",
+      "side": 1,
+      "message": "nit: I think exposing a non-const-ref getter for |sink_| would be a bit better than duplicating setters that only delegate to it.",
+      "revId": "77e7082178aafe1fcbedd5780a263d053d253855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b43cfb1_db04253b",
+        "filename": "chrome/common/media_router/media_route_provider_helper.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-17T23:42:33Z",
+      "side": 1,
+      "message": "Please add some comments and also a note that this should be kept in sync with the mojom definition.",
+      "revId": "77e7082178aafe1fcbedd5780a263d053d253855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f92755_6741f1a3",
+        "filename": "chrome/common/media_router/media_sink.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-17T23:42:33Z",
+      "side": 1,
+      "message": "nit: since there is a setter method I would prefer to omit this from the constructor. You can just default provider_id_ \u003d MediaRouteProviderId::UNKNOWN below.",
+      "revId": "77e7082178aafe1fcbedd5780a263d053d253855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f635bb14_0a7c3dcd",
         "filename": "chrome/common/media_router/mojo/media_router.mojom",
         "patchSetId": 11
