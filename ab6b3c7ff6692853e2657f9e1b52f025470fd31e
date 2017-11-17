@@ -22,6 +22,30 @@
       "revId": "ab6b3c7ff6692853e2657f9e1b52f025470fd31e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e183378_b95ff3ea",
+        "filename": "content/browser/renderer_host/input/composited_scrolling_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-11-17T18:32:15Z",
+      "side": 1,
+      "message": "So MainThreadFrameObserver waits on an ACK from RenderWidget.\nWhen the ack is received by the browser process it is enqueued. This queue is not processed until a new FrameToken is received.\n\nSo while the ack can arrive before a compositor frame has been submitted. The processing doesn\u0027t occur until after the token for that frame submission arrives.\n\nI\u0027d certainly be up for renaming this class to help clarify this.",
+      "parentUuid": "78b3a60d_e1c9ff26",
+      "range": {
+        "startLine": 93,
+        "startChar": 57,
+        "endLine": 93,
+        "endChar": 67
+      },
+      "revId": "ab6b3c7ff6692853e2657f9e1b52f025470fd31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
