@@ -16,6 +16,24 @@
       "revId": "61257949070ec0c02f939d0aa2173b4fe889a8e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9656314_611d7cca",
+        "filename": "content/browser/device_sensors/device_sensor_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-17T00:34:15Z",
+      "side": 1,
+      "message": "I tried moving the server initialization back into the test and it didn\u0027t work. Removing the SetupCrossSiteRedirector also didn\u0027t work.\n\nDid you use the EmbeddedTestServer in //chrome or //content? My browser test code here is very similar to:\nhttps://cs.chromium.org/chromium/src/chrome/browser/payments/site_per_process_payments_browsertest.cc?l\u003d40-72\nexcept it is in //chrome, but my browser test code is in //content. And I couldn\u0027t find similar code in //content that uses EmbeddedTestServer in https with a hostname in the URL.\n\nOne more difference between the test code in //chrome and //content is that in //chrome, it uses  ui_test_utils::NavigateToURL() to navigate:\nhttps://cs.chromium.org/chromium/src/chrome/test/base/ui_test_utils.cc?l\u003d191\nBut in //content, it uses content::NavigateToURL() to navigate:\nhttps://cs.chromium.org/chromium/src/content/public/test/content_browser_test_utils.cc?l\u003d84",
+      "parentUuid": "048a587a_52a3041c",
+      "revId": "61257949070ec0c02f939d0aa2173b4fe889a8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
