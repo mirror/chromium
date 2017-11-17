@@ -34,6 +34,7 @@ const char kFileSystemId[] = "testing-file-system";
 const int kRequestId = 2;
 const base::FilePath::CharType kDirectoryPath[] =
     FILE_PATH_LITERAL("/directory");
+const ProviderId kProviderId = ProviderId(kExtensionId, ProviderId::EXTENSION);
 
 // Callback invocation logger. Acts as a fileapi end-point.
 class CallbackLogger {
@@ -109,7 +110,7 @@ class FileSystemProviderOperationsReadDirectoryTest : public testing::Test {
 
   void SetUp() override {
     file_system_info_ = ProvidedFileSystemInfo(
-        kExtensionId, MountOptions(kFileSystemId, "" /* display_name */),
+        kProviderId, MountOptions(kFileSystemId, "" /* display_name */),
         base::FilePath(), false /* configurable */, true /* watchable */,
         extensions::SOURCE_FILE);
   }

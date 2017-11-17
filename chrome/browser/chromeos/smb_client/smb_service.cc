@@ -4,6 +4,7 @@
 
 #include "chrome/browser/chromeos/smb_client/smb_service.h"
 
+#include "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h"
 #include "chrome/browser/chromeos/smb_client/smb_file_system.h"
 
 using chromeos::file_system_provider::Service;
@@ -11,8 +12,6 @@ using chromeos::file_system_provider::Service;
 namespace chromeos {
 namespace smb_client {
 namespace {
-
-const char kSmbProviderId[] = "smb";
 
 using file_system_provider::ProvidedFileSystemInterface;
 
@@ -25,6 +24,10 @@ std::unique_ptr<ProvidedFileSystemInterface> CreateSmbFileSystem(
 }
 
 }  // namespace
+
+file_system_provider::ProviderId kSmbProviderId(
+    "smb",
+    file_system_provider::ProviderId::NATIVE);
 
 SmbService::SmbService(Profile* profile) : profile_(profile) {
   GetProviderService()->RegisterFileSystemFactory(

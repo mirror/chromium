@@ -33,6 +33,7 @@ const int kRequestId = 2;
 const int kFileHandle = 3;
 const char kWriteData[] = "Welcome to my world!";
 const int kOffset = 10;
+const ProviderId kProviderId = ProviderId(kExtensionId, ProviderId::EXTENSION);
 
 }  // namespace
 
@@ -45,7 +46,7 @@ class FileSystemProviderOperationsWriteFileTest : public testing::Test {
     MountOptions mount_options(kFileSystemId, "" /* display_name */);
     mount_options.writable = true;
     file_system_info_ = ProvidedFileSystemInfo(
-        kExtensionId, mount_options, base::FilePath(), false /* configurable */,
+        kProviderId, mount_options, base::FilePath(), false /* configurable */,
         true /* watchable */, extensions::SOURCE_FILE);
     io_buffer_ = base::MakeRefCounted<net::StringIOBuffer>(kWriteData);
   }
@@ -118,7 +119,7 @@ TEST_F(FileSystemProviderOperationsWriteFileTest, Execute_ReadOnly) {
   util::StatusCallbackLog callback_log;
 
   const ProvidedFileSystemInfo read_only_file_system_info(
-      kExtensionId, MountOptions(kFileSystemId, "" /* display_name */),
+      kProviderId, MountOptions(kFileSystemId, "" /* display_name */),
       base::FilePath() /* mount_path */, false /* configurable */,
       true /* watchable */, extensions::SOURCE_FILE);
 
