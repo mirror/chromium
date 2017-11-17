@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c358ed07_e029c0d2",
+        "filename": "net/cookies/cookie_store_test_helpers.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-17T18:21:56Z",
+      "side": 1,
+      "message": "Wow the pattern of this class implementation looks broken to me, in several different ways.  Not your problem as it well predates your change and you\u0027ve faithfully been consistent with the file, but I couldn\u0027t quite avert my eyes enough not to say *something*.  I should file a bug, or maybe even fix it.  Sigh.",
+      "range": {
+        "startLine": 111,
+        "startChar": 23,
+        "endLine": 111,
+        "endChar": 39
+      },
+      "revId": "55f8e04b7c68d0b56ffc9c50818751166eeb4977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
