@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8967d601_02b68ca7",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-17T10:04:11Z",
+      "side": 1,
+      "message": "You\u0027re checking this on the caller side in `CredentialManagerClient`. Can you change this validation on the browser-side into a DCHECK?",
+      "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38962005_74154b02",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-17T10:04:11Z",
+      "side": 1,
+      "message": "Could you add something like the following here?\n\n```\nDCHECK_EQ(\n    net::registry_controlled_domains::GetDomainAndRegistry(\n        caller_origin.GetURL(),\n        INCLUDE_PRIVATE_REGISTRIES), \n    net::registry_controlled_domains::GetDomainAndRegistry(\n        *relying_party_id,\n        INCLUDE_PRIVATE_REGISTRIES));\n```",
+      "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "756b0a0a_45066ab0",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-17T10:04:11Z",
+      "side": 1,
+      "message": "It seems like we ought to be doing this check elsewhere: it\u0027s a general hardening of the API against a corrupted renderer, and seems like it should be guarding any/all entry points.",
+      "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9739536d_ac5455a1",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-17T10:04:11Z",
+      "side": 1,
+      "message": "Step 4 of https://w3c.github.io/webauthn/#createCredential returns a `NotAllowedError` for opaque origins, while steps 5 and 6 returning a `SecurityError` for domain mismatch. Does this `NOT_ALLOWED_ERRROR` response turn into a `SecurityError` on the blink side? If not, can you poke it? :)",
+      "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
