@@ -82,6 +82,7 @@ class CHROMEOS_EXPORT DiskMountManager {
          bool on_boot_device,
          bool on_removable_device,
          bool is_hidden,
+         bool is_virtual,
          const std::string& file_system_type,
          const std::string& base_mount_path);
     Disk(const Disk& other);
@@ -164,6 +165,9 @@ class CHROMEOS_EXPORT DiskMountManager {
     // Shoud the device be shown in the UI, or automounted.
     bool is_hidden() const { return is_hidden_; }
 
+    // Is the device virtual.
+    bool is_virtual() const { return is_virtual_; }
+
     void set_write_disabled_by_policy(bool disable) {
       write_disabled_by_policy_ = disable;
     }
@@ -204,6 +208,7 @@ class CHROMEOS_EXPORT DiskMountManager {
     bool on_boot_device_;
     bool on_removable_device_;
     bool is_hidden_;
+    bool is_virtual_;
     std::string file_system_type_;
     std::string base_mount_path_;
   };
@@ -249,7 +254,10 @@ class CHROMEOS_EXPORT DiskMountManager {
    public:
     virtual ~Observer() {}
 
-    // Called when disk mount status is changed.
+    // Called when auto mountable disk mount status is changed.
+    virtual void OnAutoMountableDiskEvent(DiskEvent event,
+                                          const Disk* disk) = 0;
+    // Called when fixed storage disk status is changed.
     virtual void OnDiskEvent(DiskEvent event, const Disk* disk) = 0;
     // Called when device status is changed.
     virtual void OnDeviceEvent(DeviceEvent event,
