@@ -191,8 +191,10 @@ base::string16 KeywordProvider::GetKeywordForText(
   // Don't provide a keyword for inactive/disabled extension keywords.
   if ((template_url->type() == TemplateURL::OMNIBOX_API_EXTENSION) &&
       extensions_delegate_ &&
-      !extensions_delegate_->IsEnabledExtension(template_url->GetExtensionId()))
+      !extensions_delegate_->IsEnabledExtension(
+          template_url->GetExtensionId())) {
     return base::string16();
+  }
 
   return keyword;
 }
@@ -206,6 +208,30 @@ AutocompleteMatch KeywordProvider::CreateVerbatimMatch(
       GetTemplateURLService()->GetTemplateURLForKeyword(keyword),
       keyword.length(), input, keyword.length(),
       SplitReplacementStringFromInput(text, true), true, 0, false);
+}
+
+void KeywordProvider::OnKeywordEntered() {
+  base::string16 keyword, remaining_input;
+  if (!KeywordProvider::ExtractKeywordFromInput(keyword_input_, model_,
+                                                &keyword, &remaining_input))
+    return;
+
+  const TemplateURL* const template_url =
+      GetTemplateURLService()->GetTemplateURLForKeyword(keyword);
+
+  // ExtractKeywordFromInput does not check if a keyword exists. If |keyword| is
+  // not a known keyword, then |template_url| can be null.
+  if (!template_url &&
+      (template_url->type() != TemplateURL::OMNIBOX_API_EXTENSION)) {
+    return;
+  }
+
+  if (extensions_delegate_ && extensions_delegate_->IsEnabledExtension(
+                                  template_url->GetExtensionId())) {
+    extensions_delegate_->Start(keyword_input_, false, template_url,
+                                remaining_input);
+    extensions_delegate_->OnKeywordEntered(template_url);
+  }
 }
 
 void KeywordProvider::DeleteMatch(const AutocompleteMatch& match) {
