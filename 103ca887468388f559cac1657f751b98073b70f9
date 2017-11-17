@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "477f476a_15d3892b",
+        "filename": "mojo/public/cpp/bindings/callback_with_delete.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-11-17T00:50:11Z",
+      "side": 1,
+      "message": "I like callback_helpers.h",
+      "parentUuid": "11838ee0_31728ab0",
+      "revId": "103ca887468388f559cac1657f751b98073b70f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abd80d95_05d12371",
         "filename": "mojo/public/cpp/bindings/callback_with_delete.h",
         "patchSetId": 5
@@ -47,6 +65,24 @@
       "writtenOn": "2017-11-17T00:01:42Z",
       "side": 1,
       "message": "A few points on naming:\n- Function names names should be verb phrases (e.g. \"WrapCallbackWith...\")\n- I find both of the names to be confusing -- \"WithDefault\" and \"WithDelete\" seem too vague to be meaningful beyond basic mnemonics, and that only applies once the reader has already understood their meaning.\n\nMy counter-proposals sacrifice brevity for clarity, but I\u0027m not sure they\u0027re the right names either. Rather I\u0027d at least like to aim for something closer to this level of detail:\n\n- WrapCallbackWithCustomCleanupIfUninvoked\n- WrapCallbackWithDefaultInvocationOnDestruction\n\nWDYT?",
+      "revId": "103ca887468388f559cac1657f751b98073b70f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0e784b_7f5a6b96",
+        "filename": "mojo/public/cpp/bindings/callback_with_delete.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-11-17T00:50:11Z",
+      "side": 1,
+      "message": "Sounds fine. As long as they are easy to use. \n\nBTW, I always though Callback was verb \"to callback\". :-)\n\nCallbackUsingCustomDeleteIfNotRun?\nCallbackUsingDefaultInvokeIfNotRun?",
+      "parentUuid": "abd80d95_05d12371",
       "revId": "103ca887468388f559cac1657f751b98073b70f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -67,6 +103,24 @@
       "revId": "103ca887468388f559cac1657f751b98073b70f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7612c728_1a6a26d6",
+        "filename": "mojo/public/cpp/bindings/tests/callback_with_delete_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-11-17T00:50:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71ebefa9_20aa0b1c",
+      "revId": "103ca887468388f559cac1657f751b98073b70f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
