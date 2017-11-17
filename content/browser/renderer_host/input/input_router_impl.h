@@ -75,12 +75,12 @@ class CONTENT_EXPORT InputRouterImpl
   void SetDeviceScaleFactor(float device_scale_factor) override;
   void SetFrameTreeNodeId(int frame_tree_node_id) override;
   void SetForceEnableZoom(bool enabled) override;
-  cc::TouchAction AllowedTouchAction() override;
+  base::Optional<cc::TouchAction> AllowedTouchAction() override;
   void BindHost(mojom::WidgetInputHandlerHostRequest request,
                 bool frame_handler) override;
 
   // InputHandlerHost impl
-  void CancelTouchTimeout() override;
+  void SetTouchActionFromMain(cc::TouchAction touch_action) override;
   void SetWhiteListedTouchAction(cc::TouchAction touch_action,
                                  uint32_t unique_touch_event_id,
                                  InputEventAckState state) override;

@@ -188,7 +188,7 @@ void InputRouterImpl::SetForceEnableZoom(bool enabled) {
   touch_action_filter_.SetForceEnableZoom(enabled);
 }
 
-cc::TouchAction InputRouterImpl::AllowedTouchAction() {
+base::Optional<cc::TouchAction> InputRouterImpl::AllowedTouchAction() {
   return touch_action_filter_.allowed_touch_action();
 }
 
@@ -203,17 +203,15 @@ void InputRouterImpl::BindHost(mojom::WidgetInputHandlerHostRequest request,
   }
 }
 
-void InputRouterImpl::CancelTouchTimeout() {
-  touch_event_queue_->SetAckTimeoutEnabled(false);
+void InputRouterImpl::SetTouchActionFromMain(cc::TouchAction touch_action) {
+  touch_action_filter_.OnSetTouchAction(touch_action);
+  UpdateTouchAckTimeoutEnabled();
 }
 
 void InputRouterImpl::SetWhiteListedTouchAction(cc::TouchAction touch_action,
                                                 uint32_t unique_touch_event_id,
                                                 InputEventAckState state) {
-  // TODO(hayleyferr): Catch the cases that we have filtered out sending the
-  // touchstart.
-
-  touch_action_filter_.OnSetWhiteListedTouchAction(touch_action);
+  touch_action_filter_.OnReceiveWhiteListedTouchAction(touch_action);
   client_->OnSetWhiteListedTouchAction(touch_action);
 }
 
@@ -305,14 +303,14 @@ void InputRouterImpl::OnTouchEventAck(const TouchEventWithLatencyInfo& event,
   // in some cases we may filter out sending the touchstart - catch those here.
   if (WebTouchEventTraits::IsTouchSequenceStart(event.event) &&
       ack_result == INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS) {
-    touch_action_filter_.ResetTouchAction();
+    touch_action_filter_.SetTouchActionToAuto();
     UpdateTouchAckTimeoutEnabled();
   }
   disposition_handler_->OnTouchEventAck(event, ack_source, ack_result);
 
   // Reset the touch action at the end of a touch-action sequence.
   if (WebTouchEventTraits::IsTouchSequenceEnd(event.event)) {
-    touch_action_filter_.ResetTouchAction();
+    touch_action_filter_.ReportAndResetTouchAction();
     UpdateTouchAckTimeoutEnabled();
   }
 }
@@ -526,32 +524,35 @@ void InputRouterImpl::OnHasTouchEventHandlers(bool has_handlers) {
   // modifiers or that all its touch-action modifiers are auto. Resetting the
   // touch-action here allows forwarding of subsequent gestures even if the
   // underlying touches never reach the router.
-  if (!has_handlers)
-    touch_action_filter_.ResetTouchAction();
+  if (!has_handlers) {
+    touch_action_filter_.SetTouchActionToAuto();
+  } else {
+    touch_action_filter_.ResetTouchAction(kResetTouchActionConditionally);
+  }
 
   touch_event_queue_->OnHasTouchEventHandlers(has_handlers);
   client_->OnHasTouchEventHandlers(has_handlers);
 }
 
 void InputRouterImpl::OnSetTouchAction(cc::TouchAction touch_action) {
-  // Synthetic touchstart events should get filtered out in RenderWidget.
-  DCHECK(touch_event_queue_->IsPendingAckTouchStart());
   TRACE_EVENT1("input", "InputRouterImpl::OnSetTouchAction", "action",
                touch_action);
 
   touch_action_filter_.OnSetTouchAction(touch_action);
-
-  // kTouchActionNone should disable the touch ack timeout.
-  UpdateTouchAckTimeoutEnabled();
+  if (touch_event_queue_->IsPendingAckTouchStart())
+    UpdateTouchAckTimeoutEnabled();
 }
 
 void InputRouterImpl::UpdateTouchAckTimeoutEnabled() {
   // kTouchActionNone will prevent scrolling, in which case the timeout serves
   // little purpose. It's also a strong signal that touch handling is critical
   // to page functionality, so the timeout could do more harm than good.
-  const bool touch_ack_timeout_enabled =
-      touch_action_filter_.allowed_touch_action() != cc::kTouchActionNone;
-  touch_event_queue_->SetAckTimeoutEnabled(touch_ack_timeout_enabled);
+  base::Optional<cc::TouchAction> allowed_touch_action =
+      touch_action_filter_.allowed_touch_action();
+  const bool touch_ack_timeout_disabled =
+      allowed_touch_action.has_value() &&
+      allowed_touch_action.value() == cc::kTouchActionNone;
+  touch_event_queue_->SetAckTimeoutEnabled(!touch_ack_timeout_disabled);
 }
 
 }  // namespace content
