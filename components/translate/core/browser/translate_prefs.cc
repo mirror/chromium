@@ -173,8 +173,12 @@ TranslatePrefs::TranslatePrefs(PrefService* user_prefs,
 #endif
 }
 
-bool TranslatePrefs::IsEnabled() const {
-  return prefs_->GetBoolean(prefs::kEnableTranslate);
+bool TranslatePrefs::IsOfferTranslateEnabled() const {
+  return prefs_->GetBoolean(prefs::kOfferTranslateEnabled);
+}
+
+bool TranslatePrefs::IsTranslatePolicyEnabled() const {
+  return prefs_->GetBoolean(prefs::kTranslatePolicyEnabled);
 }
 
 void TranslatePrefs::SetCountry(const std::string& country) {
@@ -602,6 +606,7 @@ void TranslatePrefs::RegisterProfilePrefs(
   registry->RegisterDictionaryPref(
       kPrefLanguageProfile,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
+  registry->RegisterBooleanPref(prefs::kTranslatePolicyEnabled, true);
 #if defined(OS_ANDROID)
   registry->RegisterDictionaryPref(
       kPrefTranslateAutoAlwaysCount,
