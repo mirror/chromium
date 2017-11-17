@@ -183,6 +183,8 @@ void Env::Init() {
     return;
   }
 
+  CHECK(false);
+
 #if defined(USE_OZONE)
   // The ozone platform can provide its own event source. So initialize the
   // platform before creating the default event source. If running inside mus

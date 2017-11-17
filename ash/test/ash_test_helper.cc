@@ -95,7 +95,9 @@ void AshTestHelper::SetUp(bool start_session, bool provide_local_state) {
         switches::kAshDisableSmoothScreenRotation);
   }
 
-  if (config_ == Config::MUS)
+  // Allow for other code to have created InputDeviceManager (such as the
+  // test-suite).
+  if (config_ == Config::MUS && !ui::InputDeviceManager::HasInstance())
     input_device_client_ = std::make_unique<ui::InputDeviceClient>();
 
   display::ResetDisplayIdForTest();
