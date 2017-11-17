@@ -80,6 +80,12 @@ class TestStorageMonitorCros : public StorageMonitorCros {
     StorageMonitorCros::OnMountEvent(event, error_code, mount_info);
   }
 
+  void OnDiskEvent(
+      DiskMountManager::DiskEvent event,
+      const chromeos::disks::DiskMountManager::Disk* disk) override {
+    StorageMonitorCros::OnDiskEvent(event, disk);
+  }
+
   bool GetStorageInfoForPath(const base::FilePath& path,
                              StorageInfo* device_info) const override {
     return StorageMonitorCros::GetStorageInfoForPath(path, device_info);
@@ -531,6 +537,25 @@ TEST_F(StorageMonitorCrosTest, EjectTest) {
   base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(StorageMonitor::EJECT_OK, status_);
+}
+
+TEST_F(StorageMonitorCrosTest, FixedStroageTest) {
+  const chromeos::disks::DiskMountManager::Disk disk(
+      "fixed1", "/dev/sda1", false, "", "", "", "", "", "", "", "", "", "",
+      chromeos::DEVICE_TYPE_UNKNOWN, 0, false, false, false, false, false,
+      false, false, "", "");
+
+  monitor_->OnDiskEvent(DiskMountManager::DiskEvent::DISK_ADDED, &disk);
+  EXPECT_EQ(1, observer().attach_calls());
+  EXPECT_EQ(0, observer().detach_calls());
+
+  monitor_->OnDiskEvent(DiskMountManager::DiskEvent::DISK_CHANGED, &disk);
+  EXPECT_EQ(1, observer().attach_calls());
+  EXPECT_EQ(1, observer().detach_calls());
+
+  monitor_->OnDiskEvent(DiskMountManager::DiskEvent::DISK_REMOVED, &disk);
+  EXPECT_EQ(0, observer().attach_calls());
+  EXPECT_EQ(1, observer().detach_calls());
 }
 
 }  // namespace
