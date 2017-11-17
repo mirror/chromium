@@ -116,7 +116,7 @@ bool VideoLayerImpl::WillDraw(DrawMode draw_mode,
     DCHECK_GT(external_resources.software_resource, viz::kInvalidResourceId);
     software_resource_ = external_resources.software_resource;
     software_release_callback_ =
-        external_resources.software_release_callback;
+        std::move(external_resources.software_release_callback);
     return true;
   }
   frame_resource_offset_ = external_resources.offset;
@@ -336,10 +336,8 @@ void VideoLayerImpl::DidDraw(LayerTreeResourceProvider* resource_provider) {
   if (frame_resource_type_ ==
       VideoFrameExternalResources::SOFTWARE_RESOURCE) {
     DCHECK_GT(software_resource_, viz::kInvalidResourceId);
-    software_release_callback_.Run(gpu::SyncToken(), false);
-
+    std::move(software_release_callback_).Run(gpu::SyncToken(), false);
     software_resource_ = viz::kInvalidResourceId;
-    software_release_callback_.Reset();
   } else {
     for (size_t i = 0; i < frame_resources_.size(); ++i)
       resource_provider->DeleteResource(frame_resources_[i].id);
