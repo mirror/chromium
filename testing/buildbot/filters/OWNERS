@@ -12,5 +12,7 @@ per-file browser-side-navigation*=yzshen@chromium.org
 
 per-file fuchsia*=file://build/fuchsia/OWNERS
 
+per-file *viz*=file://components/viz/test/TEST_FILTER_OWNERS
+
 # TEAM: infra-dev@chromium.org
 # COMPONENT: Infra>Client>Chrome
