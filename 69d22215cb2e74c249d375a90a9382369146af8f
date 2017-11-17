@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "421c7e59_52f0ffda",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_fence.txt",
+        "patchSetId": 39
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-17T00:13:28Z",
+      "side": 1,
+      "message": "nit: GLuint",
+      "revId": "69d22215cb2e74c249d375a90a9382369146af8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af82d63_6bfc6971",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_fence.txt",
+        "patchSetId": 39
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-17T00:13:28Z",
+      "side": 1,
+      "message": "nit: GLuint",
+      "revId": "69d22215cb2e74c249d375a90a9382369146af8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85212000_730bf706",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-17T00:13:28Z",
+      "side": 1,
+      "message": "The helper puts commands into the command buffer. The GpuControl implementation sends messages to the service. One of these messages is flush which flushes the command buffer but there are others for creating command buffers (contexts), transfer buffers, etc.\n\nSo to answer your question, the SendGpuFence message will be processed before the flush that contains the CreateGpuFenceINTERNAL command. If I\u0027m reading the service side code correctly, this will fail because the client_id is not registered.\n\nI\u0027d recommend using an IPC for the entire thing like CreateImage does.",
+      "revId": "69d22215cb2e74c249d375a90a9382369146af8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da461df_a5ff504c",
+        "filename": "gpu/ipc/client/command_buffer_proxy_impl.h",
+        "patchSetId": 39
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-17T00:13:28Z",
+      "side": 1,
+      "message": "nit: bash::hash_map is deprecated, also it might make sense to use base::flat_map here anyway",
+      "revId": "69d22215cb2e74c249d375a90a9382369146af8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
