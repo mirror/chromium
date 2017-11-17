@@ -50,6 +50,7 @@
 #include "extensions/browser/management_policy.h"
 #include "extensions/browser/notification_types.h"
 #include "extensions/common/extension.h"
+#include "extensions/common/extension_builder.h"
 #include "extensions/common/feature_switch.h"
 #include "extensions/common/file_util.h"
 #include "extensions/common/permissions/api_permission.h"
@@ -160,12 +161,10 @@ class MockInstallPrompt : public ExtensionInstallPrompt {
   void OnInstallSuccess(const Extension* extension, SkBitmap* icon) override {
     proxy_->set_extension_id(extension->id());
     proxy_->set_confirmation_requested(did_call_show_dialog());
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
   }
   void OnInstallFailure(const CrxInstallError& error) override {
     proxy_->set_error(error.message());
     proxy_->set_confirmation_requested(did_call_show_dialog());
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
   }
 
  private:
@@ -233,19 +232,90 @@ class ExtensionCrxInstallerTest : public ExtensionBrowserTest {
         strict_manifest_checks);
   }
 
+  ExtensionService* extension_service() {
+    return extensions::ExtensionSystem::Get(browser()->profile())
+        ->extension_service();
+  }
+
+  const Extension* GetInstalledExtension(const std::string& extension_id) {
+    return extension_service()->GetInstalledExtension(extension_id);
+  }
+
+  base::FilePath UnpackedCrxTempDir() {
+    base::ScopedTempDir temp_dir;
+    EXPECT_TRUE(temp_dir.CreateUniqueTempDir());
+    EXPECT_TRUE(base::PathExists(temp_dir.GetPath()));
+
+    base::FilePath unpacked_path = test_data_dir_.AppendASCII("good_unpacked");
+    EXPECT_TRUE(base::PathExists(unpacked_path));
+    EXPECT_TRUE(base::CopyDirectory(unpacked_path, temp_dir.GetPath(), false));
+
+    return temp_dir.Take();
+  }
+
+  // Helper function that creates a file at |relative_path| within |directory|
+  // and fills it with |content|.
+  bool AddFileToDirectory(const base::FilePath& directory,
+                          const base::FilePath& relative_path,
+                          const std::string& content) const {
+    const base::FilePath full_path = directory.Append(relative_path);
+    if (!CreateDirectory(full_path.DirName()))
+      return false;
+    const int result =
+        base::WriteFile(full_path, content.data(), content.size());
+    return (static_cast<size_t>(result) == content.size());
+  }
+
+  void AddExtension(const std::string& extension_id,
+                    const std::string& version) {
+    base::ScopedTempDir temp_dir;
+    ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+    ASSERT_TRUE(base::PathExists(temp_dir.GetPath()));
+
+    base::FilePath foo_js(FILE_PATH_LITERAL("foo.js"));
+    base::FilePath bar_html(FILE_PATH_LITERAL("bar/bar.html"));
+    ASSERT_TRUE(AddFileToDirectory(temp_dir.GetPath(), foo_js, "hello"))
+        << "Failed to write " << temp_dir.GetPath().value() << "/"
+        << foo_js.value();
+    ASSERT_TRUE(AddFileToDirectory(temp_dir.GetPath(), bar_html, "world"));
+
+    ExtensionBuilder builder;
+    builder.SetManifest(DictionaryBuilder()
+                            .Set("name", "My First Extension")
+                            .Set("version", version)
+                            .Set("manifest_version", 2)
+                            .Build());
+    builder.SetID(extension_id);
+    builder.SetPath(temp_dir.GetPath());
+    ExtensionRegistry::Get(browser()->profile())->AddEnabled(builder.Build());
+
+    const Extension* extension = GetInstalledExtension(extension_id);
+    ASSERT_NE(nullptr, extension);
+    ASSERT_EQ(version, extension->VersionString());
+  }
+
   void RunCrxInstaller(const WebstoreInstaller::Approval* approval,
                        std::unique_ptr<ExtensionInstallPrompt> prompt,
                        CrxInstaller::InstallerResultCallback callback,
                        const base::FilePath& crx_path) {
-    ExtensionService* service = extensions::ExtensionSystem::Get(
-        browser()->profile())->extension_service();
+    base::RunLoop run_loop;
+
+    ExtensionService* service = extension_service();
     scoped_refptr<CrxInstaller> installer(
         CrxInstaller::Create(service, std::move(prompt), approval));
     installer->set_allow_silent_install(true);
     installer->set_is_gallery_install(true);
-    installer->set_installer_callback(std::move(callback));
+    installer->set_installer_callback(base::BindOnce(
+        [](const base::Closure& quit_closure,
+           CrxInstaller::InstallerResultCallback callback, bool success) {
+          if (!callback.is_null())
+            std::move(callback).Run(success);
+          quit_closure.Run();
+        },
+        run_loop.QuitWhenIdleClosure(), std::move(callback)));
     installer->InstallCrx(crx_path);
-    content::RunMessageLoop();
+
+    content::RunThisRunLoop(&run_loop);
   }
 
   void RunCrxInstallerFromUnpackedDirectory(
@@ -254,17 +324,50 @@ class ExtensionCrxInstallerTest : public ExtensionBrowserTest {
       const std::string& extension_id,
       const std::string& public_key,
       const base::FilePath& crx_directory) {
-    ExtensionService* service =
-        extensions::ExtensionSystem::Get(browser()->profile())
-            ->extension_service();
+    base::RunLoop run_loop;
+
+    ExtensionService* service = extension_service();
     scoped_refptr<CrxInstaller> installer(
         CrxInstaller::Create(service, std::move(prompt)));
     installer->set_allow_silent_install(true);
     installer->set_is_gallery_install(true);
-    installer->set_installer_callback(std::move(callback));
+    installer->set_installer_callback(base::BindOnce(
+        [](const base::Closure& quit_closure,
+           CrxInstaller::InstallerResultCallback callback, bool success) {
+          if (!callback.is_null())
+            std::move(callback).Run(success);
+          quit_closure.Run();
+        },
+        run_loop.QuitWhenIdleClosure(), std::move(callback)));
     installer->set_delete_source(true);
     installer->InstallUnpackedCrx(extension_id, public_key, crx_directory);
-    content::RunMessageLoop();
+
+    content::RunThisRunLoop(&run_loop);
+  }
+
+  void RunUpdateExtension(std::unique_ptr<ExtensionInstallPrompt> prompt,
+                          const std::string& extension_id,
+                          const std::string& public_key,
+                          const base::FilePath& unpacked_dir,
+                          CrxInstaller::InstallerResultCallback callback) {
+    base::RunLoop run_loop;
+
+    ExtensionService* service = extension_service();
+    scoped_refptr<CrxInstaller> installer(
+        CrxInstaller::Create(service, std::move(prompt)));
+    installer->set_delete_source(true);
+    installer->set_installer_callback(base::BindOnce(
+        [](const base::Closure& quit_closure,
+           CrxInstaller::InstallerResultCallback callback, bool success) {
+          if (!callback.is_null())
+            std::move(callback).Run(success);
+          quit_closure.Run();
+        },
+        run_loop.QuitWhenIdleClosure(), std::move(callback)));
+    installer->UpdateExtensionFromUnpackedCrx(extension_id, public_key,
+                                              unpacked_dir);
+
+    content::RunThisRunLoop(&run_loop);
   }
 
   // Installs a crx from |crx_relpath| (a path relative to the extension test
@@ -306,9 +409,7 @@ class ExtensionCrxInstallerTest : public ExtensionBrowserTest {
   }
 
   void InstallWebAppAndVerifyNoErrors() {
-    ExtensionService* service =
-        extensions::ExtensionSystem::Get(browser()->profile())
-            ->extension_service();
+    ExtensionService* service = extension_service();
     scoped_refptr<CrxInstaller> crx_installer(
         CrxInstaller::CreateSilent(service));
     crx_installer->set_error_on_unsupported_requirements(true);
@@ -473,11 +574,11 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTestWithExperimentalApis,
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, AllowOffStore) {
-  ExtensionService* service = extensions::ExtensionSystem::Get(
-      browser()->profile())->extension_service();
+  ExtensionService* service = extension_service();
   const bool kTestData[] = {false, true};
 
   for (size_t i = 0; i < arraysize(kTestData); ++i) {
+    base::RunLoop run_loop;
     std::unique_ptr<MockPromptProxy> mock_prompt =
         CreateMockPromptProxyForBrowser(browser());
 
@@ -491,10 +592,14 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, AllowOffStore) {
           CrxInstaller::OffStoreInstallAllowedInTest);
     }
 
+    crx_installer->set_installer_callback(
+        base::BindOnce([](const base::Closure& quit_closure,
+                          bool success) { quit_closure.Run(); },
+                       run_loop.QuitWhenIdleClosure()));
     crx_installer->InstallCrx(test_data_dir_.AppendASCII("good.crx"));
     // The |mock_prompt| will quit running the loop once the |crx_installer|
     // is done.
-    content::RunMessageLoop();
+    content::RunThisRunLoop(&run_loop);
     EXPECT_EQ(kTestData[i], mock_prompt->did_succeed());
     EXPECT_EQ(kTestData[i], mock_prompt->confirmation_requested()) <<
         kTestData[i];
@@ -531,9 +636,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest,
   const std::string extension_id("ldnnhddmnhbkjipkidpdiheffobcpfmf");
   base::FilePath base_path = test_data_dir_.AppendASCII("delayed_install");
 
-  ExtensionSystem* extension_system = extensions::ExtensionSystem::Get(
-      browser()->profile());
-  ExtensionService* service = extension_system->extension_service();
+  ExtensionService* service = extension_service();
   ASSERT_TRUE(service);
   ExtensionRegistry* registry = ExtensionRegistry::Get(
       browser()->profile());
@@ -734,6 +837,124 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, InstallUnpackedCrx_Success) {
   EXPECT_FALSE(base::PathExists(temp_dir.GetPath()));
 }
 
+IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest,
+                       UpdateExtensionFromUnpackedCrx_NewExtension) {
+  base::ScopedAllowBlockingForTesting allow_io;
+  std::unique_ptr<MockPromptProxy> mock_prompt =
+      CreateMockPromptProxyForBrowser(browser());
+
+  // Update won't work as the extension doesn't exist.
+  const std::string extension_id = "ldnnhddmnhbkjipkidpdiheffobcpfmf";
+  const std::string public_key =
+      "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8c4fBSPZ6utYoZ8NiWF/"
+      "DSaimBhihjwgOsskyleFGaurhi3TDClTVSGPxNkgCzrz0wACML7M4aNjpd05qupdbR2d294j"
+      "kDuI7caxEGUucpP7GJRRHnm8Sx+"
+      "y0ury28n8jbN0PnInKKWcxpIXXmNQyC19HBuO3QIeUq9Dqc+7YFQIDAQAB";
+  ASSERT_EQ(nullptr, GetInstalledExtension(extension_id));
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.Set(UnpackedCrxTempDir()));
+  RunUpdateExtension(
+      mock_prompt->CreatePrompt(), extension_id, public_key, temp_dir.GetPath(),
+      base::BindOnce([](bool success) { EXPECT_FALSE(success); }));
+
+  // The unpacked folder should be deleted.
+  EXPECT_FALSE(mock_prompt->did_succeed());
+  EXPECT_FALSE(base::PathExists(temp_dir.GetPath()));
+  EXPECT_EQ(nullptr, GetInstalledExtension(extension_id));
+}
+
+IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest,
+                       UpdateExtensionFromUnpackedCrx_UpdateExistingExtension) {
+  base::ScopedAllowBlockingForTesting allow_io;
+  std::unique_ptr<MockPromptProxy> mock_prompt =
+      CreateMockPromptProxyForBrowser(browser());
+
+  const std::string extension_id = "ldnnhddmnhbkjipkidpdiheffobcpfmf";
+  const std::string public_key =
+      "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8c4fBSPZ6utYoZ8NiWF/"
+      "DSaimBhihjwgOsskyleFGaurhi3TDClTVSGPxNkgCzrz0wACML7M4aNjpd05qupdbR2d294j"
+      "kDuI7caxEGUucpP7GJRRHnm8Sx+"
+      "y0ury28n8jbN0PnInKKWcxpIXXmNQyC19HBuO3QIeUq9Dqc+7YFQIDAQAB";
+
+  // Test updating an existing extension.
+  AddExtension(extension_id, "0.0");
+
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.Set(UnpackedCrxTempDir()));
+  RunUpdateExtension(
+      mock_prompt->CreatePrompt(), extension_id, public_key, temp_dir.GetPath(),
+      base::BindOnce([](bool success) { EXPECT_TRUE(success); }));
+
+  EXPECT_TRUE(mock_prompt->did_succeed());
+
+  // The unpacked folder should be deleted.
+  EXPECT_FALSE(base::PathExists(temp_dir.GetPath()));
+
+  const Extension* extension = GetInstalledExtension(extension_id);
+  ASSERT_NE(nullptr, extension);
+  EXPECT_EQ("1.0", extension->VersionString());
+}
+
+IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest,
+                       UpdateExtensionFromUnpackedCrx_InvalidPublicKey) {
+  base::ScopedAllowBlockingForTesting allow_io;
+  std::unique_ptr<MockPromptProxy> mock_prompt =
+      CreateMockPromptProxyForBrowser(browser());
+
+  const std::string extension_id = "ldnnhddmnhbkjipkidpdiheffobcpfmf";
+  const std::string public_key = "invalid public key";
+
+  // Test updating an existing extension.
+  AddExtension(extension_id, "0.0");
+
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.Set(UnpackedCrxTempDir()));
+  RunUpdateExtension(
+      mock_prompt->CreatePrompt(), extension_id, public_key, temp_dir.GetPath(),
+      base::BindOnce([](bool success) { EXPECT_FALSE(success); }));
+
+  EXPECT_FALSE(mock_prompt->did_succeed());
+
+  // The unpacked folder should be deleted.
+  EXPECT_FALSE(base::PathExists(temp_dir.GetPath()));
+
+  const Extension* extension = GetInstalledExtension(extension_id);
+  ASSERT_NE(nullptr, extension);
+  EXPECT_EQ("0.0", extension->VersionString());
+}
+
+IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest,
+                       UpdateExtensionFromUnpackedCrx_WrongPublicKey) {
+  base::ScopedAllowBlockingForTesting allow_io;
+  std::unique_ptr<MockPromptProxy> mock_prompt =
+      CreateMockPromptProxyForBrowser(browser());
+
+  const std::string extension_id = "gllekhaobjnhgeagipipnkpmmmpchacm";
+  const std::string public_key =
+      "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8c4fBSPZ6utYoZ8NiWF/"
+      "DSaimBhihjwgOsskyleFGaurhi3TDClTVSGPxNkgCzrz0wACML7M4aNjpd05qupdbR2d294j"
+      "kDuI7caxEGUucpP7GJRRHnm8Sx+"
+      "y0ury28n8jbN0PnInKKWcxpIXXmNQyC19HBuO3QIeUq9Dqc+7YFQIDAQAB";
+
+  // Test updating an existing extension.
+  AddExtension(extension_id, "0.0");
+
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.Set(UnpackedCrxTempDir()));
+  RunUpdateExtension(
+      mock_prompt->CreatePrompt(), extension_id, public_key, temp_dir.GetPath(),
+      base::BindOnce([](bool success) { EXPECT_FALSE(success); }));
+
+  EXPECT_FALSE(mock_prompt->did_succeed());
+
+  // The unpacked folder should be deleted.
+  EXPECT_FALSE(base::PathExists(temp_dir.GetPath()));
+
+  const Extension* extension = GetInstalledExtension(extension_id);
+  ASSERT_NE(nullptr, extension);
+  EXPECT_EQ("0.0", extension->VersionString());
+}
+
 #if defined(OS_CHROMEOS)
 IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, KioskOnlyTest) {
   // kiosk_only is whitelisted from non-chromeos.
@@ -781,8 +1002,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, InstallToSharedLocation) {
 #endif
 
 IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, DoNotSync) {
-  ExtensionService* service = extensions::ExtensionSystem::Get(
-                                  browser()->profile())->extension_service();
+  ExtensionService* service = extension_service();
   scoped_refptr<CrxInstaller> crx_installer(
       CrxInstaller::CreateSilent(service));
   crx_installer->set_do_not_sync(true);
@@ -830,9 +1050,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, UpdateWithFileAccess) {
   base::FilePath crx_with_file_permission = PackExtension(ext_source);
   ASSERT_FALSE(crx_with_file_permission.empty());
 
-  ExtensionService* service =
-      extensions::ExtensionSystem::Get(browser()->profile())
-          ->extension_service();
+  ExtensionService* service = extension_service();
 
   const std::string extension_id("bdkapipdccfifhdghmblnenbbncfcpid");
   {
