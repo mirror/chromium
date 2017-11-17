@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09ae92ea_ae1816f0",
+        "filename": "chrome/browser/resource_coordinator/lifetime_unit.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-17T22:47:19Z",
+      "side": 1,
+      "message": "You need these #ifdef\u0027s surrounding the overrides of this function, too (build errors on non-Chrome OS otherwise)",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 24
+      },
+      "revId": "6dfe05f21052392cd459fa466a278f0faf1807a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
