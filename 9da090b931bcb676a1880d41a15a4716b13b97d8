@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "e400cfd7_f98f1330",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGPath.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-17T18:25:31Z",
+      "side": 1,
+      "message": "To answer my own question: pointer-events!\n\nhttps://codereview.chromium.org/1048043002",
+      "parentUuid": "6aac2c26_f51cff89",
+      "revId": "9da090b931bcb676a1880d41a15a4716b13b97d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09a52be7_a33fecb0",
         "filename": "third_party/WebKit/Source/platform/graphics/StrokeData.cpp",
         "patchSetId": 4
