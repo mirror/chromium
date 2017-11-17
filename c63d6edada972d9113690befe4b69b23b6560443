@@ -52,6 +52,24 @@
       "revId": "c63d6edada972d9113690befe4b69b23b6560443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd664d7f_d724a550",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-17T19:09:53Z",
+      "side": 1,
+      "message": "\u003e \u003e We apply our DPR in https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java?rcl\u003da3654fbb7e08bc3a68cec4a73df102fd2ea28626\u0026l\u003d509. However, since the compositor does not listen to DPR changes it will never be applied and the page is rendered incorrectly in VR.\n\u003e \n\u003e So the correct fix is to fix that TODO then\n\nYou can add an observer to display::Screen::GetScreen()-\u003eAddObserver. I think the method that\u0027s of interest is OnDisplayMetricsChanged. You need to make sure it\u0027s the display you want to listen to, so you need to check if that display\u0027s id matches id of Screen::GetDisplayNearestWindow",
+      "parentUuid": "8242c03b_06df01e4",
+      "revId": "c63d6edada972d9113690befe4b69b23b6560443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
