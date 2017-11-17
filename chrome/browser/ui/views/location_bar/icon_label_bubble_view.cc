@@ -383,9 +383,9 @@ int IconLabelBubbleView::GetSeparatorLayoutWidth() const {
 
 int IconLabelBubbleView::GetPostSeparatorPadding() const {
   // The location bar will add LOCATION_BAR_ELEMENT_PADDING after us.
-  return kSpaceBesideSeparator -
-         GetLayoutConstant(LOCATION_BAR_ELEMENT_PADDING) -
-         next_element_interior_padding_;
+  return /*kSpaceBesideSeparator -*/
+      GetLayoutConstant(LOCATION_BAR_ELEMENT_PADDING) -
+      next_element_interior_padding_;
 }
 
 float IconLabelBubbleView::GetScaleFactor() const {
