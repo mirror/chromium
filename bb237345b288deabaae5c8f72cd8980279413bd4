@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "43492ad1_0e762967",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-17T18:24:45Z",
+      "side": 1,
+      "message": "Hmm, I\u0027m not sure this is still correct. It looks like the non-IOS code has this call in a different place. Can you add a TODO and file a crbug to investigate whether the two can be made consistent? Can assign the bug to me.",
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1edf8303_44995a09",
+        "filename": "ios/chrome/browser/metrics/incognito_web_state_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-17T18:24:45Z",
+      "side": 1,
+      "message": "Can you expand the comment to elaborate on the use case of wanting to when any Incognito tabs are open - by checking TabModelList::IsOffTheRecordSessionActive() in the body of the observer methods?",
+      "range": {
+        "startLine": 14,
+        "startChar": 27,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea287c3_ad464fbc",
+        "filename": "ios/chrome/browser/metrics/incognito_web_state_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-17T18:24:45Z",
+      "side": 1,
+      "message": "Nit: How about making these pure virtual so that they have to be implemented by subclasses? (In some observers, it\u0027s useful for someone to only implement a single function, but I think for such a class like this they\u0027d want to observe them all.)",
+      "range": {
+        "startLine": 40,
+        "startChar": 44,
+        "endLine": 40,
+        "endChar": 0
+      },
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89103817_41ab8901",
         "filename": "ios/chrome/browser/metrics/incognito_web_state_observer.mm",
         "patchSetId": 2
@@ -47,6 +110,144 @@
       "writtenOn": "2017-11-17T13:42:52Z",
       "side": 1,
       "message": "You may also need to watch WebStateReplacedAt(...) since neither WebStateInsertedAt/WebStateDetachedAt will be invoked in that case.\n\nThis is invoked when a Tab is replaced by another without any visible any UI change. Generally this correspond to a pre-rendering Tab being converted to a real Tab, or a Tab navigating from the History view (either remote or local).\n\nIn that case there will be a Tab disappearing and a Tab appearing. So the number of Tab won\u0027t change, and it may be a no-op for your purpose. In which case, maybe override it and add a comment that there is nothing to do, to optimize for future reader.",
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd08ccb9_37343b1f",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_metrics_service_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-17T18:24:45Z",
+      "side": 1,
+      "message": "Nit: . -\u003e :",
+      "range": {
+        "startLine": 90,
+        "startChar": 31,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3756e27a_98d3aa33",
+        "filename": "ios/chrome/browser/metrics/ukm_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-17T18:24:45Z",
+      "side": 1,
+      "message": "Nit: DISALLOW_COPY_AND_ASSIGN()",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 0
+      },
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9242ab11_43d4ae94",
+        "filename": "ios/chrome/browser/metrics/ukm_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-17T18:24:45Z",
+      "side": 1,
+      "message": "Nit: I\u0027d just make this a standalone constant, g_metrics_enabled and not a class one - put it in the anon namespace.",
+      "range": {
+        "startLine": 75,
+        "startChar": 45,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7507c4cf_c992b044",
+        "filename": "ios/chrome/browser/metrics/ukm_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-17T18:24:45Z",
+      "side": 1,
+      "message": "What\u0027s the reason for ending the namespace here? Is it because the ObjC code can\u0027t be in a namespace? If so, what\u0027s the value of the namespace for the helper?",
+      "range": {
+        "startLine": 77,
+        "startChar": 23,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9884100_483e5d03",
+        "filename": "ios/chrome/browser/metrics/ukm_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-17T18:24:45Z",
+      "side": 1,
+      "message": "Does this state leak between tests? Can you add logic to make sure the global is reset to the same state it was originally so as to avoid tests having side effects that stick around?",
+      "range": {
+        "startLine": 205,
+        "startChar": 51,
+        "endLine": 205,
+        "endChar": 0
+      },
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1152523_2c58187b",
+        "filename": "ios/chrome/test/earl_grey/chrome_actions.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-17T18:24:45Z",
+      "side": 1,
+      "message": "Nit: Please use !\u003d instead of ^ so that the code is easier to understand.",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 0
+      },
       "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
