@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e812950c_1689da7e",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-17T19:08:45Z",
+      "side": 1,
+      "message": "Can this enum be deleted now?",
+      "revId": "b1b273507926ced28ab70e9e88f2ceca413ac2c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
