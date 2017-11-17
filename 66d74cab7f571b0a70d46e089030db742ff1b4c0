@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "9f6c1083_d7b793b1",
+        "filename": "content/browser/service_worker/service_worker_context_core.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-17T15:51:18Z",
+      "side": 1,
+      "message": "I was wrong. A OnceClosure works fine because RepeatingClosures can be converted to them.",
+      "parentUuid": "fd16c368_8023ddc0",
+      "revId": "66d74cab7f571b0a70d46e089030db742ff1b4c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d0dc163_317597b2",
         "filename": "content/browser/service_worker/service_worker_context_core.cc",
         "patchSetId": 3
