@@ -46,7 +46,8 @@ class SurfacesInstance : public base::RefCounted<SurfacesInstance>,
                    const gfx::Rect& clip,
                    const gfx::Transform& transform,
                    const gfx::Size& frame_size,
-                   const viz::SurfaceId& child_id);
+                   const viz::SurfaceId& child_id,
+                   float device_scale_factor);
 
   void AddChildId(const viz::SurfaceId& child_id);
   void RemoveChildId(const viz::SurfaceId& child_id);
