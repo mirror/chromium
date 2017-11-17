@@ -72,6 +72,7 @@ class CORE_EXPORT LayoutEmbeddedContent : public LayoutReplaced {
   PaintLayerType LayerTypeRequired() const override;
 
   void StyleDidChange(StyleDifference, const ComputedStyle* old_style) final;
+  void UpdateFromStyle() override;
   void UpdateLayout() override;
   void Paint(const PaintInfo&, const LayoutPoint&) const override;
   CursorDirective GetCursor(const LayoutPoint&, Cursor&) const final;
