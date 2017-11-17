@@ -28,7 +28,7 @@ class FeatureInfo;
 }
 
 struct GPU_EXPORT SwapBuffersCompleteParams {
-  SwapBuffersCompleteParams();
+  SwapBuffersCompleteParams(gfx::SwapResponse response);
   SwapBuffersCompleteParams(SwapBuffersCompleteParams&& other);
   ~SwapBuffersCompleteParams();
 

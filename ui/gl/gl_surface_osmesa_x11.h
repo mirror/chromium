@@ -31,9 +31,9 @@ class GL_EXPORT GLSurfaceOSMesaX11 : public GLSurfaceOSMesa {
               ColorSpace color_space,
               bool alpha) override;
   bool IsOffscreen() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResponse SwapBuffers() override;
   bool SupportsPostSubBuffer() override;
-  gfx::SwapResult PostSubBuffer(int x, int y, int width, int height) override;
+  gfx::SwapResponse PostSubBuffer(int x, int y, int width, int height) override;
 
  protected:
   ~GLSurfaceOSMesaX11() override;

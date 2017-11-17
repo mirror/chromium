@@ -634,11 +634,13 @@ bool NativeViewGLSurfaceGLX::IsOffscreen() {
   return false;
 }
 
-gfx::SwapResult NativeViewGLSurfaceGLX::SwapBuffers() {
+gfx::SwapResponse NativeViewGLSurfaceGLX::SwapBuffers() {
   TRACE_EVENT2("gpu", "NativeViewGLSurfaceGLX:RealSwapBuffers", "width",
                GetSize().width(), "height", GetSize().height());
+  gfx::SwapResponse response(base::TimeTicks::Now(),
+                             gfx::SwapResult::SWAP_FAILED);
   glXSwapBuffers(g_display, GetDrawableHandle());
-  return gfx::SwapResult::SWAP_ACK;
+  return response.Finalize(base::TimeTicks::Now(), gfx::SwapResult::SWAP_ACK);
 }
 
 gfx::Size NativeViewGLSurfaceGLX::GetSize() {
@@ -667,13 +669,16 @@ unsigned long NativeViewGLSurfaceGLX::GetCompatibilityKey() {
   return visual_id_;
 }
 
-gfx::SwapResult NativeViewGLSurfaceGLX::PostSubBuffer(int x,
-                                                      int y,
-                                                      int width,
-                                                      int height) {
+gfx::SwapResponse NativeViewGLSurfaceGLX::PostSubBuffer(int x,
+                                                        int y,
+                                                        int width,
+                                                        int height) {
   DCHECK(g_driver_glx.ext.b_GLX_MESA_copy_sub_buffer);
+
+  gfx::SwapResponse response(base::TimeTicks::Now(),
+                             gfx::SwapResult::SWAP_FAILED);
   glXCopySubBufferMESA(g_display, GetDrawableHandle(), x, y, width, height);
-  return gfx::SwapResult::SWAP_ACK;
+  return response.Finalize(base::TimeTicks::Now(), gfx::SwapResult::SWAP_ACK);
 }
 
 gfx::VSyncProvider* NativeViewGLSurfaceGLX::GetVSyncProvider() {
@@ -748,9 +753,10 @@ bool UnmappedNativeViewGLSurfaceGLX::IsOffscreen() {
   return true;
 }
 
-gfx::SwapResult UnmappedNativeViewGLSurfaceGLX::SwapBuffers() {
+gfx::SwapResponse UnmappedNativeViewGLSurfaceGLX::SwapBuffers() {
   NOTREACHED() << "Attempted to call SwapBuffers on an unmapped window.";
-  return gfx::SwapResult::SWAP_FAILED;
+  return gfx::SwapResponse(base::TimeTicks::Now(),
+                           gfx::SwapResult::SWAP_FAILED);
 }
 
 gfx::Size UnmappedNativeViewGLSurfaceGLX::GetSize() {
