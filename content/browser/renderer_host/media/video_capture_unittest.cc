@@ -121,7 +121,7 @@ class VideoCaptureTest : public testing::Test,
             std::make_unique<media::TestAudioThread>())),
         audio_system_(
             std::make_unique<media::AudioSystemImpl>(audio_manager_.get())),
-        task_runner_(base::ThreadTaskRunnerHandle::Get()),
+        task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         opened_session_id_(kInvalidMediaCaptureSessionId),
         observer_binding_(this) {}
   ~VideoCaptureTest() override { audio_manager_->Shutdown(); }

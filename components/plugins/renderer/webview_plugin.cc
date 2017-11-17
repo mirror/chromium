@@ -133,7 +133,7 @@ void WebViewPlugin::Destroy() {
   }
   container_ = nullptr;
   content::RenderViewObserver::Observe(nullptr);
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 v8::Local<v8::Object> WebViewPlugin::V8ScriptableObject(v8::Isolate* isolate) {
@@ -193,7 +193,7 @@ void WebViewPlugin::UpdateGeometry(const WebRect& window_rect,
 
   // Plugin updates are forbidden during Blink layout. Therefore,
   // UpdatePluginForNewGeometry must be posted to a task to run asynchronously.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&WebViewPlugin::UpdatePluginForNewGeometry,
                  weak_factory_.GetWeakPtr(), window_rect, unobscured_rect));

@@ -37,9 +37,9 @@ Stream::Stream(StreamRegistry* registry,
       write_observer_(write_observer),
       stream_handle_(nullptr),
       weak_ptr_factory_(this) {
-  CreateByteStream(base::ThreadTaskRunnerHandle::Get(),
-                   base::ThreadTaskRunnerHandle::Get(), kDeferSizeThreshold,
-                   &writer_, &reader_);
+  CreateByteStream(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                   base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                   kDeferSizeThreshold, &writer_, &reader_);
 
   // Setup callback for writing.
   writer_->RegisterCallback(base::Bind(&Stream::OnSpaceAvailable,
@@ -80,7 +80,7 @@ void Stream::Abort() {
   registry_->UnregisterStream(url());
   // Notify the observer that something happens. Read will return
   // STREAM_ABORTED.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&Stream::OnDataAvailable, weak_ptr_factory_.GetWeakPtr()));
 }
@@ -145,7 +145,7 @@ void Stream::Finalize(int status) {
   writer_.reset();
 
   // Continue asynchronously.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&Stream::OnDataAvailable, weak_ptr_factory_.GetWeakPtr()));
 }

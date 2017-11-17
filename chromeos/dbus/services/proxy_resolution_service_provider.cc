@@ -63,7 +63,7 @@ struct ProxyResolutionServiceProvider::Request {
 ProxyResolutionServiceProvider::ProxyResolutionServiceProvider(
     std::unique_ptr<Delegate> delegate)
     : delegate_(std::move(delegate)),
-      origin_thread_(base::ThreadTaskRunnerHandle::Get()),
+      origin_thread_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       weak_ptr_factory_(this) {}
 
 ProxyResolutionServiceProvider::~ProxyResolutionServiceProvider() {

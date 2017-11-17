@@ -116,7 +116,7 @@ void WebAuthFlow::Start() {
 
 void WebAuthFlow::DetachDelegateAndDelete() {
   delegate_ = NULL;
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 void WebAuthFlow::OnAppWindowAdded(AppWindow* app_window) {

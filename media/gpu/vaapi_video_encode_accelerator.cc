@@ -138,7 +138,7 @@ VaapiVideoEncodeAccelerator::VaapiVideoEncodeAccelerator()
       cpb_size_(0),
       encoding_parameters_changed_(false),
       encoder_thread_("VAVEAEncoderThread"),
-      child_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      child_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       weak_this_ptr_factory_(this) {
   VLOGF(2);
   weak_this_ = weak_this_ptr_factory_.GetWeakPtr();

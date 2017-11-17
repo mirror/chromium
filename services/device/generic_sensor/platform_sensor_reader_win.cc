@@ -399,7 +399,7 @@ PlatformSensorReaderWin::PlatformSensorReaderWin(
     Microsoft::WRL::ComPtr<ISensor> sensor,
     std::unique_ptr<ReaderInitParams> params)
     : init_params_(std::move(params)),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       sensor_active_(false),
       client_(nullptr),
       sensor_(sensor),

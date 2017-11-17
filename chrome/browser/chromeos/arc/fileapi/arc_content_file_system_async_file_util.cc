@@ -42,7 +42,7 @@ void ArcContentFileSystemAsyncFileUtil::CreateOrOpen(
     int file_flags,
     const CreateOrOpenCallback& callback) {
   NOTIMPLEMENTED();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(callback, base::Passed(base::File()), base::Closure()));
 }
@@ -52,7 +52,7 @@ void ArcContentFileSystemAsyncFileUtil::EnsureFileExists(
     const storage::FileSystemURL& url,
     const EnsureFileExistsCallback& callback) {
   NOTIMPLEMENTED();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(callback, base::File::FILE_ERROR_FAILED, false));
 }
@@ -64,7 +64,7 @@ void ArcContentFileSystemAsyncFileUtil::CreateDirectory(
     bool recursive,
     const StatusCallback& callback) {
   NOTIMPLEMENTED();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, base::File::FILE_ERROR_FAILED));
 }
 
@@ -83,7 +83,7 @@ void ArcContentFileSystemAsyncFileUtil::ReadDirectory(
     const storage::FileSystemURL& url,
     const ReadDirectoryCallback& callback) {
   NOTIMPLEMENTED();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, base::File::FILE_ERROR_FAILED,
                                 EntryList(), false));
 }
@@ -95,7 +95,7 @@ void ArcContentFileSystemAsyncFileUtil::Touch(
     const base::Time& last_modified_time,
     const StatusCallback& callback) {
   NOTIMPLEMENTED();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, base::File::FILE_ERROR_FAILED));
 }
 
@@ -105,7 +105,7 @@ void ArcContentFileSystemAsyncFileUtil::Truncate(
     int64_t length,
     const StatusCallback& callback) {
   NOTIMPLEMENTED();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, base::File::FILE_ERROR_FAILED));
 }
 
@@ -117,7 +117,7 @@ void ArcContentFileSystemAsyncFileUtil::CopyFileLocal(
     const CopyFileProgressCallback& progress_callback,
     const StatusCallback& callback) {
   NOTIMPLEMENTED();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, base::File::FILE_ERROR_FAILED));
 }
 
@@ -128,7 +128,7 @@ void ArcContentFileSystemAsyncFileUtil::MoveFileLocal(
     CopyOrMoveOption option,
     const StatusCallback& callback) {
   NOTIMPLEMENTED();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, base::File::FILE_ERROR_FAILED));
 }
 
@@ -138,7 +138,7 @@ void ArcContentFileSystemAsyncFileUtil::CopyInForeignFile(
     const storage::FileSystemURL& dest_url,
     const StatusCallback& callback) {
   NOTIMPLEMENTED();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, base::File::FILE_ERROR_FAILED));
 }
 
@@ -147,7 +147,7 @@ void ArcContentFileSystemAsyncFileUtil::DeleteFile(
     const storage::FileSystemURL& url,
     const StatusCallback& callback) {
   NOTIMPLEMENTED();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, base::File::FILE_ERROR_FAILED));
 }
 
@@ -156,7 +156,7 @@ void ArcContentFileSystemAsyncFileUtil::DeleteDirectory(
     const storage::FileSystemURL& url,
     const StatusCallback& callback) {
   NOTIMPLEMENTED();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, base::File::FILE_ERROR_FAILED));
 }
 
@@ -165,7 +165,7 @@ void ArcContentFileSystemAsyncFileUtil::DeleteRecursively(
     const storage::FileSystemURL& url,
     const StatusCallback& callback) {
   NOTIMPLEMENTED();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, base::File::FILE_ERROR_FAILED));
 }
 
@@ -174,7 +174,7 @@ void ArcContentFileSystemAsyncFileUtil::CreateSnapshotFile(
     const storage::FileSystemURL& url,
     const CreateSnapshotFileCallback& callback) {
   NOTIMPLEMENTED();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(callback, base::File::FILE_ERROR_FAILED,
                      base::File::Info(), base::FilePath(),

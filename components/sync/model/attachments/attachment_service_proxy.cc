@@ -58,7 +58,7 @@ void AttachmentServiceProxy::GetOrDownloadAttachments(
   DCHECK(wrapped_task_runner_.get());
   GetOrDownloadCallback proxy_callback =
       base::Bind(&ProxyGetOrDownloadCallback,
-                 base::ThreadTaskRunnerHandle::Get(), callback);
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE), callback);
   wrapped_task_runner_->PostTask(
       FROM_HERE, base::Bind(&AttachmentService::GetOrDownloadAttachments, core_,
                             attachment_ids, proxy_callback));

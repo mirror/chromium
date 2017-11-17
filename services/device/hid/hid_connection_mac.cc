@@ -30,7 +30,7 @@ HidConnectionMac::HidConnectionMac(base::ScopedCFTypeRef<IOHIDDeviceRef> device,
                                    scoped_refptr<HidDeviceInfo> device_info)
     : HidConnection(device_info),
       device_(std::move(device)),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       blocking_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
           HidService::kBlockingTaskTraits)) {
   IOHIDDeviceScheduleWithRunLoop(device_.get(), CFRunLoopGetMain(),

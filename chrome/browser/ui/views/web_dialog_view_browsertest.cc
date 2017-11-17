@@ -60,7 +60,7 @@ class TestWebDialogView : public views::WebDialogView {
       // Schedule message loop quit because we could be called while
       // the bounds change call is on the stack and not in the nested message
       // loop.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(&base::RunLoop::QuitCurrentWhenIdleDeprecated));
     }

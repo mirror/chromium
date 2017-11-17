@@ -50,7 +50,7 @@ void ExecuteCallback(const base::android::JavaRef<jobject>& callback,
 void PostCallback(JNIEnv* env,
                   const base::android::JavaRef<jobject>& j_callback,
                   ConnectivityCheckResult result) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&ExecuteCallback,
                  base::android::ScopedJavaGlobalRef<jobject>(j_callback),
@@ -116,7 +116,7 @@ void ConnectivityChecker::OnURLFetchComplete(const net::URLFetcher* source) {
     ExecuteCallback(java_callback_, CONNECTIVITY_CHECK_RESULT_NOT_CONNECTED);
   }
 
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 ConnectivityChecker::ConnectivityChecker(
@@ -156,7 +156,7 @@ void ConnectivityChecker::OnTimeout() {
   is_being_destroyed_ = true;
   url_fetcher_.reset();
   ExecuteCallback(java_callback_, CONNECTIVITY_CHECK_RESULT_TIMEOUT);
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 }  // namespace

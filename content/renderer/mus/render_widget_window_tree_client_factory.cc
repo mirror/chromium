@@ -44,7 +44,7 @@ class RenderWidgetWindowTreeClientFactoryImpl
       public mojom::RenderWidgetWindowTreeClientFactory {
  public:
   RenderWidgetWindowTreeClientFactoryImpl() {
-    main_thread_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    main_thread_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   }
 
   ~RenderWidgetWindowTreeClientFactoryImpl() override {}

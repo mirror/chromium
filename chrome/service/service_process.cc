@@ -414,7 +414,7 @@ void ServiceProcess::OnServiceDisabled() {
 }
 
 void ServiceProcess::ScheduleShutdownCheck() {
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&ServiceProcess::ShutdownIfNeeded, base::Unretained(this)),
       base::TimeDelta::FromSeconds(kShutdownDelaySeconds));

@@ -242,9 +242,10 @@ void GpuChannelManager::ScheduleWakeUpGpu() {
 
   DoWakeUpGpu();
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&GpuChannelManager::ScheduleWakeUpGpu,
-                            weak_factory_.GetWeakPtr()),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&GpuChannelManager::ScheduleWakeUpGpu,
+                 weak_factory_.GetWeakPtr()),
       base::TimeDelta::FromMilliseconds(kMaxGpuIdleTimeMs));
 }
 

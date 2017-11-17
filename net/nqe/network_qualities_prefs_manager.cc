@@ -60,7 +60,7 @@ ParsedPrefs ConvertDictionaryValueToMap(const base::DictionaryValue* value) {
 NetworkQualitiesPrefsManager::NetworkQualitiesPrefsManager(
     std::unique_ptr<PrefDelegate> pref_delegate)
     : pref_delegate_(std::move(pref_delegate)),
-      pref_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      pref_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       prefs_(pref_delegate_->GetDictionaryValue()),
       network_quality_estimator_(nullptr),
       read_prefs_startup_(ConvertDictionaryValueToMap(prefs_.get())),
@@ -85,7 +85,7 @@ void NetworkQualitiesPrefsManager::InitializeOnNetworkThread(
   DCHECK(!network_task_runner_);
   DCHECK(network_quality_estimator);
 
-  network_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  network_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   network_quality_estimator_ = network_quality_estimator;
   network_quality_estimator_->AddNetworkQualitiesCacheObserver(this);
 

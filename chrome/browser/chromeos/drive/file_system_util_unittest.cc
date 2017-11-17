@@ -125,8 +125,9 @@ TEST_F(ProfileRelatedFileSystemUtilTest, ExtractDrivePathFromFileSystemUrl) {
       storage::ExternalMountPoints::CreateRefCounted();
   scoped_refptr<storage::FileSystemContext> context(
       new storage::FileSystemContext(
-          base::ThreadTaskRunnerHandle::Get().get(),
-          base::ThreadTaskRunnerHandle::Get().get(), mount_points.get(),
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+          mount_points.get(),
           NULL,  // special_storage_policy
           NULL,  // quota_manager_proxy,
           std::vector<std::unique_ptr<storage::FileSystemBackend>>(),

@@ -64,7 +64,7 @@ class NonBlockingPushClient::Core
 NonBlockingPushClient::Core::Core(
     const scoped_refptr<base::SingleThreadTaskRunner>& delegate_task_runner,
     const base::WeakPtr<NonBlockingPushClient>& parent_push_client)
-    : parent_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : parent_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       delegate_task_runner_(delegate_task_runner),
       parent_push_client_(parent_push_client) {}
 

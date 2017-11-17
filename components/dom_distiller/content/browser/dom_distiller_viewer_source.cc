@@ -183,7 +183,7 @@ void DomDistillerViewerSource::RequestViewerHandle::Cancel() {
 
   // Schedule the Viewer for deletion. Ensures distillation is cancelled, and
   // any pending data stored in |buffer_| is released.
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 void DomDistillerViewerSource::RequestViewerHandle::DidFinishLoad(

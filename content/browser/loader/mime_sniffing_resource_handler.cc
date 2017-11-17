@@ -275,7 +275,7 @@ void MimeSniffingResourceHandler::ResumeInternal() {
   // Otherwise proceed with the replay of the response. If it is successful,
   // it will resume the request. Posted as a task to avoid re-entrancy into
   // the calling class.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&MimeSniffingResourceHandler::AdvanceState,
                                 weak_ptr_factory_.GetWeakPtr()));
 }

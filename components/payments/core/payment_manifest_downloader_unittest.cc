@@ -19,7 +19,7 @@ class PaymentMethodManifestDownloaderTest : public testing::Test {
  public:
   PaymentMethodManifestDownloaderTest()
       : context_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))),
         downloader_(context_) {
     downloader_.DownloadPaymentMethodManifest(
         GURL("https://bobpay.com"),
@@ -222,7 +222,7 @@ class WebAppManifestDownloaderTest : public testing::Test {
  public:
   WebAppManifestDownloaderTest()
       : context_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))),
         downloader_(context_) {
     downloader_.DownloadWebAppManifest(
         GURL("https://bobpay.com"),

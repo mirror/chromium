@@ -77,10 +77,8 @@ TEST(AffiliatedCloudPolicyInvalidatorTest, CreateUseDestroy) {
   // Set up a CloudPolicyCore backed by a simple CloudPolicyStore that does no
   // signature verification and stores policy in memory.
   FakeCloudPolicyStore store;
-  CloudPolicyCore core(dm_protocol::kChromeDevicePolicyType,
-                       std::string(),
-                       &store,
-                       base::ThreadTaskRunnerHandle::Get());
+  CloudPolicyCore core(dm_protocol::kChromeDevicePolicyType, std::string(),
+                       &store, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   // Connect |core|. Expect it to send a registration request. Let the
   // registration succeed.

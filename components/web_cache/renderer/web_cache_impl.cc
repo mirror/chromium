@@ -21,7 +21,7 @@ WebCacheImpl::WebCacheImpl() : clear_cache_state_(kInit) {
   auto registry = base::MakeUnique<service_manager::BinderRegistry>();
   registry->AddInterface(
       base::Bind(&WebCacheImpl::BindRequest, base::Unretained(this)),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   if (content::ChildThread::Get()) {
     content::ChildThread::Get()
         ->GetServiceManagerConnection()

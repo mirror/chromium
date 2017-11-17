@@ -556,7 +556,7 @@ void LevelDBWrapperImpl::CreateCommitBatchIfNeeded() {
 
   commit_batch_.reset(new CommitBatch());
   BrowserThread::PostAfterStartupTask(
-      FROM_HERE, base::ThreadTaskRunnerHandle::Get(),
+      FROM_HERE, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::BindOnce(&LevelDBWrapperImpl::StartCommitTimer,
                      weak_ptr_factory_.GetWeakPtr()));
 }
@@ -571,7 +571,7 @@ void LevelDBWrapperImpl::StartCommitTimer() {
   if (commit_batches_in_flight_)
     return;
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&LevelDBWrapperImpl::CommitChanges,
                      weak_ptr_factory_.GetWeakPtr()),

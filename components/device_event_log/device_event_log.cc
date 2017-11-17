@@ -29,8 +29,8 @@ void Initialize(size_t max_entries) {
   CHECK(!g_device_event_log);
   if (max_entries == 0)
     max_entries = kDefaultMaxEntries;
-  g_device_event_log =
-      new DeviceEventLogImpl(base::ThreadTaskRunnerHandle::Get(), max_entries);
+  g_device_event_log = new DeviceEventLogImpl(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), max_entries);
 }
 
 bool IsInitialized() {

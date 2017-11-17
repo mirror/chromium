@@ -386,7 +386,8 @@ void MirrorWindowController::CloseAndDeleteHost(MirroringHostInfo* host_info,
   // was deleted as a result of input event (e.g. shortcut), so don't delete
   // now.
   if (delay_host_deletion)
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, host_info);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE,
+                                                             host_info);
   else
     delete host_info;
 }

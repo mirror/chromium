@@ -34,7 +34,7 @@ void PostPressedEvent(ui::KeyEvent* event) {
   std::unique_ptr<aura::WindowTracker> tracker(new aura::WindowTracker);
   tracker->Add(static_cast<aura::Window*>(event->target()));
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&DispatchPressedEvent, pressed_event, base::Passed(&tracker)));
 }

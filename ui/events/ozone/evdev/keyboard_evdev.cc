@@ -192,9 +192,10 @@ void KeyboardEvdev::StopKeyRepeat() {
 }
 
 void KeyboardEvdev::ScheduleKeyRepeat(const base::TimeDelta& delay) {
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&KeyboardEvdev::OnRepeatTimeout,
-                            weak_ptr_factory_.GetWeakPtr(), repeat_sequence_),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&KeyboardEvdev::OnRepeatTimeout,
+                 weak_ptr_factory_.GetWeakPtr(), repeat_sequence_),
       delay);
 }
 
@@ -205,7 +206,7 @@ void KeyboardEvdev::OnRepeatTimeout(unsigned int sequence) {
   // Post a task behind any pending key releases in the message loop
   // FIFO. This ensures there's no spurious repeats during periods of UI
   // thread jank.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&KeyboardEvdev::OnRepeatCommit,
                             weak_ptr_factory_.GetWeakPtr(), repeat_sequence_));
 }

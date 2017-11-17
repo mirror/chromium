@@ -395,7 +395,7 @@ void InstallAttributes::OnTpmGetPasswordCompleted(
     int dbus_retries_remaining,
     base::Optional<std::string> result) {
   if (!result.has_value() && dbus_retries_remaining) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&InstallAttributes::TriggerConsistencyCheck,
                    weak_ptr_factory_.GetWeakPtr(), dbus_retries_remaining - 1),

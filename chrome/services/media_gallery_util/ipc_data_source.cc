@@ -14,7 +14,7 @@ IPCDataSource::IPCDataSource(
     int64_t total_size)
     : media_data_source_(std::move(media_data_source)),
       total_size_(total_size),
-      utility_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+      utility_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
   DETACH_FROM_THREAD(data_source_thread_checker_);
 }
 

@@ -47,8 +47,7 @@ std::set<std::string> Set(const std::string& a,
 
 class BlacklistTest : public testing::Test {
  public:
-  BlacklistTest()
-      : test_prefs_(base::ThreadTaskRunnerHandle::Get()) {}
+  BlacklistTest() : test_prefs_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
  protected:
   ExtensionPrefs* prefs() {

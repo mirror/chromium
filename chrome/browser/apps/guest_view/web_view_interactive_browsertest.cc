@@ -401,7 +401,7 @@ class WebViewInteractiveTestBase : public extensions::PlatformAppBrowserTest {
 
    private:
     void ScheduleWait() {
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE,
           base::BindOnce(&PopupCreatedObserver::Wait, base::Unretained(this)),
           base::TimeDelta::FromMilliseconds(200));
@@ -475,7 +475,7 @@ class WebViewInteractiveTestBase : public extensions::PlatformAppBrowserTest {
     MoveMouseInsideWindow(gfx::Point(78, 12));
 
     // Now wait a bit before moving mouse to initiate drag/drop.
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&WebViewInteractiveTestBase::DragTestStep2,
                        base::Unretained(this)),

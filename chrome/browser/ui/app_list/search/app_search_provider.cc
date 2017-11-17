@@ -404,7 +404,7 @@ void AppSearchProvider::RefreshAppsAndUpdateResults(bool force_inline) {
     UpdateResults();
   } else {
     if (!update_results_factory_.HasWeakPtrs()) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(&AppSearchProvider::UpdateResults,
                                 update_results_factory_.GetWeakPtr()));
     }

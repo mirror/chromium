@@ -785,8 +785,8 @@ void ChromeMetricsServiceClient::OnMemoryDetailCollectionDone() {
   // Set up the callback task to call after we receive histograms from all
   // child processes. |timeout| specifies how long to wait before absolutely
   // calling us back on the task.
-  content::FetchHistogramsAsynchronously(base::ThreadTaskRunnerHandle::Get(),
-                                         callback, timeout);
+  content::FetchHistogramsAsynchronously(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), callback, timeout);
 }
 
 void ChromeMetricsServiceClient::OnHistogramSynchronizationDone() {

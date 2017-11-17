@@ -55,8 +55,9 @@ bool SyncMessageFilter::Send(Message* message) {
     // Can't use this class on the main thread or else it can lead to deadlocks.
     // Also by definition, can't use this on IO thread since we're blocking it.
     if (base::ThreadTaskRunnerHandle::IsSet()) {
-      DCHECK(base::ThreadTaskRunnerHandle::Get() != listener_task_runner_);
-      DCHECK(base::ThreadTaskRunnerHandle::Get() != io_task_runner_);
+      DCHECK(base::ThreadTaskRunnerHandle::Get(FROM_HERE) !=
+             listener_task_runner_);
+      DCHECK(base::ThreadTaskRunnerHandle::Get(FROM_HERE) != io_task_runner_);
     }
     pending_sync_messages_.insert(&pending_message);
 
@@ -103,7 +104,7 @@ void SyncMessageFilter::OnFilterAdded(Channel* channel) {
     base::AutoLock auto_lock(lock_);
     channel_ = channel;
 
-    io_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    io_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
     std::swap(pending_messages_, pending_messages);
   }
   for (auto& msg : pending_messages)
@@ -144,7 +145,7 @@ bool SyncMessageFilter::OnMessageReceived(const Message& message) {
 
 SyncMessageFilter::SyncMessageFilter(base::WaitableEvent* shutdown_event)
     : channel_(nullptr),
-      listener_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      listener_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       shutdown_event_(shutdown_event) {}
 
 SyncMessageFilter::~SyncMessageFilter() {}

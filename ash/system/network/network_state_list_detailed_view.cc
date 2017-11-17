@@ -363,7 +363,7 @@ void NetworkStateListDetailedView::CallRequestScan() {
   NetworkHandler::Get()->network_state_handler()->RequestScan(
       NetworkTypePattern::WiFi());
   // Periodically request a scan while this UI is open.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&NetworkStateListDetailedView::CallRequestScan, AsWeakPtr()),
       base::TimeDelta::FromSeconds(kRequestScanDelaySeconds));

@@ -508,7 +508,8 @@ void StoragePartitionImplMap::AsyncObliterate(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::BindOnce(&BlockingObliteratePath, browser_context_->GetPath(),
                      domain_root, paths_to_keep,
-                     base::ThreadTaskRunnerHandle::Get(), on_gc_required));
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                     on_gc_required));
 }
 
 void StoragePartitionImplMap::GarbageCollect(

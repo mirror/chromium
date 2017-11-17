@@ -257,7 +257,7 @@ class CloudPrintURLFetcherNoServiceProcess
   CloudPrintURLFetcherNoServiceProcess()
       : CloudPrintURLFetcher(PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS),
         context_getter_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())) {}
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))) {}
 
  protected:
   net::URLRequestContextGetter* GetRequestContextGetter() override {
@@ -527,14 +527,14 @@ PrinterJobHandlerTest::PrinterJobHandlerTest()
 }
 
 bool PrinterJobHandlerTest::PostSpoolSuccess() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&PrinterJobHandler::OnJobSpoolSucceeded, job_handler_, 0));
 
   // Everything that would be posted on the printer thread queue
   // has been posted, we can tell the main message loop to quit when idle
   // and not worry about it idling while the print thread does work
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, active_run_loop_->QuitWhenIdleClosure());
   return true;
 }
@@ -605,7 +605,7 @@ void PrinterJobHandlerTest::BeginTest(int timeout_seconds) {
 
   active_run_loop_ = base::MakeUnique<base::RunLoop>();
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, active_run_loop_->QuitWhenIdleClosure(),
       base::TimeDelta::FromSeconds(timeout_seconds));
 

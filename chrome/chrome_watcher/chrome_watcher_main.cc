@@ -307,7 +307,7 @@ BrowserMonitor::BrowserMonitor(base::StringPiece16 registry_path,
       browser_exited_(base::WaitableEvent::ResetPolicy::MANUAL,
                       base::WaitableEvent::InitialState::NOT_SIGNALED),
       run_loop_(run_loop),
-      main_thread_(base::ThreadTaskRunnerHandle::Get()) {}
+      main_thread_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 BrowserMonitor::~BrowserMonitor() {
 }
@@ -334,7 +334,7 @@ bool BrowserMonitor::StartWatching(
 }
 
 void BrowserMonitor::OnEndSessionMessage(UINT message, LPARAM lparam) {
-  DCHECK_EQ(main_thread_, base::ThreadTaskRunnerHandle::Get());
+  DCHECK_EQ(main_thread_, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   // If the browser hasn't exited yet, dally for a bit to try and stretch this
   // process' lifetime to give it some more time to capture the browser exit.
@@ -345,7 +345,7 @@ void BrowserMonitor::OnEndSessionMessage(UINT message, LPARAM lparam) {
 
 void BrowserMonitor::Watch(base::win::ScopedHandle on_initialized_event) {
   // This needs to run on an IO thread.
-  DCHECK_NE(main_thread_, base::ThreadTaskRunnerHandle::Get());
+  DCHECK_NE(main_thread_, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   // Signal our client that we have cleared all of the obstacles that might lead
   // to an early exit.
@@ -363,7 +363,7 @@ void BrowserMonitor::Watch(base::win::ScopedHandle on_initialized_event) {
 
 void BrowserMonitor::BrowserExited() {
   // This runs in the main thread.
-  DCHECK_EQ(main_thread_, base::ThreadTaskRunnerHandle::Get());
+  DCHECK_EQ(main_thread_, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   // Our background thread has served it's purpose.
   background_thread_.Stop();

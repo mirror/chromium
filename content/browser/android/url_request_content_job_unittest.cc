@@ -44,11 +44,8 @@ class CallbacksJobFactory : public net::URLRequestJobFactory {
       net::URLRequest* request,
       net::NetworkDelegate* network_delegate) const override {
     URLRequestContentJob* job =
-        new URLRequestContentJob(
-            request,
-            network_delegate,
-            path_,
-            base::ThreadTaskRunnerHandle::Get());
+        new URLRequestContentJob(request, network_delegate, path_,
+                                 base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     observer_->OnJobCreated();
     return job;
   }

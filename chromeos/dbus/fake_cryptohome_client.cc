@@ -69,7 +69,7 @@ void FakeCryptohomeClient::RemoveObserver(Observer* observer) {
 void FakeCryptohomeClient::WaitForServiceToBeAvailable(
     WaitForServiceToBeAvailableCallback callback) {
   if (service_is_available_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), true));
   } else {
     pending_wait_for_service_to_be_available_callbacks_.push_back(
@@ -78,12 +78,12 @@ void FakeCryptohomeClient::WaitForServiceToBeAvailable(
 }
 
 void FakeCryptohomeClient::IsMounted(DBusMethodCallback<bool> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 
 void FakeCryptohomeClient::Unmount(DBusMethodCallback<bool> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), unmount_result_));
 }
 
@@ -128,7 +128,7 @@ void FakeCryptohomeClient::GetAccountDiskUsage(
 
 void FakeCryptohomeClient::GetSystemSalt(
     DBusMethodCallback<std::vector<uint8_t>> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), system_salt_));
 }
 
@@ -140,7 +140,7 @@ void FakeCryptohomeClient::GetSanitizedUsername(
   auto id = service_is_available_
                 ? base::make_optional(GetStubSanitizedUsername(cryptohome_id))
                 : base::nullopt;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), id));
 }
 
@@ -171,12 +171,12 @@ void FakeCryptohomeClient::AsyncMountGuest(AsyncMethodCallback callback) {
 }
 
 void FakeCryptohomeClient::TpmIsReady(DBusMethodCallback<bool> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 
 void FakeCryptohomeClient::TpmIsEnabled(DBusMethodCallback<bool> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 
@@ -188,13 +188,13 @@ bool FakeCryptohomeClient::CallTpmIsEnabledAndBlock(bool* enabled) {
 void FakeCryptohomeClient::TpmGetPassword(
     DBusMethodCallback<std::string> callback) {
   constexpr char kStubTpmPassword[] = "Stub-TPM-password";
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(std::move(callback), std::string(kStubTpmPassword)));
 }
 
 void FakeCryptohomeClient::TpmIsOwned(DBusMethodCallback<bool> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 
@@ -204,7 +204,7 @@ bool FakeCryptohomeClient::CallTpmIsOwnedAndBlock(bool* owned) {
 }
 
 void FakeCryptohomeClient::TpmIsBeingOwned(DBusMethodCallback<bool> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 
@@ -215,13 +215,13 @@ bool FakeCryptohomeClient::CallTpmIsBeingOwnedAndBlock(bool* owning) {
 
 void FakeCryptohomeClient::TpmCanAttemptOwnership(
     VoidDBusMethodCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 
 void FakeCryptohomeClient::TpmClearStoredPassword(
     VoidDBusMethodCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 
@@ -231,7 +231,7 @@ bool FakeCryptohomeClient::CallTpmClearStoredPasswordAndBlock() {
 
 void FakeCryptohomeClient::Pkcs11IsTpmTokenReady(
     DBusMethodCallback<bool> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 
@@ -240,7 +240,7 @@ void FakeCryptohomeClient::Pkcs11GetTpmTokenInfo(
   const char kStubTPMTokenName[] = "StubTPMTokenName";
   const char kStubUserPin[] = "012345";
   const int kStubSlot = 0;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(std::move(callback),
                      TpmTokenInfo{kStubTPMTokenName, kStubUserPin, kStubSlot}));
@@ -336,7 +336,7 @@ bool FakeCryptohomeClient::InstallAttributesFinalize(bool* successful) {
 
 void FakeCryptohomeClient::InstallAttributesIsReady(
     DBusMethodCallback<bool> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 
@@ -356,7 +356,7 @@ void FakeCryptohomeClient::TpmAttestationIsPrepared(
   auto result = service_is_available_
                     ? base::make_optional(tpm_attestation_is_prepared_)
                     : base::nullopt;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), result));
 }
 
@@ -365,7 +365,7 @@ void FakeCryptohomeClient::TpmAttestationIsEnrolled(
   auto result = service_is_available_
                     ? base::make_optional(tpm_attestation_is_enrolled_)
                     : base::nullopt;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), result));
 }
 
@@ -407,7 +407,7 @@ void FakeCryptohomeClient::TpmAttestationDoesKeyExist(
     DBusMethodCallback<bool> callback) {
   if (!service_is_available_ ||
       !tpm_attestation_does_key_exist_should_succeed_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), base::nullopt));
     return;
   }
@@ -423,7 +423,7 @@ void FakeCryptohomeClient::TpmAttestationDoesKeyExist(
       break;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), result));
 }
 
@@ -452,7 +452,7 @@ void FakeCryptohomeClient::TpmAttestationGetCertificate(
     }
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), std::move(result)));
 }
 
@@ -461,7 +461,7 @@ void FakeCryptohomeClient::TpmAttestationGetPublicKey(
     const cryptohome::Identification& cryptohome_id,
     const std::string& key_name,
     DBusMethodCallback<TpmAttestationDataResult> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(std::move(callback), TpmAttestationDataResult{}));
 }
@@ -512,7 +512,7 @@ void FakeCryptohomeClient::TpmAttestationGetKeyPayload(
     }
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), std::move(result)));
 }
 
@@ -529,7 +529,7 @@ void FakeCryptohomeClient::TpmAttestationSetKeyPayload(
     device_key_payload_map_[key_name] = payload;
     result = true;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), result));
 }
 
@@ -538,13 +538,13 @@ void FakeCryptohomeClient::TpmAttestationDeleteKeys(
     const cryptohome::Identification& cryptohome_id,
     const std::string& key_prefix,
     DBusMethodCallback<bool> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 
 void FakeCryptohomeClient::TpmGetVersion(
     DBusMethodCallback<TpmVersionInfo> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), TpmVersionInfo()));
 }
 
@@ -641,7 +641,7 @@ void FakeCryptohomeClient::MigrateToDircrypto(
     const cryptohome::Identification& cryptohome_id,
     const cryptohome::MigrateToDircryptoRequest& request,
     VoidDBusMethodCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
   dircrypto_migration_progress_ = 0;
   dircrypto_migration_progress_timer_.Start(
@@ -665,7 +665,7 @@ void FakeCryptohomeClient::SetFirmwareManagementParametersInTpm(
 void FakeCryptohomeClient::NeedsDircryptoMigration(
     const cryptohome::Identification& cryptohome_id,
     DBusMethodCallback<bool> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(std::move(callback), needs_dircrypto_migration_));
 }
@@ -718,13 +718,13 @@ std::vector<uint8_t> FakeCryptohomeClient::GetStubSystemSalt() {
 void FakeCryptohomeClient::ReturnProtobufMethodCallback(
     const cryptohome::BaseReply& reply,
     DBusMethodCallback<cryptohome::BaseReply> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), reply));
 }
 
 void FakeCryptohomeClient::ReturnAsyncMethodResult(
     AsyncMethodCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&FakeCryptohomeClient::ReturnAsyncMethodResultInternal,
                      weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
@@ -732,7 +732,7 @@ void FakeCryptohomeClient::ReturnAsyncMethodResult(
 
 void FakeCryptohomeClient::ReturnAsyncMethodData(AsyncMethodCallback callback,
                                                  const std::string& data) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&FakeCryptohomeClient::ReturnAsyncMethodDataInternal,
                      weak_ptr_factory_.GetWeakPtr(), std::move(callback),
@@ -742,7 +742,7 @@ void FakeCryptohomeClient::ReturnAsyncMethodData(AsyncMethodCallback callback,
 void FakeCryptohomeClient::ReturnAsyncMethodResultInternal(
     AsyncMethodCallback callback) {
   std::move(callback).Run(async_call_id_);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&FakeCryptohomeClient::NotifyAsyncCallStatus,
                                 weak_ptr_factory_.GetWeakPtr(), async_call_id_,
                                 true, cryptohome::MOUNT_ERROR_NONE));
@@ -753,7 +753,7 @@ void FakeCryptohomeClient::ReturnAsyncMethodDataInternal(
     AsyncMethodCallback callback,
     const std::string& data) {
   std::move(callback).Run(async_call_id_);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&FakeCryptohomeClient::NotifyAsyncCallStatusWithData,
                      weak_ptr_factory_.GetWeakPtr(), async_call_id_, true,

@@ -123,7 +123,7 @@ void MediaStreamVideoTrack::FrameDeliverer::RemoveCallback(VideoSinkId id) {
   DCHECK(main_render_thread_checker_.CalledOnValidThread());
   io_task_runner_->PostTask(
       FROM_HERE, base::BindOnce(&FrameDeliverer::RemoveCallbackOnIO, this, id,
-                                base::ThreadTaskRunnerHandle::Get()));
+                                base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 }
 
 void MediaStreamVideoTrack::FrameDeliverer::RemoveCallbackOnIO(

@@ -107,7 +107,7 @@ void BalancedMediaTaskRunnerTest::SetupTest(
   for (size_t k = 0; k < n; k++) {
     contexts_[k].media_task_runner =
         media_task_runner_factory_->CreateMediaTaskRunner(
-            base::ThreadTaskRunnerHandle::Get());
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     contexts_[k].is_pending_task = false;
     contexts_[k].task_index = 0;
     contexts_[k].task_timestamp_list.resize(
@@ -126,9 +126,10 @@ void BalancedMediaTaskRunnerTest::SetupTest(
 }
 
 void BalancedMediaTaskRunnerTest::ProcessAllTasks() {
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&BalancedMediaTaskRunnerTest::OnTestTimeout,
-                            base::Unretained(this)),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&BalancedMediaTaskRunnerTest::OnTestTimeout,
+                 base::Unretained(this)),
       base::TimeDelta::FromSeconds(5));
   ScheduleTask();
 }
@@ -155,7 +156,7 @@ void BalancedMediaTaskRunnerTest::ScheduleTask() {
   if (context.task_index >= context.task_timestamp_list.size() ||
       context.is_pending_task) {
     pattern_index_ = next_pattern_index;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&BalancedMediaTaskRunnerTest::ScheduleTask,
                               base::Unretained(this)));
     return;
@@ -182,7 +183,7 @@ void BalancedMediaTaskRunnerTest::ScheduleTask() {
 
   context.task_index++;
   pattern_index_ = next_pattern_index;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&BalancedMediaTaskRunnerTest::ScheduleTask,
                             base::Unretained(this)));
 }

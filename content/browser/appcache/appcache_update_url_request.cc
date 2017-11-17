@@ -70,7 +70,7 @@ AppCacheUpdateJob::UpdateURLRequest::GetResponseInfo() const {
 void AppCacheUpdateJob::UpdateURLRequest::Read() {
   int bytes_read = request_->Read(buffer_.get(), buffer_size_);
   if (bytes_read != net::ERR_IO_PENDING) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&AppCacheUpdateJob::UpdateURLRequest::OnReadCompleted,
                        weak_factory_.GetWeakPtr(), request_.get(), bytes_read));

@@ -54,7 +54,7 @@ void ChildCallStackProfileCollector::SetParentProfileCollector(
   // retaining profiles after construction.
   DCHECK(retain_profiles_);
   retain_profiles_ = false;
-  task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   parent_collector_ = std::move(parent_collector);
   if (parent_collector_) {
     for (ProfilesState& state : profiles_) {
@@ -86,7 +86,7 @@ void ChildCallStackProfileCollector::CollectImpl(
       // The profiler thread does not have a task runner. Attempting to
       // invoke Get() on it results in a DCHECK.
       (!base::ThreadTaskRunnerHandle::IsSet() ||
-       base::ThreadTaskRunnerHandle::Get() != task_runner_)) {
+       base::ThreadTaskRunnerHandle::Get(FROM_HERE) != task_runner_)) {
     // Post back to the thread that owns the the parent interface.
     task_runner_->PostTask(
         FROM_HERE, base::Bind(&ChildCallStackProfileCollector::CollectImpl,

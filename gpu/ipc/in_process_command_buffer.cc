@@ -1178,9 +1178,10 @@ base::Closure InProcessCommandBuffer::WrapCallback(
   base::Closure callback_on_client_thread =
       base::Bind(&RunOnTargetThread, base::Passed(&scoped_callback));
   base::Closure wrapped_callback =
-      base::Bind(&PostCallback, base::ThreadTaskRunnerHandle::IsSet()
-                                    ? base::ThreadTaskRunnerHandle::Get()
-                                    : nullptr,
+      base::Bind(&PostCallback,
+                 base::ThreadTaskRunnerHandle::IsSet()
+                     ? base::ThreadTaskRunnerHandle::Get(FROM_HERE)
+                     : nullptr,
                  callback_on_client_thread);
   return wrapped_callback;
 }

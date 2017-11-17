@@ -221,7 +221,7 @@ void MediaClient::OnRequestUpdate(int render_process_id,
   DCHECK(base::MessageLoopForUI::IsCurrent());
   // The PostTask is necessary because the state of MediaStreamCaptureIndicator
   // gets updated after this.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&MediaClient::RequestCaptureState,
                                 weak_ptr_factory_.GetWeakPtr()));
 }

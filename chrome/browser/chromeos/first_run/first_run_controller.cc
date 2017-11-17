@@ -57,7 +57,8 @@ void FirstRunController::Stop() {
     return;
   }
   g_instance->Finalize();
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, g_instance);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE,
+                                                           g_instance);
   g_instance = NULL;
 }
 

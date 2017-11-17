@@ -218,8 +218,7 @@ class IncidentReportingService::Receiver : public IncidentReceiver {
 IncidentReportingService::Receiver::Receiver(
     const base::WeakPtr<IncidentReportingService>& service)
     : service_(service),
-      thread_runner_(base::ThreadTaskRunnerHandle::Get()) {
-}
+      thread_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 IncidentReportingService::Receiver::~Receiver() {
 }

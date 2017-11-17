@@ -41,7 +41,7 @@ namespace content {
 
 RenderMediaLog::RenderMediaLog(const GURL& security_origin)
     : security_origin_(security_origin),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       tick_clock_(new base::DefaultTickClock()),
       last_ipc_send_time_(tick_clock_->NowTicks()),
       ipc_send_pending_(false),

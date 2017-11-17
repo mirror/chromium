@@ -92,7 +92,7 @@ void ConsentProvider::RequestConsent(
   // If a whitelisted component, then no need to ask or inform the user.
   if (extension.location() == Manifest::COMPONENT &&
       delegate_->IsWhitelistedComponent(extension)) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, CONSENT_GRANTED));
     return;
   }
@@ -101,7 +101,7 @@ void ConsentProvider::RequestConsent(
   // notification.
   if (delegate_->IsAutoLaunched(extension)) {
     delegate_->ShowNotification(extension, volume, writable);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, CONSENT_GRANTED));
     return;
   }
@@ -166,7 +166,7 @@ void ConsentProviderDelegate::ShowDialog(
     web_contents = GetWebContentsForAppId(profile_, extension.id());
 
   if (!web_contents) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, ui::DIALOG_BUTTON_NONE));
     return;
   }
@@ -174,7 +174,7 @@ void ConsentProviderDelegate::ShowDialog(
   // Short circuit the user consent dialog for tests. This is far from a pretty
   // code design.
   if (g_auto_dialog_button_for_test != ui::DIALOG_BUTTON_NONE) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(callback, g_auto_dialog_button_for_test /* result */));
     return;
@@ -182,7 +182,7 @@ void ConsentProviderDelegate::ShowDialog(
 
   // If the volume is gone, then cancel the dialog.
   if (!volume.get()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, ui::DIALOG_BUTTON_CANCEL));
     return;
   }

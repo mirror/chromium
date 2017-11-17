@@ -29,7 +29,7 @@ SecurityKeyMessageReaderImpl::SecurityKeyMessageReaderImpl(
   reader_thread_.StartWithOptions(options);
 
   read_task_runner_ = reader_thread_.task_runner();
-  main_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  main_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 SecurityKeyMessageReaderImpl::~SecurityKeyMessageReaderImpl() {

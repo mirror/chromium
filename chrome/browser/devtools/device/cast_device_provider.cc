@@ -144,8 +144,9 @@ CastDeviceProvider::~CastDeviceProvider() {}
 
 void CastDeviceProvider::QueryDevices(const SerialsCallback& callback) {
   if (!lister_delegate_) {
-    lister_delegate_.reset(new DeviceListerDelegate(
-        weak_factory_.GetWeakPtr(), base::ThreadTaskRunnerHandle::Get()));
+    lister_delegate_.reset(
+        new DeviceListerDelegate(weak_factory_.GetWeakPtr(),
+                                 base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
         base::BindOnce(&DeviceListerDelegate::StartDiscovery,

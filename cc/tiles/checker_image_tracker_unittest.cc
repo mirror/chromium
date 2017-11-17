@@ -29,8 +29,8 @@ class TestImageController : public ImageController {
   // We can use the same thread for the image worker because all use of it in
   // the ImageController is over-ridden here.
   TestImageController()
-      : ImageController(base::ThreadTaskRunnerHandle::Get().get(),
-                        base::ThreadTaskRunnerHandle::Get()) {
+      : ImageController(base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+                        base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
     SetMaxImageCacheLimitBytesForTesting(kMaxImageCacheSizeBytes);
   }
 

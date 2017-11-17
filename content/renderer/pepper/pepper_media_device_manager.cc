@@ -102,7 +102,7 @@ void PepperMediaDeviceManager::EnumerateDevices(
       base::BindOnce(&PepperMediaDeviceManager::DevicesEnumerated, AsWeakPtr(),
                      callback, ToMediaDeviceType(type)));
 #else
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&PepperMediaDeviceManager::DevicesEnumerated,
                             AsWeakPtr(), callback, ToMediaDeviceType(type),
                             std::vector<MediaDeviceInfoArray>()));
@@ -149,7 +149,7 @@ int PepperMediaDeviceManager::OpenDevice(PP_DeviceType_Dev type,
       render_frame->AddMessageToConsole(CONSOLE_MESSAGE_LEVEL_WARNING,
                                         kPepperInsecureOriginMessage);
     }
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&PepperMediaDeviceManager::OnDeviceOpenFailed,
                                   AsWeakPtr(), request_id));
     return request_id;
@@ -160,7 +160,7 @@ int PepperMediaDeviceManager::OpenDevice(PP_DeviceType_Dev type,
       request_id, AsWeakPtr(), device_id,
       PepperMediaDeviceManager::FromPepperDeviceType(type));
 #else
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&PepperMediaDeviceManager::OnDeviceOpenFailed,
                             AsWeakPtr(), request_id));
 #endif

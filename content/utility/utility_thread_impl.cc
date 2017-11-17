@@ -74,7 +74,7 @@ void UtilityThreadImpl::Init() {
   registry->AddInterface(
       base::Bind(&UtilityThreadImpl::BindServiceFactoryRequest,
                  base::Unretained(this)),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   content::ServiceManagerConnection* connection = GetServiceManagerConnection();
   if (connection) {

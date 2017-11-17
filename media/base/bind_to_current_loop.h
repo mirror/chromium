@@ -91,7 +91,8 @@ inline base::RepeatingCallback<void(Args...)> BindToCurrentLoop(
   // TODO(tzik): Propagate FROM_HERE from the caller.
   return base::BindRepeating(
       run, base::MakeUnique<Helper>(
-               FROM_HERE, base::ThreadTaskRunnerHandle::Get(), std::move(cb)));
+               FROM_HERE, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+               std::move(cb)));
 }
 
 template <typename... Args>
@@ -104,7 +105,8 @@ inline base::OnceCallback<void(Args...)> BindToCurrentLoop(
   // TODO(tzik): Propagate FROM_HERE from the caller.
   return base::BindOnce(
       run, base::MakeUnique<Helper>(
-               FROM_HERE, base::ThreadTaskRunnerHandle::Get(), std::move(cb)));
+               FROM_HERE, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+               std::move(cb)));
 }
 
 }  // namespace media

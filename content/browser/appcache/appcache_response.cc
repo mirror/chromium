@@ -108,7 +108,7 @@ AppCacheResponseIO::~AppCacheResponseIO() {
 }
 
 void AppCacheResponseIO::ScheduleIOCompletionCallback(int result) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&AppCacheResponseIO::OnIOComplete,
                                 weak_factory_.GetWeakPtr(), result));
 }

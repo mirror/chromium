@@ -83,7 +83,7 @@ void MergeSessionXHRRequestWaiter::NotifyBlockingDone() {
     BrowserThread::PostTask(BrowserThread::IO, FROM_HERE, callback_);
   }
   weak_ptr_factory_.InvalidateWeakPtrs();
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 }  // namespace chromeos

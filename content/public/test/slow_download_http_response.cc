@@ -37,11 +37,11 @@ void SendResponseBody(const net::test_server::SendBytesCallback& send,
 void SendResponseBodyDone(const net::test_server::SendBytesCallback& send,
                           const net::test_server::SendCompleteCallback& done) {
   if (g_should_finish_download) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, base::Bind(&SendResponseBody, send, done, true),
         base::TimeDelta::FromMilliseconds(100));
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, base::Bind(&SendResponseBodyDone, send, done),
         base::TimeDelta::FromMilliseconds(100));
   }

@@ -247,7 +247,7 @@ class IPCChannelProxyTest : public IPCChannelMojoTestBase {
     listener_.reset(new QuitListener());
     channel_proxy_ = IPC::ChannelProxy::Create(
         TakeHandle().release(), IPC::Channel::MODE_SERVER, listener_.get(),
-        thread_->task_runner(), base::ThreadTaskRunnerHandle::Get());
+        thread_->task_runner(), base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 
   void TearDown() override {

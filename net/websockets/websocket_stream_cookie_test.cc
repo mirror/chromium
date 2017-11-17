@@ -83,7 +83,7 @@ class WebSocketStreamClientUseCookieTest
                                       bool success) {
     *weak_is_called = true;
     *weak_result = success;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, task);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, task);
   }
 };
 
@@ -115,7 +115,7 @@ class WebSocketStreamServerSetCookieTest
                                        const std::string& cookies) {
     *weak_is_called = true;
     *weak_result = cookies;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, task);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, task);
   }
 };
 

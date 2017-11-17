@@ -96,7 +96,7 @@ class PrivetURLFetcherTest : public ::testing::Test {
  public:
   PrivetURLFetcherTest() {
     request_context_ = new net::TestURLRequestContextGetter(
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     privet_urlfetcher_.reset(new PrivetURLFetcher(
         GURL(kSamplePrivetURL), net::URLFetcher::POST, request_context_.get(),
         TRAFFIC_ANNOTATION_FOR_TESTS, &delegate_));
@@ -110,7 +110,7 @@ class PrivetURLFetcherTest : public ::testing::Test {
   void RunFor(base::TimeDelta time_period) {
     base::CancelableCallback<void()> callback(base::Bind(
         &PrivetURLFetcherTest::Stop, base::Unretained(this)));
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, callback.callback(), time_period);
 
     base::RunLoop().Run();

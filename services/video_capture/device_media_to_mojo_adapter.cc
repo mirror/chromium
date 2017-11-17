@@ -58,7 +58,8 @@ void DeviceMediaToMojoAdapter::Start(
   // ReceiverOnTaskRunner.
   receiver_adapter_ptr_ = receiver_adapter.get();
   auto media_receiver = std::make_unique<ReceiverOnTaskRunner>(
-      std::move(receiver_adapter), base::ThreadTaskRunnerHandle::Get());
+      std::move(receiver_adapter),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   // Create a dedicated buffer pool for the device usage session.
   auto buffer_tracker_factory =

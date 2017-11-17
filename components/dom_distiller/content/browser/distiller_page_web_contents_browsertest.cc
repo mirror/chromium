@@ -410,7 +410,7 @@ IN_PROC_BROWSER_TEST_F(DistillerPageWebContentsTest,
   delete distiller_page_;
 
   // Make sure the test ends when it does not crash.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, run_loop.QuitClosure(), base::TimeDelta::FromSeconds(2));
 
   run_loop.Run();

@@ -25,8 +25,8 @@ void FrameLoadWaiter::DidFinishLoad() {
   did_load_ = true;
   // Post a task to quit instead of quitting directly, since the load completion
   // may trigger other IPCs that tests are expecting.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                run_loop_.QuitClosure());
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, run_loop_.QuitClosure());
 }
 
 void FrameLoadWaiter::OnDestruct() {

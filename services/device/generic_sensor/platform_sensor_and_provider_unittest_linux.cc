@@ -278,7 +278,7 @@ class PlatformSensorAndProviderLinuxTest : public ::testing::Test {
   void GenerateDeviceRemovedEvent(const base::FilePath& sensor_dir) {
     udev_device* dev = nullptr;
     DeleteFile(sensor_dir);
-    bool success = base::ThreadTaskRunnerHandle::Get()->PostTask(
+    bool success = base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&MockSensorDeviceManager::DeviceRemoved,
                               base::Unretained(manager_), dev /* not used */));
     ASSERT_TRUE(success);

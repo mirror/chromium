@@ -38,11 +38,11 @@ class SandboxFileSystemBackendDelegateTest : public testing::Test {
   void SetUp() override {
     ASSERT_TRUE(data_dir_.CreateUniqueTempDir());
     quota_manager_proxy_ = new MockQuotaManagerProxy(
-        nullptr, base::ThreadTaskRunnerHandle::Get().get());
+        nullptr, base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
     delegate_.reset(new storage::SandboxFileSystemBackendDelegate(
-        quota_manager_proxy_.get(), base::ThreadTaskRunnerHandle::Get().get(),
-        data_dir_.GetPath(), NULL /* special_storage_policy */,
-        CreateAllowFileAccessOptions()));
+        quota_manager_proxy_.get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), data_dir_.GetPath(),
+        NULL /* special_storage_policy */, CreateAllowFileAccessOptions()));
   }
 
   bool IsAccessValid(const FileSystemURL& url) const {

@@ -167,7 +167,7 @@ void ShowArcMigrationSuccessNotificationIfNeeded(Profile* profile) {
 
     // Delay the notification to make sure that it is not hidden behind windows
     // which are shown at the beginning of user session (e.g. Chrome).
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&DoShowArcMigrationSuccessNotification, notifier_id),
         kSuccessNotificationDelay);

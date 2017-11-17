@@ -242,11 +242,12 @@ void GCMDriverTest::CreateDriver() {
   GCMClient::ChromeBuildInfo chrome_build_info;
   chrome_build_info.product_category_for_subtypes = "com.chrome.macosx";
   driver_.reset(new GCMDriverDesktop(
-      std::unique_ptr<GCMClientFactory>(new FakeGCMClientFactory(
-          base::ThreadTaskRunnerHandle::Get(), io_thread_.task_runner())),
+      std::unique_ptr<GCMClientFactory>(
+          new FakeGCMClientFactory(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                                   io_thread_.task_runner())),
       chrome_build_info, "http://channel.status.request.url",
       "user-agent-string", &prefs_, temp_dir_.GetPath(), request_context,
-      base::ThreadTaskRunnerHandle::Get(), io_thread_.task_runner(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), io_thread_.task_runner(),
       message_loop_.task_runner()));
 
   gcm_app_handler_.reset(new FakeGCMAppHandler);

@@ -229,7 +229,8 @@ void AsyncFileUtilAdapter::ReadDirectory(
       FROM_HERE,
       Bind(&ReadDirectoryHelper, sync_file_util_.get(),
            base::Owned(context_ptr), url,
-           base::RetainedRef(base::ThreadTaskRunnerHandle::Get()), callback));
+           base::RetainedRef(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+           callback));
   DCHECK(success);
 }
 

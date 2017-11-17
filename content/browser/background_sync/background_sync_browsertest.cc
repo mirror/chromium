@@ -231,7 +231,7 @@ bool BackgroundSyncBrowserTest::RegistrationPending(const std::string& tag) {
 
   auto callback =
       base::BindOnce(&RegistrationPendingCallback, run_loop.QuitClosure(),
-                     base::ThreadTaskRunnerHandle::Get(), &is_pending);
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE), &is_pending);
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,

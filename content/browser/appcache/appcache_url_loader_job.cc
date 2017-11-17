@@ -75,7 +75,7 @@ void AppCacheURLLoaderJob::DeliverNetworkResponse() {
   std::move(loader_callback_).Run(StartLoaderCallback());
   weak_factory_.InvalidateWeakPtrs();
   is_deleting_soon_ = true;
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 void AppCacheURLLoaderJob::DeliverErrorResponse() {
@@ -243,7 +243,7 @@ void AppCacheURLLoaderJob::OnConnectionError() {
     storage_->CancelDelegateCallbacks(this);
   weak_factory_.InvalidateWeakPtrs();
   is_deleting_soon_ = true;
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 void AppCacheURLLoaderJob::SendResponseInfo() {

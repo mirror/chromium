@@ -72,15 +72,15 @@ void InputHandlerManager::AddInputHandler(
     bool enable_smooth_scrolling) {
   if (task_runner_->BelongsToCurrentThread()) {
     AddInputHandlerOnCompositorThread(
-        routing_id, base::ThreadTaskRunnerHandle::Get(), input_handler,
+        routing_id, base::ThreadTaskRunnerHandle::Get(FROM_HERE), input_handler,
         input_event_queue, render_widget, enable_smooth_scrolling);
   } else {
     task_runner_->PostTask(
         FROM_HERE,
         base::BindOnce(&InputHandlerManager::AddInputHandlerOnCompositorThread,
                        base::Unretained(this), routing_id,
-                       base::ThreadTaskRunnerHandle::Get(), input_handler,
-                       input_event_queue, render_widget,
+                       base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                       input_handler, input_event_queue, render_widget,
                        enable_smooth_scrolling));
   }
 }

@@ -88,7 +88,7 @@ class LocalDomainResolverTest : public testing::Test {
   void RunFor(base::TimeDelta time_period) {
     base::RunLoop run_loop;
     base::CancelableCallback<void()> callback(run_loop.QuitWhenIdleClosure());
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, callback.callback(), time_period);
     run_loop.Run();
     callback.Cancel();

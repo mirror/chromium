@@ -57,7 +57,7 @@ std::vector<std::string> TaskSendUninstallPing::GetIds() const {
 void TaskSendUninstallPing::TaskComplete(Error error) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback_), this, error));
 }
 

@@ -80,7 +80,7 @@ class ExtensionInstalledBubbleObserver
       // Only then can we be sure that a BrowserAction or PageAction has had
       // views created which we can inspect for the purpose of previewing of
       // pointing to them.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(&ExtensionInstalledBubbleObserver::Initialize,
                          weak_factory_.GetWeakPtr()));
@@ -117,7 +117,7 @@ class ExtensionInstalledBubbleObserver
       return;
     }
     if (animation_wait_retries_++ < kAnimationWaitRetries) {
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE,
           base::BindOnce(&ExtensionInstalledBubbleObserver::Show,
                          weak_factory_.GetWeakPtr()),

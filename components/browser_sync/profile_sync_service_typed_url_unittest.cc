@@ -69,7 +69,9 @@ ACTION_P(ReturnNewDataTypeManager, sync_client) {
 class HistoryBackendMock : public HistoryBackend {
  public:
   HistoryBackendMock()
-      : HistoryBackend(nullptr, nullptr, base::ThreadTaskRunnerHandle::Get()) {}
+      : HistoryBackend(nullptr,
+                       nullptr,
+                       base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
   bool IsExpiredVisitTime(const base::Time& time) override {
     return time.ToInternalValue() == EXPIRED_VISIT;
   }

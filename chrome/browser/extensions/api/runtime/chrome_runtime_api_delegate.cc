@@ -198,14 +198,14 @@ void ChromeRuntimeAPIDelegate::ReloadExtension(
     // extension function unloading the extension has to be done
     // asynchronously. Fortunately PostTask guarentees FIFO order so just
     // post both tasks.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&ExtensionService::TerminateExtension,
                                   service->AsWeakPtr(), extension_id));
     extensions::WarningSet warnings;
     warnings.insert(
         extensions::Warning::CreateReloadTooFrequentWarning(
             extension_id));
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&extensions::WarningService::NotifyWarningsOnUI,
                        browser_context_, warnings));
@@ -213,7 +213,7 @@ void ChromeRuntimeAPIDelegate::ReloadExtension(
     // We can't call ReloadExtension directly, since when this method finishes
     // it tries to decrease the reference count for the extension, which fails
     // if the extension has already been reloaded; so instead we post a task.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&ExtensionService::ReloadExtension,
                                   service->AsWeakPtr(), extension_id));
   }
@@ -234,7 +234,7 @@ bool ChromeRuntimeAPIDelegate::CheckForUpdates(
   // If not enough time has elapsed, or we have 10 or more outstanding calls,
   // return a status of throttled.
   if (info.backoff->ShouldRejectRequest() || info.callbacks.size() >= 10) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, UpdateCheckResult(
                                                 true, kUpdateThrottled, "")));
   } else {

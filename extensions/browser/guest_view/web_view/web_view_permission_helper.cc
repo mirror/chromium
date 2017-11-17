@@ -307,7 +307,7 @@ int WebViewPermissionHelper::RequestPermission(
     // objects held by the permission request are not destroyed immediately
     // after creation. This is to allow those same objects to be accessed again
     // in the same scope without fear of use after freeing.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(std::move(callback), allowed_by_default, std::string()));
     return webview::kInvalidPermissionRequestID;

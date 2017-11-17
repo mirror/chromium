@@ -33,8 +33,8 @@ void PolicyScheduler::ScheduleDelayedTask(base::TimeDelta delay) {
   }
   job_ = base::MakeUnique<base::CancelableClosure>(base::Bind(
       &PolicyScheduler::RunScheduledTask, weak_ptr_factory_.GetWeakPtr()));
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(FROM_HERE,
-                                                       job_->callback(), delay);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE, job_->callback(), delay);
 }
 
 void PolicyScheduler::ScheduleNextTask() {

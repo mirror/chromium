@@ -60,7 +60,7 @@ void FakeBluetoothLEAdvertisingManagerClient::RegisterAdvertisement(
                        "Maximum advertisements reached");
   } else {
     currently_registered_.push_back(advertisement_object_path);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback);
   }
 }
 
@@ -89,7 +89,7 @@ void FakeBluetoothLEAdvertisingManagerClient::UnregisterAdvertisement(
                        "Does not exist");
   } else {
     currently_registered_.erase(reg_iter);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, callback);
   }
 }
 

@@ -65,7 +65,7 @@ class TestThroughputAnalyzer : public internal::ThroughputAnalyzer {
       : internal::ThroughputAnalyzer(
             network_quality_provider,
             params,
-            base::ThreadTaskRunnerHandle::Get(),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE),
             base::Bind(
                 &TestThroughputAnalyzer::OnNewThroughputObservationAvailable,
                 base::Unretained(this)),

@@ -55,7 +55,7 @@ class FocusPODWaiter {
     ASSERT_TRUE(base::MessageLoopForUI::IsCurrent());
     focused_ = true;
     if (runner_.get()) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(&FocusPODWaiter::ExitMessageLoop,
                                     base::Unretained(this)));
     }

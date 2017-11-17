@@ -70,7 +70,7 @@ class HeaderRewritingURLLoaderClient : public mojom::URLLoaderClient {
   }
 
   void OnClientConnectionError() {
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
   }
 
   // mojom::URLLoaderClient implementation:
@@ -178,7 +178,7 @@ ServiceWorkerSubresourceLoader::~ServiceWorkerSubresourceLoader() {
 };
 
 void ServiceWorkerSubresourceLoader::DeleteSoon() {
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 void ServiceWorkerSubresourceLoader::StartRequest(
@@ -267,7 +267,7 @@ void ServiceWorkerSubresourceLoader::OnConnectionClosed() {
     return;
   }
   fetch_request_restarted_ = true;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&ServiceWorkerSubresourceLoader::DispatchFetchEvent,
                      weak_factory_.GetWeakPtr()));

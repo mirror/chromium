@@ -176,7 +176,8 @@ class UIControlsOzone : public ui_controls::UIControlsAura {
   void RunClosureAfterAllPendingUIEvents(
       const base::Closure& closure) override {
     if (!closure.is_null())
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, closure);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                             closure);
   }
 
  private:
@@ -188,7 +189,7 @@ class UIControlsOzone : public ui_controls::UIControlsAura {
   }
 
   void PostKeyEvent(ui::EventType type, ui::KeyboardCode key_code, int flags) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&UIControlsOzone::PostKeyEventTask,
                               base::Unretained(this), type, key_code, flags));
   }
@@ -207,7 +208,7 @@ class UIControlsOzone : public ui_controls::UIControlsAura {
                       const gfx::Point& host_location,
                       int flags,
                       int changed_button_flags) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&UIControlsOzone::PostMouseEventTask, base::Unretained(this),
                    type, host_location, flags, changed_button_flags));

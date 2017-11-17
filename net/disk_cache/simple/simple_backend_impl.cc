@@ -263,8 +263,8 @@ int SimpleBackendImpl::Init(const CompletionCallback& completion_callback) {
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN});
 
   index_ = std::make_unique<SimpleIndex>(
-      base::ThreadTaskRunnerHandle::Get(), cleanup_tracker_.get(), this,
-      cache_type_,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), cleanup_tracker_.get(),
+      this, cache_type_,
       std::make_unique<SimpleIndexFile>(cache_runner_, worker_pool_.get(),
                                         cache_type_, path_));
   index_->ExecuteWhenReady(

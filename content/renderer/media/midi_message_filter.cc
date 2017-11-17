@@ -31,7 +31,7 @@ MidiMessageFilter::MidiMessageFilter(
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner)
     : sender_(nullptr),
       io_task_runner_(io_task_runner),
-      main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       session_result_(Result::NOT_INITIALIZED),
       unacknowledged_bytes_sent_(0u) {}
 

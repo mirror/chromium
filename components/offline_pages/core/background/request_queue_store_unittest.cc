@@ -274,8 +274,8 @@ class RequestQueueInMemoryStoreFactory : public RequestQueueStoreFactory {
 class RequestQueueStoreSQLFactory : public RequestQueueStoreFactory {
  public:
   RequestQueueStore* BuildStore(const base::FilePath& path) override {
-    RequestQueueStore* store =
-        new RequestQueueStoreSQL(base::ThreadTaskRunnerHandle::Get(), path);
+    RequestQueueStore* store = new RequestQueueStoreSQL(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), path);
     return store;
   }
 
@@ -287,8 +287,8 @@ class RequestQueueStoreSQLFactory : public RequestQueueStoreFactory {
       BuildTestStoreWithSchemaFromM58(path);
     }
 
-    RequestQueueStore* store =
-        new RequestQueueStoreSQL(base::ThreadTaskRunnerHandle::Get(), path);
+    RequestQueueStore* store = new RequestQueueStoreSQL(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), path);
     return store;
   }
 };

@@ -459,8 +459,8 @@ class TranslateManagerRenderViewHostTest
  protected:
   virtual void SetUp() {
     // Setup the test environment, including the threads and message loops. This
-    // must be done before base::ThreadTaskRunnerHandle::Get() is called when
-    // setting up the net::TestURLRequestContextGetter below.
+    // must be done before base::ThreadTaskRunnerHandle::Get(FROM_HERE) is
+    // called when setting up the net::TestURLRequestContextGetter below.
     ChromeRenderViewHostTestHarness::SetUp();
 
     // Clears the translate script so it is fetched every time and sets the
@@ -472,7 +472,7 @@ class TranslateManagerRenderViewHostTest
     download_manager->ClearTranslateScriptForTesting();
     download_manager->SetTranslateScriptExpirationDelay(60 * 60 * 1000);
     download_manager->set_request_context(new net::TestURLRequestContextGetter(
-        base::ThreadTaskRunnerHandle::Get()));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 
     InfoBarService::CreateForWebContents(web_contents());
     ChromeTranslateClient::CreateForWebContents(web_contents());

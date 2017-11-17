@@ -294,7 +294,7 @@ void AomVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
 void AomVideoDecoder::Reset(const base::Closure& reset_cb) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   state_ = DecoderState::kNormal;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, reset_cb);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, reset_cb);
 }
 
 void AomVideoDecoder::CloseDecoder() {

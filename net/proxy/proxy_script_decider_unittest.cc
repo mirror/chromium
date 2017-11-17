@@ -762,7 +762,7 @@ class AsyncFailDhcpFetcher
   int Fetch(base::string16* utf16_text,
             const CompletionCallback& callback) override {
     callback_ = callback;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&AsyncFailDhcpFetcher::CallbackWithFailure, AsWeakPtr()));
     return ERR_IO_PENDING;

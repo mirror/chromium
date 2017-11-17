@@ -54,7 +54,7 @@ class WebRtcVideoCapturerAdapter::TextureFrameCopier
     : public base::RefCounted<WebRtcVideoCapturerAdapter::TextureFrameCopier> {
  public:
   TextureFrameCopier()
-      : main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      : main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         canvas_video_renderer_(new media::PaintCanvasVideoRenderer) {
     RenderThreadImpl* const main_thread = RenderThreadImpl::current();
     if (main_thread)

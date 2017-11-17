@@ -106,7 +106,7 @@ class MediaDevicesDispatcherHostTest : public testing::TestWithParam<GURL> {
     auto video_capture_provider =
         std::make_unique<InProcessVideoCaptureProvider>(
             std::move(video_capture_system),
-            base::ThreadTaskRunnerHandle::Get(), kIgnoreLogMessageCB);
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE), kIgnoreLogMessageCB);
 
     media_stream_manager_ = std::make_unique<MediaStreamManager>(
         audio_system_.get(), audio_manager_->GetTaskRunner(),

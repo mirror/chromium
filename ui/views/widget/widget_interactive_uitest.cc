@@ -471,7 +471,7 @@ TEST_F(WidgetTestInteractive, DisableCaptureWidgetFromMousePress) {
   first->Show();
 
   gfx::Point location(20, 20);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&Widget::OnMouseEvent, base::Unretained(second),
                             base::Owned(new ui::MouseEvent(
                                 ui::ET_MOUSE_RELEASED, location, location,

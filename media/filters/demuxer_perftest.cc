@@ -122,7 +122,7 @@ void StreamReader::Read() {
   base::RunLoop run_loop;
   streams_[index]->Read(
       base::Bind(&StreamReader::OnReadDone, base::Unretained(this),
-                 base::ThreadTaskRunnerHandle::Get(),
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                  run_loop.QuitWhenIdleClosure(), &end_of_stream, &timestamp));
   run_loop.Run();
 
@@ -188,9 +188,9 @@ static void RunDemuxerBenchmark(const std::string& filename) {
         base::Bind(&OnEncryptedMediaInitData);
     Demuxer::MediaTracksUpdatedCB tracks_updated_cb =
         base::Bind(&OnMediaTracksUpdated);
-    FFmpegDemuxer demuxer(base::ThreadTaskRunnerHandle::Get(), &data_source,
-                          encrypted_media_init_data_cb, tracks_updated_cb,
-                          &media_log_);
+    FFmpegDemuxer demuxer(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                          &data_source, encrypted_media_init_data_cb,
+                          tracks_updated_cb, &media_log_);
 
     {
       base::RunLoop run_loop;

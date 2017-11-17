@@ -263,7 +263,7 @@ void RendererPpapiHostImpl::CreateBrowserResourceHosts(
   PepperBrowserConnection* browser_connection =
       PepperBrowserConnection::Get(render_frame);
   if (!browser_connection) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(callback, std::vector<int>(nested_msgs.size(), 0)));
   } else {

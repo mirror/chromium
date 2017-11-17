@@ -244,7 +244,7 @@ bool SerialIoHandlerWin::PostOpen() {
   write_context_.reset(new base::MessageLoopForIO::IOContext());
 
   scoped_refptr<base::SingleThreadTaskRunner> io_thread_task_runner =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   helper_ =
       new UiThreadHelper(weak_factory_.GetWeakPtr(), io_thread_task_runner);
   ui_thread_task_runner()->PostTask(

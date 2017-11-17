@@ -304,7 +304,7 @@ GpuJpegDecodeAccelerator::GpuJpegDecodeAccelerator(
         accelerator_factory_functions)
     : accelerator_factory_functions_(accelerator_factory_functions),
       channel_(channel),
-      child_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      child_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       io_task_runner_(std::move(io_task_runner)),
       client_number_(0) {}
 

@@ -25,7 +25,7 @@ class WebDatabaseService::BackendDelegate
  public:
   BackendDelegate(const base::WeakPtr<WebDatabaseService>& web_database_service)
       : web_database_service_(web_database_service),
-        callback_task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+        callback_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
   void DBLoaded(sql::InitStatus status,
                 const std::string& diagnostics) override {

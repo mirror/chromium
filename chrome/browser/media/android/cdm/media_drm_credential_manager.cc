@@ -104,7 +104,7 @@ void MediaDrmCredentialManager::ResetCredentialsInternal(
 
   // No need to reset credentials for unsupported |security_level|.
   if (!media_drm_bridge_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(reset_credentials_cb, true));
     return;
   }

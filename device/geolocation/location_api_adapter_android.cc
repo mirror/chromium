@@ -131,7 +131,7 @@ LocationApiAdapterAndroid* LocationApiAdapterAndroid::GetInstance() {
 }
 
 LocationApiAdapterAndroid::LocationApiAdapterAndroid()
-    : task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+    : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 LocationApiAdapterAndroid::~LocationApiAdapterAndroid() {
   DCHECK(thread_checker_.CalledOnValidThread());

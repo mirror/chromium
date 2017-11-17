@@ -558,7 +558,8 @@ class ProcessSingleton::LinuxWatcher
 
   // We expect to only be constructed on the UI thread.
   explicit LinuxWatcher(ProcessSingleton* parent)
-      : ui_task_runner_(base::ThreadTaskRunnerHandle::Get()), parent_(parent) {}
+      : ui_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+        parent_(parent) {}
 
   // Start listening for connections on the socket.  This method should be
   // called from the IO thread.

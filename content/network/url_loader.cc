@@ -601,7 +601,7 @@ void URLLoader::DidRead(int num_bytes, bool completed_synchronously) {
     CompletePendingWrite();
   }
   if (completed_synchronously) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&URLLoader::ReadMore, weak_ptr_factory_.GetWeakPtr()));
   } else {

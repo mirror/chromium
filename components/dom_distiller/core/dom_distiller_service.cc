@@ -91,7 +91,7 @@ const std::string DomDistillerService::AddToList(
       // TODO(shashishekhar): Change this to check if article is available,
       // An article may not be available for a variety of reasons, e.g.
       // distillation failure or blobs not available locally.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(article_cb, true));
       return entry.entry_id();
     }
@@ -262,7 +262,7 @@ void DomDistillerService::CancelTask(TaskTracker* task) {
   if (it != tasks_.end()) {
     it->release();
     tasks_.erase(it);
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, task);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, task);
   }
 }
 

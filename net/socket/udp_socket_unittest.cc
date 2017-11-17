@@ -182,7 +182,7 @@ void UDPSocketTest::ConnectTest(bool use_nonblocking_io) {
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
 
   // Client sends to the server.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&UDPSocketTest::WriteSocketIgnoreResult,
                  base::Unretained(this), client.get(), simple_message));

@@ -71,8 +71,8 @@ class DelayTrackingTaskRunner : public base::SingleThreadTaskRunner {
 class ImageAnimationControllerTest : public testing::Test {
  public:
   void SetUp() override {
-    task_runner_ =
-        new DelayTrackingTaskRunner(base::ThreadTaskRunnerHandle::Get().get());
+    task_runner_ = new DelayTrackingTaskRunner(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
     base::Closure invalidation_callback =
         base::Bind(&ImageAnimationControllerTest::RequestInvalidation,
                    base::Unretained(this));

@@ -849,7 +849,7 @@ void PrepareFrameAndViewForPrint::DidStopLoading() {
   DCHECK(!on_ready_.is_null());
   // Don't call callback here, because it can delete |this| and WebView that is
   // called didStopLoading.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&PrepareFrameAndViewForPrint::CallOnReady,
                             weak_ptr_factory_.GetWeakPtr()));
 }
@@ -1065,7 +1065,7 @@ bool PrintRenderFrameHelper::OnMessageReceived(const IPC::Message& message) {
 
   --ipc_nesting_level_;
   if (ipc_nesting_level_ == 0 && render_frame_gone_)
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
   return handled;
 }
 
@@ -2052,7 +2052,7 @@ void PrintRenderFrameHelper::RequestPrintPreview(PrintPreviewRequestType type) {
             base::Bind(&PrintRenderFrameHelper::ShowScriptedPrintPreview,
                        weak_ptr_factory_.GetWeakPtr());
       } else {
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE,
             base::Bind(&PrintRenderFrameHelper::ShowScriptedPrintPreview,
                        weak_ptr_factory_.GetWeakPtr()));

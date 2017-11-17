@@ -115,8 +115,9 @@ void RunOnIOThreadWithDelay(const base::Closure& closure,
   base::RunLoop run_loop;
   BrowserThread::PostDelayedTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&RunAndQuit, closure, run_loop.QuitClosure(),
-                     base::RetainedRef(base::ThreadTaskRunnerHandle::Get())),
+      base::BindOnce(
+          &RunAndQuit, closure, run_loop.QuitClosure(),
+          base::RetainedRef(base::ThreadTaskRunnerHandle::Get(FROM_HERE))),
       delay);
   run_loop.Run();
 }
@@ -130,8 +131,7 @@ void RunOnIOThread(
   base::RunLoop run_loop;
   base::Closure quit_on_original_thread =
       base::Bind(base::IgnoreResult(&base::SingleThreadTaskRunner::PostTask),
-                 base::ThreadTaskRunnerHandle::Get().get(),
-                 FROM_HERE,
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), FROM_HERE,
                  run_loop.QuitClosure());
   BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
                           base::BindOnce(closure, quit_on_original_thread));

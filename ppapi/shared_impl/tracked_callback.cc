@@ -262,8 +262,8 @@ void TrackedCallback::PostRunWithLock(int32_t result) {
       // classes protect against having a null target_loop_ otherwise).
       DCHECK(IsMainThread());
       DCHECK(PpapiGlobals::Get()->IsHostGlobals());
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                    callback_closure);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                             callback_closure);
     }
   }
   is_scheduled_ = true;

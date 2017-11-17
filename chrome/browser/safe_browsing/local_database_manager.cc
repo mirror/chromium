@@ -1232,7 +1232,7 @@ void LocalSafeBrowsingDatabaseManager::StartSafeBrowsingCheck(
       safe_browsing_task_runner_.get(), FROM_HERE, task,
       base::Bind(&LocalSafeBrowsingDatabaseManager::OnAsyncCheckDone,
                  check_ptr->weak_ptr_factory_->GetWeakPtr(), check_ptr));
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&LocalSafeBrowsingDatabaseManager::TimeoutCallback,
                      check_ptr->weak_ptr_factory_->GetWeakPtr(), check_ptr),

@@ -78,7 +78,7 @@ class MemoryTracingTest : public ContentBrowserTest {
     uint32_t request_index = next_request_index_++;
     auto callback = base::Bind(
         &MemoryTracingTest::OnGlobalMemoryDumpDone, base::Unretained(this),
-        base::ThreadTaskRunnerHandle::Get(), closure, request_index);
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), closure, request_index);
     if (from_renderer_thread) {
       PostTaskToInProcessRendererAndWait(base::Bind(
           &memory_instrumentation::MemoryInstrumentation::

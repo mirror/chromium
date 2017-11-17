@@ -25,7 +25,7 @@ BleSynchronizer::BleSynchronizer(
     : bluetooth_adapter_(bluetooth_adapter),
       timer_(base::MakeUnique<base::OneShotTimer>()),
       clock_(base::MakeUnique<base::DefaultClock>()),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       weak_ptr_factory_(this) {}
 
 BleSynchronizer::~BleSynchronizer() {}

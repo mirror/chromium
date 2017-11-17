@@ -224,7 +224,7 @@ bool DesktopSessionProxy::AttachToDesktop(
   // Connect to the desktop process.
   desktop_channel_ = IPC::ChannelProxy::Create(
       desktop_pipe, IPC::Channel::MODE_CLIENT, this, io_task_runner_.get(),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   // Pass ID of the client (which is authenticated at this point) to the desktop
   // session agent and start the agent.

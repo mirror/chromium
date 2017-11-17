@@ -107,7 +107,7 @@ class ChannelIDServiceWorker {
   ChannelIDServiceWorker(const std::string& server_identifier,
                          const WorkerDoneCallback& callback)
       : server_identifier_(server_identifier),
-        origin_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+        origin_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         callback_(callback) {}
 
   // Starts the worker asynchronously.

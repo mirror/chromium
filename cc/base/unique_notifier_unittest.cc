@@ -32,7 +32,7 @@ class UniqueNotifierTest : public testing::Test {
 TEST_F(UniqueNotifierTest, Schedule) {
   {
     UniqueNotifier notifier(
-        base::ThreadTaskRunnerHandle::Get().get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
         base::Bind(&UniqueNotifierTest::Notify, base::Unretained(this)));
 
     EXPECT_EQ(0, NotificationCount());

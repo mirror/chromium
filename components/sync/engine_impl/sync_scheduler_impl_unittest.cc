@@ -77,14 +77,14 @@ void PumpLoop() {
   // Do it this way instead of RunAllPending to pump loop exactly once
   // (necessary in the presence of timers; see comment in
   // QuitLoopNow).
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                base::Bind(&QuitLoopNow));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, base::Bind(&QuitLoopNow));
   RunLoop();
 }
 
 void PumpLoopFor(TimeDelta time) {
   // Allow the loop to run for the specified amount of time.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::Bind(&QuitLoopNow), time);
   RunLoop();
 }
@@ -191,7 +191,7 @@ class SyncSchedulerImplTest : public testing::Test {
 
   // This stops the scheduler synchronously.
   void StopSyncScheduler() {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&SyncSchedulerImplTest::DoQuitLoopNow,
                               weak_ptr_factory_.GetWeakPtr()));
     RunLoop();

@@ -269,7 +269,7 @@ void AutofillAgent::FocusedNodeChanged(const WebNode& node) {
 
 void AutofillAgent::OnDestruct() {
   Shutdown();
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 void AutofillAgent::FireHostSubmitEvents(const WebFormElement& form,
@@ -348,7 +348,7 @@ void AutofillAgent::TextFieldDidChange(const WebFormControlElement& element) {
   // properly at this point (http://bugs.webkit.org/show_bug.cgi?id=16976) and
   // it is needed to trigger autofill.
   weak_ptr_factory_.InvalidateWeakPtrs();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&AutofillAgent::TextFieldDidChangeImpl,
                             weak_ptr_factory_.GetWeakPtr(), element));
 }

@@ -843,7 +843,7 @@ void DownloadTargetDeterminer::ScheduleCallbackAndDeleteSelf(
   target_info->mime_type = mime_type_;
   target_info->is_filetype_handled_safely = is_filetype_handled_safely_;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(completion_callback_, base::Passed(&target_info)));
   completion_callback_.Reset();

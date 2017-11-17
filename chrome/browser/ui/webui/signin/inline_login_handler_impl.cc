@@ -250,7 +250,7 @@ void InlineSigninHelper::OnClientOAuthSuccessAndBrowserOpened(
     if (signin::IsAutoCloseEnabledInURL(current_url_)) {
       // Close the gaia sign in tab via a task to make sure we aren't in the
       // middle of any webui handler code.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(&InlineLoginHandlerImpl::CloseTab, handler_,
                          signin::ShouldShowAccountManagement(current_url_)));
@@ -289,7 +289,7 @@ void InlineSigninHelper::OnClientOAuthSuccessAndBrowserOpened(
       CreateSyncStarter(browser, current_url_, result.refresh_token,
                         OneClickSigninSyncStarter::CURRENT_PROFILE, start_mode,
                         confirmation_required);
-      base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
     }
   }
 }
@@ -372,7 +372,7 @@ void InlineSigninHelper::ConfirmEmailAction(
     default:
       DCHECK(false) << "Invalid action";
   }
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 void InlineSigninHelper::OnClientOAuthFailure(
@@ -384,7 +384,7 @@ void InlineSigninHelper::OnClientOAuthFailure(
     AboutSigninInternalsFactory::GetForProfile(profile_);
   about_signin_internals->OnRefreshTokenReceived("Failure");
 
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 InlineLoginHandlerImpl::InlineLoginHandlerImpl()
@@ -849,7 +849,7 @@ void InlineLoginHandlerImpl::SyncStarterCallback(
   if (result == OneClickSigninSyncStarter::SYNC_SETUP_FAILURE) {
     RedirectToNtpOrAppsPage(contents, access_point);
   } else if (auto_close) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&InlineLoginHandlerImpl::CloseTab,
                        weak_factory_.GetWeakPtr(),

@@ -215,7 +215,7 @@ class MidiManagerWinrt::MidiPortManager {
   // MidiPortManager instances should be constructed on the COM thread.
   MidiPortManager(MidiManagerWinrt* midi_manager)
       : midi_manager_(midi_manager),
-        task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+        task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
   virtual ~MidiPortManager() { DCHECK(thread_checker_.CalledOnValidThread()); }
 

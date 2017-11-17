@@ -143,8 +143,8 @@ IN_PROC_BROWSER_TEST_F(RenderWidgetHostViewChildFrameTest,
   // RenderWidgetHostImpl has delayed auto-resize processing. Yield here to
   // let it complete.
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                run_loop.QuitClosure());
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, run_loop.QuitClosure());
   run_loop.Run();
 
   // The child frame's RenderWidgetHostView should now use the auto-resize value

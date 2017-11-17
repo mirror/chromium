@@ -169,7 +169,7 @@ void BrowserProcessPlatformPart::RegisterInProcessServices(
       return std::unique_ptr<service_manager::Service>(
           base::MakeUnique<AshPrefConnector>());
     });
-    info.task_runner = base::ThreadTaskRunnerHandle::Get();
+    info.task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
     services->insert(
         std::make_pair(ash::mojom::kPrefConnectorServiceName, info));
   }
@@ -177,8 +177,8 @@ void BrowserProcessPlatformPart::RegisterInProcessServices(
   if (!ash_util::IsRunningInMash()) {
     service_manager::EmbeddedServiceInfo info;
     info.factory = base::Bind(&ash_util::CreateEmbeddedAshService,
-                              base::ThreadTaskRunnerHandle::Get());
-    info.task_runner = base::ThreadTaskRunnerHandle::Get();
+                              base::ThreadTaskRunnerHandle::Get(FROM_HERE));
+    info.task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
     services->insert(std::make_pair(ash::mojom::kServiceName, info));
   }
 }

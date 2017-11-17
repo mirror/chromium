@@ -55,7 +55,8 @@ class TestModelTypeProcessor : public FakeModelTypeChangeProcessor,
         initial_sync_done_);
     activation_context->type_processor =
         std::make_unique<ModelTypeProcessorProxy>(
-            weak_factory_.GetWeakPtr(), base::ThreadTaskRunnerHandle::Get());
+            weak_factory_.GetWeakPtr(),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     callback.Run(std::move(activation_context));
   }
   void DisableSync() override { (*disable_sync_call_count_)++; }

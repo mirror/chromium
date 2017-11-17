@@ -387,7 +387,7 @@ void Executor::StartJob(Job* job) {
   job->FinishedWaitingForThread();
   thread_->task_runner()->PostTask(
       FROM_HERE,
-      base::Bind(&Job::Run, job, base::ThreadTaskRunnerHandle::Get()));
+      base::Bind(&Job::Run, job, base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 }
 
 void Executor::OnJobCompleted(Job* job) {

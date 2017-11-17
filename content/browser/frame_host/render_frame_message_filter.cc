@@ -235,7 +235,7 @@ RenderFrameMessageFilter::RenderFrameMessageFilter(
   // The PostTask below could finish before the constructor returns which would
   // lead to this object being destructed prematurely.
   AddRef();
-  base::ThreadTaskRunnerHandle::Get()->ReleaseSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->ReleaseSoon(FROM_HERE, this);
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,

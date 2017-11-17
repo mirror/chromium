@@ -125,7 +125,7 @@ void AlsaPcmInputStream::Start(AudioInputCallback* callback) {
     // driver. This could also give us a smooth read sequence going forward.
     base::TimeDelta delay = buffer_duration_ + buffer_duration_ / 2;
     next_read_time_ = base::TimeTicks::Now() + delay;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&AlsaPcmInputStream::ReadAudio, weak_factory_.GetWeakPtr()),
         delay);
@@ -177,7 +177,7 @@ void AlsaPcmInputStream::ReadAudio() {
     }
 
     base::TimeDelta next_check_time = buffer_duration_ / 2;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&AlsaPcmInputStream::ReadAudio, weak_factory_.GetWeakPtr()),
         next_check_time);
@@ -237,7 +237,7 @@ void AlsaPcmInputStream::ReadAudio() {
     delay = base::TimeDelta();
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&AlsaPcmInputStream::ReadAudio, weak_factory_.GetWeakPtr()),
       delay);

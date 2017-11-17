@@ -65,12 +65,12 @@ std::unique_ptr<AttachmentStore> AttachmentStore::CreateInMemoryStore() {
   // Both frontend and backend of attachment store will live on current thread.
   scoped_refptr<base::SingleThreadTaskRunner> runner;
   if (base::ThreadTaskRunnerHandle::IsSet()) {
-    runner = base::ThreadTaskRunnerHandle::Get();
+    runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   } else {
     // Dummy runner for tests that don't have MessageLoop.
     base::MessageLoop loop;
     // This works because |runner| takes a ref to the proxy.
-    runner = base::ThreadTaskRunnerHandle::Get();
+    runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   }
   std::unique_ptr<AttachmentStoreBackend> backend(
       new InMemoryAttachmentStore(runner));
@@ -85,8 +85,8 @@ std::unique_ptr<AttachmentStore> AttachmentStore::CreateOnDiskStore(
     const base::FilePath& path,
     const scoped_refptr<base::SequencedTaskRunner>& backend_task_runner,
     const InitCallback& callback) {
-  std::unique_ptr<OnDiskAttachmentStore> backend(
-      new OnDiskAttachmentStore(base::ThreadTaskRunnerHandle::Get(), path));
+  std::unique_ptr<OnDiskAttachmentStore> backend(new OnDiskAttachmentStore(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), path));
 
   scoped_refptr<AttachmentStoreFrontend> frontend =
       new AttachmentStoreFrontend(std::move(backend), backend_task_runner);
@@ -100,7 +100,7 @@ std::unique_ptr<AttachmentStore> AttachmentStore::CreateOnDiskStore(
 std::unique_ptr<AttachmentStore> AttachmentStore::CreateMockStoreForTest(
     std::unique_ptr<AttachmentStoreBackend> backend) {
   scoped_refptr<base::SingleThreadTaskRunner> runner =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   scoped_refptr<AttachmentStoreFrontend> attachment_store_frontend(
       new AttachmentStoreFrontend(std::move(backend), runner));
   std::unique_ptr<AttachmentStore> attachment_store(

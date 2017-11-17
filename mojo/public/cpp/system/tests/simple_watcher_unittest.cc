@@ -110,8 +110,8 @@ TEST_F(SimpleWatcherTest, Cancel) {
   EXPECT_EQ(MOJO_RESULT_OK, WriteMessageRaw(a.get(), "hello", 5, nullptr, 0,
                                             MOJO_WRITE_MESSAGE_FLAG_NONE));
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                run_loop.QuitClosure());
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, run_loop.QuitClosure());
   run_loop.Run();
 }
 
@@ -154,8 +154,8 @@ TEST_F(SimpleWatcherTest, CancelOnDestruction) {
   // This should never trigger the watcher above.
   EXPECT_EQ(MOJO_RESULT_OK, WriteMessageRaw(a.get(), "hello", 5, nullptr, 0,
                                             MOJO_WRITE_MESSAGE_FLAG_NONE));
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                run_loop.QuitClosure());
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, run_loop.QuitClosure());
   run_loop.Run();
 }
 

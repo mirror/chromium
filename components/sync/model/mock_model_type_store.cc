@@ -25,7 +25,7 @@ void MockModelTypeStore::ReadData(const IdList& id_list,
   if (!read_data_handler_.is_null()) {
     read_data_handler_.Run(id_list, callback);
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, Result::SUCCESS,
                               base::Passed(std::unique_ptr<RecordList>()),
                               base::Passed(std::unique_ptr<IdList>())));
@@ -36,7 +36,7 @@ void MockModelTypeStore::ReadAllData(const ReadAllDataCallback& callback) {
   if (!read_all_data_handler_.is_null()) {
     read_all_data_handler_.Run(callback);
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, Result::SUCCESS,
                               base::Passed(std::unique_ptr<RecordList>())));
   }
@@ -46,7 +46,7 @@ void MockModelTypeStore::ReadAllMetadata(const ReadMetadataCallback& callback) {
   if (!read_all_metadata_handler_.is_null()) {
     read_all_metadata_handler_.Run(callback);
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, base::Optional<ModelError>(),
                               base::Passed(std::unique_ptr<MetadataBatch>())));
   }
@@ -63,7 +63,7 @@ void MockModelTypeStore::CommitWriteBatch(
   if (!commit_write_batch_handler_.is_null()) {
     commit_write_batch_handler_.Run(std::move(write_batch), callback);
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, Result::SUCCESS));
   }
 }

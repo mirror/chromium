@@ -140,7 +140,7 @@ class ShillProfileTestClient {
     const std::string& userhash = profile_to_user_[profile_path.value()];
     result->SetKey(shill::kUserHashProperty, base::Value(userhash));
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&DereferenceAndCall, callback,
                               base::Owned(result.release())));
   }
@@ -157,7 +157,7 @@ class ShillProfileTestClient {
     base::DictionaryValue* entry = NULL;
     entries->GetDictionaryWithoutPathExpansion(entry_path, &entry);
     ASSERT_TRUE(entry);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&DereferenceAndCall, callback,
                               base::Owned(entry->DeepCopy())));
   }
@@ -177,7 +177,7 @@ class ShillServiceTestClient {
 
   void GetProperties(const dbus::ObjectPath& service_path,
                      const DictionaryValueCallback& callback) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, DBUS_METHOD_CALL_SUCCESS,
                               base::ConstRef(service_properties_)));
   }
@@ -1048,7 +1048,7 @@ class ManagedNetworkConfigurationHandlerShutdownTest
       const dbus::ObjectPath& profile_path,
       const ShillClientHelper::DictionaryValueCallbackWithoutStatus& callback,
       const ShillClientHelper::ErrorCallback& error_callback) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(ManagedNetworkConfigurationHandlerShutdownTest::
                                   CallbackWithEmptyDictionary,
                               callback));

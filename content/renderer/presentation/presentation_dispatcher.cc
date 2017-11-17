@@ -163,7 +163,7 @@ void PresentationDispatcher::GetAvailability(
   auto screen_availability = GetScreenAvailability(urls);
   // Reject Promise if screen availability is unsupported for all URLs.
   if (screen_availability == blink::mojom::ScreenAvailability::DISABLED) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(
             &blink::WebPresentationAvailabilityCallbacks::OnError,
@@ -182,7 +182,7 @@ void PresentationDispatcher::GetAvailability(
   }
 
   if (screen_availability != blink::mojom::ScreenAvailability::UNKNOWN) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&blink::WebPresentationAvailabilityCallbacks::OnSuccess,
                        base::Passed(&callback),

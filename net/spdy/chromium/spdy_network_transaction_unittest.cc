@@ -296,7 +296,7 @@ class SpdyNetworkTransactionTest : public ::testing::Test {
 
     std::vector<std::unique_ptr<UploadElementReader>> element_readers;
     element_readers.push_back(std::make_unique<UploadFileElementReader>(
-        base::ThreadTaskRunnerHandle::Get().get(), file_path, 0,
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), file_path, 0,
         kUploadDataSize, base::Time()));
     upload_data_stream_ = std::make_unique<ElementsUploadDataStream>(
         std::move(element_readers), 0);
@@ -315,7 +315,7 @@ class SpdyNetworkTransactionTest : public ::testing::Test {
 
     std::vector<std::unique_ptr<UploadElementReader>> element_readers;
     element_readers.push_back(std::make_unique<UploadFileElementReader>(
-        base::ThreadTaskRunnerHandle::Get().get(), file_path, 0,
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), file_path, 0,
         kUploadDataSize, base::Time()));
     upload_data_stream_ = std::make_unique<ElementsUploadDataStream>(
         std::move(element_readers), 0);
@@ -339,8 +339,8 @@ class SpdyNetworkTransactionTest : public ::testing::Test {
     element_readers.push_back(std::make_unique<UploadBytesElementReader>(
         kUploadData, kFileRangeOffset));
     element_readers.push_back(std::make_unique<UploadFileElementReader>(
-        base::ThreadTaskRunnerHandle::Get().get(), file_path, kFileRangeOffset,
-        kFileRangeLength, base::Time()));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), file_path,
+        kFileRangeOffset, kFileRangeLength, base::Time()));
     element_readers.push_back(std::make_unique<UploadBytesElementReader>(
         kUploadData + kFileRangeOffset + kFileRangeLength,
         kUploadDataSize - (kFileRangeOffset + kFileRangeLength)));

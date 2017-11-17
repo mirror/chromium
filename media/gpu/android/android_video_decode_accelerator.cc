@@ -693,7 +693,7 @@ bool AndroidVideoDecodeAccelerator::QueueInput() {
   // keep getting more bitstreams from the client, and throttle them by using
   // |bitstreams_notified_in_advance_|.
   // TODO(dwkang): check if there is a way to remove this workaround.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&AndroidVideoDecodeAccelerator::NotifyEndOfBitstreamBuffer,
                  weak_this_factory_.GetWeakPtr(), bitstream_buffer.id()));
@@ -797,7 +797,7 @@ bool AndroidVideoDecodeAccelerator::DequeueOutput() {
         // size update in |SendDecodedFrameToClient| and https://crbug/587994.
         if (output_picture_buffers_.empty() && !picturebuffers_requested_) {
           picturebuffers_requested_ = true;
-          base::ThreadTaskRunnerHandle::Get()->PostTask(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
               FROM_HERE,
               base::Bind(&AndroidVideoDecodeAccelerator::RequestPictureBuffers,
                          weak_this_factory_.GetWeakPtr()));
@@ -982,7 +982,7 @@ void AndroidVideoDecodeAccelerator::Decode(
     NOTIFY_ERROR(INVALID_ARGUMENT,
                  "Invalid bistream_buffer, id: " << bitstream_buffer.id());
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&AndroidVideoDecodeAccelerator::NotifyEndOfBitstreamBuffer,
                    weak_this_factory_.GetWeakPtr(), bitstream_buffer.id()));
@@ -1173,18 +1173,18 @@ void AndroidVideoDecodeAccelerator::OnDrainCompleted() {
   switch (*drain_type_) {
     case DRAIN_FOR_FLUSH:
       ResetCodecState();
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(&AndroidVideoDecodeAccelerator::NotifyFlushDone,
                                 weak_this_factory_.GetWeakPtr()));
       break;
     case DRAIN_FOR_RESET:
       ResetCodecState();
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(&AndroidVideoDecodeAccelerator::NotifyResetDone,
                                 weak_this_factory_.GetWeakPtr()));
       break;
     case DRAIN_FOR_DESTROY:
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(&AndroidVideoDecodeAccelerator::ActualDestroy,
                                 weak_this_factory_.GetWeakPtr()));
       break;
@@ -1252,7 +1252,7 @@ void AndroidVideoDecodeAccelerator::Reset() {
     DCHECK(!media_codec_);
     DCHECK(pending_bitstream_records_.empty());
     DCHECK_EQ(state_, BEFORE_OVERLAY_INIT);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&AndroidVideoDecodeAccelerator::NotifyResetDone,
                               weak_this_factory_.GetWeakPtr()));
     return;
@@ -1264,7 +1264,7 @@ void AndroidVideoDecodeAccelerator::Reset() {
     pending_bitstream_records_.pop();
 
     if (bitstream_buffer_id != -1) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::Bind(&AndroidVideoDecodeAccelerator::NotifyEndOfBitstreamBuffer,
                      weak_this_factory_.GetWeakPtr(), bitstream_buffer_id));

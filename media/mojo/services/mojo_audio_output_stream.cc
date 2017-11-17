@@ -38,7 +38,7 @@ MojoAudioOutputStream::MojoAudioOutputStream(
     // Failed to initialize the stream. We cannot call |deleter_callback_| yet,
     // since construction isn't done.
     binding_.Close();
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&MojoAudioOutputStream::OnStreamError,
                        weak_factory_.GetWeakPtr(), /* not used */ 0));

@@ -39,13 +39,14 @@ void PostFileSystemCallback(
 
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&fileapi_internal::RunFileSystemCallback,
-                     file_system_getter, function,
-                     on_error_callback.is_null()
-                         ? base::Closure()
-                         : base::Bind(&google_apis::RunTaskWithTaskRunner,
-                                      base::ThreadTaskRunnerHandle::Get(),
-                                      on_error_callback)));
+      base::BindOnce(
+          &fileapi_internal::RunFileSystemCallback, file_system_getter,
+          function,
+          on_error_callback.is_null()
+              ? base::Closure()
+              : base::Bind(&google_apis::RunTaskWithTaskRunner,
+                           base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                           on_error_callback)));
 }
 
 // Runs CreateOrOpenFile callback based on the given |error| and |file|.

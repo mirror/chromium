@@ -536,7 +536,7 @@ void SerialUnitTestProcessLifetimeObserver::OnCompleted(
   // The temporary file's directory is also temporary.
   DeleteFile(output_file().DirName(), true);
 
-  ThreadTaskRunnerHandle::Get()->PostTask(
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       BindOnce(&RunUnitTestsSerially, test_launcher(), platform_delegate(),
                std::move(next_test_names_), launch_flags()));
@@ -712,7 +712,7 @@ size_t UnitTestLauncherDelegate::RunTests(
 size_t UnitTestLauncherDelegate::RetryTests(
     TestLauncher* test_launcher,
     const std::vector<std::string>& test_names) {
-  ThreadTaskRunnerHandle::Get()->PostTask(
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       BindOnce(&RunUnitTestsSerially, test_launcher, platform_delegate_,
                test_names,

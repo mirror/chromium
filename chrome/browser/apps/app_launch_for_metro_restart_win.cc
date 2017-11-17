@@ -75,7 +75,7 @@ void HandleAppLaunchForMetroRestart(Profile* profile) {
   prefs->ClearPref(prefs::kAppLaunchForMetroRestart);
 
   const int kRestartAppLaunchDelayMs = 1000;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::Bind(&LaunchAppWithId, profile, extension_id),
       base::TimeDelta::FromMilliseconds(kRestartAppLaunchDelayMs));
 }

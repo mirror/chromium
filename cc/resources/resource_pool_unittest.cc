@@ -26,7 +26,7 @@ class ResourcePoolTest : public testing::Test {
     shared_bitmap_manager_.reset(new TestSharedBitmapManager);
     resource_provider_ = FakeResourceProvider::Create(
         context_provider_.get(), shared_bitmap_manager_.get());
-    task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
     resource_pool_ =
         ResourcePool::Create(resource_provider_.get(), task_runner_.get(),
                              viz::ResourceTextureHint::kDefault,

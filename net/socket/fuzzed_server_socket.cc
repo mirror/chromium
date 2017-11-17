@@ -36,7 +36,7 @@ int FuzzedServerSocket::GetLocalAddress(IPEndPoint* address) const {
 int FuzzedServerSocket::Accept(std::unique_ptr<StreamSocket>* socket,
                                const CompletionCallback& callback) {
   if (first_accept_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&FuzzedServerSocket::DispatchAccept,
                               weak_factory_.GetWeakPtr(), socket, callback));
   }

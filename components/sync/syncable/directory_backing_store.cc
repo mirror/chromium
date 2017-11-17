@@ -251,8 +251,8 @@ void OnSqliteError(const base::Closure& catastrophic_error_handler,
     // At this point sql::* and DirectoryBackingStore may be on the callstack so
     // don't invoke the error handler directly. Instead, PostTask to this thread
     // to avoid potential reentrancy issues.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  catastrophic_error_handler);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, catastrophic_error_handler);
   }
 }
 

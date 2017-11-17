@@ -82,7 +82,7 @@ void ReadingListSuggestionsProvider::DismissSuggestion(
 void ReadingListSuggestionsProvider::FetchSuggestionImage(
     const ContentSuggestion::ID& suggestion_id,
     ImageFetchedCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), gfx::Image()));
 }
 
@@ -91,7 +91,7 @@ void ReadingListSuggestionsProvider::Fetch(
     const std::set<std::string>& known_suggestion_ids,
     FetchDoneCallback callback) {
   LOG(DFATAL) << "ReadingListSuggestionsProvider has no |Fetch| functionality!";
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(std::move(callback),
                      Status(StatusCode::PERMANENT_ERROR,

@@ -38,7 +38,7 @@ BackgroundIO::~BackgroundIO() {
 // ---------------------------------------------------------------------------
 
 InFlightIO::InFlightIO()
-    : callback_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : callback_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       running_(false) {}
 
 InFlightIO::~InFlightIO() {

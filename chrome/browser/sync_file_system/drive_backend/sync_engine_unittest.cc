@@ -43,7 +43,7 @@ class SyncEngineTest : public testing::Test,
         new drive::FakeDriveService);
 
     scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner =
-        base::ThreadTaskRunnerHandle::Get();
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE);
     worker_task_runner_ = base::CreateSequencedTaskRunnerWithTraits(
         {base::MayBlock(), base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
 

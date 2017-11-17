@@ -63,7 +63,7 @@ bool GpuJpegDecodeAcceleratorFactoryProvider::
   auto accelerator_factory_functions = GetAcceleratorFactories();
   for (const auto& create_jda_function : accelerator_factory_functions) {
     std::unique_ptr<JpegDecodeAccelerator> accelerator =
-        create_jda_function.Run(base::ThreadTaskRunnerHandle::Get());
+        create_jda_function.Run(base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     if (accelerator && accelerator->IsSupported())
       return true;
   }

@@ -80,13 +80,13 @@ class FileCacheTest : public testing::Test {
     fake_free_disk_space_getter_.reset(new FakeFreeDiskSpaceGetter);
 
     metadata_storage_.reset(new ResourceMetadataStorage(
-        metadata_dir,
-        base::ThreadTaskRunnerHandle::Get().get()));
+        metadata_dir, base::ThreadTaskRunnerHandle::Get(FROM_HERE).get()));
     ASSERT_TRUE(metadata_storage_->Initialize());
 
-    cache_.reset(new FileCache(metadata_storage_.get(), cache_files_dir_,
-                               base::ThreadTaskRunnerHandle::Get().get(),
-                               fake_free_disk_space_getter_.get()));
+    cache_.reset(
+        new FileCache(metadata_storage_.get(), cache_files_dir_,
+                      base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+                      fake_free_disk_space_getter_.get()));
     ASSERT_TRUE(cache_->Initialize());
   }
 

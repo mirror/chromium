@@ -117,7 +117,7 @@ void ModelTypeRegistry::ConnectNonBlockingType(
 
   // Initialize Processor -> Worker communication channel.
   type_processor->ConnectSync(std::make_unique<CommitQueueProxy>(
-      worker_ptr->AsWeakPtr(), base::ThreadTaskRunnerHandle::Get()));
+      worker_ptr->AsWeakPtr(), base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 
   // Attempt migration if necessary.
   if (do_migration) {

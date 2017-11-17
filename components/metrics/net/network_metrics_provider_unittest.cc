@@ -34,7 +34,7 @@ class TestNetworkQualityEstimatorProvider
  private:
   // NetworkMetricsProvider::NetworkQualityEstimatorProvider:
   scoped_refptr<base::SequencedTaskRunner> GetTaskRunner() override {
-    return base::ThreadTaskRunnerHandle::Get();
+    return base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   }
 
   void PostReplyNetworkQualityEstimator(

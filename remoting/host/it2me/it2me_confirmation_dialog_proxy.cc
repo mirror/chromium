@@ -80,7 +80,8 @@ It2MeConfirmationDialogProxy::It2MeConfirmationDialogProxy(
     scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
     std::unique_ptr<It2MeConfirmationDialog> dialog)
     : weak_factory_(this) {
-  core_.reset(new Core(ui_task_runner, base::ThreadTaskRunnerHandle::Get(),
+  core_.reset(new Core(ui_task_runner,
+                       base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                        weak_factory_.GetWeakPtr(), std::move(dialog)));
 }
 

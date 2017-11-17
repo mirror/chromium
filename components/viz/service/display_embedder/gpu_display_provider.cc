@@ -49,7 +49,7 @@ GpuDisplayProvider::GpuDisplayProvider(
           base::MakeUnique<InProcessGpuMemoryBufferManager>(
               gpu_channel_manager)),
       image_factory_(GetImageFactory(gpu_channel_manager)),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 GpuDisplayProvider::~GpuDisplayProvider() = default;
 

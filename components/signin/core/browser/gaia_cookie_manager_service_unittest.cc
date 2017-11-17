@@ -248,7 +248,7 @@ TEST_F(GaiaCookieManagerServiceTest, MergeSessionRetried) {
   SimulateMergeSessionFailure(&helper, canceled());
   DCHECK(helper.is_running());
   // Transient error incurs a retry after 1 second.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       base::TimeDelta::FromMilliseconds(1100));
   base::RunLoop().Run();
@@ -272,7 +272,7 @@ TEST_F(GaiaCookieManagerServiceTest, MergeSessionRetriedTwice) {
   // Transient error incurs a retry after 1 second.
   EXPECT_LT(helper.GetBackoffEntry()->GetTimeUntilRelease(),
       base::TimeDelta::FromMilliseconds(1100));
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       base::TimeDelta::FromMilliseconds(1100));
   base::RunLoop().Run();
@@ -281,7 +281,7 @@ TEST_F(GaiaCookieManagerServiceTest, MergeSessionRetriedTwice) {
   // Next transient error incurs a retry after 3 seconds.
   EXPECT_LT(helper.GetBackoffEntry()->GetTimeUntilRelease(),
       base::TimeDelta::FromMilliseconds(3100));
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       base::TimeDelta::FromMilliseconds(3100));
   base::RunLoop().Run();

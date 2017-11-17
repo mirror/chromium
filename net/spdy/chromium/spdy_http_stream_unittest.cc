@@ -82,7 +82,7 @@ class ReadErrorUploadDataStream : public UploadDataStream {
 
   int ReadInternal(IOBuffer* buf, int buf_len) override {
     if (async_ == FailureMode::ASYNC) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(&ReadErrorUploadDataStream::CompleteRead,
                                 weak_factory_.GetWeakPtr()));
       return ERR_IO_PENDING;

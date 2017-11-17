@@ -251,7 +251,7 @@ TraceLog::ThreadLocalEventBuffer::ThreadLocalEventBuffer(TraceLog* trace_log)
 
   // This is to report the local memory usage when memory-infra is enabled.
   MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-      this, "ThreadLocalEventBuffer", ThreadTaskRunnerHandle::Get());
+      this, "ThreadLocalEventBuffer", ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   AutoLock lock(trace_log->lock_);
   trace_log->thread_message_loops_.insert(message_loop);
@@ -326,7 +326,8 @@ void TraceLog::ThreadLocalEventBuffer::FlushWhileLocked() {
 
 struct TraceLog::RegisteredAsyncObserver {
   explicit RegisteredAsyncObserver(WeakPtr<AsyncEnabledStateObserver> observer)
-      : observer(observer), task_runner(ThreadTaskRunnerHandle::Get()) {}
+      : observer(observer),
+        task_runner(ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
   ~RegisteredAsyncObserver() {}
 
   WeakPtr<AsyncEnabledStateObserver> observer;
@@ -838,7 +839,7 @@ void TraceLog::FlushInternal(const TraceLog::OutputCallback& cb,
     AutoLock lock(lock_);
     DCHECK(!flush_task_runner_);
     flush_task_runner_ = ThreadTaskRunnerHandle::IsSet()
-                             ? ThreadTaskRunnerHandle::Get()
+                             ? ThreadTaskRunnerHandle::Get(FROM_HERE)
                              : nullptr;
     DCHECK(thread_message_loops_.empty() || flush_task_runner_);
     flush_output_callback_ = cb;

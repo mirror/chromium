@@ -401,7 +401,7 @@ void SimpleMenuModel::MenuWillClose() {
   // Due to how menus work on the different platforms, ActivatedAt will be
   // called after this.  It's more convenient for the delegate to be called
   // afterwards though, so post a task.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&SimpleMenuModel::OnMenuClosed, method_factory_.GetWeakPtr()));
 }

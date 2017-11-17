@@ -212,7 +212,7 @@ class SGIVideoSyncProviderThreadShim {
       : parent_window_(parent_window),
         window_(0),
         glx_window_(0),
-        task_runner_(base::ThreadTaskRunnerHandle::Get()),
+        task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         cancel_vsync_flag_(),
         vsync_lock_() {
     // This ensures that creation of |parent_window_| has occured when this shim

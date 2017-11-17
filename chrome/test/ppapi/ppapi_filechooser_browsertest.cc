@@ -105,7 +105,7 @@ class TestSelectFileDialogFactory final : public ui::SelectFileDialogFactory {
           ADD_FAILURE() << "Unexpected SelectFileImpl invocation.";
       }
 
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::Bind(&SelectFileDialog::RespondToFileSelectionRequest, this,
                      params));

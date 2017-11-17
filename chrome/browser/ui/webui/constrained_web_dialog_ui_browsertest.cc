@@ -90,7 +90,7 @@ class ConstrainedWebDialogBrowserTest : public InProcessBrowserTest {
         return false;
       }
 
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
           base::TimeDelta::FromMilliseconds(20));
       content::RunMessageLoop();

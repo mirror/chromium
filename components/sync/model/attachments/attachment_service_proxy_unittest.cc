@@ -43,7 +43,7 @@ class StubAttachmentService : public AttachmentService {
     DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
     Increment();
     std::unique_ptr<AttachmentMap> attachments(new AttachmentMap());
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(callback, AttachmentService::GET_UNSPECIFIED_ERROR,
                    base::Passed(&attachments)));

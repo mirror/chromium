@@ -137,7 +137,7 @@ void FakeBiodClient::StartEnrollSession(const std::string& user_id,
   current_record_->label = label;
   current_session_ = FingerprintSession::ENROLL;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(callback, dbus::ObjectPath(kEnrollSessionObjectPath)));
 }
@@ -150,14 +150,14 @@ void FakeBiodClient::GetRecordsForUser(const std::string& user_id,
       records_object_paths.push_back(record.first);
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback, records_object_paths));
 }
 
 void FakeBiodClient::DestroyAllRecords(VoidDBusMethodCallback callback) {
   records_.clear();
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 
@@ -165,13 +165,13 @@ void FakeBiodClient::StartAuthSession(const ObjectPathCallback& callback) {
   DCHECK_EQ(current_session_, FingerprintSession::NONE);
 
   current_session_ = FingerprintSession::AUTH;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(callback, dbus::ObjectPath(kAuthSessionObjectPath)));
 }
 
 void FakeBiodClient::RequestType(const BiometricTypeCallback& callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(callback,
                  static_cast<uint32_t>(
@@ -186,7 +186,7 @@ void FakeBiodClient::CancelEnrollSession(VoidDBusMethodCallback callback) {
   current_record_path_ = dbus::ObjectPath();
   current_session_ = FingerprintSession::NONE;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 
@@ -194,7 +194,7 @@ void FakeBiodClient::EndAuthSession(VoidDBusMethodCallback callback) {
   DCHECK_EQ(current_session_, FingerprintSession::AUTH);
 
   current_session_ = FingerprintSession::NONE;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 
@@ -204,7 +204,7 @@ void FakeBiodClient::SetRecordLabel(const dbus::ObjectPath& record_path,
   if (records_.find(record_path) != records_.end())
     records_[record_path]->label = label;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 
@@ -212,7 +212,7 @@ void FakeBiodClient::RemoveRecord(const dbus::ObjectPath& record_path,
                                   VoidDBusMethodCallback callback) {
   records_.erase(record_path);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 
@@ -222,7 +222,7 @@ void FakeBiodClient::RequestRecordLabel(const dbus::ObjectPath& record_path,
   if (records_.find(record_path) != records_.end())
     record_label = records_[record_path]->label;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback, record_label));
 }
 

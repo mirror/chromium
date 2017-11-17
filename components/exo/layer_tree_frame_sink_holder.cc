@@ -184,7 +184,7 @@ void LayerTreeFrameSinkHolder::ScheduleDelete() {
   if (delete_pending_)
     return;
   delete_pending_ = true;
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 }  // namespace exo

@@ -59,7 +59,7 @@ BleAdvertiserImpl::BleAdvertiserImpl(
     : remote_beacon_seed_fetcher_(remote_beacon_seed_fetcher),
       local_device_data_provider_(local_device_data_provider),
       ble_synchronizer_(ble_synchronizer),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       weak_ptr_factory_(this) {}
 
 BleAdvertiserImpl::~BleAdvertiserImpl() {}

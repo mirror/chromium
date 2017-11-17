@@ -79,7 +79,7 @@ void DecodeImage(
 }  // namespace
 
 ImageDecoder::ImageRequest::ImageRequest()
-    : task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+    : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
   DCHECK(sequence_checker_.CalledOnValidSequence());
 }
 

@@ -53,6 +53,6 @@ void LeakDetectorRemoteClient::OnParamsReceived(
   if (params.sampling_rate() > 0) {
     metrics::LeakDetector* detector = metrics::LeakDetector::GetInstance();
     detector->AddObserver(this);
-    detector->Init(params, base::ThreadTaskRunnerHandle::Get());
+    detector->Init(params, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 }

@@ -16,7 +16,7 @@ namespace {
 
 TEST(TextureMailboxDeleterTest, Destroy) {
   std::unique_ptr<TextureMailboxDeleter> deleter(
-      new TextureMailboxDeleter(base::ThreadTaskRunnerHandle::Get()));
+      new TextureMailboxDeleter(base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 
   scoped_refptr<cc::TestContextProvider> context_provider =
       cc::TestContextProvider::Create();

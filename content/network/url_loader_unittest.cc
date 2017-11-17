@@ -75,7 +75,7 @@ class URLRequestMultipleWritesJob : public net::URLRequestJob {
 
   // net::URLRequestJob implementation:
   void Start() override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&URLRequestMultipleWritesJob::StartAsync,
                                   weak_factory_.GetWeakPtr()));
   }
@@ -93,7 +93,7 @@ class URLRequestMultipleWritesJob : public net::URLRequestJob {
     }
 
     if (async_reads_) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(&URLRequestMultipleWritesJob::ReadRawDataComplete,
                          weak_factory_.GetWeakPtr(), result));
@@ -661,7 +661,7 @@ TEST_F(URLLoaderTest, CloseResponseBodyConsumerBeforeProducer) {
   // (Please note that this doesn't guarantee that the pipe is filled to the
   // point that it is not writable anymore.)
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, run_loop.QuitClosure(),
       base::TimeDelta::FromMilliseconds(100));
   run_loop.Run();
@@ -718,7 +718,7 @@ TEST_F(URLLoaderTest, PauseReadingBodyFromNetBeforeRespnoseHeaders) {
   // Wait for a little amount of time so that if the loader mistakenly reads
   // response body from the underlying URLRequest, it is easier to find out.
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, run_loop.QuitClosure(),
       base::TimeDelta::FromMilliseconds(100));
   run_loop.Run();

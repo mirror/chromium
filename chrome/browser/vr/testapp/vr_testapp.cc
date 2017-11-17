@@ -116,7 +116,7 @@ class AppWindow : public ui::PlatformWindowDelegate {
   gfx::Size GetSize() { return platform_window_->GetBounds().size(); }
 
   void Start() {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&AppWindow::StartOnGpu, weak_ptr_factory_.GetWeakPtr()));
   }
@@ -173,7 +173,7 @@ bool RendererFactory::Initialize() {
   ui::OzonePlatform::InitializeForGPU(params);
 
   if (gl::init::InitializeGLOneOff() &&
-      gpu_helper_.Initialize(base::ThreadTaskRunnerHandle::Get())) {
+      gpu_helper_.Initialize(base::ThreadTaskRunnerHandle::Get(FROM_HERE))) {
     return true;
   }
   return false;
@@ -250,7 +250,7 @@ void WindowManager::OnDisplaysAquired(
 
   if (should_configure_) {
     should_configure_ = false;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&WindowManager::OnConfigurationChanged,
                               base::Unretained(this)));
   }

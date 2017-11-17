@@ -103,18 +103,18 @@ class MockResourceDelegate : public ui::ResourceBundle::Delegate {
 };
 
 ACTION(FailFetch) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(arg2, arg0, gfx::Image(), image_fetcher::RequestMetadata()));
 }
 
 ACTION_P2(DecodeSuccessfully, width, height) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(arg2, gfx::test::CreateImage(width, height)));
 }
 
 ACTION_P2(PassFetch, width, height) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(arg2, arg0, gfx::test::CreateImage(width, height),
                             image_fetcher::RequestMetadata()));
 }

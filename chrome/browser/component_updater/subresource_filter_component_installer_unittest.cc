@@ -108,9 +108,9 @@ class SubresourceFilterComponentInstallerTest : public PlatformTest {
 
     auto content_service =
         base::MakeUnique<subresource_filter::ContentRulesetService>(
-            base::ThreadTaskRunnerHandle::Get());
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     auto test_ruleset_service = base::MakeUnique<TestRulesetService>(
-        &pref_service_, base::ThreadTaskRunnerHandle::Get(),
+        &pref_service_, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
         content_service.get(), ruleset_service_dir_.GetPath());
     test_ruleset_service_ = test_ruleset_service.get();
     content_service->set_ruleset_service(std::move(test_ruleset_service));

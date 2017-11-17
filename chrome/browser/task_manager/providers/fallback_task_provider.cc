@@ -95,7 +95,7 @@ void FallbackTaskProvider::ShowTaskLater(Task* task) {
     it->second.InvalidateWeakPtrs();
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&FallbackTaskProvider::ShowPendingTask,
                  it->second.GetWeakPtr(), task),

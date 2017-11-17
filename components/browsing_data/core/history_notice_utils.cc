@@ -39,7 +39,7 @@ class MergeBooleanCallbacks {
       return;
 
     target_callback_.Run(final_response_);
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
   }
 
  private:

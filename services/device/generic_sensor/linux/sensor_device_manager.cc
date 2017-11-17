@@ -23,7 +23,7 @@ std::string StringOrEmptyIfNull(const char* value) {
 SensorDeviceManager::SensorDeviceManager()
     : observer_(this),
       delegate_(nullptr),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
   DETACH_FROM_THREAD(thread_checker_);
 }
 

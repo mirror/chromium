@@ -101,8 +101,9 @@ void ArchiveManagerTest::ResetResults() {
 
 void ArchiveManagerTest::ResetManager(const base::FilePath& temporary_dir,
                                       const base::FilePath& persistent_dir) {
-  manager_.reset(new ArchiveManager(temporary_dir, persistent_dir,
-                                    base::ThreadTaskRunnerHandle::Get()));
+  manager_.reset(
+      new ArchiveManager(temporary_dir, persistent_dir,
+                         base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 }
 
 void ArchiveManagerTest::Callback(bool result) {

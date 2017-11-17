@@ -96,9 +96,8 @@ template <typename T>
 base::Callback<T> RelayCallbackToCurrentThread(
     const base::Location& from_here,
     const base::Callback<T>& callback) {
-  return RelayCallbackToTaskRunner(
-      base::ThreadTaskRunnerHandle::Get(),
-      from_here, callback);
+  return RelayCallbackToTaskRunner(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                                   from_here, callback);
 }
 
 }  // namespace drive_backend

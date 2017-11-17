@@ -39,7 +39,7 @@ void TestBackgroundSyncManager::StoreDataInBackend(
     const ServiceWorkerStorage::StatusCallback& callback) {
   EXPECT_TRUE(continuation_.is_null());
   if (corrupt_backend_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, SERVICE_WORKER_ERROR_FAILED));
     return;
   }
@@ -58,7 +58,7 @@ void TestBackgroundSyncManager::GetDataFromBackend(
         callback) {
   EXPECT_TRUE(continuation_.is_null());
   if (corrupt_backend_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(callback, std::vector<std::pair<int64_t, std::string>>(),
                        SERVICE_WORKER_ERROR_FAILED));

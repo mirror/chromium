@@ -88,7 +88,7 @@ class CaptivePortalWindowTest : public InProcessBrowserTest {
     captive_portal_window_proxy_.reset();
 
     ASSERT_TRUE(base::MessageLoopForUI::IsCurrent());
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, host_);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, host_);
     base::RunLoop().RunUntilIdle();
   }
 

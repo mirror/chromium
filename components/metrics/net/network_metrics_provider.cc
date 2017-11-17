@@ -139,7 +139,7 @@ NetworkMetricsProvider::NetworkMetricsProvider(
             base::Bind(
                 &NetworkMetricsProvider::OnEffectiveConnectionTypeChanged,
                 base::Unretained(this)),
-            base::ThreadTaskRunnerHandle::Get()));
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 
     // Get the network quality estimator and initialize
     // |effective_connection_type_observer_| on the same task runner on  which

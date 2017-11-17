@@ -172,7 +172,7 @@ VideoTrackRecorder::Encoder::Encoder(
     const OnEncodedVideoCB& on_encoded_video_callback,
     int32_t bits_per_second,
     scoped_refptr<base::SingleThreadTaskRunner> encoding_task_runner)
-    : main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       encoding_task_runner_(encoding_task_runner),
       paused_(false),
       on_encoded_video_callback_(on_encoded_video_callback),
@@ -195,7 +195,7 @@ void VideoTrackRecorder::Encoder::StartFrameEncode(
     base::TimeTicks capture_timestamp) {
   // Cache the thread sending frames on first frame arrival.
   if (!origin_task_runner_.get())
-    origin_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    origin_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   DCHECK(origin_task_runner_->BelongsToCurrentThread());
   if (paused_)
     return;

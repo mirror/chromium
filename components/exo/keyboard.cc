@@ -374,7 +374,7 @@ void Keyboard::ProcessExpiredPendingKeyAcks() {
 void Keyboard::ScheduleProcessExpiredPendingKeyAcks(base::TimeDelta delay) {
   DCHECK(!process_expired_pending_key_acks_pending_);
   process_expired_pending_key_acks_pending_ = true;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&Keyboard::ProcessExpiredPendingKeyAcks,
                      weak_ptr_factory_.GetWeakPtr()),

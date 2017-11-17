@@ -177,10 +177,10 @@ void TopSitesImpl::GetMostVisitedURLs(
     if (!loaded_) {
       // A request came in before we finished loading. Store the callback and
       // we'll run it on current thread when we finish loading.
-      pending_callbacks_.push_back(
-          base::Bind(&RunOrPostGetMostVisitedURLsCallback,
-                     base::RetainedRef(base::ThreadTaskRunnerHandle::Get()),
-                     include_forced_urls, callback));
+      pending_callbacks_.push_back(base::Bind(
+          &RunOrPostGetMostVisitedURLsCallback,
+          base::RetainedRef(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+          include_forced_urls, callback));
       return;
     }
     if (include_forced_urls) {

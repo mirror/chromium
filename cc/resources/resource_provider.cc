@@ -188,7 +188,8 @@ ResourceProvider::ResourceProvider(
   // TODO(ericrk): Get this working in Android Webview. crbug.com/517156
   if (base::ThreadTaskRunnerHandle::IsSet()) {
     base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-        this, "cc::ResourceProvider", base::ThreadTaskRunnerHandle::Get());
+        this, "cc::ResourceProvider",
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 
   if (!compositor_context_provider)

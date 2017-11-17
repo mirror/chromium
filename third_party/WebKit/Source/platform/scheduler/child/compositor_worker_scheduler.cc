@@ -50,7 +50,7 @@ CompositorWorkerScheduler::IdleTaskRunner() {
 
 scoped_refptr<base::SingleThreadTaskRunner>
 CompositorWorkerScheduler::IPCTaskRunner() {
-  return base::ThreadTaskRunnerHandle::Get();
+  return base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 bool CompositorWorkerScheduler::CanExceedIdleDeadlineIfRequired() const {

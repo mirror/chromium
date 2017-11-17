@@ -29,7 +29,7 @@ void FakeSignalStrategy::Connect(FakeSignalStrategy* peer1,
 }
 
 FakeSignalStrategy::FakeSignalStrategy(const SignalingAddress& address)
-    : main_thread_(base::ThreadTaskRunnerHandle::Get()),
+    : main_thread_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       address_(address),
       last_id_(0),
       weak_factory_(this) {
@@ -112,7 +112,7 @@ bool FakeSignalStrategy::SendStanza(std::unique_ptr<buzz::XmlElement> stanza) {
   if (send_delay_.is_zero()) {
     peer_callback_.Run(std::move(stanza));
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, base::Bind(peer_callback_, base::Passed(&stanza)),
         send_delay_);
   }

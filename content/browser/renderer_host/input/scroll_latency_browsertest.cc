@@ -59,7 +59,7 @@ class ScrollLatencyBrowserTest : public ContentBrowserTest {
   // crbug.com/405282 for details.
   void GiveItSomeTime() {
     base::RunLoop run_loop;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop.QuitClosure(),
         base::TimeDelta::FromMillisecondsD(10));
     run_loop.Run();

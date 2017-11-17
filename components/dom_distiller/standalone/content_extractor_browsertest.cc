@@ -310,8 +310,8 @@ class ContentExtractionRequest : public ViewRequestDelegate {
   void OnArticleReady(const DistilledArticleProto* article_proto) override {
     article_proto_ = article_proto;
     CHECK(article_proto->pages_size()) << "Failed extracting " << url_;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  finished_callback_);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           finished_callback_);
   }
 
   const DistilledArticleProto* article_proto_;
@@ -421,7 +421,7 @@ class ContentExtractor : public ContentBrowserTest {
     DoArticleOutput();
     requests_.clear();
     service_.reset();
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
   }
 

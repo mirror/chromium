@@ -242,12 +242,12 @@ BluetoothAdapterBlueZ::BluetoothAdapterBlueZ(const InitCallback& init_callback)
       discovery_request_pending_(false),
       force_deactivate_discovery_(false),
       weak_ptr_factory_(this) {
-  ui_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  ui_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   socket_thread_ = device::BluetoothSocketThread::Get();
 
   // Can't initialize the adapter until DBus clients are ready.
   if (bluez::BluezDBusManager::Get()->IsObjectManagerSupportKnown()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&BluetoothAdapterBlueZ::Init,
                               weak_ptr_factory_.GetWeakPtr()));
     return;

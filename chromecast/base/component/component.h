@@ -80,7 +80,7 @@
 //   void OnEnable() override {
 //     // ... Enable setup manager ...
 //     // OnEnableComplete() may be called asynchronously.
-//     base::ThreadTaskRunnerHandle::Get()->PostTask(
+//     base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
 //         FROM_HERE, base::BindOnce(&SetupManagerImpl::CompleteEnable,
 //                                   base::Unretained(this)));
 //   }

@@ -80,7 +80,7 @@ class SandboxFileSystemBackendTest : public testing::Test {
   void SetUpNewDelegate(const storage::FileSystemOptions& options) {
     delegate_.reset(new SandboxFileSystemBackendDelegate(
         NULL /* quota_manager_proxy */,
-        base::ThreadTaskRunnerHandle::Get().get(), data_dir_.GetPath(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), data_dir_.GetPath(),
         NULL /* special_storage_policy */, options));
   }
 

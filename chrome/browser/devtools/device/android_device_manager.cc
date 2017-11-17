@@ -304,7 +304,7 @@ class DevicesRequest : public base::RefCountedThreadSafe<DevicesRequest> {
 
  private:
   explicit DevicesRequest(const DescriptorsCallback& callback)
-      : response_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      : response_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         callback_(callback),
         descriptors_(new DeviceDescriptors()) {}
 
@@ -405,7 +405,7 @@ void AndroidDeviceManager::Device::QueryDeviceInfo(
       base::BindOnce(
           &DeviceProvider::QueryDeviceInfo, provider_, serial_,
           base::Bind(&PostDeviceInfoCallback,
-                     base::ThreadTaskRunnerHandle::Get(), callback)));
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE), callback)));
 }
 
 void AndroidDeviceManager::Device::OpenSocket(const std::string& socket_name,
@@ -420,11 +420,12 @@ void AndroidDeviceManager::Device::SendJsonRequest(
     const std::string& request,
     const CommandCallback& callback) {
   task_runner_->PostTask(
-      FROM_HERE, base::BindOnce(&DeviceProvider::SendJsonRequest, provider_,
-                                serial_, socket_name, request,
-                                base::Bind(&PostCommandCallback,
-                                           base::ThreadTaskRunnerHandle::Get(),
-                                           callback)));
+      FROM_HERE,
+      base::BindOnce(
+          &DeviceProvider::SendJsonRequest, provider_, serial_, socket_name,
+          request,
+          base::Bind(&PostCommandCallback,
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE), callback)));
 }
 
 void AndroidDeviceManager::Device::HttpUpgrade(
@@ -433,18 +434,20 @@ void AndroidDeviceManager::Device::HttpUpgrade(
     const std::string& extensions,
     const HttpUpgradeCallback& callback) {
   task_runner_->PostTask(
-      FROM_HERE, base::BindOnce(&DeviceProvider::HttpUpgrade, provider_,
-                                serial_, socket_name, path, extensions,
-                                base::Bind(&PostHttpUpgradeCallback,
-                                           base::ThreadTaskRunnerHandle::Get(),
-                                           callback)));
+      FROM_HERE,
+      base::BindOnce(
+          &DeviceProvider::HttpUpgrade, provider_, serial_, socket_name, path,
+          extensions,
+          base::Bind(&PostHttpUpgradeCallback,
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE), callback)));
 }
 
 AndroidDeviceManager::Device::Device(
     scoped_refptr<base::SingleThreadTaskRunner> device_task_runner,
     scoped_refptr<DeviceProvider> provider,
     const std::string& serial)
-    : RefCountedDeleteOnSequence<Device>(base::ThreadTaskRunnerHandle::Get()),
+    : RefCountedDeleteOnSequence<Device>(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       task_runner_(device_task_runner),
       provider_(provider),
       serial_(serial),

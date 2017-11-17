@@ -34,7 +34,8 @@
 // }
 //
 // CancelableClosure timeout(base::Bind(&TimeoutCallback, "Test timed out."));
-// ThreadTaskRunnerHandle::Get()->PostDelayedTask(FROM_HERE, timeout.callback(),
+// ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(FROM_HERE,
+// timeout.callback(),
 //                                                TimeDelta::FromSeconds(4));
 // RunIntensiveTest();
 // run_loop.Run();

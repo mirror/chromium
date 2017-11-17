@@ -803,7 +803,7 @@ void PageHandler::ScreencastFrameCaptured(viz::CompositorFrameMetadata metadata,
   if (response != READBACK_SUCCESS) {
     if (capture_retry_count_) {
       --capture_retry_count_;
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE,
           base::BindOnce(&PageHandler::InnerSwapCompositorFrame,
                          weak_factory_.GetWeakPtr()),

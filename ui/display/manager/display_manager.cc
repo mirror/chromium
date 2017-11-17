@@ -1401,7 +1401,7 @@ void DisplayManager::CreateMirrorWindowAsyncIfAny() {
   // ash::Shell::Init() will call this after the compositor is initialized.
   if (software_mirroring_display_list_.empty() || !delegate_)
     return;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&DisplayManager::CreateMirrorWindowIfAny,
                             weak_ptr_factory_.GetWeakPtr()));
 }

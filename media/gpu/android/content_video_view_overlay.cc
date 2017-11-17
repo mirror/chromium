@@ -25,7 +25,7 @@ ContentVideoViewOverlay::ContentVideoViewOverlay(int surface_id,
     : surface_id_(surface_id), config_(std::move(config)), weak_factory_(this) {
   if (ContentVideoViewOverlayAllocator::GetInstance()->AllocateSurface(this)) {
     // We have the surface -- post a callback to our OnSurfaceAvailable.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&ContentVideoViewOverlay::OnSurfaceAvailable,
                               weak_factory_.GetWeakPtr(), true));
   }

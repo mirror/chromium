@@ -36,7 +36,7 @@ class ChromeMetadataSourceTest : public testing::Test {
   void Get() {
     scoped_refptr<net::TestURLRequestContextGetter> getter(
         new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get()));
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
     ChromeMetadataSource impl(std::string(), getter.get());
     std::unique_ptr<::i18n::addressinput::Source::Callback> callback(
         ::i18n::addressinput::BuildCallback(

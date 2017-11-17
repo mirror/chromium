@@ -60,7 +60,7 @@ void DataDecoderService::OnBindInterface(
 }
 
 void DataDecoderService::MaybeRequestQuitDelayed() {
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&DataDecoderService::MaybeRequestQuit,
                  weak_factory_.GetWeakPtr()),

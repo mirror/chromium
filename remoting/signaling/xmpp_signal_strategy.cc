@@ -514,7 +514,8 @@ XmppSignalStrategy::XmppSignalStrategy(
 XmppSignalStrategy::~XmppSignalStrategy() {
   // All listeners should be removed at this point, so it's safe to detach
   // |core_|.
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, core_.release());
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE,
+                                                           core_.release());
 }
 
 void XmppSignalStrategy::Connect() {

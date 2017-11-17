@@ -266,7 +266,7 @@ void StatusBubbleViews::StatusView::StartTimer(base::TimeDelta time) {
   if (timer_factory_.HasWeakPtrs())
     timer_factory_.InvalidateWeakPtrs();
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&StatusBubbleViews::StatusView::OnTimer,
                      timer_factory_.GetWeakPtr()),
@@ -778,7 +778,7 @@ void StatusBubbleViews::SetURL(const GURL& url) {
       ExpandBubble();
     } else if (url_formatter::FormatUrl(url).length() >
                url_text_.length()) {
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE,
           base::BindOnce(&StatusBubbleViews::ExpandBubble,
                          expand_timer_factory_.GetWeakPtr()),

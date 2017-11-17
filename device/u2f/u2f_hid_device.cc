@@ -320,7 +320,7 @@ void U2fHidDevice::ArmTimeout(const DeviceCallback& callback) {
   timeout_callback_.Reset(base::Bind(&U2fHidDevice::OnTimeout,
                                      weak_factory_.GetWeakPtr(), callback));
   // Setup timeout task for 3 seconds
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, timeout_callback_.callback(),
       base::TimeDelta::FromMilliseconds(3000));
 }

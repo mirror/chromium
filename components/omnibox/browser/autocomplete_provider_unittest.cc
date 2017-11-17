@@ -150,7 +150,7 @@ void TestProvider::Start(const AutocompleteInput& input, bool minimal_changes) {
 
   if (input.want_asynchronous_matches()) {
     done_ = false;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&TestProvider::Run, this));
   }
 }

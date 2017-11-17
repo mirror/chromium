@@ -75,8 +75,9 @@ TEST_F(ProxyConfigServiceImplTest, IgnoresNestedProxyConfigServiceByDefault) {
       std::make_unique<TestProxyConfigService>(
           fixed_config, net::ProxyConfigService::CONFIG_VALID);
 
-  ProxyConfigServiceImpl proxy_tracker(&profile_prefs, &local_state_prefs,
-                                       base::ThreadTaskRunnerHandle::Get());
+  ProxyConfigServiceImpl proxy_tracker(
+      &profile_prefs, &local_state_prefs,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   std::unique_ptr<net::ProxyConfigService> proxy_service =
       proxy_tracker.CreateTrackingProxyConfigService(std::move(nested_service));
@@ -109,8 +110,9 @@ TEST_F(ProxyConfigServiceImplTest, UsesNestedProxyConfigService) {
       std::make_unique<TestProxyConfigService>(
           fixed_config, net::ProxyConfigService::CONFIG_VALID);
 
-  ProxyConfigServiceImpl proxy_tracker(&profile_prefs, &local_state_prefs,
-                                       base::ThreadTaskRunnerHandle::Get());
+  ProxyConfigServiceImpl proxy_tracker(
+      &profile_prefs, &local_state_prefs,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   std::unique_ptr<net::ProxyConfigService> proxy_service =
       proxy_tracker.CreateTrackingProxyConfigService(std::move(nested_service));

@@ -88,7 +88,7 @@ void LoginPerformer::OnAuthSuccess(const UserContext& user_context) {
   DCHECK(delegate_);
   // After delegate_->OnAuthSuccess(...) is called, delegate_ releases
   // LoginPerformer ownership. LP now manages it's lifetime on its own.
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
   delegate_->OnAuthSuccess(user_context);
 }
 

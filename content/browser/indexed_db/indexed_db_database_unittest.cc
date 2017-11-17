@@ -142,7 +142,7 @@ class MockCallbacks : public IndexedDBCallbacks {
       : IndexedDBCallbacks(nullptr,
                            url::Origin(),
                            nullptr,
-                           base::ThreadTaskRunnerHandle::Get()) {}
+                           base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
   void OnBlocked(int64_t existing_version) override { blocked_called_ = true; }
   void OnSuccess(int64_t result) override { success_called_ = true; }

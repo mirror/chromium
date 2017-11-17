@@ -122,7 +122,7 @@ void TouchCalibratorController::StopCalibrationAndResetParams() {
   state_ = CalibrationState::kInactive;
 
   if (opt_callback_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(std::move(opt_callback_), false /* failure */));
     opt_callback_.Reset();
@@ -162,7 +162,7 @@ void TouchCalibratorController::CompleteCalibration(
   }
 
   if (opt_callback_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(std::move(opt_callback_), true /* success */));
     opt_callback_.Reset();

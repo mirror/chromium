@@ -145,7 +145,7 @@ void AppRemotingLatencyTestFixture::ResetApplicationState() {
 
   // Give the app some time to settle before reseting to initial state.
   run_loop_.reset(new base::RunLoop());
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, run_loop_->QuitClosure(), base::TimeDelta::FromSeconds(1));
   run_loop_->Run();
 
@@ -157,7 +157,7 @@ void AppRemotingLatencyTestFixture::ResetApplicationState() {
   PressAndReleaseKeyCombination(dom_codes);
 
   run_loop_.reset(new base::RunLoop());
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, run_loop_->QuitClosure(), base::TimeDelta::FromSeconds(2));
   run_loop_->Run();
 
@@ -166,7 +166,7 @@ void AppRemotingLatencyTestFixture::ResetApplicationState() {
   PressAndReleaseKey(ui::DomCode::US_N);
 
   run_loop_.reset(new base::RunLoop());
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, run_loop_->QuitClosure(), base::TimeDelta::FromSeconds(2));
   run_loop_->Run();
   run_loop_.reset();

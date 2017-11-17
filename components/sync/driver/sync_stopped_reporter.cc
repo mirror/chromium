@@ -108,7 +108,7 @@ void SyncStoppedReporter::OnURLFetchComplete(const net::URLFetcher* source) {
   fetcher_.reset();
   timer_.Stop();
   if (!callback_.is_null()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback_, result));
   }
 }
@@ -116,7 +116,7 @@ void SyncStoppedReporter::OnURLFetchComplete(const net::URLFetcher* source) {
 void SyncStoppedReporter::OnTimeout() {
   fetcher_.reset();
   if (!callback_.is_null()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback_, RESULT_TIMEOUT));
   }
 }

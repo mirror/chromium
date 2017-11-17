@@ -69,10 +69,10 @@ InProcessContextProvider::InProcessContextProvider(
           limits,
           gpu_memory_buffer_manager,
           image_factory,
-          base::ThreadTaskRunnerHandle::Get())),
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE))),
       cache_controller_(std::make_unique<ContextCacheController>(
           context_->GetImplementation(),
-          base::ThreadTaskRunnerHandle::Get())) {}
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE))) {}
 
 InProcessContextProvider::~InProcessContextProvider() = default;
 

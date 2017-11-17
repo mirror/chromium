@@ -382,7 +382,8 @@ void SpdySessionPool::ResumePendingRequests(
   auto iter = spdy_session_pending_request_map_.find(spdy_session_key);
   if (iter != spdy_session_pending_request_map_.end()) {
     for (auto callback : iter->second) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                             callback);
     }
     spdy_session_pending_request_map_.erase(iter);
   }

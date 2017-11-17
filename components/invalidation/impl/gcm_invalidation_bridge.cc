@@ -99,11 +99,9 @@ void GCMInvalidationBridge::Core::Initialize(
   // Pass core WeapPtr and TaskRunner to GCMInvalidationBridge for it to be able
   // to post back.
   ui_thread_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&GCMInvalidationBridge::CoreInitializationDone,
-                 bridge_,
-                 weak_factory_.GetWeakPtr(),
-                 base::ThreadTaskRunnerHandle::Get()));
+      FROM_HERE, base::Bind(&GCMInvalidationBridge::CoreInitializationDone,
+                            bridge_, weak_factory_.GetWeakPtr(),
+                            base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 }
 
 void GCMInvalidationBridge::Core::RequestToken(RequestTokenCallback callback) {
@@ -191,7 +189,7 @@ std::unique_ptr<syncer::GCMNetworkChannelDelegate>
 GCMInvalidationBridge::CreateDelegate() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   return base::MakeUnique<Core>(weak_factory_.GetWeakPtr(),
-                                base::ThreadTaskRunnerHandle::Get());
+                                base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 void GCMInvalidationBridge::CoreInitializationDone(

@@ -96,7 +96,7 @@ void MockStorageClient::OnQuotaManagerDestroyed() {
 void MockStorageClient::GetOriginUsage(const GURL& origin_url,
                                        StorageType type,
                                        const GetUsageCallback& callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&MockStorageClient::RunGetOriginUsage,
                  weak_factory_.GetWeakPtr(), origin_url, type, callback));
@@ -104,7 +104,7 @@ void MockStorageClient::GetOriginUsage(const GURL& origin_url,
 
 void MockStorageClient::GetOriginsForType(
     StorageType type, const GetOriginsCallback& callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&MockStorageClient::RunGetOriginsForType,
                             weak_factory_.GetWeakPtr(), type, callback));
 }
@@ -112,7 +112,7 @@ void MockStorageClient::GetOriginsForType(
 void MockStorageClient::GetOriginsForHost(
     StorageType type, const std::string& host,
     const GetOriginsCallback& callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&MockStorageClient::RunGetOriginsForHost,
                             weak_factory_.GetWeakPtr(), type, host, callback));
 }
@@ -120,7 +120,7 @@ void MockStorageClient::GetOriginsForHost(
 void MockStorageClient::DeleteOriginData(
     const GURL& origin, StorageType type,
     const DeletionCallback& callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&MockStorageClient::RunDeleteOriginData,
                  weak_factory_.GetWeakPtr(), origin, type, callback));

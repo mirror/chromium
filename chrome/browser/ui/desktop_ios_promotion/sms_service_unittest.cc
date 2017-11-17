@@ -85,7 +85,7 @@ class TestRequest : public SMSService::Request {
   }
   void Start() override {
     is_pending_ = true;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&TestRequest::MimicReturnFromFetch, base::Unretained(this)));
   }
@@ -126,15 +126,15 @@ class SMSServiceTest : public testing::Test {
       : signin_client_(nullptr),
         signin_manager_(&signin_client_, &account_tracker_),
         url_request_context_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))),
         sms_service_(&token_service_, &signin_manager_, url_request_context_) {}
 
   ~SMSServiceTest() override {}
 
   void TearDown() override {
     base::RunLoop run_loop;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  run_loop.QuitClosure());
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, run_loop.QuitClosure());
     run_loop.Run();
   }
 

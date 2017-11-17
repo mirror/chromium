@@ -173,12 +173,11 @@ MediaStreamTrackMetricsObserver::MediaStreamTrackMetricsObserver(
       video_track_ids_(GetTrackIds(stream->GetVideoTracks())),
       stream_type_(stream_type),
       observer_(new MediaStreamObserver(
-            base::Bind(&MediaStreamTrackMetricsObserver::OnChanged,
-                       base::Unretained(this)),
-            base::ThreadTaskRunnerHandle::Get(),
-            stream)),
-      owner_(owner) {
-}
+          base::Bind(&MediaStreamTrackMetricsObserver::OnChanged,
+                     base::Unretained(this)),
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+          stream)),
+      owner_(owner) {}
 
 MediaStreamTrackMetricsObserver::~MediaStreamTrackMetricsObserver() {
   DCHECK(thread_checker_.CalledOnValidThread());

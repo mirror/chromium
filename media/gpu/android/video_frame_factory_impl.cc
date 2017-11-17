@@ -96,12 +96,12 @@ void VideoFrameFactoryImpl::CreateVideoFrame(
     OutputWithReleaseMailboxCB output_cb) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   gpu_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&GpuVideoFrameFactory::CreateVideoFrame,
-                 base::Unretained(gpu_video_frame_factory_.get()),
-                 base::Passed(&output_buffer), surface_texture_, timestamp,
-                 natural_size, std::move(promotion_hint_cb),
-                 std::move(output_cb), base::ThreadTaskRunnerHandle::Get()));
+      FROM_HERE, base::Bind(&GpuVideoFrameFactory::CreateVideoFrame,
+                            base::Unretained(gpu_video_frame_factory_.get()),
+                            base::Passed(&output_buffer), surface_texture_,
+                            timestamp, natural_size,
+                            std::move(promotion_hint_cb), std::move(output_cb),
+                            base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 }
 
 void VideoFrameFactoryImpl::RunAfterPendingVideoFrames(

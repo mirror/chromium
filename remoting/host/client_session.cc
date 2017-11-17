@@ -447,7 +447,7 @@ std::unique_ptr<protocol::ClipboardStub> ClientSession::CreateClipboardProxy() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   return base::MakeUnique<protocol::ClipboardThreadProxy>(
       client_clipboard_factory_.GetWeakPtr(),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 void ClientSession::OnVideoSizeChanged(protocol::VideoStream* video_stream,

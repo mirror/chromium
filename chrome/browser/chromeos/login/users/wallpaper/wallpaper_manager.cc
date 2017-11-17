@@ -454,7 +454,7 @@ class WallpaperManager::PendingWallpaper {
           base::BindOnce(&WallpaperManager::GetCustomWallpaperInternal,
                          account_id_, info_, wallpaper_path_,
                          true /* update wallpaper */,
-                         base::ThreadTaskRunnerHandle::Get(),
+                         base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                          base::Passed(std::move(on_finish)),
                          manager->weak_factory_.GetWeakPtr()));
     } else if (!info_.location.empty()) {
@@ -1586,7 +1586,7 @@ void WallpaperManager::CacheUserWallpaper(const AccountId& account_id) {
           FROM_HERE,
           base::Bind(&WallpaperManager::GetCustomWallpaperInternal, account_id,
                      info, wallpaper_path, false /* do not update wallpaper */,
-                     base::ThreadTaskRunnerHandle::Get(),
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                      base::Passed(MovableOnDestroyCallbackHolder()),
                      weak_factory_.GetWeakPtr()));
       return;
@@ -1786,7 +1786,7 @@ void WallpaperManager::MoveLoggedInUserCustomWallpaper() {
         FROM_HERE, base::Bind(&WallpaperManager::MoveCustomWallpapersOnWorker,
                               logged_in_user->GetAccountId(),
                               GetFilesId(logged_in_user->GetAccountId()),
-                              base::ThreadTaskRunnerHandle::Get(),
+                              base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                               weak_factory_.GetWeakPtr()));
   }
 }
