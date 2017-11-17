@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "732cb86d_e534c581",
+        "filename": "base/observer_list.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-17T09:52:27Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be GetCurrent()?",
+      "revId": "50584d8bb675acc9428d6a1c49d53359767d897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
