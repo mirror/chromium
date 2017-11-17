@@ -16,6 +16,24 @@
       "revId": "9cbdc9a3319e60772de019e6464d3ed126a0989e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946b7660_fdfc92a8",
+        "filename": "third_party/WebKit/LayoutTests/fast/lists/list-and-margin-collapse.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1230334
+      },
+      "writtenOn": "2017-11-17T11:03:39Z",
+      "side": 1,
+      "message": "Cool! I would learn to use it.",
+      "parentUuid": "3f042742_2bcd20d4",
+      "revId": "9cbdc9a3319e60772de019e6464d3ed126a0989e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
