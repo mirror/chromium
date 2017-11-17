@@ -87,6 +87,23 @@
     },
     {
       "key": {
+        "uuid": "0e238d59_a849afe5",
+        "filename": "components/omnibox/browser/history_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-17T21:47:16Z",
+      "side": 1,
+      "message": "Use std::make_unique instead of reset.\n\nSee https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Prefer-MakeUnique-to-WrapUnique and https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/iQgMedVA8-k.",
+      "revId": "07226d49519d47a7ed0a9691160cf7968d235413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cabc77c_d6373627",
         "filename": "components/omnibox/browser/history_provider_unittest.cc",
         "patchSetId": 3
