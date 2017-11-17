@@ -22,7 +22,7 @@ void CallTaskFinishedCallback(const base::android::JavaRef<jobject>& j_callback,
 }
 
 // static
-void StartBackgroundTask(
+void DownloadBackgroundTask__StartBackgroundTask(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& jcaller,
     const base::android::JavaParamRef<jobject>& jprofile,
@@ -42,7 +42,7 @@ void StartBackgroundTask(
 }
 
 // static
-jboolean StopBackgroundTask(
+jboolean DownloadBackgroundTask__StopBackgroundTask(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& jcaller,
     const base::android::JavaParamRef<jobject>& jprofile,

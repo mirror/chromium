@@ -33,7 +33,7 @@ void OnIsPageDistillableUpdate(const JavaRef<jobject>& callback,
 }
 }  // namespace
 
-static void IsPageDistillable(JNIEnv* env,
+static void DistillablePageUtils__IsPageDistillable(JNIEnv* env,
                               const JavaParamRef<jclass>& jcaller,
                               const JavaParamRef<jobject>& webContents,
                               jboolean is_mobile_optimized,
@@ -53,7 +53,7 @@ static void IsPageDistillable(JNIEnv* env,
                                ScopedJavaGlobalRef<jobject>(env, callback)));
 }
 
-static void SetDelegate(JNIEnv* env,
+static void DistillablePageUtils__SetDelegate(JNIEnv* env,
                         const JavaParamRef<jclass>& jcaller,
                         const JavaParamRef<jobject>& webContents,
                         const JavaParamRef<jobject>& callback) {

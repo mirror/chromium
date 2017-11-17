@@ -49,7 +49,7 @@ class AnswersImageObserverAndroid : public BitmapFetcherService::Observer {
 
 }  // namespace
 
-static void CancelAnswersImageRequest(JNIEnv* env,
+static void AnswersImage__CancelAnswersImageRequest(JNIEnv* env,
                                       const JavaParamRef<jclass>&,
                                       const JavaParamRef<jobject>& java_profile,
                                       jint java_request_id) {
@@ -60,7 +60,7 @@ static void CancelAnswersImageRequest(JNIEnv* env,
   bitmap_fetcher_service->CancelRequest(java_request_id);
 }
 
-static int RequestAnswersImage(JNIEnv* env,
+static int AnswersImage__RequestAnswersImage(JNIEnv* env,
                                const JavaParamRef<jclass>&,
                                const JavaParamRef<jobject>& java_profile,
                                const JavaParamRef<jstring>& java_url,

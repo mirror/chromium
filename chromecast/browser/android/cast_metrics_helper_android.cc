@@ -10,11 +10,11 @@ using base::android::JavaParamRef;
 namespace chromecast {
 namespace shell {
 
-void LogMediaPlay(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
+void CastMetricsHelper__LogMediaPlay(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
   metrics::CastMetricsHelper::GetInstance()->LogMediaPlay();
 }
 
-void LogMediaPause(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
+void CastMetricsHelper__LogMediaPause(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
   metrics::CastMetricsHelper::GetInstance()->LogMediaPause();
 }
 

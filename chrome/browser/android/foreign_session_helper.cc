@@ -82,7 +82,7 @@ bool ShouldSkipSession(const SyncedSession& session) {
   return true;
 }
 
-void CopyTabToJava(
+void ForeignSessionHelper__CopyTabToJava(
     JNIEnv* env,
     const sessions::SessionTab& tab,
     ScopedJavaLocalRef<jobject>& j_window) {
@@ -101,7 +101,7 @@ void CopyTabToJava(
       tab.timestamp.ToJavaTime(), tab.tab_id.id());
 }
 
-void CopyWindowToJava(
+void ForeignSessionHelper__CopyWindowToJava(
     JNIEnv* env,
     const sessions::SessionWindow& window,
     ScopedJavaLocalRef<jobject>& j_window) {
@@ -111,11 +111,11 @@ void CopyWindowToJava(
     if (ShouldSkipTab(session_tab))
       return;
 
-    CopyTabToJava(env, session_tab, j_window);
+    ForeignSessionHelper__CopyTabToJava(env, session_tab, j_window);
   }
 }
 
-void CopySessionToJava(
+void ForeignSessionHelper__CopySessionToJava(
     JNIEnv* env,
     const SyncedSession& session,
     ScopedJavaLocalRef<jobject>& j_session) {
@@ -129,13 +129,13 @@ void CopySessionToJava(
     last_pushed_window.Reset(Java_ForeignSessionHelper_pushWindow(
         env, j_session, window.timestamp.ToJavaTime(), window.window_id.id()));
 
-    CopyWindowToJava(env, window, last_pushed_window);
+    ForeignSessionHelper__CopyWindowToJava(env, window, last_pushed_window);
   }
 }
 
 }  // namespace
 
-static jlong Init(JNIEnv* env,
+static jlong ForeignSessionHelper__Init(JNIEnv* env,
                   const JavaParamRef<jclass>& clazz,
                   const JavaParamRef<jobject>& profile) {
   ForeignSessionHelper* foreign_session_helper = new ForeignSessionHelper(
@@ -258,11 +258,11 @@ jboolean ForeignSessionHelper::GetForeignSessions(
       for (const sessions::SessionTab* tab : tabs) {
          if (ShouldSkipTab(*tab))
            continue;
-         CopyTabToJava(env, *tab, last_pushed_window);
+         ForeignSessionHelper__CopyTabToJava(env, *tab, last_pushed_window);
       }
     } else {
       // Push the full session, with tabs ordered by visual position.
-      CopySessionToJava(env, session, last_pushed_session);
+      ForeignSessionHelper__CopySessionToJava(env, session, last_pushed_session);
     }
   }
 

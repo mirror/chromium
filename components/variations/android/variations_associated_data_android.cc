@@ -17,7 +17,7 @@ using base::android::ScopedJavaLocalRef;
 namespace variations {
 namespace android {
 
-ScopedJavaLocalRef<jstring> GetVariationParamValue(
+ScopedJavaLocalRef<jstring> VariationsAssociatedData__GetVariationParamValue(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& jtrial_name,
@@ -29,7 +29,7 @@ ScopedJavaLocalRef<jstring> GetVariationParamValue(
   return ConvertUTF8ToJavaString(env, param_value);
 }
 
-ScopedJavaLocalRef<jstring> GetFeedbackVariations(
+ScopedJavaLocalRef<jstring> VariationsAssociatedData__GetFeedbackVariations(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz) {
   const std::string values =

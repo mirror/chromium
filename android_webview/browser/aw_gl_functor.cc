@@ -83,16 +83,16 @@ jlong AwGLFunctor::GetAwDrawGLViewContext(
   return reinterpret_cast<intptr_t>(&render_thread_manager_);
 }
 
-static jint GetNativeInstanceCount(JNIEnv* env, const JavaParamRef<jclass>&) {
+static jint AwGLFunctor__GetNativeInstanceCount(JNIEnv* env, const JavaParamRef<jclass>&) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   return g_instance_count;
 }
 
-static jlong GetAwDrawGLFunction(JNIEnv* env, const JavaParamRef<jclass>&) {
+static jlong AwGLFunctor__GetAwDrawGLFunction(JNIEnv* env, const JavaParamRef<jclass>&) {
   return reinterpret_cast<intptr_t>(&DrawGLFunction);
 }
 
-static jlong Create(JNIEnv* env,
+static jlong AwGLFunctor__Create(JNIEnv* env,
                     const JavaParamRef<jclass>&,
                     const base::android::JavaParamRef<jobject>& obj) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

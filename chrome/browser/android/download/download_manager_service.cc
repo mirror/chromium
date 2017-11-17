@@ -55,7 +55,7 @@ void UpdateNotifier(
   }
 }
 
-ScopedJavaLocalRef<jobject> CreateJavaDownloadItem(
+ScopedJavaLocalRef<jobject> DownloadManagerService__CreateJavaDownloadItem(
     JNIEnv* env, content::DownloadItem* item) {
   DCHECK(!item->IsTransient());
   return Java_DownloadItem_createDownloadItem(
@@ -127,7 +127,7 @@ ScopedJavaLocalRef<jobject> DownloadManagerService::CreateJavaDownloadInfo(
       item->GetLastAccessTime().ToJavaTime());
 }
 
-static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& jobj) {
+static jlong DownloadManagerService__Init(JNIEnv* env, const JavaParamRef<jobject>& jobj) {
   Profile* profile = ProfileManager::GetActiveUserProfile();
   DownloadManagerService* service = DownloadManagerService::GetInstance();
   service->Init(env, jobj);
@@ -217,7 +217,7 @@ void DownloadManagerService::GetAllDownloadsInternal(bool is_off_the_record) {
     if (!ShouldShowDownloadItem(item))
       continue;
 
-    ScopedJavaLocalRef<jobject> j_item = CreateJavaDownloadItem(env, item);
+    ScopedJavaLocalRef<jobject> j_item = DownloadManagerService__CreateJavaDownloadItem(env, item);
     Java_DownloadManagerService_addDownloadItemToList(
         env, java_ref_, j_download_item_list, j_item);
   }
@@ -307,7 +307,7 @@ void DownloadManagerService::OnDownloadCreated(
     return;
 
   JNIEnv* env = base::android::AttachCurrentThread();
-  ScopedJavaLocalRef<jobject> j_item = CreateJavaDownloadItem(env, item);
+  ScopedJavaLocalRef<jobject> j_item = DownloadManagerService__CreateJavaDownloadItem(env, item);
   Java_DownloadManagerService_onDownloadItemCreated(env, java_ref_, j_item);
 }
 
@@ -320,7 +320,7 @@ void DownloadManagerService::OnDownloadUpdated(
     return;
 
   JNIEnv* env = base::android::AttachCurrentThread();
-  ScopedJavaLocalRef<jobject> j_item = CreateJavaDownloadItem(env, item);
+  ScopedJavaLocalRef<jobject> j_item = DownloadManagerService__CreateJavaDownloadItem(env, item);
   Java_DownloadManagerService_onDownloadItemUpdated(env, java_ref_, j_item);
 }
 
@@ -459,7 +459,7 @@ content::DownloadManager* DownloadManagerService::GetDownloadManager(
 }
 
 // static
-jboolean IsSupportedMimeType(
+jboolean DownloadManagerService__IsSupportedMimeType(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& jmime_type) {
@@ -468,7 +468,7 @@ jboolean IsSupportedMimeType(
 }
 
 // static
-jint GetAutoResumptionLimit(JNIEnv* env,
+jint DownloadManagerService__GetAutoResumptionLimit(JNIEnv* env,
                             const JavaParamRef<jclass>& clazz) {
   std::string value  = base::GetFieldTrialParamValueByFeature(
       chrome::android::kDownloadAutoResumptionThrottling,

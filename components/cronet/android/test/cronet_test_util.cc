@@ -17,7 +17,7 @@ using base::android::JavaParamRef;
 
 namespace cronet {
 
-jint GetLoadFlags(JNIEnv* env,
+jint CronetTestUtil__GetLoadFlags(JNIEnv* env,
                   const JavaParamRef<jclass>& jcaller,
                   const jlong jurl_request_adapter) {
   return TestUtil::GetURLRequest(jurl_request_adapter)->load_flags();
@@ -78,7 +78,7 @@ static void PrepareNetworkThreadOnNetworkThread(jlong jcontext_adapter) {
 // the corresponding static tables in libcronet_test.so.  Fix this by
 // initializing a MessageLoop and SingleThreadTaskRunner in libcronet_test.so
 // for these threads.  Called from Java CronetTestUtil class.
-void PrepareNetworkThread(JNIEnv* env,
+void CronetTestUtil__PrepareNetworkThread(JNIEnv* env,
                           const JavaParamRef<jclass>& jcaller,
                           jlong jcontext_adapter) {
   TestUtil::GetTaskRunner(jcontext_adapter)
@@ -91,7 +91,7 @@ static void CleanupNetworkThreadOnNetworkThread() {
 }
 
 // Called from Java CronetTestUtil class.
-void CleanupNetworkThread(JNIEnv* env,
+void CronetTestUtil__CleanupNetworkThread(JNIEnv* env,
                           const JavaParamRef<jclass>& jcaller,
                           jlong jcontext_adapter) {
   TestUtil::RunAfterContextInit(

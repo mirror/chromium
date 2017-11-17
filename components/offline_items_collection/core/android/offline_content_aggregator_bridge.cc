@@ -26,7 +26,7 @@ namespace android {
 namespace {
 const char kOfflineContentAggregatorBridgeUserDataKey[] = "aggregator_bridge";
 
-ContentId CreateContentId(JNIEnv* env,
+ContentId OfflineContentAggregatorBridge__CreateContentId(JNIEnv* env,
                           const JavaParamRef<jstring>& j_namespace,
                           const JavaParamRef<jstring>& j_id) {
   return ContentId(ConvertJavaStringToUTF8(env, j_namespace),
@@ -91,7 +91,7 @@ void OfflineContentAggregatorBridge::OpenItem(
     const JavaParamRef<jobject>& jobj,
     const JavaParamRef<jstring>& j_namespace,
     const JavaParamRef<jstring>& j_id) {
-  provider_->OpenItem(CreateContentId(env, j_namespace, j_id));
+  provider_->OpenItem(OfflineContentAggregatorBridge__CreateContentId(env, j_namespace, j_id));
 }
 
 void OfflineContentAggregatorBridge::RemoveItem(
@@ -99,7 +99,7 @@ void OfflineContentAggregatorBridge::RemoveItem(
     const JavaParamRef<jobject>& jobj,
     const JavaParamRef<jstring>& j_namespace,
     const JavaParamRef<jstring>& j_id) {
-  provider_->RemoveItem(CreateContentId(env, j_namespace, j_id));
+  provider_->RemoveItem(OfflineContentAggregatorBridge__CreateContentId(env, j_namespace, j_id));
 }
 
 void OfflineContentAggregatorBridge::CancelDownload(
@@ -107,7 +107,7 @@ void OfflineContentAggregatorBridge::CancelDownload(
     const JavaParamRef<jobject>& jobj,
     const JavaParamRef<jstring>& j_namespace,
     const JavaParamRef<jstring>& j_id) {
-  provider_->CancelDownload(CreateContentId(env, j_namespace, j_id));
+  provider_->CancelDownload(OfflineContentAggregatorBridge__CreateContentId(env, j_namespace, j_id));
 }
 
 void OfflineContentAggregatorBridge::PauseDownload(
@@ -115,7 +115,7 @@ void OfflineContentAggregatorBridge::PauseDownload(
     const JavaParamRef<jobject>& jobj,
     const JavaParamRef<jstring>& j_namespace,
     const JavaParamRef<jstring>& j_guid) {
-  provider_->PauseDownload(CreateContentId(env, j_namespace, j_guid));
+  provider_->PauseDownload(OfflineContentAggregatorBridge__CreateContentId(env, j_namespace, j_guid));
 }
 
 void OfflineContentAggregatorBridge::ResumeDownload(
@@ -124,7 +124,7 @@ void OfflineContentAggregatorBridge::ResumeDownload(
     const JavaParamRef<jstring>& j_namespace,
     const JavaParamRef<jstring>& j_id,
     jboolean j_has_user_gesture) {
-  provider_->ResumeDownload(CreateContentId(env, j_namespace, j_id),
+  provider_->ResumeDownload(OfflineContentAggregatorBridge__CreateContentId(env, j_namespace, j_id),
                             j_has_user_gesture);
 }
 
@@ -134,7 +134,7 @@ ScopedJavaLocalRef<jobject> OfflineContentAggregatorBridge::GetItemById(
     const JavaParamRef<jstring>& j_namespace,
     const JavaParamRef<jstring>& j_id) {
   const OfflineItem* item =
-      provider_->GetItemById(CreateContentId(env, j_namespace, j_id));
+      provider_->GetItemById(OfflineContentAggregatorBridge__CreateContentId(env, j_namespace, j_id));
 
   return OfflineItemBridge::CreateOfflineItem(env, item);
 }
@@ -153,7 +153,7 @@ void OfflineContentAggregatorBridge::GetVisualsForItem(
     const JavaParamRef<jstring>& j_id,
     const JavaParamRef<jobject>& j_callback) {
   provider_->GetVisualsForItem(
-      CreateContentId(env, j_namespace, j_id),
+      OfflineContentAggregatorBridge__CreateContentId(env, j_namespace, j_id),
       base::Bind(&GetVisualsForItemHelperCallback,
                  ScopedJavaGlobalRef<jobject>(env, j_callback)));
 }

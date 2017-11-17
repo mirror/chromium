@@ -82,7 +82,7 @@ void InterstitialPageDelegateAndroid::CommandReceived(
   }
 }
 
-static jlong Init(JNIEnv* env,
+static jlong InterstitialPageDelegateAndroid__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
                   const JavaParamRef<jstring>& html_content) {
   InterstitialPageDelegateAndroid* delegate =

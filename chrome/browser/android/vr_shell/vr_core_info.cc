@@ -22,7 +22,7 @@ VrCoreInfo::VrCoreInfo(int32_t major_version,
 // Native JNI methods
 // ----------------------------------------------------------------------------
 
-jlong Init(JNIEnv* env,
+jlong VrCoreInfo__Init(JNIEnv* env,
            const JavaParamRef<jobject>& obj,
            jint major_version,
            jint minor_version,

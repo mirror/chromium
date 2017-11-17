@@ -12,7 +12,7 @@
 #include "components/physical_web/eddystone/eddystone_encoder.h"
 #include "jni/PhysicalWebBroadcastService_jni.h"
 
-static base::android::ScopedJavaLocalRef<jbyteArray> EncodeUrl(
+static base::android::ScopedJavaLocalRef<jbyteArray> PhysicalWebBroadcastService__EncodeUrl(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& jcaller,
     const base::android::JavaParamRef<jstring>& j_url) {
@@ -51,5 +51,5 @@ base::android::ScopedJavaLocalRef<jbyteArray> EncodeUrlForTesting(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& jcaller,
     const base::android::JavaParamRef<jstring>& j_url) {
-  return EncodeUrl(env, jcaller, j_url);
+  return PhysicalWebBroadcastService__EncodeUrl(env, jcaller, j_url);
 }

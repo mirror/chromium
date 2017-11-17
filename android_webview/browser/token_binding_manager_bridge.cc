@@ -60,13 +60,13 @@ void OnDeletionComplete(const ScopedJavaGlobalRef<jobject>& callback) {
 
 }  // namespace
 
-static void EnableTokenBinding(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+static void AwTokenBindingManager__EnableTokenBinding(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   // This needs to be called before starting chromium engine, so no thread
   // checks for UI.
   TokenBindingManager::GetInstance()->enable_token_binding();
 }
 
-static void GetTokenBindingKey(JNIEnv* env,
+static void AwTokenBindingManager__GetTokenBindingKey(JNIEnv* env,
                                const JavaParamRef<jobject>& obj,
                                const JavaParamRef<jstring>& host,
                                const JavaParamRef<jobject>& callback) {
@@ -82,7 +82,7 @@ static void GetTokenBindingKey(JNIEnv* env,
                                              key_callback);
 }
 
-static void DeleteTokenBindingKey(JNIEnv* env,
+static void AwTokenBindingManager__DeleteTokenBindingKey(JNIEnv* env,
                                   const JavaParamRef<jobject>& obj,
                                   const JavaParamRef<jstring>& host,
                                   const JavaParamRef<jobject>& callback) {
@@ -97,7 +97,7 @@ static void DeleteTokenBindingKey(JNIEnv* env,
       ConvertJavaStringToUTF8(env, host), complete_callback);
 }
 
-static void DeleteAllTokenBindingKeys(JNIEnv* env,
+static void AwTokenBindingManager__DeleteAllTokenBindingKeys(JNIEnv* env,
                                       const JavaParamRef<jobject>& obj,
                                       const JavaParamRef<jobject>& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

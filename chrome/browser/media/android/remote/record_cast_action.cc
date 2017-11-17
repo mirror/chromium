@@ -38,7 +38,7 @@ enum RemotePlaybackDeviceType {
 }  // namespace
 
 namespace remote_media {
-static void RecordRemotePlaybackDeviceSelected(JNIEnv*,
+static void RecordCastAction__RecordRemotePlaybackDeviceSelected(JNIEnv*,
                                                const JavaParamRef<jclass>&,
                                                jint device_type) {
   UMA_HISTOGRAM_ENUMERATION("Cast.Sender.DeviceType",
@@ -46,11 +46,11 @@ static void RecordRemotePlaybackDeviceSelected(JNIEnv*,
                             REMOTE_PLAYBACK_DEVICE_TYPE_COUNT);
 }
 
-static void RecordCastPlayRequested(JNIEnv*, const JavaParamRef<jclass>&) {
+static void RecordCastAction__RecordCastPlayRequested(JNIEnv*, const JavaParamRef<jclass>&) {
   base::RecordAction(base::UserMetricsAction("Cast_Sender_CastPlayRequested"));
 }
 
-static void RecordCastDefaultPlayerResult(JNIEnv*,
+static void RecordCastAction__RecordCastDefaultPlayerResult(JNIEnv*,
                                           const JavaParamRef<jclass>&,
                                           jboolean cast_success) {
   if (cast_success) {
@@ -64,7 +64,7 @@ static void RecordCastDefaultPlayerResult(JNIEnv*,
   }
 }
 
-static void RecordCastYouTubePlayerResult(JNIEnv*,
+static void RecordCastAction__RecordCastYouTubePlayerResult(JNIEnv*,
                                           const JavaParamRef<jclass>&,
                                           jboolean cast_success) {
   if (cast_success) {
@@ -76,7 +76,7 @@ static void RecordCastYouTubePlayerResult(JNIEnv*,
   }
 }
 
-static void RecordCastMediaType(JNIEnv*,
+static void RecordCastAction__RecordCastMediaType(JNIEnv*,
                                 const JavaParamRef<jclass>&,
                                 jint media_type) {
   UMA_HISTOGRAM_ENUMERATION(
@@ -85,7 +85,7 @@ static void RecordCastMediaType(JNIEnv*,
       media::container_names::CONTAINER_MAX);
 }
 
-static void RecordCastEndedTimeRemaining(JNIEnv*,
+static void RecordCastAction__RecordCastEndedTimeRemaining(JNIEnv*,
                                          const JavaParamRef<jclass>&,
                                          jint video_total_time,
                                          jint time_left_in_video) {

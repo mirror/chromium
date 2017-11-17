@@ -17,7 +17,7 @@
 using base::android::ConvertJavaStringToUTF8;
 using base::android::JavaParamRef;
 
-static jlong Init(JNIEnv* env,
+static jlong RecentTabsPagePrefs__Init(JNIEnv* env,
                   const JavaParamRef<jclass>& clazz,
                   const JavaParamRef<jobject>& profile) {
   RecentTabsPagePrefs* recent_tabs_page_prefs =

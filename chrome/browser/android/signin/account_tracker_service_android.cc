@@ -15,7 +15,7 @@ using base::android::JavaParamRef;
 namespace signin {
 namespace android {
 
-void SeedAccountsInfo(JNIEnv* env,
+void AccountTrackerService__SeedAccountsInfo(JNIEnv* env,
                       const JavaParamRef<jclass>& jcaller,
                       const JavaParamRef<jobjectArray>& gaiaIds,
                       const JavaParamRef<jobjectArray>& accountNames) {
@@ -37,7 +37,7 @@ void SeedAccountsInfo(JNIEnv* env,
   }
 }
 
-jboolean AreAccountsSeeded(JNIEnv* env,
+jboolean AccountTrackerService__AreAccountsSeeded(JNIEnv* env,
                            const JavaParamRef<jclass>& jcaller,
                            const JavaParamRef<jobjectArray>& accountNames) {
   std::vector<std::string> account_names;

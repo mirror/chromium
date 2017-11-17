@@ -173,7 +173,7 @@ AwContents* AwContents::FromID(int render_process_id, int render_view_id) {
 }
 
 // static
-void UpdateDefaultLocale(JNIEnv* env,
+void AwContents__UpdateDefaultLocale(JNIEnv* env,
                          const JavaParamRef<jclass>&,
                          const JavaParamRef<jstring>& locale,
                          const JavaParamRef<jstring>& locale_list) {
@@ -400,7 +400,7 @@ void AwContents::Destroy(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   delete this;
 }
 
-static jlong Init(JNIEnv* env,
+static jlong AwContents__Init(JNIEnv* env,
                   const JavaParamRef<jclass>&,
                   const JavaParamRef<jobject>& browser_context) {
   // TODO(joth): Use |browser_context| to get the native BrowserContext, rather
@@ -412,26 +412,26 @@ static jlong Init(JNIEnv* env,
   return reinterpret_cast<intptr_t>(new AwContents(std::move(web_contents)));
 }
 
-static jboolean HasRequiredHardwareExtensions(JNIEnv* env,
+static jboolean AwContents__HasRequiredHardwareExtensions(JNIEnv* env,
                                               const JavaParamRef<jclass>&) {
   return content::GpuDataManager::GetInstance()
       ->GetGPUInfo()
       .can_support_threaded_texture_mailbox;
 }
 
-static void SetAwDrawSWFunctionTable(JNIEnv* env,
+static void AwContents__SetAwDrawSWFunctionTable(JNIEnv* env,
                                      const JavaParamRef<jclass>&,
                                      jlong function_table) {
   RasterHelperSetAwDrawSWFunctionTable(
       reinterpret_cast<AwDrawSWFunctionTable*>(function_table));
 }
 
-static void SetAwDrawGLFunctionTable(JNIEnv* env,
+static void AwContents__SetAwDrawGLFunctionTable(JNIEnv* env,
                                      const JavaParamRef<jclass>&,
                                      jlong function_table) {}
 
 // static
-jint GetNativeInstanceCount(JNIEnv* env, const JavaParamRef<jclass>&) {
+jint AwContents__GetNativeInstanceCount(JNIEnv* env, const JavaParamRef<jclass>&) {
   return base::subtle::NoBarrier_Load(&g_instance_count);
 }
 
@@ -1309,7 +1309,7 @@ jlong AwContents::GetAutofillProvider(
   return reinterpret_cast<jlong>(autofill_provider_.get());
 }
 
-void SetShouldDownloadFavicons(JNIEnv* env,
+void AwContents__SetShouldDownloadFavicons(JNIEnv* env,
                                const JavaParamRef<jclass>& jclazz) {
   g_should_download_favicons = true;
 }

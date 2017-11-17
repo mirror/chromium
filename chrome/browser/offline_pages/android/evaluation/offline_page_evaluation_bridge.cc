@@ -54,7 +54,7 @@ const char kNativeTag[] = "OPNative";
 const base::FilePath::CharType kTestRequestQueueDirname[] =
     FILE_PATH_LITERAL("Offline Pages/test_request_queue");
 
-void ToJavaOfflinePageList(JNIEnv* env,
+void OfflinePageEvaluationBridge__ToJavaOfflinePageList(JNIEnv* env,
                            const JavaRef<jobject>& j_result_obj,
                            const std::vector<OfflinePageItem>& offline_pages) {
   for (const OfflinePageItem& offline_page : offline_pages) {
@@ -72,7 +72,7 @@ void ToJavaOfflinePageList(JNIEnv* env,
   }
 }
 
-ScopedJavaLocalRef<jobject> ToJavaSavePageRequest(
+ScopedJavaLocalRef<jobject> OfflinePageEvaluationBridge__ToJavaSavePageRequest(
     JNIEnv* env,
     const SavePageRequest& request) {
   return Java_OfflinePageEvaluationBridge_createSavePageRequest(
@@ -82,7 +82,7 @@ ScopedJavaLocalRef<jobject> ToJavaSavePageRequest(
       ConvertUTF8ToJavaString(env, request.client_id().id));
 }
 
-ScopedJavaLocalRef<jobjectArray> CreateJavaSavePageRequests(
+ScopedJavaLocalRef<jobjectArray> OfflinePageEvaluationBridge__CreateJavaSavePageRequests(
     JNIEnv* env,
     std::vector<std::unique_ptr<SavePageRequest>> requests) {
   ScopedJavaLocalRef<jclass> save_page_request_clazz = base::android::GetClass(
@@ -190,7 +190,7 @@ RequestCoordinator* GetRequestCoordinator(Profile* profile,
 
 }  // namespace
 
-static jlong CreateBridgeForProfile(JNIEnv* env,
+static jlong OfflinePageEvaluationBridge__CreateBridgeForProfile(JNIEnv* env,
                                     const JavaParamRef<jobject>& obj,
                                     const JavaParamRef<jobject>& j_profile,
                                     const jboolean j_use_evaluation_scheduler) {

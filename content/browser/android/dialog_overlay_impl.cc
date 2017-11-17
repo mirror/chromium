@@ -19,7 +19,7 @@ using base::android::ScopedJavaLocalRef;
 
 namespace content {
 
-static jlong Init(JNIEnv* env,
+static jlong DialogOverlayImpl__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
                   jlong high,
                   jlong low,
@@ -226,7 +226,7 @@ void DialogOverlayImpl::OnDetachedFromWindow() {
     Java_DialogOverlayImpl_onWindowToken(env, obj, nullptr);
 }
 
-static jint RegisterSurface(JNIEnv* env,
+static jint DialogOverlayImpl__RegisterSurface(JNIEnv* env,
                             const base::android::JavaParamRef<jclass>& jcaller,
                             const JavaParamRef<jobject>& surface) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -235,7 +235,7 @@ static jint RegisterSurface(JNIEnv* env,
                                             surface.obj()));
 }
 
-static void UnregisterSurface(
+static void DialogOverlayImpl__UnregisterSurface(
     JNIEnv* env,
     const base::android::JavaParamRef<jclass>& jcaller,
     jint surface_id) {
@@ -243,7 +243,7 @@ static void UnregisterSurface(
   gpu::GpuSurfaceTracker::Get()->RemoveSurface(surface_id);
 }
 
-static ScopedJavaLocalRef<jobject> LookupSurfaceForTesting(
+static ScopedJavaLocalRef<jobject> DialogOverlayImpl__LookupSurfaceForTesting(
     JNIEnv* env,
     const base::android::JavaParamRef<jclass>& jcaller,
     jint surfaceId) {

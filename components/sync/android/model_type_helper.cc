@@ -14,7 +14,7 @@ using base::android::ScopedJavaLocalRef;
 
 namespace syncer {
 
-static ScopedJavaLocalRef<jstring> ModelTypeToNotificationType(
+static ScopedJavaLocalRef<jstring> ModelTypeHelper__ModelTypeToNotificationType(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     jint model_type_int) {

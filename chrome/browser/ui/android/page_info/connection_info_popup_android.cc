@@ -32,7 +32,7 @@ using base::android::ScopedJavaLocalRef;
 using content::WebContents;
 
 // static
-static jlong Init(JNIEnv* env,
+static jlong ConnectionInfoPopup__Init(JNIEnv* env,
                   const JavaParamRef<jclass>& clazz,
                   const JavaParamRef<jobject>& obj,
                   const JavaParamRef<jobject>& java_web_contents) {

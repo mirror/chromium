@@ -126,7 +126,7 @@ bool SimpleConfirmInfoBarDelegate::Cancel() {
 
 // Native JNI methods ---------------------------------------------------------
 
-void Create(JNIEnv* env,
+void SimpleConfirmInfoBarBuilder__Create(JNIEnv* env,
             const JavaParamRef<jclass>& j_caller,
             const JavaParamRef<jobject>& j_tab,
             jint j_identifier,

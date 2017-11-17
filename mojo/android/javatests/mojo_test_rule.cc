@@ -31,22 +31,22 @@ struct TestEnvironment {
 namespace mojo {
 namespace android {
 
-static void Init(JNIEnv* env, const JavaParamRef<jobject>& jcaller) {
+static void MojoTestRule__Init(JNIEnv* env, const JavaParamRef<jobject>& jcaller) {
   base::InitAndroidTestMessageLoop();
 }
 
-static jlong SetupTestEnvironment(JNIEnv* env,
+static jlong MojoTestRule__SetupTestEnvironment(JNIEnv* env,
                                   const JavaParamRef<jobject>& jcaller) {
   return reinterpret_cast<intptr_t>(new TestEnvironment());
 }
 
-static void TearDownTestEnvironment(JNIEnv* env,
+static void MojoTestRule__TearDownTestEnvironment(JNIEnv* env,
                                     const JavaParamRef<jobject>& jcaller,
                                     jlong test_environment) {
   delete reinterpret_cast<TestEnvironment*>(test_environment);
 }
 
-static void RunLoop(JNIEnv* env,
+static void MojoTestRule__RunLoop(JNIEnv* env,
                     const JavaParamRef<jobject>& jcaller,
                     jlong timeout_ms) {
   base::RunLoop run_loop;

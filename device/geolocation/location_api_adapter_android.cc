@@ -17,7 +17,7 @@ using base::android::AttachCurrentThread;
 using base::android::JavaParamRef;
 using device::LocationApiAdapterAndroid;
 
-static void NewLocationAvailable(JNIEnv* env,
+static void LocationProviderAdapter__NewLocationAvailable(JNIEnv* env,
                                  const JavaParamRef<jclass>&,
                                  jdouble latitude,
                                  jdouble longitude,
@@ -35,7 +35,7 @@ static void NewLocationAvailable(JNIEnv* env,
       accuracy, has_heading, heading, has_speed, speed);
 }
 
-static void NewErrorAvailable(JNIEnv* env,
+static void LocationProviderAdapter__NewErrorAvailable(JNIEnv* env,
                               const JavaParamRef<jclass>&,
                               const JavaParamRef<jstring>& message) {
   LocationApiAdapterAndroid::OnNewErrorAvailable(env, message);

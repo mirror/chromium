@@ -21,84 +21,84 @@ void ShowCertificateViewer(content::WebContents* web_contents,
   NOTREACHED();
 }
 
-static ScopedJavaLocalRef<jstring> GetCertIssuedToText(
+static ScopedJavaLocalRef<jstring> CertificateViewer__GetCertIssuedToText(
     JNIEnv* env,
     const JavaParamRef<jclass>&) {
   return ConvertUTF8ToJavaString(
       env, l10n_util::GetStringUTF8(IDS_CERT_INFO_SUBJECT_GROUP));
 }
 
-static ScopedJavaLocalRef<jstring> GetCertInfoCommonNameText(
+static ScopedJavaLocalRef<jstring> CertificateViewer__GetCertInfoCommonNameText(
     JNIEnv* env,
     const JavaParamRef<jclass>&) {
   return ConvertUTF8ToJavaString(
       env, l10n_util::GetStringUTF8(IDS_CERT_INFO_COMMON_NAME_LABEL));
 }
 
-static ScopedJavaLocalRef<jstring> GetCertInfoOrganizationText(
+static ScopedJavaLocalRef<jstring> CertificateViewer__GetCertInfoOrganizationText(
     JNIEnv* env,
     const JavaParamRef<jclass>&) {
   return ConvertUTF8ToJavaString(
       env, l10n_util::GetStringUTF8(IDS_CERT_INFO_ORGANIZATION_LABEL));
 }
 
-static ScopedJavaLocalRef<jstring> GetCertInfoSerialNumberText(
+static ScopedJavaLocalRef<jstring> CertificateViewer__GetCertInfoSerialNumberText(
     JNIEnv* env,
     const JavaParamRef<jclass>&) {
   return ConvertUTF8ToJavaString(
       env, l10n_util::GetStringUTF8(IDS_CERT_INFO_SERIAL_NUMBER_LABEL));
 }
 
-static ScopedJavaLocalRef<jstring> GetCertInfoOrganizationUnitText(
+static ScopedJavaLocalRef<jstring> CertificateViewer__GetCertInfoOrganizationUnitText(
     JNIEnv* env,
     const JavaParamRef<jclass>&) {
   return ConvertUTF8ToJavaString(
       env, l10n_util::GetStringUTF8(IDS_CERT_INFO_ORGANIZATIONAL_UNIT_LABEL));
 }
 
-static ScopedJavaLocalRef<jstring> GetCertIssuedByText(
+static ScopedJavaLocalRef<jstring> CertificateViewer__GetCertIssuedByText(
     JNIEnv* env,
     const JavaParamRef<jclass>&) {
   return ConvertUTF8ToJavaString(
       env, l10n_util::GetStringUTF8(IDS_CERT_INFO_ISSUER_GROUP));
 }
 
-static ScopedJavaLocalRef<jstring> GetCertValidityText(
+static ScopedJavaLocalRef<jstring> CertificateViewer__GetCertValidityText(
     JNIEnv* env,
     const JavaParamRef<jclass>&) {
   return ConvertUTF8ToJavaString(
       env, l10n_util::GetStringUTF8(IDS_CERT_INFO_VALIDITY_GROUP));
 }
 
-static ScopedJavaLocalRef<jstring> GetCertIssuedOnText(
+static ScopedJavaLocalRef<jstring> CertificateViewer__GetCertIssuedOnText(
     JNIEnv* env,
     const JavaParamRef<jclass>&) {
   return ConvertUTF8ToJavaString(
       env, l10n_util::GetStringUTF8(IDS_CERT_INFO_ISSUED_ON_LABEL));
 }
 
-static ScopedJavaLocalRef<jstring> GetCertExpiresOnText(
+static ScopedJavaLocalRef<jstring> CertificateViewer__GetCertExpiresOnText(
     JNIEnv* env,
     const JavaParamRef<jclass>&) {
   return ConvertUTF8ToJavaString(
       env, l10n_util::GetStringUTF8(IDS_CERT_INFO_EXPIRES_ON_LABEL));
 }
 
-static ScopedJavaLocalRef<jstring> GetCertFingerprintsText(
+static ScopedJavaLocalRef<jstring> CertificateViewer__GetCertFingerprintsText(
     JNIEnv* env,
     const JavaParamRef<jclass>&) {
   return ConvertUTF8ToJavaString(
       env, l10n_util::GetStringUTF8(IDS_CERT_INFO_FINGERPRINTS_GROUP));
 }
 
-static ScopedJavaLocalRef<jstring> GetCertSHA256FingerprintText(
+static ScopedJavaLocalRef<jstring> CertificateViewer__GetCertSHA256FingerprintText(
     JNIEnv* env,
     const JavaParamRef<jclass>&) {
   return ConvertUTF8ToJavaString(
       env, l10n_util::GetStringUTF8(IDS_CERT_INFO_SHA256_FINGERPRINT_LABEL));
 }
 
-static ScopedJavaLocalRef<jstring> GetCertSHA1FingerprintText(
+static ScopedJavaLocalRef<jstring> CertificateViewer__GetCertSHA1FingerprintText(
     JNIEnv* env,
     const JavaParamRef<jclass>&) {
   return ConvertUTF8ToJavaString(

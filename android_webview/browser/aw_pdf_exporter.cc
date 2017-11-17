@@ -20,7 +20,7 @@ namespace android_webview {
 
 namespace {
 
-void GetPageRanges(JNIEnv* env,
+void AwPdfExporter__GetPageRanges(JNIEnv* env,
                    jintArray int_arr,
                    printing::PageRanges* range_vector) {
   std::vector<int> pages;
@@ -61,7 +61,7 @@ void AwPdfExporter::ExportToPdf(JNIEnv* env,
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   printing::PrintSettings print_settings;
   printing::PageRanges page_ranges;
-  GetPageRanges(env, pages, &page_ranges);
+  AwPdfExporter__GetPageRanges(env, pages, &page_ranges);
   InitPdfSettings(env, obj, page_ranges, print_settings);
   AwPrintManager* print_manager = AwPrintManager::CreateForWebContents(
       web_contents_, print_settings, base::FileDescriptor(fd, false),

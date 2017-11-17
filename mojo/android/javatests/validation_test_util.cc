@@ -18,7 +18,7 @@ using base::android::ScopedJavaLocalRef;
 namespace mojo {
 namespace android {
 
-ScopedJavaLocalRef<jobject> ParseData(
+ScopedJavaLocalRef<jobject> ValidationTestUtil__ParseData(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller,
     const JavaParamRef<jstring>& data_as_string) {

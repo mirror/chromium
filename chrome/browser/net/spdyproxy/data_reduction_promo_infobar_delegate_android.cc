@@ -66,7 +66,7 @@ bool DataReductionPromoInfoBarDelegateAndroid::Accept() {
 }
 
 // JNI for DataReductionPromoInfoBarDelegate.
-void Launch(JNIEnv* env,
+void DataReductionPromoInfoBarDelegate__Launch(JNIEnv* env,
             const JavaParamRef<jclass>& clazz,
             const JavaParamRef<jobject>& jweb_contents) {
   DataReductionPromoInfoBarDelegateAndroid::Launch(env, jweb_contents);

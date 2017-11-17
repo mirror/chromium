@@ -43,14 +43,14 @@ const char* backed_up_preferences_[] = {
 
 }  // namespace
 
-static base::android::ScopedJavaLocalRef<jobjectArray> GetBoolBackupNames(
+static base::android::ScopedJavaLocalRef<jobjectArray> ChromeBackupAgent__GetBoolBackupNames(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& jcaller) {
   return base::android::ToJavaArrayOfStrings(
       env, chrome::android::GetBackupPrefNames());
 }
 
-static base::android::ScopedJavaLocalRef<jbooleanArray> GetBoolBackupValues(
+static base::android::ScopedJavaLocalRef<jbooleanArray> ChromeBackupAgent__GetBoolBackupValues(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& jcaller) {
   PrefService* prefs = ProfileManager::GetLastUsedProfile()->GetPrefs();
@@ -65,7 +65,7 @@ static base::android::ScopedJavaLocalRef<jbooleanArray> GetBoolBackupValues(
   return base::android::ScopedJavaLocalRef<jbooleanArray>(env, array);
 }
 
-static void SetBoolBackupPrefs(
+static void ChromeBackupAgent__SetBoolBackupPrefs(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& jcaller,
     const base::android::JavaParamRef<jobjectArray>& names,
@@ -97,13 +97,13 @@ std::vector<std::string> GetBackupPrefNames() {
 base::android::ScopedJavaLocalRef<jobjectArray> GetBoolBackupNamesForTesting(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& jcaller) {
-  return GetBoolBackupNames(env, jcaller);
+  return ChromeBackupAgent__GetBoolBackupNames(env, jcaller);
 }
 
 base::android::ScopedJavaLocalRef<jbooleanArray> GetBoolBackupValuesForTesting(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& jcaller) {
-  return GetBoolBackupValues(env, jcaller);
+  return ChromeBackupAgent__GetBoolBackupValues(env, jcaller);
 }
 
 void SetBoolBackupPrefsForTesting(
@@ -111,7 +111,7 @@ void SetBoolBackupPrefsForTesting(
     const base::android::JavaParamRef<jobject>& jcaller,
     const base::android::JavaParamRef<jobjectArray>& names,
     const base::android::JavaParamRef<jbooleanArray>& values) {
-  SetBoolBackupPrefs(env, jcaller, names, values);
+  ChromeBackupAgent__SetBoolBackupPrefs(env, jcaller, names, values);
 }
 
 }  //  namespace android
