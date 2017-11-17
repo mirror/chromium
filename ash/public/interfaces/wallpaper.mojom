@@ -66,6 +66,16 @@ interface WallpaperController {
   // Sets the client interface.
   SetClient(WallpaperControllerClient client);
 
+  // Set path IDs for wallpaper directories.
+  // |user_data_enum_path_id|: Directory where user data can be written.
+  // |chromeos_wallpapers_path_id|: Directory where downloaded chromeos
+  //                                wallpapers reside.
+  // |chromeos_custom_wallpapers_path_id|: Directory where custom wallpapers
+  //                                       reside.
+  SetPathId(int32 user_data_path_id,
+            int32 chromeos_wallpapers_path_id,
+            int32 chromeos_custom_wallpapers_path_id);
+
   // Sets wallpaper from policy or from a local file. Saves the custom wallpaper
   // to file, posts task to generate thumbnail and updates local state.
   // |user_info|: The user's information related to wallpaper.
@@ -128,7 +138,8 @@ interface WallpaperController {
   ShowSigninWallpaper();
 
   // Removes all of the user's saved wallpapers and related info.
-  RemoveUserWallpaper(WallpaperUserInfo user_info);
+  // |wallpaper_files_id|: The unique id of each wallpaper file.
+  RemoveUserWallpaper(WallpaperUserInfo user_info, string wallpaper_files_id);
 
   // TODO(crbug.com/776464): This is only used by WallpaperManager. Remove this
   // after WallpaperManager is removed.

@@ -25,6 +25,9 @@ class TestWallpaperController : ash::mojom::WallpaperController {
 
   // ash::mojom::WallpaperController:
   void SetClient(ash::mojom::WallpaperControllerClientPtr client) override;
+  void SetPathId(int user_data_path_id,
+                 int chromeos_wallpapers_path_id,
+                 int chromeos_custom_wallpapers_path_id) override;
   void SetCustomWallpaper(ash::mojom::WallpaperUserInfoPtr user_info,
                           const std::string& wallpaper_files_id,
                           const std::string& file_name,
@@ -45,7 +48,8 @@ class TestWallpaperController : ash::mojom::WallpaperController {
       const base::FilePath& resized_directory) override;
   void ShowUserWallpaper(ash::mojom::WallpaperUserInfoPtr user_info) override;
   void ShowSigninWallpaper() override;
-  void RemoveUserWallpaper(ash::mojom::WallpaperUserInfoPtr user_info) override;
+  void RemoveUserWallpaper(ash::mojom::WallpaperUserInfoPtr user_info,
+                           const std::string& wallpaper_files_id) override;
   void SetWallpaper(const SkBitmap& wallpaper,
                     const wallpaper::WallpaperInfo& wallpaper_info) override;
   void AddObserver(

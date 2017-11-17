@@ -12,12 +12,16 @@
 #include "ash/shell.h"
 #include "ash/shell_test_api.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/wallpaper/wallpaper_controller.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager_test_utils.h"
 #include "chrome/browser/image_decoder.h"
+#include "chrome/browser/ui/ash/test_wallpaper_controller.h"
+#include "chrome/browser/ui/ash/wallpaper_controller_client.h"
+#include "chrome/common/chrome_paths.h"
 #include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile.h"
 #include "chromeos/cryptohome/system_salt_getter.h"
@@ -81,8 +85,13 @@ class ArcWallpaperServiceTest : public ash::AshTestBase {
     user_manager_->LoginUser(user_manager::StubAccountId());
     ASSERT_TRUE(user_manager_->GetPrimaryUser());
 
-    // Wallpaper maanger
+    // Wallpaper manager
     chromeos::WallpaperManager::Initialize();
+    TestWallpaperController test_wallpaper_controller;
+    wallpaper_controller_client_ =
+        std::make_unique<WallpaperControllerClient>();
+    wallpaper_controller_client_->InitForTesting(
+        test_wallpaper_controller.CreateInterfacePtr());
 
     // Arc services
     wallpaper_instance_ = std::make_unique<arc::FakeWallpaperInstance>();
@@ -109,6 +118,7 @@ class ArcWallpaperServiceTest : public ash::AshTestBase {
   std::unique_ptr<arc::FakeWallpaperInstance> wallpaper_instance_ = nullptr;
 
  private:
+  std::unique_ptr<WallpaperControllerClient> wallpaper_controller_client_;
   chromeos::FakeChromeUserManager* const user_manager_ = nullptr;
   user_manager::ScopedUserManager user_manager_enabler_;
   arc::ArcServiceManager arc_service_manager_;
@@ -131,6 +141,14 @@ TEST_F(ArcWallpaperServiceTest, SetDefaultWallpaper) {
 }
 
 TEST_F(ArcWallpaperServiceTest, SetAndGetWallpaper) {
+  // TODO(crbug.com/776464): Remove this after |SetCustomWallpaper| is migrated.
+  // This test is supposed to call the mock method in |TestWallpaperController|,
+  // but currently it's still calling the real method, which relies on the path
+  // IDs.
+  ash::Shell::Get()->wallpaper_controller()->SetPathId(
+      chrome::DIR_USER_DATA, chrome::DIR_CHROMEOS_WALLPAPERS,
+      chrome::DIR_CHROMEOS_CUSTOM_WALLPAPERS);
+
   service_->SetDecodeRequestSenderForTesting(
       std::make_unique<SuccessDecodeRequestSender>());
   std::vector<uint8_t> bytes;

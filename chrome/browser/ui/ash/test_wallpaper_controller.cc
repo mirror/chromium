@@ -20,6 +20,13 @@ void TestWallpaperController::SetClient(
   was_client_set_ = true;
 }
 
+void TestWallpaperController::SetPathId(
+    int user_data_path_id,
+    int chromeos_wallpapers_path_id,
+    int chromeos_custom_wallpapers_path_id) {
+  NOTIMPLEMENTED();
+}
+
 void TestWallpaperController::SetCustomWallpaper(
     ash::mojom::WallpaperUserInfoPtr user_info,
     const std::string& wallpaper_files_id,
@@ -63,7 +70,8 @@ void TestWallpaperController::ShowSigninWallpaper() {
 }
 
 void TestWallpaperController::RemoveUserWallpaper(
-    ash::mojom::WallpaperUserInfoPtr user_info) {
+    ash::mojom::WallpaperUserInfoPtr user_info,
+    const std::string& wallpaper_files_id) {
   NOTIMPLEMENTED();
 }
 

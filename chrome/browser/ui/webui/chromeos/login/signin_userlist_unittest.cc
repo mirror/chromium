@@ -13,6 +13,8 @@
 #include "chrome/browser/chromeos/login/users/multi_profile_user_controller.h"
 #include "chrome/browser/chromeos/login/users/multi_profile_user_controller_delegate.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
+#include "chrome/browser/ui/ash/test_wallpaper_controller.h"
+#include "chrome/browser/ui/ash/wallpaper_controller_client.h"
 #include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile_manager.h"
 #include "components/proximity_auth/screenlock_bridge.h"
@@ -65,6 +67,11 @@ class SigninPrepareUserListTest : public ash::AshTestBase,
     fake_user_manager_->set_owner_id(AccountId::FromUserEmail(kOwner));
 
     chromeos::WallpaperManager::Initialize();
+    TestWallpaperController test_wallpaper_controller;
+    wallpaper_controller_client_ =
+        std::make_unique<WallpaperControllerClient>();
+    wallpaper_controller_client_->InitForTesting(
+        test_wallpaper_controller.CreateInterfacePtr());
   }
 
   void TearDown() override {
@@ -82,6 +89,7 @@ class SigninPrepareUserListTest : public ash::AshTestBase,
   std::unique_ptr<TestingProfileManager> profile_manager_;
   std::map<std::string, proximity_auth::mojom::AuthType> user_auth_type_map;
   std::unique_ptr<MultiProfileUserController> controller_;
+  std::unique_ptr<WallpaperControllerClient> wallpaper_controller_client_;
 
   DISALLOW_COPY_AND_ASSIGN(SigninPrepareUserListTest);
 };

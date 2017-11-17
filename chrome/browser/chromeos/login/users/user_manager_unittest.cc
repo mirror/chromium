@@ -17,6 +17,8 @@
 #include "chrome/browser/chromeos/settings/scoped_cros_settings_test_helper.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/ui/ash/test_wallpaper_controller.h"
+#include "chrome/browser/ui/ash/wallpaper_controller_client.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/scoped_testing_local_state.h"
 #include "chrome/test/base/testing_browser_process.h"
@@ -78,6 +80,12 @@ class UserManagerTest : public testing::Test {
 
     ResetUserManager();
     WallpaperManager::Initialize();
+
+    TestWallpaperController test_wallpaper_controller;
+    wallpaper_controller_client_ =
+        std::make_unique<WallpaperControllerClient>();
+    wallpaper_controller_client_->InitForTesting(
+        test_wallpaper_controller.CreateInterfacePtr());
   }
 
   void TearDown() override {
@@ -148,6 +156,8 @@ class UserManagerTest : public testing::Test {
       AccountId::FromUserEmail("user1@invalid.domain");
 
  protected:
+  std::unique_ptr<WallpaperControllerClient> wallpaper_controller_client_;
+
   content::TestBrowserThreadBundle thread_bundle_;
 
   ScopedCrosSettingsTestHelper settings_helper_;
