@@ -11,8 +11,11 @@ DownloadEntry::DownloadEntry() = default;
 DownloadEntry::DownloadEntry(const DownloadEntry& other) = default;
 
 DownloadEntry::DownloadEntry(const std::string& guid,
-                             const std::string& request_origin)
-    : guid(guid), request_origin(request_origin){};
+                             const std::string& request_origin,
+                             DownloadSource download_source)
+    : guid(guid),
+      request_origin(request_origin),
+      download_source(download_source) {}
 
 DownloadEntry::~DownloadEntry() = default;
 

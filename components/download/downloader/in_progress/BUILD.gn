@@ -11,6 +11,8 @@ static_library("in_progress") {
   sources = [
     "download_entry.cc",
     "download_entry.h",
+    "download_source.cc",
+    "download_source.h",
     "in_progress_cache.cc",
     "in_progress_cache.h",
     "in_progress_conversions.cc",
