@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c45217d3_8da757a8",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-17T23:09:42Z",
+      "side": 1,
+      "message": "This is technically unnecessary right now, as this was part of my Gold/Chromium integration patch. Also, run_gold_test.py hasn\u0027t been added yet (also part of that patch), so at the very least, remove that line.",
+      "range": {
+        "startLine": 286,
+        "startChar": 2,
+        "endLine": 286,
+        "endChar": 6
+      },
+      "revId": "888d7c8fca0c84da7d3daddca1bc829377a78301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c49f4faf_70fc7950",
         "filename": "chrome/browser/vr/test/run_all_pixeltests.cc",
         "patchSetId": 2
