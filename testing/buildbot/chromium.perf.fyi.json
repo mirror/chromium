@@ -71,6 +71,14 @@
         ],
         "swarming": {
           "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:1cb3",
+              "id": "build34-a1",
+              "os": "Ubuntu-14.04",
+              "pool": "Chrome-perf"
+            }
+          ],
           "expiration": 36000,
           "hard_timeout": 10800,
           "ignore_task_failure": false,
