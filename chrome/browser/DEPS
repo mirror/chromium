@@ -77,6 +77,9 @@ include_rules = [
   "-ash",
   "+ash/public",
 
+  # TODO(hejq): Remove this once app_list is migrated.
+  "+ash/app_list/model",
+
   # chrome only needs switches from cc. All usage of the compositor is from
   # content. Definitely don't include generic stuff from cc/base here, if this
   # is needed these files need to move to base/
