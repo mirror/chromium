@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f24590e3_0a9cea51",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-17T19:13:12Z",
+      "side": 1,
+      "message": "\"caller_origin\" since this is a local variable.",
+      "range": {
+        "startLine": 80,
+        "startChar": 14,
+        "endLine": 80,
+        "endChar": 28
+      },
+      "revId": "de6998e3bf0e11657fd0caff7ecf4e97fbdd0cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe2ebec_bbec7219",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-17T19:13:12Z",
+      "side": 1,
+      "message": "A warning: There is no guarantee that |render_frame_host_| has not been destroyed by the time this call is made. In RenderFrameHostImpl you\u0027ll see that there\u0027s a common pattern of having the RenderFrameHostImpl own the Mojo service implementation so that it is guaranteed not to outlive the RFH.\n\nSee for example, RenderFrameHostImpl::BindPresentationServiceRequest.",
+      "revId": "de6998e3bf0e11657fd0caff7ecf4e97fbdd0cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "333dd4a1_0c27c15f",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-17T19:13:12Z",
+      "side": 1,
+      "message": "This function is now unused.",
+      "revId": "de6998e3bf0e11657fd0caff7ecf4e97fbdd0cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
