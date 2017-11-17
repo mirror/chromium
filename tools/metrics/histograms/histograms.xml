@@ -2654,6 +2654,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Arc.NativeBridgeExperiment" enum="BooleanEnabled">
+  <owner>elijahtaylor@google.com</owner>
+  <owner>levarum@google.com</owner>
+  <summary>
+    Whether NativeBridgeExperiment for ARC is enabled or not.
+  </summary>
+</histogram>
+
 <histogram name="ArcAuth.AccountCheckStatus" enum="ArcAuthAccountCheckStatus">
   <owner>elijahtaylor@google.com</owner>
   <summary>The status of account check before GMS Sign-in.</summary>
