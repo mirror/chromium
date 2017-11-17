@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00ebc07c_825a1a1f",
+        "filename": "content/browser/renderer_host/input/wheel_scroll_latching_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-11-17T14:34:53Z",
+      "side": 0,
+      "message": "Not actually used, leftover copy-pasta",
+      "range": {
+        "startLine": 249,
+        "startChar": 54,
+        "endLine": 249,
+        "endChar": 0
+      },
+      "revId": "9c2daf8b0097f103e8028dc537ecbca2726496e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
