@@ -94,11 +94,12 @@ bool InstantAppsInfoBarDelegate::ShouldExpire(
          ConfirmInfoBarDelegate::ShouldExpire(details);
 }
 
-void Launch(JNIEnv* env,
-            const base::android::JavaParamRef<jclass>& clazz,
-            const base::android::JavaParamRef<jobject>& jweb_contents,
-            const base::android::JavaParamRef<jobject>& jdata,
-            const base::android::JavaParamRef<jstring>& jurl) {
+void JNI_InstantAppsInfoBarDelegate_Launch(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jclass>& clazz,
+    const base::android::JavaParamRef<jobject>& jweb_contents,
+    const base::android::JavaParamRef<jobject>& jdata,
+    const base::android::JavaParamRef<jstring>& jurl) {
   auto* web_contents = content::WebContents::FromJavaWebContents(jweb_contents);
   std::string url(base::android::ConvertJavaStringToUTF8(env, jurl));
 
