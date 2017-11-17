@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0ebef3d_ab2763d4",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-17T15:52:20Z",
+      "side": 1,
+      "message": "ContainedStyle wasn\u0027t a term I immediately understood. I think this is shadow-including descendants[1], so RecalcShadowIncludingDescendantStylesForReattach() would be correct if not too long?\n\n[1] https://dom.spec.whatwg.org/#concept-shadow-including-descendant",
+      "revId": "f552484bd980156894d05353981a54d90bbd3816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "041331c3_92e8687f",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-17T15:52:20Z",
+      "side": 1,
+      "message": "Why did this change? Would this style previously always be calculated from AttachLayoutTree()?",
+      "revId": "f552484bd980156894d05353981a54d90bbd3816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

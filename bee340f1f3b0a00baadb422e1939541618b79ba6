@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af04acc8_6c38e4d6",
+        "filename": "third_party/WebKit/Source/core/html/HTMLEmbedElement.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-17T15:52:20Z",
+      "side": 0,
+      "message": "I guess this needed removal because we check LayoutObjectINeeded is called down a subtree which is not currently being attached?",
+      "revId": "bee340f1f3b0a00baadb422e1939541618b79ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
