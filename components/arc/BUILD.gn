@@ -250,6 +250,7 @@ source_set("unit_tests") {
   testonly = true
   sources = [
     "arc_data_remover_unittest.cc",
+    "arc_session_impl_unittest.cc",
     "arc_session_runner_unittest.cc",
     "arc_util_unittest.cc",
     "bluetooth/bluetooth_struct_traits_unittest.cc",
