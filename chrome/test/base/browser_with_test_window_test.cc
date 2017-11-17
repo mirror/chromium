@@ -82,7 +82,8 @@ void BrowserWithTestWindowTest::SetUp() {
   ASSERT_TRUE(profile_manager_->SetUp());
 
   // Subclasses can provide their own Profile.
-  profile_ = CreateProfile();
+  profile_ = profile_manager_->CreateTestingProfile(
+      "testing_profile", nullptr, base::string16(), 0, std::string(), {});
   // Subclasses can provide their own test BrowserWindow. If they return NULL
   // then Browser will create the a production BrowserWindow and the subclass
   // is responsible for cleaning it up (usually by NativeWidget destruction).
