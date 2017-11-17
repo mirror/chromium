@@ -7,7 +7,9 @@
 #include <utility>
 
 #include "base/logging.h"
+#include "content/public/browser/child_process_security_policy.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/service_manager_connection.h"
 #include "crypto/sha2.h"
@@ -22,6 +24,34 @@ namespace content {
 
 namespace {
 constexpr int32_t kCoseEs256 = -7;
+
+std::string ValidateRelyingPartyDomain(
+    RenderFrameHost* render_frame_host,
+    const base::Optional<std::string>& relying_party_id) {
+  url::Origin caller_origin = render_frame_host->GetLastCommittedOrigin();
+  if (caller_origin.unique()) {
+    return "";
+  }
+
+  std::string effective_domain = caller_origin.host();
+  DCHECK(!effective_domain.empty());
+
+  std::string domain;
+  if (!relying_party_id) {
+    domain = effective_domain;
+  } else {
+    domain = *relying_party_id;
+  }
+
+  ChildProcessSecurityPolicy* policy =
+      ChildProcessSecurityPolicy::GetInstance();
+  if (!policy->CanAccessDataForOrigin(render_frame_host->GetProcess()->GetID(),
+                                      caller_origin.GetURL())) {
+    return "";
+  }
+
+  return domain;
+}
 
 bool HasValidAlgorithm(
     const std::vector<webauth::mojom::PublicKeyCredentialParametersPtr>&
@@ -75,27 +105,12 @@ void AuthenticatorImpl::MakeCredential(
     return;
   }
 
-  // Steps 6 & 7 of https://w3c.github.io/webauthn/#createCredential
-  // opaque origin
-  url::Origin caller_origin = render_frame_host_->GetLastCommittedOrigin();
-  if (caller_origin.unique()) {
+  std::string relying_party_id = ValidateRelyingPartyDomain(
+      render_frame_host_, options->relying_party->id);
+  if (relying_party_id.empty()) {
     std::move(callback_).Run(
         webauth::mojom::AuthenticatorStatus::NOT_ALLOWED_ERROR, nullptr);
     return;
-  }
-
-  std::string effective_domain = caller_origin.host();
-  DCHECK(!effective_domain.empty());
-
-  std::string relying_party_id;
-  if (!options->relying_party->id) {
-    relying_party_id = effective_domain;
-  } else {
-    // TODO(kpaulhamus): Check if relyingPartyId is a registrable domain
-    // suffix of and equal to effectiveDomain and set relyingPartyId
-    // appropriately.
-    // TODO(kpaulhamus): Add unit tests for domains. http://crbug.com/785950.
-    relying_party_id = *options->relying_party->id;
   }
 
   // Check that at least one of the cryptographic parameters is supported.
