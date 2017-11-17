@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "base/test/scoped_task_environment.h"
+#include "extensions/renderer/bindings/test_js_runner.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "v8/include/v8.h"
 
@@ -62,6 +63,7 @@ class APIBindingTest : public testing::Test {
 
   std::unique_ptr<gin::IsolateHolder> isolate_holder_;
   std::unique_ptr<gin::ContextHolder> main_context_holder_;
+  TestJSRunner::Scope test_js_runner_;
   std::vector<std::unique_ptr<gin::ContextHolder>> additional_context_holders_;
 
   DISALLOW_COPY_AND_ASSIGN(APIBindingTest);

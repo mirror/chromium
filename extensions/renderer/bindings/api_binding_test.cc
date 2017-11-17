@@ -13,7 +13,8 @@
 
 namespace extensions {
 
-APIBindingTest::APIBindingTest() {}
+APIBindingTest::APIBindingTest()
+    : test_js_runner_(std::make_unique<TestJSRunner>()) {}
 APIBindingTest::~APIBindingTest() {}
 
 v8::ExtensionConfiguration* APIBindingTest::GetV8ExtensionConfiguration() {
