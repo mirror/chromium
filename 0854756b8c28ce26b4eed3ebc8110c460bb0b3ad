@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "5053db53_6c702055",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T10:56:20Z",
+      "side": 1,
+      "message": "Why do you want to put is_closing_ in AudioWorkletGlobalScope, rather than upper classes (e.g., WorkerOrWorkletGlobalScope)? The logic to dispose the global scope should be the same for all workers and worklets.",
+      "revId": "0854756b8c28ce26b4eed3ebc8110c460bb0b3ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2e68103_33bab04b",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T10:56:20Z",
+      "side": 1,
+      "message": "Remove this.",
+      "revId": "0854756b8c28ce26b4eed3ebc8110c460bb0b3ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a789701_ce9242fa",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T10:56:20Z",
+      "side": 1,
+      "message": "ToImplWithTypeCheck may return nullptr if the type does not match. You need to handle the nullptr case.",
+      "revId": "0854756b8c28ce26b4eed3ebc8110c460bb0b3ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc2f24d_25722ca7",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T10:56:20Z",
+      "side": 1,
+      "message": "Sorry for a late comment but it is not really useful to make this class GC-managed since it has no GCed pointers.\n\nstd::unique_ptr would be enough?",
+      "revId": "0854756b8c28ce26b4eed3ebc8110c460bb0b3ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "316e5fcf_a351fbc3",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
         "patchSetId": 21
@@ -19,6 +87,23 @@
         "endLine": 44,
         "endChar": 8
       },
+      "revId": "0854756b8c28ce26b4eed3ebc8110c460bb0b3ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc3ef42_e49b158a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T10:56:20Z",
+      "side": 1,
+      "message": "Drop explicit.",
       "revId": "0854756b8c28ce26b4eed3ebc8110c460bb0b3ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
