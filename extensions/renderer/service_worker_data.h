@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "extensions/renderer/extension_js_runner.h"
 #include "extensions/renderer/v8_schema_registry.h"
 
 namespace extensions {
@@ -34,6 +35,7 @@ class ServiceWorkerData {
   const int64_t service_worker_version_id_;
   ScriptContext* const context_;
 
+  ExtensionJSRunner js_runner_;
   std::unique_ptr<V8SchemaRegistry> v8_schema_registry_;
   std::unique_ptr<ExtensionBindingsSystem> bindings_system_;
 

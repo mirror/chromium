@@ -15,6 +15,7 @@
 #include "extensions/common/features/feature.h"
 #include "extensions/renderer/bindings/api_binding_test.h"
 #include "extensions/renderer/bindings/api_binding_types.h"
+#include "extensions/renderer/extension_js_runner.h"
 #include "extensions/renderer/ipc_message_sender.h"
 #include "extensions/renderer/message_target.h"
 #include "extensions/renderer/string_source_map.h"
@@ -115,6 +116,7 @@ class NativeExtensionBindingsSystemUnittest : public APIBindingTest {
   void TearDown() override;
   void OnWillDisposeContext(v8::Local<v8::Context> context) override;
   v8::ExtensionConfiguration* GetV8ExtensionConfiguration() override;
+  std::unique_ptr<TestJSRunner::Scope> CreateTestJSRunner() override;
 
   ScriptContext* CreateScriptContext(v8::Local<v8::Context> v8_context,
                                      Extension* extension,
@@ -150,6 +152,8 @@ class NativeExtensionBindingsSystemUnittest : public APIBindingTest {
 
   StringSourceMap source_map_;
   TestExtensionsRendererClient renderer_client_;
+
+  ExtensionJSRunner js_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(NativeExtensionBindingsSystemUnittest);
 };
