@@ -429,6 +429,24 @@
       "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c0ebf0_bc902162",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T21:39:10Z",
+      "side": 1,
+      "message": "Have you tried just putting the Init() call in the SetUp() method for the unittests?  For test-environment-specific issues like this, it\u0027s good to avoid mutating production code.",
+      "parentUuid": "b84ca041_6ddaa2bd",
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

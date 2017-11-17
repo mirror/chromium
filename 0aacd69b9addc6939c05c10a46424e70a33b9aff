@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7a8a684_023adf00",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T21:39:10Z",
+      "side": 1,
+      "message": "Let\u0027s just define these in-line in the class definition.",
+      "revId": "0aacd69b9addc6939c05c10a46424e70a33b9aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
