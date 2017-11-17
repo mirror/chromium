@@ -262,7 +262,7 @@ cr.define('media_router', function() {
       canSetVolume = false, canSeek = false,
       playState = media_router.PlayState.PLAYING, isPaused = false,
       isMuted = false, volume = 0, duration = 0, currentTime = 0,
-      hangoutsExtraData = undefined, mirroringExtraData = undefined) {
+      mirroringExtraData = undefined, hangoutsExtraData = undefined) {
 
     /** @type {string} */
     this.title = title;
@@ -297,11 +297,11 @@ cr.define('media_router', function() {
     /** @type {number} */
     this.currentTime = currentTime;
 
-    /** @type {!{localPresent: boolean}|undefined} */
-    this.hangoutsExtraData = hangoutsExtraData;
-
     /** @type {!{mediaRemotingEnabled: boolean}|undefined} */
     this.mirroringExtraData = mirroringExtraData;
+
+    /** @type {!{localPresent: boolean}|undefined} */
+    this.hangoutsExtraData = hangoutsExtraData;
   };
 
   /**

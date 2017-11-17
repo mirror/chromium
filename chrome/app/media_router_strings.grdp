@@ -181,7 +181,7 @@
   <message name="IDS_MEDIA_ROUTER_ROUTE_DETAILS_HANGOUTS_LOCAL_PRESENT_SUBTITLE" desc="The subtitle for the local present mode toggle for casting to a Hangouts.">
     Use high bandwidth for best video or animation. Other people with slow connections may not see your content.
   </message>
-  <message name="IDS_MEDIA_ROUTER_ROUTE_DETAILS_ALWAYS_USE_MIRRORING_TITLE" desc="The title for a toggle setting to choose whether video should always be mirrored (played locally and remotely), or played only remotely.">
+  <message name="IDS_MEDIA_ROUTER_ROUTE_DETAILS_ALWAYS_USE_MIRRORING_TITLE" desc="The title for the always use mirroring mode toggle for media remoting.">
     Always use mirroring
   </message>
 

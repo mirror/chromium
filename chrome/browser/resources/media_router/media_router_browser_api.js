@@ -302,7 +302,6 @@ cr.define('media_router.browserApi', function() {
   function setCurrentMediaVolume(volume) {
     chrome.send('setCurrentMediaVolume', [{volume: volume}]);
   }
-
   /**
    * Sets the local present mode of the Hangouts associated with the current
    * route.
@@ -314,7 +313,7 @@ cr.define('media_router.browserApi', function() {
 
   /**
    * Sends a command to change the Media Remoting enabled value associated with
-   * current route.
+   * current rout.
    *
    * @param {boolean} enabled
    */

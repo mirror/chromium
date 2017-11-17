@@ -407,6 +407,11 @@ TEST_F(MediaRouterWebUIMessageHandlerTest, SetCastModesList) {
 }
 
 TEST_F(MediaRouterWebUIMessageHandlerTest, UpdateMediaRouteStatus) {
+  auto controller =
+      base::MakeRefCounted<MockMediaRouteController>("routeId", profile());
+  EXPECT_CALL(*mock_media_router_ui_, GetMediaRouteController())
+      .WillRepeatedly(Return(controller.get()));
+
   MediaStatus status;
   status.title = "test title";
   status.description = "test description";
@@ -437,6 +442,21 @@ TEST_F(MediaRouterWebUIMessageHandlerTest, UpdateMediaRouteStatus) {
   EXPECT_EQ(status.current_time.InSeconds(),
             GetIntegerFromDict(status_value, "currentTime"));
   EXPECT_EQ(status.volume, GetDoubleFromDict(status_value, "volume"));
+}
+
+TEST_F(MediaRouterWebUIMessageHandlerTest,
+       UpdateRouteStatusMirroringExtraData) {
+  auto controller =
+      base::MakeRefCounted<MirroringMediaRouteController>("routeId", profile());
+  EXPECT_CALL(*mock_media_router_ui_, GetMediaRouteController())
+      .WillOnce(Return(controller.get()));
+
+  MediaStatus status;
+  handler_->UpdateMediaRouteStatus(status);
+  const base::DictionaryValue* status_value =
+      ExtractDictFromCallArg("media_router.ui.updateRouteStatus");
+  EXPECT_TRUE(GetBooleanFromDict(status_value,
+                                 "mirroringExtraData.mediaRemotingEnabled"));
 }
 
 TEST_F(MediaRouterWebUIMessageHandlerTest, OnCreateRouteResponseReceived) {
@@ -635,6 +655,22 @@ TEST_F(MediaRouterWebUIMessageHandlerTest, OnMediaCommandsReceived) {
   args->SetDouble("volume", volume);
   EXPECT_CALL(*controller, SetVolume(volume));
   handler_->OnSetCurrentMediaVolume(&args_list);
+}
+
+TEST_F(MediaRouterWebUIMessageHandlerTest, OnSetMediaRemotingEnabled) {
+  auto controller =
+      base::MakeRefCounted<MirroringMediaRouteController>("routeId", profile());
+  EXPECT_CALL(*mock_media_router_ui_, GetMediaRouteController())
+      .WillRepeatedly(Return(controller.get()));
+
+  base::ListValue args_list;
+  base::DictionaryValue* args;
+  args_list.Append(base::MakeUnique<base::DictionaryValue>());
+  args_list.GetDictionary(0, &args);
+
+  args->SetBoolean("enabled", false);
+  handler_->OnSetMediaRemotingEnabled(&args_list);
+  EXPECT_FALSE(controller->GetMediaRemotingEnabled());
 }
 
 TEST_F(MediaRouterWebUIMessageHandlerTest, OnInvalidMediaCommandsReceived) {

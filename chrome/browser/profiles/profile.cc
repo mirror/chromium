@@ -210,6 +210,9 @@ void Profile::RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
       prefs::kMediaRouterFirstRunFlowAcknowledged,
       false,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+  registry->RegisterBooleanPref(
+      prefs::kMediaRouterMediaRemotingEnabled, true,
+      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   registry->RegisterListPref(prefs::kMediaRouterTabMirroringSources);
 
 #if defined(OS_CHROMEOS)

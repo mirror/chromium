@@ -50,12 +50,12 @@ Polymer({
     },
 
     /**
-     * Keep in sync with media remoting individual user setting.
+     * True if Media Remoting is enabled.
      * @private {boolean}
      */
     mediaRemotingEnabled_: {
       type: Boolean,
-      value: true,
+      value: false,
     },
 
     /**
@@ -448,7 +448,7 @@ Polymer({
 
   /**
    * Called when the "always use mirroring" box is changed by the user.
-   * @param {!Event} e "always use mirroring" paper-checkbox's change event
+   * @param {!Event} e
    * @private
    */
   onMediaRemotingEnabledChange_: function(e) {
