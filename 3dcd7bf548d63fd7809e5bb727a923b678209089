@@ -22,6 +22,30 @@
       "revId": "3dcd7bf548d63fd7809e5bb727a923b678209089",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e090710e_8ec8753b",
+        "filename": "chrome/browser/ui/webui/signin/inline_login_handler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-11-17T16:22:17Z",
+      "side": 1,
+      "message": "+Mihai\n\nRight now, when force-sign-in is enabled, the user sign in by clicking the locked profile on UserManager. The sign-in reason for that is |REASON_SIGNIN_PRIMARY_ACCOUNT| currently. Do we want a different reason for that? i.e. |REASON_FORCED_SIGNIN_PRIMARY_ACCOUNT|.\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/views/profiles/user_manager_view.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d239\n\nOwen",
+      "parentUuid": "e5df5df9_8bafb40f",
+      "range": {
+        "startLine": 564,
+        "startChar": 26,
+        "endLine": 564,
+        "endChar": 0
+      },
+      "revId": "3dcd7bf548d63fd7809e5bb727a923b678209089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
