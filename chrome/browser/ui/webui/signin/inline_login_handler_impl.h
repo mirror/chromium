@@ -36,9 +36,7 @@ class InlineLoginHandlerImpl : public InlineLoginHandler,
 
   Browser* GetDesktopBrowser();
   void SyncStarterCallback(OneClickSigninSyncStarter::SyncSetupResult result);
-  // Closes the current tab and shows the account management view of the avatar
-  // bubble if |show_account_management| is true.
-  void CloseTab(bool show_account_management);
+  void CloseTab();
   void HandleLoginError(const std::string& error_msg,
                         const base::string16& email);
 

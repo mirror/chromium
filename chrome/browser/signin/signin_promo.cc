@@ -349,17 +349,6 @@ bool IsAutoCloseEnabledInURL(const GURL& url) {
   return false;
 }
 
-bool ShouldShowAccountManagement(const GURL& url) {
-  std::string value;
-  if (net::GetValueForKeyInQuery(
-          url, kSignInPromoQueryKeyShowAccountManagement, &value)) {
-    int enabled = 0;
-    if (base::StringToInt(value, &enabled) && enabled == 1)
-      return IsAccountConsistencyMirrorEnabled();
-  }
-  return false;
-}
-
 void ForceWebBasedSigninFlowForTesting(bool force) {
   g_force_web_based_signin_flow = force;
 }

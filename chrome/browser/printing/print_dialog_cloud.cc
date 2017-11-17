@@ -13,9 +13,6 @@
 #include "chrome/browser/ui/browser_window.h"
 #include "components/cloud_devices/common/cloud_devices_urls.h"
 #include "components/google/core/browser/google_util.h"
-#include "components/signin/core/browser/profile_management_switches.h"
-#include "components/signin/core/browser/signin_header_helper.h"
-#include "components/signin/core/browser/signin_metrics.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
@@ -71,14 +68,6 @@ void CreateCloudPrintSigninTab(Browser* browser,
                                bool add_account,
                                const base::Closure& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (signin::IsAccountConsistencyMirrorEnabled() &&
-      !browser->profile()->IsOffTheRecord()) {
-    browser->window()->ShowAvatarBubbleFromAvatarButton(
-        add_account ? BrowserWindow::AVATAR_BUBBLE_MODE_ADD_ACCOUNT
-                    : BrowserWindow::AVATAR_BUBBLE_MODE_SIGNIN,
-        signin::ManageAccountsParams(),
-        signin_metrics::AccessPoint::ACCESS_POINT_CLOUD_PRINT, false);
-  } else {
     GURL url = add_account ? cloud_devices::GetCloudPrintAddAccountURL()
                            : cloud_devices::GetCloudPrintSigninURL();
     content::WebContents* web_contents =
@@ -88,7 +77,6 @@ void CreateCloudPrintSigninTab(Browser* browser,
             content::Referrer(), WindowOpenDisposition::NEW_FOREGROUND_TAB,
             ui::PAGE_TRANSITION_AUTO_BOOKMARK, false));
     new SignInObserver(web_contents, callback);
-  }
 }
 
 }  // namespace print_dialog_cloud

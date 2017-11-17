@@ -12,11 +12,13 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
+#include "build/buildflag.h"
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/gaia_cookie_manager_service.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/signin_client.h"
+#include "components/signin/core/browser/signin_features.h"
 #include "components/signin/core/browser/signin_internals_util.h"
 #include "components/signin/core/browser/signin_metrics.h"
 #include "components/signin/core/browser/signin_pref_names.h"
@@ -358,8 +360,9 @@ void SigninManager::DisableOneClickSignIn(PrefService* prefs) {
 }
 
 void SigninManager::MergeSigninCredentialIntoCookieJar() {
-  if (!client_->ShouldMergeSigninCredentialsIntoCookieJar())
-    return;
+#if BUILDFLAG(ENABLE_MIRROR)
+  return;
+#endif
 
   if (!IsAuthenticated())
     return;

@@ -313,10 +313,6 @@ const FeatureEntry::Choice kDefaultTileHeightChoices[] = {
 
 #if !BUILDFLAG(ENABLE_MIRROR)
 
-const FeatureEntry::FeatureParam kAccountConsistencyMirror[] = {
-    {signin::kAccountConsistencyFeatureMethodParameter,
-     signin::kAccountConsistencyFeatureMethodMirror}};
-
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
 const FeatureEntry::FeatureParam kAccountConsistencyDice[] = {
     {signin::kAccountConsistencyFeatureMethodParameter,
@@ -336,10 +332,7 @@ const FeatureEntry::FeatureParam kAccountConsistencyDiceFixAuthErrors[] = {
 #endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
 const FeatureEntry::FeatureVariation kAccountConsistencyFeatureVariations[] = {
-    {"Mirror", kAccountConsistencyMirror, arraysize(kAccountConsistencyMirror),
-     nullptr /* variation_id */}
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
-    ,
     {"Dice", kAccountConsistencyDice, arraysize(kAccountConsistencyDice),
      nullptr /* variation_id */},
     {"Dice (migration)", kAccountConsistencyDiceMigration,

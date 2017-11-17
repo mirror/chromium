@@ -23,8 +23,7 @@ ScopedAccountConsistency::ScopedAccountConsistency(
 #endif
 
 #if BUILDFLAG(ENABLE_MIRROR)
-  DCHECK_EQ(AccountConsistencyMethod::kMirror, method);
-  return;
+  NOTREACHED();
 #endif
 
   if (method == AccountConsistencyMethod::kDisabled) {
@@ -38,9 +37,6 @@ ScopedAccountConsistency::ScopedAccountConsistency(
   switch (method) {
     case AccountConsistencyMethod::kDisabled:
       NOTREACHED();
-      break;
-    case AccountConsistencyMethod::kMirror:
-      feature_value = kAccountConsistencyFeatureMethodMirror;
       break;
     case AccountConsistencyMethod::kDiceFixAuthErrors:
       feature_value = kAccountConsistencyFeatureMethodDiceFixAuthErrors;

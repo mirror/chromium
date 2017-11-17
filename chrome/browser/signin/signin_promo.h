@@ -99,10 +99,6 @@ signin_metrics::Reason GetSigninReasonForPromoURL(const GURL& url);
 // Returns true if the auto_close parameter in the given URL is set to true.
 bool IsAutoCloseEnabledInURL(const GURL& url);
 
-// Returns true if the showAccountManagement parameter in the given url is set
-// to true.
-bool ShouldShowAccountManagement(const GURL& url);
-
 // Forces UseWebBasedSigninFlow() to return true when set; used in tests only.
 void ForceWebBasedSigninFlowForTesting(bool force);
 

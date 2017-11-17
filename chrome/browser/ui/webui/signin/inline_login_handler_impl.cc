@@ -252,8 +252,7 @@ void InlineSigninHelper::OnClientOAuthSuccessAndBrowserOpened(
       // middle of any webui handler code.
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE,
-          base::BindOnce(&InlineLoginHandlerImpl::CloseTab, handler_,
-                         signin::ShouldShowAccountManagement(current_url_)));
+          base::BindOnce(&InlineLoginHandlerImpl::CloseTab, handler_));
     }
 
     if (reason == signin_metrics::Reason::REASON_REAUTHENTICATION ||
@@ -850,16 +849,14 @@ void InlineLoginHandlerImpl::SyncStarterCallback(
     RedirectToNtpOrAppsPage(contents, access_point);
   } else if (auto_close) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE,
-        base::BindOnce(&InlineLoginHandlerImpl::CloseTab,
-                       weak_factory_.GetWeakPtr(),
-                       signin::ShouldShowAccountManagement(current_url)));
+        FROM_HERE, base::BindOnce(&InlineLoginHandlerImpl::CloseTab,
+                                  weak_factory_.GetWeakPtr()));
   } else {
     RedirectToNtpOrAppsPageIfNecessary(contents, access_point);
   }
 }
 
-void InlineLoginHandlerImpl::CloseTab(bool show_account_management) {
+void InlineLoginHandlerImpl::CloseTab() {
   content::WebContents* tab = web_ui()->GetWebContents();
   Browser* browser = chrome::FindBrowserWithWebContents(tab);
   if (browser) {
@@ -870,14 +867,6 @@ void InlineLoginHandlerImpl::CloseTab(bool show_account_management) {
         tab_strip_model->ExecuteContextMenuCommand(
             index, TabStripModel::CommandCloseTab);
       }
-    }
-
-    if (show_account_management) {
-      browser->window()->ShowAvatarBubbleFromAvatarButton(
-          BrowserWindow::AVATAR_BUBBLE_MODE_ACCOUNT_MANAGEMENT,
-          signin::ManageAccountsParams(),
-          signin_metrics::AccessPoint::ACCESS_POINT_AVATAR_BUBBLE_SIGN_IN,
-          false);
     }
   }
 }
