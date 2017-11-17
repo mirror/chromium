@@ -1,0 +1,70 @@
+module media.mojom;
+
+// Key information structure containing data necessary to decrypt/decode media.
+struct KeyInfo {
+  // Crypto session for decryption.
+  uint32 crypto_session_id;
+  // ID of the key.
+  array<uint8> key_id;
+  // Opaque key blob for decrypting or decoding.
+  array<uint8> key_blob;
+  // Indicates whether this key/key_id is usable.
+  // The caller sets this to false to invalidate a key.
+  bool is_usable_key;
+};
+
+interface CdmProxy {
+  // See media/cdm/cdm_proxy.h.
+  [Native]
+  enum Status;
+
+  // See media/cdm/cdm_proxy.h.
+  [Native]
+  enum Protocol;
+
+  // See media/cdm/cdm_proxy.h.
+  [Native]
+  enum Function;
+
+  // Intialize the proxy.
+  // If the proxy created a crypto session, then the ID to refer
+  // to the crypto session is passed back to the caller.
+  Initialize() => (Status status, Protocol protocol, uint32 crypto_session_id);
+
+  // Process the input data.
+  // |function| specifies what type of function to use.
+  // |crypto_session_id| must be a value returned from Initialize()
+  // or CreateMediaCryptoSessions().
+  // |input_data| is the input blob to be processed.
+  // |expected_output_size| is the expected size of the output data.
+  // Whether this value is used or not is implementation dependent,
+  // but for some proxy implementations, the caller may have to specify this.
+  Process(Function function,
+          uint32 crypto_session_id,
+          array<uint8> input_data,
+          uint32 expected_output_size) => (Status status, array<uint8> output);
+
+  // Creates crypto sessions for handling media.
+  // |create_*_crypto_session| tell the proxy whether to create that type of
+  // crypto session.
+  // |*_private_data| are used while creating crypto sessions, if any.
+  CreateMediaCryptoSessions(
+      bool create_video_crypto_session,
+      array<uint8> video_private_data,
+      bool create_audio_crypto_session,
+      array<uint8> audio_private_data) =>
+          (Status status,
+           uint32 video_crypto_session_id,
+           uint32 audio_crypto_session_id,
+           uint64 video_private_output_data,
+           uint64 audio_private_output_data);
+
+  // Set the key information to the proxy for later use.
+  SetKeyInfo(array<KeyInfo> key_infos);
+};
+
+// Client of CdmProxy.
+interface CdmProxyClient {
+  // Notifies the client that there has been a hardware reset.
+  NotifyHardwareReset();
+};
