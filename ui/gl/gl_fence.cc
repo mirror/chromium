@@ -18,6 +18,11 @@
 #include "ui/gl/gl_fence_apple.h"
 #endif
 
+#if defined(USE_EGL) && defined(OS_POSIX)
+#include "ui/gl/gl_fence_android_native_fence_sync.h"
+#include "ui/gl/gl_surface_egl.h"
+#endif
+
 namespace gl {
 
 GLFence::GLFence() {
@@ -48,7 +53,8 @@ GLFence* GLFence::Create() {
   if (g_driver_egl.ext.b_EGL_KHR_fence_sync &&
       g_driver_egl.ext.b_EGL_KHR_wait_sync) {
     // Prefer GLFenceEGL which doesn't require GL context switching.
-    fence.reset(new GLFenceEGL);
+    fence = GLFenceEGL::Create();
+    DCHECK(fence);
   } else
 #endif
       if (g_current_gl_driver->ext.b_GL_ARB_sync ||
@@ -61,7 +67,8 @@ GLFence* GLFence::Create() {
     fence.reset(new GLFenceAPPLE);
 #else
   } else if (g_driver_egl.ext.b_EGL_KHR_fence_sync) {
-    fence.reset(new GLFenceEGL);
+    fence = GLFenceEGL::Create();
+    DCHECK(fence);
 #endif
   } else if (g_current_gl_driver->ext.b_GL_NV_fence) {
     fence.reset(new GLFenceNV);
@@ -82,6 +89,43 @@ void GLFence::ResetState() {
 
 void GLFence::Invalidate() {
   NOTIMPLEMENTED();
+}
+
+bool GLFence::IsGpuFenceSupported() {
+#if defined(USE_EGL) && defined(OS_POSIX)
+  return gl::GLSurfaceEGL::IsAndroidNativeFenceSyncSupported();
+#else
+  return false;
+#endif
+}
+
+// static
+std::unique_ptr<GLFence> GLFence::CreateFromGpuFenceHandle(
+    const gfx::GpuFenceHandle& handle) {
+  DCHECK(IsGpuFenceSupported());
+  switch (handle.type) {
+#if defined(USE_EGL) && defined(OS_POSIX)
+    case gfx::GpuFenceHandleType::ANDROID_NATIVE_FENCE_SYNC:
+      return GLFenceAndroidNativeFenceSync::CreateFromGpuFenceHandle(handle);
+#endif
+    default:
+      NOTREACHED();
+      return nullptr;
+  }
+}
+
+// static
+std::unique_ptr<GLFence> GLFence::CreateForGpuFence() {
+  DCHECK(IsGpuFenceSupported());
+#if defined(USE_EGL) && defined(OS_POSIX)
+  return GLFenceAndroidNativeFenceSync::CreateForGpuFence();
+#endif
+  NOTREACHED();
+  return nullptr;
+}
+
+gfx::GpuFenceHandle GLFence::GetGpuFenceHandle() {
+  return gfx::GpuFenceHandle();
 }
 
 }  // namespace gl

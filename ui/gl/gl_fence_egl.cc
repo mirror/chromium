@@ -20,11 +20,33 @@ void GLFenceEGL::SetIgnoreFailures() {
   g_ignore_egl_sync_failures = true;
 }
 
-GLFenceEGL::GLFenceEGL() {
+GLFenceEGL::GLFenceEGL() = default;
+
+// static
+std::unique_ptr<GLFenceEGL> GLFenceEGL::Create() {
+  auto fence = Create(EGL_SYNC_FENCE_KHR, nullptr);
+  // Default creation isn't supposed to fail.
+  DCHECK(fence);
+  return fence;
+}
+
+// static
+std::unique_ptr<GLFenceEGL> GLFenceEGL::Create(EGLenum type, EGLint* attribs) {
+  // Must use a helper class, the no-args constructor is protected.
+  struct GLFenceEGLHelper : public GLFenceEGL {};
+  auto fence = base::MakeUnique<GLFenceEGLHelper>();
+
+  bool success = fence->Initialize(type, attribs);
+  if (success)
+    return fence;
+  return nullptr;
+}
+
+bool GLFenceEGL::Initialize(EGLenum type, EGLint* attribs) {
   display_ = eglGetCurrentDisplay();
-  sync_ = eglCreateSyncKHR(display_, EGL_SYNC_FENCE_KHR, NULL);
-  DCHECK(sync_ != EGL_NO_SYNC_KHR);
+  sync_ = eglCreateSyncKHR(display_, type, attribs);
   glFlush();
+  return sync_ != EGL_NO_SYNC_KHR;
 }
 
 bool GLFenceEGL::HasCompleted() {
