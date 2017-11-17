@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64b66b08_b156e4b3",
+        "filename": "chrome/browser/ui/cocoa/profiles/user_manager_mac_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-11-17T15:37:38Z",
+      "side": 1,
+      "message": "Removing this line will make the test pass. The previous version of the test manually deleted the system profile then set the profile manager to NULL as the only sort of cleanup. The new base browser test deletes all the profiles on teardown, attempting to delete the system profile twice.\n\nI\u0027m not sure why DeleteSystemProfile doesn\u0027t remove the system profile from |testing_profiles_| in TestingProfileManager (https://cs.chromium.org/chromium/src/chrome/test/base/testing_profile_manager.cc?rcl\u003d218fb925ecd32f424842c68f6ba14a660de2b0a3\u0026l\u003d203) but I guess it should too.\n\nStrangely, the local stack trace was just as useless as the one on the trybots. I\u0027m wondering if there\u0027s a problem with symbols on the Mac builds.",
+      "revId": "7a6e83558040dfd825bad23f7d1108cf26a77e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
