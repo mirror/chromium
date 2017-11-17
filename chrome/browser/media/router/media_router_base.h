@@ -69,6 +69,8 @@ class MediaRouterBase : public MediaRouter {
   // Returns a pointer to the MediaRoute whose ID is |route_id|, or nullptr
   // if not found.
   const MediaRoute* GetRoute(const MediaRoute::Id& route_id) const;
+  const MediaRoute* GetRouteByPresentationId(
+      const std::string& presentation_id) const;
 
   using PresentationConnectionStateChangedCallbacks = base::CallbackList<void(
       const content::PresentationConnectionStateChangeInfo&)>;
