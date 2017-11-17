@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "82a82226_1a6e342b",
+        "filename": "chrome/browser/ui/passwords/destination_file_system_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-17T16:13:48Z",
+      "side": 1,
+      "message": "I agree with you assessment (was just brainstorming in my previous comment).\nAnd two tests already are a good justification to have a fixture. :)",
+      "parentUuid": "0c4874d2_568b64d9",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 31
+      },
+      "revId": "0ca26eff53ba4bdcb32656053f6d21cf42ffcc57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05a05994_8ba8c527",
         "filename": "chrome/browser/ui/passwords/destination_file_system_unittest.cc",
         "patchSetId": 4
