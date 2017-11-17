@@ -81,7 +81,7 @@ class SyncFileSystemApiTest : public ExtensionApiTest {
 ACTION_P(NotifyOkStateAndCallback, mock_remote_service) {
   mock_remote_service->NotifyRemoteServiceStateUpdated(
       sync_file_system::REMOTE_SERVICE_OK, "Test event description.");
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(arg1, sync_file_system::SYNC_STATUS_OK));
 }
 
@@ -101,7 +101,7 @@ ACTION_P6(ReturnWithFakeFileAddedStatus,
       *origin,
       base::FilePath(FILE_PATH_LITERAL("foo.txt")));
   mock_remote_service->NotifyRemoteChangeQueueUpdated(0);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(arg0, sync_file_system::SYNC_STATUS_OK, mock_url));
   mock_remote_service->NotifyFileStatusChanged(

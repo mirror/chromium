@@ -280,7 +280,7 @@ void RunFaviconCallbackAsync(
     }
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&favicon::FaviconService::FaviconResultsCallbackRunner,
                      callback, base::Owned(favicon_bitmap_results)));

@@ -887,7 +887,7 @@ void BookmarkModelAssociator::PostPersistAssociationsTask() {
   // No need to post a task if a task is already pending.
   if (weak_factory_.HasWeakPtrs())
     return;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&BookmarkModelAssociator::PersistAssociations,
                             weak_factory_.GetWeakPtr()));
 }

@@ -83,8 +83,8 @@ void BackgroundSyncNetworkObserver::NotifyManagerIfNetworkChanged(
 void BackgroundSyncNetworkObserver::NotifyNetworkChanged() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                network_changed_callback_);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, network_changed_callback_);
 }
 
 }  // namespace content

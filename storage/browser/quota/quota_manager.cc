@@ -838,7 +838,7 @@ QuotaManager::QuotaManager(
     // Reset the interval to ensure we use the get_settings_function
     // the first times settings_ is needed.
     settings_.refresh_interval = base::TimeDelta();
-    get_settings_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    get_settings_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   }
 }
 
@@ -1608,11 +1608,12 @@ void QuotaManager::GetQuotaSettings(const QuotaSettingsCallback& callback) {
       FROM_HERE,
       base::BindOnce(
           get_settings_function_,
-          base::BindOnce(&DidGetSettingsThreadAdapter,
-                         base::RetainedRef(base::ThreadTaskRunnerHandle::Get()),
-                         base::BindOnce(&QuotaManager::DidGetSettings,
-                                        weak_factory_.GetWeakPtr(),
-                                        base::TimeTicks::Now()))));
+          base::BindOnce(
+              &DidGetSettingsThreadAdapter,
+              base::RetainedRef(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+              base::BindOnce(&QuotaManager::DidGetSettings,
+                             weak_factory_.GetWeakPtr(),
+                             base::TimeTicks::Now()))));
 }
 
 void QuotaManager::DidGetSettings(base::TimeTicks start_ticks,

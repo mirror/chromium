@@ -13,7 +13,7 @@
 namespace cc {
 
 TestLayerTreeHostBase::TestLayerTreeHostBase()
-    : task_runner_provider_(base::ThreadTaskRunnerHandle::Get()),
+    : task_runner_provider_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       pending_layer_(nullptr),
       active_layer_(nullptr),
       old_pending_layer_(nullptr),

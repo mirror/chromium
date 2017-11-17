@@ -15,12 +15,13 @@ namespace cc {
 class FakeImplTaskRunnerProvider : public TaskRunnerProvider {
  public:
   FakeImplTaskRunnerProvider()
-      : TaskRunnerProvider(base::ThreadTaskRunnerHandle::Get(), nullptr),
+      : TaskRunnerProvider(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                           nullptr),
         set_impl_thread_(this) {}
 
   explicit FakeImplTaskRunnerProvider(
       scoped_refptr<base::SingleThreadTaskRunner> impl_task_runner)
-      : TaskRunnerProvider(base::ThreadTaskRunnerHandle::Get(),
+      : TaskRunnerProvider(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                            impl_task_runner),
         set_impl_thread_(this) {}
 

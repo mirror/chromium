@@ -82,7 +82,7 @@ class UIControlsWin : public UIControlsAura {
       const base::Closure& closure) override {
     // On windows, posting UI events is synchronous so just post the closure.
     DCHECK(base::MessageLoopForUI::IsCurrent());
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, closure);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, closure);
   }
 
  private:

@@ -1167,7 +1167,7 @@ GCMStoreImpl::GCMStoreImpl(
     scoped_refptr<base::SequencedTaskRunner> blocking_task_runner,
     std::unique_ptr<Encryptor> encryptor)
     : backend_(new Backend(path,
-                           base::ThreadTaskRunnerHandle::Get(),
+                           base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                            std::move(encryptor))),
       blocking_task_runner_(blocking_task_runner),
       weak_ptr_factory_(this) {}

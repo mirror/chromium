@@ -98,13 +98,14 @@ gpu::ContextResult InProcessContextProvider::BindToCurrentThread() {
       !window_, /* is_offscreen */
       window_, (shared_context_ ? shared_context_->context_.get() : nullptr),
       attribs_, gpu::SharedMemoryLimits(), gpu_memory_buffer_manager_,
-      image_factory_, base::ThreadTaskRunnerHandle::Get());
+      image_factory_, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   if (bind_result_ != gpu::ContextResult::kSuccess)
     return bind_result_;
 
   cache_controller_ = std::make_unique<viz::ContextCacheController>(
-      context_->GetImplementation(), base::ThreadTaskRunnerHandle::Get());
+      context_->GetImplementation(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   std::string unique_context_name =
       base::StringPrintf("%s-%p", debug_name_.c_str(), context_.get());

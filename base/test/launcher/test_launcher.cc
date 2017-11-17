@@ -553,7 +553,7 @@ bool TestLauncher::Run() {
   // Start the watchdog timer.
   watchdog_timer_.Reset();
 
-  ThreadTaskRunnerHandle::Get()->PostTask(
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, BindOnce(&TestLauncher::RunTestIteration, Unretained(this)));
 
   RunLoop().Run();
@@ -584,10 +584,10 @@ void TestLauncher::LaunchChildGTestProcess(
   bool redirect_stdio = (parallel_jobs_ > 1) || BotModeEnabled();
 
   GetTaskRunner()->PostTask(
-      FROM_HERE,
-      BindOnce(&DoLaunchChildTestProcess, new_command_line, timeout, options,
-               redirect_stdio, RetainedRef(ThreadTaskRunnerHandle::Get()),
-               base::Passed(std::move(observer))));
+      FROM_HERE, BindOnce(&DoLaunchChildTestProcess, new_command_line, timeout,
+                          options, redirect_stdio,
+                          RetainedRef(ThreadTaskRunnerHandle::Get(FROM_HERE)),
+                          base::Passed(std::move(observer))));
 }
 
 void TestLauncher::OnTestFinished(const TestResult& original_result) {
@@ -1099,7 +1099,7 @@ void TestLauncher::RunTests() {
     fflush(stdout);
 
     // No tests have actually been started, so kick off the next iteration.
-    ThreadTaskRunnerHandle::Get()->PostTask(
+    ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, BindOnce(&TestLauncher::RunTestIteration, Unretained(this)));
   }
 }
@@ -1125,7 +1125,7 @@ void TestLauncher::RunTestIteration() {
   tests_to_retry_.clear();
   results_tracker_.OnTestIterationStarting();
 
-  ThreadTaskRunnerHandle::Get()->PostTask(
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, BindOnce(&TestLauncher::RunTests, Unretained(this)));
 }
 
@@ -1185,7 +1185,7 @@ void TestLauncher::OnTestIterationFinished() {
   results_tracker_.PrintSummaryOfCurrentIteration();
 
   // Kick off the next iteration.
-  ThreadTaskRunnerHandle::Get()->PostTask(
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, BindOnce(&TestLauncher::RunTestIteration, Unretained(this)));
 }
 

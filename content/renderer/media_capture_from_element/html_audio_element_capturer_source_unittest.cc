@@ -68,7 +68,8 @@ class HTMLAudioElementCapturerSourceTest : public testing::Test {
   HTMLAudioElementCapturerSourceTest()
       : fake_callback_(0.1, kAudioTrackSampleRate),
         audio_source_(new media::WebAudioSourceProviderImpl(
-            new media::NullAudioSink(base::ThreadTaskRunnerHandle::Get()),
+            new media::NullAudioSink(
+                base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
             &media_log_)) {}
 
   void SetUp() final {

@@ -17,7 +17,7 @@ FileReader::FileReader(
     : resource_(resource),
       optional_file_sequence_task_(optional_file_sequence_task),
       done_callback_(done_callback),
-      origin_task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+      origin_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 void FileReader::Start() {
   extensions::GetExtensionFileTaskRunner()->PostTask(

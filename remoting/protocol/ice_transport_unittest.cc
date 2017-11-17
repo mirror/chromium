@@ -96,10 +96,11 @@ class IceTransportTest : public testing::Test {
 
   void ProcessTransportInfo(std::unique_ptr<IceTransport>* target_transport,
                             std::unique_ptr<buzz::XmlElement> transport_info) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE, base::Bind(&IceTransportTest::DeliverTransportInfo,
-                              base::Unretained(this), target_transport,
-                              base::Passed(&transport_info)),
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&IceTransportTest::DeliverTransportInfo,
+                   base::Unretained(this), target_transport,
+                   base::Passed(&transport_info)),
         transport_info_delay_);
   }
 

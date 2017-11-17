@@ -126,7 +126,7 @@ class FakeDataChannel {
         return ERR_CONNECTION_RESET;
       write_called_after_close_ = true;
       write_callback_ = callback;
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(&FakeDataChannel::DoWriteCallback,
                                 weak_factory_.GetWeakPtr()));
       return ERR_IO_PENDING;
@@ -135,7 +135,7 @@ class FakeDataChannel {
     data_.push(new DrainableIOBuffer(
         new StringIOBuffer(std::string(buf->data(), buf_len)),
         buf_len));
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&FakeDataChannel::DoReadCallback,
                               weak_factory_.GetWeakPtr()));
     return buf_len;
@@ -148,7 +148,7 @@ class FakeDataChannel {
   void Close() {
     closed_ = true;
     if (!read_callback_.is_null()) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(&FakeDataChannel::DoReadCallback,
                                 weak_factory_.GetWeakPtr()));
     }
@@ -1001,7 +1001,7 @@ TEST_F(SSLServerSocketTest, ClientWriteAfterServerClose) {
   client_ret = write_callback.GetResult(client_ret);
   EXPECT_GT(client_ret, 0);
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       base::TimeDelta::FromMilliseconds(10));
   base::RunLoop().Run();

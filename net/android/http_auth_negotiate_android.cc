@@ -113,7 +113,7 @@ int HttpAuthNegotiateAndroid::GenerateAuthToken(
   auth_token_ = auth_token;
   completion_callback_ = callback;
   scoped_refptr<base::SingleThreadTaskRunner> callback_task_runner =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   base::Callback<void(int, const std::string&)> thread_safe_callback =
       base::Bind(&HttpAuthNegotiateAndroid::SetResultInternal,
                  weak_factory_.GetWeakPtr());

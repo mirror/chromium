@@ -12,7 +12,7 @@
 namespace chromecast {
 
 TaskRunnerImpl::TaskRunnerImpl()
-    : runner_(base::ThreadTaskRunnerHandle::Get()) {
+    : runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
   DCHECK(runner_.get());
 }
 

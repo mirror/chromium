@@ -56,7 +56,7 @@ struct HidServiceLinux::ConnectParams {
                 const ConnectCallback& callback)
       : device_info(std::move(device_info)),
         callback(callback),
-        task_runner(base::ThreadTaskRunnerHandle::Get()),
+        task_runner(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         blocking_task_runner(
             base::CreateSequencedTaskRunnerWithTraits(kBlockingTaskTraits)) {}
   ~ConnectParams() {}
@@ -72,7 +72,7 @@ class HidServiceLinux::BlockingTaskHelper : public UdevWatcher::Observer {
  public:
   BlockingTaskHelper(base::WeakPtr<HidServiceLinux> service)
       : service_(std::move(service)),
-        task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+        task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
     DETACH_FROM_SEQUENCE(sequence_checker_);
   }
 
@@ -211,7 +211,7 @@ void HidServiceLinux::Connect(const std::string& device_guid,
 
   const auto& map_entry = devices().find(device_guid);
   if (map_entry == devices().end()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, nullptr));
     return;
   }

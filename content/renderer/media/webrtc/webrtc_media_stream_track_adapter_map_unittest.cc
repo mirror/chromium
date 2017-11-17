@@ -25,7 +25,7 @@ class WebRtcMediaStreamTrackAdapterMapTest : public ::testing::Test {
  public:
   void SetUp() override {
     dependency_factory_.reset(new MockPeerConnectionDependencyFactory());
-    main_thread_ = base::ThreadTaskRunnerHandle::Get();
+    main_thread_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
     map_ = new WebRtcMediaStreamTrackAdapterMap(dependency_factory_.get());
   }
 

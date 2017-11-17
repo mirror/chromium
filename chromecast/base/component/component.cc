@@ -29,7 +29,7 @@ class DependencyCount : public base::RefCountedThreadSafe<DependencyCount> {
  public:
   explicit DependencyCount(ComponentBase* component)
       : component_(component),
-        task_runner_(base::ThreadTaskRunnerHandle::Get()),
+        task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         dep_count_(0),
         disabling_(false) {
     DCHECK(component_);
@@ -250,7 +250,7 @@ ScopedReferenceBase::~ScopedReferenceBase() {
 }  // namespace subtle
 
 ComponentBase::ComponentBase()
-    : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       state_(kStateDisabled),
       async_call_in_progress_(false),
       pending_dependency_count_(0),

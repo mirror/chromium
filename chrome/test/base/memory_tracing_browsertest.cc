@@ -35,7 +35,8 @@ using tracing::EndTracing;
 void RequestGlobalDumpCallback(base::Closure quit_closure,
                                bool success,
                                uint64_t) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_closure);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                         quit_closure);
   // TODO(ssid): Check for dump success once crbug.com/709524 is fixed.
 }
 

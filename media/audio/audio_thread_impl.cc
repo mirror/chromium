@@ -17,7 +17,7 @@ AudioThreadImpl::AudioThreadImpl() : thread_("AudioThread") {
 #if defined(OS_MACOSX)
   // On Mac, the audio task runner must belong to the main thread.
   // See http://crbug.com/158170.
-  task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 #else
   task_runner_ = thread_.task_runner();
 #endif

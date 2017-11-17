@@ -101,7 +101,7 @@ class ViewHttpCacheJob : public net::URLRequestJob {
 };
 
 void ViewHttpCacheJob::Start() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ViewHttpCacheJob::StartAsync,
                                 weak_factory_.GetWeakPtr()));
 }
@@ -185,7 +185,7 @@ void ViewHttpCacheJob::Core::OnIOComplete(int result) {
 
   // We may be holding the last reference to this job. If it's deleted
   // synchronously then ViewCacheHelper would have a UaF.
-  base::ThreadTaskRunnerHandle::Get()->ReleaseSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->ReleaseSoon(FROM_HERE, this);
 }
 
 }  // namespace.

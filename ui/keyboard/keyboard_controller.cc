@@ -495,7 +495,7 @@ void KeyboardController::OnTextInputStateChanged(
       case KeyboardControllerState::SHOWN:
         ChangeState(KeyboardControllerState::WILL_HIDE);
 
-        base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
             FROM_HERE,
             base::BindOnce(&KeyboardController::HideKeyboard,
                            weak_factory_will_hide_.GetWeakPtr(),
@@ -699,7 +699,7 @@ void KeyboardController::ChangeState(KeyboardControllerState state) {
   switch (state_) {
     case KeyboardControllerState::LOADING_EXTENSION:
     case KeyboardControllerState::WILL_HIDE:
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE,
           base::BindOnce(&KeyboardController::ReportLingeringState,
                          weak_factory_report_lingering_state_.GetWeakPtr()),

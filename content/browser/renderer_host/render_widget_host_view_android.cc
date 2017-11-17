@@ -261,7 +261,7 @@ void GLHelperHolder::OnContextLost() {
   gl_helper_.reset();
   // Need to post a task because the command buffer client cannot be deleted
   // from within this callback.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&RenderWidgetHostViewAndroid::OnContextLost));
 }
 

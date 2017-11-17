@@ -84,8 +84,9 @@ class MessageLoopTaskRunner : public TaskQueueManagerDelegateForTest {
 
  private:
   explicit MessageLoopTaskRunner(std::unique_ptr<base::TickClock> tick_clock)
-      : TaskQueueManagerDelegateForTest(base::ThreadTaskRunnerHandle::Get(),
-                                        std::move(tick_clock)) {}
+      : TaskQueueManagerDelegateForTest(
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+            std::move(tick_clock)) {}
   ~MessageLoopTaskRunner() override {}
 };
 

@@ -70,7 +70,7 @@ void ContentTranslateDriver::InitiateTranslation(const std::string& page_lang,
   // has finished.
   if (web_contents()->IsLoading() && attempt < max_reload_check_attempts_) {
     int backoff = attempt * kMaxTranslateLoadCheckAttempts;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&ContentTranslateDriver::InitiateTranslation,
                    weak_pointer_factory_.GetWeakPtr(), page_lang, attempt + 1),
@@ -204,7 +204,7 @@ void ContentTranslateDriver::NavigationEntryCommitted(
   // by WebContentsObservers is undefined and might result in the current
   // infobars being removed. Since the translation initiation process might add
   // an infobar, it must be done after that.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&ContentTranslateDriver::InitiateTranslation,
                  weak_pointer_factory_.GetWeakPtr(),

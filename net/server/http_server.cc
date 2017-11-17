@@ -36,7 +36,7 @@ HttpServer::HttpServer(std::unique_ptr<ServerSocket> server_socket,
   DCHECK(server_socket_);
   // Start accepting connections in next run loop in case when delegate is not
   // ready to get callbacks.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&HttpServer::DoAcceptLoop, weak_ptr_factory_.GetWeakPtr()));
 }
@@ -115,8 +115,8 @@ void HttpServer::Close(int connection_id) {
   // connection. Instead of referencing connection with ID all the time,
   // destroys the connection in next run loop to make sure any pending
   // callbacks in the call stack return.
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE,
-                                                  connection.release());
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
+      FROM_HERE, connection.release());
 }
 
 int HttpServer::GetLocalAddress(IPEndPoint* address) {

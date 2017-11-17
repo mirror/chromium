@@ -177,7 +177,7 @@ void ServeOneByOneImage(
     base::Callback<void(const std::string&,
                         const gfx::Image&,
                         const image_fetcher::RequestMetadata&)> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback, id, gfx::test::CreateImage(1, 1),
                             image_fetcher::RequestMetadata()));
   notify->OnImageDataFetched(id, "1-by-1-image-data");

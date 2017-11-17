@@ -271,9 +271,9 @@ class PersonalDataManagerTest : public PersonalDataManagerTestBase,
     prefs_ = test::PrefServiceForTesting();
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
     base::FilePath path = temp_dir_.GetPath().AppendASCII("TestWebDB");
-    web_database_ =
-        new WebDatabaseService(path, base::ThreadTaskRunnerHandle::Get(),
-                               base::ThreadTaskRunnerHandle::Get());
+    web_database_ = new WebDatabaseService(
+        path, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
     // Set up account tracker.
     signin_client_.reset(new TestSigninClient(prefs_.get()));
@@ -288,8 +288,8 @@ class PersonalDataManagerTest : public PersonalDataManagerTestBase,
     web_database_->AddTable(std::unique_ptr<WebDatabaseTable>(autofill_table_));
     web_database_->LoadDatabase();
     autofill_database_service_ = new AutofillWebDataService(
-        web_database_, base::ThreadTaskRunnerHandle::Get(),
-        base::ThreadTaskRunnerHandle::Get(),
+        web_database_, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE),
         WebDataServiceBase::ProfileErrorCallback());
     autofill_database_service_->Init();
 
@@ -2695,9 +2695,9 @@ class SaveImportedProfileTest
     prefs_ = test::PrefServiceForTesting();
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
     base::FilePath path = temp_dir_.GetPath().AppendASCII("TestWebDB");
-    web_database_ =
-        new WebDatabaseService(path, base::ThreadTaskRunnerHandle::Get(),
-                               base::ThreadTaskRunnerHandle::Get());
+    web_database_ = new WebDatabaseService(
+        path, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
     // Set up account tracker.
     signin_client_.reset(new TestSigninClient(prefs_.get()));
@@ -2712,8 +2712,8 @@ class SaveImportedProfileTest
     web_database_->AddTable(std::unique_ptr<WebDatabaseTable>(autofill_table_));
     web_database_->LoadDatabase();
     autofill_database_service_ = new AutofillWebDataService(
-        web_database_, base::ThreadTaskRunnerHandle::Get(),
-        base::ThreadTaskRunnerHandle::Get(),
+        web_database_, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE),
         WebDataServiceBase::ProfileErrorCallback());
     autofill_database_service_->Init();
 

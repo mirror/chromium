@@ -56,7 +56,7 @@ class DelayedReleaseServiceContextRef {
   explicit DelayedReleaseServiceContextRef(
       std::unique_ptr<service_manager::ServiceContextRef> ref)
       : ref_(std::move(ref)),
-        task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+        task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
   ~DelayedReleaseServiceContextRef() {
     service_manager::ServiceContextRef* ref_ptr = ref_.release();
@@ -103,7 +103,7 @@ void InterfaceFactoryImpl::CreateAudioDecoder(
     mojo::InterfaceRequest<mojom::AudioDecoder> request) {
 #if BUILDFLAG(ENABLE_MOJO_AUDIO_DECODER)
   scoped_refptr<base::SingleThreadTaskRunner> task_runner(
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   std::unique_ptr<AudioDecoder> audio_decoder =
       mojo_media_client_->CreateAudioDecoder(task_runner);
@@ -137,7 +137,7 @@ void InterfaceFactoryImpl::CreateRenderer(
     return;
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner(
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   auto audio_sink =
       mojo_media_client_->CreateAudioRendererSink(audio_device_id);
   auto video_sink = mojo_media_client_->CreateVideoRendererSink(task_runner);

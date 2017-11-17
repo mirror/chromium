@@ -20,7 +20,7 @@ void ShellContentGpuClient::InitializeRegistry(
   registry->AddInterface<mojom::PowerMonitorTest>(
       base::Bind(&PowerMonitorTestImpl::MakeStrongBinding,
                  base::Passed(std::make_unique<PowerMonitorTestImpl>())),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 }  // namespace content

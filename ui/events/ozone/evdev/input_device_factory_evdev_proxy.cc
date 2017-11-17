@@ -78,11 +78,11 @@ void InputDeviceFactoryEvdevProxy::GetTouchDeviceStatus(
     InputController::GetTouchDeviceStatusReply reply) {
   task_runner_->PostTask(
       FROM_HERE,
-      base::BindOnce(&InputDeviceFactoryEvdev::GetTouchDeviceStatus,
-                     input_device_factory_,
-                     base::BindOnce(&ForwardGetTouchDeviceStatusReply,
-                                    base::ThreadTaskRunnerHandle::Get(),
-                                    std::move(reply))));
+      base::BindOnce(
+          &InputDeviceFactoryEvdev::GetTouchDeviceStatus, input_device_factory_,
+          base::BindOnce(&ForwardGetTouchDeviceStatusReply,
+                         base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                         std::move(reply))));
 }
 
 void InputDeviceFactoryEvdevProxy::GetTouchEventLog(
@@ -90,11 +90,12 @@ void InputDeviceFactoryEvdevProxy::GetTouchEventLog(
     InputController::GetTouchEventLogReply reply) {
   task_runner_->PostTask(
       FROM_HERE,
-      base::BindOnce(&InputDeviceFactoryEvdev::GetTouchEventLog,
-                     input_device_factory_, out_dir,
-                     base::BindOnce(&ForwardGetTouchEventLogReply,
-                                    base::ThreadTaskRunnerHandle::Get(),
-                                    std::move(reply))));
+      base::BindOnce(
+          &InputDeviceFactoryEvdev::GetTouchEventLog, input_device_factory_,
+          out_dir,
+          base::BindOnce(&ForwardGetTouchEventLogReply,
+                         base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                         std::move(reply))));
 }
 
 }  // namespace ui

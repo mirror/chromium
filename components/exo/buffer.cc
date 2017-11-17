@@ -357,9 +357,10 @@ void Buffer::Texture::ScheduleWaitForRelease(base::TimeDelta delay) {
     return;
 
   wait_for_release_pending_ = true;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&Buffer::Texture::WaitForRelease,
-                            weak_ptr_factory_.GetWeakPtr()),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&Buffer::Texture::WaitForRelease,
+                 weak_ptr_factory_.GetWeakPtr()),
       delay);
 }
 

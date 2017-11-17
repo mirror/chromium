@@ -84,7 +84,7 @@ void MockChannelIDStoreWithAsyncGet::CallGetChannelIDCallbackWithResult(
     crypto::ECPrivateKey* key) {
   if (err == OK)
     channel_id_count_ = 1;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback_, err, server_identifier_,
                             base::Passed(key ? key->Copy() : nullptr)));
 }

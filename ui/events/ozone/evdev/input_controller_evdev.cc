@@ -182,7 +182,7 @@ void InputControllerEvdev::GetTouchEventLog(const base::FilePath& out_dir,
 void InputControllerEvdev::ScheduleUpdateDeviceSettings() {
   if (!input_device_factory_ || settings_update_pending_)
     return;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&InputControllerEvdev::UpdateDeviceSettings,
                             weak_ptr_factory_.GetWeakPtr()));
   settings_update_pending_ = true;

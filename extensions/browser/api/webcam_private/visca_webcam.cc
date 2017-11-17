@@ -289,7 +289,7 @@ void ViscaWebcam::OnReceiveCompleted(const CommandCompleteCallback& callback,
   // Success case. If waiting for more data, then loop until encounter the
   // terminator.
   if (data_buffer_.back() != kViscaTerminator) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&ViscaWebcam::ReceiveLoop,
                               weak_ptr_factory_.GetWeakPtr(), callback));
     return;
@@ -310,7 +310,7 @@ void ViscaWebcam::OnReceiveCompleted(const CommandCompleteCallback& callback,
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                             base::Bind(callback, true, response));
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&ViscaWebcam::ReceiveLoop,
                               weak_ptr_factory_.GetWeakPtr(), callback));
   }

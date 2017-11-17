@@ -40,7 +40,7 @@ class ProxyResolvingClientSocketTest : public testing::Test {
  protected:
   ProxyResolvingClientSocketTest()
       : url_request_context_getter_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get(),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE),
             std::unique_ptr<net::TestURLRequestContext>(
                 new MyTestURLRequestContext))) {}
 
@@ -121,7 +121,7 @@ TEST_F(ProxyResolvingClientSocketTest, ReportsBadProxies) {
 TEST_F(ProxyResolvingClientSocketTest, ReusesHTTPAuthCache_Lookup) {
   scoped_refptr<net::TestURLRequestContextGetter> url_request_context_getter(
       new net::TestURLRequestContextGetter(
-          base::ThreadTaskRunnerHandle::Get(),
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE),
           std::unique_ptr<net::TestURLRequestContext>(
               new MyTestURLRequestContext)));
   net::MockClientSocketFactory socket_factory;
@@ -185,7 +185,7 @@ TEST_F(ProxyResolvingClientSocketTest, ReusesHTTPAuthCache_Lookup) {
 TEST_F(ProxyResolvingClientSocketTest, ReusesHTTPAuthCache_Preemptive) {
   scoped_refptr<net::TestURLRequestContextGetter> url_request_context_getter(
       new net::TestURLRequestContextGetter(
-          base::ThreadTaskRunnerHandle::Get(),
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE),
           std::unique_ptr<net::TestURLRequestContext>(
               new MyTestURLRequestContext)));
   net::MockClientSocketFactory socket_factory;
@@ -230,7 +230,7 @@ TEST_F(ProxyResolvingClientSocketTest, ReusesHTTPAuthCache_Preemptive) {
 TEST_F(ProxyResolvingClientSocketTest, ReusesHTTPAuthCache_NoCredentials) {
   scoped_refptr<net::TestURLRequestContextGetter> url_request_context_getter(
       new net::TestURLRequestContextGetter(
-          base::ThreadTaskRunnerHandle::Get(),
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE),
           std::unique_ptr<net::TestURLRequestContext>(
               new MyTestURLRequestContext)));
   net::MockClientSocketFactory socket_factory;

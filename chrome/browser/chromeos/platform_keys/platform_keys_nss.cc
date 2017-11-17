@@ -350,8 +350,7 @@ class GetTokensState : public NSSOperationState {
 };
 
 NSSOperationState::NSSOperationState()
-    : origin_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
-}
+    : origin_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 GenerateRSAKeyState::GenerateRSAKeyState(
     unsigned int modulus_length_bits,

@@ -113,7 +113,7 @@ ExtensionFunction::ResponseAction
 PasswordsPrivateGetSavedPasswordListFunction::Run() {
   // GetList() can immediately call GotList() (which would Respond() before
   // RespondLater()). So we post a task to preserve order.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&PasswordsPrivateGetSavedPasswordListFunction::GetList,
                      this));
@@ -144,7 +144,7 @@ ExtensionFunction::ResponseAction
 PasswordsPrivateGetPasswordExceptionListFunction::Run() {
   // GetList() can immediately call GotList() (which would Respond() before
   // RespondLater()). So we post a task to preserve order.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&PasswordsPrivateGetPasswordExceptionListFunction::GetList,
                      this));

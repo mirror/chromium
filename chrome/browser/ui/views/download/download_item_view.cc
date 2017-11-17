@@ -339,7 +339,7 @@ void DownloadItemView::OnDownloadDestroyed(DownloadItem* download) {
 void DownloadItemView::OnDownloadOpened(DownloadItem* download) {
   disabled_while_opening_ = true;
   SetEnabled(false);
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&DownloadItemView::Reenable,
                      weak_ptr_factory_.GetWeakPtr()),

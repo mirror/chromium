@@ -225,8 +225,8 @@ class MemoryDumpManagerTest : public testing::Test {
            std::unique_ptr<ProcessMemoryDump> pmd) {
           *curried_success = success;
           EXPECT_EQ(curried_expected_guid, dump_guid);
-          ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  curried_quit_closure);
+          ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+              FROM_HERE, curried_quit_closure);
         },
         Unretained(&success), run_loop.QuitClosure(), test_guid);
 
@@ -265,7 +265,7 @@ class MemoryDumpManagerTest : public testing::Test {
 TEST_F(MemoryDumpManagerTest, SingleDumper) {
   InitializeMemoryDumpManagerForInProcessTesting(false /* is_coordinator */);
   MockMemoryDumpProvider mdp;
-  RegisterDumpProvider(&mdp, ThreadTaskRunnerHandle::Get());
+  RegisterDumpProvider(&mdp, ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   // Now repeat enabling the memory category and check that the dumper is
   // invoked this time.
@@ -296,7 +296,7 @@ TEST_F(MemoryDumpManagerTest, CheckMemoryDumpArgs) {
   InitializeMemoryDumpManagerForInProcessTesting(false /* is_coordinator */);
   MockMemoryDumpProvider mdp;
 
-  RegisterDumpProvider(&mdp, ThreadTaskRunnerHandle::Get());
+  RegisterDumpProvider(&mdp, ThreadTaskRunnerHandle::Get(FROM_HERE));
   EnableForTracing();
   EXPECT_CALL(mdp, OnMemoryDump(IsDetailedDump(), _));
   EXPECT_TRUE(RequestProcessDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,
@@ -306,7 +306,7 @@ TEST_F(MemoryDumpManagerTest, CheckMemoryDumpArgs) {
 
   // Check that requesting dumps with low level of detail actually propagates to
   // OnMemoryDump() call on dump providers.
-  RegisterDumpProvider(&mdp, ThreadTaskRunnerHandle::Get());
+  RegisterDumpProvider(&mdp, ThreadTaskRunnerHandle::Get(FROM_HERE));
   EnableForTracing();
   EXPECT_CALL(mdp, OnMemoryDump(IsLightDump(), _));
   EXPECT_TRUE(RequestProcessDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,
@@ -361,7 +361,7 @@ TEST_F(MemoryDumpManagerTest, MultipleDumpers) {
   MockMemoryDumpProvider mdp2;
 
   // Enable only mdp1.
-  RegisterDumpProvider(&mdp1, ThreadTaskRunnerHandle::Get());
+  RegisterDumpProvider(&mdp1, ThreadTaskRunnerHandle::Get(FROM_HERE));
   EnableForTracing();
   EXPECT_CALL(mdp1, OnMemoryDump(_, _));
   EXPECT_CALL(mdp2, OnMemoryDump(_, _)).Times(0);
@@ -401,7 +401,7 @@ TEST_F(MemoryDumpManagerTest, MAYBE_RegistrationConsistency) {
   InitializeMemoryDumpManagerForInProcessTesting(false /* is_coordinator */);
   MockMemoryDumpProvider mdp;
 
-  RegisterDumpProvider(&mdp, ThreadTaskRunnerHandle::Get());
+  RegisterDumpProvider(&mdp, ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   {
     EXPECT_CALL(mdp, OnMemoryDump(_, _));
@@ -421,7 +421,7 @@ TEST_F(MemoryDumpManagerTest, MAYBE_RegistrationConsistency) {
     DisableTracing();
   }
 
-  RegisterDumpProvider(&mdp, ThreadTaskRunnerHandle::Get());
+  RegisterDumpProvider(&mdp, ThreadTaskRunnerHandle::Get(FROM_HERE));
   mdm_->UnregisterDumpProvider(&mdp);
 
   {
@@ -432,9 +432,9 @@ TEST_F(MemoryDumpManagerTest, MAYBE_RegistrationConsistency) {
     DisableTracing();
   }
 
-  RegisterDumpProvider(&mdp, ThreadTaskRunnerHandle::Get());
+  RegisterDumpProvider(&mdp, ThreadTaskRunnerHandle::Get(FROM_HERE));
   mdm_->UnregisterDumpProvider(&mdp);
-  RegisterDumpProvider(&mdp, ThreadTaskRunnerHandle::Get());
+  RegisterDumpProvider(&mdp, ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   {
     EXPECT_CALL(mdp, OnMemoryDump(_, _));
@@ -610,8 +610,10 @@ TEST_F(MemoryDumpManagerTest, UnregisterDumperWhileDumping) {
   MockMemoryDumpProvider mdp1;
   MockMemoryDumpProvider mdp2;
 
-  RegisterDumpProvider(&mdp1, ThreadTaskRunnerHandle::Get(), kDefaultOptions);
-  RegisterDumpProvider(&mdp2, ThreadTaskRunnerHandle::Get(), kDefaultOptions);
+  RegisterDumpProvider(&mdp1, ThreadTaskRunnerHandle::Get(FROM_HERE),
+                       kDefaultOptions);
+  RegisterDumpProvider(&mdp2, ThreadTaskRunnerHandle::Get(FROM_HERE),
+                       kDefaultOptions);
   EnableForTracing();
 
   EXPECT_CALL(mdp1, OnMemoryDump(_, _))
@@ -844,7 +846,8 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingPseudoStack) {
   MockMemoryDumpProvider mdp3;
   MemoryDumpProvider::Options supported_options;
   supported_options.supports_heap_profiling = true;
-  RegisterDumpProvider(&mdp1, ThreadTaskRunnerHandle::Get(), supported_options);
+  RegisterDumpProvider(&mdp1, ThreadTaskRunnerHandle::Get(FROM_HERE),
+                       supported_options);
   {
     testing::InSequence sequence;
     EXPECT_CALL(mdp1, OnHeapProfilingEnabled(true)).Times(1);
@@ -855,7 +858,7 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingPseudoStack) {
     EXPECT_CALL(mdp2, OnHeapProfilingEnabled(true)).Times(1);
     EXPECT_CALL(mdp2, OnHeapProfilingEnabled(false)).Times(1);
   }
-  RegisterDumpProvider(&mdp3, ThreadTaskRunnerHandle::Get());
+  RegisterDumpProvider(&mdp3, ThreadTaskRunnerHandle::Get(FROM_HERE));
   EXPECT_CALL(mdp3, OnHeapProfilingEnabled(_)).Times(0);
 
   EXPECT_TRUE(mdm_->EnableHeapProfiling(kHeapProfilingModePseudo));
@@ -864,7 +867,8 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingPseudoStack) {
             AllocationContextTracker::capture_mode());
   EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModePseudo);
   EXPECT_EQ(TraceLog::FILTERING_MODE, TraceLog::GetInstance()->enabled_modes());
-  RegisterDumpProvider(&mdp2, ThreadTaskRunnerHandle::Get(), supported_options);
+  RegisterDumpProvider(&mdp2, ThreadTaskRunnerHandle::Get(FROM_HERE),
+                       supported_options);
 
   TraceConfig::MemoryDumpConfig config;
   config.heap_profiler_options.breakdown_threshold_bytes = 100;
@@ -899,7 +903,8 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingBackground) {
   MockMemoryDumpProvider mdp1;
   MemoryDumpProvider::Options supported_options;
   supported_options.supports_heap_profiling = true;
-  RegisterDumpProvider(&mdp1, ThreadTaskRunnerHandle::Get(), supported_options);
+  RegisterDumpProvider(&mdp1, ThreadTaskRunnerHandle::Get(FROM_HERE),
+                       supported_options);
   testing::InSequence sequence;
   EXPECT_CALL(mdp1, OnHeapProfilingEnabled(true)).Times(1);
   EXPECT_CALL(mdp1, OnHeapProfilingEnabled(false)).Times(1);
@@ -951,7 +956,8 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingTask) {
   MockMemoryDumpProvider mdp2;
   MemoryDumpProvider::Options supported_options;
   supported_options.supports_heap_profiling = true;
-  RegisterDumpProvider(&mdp1, ThreadTaskRunnerHandle::Get(), supported_options);
+  RegisterDumpProvider(&mdp1, ThreadTaskRunnerHandle::Get(FROM_HERE),
+                       supported_options);
   EXPECT_CALL(mdp1, OnHeapProfilingEnabled(_)).Times(0);
   EXPECT_CALL(mdp2, OnHeapProfilingEnabled(_)).Times(0);
 
@@ -960,7 +966,8 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingTask) {
   RunLoop().RunUntilIdle();
   ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
             AllocationContextTracker::capture_mode());
-  RegisterDumpProvider(&mdp2, ThreadTaskRunnerHandle::Get(), supported_options);
+  RegisterDumpProvider(&mdp2, ThreadTaskRunnerHandle::Get(FROM_HERE),
+                       supported_options);
   EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeTaskProfiler);
   ASSERT_TRUE(debug::ThreadHeapUsageTracker::IsHeapTrackingEnabled());
   TestingThreadHeapUsageTracker::DisableHeapTrackingForTesting();
@@ -980,7 +987,8 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingIfNeeded) {
   MockMemoryDumpProvider mdp1;
   MemoryDumpProvider::Options supported_options;
   supported_options.supports_heap_profiling = true;
-  RegisterDumpProvider(&mdp1, ThreadTaskRunnerHandle::Get(), supported_options);
+  RegisterDumpProvider(&mdp1, ThreadTaskRunnerHandle::Get(FROM_HERE),
+                       supported_options);
 
   // Should be noop.
   mdm_->EnableHeapProfilingIfNeeded();

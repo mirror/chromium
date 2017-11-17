@@ -278,7 +278,7 @@ void NetExportFileWriter::GetFilePathToCompletedLog(
     const FilePathCallback& path_callback) const {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (!(log_exists_ && state_ == STATE_NOT_LOGGING)) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(path_callback, base::FilePath()));
     return;
   }
@@ -335,7 +335,7 @@ void NetExportFileWriter::NotifyStateObservers() {
 
 void NetExportFileWriter::NotifyStateObserversAsync() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&NetExportFileWriter::NotifyStateObservers,
                             weak_ptr_factory_.GetWeakPtr()));
 }

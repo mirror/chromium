@@ -133,7 +133,8 @@ HostResolverImplChromeOS::HostResolverImplChromeOS(
   network_handler_task_runner->PostTask(
       FROM_HERE,
       base::Bind(&NetworkObserver::Create, weak_ptr_factory_.GetWeakPtr(),
-                 base::ThreadTaskRunnerHandle::Get(), network_state_handler));
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                 network_state_handler));
 }
 
 HostResolverImplChromeOS::~HostResolverImplChromeOS() {

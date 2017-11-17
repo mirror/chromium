@@ -74,7 +74,7 @@ VizMainImpl::VizMainImpl(Delegate* delegate,
     : delegate_(delegate),
       dependencies_(std::move(dependencies)),
       gpu_init_(std::move(gpu_init)),
-      gpu_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      gpu_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       binding_(this),
       associated_binding_(this) {
   // TODO(crbug.com/609317): Remove this when Mus Window Server and GPU are

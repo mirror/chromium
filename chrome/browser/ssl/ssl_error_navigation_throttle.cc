@@ -47,7 +47,7 @@ SSLErrorNavigationThrottle::WillFailRequest() {
   // callback synchronously, so we post a task that will run after this function
   // defers the navigation. This ensures that ShowInterstitial() can always
   // safely call CancelDeferredNavigation().
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(
           std::move(handle_ssl_error_callback_), handle->GetWebContents(),

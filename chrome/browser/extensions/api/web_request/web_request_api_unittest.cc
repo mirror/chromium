@@ -165,8 +165,8 @@ class TestIPCSender : public IPC::Sender {
     EXPECT_EQ(ExtensionMsg_DispatchEvent::ID, message->type());
 
     EXPECT_FALSE(task_queue_.empty());
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  task_queue_.front());
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           task_queue_.front());
     task_queue_.pop();
 
     sent_messages_.push_back(linked_ptr<IPC::Message>(message));
@@ -472,7 +472,7 @@ TEST_F(ExtensionWebRequestTest, SimulateChancelWhileBlocked) {
   // Extension response for OnErrorOccurred: Terminate the message loop.
   ipc_sender_.PushTask(
       base::Bind(base::IgnoreResult(&base::SingleThreadTaskRunner::PostTask),
-                 base::ThreadTaskRunnerHandle::Get(), FROM_HERE,
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE), FROM_HERE,
                  run_loop.QuitWhenIdleClosure()));
 
   request->Start();
@@ -532,8 +532,8 @@ void ExtensionWebRequestTest::FireURLRequestWithData(
   element_readers.push_back(base::MakeUnique<net::UploadBytesElementReader>(
       &(bytes_1[0]), bytes_1.size()));
   element_readers.push_back(base::MakeUnique<net::UploadFileElementReader>(
-      base::ThreadTaskRunnerHandle::Get().get(), base::FilePath(), 0, 0,
-      base::Time()));
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), base::FilePath(), 0,
+      0, base::Time()));
   element_readers.push_back(base::MakeUnique<net::UploadBytesElementReader>(
       &(bytes_2[0]), bytes_2.size()));
   request->set_upload(base::MakeUnique<net::ElementsUploadDataStream>(
@@ -927,7 +927,7 @@ TEST_F(ExtensionWebRequestTest, BlockedRequestsAreRemoved) {
     base::RunLoop run_loop;
     ipc_sender_.PushTask(
         base::Bind(base::IgnoreResult(&base::SingleThreadTaskRunner::PostTask),
-                   base::ThreadTaskRunnerHandle::Get(), FROM_HERE,
+                   base::ThreadTaskRunnerHandle::Get(FROM_HERE), FROM_HERE,
                    run_loop.QuitWhenIdleClosure()));
     request->Start();
     run_loop.Run();

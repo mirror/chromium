@@ -14,7 +14,7 @@ namespace syncer {
 namespace internal {
 
 WeakHandleCoreBase::WeakHandleCoreBase()
-    : owner_loop_task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+    : owner_loop_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 bool WeakHandleCoreBase::IsOnOwnerThread() const {
   return owner_loop_task_runner_->BelongsToCurrentThread();

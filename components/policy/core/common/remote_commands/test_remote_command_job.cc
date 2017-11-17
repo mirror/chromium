@@ -70,9 +70,10 @@ void TestRemoteCommandJob::RunImpl(const CallbackWithResult& succeed_callback,
                                    const CallbackWithResult& failed_callback) {
   std::unique_ptr<ResultPayload> echo_payload(
       new EchoPayload(command_payload_));
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(succeed_ ? succeed_callback : failed_callback,
-                            base::Passed(&echo_payload)),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(succeed_ ? succeed_callback : failed_callback,
+                 base::Passed(&echo_payload)),
       execution_duration_);
 }
 

@@ -66,8 +66,8 @@ class PreviewsOptOutStoreSQLTest : public testing::Test {
   // Creates a store that operates on one thread.
   void Create(std::unique_ptr<PreviewsTypeList> enabled_previews) {
     store_ = base::MakeUnique<PreviewsOptOutStoreSQL>(
-        base::ThreadTaskRunnerHandle::Get(),
-        base::ThreadTaskRunnerHandle::Get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE),
         temp_dir_.GetPath().Append(kOptOutFilename),
         std::move(enabled_previews));
   }

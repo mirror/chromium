@@ -73,10 +73,10 @@ void UsbDeviceLinux::Open(OpenCallback callback) {
   scoped_refptr<base::SequencedTaskRunner> blocking_task_runner =
       UsbService::CreateBlockingTaskRunner();
   blocking_task_runner->PostTask(
-      FROM_HERE,
-      base::BindOnce(&UsbDeviceLinux::OpenOnBlockingThread, this,
-                     std::move(callback), base::ThreadTaskRunnerHandle::Get(),
-                     blocking_task_runner));
+      FROM_HERE, base::BindOnce(&UsbDeviceLinux::OpenOnBlockingThread, this,
+                                std::move(callback),
+                                base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                                blocking_task_runner));
 #endif  // defined(OS_CHROMEOS)
 }
 

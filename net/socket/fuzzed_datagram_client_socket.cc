@@ -124,7 +124,7 @@ int FuzzedDatagramClientSocket::Read(IOBuffer* buf,
     return result;
 
   read_pending_ = true;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&FuzzedDatagramClientSocket::OnReadComplete,
                             weak_factory_.GetWeakPtr(), callback, result));
   return ERR_IO_PENDING;
@@ -155,7 +155,7 @@ int FuzzedDatagramClientSocket::Write(IOBuffer* buf,
     return result;
 
   write_pending_ = true;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&FuzzedDatagramClientSocket::OnWriteComplete,
                             weak_factory_.GetWeakPtr(), callback, result));
   return ERR_IO_PENDING;

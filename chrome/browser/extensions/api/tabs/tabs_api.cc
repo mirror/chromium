@@ -1803,7 +1803,7 @@ bool TabsDetectLanguageFunction::RunAsync() {
            .empty()) {
     // Delay the callback invocation until after the current JS call has
     // returned.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(
             &TabsDetectLanguageFunction::GotLanguage, this,

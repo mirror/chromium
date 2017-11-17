@@ -290,7 +290,7 @@ void FakeBluetoothGattCharacteristicClient::StartNotify(
   ScheduleHeartRateMeasurementValueChange();
 
   // Respond asynchronously.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, callback,
       base::TimeDelta::FromMilliseconds(kStartNotifyResponseIntervalMs));
 }
@@ -485,10 +485,11 @@ void FakeBluetoothGattCharacteristicClient::
   std::vector<uint8_t> measurement = GetHeartRateMeasurementValue();
   heart_rate_measurement_properties_->value.ReplaceValue(measurement);
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&FakeBluetoothGattCharacteristicClient::
-                                ScheduleHeartRateMeasurementValueChange,
-                            weak_ptr_factory_.GetWeakPtr()),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&FakeBluetoothGattCharacteristicClient::
+                     ScheduleHeartRateMeasurementValueChange,
+                 weak_ptr_factory_.GetWeakPtr()),
       base::TimeDelta::FromMilliseconds(
           kHeartRateMeasurementNotificationIntervalMs));
 }

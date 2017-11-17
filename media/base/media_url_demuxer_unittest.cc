@@ -22,8 +22,8 @@ class MediaUrlDemuxerTest : public testing::Test {
         default_first_party_url_("http://example.com/") {}
 
   void InitializeTest(const GURL& media_url, const GURL& first_party) {
-    demuxer_.reset(new MediaUrlDemuxer(base::ThreadTaskRunnerHandle::Get(),
-                                       media_url, first_party));
+    demuxer_.reset(new MediaUrlDemuxer(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), media_url, first_party));
   }
 
   void InitializeTest() {
@@ -38,7 +38,7 @@ class MediaUrlDemuxerTest : public testing::Test {
   GURL default_first_party_url_;
   std::unique_ptr<Demuxer> demuxer_;
 
-  // Necessary, or else base::ThreadTaskRunnerHandle::Get() fails.
+  // Necessary, or else base::ThreadTaskRunnerHandle::Get(FROM_HERE) fails.
   base::test::ScopedTaskEnvironment scoped_task_environment_;
 
  private:

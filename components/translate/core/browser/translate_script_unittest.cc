@@ -34,7 +34,7 @@ class TranslateScriptTest : public testing::Test {
     TranslateDownloadManager::GetInstance()->set_application_locale("en");
     TranslateDownloadManager::GetInstance()->set_request_context(
         new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get()));
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   }
 
   void TearDown() override { script_.reset(); }

@@ -245,7 +245,7 @@ void MockRenderProcessHost::Cleanup() {
       observer.RenderProcessHostDestroyed(this);
     // Post the delete of |this| as a WeakPtr so that if |this| is deleted by a
     // test directly, we don't double free.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&DeleteIt, weak_ptr_factory_.GetWeakPtr()));
     RenderProcessHostImpl::UnregisterHost(GetID());
     deletion_callback_called_ = true;

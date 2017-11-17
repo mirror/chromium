@@ -156,7 +156,7 @@ void D3D11VideoDecoderImpl::Decode(const scoped_refptr<DecoderBuffer>& buffer,
                                    const DecodeCB& decode_cb) {
   input_buffer_queue_.push_back(std::make_pair(buffer, decode_cb));
   // TODO(liberato): Why post?
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&D3D11VideoDecoderImpl::DoDecode, weak_factory_.GetWeakPtr()));
 }
@@ -202,7 +202,7 @@ void D3D11VideoDecoderImpl::DoDecode() {
     }
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&D3D11VideoDecoderImpl::DoDecode, weak_factory_.GetWeakPtr()));
 }
@@ -394,7 +394,7 @@ void D3D11VideoDecoderImpl::OnMailboxReleased(
   buffer->set_in_client_use(false);
 
   // Also re-start decoding in case it was waiting for more pictures.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&D3D11VideoDecoderImpl::DoDecode, weak_factory_.GetWeakPtr()));
 }

@@ -314,7 +314,7 @@ class FrameStableObserver {
 
     do {
       base::RunLoop run_loop;
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE, run_loop.QuitClosure(), delta_);
       run_loop.Run();
       previous_frame_number = current_frame_number;

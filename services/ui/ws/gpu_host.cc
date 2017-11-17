@@ -46,7 +46,7 @@ DefaultGpuHost::DefaultGpuHost(GpuHostDelegate* delegate,
                                service_manager::Connector* connector)
     : delegate_(delegate),
       next_client_id_(kInternalGpuChannelClientId + 1),
-      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       gpu_host_binding_(this),
       gpu_thread_("GpuThread"),
       viz_main_wait_(base::WaitableEvent::ResetPolicy::MANUAL,

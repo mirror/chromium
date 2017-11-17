@@ -68,7 +68,7 @@ class SafeSearchURLCheckerTest : public testing::Test {
   SafeSearchURLCheckerTest()
       : next_url_(0),
         request_context_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))),
         checker_(request_context_.get(),
                  TRAFFIC_ANNOTATION_FOR_TESTS,
                  kCacheSize) {}

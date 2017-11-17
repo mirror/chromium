@@ -118,14 +118,14 @@ class ServiceProcessControlBrowserTest
     // Quit the current message. Post a QuitTask instead of just calling Quit()
     // because this can get invoked in the context of a Launch() call and we
     // may not be in Run() yet.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
   }
 
   void ProcessControlLaunchFailed() {
     ADD_FAILURE();
     // Quit the current message.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
   }
 
@@ -252,7 +252,7 @@ IN_PROC_BROWSER_TEST_F(ServiceProcessControlBrowserTest, MAYBE_LaunchTwice) {
 static void DecrementUntilZero(int* count) {
   (*count)--;
   if (!(*count))
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
 }
 

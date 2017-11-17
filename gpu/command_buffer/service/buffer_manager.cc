@@ -52,7 +52,8 @@ BufferManager::BufferManager(MemoryTracker* memory_tracker,
   // so don't register a dump provider.
   if (memory_tracker_) {
     base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-        this, "gpu::BufferManager", base::ThreadTaskRunnerHandle::Get());
+        this, "gpu::BufferManager",
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 }
 

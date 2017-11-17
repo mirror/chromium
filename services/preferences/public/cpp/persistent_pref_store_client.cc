@@ -264,7 +264,7 @@ void PersistentPrefStoreClient::QueueWrite(
     // Use a weak pointer since a pending write should not prolong the life of
     // |this|. Instead, the destruction of |this| will flush any pending
     // writes.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&PersistentPrefStoreClient::FlushPendingWrites,
                               weak_factory_.GetWeakPtr()));
   }

@@ -63,7 +63,7 @@ void FakePowerManagerClient::SetScreenBrightnessPercent(double percent,
 
 void FakePowerManagerClient::GetScreenBrightnessPercent(
     DBusMethodCallback<double> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(std::move(callback), screen_brightness_percent_));
 }
@@ -76,7 +76,7 @@ void FakePowerManagerClient::RequestStatusUpdate() {
   // RequestStatusUpdate() calls and notifies the observers
   // asynchronously on a real device. On the fake implementation, we call
   // observers in a posted task to emulate the same behavior.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&FakePowerManagerClient::NotifyObservers,
                             weak_ptr_factory_.GetWeakPtr()));
 }
@@ -140,13 +140,13 @@ void FakePowerManagerClient::SetBacklightsForcedOff(bool forced_off) {
 
 void FakePowerManagerClient::GetBacklightsForcedOff(
     DBusMethodCallback<bool> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), backlights_forced_off_));
 }
 
 void FakePowerManagerClient::GetSwitchStates(
     DBusMethodCallback<SwitchStates> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback),
                                 SwitchStates{lid_state_, tablet_mode_}));
 }

@@ -42,7 +42,7 @@ void MockFrameConsumer::Start(const base::Closure& done_cb) {
 
   pattern_idx_ = 0;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&MockFrameConsumer::ReadFrame, base::Unretained(this)));
 }
@@ -95,12 +95,12 @@ void MockFrameConsumer::OnNewFrame(
   pattern_idx_ = (pattern_idx_ + 1) % delayed_task_pattern_.size();
 
   if (delayed) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&MockFrameConsumer::ReadFrame, base::Unretained(this)),
         base::TimeDelta::FromMilliseconds(1));
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&MockFrameConsumer::ReadFrame, base::Unretained(this)));
   }

@@ -614,7 +614,7 @@ class DevToolsExtensionTest : public DevToolsSanityTest,
                   content::NotificationService::AllSources());
     base::CancelableClosure timeout(
         base::Bind(&TimeoutCallback, "Extension host load timed out."));
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, timeout.callback(), TestTimeouts::action_timeout());
 
     extensions::ProcessManager* manager =

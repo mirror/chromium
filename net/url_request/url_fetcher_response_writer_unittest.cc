@@ -61,8 +61,8 @@ class URLFetcherFileWriterTest : public PlatformTest {
   void SetUp() override {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
     file_path_ = temp_dir_.GetPath().AppendASCII("test.txt");
-    writer_.reset(new URLFetcherFileWriter(base::ThreadTaskRunnerHandle::Get(),
-                                           file_path_));
+    writer_.reset(new URLFetcherFileWriter(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), file_path_));
     buf_ = new StringIOBuffer(kData);
   }
 
@@ -207,8 +207,8 @@ TEST_F(URLFetcherFileWriterTest, DisownFile) {
 class URLFetcherFileWriterTemporaryFileTest : public PlatformTest {
  protected:
   void SetUp() override {
-    writer_.reset(new URLFetcherFileWriter(base::ThreadTaskRunnerHandle::Get(),
-                                           base::FilePath()));
+    writer_.reset(new URLFetcherFileWriter(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), base::FilePath()));
     buf_ = new StringIOBuffer(kData);
   }
 

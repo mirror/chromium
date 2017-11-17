@@ -659,7 +659,7 @@ NetworkDelegate::AuthRequiredResponse BlockingNetworkDelegate::OnAuthRequired(
       return auth_retval_;
 
     case AUTO_CALLBACK:
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::Bind(&BlockingNetworkDelegate::RunAuthCallback,
                      weak_factory_.GetWeakPtr(), auth_retval_, callback));
@@ -668,7 +668,7 @@ NetworkDelegate::AuthRequiredResponse BlockingNetworkDelegate::OnAuthRequired(
     case USER_CALLBACK:
       auth_callback_ = callback;
       stage_blocked_for_callback_ = ON_AUTH_REQUIRED;
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
       return AUTH_REQUIRED_RESPONSE_IO_PENDING;
 
@@ -705,7 +705,7 @@ int BlockingNetworkDelegate::MaybeBlockStage(
       return retval_;
 
     case AUTO_CALLBACK:
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(&BlockingNetworkDelegate::RunCallback,
                                 weak_factory_.GetWeakPtr(), retval_, callback));
       return ERR_IO_PENDING;
@@ -713,7 +713,7 @@ int BlockingNetworkDelegate::MaybeBlockStage(
     case USER_CALLBACK:
       callback_ = callback;
       stage_blocked_for_callback_ = stage;
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
       return ERR_IO_PENDING;
 
@@ -829,7 +829,7 @@ class URLRequestTest : public PlatformTest {
 #if !BUILDFLAG(DISABLE_FILE_SUPPORT)
     job_factory_impl_->SetProtocolHandler(
         "file", std::make_unique<FileProtocolHandler>(
-                    base::ThreadTaskRunnerHandle::Get()));
+                    base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 #endif
   }
 
@@ -5238,7 +5238,7 @@ class AsyncDelegateLogger : public base::RefCounted<AsyncDelegateLogger> {
     LoadStateWithParam load_state = url_request_->GetLoadState();
     EXPECT_EQ(expected_first_load_state_, load_state.state);
     EXPECT_NE(ASCIIToUTF16(kFirstDelegateInfo), load_state.param);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&AsyncDelegateLogger::LogSecondDelegate, this));
   }
 
@@ -5251,7 +5251,7 @@ class AsyncDelegateLogger : public base::RefCounted<AsyncDelegateLogger> {
     } else {
       EXPECT_NE(ASCIIToUTF16(kSecondDelegateInfo), load_state.param);
     }
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&AsyncDelegateLogger::LogComplete, this));
   }
 
@@ -6102,7 +6102,7 @@ TEST_F(URLRequestTestHTTP, PostFileTest) {
     path = path.Append(kTestFilePath);
     path = path.Append(FILE_PATH_LITERAL("with-headers.html"));
     element_readers.push_back(std::make_unique<UploadFileElementReader>(
-        base::ThreadTaskRunnerHandle::Get().get(), path, 0,
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), path, 0,
         std::numeric_limits<uint64_t>::max(), base::Time()));
     r->set_upload(std::make_unique<ElementsUploadDataStream>(
         std::move(element_readers), 0));
@@ -6143,7 +6143,7 @@ TEST_F(URLRequestTestHTTP, PostUnreadableFileTest) {
     std::vector<std::unique_ptr<UploadElementReader>> element_readers;
 
     element_readers.push_back(std::make_unique<UploadFileElementReader>(
-        base::ThreadTaskRunnerHandle::Get().get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
         base::FilePath(FILE_PATH_LITERAL(
             "c:\\path\\to\\non\\existant\\file.randomness.12345")),
         0, std::numeric_limits<uint64_t>::max(), base::Time()));
@@ -7400,7 +7400,7 @@ TEST_F(URLRequestTestHTTP, ProtocolHandlerAndFactoryRestrictFileRedirects) {
   // Test URLRequestJobFactory::ProtocolHandler::IsSafeRedirectTarget().
   GURL file_url("file:///foo.txt");
   FileProtocolHandler file_protocol_handler(
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   EXPECT_FALSE(file_protocol_handler.IsSafeRedirectTarget(file_url));
 
   // Test URLRequestJobFactoryImpl::IsSafeRedirectTarget().

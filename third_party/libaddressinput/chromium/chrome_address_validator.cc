@@ -184,9 +184,10 @@ void AddressValidator::RulesLoaded(bool success,
   if (success || attempts_number_[region_code] + 1 >= kMaxAttemptsNumber)
     return;
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&AddressValidator::RetryLoadRules,
-                            weak_factory_.GetWeakPtr(), region_code),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&AddressValidator::RetryLoadRules, weak_factory_.GetWeakPtr(),
+                 region_code),
       GetBaseRetryPeriod() * pow(2, attempts_number_[region_code]++));
 }
 

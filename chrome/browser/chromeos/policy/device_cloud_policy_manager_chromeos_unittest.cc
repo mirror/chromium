@@ -89,7 +89,7 @@ void CopyLockResult(base::RunLoop* loop,
 void CertCallbackSuccess(
     const chromeos::attestation::AttestationFlow::CertificateCallback&
         callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, true, "fake_cert"));
 }
 
@@ -145,9 +145,9 @@ class DeviceCloudPolicyManagerChromeOSTest
         new chromeos::InstallAttributes(fake_cryptohome_client_));
     store_ = new DeviceCloudPolicyStoreChromeOS(
         &device_settings_service_, install_attributes_.get(),
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     manager_.reset(new TestingDeviceCloudPolicyManagerChromeOS(
-        base::WrapUnique(store_), base::ThreadTaskRunnerHandle::Get(),
+        base::WrapUnique(store_), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
         &state_keys_broker_));
 
     chrome::RegisterLocalState(local_state_.registry());
@@ -157,7 +157,7 @@ class DeviceCloudPolicyManagerChromeOSTest
     // OAuth tokens, then writes the token to local state, encrypting it
     // first with methods in CryptohomeTokenEncryptor.
     request_context_getter_ = new net::TestURLRequestContextGetter(
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     TestingBrowserProcess::GetGlobal()->SetSystemRequestContext(
         request_context_getter_.get());
     TestingBrowserProcess::GetGlobal()->SetLocalState(&local_state_);
@@ -216,7 +216,7 @@ class DeviceCloudPolicyManagerChromeOSTest
     manager_->AddDeviceCloudPolicyManagerObserver(this);
     initializer_ = base::MakeUnique<DeviceCloudPolicyInitializer>(
         &local_state_, &device_management_service_,
-        base::ThreadTaskRunnerHandle::Get(), install_attributes_.get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), install_attributes_.get(),
         &state_keys_broker_, store_, manager_.get(),
         cryptohome::AsyncMethodCaller::GetInstance(), std::move(unique_flow),
         &fake_statistics_provider_);

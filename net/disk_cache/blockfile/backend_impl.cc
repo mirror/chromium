@@ -1066,7 +1066,7 @@ void BackendImpl::CriticalError(int error) {
   disabled_ = true;
 
   if (!num_refs_)
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&BackendImpl::RestartCache, GetWeakPtr(), true));
 }
 
@@ -1854,7 +1854,7 @@ void BackendImpl::DecreaseNumRefs() {
   num_refs_--;
 
   if (!num_refs_ && disabled_)
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&BackendImpl::RestartCache, GetWeakPtr(), true));
 }
 

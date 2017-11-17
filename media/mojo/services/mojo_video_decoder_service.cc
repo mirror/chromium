@@ -53,7 +53,7 @@ void MojoVideoDecoderService::Construct(
       new MojoDecoderBufferReader(std::move(decoder_buffer_pipe)));
 
   decoder_ = mojo_media_client_->CreateVideoDecoder(
-      base::ThreadTaskRunnerHandle::Get(), media_log_.get(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), media_log_.get(),
       std::move(command_buffer_id),
       base::Bind(&MojoVideoDecoderService::OnDecoderOutputWithReleaseCB,
                  weak_this_),

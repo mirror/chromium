@@ -96,7 +96,7 @@ bool OwnerSettingsService::IsOwner() {
 void OwnerSettingsService::IsOwnerAsync(const IsOwnerCallback& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (private_key_.get()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, IsOwner()));
   } else {
     pending_is_owner_callbacks_.push_back(callback);

@@ -180,7 +180,7 @@ TrayBrightness::TrayBrightness(SystemTray* system_tray)
       weak_ptr_factory_(this) {
   // Post a task to get the initial brightness; the BrightnessControlDelegate
   // isn't created yet.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&TrayBrightness::GetInitialBrightness,
                             weak_ptr_factory_.GetWeakPtr()));
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(

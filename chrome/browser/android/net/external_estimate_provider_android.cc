@@ -26,7 +26,7 @@ ExternalEstimateProviderAndroid::ExternalEstimateProviderAndroid()
   if (!base::ThreadTaskRunnerHandle::IsSet())
     return;
 
-  task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   task_runner_->PostDelayedTask(
       FROM_HERE,
       base::Bind(&ExternalEstimateProviderAndroid::CreateJavaObject,

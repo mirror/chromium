@@ -93,7 +93,7 @@ NativeMessagePort::NativeMessagePort(
       weak_factory_(this) {
   core_.reset(new Core(std::move(native_message_host),
                        weak_factory_.GetWeakPtr(),
-                       base::ThreadTaskRunnerHandle::Get()));
+                       base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 }
 
 NativeMessagePort::~NativeMessagePort() {

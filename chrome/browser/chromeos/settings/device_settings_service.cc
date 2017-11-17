@@ -164,7 +164,7 @@ void DeviceSettingsService::GetOwnershipStatusAsync(
     const OwnershipStatusCallback& callback) {
   if (GetOwnershipStatus() != OWNERSHIP_UNKNOWN) {
     // Report status immediately.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, GetOwnershipStatus()));
   } else {
     // If the key hasn't been loaded yet, enqueue the callback to be fired when

@@ -69,7 +69,7 @@ bool SerialRunner::Queue::empty() {
 
 SerialRunner::SerialRunner(const Queue& bound_fns,
                            const PipelineStatusCB& done_cb)
-    : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       bound_fns_(bound_fns),
       done_cb_(done_cb),
       weak_factory_(this) {

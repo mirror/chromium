@@ -62,7 +62,7 @@ FakeRemoteGattDescriptor::GetCharacteristic() const {
 void FakeRemoteGattDescriptor::ReadRemoteDescriptor(
     const ValueCallback& callback,
     const ErrorCallback& error_callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&FakeRemoteGattDescriptor::DispatchReadResponse,
                  weak_ptr_factory_.GetWeakPtr(), callback, error_callback));

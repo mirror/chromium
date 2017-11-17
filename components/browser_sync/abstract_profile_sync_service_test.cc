@@ -103,7 +103,7 @@ void SyncEngineForProfileSyncTest::ConfigureDataTypes(ConfigureParams params) {
   // send back the list of newly configured types instead and hope it doesn't
   // break anything.
   // Posted to avoid re-entrancy issues.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(
           &SyncEngineForProfileSyncTest::FinishConfigureDataTypesOnFrontendLoop,

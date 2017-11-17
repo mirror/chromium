@@ -56,7 +56,7 @@ base::WeakPtr<BluetoothAdapterAndroid> BluetoothAdapterAndroid::Create(
       AttachCurrentThread(), reinterpret_cast<intptr_t>(adapter),
       bluetooth_adapter_wrapper));
 
-  adapter->ui_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  adapter->ui_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
   return adapter->weak_ptr_factory_.GetWeakPtr();
 }

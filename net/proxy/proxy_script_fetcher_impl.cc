@@ -200,9 +200,10 @@ int ProxyScriptFetcherImpl::Fetch(
   // Post a task to timeout this request if it takes too long.
   cur_request_id_ = ++next_id_;
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&ProxyScriptFetcherImpl::OnTimeout,
-                            weak_factory_.GetWeakPtr(), cur_request_id_),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&ProxyScriptFetcherImpl::OnTimeout, weak_factory_.GetWeakPtr(),
+                 cur_request_id_),
       max_duration_);
 
   // Start the request.

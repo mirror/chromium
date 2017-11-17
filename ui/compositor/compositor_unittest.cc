@@ -81,7 +81,7 @@ class CompositorTestWithMockedTime : public CompositorTest {
 class CompositorTestWithMessageLoop : public CompositorTest {
  protected:
   scoped_refptr<base::SingleThreadTaskRunner> CreateTaskRunner() override {
-    task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
     return task_runner_;
   }
 

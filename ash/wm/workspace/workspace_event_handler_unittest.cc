@@ -464,7 +464,8 @@ TEST_F(WorkspaceEventHandlerTest, DeleteWhileInRunLoop) {
   delegate.set_window_component(HTCAPTION);
 
   ASSERT_TRUE(::wm::GetWindowMoveClient(window->GetRootWindow()));
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, window.get());
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE,
+                                                           window.get());
   ::wm::GetWindowMoveClient(window->GetRootWindow())
       ->RunMoveLoop(window.release(), gfx::Vector2d(),
                     ::wm::WINDOW_MOVE_SOURCE_MOUSE);

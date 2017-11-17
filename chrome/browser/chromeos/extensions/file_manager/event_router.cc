@@ -538,7 +538,7 @@ void EventRouter::AddFileWatch(const base::FilePath& local_path,
 
     if (is_on_drive) {
       // For Drive, file watching is done via OnDirectoryChanged().
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(callback, true));
     } else {
       // For local files, start watching using FileWatcher.
@@ -553,7 +553,7 @@ void EventRouter::AddFileWatch(const base::FilePath& local_path,
     file_watchers_[watch_path] = std::move(watcher);
   } else {
     iter->second->AddExtension(extension_id);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, true));
   }
 }

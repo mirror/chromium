@@ -250,7 +250,7 @@ void NetworkThrottleManagerImpl::OnThrottleDestroyed(ThrottleImpl* throttle) {
   if (outstanding_throttles_.size() < kActiveRequestThrottlingLimit &&
       !blocked_throttles_.empty()) {
     // Via PostTask so there aren't upcalls from within destructors.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&NetworkThrottleManagerImpl::MaybeUnblockThrottles,
                    weak_ptr_factory_.GetWeakPtr()));

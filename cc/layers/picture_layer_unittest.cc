@@ -326,7 +326,7 @@ TEST(PictureLayerTest, NonMonotonicSourceFrameNumber) {
   params.client = &host_client1;
   params.settings = &settings;
   params.task_graph_runner = &task_graph_runner;
-  params.main_task_runner = base::ThreadTaskRunnerHandle::Get();
+  params.main_task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   params.mutator_host = animation_host.get();
   std::unique_ptr<LayerTreeHost> host1 =
       LayerTreeHost::CreateSingleThreaded(&single_thread_client, &params);
@@ -339,7 +339,7 @@ TEST(PictureLayerTest, NonMonotonicSourceFrameNumber) {
   params2.client = &host_client1;
   params2.settings = &settings;
   params2.task_graph_runner = &task_graph_runner;
-  params2.main_task_runner = base::ThreadTaskRunnerHandle::Get();
+  params2.main_task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   params2.client = &host_client2;
   params2.mutator_host = animation_host2.get();
   std::unique_ptr<LayerTreeHost> host2 =
@@ -398,7 +398,7 @@ TEST(PictureLayerTest, ChangingHostsWithCollidingFrames) {
   params.client = &host_client1;
   params.settings = &settings;
   params.task_graph_runner = &task_graph_runner;
-  params.main_task_runner = base::ThreadTaskRunnerHandle::Get();
+  params.main_task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   params.mutator_host = animation_host.get();
   std::unique_ptr<LayerTreeHost> host1 =
       LayerTreeHost::CreateSingleThreaded(&single_thread_client, &params);
@@ -411,7 +411,7 @@ TEST(PictureLayerTest, ChangingHostsWithCollidingFrames) {
   params2.client = &host_client1;
   params2.settings = &settings;
   params2.task_graph_runner = &task_graph_runner;
-  params2.main_task_runner = base::ThreadTaskRunnerHandle::Get();
+  params2.main_task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   params2.client = &host_client2;
   params2.mutator_host = animation_host2.get();
   std::unique_ptr<LayerTreeHost> host2 =

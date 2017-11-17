@@ -175,8 +175,8 @@ void CloudExternalDataManagerBaseTest::SetUp() {
                         crypto::SHA256HashString(k20ByteData)));
   cloud_policy_store_.NotifyStoreLoaded();
 
-  request_content_getter_ =
-      new net::TestURLRequestContextGetter(base::ThreadTaskRunnerHandle::Get());
+  request_content_getter_ = new net::TestURLRequestContextGetter(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   policy_details_.SetDetails(kStringPolicy, &kPolicyDetails[0]);
   policy_details_.SetDetails(k10BytePolicy, &kPolicyDetails[1]);

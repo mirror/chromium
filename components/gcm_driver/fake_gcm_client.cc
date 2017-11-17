@@ -102,7 +102,7 @@ void FakeGCMClient::Start(StartMode start_mode) {
 
 void FakeGCMClient::DoStart() {
   started_ = true;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&FakeGCMClient::Started, weak_ptr_factory_.GetWeakPtr()));
 }
@@ -134,7 +134,7 @@ void FakeGCMClient::Register(
         instance_id_token_info->scope);
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&FakeGCMClient::RegisterFinished,
                             weak_ptr_factory_.GetWeakPtr(), registration_info,
                             registration_id));
@@ -150,7 +150,7 @@ void FakeGCMClient::Unregister(
     const linked_ptr<RegistrationInfo>& registration_info) {
   DCHECK(io_thread_->RunsTasksInCurrentSequence());
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&FakeGCMClient::UnregisterFinished,
                             weak_ptr_factory_.GetWeakPtr(), registration_info));
 }
@@ -160,7 +160,7 @@ void FakeGCMClient::Send(const std::string& app_id,
                          const OutgoingMessage& message) {
   DCHECK(io_thread_->RunsTasksInCurrentSequence());
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&FakeGCMClient::SendFinished,
                             weak_ptr_factory_.GetWeakPtr(), app_id, message));
 }
@@ -292,13 +292,13 @@ void FakeGCMClient::SendFinished(const std::string& app_id,
     send_error_details.message_id = message.id;
     send_error_details.result = NETWORK_ERROR;
     send_error_details.additional_data = message.data;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&FakeGCMClient::MessageSendError,
                    weak_ptr_factory_.GetWeakPtr(), app_id, send_error_details),
         base::TimeDelta::FromMilliseconds(200));
   } else if(message.id.find("ack") != std::string::npos) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&FakeGCMClient::SendAcknowledgement,
                    weak_ptr_factory_.GetWeakPtr(), app_id, message.id),

@@ -12,7 +12,7 @@
 namespace device {
 
 WifiDataProvider::WifiDataProvider()
-    : client_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+    : client_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
   DCHECK(client_task_runner_);
 }
 

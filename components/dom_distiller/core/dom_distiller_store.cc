@@ -88,8 +88,8 @@ void DomDistillerStore::UpdateAttachments(
     std::unique_ptr<ArticleAttachmentsData> attachments_data,
     const UpdateAttachmentsCallback& callback) {
   if (!GetEntryById(entry_id, nullptr)) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  base::Bind(callback, false));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, base::Bind(callback, false));
   }
 
   std::unique_ptr<sync_pb::ArticleAttachments> article_attachments(
@@ -150,8 +150,8 @@ void DomDistillerStore::OnAttachmentsWrite(
       ApplyChangesToDatabase(changes_applied);
     }
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                base::Bind(callback, success));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, base::Bind(callback, success));
 }
 
 void DomDistillerStore::GetAttachments(
@@ -160,7 +160,7 @@ void DomDistillerStore::GetAttachments(
   ArticleEntry entry;
   if (!model_.GetEntryById(entry_id, &entry)
       || !entry.has_attachments()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, false, nullptr));
     return;
   }
@@ -194,7 +194,7 @@ void DomDistillerStore::OnAttachmentsRead(
     attachments_data = ArticleAttachmentsData::GetFromAttachmentMap(
         attachments_proto, *attachments);
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(callback, success, base::Passed(&attachments_data)));
 }

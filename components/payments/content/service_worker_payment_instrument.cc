@@ -135,7 +135,7 @@ void ServiceWorkerPaymentInstrument::OnCanMakePayment(
     bool result) {
   can_make_payment_result_ = result;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), this, result));
 }
 

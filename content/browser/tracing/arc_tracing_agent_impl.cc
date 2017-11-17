@@ -93,7 +93,7 @@ void ArcTracingAgentImpl::StartTracing(
   if (!success) {
     // Use PostTask as the convention of TracingAgent. The caller expects
     // callback to be called after this function returns.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, false /* success */));
     return;
   }

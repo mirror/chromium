@@ -32,7 +32,7 @@ class EvdevThread : public base::Thread {
         dispatcher_(std::move(dispatcher)),
         cursor_(cursor),
         init_callback_(callback),
-        init_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+        init_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
   ~EvdevThread() override { Stop(); }
 
   void Init() override {
@@ -41,8 +41,9 @@ class EvdevThread : public base::Thread {
         new InputDeviceFactoryEvdev(std::move(dispatcher_), cursor_);
 
     std::unique_ptr<InputDeviceFactoryEvdevProxy> proxy(
-        new InputDeviceFactoryEvdevProxy(base::ThreadTaskRunnerHandle::Get(),
-                                         input_device_factory_->GetWeakPtr()));
+        new InputDeviceFactoryEvdevProxy(
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+            input_device_factory_->GetWeakPtr()));
 
     if (cursor_)
       cursor_->InitializeOnEvdev();

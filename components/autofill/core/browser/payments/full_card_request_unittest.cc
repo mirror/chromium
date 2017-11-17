@@ -68,7 +68,7 @@ class FullCardRequestTest : public testing::Test,
  public:
   FullCardRequestTest()
       : request_context_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())) {
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))) {
     std::unique_ptr<TestingPrefServiceSimple> pref_service(
         new TestingPrefServiceSimple());
     pref_service->registry()->RegisterDoublePref(

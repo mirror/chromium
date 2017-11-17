@@ -50,7 +50,7 @@ class HasTypedURLsTask : public history::HistoryDBTask {
 SigninConfirmationHelper::SigninConfirmationHelper(
     history::HistoryService* history_service,
     const base::Callback<void(bool)>& return_result)
-    : origin_thread_(base::ThreadTaskRunnerHandle::Get()),
+    : origin_thread_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       history_service_(history_service),
       pending_requests_(0),
       return_result_(return_result) {}

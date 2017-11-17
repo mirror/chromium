@@ -64,11 +64,11 @@ class LogUploaderTest : public testing::Test {
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI),
         request_context_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))),
         factory_(nullptr) {}
 
  protected:
-  // Required for base::ThreadTaskRunnerHandle::Get().
+  // Required for base::ThreadTaskRunnerHandle::Get(FROM_HERE).
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   scoped_refptr<net::TestURLRequestContextGetter> request_context_;
   net::FakeURLFetcherFactory factory_;

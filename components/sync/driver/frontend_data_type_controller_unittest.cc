@@ -159,7 +159,7 @@ TEST_F(SyncFrontendDataTypeControllerTest, StartStopBeforeAssociation) {
   EXPECT_CALL(*dtc_mock_.get(), CleanUpState());
   EXPECT_CALL(model_load_callback_, Run(_, _));
   EXPECT_EQ(DataTypeController::NOT_RUNNING, frontend_dtc_->state());
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&FrontendDataTypeController::Stop,
                             base::AsWeakPtr(frontend_dtc_.get())));
   Start();

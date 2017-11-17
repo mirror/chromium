@@ -59,7 +59,7 @@ void QuicChromiumPacketReader::StartReading() {
       // Data was read, process it.
       // Schedule the work through the message loop to 1) prevent infinite
       // recursion and 2) avoid blocking the thread for too long.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(&QuicChromiumPacketReader::OnReadComplete,
                                 weak_factory_.GetWeakPtr(), rv));
     } else {

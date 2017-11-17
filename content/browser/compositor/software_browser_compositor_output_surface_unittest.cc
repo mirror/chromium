@@ -81,9 +81,10 @@ class SoftwareBrowserCompositorOutputSurfaceTest : public testing::Test {
  protected:
   std::unique_ptr<content::BrowserCompositorOutputSurface> output_surface_;
 
-  // TODO(crbug.com/616973): We shouldn't be using ThreadTaskRunnerHandle::Get()
-  // inside the OutputSurface, so we shouldn't need a MessageLoop. The
-  // OutputSurface should be using the TaskRunner given to the compositor.
+  // TODO(crbug.com/616973): We shouldn't be using
+  // ThreadTaskRunnerHandle::Get(FROM_HERE) inside the OutputSurface, so we
+  // shouldn't need a MessageLoop. The OutputSurface should be using the
+  // TaskRunner given to the compositor.
   base::TestMessageLoop message_loop_;
   viz::DelayBasedBeginFrameSource begin_frame_source_;
   std::unique_ptr<ui::Compositor> compositor_;
@@ -123,7 +124,7 @@ SoftwareBrowserCompositorOutputSurfaceTest::CreateSurface(
       base::Bind(
           &SoftwareBrowserCompositorOutputSurfaceTest::UpdateVSyncParameters,
           base::Unretained(this)),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 void SoftwareBrowserCompositorOutputSurfaceTest::UpdateVSyncParameters(

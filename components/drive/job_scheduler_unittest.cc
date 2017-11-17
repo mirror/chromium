@@ -152,7 +152,7 @@ class JobSchedulerTest : public testing::Test {
 
     scheduler_.reset(new JobScheduler(
         pref_service_.get(), logger_.get(), fake_drive_service_.get(),
-        base::ThreadTaskRunnerHandle::Get().get(), nullptr));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), nullptr));
     scheduler_->SetDisableThrottling(true);
   }
 

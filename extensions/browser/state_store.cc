@@ -169,7 +169,7 @@ void StateStore::InitAfterDelay() {
   if (IsInitialized())
     return;
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::Bind(&StateStore::Init, AsWeakPtr()),
       base::TimeDelta::FromSeconds(kInitDelaySeconds));
 }

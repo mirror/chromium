@@ -104,13 +104,13 @@ class WebDataServiceTest : public testing::Test {
     // should each use their own sequences instead of sharing this one.
     auto db_task_runner =
         base::CreateSingleThreadTaskRunnerWithTraits({base::MayBlock()});
-    wdbs_ = new WebDatabaseService(path, base::ThreadTaskRunnerHandle::Get(),
-                                   db_task_runner);
+    wdbs_ = new WebDatabaseService(
+        path, base::ThreadTaskRunnerHandle::Get(FROM_HERE), db_task_runner);
     wdbs_->AddTable(base::WrapUnique(new AutofillTable));
     wdbs_->LoadDatabase();
 
     wds_ = new AutofillWebDataService(
-        wdbs_, base::ThreadTaskRunnerHandle::Get(), db_task_runner,
+        wdbs_, base::ThreadTaskRunnerHandle::Get(FROM_HERE), db_task_runner,
         WebDataServiceBase::ProfileErrorCallback());
     wds_->Init();
   }

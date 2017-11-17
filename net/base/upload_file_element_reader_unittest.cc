@@ -42,7 +42,7 @@ class UploadFileElementReaderTest : public PlatformTest {
         base::WriteFile(temp_file_path_, &bytes_[0], bytes_.size()));
 
     reader_.reset(new UploadFileElementReader(
-        base::ThreadTaskRunnerHandle::Get().get(), temp_file_path_, 0,
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), temp_file_path_, 0,
         std::numeric_limits<uint64_t>::max(), base::Time()));
     TestCompletionCallback callback;
     ASSERT_THAT(reader_->Init(callback.callback()), IsError(ERR_IO_PENDING));
@@ -189,8 +189,8 @@ TEST_F(UploadFileElementReaderTest, Range) {
   const uint64_t kOffset = 2;
   const uint64_t kLength = bytes_.size() - kOffset * 3;
   reader_.reset(new UploadFileElementReader(
-      base::ThreadTaskRunnerHandle::Get().get(), temp_file_path_, kOffset,
-      kLength, base::Time()));
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), temp_file_path_,
+      kOffset, kLength, base::Time()));
   TestCompletionCallback init_callback;
   ASSERT_THAT(reader_->Init(init_callback.callback()), IsError(ERR_IO_PENDING));
   EXPECT_THAT(init_callback.WaitForResult(), IsOk());
@@ -216,7 +216,7 @@ TEST_F(UploadFileElementReaderTest, FileChanged) {
   const base::Time expected_modification_time =
       info.last_modified - base::TimeDelta::FromSeconds(1);
   reader_.reset(new UploadFileElementReader(
-      base::ThreadTaskRunnerHandle::Get().get(), temp_file_path_, 0,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), temp_file_path_, 0,
       std::numeric_limits<uint64_t>::max(), expected_modification_time));
   TestCompletionCallback init_callback;
   ASSERT_THAT(reader_->Init(init_callback.callback()), IsError(ERR_IO_PENDING));
@@ -230,7 +230,7 @@ TEST_F(UploadFileElementReaderTest, InexactExpectedTimeStamp) {
   const base::Time expected_modification_time =
       info.last_modified - base::TimeDelta::FromMilliseconds(900);
   reader_.reset(new UploadFileElementReader(
-      base::ThreadTaskRunnerHandle::Get().get(), temp_file_path_, 0,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), temp_file_path_, 0,
       std::numeric_limits<uint64_t>::max(), expected_modification_time));
   TestCompletionCallback init_callback;
   ASSERT_THAT(reader_->Init(init_callback.callback()), IsError(ERR_IO_PENDING));
@@ -240,7 +240,7 @@ TEST_F(UploadFileElementReaderTest, InexactExpectedTimeStamp) {
 TEST_F(UploadFileElementReaderTest, WrongPath) {
   const base::FilePath wrong_path(FILE_PATH_LITERAL("wrong_path"));
   reader_.reset(new UploadFileElementReader(
-      base::ThreadTaskRunnerHandle::Get().get(), wrong_path, 0,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), wrong_path, 0,
       std::numeric_limits<uint64_t>::max(), base::Time()));
   TestCompletionCallback init_callback;
   ASSERT_THAT(reader_->Init(init_callback.callback()), IsError(ERR_IO_PENDING));

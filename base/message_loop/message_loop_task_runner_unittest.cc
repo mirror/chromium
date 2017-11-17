@@ -268,12 +268,14 @@ class MessageLoopTaskRunnerThreadingTest : public testing::Test {
 
   void AssertOnIOThread() const {
     ASSERT_TRUE(io_thread_->task_runner()->BelongsToCurrentThread());
-    ASSERT_EQ(io_thread_->task_runner(), ThreadTaskRunnerHandle::Get());
+    ASSERT_EQ(io_thread_->task_runner(),
+              ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 
   void AssertOnFileThread() const {
     ASSERT_TRUE(file_thread_->task_runner()->BelongsToCurrentThread());
-    ASSERT_EQ(file_thread_->task_runner(), ThreadTaskRunnerHandle::Get());
+    ASSERT_EQ(file_thread_->task_runner(),
+              ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 
  protected:

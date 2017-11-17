@@ -167,23 +167,25 @@ void DOMStorageContextWrapper::GetLocalStorageUsage(
             &LocalStorageContextMojo::GetStorageUsage,
             base::Unretained(mojo_state_),
             base::BindOnce(&GotMojoLocalStorageUsage,
-                           base::ThreadTaskRunnerHandle::Get(),
+                           base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                            base::Bind(CollectLocalStorageUsage, infos_ptr,
                                       got_local_storage_usage))));
     context_->task_runner()->PostShutdownBlockingTask(
         FROM_HERE, DOMStorageTaskRunner::PRIMARY_SEQUENCE,
-        base::BindOnce(&GetLocalStorageUsageHelper,
-                       base::RetainedRef(base::ThreadTaskRunnerHandle::Get()),
-                       base::RetainedRef(context_),
-                       base::Bind(&CollectLocalStorageUsage, infos_ptr,
-                                  got_local_storage_usage)));
+        base::BindOnce(
+            &GetLocalStorageUsageHelper,
+            base::RetainedRef(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+            base::RetainedRef(context_),
+            base::Bind(&CollectLocalStorageUsage, infos_ptr,
+                       got_local_storage_usage)));
     return;
   }
   context_->task_runner()->PostShutdownBlockingTask(
       FROM_HERE, DOMStorageTaskRunner::PRIMARY_SEQUENCE,
-      base::BindOnce(&GetLocalStorageUsageHelper,
-                     base::RetainedRef(base::ThreadTaskRunnerHandle::Get()),
-                     base::RetainedRef(context_), callback));
+      base::BindOnce(
+          &GetLocalStorageUsageHelper,
+          base::RetainedRef(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+          base::RetainedRef(context_), callback));
 }
 
 void DOMStorageContextWrapper::GetSessionStorageUsage(
@@ -191,9 +193,10 @@ void DOMStorageContextWrapper::GetSessionStorageUsage(
   DCHECK(context_.get());
   context_->task_runner()->PostShutdownBlockingTask(
       FROM_HERE, DOMStorageTaskRunner::PRIMARY_SEQUENCE,
-      base::BindOnce(&GetSessionStorageUsageHelper,
-                     base::RetainedRef(base::ThreadTaskRunnerHandle::Get()),
-                     base::RetainedRef(context_), callback));
+      base::BindOnce(
+          &GetSessionStorageUsageHelper,
+          base::RetainedRef(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+          base::RetainedRef(context_), callback));
 }
 
 void DOMStorageContextWrapper::DeleteLocalStorageForPhysicalOrigin(

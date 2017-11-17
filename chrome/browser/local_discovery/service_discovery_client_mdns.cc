@@ -394,7 +394,7 @@ void ServiceDiscoveryClientMdns::ScheduleStartNewClient() {
     return;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&ServiceDiscoveryClientMdns::StartNewClient,
                      weak_ptr_factory_.GetWeakPtr()),

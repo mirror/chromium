@@ -255,7 +255,7 @@ int FileStreamWriter::Cancel(const net::CompletionCallback& callback) {
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(&OperationRunner::CloseRunnerOnUIThread, runner_));
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, net::OK));
 
   // If a write is in progress, mark it as completed.
@@ -269,7 +269,7 @@ int FileStreamWriter::Flush(const net::CompletionCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK_NE(CANCELLING, state_);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(callback,
                      state_ == INITIALIZED ? net::OK : net::ERR_FAILED));

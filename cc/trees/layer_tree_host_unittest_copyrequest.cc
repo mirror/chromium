@@ -52,7 +52,7 @@ class LayerTreeHostCopyRequestTestMultipleRequests
   void DidCommit() override { WaitForCallback(); }
 
   void WaitForCallback() {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&LayerTreeHostCopyRequestTestMultipleRequests::NextStep,
                        base::Unretained(this)));

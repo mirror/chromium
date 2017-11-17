@@ -78,7 +78,7 @@ class TestMockTimeTaskRunner : public SingleThreadTaskRunner,
   //    protected:
   //     DoBarOnFoo() {
   //       DCHECK(foo_task_runner_->RunsOnCurrentThread());
-  //       EXPECT_EQ(foo_task_runner_, ThreadTaskRunnerHandle::Get());
+  //       EXPECT_EQ(foo_task_runner_, ThreadTaskRunnerHandle::Get(FROM_HERE));
   //       DoBar();
   //     }
   //

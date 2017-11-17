@@ -339,7 +339,7 @@ void OpenFile(const base::FilePath& file_path,
                      base::File::FLAG_WRITE |
                      base::File::FLAG_WRITE_ATTRIBUTES |
                      base::File::FLAG_APPEND)) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(callback,
                        Passed(base::File(base::File::FILE_ERROR_FAILED)),

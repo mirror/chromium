@@ -211,7 +211,8 @@ class MockRTCStatsReportCallback : public blink::WebRTCStatsReportCallback {
  public:
   explicit MockRTCStatsReportCallback(
       std::unique_ptr<blink::WebRTCStatsReport>* result)
-      : main_thread_(base::ThreadTaskRunnerHandle::Get()), result_(result) {
+      : main_thread_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+        result_(result) {
     DCHECK(result_);
   }
 

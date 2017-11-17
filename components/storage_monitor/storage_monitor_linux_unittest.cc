@@ -142,7 +142,7 @@ class TestStorageMonitorLinux : public StorageMonitorLinux {
 
     // Once the storage monitor picks up the changes to the fake mtab file,
     // exit the RunLoop that should be blocking the main test thread.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
   }
 

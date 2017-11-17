@@ -130,7 +130,7 @@ class MockTCPSocket : public net::TCPClientSocket {
 
     if (connect_data_.mode == net::ASYNC) {
       CHECK_NE(connect_data_.result, net::ERR_IO_PENDING);
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(callback, connect_data_.result));
       return net::ERR_IO_PENDING;
     } else {

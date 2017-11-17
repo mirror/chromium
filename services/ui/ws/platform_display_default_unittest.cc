@@ -117,7 +117,7 @@ TEST(PlatformDisplayDefaultTest, DISABLED_EventDispatch) {
   metrics.device_scale_factor = 1.f;
   metrics.ui_scale_factor = 1.f;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   ImageCursorsSet image_cursors_set;
   std::unique_ptr<ThreadedImageCursors> threaded_image_cursors =
       std::make_unique<ThreadedImageCursors>(task_runner,

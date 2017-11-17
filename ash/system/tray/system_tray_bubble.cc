@@ -55,7 +55,7 @@ class AnimationObserverDeleteLayer : public ui::ImplicitAnimationObserver {
   ~AnimationObserverDeleteLayer() override {}
 
   void OnImplicitAnimationsCompleted() override {
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
   }
 
  private:

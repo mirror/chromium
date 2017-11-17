@@ -39,7 +39,7 @@ class PermissionRequestCreatorApiaryTest : public testing::Test {
  public:
   PermissionRequestCreatorApiaryTest()
       : request_context_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))),
         permission_creator_(&token_service_,
                             kAccountId,
                             request_context_.get()) {

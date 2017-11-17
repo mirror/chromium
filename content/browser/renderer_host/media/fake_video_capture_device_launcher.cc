@@ -77,7 +77,7 @@ void FakeVideoCaptureDeviceLauncher::LaunchDeviceAsync(
           kMaxBufferCount));
   auto device_client = base::MakeUnique<media::VideoCaptureDeviceClient>(
       base::MakeUnique<media::VideoFrameReceiverOnTaskRunner>(
-          receiver, base::ThreadTaskRunnerHandle::Get()),
+          receiver, base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       std::move(buffer_pool), empty_jpeg_decoder_factory_cb);
   device->AllocateAndStart(params, std::move(device_client));
   auto launched_device =

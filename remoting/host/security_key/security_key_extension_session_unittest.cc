@@ -106,7 +106,7 @@ void TestClientStub::SetCursorShape(
     const protocol::CursorShapeInfo& cursor_shape) {}
 
 void TestClientStub::WaitForDeliverHostMessage(base::TimeDelta max_timeout) {
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, run_loop_->QuitClosure(), max_timeout);
   run_loop_->Run();
   run_loop_.reset(new base::RunLoop);

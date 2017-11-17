@@ -48,7 +48,7 @@ class WidgetCloser : public views::WidgetObserver {
     if (action == DialogAction::INTERACTIVE)
       return;
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&WidgetCloser::CloseAction,
                                   weak_ptr_factory_.GetWeakPtr()));
   }

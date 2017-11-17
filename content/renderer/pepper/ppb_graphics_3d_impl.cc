@@ -269,7 +269,7 @@ bool PPB_Graphics3D_Impl::InitRaw(
 
   command_buffer_ = std::make_unique<gpu::CommandBufferProxyImpl>(
       std::move(channel), kGpuStreamIdDefault,
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   auto result = command_buffer_->Initialize(
       gpu::kNullSurfaceHandle, share_buffer, kGpuStreamPriorityDefault,
       attrib_helper, GURL::EmptyGURL());
@@ -320,7 +320,7 @@ void PPB_Graphics3D_Impl::OnGpuControlLostContext() {
 
   // Send context lost to plugin. This may have been caused by a PPAPI call, so
   // avoid re-entering.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&PPB_Graphics3D_Impl::SendContextLost,
                                 weak_ptr_factory_.GetWeakPtr()));
 }

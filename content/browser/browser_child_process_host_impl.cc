@@ -169,7 +169,7 @@ BrowserChildProcessHostImpl::BrowserChildProcessHostImpl(
     child_connection_.reset(
         new ChildConnection(child_identity, broker_client_invitation_.get(),
                             ServiceManagerContext::GetConnectorForIOThread(),
-                            base::ThreadTaskRunnerHandle::Get()));
+                            base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   }
 
   // Create a persistent memory segment for subprocess histograms.
@@ -244,7 +244,7 @@ void BrowserChildProcessHostImpl::Launch(
       std::move(broker_client_invitation_),
       base::Bind(&BrowserChildProcessHostImpl::OnMojoError,
                  weak_factory_.GetWeakPtr(),
-                 base::ThreadTaskRunnerHandle::Get()),
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       terminate_on_shutdown));
 }
 

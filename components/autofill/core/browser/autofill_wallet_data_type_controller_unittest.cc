@@ -90,10 +90,11 @@ class AutofillWalletDataTypeControllerTest : public testing::Test,
         autofill::prefs::kAutofillCreditCardEnabled, true);
 
     web_data_service_ =
-        new FakeWebDataService(base::ThreadTaskRunnerHandle::Get(),
-                               base::ThreadTaskRunnerHandle::Get());
+        new FakeWebDataService(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                               base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     autofill_wallet_dtc_ = base::MakeUnique<AutofillWalletDataTypeController>(
-        syncer::AUTOFILL_WALLET_DATA, base::ThreadTaskRunnerHandle::Get(),
+        syncer::AUTOFILL_WALLET_DATA,
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE),
         base::Bind(&base::DoNothing), this, web_data_service_);
 
     last_type_ = syncer::UNSPECIFIED;

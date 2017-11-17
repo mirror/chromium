@@ -181,7 +181,7 @@ class TestHistoryBackend : public HistoryBackend {
   TestHistoryBackend()
       : HistoryBackend(new TestHistoryBackendDelegate(),
                        nullptr,
-                       base::ThreadTaskRunnerHandle::Get()) {}
+                       base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
   bool IsExpiredVisitTime(const base::Time& time) override {
     return time.ToInternalValue() == kExpiredVisit;

@@ -412,7 +412,7 @@ class SurfaceLayerSwapPromise : public LayerTreeTest {
   virtual void ChangeTree() = 0;
 
   void DidCommitAndDrawFrame() override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&SurfaceLayerSwapPromise::ChangeTree,
                                   base::Unretained(this)));
   }

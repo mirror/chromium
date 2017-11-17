@@ -723,7 +723,7 @@ TEST_F(BlobReaderTest, FileAsync) {
   this->InitializeReader(&b);
 
   std::unique_ptr<FakeFileStreamReader> reader(new FakeFileStreamReader(kData));
-  reader->SetAsyncRunner(base::ThreadTaskRunnerHandle::Get().get());
+  reader->SetAsyncRunner(base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
 
   ExpectLocalFileCall(kPath, kTime, 0, reader.release());
 
@@ -759,7 +759,7 @@ TEST_F(BlobReaderTest, FileSystemAsync) {
   this->InitializeReader(&b);
 
   std::unique_ptr<FakeFileStreamReader> reader(new FakeFileStreamReader(kData));
-  reader->SetAsyncRunner(base::ThreadTaskRunnerHandle::Get().get());
+  reader->SetAsyncRunner(base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
 
   ExpectFileSystemCall(kURL, 0, kData.size(), kTime, reader.release());
 
@@ -834,12 +834,12 @@ TEST_F(BlobReaderTest, FileRange) {
   this->InitializeReader(&b);
 
   std::unique_ptr<FakeFileStreamReader> reader(new FakeFileStreamReader(kData));
-  reader->SetAsyncRunner(base::ThreadTaskRunnerHandle::Get().get());
+  reader->SetAsyncRunner(base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
   ExpectLocalFileCall(kPath, kTime, 0, reader.release());
 
   // We create the reader again with the offset after the seek.
   reader.reset(new FakeFileStreamReader(kRangeData));
-  reader->SetAsyncRunner(base::ThreadTaskRunnerHandle::Get().get());
+  reader->SetAsyncRunner(base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
   ExpectLocalFileCall(kPath, kTime, kOffset, reader.release());
 
   int size_result = -1;
@@ -935,7 +935,8 @@ TEST_F(BlobReaderTest, FileSomeAsyncSegmentedOffsetsUnknownSizes) {
     std::unique_ptr<FakeFileStreamReader> reader(new FakeFileStreamReader(
         std::string(buf.get() + offset, kItemSize), kItemSize + offset));
     if (i % 4 != 0) {
-      reader->SetAsyncRunner(base::ThreadTaskRunnerHandle::Get().get());
+      reader->SetAsyncRunner(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
     }
     FilePath path = kPathBase.Append(
         FilePath::FromUTF8Unsafe(base::StringPrintf("%d", current_value)));
@@ -999,7 +1000,7 @@ TEST_F(BlobReaderTest, MixedContent) {
 
   std::unique_ptr<FakeFileStreamReader> reader(
       new FakeFileStreamReader(kData1));
-  reader->SetAsyncRunner(base::ThreadTaskRunnerHandle::Get().get());
+  reader->SetAsyncRunner(base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
   ExpectLocalFileCall(kData1Path, kTime, 0, reader.release());
 
   int size_result = -1;
@@ -1113,7 +1114,7 @@ TEST_F(BlobReaderTest, FileErrorsAsync) {
   builder1.AppendFile(kPath, 0, kData.size(), kTime);
   this->InitializeReader(&builder1);
   FakeFileStreamReader* reader = new FakeFileStreamReader(kData);
-  reader->SetAsyncRunner(base::ThreadTaskRunnerHandle::Get().get());
+  reader->SetAsyncRunner(base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
   reader->SetReturnError(net::ERR_FILE_NOT_FOUND);
   ExpectLocalFileCall(kPath, kTime, 0, reader);
 
@@ -1133,7 +1134,7 @@ TEST_F(BlobReaderTest, FileErrorsAsync) {
   EXPECT_EQ(BlobReader::Status::DONE,
             reader_->CalculateSize(base::Bind(&SetValue<int>, &size_result)));
   reader->SetReturnError(net::ERR_FILE_NOT_FOUND);
-  reader->SetAsyncRunner(base::ThreadTaskRunnerHandle::Get().get());
+  reader->SetAsyncRunner(base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
 
   scoped_refptr<net::IOBuffer> buffer(new net::IOBuffer(kData.size()));
   int bytes_read = 0;

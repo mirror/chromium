@@ -102,7 +102,7 @@ TEST_F(NetworkQualitySocketWatcherTest, NotificationsThrottled) {
   SocketWatcher socket_watcher(SocketPerformanceWatcherFactory::PROTOCOL_TCP,
                                address_list,
                                base::TimeDelta::FromMilliseconds(2000), false,
-                               base::ThreadTaskRunnerHandle::Get(),
+                               base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                                base::Bind(OnUpdatedRTTAvailable), &tick_clock);
 
   EXPECT_TRUE(socket_watcher.ShouldNotifyUpdatedRTT());
@@ -137,7 +137,7 @@ TEST_F(NetworkQualitySocketWatcherTest, QuicFirstNotificationDropped) {
   SocketWatcher socket_watcher(
       SocketPerformanceWatcherFactory::PROTOCOL_QUIC, address_list,
       base::TimeDelta::FromMilliseconds(2000), false,
-      base::ThreadTaskRunnerHandle::Get(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::Bind(OnUpdatedRTTAvailableStoreParams), &tick_clock);
 
   EXPECT_TRUE(socket_watcher.ShouldNotifyUpdatedRTT());
@@ -190,8 +190,8 @@ TEST_F(NetworkQualitySocketWatcherTest, PrivateAddressRTTNotNotified) {
     SocketWatcher socket_watcher(
         SocketPerformanceWatcherFactory::PROTOCOL_TCP, address_list,
         base::TimeDelta::FromMilliseconds(2000), false,
-        base::ThreadTaskRunnerHandle::Get(), base::Bind(OnUpdatedRTTAvailable),
-        &tick_clock);
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+        base::Bind(OnUpdatedRTTAvailable), &tick_clock);
 
     EXPECT_EQ(test.expect_should_notify_rtt,
               socket_watcher.ShouldNotifyUpdatedRTT());
@@ -228,7 +228,7 @@ TEST_F(NetworkQualitySocketWatcherTest, RemoteHostIPHashComputedCorrectly) {
     SocketWatcher socket_watcher(
         SocketPerformanceWatcherFactory::PROTOCOL_TCP, address_list,
         base::TimeDelta::FromMilliseconds(2000), false,
-        base::ThreadTaskRunnerHandle::Get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE),
         base::Bind(OnUpdatedRTTAvailableStoreParams), &tick_clock);
     EXPECT_TRUE(socket_watcher.ShouldNotifyUpdatedRTT());
     socket_watcher.OnUpdatedRTTAvailable(base::TimeDelta::FromSeconds(10));

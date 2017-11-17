@@ -52,7 +52,8 @@ class TestDelegate;
 class NotificationCollector
     : public base::RefCountedThreadSafe<NotificationCollector> {
  public:
-  NotificationCollector() : task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+  NotificationCollector()
+      : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
   // Called from the file thread by the delegates.
   void OnChange(TestDelegate* delegate) {
@@ -188,7 +189,7 @@ class FilePathWatcherTest : public testing::Test {
 
     RunLoop run_loop;
     // Make sure we timeout if we don't get notified.
-    ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop.QuitWhenIdleClosure(),
         TestTimeouts::action_timeout());
     run_loop.Run();

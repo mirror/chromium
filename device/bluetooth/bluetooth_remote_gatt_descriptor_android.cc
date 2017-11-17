@@ -83,7 +83,7 @@ void BluetoothRemoteGattDescriptorAndroid::ReadRemoteDescriptor(
     const ValueCallback& callback,
     const ErrorCallback& error_callback) {
   if (read_pending_ || write_pending_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(error_callback,
                    BluetoothRemoteGattService::GATT_ERROR_IN_PROGRESS));
@@ -92,7 +92,7 @@ void BluetoothRemoteGattDescriptorAndroid::ReadRemoteDescriptor(
 
   if (!Java_ChromeBluetoothRemoteGattDescriptor_readRemoteDescriptor(
           AttachCurrentThread(), j_descriptor_)) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(error_callback,
                    BluetoothRemoteGattServiceAndroid::GATT_ERROR_FAILED));
@@ -109,7 +109,7 @@ void BluetoothRemoteGattDescriptorAndroid::WriteRemoteDescriptor(
     const base::Closure& callback,
     const ErrorCallback& error_callback) {
   if (read_pending_ || write_pending_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(error_callback,
                    BluetoothRemoteGattService::GATT_ERROR_IN_PROGRESS));
@@ -119,7 +119,7 @@ void BluetoothRemoteGattDescriptorAndroid::WriteRemoteDescriptor(
   JNIEnv* env = AttachCurrentThread();
   if (!Java_ChromeBluetoothRemoteGattDescriptor_writeRemoteDescriptor(
           env, j_descriptor_, base::android::ToJavaByteArray(env, new_value))) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(error_callback,
                    BluetoothRemoteGattServiceAndroid::GATT_ERROR_FAILED));

@@ -128,7 +128,7 @@ void PluginPrivateFileSystemBackend::OpenPrivateFileSystem(
     OpenFileSystemMode mode,
     StatusCallback callback) {
   if (!CanHandleType(type) || file_system_options_.is_incognito()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(std::move(callback), base::File::FILE_ERROR_SECURITY));
     return;
@@ -154,7 +154,7 @@ void PluginPrivateFileSystemBackend::ResolveURL(
     OpenFileSystemCallback callback) {
   // We never allow opening a new plugin-private filesystem via usual
   // ResolveURL.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), GURL(), std::string(),
                                 base::File::FILE_ERROR_SECURITY));
 }

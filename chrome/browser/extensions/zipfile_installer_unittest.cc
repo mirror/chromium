@@ -97,7 +97,7 @@ class ZipFileInstallerTest : public testing::Test {
 
     zipfile_installer_ = ZipFileInstaller::Create(extension_service_);
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&ZipFileInstaller::LoadFromZipFile,
                                   zipfile_installer_, original_path));
     observer_.WaitForInstall();

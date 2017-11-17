@@ -1404,7 +1404,7 @@ static std::unique_ptr<VideoEncodeAccelerator> CreateVideoEncodeAccelerator(
     std::unique_ptr<VideoEncodeAccelerator> encoder(
         new FakeVideoEncodeAccelerator(
             scoped_refptr<base::SingleThreadTaskRunner>(
-                base::ThreadTaskRunnerHandle::Get())));
+                base::ThreadTaskRunnerHandle::Get(FROM_HERE))));
     if (encoder->Initialize(input_format, input_visible_size, output_profile,
                             initial_bitrate, client))
       return encoder;
@@ -1420,7 +1420,7 @@ void VEAClient::CreateEncoder() {
   DCHECK(thread_checker_.CalledOnValidThread());
   LOG_ASSERT(!has_encoder());
 
-  vea_client_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  vea_client_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   encode_task_runner_ = vea_client_task_runner_;
 
   DVLOG(1) << "Profile: " << test_stream_->requested_profile

@@ -388,9 +388,10 @@ void FileVideoCaptureDevice::OnCaptureTask() {
     if (next_frame_time_ < current_time)
       next_frame_time_ = current_time;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&FileVideoCaptureDevice::OnCaptureTask,
-                            base::Unretained(this)),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&FileVideoCaptureDevice::OnCaptureTask,
+                 base::Unretained(this)),
       next_frame_time_ - current_time);
 }
 

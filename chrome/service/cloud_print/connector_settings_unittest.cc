@@ -54,7 +54,7 @@ class ConnectorSettingsTest : public testing::Test {
  protected:
   void SetUp() override {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
-    task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   }
 
   ServiceProcessPrefs* CreateTestFile(const char* json) {

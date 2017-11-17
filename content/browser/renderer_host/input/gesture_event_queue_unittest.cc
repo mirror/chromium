@@ -1118,7 +1118,7 @@ TEST_F(GestureEventQueueTest, DebounceDefersFollowingGestureEvents) {
   EXPECT_EQ(2U, GestureEventQueueSize());
   EXPECT_EQ(2U, GestureEventDebouncingQueueSize());
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       TimeDelta::FromMilliseconds(5));
   base::RunLoop().Run();

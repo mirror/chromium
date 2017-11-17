@@ -468,7 +468,8 @@ TEST_F(HttpServerTest, RequestWithTooLargeBody) {
   TestURLFetcherDelegate delegate(run_loop.QuitClosure());
 
   scoped_refptr<URLRequestContextGetter> request_context_getter(
-      new TestURLRequestContextGetter(base::ThreadTaskRunnerHandle::Get()));
+      new TestURLRequestContextGetter(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   std::unique_ptr<URLFetcher> fetcher = URLFetcher::Create(
       GURL(base::StringPrintf("http://127.0.0.1:%d/test",
                               server_address_.port())),

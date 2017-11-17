@@ -36,7 +36,7 @@ void BlacklistStateFetcherMock::Request(const std::string& id,
   if (base::ContainsKey(states_, id))
     result = states_[id];
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, result));
 }
 

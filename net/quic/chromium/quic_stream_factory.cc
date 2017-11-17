@@ -928,7 +928,7 @@ int QuicStreamFactory::Create(const QuicServerId& server_id,
   // TODO(rtenneti): |task_runner_| is used by the Job. Initialize task_runner_
   // in the constructor after WebRequestActionWithThreadsTest.* tests are fixed.
   if (!task_runner_)
-    task_runner_ = base::ThreadTaskRunnerHandle::Get().get();
+    task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE).get();
 
   ignore_result(StartCertVerifyJob(server_id, cert_verify_flags, net_log));
 
@@ -1349,7 +1349,7 @@ int QuicStreamFactory::CreateSession(const QuicSessionKey& key,
 
   if (!alarm_factory_.get()) {
     alarm_factory_.reset(new QuicChromiumAlarmFactory(
-        base::ThreadTaskRunnerHandle::Get().get(), clock_));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), clock_));
   }
 
   QuicConnectionId connection_id = random_generator_->RandUint64();

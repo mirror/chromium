@@ -129,7 +129,7 @@ SimpleWatcher::SimpleWatcher(const base::Location& from_here,
       task_runner_(std::move(runner)),
       is_default_task_runner_(base::ThreadTaskRunnerHandle::IsSet() &&
                               task_runner_ ==
-                                  base::ThreadTaskRunnerHandle::Get()),
+                                  base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       heap_profiler_tag_(from_here.file_name()),
       weak_factory_(this) {
   MojoResult rv = CreateWatcher(&Context::CallNotify, &watcher_handle_);

@@ -46,7 +46,7 @@ class InvalidationNotifierTestDelegate {
     invalidator_.reset(new InvalidationNotifier(
         std::move(network_channel), invalidator_client_id,
         UnackedInvalidationsMap(), initial_state, invalidation_state_tracker,
-        base::ThreadTaskRunnerHandle::Get(), "fake_client_info"));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), "fake_client_info"));
   }
 
   Invalidator* GetInvalidator() {

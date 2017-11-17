@@ -391,7 +391,7 @@ void UnloadController::ClearUnloadState(content::WebContents* web_contents,
       // Do not post a new task if there is already any.
       if (weak_factory_.HasWeakPtrs())
         return;
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(&UnloadController::ProcessPendingTabs,
                                     weak_factory_.GetWeakPtr(), false));
     }

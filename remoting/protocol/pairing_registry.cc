@@ -106,7 +106,7 @@ bool PairingRegistry::Pairing::is_valid() const {
 PairingRegistry::PairingRegistry(
     scoped_refptr<base::SingleThreadTaskRunner> delegate_task_runner,
     std::unique_ptr<Delegate> delegate)
-    : caller_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : caller_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       delegate_task_runner_(delegate_task_runner),
       delegate_(std::move(delegate)) {
   DCHECK(delegate_);

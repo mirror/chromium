@@ -19,7 +19,7 @@ P2PAsyncAddressResolver::P2PAsyncAddressResolver(
     P2PSocketDispatcher* dispatcher)
     : dispatcher_(dispatcher),
       ipc_task_runner_(dispatcher->task_runner()),
-      delegate_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      delegate_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       state_(STATE_CREATED),
       request_id_(0),
       registered_(false) {

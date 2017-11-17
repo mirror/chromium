@@ -217,7 +217,7 @@ TEST_F(PairingRegistryTest, SerializedRequests) {
       .WillOnce(QuitMessageLoop(run_loop_.QuitClosure()));
 
   scoped_refptr<PairingRegistry> registry =
-      new PairingRegistry(base::ThreadTaskRunnerHandle::Get(),
+      new PairingRegistry(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                           base::MakeUnique<MockPairingRegistryDelegate>());
   PairingRegistry::Pairing pairing_1 = registry->CreatePairing("client1");
   PairingRegistry::Pairing pairing_2 = registry->CreatePairing("client2");

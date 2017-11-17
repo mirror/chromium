@@ -16,9 +16,8 @@
 namespace media {
 
 FakeTextTrackStream::FakeTextTrackStream()
-    : task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      stopping_(false) {
-}
+    : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+      stopping_(false) {}
 
 FakeTextTrackStream::~FakeTextTrackStream() {
   DCHECK(read_cb_.is_null());

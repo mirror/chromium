@@ -77,7 +77,7 @@ class OptimizationHintsComponentInstallerTest : public PlatformTest {
 
     auto optimization_guide_service =
         base::MakeUnique<TestOptimizationGuideService>(
-            base::ThreadTaskRunnerHandle::Get());
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     optimization_guide_service_ = optimization_guide_service.get();
 
     pref_service_ = base::MakeUnique<TestingPrefServiceSimple>();

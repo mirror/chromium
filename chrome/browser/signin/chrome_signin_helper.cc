@@ -137,7 +137,7 @@ class DiceURLRequestUserData : public base::SupportsUserData::Data {
   // short time afterwards, to give the second request some time to start and
   // lock the reconcilor from there.
   ~DiceURLRequestUserData() override {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&DiceURLRequestUserData::DoNothing,
                        account_reconcilor_lock_wrapper_),

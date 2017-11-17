@@ -175,7 +175,7 @@ TEST_F(ZeroTouchEnrollmentScreenUnitTest, DoesNotRetryOnTopOfUser) {
   enrollment_screen_->Show();
 
   // Schedule user retry button click after 30 sec.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&EnrollmentScreen::OnRetry,
                      enrollment_screen_->weak_ptr_factory_.GetWeakPtr()),

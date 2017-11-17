@@ -39,7 +39,7 @@ IntranetRedirectDetector::IntranetRedirectDetector()
   // browser is starting up, and if so, come back later", but there is currently
   // no function to do this.
   static const int kStartFetchDelaySeconds = 7;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&IntranetRedirectDetector::FinishSleep,
                      weak_ptr_factory_.GetWeakPtr()),
@@ -189,7 +189,7 @@ void IntranetRedirectDetector::OnNetworkChanged(
   // delay this a little bit.
   in_sleep_ = true;
   static const int kNetworkSwitchDelayMS = 1000;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&IntranetRedirectDetector::FinishSleep,
                      weak_ptr_factory_.GetWeakPtr()),

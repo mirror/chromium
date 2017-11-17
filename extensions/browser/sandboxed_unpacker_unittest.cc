@@ -84,7 +84,7 @@ class SandboxedUnpackerTest : public ExtensionsTest {
 
     sandboxed_unpacker_ = new SandboxedUnpacker(
         Manifest::INTERNAL, Extension::NO_FLAGS, extensions_dir_.GetPath(),
-        base::ThreadTaskRunnerHandle::Get(), client_);
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), client_);
   }
 
   void TearDown() override {
@@ -107,7 +107,7 @@ class SandboxedUnpackerTest : public ExtensionsTest {
   void SetupUnpacker(const std::string& crx_name,
                      const std::string& package_hash) {
     base::FilePath crx_path = GetCrxFullPath(crx_name);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(
             &SandboxedUnpacker::StartWithCrx, sandboxed_unpacker_,
@@ -124,7 +124,7 @@ class SandboxedUnpackerTest : public ExtensionsTest {
     std::string fake_id = crx_file::id_util::GenerateId(crx_name);
     std::string fake_public_key;
     base::Base64Encode(std::string(2048, 'k'), &fake_public_key);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&SandboxedUnpacker::StartWithDirectory, sandboxed_unpacker_,
                    fake_id, fake_public_key, temp_dir.Take()));

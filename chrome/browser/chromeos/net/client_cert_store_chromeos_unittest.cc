@@ -61,7 +61,8 @@ class TestCertFilter : public ClientCertStoreChromeOS::CertFilter {
 
   void FinishInit() {
     init_finished_ = true;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, pending_callback_);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           pending_callback_);
     pending_callback_.Reset();
   }
 

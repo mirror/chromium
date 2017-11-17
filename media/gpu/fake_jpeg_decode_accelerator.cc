@@ -13,7 +13,7 @@ namespace media {
 
 FakeJpegDecodeAccelerator::FakeJpegDecodeAccelerator(
     const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner)
-    : client_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : client_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       io_task_runner_(std::move(io_task_runner)),
       decoder_thread_("FakeJpegDecoderThread"),
       weak_factory_(this) {}

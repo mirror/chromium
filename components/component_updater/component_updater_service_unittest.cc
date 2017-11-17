@@ -317,7 +317,7 @@ TEST_F(ComponentUpdaterTest, OnDemandUpdate) {
       static int cnt = 0;
       ++cnt;
       if (cnt >= max_cnt_) {
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE,
             base::BindOnce(&LoopHandler::Quit, base::Unretained(this)));
       }

@@ -193,23 +193,23 @@ class PingPongPaddle : public MessageReceiverWithResponderStatus {
 TEST_F(MojoBindingsPerftest, MultiplexRouterPingPong) {
   MessagePipe pipe;
   scoped_refptr<internal::MultiplexRouter> router0(
-      new internal::MultiplexRouter(std::move(pipe.handle0),
-                                    internal::MultiplexRouter::SINGLE_INTERFACE,
-                                    true, base::ThreadTaskRunnerHandle::Get()));
+      new internal::MultiplexRouter(
+          std::move(pipe.handle0), internal::MultiplexRouter::SINGLE_INTERFACE,
+          true, base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   scoped_refptr<internal::MultiplexRouter> router1(
       new internal::MultiplexRouter(
           std::move(pipe.handle1), internal::MultiplexRouter::SINGLE_INTERFACE,
-          false, base::ThreadTaskRunnerHandle::Get()));
+          false, base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 
   PingPongPaddle paddle0(nullptr);
   PingPongPaddle paddle1(nullptr);
 
   InterfaceEndpointClient client0(
       router0->CreateLocalEndpointHandle(kMasterInterfaceId), &paddle0, nullptr,
-      false, base::ThreadTaskRunnerHandle::Get(), 0u);
+      false, base::ThreadTaskRunnerHandle::Get(FROM_HERE), 0u);
   InterfaceEndpointClient client1(
       router1->CreateLocalEndpointHandle(kMasterInterfaceId), &paddle1, nullptr,
-      false, base::ThreadTaskRunnerHandle::Get(), 0u);
+      false, base::ThreadTaskRunnerHandle::Get(FROM_HERE), 0u);
 
   paddle0.set_sender(&client0);
   paddle1.set_sender(&client1);
@@ -251,11 +251,11 @@ TEST_F(MojoBindingsPerftest, MultiplexRouterDispatchCost) {
   MessagePipe pipe;
   scoped_refptr<internal::MultiplexRouter> router(new internal::MultiplexRouter(
       std::move(pipe.handle0), internal::MultiplexRouter::SINGLE_INTERFACE,
-      true, base::ThreadTaskRunnerHandle::Get()));
+      true, base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   CounterReceiver receiver;
   InterfaceEndpointClient client(
       router->CreateLocalEndpointHandle(kMasterInterfaceId), &receiver, nullptr,
-      false, base::ThreadTaskRunnerHandle::Get(), 0u);
+      false, base::ThreadTaskRunnerHandle::Get(FROM_HERE), 0u);
 
   static const uint32_t kIterations[] = {1000, 3000000};
 

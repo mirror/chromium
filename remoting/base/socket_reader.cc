@@ -59,7 +59,7 @@ void SocketReader::HandleReadResult(int result) {
   if (result != net::ERR_IO_PENDING) {
     if (result < 0)
       read_buffer_ = NULL;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&SocketReader::CallCallback, weak_factory_.GetWeakPtr(),
                    read_buffer_, result));

@@ -72,7 +72,7 @@ std::unique_ptr<UpdateContext> PingManagerTest::MakeFakeUpdateContext() const {
 
 TEST_F(PingManagerTest, SendPing) {
   std::unique_ptr<InterceptorFactory> interceptor_factory(
-      new InterceptorFactory(base::ThreadTaskRunnerHandle::Get()));
+      new InterceptorFactory(base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   URLRequestPostInterceptor* interceptor =
       interceptor_factory->CreateInterceptor();
   EXPECT_TRUE(interceptor);

@@ -102,14 +102,14 @@ class MockContext : public RendererAudioOutputStreamFactoryContext {
     EXPECT_EQ(render_frame_id, kRenderFrameId);
     EXPECT_EQ(session_id, 0);
     if (auth_ok_) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(std::move(cb),
                          media::OutputDeviceStatus::OUTPUT_DEVICE_STATUS_OK,
                          GetTestAudioParameters(), "default", std::string()));
       return;
     }
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(std::move(cb),
                        media::OutputDeviceStatus::

@@ -22,8 +22,8 @@ ACTION_TEMPLATE(PostReply,
                 AND_1_VALUE_PARAMS(p0)) {
   auto callback = ::testing::get<K - 2>(args);
   base::CancelableTaskTracker* tracker = ::testing::get<K - 1>(args);
-  return tracker->PostTask(base::ThreadTaskRunnerHandle::Get().get(), FROM_HERE,
-                           base::Bind(callback, p0));
+  return tracker->PostTask(base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+                           FROM_HERE, base::Bind(callback, p0));
 }
 
 class MockFaviconService : public FaviconService {

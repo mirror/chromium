@@ -83,7 +83,7 @@ int main(int argc, char** argv) {
     gin::IsolateHolder::Initialize(gin::IsolateHolder::kStrictMode,
                                    gin::IsolateHolder::kStableV8Extras,
                                    gin::ArrayBufferAllocator::SharedInstance());
-    gin::IsolateHolder instance(base::ThreadTaskRunnerHandle::Get());
+    gin::IsolateHolder instance(base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
     gin::GinShellRunnerDelegate delegate;
     gin::ShellRunner runner(&delegate, instance.isolate());
@@ -99,7 +99,7 @@ int main(int argc, char** argv) {
         base::CommandLine::ForCurrentProcess()->GetArgs();
     for (base::CommandLine::StringVector::const_iterator it = args.begin();
          it != args.end(); ++it) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::Bind(gin::Run, runner.GetWeakPtr(), base::FilePath(*it)));
     }

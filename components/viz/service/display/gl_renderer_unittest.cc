@@ -1950,7 +1950,7 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
       cc::FakeResourceProvider::CreateDisplayResourceProvider(
           output_surface->context_provider(), shared_bitmap_manager.get());
   std::unique_ptr<TextureMailboxDeleter> mailbox_deleter(
-      new TextureMailboxDeleter(base::ThreadTaskRunnerHandle::Get()));
+      new TextureMailboxDeleter(base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 
   auto child_context_provider = cc::TestContextProvider::Create();
   child_context_provider->BindToCurrentThread();
@@ -2144,7 +2144,7 @@ TEST_F(GLRendererTest, OverlaySyncTokensAreProcessed) {
       cc::FakeResourceProvider::CreateDisplayResourceProvider(
           output_surface->context_provider(), shared_bitmap_manager.get());
   std::unique_ptr<TextureMailboxDeleter> mailbox_deleter(
-      new TextureMailboxDeleter(base::ThreadTaskRunnerHandle::Get()));
+      new TextureMailboxDeleter(base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 
   auto child_context_provider = cc::TestContextProvider::Create();
   child_context_provider->BindToCurrentThread();

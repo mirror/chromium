@@ -70,7 +70,7 @@ void RunTestFromFile(const base::FilePath& path, FileRunnerDelegate* delegate,
                                  gin::IsolateHolder::kStableV8Extras,
                                  gin::ArrayBufferAllocator::SharedInstance());
 
-  gin::IsolateHolder instance(base::ThreadTaskRunnerHandle::Get());
+  gin::IsolateHolder instance(base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   gin::ShellRunner runner(delegate, instance.isolate());
   {
     gin::Runner::Scope scope(&runner);

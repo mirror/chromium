@@ -160,8 +160,8 @@ void UpdateCheckerTest::SetUp() {
   PersistedData::RegisterPrefs(pref_->registry());
   metadata_ = std::make_unique<PersistedData>(pref_.get(),
                                               activity_data_service_.get());
-  interceptor_factory_ =
-      std::make_unique<InterceptorFactory>(base::ThreadTaskRunnerHandle::Get());
+  interceptor_factory_ = std::make_unique<InterceptorFactory>(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   post_interceptor_ = interceptor_factory_->CreateInterceptor();
   EXPECT_TRUE(post_interceptor_);
 

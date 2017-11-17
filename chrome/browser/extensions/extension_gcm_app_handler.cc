@@ -130,7 +130,7 @@ void ExtensionGCMAppHandler::OnExtensionUnloaded(
     // the single function ExtensionService::AddExtension.
     AddDummyAppHandler();
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&ExtensionGCMAppHandler::RemoveDummyAppHandler,
                        weak_factory_.GetWeakPtr()));
@@ -191,7 +191,7 @@ void ExtensionGCMAppHandler::OnDeleteIDCompleted(
   // InstanceIDDriver::RemoveInstanceID will delete the InstanceID itself.
   // Postpone to do it outside this calling context to avoid any risk to
   // the caller.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ExtensionGCMAppHandler::RemoveInstanceID,
                                 weak_factory_.GetWeakPtr(), app_id));
 }

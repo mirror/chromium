@@ -37,7 +37,8 @@ bool ProxyChannel::InitWithChannel(Delegate* delegate,
       : IPC::Channel::MODE_SERVER;
   channel_ = IPC::SyncChannel::Create(
       channel_handle, mode, this, delegate->GetIPCTaskRunner(),
-      base::ThreadTaskRunnerHandle::Get(), true, delegate->GetShutdownEvent());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), true,
+      delegate->GetShutdownEvent());
   return true;
 }
 

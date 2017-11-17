@@ -114,7 +114,8 @@ void BrowserPolicyConnector::InitInternal(
 
   policy_statistics_collector_.reset(new policy::PolicyStatisticsCollector(
       base::Bind(&GetChromePolicyDetails), GetChromeSchema(),
-      GetPolicyService(), local_state, base::ThreadTaskRunnerHandle::Get()));
+      GetPolicyService(), local_state,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   policy_statistics_collector_->Initialize();
 
   InitPolicyProviders();

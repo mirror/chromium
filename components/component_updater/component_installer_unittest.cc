@@ -190,7 +190,7 @@ class ComponentInstallerTest : public testing::Test {
   void UnpackComplete(const ComponentUnpacker::Result& result);
 
   const scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_ =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   base::RunLoop runloop_;
 
   scoped_refptr<TestConfigurator> config_ =

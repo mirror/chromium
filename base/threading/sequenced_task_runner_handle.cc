@@ -52,7 +52,7 @@ scoped_refptr<SequencedTaskRunner> SequencedTaskRunnerHandle::Get() {
   CHECK(ThreadTaskRunnerHandle::IsSet())
       << "Error: This caller requires a sequenced context (i.e. the "
          "current task needs to run from a SequencedTaskRunner).";
-  return ThreadTaskRunnerHandle::Get();
+  return ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 // static

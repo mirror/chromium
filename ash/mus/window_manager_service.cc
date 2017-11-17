@@ -126,7 +126,7 @@ void WindowManagerService::ShutdownComponents() {
 
 void WindowManagerService::OnStart() {
   mojo_interface_factory::RegisterInterfaces(
-      &registry_, base::ThreadTaskRunnerHandle::Get());
+      &registry_, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   const bool register_path_provider = running_standalone_;
   aura_init_ = views::AuraInit::Create(

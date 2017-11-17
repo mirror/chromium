@@ -805,7 +805,7 @@ void RenderThreadImpl::Init(
 #endif
 
   registry->AddInterface(base::Bind(&SharedWorkerFactoryImpl::Create),
-                         base::ThreadTaskRunnerHandle::Get());
+                         base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   GetServiceManagerConnection()->AddConnectionFilter(
       std::make_unique<SimpleConnectionFilter>(std::move(registry)));
 
@@ -814,7 +814,8 @@ void RenderThreadImpl::Init(
         std::make_unique<service_manager::BinderRegistryWithArgs<
             const service_manager::BindSourceInfo&>>();
     registry_with_source_info->AddInterface(
-        base::Bind(&CreateFrameFactory), base::ThreadTaskRunnerHandle::Get());
+        base::Bind(&CreateFrameFactory),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     GetServiceManagerConnection()->AddConnectionFilter(
         std::make_unique<SimpleConnectionFilterWithSourceInfo>(
             std::move(registry_with_source_info)));
@@ -1310,7 +1311,8 @@ void RenderThreadImpl::InitializeWebKit(
   if (compositor_task_runner_)
     compositor_impl_side_task_runner = compositor_task_runner_;
   else
-    compositor_impl_side_task_runner = base::ThreadTaskRunnerHandle::Get();
+    compositor_impl_side_task_runner =
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
   compositor_message_filter_ = new CompositorForwardingMessageFilter(
       compositor_impl_side_task_runner.get());
@@ -1536,7 +1538,7 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
   gpu_->CreateVideoEncodeAcceleratorProvider(mojo::MakeRequest(&vea_provider));
 
   gpu_factories_.push_back(GpuVideoAcceleratorFactoriesImpl::Create(
-      std::move(gpu_channel_host), base::ThreadTaskRunnerHandle::Get(),
+      std::move(gpu_channel_host), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       media_task_runner, std::move(media_context_provider),
       enable_gpu_memory_buffer_video_frames, buffer_to_texture_target_map_,
       enable_video_accelerator, vea_provider.PassInterface()));
@@ -1710,8 +1712,9 @@ RenderThreadImpl::CreateExternalBeginFrameSource(int routing_id) {
 std::unique_ptr<viz::SyntheticBeginFrameSource>
 RenderThreadImpl::CreateSyntheticBeginFrameSource() {
   base::SingleThreadTaskRunner* compositor_impl_side_task_runner =
-      compositor_task_runner_ ? compositor_task_runner_.get()
-                              : base::ThreadTaskRunnerHandle::Get().get();
+      compositor_task_runner_
+          ? compositor_task_runner_.get()
+          : base::ThreadTaskRunnerHandle::Get(FROM_HERE).get();
   return std::make_unique<viz::BackToBackBeginFrameSource>(
       std::make_unique<viz::DelayBasedTimeSource>(
           compositor_impl_side_task_runner));

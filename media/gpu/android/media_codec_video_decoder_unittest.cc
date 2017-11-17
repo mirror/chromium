@@ -115,7 +115,7 @@ class MediaCodecVideoDecoderTest : public testing::Test {
     uint8_t data = 0;
     fake_decoder_buffer_ = DecoderBuffer::CopyFrom(&data, 1);
     codec_allocator_ = base::MakeUnique<FakeCodecAllocator>(
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     device_info_ = base::MakeUnique<NiceMock<MockDeviceInfo>>();
   }
 

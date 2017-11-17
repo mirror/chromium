@@ -136,7 +136,8 @@ class PrintPreviewObserver : public WebContentsObserver {
 
   // Actually stops the message loop so that the test can proceed.
   void EndLoop() {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_closure_);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           quit_closure_);
   }
 
   bool OnMessageReceived(const IPC::Message& message) override {

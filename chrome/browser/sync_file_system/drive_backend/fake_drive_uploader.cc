@@ -37,7 +37,7 @@ void DidAddFileForUploadNew(const UploadCompletionCallback& callback,
                             std::unique_ptr<FileResource> entry) {
   ASSERT_EQ(google_apis::HTTP_CREATED, error);
   ASSERT_TRUE(entry);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, google_apis::HTTP_SUCCESS, GURL(),
                                 base::Passed(&entry)));
 }
@@ -46,7 +46,7 @@ void DidGetFileResourceForUploadExisting(
     const UploadCompletionCallback& callback,
     DriveApiErrorCode error,
     std::unique_ptr<FileResource> entry) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, error, GURL(), base::Passed(&entry)));
 }
 

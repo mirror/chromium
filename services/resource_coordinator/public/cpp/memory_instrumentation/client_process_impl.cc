@@ -50,7 +50,7 @@ ClientProcessImpl::ClientProcessImpl(const Config& config)
         mojo::MakeRequest(&coordinator_), service_manager::BindSourceInfo());
   }
 
-  task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
   // TODO(primiano): this is a temporary workaround to tell the
   // base::MemoryDumpManager that it is special and should coordinate periodic

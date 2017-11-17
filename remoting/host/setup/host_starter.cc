@@ -34,7 +34,7 @@ HostStarter::HostStarter(
       unregistering_host_(false),
       weak_ptr_factory_(this) {
   weak_ptr_ = weak_ptr_factory_.GetWeakPtr();
-  main_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  main_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 HostStarter::~HostStarter() {}

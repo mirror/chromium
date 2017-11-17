@@ -1531,7 +1531,7 @@ void InputHandlerProxy::HandleScrollElasticityOverscroll(
   // the over-scroll animation. Note that the call to the elasticity controller
   // is made asynchronously, to minimize divergence between main thread and
   // impl thread event handling paths.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&InputScrollElasticityController::ObserveGestureEventAndResult,
                  scroll_elasticity_controller_->GetWeakPtr(), gesture_event,

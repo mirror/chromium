@@ -47,7 +47,7 @@ class OnDiskAttachmentStoreFactory {
     std::unique_ptr<AttachmentStore> store;
     AttachmentStore::Result result = AttachmentStore::UNSPECIFIED_ERROR;
     store = AttachmentStore::CreateOnDiskStore(
-        temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(),
+        temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
         base::Bind(&AttachmentStoreCreated, &result));
     base::RunLoop run_loop;
     run_loop.RunUntilIdle();
@@ -173,7 +173,7 @@ TEST_F(OnDiskAttachmentStoreSpecificTest, CloseAndReopen) {
 
   result = AttachmentStore::UNSPECIFIED_ERROR;
   store_ = AttachmentStore::CreateOnDiskStore(
-      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(),
+      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::Bind(&AttachmentStoreCreated, &result));
   RunLoop();
   EXPECT_EQ(AttachmentStore::SUCCESS, result);
@@ -194,7 +194,7 @@ TEST_F(OnDiskAttachmentStoreSpecificTest, CloseAndReopen) {
   store_ = nullptr;
   result = AttachmentStore::UNSPECIFIED_ERROR;
   store_ = AttachmentStore::CreateOnDiskStore(
-      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(),
+      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::Bind(&AttachmentStoreCreated, &result));
   RunLoop();
   EXPECT_EQ(AttachmentStore::SUCCESS, result);
@@ -219,7 +219,7 @@ TEST_F(OnDiskAttachmentStoreSpecificTest, FailToOpen) {
 
   AttachmentStore::Result result = AttachmentStore::SUCCESS;
   store_ = AttachmentStore::CreateOnDiskStore(
-      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(),
+      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::Bind(&AttachmentStoreCreated, &result));
   RunLoop();
   EXPECT_EQ(AttachmentStore::UNSPECIFIED_ERROR, result);
@@ -233,7 +233,7 @@ TEST_F(OnDiskAttachmentStoreSpecificTest, StoreMetadata) {
   // Open database with AttachmentStore.
   AttachmentStore::Result result = AttachmentStore::UNSPECIFIED_ERROR;
   store_ = AttachmentStore::CreateOnDiskStore(
-      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(),
+      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::Bind(&AttachmentStoreCreated, &result));
   RunLoop();
   EXPECT_EQ(AttachmentStore::SUCCESS, result);
@@ -255,7 +255,7 @@ TEST_F(OnDiskAttachmentStoreSpecificTest, StoreMetadata) {
   // AttachmentStore should fail to load.
   result = AttachmentStore::SUCCESS;
   store_ = AttachmentStore::CreateOnDiskStore(
-      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(),
+      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::Bind(&AttachmentStoreCreated, &result));
   RunLoop();
   EXPECT_EQ(AttachmentStore::UNSPECIFIED_ERROR, result);
@@ -266,7 +266,7 @@ TEST_F(OnDiskAttachmentStoreSpecificTest, StoreMetadata) {
   // AttachmentStore should fail to load.
   result = AttachmentStore::SUCCESS;
   store_ = AttachmentStore::CreateOnDiskStore(
-      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(),
+      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::Bind(&AttachmentStoreCreated, &result));
   RunLoop();
   EXPECT_EQ(AttachmentStore::UNSPECIFIED_ERROR, result);
@@ -278,7 +278,7 @@ TEST_F(OnDiskAttachmentStoreSpecificTest, RecordMetadata) {
   // Create attachment store.
   AttachmentStore::Result create_result = AttachmentStore::UNSPECIFIED_ERROR;
   store_ = AttachmentStore::CreateOnDiskStore(
-      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(),
+      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::Bind(&AttachmentStoreCreated, &create_result));
 
   // Write two attachments.
@@ -319,7 +319,7 @@ TEST_F(OnDiskAttachmentStoreSpecificTest, MismatchedCrcInStore) {
   // Create attachment store.
   AttachmentStore::Result create_result = AttachmentStore::UNSPECIFIED_ERROR;
   store_ = AttachmentStore::CreateOnDiskStore(
-      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(),
+      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::Bind(&AttachmentStoreCreated, &create_result));
 
   // Write attachment with incorrect crc32c.
@@ -359,7 +359,7 @@ TEST_F(OnDiskAttachmentStoreSpecificTest, MismatchedCrcInId) {
   // Create attachment store.
   AttachmentStore::Result create_result = AttachmentStore::UNSPECIFIED_ERROR;
   store_ = AttachmentStore::CreateOnDiskStore(
-      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(),
+      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::Bind(&AttachmentStoreCreated, &create_result));
 
   AttachmentStore::Result write_result = AttachmentStore::UNSPECIFIED_ERROR;
@@ -399,7 +399,7 @@ TEST_F(OnDiskAttachmentStoreSpecificTest, OpsAfterInitializationFailed) {
 
   AttachmentStore::Result create_result = AttachmentStore::SUCCESS;
   store_ = AttachmentStore::CreateOnDiskStore(
-      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(),
+      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::Bind(&AttachmentStoreCreated, &create_result));
 
   // Reading from uninitialized store should result in
@@ -449,7 +449,7 @@ TEST_F(OnDiskAttachmentStoreSpecificTest, ReadMetadataWithUnexpectedRecord) {
   // Create attachment store.
   AttachmentStore::Result create_result = AttachmentStore::UNSPECIFIED_ERROR;
   store_ = AttachmentStore::CreateOnDiskStore(
-      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(),
+      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::Bind(&AttachmentStoreCreated, &create_result));
 
   // Read all metadata. Should be getting no error and zero entries.
@@ -501,7 +501,7 @@ TEST_F(OnDiskAttachmentStoreSpecificTest, ReadMetadataWithUnexpectedRecord) {
   create_result = AttachmentStore::UNSPECIFIED_ERROR;
   metadata_result = AttachmentStore::UNSPECIFIED_ERROR;
   store_ = AttachmentStore::CreateOnDiskStore(
-      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(),
+      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::Bind(&AttachmentStoreCreated, &create_result));
 
   // Read all metadata back. We should be getting a failure and

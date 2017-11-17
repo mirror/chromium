@@ -34,7 +34,8 @@ bool FakeSecurityKeyMessageWriter::WriteMessage(
   last_message_type_ = message_type;
   last_message_payload_.clear();
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, write_callback_);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                         write_callback_);
 
   return write_request_succeeded_;
 }
@@ -45,7 +46,8 @@ bool FakeSecurityKeyMessageWriter::WriteMessageWithPayload(
   last_message_type_ = message_type;
   last_message_payload_ = message_payload;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, write_callback_);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                         write_callback_);
 
   return write_request_succeeded_;
 }

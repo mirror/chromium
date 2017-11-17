@@ -46,7 +46,7 @@ template <typename... Args>
 base::Callback<void(Args...)> CreateSafeCallback(
     const base::Callback<void(Args...)>& callback) {
   return base::Bind(&internal::PostAsyncTask<Args...>,
-                    base::ThreadTaskRunnerHandle::Get(), callback);
+                    base::ThreadTaskRunnerHandle::Get(FROM_HERE), callback);
 }
 
 // Creates a OnceCallback that will run |callback| on the calling thread. Useful
@@ -56,7 +56,7 @@ template <typename... Args>
 base::OnceCallback<void(Args...)> CreateSafeOnceCallback(
     base::OnceCallback<void(Args...)> callback) {
   return base::BindOnce(&internal::PostAsyncTaskOnce<Args...>,
-                        base::ThreadTaskRunnerHandle::Get(),
+                        base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                         std::move(callback));
 }
 

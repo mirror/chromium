@@ -125,7 +125,7 @@ class AttachmentStoreFrontendTest : public testing::Test {
         base::Bind(&AttachmentStoreFrontendTest::DtorCalled,
                    base::Unretained(this))));
     attachment_store_frontend_ = new AttachmentStoreFrontend(
-        std::move(backend), base::ThreadTaskRunnerHandle::Get());
+        std::move(backend), base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 
   static void DoneWithResult(const AttachmentStore::Result& result) {

@@ -100,7 +100,7 @@ void FakeExternalBeginFrameSource::PostTestOnBeginFrame() {
   begin_frame_task_.Reset(
       base::Bind(&FakeExternalBeginFrameSource::TestOnBeginFrame,
                  weak_ptr_factory_.GetWeakPtr()));
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(begin_frame_task_.callback(),
                      CreateBeginFrameArgs(BEGINFRAME_FROM_HERE)),

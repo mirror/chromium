@@ -449,7 +449,7 @@ bool BrowserPlugin::Initialize(WebPluginContainer* container) {
 
   // Defer attach call so that if there's any pending browser plugin
   // destruction, then it can progress first.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&BrowserPlugin::UpdateInternalInstanceId,
                                 weak_ptr_factory_.GetWeakPtr()));
 
@@ -479,7 +479,7 @@ void BrowserPlugin::Destroy() {
       render_frame ? render_frame->GetRenderView() : nullptr);
   if (render_view)
     render_view->mouse_lock_dispatcher()->OnLockTargetDestroyed(this);
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 v8::Local<v8::Object> BrowserPlugin::V8ScriptableObject(v8::Isolate* isolate) {

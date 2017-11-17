@@ -38,14 +38,14 @@ const int64_t kCertExpiringSoon = 20;
 const int64_t kCertExpired = -20;
 
 void CertCallbackSuccess(const AttestationFlow::CertificateCallback& callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, true, "fake_cert"));
 }
 
 void StatusCallbackSuccess(
     const policy::CloudPolicyClient::StatusCallback& callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                base::BindOnce(callback, true));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, base::BindOnce(callback, true));
 }
 
 }  // namespace
@@ -192,7 +192,7 @@ TEST_F(AttestationPolicyObserverTest, DBusFailureRetry) {
   // TpmAttestationDoesKeyExist() and fails. During this call, we make the
   // service available in the next run, so on retry, it will successfully
   // return the result.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(
                      [](FakeCryptohomeClient* cryptohome_client) {
                        cryptohome_client->SetServiceIsAvailable(true);

@@ -104,7 +104,7 @@ class FullStreamUIPolicyTest : public testing::Test {
     // when the timeout triggers then assume that the test is broken.
     base::CancelableClosure timeout(
         base::Bind(&FullStreamUIPolicyTest::TimeoutCallback));
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, timeout.callback(), TestTimeouts::action_timeout());
 
     // Wait for results; either the checker or the timeout callbacks should

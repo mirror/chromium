@@ -19,7 +19,7 @@ namespace fake_server {
 FakeServerNetworkResources::FakeServerNetworkResources(
     const base::WeakPtr<FakeServer>& fake_server)
     : fake_server_(fake_server),
-      fake_server_task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+      fake_server_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
 FakeServerNetworkResources::~FakeServerNetworkResources() {}
 

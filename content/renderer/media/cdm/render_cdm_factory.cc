@@ -49,7 +49,7 @@ void RenderCdmFactory::Create(
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (security_origin.unique()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(cdm_created_cb, nullptr, "Invalid origin."));
     return;
   }
@@ -60,7 +60,7 @@ void RenderCdmFactory::Create(
     scoped_refptr<media::ContentDecryptionModule> cdm(new media::AesDecryptor(
         session_message_cb, session_closed_cb, session_keys_change_cb,
         session_expiration_update_cb));
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(cdm_created_cb, cdm, ""));
     return;
   }
@@ -74,7 +74,7 @@ void RenderCdmFactory::Create(
       session_expiration_update_cb, cdm_created_cb);
 #else
   // No possible CDM to create, so fail the request.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(cdm_created_cb, nullptr, "Key system not supported."));
 #endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)

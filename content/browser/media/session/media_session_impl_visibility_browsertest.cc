@@ -195,7 +195,7 @@ class MediaSessionImplVisibilityBrowserTest
   // MediaRouterIntegrationTests. Move it into a general place.
   void Wait(base::TimeDelta timeout) {
     base::RunLoop run_loop;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop.QuitClosure(), timeout);
     run_loop.Run();
   }

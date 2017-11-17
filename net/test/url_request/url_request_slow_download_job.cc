@@ -62,7 +62,7 @@ base::LazyInstance<URLRequestSlowDownloadJob::SlowJobsSet>::Leaky
     URLRequestSlowDownloadJob::pending_requests_ = LAZY_INSTANCE_INITIALIZER;
 
 void URLRequestSlowDownloadJob::Start() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&URLRequestSlowDownloadJob::StartAsync,
                             weak_factory_.GetWeakPtr()));
 }
@@ -204,9 +204,10 @@ int URLRequestSlowDownloadJob::ReadRawData(IOBuffer* buf, int buf_size) {
     case REQUEST_BLOCKED:
       buffer_ = buf;
       buffer_size_ = buf_size;
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-          FROM_HERE, base::Bind(&URLRequestSlowDownloadJob::CheckDoneStatus,
-                                weak_factory_.GetWeakPtr()),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+          FROM_HERE,
+          base::Bind(&URLRequestSlowDownloadJob::CheckDoneStatus,
+                     weak_factory_.GetWeakPtr()),
           base::TimeDelta::FromMilliseconds(100));
       return ERR_IO_PENDING;
   }
@@ -228,9 +229,10 @@ void URLRequestSlowDownloadJob::CheckDoneStatus() {
     VLOG(10) << __FUNCTION__ << " called w/ should_finish_ownload_ set.";
     ReadRawDataComplete(ERR_CONNECTION_RESET);
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE, base::Bind(&URLRequestSlowDownloadJob::CheckDoneStatus,
-                              weak_factory_.GetWeakPtr()),
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&URLRequestSlowDownloadJob::CheckDoneStatus,
+                   weak_factory_.GetWeakPtr()),
         base::TimeDelta::FromMilliseconds(100));
   }
 }

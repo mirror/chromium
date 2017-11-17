@@ -276,7 +276,7 @@ class WidgetScrollViewTest : public test::WidgetTest,
   void WaitForCommit() {
     base::RunLoop run_loop;
     quit_closure_ = run_loop.QuitClosure();
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, quit_closure_, TestTimeouts::action_timeout());
     run_loop.Run();
     EXPECT_TRUE(quit_closure_.is_null()) << "Timed out waiting for a commit.";

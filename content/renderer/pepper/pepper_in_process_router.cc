@@ -111,7 +111,7 @@ bool PepperInProcessRouter::SendToHost(IPC::Message* msg) {
     // This won't cause message reordering problems because the resource
     // destroyed message is always the last one sent for a resource.
     if (message->type() == PpapiHostMsg_ResourceDestroyed::ID) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(&PepperInProcessRouter::DispatchHostMsg,
                                     weak_factory_.GetWeakPtr(),
                                     base::Owned(message.release())));
@@ -145,7 +145,7 @@ bool PepperInProcessRouter::SendToPlugin(IPC::Message* msg) {
   } else {
     CHECK(!pending_message_id_);
     // Dispatch plugin messages from the message loop.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&PepperInProcessRouter::DispatchPluginMsg,
                                   weak_factory_.GetWeakPtr(),
                                   base::Owned(message.release())));

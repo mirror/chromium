@@ -187,7 +187,7 @@ class PopularSitesTest : public ::testing::Test {
       std::map<SectionType, PopularSites::SitesVector>* sections) {
     scoped_refptr<net::TestURLRequestContextGetter> url_request_context(
         new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get()));
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
     std::unique_ptr<PopularSites> popular_sites =
         CreatePopularSites(url_request_context.get());
 
@@ -228,7 +228,7 @@ class PopularSitesTest : public ::testing::Test {
 TEST_F(PopularSitesTest, ContainsDefaultTilesRightAfterConstruction) {
   scoped_refptr<net::TestURLRequestContextGetter> url_request_context(
       new net::TestURLRequestContextGetter(
-          base::ThreadTaskRunnerHandle::Get()));
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 
   auto popular_sites = CreatePopularSites(url_request_context.get());
   EXPECT_THAT(
@@ -244,7 +244,7 @@ TEST_F(PopularSitesTest, IsEmptyOnConstructionIfDisabledByTrial) {
 
   scoped_refptr<net::TestURLRequestContextGetter> url_request_context(
       new net::TestURLRequestContextGetter(
-          base::ThreadTaskRunnerHandle::Get()));
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   auto popular_sites = CreatePopularSites(url_request_context.get());
 
   EXPECT_THAT(popular_sites->sections(),
@@ -316,7 +316,7 @@ TEST_F(PopularSitesTest, PopulatesWithDefaultResoucesOnFailure) {
 TEST_F(PopularSitesTest, AddsIconResourcesToDefaultPages) {
   scoped_refptr<net::TestURLRequestContextGetter> url_request_context(
       new net::TestURLRequestContextGetter(
-          base::ThreadTaskRunnerHandle::Get()));
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   std::unique_ptr<PopularSites> popular_sites =
       CreatePopularSites(url_request_context.get());
 
@@ -339,7 +339,7 @@ TEST_F(PopularSitesTest, ProvidesDefaultSitesUntilCallbackReturns) {
       {kWikipedia});
   scoped_refptr<net::TestURLRequestContextGetter> url_request_context(
       new net::TestURLRequestContextGetter(
-          base::ThreadTaskRunnerHandle::Get()));
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   std::unique_ptr<PopularSites> popular_sites =
       CreatePopularSites(url_request_context.get());
 

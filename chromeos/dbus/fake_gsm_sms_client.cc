@@ -85,7 +85,7 @@ void FakeGsmSMSClient::RequestUpdate(const std::string& service_name,
   test_index_ = 0;
   // Call PushTestMessageChain asynchronously so that the handler_ callback
   // does not get called from the update request.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&FakeGsmSMSClient::PushTestMessageChain,
                             weak_ptr_factory_.GetWeakPtr()));
 }
@@ -97,9 +97,10 @@ void FakeGsmSMSClient::PushTestMessageChain() {
 
 void FakeGsmSMSClient::PushTestMessageDelayed() {
   const int kSmsMessageDelaySeconds = 5;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&FakeGsmSMSClient::PushTestMessageChain,
-                            weak_ptr_factory_.GetWeakPtr()),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&FakeGsmSMSClient::PushTestMessageChain,
+                 weak_ptr_factory_.GetWeakPtr()),
       base::TimeDelta::FromSeconds(kSmsMessageDelaySeconds));
 }
 

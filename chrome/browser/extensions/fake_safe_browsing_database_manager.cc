@@ -117,7 +117,7 @@ bool FakeSafeBrowsingDatabaseManager::CheckExtensionIDs(
           safe_browsing::SB_THREAT_TYPE_EXTENSION;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&FakeSafeBrowsingDatabaseManager::OnSafeBrowsingResult,
                      this, base::Passed(&safe_browsing_check)));

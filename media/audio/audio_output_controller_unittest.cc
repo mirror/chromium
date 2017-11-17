@@ -252,7 +252,7 @@ class AudioOutputControllerTest : public testing::Test {
     EXPECT_CALL(mock_sync_reader_, Close());
 
     base::RunLoop run_loop;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&AudioOutputController::Close, controller_,
                                   run_loop.QuitClosure()));
     run_loop.Run();

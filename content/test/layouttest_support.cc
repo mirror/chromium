@@ -343,7 +343,7 @@ class LayoutTestDependenciesImpl : public LayoutTestDependencies,
     auto* task_runner = deps->GetCompositorImplThreadTaskRunner().get();
     bool synchronous_composite = !task_runner;
     if (!task_runner)
-      task_runner = base::ThreadTaskRunnerHandle::Get().get();
+      task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE).get();
 
     viz::RendererSettings renderer_settings;
     base::CommandLine* cmd = base::CommandLine::ForCurrentProcess();

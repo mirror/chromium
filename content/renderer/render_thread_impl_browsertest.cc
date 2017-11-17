@@ -180,7 +180,7 @@ class RenderThreadImplBrowserTest : public testing::Test {
     browser_threads_.reset(
         new TestBrowserThreadBundle(TestBrowserThreadBundle::IO_MAINLOOP));
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner =
-        base::ThreadTaskRunnerHandle::Get();
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
     InitializeMojo();
     shell_context_.reset(new TestServiceManagerContext);
@@ -200,7 +200,7 @@ class RenderThreadImplBrowserTest : public testing::Test {
     channel_ = IPC::ChannelProxy::Create(
         IPC::ChannelMojo::CreateServerFactory(std::move(pipe.handle0),
                                               io_task_runner),
-        nullptr, io_task_runner, base::ThreadTaskRunnerHandle::Get());
+        nullptr, io_task_runner, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
     mock_process_.reset(new MockRenderProcess);
     test_task_counter_ = base::MakeRefCounted<TestTaskCounter>();

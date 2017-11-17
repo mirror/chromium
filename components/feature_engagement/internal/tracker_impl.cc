@@ -238,7 +238,7 @@ bool TrackerImpl::IsInitialized() const {
 
 void TrackerImpl::AddOnInitializedCallback(OnInitializedCallback callback) {
   if (IsInitializationFinished()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, IsInitialized()));
     return;
   }
@@ -276,7 +276,7 @@ void TrackerImpl::MaybePostInitializedCallbacks() {
   DVLOG(2) << "Initialization finished.";
 
   for (auto& callback : on_initialized_callbacks_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, IsInitialized()));
   }
 

@@ -2936,7 +2936,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     // If URLLoader based tests are enabled, we need to wait for the URL
     // load requests to make it to the MockURLLoaderFactory.
     if (request_handler_type_ == URLLOADER) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(&AppCacheUpdateJobTest::VerifyHeadersAndDeleteUpdate,
                          update));
@@ -2944,7 +2944,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
       VerifyHeadersAndDeleteUpdate(update);
     }
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&AppCacheUpdateJobTest::UpdateFinishedUnwound,
                                   base::Unretained(this)));
   }
@@ -2987,7 +2987,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     // If URLLoader based tests are enabled, we need to wait for the URL
     // load requests to make it to the MockURLLoaderFactory.
     if (request_handler_type_ == URLLOADER) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(&AppCacheUpdateJobTest::VerifyHeadersAndDeleteUpdate,
                          update));
@@ -2995,7 +2995,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
       VerifyHeadersAndDeleteUpdate(update);
     }
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&AppCacheUpdateJobTest::UpdateFinishedUnwound,
                                   base::Unretained(this)));
   }
@@ -3039,7 +3039,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     // If URLLoader based tests are enabled, we need to wait for the URL
     // load requests to make it to the MockURLLoaderFactory.
     if (request_handler_type_ == URLLOADER) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(&AppCacheUpdateJobTest::VerifyHeadersAndDeleteUpdate,
                          update));
@@ -3047,7 +3047,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
       VerifyHeadersAndDeleteUpdate(update);
     }
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&AppCacheUpdateJobTest::UpdateFinishedUnwound,
                                   base::Unretained(this)));
   }
@@ -3225,7 +3225,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     // If URLLoader based tests are enabled, we need to wait for the URL
     // load requests to make it to the MockURLLoaderFactory.
     if (request_handler_type_ == URLLOADER) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(&AppCacheUpdateJobTest::VerifyHeadersAndDeleteUpdate,
                          update));
@@ -3233,7 +3233,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
       VerifyHeadersAndDeleteUpdate(update);
     }
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&AppCacheUpdateJobTest::UpdateFinishedUnwound,
                                   base::Unretained(this)));
   }
@@ -3279,7 +3279,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     // If URLLoader based tests are enabled, we need to wait for the URL
     // load requests to make it to the MockURLLoaderFactory.
     if (request_handler_type_ == URLLOADER) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(&AppCacheUpdateJobTest::VerifyHeadersAndDeleteUpdate,
                          update));
@@ -3287,7 +3287,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
       VerifyHeadersAndDeleteUpdate(update);
     }
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&AppCacheUpdateJobTest::UpdateFinishedUnwound,
                                   base::Unretained(this)));
   }
@@ -3364,7 +3364,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
   void UpdateFinished() {
     // We unwind the stack prior to finishing up to let stack-based objects
     // get deleted.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&AppCacheUpdateJobTest::UpdateFinishedUnwound,
                                   base::Unretained(this)));
   }

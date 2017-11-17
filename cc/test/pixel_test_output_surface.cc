@@ -70,7 +70,7 @@ bool PixelTestOutputSurface::HasExternalStencilTest() const {
 void PixelTestOutputSurface::ApplyExternalStencil() {}
 
 void PixelTestOutputSurface::SwapBuffers(viz::OutputSurfaceFrame frame) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&PixelTestOutputSurface::SwapBuffersCallback,
                                 weak_ptr_factory_.GetWeakPtr()));
 }

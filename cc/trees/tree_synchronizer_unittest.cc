@@ -530,7 +530,7 @@ TEST_F(TreeSynchronizerTest, SynchronizeCurrentlyScrollingNode) {
 
 TEST_F(TreeSynchronizerTest, SynchronizeScrollTreeScrollOffsetMap) {
   host_->InitializeSingleThreaded(&single_thread_client_,
-                                  base::ThreadTaskRunnerHandle::Get());
+                                  base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   LayerTreeSettings settings;
   FakeLayerTreeHostImplClient client;
   FakeImplTaskRunnerProvider task_runner_provider;
@@ -642,7 +642,7 @@ TEST_F(TreeSynchronizerTest, SynchronizeScrollTreeScrollOffsetMap) {
 
 TEST_F(TreeSynchronizerTest, RefreshPropertyTreesCachedData) {
   host_->InitializeSingleThreaded(&single_thread_client_,
-                                  base::ThreadTaskRunnerHandle::Get());
+                                  base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   LayerTreeSettings settings;
   FakeLayerTreeHostImplClient client;
   FakeImplTaskRunnerProvider task_runner_provider;

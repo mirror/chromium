@@ -31,7 +31,7 @@ namespace content {
 P2PSocketClientImpl::P2PSocketClientImpl(P2PSocketDispatcher* dispatcher)
     : dispatcher_(dispatcher),
       ipc_task_runner_(dispatcher->task_runner()),
-      delegate_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      delegate_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       socket_id_(0),
       delegate_(nullptr),
       state_(STATE_UNINITIALIZED),

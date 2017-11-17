@@ -315,7 +315,7 @@ bool UserImageScreen::IsWaitingForSync() const {
 void UserImageScreen::OnUserImagePolicyChanged(const base::Value* previous,
                                                const base::Value* current) {
   if (current) {
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
         FROM_HERE, policy_registrar_.release());
     ExitScreen();
   }

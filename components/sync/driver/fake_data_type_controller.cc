@@ -151,7 +151,7 @@ std::unique_ptr<DataTypeErrorHandler>
 FakeDataTypeController::CreateErrorHandler() {
   DCHECK(CalledOnValidThread());
   return std::make_unique<DataTypeErrorHandlerImpl>(
-      base::ThreadTaskRunnerHandle::Get(), base::Closure(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), base::Closure(),
       base::Bind(model_load_callback_, type()));
 }
 

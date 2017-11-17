@@ -82,12 +82,12 @@ class ExtensionEchoPrivateApiTest : public ExtensionApiTest {
     // The dialog should stay around until AcceptWindow or CancelWindow is
     // called, so base::Unretained is safe.
     if (dialog_action == DIALOG_TEST_ACTION_ACCEPT) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(base::IgnoreResult(&chromeos::EchoDialogView::Accept),
                          base::Unretained(dialog)));
     } else if (dialog_action == DIALOG_TEST_ACTION_CANCEL) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(base::IgnoreResult(&chromeos::EchoDialogView::Cancel),
                          base::Unretained(dialog)));

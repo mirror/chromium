@@ -97,7 +97,7 @@ void ThrottledOfflineContentProvider::AddObserver(
   if (!wrapped_provider_->AreItemsAvailable())
     return;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&ThrottledOfflineContentProvider::NotifyItemsAvailable,
                  weak_ptr_factory_.GetWeakPtr(), base::Unretained(observer)));
@@ -145,7 +145,7 @@ void ThrottledOfflineContentProvider::OnItemUpdated(const OfflineItem& item) {
   // Queue the update so we wait for the proper amount of time before notifying
   // observers.
   update_queued_ = true;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&ThrottledOfflineContentProvider::FlushUpdates,
                  weak_ptr_factory_.GetWeakPtr()),

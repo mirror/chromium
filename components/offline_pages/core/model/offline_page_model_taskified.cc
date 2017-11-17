@@ -349,7 +349,7 @@ void OfflinePageModelTaskified::PostClearCachedPagesTask(bool is_initializing) {
       delay = base::TimeDelta();
     }
   }
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&OfflinePageModelTaskified::ClearCachedPages,
                  weak_ptr_factory_.GetWeakPtr()),

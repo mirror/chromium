@@ -15,7 +15,7 @@ typedef ChromeRenderViewTest CastSessionBrowserTest;
 // chrome renderer.
 TEST_F(CastSessionBrowserTest, CreateAndDestroy) {
   chrome_render_thread_->set_io_task_runner(
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   ChromeContentRendererClient* client =
       static_cast<ChromeContentRendererClient*>(content_renderer_client_.get());
   client->RenderThreadStarted();

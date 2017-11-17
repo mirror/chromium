@@ -30,7 +30,7 @@ class ShillClientHelper::RefHolder {
  public:
   explicit RefHolder(base::WeakPtr<ShillClientHelper> helper)
       : helper_(helper),
-        origin_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+        origin_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
     helper_->AddRef();
   }
   ~RefHolder() {

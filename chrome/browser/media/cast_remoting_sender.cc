@@ -109,7 +109,7 @@ CastRemotingSender::CastRemotingSender(
     DCHECK(logging_flush_interval_ > base::TimeDelta());
 
   if (!frame_event_cb_.is_null()) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&CastRemotingSender::SendFrameEvents,
                        weak_factory_.GetWeakPtr()),
@@ -208,7 +208,7 @@ void CastRemotingSender::ScheduleNextResendCheck() {
   base::TimeDelta time_to_next =
       last_send_time_ - clock_->NowTicks() + max_ack_delay_;
   time_to_next = std::max(time_to_next, kMinSchedulingDelay);
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&CastRemotingSender::ResendCheck,
                      weak_factory_.GetWeakPtr()),
@@ -548,7 +548,7 @@ void CastRemotingSender::SendFrameEvents() {
     frame_event_cb_.Run(frame_events);
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&CastRemotingSender::SendFrameEvents,
                      weak_factory_.GetWeakPtr()),
@@ -558,7 +558,7 @@ void CastRemotingSender::SendFrameEvents() {
 void CastRemotingSender::ScheduleNextRtcpReport() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&CastRemotingSender::SendRtcpReport,
                      weak_factory_.GetWeakPtr()),

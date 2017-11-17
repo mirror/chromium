@@ -163,7 +163,7 @@ int ProxyResolvingClientSocket::Connect(
     // We defer execution of ProcessProxyResolveDone instead of calling it
     // directly here for simplicity. From the caller's point of view,
     // the connect always happens asynchronously.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&ProxyResolvingClientSocket::ProcessProxyResolveDone,
                    weak_factory_.GetWeakPtr(), status));
@@ -317,7 +317,7 @@ int ProxyResolvingClientSocket::ReconsiderProxyAfterError(int error) {
   // In both cases we want to post ProcessProxyResolveDone (in the error case
   // we might still want to fall back a direct connection).
   if (rv != net::ERR_IO_PENDING) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&ProxyResolvingClientSocket::ProcessProxyResolveDone,
                    weak_factory_.GetWeakPtr(), rv));

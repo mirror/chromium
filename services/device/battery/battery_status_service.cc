@@ -16,7 +16,7 @@
 namespace device {
 
 BatteryStatusService::BatteryStatusService()
-    : main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       update_callback_(base::Bind(&BatteryStatusService::NotifyConsumers,
                                   base::Unretained(this))),
       status_updated_(false),
@@ -103,7 +103,7 @@ void BatteryStatusService::SetBatteryManagerForTesting(
   status_ = mojom::BatteryStatus();
   status_updated_ = false;
   is_shutdown_ = false;
-  main_thread_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  main_thread_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 }  // namespace device

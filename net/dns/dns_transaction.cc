@@ -605,7 +605,7 @@ class DnsTransactionImpl : public DnsTransaction,
 
     // Must always return result asynchronously, to avoid reentrancy.
     if (result.rv != ERR_IO_PENDING) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::Bind(&DnsTransactionImpl::DoCallback, AsWeakPtr(), result));
     }

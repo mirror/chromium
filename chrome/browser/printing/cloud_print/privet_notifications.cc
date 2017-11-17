@@ -201,7 +201,7 @@ PrivetNotificationsListener::DeviceContext::~DeviceContext() {
 PrivetNotificationService::PrivetNotificationService(
     content::BrowserContext* profile)
     : profile_(profile) {
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::BindOnce(&PrivetNotificationService::Start, AsWeakPtr()),
       base::TimeDelta::FromSeconds(kStartDelaySeconds +
                                    base::RandInt(0, kStartDelaySeconds / 4)));

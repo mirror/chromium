@@ -92,25 +92,25 @@ TEST(TestMockTimeTaskRunnerTest, RunLoopDriveableWhenBound) {
       TestMockTimeTaskRunner::Type::kBoundToThread);
 
   int counter = 0;
-  ThreadTaskRunnerHandle::Get()->PostTask(
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind([](int* counter) { *counter += 1; }, Unretained(&counter)));
-  ThreadTaskRunnerHandle::Get()->PostTask(
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind([](int* counter) { *counter += 32; }, Unretained(&counter)));
-  ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind([](int* counter) { *counter += 256; }, Unretained(&counter)),
       TimeDelta::FromSeconds(3));
-  ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind([](int* counter) { *counter += 64; }, Unretained(&counter)),
       TimeDelta::FromSeconds(1));
-  ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind([](int* counter) { *counter += 1024; }, Unretained(&counter)),
       TimeDelta::FromMinutes(20));
-  ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind([](int* counter) { *counter += 4096; }, Unretained(&counter)),
       TimeDelta::FromDays(20));
@@ -127,9 +127,9 @@ TEST(TestMockTimeTaskRunnerTest, RunLoopDriveableWhenBound) {
 
   {
     RunLoop run_loop;
-    ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop.QuitClosure(), TimeDelta::FromSeconds(1));
-    ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind([](int* counter) { *counter += 8192; },
                    Unretained(&counter)),
@@ -150,9 +150,9 @@ TEST(TestMockTimeTaskRunnerTest, RunLoopDriveableWhenBound) {
 
   {
     RunLoop run_loop;
-    ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop.QuitWhenIdleClosure(), TimeDelta::FromSeconds(5));
-    ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind([](int* counter) { *counter += 16384; },
                    Unretained(&counter)),
@@ -171,7 +171,7 @@ TEST(TestMockTimeTaskRunnerTest, RunLoopDriveableWhenBound) {
   // do this, this is just done here for the purpose of extensively testing the
   // RunLoop approach).
   RunLoop run_loop;
-  ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, run_loop.QuitWhenIdleClosure(), TimeDelta::FromDays(50));
 
   run_loop.Run();

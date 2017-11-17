@@ -21,7 +21,7 @@ bool NoopStore::IsInitialized() {
 void NoopStore::Initialize(InitCallback callback) {
   DCHECK(!IsInitialized());
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&NoopStore::OnInitFinished, weak_ptr_factory_.GetWeakPtr(),
                      std::move(callback)));
@@ -29,17 +29,17 @@ void NoopStore::Initialize(InitCallback callback) {
 
 void NoopStore::HardRecover(StoreCallback callback) {
   initialized_ = true;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }
 
 void NoopStore::Update(const Entry& entry, StoreCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true /** success */));
 }
 
 void NoopStore::Remove(const std::string& guid, StoreCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true /** success */));
 }
 

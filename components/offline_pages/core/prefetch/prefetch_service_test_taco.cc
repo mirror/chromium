@@ -68,8 +68,8 @@ PrefetchServiceTestTaco::PrefetchServiceTestTaco() {
   gcm_handler_ = base::MakeUnique<TestPrefetchGCMHandler>();
   network_request_factory_ =
       base::MakeUnique<TestPrefetchNetworkRequestFactory>();
-  prefetch_store_ =
-      base::MakeUnique<PrefetchStore>(base::ThreadTaskRunnerHandle::Get());
+  prefetch_store_ = base::MakeUnique<PrefetchStore>(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   suggested_articles_observer_ = base::MakeUnique<SuggestedArticlesObserver>();
   prefetch_downloader_ =
       base::WrapUnique(new PrefetchDownloaderImpl(kTestChannel));

@@ -159,7 +159,7 @@ void MockBackgroundFetchDelegate::RegisterResponse(
 void MockBackgroundFetchDelegate::PostAbortCheckingTask(
     const std::string& job_unique_id,
     base::OnceCallback<void()> callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&MockBackgroundFetchDelegate::RunAbortCheckingTask,
                      base::Unretained(this), job_unique_id,

@@ -526,7 +526,7 @@ class DeviceLocalAccountTest : public DevicePolicyCrosBrowserTest,
     BrowserList::RemoveObserver(this);
 
     // This shuts down the login UI.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&chrome::AttemptExit));
     base::RunLoop().RunUntilIdle();
   }
@@ -1350,7 +1350,7 @@ IN_PROC_BROWSER_TEST_F(DeviceLocalAccountTest, ExternalData) {
   std::unique_ptr<net::FakeURLFetcherFactory> fetcher_factory(
       new net::FakeURLFetcherFactory(
           NULL, base::Bind(&RunCallbackAndReturnFakeURLFetcher,
-                           base::ThreadTaskRunnerHandle::Get(),
+                           base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                            run_loop->QuitClosure())));
   fetcher_factory->SetFakeResponse(GURL(kExternalDataURL),
                                    kExternalData,

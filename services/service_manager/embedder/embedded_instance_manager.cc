@@ -22,10 +22,10 @@ EmbeddedInstanceManager::EmbeddedInstanceManager(
       message_loop_type_(info.message_loop_type),
       thread_priority_(info.thread_priority),
       quit_closure_(quit_closure),
-      quit_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      quit_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       service_task_runner_(info.task_runner) {
   if (!use_own_thread_ && !service_task_runner_)
-    service_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    service_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 void EmbeddedInstanceManager::BindServiceRequest(

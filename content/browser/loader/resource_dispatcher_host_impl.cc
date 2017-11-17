@@ -321,7 +321,7 @@ ResourceDispatcherHostImpl::ResourceDispatcherHostImpl(
       loader_delegate_(nullptr),
       allow_cross_origin_auth_prompt_(false),
       create_download_handler_intercept_(download_handler_intercept),
-      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       io_thread_task_runner_(io_thread_runner) {
   DCHECK(main_thread_task_runner_->BelongsToCurrentThread());
   DCHECK(!g_resource_dispatcher_host);
@@ -351,7 +351,7 @@ ResourceDispatcherHostImpl::ResourceDispatcherHostImpl(
 // the main thread and the IO thread are the same for unittests.
 ResourceDispatcherHostImpl::ResourceDispatcherHostImpl()
     : ResourceDispatcherHostImpl(CreateDownloadHandlerIntercept(),
-                                 base::ThreadTaskRunnerHandle::Get(),
+                                 base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                                  /* enable_resource_scheduler */ true) {}
 
 ResourceDispatcherHostImpl::~ResourceDispatcherHostImpl() {

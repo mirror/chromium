@@ -470,7 +470,7 @@ TEST_F(KeyboardTest, AckKeyboardKeyExpired) {
       .WillOnce(testing::Return(true));
   // Wait until |ProcessExpiredPendingKeyAcks| is fired.
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, run_loop.QuitClosure(),
       base::TimeDelta::FromMilliseconds(1000));
   run_loop.Run();
@@ -540,7 +540,7 @@ TEST_F(KeyboardTest, AckKeyboardKeyExpiredWithMovingFocusAccelerator) {
   // will be moved from the surface.
   EXPECT_CALL(delegate, OnKeyboardLeave(surface.get()));
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, run_loop.QuitClosure(),
       base::TimeDelta::FromMilliseconds(1000));
   run_loop.Run();

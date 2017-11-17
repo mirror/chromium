@@ -29,9 +29,8 @@ void QuotaTask::Start() {
 
 QuotaTask::QuotaTask(QuotaTaskObserver* observer)
     : observer_(observer),
-      original_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      delete_scheduled_(false) {
-}
+      original_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+      delete_scheduled_(false) {}
 
 void QuotaTask::CallCompleted() {
   DCHECK(original_task_runner_->BelongsToCurrentThread());
@@ -52,7 +51,7 @@ void QuotaTask::DeleteSoon() {
   if (delete_scheduled_)
     return;
   delete_scheduled_ = true;
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 // QuotaTaskObserver -------------------------------------------------------

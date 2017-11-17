@@ -51,7 +51,7 @@ QueuedTaskPosterTest::QueuedTaskPosterTest()
 
 void QueuedTaskPosterTest::SetUp() {
   target_thread_.StartAndWaitForTesting();
-  main_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  main_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   target_task_runner_ = target_thread_.task_runner();
   poster_.reset(new QueuedTaskPoster(target_task_runner_));
 }

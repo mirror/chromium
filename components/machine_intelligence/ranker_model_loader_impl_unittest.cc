@@ -119,8 +119,8 @@ RankerModelLoaderImplTest::RankerModelLoaderImplTest()
     : url_fetcher_factory_(nullptr) {}
 
 void RankerModelLoaderImplTest::SetUp() {
-  request_context_getter_ =
-      new net::TestURLRequestContextGetter(base::ThreadTaskRunnerHandle::Get());
+  request_context_getter_ = new net::TestURLRequestContextGetter(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   ASSERT_TRUE(scoped_temp_dir_.CreateUniqueTempDir());
   const auto& temp_dir_path = scoped_temp_dir_.GetPath();

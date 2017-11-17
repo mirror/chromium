@@ -53,7 +53,8 @@ using UkmEntry = ukm::builders::Memory_Experimental;
 void RequestGlobalDumpCallback(base::Closure quit_closure,
                                bool success,
                                uint64_t) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_closure);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                         quit_closure);
   ASSERT_TRUE(success);
 }
 

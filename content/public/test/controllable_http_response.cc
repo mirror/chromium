@@ -26,7 +26,8 @@ class ControllableHttpResponse::Interceptor
     controller_task_runner_->PostTask(
         FROM_HERE,
         base::BindOnce(&ControllableHttpResponse::OnRequest, controller_,
-                       base::ThreadTaskRunnerHandle::Get(), send, done));
+                       base::ThreadTaskRunnerHandle::Get(FROM_HERE), send,
+                       done));
   }
 
   base::WeakPtr<ControllableHttpResponse> controller_;
@@ -45,7 +46,7 @@ ControllableHttpResponse::ControllableHttpResponse(
                                               "the EmbeddedTestServer.";
   embedded_test_server->RegisterRequestHandler(
       base::Bind(RequestHandler, weak_ptr_factory_.GetWeakPtr(),
-                 base::ThreadTaskRunnerHandle::Get(),
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                  base::Owned(new bool(true)), relative_url));
 }
 

@@ -70,10 +70,10 @@ class FileSystemOperationImplTest
     base::FilePath base_dir = base_.GetPath().AppendASCII("filesystem");
     quota_manager_ =
         new MockQuotaManager(false /* is_incognito */, base_dir,
-                             base::ThreadTaskRunnerHandle::Get().get(),
+                             base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
                              NULL /* special storage policy */);
     quota_manager_proxy_ = new MockQuotaManagerProxy(
-        quota_manager(), base::ThreadTaskRunnerHandle::Get().get());
+        quota_manager(), base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
     sandbox_file_system_.SetUp(base_dir, quota_manager_proxy_.get());
     sandbox_file_system_.AddFileChangeObserver(&change_observer_);
     sandbox_file_system_.AddFileUpdateObserver(&update_observer_);

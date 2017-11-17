@@ -95,7 +95,7 @@ class ChromeCleanerRunnerSimpleTest
                        base::Unretained(this)),
         base::BindOnce(&ChromeCleanerRunnerSimpleTest::OnProcessDone,
                        base::Unretained(this)),
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 
   // ChromeCleanerRunnerTestDelegate overrides.
@@ -240,7 +240,7 @@ class ChromeCleanerRunnerTest
                        base::Unretained(this)),
         base::BindOnce(&ChromeCleanerRunnerTest::OnProcessDone,
                        base::Unretained(this)),
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 
   // ChromeCleanerRunnerTestDelegate overrides.

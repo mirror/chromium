@@ -62,7 +62,7 @@ class ActivityLogTest : public ChromeRenderViewHostTestHarness {
     ChromeRenderViewHostTestHarness::SetUp();
 
     SetActivityLogTaskRunnerForTesting(
-        base::ThreadTaskRunnerHandle::Get().get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
 
     base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
     if (enable_activity_logging_switch()) {

@@ -109,7 +109,7 @@ void ChromeUserSelectionScreen::CheckForPublicSessionDisplayNameChange(
   // and |this| are informed of the display name change is undefined. Post a
   // task that will update the UI after the UserManager is guaranteed to have
   // been informed of the change.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&ChromeUserSelectionScreen::SetPublicSessionDisplayName,
                      weak_factory_.GetWeakPtr(), account_id));

@@ -422,9 +422,10 @@ void ScopedTransformOverviewWindow::Close() {
     CloseWidget();
     return;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&ScopedTransformOverviewWindow::CloseWidget,
-                            weak_ptr_factory_.GetWeakPtr()),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&ScopedTransformOverviewWindow::CloseWidget,
+                 weak_ptr_factory_.GetWeakPtr()),
       base::TimeDelta::FromMilliseconds(kCloseWindowDelayInMilliseconds));
 }
 

@@ -68,7 +68,7 @@ void IsolatedFileSystemBackend::ResolveURL(const FileSystemURL& url,
                                            OpenFileSystemMode mode,
                                            OpenFileSystemCallback callback) {
   // We never allow opening a new isolated FileSystem via usual ResolveURL.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), GURL(), std::string(),
                                 base::File::FILE_ERROR_SECURITY));
 }

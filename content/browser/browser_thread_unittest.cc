@@ -85,7 +85,7 @@ class UIThreadDestructionObserver
  public:
   explicit UIThreadDestructionObserver(bool* did_shutdown,
                                        const base::Closure& callback)
-      : callback_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      : callback_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         callback_(callback),
         ui_task_runner_(
             BrowserThread::GetTaskRunnerForThread(BrowserThread::UI)),
@@ -166,7 +166,7 @@ TEST_F(BrowserThreadTest, RunsTasksInCurrentSequencedDuringShutdown) {
   bool did_shutdown = false;
   base::RunLoop loop;
   UIThreadDestructionObserver observer(&did_shutdown, loop.QuitClosure());
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&BrowserThreadTest::StopUIThread, base::Unretained(this)));
   loop.Run();

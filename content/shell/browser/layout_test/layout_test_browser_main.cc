@@ -94,7 +94,7 @@ int RunTests(const std::unique_ptr<content::BrowserMainRunner>& main_runner) {
       break;
   }
   if (!ran_at_least_once) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
     main_runner->Run();
   }
@@ -144,7 +144,7 @@ int LayoutTestBrowserMain(
 
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kCheckLayoutTestSysDeps)) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
     main_runner->Run();
     content::Shell::CloseAllWindows();

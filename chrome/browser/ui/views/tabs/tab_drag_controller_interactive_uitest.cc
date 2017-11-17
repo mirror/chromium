@@ -467,7 +467,7 @@ class DetachToBrowserTabDragControllerTest
     if (input_source() == INPUT_SOURCE_MOUSE)
       return ui_controls::SendMouseMoveNotifyWhenDone(x, y, task);
 #if defined(OS_CHROMEOS)
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, task);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, task);
     event_generator_->MoveTouch(gfx::Point(x, y));
 #else
     NOTREACHED();
@@ -481,7 +481,7 @@ class DetachToBrowserTabDragControllerTest
     if (input_source() == INPUT_SOURCE_MOUSE)
       return ui_controls::SendMouseMoveNotifyWhenDone(x, y, task);
 #if defined(OS_CHROMEOS)
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, task);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, task);
     event_generator_->MoveTouchId(gfx::Point(x, y), 1);
 #else
     NOTREACHED();

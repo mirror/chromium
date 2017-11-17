@@ -34,7 +34,7 @@ class PepperDeviceEnumerationHostHelper::ScopedEnumerationRequest
       : callback_(callback), requested_(false), sync_call_(false) {
     if (!owner->delegate_) {
       // If no delegate, return an empty list of devices.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(
               &ScopedEnumerationRequest::EnumerateDevicesCallbackBody,
@@ -64,7 +64,7 @@ class PepperDeviceEnumerationHostHelper::ScopedEnumerationRequest
   void EnumerateDevicesCallbackBody(
       const std::vector<ppapi::DeviceRefData>& devices) {
     if (sync_call_) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(
               &ScopedEnumerationRequest::EnumerateDevicesCallbackBody,

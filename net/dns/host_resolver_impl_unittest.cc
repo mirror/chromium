@@ -297,7 +297,7 @@ class Request {
     if (completed())
       return result_;
     base::CancelableClosure closure(base::MessageLoop::QuitWhenIdleClosure());
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, closure.callback(), TestTimeouts::action_max_timeout());
     quit_on_complete_ = true;
     base::RunLoop().Run();
@@ -913,7 +913,7 @@ TEST_F(HostResolverImplTest, DeleteWithinCallback) {
 
       // Quit after returning from OnCompleted (to give it a chance at
       // incorrectly running the cancelled tasks).
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
     }
   };
@@ -939,7 +939,7 @@ TEST_F(HostResolverImplTest, DeleteWithinAbortedCallback) {
 
       // Quit after returning from OnCompleted (to give it a chance at
       // incorrectly running the cancelled tasks).
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
     }
   };

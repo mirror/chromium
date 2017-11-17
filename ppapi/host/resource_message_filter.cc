@@ -34,17 +34,15 @@ void ResourceMessageFilterDeleteTraits::Destruct(
 }  // namespace internal
 
 ResourceMessageFilter::ResourceMessageFilter()
-    : deletion_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      reply_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      resource_host_(NULL) {
-}
+    : deletion_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+      reply_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+      resource_host_(NULL) {}
 
 ResourceMessageFilter::ResourceMessageFilter(
     scoped_refptr<base::SingleThreadTaskRunner> reply_thread_task_runner)
-    : deletion_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : deletion_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       reply_thread_task_runner_(reply_thread_task_runner),
-      resource_host_(NULL) {
-}
+      resource_host_(NULL) {}
 
 ResourceMessageFilter::~ResourceMessageFilter() {
 }

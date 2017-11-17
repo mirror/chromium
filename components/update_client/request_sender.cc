@@ -104,7 +104,7 @@ void RequestSender::SendInternal() {
   url_fetcher_ =
       SendProtocolRequest(url, request_body_, this, config_->RequestContext());
   if (!url_fetcher_.get())
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&RequestSender::SendInternalComplete,
                                   base::Unretained(this), -1, std::string(),
                                   std::string(), 0));
@@ -116,7 +116,7 @@ void RequestSender::SendInternalComplete(int error,
                                          int retry_after_sec) {
   if (!error) {
     if (!use_signing_) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(std::move(request_sender_callback_), 0,
                                     response_body, retry_after_sec));
       return;
@@ -125,7 +125,7 @@ void RequestSender::SendInternalComplete(int error,
     DCHECK(use_signing_);
     DCHECK(signer_.get());
     if (signer_->ValidateResponse(response_body, response_etag)) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(std::move(request_sender_callback_), 0,
                                     response_body, retry_after_sec));
       return;
@@ -139,7 +139,7 @@ void RequestSender::SendInternalComplete(int error,
   // A positive |retry_after_sec| is a hint from the server that the client
   // should not send further request until the cooldown has expired.
   if (retry_after_sec <= 0 && ++cur_url_ != urls_.end() &&
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(&RequestSender::SendInternal,
                                     base::Unretained(this)))) {
     return;
@@ -167,7 +167,7 @@ void RequestSender::OnURLFetchComplete(const net::URLFetcher* source) {
     retry_after_sec = std::min(retry_after_sec, kMaxRetryAfterSec);
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&RequestSender::SendInternalComplete,
                      base::Unretained(this), fetch_error, response_body,
@@ -176,7 +176,7 @@ void RequestSender::OnURLFetchComplete(const net::URLFetcher* source) {
 }
 
 void RequestSender::HandleSendError(int error, int retry_after_sec) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(request_sender_callback_), error,
                                 std::string(), retry_after_sec));
 }

@@ -164,7 +164,7 @@ class TestCryptohomeClient : public ::chromeos::FakeCryptohomeClient {
     reply.MutableExtension(cryptohome::MountReply::reply)
         ->set_sanitized_username(
             cryptohome::MockAsyncMethodCaller::kFakeSanitizedUsername);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), reply));
   }
 

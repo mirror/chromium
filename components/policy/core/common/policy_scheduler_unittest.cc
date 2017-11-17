@@ -19,7 +19,7 @@ class PolicySchedulerTest : public testing::Test {
  public:
   void DoTask(PolicyScheduler::TaskCallback callback) {
     do_counter_++;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), true));
   }
 
@@ -28,7 +28,7 @@ class PolicySchedulerTest : public testing::Test {
 
     // Terminate PolicyScheduler after 5 iterations.
     if (done_counter_ >= 5) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(&PolicySchedulerTest::Terminate,
                                     base::Unretained(this)));
     }
@@ -42,7 +42,7 @@ class PolicySchedulerTest : public testing::Test {
 
   // Runs the captured callback to simulate the end of the slow task.
   void PostSlowTaskCallback() {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(slow_callback_), true));
   }
 

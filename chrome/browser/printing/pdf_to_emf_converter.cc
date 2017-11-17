@@ -439,9 +439,10 @@ void PdfConverterUtilityProcessHostClient::Start(
   // NOTE: This process _must_ be sandboxed, otherwise the pdf dll will load
   // gdiplus.dll, change how rendering happens, and not be able to correctly
   // generate when sent to a metafile DC.
-  utility_process_host_ = content::UtilityProcessHost::Create(
-                              this, base::ThreadTaskRunnerHandle::Get())
-                              ->AsWeakPtr();
+  utility_process_host_ =
+      content::UtilityProcessHost::Create(
+          this, base::ThreadTaskRunnerHandle::Get(FROM_HERE))
+          ->AsWeakPtr();
   utility_process_host_->SetName(GetName());
 
   base::PostTaskAndReplyWithResult(

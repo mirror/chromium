@@ -107,9 +107,10 @@ void WebResourceService::ScheduleFetch(int64_t delay_ms) {
   if (fetch_scheduled_)
     return;
   fetch_scheduled_ = true;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&WebResourceService::StartFetch,
-                            weak_ptr_factory_.GetWeakPtr()),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&WebResourceService::StartFetch,
+                 weak_ptr_factory_.GetWeakPtr()),
       base::TimeDelta::FromMilliseconds(delay_ms));
 }
 

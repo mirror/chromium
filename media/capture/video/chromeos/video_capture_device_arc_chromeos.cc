@@ -25,7 +25,7 @@ VideoCaptureDeviceArcChromeOS::VideoCaptureDeviceArcChromeOS(
     scoped_refptr<CameraHalDelegate> camera_hal_delegate)
     : device_descriptor_(device_descriptor),
       camera_hal_delegate_(std::move(camera_hal_delegate)),
-      capture_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      capture_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       camera_device_ipc_thread_(std::string("CameraDeviceIpcThread") +
                                 device_descriptor.device_id),
       screen_observer_delegate_(new ScreenObserverDelegate(

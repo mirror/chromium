@@ -29,7 +29,7 @@ const int32_t kTabId = 10;
 class TabIdProviderTest : public testing::Test {
  public:
   TabIdProviderTest()
-      : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         tab_id_getter_call_count_(0) {}
 
   ~TabIdProviderTest() override {}

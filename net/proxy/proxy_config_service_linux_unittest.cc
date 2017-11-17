@@ -307,7 +307,7 @@ class SyncConfigGetter : public ProxyConfigService::Observer {
   // default glib main loop, which is the UI thread).
   void SetupAndInitialFetch() {
     config_service_->SetupAndFetchInitialConfig(
-        base::ThreadTaskRunnerHandle::Get(), io_thread_.task_runner());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE), io_thread_.task_runner());
   }
   // Synchronously gets the proxy config.
   ProxyConfigService::ConfigAvailability SyncGetLatestProxyConfig(

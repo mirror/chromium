@@ -182,9 +182,10 @@ void GCMChannelStatusRequest::RetryWithBackoff(bool update_backoff) {
     DVLOG(1) << "Delaying GCM channel request for "
              << backoff_entry_.GetTimeUntilRelease().InMilliseconds()
              << " ms.";
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE, base::Bind(&GCMChannelStatusRequest::RetryWithBackoff,
-                              weak_ptr_factory_.GetWeakPtr(), false),
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&GCMChannelStatusRequest::RetryWithBackoff,
+                   weak_ptr_factory_.GetWeakPtr(), false),
         backoff_entry_.GetTimeUntilRelease());
     return;
   }

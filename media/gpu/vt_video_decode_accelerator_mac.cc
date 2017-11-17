@@ -425,7 +425,7 @@ VTVideoDecodeAccelerator::VTVideoDecodeAccelerator(
     const BindGLImageCallback& bind_image_cb)
     : make_context_current_cb_(make_context_current_cb),
       bind_image_cb_(bind_image_cb),
-      gpu_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      gpu_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       decoder_thread_("VTDecoderThread"),
       weak_this_factory_(this) {
   callback_.decompressionOutputCallback = OutputThunk;

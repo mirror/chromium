@@ -72,7 +72,7 @@ class LoadedObserver : public TemplateURLServiceObserver {
     service_->RemoveObserver(this);
     UpdateSearchEngine(service_);
     // Only delete this class when this callback is finished.
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
   }
 
  private:

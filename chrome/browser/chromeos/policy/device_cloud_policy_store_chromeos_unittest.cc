@@ -53,7 +53,7 @@ class DeviceCloudPolicyStoreChromeOSTest
         store_(new DeviceCloudPolicyStoreChromeOS(
             &device_settings_service_,
             install_attributes_.get(),
-            base::ThreadTaskRunnerHandle::Get())) {}
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))) {}
 
   void SetUp() override {
     DeviceSettingsTestBase::SetUp();
@@ -117,7 +117,7 @@ class DeviceCloudPolicyStoreChromeOSTest
         new chromeos::InstallAttributes(fake_cryptohome_client_));
     store_.reset(new DeviceCloudPolicyStoreChromeOS(
         &device_settings_service_, install_attributes_.get(),
-        base::ThreadTaskRunnerHandle::Get()));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   }
 
   ScopedTestingLocalState local_state_;

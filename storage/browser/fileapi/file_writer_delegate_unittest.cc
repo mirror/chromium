@@ -106,8 +106,8 @@ class FileWriterDelegateTest : public PlatformTest {
 
   int64_t GetFileSizeOnDisk(const char* test_file_path) {
     // There might be in-flight flush/write.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  base::Bind(&base::DoNothing));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, base::Bind(&base::DoNothing));
     base::RunLoop().RunUntilIdle();
 
     FileSystemURL url = GetFileSystemURL(test_file_path);
@@ -188,7 +188,7 @@ class FileWriterDelegateTestJob : public net::URLRequestJob {
         weak_factory_(this) {}
 
   void Start() override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&FileWriterDelegateTestJob::NotifyHeadersComplete,
                               weak_factory_.GetWeakPtr()));
   }

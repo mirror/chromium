@@ -322,7 +322,7 @@ void SyncClient::AddTask(const SyncTasks::key_type& key,
     tasks_[key] = task;
   }
   DCHECK_EQ(PENDING, task.state);
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&SyncClient::StartTask, weak_ptr_factory_.GetWeakPtr(), key),
       delay);
@@ -457,7 +457,7 @@ void SyncClient::OnTaskComplete(SyncType type,
   }
 
   for (size_t i = 0; i < it->second.waiting_callbacks.size(); ++i) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(it->second.waiting_callbacks[i], error));
   }
   it->second.waiting_callbacks.clear();
@@ -466,7 +466,7 @@ void SyncClient::OnTaskComplete(SyncType type,
     DVLOG(1) << "Running again: type = " << type << ", id = " << local_id;
     it->second.state = PENDING;
     it->second.should_run_again = false;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&SyncClient::StartTask, weak_ptr_factory_.GetWeakPtr(), key),
         retry_delay);

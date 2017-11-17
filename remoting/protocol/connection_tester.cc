@@ -23,7 +23,7 @@ StreamConnectionTester::StreamConnectionTester(P2PStreamSocket* client_socket,
                                                P2PStreamSocket* host_socket,
                                                int message_size,
                                                int message_count)
-    : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       host_socket_(host_socket),
       client_socket_(client_socket),
       message_size_(message_size),
@@ -137,7 +137,7 @@ DatagramConnectionTester::DatagramConnectionTester(
     int message_size,
     int message_count,
     int delay_ms)
-    : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       host_socket_(host_socket),
       client_socket_(client_socket),
       message_size_(message_size),

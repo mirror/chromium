@@ -47,7 +47,7 @@ void ChromeVisibilityObserver::OnBrowserSetLastActive(Browser* browser) {
 }
 
 void ChromeVisibilityObserver::OnBrowserNoLongerActive(Browser* browser) {
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&ChromeVisibilityObserver::SendVisibilityChangeEvent,
                      weak_factory_.GetWeakPtr(), false,

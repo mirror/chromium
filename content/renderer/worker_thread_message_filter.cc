@@ -13,9 +13,8 @@ namespace content {
 
 WorkerThreadMessageFilter::WorkerThreadMessageFilter(
     ThreadSafeSender* thread_safe_sender)
-    : main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      thread_safe_sender_(thread_safe_sender) {
-}
+    : main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+      thread_safe_sender_(thread_safe_sender) {}
 
 WorkerThreadMessageFilter::~WorkerThreadMessageFilter() {
 }

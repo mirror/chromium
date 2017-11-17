@@ -97,8 +97,8 @@ class BlobRegistryImplTest : public testing::Test {
     auto storage_policy =
         base::MakeRefCounted<content::MockSpecialStoragePolicy>();
     file_system_context_ = base::MakeRefCounted<storage::FileSystemContext>(
-        base::ThreadTaskRunnerHandle::Get().get(),
-        base::ThreadTaskRunnerHandle::Get().get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
         nullptr /* external_mount_points */, storage_policy.get(),
         nullptr /* quota_manager_proxy */,
         std::vector<std::unique_ptr<FileSystemBackend>>(),

@@ -38,7 +38,7 @@ void AppShimHost::ServeChannel(mojo::edk::ScopedPlatformHandle handle) {
       this,
       content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::IO)
           .get(),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 base::FilePath AppShimHost::GetProfilePath() const {

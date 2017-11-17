@@ -559,7 +559,7 @@ void HttpStreamFactoryImpl::JobController::ResumeMainJobLater(
     const base::TimeDelta& delay) {
   net_log_.AddEvent(NetLogEventType::HTTP_STREAM_JOB_DELAYED,
                     NetLog::Int64Callback("delay", delay.InMilliseconds()));
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&HttpStreamFactoryImpl::JobController::ResumeMainJob,
                  ptr_factory_.GetWeakPtr()),
@@ -710,7 +710,7 @@ void HttpStreamFactoryImpl::JobController::RunLoop(int result) {
     // iteration later to avoid re-entrancy.
     DCHECK(!main_job_);
     DCHECK(!alternative_job_);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&HttpStreamFactoryImpl::JobController::NotifyRequestFailed,
                    ptr_factory_.GetWeakPtr(), rv));

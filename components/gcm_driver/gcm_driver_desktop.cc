@@ -1110,7 +1110,7 @@ void GCMDriverDesktop::GetInstanceIDData(
 
   GCMClient::Result result = EnsureStarted(GCMClient::IMMEDIATE_START);
   if (result != GCMClient::SUCCESS) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, std::string(), std::string()));
     return;
   }

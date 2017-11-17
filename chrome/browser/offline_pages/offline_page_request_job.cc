@@ -621,7 +621,7 @@ OfflinePageRequestJob::~OfflinePageRequestJob() {
 }
 
 void OfflinePageRequestJob::Start() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&OfflinePageRequestJob::StartAsync,
                             weak_ptr_factory_.GetWeakPtr()));
 }

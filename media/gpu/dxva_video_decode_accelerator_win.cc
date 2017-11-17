@@ -604,7 +604,7 @@ bool DXVAVideoDecodeAccelerator::Initialize(const Config& config,
 
   client_ = client;
 
-  main_thread_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  main_thread_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
   if (!config.supported_output_formats.empty() &&
       !base::ContainsValue(config.supported_output_formats,
