@@ -22,6 +22,30 @@
       "revId": "30e41b2b4de6d1653bcd2d8a0a2caff7b5681d5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfac6160_b1737970",
+        "filename": "content/browser/renderer_host/p2p/socket_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1250427
+      },
+      "writtenOn": "2017-11-17T05:01:55Z",
+      "side": 1,
+      "message": "I was OOO yesterday. Should I push the separate CL removing this line?",
+      "parentUuid": "4a27a2df_f180c30d",
+      "range": {
+        "startLine": 164,
+        "startChar": 1,
+        "endLine": 164,
+        "endChar": 58
+      },
+      "revId": "30e41b2b4de6d1653bcd2d8a0a2caff7b5681d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
