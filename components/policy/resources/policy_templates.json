@@ -4568,7 +4568,7 @@
       'name': 'AlwaysAuthorizePlugins',
       'type': 'main',
       'schema': { 'type': 'boolean' },
-      'supported_on': ['chrome.*:13-', 'chrome_os:13-'],
+      'supported_on': ['chrome.*:13-64', 'chrome_os:13-64'],
       'features': {
         'dynamic_refresh': True,
         'per_profile': True,
@@ -10737,4 +10737,3 @@ The recommended way to configure policy on Windows is via GPO, although provisio
   },
   'placeholders': [],
 }
-
