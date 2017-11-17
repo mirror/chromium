@@ -16,6 +16,24 @@
       "revId": "c265a441ddab400fba71d5b30c1c27a62a50d3b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "448deea7_9ecd9fff",
+        "filename": "components/webcrypto/webcrypto_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-17T18:44:35Z",
+      "side": 1,
+      "message": "These are separate entries. Moreover they are shown on distinct thread tracks. Eventually we would like to show dependency arrows between events.",
+      "parentUuid": "886ac6cf_0a292fd8",
+      "revId": "c265a441ddab400fba71d5b30c1c27a62a50d3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
