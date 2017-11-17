@@ -202,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "5af446ae_e0f02e7c",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1766,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-17T00:19:44Z",
+      "side": 1,
+      "message": "I think we actually do--we want to get a sense of how much later resumptions happen (and know if it does happen like a long time later). We can still compare the against each other later.",
+      "parentUuid": "67c685ba_b7c418cd",
+      "range": {
+        "startLine": 1766,
+        "startChar": 2,
+        "endLine": 1766,
+        "endChar": 60
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e3933c8_ed8be19f",
         "filename": "content/browser/download/download_item_impl.cc",
         "patchSetId": 6

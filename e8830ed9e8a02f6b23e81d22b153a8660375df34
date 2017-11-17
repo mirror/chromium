@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "85783c47_d4ff3518",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1977,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-17T00:19:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7767d8a9_a9b07a08",
+      "range": {
+        "startLine": 1977,
+        "startChar": 5,
+        "endLine": 1977,
+        "endChar": 65
+      },
+      "revId": "e8830ed9e8a02f6b23e81d22b153a8660375df34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ab8364b_5d8a932b",
         "filename": "content/browser/download/download_ukm.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "e8830ed9e8a02f6b23e81d22b153a8660375df34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3781ee_333987cd",
+        "filename": "content/browser/download/download_ukm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-17T00:19:44Z",
+      "side": 1,
+      "message": "Well the way the code is right now, no UKM events happen because CanLog() checks to see if the url is valid, so this still makes sense. I will confirm with the UKM people about the SourceID stuff.",
+      "parentUuid": "5ab8364b_5d8a932b",
+      "range": {
+        "startLine": 93,
+        "startChar": 7,
+        "endLine": 93,
+        "endChar": 22
+      },
+      "revId": "e8830ed9e8a02f6b23e81d22b153a8660375df34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5acc0ac4_85fd4165",
+        "filename": "content/browser/download/download_ukm.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-17T00:19:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0b45aee_6de11941",
+      "range": {
+        "startLine": 27,
+        "startChar": 45,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "e8830ed9e8a02f6b23e81d22b153a8660375df34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be347447_27708c9a",
         "filename": "content/browser/download/download_ukm.h",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "e8830ed9e8a02f6b23e81d22b153a8660375df34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a23b7393_4cfa7cf8",
+        "filename": "content/browser/download/download_ukm.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-17T00:19:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be347447_27708c9a",
+      "range": {
+        "startLine": 43,
+        "startChar": 20,
+        "endLine": 43,
+        "endChar": 33
+      },
+      "revId": "e8830ed9e8a02f6b23e81d22b153a8660375df34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
