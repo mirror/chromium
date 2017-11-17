@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91e48238_6bf43a13",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4571,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-17T00:31:22Z",
+      "side": 1,
+      "message": "Do we need to do more than set a deprecation version here?",
+      "range": {
+        "startLine": 4571,
+        "startChar": 6,
+        "endLine": 4571,
+        "endChar": 59
+      },
+      "revId": "a2715e97caacc2cbb86a689df099b6074903ce85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
