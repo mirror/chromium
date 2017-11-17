@@ -3943,6 +3943,7 @@ interface KeyframeEffect : KeyframeEffectReadOnly
 interface KeyframeEffectReadOnly : AnimationEffectReadOnly
     attribute @@toStringTag
     method constructor
+    method getKeyframes
 interface LinearAccelerationSensor : Accelerometer
     attribute @@toStringTag
     method constructor
