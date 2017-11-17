@@ -944,7 +944,8 @@ IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest, AccessibilityBoundsInherits) {
   RunHtmlTest(FILE_PATH_LITERAL("bounds-inherits.html"));
 }
 
-IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest, AccessibiltyBoundsClips) {
+IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
+                       DISABLED_AccessibiltyBoundsClips) {
   RunHtmlTest(FILE_PATH_LITERAL("bounds-clips.html"));
 }
 
@@ -1201,17 +1202,18 @@ IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
 }
 
 IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
-                       AccessibilityIframeTransformNested) {
+                       DISABLED_AccessibilityIframeTransformNested) {
   RunHtmlTest(FILE_PATH_LITERAL("iframe-transform-nested.html"));
 }
 
-IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
-                       AccessibilityIframeTransformNestedCrossProcess) {
+IN_PROC_BROWSER_TEST_F(
+    DumpAccessibilityTreeTest,
+    DISABLED_AccessibilityIframeTransformNestedCrossProcess) {
   RunHtmlTest(FILE_PATH_LITERAL("iframe-transform-nested-cross-process.html"));
 }
 
 IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
-                       AccessibilityIframeTransformScrolled) {
+                       DISABLED_AccessibilityIframeTransformScrolled) {
   RunHtmlTest(FILE_PATH_LITERAL("iframe-transform-scrolled.html"));
 }
 
@@ -1700,7 +1702,7 @@ IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest, AccessibilityWbr) {
 }
 
 IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
-                       AccessibilityWindowCropsItems) {
+                       DISABLED_AccessibilityWindowCropsItems) {
   RunHtmlTest(FILE_PATH_LITERAL("window-crops-items.html"));
 }
 
