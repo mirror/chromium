@@ -55,6 +55,7 @@ include_rules = [
   "+skia",
   "+storage/common",
   "+third_party/metrics_proto",
+  "+third_party/WebKit/common",
   "-components/spellcheck/browser",  # Allow all spellcheck but browser.
 ]
 

@@ -86,6 +86,7 @@ enum class WebFeature : int32_t;
 }  // namespace mojom
 
 enum class WebTreeScopeType;
+class AssociatedInterfaceProvider;
 class WebApplicationCacheHost;
 class WebApplicationCacheHostClient;
 class WebColorChooser;
@@ -198,6 +199,17 @@ class BLINK_EXPORT WebFrameClient {
   // Returns an InterfaceProvider the frame can use to request interfaces from
   // the browser. This method may not return nullptr.
   virtual service_manager::InterfaceProvider* GetInterfaceProvider();
+
+  // Returns an AssociatedInterfaceProvider the frame can use to request
+  // navigation-associated interfaces from the browser.
+  //
+  // Navigation-associated interfaces are currently implemented as
+  // channel-associated interfaces. See
+  // https://chromium.googlesource.com/chromium/src/+/master/ipc#Using-Channel_associated-Interfaces.
+  virtual AssociatedInterfaceProvider*
+  GetRemoteNavigationAssociatedInterfaces() {
+    return nullptr;
+  }
 
   // General notifications -----------------------------------------------
 
