@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "773f8be9_36e5e0ab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ToolbarProgressBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-17T23:21:51Z",
+      "side": 1,
+      "message": "do you need \"\u0026\u0026 mProgressThrottle !\u003d null\" here?\n\nseems like this could crash on svelte below since isLargeProgressDiff can be true if mProgressThrottle \u003d\u003d null",
+      "revId": "adb1f65d5eb27639ccade53c21be755ca9e0d7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48659775_87e06dd1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ToolbarProgressBarTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-17T23:21:51Z",
+      "side": 1,
+      "message": "Should we add @CommandLineFlags.Add(BaseSwitches.ENABLE_LOW_END_DEVICE_MODE) to increase the coverage here?",
+      "range": {
+        "startLine": 287,
+        "startChar": 17,
+        "endLine": 287,
+        "endChar": 28
+      },
+      "revId": "adb1f65d5eb27639ccade53c21be755ca9e0d7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
