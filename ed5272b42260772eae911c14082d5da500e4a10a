@@ -122,6 +122,24 @@
       "revId": "ed5272b42260772eae911c14082d5da500e4a10a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f5102bc9_a05de3f8",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 16964,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-17T05:51:05Z",
+      "side": 1,
+      "message": "We can write descriptions in histograms.xml in case of the histograms, but it seems not supported in the case of the use counters.  Then, I\u0027m fine.  Please ignore this point.",
+      "parentUuid": "6d2f7e3a_9e20c210",
+      "revId": "ed5272b42260772eae911c14082d5da500e4a10a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
