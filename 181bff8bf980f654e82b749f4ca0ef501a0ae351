@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbd893b9_7fb4d4f8",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T11:26:40Z",
+      "side": 1,
+      "message": "Does this mean that you use mojo to call Blink from content/renderer/? Is it a fair use of mojo?\n\n(I was assuming that mojo should be used between browser and renderer. Between renderers public APIs are a way to call each other.)",
+      "revId": "181bff8bf980f654e82b749f4ca0ef501a0ae351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fff9129_4d1a45cb",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T11:26:40Z",
+      "side": 1,
+      "message": "I\u0027m confused. Don\u0027t you need to pass in url and debug_info to GotManifest?",
+      "revId": "181bff8bf980f654e82b749f4ca0ef501a0ae351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185fd63c_a95cd490",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T11:26:40Z",
+      "side": 1,
+      "message": "Is this change intentional?",
+      "revId": "181bff8bf980f654e82b749f4ca0ef501a0ae351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94ffca98_b9abb7f8",
+        "filename": "content/renderer/manifest/manifest_parser.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T11:26:40Z",
+      "side": 1,
+      "message": "When do we need to add base::in_place?",
+      "revId": "181bff8bf980f654e82b749f4ca0ef501a0ae351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ffd92df_04b4961c",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1862,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T11:26:40Z",
+      "side": 1,
+      "message": "Is there any reason you want to return blink::mojom::ManifestManager instead of ManifestManager?",
+      "revId": "181bff8bf980f654e82b749f4ca0ef501a0ae351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3acc34b5_3a0dffd2",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1863,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-17T11:26:40Z",
+      "side": 1,
+      "message": "manifest_manager_ is a raw pointer. How is it guaranteed that it is non null?",
+      "revId": "181bff8bf980f654e82b749f4ca0ef501a0ae351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
