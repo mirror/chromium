@@ -9,50 +9,49 @@
 #include <set>
 
 #include "base/memory/weak_ptr.h"
+#include "base/sequence_checker.h"
 #include "chrome/browser/media/router/discovery/dial/device_description_service.h"
+#include "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h"
 #include "chrome/browser/media/router/discovery/dial/dial_registry.h"
 #include "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h"
-#include "chrome/browser/media/router/discovery/media_sink_service_base.h"
+#include "chrome/common/media_router/discovery/media_sink_service_base.h"
 
 namespace media_router {
 
 class DeviceDescriptionService;
 class DialRegistry;
 
-// An observer class registered with DialMediaSinkService to receive
-// notifications when DIAL sinks are added or removed from DialMediaSinkService
-class DialMediaSinkServiceObserver {
- public:
-  virtual ~DialMediaSinkServiceObserver() {}
-
-  // Invoked when |sink| is added to DialMediaSinkServiceImpl instance.
-  // |sink|: must be a DIAL sink.
-  virtual void OnDialSinkAdded(const MediaSinkInternal& sink) = 0;
-};
-
 // A service which can be used to start background discovery and resolution of
 // DIAL devices (Smart TVs, Game Consoles, etc.).
-// This class is not thread safe. All methods must be called from the IO thread.
-class DialMediaSinkServiceImpl
-    : public MediaSinkServiceBase,
-      public DialRegistry::Observer,
-      public base::SupportsWeakPtr<DialMediaSinkServiceImpl> {
+// This class may be created on any thread. All methods, unless otherwise noted,
+// must be invoked on the SequencedTaskRunner given by |task_runner_|.
+class DialMediaSinkServiceImpl : public MediaSinkServiceBase,
+                                 public DialRegistry::Observer {
  public:
-  DialMediaSinkServiceImpl(const OnSinksDiscoveredCallback& callback,
-                           net::URLRequestContextGetter* request_context);
+  // |on_sinks_discovered_cb|: Callback for MediaSinkServiceBase.
+  // |dial_sink_added_cb|: If not null, callback to invoke when a DIAL sink has
+  // been discovered.
+  // Note that both callbacks are invoked on |task_runner_|.
+  // |request_context|: Used for network requests.
+  DialMediaSinkServiceImpl(
+      const OnSinksDiscoveredCallback& on_sinks_discovered_cb,
+      const OnDialSinkAddedCallback& dial_sink_added_cb,
+      scoped_refptr<net::URLRequestContextGetter> request_context);
   ~DialMediaSinkServiceImpl() override;
 
-  // Does not take ownership of |observer|. Caller should make sure |observer|
-  // object outlives |this|.
-  void SetObserver(DialMediaSinkServiceObserver* observer);
+  // Marked virtual for tests.
+  virtual void Start();
+  virtual void Stop();
 
-  // Sets |observer_| to nullptr.
-  void ClearObserver();
+  void OnUserGesture();
 
-  // MediaSinkService implementation
-  void Start() override;
-  void Stop() override;
-  void OnUserGesture() override;
+  // Returns the SequencedTaskRunner that should be used to invoke methods on
+  // this instance. Can be invoked on any thread.
+  scoped_refptr<base::SequencedTaskRunner> task_runner() {
+    return task_runner_;
+  }
+  void SetTaskRunnerForTest(
+      const scoped_refptr<base::SequencedTaskRunner>& task_runner);
 
  protected:
   // Returns instance of device description service. Create a new one if none
@@ -72,9 +71,7 @@ class DialMediaSinkServiceImpl
                            TestOnDeviceDescriptionAvailable);
   FRIEND_TEST_ALL_PREFIXES(DialMediaSinkServiceImplTest, TestRestartAfterStop);
   FRIEND_TEST_ALL_PREFIXES(DialMediaSinkServiceImplTest,
-                           OnDialSinkAddedCalledOnUserGesture);
-  FRIEND_TEST_ALL_PREFIXES(DialMediaSinkServiceImplTest,
-                           DialMediaSinkServiceObserver);
+                           OnDialSinkAddedCallback);
   // DialRegistry::Observer implementation
   void OnDialDeviceEvent(const DialRegistry::DeviceList& devices) override;
   void OnDialError(DialRegistry::DialErrorCode type) override;
@@ -92,6 +89,8 @@ class DialMediaSinkServiceImpl
   // MediaSinkServiceBase implementation.
   void RecordDeviceCounts() override;
 
+  OnDialSinkAddedCallback dial_sink_added_cb_;
+
   std::unique_ptr<DeviceDescriptionService> description_service_;
 
   // Raw pointer to DialRegistry singleton.
@@ -103,11 +102,13 @@ class DialMediaSinkServiceImpl
   // Device data list from current round of discovery.
   DialRegistry::DeviceList current_devices_;
 
-  DialMediaSinkServiceObserver* observer_;
-
   scoped_refptr<net::URLRequestContextGetter> request_context_;
 
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
+
   DialDeviceCountMetrics metrics_;
+
+  SEQUENCE_CHECKER(sequence_checker_);
 };
 
 }  // namespace media_router
