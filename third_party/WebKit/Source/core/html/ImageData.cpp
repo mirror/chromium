@@ -237,6 +237,33 @@ ImageData* ImageData::Create(const IntSize& size,
   return data_array ? new ImageData(size, data_array, color_settings) : nullptr;
 }
 
+static ImageDataColorSettings CanvasColorParamsToImageDataColorSettings(
+    const CanvasColorParams& color_params) {
+  ImageDataColorSettings color_settings;
+  switch (color_params.ColorSpace()) {
+    case kSRGBCanvasColorSpace:
+      color_settings.setColorSpace(kSRGBCanvasColorSpaceName);
+      break;
+    case kRec2020CanvasColorSpace:
+      color_settings.setColorSpace(kRec2020CanvasColorSpaceName);
+      break;
+    case kP3CanvasColorSpace:
+      color_settings.setColorSpace(kP3CanvasColorSpaceName);
+      break;
+  }
+  color_settings.setStorageFormat(kUint8ClampedArrayStorageFormatName);
+  if (color_params.PixelFormat() == kF16CanvasPixelFormat)
+    color_settings.setStorageFormat(kFloat32ArrayStorageFormatName);
+  return color_settings;
+}
+
+ImageData* ImageData::Create(const IntSize& size,
+                             const CanvasColorParams& color_params) {
+  ImageDataColorSettings color_settings =
+      CanvasColorParamsToImageDataColorSettings(color_params);
+  return ImageData::Create(size, &color_settings);
+}
+
 ImageData* ImageData::Create(const IntSize& size,
                              CanvasColorSpace color_space,
                              ImageDataStorageFormat storage_format) {
@@ -276,6 +303,86 @@ ImageData* ImageData::Create(const IntSize& size,
                                                color_settings))
     return nullptr;
   return new ImageData(size, data_array.View(), color_settings);
+}
+
+ImageData* ImageData::Create(const IntSize& size,
+                             NotShared<DOMArrayBufferView> data_array,
+                             const CanvasColorParams& color_params) {
+  ImageDataColorSettings color_settings =
+      CanvasColorParamsToImageDataColorSettings(color_params);
+  return Create(size, data_array, &color_settings);
+}
+
+SkImageInfo GetImageInfo(scoped_refptr<StaticBitmapImage> image) {
+  sk_sp<SkImage> skia_image = image->PaintImageForCurrentFrame().GetSkImage();
+  SkColorType color_type = kN32_SkColorType;
+  if (skia_image->colorSpace() && skia_image->colorSpace()->gammaIsLinear())
+    color_type = kRGBA_F16_SkColorType;
+  return SkImageInfo::Make(skia_image->width(), skia_image->height(),
+                           color_type, skia_image->alphaType(),
+                           skia_image->refColorSpace());
+}
+
+// The goal of this function is to read back the texture pixels into memory to
+// be used in HTMLCanvasElement toBlob and toDataUrl down the path. Therefore,
+// no alpha manipulation should happen. If the source is premul, ImageData will
+// contain the premul pixels, as they are stored in the input image.
+ImageData* ImageData::CreateForWebGLRenderingContext(
+    scoped_refptr<StaticBitmapImage> image,
+    const CanvasColorParams& color_params) {
+  sk_sp<SkImage> skia_image = image->PaintImageForCurrentFrame().GetSkImage();
+  ImageDataColorSettings color_settings =
+      CanvasColorParamsToImageDataColorSettings(color_params);
+  SkImageInfo image_info = GetImageInfo(image);
+  if (image_info.colorType() != kRGBA_F16_SkColorType) {
+    ImageData* image_data = Create(image->Size(), &color_settings);
+    skia_image->readPixels(image_info, image_data->data()->Data(),
+                           image_info.minRowBytes(), 0, 0);
+    return image_data;
+  }
+
+  // If the input image uses half float storage, we need to convert the pixels
+  // to float32. Since SkColorType does not support float 32, we have to use
+  // SkColorSpaceXform for this conversion.
+
+  // If SkImage is raster-backed, use SkPixmap to avoid creating an extra copy
+  // of pixels.
+  const void* src_pixels;
+  std::unique_ptr<uint8_t[]> src_data = nullptr;
+  SkPixmap pixmap;
+  if (skia_image->peekPixels(&pixmap)) {
+    src_pixels = pixmap.addr();
+  } else {
+    // Otherwise, do read back.
+    DCHECK(skia_image->isTextureBacked());
+    src_data.reset(new uint8_t[image->width() * image->height() * 2]);
+    bool read_pixels_successfully = skia_image->readPixels(
+        image_info, src_data.get(), image_info.minRowBytes(), 0, 0);
+    DCHECK(read_pixels_successfully);
+    if (!read_pixels_successfully)
+      return nullptr;
+    src_pixels = static_cast<const void*>(src_data.get());
+  }
+
+  DOMFloat32Array* f32_array = ImageData::AllocateAndValidateFloat32Array(
+      image->width() * image->height(), nullptr);
+  if (!f32_array)
+    return nullptr;
+
+  SkColorSpaceXform::ColorFormat src_color_format =
+      SkColorSpaceXform::ColorFormat::kRGBA_F16_ColorFormat;
+  SkColorSpaceXform::ColorFormat dst_color_format =
+      SkColorSpaceXform::ColorFormat::kRGBA_F32_ColorFormat;
+  std::unique_ptr<SkColorSpaceXform> xform =
+      SkColorSpaceXform::New(SkColorSpace::MakeSRGBLinear().get(),
+                             SkColorSpace::MakeSRGBLinear().get());
+  bool color_converison_successful = xform->apply(
+      dst_color_format, f32_array->Data(), src_color_format, src_pixels,
+      image->width() * image->height(), SkAlphaType::kUnpremul_SkAlphaType);
+  DCHECK(color_converison_successful);
+
+  return Create(image->Size(), NotShared<blink::DOMArrayBufferView>(f32_array),
+                &color_settings);
 }
 
 ImageData* ImageData::Create(unsigned width,
