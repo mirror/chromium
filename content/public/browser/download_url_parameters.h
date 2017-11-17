@@ -244,6 +244,11 @@ class CONTENT_EXPORT DownloadUrlParameters {
     request_origin_ = origin;
   }
 
+  // Sets the download source, which will be used in metrics recording.
+  void set_download_source(const std::string& download_source) {
+    download_source_ = download_source;
+  }
+
   const OnStartedCallback& callback() const { return callback_; }
   bool content_initiated() const { return content_initiated_; }
   const std::string& last_modified() const { return last_modified_; }
@@ -301,6 +306,8 @@ class CONTENT_EXPORT DownloadUrlParameters {
     return traffic_annotation_;
   }
 
+  const std::string& download_source() const { return download_source_; }
+
  private:
   OnStartedCallback callback_;
   bool content_initiated_;
@@ -328,6 +335,7 @@ class CONTENT_EXPORT DownloadUrlParameters {
   std::unique_ptr<storage::BlobDataHandle> blob_data_handle_;
   const net::NetworkTrafficAnnotationTag traffic_annotation_;
   std::string request_origin_;
+  std::string download_source_;
 
   DISALLOW_COPY_AND_ASSIGN(DownloadUrlParameters);
 };
