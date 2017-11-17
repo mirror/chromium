@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00615550_c4074905",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-17T18:53:37Z",
+      "side": 1,
+      "message": "Would love if we could cite the API doc for this.  If there\u0027s no good reference, oh well.",
+      "range": {
+        "startLine": 292,
+        "startChar": 5,
+        "endLine": 292,
+        "endChar": 54
+      },
+      "revId": "a1890ae04e2f1398ea08fd04b61e5a9d2b616f01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
