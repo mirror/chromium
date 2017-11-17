@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "2c83c393_93d91b98",
+        "filename": "components/viz/service/display/output_surface.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-17T00:08:10Z",
+      "side": 1,
+      "message": "Ah, I see now. The guide\u0027s wording \"Only A,B,C\" implies not D.\n\nDone. Also got rid of the other rvalue reference arguments in the PassThroughImageTransportSurface.",
+      "parentUuid": "d0d1fca7_9d568646",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4f175b7_a15d3f3d",
         "filename": "components/viz/service/display/output_surface.h",
         "patchSetId": 11
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "5a9d4600_bb465837",
+        "filename": "components/viz/service/display/output_surface.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-17T00:08:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d4794e8_181816b4",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e914866_600d875a",
         "filename": "components/viz/service/display_embedder/display_output_surface.cc",
         "patchSetId": 11
@@ -104,6 +140,24 @@
       "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6073070_22746d0a",
+        "filename": "components/viz/service/display_embedder/display_output_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-17T00:08:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e914866_600d875a",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "202159a1_85bd8a80",
+        "filename": "components/viz/service/display_embedder/display_output_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-17T00:08:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d226680c_060b7cac",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a6bad71_1fc392b5",
         "filename": "components/viz/service/display_embedder/display_output_surface.h",
         "patchSetId": 11
@@ -177,6 +249,24 @@
     },
     {
       "key": {
+        "uuid": "3be05e28_94967425",
+        "filename": "components/viz/service/display_embedder/display_output_surface.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-17T00:08:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47ba88e4_24535e8d",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c62baccb_bb4ed81a",
         "filename": "content/browser/compositor/gpu_browser_compositor_output_surface.cc",
         "patchSetId": 11
@@ -191,6 +281,24 @@
       "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45db589_22633aa3",
+        "filename": "content/browser/compositor/gpu_browser_compositor_output_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-17T00:08:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c62baccb_bb4ed81a",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -211,6 +319,24 @@
     },
     {
       "key": {
+        "uuid": "f6782811_a8502444",
+        "filename": "content/browser/compositor/gpu_browser_compositor_output_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-17T00:08:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "096d9aa4_95e31642",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47a8f3d6_6cb1135e",
         "filename": "content/browser/renderer_host/compositor_impl_android.cc",
         "patchSetId": 11
@@ -225,6 +351,24 @@
       "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28d05cc7_ba0b48d9",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-17T00:08:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47a8f3d6_6cb1135e",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -260,6 +404,24 @@
       "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da46fe0a_f8a45782",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-17T00:08:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e53ebc88_273112cc",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
