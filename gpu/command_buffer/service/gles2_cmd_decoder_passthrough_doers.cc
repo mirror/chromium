@@ -3190,8 +3190,8 @@ error::Error GLES2DecoderPassthroughImpl::DoSwapBuffers() {
     return error::kNoError;
   }
 
-  gfx::SwapResult result = surface_->SwapBuffers();
-  if (result == gfx::SwapResult::SWAP_FAILED) {
+  gfx::SwapResponse response = surface_->SwapBuffers();
+  if (response.result == gfx::SwapResult::SWAP_FAILED) {
     LOG(ERROR) << "Context lost because SwapBuffers failed.";
     if (!CheckResetStatus()) {
       MarkContextLost(error::kUnknown);
@@ -3771,8 +3771,8 @@ error::Error GLES2DecoderPassthroughImpl::DoSwapBuffersWithBoundsCHROMIUM(
     bounds[i] = gfx::Rect(rects[i * 4 + 0], rects[i * 4 + 1], rects[i * 4 + 2],
                           rects[i * 4 + 3]);
   }
-  gfx::SwapResult result = surface_->SwapBuffersWithBounds(bounds);
-  if (result == gfx::SwapResult::SWAP_FAILED) {
+  gfx::SwapResponse response = surface_->SwapBuffersWithBounds(bounds);
+  if (response.result == gfx::SwapResult::SWAP_FAILED) {
     LOG(ERROR) << "Context lost because SwapBuffersWithBounds failed.";
   }
   // TODO(geofflang): force the context loss?
@@ -3790,8 +3790,8 @@ error::Error GLES2DecoderPassthroughImpl::DoPostSubBufferCHROMIUM(
     return error::kNoError;
   }
 
-  gfx::SwapResult result = surface_->PostSubBuffer(x, y, width, height);
-  if (result == gfx::SwapResult::SWAP_FAILED) {
+  gfx::SwapResponse response = surface_->PostSubBuffer(x, y, width, height);
+  if (response.result == gfx::SwapResult::SWAP_FAILED) {
     LOG(ERROR) << "Context lost because PostSubBuffer failed.";
     if (!CheckResetStatus()) {
       MarkContextLost(error::kUnknown);

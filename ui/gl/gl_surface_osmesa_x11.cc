@@ -121,16 +121,17 @@ bool GLSurfaceOSMesaX11::IsOffscreen() {
   return false;
 }
 
-gfx::SwapResult GLSurfaceOSMesaX11::SwapBuffers() {
+gfx::SwapResponse GLSurfaceOSMesaX11::SwapBuffers() {
   TRACE_EVENT2("gpu", "GLSurfaceOSMesaX11:RealSwapBuffers", "width",
                GetSize().width(), "height", GetSize().height());
-
+  gfx::SwapResponse response(base::TimeTicks::Now());
   gfx::Size size = GetSize();
 
   XWindowAttributes attributes;
   if (!XGetWindowAttributes(xdisplay_, window_, &attributes)) {
     LOG(ERROR) << "XGetWindowAttributes failed for window " << window_ << ".";
-    return gfx::SwapResult::SWAP_FAILED;
+    return response.Finalize(base::TimeTicks::Now(),
+                             gfx::SwapResult::SWAP_FAILED);
   }
 
   // Copy the frame into the pixmap.
@@ -143,17 +144,18 @@ gfx::SwapResult GLSurfaceOSMesaX11::SwapBuffers() {
   XCopyArea(xdisplay_, pixmap_, window_, window_graphics_context_, 0, 0,
             size.width(), size.height(), 0, 0);
 
-  return gfx::SwapResult::SWAP_ACK;
+  return response.Finalize(base::TimeTicks::Now(), gfx::SwapResult::SWAP_ACK);
 }
 
 bool GLSurfaceOSMesaX11::SupportsPostSubBuffer() {
   return true;
 }
 
-gfx::SwapResult GLSurfaceOSMesaX11::PostSubBuffer(int x,
-                                                  int y,
-                                                  int width,
-                                                  int height) {
+gfx::SwapResponse GLSurfaceOSMesaX11::PostSubBuffer(int x,
+                                                    int y,
+                                                    int width,
+                                                    int height) {
+  gfx::SwapResponse response(base::TimeTicks::Now());
   gfx::Size size = GetSize();
 
   // Move (0,0) from lower-left to upper-left
@@ -162,7 +164,8 @@ gfx::SwapResult GLSurfaceOSMesaX11::PostSubBuffer(int x,
   XWindowAttributes attributes;
   if (!XGetWindowAttributes(xdisplay_, window_, &attributes)) {
     LOG(ERROR) << "XGetWindowAttributes failed for window " << window_ << ".";
-    return gfx::SwapResult::SWAP_FAILED;
+    return response.Finalize(base::TimeTicks::Now(),
+                             gfx::SwapResult::SWAP_FAILED);
   }
 
   // Copy the frame into the pixmap.
@@ -175,7 +178,7 @@ gfx::SwapResult GLSurfaceOSMesaX11::PostSubBuffer(int x,
   XCopyArea(xdisplay_, pixmap_, window_, window_graphics_context_, x, y, width,
             height, x, y);
 
-  return gfx::SwapResult::SWAP_ACK;
+  return response.Finalize(base::TimeTicks::Now(), gfx::SwapResult::SWAP_ACK);
 }
 
 GLSurfaceOSMesaX11::~GLSurfaceOSMesaX11() {

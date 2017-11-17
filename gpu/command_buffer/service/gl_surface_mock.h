@@ -24,9 +24,9 @@ class GLSurfaceMock : public gl::GLSurface {
                     ColorSpace color_space,
                     bool alpha));
   MOCK_METHOD0(IsOffscreen, bool());
-  MOCK_METHOD0(SwapBuffers, gfx::SwapResult());
+  MOCK_METHOD0(SwapBuffers, gfx::SwapResponse());
   MOCK_METHOD4(PostSubBuffer,
-               gfx::SwapResult(int x, int y, int width, int height));
+               gfx::SwapResponse(int x, int y, int width, int height));
   MOCK_METHOD0(SupportsPostSubBuffer, bool());
   MOCK_METHOD0(GetSize, gfx::Size());
   MOCK_METHOD0(GetHandle, void*());
