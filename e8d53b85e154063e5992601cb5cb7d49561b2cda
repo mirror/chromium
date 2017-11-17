@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11dd2614_0566c797",
+        "filename": "media/mojo/services/decoder_cdm_context_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-17T23:06:47Z",
+      "side": 1,
+      "message": "I am not a big fan of this one-function class especially given the function is trivial... Instead of adding this class, maybe we can simplify some of the steps.\n\n1. Previously we pass MojoCdmServiceContext as a weakptr, because MojoVideoDecoderService et al use StrongBinding, so that they can outlive InterfaceFactoryImpl (which owns MojoCdmServiceContext). Now that we use StrongBindingSet in InterfaceFactoryImpl, and this is not true anymore. We should just pass in a raw pointer of MojoCdmServiceContext and DCHECK that it is not null. This can help us get rid of the first check.\n\n2. All users of MojoCdmServiceContext actually only need the |cdm_context|. The reason that they need the |cdm| is such the CDM will not be destroyed (it\u0027s ref-counted). Maybe we should fix this, e.g. instead of pass in a raw pointer of CdmContext, we pass in a unique_ptr\u003cCdmContext\u003e, such that each |cdm_context| will hold a ref to the actual CDM. Then we don\u0027t need to expose the CDM at all.\n\nWith that, the code will be much simpler:\n\n  std::unique_ptr\u003cCdmContext\u003e cdm_context \u003d mojo_cdm_service_context_-\u003eGetCdm(cdm_id);\n\n  if (config.is_encrypted() \u0026\u0026 !cdm_context) {\n    std::move(callback).Run(false, false);\n    return;\n  }\n\n  // .... Initialize(..., std::move(cdm_context)...\n\nWe can do (1) easily but (2) would take more work. Does it make sense to file a bug and assign to me, and just duplicate the code for now (so we don\u0027t need this helper class) to unblock you and Dan?",
+      "revId": "e8d53b85e154063e5992601cb5cb7d49561b2cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
