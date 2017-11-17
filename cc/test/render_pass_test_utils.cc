@@ -16,6 +16,7 @@
 #include "components/viz/common/quads/texture_draw_quad.h"
 #include "components/viz/common/quads/tile_draw_quad.h"
 #include "components/viz/common/quads/yuv_video_draw_quad.h"
+#include "components/viz/common/resources/transferable_resource.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "third_party/skia/include/core/SkImageFilter.h"
 #include "ui/gfx/geometry/rect.h"
@@ -167,11 +168,10 @@ void AddOneOfEveryQuadType(viz::RenderPass* to_pass,
   memcpy(gpu_mailbox.name, "Hello world", strlen("Hello world") + 1);
   std::unique_ptr<viz::SingleReleaseCallback> callback =
       viz::SingleReleaseCallback::Create(base::Bind(&EmptyReleaseCallback));
-  viz::TextureMailbox mailbox(gpu_mailbox, kSyncTokenForMailboxTextureQuad,
-                              target);
+  auto transfer_resource = viz::TransferableResource::MakeGL(
+      gpu_mailbox, GL_LINEAR, target, kSyncTokenForMailboxTextureQuad);
   viz::ResourceId resource8 =
-      resource_provider->CreateResourceFromTextureMailbox(mailbox,
-                                                          std::move(callback));
+      resource_provider->ImportResource(transfer_resource, std::move(callback));
   resource_provider->AllocateForTesting(resource8);
 
   viz::SharedQuadState* shared_state =
@@ -325,11 +325,10 @@ void AddOneOfEveryQuadTypeInDisplayResourceProvider(
   memcpy(gpu_mailbox.name, "Hello world", strlen("Hello world") + 1);
   std::unique_ptr<viz::SingleReleaseCallback> callback =
       viz::SingleReleaseCallback::Create(base::Bind(&EmptyReleaseCallback));
-  viz::TextureMailbox mailbox(gpu_mailbox, kSyncTokenForMailboxTextureQuad,
-                              target);
-  viz::ResourceId resource8 =
-      child_resource_provider->CreateResourceFromTextureMailbox(
-          mailbox, std::move(callback));
+  auto transfer_resource = viz::TransferableResource::MakeGL(
+      gpu_mailbox, GL_LINEAR, target, kSyncTokenForMailboxTextureQuad);
+  viz::ResourceId resource8 = child_resource_provider->ImportResource(
+      transfer_resource, std::move(callback));
   child_resource_provider->AllocateForTesting(resource8);
 
   // Transfer resource to the parent.

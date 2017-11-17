@@ -495,8 +495,9 @@ class ResourceProviderTest : public testing::TestWithParam<viz::ResourceType> {
           viz::SingleReleaseCallback::Create(base::Bind(
               ReleaseSharedBitmapCallback, base::Passed(&shared_bitmap),
               release_called, release_sync_token, lost_resource));
-      return child_resource_provider_->CreateResourceFromTextureMailbox(
-          viz::TextureMailbox(gpu_mailbox, *sync_token, GL_TEXTURE_2D),
+      return child_resource_provider_->ImportResource(
+          viz::TransferableResource::MakeGL(gpu_mailbox, GL_LINEAR,
+                                            GL_TEXTURE_2D, *sync_token),
           std::move(callback));
     } else {
       gfx::Size size(64, 64);
@@ -508,8 +509,11 @@ class ResourceProviderTest : public testing::TestWithParam<viz::ResourceType> {
           viz::SingleReleaseCallback::Create(base::Bind(
               ReleaseSharedBitmapCallback, base::Passed(&shared_bitmap),
               release_called, release_sync_token, lost_resource));
-      return child_resource_provider_->CreateResourceFromTextureMailbox(
-          viz::TextureMailbox(shared_bitmap_ptr, size), std::move(callback));
+      return child_resource_provider_->ImportResource(
+          viz::TransferableResource::MakeSoftware(
+              shared_bitmap_ptr->id(), shared_bitmap_ptr->sequence_number(),
+              size),
+          std::move(callback));
     }
   }
 
@@ -635,13 +639,13 @@ TEST_P(ResourceProviderTest, TransferGLResources) {
   EXPECT_TRUE(external_sync_token.HasData());
 
   gfx::ColorSpace color_space4 = gfx::ColorSpace::CreateXYZD50();
-  viz::TextureMailbox id4_mailbox(external_mailbox, external_sync_token,
-                                  GL_TEXTURE_EXTERNAL_OES);
-  id4_mailbox.set_color_space(color_space4);
-  viz::ResourceId id4 =
-      child_resource_provider_->CreateResourceFromTextureMailbox(
-          id4_mailbox, viz::SingleReleaseCallback::Create(
-                           base::Bind(&EmptyReleaseCallback)));
+  auto id4_resource = viz::TransferableResource::MakeGL(
+      external_mailbox, GL_LINEAR, GL_TEXTURE_EXTERNAL_OES,
+      external_sync_token);
+  id4_resource.color_space = color_space4;
+  viz::ResourceId id4 = child_resource_provider_->ImportResource(
+      id4_resource,
+      viz::SingleReleaseCallback::Create(base::Bind(&EmptyReleaseCallback)));
 
   std::vector<viz::ReturnedResource> returned_to_child;
   int child_id =
@@ -1004,12 +1008,11 @@ TEST_P(ResourceProviderTestNoSyncToken, TransferGLResources) {
   child_context_->genSyncToken(child_context_->insertFenceSync(),
                                external_sync_token.GetData());
   EXPECT_TRUE(external_sync_token.HasData());
-  viz::ResourceId id3 =
-      child_resource_provider_->CreateResourceFromTextureMailbox(
-          viz::TextureMailbox(external_mailbox, external_sync_token,
-                              GL_TEXTURE_EXTERNAL_OES),
-          viz::SingleReleaseCallback::Create(
-              base::Bind(&EmptyReleaseCallback)));
+  viz::ResourceId id3 = child_resource_provider_->ImportResource(
+      viz::TransferableResource::MakeGL(external_mailbox, GL_LINEAR,
+                                        GL_TEXTURE_EXTERNAL_OES,
+                                        external_sync_token),
+      viz::SingleReleaseCallback::Create(base::Bind(&EmptyReleaseCallback)));
 
   std::vector<viz::ReturnedResource> returned_to_child;
   int child_id =
@@ -1416,11 +1419,12 @@ TEST_P(ResourceProviderTest, TransferSoftwareResources) {
   std::unique_ptr<viz::SharedBitmap> shared_bitmap(CreateAndFillSharedBitmap(
       shared_bitmap_manager_.get(), gfx::Size(1, 1), 0));
   viz::SharedBitmap* shared_bitmap_ptr = shared_bitmap.get();
-  viz::ResourceId id3 =
-      child_resource_provider_->CreateResourceFromTextureMailbox(
-          viz::TextureMailbox(shared_bitmap_ptr, gfx::Size(1, 1)),
-          viz::SingleReleaseCallback::Create(base::Bind(
-              &SharedBitmapReleaseCallback, base::Passed(&shared_bitmap))));
+  viz::ResourceId id3 = child_resource_provider_->ImportResource(
+      viz::TransferableResource::MakeSoftware(
+          shared_bitmap_ptr->id(), shared_bitmap_ptr->sequence_number(),
+          gfx::Size(1, 1)),
+      viz::SingleReleaseCallback::Create(base::Bind(
+          &SharedBitmapReleaseCallback, base::Passed(&shared_bitmap))));
 
   std::vector<viz::ReturnedResource> returned_to_child;
   int child_id =
@@ -2023,10 +2027,10 @@ TEST_P(ResourceProviderTest, TransferMailboxResources) {
   bool lost_resource = false;
   viz::ReleaseCallback callback =
       base::Bind(ReleaseCallback, &release_sync_token, &lost_resource);
-  viz::ResourceId resource =
-      child_resource_provider_->CreateResourceFromTextureMailbox(
-          viz::TextureMailbox(mailbox, sync_token, GL_TEXTURE_2D),
-          viz::SingleReleaseCallback::Create(std::move(callback)));
+  viz::ResourceId resource = child_resource_provider_->ImportResource(
+      viz::TransferableResource::MakeGL(mailbox, GL_LINEAR, GL_TEXTURE_2D,
+                                        sync_token),
+      viz::SingleReleaseCallback::Create(std::move(callback)));
   EXPECT_EQ(1u, context()->NumTextures());
   EXPECT_FALSE(release_sync_token.HasData());
   {
@@ -2079,8 +2083,9 @@ TEST_P(ResourceProviderTest, TransferMailboxResources) {
   EXPECT_LT(0u, sync_token.release_count());
   release_sync_token.Clear();
   callback = base::Bind(ReleaseCallback, &release_sync_token, &lost_resource);
-  resource = child_resource_provider_->CreateResourceFromTextureMailbox(
-      viz::TextureMailbox(mailbox, sync_token, GL_TEXTURE_2D),
+  resource = child_resource_provider_->ImportResource(
+      viz::TransferableResource::MakeGL(mailbox, GL_LINEAR, GL_TEXTURE_2D,
+                                        sync_token),
       viz::SingleReleaseCallback::Create(std::move(callback)));
   EXPECT_EQ(1u, context()->NumTextures());
   EXPECT_FALSE(release_sync_token.HasData());
@@ -2238,7 +2243,7 @@ TEST_P(ResourceProviderTest, LostMailboxInParent) {
 
   // Delete the resource in the child. Expect the resource to be lost if it's
   // a GL texture.
-  child_resource_provider_->DeleteResource(resource);
+  child_resource_provider_->RemoveImportedResource(resource);
   EXPECT_EQ(lost_resource, GetParam() == viz::ResourceType::kTexture);
 }
 
@@ -2305,8 +2310,9 @@ TEST_P(ResourceProviderTest, LostContext) {
   std::unique_ptr<viz::SingleReleaseCallback> callback =
       viz::SingleReleaseCallback::Create(
           base::Bind(&ReleaseCallback, &release_sync_token, &lost_resource));
-  child_resource_provider_->CreateResourceFromTextureMailbox(
-      viz::TextureMailbox(mailbox, sync_token, GL_TEXTURE_2D),
+  child_resource_provider_->ImportResource(
+      viz::TransferableResource::MakeGL(mailbox, GL_LINEAR, GL_TEXTURE_2D,
+                                        sync_token),
       std::move(callback));
 
   EXPECT_FALSE(release_sync_token.HasData());
@@ -2315,7 +2321,7 @@ TEST_P(ResourceProviderTest, LostContext) {
   child_resource_provider_->DidLoseVulkanContextProvider();
   child_resource_provider_ = nullptr;
 
-  EXPECT_LE(sync_token.release_count(), release_sync_token.release_count());
+  EXPECT_EQ(sync_token.release_count(), release_sync_token.release_count());
   EXPECT_TRUE(lost_resource);
 }
 
@@ -2547,11 +2553,11 @@ TEST_P(ResourceProviderTest, TextureMailbox_SharedMemory) {
   std::unique_ptr<viz::SingleReleaseCallback> callback =
       viz::SingleReleaseCallback::Create(
           base::Bind(&ReleaseCallback, &release_sync_token, &lost_resource));
-  viz::TextureMailbox mailbox(shared_bitmap.get(), size);
+  auto resource = viz::TransferableResource::MakeSoftware(
+      shared_bitmap->id(), shared_bitmap->sequence_number(), size);
 
   viz::ResourceId resource_id =
-      child_resource_provider->CreateResourceFromTextureMailbox(
-          mailbox, std::move(callback));
+      child_resource_provider->ImportResource(resource, std::move(callback));
   EXPECT_NE(0u, resource_id);
 
   // Transfer resources to the parent.
@@ -2588,7 +2594,7 @@ TEST_P(ResourceProviderTest, TextureMailbox_SharedMemory) {
   EXPECT_EQ(1u, returned_to_child.size());
   child_resource_provider->ReceiveReturnsFromParent(returned_to_child);
 
-  child_resource_provider->DeleteResource(resource_id);
+  child_resource_provider->RemoveImportedResource(resource_id);
   EXPECT_FALSE(release_sync_token.HasData());
   EXPECT_FALSE(lost_resource);
 }
@@ -2642,12 +2648,12 @@ class ResourceProviderTestTextureMailboxGLFilters
         viz::SingleReleaseCallback::Create(
             base::Bind(&ReleaseCallback, &release_sync_token, &lost_resource));
 
-    viz::TextureMailbox mailbox(gpu_mailbox, sync_token, target);
-    mailbox.set_nearest_neighbor(mailbox_nearest_neighbor);
+    GLuint filter = mailbox_nearest_neighbor ? GL_NEAREST : GL_LINEAR;
+    auto resource = viz::TransferableResource::MakeGL(gpu_mailbox, filter,
+                                                      target, sync_token);
 
     viz::ResourceId resource_id =
-        child_resource_provider->CreateResourceFromTextureMailbox(
-            mailbox, std::move(callback));
+        child_resource_provider->ImportResource(resource, std::move(callback));
     EXPECT_NE(0u, resource_id);
     EXPECT_EQ(current_fence_sync, child_context->GetNextFenceSync());
 
@@ -2719,7 +2725,7 @@ class ResourceProviderTestTextureMailboxGLFilters
     EXPECT_EQ(1u, returned_to_child.size());
     child_resource_provider->ReceiveReturnsFromParent(returned_to_child);
 
-    child_resource_provider->DeleteResource(resource_id);
+    child_resource_provider->RemoveImportedResource(resource_id);
     EXPECT_TRUE(release_sync_token.HasData());
     EXPECT_FALSE(lost_resource);
   }
@@ -2813,11 +2819,11 @@ TEST_P(ResourceProviderTest, TextureMailbox_GLTextureExternalOES) {
   std::unique_ptr<viz::SingleReleaseCallback> callback =
       viz::SingleReleaseCallback::Create(base::Bind(&EmptyReleaseCallback));
 
-  viz::TextureMailbox mailbox(gpu_mailbox, sync_token, target);
+  auto resource = viz::TransferableResource::MakeGL(gpu_mailbox, GL_LINEAR,
+                                                    target, sync_token);
 
   viz::ResourceId resource_id =
-      child_resource_provider->CreateResourceFromTextureMailbox(
-          mailbox, std::move(callback));
+      child_resource_provider->ImportResource(resource, std::move(callback));
   EXPECT_NE(0u, resource_id);
   EXPECT_EQ(current_fence_sync, child_context->GetNextFenceSync());
 
@@ -2879,7 +2885,7 @@ TEST_P(ResourceProviderTest, TextureMailbox_GLTextureExternalOES) {
   EXPECT_EQ(1u, returned_to_child.size());
   child_resource_provider->ReceiveReturnsFromParent(returned_to_child);
 
-  child_resource_provider->DeleteResource(resource_id);
+  child_resource_provider->RemoveImportedResource(resource_id);
 }
 
 TEST_P(ResourceProviderTest,
@@ -2913,10 +2919,11 @@ TEST_P(ResourceProviderTest,
   std::unique_ptr<viz::SingleReleaseCallback> callback =
       viz::SingleReleaseCallback::Create(base::Bind(&EmptyReleaseCallback));
 
-  viz::TextureMailbox mailbox(gpu_mailbox, sync_token, target);
+  auto resource = viz::TransferableResource::MakeGL(gpu_mailbox, GL_LINEAR,
+                                                    target, sync_token);
 
-  viz::ResourceId id = resource_provider->CreateResourceFromTextureMailbox(
-      mailbox, std::move(callback));
+  viz::ResourceId id =
+      resource_provider->ImportResource(resource, std::move(callback));
   EXPECT_NE(0u, id);
   EXPECT_EQ(current_fence_sync, context->GetNextFenceSync());
 
@@ -2945,10 +2952,9 @@ TEST_P(ResourceProviderTest, TextureMailbox_WaitSyncTokenIfNeeded_NoSyncToken) {
   auto context_provider = TestContextProvider::Create(std::move(context_owned));
   context_provider->BindToCurrentThread();
 
-  auto resource_provider(std::make_unique<LayerTreeResourceProvider>(
+  auto resource_provider(std::make_unique<DisplayResourceProvider>(
       context_provider.get(), shared_bitmap_manager_.get(),
-      gpu_memory_buffer_manager_.get(), kDelegatedSyncPointsRequired,
-      CreateResourceSettings()));
+      gpu_memory_buffer_manager_.get(), CreateResourceSettings()));
 
   gpu::SyncToken sync_token;
   const GLuint64 current_fence_sync = context->GetNextFenceSync();
@@ -2959,17 +2965,22 @@ TEST_P(ResourceProviderTest, TextureMailbox_WaitSyncTokenIfNeeded_NoSyncToken) {
   EXPECT_CALL(*context, produceTextureDirectCHROMIUM(_, _, _)).Times(0);
   EXPECT_CALL(*context, createAndConsumeTextureCHROMIUM(_, _)).Times(0);
 
+  ReturnCallback return_callback =
+      base::Bind([](const std::vector<viz::ReturnedResource>&) {});
+
+  int child = resource_provider->CreateChild(return_callback);
+
   gpu::Mailbox gpu_mailbox;
   memcpy(gpu_mailbox.name, "Hello world", strlen("Hello world") + 1);
-  std::unique_ptr<viz::SingleReleaseCallback> callback =
-      viz::SingleReleaseCallback::Create(base::Bind(&EmptyReleaseCallback));
+  auto resource = viz::TransferableResource::MakeGL(gpu_mailbox, GL_LINEAR,
+                                                    target, sync_token);
+  resource.id = 11;
+  resource_provider->ReceiveFromChild(child, {resource});
+  viz::ResourceId id =
+      resource_provider->GetChildToParentMap(child).find(resource.id)->second;
 
-  viz::TextureMailbox mailbox(gpu_mailbox, sync_token, target);
-
-  viz::ResourceId id = resource_provider->CreateResourceFromTextureMailbox(
-      mailbox, std::move(callback));
-  EXPECT_NE(0u, id);
   EXPECT_EQ(current_fence_sync, context->GetNextFenceSync());
+  EXPECT_NE(0u, id);
 
   Mock::VerifyAndClearExpectations(context);
 
@@ -3001,14 +3012,14 @@ TEST_P(ResourceProviderTest, TextureMailbox_PrepareSendToParent_NoSyncToken) {
   EXPECT_CALL(*context, produceTextureDirectCHROMIUM(_, _, _)).Times(0);
   EXPECT_CALL(*context, createAndConsumeTextureCHROMIUM(_, _)).Times(0);
 
-  viz::TextureMailbox mailbox(gpu::Mailbox::Generate(), gpu::SyncToken(),
-                              GL_TEXTURE_2D);
+  auto resource = viz::TransferableResource::MakeGL(
+      gpu::Mailbox::Generate(), GL_LINEAR, GL_TEXTURE_2D, gpu::SyncToken());
 
   std::unique_ptr<viz::SingleReleaseCallback> callback =
       viz::SingleReleaseCallback::Create(base::Bind(&EmptyReleaseCallback));
 
-  viz::ResourceId id = resource_provider->CreateResourceFromTextureMailbox(
-      mailbox, std::move(callback));
+  viz::ResourceId id =
+      resource_provider->ImportResource(resource, std::move(callback));
   EXPECT_NE(0u, id);
   Mock::VerifyAndClearExpectations(context);
 
