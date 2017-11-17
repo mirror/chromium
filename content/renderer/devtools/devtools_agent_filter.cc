@@ -8,8 +8,8 @@
 #include "content/child/child_process.h"
 #include "content/common/devtools_messages.h"
 #include "content/renderer/devtools/devtools_agent.h"
+#include "third_party/WebKit/public/core/WebDevToolsAgent.h"
 #include "third_party/WebKit/public/platform/WebString.h"
-#include "third_party/WebKit/public/web/WebDevToolsAgent.h"
 
 using blink::WebDevToolsAgent;
 using blink::WebString;

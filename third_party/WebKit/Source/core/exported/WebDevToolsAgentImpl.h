@@ -41,9 +41,9 @@
 #include "core/inspector/InspectorTracingAgent.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
+#include "public/core/WebDevToolsAgent.h"
 #include "public/platform/WebSize.h"
 #include "public/platform/WebThread.h"
-#include "public/web/WebDevToolsAgent.h"
 
 namespace blink {
 

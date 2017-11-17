@@ -3,4 +3,5 @@ include_rules = [
   # exported.
   "+core/exported",
   "+public/web",
+  "+public/core",
 ]

@@ -71,7 +71,7 @@ include_rules = [
   "+third_party/WebKit/public/platform/modules/serviceworker/service_worker_state.mojom.h",
   "+third_party/WebKit/public/platform/modules/serviceworker/service_worker_stream_handle.mojom.h",
   "+third_party/WebKit/public/web/WebAXEnums.h",
-  "+third_party/WebKit/public/web/WebDeviceEmulationParams.h",
+  "+third_party/WebKit/public/core/WebDeviceEmulationParams.h",
   "+third_party/WebKit/public/web/WebDragStatus.h",
   "+third_party/WebKit/public/web/WebFindOptions.h",
   "+third_party/WebKit/public/web/WebFrameOwnerProperties.h",

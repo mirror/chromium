@@ -37,7 +37,7 @@
 #include "platform/wtf/RefCounted.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/WTFString.h"
-#include "public/web/WebFileChooserParams.h"
+#include "public/core/WebFileChooserParams.h"
 
 namespace blink {
 

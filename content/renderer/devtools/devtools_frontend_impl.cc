@@ -7,8 +7,8 @@
 #include "base/strings/utf_string_conversions.h"
 #include "content/renderer/render_frame_impl.h"
 #include "content/renderer/render_thread_impl.h"
+#include "third_party/WebKit/public/core/WebDevToolsFrontend.h"
 #include "third_party/WebKit/public/platform/WebString.h"
-#include "third_party/WebKit/public/web/WebDevToolsFrontend.h"
 
 namespace content {
 

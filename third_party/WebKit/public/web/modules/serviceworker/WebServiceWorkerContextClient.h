@@ -33,6 +33,7 @@
 
 #include <memory>
 
+#include "public/core/WebDevToolsAgentClient.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebWorkerFetchContext.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerClientsClaimCallbacks.h"
@@ -40,7 +41,6 @@
 #include "public/platform/modules/serviceworker/WebServiceWorkerSkipWaitingCallbacks.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerStreamHandle.h"
 #include "public/platform/modules/serviceworker/service_worker_event_status.mojom-shared.h"
-#include "public/web/WebDevToolsAgentClient.h"
 #include "v8/include/v8.h"
 
 namespace blink {

@@ -38,9 +38,9 @@
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/inspector/DevToolsHost.h"
 #include "core/page/Page.h"
+#include "public/core/WebDevToolsFrontendClient.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebString.h"
-#include "public/web/WebDevToolsFrontendClient.h"
 
 namespace blink {
 

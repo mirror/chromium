@@ -8,7 +8,7 @@
 #include <memory>
 
 #include "content/common/resize_params.h"
-#include "third_party/WebKit/public/web/WebDeviceEmulationParams.h"
+#include "third_party/WebKit/public/core/WebDeviceEmulationParams.h"
 
 namespace gfx {
 class Rect;
