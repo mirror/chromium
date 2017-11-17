@@ -409,11 +409,6 @@ void RenderViewTest::SendWebMouseEvent(
   SendInputEvent(mouse_event);
 }
 
-void RenderViewTest::SendWebGestureEvent(
-    const blink::WebGestureEvent& gesture_event) {
-  SendInputEvent(gesture_event);
-}
-
 gfx::Rect RenderViewTest::GetElementBounds(const std::string& element_id) {
   static constexpr char kGetCoordinatesScript[] =
       "(function() {"
