@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "102ae46a_a2d67810",
+        "filename": "third_party/WebKit/LayoutTests/PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-17T18:42:12Z",
+      "side": 1,
+      "message": "Maybe this bit could be removed now since it\u0027s now explained above.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 78
+      },
+      "revId": "6f95247431a3e46def18730a758e87c40183ae23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9101642_d4736c54",
+        "filename": "third_party/WebKit/Tools/Scripts/check-testharness-expected-pass",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-17T18:42:12Z",
+      "side": 1,
+      "message": "I might say \"run-webkit-tests assumes ...\"",
+      "range": {
+        "startLine": 10,
+        "startChar": 51,
+        "endLine": 10,
+        "endChar": 60
+      },
+      "revId": "6f95247431a3e46def18730a758e87c40183ae23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
