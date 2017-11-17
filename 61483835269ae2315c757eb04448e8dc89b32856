@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6c84ea2b_a775646b",
+        "filename": "chrome/browser/extensions/api/settings_private/prefs_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-17T19:35:18Z",
+      "side": 1,
+      "message": "Per offline discussion this is the \"back door\" to allow the current remoting implementation to cancel active remoting routes.",
+      "parentUuid": "8df769cd_e828b8c9",
+      "revId": "61483835269ae2315c757eb04448e8dc89b32856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e04f0d6d_5a6fbe61",
         "filename": "chrome/browser/profiles/profile.cc",
         "patchSetId": 5

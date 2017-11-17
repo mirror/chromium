@@ -230,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "bf8f3a6b_103a2587",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-17T19:35:18Z",
+      "side": 1,
+      "message": "Got clarity from Derek - the controller is created only when the details view is active, so it\u0027s 1:1 with a route.",
+      "parentUuid": "d435d9c2_d97a0830",
+      "revId": "efbe3bd55f8fdb5113b70cb0b9c2e59c01267b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f53bbd2_6954ab48",
         "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler.cc",
         "patchSetId": 4
