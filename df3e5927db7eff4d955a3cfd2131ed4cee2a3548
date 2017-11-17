@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7783c88_6c6d59bb",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-11-17T10:34:19Z",
+      "side": 1,
+      "message": "Hmm not a huge fan of passing callbacks around, they are super hard to debug because the call stack becomes very generic and also cause the execution flow to constantly ping-pong in and out the callback.\nUnless this is too painful to do what I would do here is returning something similar to an iterator (but without all the craziness of C++ STL iterators).\nSomething like:\n\nPostOrderIterator VisitInDepthFirstPost();\n\nwhere class PostOrderIterator{ \n  Node* Next();  // returns null when the end is reached.\nprivate:\n  std::set\u003cNode*\u003e* visited;\n  std::set\u003cNode*\u003e* path;\n  // whatever other itnernal state.\n}",
+      "range": {
+        "startLine": 124,
+        "startChar": 8,
+        "endLine": 124,
+        "endChar": 60
+      },
+      "revId": "df3e5927db7eff4d955a3cfd2131ed4cee2a3548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
