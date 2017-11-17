@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "631bb52e_652575f9",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-17T21:17:55Z",
+      "side": 1,
+      "message": "nit: Consider improving the formatting with \"using\" keyword.",
+      "range": {
+        "startLine": 244,
+        "startChar": 13,
+        "endLine": 244,
+        "endChar": 20
+      },
+      "revId": "fa1a13c250351d7cc7585dd3f5e1e65870ec7df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
