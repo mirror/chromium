@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8df769cd_e828b8c9",
+        "filename": "chrome/browser/extensions/api/settings_private/prefs_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-17T18:43:46Z",
+      "side": 1,
+      "message": "Is this still required?  I don\u0027t see any extension code that refers to it.",
+      "revId": "61483835269ae2315c757eb04448e8dc89b32856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04f0d6d_5a6fbe61",
+        "filename": "chrome/browser/profiles/profile.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-17T18:43:46Z",
+      "side": 1,
+      "message": "Per discussion w/PM let\u0027s make this non-syncable to allow per-device customization.",
+      "revId": "61483835269ae2315c757eb04448e8dc89b32856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

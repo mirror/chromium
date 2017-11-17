@@ -69,6 +69,24 @@
       "revId": "46a70a45442191313f1f471d7f27538709cc9ad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5b3c3a_a3a1d576",
+        "filename": "chrome/common/media_router/mojo/media_status.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-17T18:43:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7b9bc810_a2ca2e6f",
+      "revId": "46a70a45442191313f1f471d7f27538709cc9ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
