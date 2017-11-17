@@ -199,21 +199,15 @@ class MediaEngagementContentsObserverTest
         {Entry::kEngagement_IsHighName, high_score},
     };
 
-    const ukm::UkmSource* source =
-        test_ukm_recorder_.GetSourceForUrl(url.spec().c_str());
-    EXPECT_EQ(url, source->url());
-    EXPECT_EQ(1, test_ukm_recorder_.CountEntries(*source, Entry::kEntryName));
-    test_ukm_recorder_.ExpectMetric(*source, Entry::kEntryName,
-                                    Entry::kVisits_TotalName, visits_total);
-    test_ukm_recorder_.ExpectMetric(*source, Entry::kEntryName,
-                                    Entry::kPlaybacks_TotalName,
-                                    playbacks_total);
-    test_ukm_recorder_.ExpectMetric(*source, Entry::kEntryName,
-                                    Entry::kEngagement_ScoreName, score);
-    test_ukm_recorder_.ExpectMetric(*source, Entry::kEntryName,
-                                    Entry::kPlaybacks_DeltaName,
-                                    playbacks_delta);
-    test_ukm_recorder_.ExpectEntry(*source, Entry::kEntryName, metrics);
+    auto entries = test_ukm_recorder_.GetEntriesByName(Entry::kEntryName);
+    EXPECT_EQ(1u, entries.size());
+    for (const auto* const entry : entries) {
+      test_ukm_recorder_.ExpectEntrySourceHasUrl(entry, url);
+      for (const auto& metric : metrics) {
+        test_ukm_recorder_.ExpectEntryMetric(entry, metric.first,
+                                             metric.second);
+      }
+    }
   }
 
   void ExpectNoUkmEntry() { EXPECT_FALSE(test_ukm_recorder_.sources_count()); }
