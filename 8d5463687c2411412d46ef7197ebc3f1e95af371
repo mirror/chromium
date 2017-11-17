@@ -79,6 +79,24 @@
       "revId": "8d5463687c2411412d46ef7197ebc3f1e95af371",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e174ed_edb5082a",
+        "filename": "ui/events/x/events_x.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-17T15:59:20Z",
+      "side": 1,
+      "message": "I think this addresses Sadrul\u0027s concern in events_x_utils.",
+      "parentUuid": "bbf67bfc_e5f16ffc",
+      "revId": "8d5463687c2411412d46ef7197ebc3f1e95af371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
