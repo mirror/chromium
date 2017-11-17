@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4cee1547_704942ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkOfflineDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-17T15:42:15Z",
+      "side": 1,
+      "message": "When you rename the class, you should also rename the string resources :)\n\nWe should maybe have a different message for WebAPKs and for TWAs/Webapps. My understanding is that a developer can create a TWA with no service worker.\n\nMy opinion is that the message should be:\n\n\"To use \u003cph name\u003d\"APP_NAME\"\u003e%1$s\u003cex\u003ePWA List\u003c/ex\u003e\u003c/ph\u003e, please connect to the internet.\" for webapps/TWAs\n\nand\n\n\"To use \u003cph name\u003d\"APP_NAME\"\u003e%1$s\u003cex\u003ePWA List\u003c/ex\u003e\u003c/ph\u003e for the first time, please connect to the internet.\" for WebAPKs\n\nDepending on what the dialog says, I think that showing the dialog does not hurt for regular (non-TWA) webapps",
+      "revId": "a0b4102bf7371aa5463953dab87d6df809c056be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "148a69e9_d9b84292",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 1
