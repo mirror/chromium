@@ -15,6 +15,7 @@
 #include "content/browser/frame_host/navigation_entry_impl.h"
 #include "content/browser/loader/navigation_url_loader_delegate.h"
 #include "content/common/content_export.h"
+#include "content/common/frame.mojom.h"
 #include "content/common/frame_message_enums.h"
 #include "content/common/navigation_params.h"
 #include "content/common/navigation_subresource_loader_params.h"
@@ -206,6 +207,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
       const net::RedirectInfo& redirect_info,
       const scoped_refptr<ResourceResponse>& response) override;
   void OnResponseStarted(const scoped_refptr<ResourceResponse>& response,
+                         mojom::URLLoaderPtr url_loader,
+                         mojom::URLLoaderClientRequest url_loader_client,
                          std::unique_ptr<StreamHandle> body,
                          mojo::ScopedDataPipeConsumerHandle consumer_handle,
                          const SSLStatus& ssl_status,
@@ -230,7 +233,7 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
                                bool skip_throttles);
 
   // Called when the NavigationThrottles have been checked by the
-  // NavigationHandle.
+  // NavigationHandle.j
   void OnStartChecksComplete(NavigationThrottle::ThrottleCheckResult result);
   void OnRedirectChecksComplete(NavigationThrottle::ThrottleCheckResult result);
   void OnFailureChecksComplete(RenderFrameHostImpl* render_frame_host,
@@ -247,6 +250,17 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   // Have a RenderFrameHost commit the navigation. The NavigationRequest will
   // be destroyed after this call.
   void CommitNavigation();
+
+  // When the navigation is ready to commit, this function moves the appropriate
+  // members into a new MainresourceLoaderParams. That will be used in the
+  // renderer process to continue a navigation (i.e. fetch the response's body).
+  // * If the Network Service is enabled, |handle_| is moved.
+  // * If NavigationMojoResponse is enabled, |url_loader_| and
+  //   |url_loader_client_| are moved.
+  // * In the other cases, nothing is moved and this function returns a null
+  //   MainResourceLoaderParamsPtr. |body_| is used instead to get fetch the
+  //   response's body.
+  mojom::MainResourceLoaderParamsPtr TakeMainResourceLoaderParams();
 
   // Check whether a request should be allowed to continue or should be blocked
   // because it violates a CSP. This method can have two side effects:
@@ -332,11 +346,17 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
 
   std::unique_ptr<NavigationHandleImpl> navigation_handle_;
 
-  // Holds the ResourceResponse and the StreamHandle (or
-  // DataPipeConsumerHandle) for the navigation while the WillProcessResponse
-  // checks are performed by the NavigationHandle.
+  // Holds objects used to continue a navigation while the WillProcessResponse
+  // checks are performed by the NavigationHandle. That's the ones received from
+  // OnResponseStarted(...).
+  // Note: The ScopedDataPipeConsumerHandle is only used when the network
+  // service is enabled. Otherwise if NavigationMojoResponse is enabled, the
+  // URLLoaderPtr / URLLoaderClientRequest pair is used. In the other cases, the
+  // StreamHandle is used.
   scoped_refptr<ResourceResponse> response_;
   std::unique_ptr<StreamHandle> body_;
+  mojom::URLLoaderPtr url_loader_;
+  mojom::URLLoaderClientRequest url_loader_client_;
   mojo::ScopedDataPipeConsumerHandle handle_;
   SSLStatus ssl_status_;
   bool is_download_;
