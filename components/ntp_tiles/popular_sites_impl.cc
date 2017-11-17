@@ -195,11 +195,9 @@ std::map<SectionType, PopularSites::SitesVector> ParseVersion6OrAbove(
 std::map<SectionType, PopularSites::SitesVector> ParseSites(
     const base::ListValue& list,
     int version) {
-  if (version >= kSitesExplorationStartVersion) {
+  if (version >= kSitesExplorationStartVersion)
     return ParseVersion6OrAbove(list);
-  } else {
-    return ParseVersion5(list);
-  }
+  return ParseVersion5(list);
 }
 
 #if defined(GOOGLE_CHROME_BUILD) && (defined(OS_ANDROID) || defined(OS_IOS))
