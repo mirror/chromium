@@ -46,6 +46,30 @@
       "revId": "28ef64c58c011d161214b09e4d6bcfbd20cbe22f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3733eea5_9bc77c07",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_broadcast_forwarder.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-11-17T22:35:47Z",
+      "side": 1,
+      "message": "I rebased this onto the FullscreenModel CL, so you have a better idea of how this class is used.  It might be worthwhile to just create a bridge class anyway, though.",
+      "parentUuid": "b273f6d6_873e0fe7",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "28ef64c58c011d161214b09e4d6bcfbd20cbe22f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
