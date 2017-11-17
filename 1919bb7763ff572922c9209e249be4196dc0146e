@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ce33d46_cb467afb",
+        "filename": "components/ukm/test_ukm_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-17T20:00:29Z",
+      "side": 1,
+      "message": "Nit: Can you add a // TODO(stevet): crbug.com/XXXX to remove these.\n\n(File the crbug if it doesn\u0027t exist.)",
+      "range": {
+        "startLine": 70,
+        "startChar": 45,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "1919bb7763ff572922c9209e249be4196dc0146e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
