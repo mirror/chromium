@@ -46,6 +46,30 @@
       "revId": "cd14904afde6decd3a8e5848b966fee921b75654",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef045ca5_8cd243d0",
+        "filename": "content/browser/webui/web_ui_data_source_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T00:53:15Z",
+      "side": 1,
+      "message": "I think you meant for this comment thread to be down below on UseGzip()?\n\nI don\u0027t know if I understood either of your comments here, but if I read them right, they\u0027re saying the same thing I would have said: we\u0027re putting these items right back into an unordered set, so that will de-dupe them just as effectively; and this is the one implementation of UseGzip(), so we can rely on that.  (Also, from auditing callers, I don\u0027t think anybody actually creates dupes to begin with.)",
+      "parentUuid": "2ed4959a_16afa74f",
+      "range": {
+        "startLine": 161,
+        "startChar": 18,
+        "endLine": 161,
+        "endChar": 24
+      },
+      "revId": "cd14904afde6decd3a8e5848b966fee921b75654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
