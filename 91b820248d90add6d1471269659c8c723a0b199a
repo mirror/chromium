@@ -16,6 +16,24 @@
       "revId": "91b820248d90add6d1471269659c8c723a0b199a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c667eacd_70d12adb",
+        "filename": "ios/clean/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-17T10:25:31Z",
+      "side": 0,
+      "message": "Yes, I\u0027ve captured it in the architecture doc I\u0027m working on.",
+      "parentUuid": "1ab15325_fe150a3c",
+      "revId": "91b820248d90add6d1471269659c8c723a0b199a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
