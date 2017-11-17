@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e23fc486_955b2beb",
+        "filename": "components/omnibox/browser/autocomplete_match_type.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-11-17T19:13:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "245b730e_38089677",
+      "range": {
+        "startLine": 70,
+        "startChar": 20,
+        "endLine": 70,
+        "endChar": 36
+      },
+      "revId": "dbdae4ba72203d48c0bc535d0deb4b489d767d2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdd4531b_c5ba833c",
         "filename": "components/omnibox_strings.grdp",
         "patchSetId": 9
@@ -39,6 +63,24 @@
       "revId": "dbdae4ba72203d48c0bc535d0deb4b489d767d2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f3e5a4_6628bfbb",
+        "filename": "components/omnibox_strings.grdp",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-11-17T19:13:10Z",
+      "side": 1,
+      "message": "This will be used for other platforms in the future, so I made the description more general.",
+      "parentUuid": "cdd4531b_c5ba833c",
+      "revId": "dbdae4ba72203d48c0bc535d0deb4b489d767d2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
