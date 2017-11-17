@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3debe84f_6966be33",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-17T02:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e046594d_e84f7246",
+      "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b859b345_0dd29c83",
         "filename": "components/exo/keyboard.h",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7958a108_5cffc70b",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-17T02:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b859b345_0dd29c83",
+      "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c703b8f6_65bc5ae3",
         "filename": "components/exo/seat.cc",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0c5fd8_1453bac9",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-17T02:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c703b8f6_65bc5ae3",
+      "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "afdc2c45_d4207b94",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-17T02:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd2c06aa_d809b537",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 26
+      },
+      "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3223bc3e_d0d13fff",
         "filename": "components/exo/seat.h",
         "patchSetId": 4
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "7a5f9ee2_38b471db",
+        "filename": "components/exo/seat.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-17T02:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3223bc3e_d0d13fff",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 80
+      },
+      "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11fedc8e_557847ed",
         "filename": "components/exo/seat_observer.h",
         "patchSetId": 4
@@ -113,6 +215,24 @@
       "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41026dcd_e68db5ed",
+        "filename": "components/exo/seat_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-17T02:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11fedc8e_557847ed",
+      "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "9848a4cb_b65f6be2",
+        "filename": "components/exo/seat_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-17T02:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d30a941a_9c7ec684",
+      "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19eb9b29_42d0c8d5",
         "filename": "components/exo/seat_observer.h",
         "patchSetId": 4
@@ -147,6 +285,24 @@
       "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e67316_188eb826",
+        "filename": "components/exo/seat_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-17T02:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19eb9b29_42d0c8d5",
+      "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "bc6b39b5_5883a4a6",
+        "filename": "components/exo/seat_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-17T02:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24a59924_eb598c63",
+      "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffe49afe_7dbf0f15",
         "filename": "components/exo/seat_unittest.cc",
         "patchSetId": 4
@@ -181,6 +355,24 @@
       "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5afb54e8_4ba1043f",
+        "filename": "components/exo/seat_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-17T02:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffe49afe_7dbf0f15",
+      "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -230,6 +422,54 @@
     },
     {
       "key": {
+        "uuid": "d83172e6_fb47e403",
+        "filename": "components/exo/seat_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-17T02:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d21253c_0d9d885e",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb1f2f58_33dea3eb",
+        "filename": "components/exo/seat_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-17T02:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae076807_11838393",
+      "range": {
+        "startLine": 21,
+        "startChar": 15,
+        "endLine": 21,
+        "endChar": 38
+      },
+      "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "371fa2db_e18eddf2",
         "filename": "components/exo/seat_unittest.cc",
         "patchSetId": 4
@@ -250,6 +490,30 @@
       "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c2abed_3c392755",
+        "filename": "components/exo/seat_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-17T02:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "371fa2db_e18eddf2",
+      "range": {
+        "startLine": 23,
+        "startChar": 21,
+        "endLine": 23,
+        "endChar": 29
+      },
+      "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -276,6 +540,30 @@
     },
     {
       "key": {
+        "uuid": "807ea5f5_5ff960aa",
+        "filename": "components/exo/seat_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-17T02:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f89f67be_5724609f",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 14
+      },
+      "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebb9e741_dca74e73",
         "filename": "components/exo/seat_unittest.cc",
         "patchSetId": 4
@@ -296,6 +584,30 @@
       "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1abafc3_46a986ae",
+        "filename": "components/exo/seat_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-17T02:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebb9e741_dca74e73",
+      "range": {
+        "startLine": 32,
+        "startChar": 17,
+        "endLine": 32,
+        "endChar": 22
+      },
+      "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -322,6 +634,30 @@
     },
     {
       "key": {
+        "uuid": "f051b0ce_2b0ffcd7",
+        "filename": "components/exo/seat_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-17T02:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c1ded87_d3a6a589",
+      "range": {
+        "startLine": 39,
+        "startChar": 42,
+        "endLine": 39,
+        "endChar": 50
+      },
+      "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1bedf64_29c094fc",
         "filename": "components/exo/wayland/server_unittest.cc",
         "patchSetId": 4
@@ -333,6 +669,24 @@
       "writtenOn": "2017-11-16T06:19:54Z",
       "side": 1,
       "message": "changes to this file are fine but how are they related?",
+      "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f837d2_b9fd8eba",
+        "filename": "components/exo/wayland/server_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-17T02:36:22Z",
+      "side": 1,
+      "message": "Previously aura::client::FocusChangeObserver is registered at Keyboard constructor, thus we don\u0027t need FocusClient for the test.\n\nNow aura::client::FocusChangeObserver is registered at Seat constructor, which is instantiated when Display is instantiated. Thus we need to use ExoTestBase to provides Ash support in the test.",
+      "parentUuid": "f1bedf64_29c094fc",
       "revId": "c3b44b60357d293124666f19cc5ca3c7afcefe66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
