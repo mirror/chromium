@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5bb4f7a_14618049",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-17T18:13:31Z",
+      "side": 0,
+      "message": "Where is this going? The TabLifetimeUnitImpl SortKey looks like it\u0027s only using the last focused time. (We still want to sort by things like is_internal_page, right?)\n\nI know this is just a draft, but was this dropped intentionally?",
+      "range": {
+        "startLine": 541,
+        "startChar": 17,
+        "endLine": 541,
+        "endChar": 32
+      },
+      "revId": "31868cc6fa424d7f7dc21e9721c8f3109c194e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
