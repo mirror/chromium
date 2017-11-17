@@ -113,7 +113,7 @@ class TestVariationsService : public VariationsService {
     // Set this so StartRepeatedVariationsSeedFetch can be called in tests.
     SetCreateTrialsFromSeedCalledForTesting(true);
     set_variations_server_url(
-        GetVariationsServerURL(local_state, std::string()));
+        GetVariationsServerURL(local_state, std::string(), true));
   }
 
   ~TestVariationsService() override {}
@@ -314,13 +314,13 @@ TEST_F(VariationsServiceTest, GetVariationsServerURL) {
       std::move(client),
       base::MakeUnique<web_resource::TestRequestAllowedNotifier>(&prefs_),
       &prefs_, GetMetricsStateManager(), UIStringOverrider());
-  GURL url = service.GetVariationsServerURL(&prefs_, std::string());
+  GURL url = service.GetVariationsServerURL(&prefs_, std::string(), true);
   EXPECT_TRUE(base::StartsWith(url.spec(), default_variations_url,
                                base::CompareCase::SENSITIVE));
   EXPECT_FALSE(net::GetValueForKeyInQuery(url, "restrict", &value));
 
   prefs_.SetString(prefs::kVariationsRestrictParameter, "restricted");
-  url = service.GetVariationsServerURL(&prefs_, std::string());
+  url = service.GetVariationsServerURL(&prefs_, std::string(), true);
   EXPECT_TRUE(base::StartsWith(url.spec(), default_variations_url,
                                base::CompareCase::SENSITIVE));
   EXPECT_TRUE(net::GetValueForKeyInQuery(url, "restrict", &value));
@@ -328,7 +328,7 @@ TEST_F(VariationsServiceTest, GetVariationsServerURL) {
 
   // A client override should take precedence over what's in prefs_.
   raw_client->set_restrict_parameter("client");
-  url = service.GetVariationsServerURL(&prefs_, std::string());
+  url = service.GetVariationsServerURL(&prefs_, std::string(), true);
   EXPECT_TRUE(base::StartsWith(url.spec(), default_variations_url,
                                base::CompareCase::SENSITIVE));
   EXPECT_TRUE(net::GetValueForKeyInQuery(url, "restrict", &value));
@@ -336,7 +336,7 @@ TEST_F(VariationsServiceTest, GetVariationsServerURL) {
 
   // The override value passed to the method should take precedence over
   // what's in prefs_ and a client override.
-  url = service.GetVariationsServerURL(&prefs_, "override");
+  url = service.GetVariationsServerURL(&prefs_, "override", true);
   EXPECT_TRUE(base::StartsWith(url.spec(), default_variations_url,
                                base::CompareCase::SENSITIVE));
   EXPECT_TRUE(net::GetValueForKeyInQuery(url, "restrict", &value));
@@ -352,7 +352,7 @@ TEST_F(VariationsServiceTest, VariationsURLHasParams) {
       base::MakeUnique<web_resource::TestRequestAllowedNotifier>(&prefs_),
       &prefs_, GetMetricsStateManager(), UIStringOverrider());
   raw_client->set_channel(version_info::Channel::UNKNOWN);
-  GURL url = service.GetVariationsServerURL(&prefs_, std::string());
+  GURL url = service.GetVariationsServerURL(&prefs_, std::string(), true);
 
   std::string value;
   EXPECT_TRUE(net::GetValueForKeyInQuery(url, "osname", &value));
@@ -368,7 +368,7 @@ TEST_F(VariationsServiceTest, VariationsURLHasParams) {
   EXPECT_TRUE(channel.empty());
 
   raw_client->set_channel(version_info::Channel::STABLE);
-  url = service.GetVariationsServerURL(&prefs_, std::string());
+  url = service.GetVariationsServerURL(&prefs_, std::string(), true);
   EXPECT_TRUE(net::GetValueForKeyInQuery(url, "channel", &channel));
   EXPECT_FALSE(channel.empty());
 }

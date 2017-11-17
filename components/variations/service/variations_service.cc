@@ -10,6 +10,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/base64.h"
 #include "base/base_switches.h"
 #include "base/build_time.h"
 #include "base/command_line.h"
@@ -27,6 +28,8 @@
 #include "base/version.h"
 #include "build/build_config.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
+#include "components/encrypted_messages/encrypted_message.pb.h"
+#include "components/encrypted_messages/message_encrypter.h"
 #include "components/metrics/metrics_state_manager.h"
 #include "components/network_time/network_time_tracker.h"
 #include "components/pref_registry/pref_registry_syncable.h"
@@ -55,6 +58,20 @@
 
 namespace variations {
 namespace {
+
+const base::Feature kFinchRetryFeature{"FinchHttpRetry",
+                                       base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Constants used for encrypting the if-none-match header if we are retrieving a
+// seed over http.
+char kEncryptedMessageLabel[] = "finch variations";
+
+static const uint8_t kServerPublicKey[] = {
+    0x51, 0xcc, 0x52, 0x67, 0x42, 0x47, 0x3b, 0x10, 0xe8, 0x63, 0x18,
+    0x3c, 0x61, 0xa7, 0x96, 0x76, 0x86, 0x91, 0x40, 0x71, 0x39, 0x5f,
+    0x31, 0x1a, 0x39, 0x5b, 0x76, 0xb1, 0x6b, 0x3d, 0x6a, 0x2b};
+
+static const uint32_t kServerPublicKeyVersion = 1;
 
 // TODO(mad): To be removed when we stop updating the NetworkTimeTracker.
 // For the HTTP date headers, the resolution of the server time is 1 second.
@@ -287,6 +304,18 @@ std::string VariationsService::LoadPermanentConsistencyCountry(
                                                               latest_country);
 }
 
+bool VariationsService::EncryptString(const std::string& plaintext,
+                                      std::string* encrypted) {
+  encrypted_messages::EncryptedMessage encrypted_message;
+  if (!encrypted_messages::EncryptSerializedMessage(
+          kServerPublicKey, kServerPublicKeyVersion, kEncryptedMessageLabel,
+          plaintext, &encrypted_message) ||
+      !encrypted_message.SerializeToString(encrypted)) {
+    return false;
+  }
+  return true;
+}
+
 void VariationsService::AddObserver(Observer* observer) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   observer_list_.AddObserver(observer);
@@ -325,24 +354,25 @@ void VariationsService::SetCreateTrialsFromSeedCalledForTesting(bool called) {
 
 GURL VariationsService::GetVariationsServerURL(
     PrefService* policy_pref_service,
-    const std::string& restrict_mode_override) {
+    const std::string& restrict_mode_override,
+    bool secure) {
   std::string server_url_string(
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          switches::kVariationsServerURL));
+          secure ? switches::kVariationsServerURL
+                 : switches::kVariationsServerInsecureURL));
   if (server_url_string.empty())
-    server_url_string = kDefaultServerUrl;
+    server_url_string = secure ? kDefaultServerUrl : kDefaultInsecureServerUrl;
   GURL server_url = GURL(server_url_string);
-
-  const std::string restrict_param =
-      !restrict_mode_override.empty()
-          ? restrict_mode_override
-          : GetRestrictParameterPref(client_.get(), policy_pref_service);
-  if (!restrict_param.empty()) {
-    server_url = net::AppendOrReplaceQueryParameter(server_url,
-                                                    "restrict",
-                                                    restrict_param);
+  if (secure) {
+    const std::string restrict_param =
+        !restrict_mode_override.empty()
+            ? restrict_mode_override
+            : GetRestrictParameterPref(client_.get(), policy_pref_service);
+    if (!restrict_param.empty()) {
+      server_url = net::AppendOrReplaceQueryParameter(server_url, "restrict",
+                                                      restrict_param);
+    }
   }
-
   server_url = net::AppendOrReplaceQueryParameter(server_url, "osname",
                                                   GetPlatformString());
 
@@ -361,6 +391,7 @@ GURL VariationsService::GetVariationsServerURL(
     server_url = net::AppendOrReplaceQueryParameter(server_url, "milestone",
                                                     version_parts[0]);
   }
+
   DCHECK(server_url.is_valid());
   return server_url;
 }
@@ -419,6 +450,40 @@ void VariationsService::EnableForTesting() {
 }
 
 void VariationsService::DoActualFetch() {
+  DoFetchToURL(variations_server_url_);
+}
+
+bool VariationsService::StoreSeed(const std::string& seed_data,
+                                  const std::string& seed_signature,
+                                  const std::string& country_code,
+                                  const base::Time& date_fetched,
+                                  bool is_delta_compressed,
+                                  bool is_gzip_compressed) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  std::unique_ptr<VariationsSeed> seed(new VariationsSeed);
+  if (!field_trial_creator_.seed_store().StoreSeedData(
+          seed_data, seed_signature, country_code, date_fetched,
+          is_delta_compressed, is_gzip_compressed, seed.get())) {
+    return false;
+  }
+
+  RecordSuccessfulFetch();
+
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
+      client_->GetVersionForSimulationCallback(),
+      base::Bind(&VariationsService::PerformSimulationWithVersion,
+                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&seed)));
+  return true;
+}
+
+std::unique_ptr<const base::FieldTrial::EntropyProvider>
+VariationsService::CreateLowEntropyProvider() {
+  return state_manager_->CreateLowEntropyProvider();
+}
+
+void VariationsService::DoFetchToURL(GURL url) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(IsFetchingEnabled());
 
@@ -455,9 +520,8 @@ void VariationsService::DoActualFetch() {
           policy_exception_justification:
             "Not implemented, considered not required."
         })");
-  pending_seed_request_ =
-      net::URLFetcher::Create(0, variations_server_url_, net::URLFetcher::GET,
-                              this, traffic_annotation);
+  pending_seed_request_ = net::URLFetcher::Create(0, url, net::URLFetcher::GET,
+                                                  this, traffic_annotation);
   data_use_measurement::DataUseUserData::AttachToFetcher(
       pending_seed_request_.get(),
       data_use_measurement::DataUseUserData::VARIATIONS);
@@ -470,11 +534,23 @@ void VariationsService::DoActualFetch() {
       !disable_deltas_for_next_request_) {
     // Tell the server that delta-compressed seeds are supported.
     enable_deltas = true;
-
     // Get the seed only if its serial number doesn't match what we have.
-    pending_seed_request_->AddExtraRequestHeader(
-        "If-None-Match:" +
-        field_trial_creator_.seed_store().variations_serial_number());
+    // If the fetch is being done over HTTP, encrypt the If-None-Match header.
+    if (!url.SchemeIs(url::kHttpsScheme) &&
+        base::FeatureList::IsEnabled(kFinchRetryFeature)) {
+      std::string encrypted_sn;
+      std::string encoded_sn;
+      EncryptString(
+          field_trial_creator_.seed_store().variations_serial_number(),
+          &encrypted_sn);
+      base::Base64Encode(encrypted_sn, &encoded_sn);
+      pending_seed_request_->AddExtraRequestHeader("If-None-Match:" +
+                                                   encoded_sn);
+    } else {
+      pending_seed_request_->AddExtraRequestHeader(
+          "If-None-Match:" +
+          field_trial_creator_.seed_store().variations_serial_number());
+    }
   }
   // Tell the server that delta-compressed and gzipped seeds are supported.
   const char* supported_im = enable_deltas ? "A-IM:x-bm,gzip" : "A-IM:gzip";
@@ -496,42 +572,16 @@ void VariationsService::DoActualFetch() {
   disable_deltas_for_next_request_ = false;
 }
 
-bool VariationsService::StoreSeed(const std::string& seed_data,
-                                  const std::string& seed_signature,
-                                  const std::string& country_code,
-                                  const base::Time& date_fetched,
-                                  bool is_delta_compressed,
-                                  bool is_gzip_compressed) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-
-  std::unique_ptr<VariationsSeed> seed(new VariationsSeed);
-  if (!field_trial_creator_.seed_store().StoreSeedData(
-          seed_data, seed_signature, country_code, date_fetched,
-          is_delta_compressed, is_gzip_compressed, seed.get())) {
-    return false;
-  }
-
-  RecordSuccessfulFetch();
-
-  base::PostTaskWithTraitsAndReplyWithResult(
-      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      client_->GetVersionForSimulationCallback(),
-      base::Bind(&VariationsService::PerformSimulationWithVersion,
-                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&seed)));
-  return true;
-}
-
-std::unique_ptr<const base::FieldTrial::EntropyProvider>
-VariationsService::CreateLowEntropyProvider() {
-  return state_manager_->CreateLowEntropyProvider();
-}
-
 void VariationsService::StartRepeatedVariationsSeedFetch() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   // Initialize the Variations server URL.
-  variations_server_url_ =
-      GetVariationsServerURL(policy_pref_service_, restrict_mode_);
+  variations_server_url_ = GetVariationsServerURL(
+      policy_pref_service_, restrict_mode_, true /*secure*/);
+
+  // Initialize the fallback HTTP URL.
+  insecure_variations_server_url_ = GetVariationsServerURL(
+      policy_pref_service_, restrict_mode_, false /*secure*/);
 
   // Check that |CreateTrialsFromSeed| was called, which is necessary to
   // retrieve the serial number that will be sent to the server.
@@ -586,6 +636,7 @@ void VariationsService::OnURLFetchComplete(const net::URLFetcher* source) {
       pending_seed_request_.release());
   const net::URLRequestStatus& status = request->GetStatus();
   const int response_code = request->GetResponseCode();
+  // TODO(carlosil): Separate this histogram into http and https.
   UMA_HISTOGRAM_SPARSE_SLOWLY(
       "Variations.SeedFetchResponseOrErrorCode",
       status.is_success() ? response_code : status.error());
@@ -593,6 +644,15 @@ void VariationsService::OnURLFetchComplete(const net::URLFetcher* source) {
   if (status.status() != net::URLRequestStatus::SUCCESS) {
     DVLOG(1) << "Variations server request failed with error: "
              << status.error() << ": " << net::ErrorToString(status.error());
+    // If the current fetch attempt was over an HTTPS connection, retry the
+    // fetch immediately over an HTTP connection.
+    // Currently we only do this if if the 'FinchHttpRetry' feature is enabled.
+    if (request->GetURL().SchemeIs(url::kHttpsScheme) &&
+        !insecure_variations_server_url_.is_empty() &&
+        base::FeatureList::IsEnabled(kFinchRetryFeature)) {
+      DoFetchToURL(insecure_variations_server_url_);
+      return;
+    }
     // It's common for the very first fetch attempt to fail (e.g. the network
     // may not yet be available). In such a case, try again soon, rather than
     // waiting the full time interval.

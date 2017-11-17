@@ -110,9 +110,11 @@ class VariationsService
 
   // Returns the variations server URL, which can vary if a command-line flag is
   // set and/or the variations restrict pref is set in |local_prefs|. Declared
-  // static for test purposes.
+  // static for test purposes. If |secure| is set, returns the HTTPS URL, else
+  // returns the HTTP URL.
   GURL GetVariationsServerURL(PrefService* local_prefs,
-                              const std::string& restrict_mode_override);
+                              const std::string& restrict_mode_overrided,
+                              bool secure);
 
   // Returns the permanent country code stored for this client. Country code is
   // in the format of lowercase ISO 3166-1 alpha-2. Example: us, br, in
@@ -171,7 +173,7 @@ class VariationsService
 
  protected:
   // Starts the fetching process once, where |OnURLFetchComplete| is called with
-  // the response.
+  // the response. This calls DoFetchToURL with the set url.
   virtual void DoActualFetch();
 
   // Stores the seed to prefs. Set as virtual and protected so that it can be
@@ -239,6 +241,9 @@ class VariationsService
     LOAD_COUNTRY_MAX,
   };
 
+  // Attempts a seed fetch from the set |url|.
+  void DoFetchToURL(GURL url);
+
   // Calls FetchVariationsSeed once and repeats this periodically. See
   // implementation for details on the period. Must be called after
   // |CreateTrialsFromSeed|.
@@ -268,6 +273,11 @@ class VariationsService
   //   (1) Resets failure streaks for Safe Mode.
   //   (2) Records the time of this fetch as the most recent successful fetch.
   void RecordSuccessfulFetch();
+
+  // Encrypts a string using the encrypted_messages component, input is passed
+  // in as |plaintext|, outputs a serialized EncryptedMessage protobuf as
+  // |encrypted|. Returns true on success, false on failure.
+  bool EncryptString(const std::string& plaintext, std::string* encrypted);
 
   // Loads the country code to use for filtering permanent consistency studies,
   // updating the stored country code if the stored value was for a different
@@ -307,6 +317,9 @@ class VariationsService
 
   // The URL to use for querying the variations server.
   GURL variations_server_url_;
+
+  // HTTP URL used as a fallback if HTTPS fetches fail.
+  GURL insecure_variations_server_url_;
 
   // Tracks whether the initial request to the variations server had completed.
   bool initial_request_completed_;
