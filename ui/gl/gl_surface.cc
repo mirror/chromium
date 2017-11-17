@@ -77,13 +77,16 @@ void GLSurface::SwapBuffersAsync(const SwapCompletionCallback& callback) {
   NOTREACHED();
 }
 
-gfx::SwapResult GLSurface::SwapBuffersWithBounds(
+gfx::SwapResponse GLSurface::SwapBuffersWithBounds(
     const std::vector<gfx::Rect>& rects) {
-  return gfx::SwapResult::SWAP_FAILED;
+  return gfx::SwapResponse(base::TimeTicks::Now());
 }
 
-gfx::SwapResult GLSurface::PostSubBuffer(int x, int y, int width, int height) {
-  return gfx::SwapResult::SWAP_FAILED;
+gfx::SwapResponse GLSurface::PostSubBuffer(int x,
+                                           int y,
+                                           int width,
+                                           int height) {
+  return gfx::SwapResponse(base::TimeTicks::Now());
 }
 
 void GLSurface::PostSubBufferAsync(int x,
@@ -94,9 +97,9 @@ void GLSurface::PostSubBufferAsync(int x,
   NOTREACHED();
 }
 
-gfx::SwapResult GLSurface::CommitOverlayPlanes() {
+gfx::SwapResponse GLSurface::CommitOverlayPlanes() {
   NOTREACHED();
-  return gfx::SwapResult::SWAP_FAILED;
+  return gfx::SwapResponse(base::TimeTicks::Now());
 }
 
 void GLSurface::CommitOverlayPlanesAsync(
@@ -268,7 +271,7 @@ bool GLSurfaceAdapter::IsOffscreen() {
   return surface_->IsOffscreen();
 }
 
-gfx::SwapResult GLSurfaceAdapter::SwapBuffers() {
+gfx::SwapResponse GLSurfaceAdapter::SwapBuffers() {
   return surface_->SwapBuffers();
 }
 
@@ -277,15 +280,15 @@ void GLSurfaceAdapter::SwapBuffersAsync(
   surface_->SwapBuffersAsync(callback);
 }
 
-gfx::SwapResult GLSurfaceAdapter::SwapBuffersWithBounds(
+gfx::SwapResponse GLSurfaceAdapter::SwapBuffersWithBounds(
     const std::vector<gfx::Rect>& rects) {
   return surface_->SwapBuffersWithBounds(rects);
 }
 
-gfx::SwapResult GLSurfaceAdapter::PostSubBuffer(int x,
-                                                int y,
-                                                int width,
-                                                int height) {
+gfx::SwapResponse GLSurfaceAdapter::PostSubBuffer(int x,
+                                                  int y,
+                                                  int width,
+                                                  int height) {
   return surface_->PostSubBuffer(x, y, width, height);
 }
 
@@ -298,7 +301,7 @@ void GLSurfaceAdapter::PostSubBufferAsync(
   surface_->PostSubBufferAsync(x, y, width, height, callback);
 }
 
-gfx::SwapResult GLSurfaceAdapter::CommitOverlayPlanes() {
+gfx::SwapResponse GLSurfaceAdapter::CommitOverlayPlanes() {
   return surface_->CommitOverlayPlanes();
 }
 

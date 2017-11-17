@@ -1030,14 +1030,16 @@ bool NativeViewGLSurfaceEGL::IsOffscreen() {
   return false;
 }
 
-gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffers() {
+gfx::SwapResponse NativeViewGLSurfaceEGL::SwapBuffers() {
   TRACE_EVENT2("gpu", "NativeViewGLSurfaceEGL:RealSwapBuffers",
       "width", GetSize().width(),
       "height", GetSize().height());
+  gfx::SwapResponse response(base::TimeTicks::Now());
 
   if (!CommitAndClearPendingOverlays()) {
     DVLOG(1) << "Failed to commit pending overlay planes.";
-    return gfx::SwapResult::SWAP_FAILED;
+    return response.Finalize(base::TimeTicks::Now(),
+                             gfx::SwapResult::SWAP_FAILED);
   }
 
   EGLuint64KHR newFrameId = 0;
@@ -1050,14 +1052,15 @@ gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffers() {
   if (!eglSwapBuffers(GetDisplay(), surface_)) {
     DVLOG(1) << "eglSwapBuffers failed with error "
              << GetLastEGLErrorString();
-    return gfx::SwapResult::SWAP_FAILED;
+    return response.Finalize(base::TimeTicks::Now(),
+                             gfx::SwapResult::SWAP_FAILED);
   }
 
   if (use_egl_timestamps_) {
     UpdateSwapEvents(newFrameId, newFrameIdIsValid);
   }
 
-  return gfx::SwapResult::SWAP_ACK;
+  return response.Finalize(base::TimeTicks::Now(), gfx::SwapResult::SWAP_ACK);
 }
 
 void NativeViewGLSurfaceEGL::UpdateSwapEvents(EGLuint64KHR newFrameId,
@@ -1242,12 +1245,16 @@ bool NativeViewGLSurfaceEGL::BuffersFlipped() const {
   return g_use_direct_composition;
 }
 
-gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffersWithDamage(
+gfx::SwapResponse NativeViewGLSurfaceEGL::SwapBuffersWithDamage(
     const std::vector<int>& rects) {
   DCHECK(supports_swap_buffer_with_damage_);
+
+  gfx::SwapResponse response(base::TimeTicks::Now());
+
   if (!CommitAndClearPendingOverlays()) {
     DVLOG(1) << "Failed to commit pending overlay planes.";
-    return gfx::SwapResult::SWAP_FAILED;
+    return response.Finalize(base::TimeTicks::Now(),
+                             gfx::SwapResult::SWAP_FAILED);
   }
 
   if (!eglSwapBuffersWithDamageKHR(GetDisplay(), surface_,
@@ -1255,19 +1262,24 @@ gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffersWithDamage(
                                    static_cast<EGLint>(rects.size() / 4))) {
     DVLOG(1) << "eglSwapBuffersWithDamageKHR failed with error "
              << GetLastEGLErrorString();
-    return gfx::SwapResult::SWAP_FAILED;
+    return response.Finalize(base::TimeTicks::Now(),
+                             gfx::SwapResult::SWAP_FAILED);
   }
-  return gfx::SwapResult::SWAP_ACK;
+  return response.Finalize(base::TimeTicks::Now(), gfx::SwapResult::SWAP_ACK);
 }
 
-gfx::SwapResult NativeViewGLSurfaceEGL::PostSubBuffer(int x,
-                                                      int y,
-                                                      int width,
-                                                      int height) {
+gfx::SwapResponse NativeViewGLSurfaceEGL::PostSubBuffer(int x,
+                                                        int y,
+                                                        int width,
+                                                        int height) {
   DCHECK(supports_post_sub_buffer_);
+
+  gfx::SwapResponse response(base::TimeTicks::Now());
+
   if (!CommitAndClearPendingOverlays()) {
     DVLOG(1) << "Failed to commit pending overlay planes.";
-    return gfx::SwapResult::SWAP_FAILED;
+    return response.Finalize(base::TimeTicks::Now(),
+                             gfx::SwapResult::SWAP_FAILED);
   }
   if (flips_vertically_) {
     // With EGL_SURFACE_ORIENTATION_INVERT_Y_ANGLE the contents are rendered
@@ -1278,9 +1290,10 @@ gfx::SwapResult NativeViewGLSurfaceEGL::PostSubBuffer(int x,
   if (!eglPostSubBufferNV(GetDisplay(), surface_, x, y, width, height)) {
     DVLOG(1) << "eglPostSubBufferNV failed with error "
              << GetLastEGLErrorString();
-    return gfx::SwapResult::SWAP_FAILED;
+    return response.Finalize(base::TimeTicks::Now(),
+                             gfx::SwapResult::SWAP_FAILED);
   }
-  return gfx::SwapResult::SWAP_ACK;
+  return response.Finalize(base::TimeTicks::Now(), gfx::SwapResult::SWAP_ACK);
 }
 
 bool NativeViewGLSurfaceEGL::SupportsCommitOverlayPlanes() {
@@ -1291,13 +1304,16 @@ bool NativeViewGLSurfaceEGL::SupportsCommitOverlayPlanes() {
 #endif
 }
 
-gfx::SwapResult NativeViewGLSurfaceEGL::CommitOverlayPlanes() {
+gfx::SwapResponse NativeViewGLSurfaceEGL::CommitOverlayPlanes() {
   DCHECK(SupportsCommitOverlayPlanes());
+  gfx::SwapResponse response(base::TimeTicks::Now());
   // Here we assume that the overlays scheduled on this surface will display
   // themselves to the screen right away in |CommitAndClearPendingOverlays|,
   // rather than being queued and waiting for a "swap" signal.
-  return CommitAndClearPendingOverlays() ? gfx::SwapResult::SWAP_ACK
-                                         : gfx::SwapResult::SWAP_FAILED;
+  bool success = CommitAndClearPendingOverlays();
+  return response.Finalize(
+      base::TimeTicks::Now(),
+      success ? gfx::SwapResult::SWAP_ACK : gfx::SwapResult::SWAP_FAILED);
 }
 
 gfx::VSyncProvider* NativeViewGLSurfaceEGL::GetVSyncProvider() {
@@ -1416,9 +1432,9 @@ bool PbufferGLSurfaceEGL::IsOffscreen() {
   return true;
 }
 
-gfx::SwapResult PbufferGLSurfaceEGL::SwapBuffers() {
+gfx::SwapResponse PbufferGLSurfaceEGL::SwapBuffers() {
   NOTREACHED() << "Attempted to call SwapBuffers on a PbufferGLSurfaceEGL.";
-  return gfx::SwapResult::SWAP_FAILED;
+  return gfx::SwapResponse(base::TimeTicks::Now());
 }
 
 gfx::Size PbufferGLSurfaceEGL::GetSize() {
@@ -1500,9 +1516,9 @@ bool SurfacelessEGL::IsSurfaceless() const {
   return true;
 }
 
-gfx::SwapResult SurfacelessEGL::SwapBuffers() {
+gfx::SwapResponse SurfacelessEGL::SwapBuffers() {
   LOG(ERROR) << "Attempted to call SwapBuffers with SurfacelessEGL.";
-  return gfx::SwapResult::SWAP_FAILED;
+  return gfx::SwapResponse(base::TimeTicks::Now());
 }
 
 gfx::Size SurfacelessEGL::GetSize() {

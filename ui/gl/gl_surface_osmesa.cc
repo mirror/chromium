@@ -83,9 +83,9 @@ bool GLSurfaceOSMesa::IsOffscreen() {
   return true;
 }
 
-gfx::SwapResult GLSurfaceOSMesa::SwapBuffers() {
+gfx::SwapResponse GLSurfaceOSMesa::SwapBuffers() {
   NOTREACHED() << "Should not call SwapBuffers on an GLSurfaceOSMesa.";
-  return gfx::SwapResult::SWAP_FAILED;
+  return gfx::SwapResponse(base::TimeTicks::Now());
 }
 
 gfx::Size GLSurfaceOSMesa::GetSize() {
@@ -106,8 +106,8 @@ GLSurfaceOSMesa::~GLSurfaceOSMesa() {
 
 bool GLSurfaceOSMesaHeadless::IsOffscreen() { return false; }
 
-gfx::SwapResult GLSurfaceOSMesaHeadless::SwapBuffers() {
-  return gfx::SwapResult::SWAP_ACK;
+gfx::SwapResponse GLSurfaceOSMesaHeadless::SwapBuffers() {
+  return gfx::SwapResponse(base::TimeTicks::Now());
 }
 
 GLSurfaceOSMesaHeadless::GLSurfaceOSMesaHeadless()

@@ -17,8 +17,19 @@ enum class SwapResult {
 };
 
 struct SwapResponse {
-  uint64_t swap_id;
-  SwapResult result;
+  SwapResponse() = default;
+  SwapResponse(base::TimeTicks start,
+               SwapResult result = SwapResult::SWAP_FAILED)
+      : result(result), swap_start(start), swap_end(start) {}
+
+  SwapResponse& Finalize(base::TimeTicks end, gfx::SwapResult res) {
+    result = res;
+    swap_end = end;
+    return *this;
+  }
+
+  uint64_t swap_id = 0;
+  SwapResult result = SwapResult::SWAP_FAILED;
 
   // Sampled by Chrome. Supported by all platforms.
   base::TimeTicks swap_start;

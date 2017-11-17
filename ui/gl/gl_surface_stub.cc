@@ -20,8 +20,8 @@ bool GLSurfaceStub::IsOffscreen() {
   return false;
 }
 
-gfx::SwapResult GLSurfaceStub::SwapBuffers() {
-  return gfx::SwapResult::SWAP_ACK;
+gfx::SwapResponse GLSurfaceStub::SwapBuffers() {
+  return gfx::SwapResponse(base::TimeTicks::Now(), gfx::SwapResult::SWAP_ACK);
 }
 
 gfx::Size GLSurfaceStub::GetSize() {

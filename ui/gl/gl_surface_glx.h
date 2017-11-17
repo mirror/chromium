@@ -72,14 +72,14 @@ class GL_EXPORT NativeViewGLSurfaceGLX : public GLSurfaceGLX {
               ColorSpace color_space,
               bool has_alpha) override;
   bool IsOffscreen() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResponse SwapBuffers() override;
   gfx::Size GetSize() override;
   void* GetHandle() override;
   bool SupportsPostSubBuffer() override;
   void* GetConfig() override;
   GLSurfaceFormat GetFormat() override;
   unsigned long GetCompatibilityKey() override;
-  gfx::SwapResult PostSubBuffer(int x, int y, int width, int height) override;
+  gfx::SwapResponse PostSubBuffer(int x, int y, int width, int height) override;
   gfx::VSyncProvider* GetVSyncProvider() override;
 
   VisualID GetVisualID() const { return visual_id_; }
@@ -129,7 +129,7 @@ class GL_EXPORT UnmappedNativeViewGLSurfaceGLX : public GLSurfaceGLX {
   bool Initialize(GLSurfaceFormat format) override;
   void Destroy() override;
   bool IsOffscreen() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResponse SwapBuffers() override;
   gfx::Size GetSize() override;
   void* GetHandle() override;
   void* GetConfig() override;
