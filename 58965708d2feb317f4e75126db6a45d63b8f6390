@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37768cdb_bc30cfda",
+        "filename": "third_party/WebKit/Tools/.gitignore",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-17T06:29:16Z",
+      "side": 0,
+      "message": "Per qyearsley\u0027s comment in https://chromium-review.googlesource.com/c/chromium/src/+/768416#message-a4de04f0831995b0bf9508e1a0f3622c63eb0e29, removed this as well.",
+      "revId": "58965708d2feb317f4e75126db6a45d63b8f6390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
