@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f546a017_e42bb8b6",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-17T11:58:55Z",
+      "side": 1,
+      "message": "thanks Colin, that\u0027s actually exactly what I meant :)\n\nI will remove the AddDestructionCallback stuff in PublicIpAddressLocationNotifier and make PublicIpAddressGeolocationProvider controls the lifetimes.\n\nThanks a lot!",
+      "parentUuid": "d2106c3e_a6b6751c",
+      "revId": "a1822bee06f9dcb3dc58893112190b148c7152c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5e1ef75_5433c508",
         "filename": "services/device/geolocation/public_ip_address_geolocator.h",
         "patchSetId": 5
