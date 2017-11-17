@@ -94,6 +94,24 @@
     },
     {
       "key": {
+        "uuid": "b3546a24_1af88606",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-11-17T20:21:05Z",
+      "side": 1,
+      "message": "That means changing the uniqe_ptr references to shared_ptr.\nThis seems like a deep change potentially affecting performance which should be separated from (and precede) the threading one.",
+      "parentUuid": "e3ab519b_6d040754",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cad9a6e6_057716cd",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
         "patchSetId": 36
@@ -114,6 +132,30 @@
       "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66754592_0ee829a0",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-11-17T20:21:05Z",
+      "side": 1,
+      "message": "Keishi added the comment in https://codereview.chromium.org/2774223002 reviewed by flackr@\nI believe this means/should read Compositor thread, if present, otherwise the constructing thread.",
+      "parentUuid": "cad9a6e6_057716cd",
+      "range": {
+        "startLine": 26,
+        "startChar": 12,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +193,24 @@
       "writtenOn": "2017-11-17T11:51:23Z",
       "side": 1,
       "message": "This is the compositor thread? Can we call it compositor_thread_ and/or comment to that effect? Thanks!",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a4ae31_91a67853",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-11-17T20:21:05Z",
+      "side": 1,
+      "message": "It was the constructing thread, whichever that turns out to be.\nIn non-threaded rendering, Main thread?\nIn testing, the mainline.\n\nI guess from all of the repeated feedback, I\u0027m going to give up on keeping the architecture from seeping into the classes, and remove this.",
+      "parentUuid": "81fdd1a3_85ddee54",
       "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
