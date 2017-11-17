@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d571877_29062188",
+        "filename": "chrome/browser/resources/print_preview/new/settings_section.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-17T01:58:15Z",
+      "side": 1,
+      "message": "Per offline discussion added this to address the case where a single long word is used as a label. The previous UI would push the controls further to the right, but it seems better to just wrap the word to a 2nd line and keep the controls unaffected, see  old vs new difference at https://imgur.com/a/2CPF8.",
+      "revId": "979e89530ad989628552eaad73a45ac7573584e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
