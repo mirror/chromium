@@ -50,6 +50,7 @@ struct TestDiskInfo {
   bool on_boot_device;
   bool on_removable_device;
   bool is_hidden;
+  bool is_virtual;
   const char* file_system_type;
   const char* base_mount_path;
 };
@@ -83,6 +84,7 @@ TestDiskInfo kTestDisks[] = {{"system_path1",
                               false,
                               false,
                               false,
+                              false,
                               "exfat",
                               ""},
                              {"system_path2",
@@ -104,6 +106,7 @@ TestDiskInfo kTestDisks[] = {{"system_path1",
                               true,
                               false,
                               false,
+                              false,
                               "exfat",
                               ""},
                              {"system_path3",
@@ -123,6 +126,7 @@ TestDiskInfo kTestDisks[] = {{"system_path1",
                               false,  // is_hardware_read_only
                               false,
                               true,
+                              false,
                               false,
                               false,
                               "exfat",
@@ -293,6 +297,7 @@ class FileManagerPrivateApiTest : public ExtensionApiTest {
                 kTestDisks[disk_info_index].on_boot_device,
                 kTestDisks[disk_info_index].on_removable_device,
                 kTestDisks[disk_info_index].is_hidden,
+                kTestDisks[disk_info_index].is_virtual,
                 kTestDisks[disk_info_index].file_system_type,
                 kTestDisks[disk_info_index].base_mount_path)));
       }
