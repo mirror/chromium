@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4de14b31_4c4a115b",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-17T15:46:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c62fd36d_3496b8fc",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 12
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52ab6f1e_bdd19a29",
         "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
         "patchSetId": 8
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Done for load_sdk and close_sdk. The rest are kept the same for consistency with the gvr_keyboard header which doesn\u0027t seem to follow that format :(",
       "parentUuid": "52ab6f1e_bdd19a29",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 14
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58f8deb0_f5f0719f",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-17T15:46:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7fef2a84_6a397769",
       "range": {
         "startLine": 64,
         "startChar": 5,
@@ -187,6 +235,30 @@
       "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56e7b35_fdc476f3",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-17T15:46:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "451d31fd_85395b22",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 16
+      },
+      "revId": "967520af04c0babbb4ee1da9462d75209b4bf8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
