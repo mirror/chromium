@@ -593,13 +593,15 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
 #pragma mark PasswordDetailsCollectionViewControllerDelegate
 
 - (void)deletePassword:(const autofill::PasswordForm&)form {
-  passwordStore_->RemoveLogin(form);
-  for (auto it = savedForms_.begin(); it != savedForms_.end(); ++it) {
-    if (**it == form) {
-      savedForms_.erase(it);
+  auto& forms = form.blacklisted_by_user ? blacklistedForms_ : savedForms_;
+  for (auto iterator = forms.begin(); iterator != forms.end(); ++iterator) {
+    if (**iterator == form) {
+      forms.erase(iterator);
       break;
     }
   }
+  passwordStore_->RemoveLogin(form);
+
   [self updateEditButton];
   [self reloadData];
   [self.navigationController popViewControllerAnimated:YES];
