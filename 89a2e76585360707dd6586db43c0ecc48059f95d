@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e892c956_630723bb",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-17T23:03:44Z",
+      "side": 1,
+      "message": "this needs to be in the \u0027tryserver.chromium.perf\u0027 section, not \u0027chromium.perf\u0027 :).",
+      "revId": "89a2e76585360707dd6586db43c0ecc48059f95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
