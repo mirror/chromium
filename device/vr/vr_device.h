@@ -27,6 +27,7 @@ class DEVICE_VR_EXPORT VRDevice {
   virtual void Blur() = 0;
   virtual void Focus() = 0;
   virtual mojom::VRDisplayInfoPtr GetVRDisplayInfo() = 0;
+  virtual void SetInBrowsingMode(bool in_browsing_mode) = 0;
 
   // TODO(mthiesse): The browser should handle browser-side exiting of
   // presentation before device/ is even aware presentation is being exited.

@@ -38,7 +38,7 @@ class DEVICE_VR_EXPORT VRDeviceBase : public VRDevice {
       mojom::VRPresentationProviderRequest request,
       mojom::VRDisplayHost::RequestPresentCallback callback);
   virtual void ExitPresent();
-  virtual void GetPose(mojom::VRMagicWindowProvider::GetPoseCallback callback);
+  void GetPose(mojom::VRMagicWindowProvider::GetPoseCallback callback);
 
   void AddDisplay(VRDisplayImpl* display);
   void RemoveDisplay(VRDisplayImpl* display);
@@ -49,16 +49,19 @@ class DEVICE_VR_EXPORT VRDeviceBase : public VRDevice {
 
   VRDisplayImpl* GetPresentingDisplay() { return presenting_display_; }
 
+  void SetInBrowsingMode(bool in_browsing_mode) final;
+
  protected:
   void SetPresentingDisplay(VRDisplayImpl* display);
   void SetVRDisplayInfo(mojom::VRDisplayInfoPtr display_info);
   void OnActivate(mojom::VRDisplayEventReason reason,
                   base::Callback<void(bool)> on_handled);
 
-  virtual void OnListeningForActivate(bool listening);
-
  private:
   void UpdateListeningForActivate(VRDisplayImpl* display);
+  virtual void OnListeningForActivate(bool listening);
+  virtual void OnMagicWindowPoseRequest(
+      mojom::VRMagicWindowProvider::GetPoseCallback callback);
 
   std::set<VRDisplayImpl*> displays_;
 
@@ -81,8 +84,8 @@ class DEVICE_VR_EXPORT VRDeviceBase : public VRDevice {
   mojom::VRDisplayInfoPtr display_info_;
 
   unsigned int id_;
-
   static unsigned int next_id_;
+  bool in_browsing_mode_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(VRDeviceBase);
 };
