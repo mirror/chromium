@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "083cd71d_95176a2e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-17T18:29:04Z",
+      "side": 1,
+      "message": "might be nice to blither a bit more here.",
+      "revId": "8e9f3636c73a91773b667e92042253ad48a0e271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95121986_437c66db",
+        "filename": "services/viz/public/interfaces/hit_test/input_target_client.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-17T18:29:04Z",
+      "side": 1,
+      "message": "Do we need the additional data like touch action etc.? That could be added in a subsequent CL.",
+      "revId": "8e9f3636c73a91773b667e92042253ad48a0e271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
