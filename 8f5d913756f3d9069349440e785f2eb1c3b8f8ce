@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f86c481_b63306f9",
+        "filename": "chrome/common/extensions/docs/static/images/user_interface/tooltip.png",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T23:30:41Z",
+      "side": 1,
+      "message": "It\u0027d be nice if we could capture this mouse here (or fake it) - otherwise, it\u0027s very hard to tell what this is displaying.",
+      "revId": "8f5d913756f3d9069349440e785f2eb1c3b8f8ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff862a4_ed621cc1",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T23:30:41Z",
+      "side": 1,
+      "message": "Declaring where? (Might be worth mentioning)",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "8f5d913756f3d9069349440e785f2eb1c3b8f8ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "810ea793_cff01299",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T23:30:41Z",
+      "side": 1,
+      "message": "I don\u0027t understand this sentence?",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 28
+      },
+      "revId": "8f5d913756f3d9069349440e785f2eb1c3b8f8ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f422c99_d4a285b1",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T23:30:41Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 31
+      },
+      "revId": "8f5d913756f3d9069349440e785f2eb1c3b8f8ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8bb1a37_1d8c167f",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T23:30:41Z",
+      "side": 1,
+      "message": "Note also that you can enable/disable a page action through chrome.pageAction.show/hide.",
+      "revId": "8f5d913756f3d9069349440e785f2eb1c3b8f8ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc3e5c3_1290f6d1",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T23:30:41Z",
+      "side": 1,
+      "message": "be set dynamically?",
+      "range": {
+        "startLine": 235,
+        "startChar": 18,
+        "endLine": 235,
+        "endChar": 32
+      },
+      "revId": "8f5d913756f3d9069349440e785f2eb1c3b8f8ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab55a838_4ca720bd",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T23:30:41Z",
+      "side": 1,
+      "message": "nit: space",
+      "range": {
+        "startLine": 243,
+        "startChar": 5,
+        "endLine": 243,
+        "endChar": 7
+      },
+      "revId": "8f5d913756f3d9069349440e785f2eb1c3b8f8ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
