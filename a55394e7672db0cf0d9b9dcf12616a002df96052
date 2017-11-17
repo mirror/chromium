@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4606321c_2d6810b9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/network/network-persistence-filename-safety.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-17T22:31:43Z",
+      "side": 0,
+      "message": "Removed because this will never happen... it\u0027ll always end in a slash.",
+      "revId": "a55394e7672db0cf0d9b9dcf12616a002df96052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
