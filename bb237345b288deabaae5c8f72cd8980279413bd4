@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89103817_41ab8901",
+        "filename": "ios/chrome/browser/metrics/incognito_web_state_observer.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-17T13:42:52Z",
+      "side": 1,
+      "message": "Should it attach itself to all existing TabModels\u0027 WebStateLists? Otherwise this will only work if this object is created before all TabModels (make it harder to test IMO).",
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a6e1b76_4f783e23",
+        "filename": "ios/chrome/browser/metrics/incognito_web_state_observer.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-17T13:42:52Z",
+      "side": 1,
+      "message": "I think it should unregister itself from all WebStateLists it is currently observing. Maybe use a ScopedObserver for that.",
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c576500f_1389e83b",
+        "filename": "ios/chrome/browser/metrics/incognito_web_state_observer.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-17T13:42:52Z",
+      "side": 1,
+      "message": "You may also need to watch WebStateReplacedAt(...) since neither WebStateInsertedAt/WebStateDetachedAt will be invoked in that case.\n\nThis is invoked when a Tab is replaced by another without any visible any UI change. Generally this correspond to a pre-rendering Tab being converted to a real Tab, or a Tab navigating from the History view (either remote or local).\n\nIn that case there will be a Tab disappearing and a Tab appearing. So the number of Tab won\u0027t change, and it may be a no-op for your purpose. In which case, maybe override it and add a comment that there is nothing to do, to optimize for future reader.",
+      "revId": "bb237345b288deabaae5c8f72cd8980279413bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
