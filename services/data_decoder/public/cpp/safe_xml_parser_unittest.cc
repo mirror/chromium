@@ -79,6 +79,40 @@ TEST_F(SafeXmlParserTest, TextAccessor) {
   ExpectElementTextEq(*text_element, "bonjour bonjour");
 }
 
+TEST_F(SafeXmlParserTest, QualifiedName) {
+  EXPECT_EQ(GetXmlQualifiedName("foo", "bar"), "foo:bar");
+  EXPECT_EQ(GetXmlQualifiedName("", "foo"), "foo");
+}
+
+TEST_F(SafeXmlParserTest, NamespacePrefix) {
+  // Fails with no namespace.
+  std::unique_ptr<base::Value> no_ns_element = ParseXml("<a/>");
+  std::string prefix;
+  EXPECT_FALSE(
+      GetXmlElementNamespacePrefix(*no_ns_element, "http://a", &prefix));
+  EXPECT_TRUE(prefix.empty());
+  prefix.clear();
+
+  // Multiple namespaces.
+  std::unique_ptr<base::Value> multiple_ns_element = ParseXml(
+      "<a xmlns='http://a' xmlns:b='http://b' xmlns:test='http://c'/>");
+  EXPECT_TRUE(
+      GetXmlElementNamespacePrefix(*multiple_ns_element, "http://a", &prefix));
+  EXPECT_TRUE(prefix.empty());  // Default namespace has an empty prefix.
+  prefix.clear();
+  EXPECT_TRUE(
+      GetXmlElementNamespacePrefix(*multiple_ns_element, "http://b", &prefix));
+  EXPECT_EQ(prefix, "b");
+  prefix.clear();
+  EXPECT_TRUE(
+      GetXmlElementNamespacePrefix(*multiple_ns_element, "http://c", &prefix));
+  EXPECT_EQ(prefix, "test");
+  prefix.clear();
+  EXPECT_FALSE(
+      GetXmlElementNamespacePrefix(*multiple_ns_element, "http://d", &prefix));
+  EXPECT_TRUE(prefix.empty());
+}
+
 TEST_F(SafeXmlParserTest, ChildAccessor) {
   // Test that the API does not choke on non XML element values.
   base::Value not_an_xml_value;
