@@ -458,6 +458,7 @@ void ExportAllocationEventSetToJSON(
 
 void ExportMemoryMapsAndV2StackTraceToJSON(const ExportParams& params,
                                            std::ostream& out) {
+  LOG(ERROR) << "ExportMemoryMapsAndV2StackTraceToJSON";
   // Start dictionary.
   out << "{\n";
 
@@ -498,7 +499,9 @@ void ExportMemoryMapsAndV2StackTraceToJSON(const ExportParams& params,
       if (alloc->second.size < params.min_size_threshold &&
           alloc->second.count < params.min_count_threshold) {
         alloc = filtered_allocations[i].erase(alloc);
+        LOG(ERROR) << "filtered alocation size: " << alloc->second.size << " count: " << alloc->second.count << " allocator: " << i;
       } else {
+        LOG(ERROR) << "alocation size: " << alloc->second.size << " count: " << alloc->second.count << " allocator: " << i;
         ++alloc;
       }
     }
