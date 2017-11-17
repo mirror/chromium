@@ -16,6 +16,24 @@
       "revId": "eb7855635632c971c58bb044ae1f002fa7c4cee9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e12cd3_b7530fb5",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommandTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-17T02:15:24Z",
+      "side": 1,
+      "message": "My comment was confusing.\nI mean, could you just move comment on L162 to L168 before |command-\u003eApply()|?",
+      "parentUuid": "5fe06eec_5f9fbbcb",
+      "revId": "eb7855635632c971c58bb044ae1f002fa7c4cee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
