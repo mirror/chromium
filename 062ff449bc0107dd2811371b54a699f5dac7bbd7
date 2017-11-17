@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8c3a6409_97084c6a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SourcesView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-11-17T01:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcf73183_266a289c",
+      "range": {
+        "startLine": 513,
+        "startChar": 25,
+        "endLine": 513,
+        "endChar": 45
+      },
+      "revId": "062ff449bc0107dd2811371b54a699f5dac7bbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c39bd90d_a6f4ea12",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/SourcesView.js",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4759b0b1_63c92439",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SourcesView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-11-17T01:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c39bd90d_a6f4ea12",
+      "range": {
+        "startLine": 519,
+        "startChar": 27,
+        "endLine": 519,
+        "endChar": 38
+      },
+      "revId": "062ff449bc0107dd2811371b54a699f5dac7bbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e40e40b5_c95bb4d4",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/UISourceCodeFrame.js",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "062ff449bc0107dd2811371b54a699f5dac7bbd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5927002f_bf5d6fc4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/UISourceCodeFrame.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-11-17T01:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e40e40b5_c95bb4d4",
+      "range": {
+        "startLine": 262,
+        "startChar": 4,
+        "endLine": 262,
+        "endChar": 6
+      },
+      "revId": "062ff449bc0107dd2811371b54a699f5dac7bbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
