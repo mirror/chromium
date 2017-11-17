@@ -64,7 +64,7 @@ CourierRenderer::CourierRenderer(
     const base::WeakPtr<RendererController>& controller,
     VideoRendererSink* video_renderer_sink)
     : state_(STATE_UNINITIALIZED),
-      main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       media_task_runner_(std::move(media_task_runner)),
       media_resource_(nullptr),
       client_(nullptr),

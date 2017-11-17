@@ -64,7 +64,7 @@ void FingerprintChromeOS::OnCloseAuthSessionForEnroll(
 
   // TODO(xiaoyinh@): Timeout should be removed after we resolve
   // crbug.com/715302.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&FingerprintChromeOS::ScheduleStartEnroll,
                  weak_ptr_factory_.GetWeakPtr(), user_id, label),
@@ -125,7 +125,7 @@ void FingerprintChromeOS::OnCloseEnrollSessionForAuth(bool result) {
 
   // TODO(xiaoyinh@): Timeout should be removed after we resolve
   // crbug.com/715302.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&FingerprintChromeOS::ScheduleStartAuth,
                  weak_ptr_factory_.GetWeakPtr()),

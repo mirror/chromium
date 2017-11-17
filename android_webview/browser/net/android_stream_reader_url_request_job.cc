@@ -143,7 +143,7 @@ void AndroidStreamReaderURLRequestJob::Start() {
                    weak_factory_.GetWeakPtr()));
   } else {
     // Run DoStart asynchronously to avoid re-entering the delegate.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&AndroidStreamReaderURLRequestJob::DoStart,
                               weak_factory_.GetWeakPtr()));
   }
@@ -286,7 +286,8 @@ void AndroidStreamReaderURLRequestJob::DoStart() {
   base::PostTaskWithTraits(
       FROM_HERE, {base::MayBlock()},
       base::Bind(
-          &OpenInputStreamOnWorkerThread, base::ThreadTaskRunnerHandle::Get(),
+          &OpenInputStreamOnWorkerThread,
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE),
           // This is intentional - the job could be deleted while the callback
           // is executing on the background thread.
           // The delegate will be "returned" to the job once the InputStream

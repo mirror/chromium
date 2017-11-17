@@ -95,7 +95,7 @@ class MockVideoCaptureControllerEventHandler
                                       &reference_time));
     DoBufferReady(id, frame_info->coded_size);
     if (enable_auto_return_buffer_on_buffer_ready_) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(&VideoCaptureController::ReturnBuffer,
                                     base::Unretained(controller_), id, this,
                                     buffer_id, resource_utilization_));
@@ -104,7 +104,7 @@ class MockVideoCaptureControllerEventHandler
   void OnEnded(VideoCaptureControllerID id) override {
     DoEnded(id);
     // OnEnded() must respond by (eventually) unregistering the client.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(base::IgnoreResult(
                                       &VideoCaptureController::RemoveClient),
                                   base::Unretained(controller_), id, this));

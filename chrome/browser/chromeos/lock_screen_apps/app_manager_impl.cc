@@ -394,7 +394,7 @@ AppManagerImpl::State AppManagerImpl::AddAppToLockScreenProfile(
                      base::Bind(&AppManagerImpl::CompleteLockScreenAppInstall,
                                 weak_ptr_factory_.GetWeakPtr(), install_count_,
                                 tick_clock_->NowTicks()),
-                     base::ThreadTaskRunnerHandle::Get())));
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE))));
   return State::kActivating;
 }
 

@@ -69,7 +69,7 @@ class DeviceOAuth2TokenServiceTest : public testing::Test {
   DeviceOAuth2TokenServiceTest()
       : scoped_testing_local_state_(TestingBrowserProcess::GetGlobal()),
         request_context_getter_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())) {}
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE))) {}
   ~DeviceOAuth2TokenServiceTest() override {}
 
   // Most tests just want a noop crypto impl with a dummy refresh token value in

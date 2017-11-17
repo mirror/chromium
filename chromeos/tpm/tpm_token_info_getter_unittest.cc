@@ -54,7 +54,8 @@ class FakeTaskRunner : public base::TaskRunner {
                        base::OnceClosure task,
                        base::TimeDelta delay) override {
     delays_->push_back(delay.InMilliseconds());
-    base::ThreadTaskRunnerHandle::Get()->PostTask(from_here, std::move(task));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(from_here,
+                                                           std::move(task));
     return true;
   }
   bool RunsTasksInCurrentSequence() const override { return true; }
@@ -129,7 +130,7 @@ class TestCryptohomeClient : public chromeos::FakeCryptohomeClient {
       tpm_is_enabled_succeeded_ = true;
       result.emplace(tpm_is_enabled_);
     }
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), result));
   }
 
@@ -160,14 +161,14 @@ class TestCryptohomeClient : public chromeos::FakeCryptohomeClient {
 
     if (get_tpm_token_info_failure_count_ > 0) {
       --get_tpm_token_info_failure_count_;
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(std::move(callback), base::nullopt));
       return;
     }
 
     if (get_tpm_token_info_not_set_count_ > 0) {
       --get_tpm_token_info_not_set_count_;
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(std::move(callback),
                                     TpmTokenInfo{std::string() /* label */,
                                                  std::string() /* user_pin */,

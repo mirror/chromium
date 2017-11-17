@@ -84,7 +84,7 @@ void CastReceiverSession::Start(
       new CastReceiverSession::AudioCapturerSource(this));
   std::unique_ptr<media::VideoCapturerSource> video(
       new CastReceiverSession::VideoCapturerSource(this));
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(start_callback, audio, base::Passed(&video)));
 }
 

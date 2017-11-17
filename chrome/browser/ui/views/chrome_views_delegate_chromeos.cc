@@ -40,7 +40,7 @@ ChromeViewsDelegate::ProcessAcceleratorWhileMenuShowing(
       accelerator);
   if (accelerator_controller->ShouldCloseMenuAndRepostAccelerator(
           accelerator)) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(ProcessAcceleratorNow, accelerator));
     return views::ViewsDelegate::ProcessMenuAcceleratorResult::CLOSE_MENU;
   }

@@ -520,7 +520,7 @@ void FakePhotoDevice::SetPhotoOptions(
 
 void FakeVideoCaptureDevice::TakePhoto(TakePhotoCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&FakePhotoDevice::TakePhoto,
                             base::Unretained(photo_device_.get()),
                             base::Passed(&callback), elapsed_time_));
@@ -648,7 +648,7 @@ void FakeVideoCaptureDevice::BeepAndScheduleNextCapture(
   const base::TimeTicks next_execution_time =
       std::max(current_time, expected_execution_time + frame_interval);
   const base::TimeDelta delay = next_execution_time - current_time;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&FakeVideoCaptureDevice::OnNextFrameDue,
                  weak_factory_.GetWeakPtr(), next_execution_time,

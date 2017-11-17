@@ -180,7 +180,7 @@ void PixelTest::SetUpGLRenderer(bool flipped_output_surface) {
       settings_.resource_settings);
 
   texture_mailbox_deleter_ = std::make_unique<viz::TextureMailboxDeleter>(
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   renderer_ = std::make_unique<viz::GLRenderer>(
       &renderer_settings_, output_surface_.get(), resource_provider_.get(),

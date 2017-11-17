@@ -56,7 +56,7 @@ NetworkChangeNotifierChromeos::NetworkChangeNotifierChromeos()
       max_bandwidth_mbps_(
           NetworkChangeNotifier::GetMaxBandwidthMbpsForConnectionSubtype(
               SUBTYPE_NONE)),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       weak_ptr_factory_(this) {
   poll_callback_ = base::Bind(&NetworkChangeNotifierChromeos::PollForState,
                               weak_ptr_factory_.GetWeakPtr());

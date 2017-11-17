@@ -75,7 +75,7 @@ const base::FilePath& ImageWriter::GetImagePath() { return image_path_; }
 const base::FilePath& ImageWriter::GetDevicePath() { return device_path_; }
 
 void ImageWriter::PostTask(const base::Closure& task) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, task);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, task);
 }
 
 void ImageWriter::PostProgress(int64_t progress) {

@@ -113,7 +113,7 @@ Shell::~Shell() {
   if (windows_.empty() && quit_message_loop_) {
     if (headless_)
       PlatformExit();
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
   }
 

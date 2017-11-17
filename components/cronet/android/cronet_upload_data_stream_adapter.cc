@@ -37,7 +37,7 @@ void CronetUploadDataStreamAdapter::InitializeOnNetworkThread(
   DCHECK(!network_task_runner_.get());
 
   upload_data_stream_ = upload_data_stream;
-  network_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  network_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   DCHECK(network_task_runner_);
 }
 

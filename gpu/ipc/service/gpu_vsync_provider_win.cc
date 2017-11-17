@@ -591,7 +591,7 @@ class GpuVSyncMessageFilter : public IPC::MessageFilter {
 };
 
 void GpuVSyncMessageFilter::OnFilterAdded(IPC::Channel* channel) {
-  io_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  io_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   sender_ = channel;
 }
 

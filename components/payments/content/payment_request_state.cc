@@ -171,7 +171,7 @@ void PaymentRequestState::CanMakePayment(StatusCallback callback) {
     return;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&PaymentRequestState::CheckCanMakePayment,
                      weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
@@ -195,7 +195,7 @@ void PaymentRequestState::AreRequestedMethodsSupported(
     return;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&PaymentRequestState::CheckRequestedMethodsSupported,
                      weak_ptr_factory_.GetWeakPtr(), std::move(callback)));

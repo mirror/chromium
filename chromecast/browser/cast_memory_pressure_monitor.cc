@@ -107,9 +107,10 @@ void CastMemoryPressureMonitor::PollPressureLevel() {
         1, 500, 100);
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&CastMemoryPressureMonitor::PollPressureLevel,
-                            weak_ptr_factory_.GetWeakPtr()),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&CastMemoryPressureMonitor::PollPressureLevel,
+                 weak_ptr_factory_.GetWeakPtr()),
       base::TimeDelta::FromMilliseconds(kPollingIntervalMS));
 }
 

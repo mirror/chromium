@@ -253,7 +253,7 @@ void UiController::OnMessageCenterChanged() {
         std::make_unique<base::CancelableClosure>(base::Bind(
             base::IgnoreResult(&UiController::HideMessageCenterBubble),
             base::Unretained(this)));
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, hide_empty_message_center_callback_->callback());
     return;
   }

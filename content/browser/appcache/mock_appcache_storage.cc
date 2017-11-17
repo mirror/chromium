@@ -473,7 +473,7 @@ void MockAppCacheStorage::ProcessMakeGroupObsolete(
 
 void MockAppCacheStorage::ScheduleTask(base::OnceClosure task) {
   pending_tasks_.push_back(std::move(task));
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&MockAppCacheStorage::RunOnePendingTask,
                                 weak_factory_.GetWeakPtr()));
 }

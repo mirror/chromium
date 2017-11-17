@@ -613,7 +613,7 @@ void WebrtcTransport::RequestNegotiation() {
 
   if (!negotiation_pending_) {
     negotiation_pending_ = true;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&WebrtcTransport::SendOffer, weak_factory_.GetWeakPtr()));
   }
@@ -730,7 +730,7 @@ void WebrtcTransport::Close(ErrorCode error) {
 
   // Close and delete PeerConnection asynchronously. PeerConnection may be on
   // the stack and so it must be destroyed later.
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
       FROM_HERE, peer_connection_wrapper_.release());
 
   if (error != OK)

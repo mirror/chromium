@@ -482,7 +482,8 @@ int MCSProbeMain(int argc, char* argv[]) {
 
   // For check-in and creating registration ids.
   const scoped_refptr<MyTestURLRequestContextGetter> context_getter =
-      new MyTestURLRequestContextGetter(base::ThreadTaskRunnerHandle::Get());
+      new MyTestURLRequestContextGetter(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();

@@ -87,7 +87,7 @@ class QueueManager {
     } else {
       packet_pipe_ = std::move(tmp);
     }
-    packet_pipe_->InitOnIOThread(base::ThreadTaskRunnerHandle::Get(),
+    packet_pipe_->InitOnIOThread(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                                  &tick_clock_);
   }
 
@@ -211,9 +211,8 @@ void CheckByteCounters() {
 
     last_printout = now;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE,
-      base::Bind(&CheckByteCounters),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE, base::Bind(&CheckByteCounters),
       base::TimeDelta::FromMilliseconds(100));
 }
 

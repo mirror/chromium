@@ -85,7 +85,8 @@ int FileStream::Context::Read(IOBuffer* buf,
       FROM_HERE,
       base::Bind(&FileStream::Context::ReadAsync, base::Unretained(this),
                  file_.GetPlatformFile(), base::WrapRefCounted(buf), buf_len,
-                 &io_context_.overlapped, base::ThreadTaskRunnerHandle::Get()));
+                 &io_context_.overlapped,
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   return ERR_IO_PENDING;
 }
 

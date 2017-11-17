@@ -405,7 +405,7 @@ void HandleAddChunks(
     const std::vector<std::unique_ptr<SBChunkData>>& chunks,
     SafeBrowsingProtocolManagerDelegate::AddChunksCallback callback) {
   scoped_refptr<base::SingleThreadTaskRunner> task_runner(
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   if (!task_runner.get())
     return;
   task_runner->PostTask(FROM_HERE, callback);

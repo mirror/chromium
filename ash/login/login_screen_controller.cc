@@ -129,7 +129,7 @@ void LoginScreenController::AuthenticateUser(
       std::move(callback).Run(false);
       return;
     case ForceFailAuth::kDelayed:
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE, base::BindOnce(std::move(callback), false),
           base::TimeDelta::FromSeconds(1));
       return;

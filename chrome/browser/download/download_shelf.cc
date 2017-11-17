@@ -137,7 +137,7 @@ void DownloadShelf::AddDownload(DownloadItem* download) {
     // If we are going to remove the download from the shelf upon completion,
     // wait a few seconds to see if it completes quickly. If it's a small
     // download, then the user won't have time to interact with it.
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&DownloadShelf::ShowDownloadById,
                        weak_ptr_factory_.GetWeakPtr(), download->GetId()),

@@ -88,7 +88,7 @@ class SyncFileSystemTest : public extensions::PlatformAppBrowserTest,
         browser()->profile()));
 
     remote_service_ = new drive_backend::SyncEngine(
-        base::ThreadTaskRunnerHandle::Get(),  // ui_task_runner
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE),  // ui_task_runner
         MakeSequencedTaskRunner(), MakeSequencedTaskRunner(),
         base_dir_.GetPath(),
         NULL,  // task_logger

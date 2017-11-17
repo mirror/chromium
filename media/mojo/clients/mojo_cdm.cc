@@ -279,7 +279,7 @@ Decryptor* MojoCdm::GetDecryptor() {
   base::AutoLock auto_lock(lock_);
 
   if (!decryptor_task_runner_)
-    decryptor_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    decryptor_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   DCHECK(decryptor_task_runner_->BelongsToCurrentThread());
 
   // Can be called on a different thread.

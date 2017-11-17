@@ -79,7 +79,7 @@ void DriveAppProvider::AddUninstalledDriveAppFromSync(
   // Decouple the operation because this function could be called during
   // sync processing and UpdateDriveApps could trigger another sync change.
   // See http://crbug.com/429205
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&DriveAppProvider::UpdateDriveApps,
                             weak_ptr_factory_.GetWeakPtr()));
 }
@@ -91,7 +91,7 @@ void DriveAppProvider::RemoveUninstalledDriveAppFromSync(
   // Decouple the operation because this function could be called during
   // sync processing and UpdateDriveApps could trigger another sync change.
   // See http://crbug.com/429205
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&DriveAppProvider::UpdateDriveApps,
                             weak_ptr_factory_.GetWeakPtr()));
 }
@@ -301,7 +301,7 @@ void DriveAppProvider::OnExtensionInstalled(
       // Defer the processing because it touches the extensions system and
       // it is better to let the current task finish to avoid unexpected
       // incomplete status.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::Bind(&DriveAppProvider::ProcessDeferredOnExtensionInstalled,
                      weak_ptr_factory_.GetWeakPtr(), drive_apps_[i].app_id,

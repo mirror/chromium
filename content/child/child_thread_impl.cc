@@ -215,7 +215,7 @@ void QuitClosure::PostClosure(
 void QuitClosure::BindToMainThread() {
   base::AutoLock lock(lock_);
   scoped_refptr<base::SingleThreadTaskRunner> task_runner(
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   base::Closure quit_closure =
       base::MessageLoop::current()->QuitWhenIdleClosure();
   closure_ = base::Bind(&QuitClosure::PostClosure, task_runner, quit_closure);
@@ -442,7 +442,8 @@ void ChildThreadImpl::Init(const Options& options) {
 
   channel_ = IPC::SyncChannel::Create(
       this, ChildProcess::current()->io_task_runner(),
-      ipc_task_runner_ ? ipc_task_runner_ : base::ThreadTaskRunnerHandle::Get(),
+      ipc_task_runner_ ? ipc_task_runner_
+                       : base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       ChildProcess::current()->GetShutDownEvent());
 #if BUILDFLAG(IPC_MESSAGE_LOG_ENABLED)
   if (!IsInBrowserProcess())
@@ -484,7 +485,7 @@ void ChildThreadImpl::Init(const Options& options) {
                          GetIOTaskRunner());
   registry->AddInterface(base::Bind(&ChildThreadImpl::OnChildControlRequest,
                                     base::Unretained(this)),
-                         base::ThreadTaskRunnerHandle::Get());
+                         base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   GetServiceManagerConnection()->AddConnectionFilter(
       std::make_unique<SimpleConnectionFilter>(std::move(registry)));
 

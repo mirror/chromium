@@ -36,7 +36,8 @@ std::unique_ptr<net::ProxyService> CreateProxyServiceUsingMojoFactory(
       std::make_unique<ProxyResolverFactoryMojo>(
           std::move(mojo_proxy_factory), host_resolver,
           base::Bind(&net::NetworkDelegateErrorObserver::Create,
-                     network_delegate, base::ThreadTaskRunnerHandle::Get()),
+                     network_delegate,
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
           net_log),
       net_log));
 

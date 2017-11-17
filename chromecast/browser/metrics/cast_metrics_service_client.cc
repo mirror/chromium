@@ -282,7 +282,7 @@ CastMetricsServiceClient::CastMetricsServiceClient(
       external_metrics_(nullptr),
       platform_metrics_(nullptr),
 #endif  // defined(OS_LINUX)
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       request_context_(request_context) {
 }
 

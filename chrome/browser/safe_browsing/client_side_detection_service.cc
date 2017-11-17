@@ -166,7 +166,7 @@ void ClientSideDetectionService::SendClientReportPhishingRequest(
     bool is_extended_reporting,
     const ClientReportPhishingRequestCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(
           &ClientSideDetectionService::StartClientReportPhishingRequest,
@@ -178,7 +178,7 @@ void ClientSideDetectionService::SendClientReportMalwareRequest(
     ClientMalwareRequest* verdict,
     const ClientReportMalwareRequestCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(
           &ClientSideDetectionService::StartClientReportMalwareRequest,

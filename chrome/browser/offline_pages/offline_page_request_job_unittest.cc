@@ -248,7 +248,7 @@ class TestOfflinePageArchiver : public OfflinePageArchiver {
   void CreateArchive(const base::FilePath& archives_dir,
                      const CreateArchiveParams& create_archive_params,
                      const CreateArchiveCallback& callback) override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(callback, this, ArchiverResult::SUCCESSFULLY_CREATED, url_,
                    archive_file_path_, base::string16(), archive_file_size_,
@@ -793,7 +793,7 @@ void OfflinePageRequestJobTest::ReadCompleted(
   bytes_read_ = bytes_read;
   is_offline_page_set_in_navigation_data_ =
       is_offline_page_set_in_navigation_data;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
 }
 

@@ -160,7 +160,7 @@ std::unique_ptr<EventConverterEvdev> OpenInputDevice(
 InputDeviceFactoryEvdev::InputDeviceFactoryEvdev(
     std::unique_ptr<DeviceEventDispatcherEvdev> dispatcher,
     CursorDelegateEvdev* cursor)
-    : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       cursor_(cursor),
 #if defined(USE_EVDEV_GESTURES)
       gesture_property_provider_(new GesturePropertyProvider),
@@ -186,7 +186,7 @@ void InputDeviceFactoryEvdev::AddInputDevice(int id,
 
   std::unique_ptr<EventConverterEvdev> converter = OpenInputDevice(params);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&InputDeviceFactoryEvdev::AttachInputDevice,
                  weak_ptr_factory_.GetWeakPtr(), base::Passed(&converter)));

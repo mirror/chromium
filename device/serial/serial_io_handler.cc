@@ -54,7 +54,7 @@ void SerialIoHandler::Open(const std::string& port,
   DCHECK(client) << "Could not get permission_broker client.";
   // PermissionBrokerClient should be called on the UI thread.
   scoped_refptr<base::SingleThreadTaskRunner> task_runner =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   ui_thread_task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(
@@ -66,7 +66,7 @@ void SerialIoHandler::Open(const std::string& port,
       FROM_HERE,
       {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
       base::BindOnce(&SerialIoHandler::StartOpen, this, port,
-                     base::ThreadTaskRunnerHandle::Get()));
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 #endif  // defined(OS_CHROMEOS)
 }
 
@@ -262,14 +262,14 @@ bool SerialIoHandler::ConfigurePort(
 
 void SerialIoHandler::QueueReadCompleted(int bytes_read,
                                          mojom::SerialReceiveError error) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&SerialIoHandler::ReadCompleted, this, bytes_read, error));
 }
 
 void SerialIoHandler::QueueWriteCompleted(int bytes_written,
                                           mojom::SerialSendError error) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&SerialIoHandler::WriteCompleted, this,
                                 bytes_written, error));
 }

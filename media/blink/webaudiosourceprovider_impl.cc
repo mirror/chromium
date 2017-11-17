@@ -312,7 +312,7 @@ void WebAudioSourceProviderImpl::OnSetFormat() {
 scoped_refptr<SwitchableAudioRendererSink>
 WebAudioSourceProviderImpl::CreateFallbackSink() {
   // Assuming it is called on media thread.
-  return new NullAudioSink(base::ThreadTaskRunnerHandle::Get());
+  return new NullAudioSink(base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 int WebAudioSourceProviderImpl::TeeFilter::Render(

@@ -105,7 +105,7 @@ class MockFileSelector : public file_manager::FileSelector {
 
     // Send response to the extension function.
     // The callback will take a reference to the function and keep it alive.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(
             &FileBrowserHandlerInternalSelectFileFunction::OnFilePathSelected,

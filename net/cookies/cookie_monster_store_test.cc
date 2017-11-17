@@ -53,7 +53,7 @@ void MockPersistentCookieStore::Load(const LoadedCallback& loaded_callback) {
     out_cookies.swap(load_result_);
     loaded_ = true;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(loaded_callback, base::Passed(&out_cookies)));
 }
 
@@ -69,7 +69,7 @@ void MockPersistentCookieStore::LoadCookiesForKey(
     Load(loaded_callback);
   } else {
     std::vector<std::unique_ptr<CanonicalCookie>> empty_cookies;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(loaded_callback, base::Passed(&empty_cookies)));
   }
 }
@@ -91,8 +91,8 @@ void MockPersistentCookieStore::SetBeforeFlushCallback(
 
 void MockPersistentCookieStore::Flush(base::OnceClosure callback) {
   if (!callback.is_null())
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  std::move(callback));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           std::move(callback));
 }
 
 void MockPersistentCookieStore::SetForceKeepSessionState() {
@@ -146,7 +146,7 @@ void MockSimplePersistentCookieStore::Load(
   for (auto it = cookies_.begin(); it != cookies_.end(); it++)
     out_cookies.push_back(std::make_unique<CanonicalCookie>(it->second));
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(loaded_callback, base::Passed(&out_cookies)));
   loaded_ = true;
 }
@@ -158,7 +158,7 @@ void MockSimplePersistentCookieStore::LoadCookiesForKey(
     Load(loaded_callback);
   } else {
     std::vector<std::unique_ptr<CanonicalCookie>> empty_cookies;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(loaded_callback, base::Passed(&empty_cookies)));
   }
 }
@@ -189,8 +189,8 @@ void MockSimplePersistentCookieStore::SetBeforeFlushCallback(
 
 void MockSimplePersistentCookieStore::Flush(base::OnceClosure callback) {
   if (!callback.is_null())
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  std::move(callback));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           std::move(callback));
 }
 
 void MockSimplePersistentCookieStore::SetForceKeepSessionState() {

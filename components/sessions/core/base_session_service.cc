@@ -121,7 +121,7 @@ void BaseSessionService::StartSaveTimer() {
   // Don't start a timer when testing.
   if (delegate_->ShouldUseDelayedSave() &&
       base::ThreadTaskRunnerHandle::IsSet() && !weak_factory_.HasWeakPtrs()) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&BaseSessionService::Save, weak_factory_.GetWeakPtr()),
         base::TimeDelta::FromMilliseconds(kSaveDelayMS));
@@ -160,10 +160,10 @@ BaseSessionService::ScheduleGetLastSessionCommands(
   GetCommandsCallback run_if_not_canceled =
       base::Bind(&RunIfNotCanceled, is_canceled, callback);
 
-  GetCommandsCallback callback_runner =
-      base::Bind(&PostOrRunInternalGetCommandsCallback,
-                 base::RetainedRef(base::ThreadTaskRunnerHandle::Get()),
-                 run_if_not_canceled);
+  GetCommandsCallback callback_runner = base::Bind(
+      &PostOrRunInternalGetCommandsCallback,
+      base::RetainedRef(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+      run_if_not_canceled);
 
   RunTaskOnBackendThread(
       FROM_HERE, base::BindOnce(&SessionBackend::ReadLastSessionCommands,

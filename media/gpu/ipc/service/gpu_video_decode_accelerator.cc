@@ -155,7 +155,7 @@ GpuVideoDecodeAccelerator::GpuVideoDecodeAccelerator(
       textures_per_buffer_(0),
       filter_removed_(base::WaitableEvent::ResetPolicy::MANUAL,
                       base::WaitableEvent::InitialState::NOT_SIGNALED),
-      child_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      child_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       io_task_runner_(io_task_runner),
       overlay_factory_cb_(overlay_factory_cb),
       weak_factory_for_io_(this) {

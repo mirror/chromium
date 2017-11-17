@@ -114,7 +114,7 @@ class ReadErrorUploadDataStream : public UploadDataStream {
 
   int ReadInternal(IOBuffer* buf, int buf_len) override {
     if (async_ == FailureMode::ASYNC) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(&ReadErrorUploadDataStream::CompleteRead,
                                 weak_factory_.GetWeakPtr()));
       return ERR_IO_PENDING;
@@ -305,7 +305,7 @@ class QuicHttpStreamTest
         QuicTime::Delta::FromMilliseconds(kQuicYieldAfterDurationMilliseconds),
         /*cert_verify_flags=*/0, DefaultQuicConfig(), &crypto_config_,
         "CONNECTION_UNKNOWN", dns_start, dns_end, &push_promise_index_, nullptr,
-        base::ThreadTaskRunnerHandle::Get().get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
         /*socket_performance_watcher=*/nullptr, net_log_.bound().net_log()));
     session_->Initialize();
     TestCompletionCallback callback;

@@ -455,7 +455,7 @@ TEST_F(ConnectionFactoryImplTest, CanarySucceedsRetryDuringLogin) {
   EXPECT_FALSE(factory()->IsEndpointReachable());
 
   // Pump the loop, to ensure the pending backoff retry has no effect.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       base::TimeDelta::FromMilliseconds(1));
   WaitForConnections();

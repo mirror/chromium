@@ -138,7 +138,7 @@ void CardUnmaskPromptViews::GotVerificationResult(
     progress_label_->SetText(l10n_util::GetStringUTF16(
         IDS_AUTOFILL_CARD_UNMASK_VERIFICATION_SUCCESS));
     progress_throbber_->SetChecked(true);
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&CardUnmaskPromptViews::ClosePrompt,
                        weak_ptr_factory_.GetWeakPtr()),

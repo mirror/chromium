@@ -2194,9 +2194,10 @@ class WaylandRemoteShell : public ash::TabletModeObserver,
  private:
   void ScheduleSendDisplayMetrics(int delay_ms) {
     needs_send_display_metrics_ = true;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE, base::Bind(&WaylandRemoteShell::SendDisplayMetrics,
-                              weak_ptr_factory_.GetWeakPtr()),
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&WaylandRemoteShell::SendDisplayMetrics,
+                   weak_ptr_factory_.GetWeakPtr()),
         base::TimeDelta::FromMilliseconds(delay_ms));
   }
 

@@ -154,7 +154,7 @@ class MockDisplayInfoProvider : public DisplayInfoProvider {
       const std::string& id,
       std::string* error,
       DisplayInfoProvider::TouchCalibrationCallback callback) override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(std::move(callback), native_touch_calibration_success_));
     return true;

@@ -636,7 +636,7 @@ void PrefsTabHelper::OnWebPrefChanged(const std::string& pref_name) {
   // Use PostTask to dispatch the OnWebkitPreferencesChanged notification to
   // give other observers (particularly the FontFamilyCache) a chance to react
   // to the pref change.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&PrefsTabHelper::NotifyWebkitPreferencesChanged,
                                 weak_ptr_factory_.GetWeakPtr(), pref_name));
 }

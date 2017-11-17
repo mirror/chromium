@@ -130,7 +130,8 @@ BrowserPolicyConnectorChromeOS::BrowserPolicyConnectorChromeOS()
 
       device_cloud_policy_manager_ = new DeviceCloudPolicyManagerChromeOS(
           std::move(device_cloud_policy_store),
-          base::ThreadTaskRunnerHandle::Get(), state_keys_broker_.get());
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+          state_keys_broker_.get());
       AddPolicyProvider(base::WrapUnique<ConfigurationPolicyProvider>(
           device_cloud_policy_manager_));
     }
@@ -336,7 +337,7 @@ void BrowserPolicyConnectorChromeOS::OnDeviceCloudPolicyManagerConnected() {
   // DeviceCloudPolicyInitializer might still be on the call stack, so we
   // should release the initializer after this function returns.
   device_cloud_policy_initializer_->Shutdown();
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(
       FROM_HERE, device_cloud_policy_initializer_.release());
 }
 

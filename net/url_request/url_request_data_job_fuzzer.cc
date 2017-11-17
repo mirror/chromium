@@ -28,7 +28,8 @@ const size_t kMaxLengthForFuzzedRange = 32;
 class URLRequestDataJobFuzzerHarness : public net::URLRequest::Delegate {
  public:
   URLRequestDataJobFuzzerHarness()
-      : task_runner_(base::ThreadTaskRunnerHandle::Get()), context_(true) {
+      : task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+        context_(true) {
     job_factory_.SetProtocolHandler(
         "data", std::make_unique<net::DataProtocolHandler>());
     context_.set_job_factory(&job_factory_);

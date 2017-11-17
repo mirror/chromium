@@ -46,7 +46,7 @@ class PaymentsClientTest : public testing::Test,
     legal_message_.reset();
 
     request_context_ = new net::TestURLRequestContextGetter(
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     token_service_.reset(new FakeOAuth2TokenService());
     identity_provider_.reset(new FakeIdentityProvider(token_service_.get()));
     TestingPrefServiceSimple pref_service_;

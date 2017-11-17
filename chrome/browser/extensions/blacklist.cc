@@ -73,10 +73,9 @@ class SafeBrowsingClientImpl
 
   // Constructs a client to query the database manager for |extension_ids| and
   // run |callback| with the IDs of those which have been blacklisted.
-  SafeBrowsingClientImpl(
-      const std::set<std::string>& extension_ids,
-      const OnResultCallback& callback)
-      : callback_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+  SafeBrowsingClientImpl(const std::set<std::string>& extension_ids,
+                         const OnResultCallback& callback)
+      : callback_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         callback_(callback) {
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
@@ -191,7 +190,7 @@ void Blacklist::GetBlacklistedIDs(const std::set<std::string>& ids,
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   if (ids.empty() || !g_database_manager.Get().get().get()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, BlacklistStateMap()));
     return;
   }

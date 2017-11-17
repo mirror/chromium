@@ -1012,7 +1012,7 @@ ResourceScheduler::ResourceScheduler(bool enabled)
           base::GetFieldTrialParamByFeatureAsInt(kNetworkSchedulerYielding,
                                                  kYieldMsParam,
                                                  kYieldMsDefault))),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
   // Don't run the two experiments together.
   if (priority_requests_delayable_ && head_priority_requests_delayable_)
     priority_requests_delayable_ = false;

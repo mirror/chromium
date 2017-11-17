@@ -182,7 +182,7 @@ SpellCheck::SpellCheck(
   auto registry = base::MakeUnique<service_manager::BinderRegistry>();
   registry->AddInterface(
       base::Bind(&SpellCheck::SpellCheckerRequest, base::Unretained(this)),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   service_manager_connection->AddConnectionFilter(
       base::MakeUnique<content::SimpleConnectionFilter>(std::move(registry)));
@@ -445,7 +445,7 @@ void SpellCheck::PostDelayedSpellCheckTask(SpellcheckRequest* request) {
   if (!request)
     return;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&SpellCheck::PerformSpellCheck, AsWeakPtr(),
                             base::Owned(request)));
 }

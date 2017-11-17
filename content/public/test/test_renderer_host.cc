@@ -151,7 +151,8 @@ RenderViewHostTestEnabler::RenderViewHostTestEnabler()
 #endif
 #if defined(OS_MACOSX)
   if (base::ThreadTaskRunnerHandle::IsSet())
-    ui::WindowResizeHelperMac::Get()->Init(base::ThreadTaskRunnerHandle::Get());
+    ui::WindowResizeHelperMac::Get()->Init(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 #endif  // OS_MACOSX
 }
 

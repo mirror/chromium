@@ -213,7 +213,8 @@ DiscardableSharedMemoryManager::DiscardableSharedMemoryManager()
           base::Bind(&DiscardableSharedMemoryManager::OnMemoryPressure,
                      base::Unretained(this)))),
       // Current thread might not have a task runner in tests.
-      enforce_memory_policy_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      enforce_memory_policy_task_runner_(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       enforce_memory_policy_pending_(false),
       weak_ptr_factory_(this) {
   DCHECK_NE(memory_limit_, 0u);
@@ -222,7 +223,7 @@ DiscardableSharedMemoryManager::DiscardableSharedMemoryManager()
                  weak_ptr_factory_.GetWeakPtr());
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
       this, "DiscardableSharedMemoryManager",
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   base::MemoryCoordinatorClientRegistry::GetInstance()->Register(this);
 }
 

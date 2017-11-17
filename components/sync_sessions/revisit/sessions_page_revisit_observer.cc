@@ -34,7 +34,7 @@ void SessionsPageRevisitObserver::OnPageVisit(
 
   // Bind this task to this->AsWeakPtr() so that if we're destructed this task
   // just vanish instead of breaking things.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&SessionsPageRevisitObserver::CheckForRevisit,
                             this->AsWeakPtr(), url, transition));
 }

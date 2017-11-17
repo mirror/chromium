@@ -192,7 +192,7 @@ DragDownloadFile::DragDownloadFile(const base::FilePath& file_path,
                                    WebContents* web_contents)
     : file_path_(file_path),
       file_(std::move(file)),
-      drag_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      drag_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       state_(INITIALIZED),
       drag_ui_(nullptr),
       weak_ptr_factory_(this) {

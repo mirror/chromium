@@ -84,7 +84,7 @@ void MediaSinkDesktop::ScheduleEndOfStreamTask() {
       base::Bind(&MediaPipelineBackend::Decoder::Delegate::OnEndOfStream,
                  base::Unretained(delegate_)));
   base::TimeDelta delay = (last_frame_pts_ - GetCurrentPts()) / playback_rate_;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, eos_task_.callback(), delay);
 }
 

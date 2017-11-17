@@ -99,7 +99,7 @@ bool AvPipelineImpl::StartPlayingFrom(
   // Discard any previously pushed buffer and start feeding the pipeline.
   pushed_buffer_ = nullptr;
   enable_feeding_ = true;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&AvPipelineImpl::FetchBuffer, weak_this_));
 
   set_state(kPlaying);
@@ -300,7 +300,7 @@ void AvPipelineImpl::OnPushBufferComplete(BufferStatus status) {
     OnDecoderError();
     return;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&AvPipelineImpl::FetchBuffer, weak_this_));
 }
 

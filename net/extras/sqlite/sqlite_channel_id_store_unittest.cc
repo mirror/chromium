@@ -100,7 +100,7 @@ class SQLiteChannelIDStoreTest : public testing::Test {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
     store_ = new SQLiteChannelIDStore(
         temp_dir_.GetPath().Append(kTestChannelIDFilename),
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     std::vector<std::unique_ptr<DefaultChannelIDStore::ChannelID>> channel_ids;
     Load(&channel_ids);
     ASSERT_EQ(0u, channel_ids.size());
@@ -131,7 +131,7 @@ TEST_F(SQLiteChannelIDStoreTest, TestPersistence) {
   base::RunLoop().RunUntilIdle();
   store_ = new SQLiteChannelIDStore(
       temp_dir_.GetPath().Append(kTestChannelIDFilename),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   // Reload and test for persistence
   Load(&channel_ids);
@@ -161,7 +161,7 @@ TEST_F(SQLiteChannelIDStoreTest, TestPersistence) {
   channel_ids.clear();
   store_ = new SQLiteChannelIDStore(
       temp_dir_.GetPath().Append(kTestChannelIDFilename),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   // Reload and check if the keypair has been removed.
   Load(&channel_ids);
@@ -187,7 +187,7 @@ TEST_F(SQLiteChannelIDStoreTest, TestDeleteAll) {
   base::RunLoop().RunUntilIdle();
   store_ = new SQLiteChannelIDStore(
       temp_dir_.GetPath().Append(kTestChannelIDFilename),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   // Reload and test for persistence
   Load(&channel_ids);
@@ -205,7 +205,7 @@ TEST_F(SQLiteChannelIDStoreTest, TestDeleteAll) {
   channel_ids.clear();
   store_ = new SQLiteChannelIDStore(
       temp_dir_.GetPath().Append(kTestChannelIDFilename),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   // Reload and check that only foo.com persisted in store.
   Load(&channel_ids);
@@ -263,8 +263,8 @@ TEST_F(SQLiteChannelIDStoreTest, TestUpgradeV1) {
     SCOPED_TRACE(i);
 
     std::vector<std::unique_ptr<DefaultChannelIDStore::ChannelID>> channel_ids;
-    store_ = new SQLiteChannelIDStore(v1_db_path,
-                                      base::ThreadTaskRunnerHandle::Get());
+    store_ = new SQLiteChannelIDStore(
+        v1_db_path, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
     // Load the database. Because the existing v1 certs are implicitly of type
     // RSA, which is unsupported, they're discarded.
@@ -337,8 +337,8 @@ TEST_F(SQLiteChannelIDStoreTest, TestUpgradeV2) {
     SCOPED_TRACE(i);
 
     std::vector<std::unique_ptr<DefaultChannelIDStore::ChannelID>> channel_ids;
-    store_ = new SQLiteChannelIDStore(v2_db_path,
-                                      base::ThreadTaskRunnerHandle::Get());
+    store_ = new SQLiteChannelIDStore(
+        v2_db_path, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
     // Load the database. V2 cert keys are stored in a format that is
     // unsupported, so they will be discarded.
@@ -414,8 +414,8 @@ TEST_F(SQLiteChannelIDStoreTest, TestUpgradeV3) {
     SCOPED_TRACE(i);
 
     std::vector<std::unique_ptr<DefaultChannelIDStore::ChannelID>> channel_ids;
-    store_ = new SQLiteChannelIDStore(v3_db_path,
-                                      base::ThreadTaskRunnerHandle::Get());
+    store_ = new SQLiteChannelIDStore(
+        v3_db_path, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
     // Load the database. V3 cert keys are in a format that is no longer
     // supported, so they are discarded.
@@ -507,8 +507,8 @@ TEST_F(SQLiteChannelIDStoreTest, TestUpgradeV4) {
     SCOPED_TRACE(i);
 
     std::vector<std::unique_ptr<DefaultChannelIDStore::ChannelID>> channel_ids;
-    store_ = new SQLiteChannelIDStore(v4_db_path,
-                                      base::ThreadTaskRunnerHandle::Get());
+    store_ = new SQLiteChannelIDStore(
+        v4_db_path, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
     // Load the database. V4 cert keys are in a format that is no longer
     // supported, so they are discarded.
@@ -582,8 +582,8 @@ TEST_F(SQLiteChannelIDStoreTest, TestUpgradeV5) {
     SCOPED_TRACE(i);
 
     std::vector<std::unique_ptr<DefaultChannelIDStore::ChannelID>> channel_ids;
-    store_ = new SQLiteChannelIDStore(v5_db_path,
-                                      base::ThreadTaskRunnerHandle::Get());
+    store_ = new SQLiteChannelIDStore(
+        v5_db_path, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
     // Load the database. V5 private keys are in a format that is no longer
     // supported, so the keys get deleted in the migration.

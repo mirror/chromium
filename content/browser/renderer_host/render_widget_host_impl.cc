@@ -1922,7 +1922,7 @@ void RenderWidgetHostImpl::OnGpuSwapBuffersCompletedInternal(
     // snapshot will actually pick up that content. Insert a manual delay of
     // 1/6th of a second (to simulate 10 frames at 60 fps) before actually
     // taking the snapshot.
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&RenderWidgetHostImpl::WindowSnapshotReachedScreen,
                    weak_factory_.GetWeakPtr(), sequence_number),
@@ -2060,7 +2060,7 @@ void RenderWidgetHostImpl::OnResizeOrRepaintACK(
     bool post_callback = new_auto_size_.IsEmpty();
     new_auto_size_ = params.view_size;
     if (post_callback) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::BindOnce(&RenderWidgetHostImpl::DelayedAutoResized,
                                     weak_factory_.GetWeakPtr()));
     }

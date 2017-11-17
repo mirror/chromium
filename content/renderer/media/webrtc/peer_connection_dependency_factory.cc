@@ -479,7 +479,7 @@ void PeerConnectionDependencyFactory::TryScheduleStunProbeTrial() {
   // The underneath IPC channel has to be connected before sending any IPC
   // message.
   if (!p2p_socket_dispatcher_->connected()) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(
             &PeerConnectionDependencyFactory::TryScheduleStunProbeTrial,

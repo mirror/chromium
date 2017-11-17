@@ -287,7 +287,7 @@ void DownloadHandler::FreeDiskSpaceIfNeeded() {
   if (has_pending_free_disk_space_)
     return;
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&DownloadHandler::FreeDiskSpaceIfNeededImmediately,
                      weak_ptr_factory_.GetWeakPtr()),

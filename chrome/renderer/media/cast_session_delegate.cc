@@ -70,7 +70,7 @@ void CastSessionDelegateBase::StartUDP(
   // TODO(hubbe): Create cast environment in ctor instead.
   cast_environment_ = new CastEnvironment(
       std::unique_ptr<base::TickClock>(new base::DefaultTickClock()),
-      base::ThreadTaskRunnerHandle::Get(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       g_cast_threads.Get().GetAudioEncodeTaskRunner(),
       g_cast_threads.Get().GetVideoEncodeTaskRunner());
 

@@ -1222,15 +1222,15 @@ TEST_F(DragDropControllerTest, EventTarget) {
   ui::test::EventGenerator generator(window->GetRootWindow(), window.get());
   generator.PressLeftButton();
   // For drag enter
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ui::test::EventGenerator::MoveMouseBy,
                                 base::Unretained(&generator), 0, 1));
   // For drag update
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ui::test::EventGenerator::MoveMouseBy,
                                 base::Unretained(&generator), 0, 1));
   // For perform drop
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&ui::test::EventGenerator::ReleaseLeftButton,
                                 base::Unretained(&generator)));
 

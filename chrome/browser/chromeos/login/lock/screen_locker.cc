@@ -309,7 +309,7 @@ void ScreenLocker::OnAuthSuccess(const UserContext& user_context) {
 
   // Add guard for case when something get broken in call chain to unlock
   // for sure.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&ScreenLocker::UnlockOnLoginSuccess,
                      weak_factory_.GetWeakPtr()),

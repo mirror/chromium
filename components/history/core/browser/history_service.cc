@@ -316,9 +316,10 @@ base::CancelableTaskTracker::TaskId HistoryService::ScheduleDBTask(
   // the current message loop so that we can forward the call to the method
   // HistoryDBTask::DoneRunOnMainThread() in the correct thread.
   backend_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&HistoryBackend::ProcessDBTask, history_backend_,
-                            base::Passed(&task),
-                            base::ThreadTaskRunnerHandle::Get(), is_canceled));
+      FROM_HERE,
+      base::Bind(&HistoryBackend::ProcessDBTask, history_backend_,
+                 base::Passed(&task),
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE), is_canceled));
   return task_id;
 }
 
@@ -333,7 +334,7 @@ void HistoryService::SetOnBackendDestroyTask(const base::Closure& task) {
   ScheduleTask(
       PRIORITY_NORMAL,
       base::Bind(&HistoryBackend::SetOnBackendDestroyTask, history_backend_,
-                 base::ThreadTaskRunnerHandle::Get(), task));
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE), task));
 }
 
 void HistoryService::TopHosts(size_t num_hosts,
@@ -949,7 +950,7 @@ bool HistoryService::Init(
   // Create the history backend.
   scoped_refptr<HistoryBackend> backend(new HistoryBackend(
       new BackendDelegate(weak_ptr_factory_.GetWeakPtr(),
-                          base::ThreadTaskRunnerHandle::Get()),
+                          base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       history_client_ ? history_client_->CreateBackendClient() : nullptr,
       backend_task_runner_));
   history_backend_.swap(backend);

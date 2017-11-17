@@ -77,7 +77,7 @@ void CastTransportImpl::SetReadDelegate(std::unique_ptr<Delegate> delegate) {
 void CastTransportImpl::FlushWriteQueue() {
   for (; !write_queue_.empty(); write_queue_.pop()) {
     net::CompletionCallback& callback = write_queue_.front().callback;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, net::ERR_FAILED));
     callback.Reset();
   }
@@ -88,7 +88,7 @@ void CastTransportImpl::SendMessage(const CastMessage& message,
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   std::string serialized_message;
   if (!MessageFramer::Serialize(message, &serialized_message)) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, net::ERR_FAILED));
     return;
   }
@@ -231,7 +231,7 @@ int CastTransportImpl::DoWriteCallback() {
   DCHECK(!write_queue_.empty());
 
   WriteRequest& request = write_queue_.front();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(request.callback, net::OK));
 
   write_queue_.pop();

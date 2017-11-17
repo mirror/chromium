@@ -179,7 +179,7 @@ void SetUpTestContextGetterWithQuicTimeoutInfo(
   context->Init();
 
   *context_getter = new net::TestURLRequestContextGetter(
-      base::ThreadTaskRunnerHandle::Get(), std::move(context));
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), std::move(context));
 }
 
 void SetUpTestContextGetterWithRequest(
@@ -197,7 +197,7 @@ void SetUpTestContextGetterWithRequest(
   (*request)->Start();
 
   *context_getter = new net::TestURLRequestContextGetter(
-      base::ThreadTaskRunnerHandle::Get(), std::move(context));
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), std::move(context));
 }
 
 // An implementation of NetExportFileWriter::StateObserver that allows waiting

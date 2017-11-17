@@ -292,7 +292,7 @@ TransportSecurityPersister::TransportSecurityPersister(
     const scoped_refptr<base::SequencedTaskRunner>& background_runner)
     : transport_security_state_(state),
       writer_(profile_path.AppendASCII("TransportSecurity"), background_runner),
-      foreground_runner_(base::ThreadTaskRunnerHandle::Get()),
+      foreground_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       background_runner_(background_runner),
       weak_ptr_factory_(this) {
   transport_security_state_->SetDelegate(this);

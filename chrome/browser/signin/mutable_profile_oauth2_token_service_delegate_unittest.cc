@@ -70,7 +70,7 @@ class MutableProfileOAuth2TokenServiceDelegateTest
         AccountTrackerService::MIGRATION_NOT_STARTED);
     client_.reset(new TestSigninClient(&pref_service_));
     client_->SetURLRequestContext(new net::TestURLRequestContextGetter(
-        base::ThreadTaskRunnerHandle::Get()));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
     client_->LoadTokenDatabase();
     account_tracker_service_.Initialize(client_.get());
     oauth2_service_delegate_.reset(new MutableProfileOAuth2TokenServiceDelegate(

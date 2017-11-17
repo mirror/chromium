@@ -132,7 +132,7 @@ void MockOAuth2TokenService::FetchOAuth2Token(
     const std::string& client_id,
     const std::string& client_secret,
     const ScopeSet& scopes) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&OAuth2TokenService::RequestImpl::InformConsumer,
                             request->AsWeakPtr(), response_error_,
                             response_access_token_, response_expiration_));
@@ -180,8 +180,8 @@ void OAuth2TokenServiceRequestTest::SetUp() {
   scopes_.insert(kScope);
   oauth2_service_.reset(new MockOAuth2TokenService);
   oauth2_service_->AddAccount(kAccountId);
-  provider_ =
-      new Provider(base::ThreadTaskRunnerHandle::Get(), oauth2_service_.get());
+  provider_ = new Provider(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                           oauth2_service_.get());
 }
 
 void OAuth2TokenServiceRequestTest::TearDown() {

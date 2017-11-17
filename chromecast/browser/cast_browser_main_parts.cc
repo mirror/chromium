@@ -323,7 +323,8 @@ CastBrowserMainParts::GetMediaTaskRunner() {
     // and we want to initialize it with the correct task runner before any
     // tasks that might use it are posted to the media thread.
     media_resource_tracker_ = new media::MediaResourceTracker(
-        base::ThreadTaskRunnerHandle::Get(), media_thread_->task_runner());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+        media_thread_->task_runner());
   }
   return media_thread_->task_runner();
 #else
@@ -371,7 +372,7 @@ void CastBrowserMainParts::PreMainMessageLoopStart() {
 void CastBrowserMainParts::PostMainMessageLoopStart() {
   cast_browser_process_->SetMetricsHelper(
       base::MakeUnique<metrics::CastMetricsHelper>(
-          base::ThreadTaskRunnerHandle::Get()));
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 
 #if defined(OS_ANDROID)
   base::MessageLoopForUI::current()->Start();

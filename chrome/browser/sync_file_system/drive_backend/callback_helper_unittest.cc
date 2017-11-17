@@ -67,7 +67,7 @@ TEST(DriveBackendCallbackHelperTest, RunOnOtherThreadTest) {
   thread.Start();
 
   scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   scoped_refptr<base::SequencedTaskRunner> worker_task_runner =
       thread.task_runner();
 

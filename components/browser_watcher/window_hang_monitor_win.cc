@@ -75,7 +75,7 @@ WindowHangMonitor::~WindowHangMonitor() {
 
 void WindowHangMonitor::Initialize(base::Process process) {
   window_process_ = std::move(process);
-  timer_.SetTaskRunner(base::ThreadTaskRunnerHandle::Get());
+  timer_.SetTaskRunner(base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 
   ScheduleFindWindow();
 }

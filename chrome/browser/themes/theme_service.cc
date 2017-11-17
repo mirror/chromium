@@ -544,7 +544,7 @@ void ThemeService::ClearAllThemeData() {
   // http://crbug.com/62154
   // RemoveUnusedThemes is called on a task because ClearAllThemeData() may
   // be called as a result of OnExtensionUnloaded().
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&ThemeService::RemoveUnusedThemes,
                             weak_ptr_factory_.GetWeakPtr(), true));
 }
@@ -796,9 +796,10 @@ void ThemeService::OnExtensionServiceReady() {
   theme_observer_ = base::MakeUnique<ThemeObserver>(this);
 #endif
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&ThemeService::RemoveUnusedThemes,
-                            weak_ptr_factory_.GetWeakPtr(), false),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&ThemeService::RemoveUnusedThemes,
+                 weak_ptr_factory_.GetWeakPtr(), false),
       base::TimeDelta::FromSeconds(kRemoveUnusedThemesStartupDelay));
 }
 

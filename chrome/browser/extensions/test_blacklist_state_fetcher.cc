@@ -35,8 +35,8 @@ TestBlacklistStateFetcher::TestBlacklistStateFetcher(
     BlacklistStateFetcher* fetcher) : fetcher_(fetcher) {
   fetcher_->SetSafeBrowsingConfig(CreateSafeBrowsingProtocolConfig());
   scoped_refptr<net::TestURLRequestContextGetter> context =
-        new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get());
+      new net::TestURLRequestContextGetter(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   fetcher_->SetURLRequestContextForTest(context.get());
 }
 

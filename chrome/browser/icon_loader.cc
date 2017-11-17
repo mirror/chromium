@@ -22,7 +22,7 @@ IconLoader* IconLoader::Create(const base::FilePath& file_path,
 }
 
 void IconLoader::Start() {
-  target_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  target_task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
   base::PostTaskWithTraits(
       FROM_HERE, traits(),

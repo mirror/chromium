@@ -895,7 +895,8 @@ std::unique_ptr<ModelTypeConnector>
 SyncManagerImpl::GetModelTypeConnectorProxy() {
   DCHECK(initialized_);
   return std::make_unique<ModelTypeConnectorProxy>(
-      base::ThreadTaskRunnerHandle::Get(), model_type_registry_->AsWeakPtr());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+      model_type_registry_->AsWeakPtr());
 }
 
 const std::string SyncManagerImpl::cache_guid() {

@@ -1847,7 +1847,7 @@ void BookmarkBarView::StartShowFolderDropMenuTimer(const BookmarkNode* node) {
     return;
   }
   show_folder_method_factory_.InvalidateWeakPtrs();
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&BookmarkBarView::ShowDropFolderForNode,
                      show_folder_method_factory_.GetWeakPtr(), node),

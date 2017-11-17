@@ -432,7 +432,7 @@ IN_PROC_BROWSER_TEST_F(TabCaptureApiTest, MAYBE_TabIndicator) {
           chrome::GetTabAlertStateForContents(contents);
       if (alert_state != last_alert_state_) {
         last_alert_state_ = alert_state;
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
       }
     }

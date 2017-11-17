@@ -99,7 +99,8 @@ void PepperPlatformAudioOutput::OnStreamCreated(
 #endif
   DCHECK(handle.GetSize());
 
-  if (base::ThreadTaskRunnerHandle::Get().get() == main_task_runner_.get()) {
+  if (base::ThreadTaskRunnerHandle::Get(FROM_HERE).get() ==
+      main_task_runner_.get()) {
     // Must dereference the client only on the main thread. Shutdown may have
     // occurred while the request was in-flight, so we need to NULL check.
     if (client_)
@@ -122,7 +123,7 @@ PepperPlatformAudioOutput::~PepperPlatformAudioOutput() {
 
 PepperPlatformAudioOutput::PepperPlatformAudioOutput()
     : client_(nullptr),
-      main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       io_task_runner_(ChildProcess::current()->io_task_runner()) {}
 
 bool PepperPlatformAudioOutput::Initialize(int sample_rate,

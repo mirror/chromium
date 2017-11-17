@@ -101,7 +101,7 @@ class PrefetchImporterImplTest : public testing::Test {
   }
 
   scoped_refptr<base::SequencedTaskRunner> background_task_runner() {
-    return base::ThreadTaskRunnerHandle::Get();
+    return base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   }
   base::FilePath temp_dir_path() const { return temp_dir_.GetPath(); }
   Profile* profile() { return profile_.get(); }

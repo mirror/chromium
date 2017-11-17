@@ -92,7 +92,7 @@ cc::UIResourceBitmap Thumbnail::GetBitmap(cc::UIResourceId uid,
     // InvalidateCachedThumbnail() causes |this| to be deleted, so
     // don't delete the resource while LayerTeeHost calls into |this|
     // to avoid reentry there.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&Thumbnail::DoInvalidate, weak_factory_.GetWeakPtr()));
     return bitmap_;

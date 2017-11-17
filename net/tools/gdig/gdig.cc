@@ -399,7 +399,7 @@ void GDig::Start() {
                                                base::Unretained(this)));
     timeout_closure_.Reset(base::Bind(&GDig::OnTimeout,
                                       base::Unretained(this)));
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, timeout_closure_.callback(), config_timeout_);
   }
 }
@@ -455,7 +455,7 @@ void GDig::ReplayNextEntry() {
     const ReplayLogEntry& entry = replay_log_[replay_log_index_];
     if (time_since_start < entry.start_time) {
       // Delay call to next time and return.
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE, base::Bind(&GDig::ReplayNextEntry, base::Unretained(this)),
           entry.start_time - time_since_start);
       return;

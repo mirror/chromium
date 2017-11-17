@@ -80,7 +80,7 @@ MultiDemuxerStreamAdaptersTest::~MultiDemuxerStreamAdaptersTest() {
 }
 
 void MultiDemuxerStreamAdaptersTest::Start() {
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&MultiDemuxerStreamAdaptersTest::OnTestTimeout,
                  base::Unretained(this)),
@@ -94,8 +94,8 @@ void MultiDemuxerStreamAdaptersTest::Start() {
 
   for (const auto& stream : demuxer_streams_) {
     coded_frame_providers_.push_back(base::MakeUnique<DemuxerStreamAdapter>(
-        base::ThreadTaskRunnerHandle::Get(), media_task_runner_factory_,
-        stream.get()));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+        media_task_runner_factory_, stream.get()));
   }
   running_stream_count_ = coded_frame_providers_.size();
 
@@ -109,7 +109,7 @@ void MultiDemuxerStreamAdaptersTest::Start() {
         base::Bind(&CodedFrameProvider::Read,
                    base::Unretained(code_frame_provider.get()), read_cb);
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, task);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, task);
   }
 }
 

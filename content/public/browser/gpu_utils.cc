@@ -140,9 +140,10 @@ void StopGpuProcess(const base::Closure& callback) {
   content::GpuProcessHost::CallOnIO(
       content::GpuProcessHost::GPU_PROCESS_KIND_SANDBOXED,
       false /* force_create */,
-      base::Bind(&StopGpuProcessImpl,
-                 base::Bind(RunTaskOnTaskRunner,
-                            base::ThreadTaskRunnerHandle::Get(), callback)));
+      base::Bind(
+          &StopGpuProcessImpl,
+          base::Bind(RunTaskOnTaskRunner,
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE), callback)));
 }
 
 }  // namespace content

@@ -518,14 +518,14 @@ void BasicStep3(TestDragDropClient* client, XID toplevel) {
 TEST_F(DesktopDragDropClientAuraX11Test, Basic) {
   XID toplevel = 1;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&BasicStep2, client(), toplevel));
   int result = StartDragAndDrop();
   EXPECT_EQ(ui::DragDropTypes::DRAG_COPY, result);
 
   // Do another drag and drop to test that the data is properly cleaned up as a
   // result of the XdndFinished message.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&BasicStep3, client(), toplevel));
   result = StartDragAndDrop();
   EXPECT_EQ(ui::DragDropTypes::DRAG_COPY, result);
@@ -557,7 +557,7 @@ TEST_F(DesktopDragDropClientAuraX11Test, HighDPI200) {
       static_cast<aura::TestScreen*>(display::Screen::GetScreen());
   screen->SetDeviceScaleFactor(2.0f);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&HighDPIStep, client()));
   int result = StartDragAndDrop();
   EXPECT_EQ(ui::DragDropTypes::DRAG_NONE, result);
@@ -568,7 +568,7 @@ TEST_F(DesktopDragDropClientAuraX11Test, HighDPI150) {
       static_cast<aura::TestScreen*>(display::Screen::GetScreen());
   screen->SetDeviceScaleFactor(1.5f);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&HighDPIStep, client()));
   int result = StartDragAndDrop();
   EXPECT_EQ(ui::DragDropTypes::DRAG_NONE, result);
@@ -602,7 +602,7 @@ void TargetDoesNotRespondStep2(TestDragDropClient* client) {
 // DNDCollectionWindow is an example of an XdndAware target which does not
 // respond to XdndPosition messages at all.
 TEST_F(DesktopDragDropClientAuraX11Test, TargetDoesNotRespond) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&TargetDoesNotRespondStep2, client()));
   int result = StartDragAndDrop();
   EXPECT_EQ(ui::DragDropTypes::DRAG_NONE, result);
@@ -647,7 +647,7 @@ void QueuePositionStep2(TestDragDropClient* client) {
 // Test that XdndPosition messages are queued till the pending XdndPosition
 // message is acked via an XdndStatus message.
 TEST_F(DesktopDragDropClientAuraX11Test, QueuePosition) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&QueuePositionStep2, client()));
   int result = StartDragAndDrop();
   EXPECT_EQ(ui::DragDropTypes::DRAG_COPY, result);
@@ -699,7 +699,7 @@ void TargetChangesStep2(TestDragDropClient* client) {
 
 // Test the behavior when the target changes during a drag.
 TEST_F(DesktopDragDropClientAuraX11Test, TargetChanges) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&TargetChangesStep2, client()));
   int result = StartDragAndDrop();
   EXPECT_EQ(ui::DragDropTypes::DRAG_COPY, result);
@@ -768,13 +768,13 @@ void RejectAfterMouseReleaseStep3(TestDragDropClient* client) {
 // Test that the source sends XdndLeave instead of XdndDrop if the drag
 // operation is rejected after the mouse is released.
 TEST_F(DesktopDragDropClientAuraX11Test, RejectAfterMouseRelease) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&RejectAfterMouseReleaseStep2, client()));
   int result = StartDragAndDrop();
   EXPECT_EQ(ui::DragDropTypes::DRAG_NONE, result);
 
   // Repeat the test but reject the drop in the XdndFinished message instead.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&RejectAfterMouseReleaseStep3, client()));
   result = StartDragAndDrop();
   EXPECT_EQ(ui::DragDropTypes::DRAG_NONE, result);
@@ -973,7 +973,7 @@ void ChromeSourceTargetStep2(SimpleTestDragDropClient* client,
 }  // namespace
 
 TEST_F(DesktopDragDropClientAuraX11ChromeSourceTargetTest, Basic) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&ChromeSourceTargetStep2, client(), ui::EF_NONE));
   int result = StartDragAndDrop();
   EXPECT_EQ(ui::DragDropTypes::DRAG_COPY, result);
@@ -982,7 +982,7 @@ TEST_F(DesktopDragDropClientAuraX11ChromeSourceTargetTest, Basic) {
 // Test that if 'Ctrl' is pressed during a drag and drop operation, that
 // the aura::client::DragDropDelegate is properly notified.
 TEST_F(DesktopDragDropClientAuraX11ChromeSourceTargetTest, CtrlPressed) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&ChromeSourceTargetStep2, client(), ui::EF_CONTROL_DOWN));
   int result = StartDragAndDrop();

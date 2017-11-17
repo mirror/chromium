@@ -109,7 +109,7 @@ void ProximityMonitorImpl::UpdatePollingState() {
 
     // Polling can re-entrantly call back into this method, so make sure to
     // schedule the next polling iteration prior to executing the current one.
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&ProximityMonitorImpl::PerformScheduledUpdatePollingState,
                    polling_weak_ptr_factory_.GetWeakPtr()),

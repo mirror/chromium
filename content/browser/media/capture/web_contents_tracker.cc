@@ -25,7 +25,7 @@ void WebContentsTracker::Start(int render_process_id, int main_render_frame_id,
                                const ChangeCallback& callback) {
   DCHECK(!task_runner_ || task_runner_->BelongsToCurrentThread());
 
-  task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   DCHECK(task_runner_);
   callback_ = callback;
 

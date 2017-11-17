@@ -65,7 +65,7 @@ void V4Database::Create(
   DCHECK(!list_infos.empty());
 
   const scoped_refptr<base::SingleThreadTaskRunner> callback_task_runner =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   db_task_runner->PostTask(
       FROM_HERE, base::Bind(&V4Database::CreateOnTaskRunner, db_task_runner,
                             base_path, list_infos, callback_task_runner,
@@ -163,7 +163,7 @@ void V4Database::ApplyUpdate(
   // Post the V4Store update task on the task runner but get the callback on the
   // current thread.
   const scoped_refptr<base::SingleThreadTaskRunner> current_task_runner =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   for (std::unique_ptr<ListUpdateResponse>& response :
        *parsed_server_response) {
     ListIdentifier identifier(*response);

@@ -90,7 +90,7 @@ bool StartupController::StartUp(StartUpDeferredOption deferred_option) {
           switches::kSyncDisableDeferredStartup) &&
       sync_prefs_->GetPreferredDataTypes(registered_types_).Has(SESSIONS)) {
     if (first_start) {
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE,
           base::Bind(&StartupController::OnFallbackStartupTimerExpired,
                      weak_factory_.GetWeakPtr()),

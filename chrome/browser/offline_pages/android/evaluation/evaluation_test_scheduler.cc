@@ -30,8 +30,8 @@ const char kLogTag[] = "EvaluationTestScheduler";
 void StartProcessing();
 
 void ProcessingDoneCallback(bool result) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                base::Bind(&StartProcessing));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, base::Bind(&StartProcessing));
 }
 
 void GetAllRequestsDone(
@@ -48,7 +48,7 @@ void StartProcessing() {
   // If there's no network connection then try in 2 seconds.
   if (net::NetworkChangeNotifier::GetConnectionType() ==
       net::NetworkChangeNotifier::ConnectionType::CONNECTION_NONE) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, base::Bind(&StartProcessing),
         base::TimeDelta::FromSeconds(2));
     return;
@@ -81,8 +81,8 @@ void EvaluationTestScheduler::Schedule(
   }
   coordinator_->GetLogger()->RecordActivity(std::string(kLogTag) +
                                             " Start schedule!");
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                base::Bind(&StartProcessing));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, base::Bind(&StartProcessing));
 }
 
 void EvaluationTestScheduler::BackupSchedule(
@@ -108,8 +108,8 @@ DeviceConditions& EvaluationTestScheduler::GetCurrentDeviceConditions() {
 }
 
 void EvaluationTestScheduler::ImmediateScheduleCallback(bool result) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                base::Bind(&StartProcessing));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, base::Bind(&StartProcessing));
 }
 
 }  // namespace android

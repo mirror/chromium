@@ -81,7 +81,7 @@ int FakeSocket::Write(net::IOBuffer* buf, int buf_len,
   DCHECK(!write_pending_);
 
   if (async_write_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&FakeSocket::DoAsyncWrite, base::Unretained(this),
                        scoped_refptr<net::IOBuffer>(buf), buf_len, callback));

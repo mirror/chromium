@@ -90,7 +90,7 @@ class TestCardUnmaskPromptController : public CardUnmaskPromptControllerImpl {
     } else if (expected_failure_permanent_) {
       verification_message = base::ASCIIToUTF16("This is a permanent error.");
     }
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&TestCardUnmaskPromptController::ShowVerificationResult,
                    weak_factory_.GetWeakPtr(), verification_message,
@@ -221,7 +221,7 @@ IN_PROC_BROWSER_TEST_F(CardUnmaskPromptViewBrowserTest,
   // Simulate the user clicking [x] before the "Success!" message disappears.
   CardUnmaskPromptViewTester::For(controller()->view())->Close();
   // Wait a little while; there should be no crash.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&content::MessageLoopRunner::Quit,
                      base::Unretained(runner_.get())),

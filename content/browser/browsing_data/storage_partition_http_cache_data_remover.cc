@@ -88,7 +88,7 @@ void StoragePartitionHttpCacheDataRemover::ClearHttpCacheOnIOThread() {
 void StoragePartitionHttpCacheDataRemover::ClearedHttpCache() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   done_callback_.Run();
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 // The expected state sequence is CacheState::NONE --> CacheState::CREATE_MAIN

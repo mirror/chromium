@@ -302,7 +302,7 @@ void CastSocketImpl::PostTaskToStartConnectLoop(int result) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   ResetConnectLoopCallback();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(connect_loop_callback_.callback(), result));
 }
 

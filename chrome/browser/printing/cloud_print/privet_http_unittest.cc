@@ -263,7 +263,7 @@ class PrivetHTTPTest : public TestWithParam<const char*> {
     PrivetURLFetcher::ResetTokenMapForTests();
 
     request_context_ = base::MakeRefCounted<net::TestURLRequestContextGetter>(
-        base::ThreadTaskRunnerHandle::Get());
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     privet_client_ = PrivetV1HTTPClient::CreateDefault(
         std::make_unique<PrivetHTTPClientImpl>(
             "sampleDevice._privet._tcp.local",
@@ -352,7 +352,7 @@ class PrivetHTTPTest : public TestWithParam<const char*> {
   void RunFor(base::TimeDelta time_period) {
     base::CancelableCallback<void()> callback(base::Bind(
         &PrivetHTTPTest::Stop, base::Unretained(this)));
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, callback.callback(), time_period);
 
     base::RunLoop().Run();
@@ -1067,14 +1067,14 @@ class PrivetHttpWithServerTest : public ::testing::Test,
     success_ = false;
     error_ = error;
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, quit_);
   }
 
   void OnParsedJson(PrivetURLFetcher* fetcher,
                     const base::DictionaryValue& value,
                     bool has_error) override {
     NOTREACHED();
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, quit_);
   }
 
   bool OnRawData(PrivetURLFetcher* fetcher,
@@ -1084,7 +1084,7 @@ class PrivetHttpWithServerTest : public ::testing::Test,
     done_ = true;
     success_ = true;
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE, quit_);
     return true;
   }
 

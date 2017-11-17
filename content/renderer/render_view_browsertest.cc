@@ -461,7 +461,7 @@ class DevToolsAgentTest : public RenderViewImplTest {
                     static_cast<int>(call_frames->GetSize()));
         }
         expecting_pause_ = false;
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE,
             base::BindOnce(&DevToolsAgentTest::DispatchDevToolsMessage,
                            base::Unretained(this), "Debugger.resume",
@@ -1494,7 +1494,7 @@ TEST_F(RenderViewImplTest, AndroidContextMenuSelectionOrdering) {
 
   scoped_refptr<content::MessageLoopRunner> message_loop_runner =
       new content::MessageLoopRunner;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, message_loop_runner->QuitClosure());
 
   EXPECT_FALSE(render_thread_->sink().GetUniqueMessageMatching(
@@ -2600,7 +2600,7 @@ TEST_F(DevToolsAgentTest, DevToolsResumeOnClose) {
 
   // Executing javascript will pause the thread and create nested run loop.
   // Posting task simulates message coming from browser.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&DevToolsAgentTest::CloseWhilePaused,
                                 base::Unretained(this)));
   ExecuteJavaScriptForTests("debugger;");

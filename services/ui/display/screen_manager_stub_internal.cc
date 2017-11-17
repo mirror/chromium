@@ -69,7 +69,7 @@ void ScreenManagerStubInternal::Init(ScreenManagerDelegate* delegate) {
   DCHECK(delegate);
   delegate_ = delegate;
   display_ = DefaultDisplay();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&ScreenManagerStubInternal::FixedSizeScreenConfiguration,
                  weak_ptr_factory_.GetWeakPtr()));
@@ -77,7 +77,7 @@ void ScreenManagerStubInternal::Init(ScreenManagerDelegate* delegate) {
 
 void ScreenManagerStubInternal::RequestCloseDisplay(int64_t display_id) {
   if (display_id == display_.id()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&ScreenManagerDelegate::OnDisplayRemoved,
                               base::Unretained(delegate_), display_id));
   }

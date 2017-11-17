@@ -145,7 +145,7 @@ void ArcProcessTaskProvider::ScheduleNextRequest(const base::Closure& task,
   // TODO(nya): Remove this timer once ARC starts to send us UpdateProcessList
   // message when the process list changed. As of today, ARC does not send
   // the process list unless we request it by RequestAppProcessList message.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, task, base::TimeDelta::FromSeconds(delaySeconds));
 }
 

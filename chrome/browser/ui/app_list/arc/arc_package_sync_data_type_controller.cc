@@ -18,11 +18,12 @@ ArcPackageSyncDataTypeController::ArcPackageSyncDataTypeController(
     const base::Closure& dump_stack,
     syncer::SyncClient* sync_client,
     Profile* profile)
-    : syncer::AsyncDirectoryTypeController(type,
-                                           dump_stack,
-                                           sync_client,
-                                           syncer::GROUP_UI,
-                                           base::ThreadTaskRunnerHandle::Get()),
+    : syncer::AsyncDirectoryTypeController(
+          type,
+          dump_stack,
+          sync_client,
+          syncer::GROUP_UI,
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       profile_(profile) {
   arc::ArcSessionManager* arc_session_manager = arc::ArcSessionManager::Get();
   if (arc_session_manager)

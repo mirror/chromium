@@ -29,11 +29,10 @@ class NonBlockingPushClientTest : public testing::Test {
   ~NonBlockingPushClientTest() override {}
 
   void SetUp() override {
-    push_client_.reset(
-        new NonBlockingPushClient(
-            base::ThreadTaskRunnerHandle::Get(),
-            base::Bind(&NonBlockingPushClientTest::CreateFakePushClient,
-                       base::Unretained(this))));
+    push_client_.reset(new NonBlockingPushClient(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+        base::Bind(&NonBlockingPushClientTest::CreateFakePushClient,
+                   base::Unretained(this))));
     push_client_->AddObserver(&fake_observer_);
     // Pump message loop to run CreateFakePushClient.
     base::RunLoop().RunUntilIdle();

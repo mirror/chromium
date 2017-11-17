@@ -282,7 +282,7 @@ TEST_F(MemoryTracingIntegrationTest, TestBackgroundTracingSetup) {
                        kWhitelistedMDPName);
 
   base::RunLoop run_loop;
-  auto test_task_runner = base::ThreadTaskRunnerHandle::Get();
+  auto test_task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   auto quit_closure = run_loop.QuitClosure();
 
   {
@@ -384,7 +384,7 @@ TEST_F(MemoryTracingIntegrationTest, PeriodicDumpingWithMultipleModes) {
   // process with a fully defined trigger config should cause periodic dumps to
   // be performed in the correct order.
   base::RunLoop run_loop;
-  auto test_task_runner = base::ThreadTaskRunnerHandle::Get();
+  auto test_task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   auto quit_closure = run_loop.QuitClosure();
 
   const int kHeavyDumpRate = 5;
@@ -453,7 +453,7 @@ TEST_F(MemoryTracingIntegrationTest, TestPollingOnDumpThread) {
   RegisterDumpProvider(mdp1.get(), nullptr, options);
 
   base::RunLoop run_loop;
-  auto test_task_runner = base::ThreadTaskRunnerHandle::Get();
+  auto test_task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   auto quit_closure = run_loop.QuitClosure();
   MemoryDumpManager* mdm = mdm_.get();
 

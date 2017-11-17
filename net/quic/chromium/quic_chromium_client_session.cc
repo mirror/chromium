@@ -551,7 +551,7 @@ void QuicChromiumClientSession::StreamRequest::OnRequestCompleteFailure(
   // This method is called even when the request completes synchronously.
   if (callback_) {
     // Avoid re-entrancy if the callback calls into the session.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&QuicChromiumClientSession::StreamRequest::DoCallback,
                    weak_factory_.GetWeakPtr(), rv));
@@ -1879,7 +1879,7 @@ void QuicChromiumClientSession::NotifyFactoryOfSessionClosedLater() {
   going_away_ = true;
   DCHECK_EQ(0u, GetNumActiveStreams());
   DCHECK(!connection()->connected());
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&QuicChromiumClientSession::NotifyFactoryOfSessionClosed,
                  weak_factory_.GetWeakPtr()));

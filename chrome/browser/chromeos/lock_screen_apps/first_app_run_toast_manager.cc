@@ -94,7 +94,7 @@ void FirstAppRunToastManager::OnAppWindowActivated(
 
     // Start toast dialog creation asynchronously so it happens after app window
     // activation completes.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&FirstAppRunToastManager::CreateAndShowToastDialog,
                    weak_ptr_factory_.GetWeakPtr()));

@@ -146,7 +146,7 @@ class TestFakePluginService : public FakePluginService {
   void GetPlugins(GetPluginsCallback callback) override {
     is_plugin_stale_ = false;
     std::vector<WebPluginInfo> plugins;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), plugins));
   }
 

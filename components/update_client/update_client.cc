@@ -128,7 +128,7 @@ void UpdateClientImpl::Update(const std::vector<std::string>& ids,
 
 void UpdateClientImpl::RunTask(std::unique_ptr<Task> task) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&Task::Run, base::Unretained(task.get())));
   tasks_.insert(task.release());
 }
@@ -139,7 +139,7 @@ void UpdateClientImpl::OnTaskComplete(Callback callback,
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(task);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), error));
 
   // Remove the task from the set of the running tasks. Only tasks handled by

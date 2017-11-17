@@ -48,7 +48,7 @@ void DeleteOriginDidDeleteDir(
     bool rv) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, rv ? storage::kQuotaStatusOk
                                              : storage::kQuotaErrorAbort));
 }
@@ -119,7 +119,7 @@ void GetOriginsForHostDidListOrigins(
     if (host == net::GetHostOrSpecFromURL(origin))
       out_origins.insert(origin);
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, out_origins));
 }
 
@@ -130,7 +130,7 @@ void AllOriginSizesReported(
     const CacheStorageContext::GetUsageInfoCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(callback, *usages));
 }
 
@@ -141,7 +141,8 @@ void OneOriginSizeReported(base::OnceClosure callback,
 
   DCHECK_NE(size, CacheStorage::kSizeUnknown);
   usage->total_size_bytes = size;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, std::move(callback));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                         std::move(callback));
 }
 
 }  // namespace
@@ -312,7 +313,7 @@ void CacheStorageManager::GetAllOriginsUsageGetSizes(
   std::vector<CacheStorageUsageInfo>* usages_ptr = usages.get();
 
   if (usages->empty()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, *usages));
     return;
   }
@@ -324,7 +325,8 @@ void CacheStorageManager::GetAllOriginsUsageGetSizes(
 
   for (CacheStorageUsageInfo& usage : *usages_ptr) {
     if (usage.total_size_bytes != CacheStorage::kSizeUnknown) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, barrier_closure);
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                             barrier_closure);
       continue;
     }
     CacheStorage* cache_storage = FindOrCreateCacheStorage(usage.origin);
@@ -352,7 +354,7 @@ void CacheStorageManager::GetOrigins(
     for (const auto& key_value : cache_storage_map_)
       origins.insert(key_value.first);
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, origins));
     return;
   }
@@ -373,7 +375,7 @@ void CacheStorageManager::GetOriginsForHost(
       if (host == net::GetHostOrSpecFromURL(key_value.first))
         origins.insert(key_value.first);
     }
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, origins));
     return;
   }
@@ -425,7 +427,7 @@ void CacheStorageManager::DeleteOriginDidClose(
   NotifyCacheListChanged(origin);
 
   if (IsMemoryBacked()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, storage::kQuotaStatusOk));
     return;
   }

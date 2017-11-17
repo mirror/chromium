@@ -154,7 +154,7 @@ void DistillerPage::OnDistillationDone(const GURL& page_url,
     }
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(distiller_page_callback_,
                             base::Passed(&distiller_result), found_content));
 }

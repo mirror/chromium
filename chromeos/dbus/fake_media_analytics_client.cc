@@ -21,7 +21,7 @@ bool FakeMediaAnalyticsClient::FireMediaPerceptionEvent(
     const mri::MediaPerception& media_perception) {
   if (!process_running_)
     return false;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&FakeMediaAnalyticsClient::OnMediaPerception,
                             weak_ptr_factory_.GetWeakPtr(), media_perception));
   return true;
@@ -48,7 +48,7 @@ void FakeMediaAnalyticsClient::GetState(const StateCallback& callback) {
     callback.Run(false, current_state_);
     return;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&FakeMediaAnalyticsClient::OnState,
                             weak_ptr_factory_.GetWeakPtr(), callback));
 }
@@ -66,7 +66,7 @@ void FakeMediaAnalyticsClient::SetState(const mri::State& state,
       << "Trying set state to something other than RUNNING, SUSPENDED or "
          "RESTARTING.";
   current_state_ = state;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&FakeMediaAnalyticsClient::OnState,
                             weak_ptr_factory_.GetWeakPtr(), callback));
 }
@@ -91,7 +91,7 @@ void FakeMediaAnalyticsClient::GetDiagnostics(
     callback.Run(false, mri::Diagnostics());
     return;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&FakeMediaAnalyticsClient::OnGetDiagnostics,
                             weak_ptr_factory_.GetWeakPtr(), callback));
 }

@@ -281,7 +281,7 @@ void ExtensionDisabledGlobalError::BubbleViewAcceptButtonPressed(
   }
   user_response_ = REENABLE;
   // Delay extension reenabling so this bubble closes properly.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&ExtensionService::GrantPermissionsAndEnableExtension,
                      service_->AsWeakPtr(), base::RetainedRef(extension_)));
@@ -298,7 +298,7 @@ void ExtensionDisabledGlobalError::BubbleViewCancelButtonPressed(
   user_response_ = UNINSTALL;
   // Delay showing the uninstall dialog, so that this function returns
   // immediately, to close the bubble properly. See crbug.com/121544.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&ExtensionUninstallDialog::ConfirmUninstall,
                  uninstall_dialog_->AsWeakPtr(), base::RetainedRef(extension_),
@@ -360,7 +360,8 @@ void ExtensionDisabledGlobalError::RemoveGlobalError() {
   registry_observer_.RemoveAll();
   // Delete this object after any running tasks, so that the extension dialog
   // still has it as a delegate to finish the current tasks.
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, ptr.release());
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE,
+                                                           ptr.release());
 }
 
 // Globals --------------------------------------------------------------------

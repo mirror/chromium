@@ -16,7 +16,7 @@ namespace gl {
 SurfaceTextureListener::SurfaceTextureListener(const base::Closure& callback,
                                                bool use_any_thread)
     : callback_(callback),
-      browser_loop_(base::ThreadTaskRunnerHandle::Get()),
+      browser_loop_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       use_any_thread_(use_any_thread) {}
 
 SurfaceTextureListener::~SurfaceTextureListener() {

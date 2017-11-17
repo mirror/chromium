@@ -121,10 +121,11 @@ void PrefetchImporterImpl::ImportArchive(const PrefetchArchiveInfo& archive) {
   // file move operation should be done on background thread.
   background_task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&MoveFile, archive.file_path, dest_path,
-                 base::RetainedRef(base::ThreadTaskRunnerHandle::Get()),
-                 base::Bind(&PrefetchImporterImpl::OnMoveFileDone,
-                            weak_ptr_factory_.GetWeakPtr(), offline_page)));
+      base::Bind(
+          &MoveFile, archive.file_path, dest_path,
+          base::RetainedRef(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
+          base::Bind(&PrefetchImporterImpl::OnMoveFileDone,
+                     weak_ptr_factory_.GetWeakPtr(), offline_page)));
 }
 
 void PrefetchImporterImpl::MarkImportCompleted(int64_t offline_id) {

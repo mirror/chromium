@@ -327,7 +327,7 @@ void TestMockTimeTaskRunner::ProcessAllTasksNoLaterThan(TimeDelta max_delta) {
   // unit tests. Make sure this TestMockTimeTaskRunner's tasks run in its scope.
   ScopedClosureRunner undo_override;
   if (!ThreadTaskRunnerHandle::IsSet() ||
-      ThreadTaskRunnerHandle::Get() != this) {
+      ThreadTaskRunnerHandle::Get(FROM_HERE) != this) {
     undo_override = ThreadTaskRunnerHandle::OverrideForTesting(this);
   }
 

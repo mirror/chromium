@@ -88,7 +88,7 @@ void MidiService::StartSession(MidiManagerClient* client) {
     DCHECK(is_dynamic_instantiation_enabled_);
     manager_ = manager_factory_->Create(this);
     if (!manager_destructor_runner_)
-      manager_destructor_runner_ = base::ThreadTaskRunnerHandle::Get();
+      manager_destructor_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   }
   manager_->StartSession(client);
 }

@@ -280,7 +280,7 @@ void TaskQueue<T>::Dispatch() {
   const T& task = queue_.front();
   ++num_in_progress_;
   DCHECK_LE(num_in_progress_, kMaxConcurrentTasks);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(process_callback_, task));
   queue_.pop_front();
 }

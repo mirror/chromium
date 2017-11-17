@@ -95,9 +95,10 @@ void GCMAccountTracker::ScheduleReportTokens() {
            << GetTimeToNextTokenReporting().InSeconds() << " seconds.";
 
   reporting_weak_ptr_factory_.InvalidateWeakPtrs();
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&GCMAccountTracker::ReportTokens,
-                            reporting_weak_ptr_factory_.GetWeakPtr()),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&GCMAccountTracker::ReportTokens,
+                 reporting_weak_ptr_factory_.GetWeakPtr()),
       GetTimeToNextTokenReporting());
 }
 

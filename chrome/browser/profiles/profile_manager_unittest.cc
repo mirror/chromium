@@ -87,9 +87,9 @@ class UnittestProfileManager : public ::ProfileManagerWithoutInit {
 
   Profile* CreateProfileAsyncHelper(const base::FilePath& path,
                                     Delegate* delegate) override {
-    // ThreadTaskRunnerHandle::Get() is TestingProfile's "async" IOTaskRunner
-    // (ref. TestingProfile::GetIOTaskRunner()).
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    // ThreadTaskRunnerHandle::Get(FROM_HERE) is TestingProfile's "async"
+    // IOTaskRunner (ref. TestingProfile::GetIOTaskRunner()).
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(base::IgnoreResult(&base::CreateDirectory), path));
 

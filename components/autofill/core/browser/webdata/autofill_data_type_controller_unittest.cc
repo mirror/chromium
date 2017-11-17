@@ -89,11 +89,11 @@ class AutofillDataTypeControllerTest : public testing::Test,
     prefs_.registry()->RegisterBooleanPref(autofill::prefs::kAutofillEnabled,
                                            true);
     web_data_service_ =
-        new FakeWebDataService(base::ThreadTaskRunnerHandle::Get(),
-                               base::ThreadTaskRunnerHandle::Get());
+        new FakeWebDataService(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                               base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     autofill_dtc_ = base::MakeUnique<AutofillDataTypeController>(
-        base::ThreadTaskRunnerHandle::Get(), base::Bind(&base::DoNothing), this,
-        web_data_service_);
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+        base::Bind(&base::DoNothing), this, web_data_service_);
 
     last_type_ = syncer::UNSPECIFIED;
     last_error_ = syncer::SyncError();

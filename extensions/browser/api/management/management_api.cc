@@ -542,7 +542,7 @@ ExtensionFunction::ResponseAction ManagementUninstallFunctionBase::Uninstall(
     uninstall_dialog_ = delegate->UninstallFunctionDelegate(
         this, target_extension, show_programmatic_uninstall_ui);
   } else {  // No confirm dialog.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&ManagementUninstallFunctionBase::UninstallExtension, this));
   }

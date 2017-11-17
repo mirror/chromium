@@ -136,15 +136,17 @@ BundleSyncClient::CreateModelWorkerForGroup(syncer::ModelSafeGroup group) {
     case syncer::GROUP_FILE:
       return new syncer::SequencedModelWorker(file_thread_, syncer::GROUP_FILE);
     case syncer::GROUP_UI:
-      return new syncer::UIModelWorker(base::ThreadTaskRunnerHandle::Get());
+      return new syncer::UIModelWorker(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     case syncer::GROUP_PASSIVE:
       return new syncer::PassiveModelWorker();
     case syncer::GROUP_HISTORY: {
       history::HistoryService* history_service = GetHistoryService();
       if (!history_service)
         return nullptr;
-      return new HistoryModelWorker(history_service->AsWeakPtr(),
-                                    base::ThreadTaskRunnerHandle::Get());
+      return new HistoryModelWorker(
+          history_service->AsWeakPtr(),
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     }
     default:
       return nullptr;
@@ -222,12 +224,13 @@ ProfileSyncServiceBundle::SyncClientBuilder::Build() {
       get_syncable_service_callback_, get_sync_service_callback_,
       get_bookmark_model_callback_,
       activate_model_creation_ ? bundle_->db_thread() : nullptr,
-      activate_model_creation_ ? base::ThreadTaskRunnerHandle::Get() : nullptr,
+      activate_model_creation_ ? base::ThreadTaskRunnerHandle::Get(FROM_HERE)
+                               : nullptr,
       history_service_);
 }
 
 ProfileSyncServiceBundle::ProfileSyncServiceBundle()
-    : db_thread_(base::ThreadTaskRunnerHandle::Get()),
+    : db_thread_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       worker_pool_owner_(2, "sync test worker pool"),
       signin_client_(&pref_service_),
 #if defined(OS_CHROMEOS)
@@ -239,7 +242,7 @@ ProfileSyncServiceBundle::ProfileSyncServiceBundle()
                       nullptr),
 #endif
       url_request_context_(new net::TestURLRequestContextGetter(
-          base::ThreadTaskRunnerHandle::Get())) {
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE))) {
   RegisterPrefsForProfileSyncService(pref_service_.registry());
   auth_service_.set_auto_post_fetch_response_on_message_loop(true);
   account_tracker_.Initialize(&signin_client_);

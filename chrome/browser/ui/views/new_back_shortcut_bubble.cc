@@ -47,7 +47,7 @@ NewBackShortcutBubble::~NewBackShortcutBubble() {
   // We might need to delete the widget asynchronously. See rationale in
   // ~ExclusiveAccessBubbleViews.
   popup_->Close();
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, popup_);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, popup_);
 }
 
 bool NewBackShortcutBubble::IsVisible() const {

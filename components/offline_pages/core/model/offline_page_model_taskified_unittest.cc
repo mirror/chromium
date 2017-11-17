@@ -173,10 +173,10 @@ void OfflinePageModelTaskifiedTest::SetUp() {
   ASSERT_TRUE(persistent_dir_.CreateUniqueTempDir());
   auto archive_manager = base::MakeUnique<ArchiveManager>(
       temporary_dir_path(), persistent_dir_path(),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   model_ = base::MakeUnique<OfflinePageModelTaskified>(
       store_test_util()->ReleaseStore(), std::move(archive_manager),
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   model_->AddObserver(this);
   page_generator()->SetArchiveDirectory(temporary_dir_path());
   ResetResults();
@@ -275,7 +275,7 @@ OfflinePageModelTaskifiedTest::BuildArchiver(const GURL& url,
                                              ArchiverResult result) {
   return base::MakeUnique<OfflinePageTestArchiver>(
       this, url, result, kTestTitle, kTestFileSize,
-      base::ThreadTaskRunnerHandle::Get());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 void OfflinePageModelTaskifiedTest::CheckTaskQueueIdle() {

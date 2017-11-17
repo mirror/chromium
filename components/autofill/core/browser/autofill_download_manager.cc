@@ -402,7 +402,7 @@ void AutofillDownloadManager::OnURLFetchComplete(
   if (!success) {
     // Reschedule with the appropriate delay, ignoring return value because
     // payload is already well formed.
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(base::IgnoreResult(&AutofillDownloadManager::StartRequest),
                    weak_factory_.GetWeakPtr(), it->second.second),

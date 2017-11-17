@@ -22,7 +22,7 @@ GpuVideoEncodeAcceleratorHost::GpuVideoEncodeAcceleratorHost(
       client_(nullptr),
       impl_(impl),
       next_frame_id_(0),
-      media_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      media_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       weak_this_factory_(this) {
   DCHECK(channel_);
   DCHECK(impl_);

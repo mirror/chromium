@@ -19,7 +19,7 @@ namespace content {
 TEST(ShareableFileReferenceTest, TestReferences) {
   base::MessageLoop message_loop;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
 

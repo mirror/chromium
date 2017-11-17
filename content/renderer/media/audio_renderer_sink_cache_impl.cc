@@ -56,7 +56,7 @@ struct AudioRendererSinkCacheImpl::CacheEntry {
 // static
 std::unique_ptr<AudioRendererSinkCache> AudioRendererSinkCache::Create() {
   return base::WrapUnique(new AudioRendererSinkCacheImpl(
-      base::ThreadTaskRunnerHandle::Get(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::Bind(&AudioDeviceFactory::NewAudioRendererMixerSink),
       base::TimeDelta::FromMilliseconds(kDeleteTimeoutMs)));
 }

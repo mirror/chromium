@@ -137,7 +137,8 @@ void BackgroundPrintingManager::DeletePreviewContents(
   // ... and mortally wound the contents. Deletion immediately is not a good
   // idea in case this was triggered by |preview_contents| far up the
   // callstack. (Trace where the NOTIFICATION_PRINT_JOB_RELEASED comes from.)
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, preview_contents);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE,
+                                                           preview_contents);
 }
 
 std::set<content::WebContents*> BackgroundPrintingManager::CurrentContentSet() {

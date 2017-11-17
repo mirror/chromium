@@ -185,9 +185,10 @@ void RecordAppListDiscoverability(PrefService* local_state,
         base::TimeDelta::FromMinutes(kDiscoverabilityTimeoutMinutes) -
         base::Time::Now();
     if (time_remaining > base::TimeDelta()) {
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-          FROM_HERE, base::Bind(&RecordAppListDiscoverability,
-                                base::Unretained(local_state), false),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+          FROM_HERE,
+          base::Bind(&RecordAppListDiscoverability,
+                     base::Unretained(local_state), false),
           time_remaining);
       return;
     }
@@ -413,9 +414,10 @@ void AppListServiceImpl::EnableAppList(Profile* initial_profile,
   if (base::ThreadTaskRunnerHandle::IsSet()) {
     // Ensure a value is recorded if the user "never" shows the app list. Note
     // there is no message loop in unit tests.
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE, base::Bind(&RecordAppListDiscoverability,
-                              base::Unretained(local_state_), false),
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&RecordAppListDiscoverability,
+                   base::Unretained(local_state_), false),
         base::TimeDelta::FromMinutes(kDiscoverabilityTimeoutMinutes));
   }
 }
@@ -440,7 +442,7 @@ void AppListServiceImpl::PerformStartupChecks(Profile* initial_profile) {
 
   // Send app list usage stats after a delay.
   const int kSendUsageStatsDelay = 5;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::Bind(&AppListServiceImpl::SendAppListStats),
       base::TimeDelta::FromSeconds(kSendUsageStatsDelay));
 }

@@ -142,7 +142,7 @@ void CompleteWithKeyOrError(const Status& status,
 // Gets a task runner for the current thread.
 scoped_refptr<base::TaskRunner> GetCurrentBlinkThread() {
   DCHECK(base::ThreadTaskRunnerHandle::IsSet());
-  return base::ThreadTaskRunnerHandle::Get();
+  return base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 // --------------------------------------------------------------------

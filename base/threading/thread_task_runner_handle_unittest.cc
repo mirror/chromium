@@ -18,7 +18,7 @@ TEST(ThreadTaskRunnerHandleTest, Basic) {
   {
     ThreadTaskRunnerHandle ttrh1(task_runner);
     EXPECT_TRUE(ThreadTaskRunnerHandle::IsSet());
-    EXPECT_EQ(task_runner, ThreadTaskRunnerHandle::Get());
+    EXPECT_EQ(task_runner, ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
   EXPECT_FALSE(ThreadTaskRunnerHandle::IsSet());
 }
@@ -44,39 +44,39 @@ TEST(ThreadTaskRunnerHandleTest, OverrideForTestingExistingTTRH) {
     // TTRH in place prior to override.
     ThreadTaskRunnerHandle ttrh1(task_runner_1);
     EXPECT_TRUE(ThreadTaskRunnerHandle::IsSet());
-    EXPECT_EQ(task_runner_1, ThreadTaskRunnerHandle::Get());
+    EXPECT_EQ(task_runner_1, ThreadTaskRunnerHandle::Get(FROM_HERE));
 
     {
       // Override.
       ScopedClosureRunner undo_override_2 =
           ThreadTaskRunnerHandle::OverrideForTesting(task_runner_2);
       EXPECT_TRUE(ThreadTaskRunnerHandle::IsSet());
-      EXPECT_EQ(task_runner_2, ThreadTaskRunnerHandle::Get());
+      EXPECT_EQ(task_runner_2, ThreadTaskRunnerHandle::Get(FROM_HERE));
 
       {
         // Nested override.
         ScopedClosureRunner undo_override_3 =
             ThreadTaskRunnerHandle::OverrideForTesting(task_runner_3);
         EXPECT_TRUE(ThreadTaskRunnerHandle::IsSet());
-        EXPECT_EQ(task_runner_3, ThreadTaskRunnerHandle::Get());
+        EXPECT_EQ(task_runner_3, ThreadTaskRunnerHandle::Get(FROM_HERE));
       }
 
       // Back to single override.
       EXPECT_TRUE(ThreadTaskRunnerHandle::IsSet());
-      EXPECT_EQ(task_runner_2, ThreadTaskRunnerHandle::Get());
+      EXPECT_EQ(task_runner_2, ThreadTaskRunnerHandle::Get(FROM_HERE));
 
       {
         // Backup to double override with another TTRH.
         ScopedClosureRunner undo_override_4 =
             ThreadTaskRunnerHandle::OverrideForTesting(task_runner_4);
         EXPECT_TRUE(ThreadTaskRunnerHandle::IsSet());
-        EXPECT_EQ(task_runner_4, ThreadTaskRunnerHandle::Get());
+        EXPECT_EQ(task_runner_4, ThreadTaskRunnerHandle::Get(FROM_HERE));
       }
     }
 
     // Back to simple TTRH.
     EXPECT_TRUE(ThreadTaskRunnerHandle::IsSet());
-    EXPECT_EQ(task_runner_1, ThreadTaskRunnerHandle::Get());
+    EXPECT_EQ(task_runner_1, ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
   EXPECT_FALSE(ThreadTaskRunnerHandle::IsSet());
 }
@@ -91,19 +91,19 @@ TEST(ThreadTaskRunnerHandleTest, OverrideForTestingNoExistingTTRH) {
     ScopedClosureRunner undo_override_1 =
         ThreadTaskRunnerHandle::OverrideForTesting(task_runner_1);
     EXPECT_TRUE(ThreadTaskRunnerHandle::IsSet());
-    EXPECT_EQ(task_runner_1, ThreadTaskRunnerHandle::Get());
+    EXPECT_EQ(task_runner_1, ThreadTaskRunnerHandle::Get(FROM_HERE));
 
     {
       // Nested override works the same.
       ScopedClosureRunner undo_override_2 =
           ThreadTaskRunnerHandle::OverrideForTesting(task_runner_2);
       EXPECT_TRUE(ThreadTaskRunnerHandle::IsSet());
-      EXPECT_EQ(task_runner_2, ThreadTaskRunnerHandle::Get());
+      EXPECT_EQ(task_runner_2, ThreadTaskRunnerHandle::Get(FROM_HERE));
     }
 
     // Back to single override.
     EXPECT_TRUE(ThreadTaskRunnerHandle::IsSet());
-    EXPECT_EQ(task_runner_1, ThreadTaskRunnerHandle::Get());
+    EXPECT_EQ(task_runner_1, ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
   EXPECT_FALSE(ThreadTaskRunnerHandle::IsSet());
 }

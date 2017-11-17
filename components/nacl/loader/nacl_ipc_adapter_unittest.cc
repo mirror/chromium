@@ -34,8 +34,9 @@ class NaClIPCAdapterTest : public testing::Test {
     // Takes ownership of the sink_ pointer. Note we provide the current message
     // loop instead of using a real IO thread. This should work OK since we do
     // not need real IPC for the tests.
-    adapter_ = new NaClIPCAdapter(std::unique_ptr<IPC::Channel>(sink_),
-                                  base::ThreadTaskRunnerHandle::Get().get());
+    adapter_ =
+        new NaClIPCAdapter(std::unique_ptr<IPC::Channel>(sink_),
+                           base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
   }
   void TearDown() override {
     sink_ = NULL;  // This pointer is actually owned by the IPCAdapter.

@@ -96,7 +96,7 @@ class ScopedAddListenerObserver : public EventRouter::Observer {
     if (details.extension_id != extension_id_ || !callback_)
       return;
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::ResetAndReturn(&callback_));
   }
 

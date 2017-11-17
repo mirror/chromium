@@ -183,7 +183,7 @@ bool FirstUserActionRecorder::ShouldProcessAction(
   if (!action_pending_ &&
       ArrayContainsString(kRethrownActions, arraysize(kRethrownActions),
                           action_name.c_str())) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(&FirstUserActionRecorder::OnUserAction,
                               base::Unretained(this), action_name));
     action_pending_ = true;

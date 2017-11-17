@@ -79,7 +79,7 @@ void TestDownloadService::StartDownload(const DownloadParams& params) {
   if (!is_ready_)
     return;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&TestDownloadService::ProcessDownload,
                             base::Unretained(this)));
 }

@@ -257,7 +257,7 @@ class Simulator {
       ExposureMask,
       reinterpret_cast<XEvent*>(&ev));
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&Simulator::UpdateLoop, weak_factory_.GetWeakPtr()));
   }

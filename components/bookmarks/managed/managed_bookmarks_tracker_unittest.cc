@@ -69,8 +69,8 @@ class ManagedBookmarksTrackerTest : public testing::Test {
     model_->AddObserver(&observer_);
     EXPECT_CALL(observer_, BookmarkModelLoaded(model_.get(), _));
     model_->Load(&prefs_, base::FilePath(),
-                 base::ThreadTaskRunnerHandle::Get(),
-                 base::ThreadTaskRunnerHandle::Get());
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE));
     test::WaitForBookmarkModelToLoad(model_.get());
     Mock::VerifyAndClearExpectations(&observer_);
 

@@ -105,7 +105,7 @@ void BackendMigrator::OnConfigureDone(
   // |manager_|'s methods aren't re-entrant, and we're notified from
   // them, so post a task to avoid problems.
   SDVLOG(1) << "Posting OnConfigureDoneImpl";
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&BackendMigrator::OnConfigureDoneImpl,
                             weak_ptr_factory_.GetWeakPtr(), result));
 }

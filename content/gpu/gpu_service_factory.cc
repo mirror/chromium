@@ -23,7 +23,7 @@ GpuServiceFactory::GpuServiceFactory(
     media::AndroidOverlayMojoFactoryCB android_overlay_factory_cb) {
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_GPU_PROCESS)
   gpu_preferences_ = gpu_preferences;
-  task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  task_runner_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   media_gpu_channel_manager_ = std::move(media_gpu_channel_manager);
   android_overlay_factory_cb_ = std::move(android_overlay_factory_cb);
 #endif

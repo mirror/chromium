@@ -77,10 +77,9 @@ DemuxerStreamAdapterTest::~DemuxerStreamAdapterTest() {
 
 void DemuxerStreamAdapterTest::Initialize(
     ::media::DemuxerStream* demuxer_stream) {
-  coded_frame_provider_.reset(
-      new DemuxerStreamAdapter(base::ThreadTaskRunnerHandle::Get(),
-                               scoped_refptr<BalancedMediaTaskRunnerFactory>(),
-                               demuxer_stream));
+  coded_frame_provider_.reset(new DemuxerStreamAdapter(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+      scoped_refptr<BalancedMediaTaskRunnerFactory>(), demuxer_stream));
 }
 
 void DemuxerStreamAdapterTest::Start() {
@@ -89,9 +88,10 @@ void DemuxerStreamAdapterTest::Start() {
   // TODO(damienv): currently, test assertions which fail do not trigger the
   // exit of the unit test, the message loop is still running. Find a different
   // way to exit the unit test.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&DemuxerStreamAdapterTest::OnTestTimeout,
-                            base::Unretained(this)),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&DemuxerStreamAdapterTest::OnTestTimeout,
+                 base::Unretained(this)),
       base::TimeDelta::FromSeconds(5));
 
   coded_frame_provider_->Read(base::Bind(&DemuxerStreamAdapterTest::OnNewFrame,
@@ -133,7 +133,7 @@ void DemuxerStreamAdapterTest::OnNewFrame(
     base::Closure flush_cb = base::Bind(
         &DemuxerStreamAdapterTest::OnFlushCompleted, base::Unretained(this));
     if (use_post_task_for_flush_) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::Bind(&CodedFrameProvider::Flush,
                      base::Unretained(coded_frame_provider_.get()), flush_cb));

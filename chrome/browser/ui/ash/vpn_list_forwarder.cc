@@ -151,7 +151,7 @@ void VpnListForwarder::Observe(int type,
   // chrome::NOTIFICATION_PROFILE_CREATED notification to finish initializing
   // the profile, then start observing the primary user's extension registry.
   registrar_.RemoveAll();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&VpnListForwarder::AttachToPrimaryUserProfile,
                                 weak_factory_.GetWeakPtr()));
 }

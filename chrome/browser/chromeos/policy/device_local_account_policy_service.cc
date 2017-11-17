@@ -476,8 +476,8 @@ void DeviceLocalAccountPolicyService::UpdateAccountList() {
           std::move(store), external_data_manager,
           base::Bind(&DeviceLocalAccountPolicyService::NotifyPolicyUpdated,
                      base::Unretained(this), it->user_id),
-          base::ThreadTaskRunnerHandle::Get(), resource_cache_task_runner_,
-          invalidation_service_provider_));
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+          resource_cache_task_runner_, invalidation_service_provider_));
     }
 
     // Fire up the cloud connection for fetching policy for the account from

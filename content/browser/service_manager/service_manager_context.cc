@@ -262,7 +262,7 @@ void RegisterUIServiceInProcessIfNecessary(
 
   service_manager::EmbeddedServiceInfo info;
   info.factory = base::Bind(
-      &CreateEmbeddedUIService, base::ThreadTaskRunnerHandle::Get(),
+      &CreateEmbeddedUIService, base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       BrowserMainLoop::GetInstance()->image_cursors_set()->GetWeakPtr(),
       GetDiscardableSharedMemoryManager());
   info.use_own_thread = true;
@@ -436,7 +436,7 @@ ServiceManagerContext::ServiceManagerContext() {
       base::Bind(&device::CreateDeviceService, device_blocking_task_runner,
                  BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
 #endif
-  device_info.task_runner = base::ThreadTaskRunnerHandle::Get();
+  device_info.task_runner = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   packaged_services_connection_->AddEmbeddedService(device::mojom::kServiceName,
                                                     device_info);
 

@@ -102,7 +102,7 @@ ChromeAppCacheServiceTest::CreateAppCacheServiceImpl(
   scoped_refptr<MockURLRequestContextGetter> mock_request_context_getter =
       new MockURLRequestContextGetter(
           browser_context_.GetResourceContext()->GetRequestContext(),
-          base::ThreadTaskRunnerHandle::Get());
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(

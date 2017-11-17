@@ -153,7 +153,7 @@ void PepperWebPluginImpl::Destroy() {
     instance_ = nullptr;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 v8::Local<v8::Object> PepperWebPluginImpl::V8ScriptableObject(

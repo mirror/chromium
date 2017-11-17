@@ -1190,7 +1190,7 @@ void UserSessionManager::UserProfileInitialized(Profile* profile,
     } else {
       // We need to post task so that OnProfileCreated() caller sends out
       // NOTIFICATION_PROFILE_CREATED which marks user profile as initialized.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::BindOnce(
               &UserSessionManager::CompleteProfileCreateAfterAuthTransfer,
@@ -1202,7 +1202,7 @@ void UserSessionManager::UserProfileInitialized(Profile* profile,
   if (user_context_.GetAuthFlow() == UserContext::AUTH_FLOW_ACTIVE_DIRECTORY) {
     // Call FinalizePrepareProfile directly and skip RestoreAuthSessionImpl
     // because there is no need to merge session for Active Directory users.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&UserSessionManager::PrepareTpmDeviceAndFinalizeProfile,
                        AsWeakPtr(), profile));
@@ -1370,7 +1370,7 @@ bool UserSessionManager::InitializeUserSession(Profile* profile) {
   child_service->AddChildStatusReceivedCallback(
       base::Bind(&UserSessionManager::ChildAccountStatusReceivedCallback,
                  weak_factory_.GetWeakPtr(), profile));
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&UserSessionManager::StopChildStatusObserving,
                      weak_factory_.GetWeakPtr(), profile),
@@ -1698,7 +1698,7 @@ net::URLRequestContextGetter* UserSessionManager::GetAuthRequestContext()
 void UserSessionManager::AttemptRestart(Profile* profile) {
   // Restart unconditionally in case if we are stuck somewhere in a session
   // restore process. http://crbug.com/520346.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::BindOnce(RestartOnTimeout),
       base::TimeDelta::FromSeconds(kMaxRestartDelaySeconds));
 

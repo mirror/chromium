@@ -749,7 +749,7 @@ void ToolbarActionsModel::OnActionToolbarPrefChange() {
   if (last_known_positions_.size() > pref_position_size) {
     // Need to update pref because we have extra icons. But can't call
     // UpdatePrefs() directly within observation closure.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&ToolbarActionsModel::UpdatePrefs,
                                   weak_ptr_factory_.GetWeakPtr()));
   }

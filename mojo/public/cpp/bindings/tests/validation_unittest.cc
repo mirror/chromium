@@ -262,7 +262,7 @@ class ValidationIntegrationTest : public ValidationTest {
         : owner_(owner),
           connector_(std::move(handle),
                      mojo::Connector::SINGLE_THREADED_SEND,
-                     base::ThreadTaskRunnerHandle::Get()) {
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {
       connector_.set_enforce_errors_from_incoming_receiver(false);
     }
     ~TestMessageReceiver() override {}

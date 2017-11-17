@@ -111,7 +111,8 @@ void ServiceProcessControl::ConnectInternal() {
       base::BindOnce(
           &ConnectAsyncWithBackoff, std::move(interface_provider_request),
           GetServiceProcessChannel(), kMaxConnectionAttempts,
-          kInitialConnectionRetryDelay, base::ThreadTaskRunnerHandle::Get(),
+          kInitialConnectionRetryDelay,
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE),
           base::BindOnce(&ServiceProcessControl::OnPeerConnectionComplete,
                          weak_factory_.GetWeakPtr())));
 }
@@ -371,7 +372,7 @@ void ServiceProcessControl::Launcher::DoDetectLaunched() {
 
   // If the service process is not launched yet then check again in 2 seconds.
   const base::TimeDelta kDetectLaunchRetry = base::TimeDelta::FromSeconds(2);
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::Bind(&Launcher::DoDetectLaunched, this),
       kDetectLaunchRetry);
 }

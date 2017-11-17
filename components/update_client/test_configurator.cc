@@ -39,7 +39,7 @@ TestConfigurator::TestConfigurator()
       connector_factory_(std::make_unique<patch::PatchService>()),
       connector_(connector_factory_.CreateConnector()),
       context_(base::MakeRefCounted<net::TestURLRequestContextGetter>(
-          base::ThreadTaskRunnerHandle::Get())) {}
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE))) {}
 
 TestConfigurator::~TestConfigurator() {
 }

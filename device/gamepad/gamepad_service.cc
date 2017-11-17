@@ -23,7 +23,7 @@ GamepadService* g_gamepad_service = 0;
 }
 
 GamepadService::GamepadService()
-    : main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       num_active_consumers_(0),
       gesture_callback_pending_(false) {
   SetInstance(this);
@@ -32,7 +32,7 @@ GamepadService::GamepadService()
 GamepadService::GamepadService(
     std::unique_ptr<device::GamepadDataFetcher> fetcher)
     : provider_(new device::GamepadProvider(this, std::move(fetcher))),
-      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       num_active_consumers_(0),
       gesture_callback_pending_(false) {
   SetInstance(this);

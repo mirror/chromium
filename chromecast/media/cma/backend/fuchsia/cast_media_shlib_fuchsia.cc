@@ -64,7 +64,7 @@ VideoPlane* CastMediaShlib::GetVideoPlane() {
 
 MediaPipelineBackend* CastMediaShlib::CreateMediaPipelineBackend(
     const MediaPipelineDeviceParams& params) {
-  // Set up the static reference in base::ThreadTaskRunnerHandle::Get()
+  // Set up the static reference in base::ThreadTaskRunnerHandle::Get(FROM_HERE)
   // for the media thread in this shared library. We can extract the
   // SingleThreadTaskRunner passed in from cast_shell for this.
   if (!base::ThreadTaskRunnerHandle::IsSet()) {

@@ -178,11 +178,11 @@ void CloudPolicyValidatorBase::PostValidationTask(
     std::unique_ptr<CloudPolicyValidatorBase> validator,
     const base::Closure& completion_callback) {
   const auto task_runner = validator->background_task_runner_;
-  task_runner->PostTask(
-      FROM_HERE,
-      base::Bind(&CloudPolicyValidatorBase::PerformValidation,
-                 base::Passed(&validator), base::ThreadTaskRunnerHandle::Get(),
-                 completion_callback));
+  task_runner->PostTask(FROM_HERE,
+                        base::Bind(&CloudPolicyValidatorBase::PerformValidation,
+                                   base::Passed(&validator),
+                                   base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                                   completion_callback));
 }
 
 // static

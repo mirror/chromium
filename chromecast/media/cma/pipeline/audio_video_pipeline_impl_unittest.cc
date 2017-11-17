@@ -45,7 +45,7 @@ namespace media {
 
 ACTION_P2(PushBuffer, delegate, buffer_pts) {
   if (arg0->end_of_stream()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&MediaPipelineBackend::Decoder::Delegate::OnEndOfStream,
                    base::Unretained(*delegate)));

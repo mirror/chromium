@@ -66,7 +66,8 @@ RenderbufferManager::RenderbufferManager(MemoryTracker* memory_tracker,
   // so don't register a dump provider.
   if (memory_tracker_) {
     base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-        this, "gpu::RenderbufferManager", base::ThreadTaskRunnerHandle::Get());
+        this, "gpu::RenderbufferManager",
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE));
   }
 }
 

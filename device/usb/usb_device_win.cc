@@ -24,7 +24,7 @@ UsbDeviceWin::UsbDeviceWin(
       hub_path_(hub_path),
       port_number_(port_number),
       driver_name_(driver_name),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       blocking_task_runner_(std::move(blocking_task_runner)) {}
 
 UsbDeviceWin::~UsbDeviceWin() {}

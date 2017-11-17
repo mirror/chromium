@@ -58,7 +58,7 @@ int FileSystemDirURLRequestJob::ReadRawData(net::IOBuffer* dest,
 }
 
 void FileSystemDirURLRequestJob::Start() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&FileSystemDirURLRequestJob::StartAsync,
                             weak_factory_.GetWeakPtr()));
 }

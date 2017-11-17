@@ -413,7 +413,7 @@ void CastStreamingNativeHandler::CreateCastSession(
 
   create_callback_.Reset(isolate, args[2].As<v8::Function>());
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&CastStreamingNativeHandler::CallCreateCallback,
                  weak_factory_.GetWeakPtr(), base::Passed(&stream1),

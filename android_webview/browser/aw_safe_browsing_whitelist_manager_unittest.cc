@@ -21,8 +21,8 @@ class AwSafeBrowsingWhitelistManagerTest : public testing::Test {
 
   void SetUp() override {
     wm_.reset(new AwSafeBrowsingWhitelistManager(
-        base::ThreadTaskRunnerHandle::Get(),
-        base::ThreadTaskRunnerHandle::Get()));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   }
 
   void TearDown() override { wm_.reset(); }

@@ -67,7 +67,7 @@ WebRtcMediaStreamAdapterMap::WebRtcMediaStreamAdapterMap(
     PeerConnectionDependencyFactory* const factory,
     scoped_refptr<WebRtcMediaStreamTrackAdapterMap> track_adapter_map)
     : factory_(factory),
-      main_thread_(base::ThreadTaskRunnerHandle::Get()),
+      main_thread_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       track_adapter_map_(std::move(track_adapter_map)) {
   DCHECK(factory_);
   DCHECK(main_thread_);

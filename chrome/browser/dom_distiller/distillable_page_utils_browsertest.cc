@@ -79,7 +79,7 @@ const int kDefaultTimeoutMs = 10000;
 
 void QuitAfter(int time_ms) {
   DCHECK_GE(time_ms, 0);
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       base::TimeDelta::FromMilliseconds(time_ms));
 }

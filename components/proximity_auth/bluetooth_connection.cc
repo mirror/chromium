@@ -189,7 +189,7 @@ void BluetoothConnection::OnReceive(int bytes_received,
 
   // Post a task to delay the read until the socket is available, as
   // calling StartReceive at this point would error with ERR_IO_PENDING.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&BluetoothConnection::StartReceive,
                             weak_ptr_factory_.GetWeakPtr()));
 }
@@ -201,7 +201,7 @@ void BluetoothConnection::OnReceiveError(
 
   // Post a task to delay the read until the socket is available, as
   // calling StartReceive at this point would error with ERR_IO_PENDING.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&BluetoothConnection::StartReceive,
                             weak_ptr_factory_.GetWeakPtr()));
 }

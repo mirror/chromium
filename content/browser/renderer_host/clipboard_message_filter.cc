@@ -223,7 +223,7 @@ void ClipboardMessageFilter::OnReadAndEncodeImageFinished(
       // TODO(dmurph): There should be a better way of transferring ownership of
       // a blob from the browser to the renderer, rather than relying on this
       // timeout to clean up eventually. See https://crbug.com/604800.
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE,
           base::BindOnce(&CleanupReadImageBlob, base::Passed(&blob_handle)),
           base::TimeDelta::FromMinutes(1));

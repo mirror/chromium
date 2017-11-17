@@ -81,7 +81,8 @@ TEST(SignedInDevicesAPITest, GetSignedInDevices) {
   content::TestBrowserThreadBundle thread_bundle;
   TestingProfile profile;
   MockDeviceInfoTracker device_tracker;
-  TestExtensionPrefs extension_prefs(base::ThreadTaskRunnerHandle::Get().get());
+  TestExtensionPrefs extension_prefs(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
 
   // Add a couple of devices and make sure we get back public ids for them.
   std::string extension_name = "test";

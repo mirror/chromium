@@ -312,7 +312,7 @@ void UnlockManagerImpl::OnAuthAttempted(mojom::AuthType auth_type) {
     return;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&UnlockManagerImpl::AcceptAuthAttempt,
                  reject_auth_attempt_weak_ptr_factory_.GetWeakPtr(), false),
@@ -454,7 +454,7 @@ void UnlockManagerImpl::SetWakingUpState(bool is_waking_up) {
   // Clear the waking up state after a timeout.
   clear_waking_up_state_weak_ptr_factory_.InvalidateWeakPtrs();
   if (is_waking_up_) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE,
         base::Bind(&UnlockManagerImpl::SetWakingUpState,
                    clear_waking_up_state_weak_ptr_factory_.GetWeakPtr(), false),

@@ -52,7 +52,7 @@ URLRequestContext::URLRequestContext()
       name_("unknown"),
       largest_outstanding_requests_count_seen_(0) {
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-      this, "URLRequestContext", base::ThreadTaskRunnerHandle::Get());
+      this, "URLRequestContext", base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 URLRequestContext::~URLRequestContext() {

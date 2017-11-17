@@ -24,7 +24,7 @@ void TaskPump::WakeTasks() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (!stopped_ && !posted_wake_) {
     // Do the requested wake up.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&TaskPump::CheckAndRunTasks, weak_factory_.GetWeakPtr()));
     posted_wake_ = true;

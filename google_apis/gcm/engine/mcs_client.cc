@@ -546,10 +546,9 @@ void MCSClient::MaybeSendMessage() {
         packet->persistent_id,
         base::Bind(&MCSClient::OnGCMUpdateFinished,
                    weak_ptr_factory_.GetWeakPtr()));
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-            FROM_HERE,
-            base::Bind(&MCSClient::MaybeSendMessage,
-                       weak_ptr_factory_.GetWeakPtr()));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+        FROM_HERE, base::Bind(&MCSClient::MaybeSendMessage,
+                              weak_ptr_factory_.GetWeakPtr()));
     return;
   }
   DVLOG(1) << "Pending output message found, sending.";
@@ -720,16 +719,15 @@ void MCSClient::HandlePacketFromWire(
       DCHECK_EQ(1U, stream_id_out_);
 
       // Pass the login response on up.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(message_received_callback_,
                                 MCSMessage(tag, std::move(protobuf))));
 
       // If there are pending messages, attempt to send one.
       if (!to_send_.empty()) {
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
-            FROM_HERE,
-            base::Bind(&MCSClient::MaybeSendMessage,
-                       weak_ptr_factory_.GetWeakPtr()));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+            FROM_HERE, base::Bind(&MCSClient::MaybeSendMessage,
+                                  weak_ptr_factory_.GetWeakPtr()));
       }
 
       heartbeat_manager_.Start(
@@ -790,7 +788,7 @@ void MCSClient::HandlePacketFromWire(
       }
 
       DCHECK(protobuf.get());
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(message_received_callback_,
                                 MCSMessage(tag, std::move(protobuf))));
       return;
@@ -897,10 +895,9 @@ void MCSClient::HandleSelectiveAck(const PersistentIdList& id_list) {
     to_send_.push_front(to_resend_.back());
     to_resend_.pop_back();
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
-      base::Bind(&MCSClient::MaybeSendMessage,
-                 weak_ptr_factory_.GetWeakPtr()));
+      base::Bind(&MCSClient::MaybeSendMessage, weak_ptr_factory_.GetWeakPtr()));
 }
 
 void MCSClient::HandleServerConfirmedReceipt(StreamId device_stream_id) {

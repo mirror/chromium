@@ -147,7 +147,7 @@ class LocalStorageContextMojoTest : public testing::Test {
       : db_(&mock_data_),
         db_binding_(&db_),
         task_runner_(new MockDOMStorageTaskRunner(
-            base::ThreadTaskRunnerHandle::Get().get())),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE).get())),
         mock_special_storage_policy_(new MockSpecialStoragePolicy()) {
     EXPECT_TRUE(temp_path_.CreateUniqueTempDir());
     dom_storage_context_ = new DOMStorageContextImpl(
@@ -164,7 +164,7 @@ class LocalStorageContextMojoTest : public testing::Test {
   LocalStorageContextMojo* context() {
     if (!context_) {
       context_ = new LocalStorageContextMojo(
-          base::ThreadTaskRunnerHandle::Get(), nullptr, task_runner_,
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE), nullptr, task_runner_,
           temp_path_.GetPath(), base::FilePath(FILE_PATH_LITERAL("leveldb")),
           special_storage_policy());
       leveldb::mojom::LevelDBDatabaseAssociatedPtr database_ptr;
@@ -981,7 +981,7 @@ class LocalStorageContextMojoTestWithService
 
 TEST_F(LocalStorageContextMojoTestWithService, InMemory) {
   auto* context = new LocalStorageContextMojo(
-      base::ThreadTaskRunnerHandle::Get(), connector(), nullptr,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), connector(), nullptr,
       base::FilePath(), base::FilePath(), nullptr);
   auto key = StdStringToUint8Vector("key");
   auto value = StdStringToUint8Vector("value");
@@ -1002,16 +1002,16 @@ TEST_F(LocalStorageContextMojoTestWithService, InMemory) {
   EXPECT_TRUE(FirstEntryInDir().empty());
 
   // Re-opening should get fresh data.
-  context = new LocalStorageContextMojo(base::ThreadTaskRunnerHandle::Get(),
-                                        connector(), nullptr, base::FilePath(),
-                                        base::FilePath(), nullptr);
+  context = new LocalStorageContextMojo(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), connector(), nullptr,
+      base::FilePath(), base::FilePath(), nullptr);
   EXPECT_FALSE(DoTestGet(context, key, &result));
   context->ShutdownAndDelete();
 }
 
 TEST_F(LocalStorageContextMojoTestWithService, InMemoryInvalidPath) {
   auto* context = new LocalStorageContextMojo(
-      base::ThreadTaskRunnerHandle::Get(), connector(), nullptr,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), connector(), nullptr,
       base::FilePath(), base::FilePath(FILE_PATH_LITERAL("../../")), nullptr);
   auto key = StdStringToUint8Vector("key");
   auto value = StdStringToUint8Vector("value");
@@ -1036,7 +1036,7 @@ TEST_F(LocalStorageContextMojoTestWithService, InMemoryInvalidPath) {
 TEST_F(LocalStorageContextMojoTestWithService, OnDisk) {
   base::FilePath test_path(FILE_PATH_LITERAL("test_path"));
   auto* context = new LocalStorageContextMojo(
-      base::ThreadTaskRunnerHandle::Get(), connector(), nullptr,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), connector(), nullptr,
       base::FilePath(), test_path, nullptr);
   auto key = StdStringToUint8Vector("key");
   auto value = StdStringToUint8Vector("value");
@@ -1054,9 +1054,9 @@ TEST_F(LocalStorageContextMojoTestWithService, OnDisk) {
   EXPECT_EQ(test_path, FirstEntryInDir().BaseName());
 
   // Should be able to re-open.
-  context = new LocalStorageContextMojo(base::ThreadTaskRunnerHandle::Get(),
-                                        connector(), nullptr, base::FilePath(),
-                                        test_path, nullptr);
+  context = new LocalStorageContextMojo(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), connector(), nullptr,
+      base::FilePath(), test_path, nullptr);
   EXPECT_TRUE(DoTestGet(context, key, &result));
   EXPECT_EQ(value, result);
   context->ShutdownAndDelete();
@@ -1073,7 +1073,7 @@ TEST_F(LocalStorageContextMojoTestWithService, MAYBE_InvalidVersionOnDisk) {
 
   // Create context and add some data to it.
   auto* context = new LocalStorageContextMojo(
-      base::ThreadTaskRunnerHandle::Get(), connector(), nullptr,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), connector(), nullptr,
       base::FilePath(), test_path, nullptr);
   auto key = StdStringToUint8Vector("key");
   auto value = StdStringToUint8Vector("value");
@@ -1100,9 +1100,9 @@ TEST_F(LocalStorageContextMojoTestWithService, MAYBE_InvalidVersionOnDisk) {
   }
 
   // Make sure data is gone.
-  context = new LocalStorageContextMojo(base::ThreadTaskRunnerHandle::Get(),
-                                        connector(), nullptr, base::FilePath(),
-                                        test_path, nullptr);
+  context = new LocalStorageContextMojo(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), connector(), nullptr,
+      base::FilePath(), test_path, nullptr);
   EXPECT_FALSE(DoTestGet(context, key, &result));
 
   // Write data again.
@@ -1113,9 +1113,9 @@ TEST_F(LocalStorageContextMojoTestWithService, MAYBE_InvalidVersionOnDisk) {
   base::RunLoop().RunUntilIdle();
 
   // Data should have been preserved now.
-  context = new LocalStorageContextMojo(base::ThreadTaskRunnerHandle::Get(),
-                                        connector(), nullptr, base::FilePath(),
-                                        test_path, nullptr);
+  context = new LocalStorageContextMojo(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), connector(), nullptr,
+      base::FilePath(), test_path, nullptr);
   EXPECT_TRUE(DoTestGet(context, key, &result));
   EXPECT_EQ(value, result);
   context->ShutdownAndDelete();
@@ -1126,7 +1126,7 @@ TEST_F(LocalStorageContextMojoTestWithService, CorruptionOnDisk) {
 
   // Create context and add some data to it.
   auto* context = new LocalStorageContextMojo(
-      base::ThreadTaskRunnerHandle::Get(), connector(), nullptr,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), connector(), nullptr,
       base::FilePath(), test_path, nullptr);
   auto key = StdStringToUint8Vector("key");
   auto value = StdStringToUint8Vector("value");
@@ -1153,9 +1153,9 @@ TEST_F(LocalStorageContextMojoTestWithService, CorruptionOnDisk) {
   }
 
   // Make sure data is gone.
-  context = new LocalStorageContextMojo(base::ThreadTaskRunnerHandle::Get(),
-                                        connector(), nullptr, base::FilePath(),
-                                        test_path, nullptr);
+  context = new LocalStorageContextMojo(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), connector(), nullptr,
+      base::FilePath(), test_path, nullptr);
   EXPECT_FALSE(DoTestGet(context, key, &result));
 
   // Write data again.
@@ -1166,9 +1166,9 @@ TEST_F(LocalStorageContextMojoTestWithService, CorruptionOnDisk) {
   base::RunLoop().RunUntilIdle();
 
   // Data should have been preserved now.
-  context = new LocalStorageContextMojo(base::ThreadTaskRunnerHandle::Get(),
-                                        connector(), nullptr, base::FilePath(),
-                                        test_path, nullptr);
+  context = new LocalStorageContextMojo(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), connector(), nullptr,
+      base::FilePath(), test_path, nullptr);
   EXPECT_TRUE(DoTestGet(context, key, &result));
   EXPECT_EQ(value, result);
   context->ShutdownAndDelete();
@@ -1272,7 +1272,7 @@ TEST_F(LocalStorageContextMojoTestWithService, RecreateOnCommitFailure) {
 
   base::FilePath test_path(FILE_PATH_LITERAL("test_path"));
   auto* context = new LocalStorageContextMojo(
-      base::ThreadTaskRunnerHandle::Get(), connector(), nullptr,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), connector(), nullptr,
       base::FilePath(), test_path, nullptr);
 
   auto key = StdStringToUint8Vector("key");
@@ -1426,7 +1426,7 @@ TEST_F(LocalStorageContextMojoTestWithService,
 
   base::FilePath test_path(FILE_PATH_LITERAL("test_path"));
   auto* context = new LocalStorageContextMojo(
-      base::ThreadTaskRunnerHandle::Get(), connector(), nullptr,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE), connector(), nullptr,
       base::FilePath(), test_path, nullptr);
 
   auto key = StdStringToUint8Vector("key");

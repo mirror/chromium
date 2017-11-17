@@ -126,7 +126,7 @@ void HidDeviceManager::GetApiDevices(
   if (enumeration_ready_) {
     std::unique_ptr<base::ListValue> devices =
         CreateApiDeviceList(extension, filters);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, base::Passed(&devices)));
   } else {
     pending_enumerations_.push_back(

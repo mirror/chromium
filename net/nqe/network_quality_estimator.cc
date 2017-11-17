@@ -268,13 +268,13 @@ NetworkQualityEstimator::NetworkQualityEstimator(
   }
 
   throughput_analyzer_.reset(new nqe::internal::ThroughputAnalyzer(
-      this, params_.get(), base::ThreadTaskRunnerHandle::Get(),
+      this, params_.get(), base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       base::Bind(&NetworkQualityEstimator::OnNewThroughputObservationAvailable,
                  base::Unretained(this)),
       tick_clock_.get(), net_log_));
 
   watcher_factory_.reset(new nqe::internal::SocketWatcherFactory(
-      base::ThreadTaskRunnerHandle::Get(),
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE),
       params_->min_socket_watcher_notification_interval(),
       base::Bind(&NetworkQualityEstimator::OnUpdatedTransportRTTAvailable,
                  base::Unretained(this)),
@@ -364,7 +364,7 @@ void NetworkQualityEstimator::NotifyStartTransaction(
     // observations received over intervals of varying durations.
     for (const base::TimeDelta& measuring_delay :
          GetAccuracyRecordingIntervals()) {
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
           FROM_HERE,
           base::Bind(&NetworkQualityEstimator::RecordAccuracyAfterMainFrame,
                      weak_ptr_factory_.GetWeakPtr(), measuring_delay),
@@ -1010,7 +1010,7 @@ void NetworkQualityEstimator::IncreaseInTransportRTTUpdater() {
   }
 
   increase_in_transport_rtt_updater_posted_ = true;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::Bind(&NetworkQualityEstimator::IncreaseInTransportRTTUpdater,
                  weak_ptr_factory_.GetWeakPtr()),
@@ -1395,7 +1395,7 @@ void NetworkQualityEstimator::AddEffectiveConnectionTypeObserver(
 
   // Notify the |observer| on the next message pump since |observer| may not
   // be completely set up for receiving the callbacks.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&NetworkQualityEstimator::
                                 NotifyEffectiveConnectionTypeObserverIfPresent,
                             weak_ptr_factory_.GetWeakPtr(), observer));
@@ -1415,7 +1415,7 @@ void NetworkQualityEstimator::AddRTTAndThroughputEstimatesObserver(
 
   // Notify the |observer| on the next message pump since |observer| may not
   // be completely set up for receiving the callbacks.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&NetworkQualityEstimator::
                      NotifyRTTAndThroughputEstimatesObserverIfPresent,

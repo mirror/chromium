@@ -76,7 +76,7 @@ class TestConnectionListener
   TestConnectionListener()
       : socket_accepted_count_(0),
         did_read_from_socket_(false),
-        task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+        task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
   ~TestConnectionListener() override {}
 
@@ -424,7 +424,7 @@ class CancelRequestDelegate : public TestDelegate {
 
   void OnResponseStarted(URLRequest* request, int net_error) override {
     TestDelegate::OnResponseStarted(request, net_error);
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop_.QuitClosure(), base::TimeDelta::FromSeconds(1));
   }
 
@@ -449,7 +449,7 @@ class InfiniteResponse : public BasicHttpResponse {
 
  private:
   void SendInfinite(const SendBytesCallback& send) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(send, "echo",
                    base::Bind(&InfiniteResponse::SendInfinite,

@@ -31,7 +31,7 @@ class SyncDataTest : public testing::Test {
       : attachment_service(AttachmentService::CreateForTest()),
         attachment_service_weak_ptr_factory(attachment_service.get()),
         attachment_service_proxy(
-            base::ThreadTaskRunnerHandle::Get(),
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE),
             attachment_service_weak_ptr_factory.GetWeakPtr()) {}
   base::MessageLoop loop;
   sync_pb::EntitySpecifics specifics;

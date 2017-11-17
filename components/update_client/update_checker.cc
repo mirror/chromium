@@ -198,7 +198,7 @@ void UpdateCheckerImpl::UpdateCheckSucceeded(
       it->second->SetParseResult(result);
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(std::move(update_check_callback_), 0, retry_after_sec));
 }
@@ -214,7 +214,7 @@ void UpdateCheckerImpl::UpdateCheckFailed(const IdToComponentPtrMap& components,
     component.set_update_check_error(error);
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(update_check_callback_), error,
                                 retry_after_sec));
 }

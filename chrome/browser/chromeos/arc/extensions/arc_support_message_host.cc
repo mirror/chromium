@@ -85,7 +85,7 @@ void ArcSupportMessageHost::OnMessage(const std::string& message_string) {
 
 scoped_refptr<base::SingleThreadTaskRunner> ArcSupportMessageHost::task_runner()
     const {
-  return base::ThreadTaskRunnerHandle::Get();
+  return base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 }
 
 }  // namespace arc

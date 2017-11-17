@@ -10,6 +10,7 @@
 #include <limits>
 
 #include "base/atomic_sequence_num.h"
+#include "base/location.h"
 #include "base/rand_util.h"
 #include "base/strings/stringprintf.h"
 #include "build/build_config.h"
@@ -46,6 +47,22 @@ std::string Channel::GenerateUniqueRandomChannelID() {
       process_id,
       g_last_id.GetNext(),
       base::RandInt(0, std::numeric_limits<int32_t>::max()));
+}
+
+// static
+std::unique_ptr<Channel> Channel::CreateClient(
+    const IPC::ChannelHandle& channel_handle,
+    Listener* listener) {
+  return CreateClient(channel_handle, listener,
+                      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
+}
+
+// static
+std::unique_ptr<Channel> Channel::CreateServer(
+    const IPC::ChannelHandle& channel_handle,
+    Listener* listener) {
+  return CreateServer(channel_handle, listener,
+                      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 }  // namespace IPC

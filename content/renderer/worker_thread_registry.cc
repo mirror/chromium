@@ -100,7 +100,7 @@ void WorkerThreadRegistry::DidStartCurrentWorkerThread() {
   g_observers_tls.Pointer()->Set(new WorkerThreadObservers());
   int id = base::PlatformThread::CurrentId();
   base::AutoLock locker_(task_runner_map_lock_);
-  task_runner_map_[id] = base::ThreadTaskRunnerHandle::Get().get();
+  task_runner_map_[id] = base::ThreadTaskRunnerHandle::Get(FROM_HERE).get();
   CHECK(task_runner_map_[id]);
 }
 

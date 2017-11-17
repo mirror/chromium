@@ -5058,7 +5058,7 @@ void WebContentsImpl::DidChangeLoadProgress() {
   if (loading_weak_factory_.HasWeakPtrs())
     return;
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&WebContentsImpl::SendChangeLoadProgress,
                      loading_weak_factory_.GetWeakPtr()),

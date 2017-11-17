@@ -83,7 +83,7 @@ std::string HexedHash(const std::string& value) {
 
 void SizeRetrievedFromAllCaches(std::unique_ptr<int64_t> accumulator,
                                 CacheStorage::SizeCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), *accumulator));
 }
 
@@ -734,7 +734,7 @@ void CacheStorage::ScheduleWriteIndex() {
   index_write_task_.Reset(base::Bind(&CacheStorage::WriteIndex,
                                      weak_factory_.GetWeakPtr(),
                                      base::Bind(&DoNothingWithBool)));
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE, index_write_task_.callback(),
       base::TimeDelta::FromSeconds(kWriteIndexDelaySecs));
 }
@@ -904,7 +904,7 @@ void CacheStorage::DeleteCacheImpl(const std::string& cache_name,
                                    BoolAndErrorCallback callback) {
   CacheStorageCacheHandle cache_handle = GetLoadedCache(cache_name);
   if (!cache_handle.value()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), false,
                                   CacheStorageError::kErrorNotFound));
     return;
@@ -1181,7 +1181,7 @@ void CacheStorage::SizeImpl(SizeCallback callback) {
   DCHECK(initialized_);
 
   if (cache_index_->GetPaddedStorageSize() != kSizeUnknown) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback),
                                   cache_index_->GetPaddedStorageSize()));
     return;

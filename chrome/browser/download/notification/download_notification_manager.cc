@@ -144,7 +144,8 @@ void DownloadNotificationManagerForProfile::OnDownloadRemoved(
 
   // This removing might be initiated from DownloadNotificationItem, so delaying
   // deleting for item to do remaining cleanups.
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, item.release());
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE,
+                                                           item.release());
 
   if (items_.size() == 0 && parent_manager_)
     parent_manager_->OnAllDownloadsRemoving(profile_);
@@ -162,7 +163,8 @@ void DownloadNotificationManagerForProfile::OnDownloadDestroyed(
 
   // This removing might be initiated from DownloadNotificationItem, so delaying
   // deleting for item to do remaining cleanups.
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, item.release());
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE,
+                                                           item.release());
 
   if (items_.size() == 0 && parent_manager_)
     parent_manager_->OnAllDownloadsRemoving(profile_);

@@ -928,7 +928,7 @@ void PepperGraphics2DHost::SendOffscreenFlushAck() {
 
 void PepperGraphics2DHost::ScheduleOffscreenFlushAck() {
   offscreen_flush_pending_ = true;
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&PepperGraphics2DHost::SendOffscreenFlushAck, AsWeakPtr()),
       base::TimeDelta::FromMilliseconds(kOffscreenCallbackDelayMs));

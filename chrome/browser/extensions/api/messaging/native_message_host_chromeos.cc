@@ -75,7 +75,7 @@ class EchoHost : public NativeMessageHost {
   };
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner() const override {
-    return base::ThreadTaskRunnerHandle::Get();
+    return base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   };
 
  private:

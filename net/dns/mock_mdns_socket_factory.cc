@@ -55,8 +55,8 @@ int MockMDnsDatagramServerSocket::HandleRecvLater(
     IOBuffer* buffer, int size, IPEndPoint* address,
     const CompletionCallback& callback) {
   int rv = HandleRecvNow(buffer, size, address, callback);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                base::Bind(callback, rv));
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+      FROM_HERE, base::Bind(callback, rv));
   return ERR_IO_PENDING;
 }
 

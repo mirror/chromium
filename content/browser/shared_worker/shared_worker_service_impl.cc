@@ -70,8 +70,8 @@ void SharedWorkerServiceImpl::TerminateAllWorkersForTesting(
   DCHECK(!terminate_all_workers_callback_);
   if (worker_hosts_.empty()) {
     // Run callback asynchronously to avoid re-entering the caller.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  std::move(callback));
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           std::move(callback));
   } else {
     terminate_all_workers_callback_ = std::move(callback);
     for (auto& iter : worker_hosts_)

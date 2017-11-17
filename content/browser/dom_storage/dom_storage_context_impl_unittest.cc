@@ -47,8 +47,8 @@ class DOMStorageContextImplTest : public testing::Test {
   void SetUp() override {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
     storage_policy_ = new MockSpecialStoragePolicy;
-    task_runner_ =
-        new MockDOMStorageTaskRunner(base::ThreadTaskRunnerHandle::Get().get());
+    task_runner_ = new MockDOMStorageTaskRunner(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
     context_ =
         new DOMStorageContextImpl(temp_dir_.GetPath(), base::FilePath(),
                                   storage_policy_.get(), task_runner_.get());

@@ -44,7 +44,7 @@ void DisplayRotationDefaultHandler::OnWindowTreeHostManagerShutdown() {
   ash::Shell::Get()->window_tree_host_manager()->RemoveObserver(this);
   ash::Shell::Get()->RemoveShellObserver(this);
   settings_observer_.reset();
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 void DisplayRotationDefaultHandler::OnCrosSettingsChanged() {

@@ -55,9 +55,8 @@ TabRestoreServiceHelper::TabRestoreServiceHelper(
       time_factory_(time_factory) {
   DCHECK(tab_restore_service_);
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-      this,
-      "TabRestoreServiceHelper",
-      base::ThreadTaskRunnerHandle::Get());
+      this, "TabRestoreServiceHelper",
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 }
 
 TabRestoreServiceHelper::~TabRestoreServiceHelper() {

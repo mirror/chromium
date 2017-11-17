@@ -111,7 +111,7 @@ enterprise_management::RemoteCommand_Type DeviceCommandScreenshotJob::GetType()
 
 void DeviceCommandScreenshotJob::OnSuccess() {
   SYSLOG(INFO) << "Upload successful.";
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(succeeded_callback_,
                      base::Passed(base::MakeUnique<Payload>(SUCCESS))));
@@ -129,7 +129,7 @@ void DeviceCommandScreenshotJob::OnFailure(UploadJob::ErrorCode error_code) {
       result_code = FAILURE_SERVER;
       break;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(failed_callback_,
                      base::Passed(base::MakeUnique<Payload>(result_code))));
@@ -198,7 +198,7 @@ void DeviceCommandScreenshotJob::RunImpl(
   // Fail if the delegate says screenshots are not allowed in this session.
   if (!screenshot_delegate_->IsScreenshotAllowed()) {
     SYSLOG(ERROR) << "Screenshots are not allowed.";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(failed_callback_, base::Passed(base::MakeUnique<Payload>(
                                              FAILURE_USER_INPUT))));
@@ -209,7 +209,7 @@ void DeviceCommandScreenshotJob::RunImpl(
   // Immediately fail if the upload url is invalid.
   if (!upload_url_.is_valid()) {
     SYSLOG(ERROR) << upload_url_ << " is not a valid URL.";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(failed_callback_, base::Passed(base::MakeUnique<Payload>(
                                              FAILURE_INVALID_URL))));
@@ -219,7 +219,7 @@ void DeviceCommandScreenshotJob::RunImpl(
   // Immediately fail if there are no attached screens.
   if (root_windows.size() == 0) {
     SYSLOG(ERROR) << "No attached screens.";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(failed_callback_, base::Passed(base::MakeUnique<Payload>(
                                              FAILURE_SCREENSHOT_ACQUISITION))));
@@ -240,7 +240,7 @@ void DeviceCommandScreenshotJob::RunImpl(
         base::Bind(&RunStoreScreenshotOnTaskRunner,
                    base::Bind(&DeviceCommandScreenshotJob::StoreScreenshot,
                               weak_ptr_factory_.GetWeakPtr(), screen),
-                   base::ThreadTaskRunnerHandle::Get()));
+                   base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   }
 }
 

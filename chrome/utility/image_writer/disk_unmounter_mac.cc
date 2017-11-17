@@ -33,7 +33,7 @@ void DiskUnmounterMac::Unmount(const std::string& device_path,
                                const base::Closure& failure_continuation) {
   // Should only be used once.
   DCHECK(!original_thread_.get());
-  original_thread_ = base::ThreadTaskRunnerHandle::Get();
+  original_thread_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE);
   success_continuation_ = success_continuation;
   failure_continuation_ = failure_continuation;
 

@@ -187,7 +187,7 @@ void PluginInfoHostImpl::Context::ShutdownOnUIThread() {
 
 PluginInfoHostImpl::PluginInfoHostImpl(int render_process_id, Profile* profile)
     : context_(render_process_id, profile),
-      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       ukm_source_id_(ukm::UkmRecorder::GetNewSourceID()),
       binding_(this) {
   shutdown_notifier_ =

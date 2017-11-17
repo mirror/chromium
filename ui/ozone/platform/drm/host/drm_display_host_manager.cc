@@ -254,14 +254,14 @@ void DrmDisplayHostManager::ProcessEvent() {
               {base::MayBlock(),
                base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
               base::Bind(&OpenDeviceAsync, event.path,
-                         base::ThreadTaskRunnerHandle::Get(),
+                         base::ThreadTaskRunnerHandle::Get(FROM_HERE),
                          base::Bind(&DrmDisplayHostManager::OnAddGraphicsDevice,
                                     weak_ptr_factory_.GetWeakPtr())));
           task_pending_ = true;
         }
         break;
       case DeviceEvent::CHANGE:
-        task_pending_ = base::ThreadTaskRunnerHandle::Get()->PostTask(
+        task_pending_ = base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE,
             base::Bind(&DrmDisplayHostManager::OnUpdateGraphicsDevice,
                        weak_ptr_factory_.GetWeakPtr()));
@@ -271,10 +271,11 @@ void DrmDisplayHostManager::ProcessEvent() {
             << "Removing primary graphics card";
         auto it = drm_devices_.find(event.path);
         if (it != drm_devices_.end()) {
-          task_pending_ = base::ThreadTaskRunnerHandle::Get()->PostTask(
-              FROM_HERE,
-              base::Bind(&DrmDisplayHostManager::OnRemoveGraphicsDevice,
-                         weak_ptr_factory_.GetWeakPtr(), it->second));
+          task_pending_ =
+              base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+                  FROM_HERE,
+                  base::Bind(&DrmDisplayHostManager::OnRemoveGraphicsDevice,
+                             weak_ptr_factory_.GetWeakPtr(), it->second));
           drm_devices_.erase(it);
         }
         break;
@@ -341,7 +342,7 @@ void DrmDisplayHostManager::OnGpuThreadReady() {
   // delegate know that the display configuration changed and it needs to
   // update it again.
   if (!get_displays_callback_.is_null()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&DrmDisplayHostManager::RunUpdateDisplaysCallback,
                    weak_ptr_factory_.GetWeakPtr(), get_displays_callback_));
@@ -382,7 +383,7 @@ void DrmDisplayHostManager::GpuHasUpdatedNativeDisplays(
   }
 
   if (!get_displays_callback_.is_null()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&DrmDisplayHostManager::RunUpdateDisplaysCallback,
                    weak_ptr_factory_.GetWeakPtr(), get_displays_callback_));
@@ -434,7 +435,7 @@ void DrmDisplayHostManager::GpuTookDisplayControl(bool status) {
     display_externally_controlled_ = false;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(take_display_control_callback_, status));
   take_display_control_callback_.Reset();
   display_control_change_pending_ = false;
@@ -454,7 +455,7 @@ void DrmDisplayHostManager::GpuRelinquishedDisplayControl(bool status) {
     display_externally_controlled_ = true;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(relinquish_display_control_callback_, status));
   relinquish_display_control_callback_.Reset();
   display_control_change_pending_ = false;

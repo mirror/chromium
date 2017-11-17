@@ -28,7 +28,7 @@ namespace syncer {
 //   std::unique_ptr<ModelTypeStore::RecordList> record_list(
 //       new ModelTypeStore::RecordList);
 //   record_list->push_back(ModelTypeStore::Record("id1", "value1"));
-//   base::ThreadTaskRunnerHandle::Get()->PostTask(
+//   base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
 //       FROM_HERE, base::Bind(callback, Result::SUCCESS,
 //                             base::Passed(record_list)));
 // }

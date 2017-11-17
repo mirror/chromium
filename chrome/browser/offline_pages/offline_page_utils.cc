@@ -154,7 +154,7 @@ void OfflinePageUtils::SelectPageForURL(
   OfflinePageModel* offline_page_model =
       OfflinePageModelFactory::GetForBrowserContext(browser_context);
   if (!offline_page_model) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::Bind(callback, nullptr));
     return;
   }

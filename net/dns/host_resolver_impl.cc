@@ -690,7 +690,7 @@ class HostResolverImpl::ProcTask
       : key_(key),
         params_(params),
         callback_(callback),
-        network_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+        network_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
         proc_task_runner_(std::move(proc_task_runner)),
         attempt_number_(0),
         completed_attempt_number_(0),

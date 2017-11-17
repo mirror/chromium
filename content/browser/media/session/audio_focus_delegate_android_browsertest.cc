@@ -63,7 +63,7 @@ IN_PROC_BROWSER_TEST_F(AudioFocusDelegateAndroidBrowserTest,
   // to the listeners. If the bug is still present, it will crash.
   {
     base::RunLoop run_loop;
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
         FROM_HERE, run_loop.QuitClosure(), base::TimeDelta::FromSeconds(1));
     run_loop.Run();
   }

@@ -77,7 +77,7 @@ template <typename Sig>
 base::OnceCallback<Sig> CreateRelayCallback(base::OnceCallback<Sig> callback) {
   return CreateComposedCallback(
       base::BindOnce(&RunTaskWithTaskRunner,
-                     base::ThreadTaskRunnerHandle::Get()),
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       std::move(callback));
 }
 
@@ -86,7 +86,7 @@ base::RepeatingCallback<Sig> CreateRelayCallback(
     base::RepeatingCallback<Sig> callback) {
   return CreateComposedCallback(
       base::BindRepeating(&RunTaskWithTaskRunner,
-                          base::ThreadTaskRunnerHandle::Get()),
+                          base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       std::move(callback));
 }
 

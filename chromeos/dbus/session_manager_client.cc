@@ -1056,7 +1056,7 @@ class SessionManagerClientStubImpl : public SessionManagerClient {
 
   void RemoveArcData(const cryptohome::Identification& cryptohome_id,
                      VoidDBusMethodCallback callback) override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), false));
   }
 

@@ -392,8 +392,9 @@ class SharedIsolateFactory {
         has_initialized_v8_ = true;
       }
 
-      holder_.reset(new gin::IsolateHolder(base::ThreadTaskRunnerHandle::Get(),
-                                           gin::IsolateHolder::kUseLocker));
+      holder_.reset(
+          new gin::IsolateHolder(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                                 gin::IsolateHolder::kUseLocker));
     }
 
     return holder_->isolate();

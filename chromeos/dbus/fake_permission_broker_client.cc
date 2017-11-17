@@ -66,7 +66,7 @@ void FakePermissionBrokerClient::OpenPath(const std::string& path,
       FROM_HERE,
       {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
       base::Bind(&chromeos::OpenPath, path, callback, error_callback,
-                 base::ThreadTaskRunnerHandle::Get()));
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
 }
 
 void FakePermissionBrokerClient::RequestTcpPortAccess(

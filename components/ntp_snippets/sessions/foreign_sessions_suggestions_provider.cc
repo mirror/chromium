@@ -221,7 +221,7 @@ void ForeignSessionsSuggestionsProvider::DismissSuggestion(
 void ForeignSessionsSuggestionsProvider::FetchSuggestionImage(
     const ContentSuggestion::ID& suggestion_id,
     ImageFetchedCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), gfx::Image()));
 }
 
@@ -231,7 +231,7 @@ void ForeignSessionsSuggestionsProvider::Fetch(
     FetchDoneCallback callback) {
   LOG(DFATAL)
       << "ForeignSessionsSuggestionsProvider has no |Fetch| functionality!";
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback),
                                 Status(StatusCode::PERMANENT_ERROR,
                                        "ForeignSessionsSuggestionsProvider "

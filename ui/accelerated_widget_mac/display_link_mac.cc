@@ -84,7 +84,7 @@ scoped_refptr<DisplayLinkMac> DisplayLinkMac::GetForDisplay(
 DisplayLinkMac::DisplayLinkMac(
     CGDirectDisplayID display_id,
     base::ScopedTypeRef<CVDisplayLinkRef> display_link)
-    : main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       display_id_(display_id),
       display_link_(display_link),
       timebase_and_interval_valid_(false) {

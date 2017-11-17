@@ -171,7 +171,7 @@ CertificateWatcher::CertificateWatcher(
     const base::Closure& restart_action,
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner)
     : restart_action_(restart_action),
-      caller_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      caller_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       io_task_runner_(io_task_runner),
       delay_(base::TimeDelta::FromSeconds(kReadDelayInSeconds)),
       weak_factory_(this) {

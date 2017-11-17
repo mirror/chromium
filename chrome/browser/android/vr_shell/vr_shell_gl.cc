@@ -182,7 +182,7 @@ VrShellGl::VrShellGl(GlBrowserInterface* browser_interface,
       web_vr_mode_(start_in_web_vr_mode),
       surfaceless_rendering_(reprojected_rendering),
       daydream_support_(daydream_support),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)),
       binding_(this),
       browser_(browser_interface),
       fps_meter_(new vr::FPSMeter()),
@@ -665,13 +665,13 @@ void VrShellGl::HandleControllerAppButtonActivity(
                         : vr::PlatformController::kSwipeDirectionRight;
         // Post a task, rather than calling the UI directly, so as not to modify
         // UI state in the midst of frame rendering.
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE, base::Bind(&vr::Ui::OnAppButtonGesturePerformed,
                                   base::Unretained(ui_.get()), direction));
       }
     }
     if (direction == vr::PlatformController::kSwipeDirectionNone) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::Bind(&vr::Ui::OnAppButtonClicked, base::Unretained(ui_.get())));
     }

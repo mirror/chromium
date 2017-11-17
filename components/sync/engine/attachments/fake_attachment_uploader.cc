@@ -28,7 +28,7 @@ void FakeAttachmentUploader::UploadAttachment(const Attachment& attachment,
 
   UploadResult result = UPLOAD_SUCCESS;
   AttachmentId id = attachment.GetId();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(callback, result, id));
 }
 

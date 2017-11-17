@@ -44,7 +44,7 @@ class ComponentA : public Component<ComponentA> {
       enabled_ = true;
       Test();
     }
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&ComponentA::OnEnableComplete,
                                   base::Unretained(this), !fail_enable_));
   }
@@ -53,7 +53,7 @@ class ComponentA : public Component<ComponentA> {
     if (enabled_)
       Test();
     enabled_ = false;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&ComponentA::OnDisableComplete, base::Unretained(this)));
   }
@@ -84,7 +84,7 @@ class ComponentB : public Component<ComponentB> {
       enabled_ = true;
       Test();
     }
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&ComponentB::OnEnableComplete,
                                   base::Unretained(this), !fail_enable_));
   }
@@ -93,7 +93,7 @@ class ComponentB : public Component<ComponentB> {
     if (enabled_)
       Test();
     enabled_ = false;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&ComponentB::OnDisableComplete, base::Unretained(this)));
   }
@@ -123,7 +123,7 @@ class ComponentC : public Component<ComponentC> {
       enabled_ = true;
       Test();
     }
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&ComponentC::OnEnableComplete,
                                   base::Unretained(this), !fail_enable_));
   }
@@ -132,7 +132,7 @@ class ComponentC : public Component<ComponentC> {
     if (enabled_)
       Test();
     enabled_ = false;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&ComponentC::OnDisableComplete, base::Unretained(this)));
   }

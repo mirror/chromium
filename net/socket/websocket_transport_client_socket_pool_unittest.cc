@@ -47,8 +47,8 @@ const RequestPriority kDefaultPriority = LOW;
 void RunLoopForTimePeriod(base::TimeDelta period) {
   base::RunLoop run_loop;
   base::Closure quit_closure(run_loop.QuitClosure());
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(FROM_HERE, quit_closure,
-                                                       period);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE, quit_closure, period);
   run_loop.Run();
 }
 

@@ -79,9 +79,10 @@ void ReachablePhoneFlow::OnSyncTickleSuccess(
     const cryptauth::SendDeviceSyncTickleResponse& response) {
   PA_LOG(INFO) << "Waiting " << kWaitTimeMillis
                << "ms for phones to callback to CryptAuth...";
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&ReachablePhoneFlow::QueryReachablePhones,
-                            weak_ptr_factory_.GetWeakPtr()),
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&ReachablePhoneFlow::QueryReachablePhones,
+                 weak_ptr_factory_.GetWeakPtr()),
       base::TimeDelta::FromMilliseconds(kWaitTimeMillis));
 }
 

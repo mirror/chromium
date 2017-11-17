@@ -501,7 +501,7 @@ void CacheStorageCache::WriteSideData(ErrorCallback callback,
                                       scoped_refptr<net::IOBuffer> buffer,
                                       int buf_len) {
   if (backend_state_ == BACKEND_CLOSED) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(std::move(callback), CacheStorageError::kErrorStorage));
     return;
@@ -510,7 +510,7 @@ void CacheStorageCache::WriteSideData(ErrorCallback callback,
   // GetUsageAndQuota is called before entering a scheduled operation since it
   // can call Size, another scheduled operation.
   quota_manager_proxy_->GetUsageAndQuota(
-      base::ThreadTaskRunnerHandle::Get().get(), origin_,
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), origin_,
       storage::kStorageTypeTemporary,
       base::AdaptCallbackForRepeating(
           base::BindOnce(&CacheStorageCache::WriteSideDataDidGetQuota,
@@ -523,7 +523,7 @@ void CacheStorageCache::BatchOperation(
     ErrorCallback callback,
     BadMessageCallback bad_message_callback) {
   if (backend_state_ == BACKEND_CLOSED) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(std::move(callback), CacheStorageError::kErrorStorage));
     return;
@@ -541,10 +541,10 @@ void CacheStorageCache::BatchOperation(
     }
   }
   if (!safe_space_required.IsValid() || !safe_side_data_size.IsValid()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(bad_message_callback),
                                   bad_message::CSDH_UNEXPECTED_OPERATION));
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(std::move(callback), CacheStorageError::kErrorStorage));
     return;
@@ -558,7 +558,7 @@ void CacheStorageCache::BatchOperation(
     // Put runs, the cache might already be full and the origin will be larger
     // than it's supposed to be.
     quota_manager_proxy_->GetUsageAndQuota(
-        base::ThreadTaskRunnerHandle::Get().get(), origin_,
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), origin_,
         storage::kStorageTypeTemporary,
         base::AdaptCallbackForRepeating(base::BindOnce(
             &CacheStorageCache::BatchDidGetUsageAndQuota,
@@ -588,17 +588,17 @@ void CacheStorageCache::BatchDidGetUsageAndQuota(
   safe_space_required_with_side_data = safe_space_required + side_data_size;
   if (!safe_space_required.IsValid() ||
       !safe_space_required_with_side_data.IsValid()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(bad_message_callback),
                                   bad_message::CSDH_UNEXPECTED_OPERATION));
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(std::move(callback), CacheStorageError::kErrorStorage));
     return;
   }
   if (status_code != storage::kQuotaStatusOk ||
       safe_space_required.ValueOrDie() > quota) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback),
                                   CacheStorageError::kErrorQuotaExceeded));
     return;
@@ -697,7 +697,7 @@ void CacheStorageCache::Close(base::OnceClosure callback) {
 void CacheStorageCache::Size(SizeCallback callback) {
   if (backend_state_ == BACKEND_CLOSED) {
     // TODO(jkarlin): Delete caches that can't be initialized.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), 0));
     return;
   }
@@ -709,7 +709,7 @@ void CacheStorageCache::Size(SizeCallback callback) {
 
 void CacheStorageCache::GetSizeThenClose(SizeCallback callback) {
   if (backend_state_ == BACKEND_CLOSED) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), 0));
     return;
   }
@@ -1093,7 +1093,7 @@ void CacheStorageCache::WriteSideDataDidGetQuota(
     int64_t usage,
     int64_t quota) {
   if (status_code != storage::kQuotaStatusOk || (buf_len > quota - usage)) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback),
                                   CacheStorageError::kErrorQuotaExceeded));
     return;
@@ -1693,13 +1693,13 @@ void CacheStorageCache::SizeImpl(SizeCallback callback) {
 
   // TODO(cmumford): Can CacheStorage::kSizeUnknown be returned instead of zero?
   if (backend_state_ != BACKEND_OPEN) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), 0));
     return;
   }
 
   int64_t size = backend_state_ == BACKEND_OPEN ? PaddedCacheSize() : 0;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), size));
 }
 

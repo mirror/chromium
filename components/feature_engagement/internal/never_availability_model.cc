@@ -20,7 +20,7 @@ NeverAvailabilityModel::~NeverAvailabilityModel() = default;
 
 void NeverAvailabilityModel::Initialize(OnInitializedCallback callback,
                                         uint32_t current_day) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&NeverAvailabilityModel::ForwardedOnInitializedCallback,
                      base::Unretained(this), std::move(callback)));
@@ -37,7 +37,7 @@ base::Optional<uint32_t> NeverAvailabilityModel::GetAvailability(
 
 void NeverAvailabilityModel::ForwardedOnInitializedCallback(
     OnInitializedCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
   ready_ = true;
 }

@@ -61,8 +61,8 @@ class TestNotificationObserver : public MessageCenterObserver {
       const message_center::DisplaySource source) override {
     if (notification_id ==
         NetworkPortalNotificationController::kNotificationId) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                    run_loop_.QuitClosure());
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
+          FROM_HERE, run_loop_.QuitClosure());
     }
   }
 

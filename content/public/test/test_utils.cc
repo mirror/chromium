@@ -55,7 +55,7 @@ void DeferredQuitRunLoop(const base::Closure& quit_task,
   if (num_quit_deferrals <= 0) {
     quit_task.Run();
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&DeferredQuitRunLoop, quit_task,
                                   num_quit_deferrals - 1));
   }
@@ -129,7 +129,7 @@ void RunThisRunLoop(base::RunLoop* run_loop) {
 void RunAllPendingInMessageLoop() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, GetDeferredQuitTaskForRunLoop(&run_loop));
   RunThisRunLoop(&run_loop);
 }
@@ -145,9 +145,10 @@ void RunAllPendingInMessageLoop(BrowserThread::ID thread_id) {
   // this thread. When a few generations of pending tasks have run on
   // |thread_id|, a task will be posted to this thread to exit the RunLoop.
   base::RunLoop run_loop;
-  const base::Closure post_quit_run_loop_to_ui_thread = base::Bind(
-      base::IgnoreResult(&base::SingleThreadTaskRunner::PostTask),
-      base::ThreadTaskRunnerHandle::Get(), FROM_HERE, run_loop.QuitClosure());
+  const base::Closure post_quit_run_loop_to_ui_thread =
+      base::Bind(base::IgnoreResult(&base::SingleThreadTaskRunner::PostTask),
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE), FROM_HERE,
+                 run_loop.QuitClosure());
   BrowserThread::PostTask(
       thread_id, FROM_HERE,
       base::BindOnce(&DeferredQuitRunLoop, post_quit_run_loop_to_ui_thread,

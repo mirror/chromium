@@ -13,8 +13,8 @@ namespace media {
 ContentVideoViewOverlayAllocator*
 ContentVideoViewOverlayAllocator::GetInstance() {
   static ContentVideoViewOverlayAllocator* allocator =
-      new ContentVideoViewOverlayAllocator(
-          AVDACodecAllocator::GetInstance(base::ThreadTaskRunnerHandle::Get()));
+      new ContentVideoViewOverlayAllocator(AVDACodecAllocator::GetInstance(
+          base::ThreadTaskRunnerHandle::Get(FROM_HERE)));
   return allocator;
 }
 

@@ -166,10 +166,11 @@ void HandleRequestOnIOThread(
     const net::HttpServerRequestInfo& request,
     const HttpResponseSenderFunc& send_response_func) {
   cmd_task_runner->PostTask(
-      FROM_HERE, base::BindOnce(handle_request_on_cmd_func, request,
-                                base::Bind(&SendResponseOnCmdThread,
-                                           base::ThreadTaskRunnerHandle::Get(),
-                                           send_response_func)));
+      FROM_HERE,
+      base::BindOnce(handle_request_on_cmd_func, request,
+                     base::Bind(&SendResponseOnCmdThread,
+                                base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                                send_response_func)));
 }
 
 base::LazyInstance<base::ThreadLocalPointer<HttpServer>>::DestructorAtExit

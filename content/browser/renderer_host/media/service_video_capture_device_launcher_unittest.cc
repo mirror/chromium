@@ -123,7 +123,7 @@ TEST_F(ServiceVideoCaptureDeviceLauncherTest, LaunchingDeviceSucceeds) {
         // Note: We must keep |device_request| alive at least until we have
         // sent out the callback. Otherwise, |launcher_| may interpret this
         // as the connection having been lost before receiving the callback.
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE,
             base::BindOnce(
                 [](video_capture::mojom::DeviceRequest device_request,
@@ -238,7 +238,7 @@ TEST_F(ServiceVideoCaptureDeviceLauncherTest,
             // Note: We must keep |device_request| alive at least until we have
             // sent out the callback. Otherwise, |launcher_| may interpret this
             // as the connection having been lost before receiving the callback.
-            base::ThreadTaskRunnerHandle::Get()->PostTask(
+            base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
                 FROM_HERE,
                 base::BindOnce(
                     [](video_capture::mojom::DeviceRequest device_request,
@@ -343,7 +343,7 @@ TEST_F(ServiceVideoCaptureDeviceLauncherTest,
                                CreateDeviceCallback& callback) {
         // The service holds on to the |device_request|.
         device_request_owned_by_service = std::move(*device_request);
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE,
             base::BindOnce(
                 [](video_capture::mojom::DeviceFactory::CreateDeviceCallback

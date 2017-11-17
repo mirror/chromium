@@ -25,8 +25,7 @@ void RunCloseListeners(const std::vector<base::Closure>& close_listeners) {
 StreamHandleImpl::StreamHandleImpl(const base::WeakPtr<Stream>& stream)
     : stream_(stream),
       url_(stream->url()),
-      stream_task_runner_(base::ThreadTaskRunnerHandle::Get().get()) {
-}
+      stream_task_runner_(base::ThreadTaskRunnerHandle::Get(FROM_HERE).get()) {}
 
 StreamHandleImpl::~StreamHandleImpl() {
   stream_task_runner_->PostTaskAndReply(

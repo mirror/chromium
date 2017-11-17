@@ -1843,7 +1843,7 @@ TEST_F(DownloadProtectionServiceTest,
     EXPECT_EQ("dummy dos header", headers.pe_headers().dos_header());
 
     // Simulate the request finishing.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&DownloadProtectionServiceTest::SendURLFetchComplete,
                        base::Unretained(this), fetcher));
@@ -1902,7 +1902,7 @@ TEST_F(DownloadProtectionServiceTest,
     EXPECT_EQ("dummy cert data", chain.element(0).certificate());
 
     // Simulate the request finishing.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::BindOnce(&DownloadProtectionServiceTest::SendURLFetchComplete,
                        base::Unretained(this), fetcher));

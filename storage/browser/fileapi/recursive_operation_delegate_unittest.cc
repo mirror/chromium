@@ -136,7 +136,7 @@ void ReportStatus(base::File::Error* out_error,
 void CallCancelLater(storage::RecursiveOperationDelegate* operation,
                      int counter) {
   if (counter > 0) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE,
         base::Bind(&CallCancelLater, base::Unretained(operation), counter - 1));
     return;

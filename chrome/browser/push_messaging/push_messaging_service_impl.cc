@@ -835,7 +835,7 @@ void PushMessagingServiceImpl::DidDeleteID(const std::string& app_id,
   // |app_id_when_instance_id|, since it calls
   // InstanceIDDriver::RemoveInstanceID which deletes the InstanceID itself.
   // Calling that immediately would cause a use-after-free in our caller.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::BindOnce(&PushMessagingServiceImpl::DidUnsubscribe,
                      weak_factory_.GetWeakPtr(), app_id, was_subscribed));

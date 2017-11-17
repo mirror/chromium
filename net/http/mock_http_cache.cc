@@ -338,7 +338,7 @@ void MockDiskEntry::CallbackLater(const CompletionCallback& callback,
                                   int result) {
   if (ignore_callbacks_)
     return StoreAndDeliverCallbacks(true, this, callback, result);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&MockDiskEntry::RunCallback, this, callback, result));
 }
@@ -579,7 +579,7 @@ void MockDiskCache::ReleaseAll() {
 
 void MockDiskCache::CallbackLater(const CompletionCallback& callback,
                                   int result) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&CallbackForwader, callback, result));
 }
 

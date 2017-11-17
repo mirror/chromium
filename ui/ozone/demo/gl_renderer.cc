@@ -61,7 +61,7 @@ void GlRenderer::RenderFrame() {
 }
 
 void GlRenderer::PostRenderFrameTask(gfx::SwapResult result) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&GlRenderer::RenderFrame, weak_ptr_factory_.GetWeakPtr()));
 }

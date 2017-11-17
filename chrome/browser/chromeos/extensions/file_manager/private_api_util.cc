@@ -358,7 +358,7 @@ void GetSelectedFileInfo(content::RenderFrameHost* render_frame_host,
     }
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&GetSelectedFileInfoInternal, profile,
                                 base::Passed(&params)));
 }

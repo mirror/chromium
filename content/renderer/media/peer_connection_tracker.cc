@@ -315,7 +315,7 @@ static std::unique_ptr<base::DictionaryValue> GetDictValue(
 class InternalStatsObserver : public webrtc::StatsObserver {
  public:
   explicit InternalStatsObserver(int lid)
-      : lid_(lid), main_thread_(base::ThreadTaskRunnerHandle::Get()) {}
+      : lid_(lid), main_thread_(base::ThreadTaskRunnerHandle::Get(FROM_HERE)) {}
 
   void OnComplete(const StatsReports& reports) override {
     std::unique_ptr<base::ListValue> list(new base::ListValue());

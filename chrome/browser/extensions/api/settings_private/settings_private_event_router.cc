@@ -127,7 +127,7 @@ void SettingsPrivateEventRouter::OnPreferenceChanged(
   // This posts an asynchronous task to ensure that all pref stores are updated,
   // as |prefs_util_->GetPref()| relies on this information to determine if a
   // preference is controlled by e.g. extensions.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::BindOnce(&SettingsPrivateEventRouter::SendPrefChange,
                                 weak_ptr_factory_.GetWeakPtr(), pref_name));
 }

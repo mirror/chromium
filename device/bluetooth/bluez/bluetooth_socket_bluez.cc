@@ -230,7 +230,8 @@ void BluetoothSocketBlueZ::RegisterProfile(
   if (!adapter->IsPresent()) {
     VLOG(1) << uuid_.canonical_value() << " on " << device_path_.value()
             << ": Delaying profile registration.";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, success_callback);
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(FROM_HERE,
+                                                           success_callback);
     return;
   }
 

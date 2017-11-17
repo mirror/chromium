@@ -86,7 +86,7 @@ class HistoryServiceTest : public testing::Test {
 
     // Make sure we don't have any event pending that could disrupt the next
     // test.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
     base::RunLoop().Run();
   }
@@ -719,7 +719,7 @@ void CheckDirectiveProcessingResult(
   }
 
   base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(100));
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE, base::Bind(&CheckDirectiveProcessingResult, timeout,
                             change_processor, num_changes));
 }
@@ -786,7 +786,7 @@ TEST_F(HistoryServiceTest, ProcessGlobalIdDeleteDirective) {
 
   // Inject a task to check status and keep message loop filled before directive
   // processing finishes.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&CheckDirectiveProcessingResult,
                  base::Time::Now() + base::TimeDelta::FromSeconds(10),
@@ -869,7 +869,7 @@ TEST_F(HistoryServiceTest, ProcessTimeRangeDeleteDirective) {
 
   // Inject a task to check status and keep message loop filled before
   // directive processing finishes.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&CheckDirectiveProcessingResult,
                  base::Time::Now() + base::TimeDelta::FromSeconds(10),

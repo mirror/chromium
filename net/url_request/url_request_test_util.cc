@@ -215,7 +215,7 @@ void TestDelegate::OnReceivedRedirect(URLRequest* request,
   received_redirect_count_++;
   if (quit_on_redirect_) {
     *defer_redirect = true;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
   } else if (cancel_in_rr_) {
     request->Cancel();
@@ -226,7 +226,7 @@ void TestDelegate::OnAuthRequired(URLRequest* request,
                                   AuthChallengeInfo* auth_info) {
   auth_required_ = true;
   if (quit_on_auth_required_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
     return;
   }
@@ -300,7 +300,7 @@ void TestDelegate::OnReadCompleted(URLRequest* request, int bytes_read) {
       request_status_ = request->Cancel();
       // If bytes_read is 0, won't get a notification on cancelation.
       if (bytes_read == 0 && quit_on_complete_) {
-        base::ThreadTaskRunnerHandle::Get()->PostTask(
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
             FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
       }
       return;
@@ -326,7 +326,7 @@ void TestDelegate::OnReadCompleted(URLRequest* request, int bytes_read) {
 void TestDelegate::OnResponseCompleted(URLRequest* request) {
   response_completed_ = true;
   if (quit_on_complete_)
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
 }
 

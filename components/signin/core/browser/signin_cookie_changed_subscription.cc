@@ -50,7 +50,8 @@ void SigninCookieChangedSubscription::RegisterForCookieChangedNotifications(
   // notifications.
   net::CookieStore::CookieChangedCallback run_on_current_thread_callback =
       base::Bind(&SigninCookieChangedSubscription::RunAsyncOnCookieChanged,
-                 base::ThreadTaskRunnerHandle::Get(), this->AsWeakPtr());
+                 base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                 this->AsWeakPtr());
   base::Closure register_closure =
       base::Bind(&RegisterForCookieChangesOnIOThread,
                  context_getter_,

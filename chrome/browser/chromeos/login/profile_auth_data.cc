@@ -334,7 +334,7 @@ void ProfileAuthDataTransferer::Finish() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!completion_callback_.is_null())
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE, completion_callback_);
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->DeleteSoon(FROM_HERE, this);
 }
 
 }  // namespace

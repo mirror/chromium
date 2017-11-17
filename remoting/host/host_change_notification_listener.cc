@@ -68,9 +68,9 @@ bool HostChangeNotificationListener::OnSignalStrategyIncomingStanza(
       // OnHostDeleted() may want delete |signal_strategy_|, but SignalStrategy
       // objects cannot be deleted from a Listener callback, so OnHostDeleted()
       // has to be invoked later.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(&HostChangeNotificationListener::OnHostDeleted,
-              weak_factory_.GetWeakPtr()));
+                                weak_factory_.GetWeakPtr()));
     }
   } else {
     LOG(ERROR) << "Invalid host-changed message received: " << stanza->Str();

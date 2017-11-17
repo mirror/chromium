@@ -225,7 +225,7 @@ void RuntimeAPI::OnExtensionLoaded(content::BrowserContext* browser_context,
     return;
 
   // Dispatch the onInstalled event with reason "chrome_update".
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&RuntimeEventRouter::DispatchOnInstalledEvent,
                  browser_context_, extension->id(), base::Version(), true));
@@ -579,7 +579,7 @@ void RuntimeAPI::OnExtensionInstalledAndLoaded(
     content::BrowserContext* browser_context,
     const Extension* extension,
     const base::Version& previous_version) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
       FROM_HERE,
       base::Bind(&RuntimeEventRouter::DispatchOnInstalledEvent,
                  browser_context_, extension->id(), previous_version, false));

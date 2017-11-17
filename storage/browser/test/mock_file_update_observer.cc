@@ -18,7 +18,8 @@ MockFileUpdateObserver::~MockFileUpdateObserver() {
 UpdateObserverList MockFileUpdateObserver::CreateList(
     MockFileUpdateObserver* observer) {
   UpdateObserverList list;
-  return list.AddObserver(observer, base::ThreadTaskRunnerHandle::Get().get());
+  return list.AddObserver(observer,
+                          base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
 }
 
 void MockFileUpdateObserver::OnStartUpdate(const FileSystemURL& url) {

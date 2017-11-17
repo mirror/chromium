@@ -58,8 +58,8 @@ class SyncableFileOperationRunnerTest : public testing::Test {
         in_memory_env_(leveldb_chrome::NewMemEnv(leveldb::Env::Default())),
         file_system_(GURL("http://example.com"),
                      in_memory_env_.get(),
-                     base::ThreadTaskRunnerHandle::Get().get(),
-                     base::ThreadTaskRunnerHandle::Get().get()),
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+                     base::ThreadTaskRunnerHandle::Get(FROM_HERE).get()),
         callback_count_(0),
         write_status_(File::FILE_ERROR_FAILED),
         write_bytes_(0),
@@ -71,10 +71,10 @@ class SyncableFileOperationRunnerTest : public testing::Test {
     ASSERT_TRUE(dir_.CreateUniqueTempDir());
 
     file_system_.SetUp(CannedSyncableFileSystem::QUOTA_ENABLED);
-    sync_context_ =
-        new LocalFileSyncContext(dir_.GetPath(), in_memory_env_.get(),
-                                 base::ThreadTaskRunnerHandle::Get().get(),
-                                 base::ThreadTaskRunnerHandle::Get().get());
+    sync_context_ = new LocalFileSyncContext(
+        dir_.GetPath(), in_memory_env_.get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get());
     ASSERT_EQ(
         SYNC_STATUS_OK,
         file_system_.MaybeInitializeFileSystemContext(sync_context_.get()));

@@ -647,9 +647,10 @@ class ProxyService::ProxyScriptDeciderPoller {
   void StartPollTimer() {
     DCHECK(!decider_.get());
 
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE, base::Bind(&ProxyScriptDeciderPoller::DoPoll,
-                              weak_factory_.GetWeakPtr()),
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&ProxyScriptDeciderPoller::DoPoll,
+                   weak_factory_.GetWeakPtr()),
         next_poll_delay_);
   }
 
@@ -694,12 +695,11 @@ class ProxyService::ProxyScriptDeciderPoller {
       // rather than calling it directly -- this is done to avoid an ugly
       // destruction sequence, since |this| might be destroyed as a result of
       // the notification.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE,
           base::Bind(&ProxyScriptDeciderPoller::NotifyProxyServiceOfChange,
                      weak_factory_.GetWeakPtr(), result,
-                     decider_->script_data(),
-                     decider_->effective_config()));
+                     decider_->script_data(), decider_->effective_config()));
       return;
     }
 
@@ -1504,7 +1504,7 @@ ProxyService::CreateSystemProxyConfigService(
   // main loop, so the current thread is where we should be running
   // gconf calls from.
   scoped_refptr<base::SingleThreadTaskRunner> glib_thread_task_runner =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 
   // Synchronously fetch the current proxy config (since we are running on
   // glib_default_loop). Additionally register for notifications (delivered in
@@ -1516,7 +1516,7 @@ ProxyService::CreateSystemProxyConfigService(
   return std::move(linux_config_service);
 #elif defined(OS_ANDROID)
   return std::make_unique<ProxyConfigServiceAndroid>(
-      io_task_runner, base::ThreadTaskRunnerHandle::Get());
+      io_task_runner, base::ThreadTaskRunnerHandle::Get(FROM_HERE));
 #else
   LOG(WARNING) << "Failed to choose a system proxy settings fetcher "
                   "for this platform.";

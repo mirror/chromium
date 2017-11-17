@@ -286,8 +286,9 @@ class CourierRendererTest : public testing::Test {
     controller_->GetRpcBroker()->SetMessageCallbackForTesting(base::Bind(
         &CourierRendererTest::OnSendMessageToSink, base::Unretained(this)));
 
-    renderer_.reset(new CourierRenderer(base::ThreadTaskRunnerHandle::Get(),
-                                        controller_->GetWeakPtr(), nullptr));
+    renderer_.reset(
+        new CourierRenderer(base::ThreadTaskRunnerHandle::Get(FROM_HERE),
+                            controller_->GetWeakPtr(), nullptr));
     clock_ = new base::SimpleTestTickClock();
     renderer_->clock_.reset(clock_);
     clock_->Advance(base::TimeDelta::FromSeconds(1));

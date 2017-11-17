@@ -66,7 +66,7 @@ class ExampleEmployer::ExampleWorker
   CompletionCallback callback_;
   // Used to post ourselves onto the origin thread.
   const scoped_refptr<base::SingleThreadTaskRunner> origin_task_runner_ =
-      base::ThreadTaskRunnerHandle::Get();
+      base::ThreadTaskRunnerHandle::Get(FROM_HERE);
 };
 
 void ExampleEmployer::ExampleWorker::DoWork() {
@@ -98,7 +98,7 @@ bool ExampleEmployer::DoSomething(const CompletionCallback& callback) {
 
   request_ = new ExampleWorker(this, callback);
 
-  if (!base::ThreadTaskRunnerHandle::Get()->PostTask(
+  if (!base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
           FROM_HERE, base::Bind(&ExampleWorker::DoWork, request_))) {
     NOTREACHED();
     request_ = NULL;

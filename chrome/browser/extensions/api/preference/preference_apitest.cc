@@ -96,7 +96,7 @@ class ExtensionPreferenceApiTest : public ExtensionApiTest {
   void TearDownOnMainThread() override {
     // BrowserProcess::Shutdown() needs to be called in a message loop, so we
     // post a task to release the keep alive, then run the message loop.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(&std::unique_ptr<ScopedKeepAlive>::reset,
                                   base::Unretained(&keep_alive_), nullptr));
     content::RunAllPendingInMessageLoop();

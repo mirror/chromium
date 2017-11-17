@@ -92,30 +92,29 @@ class ChangeListLoaderTest : public testing::Test {
 
     scheduler_.reset(new JobScheduler(
         pref_service_.get(), logger_.get(), drive_service_.get(),
-        base::ThreadTaskRunnerHandle::Get().get(), nullptr));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(), nullptr));
     metadata_storage_.reset(new ResourceMetadataStorage(
-        temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get().get()));
+        temp_dir_.GetPath(),
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get()));
     ASSERT_TRUE(metadata_storage_->Initialize());
 
-    cache_.reset(new FileCache(metadata_storage_.get(), temp_dir_.GetPath(),
-                               base::ThreadTaskRunnerHandle::Get().get(),
-                               NULL /* free_disk_space_getter */));
+    cache_.reset(
+        new FileCache(metadata_storage_.get(), temp_dir_.GetPath(),
+                      base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+                      NULL /* free_disk_space_getter */));
     ASSERT_TRUE(cache_->Initialize());
 
     metadata_.reset(new ResourceMetadata(
         metadata_storage_.get(), cache_.get(),
-        base::ThreadTaskRunnerHandle::Get().get()));
+        base::ThreadTaskRunnerHandle::Get(FROM_HERE).get()));
     ASSERT_EQ(FILE_ERROR_OK, metadata_->Initialize());
 
     about_resource_loader_.reset(new AboutResourceLoader(scheduler_.get()));
     loader_controller_.reset(new LoaderController);
-    change_list_loader_.reset(
-        new ChangeListLoader(logger_.get(),
-                             base::ThreadTaskRunnerHandle::Get().get(),
-                             metadata_.get(),
-                             scheduler_.get(),
-                             about_resource_loader_.get(),
-                             loader_controller_.get()));
+    change_list_loader_.reset(new ChangeListLoader(
+        logger_.get(), base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+        metadata_.get(), scheduler_.get(), about_resource_loader_.get(),
+        loader_controller_.get()));
   }
 
   void SetUpForTeamDrives() {
@@ -315,13 +314,10 @@ TEST_F(ChangeListLoaderTest, Load_LocalMetadataAvailable) {
 
   // Reset loader.
   about_resource_loader_.reset(new AboutResourceLoader(scheduler_.get()));
-  change_list_loader_.reset(
-      new ChangeListLoader(logger_.get(),
-                           base::ThreadTaskRunnerHandle::Get().get(),
-                           metadata_.get(),
-                           scheduler_.get(),
-                           about_resource_loader_.get(),
-                           loader_controller_.get()));
+  change_list_loader_.reset(new ChangeListLoader(
+      logger_.get(), base::ThreadTaskRunnerHandle::Get(FROM_HERE).get(),
+      metadata_.get(), scheduler_.get(), about_resource_loader_.get(),
+      loader_controller_.get()));
 
   // Add a file to the service.
   std::unique_ptr<google_apis::FileResource> gdata_entry =

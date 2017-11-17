@@ -82,9 +82,10 @@ void ToastManager::ShowLatest() {
 
   if (data.duration_ms != ToastData::kInfiniteDuration) {
     int32_t duration_ms = std::max(data.duration_ms, kMinimumDurationMs);
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE, base::Bind(&ToastManager::OnDurationPassed,
-                              weak_ptr_factory_.GetWeakPtr(), serial_),
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&ToastManager::OnDurationPassed,
+                   weak_ptr_factory_.GetWeakPtr(), serial_),
         base::TimeDelta::FromMilliseconds(duration_ms));
   }
 }

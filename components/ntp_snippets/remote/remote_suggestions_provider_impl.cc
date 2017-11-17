@@ -1391,7 +1391,7 @@ void RemoteSuggestionsProviderImpl::FetchSuggestionImage(
     const ContentSuggestion::ID& suggestion_id,
     ImageFetchedCallback callback) {
   if (!base::ContainsKey(category_contents_, suggestion_id.category())) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), gfx::Image()));
     return;
   }
@@ -1400,7 +1400,7 @@ void RemoteSuggestionsProviderImpl::FetchSuggestionImage(
     // As we don't know the corresponding suggestion anymore, we don't expect to
     // find it in the database (and also can't fetch it remotely). Cut the
     // lookup short and return directly.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), gfx::Image()));
     return;
   }

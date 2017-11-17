@@ -106,7 +106,7 @@ bool ArcTracingBridge::StartTracing(
   if (!tracing_instance) {
     // Use PostTask as the convention of TracingAgent. The caller expects
     // callback to be called after this function returns.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, false));
     return false;
   }
@@ -130,7 +130,7 @@ void ArcTracingBridge::StopTracing(const StopTracingCallback& callback) {
   mojom::TracingInstance* tracing_instance =
       ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->tracing(), StopTracing);
   if (!tracing_instance) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get(FROM_HERE)->PostTask(
         FROM_HERE, base::BindOnce(callback, false));
     return;
   }
