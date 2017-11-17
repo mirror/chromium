@@ -49,8 +49,10 @@ class CONTENT_EXPORT RTCRtpReceiver : public blink::WebRTCRtpReceiver {
   std::vector<std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>>
   StreamAdapterRefs() const;
 
- private:
+  // private:
   const rtc::scoped_refptr<webrtc::RtpReceiverInterface> webrtc_rtp_receiver_;
+
+ private:
   // The track adapter is the glue between blink and webrtc layer tracks.
   // Keeping a reference to the adapter ensures it is not disposed, as is
   // required as long as the webrtc layer track is in use by the receiver.

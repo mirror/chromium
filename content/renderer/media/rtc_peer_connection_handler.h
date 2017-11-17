@@ -189,6 +189,8 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
 
   class Observer;
   friend class Observer;
+  class SetRemoteDescriptionObserver;
+  friend class SetRemoteDescriptionObserver;
 
   void OnSignalingChange(
       webrtc::PeerConnectionInterface::SignalingState new_state);
