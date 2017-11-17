@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18874941_2fb80db5",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2300,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T16:31:23Z",
+      "side": 1,
+      "message": "Do we have (or want to have) a separate bug for this restriction, rather than only citing the meta bug for frame finding?",
+      "revId": "b9a3544d060ee96dbdec5af56472b46357eb0c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ca5329f_88fc7753",
+        "filename": "chrome/browser/extensions/process_management_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T16:31:23Z",
+      "side": 1,
+      "message": "needed?",
+      "revId": "b9a3544d060ee96dbdec5af56472b46357eb0c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b47ea9_2bdd23cc",
+        "filename": "content/browser/renderer_host/render_process_host_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T16:31:23Z",
+      "side": 1,
+      "message": "Please double-check that dcheng@ (or another content owner) has checked this and is okay with it and its placement.",
+      "revId": "b9a3544d060ee96dbdec5af56472b46357eb0c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5418970f_08c338de",
+        "filename": "extensions/renderer/extension_frame_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T16:31:23Z",
+      "side": 1,
+      "message": "It might be worth documenting this a bit more.  Something like:\n// Finds a neighboring extension frame with the same extension as the one\n// owning |relative_to_frame| (if |relative_to_frame| is not an extension\n// frame, returns nullptr). Pierces the site instance boundary because\n// certain extensions rely on this behavior.\n// TODO(devlin/lukasz): Remove this behavior, and make extensions follow the\n// web standard for finding frames or use an explicit API.",
+      "revId": "b9a3544d060ee96dbdec5af56472b46357eb0c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

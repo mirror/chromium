@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "c4171287_4afc7858",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-17T16:31:23Z",
+      "side": 1,
+      "message": "\u003e I wasn\u0027t sure if \"MainWorld\" is an important piece of information to include in the name of the new ScriptContextSet::GetContextForFrame method.\n\nNow you mention it, probably - let\u0027s do GetContextForFrameMainWorld or similar.\n\n\u003e With --isolate-extensions, is it possible at all to get nullptr from 1) the new ScriptContext::GetContextForFrame or 2) the old GetContextByV8Context (except in unit tests).  Do I really need all the null checks I\u0027ve added?\n\nShort answer: yes. During context invalidation (i.e., sometime after WillReleaseScriptContext() is called, JS can still be executing (because... I don\u0027t know, but it\u0027s always been that way ;)).  This can lead to unfortunate instances, and because of this anything that can be triggered from JS needs to account for the possibility that there isn\u0027t an associated ScriptContext (ScriptContext\u0027s lifetime is bound between DidCreateScriptContext and WillReleaseScriptContext).  Since getting a frame is triggered by script, we need these null checks.",
+      "parentUuid": "f990d42c_36b63ee4",
+      "range": {
+        "startLine": 102,
+        "startChar": 23,
+        "endLine": 102,
+        "endChar": 61
+      },
+      "revId": "2e5ef7ea96d074db80194e074aaae7624b123165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62ea92ad_e000c9da",
         "filename": "extensions/renderer/extension_frame_helper.cc",
         "patchSetId": 8
