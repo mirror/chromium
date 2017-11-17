@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8efa2954_36dbbcdf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-17T17:38:32Z",
+      "side": 1,
+      "message": "nit: Please re-format the commit message.\n\n- The subject is too long (better less than 50 chars)\n- Body should be wrapped at 80 chars.\n- Insert a space between \"Bug:\" and bug number.\n- Use CamelCase for HomeDirMethods and CryptohomeClient to be consistent\n  with code.\n\nhttps://www.chromium.org/developers/contributing-code#TOC-Writing-commit-descriptions\n\nSuggested format:\n\u003d\u003d\u003d\u003d\nUnify AuthorizationRequest creation methods\n\nThis change should make it easier to make HomeDirMethods completely\npass-through, and eventually the method should live with CryptohomeClient.\n\nBug: 741274",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 89
+      },
+      "revId": "b767656e066e8b04f55a94990a04cef09a1c19d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76d6e060_75dc8f53",
         "filename": "chromeos/cryptohome/homedir_methods.cc",
         "patchSetId": 1
