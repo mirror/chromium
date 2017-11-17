@@ -594,12 +594,24 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
 
 - (void)deletePassword:(const autofill::PasswordForm&)form {
   passwordStore_->RemoveLogin(form);
-  for (auto it = savedForms_.begin(); it != savedForms_.end(); ++it) {
-    if (**it == form) {
-      savedForms_.erase(it);
-      break;
+  if (form.blacklisted_by_user) {
+    for (auto iterator = blacklistedForms_.begin();
+         iterator != blacklistedForms_.end(); ++iterator) {
+      if (**iterator == form) {
+        blacklistedForms_.erase(iterator);
+        break;
+      }
+    }
+  } else {
+    for (auto iterator = savedForms_.begin(); iterator != savedForms_.end();
+         ++iterator) {
+      if (**iterator == form) {
+        savedForms_.erase(iterator);
+        break;
+      }
     }
   }
+
   [self updateEditButton];
   [self reloadData];
   [self.navigationController popViewControllerAnimated:YES];
