@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c0b2fcb_2912286c",
+        "filename": "components/viz/service/display_embedder/gpu_display_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-17T16:08:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1ede1ee_49ca126d",
+      "revId": "54d8137e280082ec81fb611661f28108e5c8b975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f4d48ec_34d42137",
         "filename": "components/viz/service/main/viz_main_impl.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-17T11:27:11Z",
       "side": 1,
       "message": "Does std::move() not reset it?",
+      "revId": "54d8137e280082ec81fb611661f28108e5c8b975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8068b4d_983de81f",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-17T16:08:08Z",
+      "side": 1,
+      "message": "It does now but doesn\u0027t necessarily have to. The C++ standard has a guarantee that unique_ptr/shared_ptr are null after being moved from but otherwise all you get is \"moved-from objects shall be placed in a valid but unspecified state.\"",
+      "parentUuid": "2f4d48ec_34d42137",
       "revId": "54d8137e280082ec81fb611661f28108e5c8b975",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
