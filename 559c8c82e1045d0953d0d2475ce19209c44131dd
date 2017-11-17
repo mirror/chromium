@@ -16,6 +16,24 @@
       "revId": "559c8c82e1045d0953d0d2475ce19209c44131dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61accd1f_70641c53",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-17T19:03:49Z",
+      "side": 1,
+      "message": "ah clever, good call.",
+      "parentUuid": "3e5e200d_5787a2be",
+      "revId": "559c8c82e1045d0953d0d2475ce19209c44131dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
