@@ -10,6 +10,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/shared_memory.h"
 #include "base/numerics/safe_math.h"
+#include "base/task_runner_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "content/common/gpu_stream_constants.h"
@@ -24,7 +25,7 @@
 #include "media/base/bind_to_current_loop.h"
 #include "media/base/video_frame.h"
 #include "media/gpu/gpu_video_accelerator_util.h"
-#include "media/gpu/ipc/client/gpu_video_encode_accelerator_host.h"
+#include "media/mojo/clients/mojo_video_encode_accelerator.h"
 #include "media/video/gpu_video_accelerator_factories.h"
 #include "media/video/video_encode_accelerator.h"
 #include "ppapi/c/pp_codecs.h"
@@ -204,8 +205,7 @@ PepperVideoEncoderHost::PepperVideoEncoderHost(RendererPpapiHost* host,
       encoder_last_error_(PP_ERROR_FAILED),
       frame_count_(0),
       media_input_format_(media::PIXEL_FORMAT_UNKNOWN),
-      weak_ptr_factory_(this) {
-}
+      weak_ptr_factory_(this) {}
 
 PepperVideoEncoderHost::~PepperVideoEncoderHost() {
   Close();
@@ -291,10 +291,12 @@ int32_t PepperVideoEncoderHost::OnHostMsgInitialize(
   int32_t error = PP_ERROR_NOTSUPPORTED;
   initialize_reply_context_ = context->MakeReplyMessageContext();
 
+  DCHECK_EQ(PP_HARDWAREACCELERATION_WITHFALLBACK, acceleration);
   if (acceleration != PP_HARDWAREACCELERATION_NONE) {
     if (InitializeHardware(media_input_format_, input_size, media_profile,
-                           initial_bitrate))
+                           initial_bitrate)) {
       return PP_OK_COMPLETIONPENDING;
+    }
 
     if (acceleration == PP_HARDWAREACCELERATION_ONLY)
       error = PP_ERROR_FAILED;
@@ -308,8 +310,9 @@ int32_t PepperVideoEncoderHost::OnHostMsgInitialize(
   if (acceleration != PP_HARDWAREACCELERATION_ONLY) {
     encoder_.reset(new VideoEncoderShim(this));
     if (encoder_->Initialize(media_input_format_, input_size, media_profile,
-                             initial_bitrate, this))
+                             initial_bitrate, this)) {
       return PP_OK_COMPLETIONPENDING;
+    }
     error = PP_ERROR_FAILED;
   }
 
@@ -555,11 +558,18 @@ bool PepperVideoEncoderHost::InitializeHardware(
 
   if (!EnsureGpuChannel())
     return false;
+  media::GpuVideoAcceleratorFactories* gpu_factories =
+      RenderThreadImpl::current()->GetGpuFactories();
+  if (!gpu_factories)
+    return false;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner =
+      gpu_factories->GetTaskRunner();
+  if (!task_runner)
+    return false;
 
-  encoder_.reset(
-      new media::GpuVideoEncodeAcceleratorHost(command_buffer_.get()));
-  return encoder_->Initialize(input_format, input_visible_size, output_profile,
-                              initial_bitrate, this);
+  // TODO(mcasas): Re-enable hardware accelerated video encoding; needs moving
+  // the whole encoder management to |task_runner_|.
+  return false;
 }
 
 void PepperVideoEncoderHost::Close() {
