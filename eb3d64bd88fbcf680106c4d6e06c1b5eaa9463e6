@@ -46,6 +46,30 @@
       "revId": "eb3d64bd88fbcf680106c4d6e06c1b5eaa9463e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c10a00a_3046e6ef",
+        "filename": "device/bluetooth/bluetooth_low_energy_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-17T23:22:00Z",
+      "side": 1,
+      "message": "Yes, good point, my suggestion would be faulty.",
+      "parentUuid": "ce364900_2db20119",
+      "range": {
+        "startLine": 830,
+        "startChar": 0,
+        "endLine": 831,
+        "endChar": 54
+      },
+      "revId": "eb3d64bd88fbcf680106c4d6e06c1b5eaa9463e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
