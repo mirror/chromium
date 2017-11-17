@@ -16,6 +16,24 @@
       "revId": "846be7a4ab53964c82ec0984c33b24c4d5561313",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed0bfc4_9ab0e6af",
+        "filename": "ui/gl/gl_bindings.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-17T16:25:00Z",
+      "side": 1,
+      "message": "It seemed like a nice symmetry. They are set inside USE_GLX and then it seemed most logical to unset them inside USE_GLX. I think it\u0027s rather harmless to do it always though if you think that is better.",
+      "parentUuid": "a3e59e47_feb9d894",
+      "revId": "846be7a4ab53964c82ec0984c33b24c4d5561313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
