@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49f6ab9f_d09299ee",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T23:29:16Z",
+      "side": 1,
+      "message": "getPreviewsFlagDetails ? since not really status",
+      "range": {
+        "startLine": 380,
+        "startChar": 11,
+        "endLine": 380,
+        "endChar": 35
+      },
+      "revId": "a59cb51fabbc0961be1c321c1f77a22ed0683a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea452f03_0fbd3810",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T23:29:16Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem like status to me - could be GetPreviewsFlags or GetPreviewsFlagDetails (or GetPreviewsFlagValues but if also getting link then either of first two are better)",
+      "range": {
+        "startLine": 170,
+        "startChar": 40,
+        "endLine": 170,
+        "endChar": 64
+      },
+      "revId": "a59cb51fabbc0961be1c321c1f77a22ed0683a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732b2405_1694085f",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T23:29:16Z",
+      "side": 1,
+      "message": "statuses \u003d\u003e previews",
+      "range": {
+        "startLine": 39,
+        "startChar": 20,
+        "endLine": 39,
+        "endChar": 28
+      },
+      "revId": "a59cb51fabbc0961be1c321c1f77a22ed0683a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc6bef5_0fce33d1",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T23:29:16Z",
+      "side": 1,
+      "message": "btw, good to name the test for the method being test and scenario - so I might name this one GetPreviewsEnabledCount and the next one GetPreviewsEnabledAmpDisabled, etc",
+      "range": {
+        "startLine": 258,
+        "startChar": 46,
+        "endLine": 258,
+        "endChar": 74
+      },
+      "revId": "a59cb51fabbc0961be1c321c1f77a22ed0683a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef7f049_2410c2a0",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T23:29:16Z",
+      "side": 1,
+      "message": "maybe name these along these lines: GetPreviewsFlagsDefaultValue",
+      "range": {
+        "startLine": 377,
+        "startChar": 46,
+        "endLine": 377,
+        "endChar": 65
+      },
+      "revId": "a59cb51fabbc0961be1c321c1f77a22ed0683a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d03d478_ebc3a77a",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T23:29:16Z",
+      "side": 1,
+      "message": "\u0027GetPreviewsEnabled\u0027",
+      "range": {
+        "startLine": 114,
+        "startChar": 40,
+        "endLine": 114,
+        "endChar": 60
+      },
+      "revId": "a59cb51fabbc0961be1c321c1f77a22ed0683a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bdc2537_2ed69c52",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-17T23:29:16Z",
+      "side": 1,
+      "message": "\u0027GetPreviewsFlags\u0027 or whatever method name decided earlier",
+      "range": {
+        "startLine": 159,
+        "startChar": 40,
+        "endLine": 159,
+        "endChar": 61
+      },
+      "revId": "a59cb51fabbc0961be1c321c1f77a22ed0683a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
