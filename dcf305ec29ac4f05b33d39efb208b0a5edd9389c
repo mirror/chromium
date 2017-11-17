@@ -93,6 +93,30 @@
       "revId": "dcf305ec29ac4f05b33d39efb208b0a5edd9389c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c23a168_dbafc00a",
+        "filename": "third_party/metrics_proto/ukm/aggregate.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-17T20:19:24Z",
+      "side": 1,
+      "message": "Metrics should only be recorded 0 or 1 times per event (though the API doesn\u0027t yet enforce this), but I suppose the 0/1 is still enough uncertainty here.",
+      "parentUuid": "6110e67a_affc6634",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 48
+      },
+      "revId": "dcf305ec29ac4f05b33d39efb208b0a5edd9389c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
