@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4c7ba59_284f231c",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-17T20:02:37Z",
+      "side": 1,
+      "message": "ViewBounds",
+      "range": {
+        "startLine": 214,
+        "startChar": 8,
+        "endLine": 214,
+        "endChar": 18
+      },
+      "revId": "0c4305d7c9376e23da8f03702e7832d1f7bc3184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f40c5b_03735a9d",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-17T20:02:37Z",
+      "side": 1,
+      "message": "Do you know why is Android special here? Other platforms can change the PSF too. The difference I know of is that Android is the only one that can load a page with a non-1.0 zoom. If that\u0027s the only thing, I\u0027d add a \u003cmeta name\u003d\u0027viewport\u0027 content\u003d\u0027width\u003ddevice-width, minimum-scale\u003d1\u0027\u003e tag to your test so you can avoid page scale unless the test explicitly zooms in. That might be enough so that you don\u0027t have to worry about the page scale issues I mention below (though then we\u0027re not testing pinch-zoom...)",
+      "range": {
+        "startLine": 221,
+        "startChar": 12,
+        "endLine": 221,
+        "endChar": 48
+      },
+      "revId": "0c4305d7c9376e23da8f03702e7832d1f7bc3184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cebac131_57988db0",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-17T20:02:37Z",
+      "side": 1,
+      "message": "I don\u0027t think this will work in general - assuming I\u0027m understanding the purpose here. If you want to make sure something\u0027s in view -- including pinch-zoom -- scaling by the PSF isn\u0027t enough.\n\ne.g. if you have an unscrollable page and a subframe that\u0027s in the bottom right of the main frame. If you pinch-zoom in and scroll to the bottom right, you\u0027ll have the subframe in view. But there\u0027s no scrolling there, the offset of the visual viewport is entirely inside Blink. So this function will say that the subframe isn\u0027t in view - even though it is.\n\nSo in addition to applying the pageScaleFactor you also have to apply the visual viewport offset, see VisualViewport::RootFrame for how that\u0027s done in Blink. The offset is exposed via WebView::VisualViewportOffset",
+      "range": {
+        "startLine": 225,
+        "startChar": 10,
+        "endLine": 228,
+        "endChar": 63
+      },
+      "revId": "0c4305d7c9376e23da8f03702e7832d1f7bc3184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de94c41a_0b9621c6",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1667,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-17T20:02:37Z",
+      "side": 1,
+      "message": "Perhaps you could put up a separate patch that rips this parameter out all the way up the call chain.",
+      "range": {
+        "startLine": 1667,
+        "startChar": 6,
+        "endLine": 1667,
+        "endChar": 17
+      },
+      "revId": "0c4305d7c9376e23da8f03702e7832d1f7bc3184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850cffc1_8d163c10",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2512,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-17T20:02:37Z",
+      "side": 1,
+      "message": "You can remove this parameter since it\u0027s unused.",
+      "range": {
+        "startLine": 2512,
+        "startChar": 4,
+        "endLine": 2512,
+        "endChar": 35
+      },
+      "revId": "0c4305d7c9376e23da8f03702e7832d1f7bc3184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ead4d8d_8c3a0753",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2539,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-17T20:02:37Z",
+      "side": 1,
+      "message": "already checked above",
+      "range": {
+        "startLine": 2538,
+        "startChar": 1,
+        "endLine": 2539,
+        "endChar": 17
+      },
+      "revId": "0c4305d7c9376e23da8f03702e7832d1f7bc3184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
