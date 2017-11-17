@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d56578b_489fe95c",
+        "filename": "components/history/core/browser/typed_url_model_type_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-17T20:22:39Z",
+      "side": 1,
+      "message": "This should be cleaned up too, right? I don\u0027t care if you want to do this in a new CL or this one.",
+      "revId": "191a3a8646cd14355a0bbabb065ea6bdb5991c69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5336979_c94166b2",
+        "filename": "components/sync/driver/model_type_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-17T20:22:39Z",
+      "side": 1,
+      "message": "While you\u0027re in here, can you remove the if assignment syntax? I think it was a mistake of myself to write it that way in the first place.",
+      "revId": "191a3a8646cd14355a0bbabb065ea6bdb5991c69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ee4d44_88e81e42",
+        "filename": "components/sync/driver/model_type_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-17T20:22:39Z",
+      "side": 1,
+      "message": "Seems like we should decide if this is going to be Repeating or Once as well... I think we could go either way. While the current implementations could call this closure multiple times and it would work, the autofill ones need to be destroyed eventually as they hold refs. Can you make this thing Once as well?",
+      "revId": "191a3a8646cd14355a0bbabb065ea6bdb5991c69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
