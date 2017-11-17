@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4beb1429_bf34aa4f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/abspos-dialog-layout.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-17T12:56:28Z",
+      "side": 1,
+      "message": "I\u0027m not so hopeful that we\u0027ll resolve https://github.com/w3c/web-platform-tests/issues/7642 any time soon now. Rather than these hardcoded expected values, can you compute them based on innerWidth and innerHeight?",
+      "range": {
+        "startLine": 75,
+        "startChar": 12,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "49dcab69d2b62e2ebec8afc8fcbc41d7957302f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a79e904_d67e8c6f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/abspos-dialog-layout.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-17T12:56:28Z",
+      "side": 1,
+      "message": "Here I meant that assert_equals(dialog.parentNode, relativeContainer) should be before dialog.remove(), to make it clear that it\u0027s being added back in the same place. This could fail if the order of these tests were changed, for example.\n\nThe asserts around the appendChild call aren\u0027t really necessary I think.",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 10
+      },
+      "revId": "49dcab69d2b62e2ebec8afc8fcbc41d7957302f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
