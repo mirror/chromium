@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "131ae9e3_6be9b1f1",
+        "filename": "content/browser/media/media_canplaytype_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-17T01:32:20Z",
+      "side": 1,
+      "message": "We\u0027ll likely only set buildflag on Dev/Canary releases for a while, but this isn\u0027t the final bitstream so we don\u0027t want it enabled by default yet even if we ship on trunk.",
+      "parentUuid": "90024cb6_e89bc4c6",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 24
+      },
+      "revId": "321667b736bdc9b88734afaa0eebbd54771a60f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2cadfc3_a718538e",
         "filename": "media/base/mime_util_internal.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e15f303c_2006b124",
+        "filename": "media/base/mime_util_internal.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-17T01:32:20Z",
+      "side": 1,
+      "message": "Already handled within that function.",
+      "parentUuid": "e2cadfc3_a718538e",
+      "range": {
+        "startLine": 944,
+        "startChar": 7,
+        "endLine": 944,
+        "endChar": 32
+      },
+      "revId": "321667b736bdc9b88734afaa0eebbd54771a60f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2714834_e33128d1",
         "filename": "media/formats/webm/webm_video_client.cc",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-17T01:13:42Z",
       "side": 1,
       "message": "weird. Do they have a bug filed on them?",
+      "range": {
+        "startLine": 93,
+        "startChar": 57,
+        "endLine": 93,
+        "endChar": 70
+      },
+      "revId": "321667b736bdc9b88734afaa0eebbd54771a60f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4697fc39_3ecf3469",
+        "filename": "media/formats/webm/webm_video_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-17T01:32:20Z",
+      "side": 1,
+      "message": "AV1 in WEBM isn\u0027t finalized, so I don\u0027t think this is unexpected, but +tomfinegan for FYI and to file a bug in case one is needed.",
+      "parentUuid": "c2714834_e33128d1",
       "range": {
         "startLine": 93,
         "startChar": 57,
