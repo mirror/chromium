@@ -25,6 +25,7 @@
 #include "extensions/common/extensions_client.h"
 #include "extensions/common/features/feature.h"
 #include "extensions/common/features/feature_session_type.h"
+#include "extensions/renderer/extension_js_runner.h"
 #include "extensions/renderer/resource_bundle_source_map.h"
 #include "extensions/renderer/script_context.h"
 #include "extensions/renderer/script_context_set.h"
@@ -241,6 +242,9 @@ class Dispatcher : public content::RenderThreadObserver,
   // Requires the GuestView modules in the module system of the ScriptContext
   // |context|.
   void RequireGuestViewModules(ScriptContext* context);
+
+  // Used to run JS function safely, respecting blink deferring JS, etc.
+  ExtensionJSRunner js_runner_;
 
   // The delegate for this dispatcher to handle embedder-specific logic.
   std::unique_ptr<DispatcherDelegate> delegate_;
