@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 1998, 1999 Torben Weis <weis@kde.org>
+
  *                     1999 Lars Knoll <knoll@kde.org>
  *                     1999 Antti Koivisto <koivisto@kde.org>
  *                     2000 Dirk Mueller <mueller@kde.org>
