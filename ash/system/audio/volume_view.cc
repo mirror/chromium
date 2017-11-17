@@ -145,6 +145,8 @@ VolumeView::~VolumeView() {}
 void VolumeView::Update() {
   icon_->Update();
   slider_->UpdateState(!CrasAudioHandler::Get()->IsOutputMuted());
+  slider_->set_should_paint_focus_rect(
+      CrasAudioHandler::Get()->IsOutputMuted());
   UpdateDeviceTypeAndMore();
   Layout();
 }
