@@ -235,6 +235,74 @@
       "revId": "ccb21d3590d54ac82396d1252bce1fbf13f78c59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b897bac2_13de8584",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 30703,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-17T20:29:06Z",
+      "side": 1,
+      "message": "nit: Please put the standard warning by the enum definition in\nchrome/browser/android/bookmarks/partner_bookmarks_reader.h\nthat it generally cannot be changed.\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms",
+      "revId": "ccb21d3590d54ac82396d1252bce1fbf13f78c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd5b190_489672e2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57499,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-17T20:29:06Z",
+      "side": 1,
+      "message": "Please add only recorded on Android.  I know it\u0027s pretty obvious, but this status isn\u0027t likely to change ever, so it helps people realize what view they should be looking at.",
+      "revId": "ccb21d3590d54ac82396d1252bce1fbf13f78c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d6c9ab_7bb5b2f5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57521,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-17T20:29:06Z",
+      "side": 1,
+      "message": "This histogram name does not agree with the name in the code.  Please make the agree.",
+      "revId": "ccb21d3590d54ac82396d1252bce1fbf13f78c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e79c01_adada3e6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57525,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-17T20:29:06Z",
+      "side": 1,
+      "message": "This is always recorded, or only recorded when there may be some partner bookmarks?",
+      "revId": "ccb21d3590d54ac82396d1252bce1fbf13f78c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
