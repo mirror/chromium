@@ -4,6 +4,7 @@
 
 #include "modules/media_capabilities/NavigatorMediaCapabilities.h"
 
+#include "core/frame/UseCounter.h"
 #include "modules/media_capabilities/MediaCapabilities.h"
 #include "platform/Supplementable.h"
 
@@ -11,6 +12,8 @@ namespace blink {
 
 MediaCapabilities* NavigatorMediaCapabilities::mediaCapabilities(
     Navigator& navigator) {
+  UseCounter::Count(navigator.GetFrame(), WebFeature::kMediaCapabilities);
+
   NavigatorMediaCapabilities& self =
       NavigatorMediaCapabilities::From(navigator);
   if (!self.capabilities_)
