@@ -1843,7 +1843,7 @@ void Element::AttachLayoutTree(AttachContext& context) {
     builder.CreateLayoutObjectIfNeeded();
 
     if (ComputedStyle* style = builder.ResolvedStyle()) {
-      if (!GetLayoutObject() && ShouldStoreNonLayoutObjectComputedStyle(*style))
+      if (!GetLayoutObject() && ShouldStoreNonLayoutObjectComputedStyle(style))
         StoreNonLayoutObjectComputedStyle(style);
     }
   }
@@ -2019,7 +2019,7 @@ void Element::RecalcStyle(StyleRecalcChange change) {
         // style.
         const ComputedStyle* non_layout_style = NonLayoutObjectComputedStyle();
         if (!non_layout_style ||
-            !ShouldStoreNonLayoutObjectComputedStyle(*non_layout_style) ||
+            !ShouldStoreNonLayoutObjectComputedStyle(non_layout_style) ||
             !ParentComputedStyle()) {
           data->ClearComputedStyle();
         }
@@ -2163,7 +2163,7 @@ StyleRecalcChange Element::RecalcOwnStyle(StyleRecalcChange change) {
     }
   } else {
     if (local_change != kNoChange) {
-      if (ShouldStoreNonLayoutObjectComputedStyle(*new_style))
+      if (ShouldStoreNonLayoutObjectComputedStyle(new_style.get()))
         StoreNonLayoutObjectComputedStyle(new_style);
       else if (HasRareData())
         GetElementRareData()->ClearComputedStyle();
@@ -3504,13 +3504,13 @@ bool Element::HasDisplayContentsStyle() const {
 }
 
 bool Element::ShouldStoreNonLayoutObjectComputedStyle(
-    const ComputedStyle& style) const {
+    const ComputedStyle* style) const {
 #if DCHECK_IS_ON()
-  if (style.Display() == EDisplay::kContents)
+  if (style && style->Display() == EDisplay::kContents)
     DCHECK(!GetLayoutObject());
 #endif
 
-  return style.Display() == EDisplay::kContents ||
+  return (style && style->Display() == EDisplay::kContents) ||
          IsHTMLOptGroupElement(*this) || IsHTMLOptionElement(*this) ||
          IsSVGStopElement(*this);
 }
@@ -3518,7 +3518,7 @@ bool Element::ShouldStoreNonLayoutObjectComputedStyle(
 void Element::StoreNonLayoutObjectComputedStyle(
     scoped_refptr<ComputedStyle> style) {
   DCHECK(style);
-  DCHECK(ShouldStoreNonLayoutObjectComputedStyle(*style));
+  DCHECK(ShouldStoreNonLayoutObjectComputedStyle(style.get()));
   EnsureElementRareData().SetComputedStyle(std::move(style));
 }
 

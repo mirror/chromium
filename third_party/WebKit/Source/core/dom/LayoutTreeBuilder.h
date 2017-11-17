@@ -87,8 +87,15 @@ class LayoutTreeBuilderForElement : public LayoutTreeBuilder<Element> {
   LayoutTreeBuilderForElement(Element&, ComputedStyle*);
 
   void CreateLayoutObjectIfNeeded() {
-    if (ShouldCreateLayoutObject())
+    if (ShouldCreateLayoutObject()) {
       CreateLayoutObject();
+    } else if (node_->ShouldStoreNonLayoutObjectComputedStyle(
+                   ResolvedStyle())) {
+      // If we decided not to create a layout object, style_ may be
+      // unresolved.  Make sure we always resolve when the element
+      // requires a NonLayoutObjectComputedStyle.
+      EnsureStyle();
+    }
   }
 
   ComputedStyle* ResolvedStyle() const { return style_.get(); }
@@ -97,7 +104,7 @@ class LayoutTreeBuilderForElement : public LayoutTreeBuilder<Element> {
   LayoutObject* ParentLayoutObject() const;
   LayoutObject* NextLayoutObject() const;
   bool ShouldCreateLayoutObject() const;
-  ComputedStyle& Style() const;
+  ComputedStyle& EnsureStyle() const;
   void CreateLayoutObject();
 
   mutable scoped_refptr<ComputedStyle> style_;

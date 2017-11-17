@@ -521,7 +521,7 @@ class CORE_EXPORT Element : public ContainerNode {
     return const_cast<ComputedStyle*>(NonLayoutObjectComputedStyle());
   }
 
-  bool ShouldStoreNonLayoutObjectComputedStyle(const ComputedStyle&) const;
+  bool ShouldStoreNonLayoutObjectComputedStyle(const ComputedStyle*) const;
   void StoreNonLayoutObjectComputedStyle(scoped_refptr<ComputedStyle>);
 
   // Methods for indicating the style is affected by dynamic updates (e.g.,
