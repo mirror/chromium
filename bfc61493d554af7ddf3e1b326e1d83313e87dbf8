@@ -142,6 +142,24 @@
       "revId": "bfc61493d554af7ddf3e1b326e1d83313e87dbf8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d902615_27585fd7",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-17T14:09:04Z",
+      "side": 1,
+      "message": "Yes, I believe that\u0027s the explanation.",
+      "parentUuid": "e371ee5a_adabc35c",
+      "revId": "bfc61493d554af7ddf3e1b326e1d83313e87dbf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
