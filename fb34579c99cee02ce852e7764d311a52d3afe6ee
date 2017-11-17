@@ -22,6 +22,30 @@
       "revId": "fb34579c99cee02ce852e7764d311a52d3afe6ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "809a762a_2259adb6",
+        "filename": "components/vector_icons/clipboard.icon",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-17T01:12:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a799bee2_2ce4acc1",
+      "range": {
+        "startLine": 5,
+        "startChar": 3,
+        "endLine": 5,
+        "endChar": 66
+      },
+      "revId": "fb34579c99cee02ce852e7764d311a52d3afe6ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
