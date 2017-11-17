@@ -586,7 +586,8 @@ def CreateMetadata(map_path, elf_path, apk_path, tool_prefix, output_directory):
 
 
 def CreateSizeInfo(map_path, elf_path, tool_prefix, output_directory,
-                   normalize_names=True, track_string_literals=True):
+                   linker_name, normalize_names=True,
+                   track_string_literals=True):
   """Creates a SizeInfo.
 
   Args:
@@ -648,13 +649,15 @@ def CreateSizeInfo(map_path, elf_path, tool_prefix, output_directory,
         sys.exit(1)
 
   if elf_path and output_directory:
+    string_sym_full_name = {'gold': '** merge strings',
+                            'lld': '** lld merge strings'}[linker_name]
     missed_object_paths = _DiscoverMissedObjectPaths(
         raw_symbols, elf_object_paths)
     bulk_analyzer.AnalyzePaths(missed_object_paths)
     bulk_analyzer.SortPaths()
     if track_string_literals:
       merge_string_syms = [
-          s for s in raw_symbols if s.full_name == '** merge strings']
+          s for s in raw_symbols if s.full_name == string_sym_full_name]
       # More likely for there to be a bug in supersize than an ELF to not have a
       # single string literal.
       assert merge_string_syms
@@ -888,7 +891,7 @@ def Run(args, parser):
         _ElfInfoFromApk, (apk_path, apk_so_path, tool_prefix))
 
   size_info = CreateSizeInfo(map_path, elf_path, tool_prefix, output_directory,
-                             normalize_names=False,
+                             linker_name, normalize_names=False,
                              track_string_literals=args.track_string_literals)
 
   if metadata:

@@ -105,7 +105,7 @@ class IntegrationTest(unittest.TestCase):
       elf_path = _TEST_ELF_PATH if use_elf else None
       output_directory = _TEST_OUTPUT_DIR if use_output_directory else None
       IntegrationTest.cached_size_info[i] = archive.CreateSizeInfo(
-          _TEST_MAP_PATH, elf_path, _TEST_TOOL_PREFIX, output_directory)
+          _TEST_MAP_PATH, elf_path, _TEST_TOOL_PREFIX, output_directory, "gold")
       if use_elf:
         with _AddMocksToPath():
           IntegrationTest.cached_size_info[i].metadata = archive.CreateMetadata(
