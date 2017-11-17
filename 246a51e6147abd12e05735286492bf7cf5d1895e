@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "faed27ae_3225dc6b",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-17T19:52:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "788cd15d_b04e36e5",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 10
+      },
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "839e9466_9c3e2287",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 10
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "5ee2a397_a58c7011",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-17T19:52:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1f79097_490235ee",
+      "range": {
+        "startLine": 43,
+        "startChar": 54,
+        "endLine": 44,
+        "endChar": 12
+      },
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a79fed97_f50188b9",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 10
@@ -105,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "a529369a_255d0351",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-17T19:52:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bfde15d_0cc4a981",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eac853d9_b6360739",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 10
@@ -116,6 +182,24 @@
       "writtenOn": "2017-11-14T13:57:49Z",
       "side": 1,
       "message": "nit: Could you use BindOnce?",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "022126cf_a4df07e0",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-17T19:52:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eac853d9_b6360739",
       "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -179,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "faf67f9b_8762a28b",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-17T19:52:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86784e77_200e08e2",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "234a29be_ab15e89c",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 10
@@ -190,6 +292,24 @@
       "writtenOn": "2017-11-14T13:57:49Z",
       "side": 1,
       "message": "To me, this looks confusing because in case of error, all timers *including already established ones* _looks_ deleted. (Though, I understand, it is not officially supported way).\nCould you implement this in slightly better way, e.g.;\n- Keep the set\u003cunique_ptr\u003cArcTimer\u003e\u003e in local var, and use it in the loop.\n- Move all the elements to the set\u003c\u003e member at L128.\nI believe it is not that huge work here.",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e83f2c_f4c9042e",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-17T19:52:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "234a29be_ab15e89c",
       "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -231,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "0256fbfd_39bbc982",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-17T19:52:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc00bc32_9d0a9ac3",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0102b0c4_fab7af0b",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 10
@@ -248,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "548ade25_3a6d351e",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-17T19:52:24Z",
+      "side": 1,
+      "message": "So a bit of background Android opens clocks of both types CLOCK_REALTIME_ALARM, CLOCK_BOOTTIME_ALARM. During runtime Android only uses CLOCK_BOOTITME_ALARM. If I don\u0027t support this clock then I\u0027d have to make hacky changes to Android so it can boot. For now I pretend SimpleAlarmTimer can also be used by CLOCK_REALTIME_ALARM whereas it uses CLOCK_BOOTTIME_ALARM internally. I can make SimpleAlarmTimer take a clock type in a constructor in the future. (See TODO).",
+      "parentUuid": "0102b0c4_fab7af0b",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c628e11_82a082c8",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 10
@@ -259,6 +415,24 @@
       "writtenOn": "2017-11-14T13:57:49Z",
       "side": 1,
       "message": "Clarification: So the timer is kept even after FD /MojoChannel is closed in container side?\nShould these timers be removed at that timing?",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63382337_6ddb5b70",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-17T19:52:24Z",
+      "side": 1,
+      "message": "OnInstanceClosed calls DeleteArcTimers so no they are not kept around.",
+      "parentUuid": "0c628e11_82a082c8",
       "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -288,6 +462,30 @@
     },
     {
       "key": {
+        "uuid": "da57303b_aac6f4e5",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-17T19:52:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f77f03c9_09c25d59",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 10
+      },
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1961a45b_defbfff6",
         "filename": "components/arc/timer/arc_timer_impl.h",
         "patchSetId": 10
@@ -299,6 +497,30 @@
       "writtenOn": "2017-11-14T22:29:18Z",
       "side": 1,
       "message": "Remember not to add the docstring when overriding. Instead, just use the override comment.",
+      "range": {
+        "startLine": 36,
+        "startChar": 37,
+        "endLine": 36,
+        "endChar": 45
+      },
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea837f2_2dbd1f0e",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-17T19:52:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1961a45b_defbfff6",
       "range": {
         "startLine": 36,
         "startChar": 37,
@@ -364,6 +586,24 @@
     },
     {
       "key": {
+        "uuid": "a5691b97_d5b0f29e",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-17T19:52:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b77a6bb_4c8311f5",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "486a34d9_405c9400",
         "filename": "components/arc/timer/arc_timer_impl.h",
         "patchSetId": 10
@@ -384,6 +624,30 @@
       "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e9e73a0_9d8759e5",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-17T19:52:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "486a34d9_405c9400",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 30
+      },
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -433,6 +697,30 @@
       "writtenOn": "2017-11-14T22:29:18Z",
       "side": 1,
       "message": "Can this use the enum type?",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 9
+      },
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "524cbf84_ffe131fd",
+        "filename": "components/arc/timer/arc_timer_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-17T19:52:24Z",
+      "side": 1,
+      "message": "I\u0027d rather save the mojo enum for transport and then translate it all at once using type mapping before using it. Otherwise I\u0027d have to convert it again while using it in the source file.",
+      "parentUuid": "809d0772_b288f617",
       "range": {
         "startLine": 16,
         "startChar": 2,

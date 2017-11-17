@@ -494,6 +494,24 @@
     },
     {
       "key": {
+        "uuid": "71fd0270_aa19fe09",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-17T19:52:24Z",
+      "side": 1,
+      "message": "This is a very small speedup. The majority of time is spent in IPCing, this sacrifice for easily adding clocks in the future is not worth it IMO",
+      "parentUuid": "27ea69fd_a6b45d40",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "600a4ff2_cf2fa836",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 9
