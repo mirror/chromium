@@ -62,8 +62,7 @@ void WebSocketHandleImpl::Connect(const KURL& url,
   client_ = client;
 
   mojom::blink::WebSocketClientPtr client_proxy;
-  client_binding_.Bind(mojo::MakeRequest(
-      &client_proxy, task_runner->ToSingleThreadTaskRunner()));
+  client_binding_.Bind(mojo::MakeRequest(&client_proxy, task_runner));
   websocket_->AddChannelRequest(
       url, protocols, origin, site_for_cookies,
       user_agent_override.IsNull() ? g_empty_string : user_agent_override,

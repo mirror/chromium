@@ -91,8 +91,7 @@ void TimerBase::MoveToNewTaskRunner(scoped_refptr<WebTaskRunner> task_runner) {
   DCHECK(task_runner->RunsTasksInCurrentSequence());
 #endif
   // If the underlying task runner stays the same, ignore it.
-  if (web_task_runner_->ToSingleThreadTaskRunner() ==
-      task_runner->ToSingleThreadTaskRunner()) {
+  if (web_task_runner_ == task_runner) {
     return;
   }
 
@@ -132,7 +131,7 @@ void TimerBase::SetNextFireTime(double now, double delay) {
     // Cancel any previously posted task.
     weak_ptr_factory_.RevokeAll();
 
-    TimerTaskRunner()->ToSingleThreadTaskRunner()->PostDelayedTask(
+    TimerTaskRunner()->PostDelayedTask(
         location_,
         base::Bind(&TimerBase::RunInternal, weak_ptr_factory_.CreateWeakPtr()),
         TimeDelta::FromSecondsD(delay));
