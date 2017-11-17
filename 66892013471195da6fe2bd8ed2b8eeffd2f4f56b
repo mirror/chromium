@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "963ac9d5_8a4a7a8a",
+        "filename": "components/download/downloader/in_progress/in_progress_conversions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-11-17T23:47:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44589025_4b3d89c5",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 35
+      },
+      "revId": "66892013471195da6fe2bd8ed2b8eeffd2f4f56b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00a2dced_bb5b2e79",
         "filename": "content/public/browser/download_url_parameters.h",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-17T23:23:03Z",
       "side": 1,
       "message": "Is there a specific reason why this is a string and not a DownloadSource enum?",
+      "range": {
+        "startLine": 338,
+        "startChar": 2,
+        "endLine": 339,
+        "endChar": 0
+      },
+      "revId": "66892013471195da6fe2bd8ed2b8eeffd2f4f56b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36aafe1c_79de8ee6",
+        "filename": "content/public/browser/download_url_parameters.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-11-17T23:47:49Z",
+      "side": 1,
+      "message": "Yeah, because this is in content/public, in general I think it shouldn\u0027t depend on components/download. See\nhttps://cs.chromium.org/chromium/src/content/DEPS?l\u003d19.\n\nPut this enum in content/ is also weird, \nSince some of the items are not strictly belong to content/. In general this is just a string used in metrics in content/. \n\nIf we can put it in content/, that components/download/downloader needs to depends on content/public, which will have loop dependency(c/d/downloader\u003d\u003d\u003econtent/public\u003d\u003d\u003econtent/browser\u003d\u003d\u003ec/d/downloader). Or pass int or string from content/public to components/download, which is same as this.\n\nOther options are use std::string in both place, which lacks control, or have 2 enums copied around each other, which is also weird.",
+      "parentUuid": "00a2dced_bb5b2e79",
       "range": {
         "startLine": 338,
         "startChar": 2,
