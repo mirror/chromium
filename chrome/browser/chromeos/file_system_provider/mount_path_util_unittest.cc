@@ -34,17 +34,18 @@ namespace util {
 
 namespace {
 
-const char kProviderId[] = "mbflcebpggnecokmikipoihdbecnjfoj";
+const char kExtensionId[] = "mbflcebpggnecokmikipoihdbecnjfoj";
 const char kFileSystemId[] = "File/System/Id";
 const char kDisplayName[] = "Camera Pictures";
+const ProviderId kProviderId = ProviderId(kExtensionId, ProviderId::EXTENSION);
 
 // Creates a FileSystemURL for tests.
 storage::FileSystemURL CreateFileSystemURL(
     Profile* profile,
     const ProvidedFileSystemInfo& file_system_info,
     const base::FilePath& file_path) {
-  const std::string origin =
-      std::string("chrome-extension://") + file_system_info.provider_id();
+  const std::string origin = std::string("chrome-extension://") +
+                             file_system_info.provider_id().GetId();
   const base::FilePath mount_path = file_system_info.mount_path();
   const storage::ExternalMountPoints* const mount_points =
       storage::ExternalMountPoints::GetSystemInstance();
@@ -89,7 +90,7 @@ class FileSystemProviderMountPathUtilTest : public testing::Test {
 
 TEST_F(FileSystemProviderMountPathUtilTest, GetMountPath) {
   const base::FilePath result =
-      GetMountPath(profile_, kProviderId, kFileSystemId);
+      GetMountPath(profile_, kProviderId.GetId(), kFileSystemId);
   const std::string expected =
       "/provided/mbflcebpggnecokmikipoihdbecnjfoj:"
       "File%2FSystem%2FId:testing-profile-hash";
@@ -98,7 +99,7 @@ TEST_F(FileSystemProviderMountPathUtilTest, GetMountPath) {
 
 TEST_F(FileSystemProviderMountPathUtilTest, IsFileSystemProviderLocalPath) {
   const base::FilePath mount_path =
-      GetMountPath(profile_, kProviderId, kFileSystemId);
+      GetMountPath(profile_, kProviderId.GetId(), kFileSystemId);
   const base::FilePath file_path =
       base::FilePath(FILE_PATH_LITERAL("/hello/world.txt"));
   const base::FilePath local_file_path =
@@ -168,7 +169,7 @@ TEST_F(FileSystemProviderMountPathUtilTest, Parser_RootPath) {
 TEST_F(FileSystemProviderMountPathUtilTest, Parser_WrongUrl) {
   const ProvidedFileSystemInfo file_system_info(
       kProviderId, MountOptions(kFileSystemId, kDisplayName),
-      GetMountPath(profile_, kProviderId, kFileSystemId),
+      GetMountPath(profile_, kProviderId.GetId(), kFileSystemId),
       false /* configurable */, true /* watchable */, extensions::SOURCE_FILE);
 
   const base::FilePath kFilePath = base::FilePath(FILE_PATH_LITERAL("/hello"));

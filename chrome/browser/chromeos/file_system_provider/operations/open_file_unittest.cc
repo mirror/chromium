@@ -31,6 +31,7 @@ const char kFileSystemId[] = "testing-file-system";
 const int kRequestId = 2;
 const base::FilePath::CharType kFilePath[] =
     FILE_PATH_LITERAL("/directory/blueberries.txt");
+const ProviderId kProviderId = ProviderId(kExtensionId, ProviderId::EXTENSION);
 
 // Callback invocation logger. Acts as a fileapi end-point.
 class CallbackLogger {
@@ -75,7 +76,7 @@ class FileSystemProviderOperationsOpenFileTest : public testing::Test {
 
   void SetUp() override {
     file_system_info_ = ProvidedFileSystemInfo(
-        kExtensionId, MountOptions(kFileSystemId, "" /* display_name */),
+        kProviderId, MountOptions(kFileSystemId, "" /* display_name */),
         base::FilePath(), false /* configurable */, true /* watchable */,
         extensions::SOURCE_FILE);
   }
@@ -139,7 +140,7 @@ TEST_F(FileSystemProviderOperationsOpenFileTest, Execute_ReadOnly) {
   CallbackLogger callback_logger;
 
   const ProvidedFileSystemInfo read_only_file_system_info(
-      kExtensionId, MountOptions(kFileSystemId, "" /* display_name */),
+      kProviderId, MountOptions(kFileSystemId, "" /* display_name */),
       base::FilePath() /* mount_path */, false /* configurable */,
       true /* watchable */, extensions::SOURCE_FILE);
 

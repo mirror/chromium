@@ -32,6 +32,7 @@ const base::FilePath::CharType kDirectoryPath[] =
 const base::FilePath::CharType kFilePath[] =
     FILE_PATH_LITERAL("/rabbit/and/bear/happy");
 const char kActionId[] = "SHARE";
+const ProviderId kProviderId = ProviderId(kExtensionId, ProviderId::EXTENSION);
 
 }  // namespace
 
@@ -42,7 +43,7 @@ class FileSystemProviderOperationsExecuteActionTest : public testing::Test {
 
   void SetUp() override {
     file_system_info_ = ProvidedFileSystemInfo(
-        kExtensionId, MountOptions(kFileSystemId, "" /* display_name */),
+        kProviderId, MountOptions(kFileSystemId, "" /* display_name */),
         base::FilePath(), false /* configurable */, true /* watchable */,
         extensions::SOURCE_FILE);
     entry_paths_.clear();

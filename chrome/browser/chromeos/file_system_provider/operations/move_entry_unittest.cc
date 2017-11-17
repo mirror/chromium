@@ -32,6 +32,7 @@ const base::FilePath::CharType kSourcePath[] =
     FILE_PATH_LITERAL("/bunny/and/bear/happy");
 const base::FilePath::CharType kTargetPath[] =
     FILE_PATH_LITERAL("/kitty/and/puppy/happy");
+const ProviderId kProviderId = ProviderId(kExtensionId, ProviderId::EXTENSION);
 
 }  // namespace
 
@@ -44,7 +45,7 @@ class FileSystemProviderOperationsMoveEntryTest : public testing::Test {
     MountOptions mount_options(kFileSystemId, "" /* display_name */);
     mount_options.writable = true;
     file_system_info_ = ProvidedFileSystemInfo(
-        kExtensionId, mount_options, base::FilePath(), false /* configurable */,
+        kProviderId, mount_options, base::FilePath(), false /* configurable */,
         true /* watchable */, extensions::SOURCE_FILE);
   }
 
@@ -104,7 +105,7 @@ TEST_F(FileSystemProviderOperationsMoveEntryTest, Execute_ReadOnly) {
   util::StatusCallbackLog callback_log;
 
   const ProvidedFileSystemInfo read_only_file_system_info(
-      kExtensionId, MountOptions(kFileSystemId, "" /* display_name */),
+      kProviderId, MountOptions(kFileSystemId, "" /* display_name */),
       base::FilePath() /* mount_path */, false /* configurable */,
       true /* watchable */, extensions::SOURCE_FILE);
 

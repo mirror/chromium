@@ -37,6 +37,7 @@ const base::FilePath::CharType kDirectoryPath[] =
 
 // URLs are case insensitive, so it should pass the sanity check.
 const char kThumbnail[] = "DaTa:ImAgE/pNg;base64,";
+const ProviderId kProviderId = ProviderId(kExtensionId, ProviderId::EXTENSION);
 
 // Returns the request value as |result| in case of successful parse.
 void CreateRequestValueFromJSON(const std::string& json,
@@ -105,7 +106,7 @@ class FileSystemProviderOperationsGetMetadataTest : public testing::Test {
 
   void SetUp() override {
     file_system_info_ = ProvidedFileSystemInfo(
-        kExtensionId, MountOptions(kFileSystemId, "" /* display_name */),
+        kProviderId, MountOptions(kFileSystemId, "" /* display_name */),
         base::FilePath(), false /* configurable */, true /* watchable */,
         extensions::SOURCE_FILE);
   }

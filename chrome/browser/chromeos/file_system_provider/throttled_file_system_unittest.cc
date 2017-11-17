@@ -26,6 +26,7 @@ namespace {
 const char kExtensionId[] = "mbflcebpggnecokmikipoihdbecnjfoj";
 const char kFileSystemId[] = "camera-pictures";
 const char kDisplayName[] = "Camera Pictures";
+const ProviderId kProviderId = ProviderId(kExtensionId, ProviderId::EXTENSION);
 
 typedef std::vector<base::File::Error> StatusLog;
 typedef std::vector<std::pair<int, base::File::Error>> OpenLog;
@@ -56,7 +57,7 @@ class FileSystemProviderThrottledFileSystemTest : public testing::Test {
     options.opened_files_limit = limit;
 
     ProvidedFileSystemInfo file_system_info(
-        kExtensionId, options, base::FilePath() /* mount_path */,
+        kProviderId, options, base::FilePath() /* mount_path */,
         false /* configurable */, true /* watchable */,
         extensions::SOURCE_FILE);
 
