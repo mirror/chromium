@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "3f1e57cc_d9e9a52f",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-11-17T02:04:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "359726ec_4c81740a",
+      "range": {
+        "startLine": 137,
+        "startChar": 27,
+        "endLine": 137,
+        "endChar": 41
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75c771fe_c6fd5385",
         "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
         "patchSetId": 1
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "I don\u0027t know what\u0027s the numbers we have.. but in most cases I\u0027m not expecting numbers \u003e 100 for both M and N... Is timing/memory consumption a potential issue here?",
       "parentUuid": "75c771fe_c6fd5385",
+      "range": {
+        "startLine": 139,
+        "startChar": 8,
+        "endLine": 139,
+        "endChar": 20
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c05aa59_c95ea46d",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-11-17T02:04:28Z",
+      "side": 1,
+      "message": "10,000 string compares is a lot.  If we think it might happen often, we might want a map for the persistent_page_infos so we can do a map lookup instead of a find_if.  WDYT?",
+      "parentUuid": "cf3db14b_5d70b70f",
       "range": {
         "startLine": 139,
         "startChar": 8,
@@ -284,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "c6b450d1_ff6f4782",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-11-17T02:04:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d56ee2c6_9b89ace6",
+      "range": {
+        "startLine": 184,
+        "startChar": 17,
+        "endLine": 184,
+        "endChar": 23
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e21b6ef1_1e4b641c",
         "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.h",
         "patchSetId": 1
@@ -328,6 +400,30 @@
       "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b9a5526_614e9a92",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-11-17T02:04:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b3f0147b_8df55c22",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 47
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -425,6 +521,30 @@
     },
     {
       "key": {
+        "uuid": "238348b2_0418b1aa",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-11-17T02:04:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3f05fae8_57f28d35",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 29
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ba0c25a_8e8c28f1",
         "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task_unittest.cc",
         "patchSetId": 1
@@ -472,6 +592,30 @@
     },
     {
       "key": {
+        "uuid": "fc352a07_0fe34ec3",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-11-17T02:04:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "42f3e9ac_6236fda6",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 48
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f85c639_9c5e5849",
         "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task_unittest.cc",
         "patchSetId": 1
@@ -507,6 +651,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "5f85c639_9c5e5849",
+      "range": {
+        "startLine": 113,
+        "startChar": 46,
+        "endLine": 113,
+        "endChar": 69
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50234d36_eb467dd1",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-11-17T02:04:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a3a6a8bb_54ce3beb",
       "range": {
         "startLine": 113,
         "startChar": 46,
@@ -566,6 +734,30 @@
     },
     {
       "key": {
+        "uuid": "1a32d1eb_a2059464",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-11-17T02:04:28Z",
+      "side": 1,
+      "message": "How about \"IsPageRemovedFromBothPlaces() ?",
+      "parentUuid": "538e98e1_5553dd15",
+      "range": {
+        "startLine": 120,
+        "startChar": 46,
+        "endLine": 120,
+        "endChar": 59
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b05b799_b3ea7764",
         "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task_unittest.cc",
         "patchSetId": 1
@@ -610,6 +802,30 @@
       "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc91b723_432dd6af",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-11-17T02:04:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9e75717c_df53abd8",
+      "range": {
+        "startLine": 168,
+        "startChar": 28,
+        "endLine": 168,
+        "endChar": 52
+      },
+      "revId": "20c280a56c2ac3b5c5828440cc866a160b3aadc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
