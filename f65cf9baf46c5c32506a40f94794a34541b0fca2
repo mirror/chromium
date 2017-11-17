@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12a597e0_4ec4bd4e",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/WorkletAnimation.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-17T20:17:25Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be a reference? This can explain some of the failures on bots.",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 63
+      },
+      "revId": "f65cf9baf46c5c32506a40f94794a34541b0fca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d6c893_7a537e06",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/WorkletAnimation.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-17T20:17:25Z",
+      "side": 1,
+      "message": "nit: Saying \"must be a KeyframeEffectReadOnly\" should be enough and has the same meaning.\nSubclass is an internal detail and not necessarily correct in Javascript inheritance model.",
+      "range": {
+        "startLine": 32,
+        "startChar": 37,
+        "endLine": 32,
+        "endChar": 51
+      },
+      "revId": "f65cf9baf46c5c32506a40f94794a34541b0fca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
