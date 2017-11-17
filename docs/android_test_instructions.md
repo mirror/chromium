@@ -208,6 +208,10 @@ BUILDTYPE=my_build build/android/test_runner.py junit -s chrome_junit_tests -vvv
 # Run a subset of tests. You might need to pass the package name for some tests.
 BUILDTYPE=my_build build/android/test_runner.py junit -s chrome_junit_tests -vvv
 -f "org.chromium.chrome.browser.media.*"
+
+# Instruct the tests to not start until a java debugger is attached.
+BUILDTYPE=my_build build/android/test_runner.py junit -s chrome_junit_tests -vvv
+-f "org.chromium.chrome.browser.media.*" --debug-socket 5000
 ```
 
 ## Gtests
