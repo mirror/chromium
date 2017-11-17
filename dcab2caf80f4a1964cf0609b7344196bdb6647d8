@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "04769369_306fa184",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-17T19:46:37Z",
+      "side": 1,
+      "message": "\u003e Done.\n\u003e \n\u003e CanReadRawCookies is granted from when devtools attached to a target (fame in this case). Any subframes that spawn will eventually (if not immediately) have devtools attached and granted this permission. However, for example, window.open(\u0027http://cross-site\u0027) will not have devtools attached and we should not be sending post data.\n\nWait, I may have approved too soon.  The check you\u0027re doing is process-wide, which means it will include the POST data for the window.open case as well (as well as any other tabs that happen to be sharing the process).  That doesn\u0027t seem ok.\n\nIsn\u0027t there a more direct way to know if a RenderFrameHost has DevTools attached?",
+      "parentUuid": "34762d04_673ed49a",
+      "revId": "dcab2caf80f4a1964cf0609b7344196bdb6647d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3ae30ac_09bd2b7f",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 2
