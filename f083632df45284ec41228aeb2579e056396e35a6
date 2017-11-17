@@ -52,6 +52,24 @@
       "revId": "f083632df45284ec41228aeb2579e056396e35a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "387ac17f_fab837fa",
+        "filename": "storage/common/data_element.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-17T06:45:06Z",
+      "side": 1,
+      "message": "Regarding the categorization we could probably start with something like this:\n\n// Only used for Upload with Network Service as of now:\nTYPE_RAW_FILE,\nTYPE_DATA_PIPE,\n\n// Only used for Blob:\nTYPE_BYTES_DESCRIPTION,\nTYPE_DISK_CACHE_ENTRY,  // Only used by CacheStorage\nTYPE_FILE_FILESYSTEM,\n\n// Commonly used for Blob, and also for Upload when Network Service is disabled:\nTYPE_BLOB,\nTYPE_FILE,\n\n// Commonly used in every case:\nTYPE_BYTES,",
+      "parentUuid": "c7a8693b_088aeb87",
+      "revId": "f083632df45284ec41228aeb2579e056396e35a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
