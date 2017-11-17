@@ -16,6 +16,24 @@
       "revId": "1abc81fe66f74f98dc8a7e57b81c3b9f5b0a2912",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b4bb27_e3136d9d",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-17T21:42:32Z",
+      "side": 1,
+      "message": "This seems reasonable, though I\u0027d prefer to have this broken out into another file with a class-level comment that describes what you\u0027ve said here.",
+      "parentUuid": "2dfd38a5_8657fb94",
+      "revId": "1abc81fe66f74f98dc8a7e57b81c3b9f5b0a2912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
