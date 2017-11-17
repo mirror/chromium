@@ -117,6 +117,30 @@
       "revId": "6a8a311726298c1559830c3d0037cdf8d5c98d04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5df76f0d_c454e6e8",
+        "filename": "device/bluetooth/bluetooth_adapter_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-17T22:27:17Z",
+      "side": 1,
+      "message": "I guess I don\u0027t understand the question.  Why would DeleteDevice be sufficient?  The device will get deleted and then it can\u0027t be accessed.  That\u0027s why there is RememberDeviceForSubsequentAction.",
+      "parentUuid": "39d31f53_381dd16e",
+      "range": {
+        "startLine": 291,
+        "startChar": 38,
+        "endLine": 291,
+        "endChar": 61
+      },
+      "revId": "6a8a311726298c1559830c3d0037cdf8d5c98d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
