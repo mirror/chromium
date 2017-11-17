@@ -665,6 +665,30 @@
     },
     {
       "key": {
+        "uuid": "d00d7f94_ec4f8199",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T17:12:01Z",
+      "side": 1,
+      "message": "Done.  Not a huge fan of temporaries all over the place (That\u0027s also why there\u0027s no DoRead), but done feel too strongly about it.\n\nAlso went ahead and lambda-ified this method, now that it doesn\u0027t do much.",
+      "parentUuid": "9333ba53_50f62d90",
+      "range": {
+        "startLine": 279,
+        "startChar": 30,
+        "endLine": 279,
+        "endChar": 52
+      },
+      "revId": "ee722d702466e9be02423594299b01127c3ba760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb6dab62_f3ad5986",
         "filename": "net/base/upload_file_element_reader.h",
         "patchSetId": 3

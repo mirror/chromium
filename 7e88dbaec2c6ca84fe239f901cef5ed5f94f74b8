@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22af28a2_d7b639b6",
+        "filename": "net/base/file_stream.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T17:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34d779ef_fc7b06f4",
+      "range": {
+        "startLine": 34,
+        "startChar": 41,
+        "endLine": 34,
+        "endChar": 51
+      },
+      "revId": "7e88dbaec2c6ca84fe239f901cef5ed5f94f74b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6569e76e_11df9294",
         "filename": "net/base/file_stream.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-16T22:57:14Z",
       "side": 1,
       "message": "I think what you mean here is that file operations are always posted to task_runner, and that on Windows the calls on that task runner are async and on other platforms they\u0027re sync?  \n\nIf so, I\u0027m not sure if that\u0027s information that\u0027s important to the consumer of the FileStream; can you give me a sense as to how it\u0027s actionable for the consumer?  Reading the old comment I understood it as saying \"FileStream posts file operations to task_runner and are notified asynchronously when they complete\" which is true for both implementations and is actionable for the caller.  I did a fairly large \"Huh?\" when I read this changed comment.  \n\nIIUC (which is an important if) I\u0027d suggest either reverting the comment change or expanding it a bit.",
+      "range": {
+        "startLine": 39,
+        "startChar": 16,
+        "endLine": 39,
+        "endChar": 25
+      },
+      "revId": "7e88dbaec2c6ca84fe239f901cef5ed5f94f74b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d544552_dbad0996",
+        "filename": "net/base/file_stream.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T17:12:01Z",
+      "side": 1,
+      "message": "Fixed the comment (Really wanted to get at the file must be opened for async operations on Windows, but didn\u0027t do that well).",
+      "parentUuid": "6569e76e_11df9294",
       "range": {
         "startLine": 39,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "19fa7553_a9522554",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T17:12:01Z",
+      "side": 1,
+      "message": "It could be false at the top of the method - there\u0027s no API contract preventing Init from being called multiple times in a row, interrupting the previous init call.  There\u0027s no test of that, so I added one.",
+      "parentUuid": "cd1d71de_cf5d5f8a",
+      "range": {
+        "startLine": 85,
+        "startChar": 10,
+        "endLine": 85,
+        "endChar": 46
+      },
+      "revId": "7e88dbaec2c6ca84fe239f901cef5ed5f94f74b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d5746bc_9c3f8080",
         "filename": "net/base/upload_file_element_reader.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "7e88dbaec2c6ca84fe239f901cef5ed5f94f74b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ba8b05_5094928d",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T17:12:01Z",
+      "side": 1,
+      "message": "Done.  Just for kicks, since the code is now merged, when an init interrupts an open, we just wait for the original open to complete.  Per earlier discussion, we never re-init out of impatience because the original open was taking to long.",
+      "parentUuid": "9d5746bc_9c3f8080",
+      "range": {
+        "startLine": 144,
+        "startChar": 16,
+        "endLine": 144,
+        "endChar": 18
+      },
+      "revId": "7e88dbaec2c6ca84fe239f901cef5ed5f94f74b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "244e713b_7c2be33c",
+        "filename": "net/base/upload_file_element_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T17:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcde2c59_8e34e233",
+      "range": {
+        "startLine": 272,
+        "startChar": 6,
+        "endLine": 272,
+        "endChar": 42
+      },
+      "revId": "7e88dbaec2c6ca84fe239f901cef5ed5f94f74b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "201b10c8_c1d8d0d6",
         "filename": "net/base/upload_file_element_reader.h",
         "patchSetId": 4
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-16T22:57:14Z",
       "side": 1,
       "message": "If you follow my suggestion of removing the comment change on the new constructor, I could imagine a reference from here to an implementation file where the sync/async thing is explained could be reasonable.  (Not a request, just recognizing that, while this comment is totally actionable for the consumer, it might be a bit confusing.)",
+      "range": {
+        "startLine": 37,
+        "startChar": 22,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "7e88dbaec2c6ca84fe239f901cef5ed5f94f74b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da1f58b4_5e8234a3",
+        "filename": "net/base/upload_file_element_reader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T17:12:01Z",
+      "side": 1,
+      "message": "Leaving as-is, for now.",
+      "parentUuid": "201b10c8_c1d8d0d6",
       "range": {
         "startLine": 37,
         "startChar": 22,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "73afda15_9777e713",
+        "filename": "net/base/upload_file_element_reader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T17:12:01Z",
+      "side": 1,
+      "message": "That\u0027s not true, actually - it\u0027s used in all paths.  The issue is that we should be using base/task_scheduler.h instead.  Updated comment to be clearer.  I may actually remove it fairly shorting in a followup CL (And switch to using OnceCallbacks?)",
+      "parentUuid": "8d0a9b5d_e64a2ac9",
+      "range": {
+        "startLine": 39,
+        "startChar": 19,
+        "endLine": 39,
+        "endChar": 25
+      },
+      "revId": "7e88dbaec2c6ca84fe239f901cef5ed5f94f74b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab83ab47_fcde7304",
         "filename": "net/base/upload_file_element_reader.h",
         "patchSetId": 4
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "fb325ad9_c621d89a",
+        "filename": "net/base/upload_file_element_reader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T17:12:01Z",
+      "side": 1,
+      "message": "Beefed up comments a little.",
+      "parentUuid": "ab83ab47_fcde7304",
+      "range": {
+        "startLine": 79,
+        "startChar": 38,
+        "endLine": 79,
+        "endChar": 45
+      },
+      "revId": "7e88dbaec2c6ca84fe239f901cef5ed5f94f74b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "188952e9_2ab79c49",
         "filename": "net/base/upload_file_element_reader_unittest.cc",
         "patchSetId": 4
@@ -206,6 +398,30 @@
       "revId": "7e88dbaec2c6ca84fe239f901cef5ed5f94f74b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372bb7ea_759b0e22",
+        "filename": "net/base/upload_file_element_reader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-17T17:12:01Z",
+      "side": 1,
+      "message": "Done.  Was going to add an enum class, but didn\u0027t like any of the names I came up with.  :(",
+      "parentUuid": "188952e9_2ab79c49",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 33
+      },
+      "revId": "7e88dbaec2c6ca84fe239f901cef5ed5f94f74b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
