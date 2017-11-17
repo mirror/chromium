@@ -193,3 +193,7 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_explicit_close_after_tlp, false)
 
 // Enables 3 new connection options to make PROBE_RTT more aggressive
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_less_probe_rtt, false)
+
+// If true, truncates QUIC error strings to 256 characters before writing them
+// to the wire.
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_truncate_long_details, true)
