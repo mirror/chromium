@@ -25,6 +25,295 @@
     },
     {
       "key": {
+        "uuid": "f676c7ef_52c436f3",
+        "filename": "chrome/browser/ui/blocked_content/framebust_block_tab_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: Technically, callers could just do GetBlockedUrls().empty(), but maybe that\u0027s verbose.  (Also that pattern is a little nicer when the accessor is inlined, see below.)",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff9dc3ed_714db701",
+        "filename": "chrome/browser/ui/blocked_content/framebust_block_tab_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: Could just be an inlined accessor called blocked_urls()",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03703fd4_391d1e43",
+        "filename": "chrome/browser/ui/blocked_content/framebust_block_tab_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: Given the implementations of these, it seems like it might be clearer for them to be simple inlined accessors:\n\n  bool animation_has_run() const { return animation_has_run_; }\n  void set_animation_has_run() { animation_has_run_ \u003d true; }\n\nThis leaves the concept of what to do with this information (\"you should run the animation\") in the hands of the caller.",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c94dc8_1dae4e1d",
+        "filename": "chrome/browser/ui/blocked_content/framebust_block_tab_helper.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: Your terminology is a bit inconsistent between \"urls\" and \"redirections\"; being consistent would help clarity.",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75592e56_7108d588",
+        "filename": "chrome/browser/ui/blocked_content/framebust_block_tab_helper.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: block -\u003e blocked?",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f71bcc5a_8a5d54de",
+        "filename": "chrome/browser/ui/blocked_content/framebust_block_tab_helper.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: one or multiple framebust were -\u003e at least one Framebust was",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc789e9f_7da05196",
+        "filename": "chrome/browser/ui/blocked_content/framebust_block_tab_helper.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: Since |index| is referring to an object in a list of things in memory, it should be a size_t instead of an int.",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed00e573_c92b275c",
+        "filename": "chrome/browser/ui/blocked_content/framebust_block_tab_helper.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: Try to avoid saying \"list\" on types that aren\u0027t actually std::list.",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dab788d_2035334a",
+        "filename": "chrome/browser/ui/blocked_content/framebust_block_tab_helper.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: Consider a type alias for vector\u003cGURL\u003e, e.g. BlockedUrls.",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8a2a95_540e71de",
+        "filename": "chrome/browser/ui/blocked_content/framebust_block_tab_helper.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: navigation",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d8b518_11aa4d2e",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1407,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "When can this be null?  In ShouldAllowRunningInsecureContent() above, for example, it\u0027s DCHECKed as non-null.",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9792b35_49c89bdc",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1595,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: Definition order of classes in .cc file should match declaration order in .h file (it\u0027s last there but not here)",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78270fe1_42418492",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1606,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: Not clear to me what this comment adds.  Say more about what you\u0027re setting up or remove.",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c348c9e_20aaf3a1",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1625,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: Could collapse into next line, but maybe that\u0027s bad if it wraps anyway",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3766f6eb_f0511b85",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: Could use ?: to initialize if you want",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "572b3f50_5ba358e1",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1657,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: You might want to check \"if (url.is_valid())\" below instead, then?  That would be more defensive and closer to this text (but maybe not necessary)",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "459cd35e_f96627b3",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1670,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: Might end up being more readable to pull the image in question out into a temp above this call",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "038c4725_c6bbdc9f",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.h",
         "patchSetId": 9
@@ -42,6 +331,74 @@
         "endLine": 451,
         "endChar": 45
       },
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b53442_845d9fcc",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: Again, match declaration/definition order",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b82c9fd_12225ab6",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: Probably not for this CL, but it\u0027d be nice if this API returned a unique_ptr since it\u0027s transferring ownership.",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "909d9ee0_40166c6c",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: Or\n\n  return web_contents \u0026\u0026 ...\n\n(2 places)",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "703c349e_988fe49d",
+        "filename": "chrome/browser/ui/content_settings/framebust_block_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-17T22:41:26Z",
+      "side": 1,
+      "message": "Nit: Would it be any clearer to call these 0, 1, and 2 so that the variable name in the EXPECT below matched the index of the item clicked?\n\nAnother way:\n\n  const GURL blocked_urls[] \u003d {..., ..., ...};\n  ...\n  for (const auto\u0026 url : blocked_urls)\n    helper-\u003eAddBlockedUrl(url);\n  ...\n  EXPECT_EQ(blocked_urls[1], ...);",
       "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
