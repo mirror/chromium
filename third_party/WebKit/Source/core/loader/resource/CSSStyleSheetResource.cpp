@@ -27,18 +27,14 @@
 #include "core/loader/resource/CSSStyleSheetResource.h"
 
 #include "core/css/StyleSheetContents.h"
-#include "core/loader/resource/StyleSheetResourceClient.h"
-#include "platform/SharedBuffer.h"
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/MemoryCache.h"
-#include "platform/loader/fetch/ResourceClientWalker.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/TextResourceDecoderOptions.h"
 #include "platform/network/http_names.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/SecurityPolicy.h"
-#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/text/TextEncoding.h"
 
 namespace blink {
@@ -71,11 +67,8 @@ CSSStyleSheetResource::CSSStyleSheetResource(
     const ResourceRequest& resource_request,
     const ResourceLoaderOptions& options,
     const TextResourceDecoderOptions& decoder_options)
-    : StyleSheetResource(resource_request,
-                         kCSSStyleSheet,
-                         options,
-                         decoder_options),
-      did_notify_first_data_(false) {}
+    : TextResource(resource_request, kCSSStyleSheet, options, decoder_options) {
+}
 
 CSSStyleSheetResource::~CSSStyleSheetResource() {}
 
@@ -93,34 +86,19 @@ void CSSStyleSheetResource::SetParsedStyleSheetCache(
 
 void CSSStyleSheetResource::Trace(blink::Visitor* visitor) {
   visitor->Trace(parsed_style_sheet_cache_);
-  StyleSheetResource::Trace(visitor);
+  TextResource::Trace(visitor);
 }
 
-void CSSStyleSheetResource::DidAddClient(ResourceClient* c) {
-  DCHECK(StyleSheetResourceClient::IsExpectedType(c));
-  // Resource::didAddClient() must be before setCSSStyleSheet(), because
-  // setCSSStyleSheet() may cause scripts to be executed, which could destroy
-  // 'c' if it is an instance of HTMLLinkElement. see the comment of
-  // HTMLLinkElement::setCSSStyleSheet.
-  Resource::DidAddClient(c);
-
-  if (HasClient(c) && did_notify_first_data_)
-    static_cast<StyleSheetResourceClient*>(c)->DidAppendFirstData(this);
-
-  // |c| might be removed in didAppendFirstData, so ensure it is still a client.
-  if (HasClient(c) && !IsLoading()) {
-    ReferrerPolicy referrer_policy = kReferrerPolicyDefault;
-    String referrer_policy_header =
-        GetResponse().HttpHeaderField(HTTPNames::Referrer_Policy);
-    if (!referrer_policy_header.IsNull()) {
-      SecurityPolicy::ReferrerPolicyFromHeaderValue(
-          referrer_policy_header, kDoNotSupportReferrerPolicyLegacyKeywords,
-          &referrer_policy);
-    }
-    static_cast<StyleSheetResourceClient*>(c)->SetCSSStyleSheet(
-        GetResourceRequest().Url(), GetResponse().Url(), referrer_policy,
-        Encoding(), this);
+ReferrerPolicy CSSStyleSheetResource::GetReferrerPolicy() const {
+  ReferrerPolicy referrer_policy = kReferrerPolicyDefault;
+  String referrer_policy_header =
+      GetResponse().HttpHeaderField(HTTPNames::Referrer_Policy);
+  if (!referrer_policy_header.IsNull()) {
+    SecurityPolicy::ReferrerPolicyFromHeaderValue(
+        referrer_policy_header, kDoNotSupportReferrerPolicyLegacyKeywords,
+        &referrer_policy);
   }
+  return referrer_policy;
 }
 
 const String CSSStyleSheetResource::SheetText(
@@ -143,36 +121,12 @@ const String CSSStyleSheetResource::SheetText(
   return DecodedText();
 }
 
-void CSSStyleSheetResource::AppendData(const char* data, size_t length) {
-  Resource::AppendData(data, length);
-  if (did_notify_first_data_)
-    return;
-  ResourceClientWalker<StyleSheetResourceClient> w(Clients());
-  while (StyleSheetResourceClient* c = w.Next())
-    c->DidAppendFirstData(this);
-  did_notify_first_data_ = true;
-}
-
 void CSSStyleSheetResource::NotifyFinished() {
   // Decode the data to find out the encoding and cache the decoded sheet text.
   if (Data())
     SetDecodedSheetText(DecodedText());
 
-  ReferrerPolicy referrer_policy = kReferrerPolicyDefault;
-  String referrer_policy_header =
-      GetResponse().HttpHeaderField(HTTPNames::Referrer_Policy);
-  if (!referrer_policy_header.IsNull()) {
-    SecurityPolicy::ReferrerPolicyFromHeaderValue(
-        referrer_policy_header, kDoNotSupportReferrerPolicyLegacyKeywords,
-        &referrer_policy);
-  }
-
-  ResourceClientWalker<StyleSheetResourceClient> w(Clients());
-  while (StyleSheetResourceClient* c = w.Next()) {
-    MarkClientFinished(c);
-    c->SetCSSStyleSheet(GetResourceRequest().Url(), GetResponse().Url(),
-                        referrer_policy, Encoding(), this);
-  }
+  Resource::NotifyFinished();
 
   // Clear raw bytes as now we have the full decoded sheet text.
   // We wait for all LinkStyle::setCSSStyleSheet to run (at least once)
