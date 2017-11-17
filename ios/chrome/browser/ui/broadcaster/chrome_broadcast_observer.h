@@ -39,6 +39,12 @@
 // possible for |dragging| to be NO while |scrolling| is still YES.
 - (void)broadcastScrollViewIsDragging:(BOOL)dragging;
 
+#pragma mark - Toolbar UI
+
+// Observer method for objects that care about the current height of the
+// toolbar.
+- (void)broadcastToolbarHeight:(CGFloat)height;
+
 #pragma mark - NTP UI
 
 // Observer method for objects that care about the current panel selected on the
