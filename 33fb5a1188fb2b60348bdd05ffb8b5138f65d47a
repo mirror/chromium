@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb4af07e_c53de737",
+        "filename": "content/renderer/dom_storage/session_storage_namespace.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-17T00:09:47Z",
+      "side": 1,
+      "message": "nit: no need for explicit",
+      "revId": "33fb5a1188fb2b60348bdd05ffb8b5138f65d47a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
