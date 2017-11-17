@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9110afa_ab17eec6",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 1754,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-17T22:31:33Z",
+      "side": 1,
+      "message": "This passes a ptr from a stack variable back to the caller.",
+      "range": {
+        "startLine": 1754,
+        "startChar": 4,
+        "endLine": 1754,
+        "endChar": 33
+      },
+      "revId": "242858718fe3ad478fca612f493951399dd3e149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
