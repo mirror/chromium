@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "acbcf7e5_398059b4",
+        "filename": "chrome/browser/extensions/extension_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5754d1d_04f62299",
+      "range": {
+        "startLine": 408,
+        "startChar": 54,
+        "endLine": 408,
+        "endChar": 55
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f330703f_dc856ba7",
         "filename": "chrome/browser/extensions/extension_system_impl.cc",
         "patchSetId": 3
@@ -63,6 +87,24 @@
       "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ecd2d0b_43d0d681",
+        "filename": "chrome/browser/extensions/extension_system_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "I\u0027ll move this implementation to CrxInstaller.",
+      "parentUuid": "f330703f_dc856ba7",
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "a56eaede_3b03f692",
+        "filename": "chrome/browser/extensions/extension_system_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb66e12c_f8db5e87",
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7739c4d0_0452ef0e",
         "filename": "chrome/browser/extensions/extension_system_impl.cc",
         "patchSetId": 3
@@ -97,6 +157,24 @@
       "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2890cdd1_208cf5e6",
+        "filename": "chrome/browser/extensions/extension_system_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "I misunderstood the usage of PostTaskWithTraitsAndReply. Thanks for pointing it out.",
+      "parentUuid": "7739c4d0_0452ef0e",
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "04bbb4a0_c4006d6a",
+        "filename": "chrome/browser/extensions/extension_system_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f148afb8_fc4a5c12",
+      "range": {
+        "startLine": 474,
+        "startChar": 6,
+        "endLine": 474,
+        "endChar": 18
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91d4275b_1b4c87ad",
         "filename": "chrome/browser/extensions/extension_system_impl_browsertest.cc",
         "patchSetId": 3
@@ -143,6 +245,30 @@
       "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a449c938_a96abcf5",
+        "filename": "chrome/browser/extensions/extension_system_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91d4275b_1b4c87ad",
+      "range": {
+        "startLine": 45,
+        "startChar": 9,
+        "endLine": 45,
+        "endChar": 18
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -169,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "705531ec_3985e1a1",
+        "filename": "chrome/browser/extensions/extension_system_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "RunLoop::QuitClosure and RunLoop::QuitWhenIdleClosure return base::Closure.\n\nhttps://cs.chromium.org/chromium/src/base/run_loop.cc?type\u003dcs\u0026q\u003dQuitWhenIdleClosure\u0026l\u003d164",
+      "parentUuid": "1cca10db_3c3a92cd",
+      "range": {
+        "startLine": 52,
+        "startChar": 43,
+        "endLine": 52,
+        "endChar": 50
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "882128ee_45763a0e",
         "filename": "chrome/browser/extensions/extension_system_impl_browsertest.cc",
         "patchSetId": 3
@@ -189,6 +339,30 @@
       "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db602371_dfd3d46e",
+        "filename": "chrome/browser/extensions/extension_system_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "882128ee_45763a0e",
+      "range": {
+        "startLine": 58,
+        "startChar": 32,
+        "endLine": 58,
+        "endChar": 51
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -215,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "67dfde4e_16fe8638",
+        "filename": "chrome/browser/extensions/extension_system_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968a1e3c_262de42d",
+      "range": {
+        "startLine": 87,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 8
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3e771af_05171e5b",
         "filename": "chrome/browser/extensions/extension_system_impl_browsertest.cc",
         "patchSetId": 3
@@ -238,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "549363ad_11cbf3c5",
+        "filename": "chrome/browser/extensions/extension_system_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3e771af_05171e5b",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 15
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "587ae571_a985a7bd",
         "filename": "extensions/browser/updater/update_data_provider.cc",
         "patchSetId": 3
@@ -252,6 +474,24 @@
       "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc26bc1_bcfd41a0",
+        "filename": "extensions/browser/updater/update_data_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "This is for the case when the extension is disabled but the reason is unknown.",
+      "parentUuid": "587ae571_a985a7bd",
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "a0a8f433_9ee67cbf",
+        "filename": "extensions/browser/updater/update_data_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8dac291_54b58bcd",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 10
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "063ebd27_75d3e3f7",
         "filename": "extensions/browser/updater/update_data_provider_unittest.cc",
         "patchSetId": 3
@@ -301,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "00938d50_92b381d9",
+        "filename": "extensions/browser/updater/update_data_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "063ebd27_75d3e3f7",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 43
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4118e222_bb7c8062",
         "filename": "extensions/browser/updater/update_data_provider_unittest.cc",
         "patchSetId": 3
@@ -315,6 +603,24 @@
       "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1be02ecb_8fa90c88",
+        "filename": "extensions/browser/updater/update_data_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4118e222_bb7c8062",
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -341,6 +647,30 @@
     },
     {
       "key": {
+        "uuid": "7b518c2e_fa04156f",
+        "filename": "extensions/browser/updater/update_data_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf823433_f04c2c14",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 8
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e685c5c5_b6baeb3e",
         "filename": "extensions/browser/updater/update_install_shim.cc",
         "patchSetId": 3
@@ -358,6 +688,24 @@
     },
     {
       "key": {
+        "uuid": "1f20ea92_e763d712",
+        "filename": "extensions/browser/updater/update_install_shim.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e685c5c5_b6baeb3e",
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5337042c_7ed3274b",
         "filename": "extensions/browser/updater/update_install_shim.cc",
         "patchSetId": 3
@@ -372,6 +720,24 @@
       "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e896af9_a3bd5193",
+        "filename": "extensions/browser/updater/update_install_shim.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5337042c_7ed3274b",
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -398,6 +764,30 @@
     },
     {
       "key": {
+        "uuid": "7657c479_9aa3bbc7",
+        "filename": "extensions/browser/updater/update_install_shim.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "275837a5_fdf646d2",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 23
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96f3ccfe_9adb65e1",
         "filename": "extensions/browser/updater/update_install_shim_unittest.cc",
         "patchSetId": 3
@@ -421,6 +811,30 @@
     },
     {
       "key": {
+        "uuid": "cd5a8bf6_bf1afaeb",
+        "filename": "extensions/browser/updater/update_install_shim_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "No particular reason, I copied a pasted the test template from UpdateServiceTest. Switched to RunLoop.",
+      "parentUuid": "96f3ccfe_9adb65e1",
+      "range": {
+        "startLine": 61,
+        "startChar": 49,
+        "endLine": 61,
+        "endChar": 66
+      },
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "085b0f72_cdcf178e",
         "filename": "extensions/browser/updater/update_service_unittest.cc",
         "patchSetId": 3
@@ -435,6 +849,24 @@
       "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8671c7bf_55e05a08",
+        "filename": "extensions/browser/updater/update_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-17T05:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "085b0f72_cdcf178e",
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
