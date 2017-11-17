@@ -43,7 +43,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &features::kCopylessPaste,
     &features::kDownloadsForeground,
     &features::kImportantSitesInCbd,
-    &features::kMaterialDesignIncognitoNTP,
     &features::kServiceWorkerPaymentApps,
     &features::kSiteNotificationChannels,
     &features::kSimplifiedFullscreenUI,
