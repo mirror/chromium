@@ -1172,6 +1172,16 @@ LayoutRect LayoutObject::FragmentsVisualRectBoundingBox() const {
   return visual_rect;
 }
 
+LayoutUnit LayoutObject::VisualRectOutsetForRasterEffects() const {
+  // Borders may trigger Skia's hairline stroker, which can spill up to 0.5
+  // units in device space.
+  if (IsLayoutBlock()) {
+    ToLayoutBlock(const_cast<LayoutObject*>(this))
+        ->RecalcOverflowAfterStyleChange();
+  }
+  return LayoutUnit(StyleRef().HasOutline() ? 2.0f : 0);
+}
+
 LayoutRect LayoutObject::VisualRect() const {
   return FragmentsVisualRectBoundingBox();
 }
