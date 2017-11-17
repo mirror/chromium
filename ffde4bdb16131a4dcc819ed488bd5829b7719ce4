@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "85dda56d_55f52ea9",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-17T00:37:59Z",
+      "side": 1,
+      "message": "Well, we could hide the \u0027Connect\u0027 button for ARC VPN easily enough. I won\u0027t block on this, but I think it is worth double checking with UX.",
+      "parentUuid": "f84ccad1_a21cbdd3",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "514c0411_893dddf3",
         "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
         "patchSetId": 11
@@ -241,6 +259,24 @@
       "side": 1,
       "message": "This behavior is requested in the mock of PRD.\nFrom what I observe is that if we show IP here, it shows a fixed predefined ip \"100.115.92.2\"(I guess kevin set it) rather than the real IP.",
       "parentUuid": "43adc7e1_9c74c834",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794eaade_01b06aa9",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-17T00:37:59Z",
+      "side": 1,
+      "message": "That sounds like a bug in Shill then? If we don\u0027t have a valid IP we probably shouldn\u0027t be setting it. If we want to keep this logic, please add a comment explaining why we hide this for ARC VPN even if the property is set.",
+      "parentUuid": "ff000b3a_68760ca5",
       "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -626,6 +662,24 @@
       "side": 1,
       "message": "Will do this in crbug.com/785500",
       "parentUuid": "1f12c01a_14ad7a04",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db46135d_494aa522",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/internet_handler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-17T00:37:59Z",
+      "side": 1,
+      "message": "OK. I\u0027d prefer to have this depend on that change though.",
+      "parentUuid": "ed31843a_2b7007d6",
       "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
