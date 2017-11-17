@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ea31ee1_af9ae010",
+        "filename": "DEPS",
+        "patchSetId": 28
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-17T17:31:17Z",
+      "side": 1,
+      "message": "NAK.\n\nWhy is this needed? It sounds like you\u0027re missing a dependency somewhere",
+      "revId": "5de8a7dc710898b4497a5e384b9d0ac0866e259d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de4623a_8f1b2071",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-17T17:31:17Z",
+      "side": 1,
+      "message": "We shouldn\u0027t be doing all this, and especially not here.\ngpu/vulkan links in the loader library, so we can use vkGet{Instance,Device}ProcAddr directly whithout needing to dlopen/dlsym.",
+      "revId": "5de8a7dc710898b4497a5e384b9d0ac0866e259d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76220f5b_ae8c4885",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-17T17:31:17Z",
+      "side": 1,
+      "message": "This looks wrong. This code is used for non-root render passes, so we should not be binding the output surface, which is what we would do for the root render pass (and we do that already in the the section above).\n\nAlso, I don\u0027t think ENABLE_VULKAN should leak to DirectRenderer - any specialization/difference should go to the SkiaRenderer.",
+      "revId": "5de8a7dc710898b4497a5e384b9d0ac0866e259d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6f3e00_92384fb7",
+        "filename": "gpu/vulkan/BUILD.gn",
+        "patchSetId": 28
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-17T17:31:17Z",
+      "side": 1,
+      "message": "That is not relevant for this library which doesn\u0027t depend on skia.\nWe need to export the configs that are necessary to compile headers in this library.",
+      "revId": "5de8a7dc710898b4497a5e384b9d0ac0866e259d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
