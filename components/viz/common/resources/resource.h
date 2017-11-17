@@ -39,7 +39,7 @@ namespace internal {
 // for client and service libraries and should not be used directly from
 // external client code.
 struct VIZ_COMMON_EXPORT Resource {
-  enum Origin { INTERNAL, EXTERNAL, DELEGATED };
+  enum Origin { INTERNAL, DELEGATED };
   enum SynchronizationState {
     // The LOCALLY_USED state is the state each resource defaults to when
     // constructed or modified or read. This state indicates that the
@@ -153,8 +153,6 @@ struct VIZ_COMMON_EXPORT Resource {
   // sent from the client to the service. The mailbox has the IPC-capable data
   // for sharing the resource backing between modules/GL contexts/processes.
   gpu::Mailbox mailbox;
-  // Callback to run when the resource is deleted and not in use by the service.
-  ReleaseCallback release_callback;
   // Non-owning pointer to a software-backed resource when mapped.
   uint8_t* pixels = nullptr;
   // Reference-counts to know when a resource can be released through the
@@ -172,8 +170,7 @@ struct VIZ_COMMON_EXPORT Resource {
   // Size of the resource in pixels.
   gfx::Size size;
   // Where the resource was originally allocated. Either internally by the
-  // ResourceProvider instance, externally and given to the ResourceProvider
-  // via in-process methods, or in a client and given to the ResourceProvider
+  // ResourceProvider instance, or in a client and given to the ResourceProvider
   // via IPC.
   Origin origin = INTERNAL;
   // The texture target for GpuMemoryBuffer- and texture-backed resources.
