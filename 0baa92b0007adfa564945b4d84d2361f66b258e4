@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ca4b2e30_30d41e14",
+        "filename": "third_party/WebKit/Source/core/html/LinkStyle.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-17T16:59:50Z",
+      "side": 1,
+      "message": "Reworked the comment, removed entirely.",
+      "parentUuid": "a588fb6b_b59e2287",
+      "revId": "0baa92b0007adfa564945b4d84d2361f66b258e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1509f8b7_aabbc9f8",
         "filename": "third_party/WebKit/Source/core/html/LinkStyle.cpp",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-15T13:35:29Z",
       "side": 1,
       "message": "This is not from your change, but the condition on line 339 says loading_ is true... is the comment or code wrong?",
+      "revId": "0baa92b0007adfa564945b4d84d2361f66b258e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f375729a_2120b2cc",
+        "filename": "third_party/WebKit/Source/core/html/LinkStyle.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-17T16:59:50Z",
+      "side": 1,
+      "message": "The comment is trying to describe the case where GetResource() is nullptr but we *don\u0027t* need to do the synchronous failure work in this cleanup block. I\u0027ve reworked the comment.",
+      "parentUuid": "1509f8b7_aabbc9f8",
       "revId": "0baa92b0007adfa564945b4d84d2361f66b258e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9b8967ed_1376efc1",
+        "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScanner.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-17T16:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93c09261_80954f7c",
+      "revId": "0baa92b0007adfa564945b4d84d2361f66b258e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4753bcaf_fbe7605f",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorResourceContentLoader.cpp",
         "patchSetId": 14
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-16T12:03:18Z",
       "side": 1,
       "message": "This diamond inheritance now involves a member variable, which makes me sad.",
+      "revId": "0baa92b0007adfa564945b4d84d2361f66b258e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92015b23_5217b922",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorResourceContentLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-17T16:59:50Z",
+      "side": 1,
+      "message": "Yeah :(\n\nI dream of flattening the ResourceClient hierarchy someday.",
+      "parentUuid": "4753bcaf_fbe7605f",
       "revId": "0baa92b0007adfa564945b4d84d2361f66b258e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -102,6 +174,24 @@
       "revId": "0baa92b0007adfa564945b4d84d2361f66b258e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b35703_cbb9b543",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-17T16:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e9325d0_b7ae984d",
+      "revId": "0baa92b0007adfa564945b4d84d2361f66b258e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
