@@ -33,6 +33,24 @@
       "revId": "779b8e4575f323a9f8cdf2e6fc5d37c7a9b1aee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee350d5_32c5f062",
+        "filename": "ui/base/ime/text_input_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-17T11:42:15Z",
+      "side": 1,
+      "message": "I would be interested to see where this is called from, because as msw@ mentions, there may be a better way to get this information.\n\nIt doesn\u0027t sound too bad to get this info from the TextInputClient though. But I am not sure a GURL is the best format for that. Maybe just a \u0027std::string GetClientSourceId()\u0027, or something like that, so that native textfields (e.g. omnibox) can also identify themselves.",
+      "parentUuid": "9eac49f7_a78bacf3",
+      "revId": "779b8e4575f323a9f8cdf2e6fc5d37c7a9b1aee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
