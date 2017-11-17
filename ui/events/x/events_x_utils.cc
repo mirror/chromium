@@ -721,12 +721,6 @@ float GetTouchRadiusYFromXEvent(const XEvent& xev) {
   return radius;
 }
 
-float GetTouchAngleFromXEvent(const XEvent& xev) {
-  return GetTouchParamFromXEvent(
-             xev, ui::DeviceDataManagerX11::DT_TOUCH_ORIENTATION, 0.0) /
-         2.0;
-}
-
 float GetTouchForceFromXEvent(const XEvent& xev) {
   XIDeviceEvent* event = static_cast<XIDeviceEvent*>(xev.xcookie.data);
   if (event->evtype == XI_TouchEnd)

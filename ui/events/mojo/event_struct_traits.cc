@@ -268,6 +268,7 @@ StructTraits<ui::mojom::EventDataView, EventUniquePtr>::pointer_data(
   brush_data->width = pointer_details->radius_x;
   brush_data->height = pointer_details->radius_y;
   // TODO(rjk): update for touch_event->rotation_angle();
+  // Removed rotation_angle() from ui::TouchEvent by crbug.com/726824.
   brush_data->pressure = pointer_details->force;
   // In theory only pen events should have tilt, tangential_pressure and twist.
   // In practive a JavaScript PointerEvent could have type touch and still have

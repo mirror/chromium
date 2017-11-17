@@ -58,9 +58,6 @@ EVENTS_X_EXPORT int GetTouchIdFromXEvent(const XEvent& xev);
 EVENTS_X_EXPORT float GetTouchRadiusXFromXEvent(const XEvent& xev);
 EVENTS_X_EXPORT float GetTouchRadiusYFromXEvent(const XEvent& xev);
 
-// Gets the angle of the major axis away from the X axis. Default is 0.0.
-EVENTS_X_EXPORT float GetTouchAngleFromXEvent(const XEvent& xev);
-
 // Gets the force from a native_event. Normalized to be [0, 1]. Default is 0.0.
 EVENTS_X_EXPORT float GetTouchForceFromXEvent(const XEvent& xev);
 
