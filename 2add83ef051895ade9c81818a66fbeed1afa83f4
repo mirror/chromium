@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f2bb7fe_9ea541b9",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-17T22:33:49Z",
+      "side": 1,
+      "message": "Nit: This is fine for now, but I suspect that we\u0027ll want to push the color matrix into the overlay processor eventually.",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c0634b2_88e85587",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2993,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-17T22:33:49Z",
+      "side": 1,
+      "message": "nit: the logic below may be a little easier if we said\n  has_output_color_matrix \u003d is_root_render_pass \u0026\u0026 !output_color_matrix.isIdentity();\nand then didn\u0027t have to check is_root_render_pass later.",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c381b856_19767775",
+        "filename": "components/viz/service/display/shader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-17T22:33:49Z",
+      "side": 1,
+      "message": "Nit: output_color_matrix instead of outputColorMatrix",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dbaa13b_519c3ea5",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-17T22:33:49Z",
+      "side": 1,
+      "message": "I think we need to call SetDisplayColorMatrix here too.",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
