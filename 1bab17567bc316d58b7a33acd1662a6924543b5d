@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a24bcd3d_2dfe214b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-17T22:01:07Z",
+      "side": 1,
+      "message": "Right, some became redundant with other WPT cases due to the recent move of the other layout tests into WPT. I\u0027ll drop those",
+      "parentUuid": "f25b7d88_92188226",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f497f63_4b7f5dd5",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_domain.tentative.html",
         "patchSetId": 6
