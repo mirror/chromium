@@ -22,6 +22,30 @@
       "revId": "28ef64c58c011d161214b09e4d6bcfbd20cbe22f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b273f6d6_873e0fe7",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_broadcast_forwarder.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-11-17T19:27:59Z",
+      "side": 1,
+      "message": "The main purpose of this class is to forward broadcasted ObjectiveC UI info to FullscreenModel, which is in C++.  The final implementation of FullscreenBroadcastReceiver will have a FullscreenModel pointer and will pass all received broadcast information to the model.\n\nEssentially, this is the inverse of the observer bridge pattern we use elsewhere.  I haven\u0027t seen any Objective-C \u003d\u003e C++ bridges yet though; do you want me to just create a generalized bridge for all broadcast functions?",
+      "parentUuid": "d92e5229_0907a121",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "28ef64c58c011d161214b09e4d6bcfbd20cbe22f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
