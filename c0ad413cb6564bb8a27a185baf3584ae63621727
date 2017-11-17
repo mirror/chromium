@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3cf7fda_fd48a4c1",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-17T18:08:05Z",
+      "side": 1,
+      "message": "Needs localization, of course. I think we have a way to do it in JS?",
+      "revId": "c0ad413cb6564bb8a27a185baf3584ae63621727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
