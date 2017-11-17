@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af858dee_0b870d40",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T22:53:14Z",
+      "side": 1,
+      "message": "Just FYI, you can do \"tools/git/move_source_file.py ui/app_list/foo.* ash/app_list/model/\"",
+      "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42203ce8_f528fb7e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T22:53:14Z",
+      "side": 1,
+      "message": "Can you add an //ash/app_list/model/README.md that explains the refactor that is happening here? (Feel free to make a go/ link to a design doc and reference it there.) It particular, other people may be confused about why code in //ui is depending on code in //ash, since most deps go the other way.",
+      "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae31a3f_98f423fc",
+        "filename": "ash/app_list/model/app_list_model_export.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T22:53:14Z",
+      "side": 1,
+      "message": "nit: No \" (c) \" in new code",
+      "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d179689_6ad2cb72",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T22:53:14Z",
+      "side": 1,
+      "message": "nit: Cite a bug or explain in more detail (what is migrating where and why).",
+      "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40253872_935d667a",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T22:53:14Z",
+      "side": 1,
+      "message": "Instead of putting this here, can you put copies in deeper directories? (c/b/extensions, c/b/sync, c/b/ui/app_list). chrome/browser has a lot of code.",
+      "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61fb8b43_46e87e5f",
+        "filename": "ui/app_list/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T22:53:14Z",
+      "side": 1,
+      "message": "ditto re bug or longer explanation",
+      "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d40a6ec_cf434bd9",
+        "filename": "ui/app_list/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T22:53:14Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73a59e8_0b892e2e",
+        "filename": "ui/app_list/app_list_item_list_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T22:53:14Z",
+      "side": 1,
+      "message": "Can this file move into //ash/app_list also? It\u0027s better when tests live next to the code under test.",
+      "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05ea801c_6696e6fb",
+        "filename": "ui/app_list/app_list_model_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-17T22:53:14Z",
+      "side": 1,
+      "message": "Can this test model move into //ash? It doesn\u0027t need to be in this CL.",
+      "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
