@@ -29,6 +29,7 @@ import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.firstrun.FirstRunUtils;
+import org.chromium.chrome.browser.locale.LocaleManager;
 import org.chromium.chrome.browser.metrics.UmaSessionStats;
 import org.chromium.chrome.browser.omnibox.OmniboxPlaceholderFieldTrial;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
@@ -278,8 +279,10 @@ public class FeatureUtilities {
         ChromePreferenceManager manager = ChromePreferenceManager.getInstance();
         manager.setChromeHomeEnabled(isChromeHomeEnabled);
 
+        LocaleManager localeManager = LocaleManager.getInstance();
         PrefServiceBridge.getInstance().setChromeHomePersonalizedOmniboxSuggestionsEnabled(
-                !isChromeHomeEnabled()
+                !isChromeHomeEnabled() || localeManager.hasCompletedSearchEnginePromo()
+                                || localeManager.hasShownSearchEnginePromoThisSession()
                         ? false
                         : ChromeFeatureList.isEnabled(
                                   ChromeFeatureList.CHROME_HOME_PERSONALIZED_OMNIBOX_SUGGESTIONS));
