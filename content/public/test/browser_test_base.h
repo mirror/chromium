@@ -80,6 +80,11 @@ class BrowserTestBase : public testing::Test {
   // This is meant to be inherited only by the test harness.
   virtual void PostRunTestOnMainThread() = 0;
 
+  // Whether the test harness should clear out the current set of field trial
+  // params just before runnning BrowserMain. The params need to be cleared if
+  // BrowserMain creates a new ChromeBrowser (not ShellBrowser).
+  virtual bool ShouldResetFieldTrialParamsBeforeBrowserStart() const;
+
   // Sets expected browser exit code, in case it's different than 0 (success).
   void set_expected_exit_code(int code) { expected_exit_code_ = code; }
 

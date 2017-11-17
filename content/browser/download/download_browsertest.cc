@@ -890,11 +890,7 @@ class DownloadContentTest : public ContentBrowserTest {
 // Test fixture for parallel downloading.
 class ParallelDownloadTest : public DownloadContentTest {
  protected:
-  ParallelDownloadTest() {}
-
-  ~ParallelDownloadTest() override {}
-
-  void SetUpOnMainThread() override {
+  ParallelDownloadTest() {
     std::map<std::string, std::string> params = {
         {content::kMinSliceSizeFinchKey, "1"},
         {content::kParallelRequestCountFinchKey,
@@ -903,8 +899,9 @@ class ParallelDownloadTest : public DownloadContentTest {
         {content::kParallelRequestRemainingTimeFinchKey, "0"}};
     scoped_feature_list_.InitAndEnableFeatureWithParameters(
         features::kParallelDownloading, params);
-    DownloadContentTest::SetUpOnMainThread();
   }
+
+  ~ParallelDownloadTest() override {}
 
  private:
   base::test::ScopedFeatureList scoped_feature_list_;
@@ -2899,14 +2896,7 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest,
                download->GetTargetFilePath().BaseName().value().c_str());
 }
 
-// Verify parallel download in normal case.
-#if defined(THREAD_SANITIZER)
-// Failing/Flaky under TSAN: https://crbug.com/782037
-#define MAYBE_ParallelDownloadComplete DISABLED_DownloadComplete
-#else
-#define MAYBE_ParallelDownloadComplete ParallelDownloadComplete
-#endif
-IN_PROC_BROWSER_TEST_F(ParallelDownloadTest, MAYBE_ParallelDownloadComplete) {
+IN_PROC_BROWSER_TEST_F(ParallelDownloadTest, ParallelDownloadComplete) {
   EXPECT_TRUE(base::FeatureList::IsEnabled(features::kParallelDownloading));
 
   GURL url = TestDownloadHttpResponse::GetNextURLForDownload();

@@ -175,6 +175,8 @@ class InProcessBrowserTest : public content::BrowserTestBase {
   void PreRunTestOnMainThread() override;
   void PostRunTestOnMainThread() override;
 
+  bool ShouldResetFieldTrialParamsBeforeBrowserStart() const override;
+
   // Ensures that no devtools are open, and then opens the devtools.
   void OpenDevToolsWindow(content::WebContents* web_contents);
 
