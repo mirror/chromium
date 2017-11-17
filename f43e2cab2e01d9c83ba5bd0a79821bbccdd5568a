@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e3c68a4d_ebbaf035",
+        "filename": "chrome/browser/resources/media_router/media_router_common.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-17T20:08:40Z",
+      "side": 1,
+      "message": "The route controls already have a 1.25em multiplier on the #media-controls element, so further multiplying that by 1.2em makes it bigger than intended. I think we can put this line back in route_details.css to keep font sizes the way they were before (or put 1.25em there to make them the same size).\n\nWhen we get rid of extensionview from route details (which we can already do), we\u0027ll be able to remove route description from route details and always just show the one in route controls, which will eliminate the necessity of trying to keep consistency among two route descriptions.",
+      "parentUuid": "6d5c10a6_ad2f8126",
+      "revId": "f43e2cab2e01d9c83ba5bd0a79821bbccdd5568a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fbc719d_81c9eefe",
         "filename": "chrome/common/media_router/mojo/media_status.mojom",
         "patchSetId": 3
