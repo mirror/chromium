@@ -188,7 +188,10 @@ function PDFViewer(browserApi) {
   this.zoomToolbar_ = $('zoom-toolbar');
   this.zoomToolbar_.addEventListener(
       'fit-to-width', this.viewport_.fitToWidth.bind(this.viewport_));
-  this.zoomToolbar_.addEventListener('fit-to-page', this.fitToPage_.bind(this));
+  this.zoomToolbar_.addEventListener(
+      'fit-to-height', this.fitToHeightAndHideToolbar_.bind(this));
+  this.zoomToolbar_.addEventListener(
+      'fit-to-page', this.fitToPageAndHideToolbar_.bind(this));
   this.zoomToolbar_.addEventListener(
       'zoom-in', this.viewport_.zoomIn.bind(this.viewport_));
   this.zoomToolbar_.addEventListener(
@@ -281,8 +284,8 @@ PDFViewer.prototype = {
     this.toolbarManager_.hideToolbarsAfterTimeout(e);
 
     var pageUpHandler = () => {
-      // Go to the previous page if we are fit-to-page.
-      if (this.viewport_.fittingType == Viewport.FittingType.FIT_TO_PAGE) {
+      // Go to the previous page if we are fit-to-page or fit-to-height.
+      if (this.viewport_.isPagedMode()) {
         this.viewport_.goToPage(this.viewport_.getMostVisiblePage() - 1);
         // Since we do the movement of the page.
         e.preventDefault();
@@ -292,8 +295,8 @@ PDFViewer.prototype = {
       }
     };
     var pageDownHandler = () => {
-      // Go to the next page if we are fit-to-page.
-      if (this.viewport_.fittingType == Viewport.FittingType.FIT_TO_PAGE) {
+      // Go to the next page if we are fit-to-page or fit-to-height.
+      if (this.viewport_.isPagedMode()) {
         this.viewport_.goToPage(this.viewport_.getMostVisiblePage() + 1);
         // Since we do the movement of the page.
         e.preventDefault();
@@ -441,10 +444,19 @@ PDFViewer.prototype = {
 
   /**
    * @private
-   * Set zoom to "fit to page".
+   * Set zoom to "fit to page" and hide toolbar.
    */
-  fitToPage_: function() {
+  fitToPageAndHideToolbar_: function() {
     this.viewport_.fitToPage();
+    this.toolbarManager_.forceHideTopToolbar();
+  },
+
+  /**
+   * @private
+   * Set zoom to "fit to height" and hide toolbar.
+   */
+  fitToHeightAndHideToolbar_: function() {
+    this.viewport_.fitToHeight();
     this.toolbarManager_.forceHideTopToolbar();
   },
 
@@ -499,6 +511,7 @@ PDFViewer.prototype = {
   handleURLParams_: function(viewportPosition) {
     if (viewportPosition.page != undefined)
       this.viewport_.goToPage(viewportPosition.page);
+
     if (viewportPosition.position) {
       // Make sure we don't cancel effect of page parameter.
       this.viewport_.position = {
@@ -506,8 +519,22 @@ PDFViewer.prototype = {
         y: this.viewport_.position.y + viewportPosition.position.y
       };
     }
+
     if (viewportPosition.zoom)
       this.viewport_.setZoom(viewportPosition.zoom);
+
+    if (viewportPosition.view) {
+      this.isUserInitiatedEvent_ = false;
+
+      if (viewportPosition.view == 'fit')
+        this.zoomToolbar_.forceFitToPage();
+      else if (viewportPosition.view == 'fith')
+        this.zoomToolbar_.forceFitToWidth();
+      else if (viewportPosition.view == 'fitv')
+        this.zoomToolbar_.forceFitToHeight();
+
+      this.isUserInitiatedEvent_ = true;
+    }
   },
 
   /**
