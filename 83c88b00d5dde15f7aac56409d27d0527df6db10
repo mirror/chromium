@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed11893a_39d8d0af",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-17T01:11:18Z",
+      "side": 1,
+      "message": "Note: there is no behavior change by adding this check, because InlineBoxWrapper() returns non-null only for atomic inlines.",
+      "range": {
+        "startLine": 316,
+        "startChar": 2,
+        "endLine": 316,
+        "endChar": 45
+      },
+      "revId": "83c88b00d5dde15f7aac56409d27d0527df6db10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
