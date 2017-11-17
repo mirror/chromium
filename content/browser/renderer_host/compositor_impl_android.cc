@@ -636,6 +636,15 @@ void CompositorImpl::SetWindowBounds(const gfx::Size& size) {
   root_window_->GetLayer()->SetBounds(size);
 }
 
+void CompositorImpl::SetPaintedDeviceScaleFactor(
+    float painted_device_scale_factor) {
+  host_->SetPaintedDeviceScaleFactor(painted_device_scale_factor);
+}
+
+void CompositorImpl::SetDeferCommits(bool defer_commits) {
+  host_->SetDeferCommits(defer_commits);
+}
+
 void CompositorImpl::SetRequiresAlphaChannel(bool flag) {
   requires_alpha_channel_ = flag;
 }
