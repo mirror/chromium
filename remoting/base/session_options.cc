@@ -34,6 +34,11 @@ bool KeyIsValid(const std::string& key) {
 
 SessionOptions::SessionOptions() = default;
 SessionOptions::~SessionOptions() = default;
+SessionOptions::SessionOptions(const SessionOptions& other) = default;
+SessionOptions::SessionOptions(SessionOptions&& other) = default;
+SessionOptions& SessionOptions::operator=(
+    const SessionOptions& other) = default;
+SessionOptions& SessionOptions::operator=(SessionOptions&& other) = default;
 
 SessionOptions::SessionOptions(const std::string& parameter) {
   Import(parameter);
