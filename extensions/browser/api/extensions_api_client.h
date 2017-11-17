@@ -42,6 +42,7 @@ class ExtensionOptionsGuestDelegate;
 class FeedbackPrivateDelegate;
 class FileSystemDelegate;
 class ManagementAPIDelegate;
+class MediaPerceptionCrOSComponentDelegate;
 class MessagingDelegate;
 class MetricsPrivateDelegate;
 class MimeHandlerViewGuest;
@@ -162,6 +163,11 @@ class ExtensionsAPIClient {
   // file systems.
   virtual NonNativeFileSystemDelegate* GetNonNativeFileSystemDelegate();
 
+  // Provides an interface through which a Chrome OS media analytics component
+  // from Component Updater can be loaded and mounted on a device.
+  virtual MediaPerceptionCrOSComponentDelegate*
+  GetMediaPerceptionCrOSComponentDelegate();
+
   // Saves image data on clipboard.
   virtual void SaveImageDataToClipboard(
       const std::vector<char>& image_data,
@@ -169,6 +175,7 @@ class ExtensionsAPIClient {
       AdditionalDataItemList additional_items,
       const base::Closure& success_callback,
       const base::Callback<void(const std::string&)>& error_callback);
+
 #endif
 
   // NOTE: If this interface gains too many methods (perhaps more than 20) it
