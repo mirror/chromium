@@ -22,6 +22,30 @@
       "revId": "35ad5d4305d14c6cdae107f72345f68623a4028d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "384157e0_615df1ce",
+        "filename": "ui/events/event.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1227574
+      },
+      "writtenOn": "2017-11-17T06:55:05Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "aec41ab9_23210e99",
+      "range": {
+        "startLine": 834,
+        "startChar": 22,
+        "endLine": 834,
+        "endChar": 35
+      },
+      "revId": "35ad5d4305d14c6cdae107f72345f68623a4028d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

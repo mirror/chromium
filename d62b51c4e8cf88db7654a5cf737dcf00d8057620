@@ -16,6 +16,24 @@
       "revId": "d62b51c4e8cf88db7654a5cf737dcf00d8057620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f61795d_a41ee820",
+        "filename": "ui/events/gestures/motion_event_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1227574
+      },
+      "writtenOn": "2017-11-17T06:55:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6de9a5f_4d6729fe",
+      "revId": "d62b51c4e8cf88db7654a5cf737dcf00d8057620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
