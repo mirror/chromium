@@ -1253,6 +1253,30 @@
     },
     {
       "key": {
+        "uuid": "e8104a22_f5c7c144",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-17T17:47:19Z",
+      "side": 1,
+      "message": "My interest is to make TEST_Fs more readable, so adding EmulateDBusFailure() to ArcSessionImplTest (but not to the fake session manager client) seems good enough.\n\nCurrently GetSessionManagerClient()-\u003eset_arc_available(true); is hidden from TEST_F, so I\u0027d hide  GetSessionManagerClient()-\u003eset_arc_available(false); from TEST_F too.",
+      "parentUuid": "3e53efed_28b957d9",
+      "range": {
+        "startLine": 342,
+        "startChar": 29,
+        "endLine": 342,
+        "endChar": 46
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "963e3d1f_e9604192",
         "filename": "components/arc/arc_session_impl_unittest.cc",
         "patchSetId": 1
@@ -1282,6 +1306,24 @@
       "side": 1,
       "message": "Sorry, I don\u0027t understand your point. Could you clarify?",
       "parentUuid": "963e3d1f_e9604192",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3be75134_7d842baa",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-17T17:47:19Z",
+      "side": 1,
+      "message": "There are 6 TEST_Fs below. Each test uses arc_session-\u003eStart(ArcInstanceMode::FULL_INSTANCE), and I wanted to have 6 more tests that are with \u0027upgrade\u0027:\n\n arc_session-\u003eStart(ArcInstanceMode::MINI_INSTANCE);\n ASSERT_EQ(ArcSessionImpl::State::STARTING_MINI_INSTANCE,\n           arc_session-\u003eGetStateForTesting());\n arc_session-\u003eStart(ArcInstanceMode::FULL_INSTANCE);\n\nAs you know, starting full without using mini is now the rarely-used path because of cmtm\u0027s recent work. I\u0027d like to have more tests with upgrade.",
+      "parentUuid": "5cd13306_d6ad66dc",
       "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
