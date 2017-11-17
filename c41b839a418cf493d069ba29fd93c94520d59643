@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc903b67_0a413c71",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-11-17T17:24:36Z",
+      "side": 1,
+      "message": "CL description could be improved (not clear it\u0027s about cast-on-android feedback reports)",
+      "revId": "c41b839a418cf493d069ba29fd93c94520d59643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
