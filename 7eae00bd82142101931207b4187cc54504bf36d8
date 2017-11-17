@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dd18024_5599826c",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-17T12:04:55Z",
+      "side": 1,
+      "message": "This comment does not capture the whole behavior yet. I believe this should be: XPositionForOffset returns the x position in layout space from the beginning of the run to the beginning (kAdjustToStart) or the end (kAdjustToEnd) of the grapheme cluster that the character at \u0027offset\u0027 is a part of. Would you agree?",
+      "revId": "7eae00bd82142101931207b4187cc54504bf36d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a3ab10_54c113de",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-17T12:04:55Z",
+      "side": 1,
+      "message": "UCI? Do you mean ICU?\n\nI would not talk about ICU\u0027s behavior here, rather about Unicode and HarfBuzz terminology, something like: When multiple characters form one visual grapheme as returned by HarfBuzz, we distribute the width of this grapheme cluster linearly among the number of cursor position stops as returned by our TextBreakIterator configured for cursor positions.",
+      "revId": "7eae00bd82142101931207b4187cc54504bf36d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61090a9b_7ac67dd2",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-17T12:04:55Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me what you mean by \"track\" here, could you explain that further?",
+      "revId": "7eae00bd82142101931207b4187cc54504bf36d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e77028_0a0fdef2",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-17T12:04:55Z",
+      "side": 1,
+      "message": "c is too short, let\u0027s find a better name for it.",
+      "revId": "7eae00bd82142101931207b4187cc54504bf36d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8712d5b8_e4bd7dcd",
+        "filename": "third_party/WebKit/Source/platform/text/CursorPositionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-17T12:04:55Z",
+      "side": 1,
+      "message": "Minor: Since it\u0027s now three fonts here in the instantiation if statement, and the string comparison is not necessary, perhaps use an enum for font_name/font? Then you could use the enum value to index into a dictionary with the font family name and the path.",
+      "revId": "7eae00bd82142101931207b4187cc54504bf36d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de9ae5c_83608e9a",
+        "filename": "third_party/WebKit/Source/platform/text/CursorPositionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-17T12:04:55Z",
+      "side": 1,
+      "message": "Could you make the name a bit clearer, perhaps something like kSyllableWidthFU?",
+      "revId": "7eae00bd82142101931207b4187cc54504bf36d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c37e25_b2591f7d",
+        "filename": "third_party/WebKit/Source/platform/text/CursorPositionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-17T12:04:55Z",
+      "side": 1,
+      "message": "Can we work with ASSERT_FLOAT_EQ or ASSERT_NEAR for these tests?\nCompare https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#floating-point-comparison",
+      "revId": "7eae00bd82142101931207b4187cc54504bf36d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c132f3_e92913a6",
+        "filename": "third_party/WebKit/Source/platform/text/CursorPositionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-17T12:04:55Z",
+      "side": 1,
+      "message": "Somewhat optional, but really nice to have: I think Roboto has a ffi ligature, but doesn\u0027t have a ligature for ffî. For the latter, HarfBuzz should pick the ff ligature, but use a separate i glyph. It would be great if we could cover this case as well, because a) it\u0027s a longer 3 character ligature, and has this special case of different ligature formation with the i with circumflex.",
+      "revId": "7eae00bd82142101931207b4187cc54504bf36d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "692303ef_2a4cca99",
+        "filename": "third_party/WebKit/Source/platform/text/CursorPositionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-17T12:04:55Z",
+      "side": 1,
+      "message": "For these Arabic comparisons could we make them more reftest like, instead of using the numbers? Could you use the substrings beginning/ending on a ZWJ to force medial forms where possible, otherwise use the explicit terminal or initial forms?\n\ne.g. compare الخط  0,2\nto ال‍\n(You can use https://codepoints.net/%D8%A7%D9%84%E2%80%8D and just paste after the slash of codepoints.net to analyze the exact codepoint sequence).",
+      "revId": "7eae00bd82142101931207b4187cc54504bf36d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8994a0_42d1e6c5",
+        "filename": "third_party/WebKit/Source/platform/text/TextBreakIterator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-17T12:04:55Z",
+      "side": 1,
+      "message": "Nice, thanks for moving that.",
+      "revId": "7eae00bd82142101931207b4187cc54504bf36d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
