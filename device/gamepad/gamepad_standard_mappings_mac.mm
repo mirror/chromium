@@ -6,6 +6,7 @@
 
 #include "base/macros.h"
 #include "device/gamepad/gamepad_standard_mappings.h"
+#include "device/gamepad/gamepad_uma.h"
 
 namespace device {
 
@@ -429,12 +430,20 @@ GamepadStandardMappingFunction GetGamepadStandardMappingFunction(
     const base::StringPiece& vendor_id,
     const base::StringPiece& product_id,
     const base::StringPiece& version_number) {
+  GamepadStandardMappingFunction mapper = nullptr;
   for (size_t i = 0; i < arraysize(AvailableMappings); ++i) {
     MappingData& item = AvailableMappings[i];
-    if (vendor_id == item.vendor_id && product_id == item.product_id)
-      return item.function;
+    if (vendor_id == item.vendor_id && product_id == item.product_id) {
+      mapper = item.function;
+      break;
+    }
   }
-  return NULL;
+
+  // Record the gamepad device IDs and whether a standard mapping function was
+  // provided for this device.
+  RecordConnectedGamepadInfo(vendor_id, product_id, (mapper != nullptr));
+
+  return mapper;
 }
 
 }  // namespace device

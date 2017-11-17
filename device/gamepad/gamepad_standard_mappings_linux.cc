@@ -6,6 +6,7 @@
 
 #include "base/macros.h"
 #include "device/gamepad/gamepad_standard_mappings.h"
+#include "device/gamepad/gamepad_uma.h"
 
 namespace device {
 
@@ -505,6 +506,10 @@ GamepadStandardMappingFunction GetGamepadStandardMappingFunction(
   } else if (mapper == MapperDualshock3SixAxis && version_number == "8111") {
     mapper = MapperDualshock3SixAxisNew;
   }
+
+  // Record the gamepad device IDs and whether a standard mapping function was
+  // provided for this device.
+  RecordConnectedGamepadInfo(vendor_id, product_id, (mapper != nullptr));
 
   return mapper;
 }
