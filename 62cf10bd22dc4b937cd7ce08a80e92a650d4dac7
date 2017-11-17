@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20f7d1ab_0ddff83a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/instantapps/InstantAppsHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-17T20:00:42Z",
+      "side": 1,
+      "message": "I would do a null check on getHost() call here -- some URLs may not have host (e.g. mailto:// and other weird URLs. I am not sure this is http only)",
+      "range": {
+        "startLine": 312,
+        "startChar": 52,
+        "endLine": 312,
+        "endChar": 57
+      },
+      "revId": "62cf10bd22dc4b937cd7ce08a80e92a650d4dac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
