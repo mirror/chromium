@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<title>Web Locks API: Workers</title>
+<link rel=help href="https://github.com/inexorabletash/web-locks">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+function snooze(t, ms) { return new Promise(r => t.step_timeout(r, ms)); }
+
+function postAndWait(worker, data) {
+  return new Promise(resolve => {
+    worker.postMessage(data);
+    worker.addEventListener(
+      'message', e => { resolve(e.data); }, {once: true});
+  });
+}
+
+promise_test(async t => {
+  const worker = new Worker('resources/worker.js');
+  t.add_cleanup(() => { worker.terminate(); });
+
+  const res = 'shared resource 1';
+
+  const data = await postAndWait(
+    worker, {op: 'request', id: 1, scope: res, mode: 'shared'})
+
+  assert_equals(data.ack, 'request');
+  assert_equals(data.id, 1);
+  await navigator.locks.acquire(res, {mode: 'shared'}, async lock => {
+    const data = await postAndWait(worker, {op: 'release', id: 1});
+    assert_equals(data.ack, 'release');
+    assert_equals(data.id, 1);
+  });
+
+}, 'Window and Worker - shared mode');
+
+promise_test(async t => {
+  const worker = new Worker('resources/worker.js');
+  t.add_cleanup(() => { worker.terminate(); });
+
+  const res = 'exclusive resource 1';
+
+  const data = await postAndWait(
+    worker, {op: 'request', id: 1, scope: res})
+
+  // Worker has the lock.
+  assert_equals(data.ack, 'request');
+  assert_equals(data.id, 1);
+
+  // This request should be blocked.
+  let got_it = false;
+  const blocked = navigator.locks.acquire(res, lock => { got_it = true; });
+
+  // So we can't get it.
+  await snooze(t, 100);
+  assert_false(got_it);
+
+  // Ask the worker to release it.
+  const data2 = await postAndWait(worker, {op: 'release', id: 1});
+
+  // Worker released it.
+  assert_equals(data2.ack, 'release');
+  assert_equals(data2.id, 1);
+
+  // Now we've got it.
+  const lock2 = await blocked;
+  assert_true(got_it);
+
+}, 'Window and Worker - exclusive mode');
+
+promise_test(async t => {
+  const worker1 = new Worker('resources/worker.js');
+  const worker2 = new Worker('resources/worker.js');
+  t.add_cleanup(() => { worker1.terminate(); worker2.terminate(); });
+
+  const res = 'exclusive resource 2';
+
+  const data = await postAndWait(
+    worker1, {op: 'request', id: 1, scope: res})
+
+  // Worker 1 has the lock.
+  assert_equals(data.ack, 'request');
+  assert_equals(data.id, 1);
+
+  // This request should be blocked.
+  let got_it = false;
+  const blocked = postAndWait(
+    worker2, {op: 'request', id: 1, scope: res});
+  blocked.then(f => { got_it = true; });
+
+  // So worker2 can't get it.
+  await snooze(t, 100);
+  assert_false(got_it);
+
+  // Ask worker1 to release it.
+  const data2 = await postAndWait(worker1, {op: 'release', id: 1});
+
+  // Worker1 released it.
+  assert_equals(data2.ack, 'release');
+  assert_equals(data2.id, 1);
+
+  // Now worker2 can get it.
+  const lock = await blocked;
+  assert_true(got_it);
+
+}, 'Worker and Worker - exclusive mode');
+
+promise_test(async t => {
+  const worker = new Worker('resources/worker.js');
+
+  const res = 'exclusive resource 3';
+
+  const data = await postAndWait(
+    worker, {op: 'request', id: 1, scope: res})
+
+  // Worker has the lock.
+  assert_equals(data.ack, 'request');
+  assert_equals(data.id, 1);
+
+  // This request should be blocked.
+  let got_it = false;
+  const blocked = navigator.locks.acquire(res, lock => { got_it = true; });
+
+  // So we can't get it.
+  await snooze(t, 100);
+  assert_false(got_it);
+
+  // Implicitly release it by terminating the worker.
+  worker.terminate();
+
+  // Now we've got it.
+  const lock = await blocked;
+  assert_true(got_it);
+
+}, 'Terminated Worker - exclusive mode');
+
+</script>
