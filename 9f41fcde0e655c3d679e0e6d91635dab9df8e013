@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d4af447_18d5659e",
+        "filename": "services/video_capture/public/interfaces/virtual_device.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-17T04:13:07Z",
+      "side": 1,
+      "message": "The first sentence in the above comment now looks more confusing than helpful. Maybe we can remove it.\n\nOverall, putting myself in the shoes of a reader unfamiliar with the code, I doubt that the explanation we provide here and in interface Producer is sufficient to understand the protocol for feeding frames from the producer works. I think we need to make it more clear, maybe even explicitly write down the sequence of events that are supposed to happen during normal operation.\n\nWe should also mention in the explanation, why the API is designed the way it is, i.e. to allow avoiding the remapping of buffers. This is really quite non-obvious (and this information is also missing from my own documentation of the protocol between service and consumers).",
+      "revId": "9f41fcde0e655c3d679e0e6d91635dab9df8e013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf953a8_2b6699e2",
+        "filename": "services/video_capture/virtual_device_mojo_adapter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-17T04:13:07Z",
+      "side": 1,
+      "message": "had -\u003e has",
+      "revId": "9f41fcde0e655c3d679e0e6d91635dab9df8e013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba254f0a_5041ebb8",
+        "filename": "services/video_capture/virtual_device_mojo_adapter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-17T04:13:07Z",
+      "side": 1,
+      "message": "Is use of base::Unretained(this) safe here? If yes, please add a brief code comment on why it is safe.\n\nActually, it looks like method OnNewBufferHandleAcked() does not access any members of class VirtualDeviceMojoAdapter, so we can probably just make it file-level static in an anonymous namespace at the top of this file.",
+      "revId": "9f41fcde0e655c3d679e0e6d91635dab9df8e013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57a38900_8b4873bb",
+        "filename": "services/video_capture/virtual_device_mojo_adapter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-17T04:13:07Z",
+      "side": 1,
+      "message": "As per Chromium guidelines I recommend not abbreviating here, i.e. Acked -\u003e Acknowledged",
+      "revId": "9f41fcde0e655c3d679e0e6d91635dab9df8e013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
