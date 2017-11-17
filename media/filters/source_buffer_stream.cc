@@ -1402,10 +1402,15 @@ template <typename RangeClass>
 bool SourceBufferStream<RangeClass>::
     IsNextGopAdjacentToEndOfCurrentAppendSequence(
         DecodeTimestamp next_gop_timestamp) const {
+  DecodeTimestamp upper_bound = highest_timestamp_in_append_sequence_ +
+                                ComputeFudgeRoom(GetMaxInterbufferDistance());
+  DVLOG(4) << __func__ << " " << GetStreamTypeName()
+           << " next_gop_timestamp=" << next_gop_timestamp.InMicroseconds()
+           << "us, highest_timestamp_in_append_sequence_="
+           << highest_timestamp_in_append_sequence_.InMicroseconds()
+           << "us, upper_bound=" << upper_bound.InMicroseconds() << "us";
   return highest_timestamp_in_append_sequence_ < next_gop_timestamp &&
-         next_gop_timestamp <=
-             highest_timestamp_in_append_sequence_ +
-                 ComputeFudgeRoom(GetMaxInterbufferDistance());
+         next_gop_timestamp <= upper_bound;
 }
 
 template <typename RangeClass>
