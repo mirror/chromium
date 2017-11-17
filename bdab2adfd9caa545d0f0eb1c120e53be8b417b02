@@ -34,6 +34,24 @@
       "revId": "bdab2adfd9caa545d0f0eb1c120e53be8b417b02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a39e88f_8b4d87a6",
+        "filename": "tools/perf/benchmarks/blink_perf_unittest.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-17T22:18:35Z",
+      "side": 1,
+      "message": "Although ultimately of course all the non-mojo paths should be removed. I just wasn\u0027t sure if now was the time to do so, and supporting both makes it possibly easier to flip MojoBlobs back off without causing things to break. So this is really just temporary until we\u0027re sure we\u0027re sticking with mojo blobs and getting rid of the old code paths.",
+      "parentUuid": "678cbeac_e6e61134",
+      "revId": "bdab2adfd9caa545d0f0eb1c120e53be8b417b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
