@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc7eda55_33e15e6b",
+        "filename": "chrome/browser/first_run/first_run_internal_posix.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T06:30:37Z",
+      "side": 1,
+      "message": "\u003e i\u0027m a little surprised that the compiler doesn\u0027t complain about all of the dead code below this. should this be #else, with #endif at the bottom of the function?\n\nheh - that\u0027s an MSVC thing. Since this is only compiled on posix platforms, it\u0027s not an issue... I think it\u0027s better without the #else so that code is compiled on more trybots.",
+      "parentUuid": "167016ab_fbc79e18",
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1b6df5a_8a5faced",
         "filename": "chrome/browser/first_run/first_run_internal_posix.cc",
         "patchSetId": 13
@@ -39,6 +57,30 @@
       "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4ba6a5_370e019b",
+        "filename": "chrome/browser/first_run/first_run_internal_posix.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1b6df5a_8a5faced",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 17
+      },
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "1e85153b_925eab92",
+        "filename": "chrome/browser/first_run/first_run_internal_posix.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ca9dd4d_7c232eea",
+      "range": {
+        "startLine": 70,
+        "startChar": 11,
+        "endLine": 70,
+        "endChar": 45
+      },
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18a4aa07_a5725cca",
         "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
         "patchSetId": 13
@@ -79,6 +145,24 @@
       "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0429ef6_89656a26",
+        "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18a4aa07_a5725cca",
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "97f701fb_cb362add",
+        "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9935abd0_52c308a2",
+      "range": {
+        "startLine": 18,
+        "startChar": 30,
+        "endLine": 18,
+        "endChar": 32
+      },
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4043cef1_887571c1",
         "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
         "patchSetId": 13
@@ -116,6 +224,24 @@
       "writtenOn": "2017-11-15T14:05:30Z",
       "side": 1,
       "message": "it was my understanding that browser test should hook into the various virtual methods provided by BrowserTestBase and InProcessBrowserTest where possible. can everything here before InProcessBrowserTest::SetUp() go into a SetUpInProcessBrowserTestFixture override, and the final expectation in a TearDownInProcessBrowserTestFixture override?",
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8798bfb_91231b01",
+        "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T06:30:37Z",
+      "side": 1,
+      "message": "\u003e it was my understanding that browser test should hook into the various virtual methods provided by BrowserTestBase and InProcessBrowserTest where possible. can everything here before InProcessBrowserTest::SetUp() go into a SetUpInProcessBrowserTestFixture override, and the final expectation in a TearDownInProcessBrowserTestFixture override?\n\nooh neat! I didn\u0027t know about those methods. They work \\o/. (However, all the stuff in the comment below still applies, since BrowserTestBase::SetUp() hasn\u0027t invoked BrowserMain() yet).",
+      "parentUuid": "4043cef1_887571c1",
       "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "4847a730_4068207d",
+        "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b178569f_d7d2f757",
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d961ab21_96dc21e9",
         "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
         "patchSetId": 13
@@ -153,6 +297,24 @@
       "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd9b9f49_7167cd69",
+        "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d961ab21_96dc21e9",
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "81690bd2_d800779c",
+        "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T06:30:37Z",
+      "side": 1,
+      "message": "\u003e q: can you use SequencedTaskRunnerHandle here? it was my understanding that it\u0027s preferred over Thread* in all cases where it\u0027s possible to use it.\n\nyup - that works. Done.",
+      "parentUuid": "31b240ae_8a1924db",
+      "range": {
+        "startLine": 52,
+        "startChar": 22,
+        "endLine": 52,
+        "endChar": 28
+      },
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e11d5558_2f28370e",
         "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
         "patchSetId": 13
@@ -193,6 +379,24 @@
       "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf604e3_0f88c714",
+        "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-17T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e11d5558_2f28370e",
+      "revId": "9bcff32bcffa0db056337bf0eaee1e78e2f267d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
