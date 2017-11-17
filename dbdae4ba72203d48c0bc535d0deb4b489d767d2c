@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "245b730e_38089677",
+        "filename": "components/omnibox/browser/autocomplete_match_type.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-17T18:43:49Z",
+      "side": 1,
+      "message": "Update this to |match_text| and add a description of |additional_descriptive_text|.",
+      "range": {
+        "startLine": 70,
+        "startChar": 20,
+        "endLine": 70,
+        "endChar": 36
+      },
+      "revId": "dbdae4ba72203d48c0bc535d0deb4b489d767d2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd4531b_c5ba833c",
+        "filename": "components/omnibox_strings.grdp",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-17T18:43:49Z",
+      "side": 1,
+      "message": "These changes are what are referred to by \"Provide friendlier-sounding suggestions that are more efficient for VoiceOver use.\" in the CL description? If so, can you update that to make clear that this part of the change applies to all platforms (all desktop platforms?), not just Mac?\n\nOh, wait. It looks like these are only used on Mac? Can/should they be used in the views UI?",
+      "revId": "dbdae4ba72203d48c0bc535d0deb4b489d767d2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
