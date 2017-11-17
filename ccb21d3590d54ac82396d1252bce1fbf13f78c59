@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "b48b8134_ef38c45e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-17T01:08:51Z",
+      "side": 1,
+      "message": "I\u0027m a bit concerned about favicon server blocking the UI if the network is there but very slow. You can test this with GIN-2g-poor network.\n\nWe can fix this in the next CL though.",
+      "range": {
+        "startLine": 114,
+        "startChar": 24,
+        "endLine": 114,
+        "endChar": 32
+      },
+      "revId": "ccb21d3590d54ac82396d1252bce1fbf13f78c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf6f5f3f_d065ba7e",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksFaviconThrottleTest.java",
         "patchSetId": 7
