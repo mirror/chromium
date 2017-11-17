@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1c0b742f_09665d86",
+        "filename": "services/video_capture/public/interfaces/virtual_device.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-11-17T18:02:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5d4af447_18d5659e",
+      "revId": "9f41fcde0e655c3d679e0e6d91635dab9df8e013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edf953a8_2b6699e2",
         "filename": "services/video_capture/virtual_device_mojo_adapter.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "9f41fcde0e655c3d679e0e6d91635dab9df8e013",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1a75ab_2c5fb992",
+        "filename": "services/video_capture/virtual_device_mojo_adapter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-11-17T18:02:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "edf953a8_2b6699e2",
+      "revId": "9f41fcde0e655c3d679e0e6d91635dab9df8e013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "711a3d6e_c2b7fe50",
+        "filename": "services/video_capture/virtual_device_mojo_adapter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-11-17T18:02:35Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right. Will move the function to anonymous namespace.",
+      "parentUuid": "ba254f0a_5041ebb8",
+      "revId": "9f41fcde0e655c3d679e0e6d91635dab9df8e013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57a38900_8b4873bb",
         "filename": "services/video_capture/virtual_device_mojo_adapter.h",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "9f41fcde0e655c3d679e0e6d91635dab9df8e013",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d4f118_b4a9cd62",
+        "filename": "services/video_capture/virtual_device_mojo_adapter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-11-17T18:02:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "57a38900_8b4873bb",
+      "revId": "9f41fcde0e655c3d679e0e6d91635dab9df8e013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
