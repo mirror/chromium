@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83c2a68f_c9ad3f48",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-17T00:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5929985b_29b6f290",
+      "revId": "aa19a43c1795d7fcfb7b071f5dbb6b11ce25b381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f6c9190_16586538",
         "filename": "ash/wm/overview/overview_window_drag_controller.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-16T23:54:13Z",
       "side": 1,
       "message": "This is same as before right? (just double checking and not asking to change)",
+      "revId": "aa19a43c1795d7fcfb7b071f5dbb6b11ce25b381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52a602c_aeb80aaf",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-17T00:37:54Z",
+      "side": 1,
+      "message": "the || to \u0026\u0026 is the fix for the second bug.\n\nThe change to use vector was to shorten it a bit.",
+      "parentUuid": "7f6c9190_16586538",
       "revId": "aa19a43c1795d7fcfb7b071f5dbb6b11ce25b381",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "536d36b0_d7f9e9b9",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-17T00:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ba541a4_d9258385",
+      "revId": "aa19a43c1795d7fcfb7b071f5dbb6b11ce25b381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "064dc421_e304282b",
         "filename": "ash/wm/overview/overview_window_drag_controller.h",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-16T23:54:13Z",
       "side": 1,
       "message": "nit: static shouldn\u0027t necessary for constexpr because it\u0027s compile time constant.",
+      "revId": "aa19a43c1795d7fcfb7b071f5dbb6b11ce25b381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d643a6af_7a2d99f1",
+        "filename": "ash/wm/overview/overview_window_drag_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-17T00:37:54Z",
+      "side": 1,
+      "message": "it needs to be static because it is part of OverviewWindowDragController, otherwise it won\u0027t compile.",
+      "parentUuid": "064dc421_e304282b",
       "revId": "aa19a43c1795d7fcfb7b071f5dbb6b11ce25b381",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
