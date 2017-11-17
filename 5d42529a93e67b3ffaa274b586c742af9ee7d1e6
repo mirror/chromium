@@ -70,6 +70,30 @@
       "revId": "5d42529a93e67b3ffaa274b586c742af9ee7d1e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bee6735d_2e51c18a",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-17T23:06:05Z",
+      "side": 1,
+      "message": "The names are a little confusing, but \u0027check\u0027 actually queries the database for suggestions and \u0027retrieve\u0027 just returns them.",
+      "parentUuid": "4c30883c_5a1a24b3",
+      "range": {
+        "startLine": 79,
+        "startChar": 31,
+        "endLine": 79,
+        "endChar": 51
+      },
+      "revId": "5d42529a93e67b3ffaa274b586c742af9ee7d1e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
