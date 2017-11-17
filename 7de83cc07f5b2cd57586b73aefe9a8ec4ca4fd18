@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11d91b98_3da7e20c",
+        "filename": "components/viz/service/display/output_surface.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-17T01:35:04Z",
+      "side": 1,
+      "message": "nit: add virtual destructor.",
+      "revId": "7de83cc07f5b2cd57586b73aefe9a8ec4ca4fd18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a8bbacc_ca616e82",
+        "filename": "components/viz/service/display/output_surface.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-17T01:35:04Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "7de83cc07f5b2cd57586b73aefe9a8ec4ca4fd18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
