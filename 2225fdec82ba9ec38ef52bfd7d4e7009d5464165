@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c914b9ab_f2c9edbd",
+        "filename": "ash/app_list/model/search/tokenized_string_char_iterator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-17T19:39:26Z",
+      "side": 1,
+      "message": "Is this what \"git cl format\" gives? Feels strange to have \"const\" on its own line...",
+      "revId": "2225fdec82ba9ec38ef52bfd7d4e7009d5464165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac595380_15b35f88",
+        "filename": "ash/public/cpp/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-17T19:39:26Z",
+      "side": 1,
+      "message": "Let\u0027s keep AppListItem with other files.\n\nWe would need to have something to represent AppListItem and SearchResult in ash/public/cpp. But AppListItem does not look ready without refactoring it a bit. AppListItemObserver should not be here because it would look like we would provide an observer as ash public interface but we probably don\u0027t want to support that over mojo.",
+      "revId": "2225fdec82ba9ec38ef52bfd7d4e7009d5464165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
