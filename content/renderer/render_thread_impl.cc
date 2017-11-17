@@ -333,6 +333,11 @@ void AddHistogramSample(void* hist, int sample) {
   histogram->Add(sample);
 }
 
+bool IsMusHostingViz() {
+  const auto* cmdline = base::CommandLine::ForCurrentProcess();
+  return cmdline->GetSwitchValueASCII(switches::kIsRunningWithMus) == "viz";
+}
+
 class FrameFactoryImpl : public mojom::FrameFactory {
  public:
   explicit FrameFactoryImpl(const service_manager::BindSourceInfo& source_info)
@@ -690,7 +695,7 @@ void RenderThreadImpl::Init(
 
   gpu_ = ui::Gpu::Create(
       GetConnector(),
-      IsRunningInMash() ? ui::mojom::kServiceName : mojom::kBrowserServiceName,
+      IsMusHostingViz() ? ui::mojom::kServiceName : mojom::kBrowserServiceName,
       GetIOTaskRunner());
 
   viz::mojom::SharedBitmapAllocationNotifierPtr
@@ -799,7 +804,7 @@ void RenderThreadImpl::Init(
 // Register exported services:
 
 #if defined(USE_AURA)
-  if (IsRunningInMash()) {
+  if (IsRunningWithMus()) {
     CreateRenderWidgetWindowTreeClientFactory(GetServiceManagerConnection());
   }
 #endif
@@ -952,7 +957,7 @@ void RenderThreadImpl::Init(
   categorized_worker_pool_->Start(num_raster_threads);
 
   discardable_memory::mojom::DiscardableSharedMemoryManagerPtr manager_ptr;
-  if (IsRunningInMash()) {
+  if (IsRunningWithMus()) {
 #if defined(USE_AURA)
     GetServiceManagerConnection()->GetConnector()->BindInterface(
         ui::mojom::kServiceName, &manager_ptr);
@@ -2043,7 +2048,7 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   }
 
 #if defined(USE_AURA)
-  if (IsRunningInMash()) {
+  if (IsMusHostingViz()) {
     if (!RendererWindowTreeClient::Get(routing_id)) {
       callback.Run(nullptr);
       return;

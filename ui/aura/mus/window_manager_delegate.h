@@ -20,6 +20,7 @@
 #include "services/ui/public/interfaces/window_tree_constants.mojom.h"
 #include "ui/aura/aura_export.h"
 #include "ui/events/mojo/event.mojom.h"
+#include "ui/gfx/native_widget_types.h"
 
 namespace display {
 class Display;
@@ -151,6 +152,10 @@ class AURA_EXPORT WindowManagerDelegate {
   // Called once to give the delegate access to functions only exposed to
   // the WindowManager.
   virtual void SetWindowManagerClient(WindowManagerClient* client) = 0;
+
+  virtual void OnWmAcceleratedWidgetAvailableForDisplay(
+      int64_t display_id,
+      gfx::AcceleratedWidget widget) = 0;
 
   // Called when the connection to mus has been fully established.
   virtual void OnWmConnected();

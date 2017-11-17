@@ -29,7 +29,7 @@ class WindowTreeHostMusDelegate;
 struct DisplayInitParams;
 struct WindowTreeHostMusInitParams;
 
-class AURA_EXPORT WindowTreeHostMus : public aura::WindowTreeHostPlatform {
+class AURA_EXPORT WindowTreeHostMus : public WindowTreeHostPlatform {
  public:
   explicit WindowTreeHostMus(WindowTreeHostMusInitParams init_params);
 
@@ -98,6 +98,7 @@ class AURA_EXPORT WindowTreeHostMus : public aura::WindowTreeHostPlatform {
   // aura::WindowTreeHostPlatform:
   void HideImpl() override;
   void SetBoundsInPixels(const gfx::Rect& bounds) override;
+  void OverrideAcceleratedWidget(gfx::AcceleratedWidget widget) override;
   void DispatchEvent(ui::Event* event) override;
   void OnClosed() override;
   void OnActivationChanged(bool active) override;

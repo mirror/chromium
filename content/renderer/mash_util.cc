@@ -9,9 +9,9 @@
 
 namespace content {
 
-bool IsRunningInMash() {
+bool IsRunningWithMus() {
   const base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
-  return cmdline->HasSwitch(switches::kIsRunningInMash);
+  return cmdline->HasSwitch(switches::kIsRunningWithMus);
 }
 
 }  // namespace content

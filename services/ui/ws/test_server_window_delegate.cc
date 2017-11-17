@@ -19,8 +19,8 @@ void TestServerWindowDelegate::AddRootWindow(ServerWindow* window) {
   roots_.insert(window);
 }
 
-viz::HostFrameSinkManager* TestServerWindowDelegate::GetHostFrameSinkManager() {
-  return host_frame_sink_manager_;
+VizHostProxy* TestServerWindowDelegate::GetVizHostProxy() {
+  return nullptr;  // host_frame_sink_manager_;
 }
 
 ServerWindow* TestServerWindowDelegate::GetRootWindowForDrawn(

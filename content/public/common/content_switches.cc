@@ -589,8 +589,9 @@ const char kIPCConnectionTimeout[]          = "ipc-connection-timeout";
 //   --isolate-origins=https://www.foo.com,https://www.bar.com
 const char kIsolateOrigins[] = "isolate-origins";
 
-// Chrome is running in Mash.
-const char kIsRunningInMash[] = "is-running-in-mash";
+// Chrome is running with the mus window server. If the flag is set to 'viz',
+// that means mus is also hosting viz. Otherwise, the browser is hosting viz.
+const char kIsRunningWithMus[] = "is-running-with-mus";
 
 // Disable latest shipping ECMAScript 6 features.
 const char kDisableJavaScriptHarmonyShipping[] =
