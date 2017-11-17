@@ -26,8 +26,8 @@
 // Define the section read-only
 __asm__(".section protected_memory, \"a\"\n\t");
 #define PROTECTED_MEMORY_SECTION __attribute__((section("protected_memory")))
-extern char __start_protected_memory;
-extern char __stop_protected_memory;
+__attribute__((visibility("hidden"))) extern char __start_protected_memory;
+__attribute__((visibility("hidden"))) extern char __stop_protected_memory;
 
 #elif defined(OS_MACOSX) && !defined(OS_IOS)
 // The segment the section is in is defined read-only with a linker flag in
