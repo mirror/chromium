@@ -62,6 +62,7 @@ using base::android::ConvertJavaStringToUTF8;
 using base::android::ConvertUTF8ToJavaString;
 using base::android::JavaParamRef;
 using base::android::ScopedJavaLocalRef;
+using base::android::ToJavaArrayOfStrings;
 
 namespace {
 
@@ -1056,6 +1057,19 @@ static void SetChromeHomePersonalizedOmniboxSuggestionsEnabled(
     jboolean is_enabled) {
   GetPrefService()->SetBoolean(omnibox::kZeroSuggestChromeHomePersonalized,
                                is_enabled);
+}
+
+static void GetChromeLanguageList(JNIEnv* env,
+                                  const JavaParamRef<jobject>& obj,
+                                  const JavaParamRef<jobject>& list,
+                                  jboolean is_incognito) {
+  std::unique_ptr<translate::TranslatePrefs> translate_prefs =
+      ChromeTranslateClient::CreateTranslatePrefs(GetPrefService());
+
+  std::vector<std::string> languages;
+  translate_prefs->GetLanguageList(&languages);
+  Java_PrefServiceBridge_copyLanguageList(env, list,
+                                          ToJavaArrayOfStrings(env, languages));
 }
 
 const char* PrefServiceBridge::GetPrefNameExposedToJava(int pref_index) {
