@@ -175,7 +175,7 @@ SDK.EmulationModel.Geolocation = class {
         var splitPosition = splitError[0].split('@');
         if (splitPosition.length === 2) {
           return new SDK.EmulationModel.Geolocation(
-              parseFloat(splitPosition[0]), parseFloat(splitPosition[1]), splitError[1]);
+              parseFloat(splitPosition[0]), parseFloat(splitPosition[1]), !!splitError[1]);
         }
       }
     }
@@ -209,7 +209,8 @@ SDK.EmulationModel.Geolocation = class {
    */
   static latitudeValidator(value) {
     var numValue = parseFloat(value);
-    return /^([+-]?[\d]+(\.\d+)?|[+-]?\.\d+)$/.test(value) && numValue >= -90 && numValue <= 90;
+    return typeof numValue === 'number' && /^([+-]?[\d]+(\.\d+)?|[+-]?\.\d+)$/.test(value) && numValue >= -90 &&
+        numValue <= 90;
   }
 
   /**
@@ -218,16 +219,15 @@ SDK.EmulationModel.Geolocation = class {
    */
   static longitudeValidator(value) {
     var numValue = parseFloat(value);
-    return /^([+-]?[\d]+(\.\d+)?|[+-]?\.\d+)$/.test(value) && numValue >= -180 && numValue <= 180;
+    return typeof numValue === 'number' && /^([+-]?[\d]+(\.\d+)?|[+-]?\.\d+)$/.test(value) && numValue >= -180 &&
+        numValue <= 180;
   }
 
   /**
    * @return {string}
    */
   toSetting() {
-    return (typeof this.latitude === 'number' && typeof this.longitude === 'number' && typeof this.error === 'string') ?
-        this.latitude + '@' + this.longitude + ':' + this.error :
-        '';
+    return this.latitude + '@' + this.longitude + ':' + (this.error ? 'error' : '');
   }
 };
 
