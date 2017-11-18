@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5877d524_7f80f080",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-11-18T00:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec04fd87_20d74c04",
+      "range": {
+        "startLine": 335,
+        "startChar": 8,
+        "endLine": 335,
+        "endChar": 26
+      },
+      "revId": "aec9ecc61ec08068cf18284cac2d8b1ee02bfc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2051e91a_eed7ebaf",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/CallStackSidebarPane.js",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "aec9ecc61ec08068cf18284cac2d8b1ee02bfc9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8153f881_ce94639f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/CallStackSidebarPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-11-18T00:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2051e91a_eed7ebaf",
+      "revId": "aec9ecc61ec08068cf18284cac2d8b1ee02bfc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "dfc129c5_fd840eee",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/CallStackSidebarPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-11-18T00:32:13Z",
+      "side": 1,
+      "message": "I think we can do it. First we need finish work on creation frames for events - I will take a look.",
+      "parentUuid": "a66ddd53_8eac357a",
+      "revId": "aec9ecc61ec08068cf18284cac2d8b1ee02bfc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "988c1bd0_d1193f5b",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/CallStackSidebarPane.js",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "aec9ecc61ec08068cf18284cac2d8b1ee02bfc9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcc280dc_98a1f7dc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/CallStackSidebarPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-11-18T00:32:13Z",
+      "side": 1,
+      "message": "closure checks only defined properties and ignore any checks for undefined. fixed typedef.",
+      "parentUuid": "988c1bd0_d1193f5b",
+      "revId": "aec9ecc61ec08068cf18284cac2d8b1ee02bfc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
