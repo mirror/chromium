@@ -475,6 +475,8 @@ class TestWindowTreeClient : public mojom::WindowTreeClient,
 
   // mojom::WindowManager:
   void OnConnect() override {}
+  void WmOnAcceleratedWidgetForDisplay(int64_t display,
+                                       uint64_t widget) override {}
   void WmNewDisplayAdded(
       const display::Display& display,
       mojom::WindowDataPtr root_data,
