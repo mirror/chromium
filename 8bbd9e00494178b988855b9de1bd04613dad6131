@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87874caf_be3135fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-18T02:10:45Z",
+      "side": 1,
+      "message": "rdsmith@: is there a good bug for this?",
+      "revId": "8bbd9e00494178b988855b9de1bd04613dad6131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

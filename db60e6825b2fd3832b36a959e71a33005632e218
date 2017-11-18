@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fde2e915_a74a2535",
+        "filename": "chrome/browser/extensions/webstore_reinstaller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-18T02:10:45Z",
+      "side": 0,
+      "message": "This appeared to be the only real use of the callback, and, AFAICT, it\u0027s not really necessary.",
+      "revId": "db60e6825b2fd3832b36a959e71a33005632e218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
