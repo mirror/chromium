@@ -133,9 +133,8 @@ class MseTrackBuffer {
   // 1) to understand if the stream parser is producing random access
   //    points that are not SAP Type 1, whose support is likely going to be
   //    deprecated from MSE API pending real-world usage data, and
-  // 2) (by owning FrameProcessor) to determine if it's hit a decreasing
-  //    keyframe PTS sequence when buffering by PTS intervals, such that a new
-  //    coded frame group needs to be signalled.
+  // 2) (by owning FrameProcessor) to enable signalling the stream on every
+  //    keyframe when buffering by PTS intervals.
   base::TimeDelta last_keyframe_presentation_timestamp_;
 
   // The coded frame duration of the last coded frame appended in the current
@@ -901,16 +900,14 @@ bool FrameProcessor::ProcessFrame(
         (track_buffer->pending_group_start_pts() != kNoTimestamp &&
          track_buffer->pending_group_start_pts() > presentation_timestamp);
 
-    // When buffering by PTS intervals and a keyframe is discovered to have
-    // a decreasing PTS versus the previous keyframe for that track in the
-    // current coded frame group, signal a new coded frame group for that track
-    // buffer so that it can correctly process overlap-removals of the new GOP.
+    // When buffering by PTS intervals and we are processing a keyframe (the
+    // first frame of potentially multiple in a GOP), signal a new coded frame
+    // group in case this new keyframe's PTS is not immediately adjacent to the
+    // PTS end time of the previously buffered coded frames.
     signal_new_cfg |=
         range_api_ == ChunkDemuxerStream::RangeApi::kNewByPts &&
         frame->is_key_frame() &&
-        track_buffer->last_keyframe_presentation_timestamp() != kNoTimestamp &&
-        track_buffer->last_keyframe_presentation_timestamp() >
-            presentation_timestamp;
+        track_buffer->last_keyframe_presentation_timestamp() != kNoTimestamp;
 
     if (signal_new_cfg) {
       DCHECK(frame->is_key_frame());
@@ -924,11 +921,12 @@ bool FrameProcessor::ProcessFrame(
         NotifyStartOfCodedFrameGroup(decode_timestamp, presentation_timestamp);
         pending_notify_all_group_start_ = false;
       } else {
-        // Don't signal later times than previously signalled for this group.
         DecodeTimestamp updated_dts = std::min(
             track_buffer->last_processed_decode_timestamp(), decode_timestamp);
-        base::TimeDelta updated_pts = track_buffer->pending_group_start_pts();
-        if (updated_pts == kNoTimestamp || updated_pts > presentation_timestamp)
+        base::TimeDelta updated_pts =
+            track_buffer->pending_group_start_pts();  // BIG TODO hmmmmm
+        if (updated_pts == kNoTimestamp ||
+            updated_pts > presentation_timestamp)  // BIG TODO hmmmmm
           updated_pts = presentation_timestamp;
         track_buffer->NotifyStartOfCodedFrameGroup(updated_dts, updated_pts);
       }

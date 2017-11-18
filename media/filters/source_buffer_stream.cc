@@ -293,6 +293,8 @@ bool SourceBufferStream<RangeClass>::Append(const BufferQueue& buffers) {
            << BufferQueueMetadataToLogString<RangeClass>(buffers);
   DVLOG(4) << BufferQueueBuffersToLogString<RangeClass>(buffers);
 
+  DVLOG(4) << "MDW BIG TODO remove: before append: highest_buffered_end_time_in_append_sequence_=" << highest_buffered_end_time_in_append_sequence_.InMicroseconds() << "us";
+
   // TODO(wolenetz): Make this DCHECK also applicable to ByPts once SAP-Type-2
   // is more fully supported such that the NewByPts versions of
   // FrameProcessorTest.OOOKeyframePrecededByDependantNonKeyframeShouldWarn
@@ -461,6 +463,9 @@ bool SourceBufferStream<RangeClass>::Append(const BufferQueue& buffers) {
            << ": done. ranges_=" << RangesToString<RangeClass>(ranges_);
   DCHECK(IsRangeListSorted(ranges_));
   DCHECK(OnlySelectedRangeIsSeeked());
+
+  DVLOG(4) << "MDW BIG TODO remove: after append: highest_buffered_end_time_in_append_sequence_=" << highest_buffered_end_time_in_append_sequence_.InMicroseconds() << "us";
+
   return true;
 }
 
@@ -1402,10 +1407,15 @@ template <typename RangeClass>
 bool SourceBufferStream<RangeClass>::
     IsNextGopAdjacentToEndOfCurrentAppendSequence(
         DecodeTimestamp next_gop_timestamp) const {
+  DecodeTimestamp upper_bound = highest_timestamp_in_append_sequence_ +
+                                ComputeFudgeRoom(GetMaxInterbufferDistance());
+  DVLOG(4) << __func__ << " " << GetStreamTypeName()
+           << " next_gop_timestamp=" << next_gop_timestamp.InMicroseconds()
+           << "us, highest_timestamp_in_append_sequence_="
+           << highest_timestamp_in_append_sequence_.InMicroseconds()
+           << "us, upper_bound=" << upper_bound.InMicroseconds() << "us";
   return highest_timestamp_in_append_sequence_ < next_gop_timestamp &&
-         next_gop_timestamp <=
-             highest_timestamp_in_append_sequence_ +
-                 ComputeFudgeRoom(GetMaxInterbufferDistance());
+         next_gop_timestamp <= upper_bound;
 }
 
 template <typename RangeClass>
