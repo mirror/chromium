@@ -16,6 +16,24 @@
       "revId": "cbf9bfa57b57c491126914503debb3b6f5a54b48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1eb614a_a977e7be",
+        "filename": "content/browser/renderer_host/input/synthetic_gesture_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-11-18T00:21:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81a48c1a_bf4866e3",
+      "revId": "cbf9bfa57b57c491126914503debb3b6f5a54b48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
