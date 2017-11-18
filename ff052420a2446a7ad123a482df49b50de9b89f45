@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bf7ec1e_16af4f76",
+        "filename": "content/browser/indexed_db/indexed_db_active_blob_registry.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-18T02:06:47Z",
+      "side": 1,
+      "message": "bit.ly -\u003e goo.gl",
+      "range": {
+        "startLine": 23,
+        "startChar": 7,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "ff052420a2446a7ad123a482df49b50de9b89f45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08f71abc_49353646",
+        "filename": "content/browser/indexed_db/indexed_db_active_blob_registry.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-18T02:06:47Z",
+      "side": 1,
+      "message": "Nit: \"Called when the given block\" / \"Notifies this registry that the given blob...\"\n\nWithout qualifications, \"Notifies\" generally makes me think that some observers\u0027 callbacks will be invoked.",
+      "revId": "ff052420a2446a7ad123a482df49b50de9b89f45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
