@@ -10,6 +10,7 @@
 #include "chromeos/components/tether/ble_scanner_impl.h"
 #include "chromeos/components/tether/ble_synchronizer.h"
 #include "chromeos/components/tether/disconnect_tethering_request_sender_impl.h"
+#include "chromeos/components/tether/gatt_services_workaround_impl.h"
 #include "chromeos/components/tether/network_configuration_remover.h"
 #include "chromeos/components/tether/tether_host_fetcher.h"
 #include "chromeos/components/tether/wifi_hotspot_disconnector_impl.h"
@@ -95,12 +96,17 @@ AsynchronousShutdownObjectContainerImpl::
           base::MakeUnique<BleScannerImpl>(adapter,
                                            local_device_data_provider_.get(),
                                            ble_synchronizer_.get())),
+      gatt_services_workaround_(base::MakeUnique<GattServicesWorkaroundImpl>(
+          local_device_data_provider_.get(),
+          remote_beacon_seed_fetcher_.get(),
+          ble_synchronizer_.get())),
       ble_connection_manager_(base::MakeUnique<BleConnectionManager>(
           cryptauth_service,
           adapter,
           ble_advertisement_device_queue_.get(),
           ble_advertiser_.get(),
-          ble_scanner_.get())),
+          ble_scanner_.get(),
+          gatt_services_workaround_.get())),
       disconnect_tethering_request_sender_(
           base::MakeUnique<DisconnectTetheringRequestSenderImpl>(
               ble_connection_manager_.get(),
@@ -120,6 +126,7 @@ AsynchronousShutdownObjectContainerImpl::
   ble_advertiser_->RemoveObserver(this);
   ble_scanner_->RemoveObserver(this);
   disconnect_tethering_request_sender_->RemoveObserver(this);
+  gatt_services_workaround_->RemoveObserver(this);
 }
 
 void AsynchronousShutdownObjectContainerImpl::Shutdown(
@@ -133,6 +140,7 @@ void AsynchronousShutdownObjectContainerImpl::Shutdown(
   ble_advertiser_->AddObserver(this);
   ble_scanner_->AddObserver(this);
   disconnect_tethering_request_sender_->AddObserver(this);
+  gatt_services_workaround_->AddObserver(this);
 
   ShutdownIfPossible();
 }
@@ -172,6 +180,10 @@ void AsynchronousShutdownObjectContainerImpl::
   ShutdownIfPossible();
 }
 
+void AsynchronousShutdownObjectContainerImpl::OnAsynchronousShutdownComplete() {
+  ShutdownIfPossible();
+}
+
 void AsynchronousShutdownObjectContainerImpl::OnDiscoverySessionStateChanged(
     bool discovery_session_active) {
   ShutdownIfPossible();
@@ -186,6 +198,7 @@ void AsynchronousShutdownObjectContainerImpl::ShutdownIfPossible() {
   ble_advertiser_->RemoveObserver(this);
   ble_scanner_->RemoveObserver(this);
   disconnect_tethering_request_sender_->RemoveObserver(this);
+  gatt_services_workaround_->RemoveObserver(this);
 
   shutdown_complete_callback_.Run();
 }
@@ -213,6 +226,10 @@ bool AsynchronousShutdownObjectContainerImpl::
   if (ble_advertiser_->AreAdvertisementsRegistered())
     return true;
 
+  // Likewise, the GATT services workaround must be shut down.
+  if (gatt_services_workaround_->HasPendingRequests())
+    return true;
+
   return false;
 }
 
@@ -220,11 +237,13 @@ void AsynchronousShutdownObjectContainerImpl::SetTestDoubles(
     std::unique_ptr<BleAdvertiser> ble_advertiser,
     std::unique_ptr<BleScanner> ble_scanner,
     std::unique_ptr<DisconnectTetheringRequestSender>
-        disconnect_tethering_request_sender) {
+        disconnect_tethering_request_sender,
+    std::unique_ptr<GattServicesWorkaround> gatt_services_workaround) {
   ble_advertiser_ = std::move(ble_advertiser);
   ble_scanner_ = std::move(ble_scanner);
   disconnect_tethering_request_sender_ =
       std::move(disconnect_tethering_request_sender);
+  gatt_services_workaround_ = std::move(gatt_services_workaround);
 }
 
 }  // namespace tether

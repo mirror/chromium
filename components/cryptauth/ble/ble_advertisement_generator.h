@@ -14,6 +14,7 @@
 namespace chromeos {
 namespace tether {
 class BleAdvertiserImplTest;
+class GattServicesWorkaroundImplTest;
 }  // namespace tether
 }  // namespace chromeos
 
@@ -46,6 +47,7 @@ class BleAdvertisementGenerator {
  private:
   friend class CryptAuthBleAdvertisementGeneratorTest;
   friend class chromeos::tether::BleAdvertiserImplTest;
+  friend class chromeos::tether::GattServicesWorkaroundImplTest;
 
   static BleAdvertisementGenerator* instance_;
 
