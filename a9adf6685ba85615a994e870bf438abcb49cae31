@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab42f6e8_ddfe5b46",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-18T01:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8576dc6_4cd31774",
+      "range": {
+        "startLine": 176,
+        "startChar": 65,
+        "endLine": 176,
+        "endChar": 78
+      },
+      "revId": "a9adf6685ba85615a994e870bf438abcb49cae31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98b0580b_21614529",
         "filename": "chrome/common/media_router/mojo/media_router_struct_traits.h",
         "patchSetId": 7
@@ -71,6 +95,24 @@
       "writtenOn": "2017-11-17T06:46:58Z",
       "side": 1,
       "message": "Don\u0027t we always pass through something now? It might be an empty string--but then the RHS of the || evaluates to exactly the same thing.",
+      "revId": "a9adf6685ba85615a994e870bf438abcb49cae31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc06a880_9ee95b7e",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-18T01:17:03Z",
+      "side": 1,
+      "message": "No, the issue object is from the component extension and the message attribute may be null.",
+      "parentUuid": "539bea8b_59b147e2",
       "revId": "a9adf6685ba85615a994e870bf438abcb49cae31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
