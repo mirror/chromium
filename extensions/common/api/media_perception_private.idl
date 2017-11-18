@@ -134,7 +134,8 @@ namespace mediaPerceptionPrivate {
     UNSPECIFIED,
     FACE,
     PERSON,
-    MOTION_REGION
+    MOTION_REGION,
+    LABELED_MOTION
   };
 
   dictionary Entity {
