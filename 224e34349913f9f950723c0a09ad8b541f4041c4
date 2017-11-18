@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "560ec997_0e6ee4e2",
+        "filename": "net/spdy/chromium/spdy_session_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-18T01:14:04Z",
+      "side": 1,
+      "message": "This looks like a behavior change because the old code *looks* like it was checking a specific error. Is that check going away?",
+      "revId": "224e34349913f9f950723c0a09ad8b541f4041c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3963f91e_cb506c55",
+        "filename": "net/spdy/chromium/spdy_test_util_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-18T01:14:04Z",
+      "side": 1,
+      "message": "I get that make_unique is the new \"right\" way to do this, so I\u0027m happy to see this change.\n\nBut it\u0027s annoying that it\u0027s actually longer :/ I wish there were a make_unique variant which got the template type based on the return value so you could just say:\n\nfoo_(std::make_unique()),\n\nSigh :)",
+      "revId": "224e34349913f9f950723c0a09ad8b541f4041c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
