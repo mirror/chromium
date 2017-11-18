@@ -570,14 +570,13 @@ NGBoxStrut CalculateBorderScrollbarPadding(
     // seems insane, but works in the old code; in NG it trips
     // DCHECKs.
     border_intrinsic_padding = NGBoxStrut(
-        cell->BorderStart(), cell->BorderEnd(),
-        cell->BorderBefore() + LayoutUnit(cell->IntrinsicPaddingBefore()),
-        cell->BorderAfter() + LayoutUnit(cell->IntrinsicPaddingAfter()));
+        cell->BorderAndPaddingStart(), cell->BorderEnd() + cell->PaddingEnd(),
+        cell->BorderAndPaddingBefore(), cell->BorderAndPaddingAfter());
   } else {
-    border_intrinsic_padding = ComputeBorders(constraint_space, style);
+    border_intrinsic_padding = ComputeBorders(constraint_space, style) +
+                               ComputePadding(constraint_space, style);
   }
-  return border_intrinsic_padding + ComputePadding(constraint_space, style) +
-         node.GetScrollbarSizes();
+  return border_intrinsic_padding + node.GetScrollbarSizes();
 }
 
 NGLogicalSize CalculateContentBoxSize(
