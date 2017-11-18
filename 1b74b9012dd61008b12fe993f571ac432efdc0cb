@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85e3b200_b626ae9c",
+        "filename": "net/http/http_network_session.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-18T01:25:35Z",
+      "side": 1,
+      "message": "Can you clarify the comment to explain that if this is non-empty, QUIC will only be spoken to these hosts?",
+      "revId": "1b74b9012dd61008b12fe993f571ac432efdc0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "200e71e6_d8b41423",
+        "filename": "net/http/http_network_session.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-18T01:25:35Z",
+      "side": 1,
+      "message": "Looking at base/containers/README.md this should probably be a base::flat_set, I think.",
+      "revId": "1b74b9012dd61008b12fe993f571ac432efdc0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bfabf4a_24bb5db0",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2288,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-18T01:25:35Z",
+      "side": 1,
+      "message": "Can we also add a QuicNetworkTransaction tests in which we can speak QUIC to a host on the whitelist, but not to a host that is not on it?",
+      "revId": "1b74b9012dd61008b12fe993f571ac432efdc0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
