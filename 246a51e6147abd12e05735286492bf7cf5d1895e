@@ -404,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "dfc1b0c0_62eda72a",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-18T00:11:27Z",
+      "side": 1,
+      "message": "thanks. that explanation would make for a useful comment right here in the code. :-)",
+      "parentUuid": "548ade25_3a6d351e",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c628e11_82a082c8",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 10

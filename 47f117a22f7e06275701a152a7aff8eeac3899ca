@@ -512,6 +512,24 @@
     },
     {
       "key": {
+        "uuid": "e32a5673_c0b302df",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-18T00:11:27Z",
+      "side": 1,
+      "message": "i think my main argument here would be that you only use this in one place, and switching to an or condition would:\n\na) keep the check the same length\nb) make it so one can see what the check is doing without tracking down the member initialization in the header\nc) remove some unnecessary code from the c\u0027tor and the header\n\nbut i won\u0027t argue more if you feel strongly about this.",
+      "parentUuid": "71fd0270_aa19fe09",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "600a4ff2_cf2fa836",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 9
