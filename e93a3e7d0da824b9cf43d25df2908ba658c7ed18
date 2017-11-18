@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "32c25192_f5bd346b",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-11-18T08:46:48Z",
+      "side": 1,
+      "message": "Sorry I haven\u0027t read an earlier conversation on this. \n\nMark wrote:\n\n\u003eWe can\u0027t do this before/after for beta or stable because usually there are too many things bundled in a new milestone release.\n\nPeter wrote in response:\n\n\u003e I\u0027d err on the side of doing nothing.\n\n\u003e The other option is to stick it under Finch control and roll it out on by default but with a holdback so we can measure.  I dunno if that\u0027s worth it.\n\n\u003e I wouldn\u0027t roll it out off-by-default, since it seems like the right thing to do.\n\nI agree with Peter. I\u0027d not roll it out off-by-default (the latest CL has this off-by-default). And, I think having a holdback with the default on is not worth the effort, either.  \n\nMark,  is there any reason to roll out this with default-off ?",
+      "parentUuid": "de79e02a_f7bb70b7",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 0
+      },
+      "revId": "e93a3e7d0da824b9cf43d25df2908ba658c7ed18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ffbf7eb_69286ca0",
         "filename": "components/omnibox/browser/tailored_word_break_iterator.cc",
         "patchSetId": 15
