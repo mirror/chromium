@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "293b7dae_6ddab4f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-18T00:46:07Z",
+      "side": 1,
+      "message": "Please add the following footer to avoid another bot breakage.\n\nCq-Include-Trybots: linux_site_isolation",
+      "revId": "1b8f7d6819a6808fbd447aaa61d1cd616a586778",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
