@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77f2677b_c7545f1b",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-18T01:43:49Z",
+      "side": 0,
+      "message": "Probably I shouldn\u0027t remove spoken_feedback_enabled_ here. I am not sure if this early bails out matters...",
+      "revId": "4aaf9dfc60fd5f1dcca137967f75668c0f8fe434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

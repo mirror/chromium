@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3c246e5_c637275a",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-18T01:43:49Z",
+      "side": 1,
+      "message": "This is needed to update ash::AccessibilityController::IsSpokenFeedbackEnabled.",
+      "revId": "3cca1c2884a96e2cfbc6d0d1d8636a9d7a52db43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
