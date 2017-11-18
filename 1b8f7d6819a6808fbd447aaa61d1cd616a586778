@@ -69,6 +69,24 @@
       "revId": "1b8f7d6819a6808fbd447aaa61d1cd616a586778",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa2f826_0049781e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/post-echo.cgi",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-18T01:54:35Z",
+      "side": 1,
+      "message": "Better: CGI is deleted, tests are same-origin and using http: now. Thanks for guiding me toward this better and simpler approach!",
+      "parentUuid": "1cf97fc8_83a25c16",
+      "revId": "1b8f7d6819a6808fbd447aaa61d1cd616a586778",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
