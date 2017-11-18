@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e33959fb_eb30a09a",
+        "filename": "chrome/common/media_router/issue.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-18T11:21:46Z",
+      "side": 1,
+      "message": "So just to be clear, it\u0027s valid to have a route ID that\u0027s set, but empty, right?",
+      "revId": "42d7cda9add1114b81da87a68763f6b4bda3be3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

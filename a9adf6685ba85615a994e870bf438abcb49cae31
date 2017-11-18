@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "9434cd10_fc749f3c",
+        "filename": "chrome/common/media_router/mojo/media_router_struct_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-18T11:21:46Z",
+      "side": 1,
+      "message": "Hmm... maybe let\u0027s followup on this. I don\u0027t think it should block this CL, but it\u0027d be good to understand why it\u0027s necessary: in general, if we don\u0027t need to send something over IPC, it\u0027d be better to omit it from the mojom altogether.",
+      "parentUuid": "ae56c2ef_097a1c21",
+      "revId": "a9adf6685ba85615a994e870bf438abcb49cae31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "539bea8b_59b147e2",
         "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
         "patchSetId": 7
