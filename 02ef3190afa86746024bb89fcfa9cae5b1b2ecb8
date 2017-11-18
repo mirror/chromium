@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02b1cd07_95937c9e",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-18T00:46:14Z",
+      "side": 1,
+      "message": "This part seems redundant.",
+      "range": {
+        "startLine": 61,
+        "startChar": 10,
+        "endLine": 61,
+        "endChar": 15
+      },
+      "revId": "02ef3190afa86746024bb89fcfa9cae5b1b2ecb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e903add6_1b7995a8",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-18T00:46:14Z",
+      "side": 1,
+      "message": "nit: here and everywhere else, reflow comments",
+      "revId": "02ef3190afa86746024bb89fcfa9cae5b1b2ecb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c79cef2_ce1e4c8a",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-18T00:46:14Z",
+      "side": 1,
+      "message": "nit: here and everywhere else, we use Initialize_s_ on interface comments.",
+      "range": {
+        "startLine": 74,
+        "startChar": 5,
+        "endLine": 74,
+        "endChar": 15
+      },
+      "revId": "02ef3190afa86746024bb89fcfa9cae5b1b2ecb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1538b28b_7a708d87",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-18T00:46:14Z",
+      "side": 1,
+      "message": "But if I am writing a caller, how do I know whether I should specify this without knowing the proxy impl detail? Should the caller always specify it, or is it protocol dependent?",
+      "range": {
+        "startLine": 90,
+        "startChar": 41,
+        "endLine": 90,
+        "endChar": 76
+      },
+      "revId": "02ef3190afa86746024bb89fcfa9cae5b1b2ecb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83148d30_90b45334",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-18T00:46:14Z",
+      "side": 1,
+      "message": "nit: typically we put audio before video",
+      "revId": "02ef3190afa86746024bb89fcfa9cae5b1b2ecb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b87594_56bda4d9",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-18T00:46:14Z",
+      "side": 1,
+      "message": "as discussed offline, let\u0027s only create one session at a time, then we can drop the audio/video part as well",
+      "revId": "02ef3190afa86746024bb89fcfa9cae5b1b2ecb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
