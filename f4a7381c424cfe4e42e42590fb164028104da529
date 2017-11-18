@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "8da94d76_fc4da99c",
+        "filename": "chrome/android/java/res/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-18T01:01:34Z",
+      "side": 1,
+      "message": "So I ran 5 presubmit checks in sequence. First case with color checks commented out, and second case with the color checks. The averages are as follows:\n10.92s -- no color checks\n10.76s -- all three checks\n\nI\u0027m not sure why it\u0027s so slow even if I commented out all three checks in _CommonChecks here. but if just comparing the time, it seems that the checks are not slowing down presubmit checks much.\n\nAnd yes I think we can narrow down to check xml files only in the Android resource directories in ui/, chrome/ and possibly content/.",
+      "parentUuid": "d0aafc6e_a50ba3d3",
+      "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92f60c9a_db393d48",
         "filename": "chrome/android/java/res/PRESUBMIT.py",
         "patchSetId": 2
@@ -478,6 +496,30 @@
       "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7154acd_5251248c",
+        "filename": "chrome/android/java/res/PRESUBMIT_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-18T01:01:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4e3c2b4_c1206c6b",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 28
+      },
+      "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
