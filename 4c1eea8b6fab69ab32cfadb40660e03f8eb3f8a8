@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a24d2e4_c7b25bd0",
+        "filename": "components/security_state/content/content_utils_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-18T00:16:25Z",
+      "side": 1,
+      "message": "probably want this to be CONTENT_STATUS_NONE; otherwise we can\u0027t be sure that we\u0027re testing that the insecure explanation is due to the malicious_content_status rather than this. (Also I suppose we should probably check that insecure_explanations has size 1 exactly rather than it\u0027s just non-empty.)",
+      "range": {
+        "startLine": 587,
+        "startChar": 6,
+        "endLine": 587,
+        "endChar": 54
+      },
+      "revId": "4c1eea8b6fab69ab32cfadb40660e03f8eb3f8a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
