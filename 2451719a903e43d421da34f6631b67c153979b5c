@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf05394e_ff04cf6f",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-18T02:53:15Z",
+      "side": 1,
+      "message": "Nit: can you move this check and the one for IsLayoutView up to line 1373?",
+      "revId": "2451719a903e43d421da34f6631b67c153979b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7af7de3_21559c16",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1393,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-18T02:53:15Z",
+      "side": 1,
+      "message": "Two nits:\nWe use \"visible_size_with_scrollbars\" above but \"client_size_without_any_scrollbars\" here. This is just due to which perspective the rect is viewed from. Can you rename this to \"client_size_with_scrollbars\"?\n\nThis code will be called a lot so I think it\u0027s important to avoid calculation if possible. Can you slightly refactor this to not compute the size unless the scrollbars are both auto?\n\nI\u0027m thinking:\nif (!Box().HasAutoVerticalScrollbar() || !Box().HasAutoHorizontalScrollbar())\n  return false;\n\nLayoutSize client_size_with_scrollbars \u003d LayoutContentRect(kIncludeScrollbars).Size();\nif (ScrollWidth() \u003c\u003d client_size_with_scrollbars.Width() \u0026\u0026\n  ScrollHeight() \u003c\u003d client_size_with_scrollbars.Height()) {\n    return true;\n}",
+      "revId": "2451719a903e43d421da34f6631b67c153979b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
