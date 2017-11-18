@@ -16,6 +16,24 @@
       "revId": "c54ae06dbd681aea54f895b1707735cad923831a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94955f33_017d3c39",
+        "filename": "ash/system/power/display_forced_off_setter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-18T00:25:41Z",
+      "side": 1,
+      "message": "it doesn\u0027t - I have already tried it",
+      "parentUuid": "32d6d197_55d6ad34",
+      "revId": "c54ae06dbd681aea54f895b1707735cad923831a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
