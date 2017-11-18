@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7acf9ebb_24dc42c3",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-18T01:33:43Z",
+      "side": 1,
+      "message": "Instead of using a peer to do this, how \u0027bout just passing the task runner in via the constructor?",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "1a87da7a3b63df06080ccf83ecab94255886db54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b877ecc_e527cb28",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-18T01:33:43Z",
+      "side": 1,
+      "message": "It\u0027s usually simplest to do all this work in the constructor, unless there\u0027s a compelling reason to do otherwise.",
+      "revId": "1a87da7a3b63df06080ccf83ecab94255886db54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c5c0898_6d46b68c",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-18T01:33:43Z",
+      "side": 1,
+      "message": "Can this ever be false?",
+      "range": {
+        "startLine": 95,
+        "startChar": 23,
+        "endLine": 95,
+        "endChar": 0
+      },
+      "revId": "1a87da7a3b63df06080ccf83ecab94255886db54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b594b0_e117a7af",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-18T01:33:43Z",
+      "side": 1,
+      "message": "Can this be an object instead of a unique_ptr?",
+      "revId": "1a87da7a3b63df06080ccf83ecab94255886db54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
