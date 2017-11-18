@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fcb0dc3_b4f121ad",
+        "filename": "chrome/browser/ui/views/location_bar/location_icon_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-18T00:18:46Z",
+      "side": 1,
+      "message": "Can you instead call SetEnabled(false)? Seems like doing that would mean you don\u0027t need to override IsTriggerableEvent and check iseditingorempty.",
+      "range": {
+        "startLine": 111,
+        "startChar": 3,
+        "endLine": 113,
+        "endChar": 22
+      },
+      "revId": "6a39eb7fc85d16335a10dd366ff7d675d3d8820e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
