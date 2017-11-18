@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2bca91d_6e5c2839",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-11-18T08:26:11Z",
+      "side": 1,
+      "message": "Why do we need this code duplication between if-block and else-block? Doesn\u0027t the following work? Am I missing something? \n\nstd::unique_ptr\u003cbase::i18n::BreakIterator\u003e iter;\n\nif (force_break_on_underscore) \n  iter.reset(new Tailored....(lower_terms[i], ...BREAK_WORD));\nelse\n  iter.reset(new base::i18n::BreakIterator(.....));",
+      "range": {
+        "startLine": 749,
+        "startChar": 1,
+        "endLine": 776,
+        "endChar": 0
+      },
+      "revId": "e93a3e7d0da824b9cf43d25df2908ba658c7ed18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
