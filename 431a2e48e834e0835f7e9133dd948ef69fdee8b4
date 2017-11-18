@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d8ab6abf_b33e230b",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-18T02:22:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28170965_104f14d1",
+      "revId": "431a2e48e834e0835f7e9133dd948ef69fdee8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdfd6f18_b29696fe",
         "filename": "content/browser/gpu/gpu_client.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-18T00:55:51Z",
       "side": 1,
       "message": "The downside of testing this is that if the GPU process is disabled, if we receive the failure reply before the renderer request, we\u0027ll get here with an invalid channel, and gpu_channel_requested_ being false, and we\u0027re try to establish again, whereas we should be able to reply to the renderer immediately.\n\nI think we want a flag that says \"we received a reply, channel_handle_/gpu_info_/gpu_feature_info_ have the data\" (we can synthesize the result based on whether we do have a channel or not). If it\u0027s true, we reply to the renderer with that data (whether success or not). If it\u0027s false, we know we have to wait for the request (possibly starting it).",
+      "revId": "431a2e48e834e0835f7e9133dd948ef69fdee8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b3898e0_f2f4161e",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-18T02:22:56Z",
+      "side": 1,
+      "message": "We always check GpuProcessHost::Get() first before reaching this.\n\nAs for if PreEstablish* fails, we retry anyway, See the GPU_HOST_INVALID block in OnEstablishGpuChannel. So the *_requested_ flag has been set and return early in the next condition.\n\nWill this address your concern?",
+      "parentUuid": "cdfd6f18_b29696fe",
       "revId": "431a2e48e834e0835f7e9133dd948ef69fdee8b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2b61d4e2_279baa57",
+        "filename": "content/browser/gpu/gpu_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-18T02:22:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0139df3c_a4feba5f",
+      "revId": "431a2e48e834e0835f7e9133dd948ef69fdee8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c932bda2_3f7a8b81",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "21a643c6_8b84a3fc",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1453,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-18T02:22:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c932bda2_3f7a8b81",
+      "revId": "431a2e48e834e0835f7e9133dd948ef69fdee8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fbf282f_bbb501b8",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "431a2e48e834e0835f7e9133dd948ef69fdee8b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a31c9b0e_32ed5cf9",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-18T02:22:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fbf282f_bbb501b8",
+      "revId": "431a2e48e834e0835f7e9133dd948ef69fdee8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
