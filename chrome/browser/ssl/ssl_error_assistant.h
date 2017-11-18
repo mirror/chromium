@@ -13,11 +13,19 @@
 
 namespace chrome_browser_ssl {
 class SSLErrorAssistantConfig;
+class UrgentInterstitial;
 }  // namespace chrome_browser_ssl
 
 namespace net {
 class SSLInfo;
 }
+
+enum class UrgentInterstitialPageType {
+  NONE = 0,
+  SSL,
+  CAPTIVE_PORTAL,
+  MITM_SOFTWARE
+};
 
 // Struct which stores data about a known MITM software pulled from the
 // SSLErrorAssistant proto.
@@ -29,6 +37,26 @@ struct MITMSoftwareType {
   const std::string name;
   const std::string issuer_common_name_regex;
   const std::string issuer_organization_regex;
+};
+
+class UrgentInterstitialData {
+ public:
+  UrgentInterstitialData(const chrome_browser_ssl::UrgentInterstitial& entry);
+  ~UrgentInterstitialData();
+
+  bool MatchCertificate(const net::SSLInfo& ssl_info);
+
+  UrgentInterstitialPageType interstitial_type() const {
+    return interstitial_type_;
+  }
+
+ private:
+  std::unordered_set<std::string> spki_hashes_;
+  const int error_code_;
+  const UrgentInterstitialPageType interstitial_type_;
+  const std::string help_url_;
+
+  DISALLOW_COPY_AND_ASSIGN(UrgentInterstitialData);
 };
 
 // Helper class for SSLErrorHandler. This class is responsible for reading in
@@ -50,6 +78,9 @@ class SSLErrorAssistant {
   const std::string MatchKnownMITMSoftware(
       const scoped_refptr<net::X509Certificate>& cert);
 
+  // TODO: return an interstitial type.
+  UrgentInterstitialData* MatchUrgentInterstitial(const net::SSLInfo& ssl_info);
+
   void SetErrorAssistantProto(
       std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig> proto);
 
@@ -66,6 +97,9 @@ class SSLErrorAssistant {
   // Data about a known MITM software pulled from the SSLErrorAssistant proto.
   // Null until MatchKnownMITMSoftware() is called.
   std::unique_ptr<std::vector<MITMSoftwareType>> mitm_software_list_;
+
+  std::vector<std::unique_ptr<UrgentInterstitialData>>
+      urgent_interstitial_list_;
 
   // Error assistant configuration.
   std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig>
