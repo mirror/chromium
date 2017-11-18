@@ -203,7 +203,8 @@ bool BrokerFilePermission::CheckOpen(const char* requested_filename,
 }
 
 const char* BrokerFilePermission::GetErrorMessageForTests() {
-  static char kInvalidBrokerFileString[] = "Invalid BrokerFilePermission";
+  static constexpr char kInvalidBrokerFileString[] =
+      "Invalid BrokerFilePermission";
   return kInvalidBrokerFileString;
 }
 

@@ -270,19 +270,19 @@ enum ResourceType {
   kBitmapResourceType,
 };
 
-ResourceType kSoftwareCompositedFallbackList[] = {
+constexpr ResourceType kSoftwareCompositedFallbackList[] = {
     kBitmapResourceType,
 };
 
-ResourceType kSoftwareFallbackList[] = {
+constexpr ResourceType kSoftwareFallbackList[] = {
     kBitmapResourceType,
 };
 
-ResourceType kAcceleratedFallbackList[] = {
+constexpr ResourceType kAcceleratedFallbackList[] = {
     kTextureResourceType, kBitmapResourceType,
 };
 
-ResourceType kAcceleratedCompositedFallbackList[] = {
+constexpr ResourceType kAcceleratedCompositedFallbackList[] = {
     kTextureGpuMemoryBufferResourceType, kTextureResourceType,
     kBitmapResourceType,
 };
@@ -294,14 +294,13 @@ std::unique_ptr<CanvasResourceProvider> CanvasResourceProvider::Create(
     ResourceUsage usage,
     WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper) {
   unsigned resourceTypeFallbackListLength = 0;
-  ResourceType* resourceTypeFallbackList = nullptr;
+  const ResourceType* resourceTypeFallbackList = nullptr;
 
   switch (usage) {
-#define DEFINE_FALLBACK(NAME)                              \
-  case NAME##ResourceUsage:                                \
-    resourceTypeFallbackList = NAME##FallbackList;         \
-    resourceTypeFallbackListLength =                       \
-        sizeof(NAME##FallbackList) / sizeof(ResourceType); \
+#define DEFINE_FALLBACK(NAME)                                       \
+  case NAME##ResourceUsage:                                         \
+    resourceTypeFallbackList = NAME##FallbackList;                  \
+    resourceTypeFallbackListLength = arraysize(NAME##FallbackList); \
     break;
 
     DEFINE_FALLBACK(kSoftware);
