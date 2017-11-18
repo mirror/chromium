@@ -29,6 +29,7 @@ namespace gpu {
 class CommandBufferProxyImpl;
 class GpuChannelHost;
 struct GpuFeatureInfo;
+class RasterImplementation;
 class TransferBuffer;
 namespace gles2 {
 class GLES2CmdHelper;
@@ -70,6 +71,7 @@ class ContextProviderCommandBuffer
   // viz::ContextProvider implementation.
   gpu::ContextResult BindToCurrentThread() override;
   gpu::gles2::GLES2Interface* ContextGL() override;
+  gpu::RasterInterface* RasterContext() override;
   gpu::ContextSupport* ContextSupport() override;
   class GrContext* GrContext() override;
   viz::ContextCacheController* CacheController() override;
@@ -142,6 +144,7 @@ class ContextProviderCommandBuffer
   std::unique_ptr<gpu::TransferBuffer> transfer_buffer_;
   std::unique_ptr<gpu::gles2::GLES2Implementation> gles2_impl_;
   std::unique_ptr<gpu::gles2::GLES2TraceImplementation> trace_impl_;
+  std::unique_ptr<gpu::RasterImplementation> raster_impl_;
   std::unique_ptr<skia_bindings::GrContextForGLES2Interface> gr_context_;
   std::unique_ptr<viz::ContextCacheController> cache_controller_;
 
