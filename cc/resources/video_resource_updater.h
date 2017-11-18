@@ -29,12 +29,18 @@ class PaintCanvasVideoRenderer;
 class VideoFrame;
 }
 
+namespace gfx {
+class Rect;
+class Transform;
+}  // namespace gfx
+
 namespace viz {
 class ContextProvider;
+class RenderPass;
 }
 
 namespace cc {
-class ResourceProvider;
+class LayerTreeResourceProvider;
 
 class CC_EXPORT VideoFrameExternalResources {
  public:
@@ -50,7 +56,6 @@ class CC_EXPORT VideoFrameExternalResources {
 
     SOFTWARE_RESOURCE
   };
-
   ResourceType type = NONE;
   std::vector<viz::TransferableResource> resources;
   std::vector<viz::ReleaseCallback> release_callbacks;
@@ -80,7 +85,7 @@ class CC_EXPORT VideoFrameExternalResources {
 class CC_EXPORT VideoResourceUpdater {
  public:
   VideoResourceUpdater(viz::ContextProvider* context_provider,
-                       ResourceProvider* resource_provider,
+                       LayerTreeResourceProvider* resource_provider,
                        bool use_stream_video_draw_quad);
   ~VideoResourceUpdater();
 
@@ -90,6 +95,20 @@ class CC_EXPORT VideoResourceUpdater {
   void SetUseR16ForTesting(bool use_r16_for_testing) {
     use_r16_for_testing_ = use_r16_for_testing;
   }
+
+  void ObtainFrameResources(scoped_refptr<media::VideoFrame> video_frame);
+  void ReleaseFrameResources();
+  void AppendQuads(viz::RenderPass* render_pass,
+                   scoped_refptr<media::VideoFrame> frame,
+                   gfx::Transform transform,
+                   gfx::Size rotated_size,
+                   gfx::Rect visible_layer_rect,
+                   gfx::Rect clip_rect,
+                   bool is_clipped,
+                   bool context_opaque,
+                   float draw_opacity,
+                   int sorting_context_id,
+                   gfx::Rect visible_quad_rect);
 
  private:
   class PlaneResource {
@@ -181,11 +200,33 @@ class CC_EXPORT VideoResourceUpdater {
                             bool lost_resource);
 
   viz::ContextProvider* context_provider_;
-  ResourceProvider* resource_provider_;
+  LayerTreeResourceProvider* resource_provider_;
   const bool use_stream_video_draw_quad_;
   std::unique_ptr<media::PaintCanvasVideoRenderer> video_renderer_;
   std::vector<uint8_t> upload_pixels_;
   bool use_r16_for_testing_ = false;
+
+  VideoFrameExternalResources::ResourceType frame_resource_type_;
+  // TODO(danakj): Remove these, use TransferableResource for software path too.
+  unsigned software_resource_ = viz::kInvalidResourceId;
+  using SoftwareReleaseCallback =
+            VideoFrameExternalResources::SoftwareReleaseCallback;
+  // Called once for |software_resource_|.
+  SoftwareReleaseCallback software_release_callback_;
+
+  float frame_resource_offset_;
+  float frame_resource_multiplier_;
+  uint32_t frame_bits_per_channel_;
+
+  struct FrameResource {
+    FrameResource(viz::ResourceId id,
+                  gfx::Size size_in_pixels)
+        : id(id),
+          size_in_pixels(size_in_pixels) {}
+    viz::ResourceId id;
+    gfx::Size size_in_pixels;
+  };
+  std::vector<FrameResource> frame_resources_;
 
   // Recycle resources so that we can reduce the number of allocations and
   // data transfers.

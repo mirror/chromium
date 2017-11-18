@@ -169,6 +169,11 @@ WebMediaPlayerMSCompositor::~WebMediaPlayerMSCompositor() {
       << "Must call StopUsingProvider() before dtor!";
 }
 
+scoped_refptr<base::SingleThreadTaskRunner>
+WebMediaPlayerMSCompositor::GetTaskRunner() {
+  return compositor_task_runner_;
+}
+
 gfx::Size WebMediaPlayerMSCompositor::GetCurrentSize() {
   DCHECK(thread_checker_.CalledOnValidThread());
   base::AutoLock auto_lock(current_frame_lock_);

@@ -86,7 +86,9 @@ class MockVideoFrameResourceProvider
   ~MockVideoFrameResourceProvider() = default;
 
   MOCK_METHOD1(Initialize, void(viz::ContextProvider*));
-  MOCK_METHOD1(AppendQuads, void(viz::RenderPass*));
+  MOCK_METHOD2(AppendQuads,
+               void(viz::RenderPass*, scoped_refptr<media::VideoFrame>));
+  MOCK_METHOD0(DidDraw, void());
   MOCK_METHOD2(PrepareSendToParent,
                void(const cc::LayerTreeResourceProvider::ResourceIdArray&,
                     std::vector<viz::TransferableResource>*));
@@ -108,6 +110,11 @@ class VideoFrameSubmitterTest : public ::testing::Test {
         provider_(new StrictMock<MockVideoFrameProvider>()),
         context_provider_(cc::TestContextProvider::Create()) {
     context_provider_->BindToCurrentThread();
+  }
+
+  void SetUp() override {
+    MakeSubmitter();
+    scoped_task_environment_.RunUntilIdle();
   }
 
   void MakeSubmitter() {
@@ -181,8 +188,9 @@ TEST_F(VideoFrameSubmitterTest,
   EXPECT_CALL(*sink_, DoSubmitCompositorFrame(_, _));
   EXPECT_CALL(*provider_, PutCurrentFrame());
   EXPECT_CALL(*sink_, SetNeedsBeginFrame(false));
-  EXPECT_CALL(*resource_provider_, AppendQuads(_));
+  EXPECT_CALL(*resource_provider_, AppendQuads(_, _));
   EXPECT_CALL(*resource_provider_, PrepareSendToParent(_, _));
+  EXPECT_CALL(*resource_provider_, DidDraw());
 
   submitter_->StopUsingProvider();
 
@@ -218,8 +226,9 @@ TEST_F(VideoFrameSubmitterTest, DidReceiveFrameSubmitsFrame) {
           gfx::Size(8, 8), base::TimeDelta())));
   EXPECT_CALL(*sink_, DoSubmitCompositorFrame(_, _));
   EXPECT_CALL(*provider_, PutCurrentFrame());
-  EXPECT_CALL(*resource_provider_, AppendQuads(_));
+  EXPECT_CALL(*resource_provider_, AppendQuads(_, _));
   EXPECT_CALL(*resource_provider_, PrepareSendToParent(_, _));
+  EXPECT_CALL(*resource_provider_, DidDraw());
 
   submitter_->DidReceiveFrame();
   scoped_task_environment_.RunUntilIdle();
@@ -241,8 +250,9 @@ TEST_F(VideoFrameSubmitterTest, OnBeginFrameSubmitsFrame) {
           gfx::Size(8, 8), base::TimeDelta())));
   EXPECT_CALL(*sink_, DoSubmitCompositorFrame(_, _));
   EXPECT_CALL(*provider_, PutCurrentFrame());
-  EXPECT_CALL(*resource_provider_, AppendQuads(_));
+  EXPECT_CALL(*resource_provider_, AppendQuads(_, _));
   EXPECT_CALL(*resource_provider_, PrepareSendToParent(_, _));
+  EXPECT_CALL(*resource_provider_, DidDraw());
 
   viz::BeginFrameArgs args = begin_frame_source_->CreateBeginFrameArgs(
       BEGINFRAME_FROM_HERE, now_src_.get());
