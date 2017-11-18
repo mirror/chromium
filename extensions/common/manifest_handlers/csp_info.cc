@@ -38,16 +38,23 @@ const char kDefaultPlatformAppContentSecurityPolicy[] =
     // For remote resources, they can fetch them via XMLHttpRequest.
     " connect-src * data: blob: filesystem:;"
     // And serve them via data: or same-origin (blob:, filesystem:) URLs
-    " style-src " PLATFORM_APP_LOCAL_CSP_SOURCES " 'unsafe-inline';"
-    " img-src " PLATFORM_APP_LOCAL_CSP_SOURCES ";"
-    " frame-src " PLATFORM_APP_LOCAL_CSP_SOURCES ";"
-    " font-src " PLATFORM_APP_LOCAL_CSP_SOURCES ";"
+    " style-src " PLATFORM_APP_LOCAL_CSP_SOURCES
+    " 'unsafe-inline';"
+    " img-src " PLATFORM_APP_LOCAL_CSP_SOURCES
+    ";"
+    " frame-src " PLATFORM_APP_LOCAL_CSP_SOURCES
+    ";"
+    " font-src " PLATFORM_APP_LOCAL_CSP_SOURCES
+    ";"
     // Media can be loaded from remote resources since:
     // 1. <video> and <audio> have good fallback behavior when offline or under
     //    spotty connectivity.
     // 2. Fetching via XHR and serving via blob: URLs currently does not allow
     //    streaming or partial buffering.
-    " media-src * data: blob: filesystem:;";
+    " media-src * data: blob: filesystem:;"
+    // Scripts are allowed to use WebAssembly
+    " script-src 'self' blob: filesystem: chrome-extension-resource: "
+    "'wasm-eval';";
 
 int GetValidatorOptions(Extension* extension) {
   int options = csp_validator::OPTIONS_NONE;
