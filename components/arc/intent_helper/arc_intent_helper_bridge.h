@@ -23,13 +23,10 @@
 
 class KeyedServiceBaseFactory;
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 class IntentFilter;
 
 // Receives intents from ARC.
@@ -40,8 +37,7 @@ class ArcIntentHelperBridge
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcIntentHelperBridge* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcIntentHelperBridge* GetForContext(ArcContext* context);
 
   // Returns factory for the ArcIntentHelperBridge.
   static KeyedServiceBaseFactory* GetFactory();
@@ -50,8 +46,7 @@ class ArcIntentHelperBridge
   static std::string AppendStringToIntentHelperPackageName(
       const std::string& to_append);
 
-  ArcIntentHelperBridge(content::BrowserContext* context,
-                        ArcBridgeService* bridge_service);
+  ArcIntentHelperBridge(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcIntentHelperBridge() override;
 
   void AddObserver(ArcIntentHelperObserver* observer);
@@ -121,7 +116,7 @@ class ArcIntentHelperBridge
   // TODO(yusukes): Properly fix b/68953603 and remove the function.
   bool IsWhitelistedChromeUrl(const GURL& url);
 
-  content::BrowserContext* const context_;
+  ArcContext* const context_;
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
 
   mojo::Binding<mojom::IntentHelperHost> binding_;

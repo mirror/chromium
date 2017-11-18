@@ -34,12 +34,12 @@ class ArcUserSessionServiceFactory
 
 }  // namespace
 
-ArcUserSessionService* ArcUserSessionService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcUserSessionServiceFactory::GetForBrowserContext(context);
+ArcUserSessionService* ArcUserSessionService::GetForContext(
+    ArcContext* context) {
+  return ArcUserSessionServiceFactory::GetForContext(context);
 }
 
-ArcUserSessionService::ArcUserSessionService(content::BrowserContext* context,
+ArcUserSessionService::ArcUserSessionService(ArcContext* context,
                                              ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service) {
   arc_bridge_service_->intent_helper()->AddObserver(this);

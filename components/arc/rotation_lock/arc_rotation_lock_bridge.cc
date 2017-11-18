@@ -39,12 +39,12 @@ class ArcRotationLockBridgeFactory
 }  // namespace
 
 // static
-ArcRotationLockBridge* ArcRotationLockBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcRotationLockBridgeFactory::GetForBrowserContext(context);
+ArcRotationLockBridge* ArcRotationLockBridge::GetForContext(
+    ArcContext* context) {
+  return ArcRotationLockBridgeFactory::GetForContext(context);
 }
 
-ArcRotationLockBridge::ArcRotationLockBridge(content::BrowserContext* context,
+ArcRotationLockBridge::ArcRotationLockBridge(ArcContext* context,
                                              ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service) {
   arc_bridge_service_->rotation_lock()->AddObserver(this);

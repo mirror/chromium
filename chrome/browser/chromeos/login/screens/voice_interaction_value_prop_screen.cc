@@ -9,6 +9,7 @@
 #include "chrome/browser/chromeos/login/screens/voice_interaction_value_prop_screen_view.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "components/arc/arc_context.h"
 
 namespace chromeos {
 namespace {
@@ -78,7 +79,8 @@ VoiceInteractionValuePropScreen::GetVoiceInteractionHomeService() {
   Profile* const profile = ProfileManager::GetActiveUserProfile();
   DCHECK(profile);
   arc::ArcVoiceInteractionArcHomeService* const home_service =
-      arc::ArcVoiceInteractionArcHomeService::GetForBrowserContext(profile);
+      arc::ArcVoiceInteractionArcHomeService::GetForContext(
+          arc::ArcContext::FromBrowserContext(profile));
   DCHECK(home_service);
   return home_service;
 }

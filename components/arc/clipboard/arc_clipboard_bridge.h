@@ -15,13 +15,10 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "ui/base/clipboard/clipboard_observer.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 class ArcClipboardBridge
     : public KeyedService,
@@ -31,11 +28,9 @@ class ArcClipboardBridge
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcClipboardBridge* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcClipboardBridge* GetForContext(ArcContext* context);
 
-  ArcClipboardBridge(content::BrowserContext* context,
-                     ArcBridgeService* bridge_service);
+  ArcClipboardBridge(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcClipboardBridge() override;
 
   // InstanceHolder<mojom::ClipboardInstance>::Observer overrides.

@@ -83,26 +83,26 @@ class ArcBootPhaseMonitorBridgeFactory
 }  // namespace
 
 // static
-ArcBootPhaseMonitorBridge* ArcBootPhaseMonitorBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcBootPhaseMonitorBridgeFactory::GetForBrowserContext(context);
+ArcBootPhaseMonitorBridge* ArcBootPhaseMonitorBridge::GetForContext(
+    ArcContext* context) {
+  return ArcBootPhaseMonitorBridgeFactory::GetForContext(context);
 }
 
 // static
 void ArcBootPhaseMonitorBridge::RecordFirstAppLaunchDelayUMA(
-    content::BrowserContext* context) {
-  auto* bridge = arc::ArcBootPhaseMonitorBridge::GetForBrowserContext(context);
+    ArcContext* context) {
+  auto* bridge = arc::ArcBootPhaseMonitorBridge::GetForContext(context);
   if (bridge)
     bridge->RecordFirstAppLaunchDelayUMAInternal();
 }
 
 ArcBootPhaseMonitorBridge::ArcBootPhaseMonitorBridge(
-    content::BrowserContext* context,
+    ArcContext* context,
     ArcBridgeService* bridge_service)
     : context_(context),
       arc_bridge_service_(bridge_service),
       account_id_(multi_user_util::GetAccountIdFromProfile(
-          Profile::FromBrowserContext(context))),
+          Profile::FromBrowserContext(context->browser_context()))),
       binding_(this),
       // Set the default delegate. Unit tests may use a different one.
       delegate_(std::make_unique<DefaultDelegateImpl>()),
@@ -113,7 +113,7 @@ ArcBootPhaseMonitorBridge::ArcBootPhaseMonitorBridge(
   arc_session_manager->AddObserver(this);
   SessionRestore::AddObserver(this);
 
-  auto* profile = Profile::FromBrowserContext(context);
+  auto* profile = Profile::FromBrowserContext(context->browser_context());
   auto* extension_system = extensions::ExtensionSystem::Get(profile);
   DCHECK(extension_system);
   extension_system->ready().Post(
@@ -184,7 +184,7 @@ void ArcBootPhaseMonitorBridge::OnBootCompleted() {
 }
 
 void ArcBootPhaseMonitorBridge::OnArcPlayStoreEnabledChanged(bool enabled) {
-  auto* profile = Profile::FromBrowserContext(context_);
+  auto* profile = Profile::FromBrowserContext(context_->browser_context());
   enabled_by_policy_ =
       enabled && IsArcPlayStoreEnabledPreferenceManagedForProfile(profile);
   if (enabled_by_policy_)

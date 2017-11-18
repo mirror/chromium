@@ -39,12 +39,11 @@ class ArcObbMounterBridgeFactory
 }  // namespace
 
 // static
-ArcObbMounterBridge* ArcObbMounterBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcObbMounterBridgeFactory::GetForBrowserContext(context);
+ArcObbMounterBridge* ArcObbMounterBridge::GetForContext(ArcContext* context) {
+  return ArcObbMounterBridgeFactory::GetForContext(context);
 }
 
-ArcObbMounterBridge::ArcObbMounterBridge(content::BrowserContext* context,
+ArcObbMounterBridge::ArcObbMounterBridge(ArcContext* context,
                                          ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service), binding_(this) {
   arc_bridge_service_->obb_mounter()->AddObserver(this);

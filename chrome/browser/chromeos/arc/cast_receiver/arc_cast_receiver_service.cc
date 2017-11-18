@@ -46,19 +46,19 @@ class ArcCastReceiverServiceFactory
 }  // namespace
 
 // static
-ArcCastReceiverService* ArcCastReceiverService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcCastReceiverServiceFactory::GetForBrowserContext(context);
+ArcCastReceiverService* ArcCastReceiverService::GetForContext(
+    ArcContext* context) {
+  return ArcCastReceiverServiceFactory::GetForContext(context);
 }
 
-ArcCastReceiverService::ArcCastReceiverService(content::BrowserContext* context,
+ArcCastReceiverService::ArcCastReceiverService(ArcContext* context,
                                                ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service) {
   arc_bridge_service_->cast_receiver()->AddObserver(this);
 
   pref_change_registrar_ = std::make_unique<PrefChangeRegistrar>();
   pref_change_registrar_->Init(
-      Profile::FromBrowserContext(context)->GetPrefs());
+      Profile::FromBrowserContext(context->browser_context())->GetPrefs());
   // Observe prefs for the Cast Receiver. We can use base::Unretained() here
   // because we own |pref_change_registrar_|.
   pref_change_registrar_->Add(

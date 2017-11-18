@@ -13,15 +13,12 @@
 #include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 class PrefChangeRegistrar;
 
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // Provides control of the Android Cast Receiver.
 class ArcCastReceiverService
@@ -30,11 +27,9 @@ class ArcCastReceiverService
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcCastReceiverService* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcCastReceiverService* GetForContext(ArcContext* context);
 
-  ArcCastReceiverService(content::BrowserContext* context,
-                         ArcBridgeService* bridge_service);
+  ArcCastReceiverService(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcCastReceiverService() override;
 
   // InstanceHolder<mojom::CastReceiverInstance>::Observer overrides:

@@ -18,13 +18,10 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // Lives on the UI thread.
 class ArcWallpaperService
@@ -35,11 +32,9 @@ class ArcWallpaperService
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcWallpaperService* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcWallpaperService* GetForContext(ArcContext* context);
 
-  ArcWallpaperService(content::BrowserContext* context,
-                      ArcBridgeService* bridge_service);
+  ArcWallpaperService(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcWallpaperService() override;
 
   // InstanceHolder<mojom::WallpaperInstance>::Observer overrides.

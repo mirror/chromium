@@ -71,12 +71,11 @@ class ArcPrintServiceFactory
 }  // namespace
 
 // static
-ArcPrintService* ArcPrintService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcPrintServiceFactory::GetForBrowserContext(context);
+ArcPrintService* ArcPrintService::GetForContext(ArcContext* context) {
+  return ArcPrintServiceFactory::GetForContext(context);
 }
 
-ArcPrintService::ArcPrintService(content::BrowserContext* context,
+ArcPrintService::ArcPrintService(ArcContext* context,
                                  ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service),
       binding_(this),

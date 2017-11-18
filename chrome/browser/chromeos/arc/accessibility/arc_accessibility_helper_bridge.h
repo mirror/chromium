@@ -22,14 +22,11 @@
 
 class Profile;
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class AXTreeSourceArc;
 class ArcBridgeService;
+class ArcContext;
 
 // ArcAccessibilityHelperBridge is an instance to receive converted Android
 // accessibility events and info via mojo interface and dispatch them to chrome
@@ -45,10 +42,9 @@ class ArcAccessibilityHelperBridge
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcAccessibilityHelperBridge* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcAccessibilityHelperBridge* GetForContext(ArcContext* context);
 
-  ArcAccessibilityHelperBridge(content::BrowserContext* browser_context,
+  ArcAccessibilityHelperBridge(ArcContext* context,
                                ArcBridgeService* arc_bridge_service);
   ~ArcAccessibilityHelperBridge() override;
 

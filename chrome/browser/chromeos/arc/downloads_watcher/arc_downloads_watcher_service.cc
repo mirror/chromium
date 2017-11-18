@@ -229,7 +229,7 @@ class ArcDownloadsWatcherService::DownloadsWatcher {
  public:
   using Callback = base::Callback<void(const std::vector<std::string>& paths)>;
 
-  DownloadsWatcher(content::BrowserContext* context, const Callback& callback);
+  DownloadsWatcher(ArcContext* context, const Callback& callback);
   ~DownloadsWatcher();
 
   // Starts watching Downloads directory.
@@ -269,7 +269,7 @@ class ArcDownloadsWatcherService::DownloadsWatcher {
 };
 
 ArcDownloadsWatcherService::DownloadsWatcher::DownloadsWatcher(
-    content::BrowserContext* context,
+    ArcContext* context,
     const Callback& callback)
     : callback_(callback),
       last_notify_time_(base::TimeTicks()),
@@ -278,9 +278,10 @@ ArcDownloadsWatcherService::DownloadsWatcher::DownloadsWatcher(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DETACH_FROM_SEQUENCE(sequence_checker_);
 
-  downloads_dir_ = DownloadPrefs(Profile::FromBrowserContext(context))
-                       .GetDefaultDownloadDirectoryForProfile()
-                       .StripTrailingSeparators();
+  downloads_dir_ =
+      DownloadPrefs(Profile::FromBrowserContext(context->browser_context()))
+          .GetDefaultDownloadDirectoryForProfile()
+          .StripTrailingSeparators();
 }
 
 ArcDownloadsWatcherService::DownloadsWatcher::~DownloadsWatcher() {
@@ -355,13 +356,13 @@ void ArcDownloadsWatcherService::DownloadsWatcher::OnBuildTimestampMap(
 }
 
 // static
-ArcDownloadsWatcherService* ArcDownloadsWatcherService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcDownloadsWatcherServiceFactory::GetForBrowserContext(context);
+ArcDownloadsWatcherService* ArcDownloadsWatcherService::GetForContext(
+    ArcContext* context) {
+  return ArcDownloadsWatcherServiceFactory::GetForContext(context);
 }
 
 ArcDownloadsWatcherService::ArcDownloadsWatcherService(
-    content::BrowserContext* context,
+    ArcContext* context,
     ArcBridgeService* bridge_service)
     : context_(context),
       arc_bridge_service_(bridge_service),

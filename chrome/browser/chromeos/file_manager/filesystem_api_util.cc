@@ -19,6 +19,7 @@
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_interface.h"
 #include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/profiles/profile.h"
+#include "components/arc/arc_context.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/drive/chromeos/file_system_interface.h"
 #include "components/drive/file_errors.h"
@@ -201,8 +202,8 @@ void GetNonNativeLocalPathMimeType(
   if (arc::IsArcAllowedForProfile(profile) &&
       base::FilePath(arc::kContentFileSystemMountPointPath).IsParent(path)) {
     GURL arc_url = arc::PathToArcUrl(path);
-    auto* runner =
-        arc::ArcFileSystemOperationRunner::GetForBrowserContext(profile);
+    auto* runner = arc::ArcFileSystemOperationRunner::GetForContext(
+        arc::ArcContext::FromBrowserContext(profile));
     if (!runner) {
       content::BrowserThread::PostTask(
           content::BrowserThread::UI, FROM_HERE,

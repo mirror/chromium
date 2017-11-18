@@ -8,17 +8,18 @@
 #include "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.h"
 #include "chrome/browser/profiles/incognito_helpers.h"
 #include "chrome/browser/profiles/profile.h"
+#include "components/arc/arc_context.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 
 namespace arc {
 
 // static
-ArcDocumentsProviderRootMap*
-ArcDocumentsProviderRootMapFactory::GetForBrowserContext(
-    content::BrowserContext* context) {
+ArcDocumentsProviderRootMap* ArcDocumentsProviderRootMapFactory::GetForContext(
+    ArcContext* context) {
   return static_cast<ArcDocumentsProviderRootMap*>(
-      GetInstance()->GetServiceForBrowserContext(context, true /* create */));
+      GetInstance()->GetServiceForBrowserContext(context->browser_context(),
+                                                 true /* create */));
 }
 
 ArcDocumentsProviderRootMapFactory::ArcDocumentsProviderRootMapFactory()
@@ -54,7 +55,7 @@ KeyedService* ArcDocumentsProviderRootMapFactory::BuildServiceInstanceFor(
     return nullptr;
   }
 
-  if (arc_service_manager->browser_context() != context) {
+  if (arc_service_manager->context()->browser_context() != context) {
     VLOG(2) << "Non ARC allowed browser context.";
     return nullptr;
   }

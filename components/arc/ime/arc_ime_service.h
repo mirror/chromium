@@ -24,10 +24,6 @@ namespace aura {
 class Window;
 }  // namespace aura
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace ui {
 class InputMethod;
 }  // namespace ui
@@ -35,6 +31,7 @@ class InputMethod;
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // This class implements ui::TextInputClient and makes ARC windows behave
 // as a text input target in Chrome OS environment.
@@ -48,10 +45,9 @@ class ArcImeService : public KeyedService,
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcImeService* GetForBrowserContext(content::BrowserContext* context);
+  static ArcImeService* GetForContext(ArcContext* context);
 
-  ArcImeService(content::BrowserContext* context,
-                ArcBridgeService* bridge_service);
+  ArcImeService(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcImeService() override;
 
   class ArcWindowDelegate {

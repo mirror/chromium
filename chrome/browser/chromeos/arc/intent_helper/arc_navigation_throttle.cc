@@ -166,8 +166,9 @@ ArcNavigationThrottle::HandleRequest() {
   if (!arc_service_manager)
     return content::NavigationThrottle::PROCEED;
 
-  auto* intent_helper_bridge = ArcIntentHelperBridge::GetForBrowserContext(
-      handle->GetWebContents()->GetBrowserContext());
+  auto* intent_helper_bridge =
+      ArcIntentHelperBridge::GetForContext(ArcContext::FromBrowserContext(
+          handle->GetWebContents()->GetBrowserContext()));
   if (!intent_helper_bridge)
     return content::NavigationThrottle::PROCEED;
 
@@ -269,8 +270,9 @@ bool ArcNavigationThrottle::FoundPreferredOrVerifiedArcApp(
     Platform platform = GetDestinationPlatform(package_name, close_reason);
     RecordUma(close_reason, platform);
   } else {
-    auto* intent_helper_bridge = ArcIntentHelperBridge::GetForBrowserContext(
-        handle->GetWebContents()->GetBrowserContext());
+    auto* intent_helper_bridge =
+        ArcIntentHelperBridge::GetForContext(ArcContext::FromBrowserContext(
+            handle->GetWebContents()->GetBrowserContext()));
     if (!intent_helper_bridge) {
       LOG(ERROR) << "Cannot get an instance of ArcIntentHelperBridge";
       return cancel_navigation;
@@ -467,8 +469,10 @@ void ArcNavigationThrottle::AsyncOnAppCandidatesReceived(
     return;
   }
 
-  auto* intent_helper_bridge = arc::ArcIntentHelperBridge::GetForBrowserContext(
-      browser->tab_strip_model()->GetActiveWebContents()->GetBrowserContext());
+  auto* intent_helper_bridge = arc::ArcIntentHelperBridge::GetForContext(
+      ArcContext::FromBrowserContext(browser->tab_strip_model()
+                                         ->GetActiveWebContents()
+                                         ->GetBrowserContext()));
   if (!intent_helper_bridge) {
     DVLOG(1) << "Cannot get an instance of ArcIntentHelperBridge";
     return;

@@ -12,24 +12,19 @@
 #include "components/arc/common/storage_manager.mojom.h"
 #include "components/keyed_service/core/keyed_service.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // This class represents as a simple proxy of StorageManager to Chrome OS.
 class ArcStorageManager : public KeyedService {
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcStorageManager* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcStorageManager* GetForContext(ArcContext* context);
 
-  ArcStorageManager(content::BrowserContext* context,
-                    ArcBridgeService* bridge_service);
+  ArcStorageManager(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcStorageManager() override;
 
   // Opens detailed preference screen of private volume on ARC.

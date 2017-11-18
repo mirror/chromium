@@ -10,6 +10,7 @@
 #include "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h"
 #include "chrome/browser/ui/ash/app_list/app_list_service_ash.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
+#include "components/arc/arc_context.h"
 #include "content/public/common/service_manager_connection.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "ui/app_list/presenter/app_list_presenter_impl.h"
@@ -52,17 +53,17 @@ void AppListPresenterService::ToggleAppList(int64_t display_id) {
 }
 
 void AppListPresenterService::StartVoiceInteractionSession() {
-  auto* service =
-      arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(
-          ChromeLauncherController::instance()->profile());
+  auto* service = arc::ArcVoiceInteractionFrameworkService::GetForContext(
+      arc::ArcContext::FromBrowserContext(
+          ChromeLauncherController::instance()->profile()));
   if (service)
     service->StartSessionFromUserInteraction(gfx::Rect());
 }
 
 void AppListPresenterService::ToggleVoiceInteractionSession() {
-  auto* service =
-      arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(
-          ChromeLauncherController::instance()->profile());
+  auto* service = arc::ArcVoiceInteractionFrameworkService::GetForContext(
+      arc::ArcContext::FromBrowserContext(
+          ChromeLauncherController::instance()->profile()));
   if (service)
     service->ToggleSessionFromUserInteraction();
 }

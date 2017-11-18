@@ -15,13 +15,10 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 class ArcPrintService : public KeyedService,
                         public InstanceHolder<mojom::PrintInstance>::Observer,
@@ -29,11 +26,9 @@ class ArcPrintService : public KeyedService,
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcPrintService* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcPrintService* GetForContext(ArcContext* context);
 
-  ArcPrintService(content::BrowserContext* context,
-                  ArcBridgeService* bridge_service);
+  ArcPrintService(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcPrintService() override;
 
   // InstanceHolder<mojom::PrintInstance>::Observer override:

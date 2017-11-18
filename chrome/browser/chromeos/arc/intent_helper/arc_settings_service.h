@@ -12,13 +12,10 @@
 #include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 class ArcSettingsServiceImpl;
 
 class ArcSettingsService
@@ -27,11 +24,9 @@ class ArcSettingsService
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcSettingsService* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcSettingsService* GetForContext(ArcContext* context);
 
-  ArcSettingsService(content::BrowserContext* context,
-                     ArcBridgeService* bridge_service);
+  ArcSettingsService(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcSettingsService() override;
 
   // InstanceHolder<mojom::IntentHelperInstance>::Observer
@@ -39,7 +34,7 @@ class ArcSettingsService
   void OnInstanceClosed() override;
 
  private:
-  content::BrowserContext* const context_;
+  ArcContext* const context_;
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
   std::unique_ptr<ArcSettingsServiceImpl> impl_;
 

@@ -8,6 +8,7 @@
 #include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.h"
 #include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_util.h"
 #include "chrome/browser/profiles/profile.h"
+#include "components/arc/arc_context.h"
 #include "components/arc/arc_service_manager.h"
 #include "content/public/browser/browser_thread.h"
 
@@ -32,22 +33,22 @@ constexpr DocumentsProviderSpec kDocumentsProviderWhitelist[] = {
 }  // namespace
 
 // static
-ArcDocumentsProviderRootMap* ArcDocumentsProviderRootMap::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcDocumentsProviderRootMapFactory::GetForBrowserContext(context);
+ArcDocumentsProviderRootMap* ArcDocumentsProviderRootMap::GetForContext(
+    ArcContext* context) {
+  return ArcDocumentsProviderRootMapFactory::GetForContext(context);
 }
 
 // static
-ArcDocumentsProviderRootMap*
-ArcDocumentsProviderRootMap::GetForArcBrowserContext() {
-  return GetForBrowserContext(ArcServiceManager::Get()->browser_context());
+ArcDocumentsProviderRootMap* ArcDocumentsProviderRootMap::GetForArcContext() {
+  return GetForContext(ArcServiceManager::Get()->context());
 }
 
 ArcDocumentsProviderRootMap::ArcDocumentsProviderRootMap(Profile* profile) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   ArcFileSystemOperationRunner* runner =
-      ArcFileSystemOperationRunner::GetForBrowserContext(profile);
+      ArcFileSystemOperationRunner::GetForContext(
+          ArcContext::FromBrowserContext(profile));
   // ArcDocumentsProviderRootMap is created only for the profile with ARC
   // in ArcDocumentsProviderRootMapFactory.
   DCHECK(runner);

@@ -26,13 +26,10 @@ class BrowserContextKeyedServiceFactory;
 class GURL;
 class Profile;
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // This class handles file system related IPC from the ARC container.
 class ArcFileSystemBridge
@@ -50,8 +47,7 @@ class ArcFileSystemBridge
     virtual ~Observer() {}
   };
 
-  ArcFileSystemBridge(content::BrowserContext* context,
-                      ArcBridgeService* bridge_service);
+  ArcFileSystemBridge(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcFileSystemBridge() override;
 
   // Returns the factory instance for this class.
@@ -59,8 +55,7 @@ class ArcFileSystemBridge
 
   // Returns the instance for the given BrowserContext, or nullptr if the
   // browser |context| is not allowed to use ARC.
-  static ArcFileSystemBridge* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcFileSystemBridge* GetForContext(ArcContext* context);
 
   // Handles a read request.
   bool HandleReadRequest(const std::string& id,

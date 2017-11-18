@@ -60,7 +60,7 @@ void GetFileInfoOnUIThread(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   ArcDocumentsProviderRootMap* roots =
-      ArcDocumentsProviderRootMap::GetForArcBrowserContext();
+      ArcDocumentsProviderRootMap::GetForArcContext();
   if (!roots) {
     OnGetFileInfoOnUIThread(callback, base::File::FILE_ERROR_SECURITY,
                             base::File::Info());
@@ -84,7 +84,7 @@ void ReadDirectoryOnUIThread(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   ArcDocumentsProviderRootMap* roots =
-      ArcDocumentsProviderRootMap::GetForArcBrowserContext();
+      ArcDocumentsProviderRootMap::GetForArcContext();
   if (!roots) {
     OnReadDirectoryOnUIThread(callback, base::File::FILE_ERROR_SECURITY, {});
     return;

@@ -100,9 +100,9 @@ class ArcFileSystemBridgeFactory
 
 }  // namespace
 
-ArcFileSystemBridge::ArcFileSystemBridge(content::BrowserContext* context,
+ArcFileSystemBridge::ArcFileSystemBridge(ArcContext* context,
                                          ArcBridgeService* bridge_service)
-    : profile_(Profile::FromBrowserContext(context)),
+    : profile_(Profile::FromBrowserContext(context->browser_context())),
       bridge_service_(bridge_service),
       binding_(this),
       weak_ptr_factory_(this) {
@@ -121,10 +121,9 @@ BrowserContextKeyedServiceFactory* ArcFileSystemBridge::GetFactory() {
 }
 
 // static
-ArcFileSystemBridge* ArcFileSystemBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
+ArcFileSystemBridge* ArcFileSystemBridge::GetForContext(ArcContext* context) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  return ArcFileSystemBridgeFactory::GetForBrowserContext(context);
+  return ArcFileSystemBridgeFactory::GetForContext(context);
 }
 
 void ArcFileSystemBridge::AddObserver(Observer* observer) {
