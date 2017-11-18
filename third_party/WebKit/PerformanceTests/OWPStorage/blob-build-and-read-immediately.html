@@ -1,12 +1,12 @@
 <!doctype html>
-<title>Blob Build and Read Immediately</title>
+<title>Blob Build and Read Immediately (2 Bytes)</title>
+<body>
 <script src="../resources/runner.js"></script>
 <script src="resources/shared.js"></script>
 <script>
-let runnerParams = { size: 2, numBlobs: 200 };
 let test = {
   description:
-    'Benchmark for creating blobs and then reading them immediately.',
+    'Benchmark for creating 200 2 bytes blobs and reading them immediately.',
   unit: 'ms',
   iterationCount: 10,
   tracingCategories: 'Blob',
@@ -15,7 +15,8 @@ let test = {
     'BlobRequest::ReadRawData', 'BlobRequest'
   ],
   path: 'resources/blob-build-and-read-immediately-runner.html',
-  params: runnerParams
-}
+  params: { size: 40 * 1024 * 1024, numBlobs: 10 }
+};
 PerfTestRunner.measurePageLoadTimeAfterDoneMessage(test);
 </script>
+</body>
