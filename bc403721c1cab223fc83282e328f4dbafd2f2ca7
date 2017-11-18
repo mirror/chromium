@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d3a21ba_94b96813",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 3084,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-11-18T01:52:03Z",
+      "side": 1,
+      "message": "i guess that\u0027s good enough for now.",
+      "range": {
+        "startLine": 3084,
+        "startChar": 18,
+        "endLine": 3084,
+        "endChar": 26
+      },
+      "revId": "bc403721c1cab223fc83282e328f4dbafd2f2ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
