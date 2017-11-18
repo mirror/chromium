@@ -22385,6 +22385,13 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
   <int value="50" label="CRASH"/>
 </enum>
 
+<enum name="InterstitialTypeEnum">
+  <summary>Track which style of Safe Browsing interstitial is shown.</summary>
+  <int value="0" label="LOUD"/>
+  <int value="1" label="QUIET_SMALL"/>
+  <int value="2" label="QUIET_GIANT"/>
+</enum>
+
 <enum name="InvalidationNetworkChannel">
   <int value="0" label="PushClientChannel"/>
   <int value="1" label="GCMNetworkChannel"/>
