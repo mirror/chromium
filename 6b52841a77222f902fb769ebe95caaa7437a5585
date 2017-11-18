@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86780ea6_313c80ec",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-18T00:41:19Z",
+      "side": 1,
+      "message": "Maybe \"only accepts canonical CBOR as defined by section 3.9\"? @Balazs, you\u0027re right that the decoder side is formally \"strict mode\" rather than \"canonical CBOR\", but I think it\u0027s right to define the input of a strict decoder as needing to be canonical. Does that make sense?",
+      "range": {
+        "startLine": 18,
+        "startChar": 3,
+        "endLine": 18,
+        "endChar": 72
+      },
+      "revId": "6b52841a77222f902fb769ebe95caaa7437a5585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

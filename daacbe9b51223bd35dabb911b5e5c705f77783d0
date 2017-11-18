@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "b6018030_c8fb3073",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-18T00:41:19Z",
+      "side": 1,
+      "message": "The other way would be `uint_data \u003c (1ULL\u003c\u003c(4*additional_bytes))` since 1\u003c\u003cn is 2**n and additional_bytes is always 1, 2, 4, or 8. If you go that way, it\u0027s probably worth including a CHECK_LE(additional_bytes, 8) and maybe a static_assert(sizeof(1ULL)\u003d\u003d8, \"Unexpected unsigned long long size\"). The integer code is harder to read, so I don\u0027t have a strong preference.",
+      "parentUuid": "efd431d8_4336d4aa",
+      "range": {
+        "startLine": 141,
+        "startChar": 19,
+        "endLine": 141,
+        "endChar": 58
+      },
+      "revId": "daacbe9b51223bd35dabb911b5e5c705f77783d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0f25201_57b5e8e0",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 12
