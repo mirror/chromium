@@ -316,6 +316,7 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
       bool require_confirmation,
       bool migrate_sesion_early,
       bool migrate_session_on_network_change,
+      bool migrate_session_on_network_change_v2,
       int yield_after_packets,
       QuicTime::Delta yield_after_duration,
       int cert_verify_flags,
@@ -523,6 +524,12 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
       NetworkChangeNotifier::NetworkHandle alternate_network,
       const NetLogWithSource& migration_net_log);
 
+  // Called when NetworkChangeNotifier broadcasts to observers of
+  // |disconnected_network|.
+  void OnNetworkDisconnectedV2(
+      NetworkChangeNotifier::NetworkHandle disconnected_network,
+      const NetLogWithSource& migration_net_log);
+
   // Called when NetworkChangeNotifier broadcats to observers of a new default
   // network. Migrates this session to |new_network| if appropriate.
   void OnNetworkMadeDefault(NetworkChangeNotifier::NetworkHandle new_network,
@@ -603,6 +610,26 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
                                   IPEndPoint peer_address,
                                   const NetLogWithSource& migration_net_log);
 
+  // Called when there is only one possible working network: |network|, If any
+  // error encountered, this session will be cloed. When the migration succeeds:
+  //  - If we are no longer on the default interface, migrate back to default
+  //    network timer will be set.
+  //  - If we are now on the default interface, migrate back to default network
+  //    timer will be cancelled.
+  void MigrateImmediately(NetworkChangeNotifier::NetworkHandle network);
+
+  void StartMigrateBackToDefaultNetworkTimer(base::TimeDelta delay);
+  void CancelMigrateBackToDefaultNetworkTimer();
+  void TryMigrateBackToDefaultNetwork(base::TimeDelta timeout);
+  void MaybeRetryMigrateBackToDefaultNetwork();
+
+  bool ShouldMigrateSession(bool mark_going_away,
+                            bool close_if_cannot_migrate,
+                            NetworkChangeNotifier::NetworkHandle network,
+                            const NetLogWithSource& migration_net_log);
+  void LogMetricsOnNetworkDisconnected();
+  void LogMetricsOnNetworkMadeDefault();
+
   // Notifies the factory that this session is going away and no more streams
   // should be created from it.  This needs to be called before closing any
   // streams, because closing a stream may cause a new stream to be created.
@@ -619,6 +646,7 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
   bool require_confirmation_;
   bool migrate_session_early_;
   bool migrate_session_on_network_change_;
+  bool migrate_session_on_network_change_v2_;
   QuicClock* clock_;  // Unowned.
   int yield_after_packets_;
   QuicTime::Delta yield_after_duration_;
@@ -665,7 +693,11 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
   // Stores packet that witnesses socket write error. This packet is
   // written to a new socket after migration completes.
   scoped_refptr<QuicChromiumPacketWriter::ReusableIOBuffer> packet_;
+  // Stores the latest default network platform marks.
+  NetworkChangeNotifier::NetworkHandle default_network_;
   QuicConnectivityProbingManager probing_manager_;
+  int retry_migrate_back_count_;
+  base::OneShotTimer migrate_back_to_default_timer_;
   // TODO(jri): Replace use of migration_pending_ sockets_.size().
   // When a task is posted for MigrateSessionOnError, pass in
   // sockets_.size(). Then in MigrateSessionOnError, check to see if

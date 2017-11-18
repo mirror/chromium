@@ -291,6 +291,7 @@ TEST_F(QuicConnectivityProbingManagerTest, CancelProbing) {
   // packet for this probing.
   EXPECT_CALL(session_, OnSendConnectivityProbingPacket(_, _)).Times(0);
   EXPECT_CALL(session_, OnProbeNetworkFailed(_)).Times(0);
+  probing_manager_->CancelProbing(testNetworkHandle);
   test_task_runner->RunUntilIdle();
 }
 

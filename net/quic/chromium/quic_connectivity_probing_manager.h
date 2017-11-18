@@ -47,6 +47,10 @@ class NET_EXPORT_PRIVATE QuicConnectivityProbingManager {
   QuicConnectivityProbingManager(Delegate* delegate);
   ~QuicConnectivityProbingManager();
 
+  // If this method is called, no probing packets will be sent out. Probing
+  // manager will declare probing as failed immediately.
+  void ShutDown();
+
   // Starts probe |network| to |peer_address|. |this| will take ownership of
   // |socket|, |writer| and |reader|. |writer| and |reader| should be bound
   // to |socket| and |writer| will be used to send connectivity probing packets.
@@ -61,13 +65,21 @@ class NET_EXPORT_PRIVATE QuicConnectivityProbingManager {
                     std::unique_ptr<QuicChromiumPacketReader> reader,
                     base::TimeDelta initial_timeout);
 
+  // Cancels undergoing probing if the current |network_| being probed is the
+  // same as |network|.
+  void CancelProbing(NetworkChangeNotifier::NetworkHandle network);
   // Cancels undergoing probing.
-  void CancelProbing();
+  void CancelProbingIfAny();
 
   // Called when a connectivity probing packet has been received from
   // |peer_address| on a socket with |self_address|.
   void OnConnectivityProbingReceived(const QuicSocketAddress& self_address,
                                      const QuicSocketAddress& peer_address);
+
+  // Returns the current network that is still under probing.
+  NetworkChangeNotifier::NetworkHandle current_probing_network() {
+    return network_;
+  }
 
  private:
   // Called when a connectivity probing needs to be sent to |peer_address_| and
@@ -81,6 +93,9 @@ class NET_EXPORT_PRIVATE QuicConnectivityProbingManager {
 
   Delegate* delegate_;  // Unowned, must outlive |this|.
 
+  // Current network that is under probing, resets to
+  // NetworkChangeNotifier::kInvalidNetwork when probing results has been
+  // delivered to |delegate_|.
   NetworkChangeNotifier::NetworkHandle network_;
   QuicSocketAddress peer_address_;
 
@@ -91,6 +106,8 @@ class NET_EXPORT_PRIVATE QuicConnectivityProbingManager {
   int retry_count_;
   int initial_timeout_ms_;
   base::OneShotTimer retransmit_timer_;
+
+  bool is_running_;
 
   base::WeakPtrFactory<QuicConnectivityProbingManager> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(QuicConnectivityProbingManager);

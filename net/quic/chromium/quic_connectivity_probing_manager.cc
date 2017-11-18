@@ -18,13 +18,25 @@ QuicConnectivityProbingManager::QuicConnectivityProbingManager(
     : delegate_(delegate),
       retry_count_(0),
       initial_timeout_ms_(0),
+      is_running_(true),
       weak_factory_(this) {}
 
 QuicConnectivityProbingManager::~QuicConnectivityProbingManager() {
-  CancelProbing();
+  CancelProbingIfAny();
 }
 
-void QuicConnectivityProbingManager::CancelProbing() {
+void QuicConnectivityProbingManager::ShutDown() {
+  CancelProbingIfAny();
+  is_running_ = false;
+}
+
+void QuicConnectivityProbingManager::CancelProbing(
+    NetworkChangeNotifier::NetworkHandle network) {
+  if (network == network_)
+    CancelProbingIfAny();
+}
+
+void QuicConnectivityProbingManager::CancelProbingIfAny() {
   network_ = NetworkChangeNotifier::kInvalidNetworkHandle;
   peer_address_ = QuicSocketAddress();
   socket_.reset();
@@ -42,8 +54,13 @@ void QuicConnectivityProbingManager::StartProbing(
     std::unique_ptr<QuicChromiumPacketWriter> writer,
     std::unique_ptr<QuicChromiumPacketReader> reader,
     base::TimeDelta initial_timeout) {
+  if (!is_running_) {
+    delegate_->OnProbeNetworkFailed(network);
+    return;
+  }
+
   // Start a new probe will always cancel the previous one.
-  CancelProbing();
+  CancelProbingIfAny();
 
   network_ = network;
   peer_address_ = peer_address;
@@ -84,7 +101,7 @@ void QuicConnectivityProbingManager::OnConnectivityProbingReceived(
   // Notify the delegate that the probe succeeds and reset everything.
   delegate_->OnProbeNetworkSucceeded(network_, self_address, std::move(socket_),
                                      std::move(writer_), std::move(reader_));
-  CancelProbing();
+  CancelProbingIfAny();
 }
 
 void QuicConnectivityProbingManager::SendConnectivityProbingPacket(
@@ -103,7 +120,7 @@ void QuicConnectivityProbingManager::MaybeResendConnectivityProbingPacket() {
   int64_t timeout_ms = (1 << retry_count_) * initial_timeout_ms_;
   if (timeout_ms > kMaxProbingTimeoutMs) {
     delegate_->OnProbeNetworkFailed(network_);
-    CancelProbing();
+    CancelProbingIfAny();
     return;
   }
   SendConnectivityProbingPacket(base::TimeDelta::FromMilliseconds(timeout_ms));
