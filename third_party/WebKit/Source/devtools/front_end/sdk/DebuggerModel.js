@@ -115,10 +115,29 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
     this._debuggerEnabled = true;
 
     var enablePromise = this._agent.enable();
+    enablePromise.then(this._registerDebugger.bind(this));
     this._pauseOnExceptionStateChanged();
     this._asyncStackTracesStateChanged();
     this.dispatchEventToListeners(SDK.DebuggerModel.Events.DebuggerWasEnabled, this);
     return enablePromise;
+  }
+
+  /**
+   * @param {string|null} debuggerId
+   */
+  _registerDebugger(debuggerId) {
+    if (!debuggerId)
+      return;
+    SDK.DebuggerModel._debuggerIdToModel.set(debuggerId, this);
+    this._debuggerId = debuggerId;
+  }
+
+  /**
+   * @param {string} debuggerId
+   * @return {?SDK.DebuggerModel}
+   */
+  static modelForDebuggerId(debuggerId) {
+    return SDK.DebuggerModel._debuggerIdToModel.get(debuggerId) || null;
   }
 
   /**
@@ -134,6 +153,7 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
     this._asyncStackTracesStateChanged();
     this.globalObjectCleared();
     this.dispatchEventToListeners(SDK.DebuggerModel.Events.DebuggerWasDisabled);
+    SDK.DebuggerModel._debuggerIdToModel.delete(this._debuggerId);
     return disablePromise;
   }
 
@@ -309,6 +329,15 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
   }
 
   /**
+   * @param {!Protocol.Runtime.StackTraceId} stackId
+   * @return {!Promise<?Protocol.Runtime.StackTrace>}
+   */
+  async fetchAsyncStackTrace(stackId) {
+    var response = await this._agent.invoke_getStackTrace({stackTraceId: stackId});
+    return response[Protocol.Error] ? null : response.stackTrace;
+  }
+
+  /**
    * @param {!Protocol.Debugger.BreakpointId} breakpointId
    * @param {!Protocol.Debugger.Location} location
    */
@@ -390,16 +419,11 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
    * @param {!Protocol.Runtime.ExceptionDetails=} exceptionDetails
    * @param {!Array.<!Protocol.Debugger.CallFrame>=} callFrames
    * @param {!Protocol.Runtime.StackTrace=} asyncStackTrace
+   * @param {!Protocol.Runtime.StackTraceId=} externalAsyncStackTrace
    * @param {boolean=} needsStepIn
    */
   _didEditScriptSource(
-      scriptId,
-      newSource,
-      callback,
-      error,
-      exceptionDetails,
-      callFrames,
-      asyncStackTrace,
+      scriptId, newSource, callback, error, exceptionDetails, callFrames, asyncStackTrace, externalAsyncStackTrace,
       needsStepIn) {
     callback(error, exceptionDetails);
     if (needsStepIn) {
@@ -410,7 +434,7 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
     if (!error && callFrames && callFrames.length) {
       this._pausedScript(
           callFrames, this._debuggerPausedDetails.reason, this._debuggerPausedDetails.auxData,
-          this._debuggerPausedDetails.breakpointIds, asyncStackTrace);
+          this._debuggerPausedDetails.breakpointIds, asyncStackTrace, externalAsyncStackTrace);
     }
   }
 
@@ -462,10 +486,11 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
    * @param {!Object|undefined} auxData
    * @param {!Array.<string>} breakpointIds
    * @param {!Protocol.Runtime.StackTrace=} asyncStackTrace
+   * @param {!Protocol.Runtime.StackTraceId=} externalAsyncStackTrace
    */
-  _pausedScript(callFrames, reason, auxData, breakpointIds, asyncStackTrace) {
-    var pausedDetails =
-        new SDK.DebuggerPausedDetails(this, callFrames, reason, auxData, breakpointIds, asyncStackTrace);
+  _pausedScript(callFrames, reason, auxData, breakpointIds, asyncStackTrace, externalAsyncStackTrace) {
+    var pausedDetails = new SDK.DebuggerPausedDetails(
+        this, callFrames, reason, auxData, breakpointIds, asyncStackTrace, externalAsyncStackTrace);
 
     if (pausedDetails && this._continueToLocationCallback) {
       var callback = this._continueToLocationCallback;
@@ -807,6 +832,7 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
    */
   dispose() {
     this._sourceMapManager.dispose();
+    SDK.DebuggerModel._debuggerIdToModel.delete(this._debuggerId);
     Common.moduleSetting('pauseOnExceptionEnabled').removeChangeListener(this._pauseOnExceptionStateChanged, this);
     Common.moduleSetting('pauseOnCaughtException').removeChangeListener(this._pauseOnExceptionStateChanged, this);
     Common.moduleSetting('disableAsyncStackTraces').removeChangeListener(this._asyncStackTracesStateChanged, this);
@@ -838,6 +864,9 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
     return this._stringMap.get(string);
   }
 };
+
+/** @type {!Map<string, !SDK.DebuggerModel>} */
+SDK.DebuggerModel._debuggerIdToModel = new Map();
 
 /** @type {!Map<string, string>} */
 SDK.DebuggerModel._fileURLToNodeJSPath = new Map();
@@ -929,9 +958,11 @@ SDK.DebuggerDispatcher = class {
    * @param {!Object=} auxData
    * @param {!Array.<string>=} breakpointIds
    * @param {!Protocol.Runtime.StackTrace=} asyncStackTrace
+   * @param {!Protocol.Runtime.StackTraceId=} externalAsyncStackTrace
    */
-  paused(callFrames, reason, auxData, breakpointIds, asyncStackTrace) {
-    this._debuggerModel._pausedScript(callFrames, reason, auxData, breakpointIds || [], asyncStackTrace);
+  paused(callFrames, reason, auxData, breakpointIds, asyncStackTrace, externalAsyncStackTrace) {
+    this._debuggerModel._pausedScript(
+        callFrames, reason, auxData, breakpointIds || [], asyncStackTrace, externalAsyncStackTrace);
   }
 
   /**
@@ -1365,8 +1396,9 @@ SDK.DebuggerPausedDetails = class {
    * @param {!Object|undefined} auxData
    * @param {!Array.<string>} breakpointIds
    * @param {!Protocol.Runtime.StackTrace=} asyncStackTrace
+   * @param {!Protocol.Runtime.StackTraceId=} externalAsyncStackTrace
    */
-  constructor(debuggerModel, callFrames, reason, auxData, breakpointIds, asyncStackTrace) {
+  constructor(debuggerModel, callFrames, reason, auxData, breakpointIds, asyncStackTrace, externalAsyncStackTrace) {
     this.debuggerModel = debuggerModel;
     this.callFrames = SDK.DebuggerModel.CallFrame.fromPayloadArray(debuggerModel, callFrames);
     this.reason = reason;
@@ -1374,6 +1406,7 @@ SDK.DebuggerPausedDetails = class {
     this.breakpointIds = breakpointIds;
     if (asyncStackTrace)
       this.asyncStackTrace = this._cleanRedundantFrames(asyncStackTrace);
+    this.externalAsyncStackTrace = externalAsyncStackTrace;
   }
 
   /**
