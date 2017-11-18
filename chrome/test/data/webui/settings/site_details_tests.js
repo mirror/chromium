@@ -77,6 +77,9 @@ suite('SiteDetails', function() {
         protectedContent: {
           setting: settings.ContentSetting.ALLOW,
         },
+        clipboard: {
+          setting: settings.ContentSetting.ALLOW,
+        },
       },
       exceptions: {
         ads: [createExceptionForTest()],
@@ -104,6 +107,7 @@ suite('SiteDetails', function() {
         sound: [createExceptionForTest()],
         unsandboxed_plugins: [createExceptionForTest()],
         protectedContent: [createExceptionForTest()],
+        clipboard: [createExceptionForTest()],
       }
     };
 
@@ -140,6 +144,9 @@ suite('SiteDetails', function() {
     optionalSiteDetailsContentSettingsTypes[settings.ContentSettingsTypes
                                                 .SOUND] =
         'enableSoundContentSetting';
+    optionalSiteDetailsContentSettingsTypes[settings.ContentSettingsTypes
+                                                .CLIPBOARD] =
+        'enableClipboardContentSetting';
 
     browserProxy.setPrefs(prefs);
 
