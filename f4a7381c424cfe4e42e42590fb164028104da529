@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "b5cc5cab_69821968",
+        "filename": "chrome/android/java/res/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-18T01:10:24Z",
+      "side": 1,
+      "message": "Having these run in //PRESUBMIT.py seems fine, then.",
+      "parentUuid": "8da94d76_fc4da99c",
+      "revId": "f4a7381c424cfe4e42e42590fb164028104da529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92f60c9a_db393d48",
         "filename": "chrome/android/java/res/PRESUBMIT.py",
         "patchSetId": 2
