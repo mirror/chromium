@@ -237,9 +237,6 @@ void ModelLoader::EndFetch(ClientModelStatus status, base::TimeDelta max_age) {
 
 void ModelLoader::ScheduleFetch(int64_t delay_ms) {
   DCHECK(fetch_sequence_checker_.CalledOnValidSequence());
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          safe_browsing::switches::kSbDisableAutoUpdate))
-    return;
   base::SequencedTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE,
       base::BindOnce(&ModelLoader::StartFetch, weak_factory_.GetWeakPtr()),
