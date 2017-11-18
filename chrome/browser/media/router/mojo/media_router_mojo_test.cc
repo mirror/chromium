@@ -35,7 +35,7 @@ const uint8_t kBinaryMessage[] = {0x01, 0x02, 0x03, 0x04};
 // Creates a media route whose ID is |kRouteId|.
 MediaRoute CreateMediaRoute() {
   MediaRoute route(kRouteId, MediaSource(kSource), kSinkId, kDescription, true,
-                   std::string(), true);
+                   true);
   route.set_presentation_id(kPresentationId);
   route.set_controller_type(RouteControllerType::kGeneric);
   return route;
@@ -225,7 +225,7 @@ void MediaRouterMojoTest::ProvideTestSink(
 
 void MediaRouterMojoTest::TestCreateRoute() {
   MediaSource media_source(kSource);
-  MediaRoute expected_route(kRouteId, media_source, kSinkId, "", false, "",
+  MediaRoute expected_route(kRouteId, media_source, kSinkId, "", false,
                             false);
   ProvideTestSink(mojom::MediaRouteProvider::Id::EXTENSION, kSinkId);
 
@@ -260,7 +260,7 @@ void MediaRouterMojoTest::TestCreateRoute() {
 
 void MediaRouterMojoTest::TestJoinRoute() {
   MediaSource media_source(kSource);
-  MediaRoute expected_route(kRouteId, media_source, kSinkId, "", false, "",
+  MediaRoute expected_route(kRouteId, media_source, kSinkId, "", false,
                             false);
 
   MediaRoute route = CreateMediaRoute();
@@ -304,7 +304,7 @@ void MediaRouterMojoTest::TestJoinRoute() {
 
 void MediaRouterMojoTest::TestConnectRouteByRouteId() {
   MediaSource media_source(kSource);
-  MediaRoute expected_route(kRouteId, media_source, kSinkId, "", false, "",
+  MediaRoute expected_route(kRouteId, media_source, kSinkId, "", false,
                             false);
   expected_route.set_incognito(false);
   MediaRoute route = CreateMediaRoute();

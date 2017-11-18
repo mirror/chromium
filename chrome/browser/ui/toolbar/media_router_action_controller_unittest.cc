@@ -67,13 +67,13 @@ class MediaRouterActionControllerUnitTest : public MediaRouterWebUITest {
 
     local_display_route_list_.push_back(
         media_router::MediaRoute("routeId1", source1_, "sinkId1", "description",
-                                 true, std::string(), true));
+                                 true, true));
     non_local_display_route_list_.push_back(
         media_router::MediaRoute("routeId2", source1_, "sinkId2", "description",
-                                 false, std::string(), true));
+                                 false, true));
     non_local_display_route_list_.push_back(
         media_router::MediaRoute("routeId3", source2_, "sinkId3", "description",
-                                 true, std::string(), false));
+                                 true, false));
   }
 
   void TearDown() override {

@@ -90,7 +90,7 @@ IssueInfo CreateIssueInfo(const std::string& title) {
 // Creates a media route whose ID is |kRouteId|.
 MediaRoute CreateMediaRoute() {
   MediaRoute route(kRouteId, MediaSource(kSource), kSinkId, kDescription, true,
-                   std::string(), true);
+                   true);
   route.set_presentation_id(kPresentationId);
   route.set_controller_type(RouteControllerType::kGeneric);
   return route;
@@ -99,7 +99,7 @@ MediaRoute CreateMediaRoute() {
 // Creates a media route whose ID is |kRouteId2|.
 MediaRoute CreateMediaRoute2() {
   MediaRoute route(kRouteId2, MediaSource(kSource), kSinkId, kDescription, true,
-                   std::string(), true);
+                   true);
   route.set_presentation_id(kPresentationId);
   route.set_controller_type(RouteControllerType::kGeneric);
   return route;
@@ -177,7 +177,7 @@ TEST_F(MediaRouterMojoImplTest, RouteRecognizedAfterCreation) {
 TEST_F(MediaRouterMojoImplTest, CreateIncognitoRoute) {
   ProvideTestSink(mojom::MediaRouteProvider::Id::EXTENSION, kSinkId);
   MediaSource media_source(kSource);
-  MediaRoute expected_route(kRouteId, media_source, kSinkId, "", false, "",
+  MediaRoute expected_route(kRouteId, media_source, kSinkId, "", false,
                             false);
   expected_route.set_incognito(true);
 
@@ -719,9 +719,9 @@ TEST_F(MediaRouterMojoImplTest, RegisterAndUnregisterMediaRoutesObserver) {
 
   std::vector<MediaRoute> expected_routes;
   expected_routes.push_back(MediaRoute(kRouteId, media_source, kSinkId,
-                                       kDescription, false, "", false));
+                                       kDescription, false, false));
   MediaRoute incognito_expected_route(kRouteId2, media_source, kSinkId,
-                                      kDescription, false, "", false);
+                                      kDescription, false, false);
   incognito_expected_route.set_incognito(true);
   expected_routes.push_back(incognito_expected_route);
   std::vector<MediaRoute::Id> expected_joinable_route_ids;
@@ -764,7 +764,7 @@ TEST_F(MediaRouterMojoImplTest, RegisterMediaRoutesObserver_DedupingWithCache) {
   const MediaSource media_source = MediaSource(kSource);
   std::vector<MediaRoute> expected_routes;
   expected_routes.push_back(MediaRoute(kRouteId, media_source, kSinkId,
-                                       kDescription, false, "", false));
+                                       kDescription, false, false));
   std::vector<MediaRoute::Id> expected_joinable_route_ids;
   expected_joinable_route_ids.push_back(kJoinableRouteId);
 
@@ -1216,11 +1216,11 @@ TEST_F(MediaRouterMojoImplTest, ObserveSinksFromMultipleProviders) {
 TEST_F(MediaRouterMojoImplTest, ObserveRoutesFromMultipleProviders) {
   const MediaSource source(kSource);
   // Routes for the extension MRP.
-  const MediaRoute route1a("route1a", source, "sink 1a", "", true, "", true);
-  const MediaRoute route1b("route1b", source, "sink 1b", "", true, "", true);
+  const MediaRoute route1a("route1a", source, "sink 1a", "", true, true);
+  const MediaRoute route1b("route1b", source, "sink 1b", "", true, true);
   // Routes for the wired display MRP.
-  const MediaRoute route2a("route2a", source, "sink 2a", "", true, "", true);
-  const MediaRoute route2b("route2b", source, "sink 2b", "", true, "", true);
+  const MediaRoute route2a("route2a", source, "sink 2a", "", true, true);
+  const MediaRoute route2b("route2b", source, "sink 2b", "", true, true);
   RegisterWiredDisplayProvider();
   MockMediaRoutesObserver observer(router(), kSource);
 
