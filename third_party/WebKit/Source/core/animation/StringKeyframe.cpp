@@ -73,20 +73,23 @@ PropertyHandleSet StringKeyframe::Properties() const {
   for (unsigned i = 0; i < css_property_map_->PropertyCount(); ++i) {
     CSSPropertyValueSet::PropertyReference property_reference =
         css_property_map_->PropertyAt(i);
-    DCHECK(!CSSProperty::Get(property_reference.Id()).IsShorthand())
+    const CSSProperty& property = property_reference.Property();
+    DCHECK(!property.IsShorthand())
         << "Web Animations: Encountered unexpanded shorthand CSS property ("
-        << property_reference.Id() << ").";
-    if (property_reference.Id() == CSSPropertyVariable)
+        << property.PropertyID() << ").";
+    if (property.IDEquals(CSSPropertyVariable)) {
       properties.insert(PropertyHandle(
           ToCSSCustomPropertyDeclaration(property_reference.Value())
               .GetName()));
-    else
-      properties.insert(PropertyHandle(property_reference.Id(), false));
+    } else {
+      properties.insert(PropertyHandle(property, false));
+    }
   }
 
-  for (unsigned i = 0; i < presentation_attribute_map_->PropertyCount(); ++i)
-    properties.insert(
-        PropertyHandle(presentation_attribute_map_->PropertyAt(i).Id(), true));
+  for (unsigned i = 0; i < presentation_attribute_map_->PropertyCount(); ++i) {
+    properties.insert(PropertyHandle(
+        presentation_attribute_map_->PropertyAt(i).Property(), true));
+  }
 
   for (auto* const key : svg_attribute_map_.Keys())
     properties.insert(PropertyHandle(*key));
@@ -109,7 +112,8 @@ StringKeyframe::CreatePropertySpecificKeyframe(const PropertyHandle& property,
   if (property.IsPresentationAttribute()) {
     return CSSPropertySpecificKeyframe::Create(
         offset, &Easing(),
-        &PresentationAttributeValue(property.PresentationAttribute()),
+        &PresentationAttributeValue(
+            property.PresentationAttribute().PropertyID()),
         Composite());
   }
 
@@ -120,7 +124,7 @@ StringKeyframe::CreatePropertySpecificKeyframe(const PropertyHandle& property,
 }
 
 bool StringKeyframe::CSSPropertySpecificKeyframe::PopulateAnimatableValue(
-    CSSPropertyID property,
+    const CSSProperty& property,
     Element& element,
     const ComputedStyle& base_style,
     const ComputedStyle* parent_style) const {

@@ -56,7 +56,11 @@ class CORE_EXPORT CSSPropertyValueSet
         : property_set_(&property_set), index_(index) {}
 
     CSSPropertyID Id() const {
-      return static_cast<CSSPropertyID>(PropertyMetadata().property_id_);
+      return static_cast<CSSPropertyID>(
+          PropertyMetadata().Property().PropertyID());
+    }
+    const CSSProperty& Property() const {
+      return PropertyMetadata().Property();
     }
     CSSPropertyID ShorthandID() const {
       return PropertyMetadata().ShorthandID();
@@ -118,7 +122,7 @@ class CORE_EXPORT CSSPropertyValueSet
   ImmutableCSSPropertyValueSet* ImmutableCopyIfNeeded() const;
 
   MutableCSSPropertyValueSet* CopyPropertiesInSet(
-      const Vector<CSSPropertyID>&) const;
+      const Vector<const CSSProperty*>&) const;
 
   String AsText() const;
 
@@ -256,7 +260,7 @@ class CORE_EXPORT MutableCSSPropertyValueSet : public CSSPropertyValueSet {
 
   template <typename T>  // CSSPropertyID or AtomicString
   bool RemoveProperty(T property, String* return_text = 0);
-  bool RemovePropertiesInSet(const CSSPropertyID* set, unsigned length);
+  bool RemovePropertiesInSet(const CSSProperty** set, unsigned length);
   void RemoveEquivalentProperties(const CSSPropertyValueSet*);
   void RemoveEquivalentProperties(const CSSStyleDeclaration*);
 
