@@ -281,10 +281,6 @@ class ExampleAppListViewDelegate : public app_list::AppListViewDelegate {
   void StartSpeechRecognition() override { NOTIMPLEMENTED(); }
   void StopSpeechRecognition() override { NOTIMPLEMENTED(); }
 
-  views::View* CreateStartPageWebView(const gfx::Size& size) override {
-    return NULL;
-  }
-
   std::vector<views::View*> CreateCustomPageWebViews(
       const gfx::Size& size) override {
     return std::vector<views::View*>();

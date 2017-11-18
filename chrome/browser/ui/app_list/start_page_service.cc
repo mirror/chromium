@@ -10,8 +10,6 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
-#include "base/json/json_reader.h"
-#include "base/json/json_string_value_serializer.h"
 #include "base/macros.h"
 #include "base/memory/singleton.h"
 #include "base/metrics/user_metrics.h"
@@ -23,7 +21,6 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/hotword_service.h"
 #include "chrome/browser/search/hotword_service_factory.h"
-#include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/browser/search_engines/ui_thread_search_terms_data.h"
 #include "chrome/browser/ui/app_list/speech_auth_helper.h"
 #include "chrome/browser/ui/app_list/speech_recognizer.h"
@@ -37,7 +34,6 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "components/prefs/pref_service.h"
-#include "components/search_engines/template_url_service.h"
 #include "components/zoom/zoom_controller.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_handle.h"
@@ -58,7 +54,6 @@
 #include "extensions/common/extension.h"
 #include "net/base/load_flags.h"
 #include "net/base/network_change_notifier.h"
-#include "net/url_request/url_fetcher.h"
 #include "ui/app_list/app_list_switches.h"
 #include "chromeos/audio/cras_audio_handler.h"
 
@@ -69,41 +64,9 @@ namespace app_list {
 
 namespace {
 
-// Path to google.com's doodle JSON.
-const char kDoodleJsonPath[] = "async/ddljson";
-
-// Maximum delay between checking for a new doodle when the doodle cannot be
-// retrieved. This is also used as the delay once a doodle is retrieved.
-const int kMaximumRecheckDelayMs = 1000 * 60 * 30;  // 30 minutes.
 
 // Delay before loading the start page WebContents on initialization.
 const int kLoadContentsDelaySeconds = 5;
-
-const net::BackoffEntry::Policy kDoodleBackoffPolicy = {
-  // Number of initial errors (in sequence) to ignore before applying
-  // exponential back-off rules.
-  0,
-
-  // Initial delay for exponential back-off in ms.
-  2500,
-
-  // Factor by which the waiting time will be multiplied.
-  2,
-
-  // Fuzzing percentage. ex: 10% will spread requests randomly
-  // between 90%-100% of the calculated time.
-  0.4,
-
-  // Maximum amount of time we are willing to delay our request in ms.
-  kMaximumRecheckDelayMs,
-
-  // Time to keep an entry from being discarded even when it
-  // has no significant state, -1 to never discard.
-  -1,
-
-  // Don't use initial delay unless the last request was an error.
-  false,
-};
 
 bool InSpeechRecognition(SpeechRecognitionState state) {
   return state == SPEECH_RECOGNITION_RECOGNIZING ||
@@ -299,21 +262,10 @@ StartPageService::StartPageService(Profile* profile)
       state_(app_list::SPEECH_RECOGNITION_READY),
       speech_button_toggled_manually_(false),
       speech_result_obtained_(false),
-      webui_finished_loading_(false),
       speech_auth_helper_(new SpeechAuthHelper(profile, &clock_)),
       network_available_(true),
       microphone_available_(true),
-      search_engine_is_google_(false),
-      backoff_entry_(&kDoodleBackoffPolicy),
       weak_factory_(this) {
-  TemplateURLService* template_url_service =
-      TemplateURLServiceFactory::GetForProfile(profile_);
-  const TemplateURL* default_provider =
-      template_url_service->GetDefaultSearchProvider();
-  search_engine_is_google_ =
-      default_provider->GetEngineType(
-          template_url_service->search_terms_data()) == SEARCH_ENGINE_GOOGLE;
-
   network_change_observer_.reset(new NetworkChangeObserver(this));
 }
 
@@ -545,20 +497,6 @@ void StartPageService::DidFinishNavigation(
   zoom::ZoomController::FromWebContents(contents_.get())->SetZoomLevel(0);
 }
 
-void StartPageService::WebUILoaded() {
-  // There's a race condition between the WebUI loading, and calling its JS
-  // functions. Specifically, calling LoadContents() doesn't mean that the page
-  // has loaded, but several code paths make this assumption. This function
-  // allows us to defer calling JS functions until after the page has finished
-  // loading.
-  webui_finished_loading_ = true;
-  for (const auto& cb : pending_webui_callbacks_)
-    cb.Run();
-  pending_webui_callbacks_.clear();
-
-  FetchDoodleJson();
-}
-
 void StartPageService::LoadContents() {
   contents_.reset(content::WebContents::Create(
       content::WebContents::CreateParams(profile_)));
@@ -576,7 +514,6 @@ void StartPageService::LoadContents() {
 
 void StartPageService::UnloadContents() {
   contents_.reset();
-  webui_finished_loading_ = false;
 }
 
 void StartPageService::LoadStartPageURL() {
@@ -588,64 +525,6 @@ void StartPageService::LoadStartPageURL() {
 
   contents_->GetRenderViewHost()->GetWidget()->GetView()->SetBackgroundColor(
       SK_ColorTRANSPARENT);
-}
-
-void StartPageService::FetchDoodleJson() {
-  if (!search_engine_is_google_)
-    return;
-
-  GURL::Replacements replacements;
-  replacements.SetPathStr(kDoodleJsonPath);
-
-  GURL google_base_url(UIThreadSearchTermsData(profile_).GoogleBaseURLValue());
-  GURL doodle_url = google_base_url.ReplaceComponents(replacements);
-  doodle_fetcher_ =
-      net::URLFetcher::Create(0, doodle_url, net::URLFetcher::GET, this);
-  doodle_fetcher_->SetRequestContext(profile_->GetRequestContext());
-  doodle_fetcher_->SetLoadFlags(net::LOAD_DO_NOT_SAVE_COOKIES);
-  doodle_fetcher_->Start();
-}
-
-void StartPageService::OnURLFetchComplete(const net::URLFetcher* source) {
-  std::string json_data;
-  source->GetResponseAsString(&json_data);
-
-  // Remove XSSI guard for JSON parsing.
-  size_t json_start_index = json_data.find("{");
-  base::StringPiece json_data_substr(json_data);
-  if (json_start_index != std::string::npos)
-    json_data_substr.remove_prefix(json_start_index);
-
-  JSONStringValueDeserializer deserializer(json_data_substr,
-                                           base::JSON_ALLOW_TRAILING_COMMAS);
-  int error_code = 0;
-  std::unique_ptr<base::Value> doodle_json =
-      deserializer.Deserialize(&error_code, nullptr);
-
-  base::TimeDelta recheck_delay;
-  if (error_code != 0) {
-    // On failure, use expotential backoff.
-    backoff_entry_.InformOfRequest(false);
-    recheck_delay = backoff_entry_.GetTimeUntilRelease();
-  } else {
-    // If we received information, even if there's no doodle, reset the backoff
-    // entry and start rechecking for the doodle at the maximum interval.
-    backoff_entry_.Reset();
-    recheck_delay = base::TimeDelta::FromMilliseconds(kMaximumRecheckDelayMs);
-
-    if (contents_ && contents_->GetWebUI()) {
-      contents_->GetWebUI()->CallJavascriptFunctionUnsafe(
-          "appList.startPage.onAppListDoodleUpdated", *doodle_json,
-          base::Value(UIThreadSearchTermsData(profile_).GoogleBaseURLValue()));
-    }
-  }
-
-  // Check for a new doodle.
-  content::BrowserThread::PostDelayedTask(
-      content::BrowserThread::UI, FROM_HERE,
-      base::Bind(&StartPageService::FetchDoodleJson,
-                 weak_factory_.GetWeakPtr()),
-      recheck_delay);
 }
 
 }  // namespace app_list

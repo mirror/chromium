@@ -71,10 +71,6 @@ void AppListTestViewDelegate::StopSpeechRecognition() {
   ++stop_speech_recognition_count_;
 }
 
-views::View* AppListTestViewDelegate::CreateStartPageWebView(
-    const gfx::Size& size) {
-  return NULL;
-}
 std::vector<views::View*> AppListTestViewDelegate::CreateCustomPageWebViews(
     const gfx::Size& size) {
   return std::vector<views::View*>();
