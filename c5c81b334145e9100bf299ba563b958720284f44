@@ -207,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "4404fc13_56f9a5ea",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1118373
+      },
+      "writtenOn": "2017-11-18T13:45:41Z",
+      "side": 1,
+      "message": "I wouldn\u0027t consider it wasteful.\n\nWhen you compile a script, the compiler creates an object graph of script objects, shared function infos, bytecode arrays, etc. This object graph is usually used for executing the script. In this particular case however, it\u0027s not used to execute, but serialized into the code cache. So the compilation result is not a wasted by-product at all, just consumed differently.",
+      "parentUuid": "76944b06_b1ec3aa5",
+      "revId": "c5c81b334145e9100bf299ba563b958720284f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79c27aec_cf568095",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
         "patchSetId": 44
