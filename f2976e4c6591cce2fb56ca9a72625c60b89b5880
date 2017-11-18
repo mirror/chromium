@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df426d19_0e504fc9",
+        "filename": "components/download/downloader/in_progress/in_progress_conversions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-18T00:06:40Z",
+      "side": 1,
+      "message": "nit: metadata_pb::DownloadSource is primitive type, no need to use const",
+      "revId": "f2976e4c6591cce2fb56ca9a72625c60b89b5880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
