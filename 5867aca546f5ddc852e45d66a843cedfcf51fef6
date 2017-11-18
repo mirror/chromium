@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4afa2e45_d24ad06d",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-18T01:50:29Z",
+      "side": 1,
+      "message": "nit: prefer this:\nauto chrome_navigation_data \u003d std::make_unique\u003cChromeNavigationData\u003e();\n...\n... SetNavigationData(..., std::move(chrome_navigation_data));\n\nAlso, please include \u003cmemory\u003e and \u003cutility\u003e",
+      "revId": "5867aca546f5ddc852e45d66a843cedfcf51fef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "375f998e_a8b9f40d",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-18T01:50:29Z",
+      "side": 1,
+      "message": "Why not just have a method that actually simulates sending this data, instead of populating a member at the beginning of the test and sending that.\n\nThis would make a bit more sense if you are simulating multiple IPCs but I don\u0027t think you are here.",
+      "revId": "5867aca546f5ddc852e45d66a843cedfcf51fef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae6c849_8db62cf8",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-18T01:50:29Z",
+      "side": 1,
+      "message": "Can we assert the metric has no counts?",
+      "revId": "5867aca546f5ddc852e45d66a843cedfcf51fef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a815f3b3_748bc087",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-18T01:50:29Z",
+      "side": 1,
+      "message": "Could probably move this into a helper, but it\u0027s optional.",
+      "revId": "5867aca546f5ddc852e45d66a843cedfcf51fef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
