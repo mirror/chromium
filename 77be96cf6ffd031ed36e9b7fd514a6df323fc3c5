@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81939029_964ae126",
+        "filename": "content/browser/media/session/media_session_controllers_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-18T00:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29fb6f5c_fd601a15",
+      "revId": "77be96cf6ffd031ed36e9b7fd514a6df323fc3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55d1185a_0d8c4d95",
         "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-15T14:05:45Z",
       "side": 1,
       "message": "Instead of passing true/false here, I would recommand changing the CommandLine like:\n```\nbase::CommandLine::ForCurrentProcess()-\u003eAppendSwitch(switches::...);\n```\n\nUsually, this is set in the test class but in this case, you might want to have either a parameterised test or manually enable/disable the feature. An example of parameterised tests: https://cs.chromium.org/chromium/src/content/browser/media/media_browsertest.cc",
+      "revId": "77be96cf6ffd031ed36e9b7fd514a6df323fc3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b0d96c7_f2c4f810",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-18T00:38:14Z",
+      "side": 1,
+      "message": "So I mainly did it this way to not deal with OS \n\n#if defined(OS_ANDROID) || defined(OS_CHROMEOS)\n  return true;\n\nIs there a way to make sure the OS is considered when testing this?\n\nAlso, we could continue passing in the bool, but have the bool calculated at runtime of the test, rather than passing it directly.",
+      "parentUuid": "55d1185a_0d8c4d95",
       "revId": "77be96cf6ffd031ed36e9b7fd514a6df323fc3c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c3f7e488_e0c7e723",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-18T00:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a81e7d76_1f6c6c17",
+      "revId": "77be96cf6ffd031ed36e9b7fd514a6df323fc3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d497c0cb_218586a6",
         "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-15T14:05:45Z",
       "side": 1,
       "message": "Should you add an expectation of something not being called or would it fail if the mock controller gets a call that isn\u0027t expected?",
+      "revId": "77be96cf6ffd031ed36e9b7fd514a6df323fc3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f1f6ec2_4ca96bc1",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-18T00:38:14Z",
+      "side": 1,
+      "message": "If something is declared as a StrictMock, it will fail if called unexpectedly.",
+      "parentUuid": "d497c0cb_218586a6",
       "revId": "77be96cf6ffd031ed36e9b7fd514a6df323fc3c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
