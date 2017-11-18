@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dc8aa44_9be002cb",
+        "filename": "net/quic/chromium/crypto/proof_verifier_chromium.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-18T00:20:22Z",
+      "side": 1,
+      "message": "😬😅",
+      "revId": "38c0ee2f6a403879fbf72eccd31ae748d334f4af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23915e85_a347e6b6",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1563,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-18T00:20:22Z",
+      "side": 1,
+      "message": "BUG: Is this correct for line 1561?\n\nIt\u0027d probably make sense to set to false in 1545 (or an else on 1554)",
+      "revId": "38c0ee2f6a403879fbf72eccd31ae748d334f4af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
