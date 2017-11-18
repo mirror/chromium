@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "208db549_3c05dff9",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-18T00:36:25Z",
+      "side": 1,
+      "message": "nit: \nUse alt. server config. 1",
+      "range": {
+        "startLine": 353,
+        "startChar": 5,
+        "endLine": 353,
+        "endChar": 43
+      },
+      "revId": "4730cb356b145b8d6982865dd503c498dfac060e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d74e128_5f1b4658",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-18T00:36:25Z",
+      "side": 1,
+      "message": "nit: call them alt1, alt2...and so on.",
+      "range": {
+        "startLine": 23,
+        "startChar": 54,
+        "endLine": 23,
+        "endChar": 66
+      },
+      "revId": "4730cb356b145b8d6982865dd503c498dfac060e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
