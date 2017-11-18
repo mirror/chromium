@@ -34,6 +34,7 @@
 #include "net/base/trace_constants.h"
 #include "net/base/url_util.h"
 #include "net/cert/cert_status_flags.h"
+#include "net/cert/ct_policy_status.h"
 #include "net/cookies/canonical_cookie.h"
 #include "net/cookies/cookie_store.h"
 #include "net/filter/brotli_source_stream.h"
@@ -80,6 +81,40 @@
 #endif  // BUILDFLAG(ENABLE_REPORTING)
 
 namespace {
+
+// Records per-request histograms relating to Certificate Transparency
+// compliance.
+void RecordCTHistograms(const net::SSLInfo& ssl_info) {
+  if (!ssl_info.ct_compliance_details_available)
+    return;
+
+  // Connections with major errors other than CERTIFICATE_TRANSPARENCY_REQUIRED
+  // would have failed anyway, so do not record these histograms for such
+  // requests.
+  net::CertStatus other_errors =
+      ssl_info.cert_status &
+      ~net::CERT_STATUS_CERTIFICATE_TRANSPARENCY_REQUIRED;
+  if (net::IsCertStatusError(other_errors) &&
+      !net::IsCertStatusMinorError(other_errors)) {
+    return;
+  }
+
+  // Record the CT compliance of each request, to give a picture of the
+  // percentage of overall requests that are CT-compliant.
+  UMA_HISTOGRAM_ENUMERATION(
+      "Net.CertificateTransparency.RequestComplianceStatus",
+      ssl_info.ct_cert_policy_compliance,
+      net::ct::CertPolicyCompliance::CERT_POLICY_MAX);
+  // Record the CT compliance of each request which was required to be CT
+  // compliant. This gives a picture of the sites that are supposed to be
+  // compliant and how well they do at actually being compliant.
+  if (ssl_info.ct_policy_compliance_required) {
+    UMA_HISTOGRAM_ENUMERATION(
+        "Net.CertificateTransparency.CTRequiredRequestComplianceStatus",
+        ssl_info.ct_cert_policy_compliance,
+        net::ct::CertPolicyCompliance::CERT_POLICY_MAX);
+  }
+}
 
 // Logs whether the CookieStore used for this request matches the
 // ChannelIDService used when establishing the connection that this request is
@@ -1458,6 +1493,8 @@ void URLRequestHttpJob::DoneWithRequest(CompletionCause reason) {
 
   RecordPerfHistograms(reason);
   request()->set_received_response_content_length(prefilter_bytes_read());
+  if (transaction_)
+    RecordCTHistograms(transaction_->GetResponseInfo()->ssl_info);
 }
 
 HttpResponseHeaders* URLRequestHttpJob::GetResponseHeaders() const {
