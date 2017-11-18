@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28170965_104f14d1",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-18T00:55:51Z",
+      "side": 1,
+      "message": "Should we just runn the callback directly? calling OnEstablishGpuChannel will reset gpu_channel_requested_ even though we may still have a request pending that we\u0027ll receive later. I worry that we might end up requesting too many channels.",
+      "revId": "431a2e48e834e0835f7e9133dd948ef69fdee8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdfd6f18_b29696fe",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-18T00:55:51Z",
+      "side": 1,
+      "message": "The downside of testing this is that if the GPU process is disabled, if we receive the failure reply before the renderer request, we\u0027ll get here with an invalid channel, and gpu_channel_requested_ being false, and we\u0027re try to establish again, whereas we should be able to reply to the renderer immediately.\n\nI think we want a flag that says \"we received a reply, channel_handle_/gpu_info_/gpu_feature_info_ have the data\" (we can synthesize the result based on whether we do have a channel or not). If it\u0027s true, we reply to the renderer with that data (whether success or not). If it\u0027s false, we know we have to wait for the request (possibly starting it).",
+      "revId": "431a2e48e834e0835f7e9133dd948ef69fdee8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0139df3c_a4feba5f",
+        "filename": "content/browser/gpu/gpu_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-18T00:55:51Z",
+      "side": 1,
+      "message": "nit: you don\u0027t technically need base::Optional. callbacks have an empty default value (you can test with callback.is_null() )",
+      "revId": "431a2e48e834e0835f7e9133dd948ef69fdee8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c932bda2_3f7a8b81",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1453,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-18T00:55:51Z",
+      "side": 1,
+      "message": "nit: I think we can do this even when in-process",
+      "revId": "431a2e48e834e0835f7e9133dd948ef69fdee8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fbf282f_bbb501b8",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-18T00:55:51Z",
+      "side": 1,
+      "message": "nit: maybe add a comment as to why Unretained is safe (\"gpu_client_ outlives the registry, because its destruction is posted to IO thread from the destructor of |this|).",
+      "revId": "431a2e48e834e0835f7e9133dd948ef69fdee8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
