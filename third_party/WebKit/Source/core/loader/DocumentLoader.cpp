@@ -1009,16 +1009,19 @@ void DocumentLoader::DidCommitNavigation() {
 bool DocumentLoader::ShouldClearWindowName(
     const LocalFrame& frame,
     SecurityOrigin* previous_security_origin,
+    const KURL* previous_url,
     const Document& new_document) {
-  if (!previous_security_origin)
+  if (!previous_security_origin || !frame.IsMainFrame() ||
+      frame.Loader().Opener() ||
+      (frame.GetPage() && frame.GetPage()->OpenedByDOM()) ||
+      (previous_url && previous_url->IsEmpty())) {
     return false;
-  if (!frame.IsMainFrame())
-    return false;
-  if (frame.Loader().Opener())
-    return false;
+  }
 
-  return !new_document.GetSecurityOrigin()->IsSameSchemeHostPort(
+  bool result = !new_document.GetSecurityOrigin()->IsSameSchemeHostPort(
       previous_security_origin);
+
+  return result;
 }
 
 // static
@@ -1065,8 +1068,11 @@ void DocumentLoader::InstallNewDocument(
   }
 
   SecurityOrigin* previous_security_origin = nullptr;
-  if (frame_->GetDocument())
+  const KURL* previous_url = nullptr;
+  if (frame_->GetDocument()) {
     previous_security_origin = frame_->GetDocument()->GetSecurityOrigin();
+    previous_url = &(frame_->GetDocument()->Url());
+  }
 
   // In some rare cases, we'll re-use a LocalDOMWindow for a new Document. For
   // example, when a script calls window.open("..."), the browser gives
@@ -1106,13 +1112,9 @@ void DocumentLoader::InstallNewDocument(
       frame_->ClearActivation();
   }
 
-  if (ShouldClearWindowName(*frame_, previous_security_origin, *document)) {
-    // TODO(andypaicu): experimentalSetNullName will just record the fact
-    // that the name would be nulled and if the name is accessed after we will
-    // fire a UseCounter. If we decide to move forward with this change, we'd
-    // actually clean the name here.
-    // frame_->tree().setName(g_null_atom);
-    frame_->Tree().ExperimentalSetNulledName();
+  if (ShouldClearWindowName(*frame_, previous_security_origin, previous_url,
+                            *document)) {
+    frame_->Tree().SetName(g_null_atom);
   }
 
   if (!overriding_url.IsEmpty())
