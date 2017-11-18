@@ -50,6 +50,7 @@
 
 namespace gpu {
 class GpuMemoryBufferManager;
+class RasterInterface;
 namespace gles {
 class GLES2Interface;
 }
@@ -198,9 +199,11 @@ class CC_EXPORT ResourceProvider
     // Creates a texture id, allocating if necessary, on the given context. The
     // texture id must be deleted by the caller.
     GLuint ConsumeTexture(gpu::gles2::GLES2Interface* gl);
+    GLuint ConsumeTexture(gpu::RasterInterface* gl);
 
    private:
     void LazyAllocate(gpu::gles2::GLES2Interface* gl, GLuint texture_id);
+    void LazyAllocate(gpu::RasterInterface* gl, GLuint texture_id);
 
     ResourceProvider* const resource_provider_;
     const viz::ResourceId resource_id_;

@@ -91,6 +91,11 @@ gpu::gles2::GLES2Interface* TestInProcessContextProvider::ContextGL() {
   return context_->GetImplementation();
 }
 
+gpu::RasterInterface* TestInProcessContextProvider::RasterContext() {
+  NOTREACHED();
+  return nullptr;
+}
+
 gpu::ContextSupport* TestInProcessContextProvider::ContextSupport() {
   return context_->GetImplementation();
 }

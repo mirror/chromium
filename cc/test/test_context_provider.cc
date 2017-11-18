@@ -230,6 +230,11 @@ gpu::gles2::GLES2Interface* TestContextProvider::ContextGL() {
   return context_gl_.get();
 }
 
+gpu::RasterInterface* TestContextProvider::RasterContext() {
+  NOTREACHED();
+  return nullptr;
+}
+
 gpu::ContextSupport* TestContextProvider::ContextSupport() {
   return support();
 }
