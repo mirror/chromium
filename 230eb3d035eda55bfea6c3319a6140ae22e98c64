@@ -16,6 +16,24 @@
       "revId": "230eb3d035eda55bfea6c3319a6140ae22e98c64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa022cb_27d1deb6",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-18T02:53:01Z",
+      "side": 1,
+      "message": "This line should\u0027ve been removed in the previous patch, but was unintentionally included due to local patch merging, rebasing, etc. It is now removed.",
+      "parentUuid": "651ef34d_1baad715",
+      "revId": "230eb3d035eda55bfea6c3319a6140ae22e98c64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
