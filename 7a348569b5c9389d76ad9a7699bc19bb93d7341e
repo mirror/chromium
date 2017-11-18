@@ -52,6 +52,24 @@
       "revId": "7a348569b5c9389d76ad9a7699bc19bb93d7341e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fca89ba_89a0f2bc",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_physical_offset.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-18T14:31:07Z",
+      "side": 1,
+      "message": "Oh interesting, thanks. Searched blink-dev and found:\n\n\u003e LTO isn\u0027t presently incredibly aggressive, so generally inlining will only happen if the definition is available in the same translation unit.\nhttps://groups.google.com/a/chromium.org/d/msg/blink-dev/7fPGui8ZBqM/FD3CazsRBQAJ\n\nMaybe I read articles in the context of POGO, not LTO.",
+      "parentUuid": "6dafc013_2630ea17",
+      "revId": "7a348569b5c9389d76ad9a7699bc19bb93d7341e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
