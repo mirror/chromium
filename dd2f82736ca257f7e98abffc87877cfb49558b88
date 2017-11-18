@@ -16,6 +16,24 @@
       "revId": "dd2f82736ca257f7e98abffc87877cfb49558b88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c66161_c0185660",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/worker/worker-on-message-async-stacks.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-11-18T00:01:11Z",
+      "side": 1,
+      "message": "Extracted stack trace logging.",
+      "parentUuid": "9e036ec3_d179e4c4",
+      "revId": "dd2f82736ca257f7e98abffc87877cfb49558b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
