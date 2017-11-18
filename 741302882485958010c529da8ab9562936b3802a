@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e97aed95_587f5268",
+        "filename": "android_webview/browser/aw_safe_browsing_blocking_page.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-18T07:45:39Z",
+      "side": 1,
+      "message": "Please document that these enum values are persisted to logs, and should therefore never be renumbered nor reused.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 65
+      },
+      "revId": "741302882485958010c529da8ab9562936b3802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e4e4ef_fab92040",
+        "filename": "android_webview/browser/aw_safe_browsing_blocking_page.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-18T07:45:39Z",
+      "side": 1,
+      "message": "nit: I\u0027d recommend naming this \"COUNT\" rather than \"MAX\", as \"max\" is more typically used as an alias for the last item in an enum, whereas \"count\" is more typically used to count the number of entries in the enum.",
+      "range": {
+        "startLine": 33,
+        "startChar": 59,
+        "endLine": 33,
+        "endChar": 62
+      },
+      "revId": "741302882485958010c529da8ab9562936b3802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4edbe6c6_69b33a89",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 22389,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-18T07:45:39Z",
+      "side": 1,
+      "message": "Optional: This summary is only shown on hover, and is therefore typically omitted for most enums.  (But, you\u0027re welcome to keep it if you\u0027d like to.)",
+      "range": {
+        "startLine": 22389,
+        "startChar": 78,
+        "endLine": 22389,
+        "endChar": 0
+      },
+      "revId": "741302882485958010c529da8ab9562936b3802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d28a59c_34ccf409",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 22390,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-18T07:45:39Z",
+      "side": 1,
+      "message": "Optional: I personally prefer more human-friendly name casing, e.g. \"Loud\" for this entry.",
+      "range": {
+        "startLine": 22390,
+        "startChar": 24,
+        "endLine": 22390,
+        "endChar": 28
+      },
+      "revId": "741302882485958010c529da8ab9562936b3802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
