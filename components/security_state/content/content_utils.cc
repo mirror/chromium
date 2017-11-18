@@ -82,11 +82,36 @@ void ExplainHTTPSecurity(
 void ExplainSafeBrowsingSecurity(
     const security_state::SecurityInfo& security_info,
     content::SecurityStyleExplanations* security_style_explanations) {
-  if (security_info.malicious_content_status !=
+  if (security_info.malicious_content_status ==
       security_state::MALICIOUS_CONTENT_STATUS_NONE) {
-    security_style_explanations->summary =
-        l10n_util::GetStringUTF8(IDS_SAFEBROWSING_WARNING);
+    return;
   }
+  // Override the main summary for the page.
+  security_style_explanations->summary =
+      l10n_util::GetStringUTF8(IDS_SAFEBROWSING_WARNING);
+  // Add a bullet describing the issue.
+  std::string description;
+  switch (security_info.malicious_content_status) {
+    case security_state::MALICIOUS_CONTENT_STATUS_MALWARE:
+      description = l10n_util::GetStringUTF8(
+          IDS_SAFEBROWSING_WARNING_DESCRIPTION_MALWARE);
+      break;
+    case security_state::MALICIOUS_CONTENT_STATUS_UNWANTED_SOFTWARE:
+      description = l10n_util::GetStringUTF8(
+          IDS_SAFEBROWSING_WARNING_DESCRIPTION_UNWANTED_SOFTWARE);
+      break;
+    case security_state::MALICIOUS_CONTENT_STATUS_SOCIAL_ENGINEERING:
+      description = l10n_util::GetStringUTF8(
+          IDS_SAFEBROWSING_WARNING_DESCRIPTION_SOCIAL_ENGINEERING);
+      break;
+    default:
+      description =
+          l10n_util::GetStringUTF8(IDS_SAFEBROWSING_WARNING_DESCRIPTION);
+      break;
+  }
+  content::SecurityStyleExplanation explanation(
+      l10n_util::GetStringUTF8(IDS_SAFEBROWSING_WARNING_SUMMARY), description);
+  security_style_explanations->insecure_explanations.push_back(explanation);
 }
 
 void ExplainCertificateSecurity(
