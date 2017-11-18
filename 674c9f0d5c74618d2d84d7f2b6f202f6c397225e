@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "b49dadd2_d4541466",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-18T02:59:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55a2e487_ead77969",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 69,
+        "endChar": 19
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81c65971_99400938",
         "filename": "net/quic/chromium/quic_chromium_client_session.cc",
         "patchSetId": 1
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "cb3ed953_c53192f7",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1628,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-18T02:59:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77913f9d_c1a1a4a2",
+      "range": {
+        "startLine": 1628,
+        "startChar": 36,
+        "endLine": 1628,
+        "endChar": 41
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84c32950_1e3f930e",
         "filename": "net/quic/chromium/quic_chromium_client_session.cc",
         "patchSetId": 1
@@ -114,6 +162,30 @@
       "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c7d3d2_98a3b1ed",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1630,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-18T02:59:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84c32950_1e3f930e",
+      "range": {
+        "startLine": 1630,
+        "startChar": 4,
+        "endLine": 1630,
+        "endChar": 6
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "aabc65e4_a35c920e",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1631,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-18T02:59:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5155272_1518a694",
+      "range": {
+        "startLine": 1631,
+        "startChar": 34,
+        "endLine": 1631,
+        "endChar": 39
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4cb1f1b_415db5da",
         "filename": "net/quic/chromium/quic_chromium_client_session.cc",
         "patchSetId": 1
@@ -163,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "7b1b5d9b_c2c6b2c0",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1660,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-18T02:59:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4cb1f1b_415db5da",
+      "range": {
+        "startLine": 1660,
+        "startChar": 43,
+        "endLine": 1660,
+        "endChar": 0
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "259fcdc5_7c2cb903",
         "filename": "net/quic/chromium/quic_chromium_client_session.cc",
         "patchSetId": 1
@@ -177,6 +297,24 @@
       "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e878d03_9fa20dd8",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1685,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-18T02:59:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "259fcdc5_7c2cb903",
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "9f42fb3c_b56a54bd",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1695,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-18T02:59:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0745658_d713ce05",
+      "range": {
+        "startLine": 1695,
+        "startChar": 5,
+        "endLine": 1695,
+        "endChar": 11
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "518c661d_84c571a4",
         "filename": "net/quic/chromium/quic_chromium_client_session.cc",
         "patchSetId": 1
@@ -223,6 +385,30 @@
       "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d28bde49_a4e0d907",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1736,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-18T02:59:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "518c661d_84c571a4",
+      "range": {
+        "startLine": 1736,
+        "startChar": 24,
+        "endLine": 1736,
+        "endChar": 25
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +435,30 @@
     },
     {
       "key": {
+        "uuid": "57b6ebe0_31618aff",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1751,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-18T02:59:53Z",
+      "side": 1,
+      "message": "Thanks for the discussion offline. I made the new API which passes in a delay to start probe on the default network.",
+      "parentUuid": "87e1c85a_01625d91",
+      "range": {
+        "startLine": 1751,
+        "startChar": 39,
+        "endLine": 1751,
+        "endChar": 0
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a774e58_71465210",
         "filename": "net/quic/chromium/quic_chromium_client_session.cc",
         "patchSetId": 1
@@ -269,6 +479,30 @@
       "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f1f2df_acff7008",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1760,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-18T02:59:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a774e58_71465210",
+      "range": {
+        "startLine": 1760,
+        "startChar": 28,
+        "endLine": 1760,
+        "endChar": 39
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -295,6 +529,30 @@
     },
     {
       "key": {
+        "uuid": "d701f4b3_92f11a4a",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1764,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-18T02:59:53Z",
+      "side": 1,
+      "message": "I am not super sure. This is being conservative. Depends on how much we trust the platform signal.\n\nThere are two cases we migrate immediately as I mentioned earlier: 0 -\u003e 1 or 2 -\u003e 1.\n2-\u003e1 happens when network disconnects, it\u0027s guaranteed that we won\u0027t be on the network we\u0027re forced to mgirate to.\n\n0-\u003e1: happens when a network connects OnNetworkConnected, \nWe get to 0 state (no network) in two cases: 1. the network we are currently on was disconnected, 2. the network we are currently on was having write error. \ncase 2 might eventually cause case 1. \n\nI am not sure when a same network disconnects and re-connects, the NetworkHandle would be different or not. I will continue think about this case.",
+      "parentUuid": "aef11526_2f275b42",
+      "range": {
+        "startLine": 1764,
+        "startChar": 11,
+        "endLine": 1764,
+        "endChar": 0
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69e3dc41_22ce01f5",
         "filename": "net/quic/chromium/quic_chromium_client_session.cc",
         "patchSetId": 1
@@ -309,6 +567,24 @@
       "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d3e93f7_7ef368ac",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2003,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-18T02:59:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69e3dc41_22ce01f5",
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
