@@ -16,6 +16,24 @@
       "revId": "bbb23ad0572fa54827f7edc3ca94432628af00ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee1b83c_4665f39d",
+        "filename": "net/http/transport_security_state_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1624,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-18T00:23:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05b3ef18_c8349bb9",
+      "revId": "bbb23ad0572fa54827f7edc3ca94432628af00ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
