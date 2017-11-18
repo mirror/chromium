@@ -544,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "ebdec810_58407a3f",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:26:43Z",
+      "side": 1,
+      "message": "I don\u0027t know :)\n\nIf we are not sure, maybe we should take defensive measures? \nCould you tell me which ones?",
+      "parentUuid": "6a1c6dc8_1e180760",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "614c2b95_79cb5764",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 16
