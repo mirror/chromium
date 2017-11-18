@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc25129e_5b11d59a",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/root-layer-scrolls",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-18T00:25:00Z",
+      "side": 0,
+      "message": "You checked that this actually passes, right?  (I thought it would need an RLS -expected.txt baseline.)",
+      "revId": "f4571479cece3b0bd70653692f5240a0866950d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
