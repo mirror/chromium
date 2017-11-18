@@ -16,6 +16,24 @@
       "revId": "f8b0a5576371f338c39023be5eeeb78a6571fdf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3c7170_6313f372",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000804
+      },
+      "writtenOn": "2017-11-18T22:31:10Z",
+      "side": 1,
+      "message": "Done.\n\nNot sure.\nI was trying to be consistent with kCSPWithStrictDynamic.\nDoes AllowDynamic similarly include non-CSP\u0027ed pages?",
+      "parentUuid": "cc2a884d_ac66d607",
+      "revId": "f8b0a5576371f338c39023be5eeeb78a6571fdf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
