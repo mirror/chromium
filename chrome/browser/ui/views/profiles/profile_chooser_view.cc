@@ -168,7 +168,9 @@ views::ImageButton* CreateBackButton(views::ButtonListener* listener) {
 
 BadgedProfilePhoto::BadgeType GetProfileBadgeType(const Profile* profile) {
   if (!profile->IsSupervised())
-    return BadgedProfilePhoto::BADGE_TYPE_NONE;
+    return signin::IsDiceEnabledForProfile(profile->GetPrefs())
+               ? BadgedProfilePhoto::BADGE_TYPE_SYNC_COMPLETE_CIRCLE
+               : BadgedProfilePhoto::BADGE_TYPE_NONE;
   return profile->IsChild() ? BadgedProfilePhoto::BADGE_TYPE_CHILD
                             : BadgedProfilePhoto::BADGE_TYPE_SUPERVISOR;
 }
