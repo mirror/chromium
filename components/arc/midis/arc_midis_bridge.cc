@@ -42,12 +42,11 @@ class ArcMidisBridgeFactory
 }  // namespace
 
 // static
-ArcMidisBridge* ArcMidisBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcMidisBridgeFactory::GetForBrowserContext(context);
+ArcMidisBridge* ArcMidisBridge::GetForContext(ArcContext* context) {
+  return ArcMidisBridgeFactory::GetForContext(context);
 }
 
-ArcMidisBridge::ArcMidisBridge(content::BrowserContext* context,
+ArcMidisBridge::ArcMidisBridge(ArcContext* context,
                                ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service), binding_(this), weak_factory_(this) {
   arc_bridge_service_->midis()->AddObserver(this);

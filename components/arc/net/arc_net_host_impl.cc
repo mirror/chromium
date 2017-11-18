@@ -355,12 +355,11 @@ class ArcNetHostImplFactory
 }  // namespace
 
 // static
-ArcNetHostImpl* ArcNetHostImpl::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcNetHostImplFactory::GetForBrowserContext(context);
+ArcNetHostImpl* ArcNetHostImpl::GetForContext(ArcContext* context) {
+  return ArcNetHostImplFactory::GetForContext(context);
 }
 
-ArcNetHostImpl::ArcNetHostImpl(content::BrowserContext* context,
+ArcNetHostImpl::ArcNetHostImpl(ArcContext* context,
                                ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service), binding_(this), weak_factory_(this) {
   arc_bridge_service_->net()->AddObserver(this);

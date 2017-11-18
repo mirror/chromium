@@ -12,14 +12,14 @@
 namespace arc {
 
 class ArcDocumentsProviderRootMap;
+class ArcContext;
 
 class ArcDocumentsProviderRootMapFactory
     : public BrowserContextKeyedServiceFactory {
  public:
   // Returns the ArcDocumentsProviderRootMap for |context|, creating it if not
   // created yet.
-  static ArcDocumentsProviderRootMap* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcDocumentsProviderRootMap* GetForContext(ArcContext* context);
 
   // Returns the singleton ArcDocumentsProviderRootMapFactory instance.
   static ArcDocumentsProviderRootMapFactory* GetInstance();

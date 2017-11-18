@@ -49,7 +49,7 @@ void AddWatcherOnUIThread(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   ArcDocumentsProviderRootMap* roots =
-      ArcDocumentsProviderRootMap::GetForArcBrowserContext();
+      ArcDocumentsProviderRootMap::GetForArcContext();
   if (!roots) {
     OnAddWatcherOnUIThread(callback, base::File::FILE_ERROR_SECURITY);
     return;
@@ -73,7 +73,7 @@ void RemoveWatcherOnUIThread(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   ArcDocumentsProviderRootMap* roots =
-      ArcDocumentsProviderRootMap::GetForArcBrowserContext();
+      ArcDocumentsProviderRootMap::GetForArcContext();
   if (!roots) {
     OnRemoveWatcherOnUIThread(callback, base::File::FILE_ERROR_SECURITY);
     return;

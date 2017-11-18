@@ -34,7 +34,7 @@ void ResolveToContentUrlOnUIThread(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   ArcDocumentsProviderRootMap* roots =
-      ArcDocumentsProviderRootMap::GetForArcBrowserContext();
+      ArcDocumentsProviderRootMap::GetForArcContext();
   if (!roots) {
     OnResolveToContentUrlOnUIThread(callback, GURL());
     return;

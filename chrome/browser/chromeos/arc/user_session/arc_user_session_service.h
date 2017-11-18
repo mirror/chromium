@@ -11,13 +11,10 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/session_manager/core/session_manager_observer.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 class ArcUserSessionService
     : public KeyedService,
@@ -26,11 +23,9 @@ class ArcUserSessionService
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcUserSessionService* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcUserSessionService* GetForContext(ArcContext* context);
 
-  ArcUserSessionService(content::BrowserContext* context,
-                        ArcBridgeService* bridge_service);
+  ArcUserSessionService(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcUserSessionService() override;
 
   // InstanceHolder<mojom::IntentHelperInstance>::Observer

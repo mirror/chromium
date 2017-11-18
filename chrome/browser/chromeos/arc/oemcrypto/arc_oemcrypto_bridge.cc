@@ -45,12 +45,11 @@ class ArcOemCryptoBridgeFactory
 }  // namespace
 
 // static
-ArcOemCryptoBridge* ArcOemCryptoBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcOemCryptoBridgeFactory::GetForBrowserContext(context);
+ArcOemCryptoBridge* ArcOemCryptoBridge::GetForContext(ArcContext* context) {
+  return ArcOemCryptoBridgeFactory::GetForContext(context);
 }
 
-ArcOemCryptoBridge::ArcOemCryptoBridge(content::BrowserContext* context,
+ArcOemCryptoBridge::ArcOemCryptoBridge(ArcContext* context,
                                        ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service), binding_(this), weak_factory_(this) {
   arc_bridge_service_->oemcrypto()->AddObserver(this);

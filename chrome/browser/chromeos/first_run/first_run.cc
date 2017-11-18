@@ -137,9 +137,8 @@ class DialogLauncher : public content::NotificationObserver {
     if (account_supported && arc::IsArcPlayStoreEnabledForProfile(profile_) &&
         !profile_->GetPrefs()->GetBoolean(
             arc::prefs::kArcVoiceInteractionValuePropAccepted)) {
-      auto* service =
-          arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(
-              profile_);
+      auto* service = arc::ArcVoiceInteractionFrameworkService::GetForContext(
+          arc::ArcContext::FromBrowserContext(profile_));
       if (service)
         service->StartVoiceInteractionOobe();
     } else {

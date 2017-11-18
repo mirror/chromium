@@ -13,13 +13,10 @@
 #include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // This class notifies the Chrome OS side user rotation lock state to the
 // container.
@@ -31,11 +28,9 @@ class ArcRotationLockBridge
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcRotationLockBridge* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcRotationLockBridge* GetForContext(ArcContext* context);
 
-  ArcRotationLockBridge(content::BrowserContext* context,
-                        ArcBridgeService* bridge_service);
+  ArcRotationLockBridge(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcRotationLockBridge() override;
 
   // InstanceHolder<mojom::RotationLockInstance>::Observer:

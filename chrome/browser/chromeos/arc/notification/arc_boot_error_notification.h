@@ -9,11 +9,9 @@
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "components/keyed_service/core/keyed_service.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
+
+class ArcContext;
 
 // Watches for ARC boot errors and show notifications.
 class ArcBootErrorNotification : public KeyedService,
@@ -21,10 +19,9 @@ class ArcBootErrorNotification : public KeyedService,
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcBootErrorNotification* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcBootErrorNotification* GetForContext(ArcContext* context);
 
-  ArcBootErrorNotification(content::BrowserContext* context,
+  ArcBootErrorNotification(ArcContext* context,
                            ArcBridgeService* bridge_service);
   ~ArcBootErrorNotification() override;
 
@@ -32,7 +29,7 @@ class ArcBootErrorNotification : public KeyedService,
   void OnArcSessionStopped(ArcStopReason reason) override;
 
  private:
-  content::BrowserContext* const context_;
+  ArcContext* const context_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcBootErrorNotification);
 };

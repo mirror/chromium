@@ -223,12 +223,11 @@ class ArcProcessServiceFactory
 }  // namespace
 
 // static
-ArcProcessService* ArcProcessService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcProcessServiceFactory::GetForBrowserContext(context);
+ArcProcessService* ArcProcessService::GetForContext(ArcContext* context) {
+  return ArcProcessServiceFactory::GetForContext(context);
 }
 
-ArcProcessService::ArcProcessService(content::BrowserContext* context,
+ArcProcessService::ArcProcessService(ArcContext* context,
                                      ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service),
       nspid_to_pid_(new NSPidToPidMap()),
@@ -253,9 +252,9 @@ ArcProcessService* ArcProcessService::Get() {
   // allowed to use ARC, and 2) the rest of ARC service's lifetime are
   // tied to it.
   auto* arc_service_manager = ArcServiceManager::Get();
-  if (!arc_service_manager || !arc_service_manager->browser_context())
+  if (!arc_service_manager || !arc_service_manager->context())
     return nullptr;
-  return GetForBrowserContext(arc_service_manager->browser_context());
+  return GetForContext(arc_service_manager->context());
 }
 
 void ArcProcessService::RequestSystemProcessList(

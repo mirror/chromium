@@ -48,10 +48,9 @@ class ArcFileSystemOperationRunnerFactory
 }  // namespace
 
 // static
-ArcFileSystemOperationRunner*
-ArcFileSystemOperationRunner::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcFileSystemOperationRunnerFactory::GetForBrowserContext(context);
+ArcFileSystemOperationRunner* ArcFileSystemOperationRunner::GetForContext(
+    ArcContext* context) {
+  return ArcFileSystemOperationRunnerFactory::GetForContext(context);
 }
 
 // static
@@ -62,7 +61,7 @@ BrowserContextKeyedServiceFactory* ArcFileSystemOperationRunner::GetFactory() {
 // static
 std::unique_ptr<ArcFileSystemOperationRunner>
 ArcFileSystemOperationRunner::CreateForTesting(
-    content::BrowserContext* context,
+    ArcContext* context,
     ArcBridgeService* bridge_service) {
   // We can't use std::make_unique() here because we are calling a private
   // constructor.
@@ -71,16 +70,18 @@ ArcFileSystemOperationRunner::CreateForTesting(
 }
 
 ArcFileSystemOperationRunner::ArcFileSystemOperationRunner(
-    content::BrowserContext* context,
+    ArcContext* context,
     ArcBridgeService* bridge_service)
-    : ArcFileSystemOperationRunner(Profile::FromBrowserContext(context),
-                                   bridge_service,
-                                   true) {
+    : ArcFileSystemOperationRunner(
+          ArcContext::FromBrowserContext(
+              Profile::FromBrowserContext(context->browser_context())),
+          bridge_service,
+          true) {
   DCHECK(context);
 }
 
 ArcFileSystemOperationRunner::ArcFileSystemOperationRunner(
-    content::BrowserContext* context,
+    ArcContext* context,
     ArcBridgeService* bridge_service,
     bool set_should_defer_by_events)
     : context_(context),
@@ -96,7 +97,7 @@ ArcFileSystemOperationRunner::ArcFileSystemOperationRunner(
   if (arc_session_manager)
     arc_session_manager->AddObserver(this);
 
-  ArcFileSystemBridge::GetForBrowserContext(context_)->AddObserver(this);
+  ArcFileSystemBridge::GetForContext(context_)->AddObserver(this);
 
   OnStateChanged();
 }
@@ -306,7 +307,7 @@ void ArcFileSystemOperationRunner::RemoveWatcher(
 
 void ArcFileSystemOperationRunner::Shutdown() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  ArcFileSystemBridge::GetForBrowserContext(context_)->RemoveObserver(this);
+  ArcFileSystemBridge::GetForContext(context_)->RemoveObserver(this);
 
   // ArcSessionManager may not exist in unit tests.
   auto* arc_session_manager = ArcSessionManager::Get();
@@ -369,8 +370,8 @@ void ArcFileSystemOperationRunner::OnWatcherAdded(
 void ArcFileSystemOperationRunner::OnStateChanged() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (set_should_defer_by_events_) {
-    SetShouldDefer(IsArcPlayStoreEnabledForProfile(
-                       Profile::FromBrowserContext(context_)) &&
+    SetShouldDefer(IsArcPlayStoreEnabledForProfile(Profile::FromBrowserContext(
+                       context_->browser_context())) &&
                    !arc_bridge_service_->file_system()->has_instance());
   }
 }

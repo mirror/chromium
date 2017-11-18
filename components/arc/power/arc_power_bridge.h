@@ -18,10 +18,6 @@
 #include "services/device/public/interfaces/wake_lock.mojom.h"
 #include "ui/display/manager/chromeos/display_configurator.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace service_manager {
 class Connector;
 }  // namespace service_manager
@@ -29,6 +25,7 @@ class Connector;
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // ARC Power Client sets power management policy based on requests from
 // ARC instances.
@@ -40,10 +37,9 @@ class ArcPowerBridge : public KeyedService,
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcPowerBridge* GetForBrowserContext(content::BrowserContext* context);
+  static ArcPowerBridge* GetForContext(ArcContext* context);
 
-  ArcPowerBridge(content::BrowserContext* context,
-                 ArcBridgeService* bridge_service);
+  ArcPowerBridge(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcPowerBridge() override;
 
   void set_connector_for_test(service_manager::Connector* connector) {

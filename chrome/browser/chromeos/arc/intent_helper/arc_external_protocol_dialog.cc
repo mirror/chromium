@@ -14,6 +14,7 @@
 #include "chrome/browser/tab_contents/tab_util.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "components/arc/arc_bridge_service.h"
+#include "components/arc/arc_context.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/intent_helper/arc_intent_helper_bridge.h"
 #include "components/arc/intent_helper/page_transition_util.h"
@@ -388,9 +389,10 @@ void OnUrlHandlerList(int render_process_host_id,
   WebContents* web_contents =
       tab_util::GetWebContentsByID(render_process_host_id, routing_id);
   auto* intent_helper_bridge =
-      web_contents ? ArcIntentHelperBridge::GetForBrowserContext(
-                         web_contents->GetBrowserContext())
-                   : nullptr;
+      web_contents
+          ? ArcIntentHelperBridge::GetForContext(ArcContext::FromBrowserContext(
+                web_contents->GetBrowserContext()))
+          : nullptr;
   if (!instance || !intent_helper_bridge) {
     // ARC is not running anymore. Show the Chrome OS dialog.
     ShowFallbackExternalProtocolDialog(render_process_host_id, routing_id, url);

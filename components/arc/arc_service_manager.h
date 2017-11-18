@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "base/threading/thread_checker.h"
+#include "components/arc/arc_context.h"
 #include "components/signin/core/account_id/account_id.h"
 
 namespace content {
@@ -32,13 +33,18 @@ class ArcServiceManager {
   // This is workaround to split the dependency from chrome/.
   // TODO(hidehiko): Remove this when we move IsArcAllowedForProfile() to
   // components/arc.
-  content::BrowserContext* browser_context() { return browser_context_; }
+  content::BrowserContext* browser_context() {
+    return context_->browser_context();
+  }
 
   // TODO(hidehiko): Remove this when we move IsArcAllowedForProfile() to
   // components/arc. See browser_context() for details.
   void set_browser_context(content::BrowserContext* browser_context) {
-    browser_context_ = browser_context;
+    DCHECK(!context_);
+    context_ = std::make_unique<ArcContext>(browser_context);
   }
+
+  ArcContext* context() { return context_.get(); }
 
   // Returns the current AccountID which ARC is allowed.
   // This is workaround to split the dependency from chrome/.
@@ -72,7 +78,7 @@ class ArcServiceManager {
   // allowed to use ARC.
   // TODO(hidehiko): Remove this when we move IsArcAllowedForProfile() to
   // components/arc. See browser_context() for details.
-  content::BrowserContext* browser_context_ = nullptr;
+  std::unique_ptr<ArcContext> context_;
 
   // This holds the AccountId corresponding to the |browser_context_|.
   // TODO(hidehiko): Remove this when we move IsArcAllowedForProfile() to

@@ -91,12 +91,11 @@ class ArcImeServiceFactory
 // ArcImeService main implementation:
 
 // static
-ArcImeService* ArcImeService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcImeServiceFactory::GetForBrowserContext(context);
+ArcImeService* ArcImeService::GetForContext(ArcContext* context) {
+  return ArcImeServiceFactory::GetForContext(context);
 }
 
-ArcImeService::ArcImeService(content::BrowserContext* context,
+ArcImeService::ArcImeService(ArcContext* context,
                              ArcBridgeService* bridge_service)
     : ime_bridge_(new ArcImeBridgeImpl(this, bridge_service)),
       arc_window_delegate_(new ArcWindowDelegateImpl(this)),

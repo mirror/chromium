@@ -7,6 +7,7 @@
 #include <utility>
 #include <vector>
 
+#include "components/arc/arc_context.h"
 #include "components/arc/arc_service_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "url/gurl.h"
@@ -22,8 +23,9 @@ namespace {
 // TODO(crbug.com/745648): Use correct BrowserContext.
 ArcFileSystemOperationRunner* GetArcFileSystemOperationRunner() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  return ArcFileSystemOperationRunner::GetForBrowserContext(
-      ArcServiceManager::Get()->browser_context());
+  return ArcFileSystemOperationRunner::GetForContext(
+      ArcContext::FromBrowserContext(
+          ArcServiceManager::Get()->browser_context()));
 }
 
 template <typename T>

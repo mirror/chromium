@@ -12,13 +12,10 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/session_manager/core/session_manager_observer.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // This class notifies the Chrome OS side lock screen state to the container.
 class ArcLockScreenBridge
@@ -28,11 +25,9 @@ class ArcLockScreenBridge
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcLockScreenBridge* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcLockScreenBridge* GetForContext(ArcContext* context);
 
-  ArcLockScreenBridge(content::BrowserContext* context,
-                      ArcBridgeService* bridge_service);
+  ArcLockScreenBridge(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcLockScreenBridge() override;
 
   // InstanceHolder<mojom::LockScreenInstance>::Observer overrides:

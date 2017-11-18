@@ -18,10 +18,6 @@
 #include "components/policy/core/common/policy_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace policy {
 class PolicyMap;
 }  // namespace policy
@@ -29,6 +25,7 @@ class PolicyMap;
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // Constants for the ARC certs sync mode are defined in the policy, please keep
 // its in sync.
@@ -46,12 +43,10 @@ class ArcPolicyBridge : public KeyedService,
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcPolicyBridge* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcPolicyBridge* GetForContext(ArcContext* context);
 
-  ArcPolicyBridge(content::BrowserContext* context,
-                  ArcBridgeService* bridge_service);
-  ArcPolicyBridge(content::BrowserContext* context,
+  ArcPolicyBridge(ArcContext* context, ArcBridgeService* bridge_service);
+  ArcPolicyBridge(ArcContext* context,
                   ArcBridgeService* bridge_service,
                   policy::PolicyService* policy_service);
   ~ArcPolicyBridge() override;
@@ -85,7 +80,7 @@ class ArcPolicyBridge : public KeyedService,
 
   void UpdateComplianceReportMetrics(const base::DictionaryValue* report);
 
-  content::BrowserContext* const context_;
+  ArcContext* const context_;
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
 
   mojo::Binding<PolicyHost> binding_;

@@ -49,12 +49,12 @@ class ArcVolumeMounterBridgeFactory
 }  // namespace
 
 // static
-ArcVolumeMounterBridge* ArcVolumeMounterBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcVolumeMounterBridgeFactory::GetForBrowserContext(context);
+ArcVolumeMounterBridge* ArcVolumeMounterBridge::GetForContext(
+    ArcContext* context) {
+  return ArcVolumeMounterBridgeFactory::GetForContext(context);
 }
 
-ArcVolumeMounterBridge::ArcVolumeMounterBridge(content::BrowserContext* context,
+ArcVolumeMounterBridge::ArcVolumeMounterBridge(ArcContext* context,
                                                ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service) {
   arc_bridge_service_->volume_mounter()->AddObserver(this);

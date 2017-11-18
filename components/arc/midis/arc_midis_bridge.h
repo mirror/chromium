@@ -15,13 +15,10 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 class ArcMidisBridge : public KeyedService,
                        public InstanceHolder<mojom::MidisInstance>::Observer,
@@ -29,10 +26,9 @@ class ArcMidisBridge : public KeyedService,
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcMidisBridge* GetForBrowserContext(content::BrowserContext* context);
+  static ArcMidisBridge* GetForContext(ArcContext* context);
 
-  ArcMidisBridge(content::BrowserContext* context,
-                 ArcBridgeService* bridge_service);
+  ArcMidisBridge(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcMidisBridge() override;
 
   // Overridden from InstanceHolder<mojom::MidisInstance>::Observer:

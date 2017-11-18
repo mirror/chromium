@@ -15,13 +15,10 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // This class controls the ARC enterprise reporting.
 class ArcEnterpriseReportingService
@@ -31,10 +28,9 @@ class ArcEnterpriseReportingService
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcEnterpriseReportingService* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcEnterpriseReportingService* GetForContext(ArcContext* context);
 
-  ArcEnterpriseReportingService(content::BrowserContext* context,
+  ArcEnterpriseReportingService(ArcContext* context,
                                 ArcBridgeService* arc_bridge_service);
   ~ArcEnterpriseReportingService() override;
 

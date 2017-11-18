@@ -16,16 +16,13 @@
 
 class Profile;
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace storage {
 class FileSystemURL;
 }  // namespace storage
 
 namespace arc {
 
+class ArcContext;
 class ArcDocumentsProviderRoot;
 
 // Container of ArcDocumentsProviderRoot instances.
@@ -37,15 +34,14 @@ class ArcDocumentsProviderRootMap : public KeyedService {
 
   // Returns an instance for the given browser context, or nullptr if ARC is not
   // allowed for the browser context.
-  static ArcDocumentsProviderRootMap* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcDocumentsProviderRootMap* GetForContext(ArcContext* context);
 
   // Returns an instance for the browser context associated with ARC, or nullptr
   // if ARC is not allowed.
   // TODO(nya): Remove this function when we support multi-user ARC. For now,
   // it is okay to call this function only from chromeos::FileSystemBackend and
   // its delegates.
-  static ArcDocumentsProviderRootMap* GetForArcBrowserContext();
+  static ArcDocumentsProviderRootMap* GetForArcContext();
 
   // Looks up a root corresponding to |url|.
   // |path| is set to the remaining path part of |url|.

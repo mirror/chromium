@@ -11,6 +11,7 @@
 #include "chrome/browser/chromeos/app_mode/arc/arc_kiosk_app_service_factory.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
+#include "components/arc/arc_context.h"
 #include "components/user_manager/user_manager.h"
 
 namespace arc {
@@ -51,9 +52,8 @@ class ArcKioskBridgeFactory
 }  // namespace
 
 // static
-ArcKioskBridge* ArcKioskBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcKioskBridgeFactory::GetForBrowserContext(context);
+ArcKioskBridge* ArcKioskBridge::GetForContext(ArcContext* context) {
+  return ArcKioskBridgeFactory::GetForContext(context);
 }
 
 // static
@@ -64,10 +64,11 @@ std::unique_ptr<ArcKioskBridge> ArcKioskBridge::CreateForTesting(
   return base::WrapUnique(new ArcKioskBridge(arc_bridge_service, delegate));
 }
 
-ArcKioskBridge::ArcKioskBridge(content::BrowserContext* context,
+ArcKioskBridge::ArcKioskBridge(ArcContext* context,
                                ArcBridgeService* bridge_service)
-    : ArcKioskBridge(bridge_service,
-                     chromeos::ArcKioskAppService::Get(context)) {}
+    : ArcKioskBridge(
+          bridge_service,
+          chromeos::ArcKioskAppService::Get(context->browser_context())) {}
 
 ArcKioskBridge::ArcKioskBridge(ArcBridgeService* bridge_service,
                                Delegate* delegate)

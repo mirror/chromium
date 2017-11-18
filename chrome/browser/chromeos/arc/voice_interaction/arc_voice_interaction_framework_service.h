@@ -22,10 +22,6 @@
 
 class KeyedServiceBaseFactory;
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace gfx {
 class Rect;
 }  // namespace gfx
@@ -33,6 +29,7 @@ class Rect;
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 class HighlighterControllerClient;
 class VoiceInteractionControllerClient;
 
@@ -49,13 +46,13 @@ class ArcVoiceInteractionFrameworkService
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcVoiceInteractionFrameworkService* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcVoiceInteractionFrameworkService* GetForContext(
+      ArcContext* context);
 
   // Returns factory for ArcVoiceInteractionFrameworkService.
   static KeyedServiceBaseFactory* GetFactory();
 
-  ArcVoiceInteractionFrameworkService(content::BrowserContext* context,
+  ArcVoiceInteractionFrameworkService(ArcContext* context,
                                       ArcBridgeService* bridge_service);
   ~ArcVoiceInteractionFrameworkService() override;
 
@@ -152,7 +149,7 @@ class ArcVoiceInteractionFrameworkService
 
   void StartVoiceInteractionSetupWizardActivity();
 
-  content::BrowserContext* context_;
+  ArcContext* context_;
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager
   mojo::Binding<mojom::VoiceInteractionFrameworkHost> binding_;
 

@@ -20,6 +20,7 @@
 #include "chromeos/chromeos_switches.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
+#include "components/arc/arc_context.h"
 #include "components/arc/arc_features.h"
 #include "components/arc/arc_prefs.h"
 #include "components/arc/arc_service_manager.h"
@@ -120,14 +121,13 @@ mojom::AccountInfoPtr CreateAccountInfo(bool is_enforced,
 const char ArcAuthService::kArcServiceName[] = "arc::ArcAuthService";
 
 // static
-ArcAuthService* ArcAuthService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcAuthServiceFactory::GetForBrowserContext(context);
+ArcAuthService* ArcAuthService::GetForContext(ArcContext* context) {
+  return ArcAuthServiceFactory::GetForContext(context);
 }
 
-ArcAuthService::ArcAuthService(content::BrowserContext* browser_context,
+ArcAuthService::ArcAuthService(ArcContext* context,
                                ArcBridgeService* arc_bridge_service)
-    : profile_(Profile::FromBrowserContext(browser_context)),
+    : profile_(Profile::FromBrowserContext(context->browser_context())),
       arc_bridge_service_(arc_bridge_service),
       binding_(this),
       weak_ptr_factory_(this) {

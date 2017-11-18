@@ -13,13 +13,10 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // TODO(hidehiko): Consider to migrate this class into ArcKioskAppService.
 class ArcKioskBridge : public KeyedService,
@@ -36,15 +33,14 @@ class ArcKioskBridge : public KeyedService,
 
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcKioskBridge* GetForBrowserContext(content::BrowserContext* context);
+  static ArcKioskBridge* GetForContext(ArcContext* context);
 
   // Returns a created instance for testing.
   static std::unique_ptr<ArcKioskBridge> CreateForTesting(
       ArcBridgeService* bridge_service,
       Delegate* delegate);
 
-  ArcKioskBridge(content::BrowserContext* context,
-                 ArcBridgeService* bridge_service);
+  ArcKioskBridge(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcKioskBridge() override;
 
   // InstanceHolder<mojom::KioskInstance>::Observer overrides.

@@ -39,12 +39,11 @@ class ArcFileSystemMounterFactory
 }  // namespace
 
 // static
-ArcFileSystemMounter* ArcFileSystemMounter::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcFileSystemMounterFactory::GetForBrowserContext(context);
+ArcFileSystemMounter* ArcFileSystemMounter::GetForContext(ArcContext* context) {
+  return ArcFileSystemMounterFactory::GetForContext(context);
 }
 
-ArcFileSystemMounter::ArcFileSystemMounter(content::BrowserContext* context,
+ArcFileSystemMounter::ArcFileSystemMounter(ArcContext* context,
                                            ArcBridgeService* bridge_service) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 

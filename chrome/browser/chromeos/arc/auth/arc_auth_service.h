@@ -18,14 +18,11 @@
 
 class Profile;
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
-class ArcFetcherBase;
 class ArcBridgeService;
+class ArcContext;
+class ArcFetcherBase;
 
 // Implementation of ARC authorization.
 class ArcAuthService : public KeyedService,
@@ -34,10 +31,9 @@ class ArcAuthService : public KeyedService,
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcAuthService* GetForBrowserContext(content::BrowserContext* context);
+  static ArcAuthService* GetForContext(ArcContext* context);
 
-  ArcAuthService(content::BrowserContext* profile,
-                 ArcBridgeService* bridge_service);
+  ArcAuthService(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcAuthService() override;
 
   // For supporting ArcServiceManager::GetService<T>().

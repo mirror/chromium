@@ -39,14 +39,13 @@ class ArcEnterpriseReportingServiceFactory
 }  // namespace
 
 // static
-ArcEnterpriseReportingService*
-ArcEnterpriseReportingService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcEnterpriseReportingServiceFactory::GetForBrowserContext(context);
+ArcEnterpriseReportingService* ArcEnterpriseReportingService::GetForContext(
+    ArcContext* context) {
+  return ArcEnterpriseReportingServiceFactory::GetForContext(context);
 }
 
 ArcEnterpriseReportingService::ArcEnterpriseReportingService(
-    content::BrowserContext* context,
+    ArcContext* context,
     ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service),
       binding_(this),

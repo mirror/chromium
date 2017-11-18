@@ -29,6 +29,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/grit/generated_resources.h"
 #include "chromeos/cryptohome/homedir_methods.h"
+#include "components/arc/arc_context.h"
 #include "components/arc/arc_util.h"
 #include "components/browsing_data/content/conditional_cache_counting_helper.h"
 #include "components/drive/chromeos/file_system_interface.h"
@@ -122,8 +123,8 @@ void StorageHandler::HandleOpenDownloads(
 
 void StorageHandler::HandleOpenArcStorage(
     const base::ListValue* unused_args) {
-  auto* arc_storage_manager = arc::ArcStorageManager::GetForBrowserContext(
-      Profile::FromWebUI(web_ui()));
+  auto* arc_storage_manager = arc::ArcStorageManager::GetForContext(
+      arc::ArcContext::FromBrowserContext(Profile::FromWebUI(web_ui())));
   if (arc_storage_manager)
     arc_storage_manager->OpenPrivateVolumeSettings();
 }
@@ -344,8 +345,8 @@ void StorageHandler::UpdateAndroidSize() {
   // Shows the item "Android apps and cache" and start calculating size.
   FireWebUIListener("storage-android-enabled-changed", base::Value(true));
   bool success = false;
-  auto* arc_storage_manager =
-      arc::ArcStorageManager::GetForBrowserContext(profile);
+  auto* arc_storage_manager = arc::ArcStorageManager::GetForContext(
+      arc::ArcContext::FromBrowserContext(profile));
   if (arc_storage_manager) {
     success = arc_storage_manager->GetApplicationsSize(base::Bind(
         &StorageHandler::OnGetAndroidSize, weak_ptr_factory_.GetWeakPtr()));
