@@ -431,8 +431,9 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
   WebAXObject offset_container;
   WebFloatRect bounds_in_container;
   SkMatrix44 container_transform;
+  bool clips_children = false;
   src.GetRelativeBounds(offset_container, bounds_in_container,
-                        container_transform);
+                        container_transform, &clips_children);
   dst->location = bounds_in_container;
   if (!container_transform.isIdentity())
     dst->transform = base::WrapUnique(new gfx::Transform(container_transform));
@@ -488,6 +489,13 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
 
   if (!src.Url().IsEmpty())
     dst->AddStringAttribute(ui::AX_ATTR_URL, src.Url().GetString().Utf8());
+
+  // Some types of elements always clip their children, whereas for most this
+  // is calculated dynamically.
+  if (clips_children || dst->role == ui::AX_ROLE_WINDOW ||
+      dst->role == ui::AX_ROLE_DESKTOP ||
+      dst->role == ui::AX_ROLE_ROOT_WEB_AREA || dst->role == ui::AX_ROLE_DIALOG)
+    dst->AddBoolAttribute(ui::AX_ATTR_CLIPS_CHILDREN, true);
 
   // The following set of attributes are only accessed when the accessibility
   // mode is set to screen reader mode, otherwise only the more basic
