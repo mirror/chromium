@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb682fbc_ede7d265",
+        "filename": "content/renderer/dom_storage/session_storage_namespace.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-18T18:41:28Z",
+      "side": 1,
+      "message": "This name (in the same namespace) is already taken, in content/public/browser/session_storage_namespace.h. Thus, this class is an ODR violation. I noticed this because of warnings in the VC++ PGO builder (LTCG can detect some ODR violations).\n\nwarning C4743: \u0027const content::SessionStorageNamespace::`vftable\u0027\u0027 has different size in \u0027c:\\b\\build\\slave\\chromium-win-x64-pgo-builder\\build\\src\\content\\renderer\\dom_storage\\session_storage_namespace.cc\u0027 and \u0027c:\\b\\build\\slave\\chromium-win-x64-pgo-builder\\build\\src\\content\\browser\\dom_storage\\session_storage_namespace_impl.cc\u0027: 24 and 40 bytes\n\nhttps://build.chromium.org/p/chromium.fyi/builders/Chromium%20Win%20x64%20PGO%20Builder/builds/22447",
+      "revId": "ab3de2ef31b1bcf76140c6ba61fbc5514ebf7749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
