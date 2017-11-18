@@ -41,19 +41,23 @@ std::string GetSyncUsernameIfSyncingPasswords(
 bool IsSyncAccountCredential(const autofill::PasswordForm& form,
                              const syncer::SyncService* sync_service,
                              const SigninManagerBase* signin_manager) {
+  LOG(ERROR) << "IsSyncAccountCredential";
   const Origin gaia_origin =
       Origin::Create(GaiaUrls::GetInstance()->gaia_url().GetOrigin());
   if (!Origin::Create(GURL(form.signon_realm)).IsSameOriginWith(gaia_origin) &&
       form.signon_realm != kGoogleChangePasswordSignonRealm) {
+    LOG(ERROR) << "1";
     return false;
   }
 
   // The empty username can mean that Chrome did not detect it correctly. For
   // reasons described in http://crbug.com/636292#c1, the username is suspected
   // to be the sync username unless proven otherwise.
-  if (form.username_value.empty())
+  if (form.username_value.empty()) {
+    LOG(ERROR) << "2";
     return true;
-
+  }
+  LOG(ERROR) << "3";
   return gaia::AreEmailsSame(
       base::UTF16ToUTF8(form.username_value),
       GetSyncUsernameIfSyncingPasswords(sync_service, signin_manager));

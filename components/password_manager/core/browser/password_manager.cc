@@ -801,6 +801,7 @@ void PasswordManager::OnInPageNavigation(
 }
 
 void PasswordManager::OnLoginSuccessful() {
+  LOG(ERROR) << "OnLoginSuccessful";
   std::unique_ptr<BrowserSavePasswordProgressLogger> logger;
   if (password_manager_util::IsLoggingActive(client_)) {
     logger.reset(
@@ -822,15 +823,18 @@ void PasswordManager::OnLoginSuccessful() {
   DCHECK(provisional_save_manager_->submitted_form());
   if (!client_->GetStoreResultFilter()->ShouldSave(
           *provisional_save_manager_->submitted_form())) {
+    LOG(ERROR) << "Should not save to password manager";
 #if defined(OS_WIN) || (defined(OS_MACOSX) && !defined(OS_IOS)) || \
     (defined(OS_LINUX) && !defined(OS_CHROMEOS))
     // When |username_value| is empty, it's not clear whether the submitted
     // credentials are really sync credentials. Don't save sync password hash
     // in that case.
     if (!provisional_save_manager_->submitted_form()->username_value.empty()) {
+      LOG(ERROR) << "User name not empty";
       password_manager::PasswordStore* store = client_->GetPasswordStore();
       // May be null in tests.
       if (store) {
+        LOG(ERROR) << "Has Store";
         bool is_sync_password_change =
             !provisional_save_manager_->submitted_form()
                  ->new_password_element.empty();

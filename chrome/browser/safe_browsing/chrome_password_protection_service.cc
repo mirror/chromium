@@ -635,6 +635,7 @@ void ChromePasswordProtectionService::
 }
 
 void ChromePasswordProtectionService::CheckGaiaPasswordChange() {
+  LOG(ERROR) << "ChromePasswordProtectionService::CheckGaiaPasswordChange";
   std::string new_gaia_password_hash = profile_->GetPrefs()->GetString(
       password_manager::prefs::kSyncPasswordHash);
   if (gaia_password_hash_ != new_gaia_password_hash) {
@@ -644,6 +645,7 @@ void ChromePasswordProtectionService::CheckGaiaPasswordChange() {
 }
 
 void ChromePasswordProtectionService::OnGaiaPasswordChanged() {
+  LOG(ERROR) << "OnGaiaPasswordChanged";
   DictionaryPrefUpdate unhandled_sync_password_reuses(
       profile_->GetPrefs(), prefs::kSafeBrowsingUnhandledSyncPasswordReuses);
   UMA_HISTOGRAM_COUNTS_100(

@@ -31,9 +31,11 @@ bool HashPasswordManager::SavePasswordHash(const base::string16& password) {
       password_manager_util::CalculateSyncPasswordHash(
           password, current_sync_password_data->salt) ==
           current_sync_password_data->hash) {
+    LOG(ERROR) << "SavePasswordHash::SamePassword";
     return true;
   }
 
+  LOG(ERROR) << "SavePasswordHash";
   std::string salt = CreateRandomSalt();
   std::string hash = base::Uint64ToString(
       password_manager_util::CalculateSyncPasswordHash(password, salt));
