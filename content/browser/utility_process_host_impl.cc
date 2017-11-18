@@ -290,6 +290,7 @@ bool UtilityProcessHostImpl::StartProcess() {
     static const char* const kSwitchNames[] = {
       switches::kHostResolverRules,
       switches::kIgnoreCertificateErrorsSPKIList,
+      switches::kMus,
       switches::kLogNetLog,
       switches::kNoSandbox,
       switches::kOverrideUseSoftwareGLForTests,
@@ -303,7 +304,8 @@ bool UtilityProcessHostImpl::StartProcess() {
       switches::kForceMediaFoundationVideoCapture,
 #endif  // defined(OS_WIN)
       switches::kUtilityStartupDialog,
-      switches::kUseGL
+      switches::kUseGL,
+      "mash"
     };
     cmd_line->CopySwitchesFrom(browser_command_line, kSwitchNames,
                                arraysize(kSwitchNames));

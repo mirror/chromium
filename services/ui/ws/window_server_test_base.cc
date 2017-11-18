@@ -5,6 +5,7 @@
 #include "services/ui/ws/window_server_test_base.h"
 
 #include "base/bind.h"
+#include "base/command_line.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
@@ -91,6 +92,7 @@ WindowServerTestBase::ReleaseMostRecentClient() {
 }
 
 void WindowServerTestBase::SetUp() {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch("mash");
   WindowServerServiceTestBase::SetUp();
 
   env_ = aura::Env::CreateInstance(aura::Env::Mode::MUS);
