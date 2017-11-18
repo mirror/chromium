@@ -434,6 +434,24 @@
     },
     {
       "key": {
+        "uuid": "e7055e25_c12a0533",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1407,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-18T01:18:03Z",
+      "side": 1,
+      "message": "Ah, can we reach here in those cases?  If so, I would add a note that that\u0027s why we need the conditional.",
+      "parentUuid": "15465466_12e61957",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9792b35_49c89bdc",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
         "patchSetId": 9
