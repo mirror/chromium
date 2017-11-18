@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf5bf9e6_ce4b2ac7",
+        "filename": "device/vr/openvr/openvr_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-11-18T00:25:44Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be necessary to null this out in the destructor, the unique_ptr will clean itself up.",
+      "revId": "72f7dc5aba38c5cbeb09c60fe4cfc1ce7ae1912f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
