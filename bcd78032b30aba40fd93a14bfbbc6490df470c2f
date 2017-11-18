@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b7059ec_04e99e05",
+        "filename": "base/task_scheduler/task.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-18T01:12:49Z",
+      "side": 1,
+      "message": "Yeah, this is a weird part of slicing. My read is if PendingTask doesn\u0027t know about the members, then there\u0027s no way to move them. The members below are those added by Task. If we wanted to be paranoid, we\u0027d move our fields first and then we\u0027d request the move from PendingTask, but I don\u0027t think we can do that.",
+      "parentUuid": "751454ad_c77f5881",
+      "range": {
+        "startLine": 38,
+        "startChar": 18,
+        "endLine": 38,
+        "endChar": 34
+      },
+      "revId": "bcd78032b30aba40fd93a14bfbbc6490df470c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a6f04cd_b2596214",
         "filename": "base/task_scheduler/task.h",
         "patchSetId": 4
