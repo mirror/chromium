@@ -141,9 +141,9 @@ TEST_P(ScrollbarsTest, DocumentStyleRecalcPreservesScrollbars) {
   WebView().Resize(WebSize(800, 600));
   SimRequest request("https://example.com/test.html", "text/html");
   LoadURL("https://example.com/test.html");
-  request.Complete(
-      "<!DOCTYPE html>"
-      "<style> body { width: 1600px; height: 1200px; } </style>");
+  request.Complete(R"HTML(
+    <!DOCTYPE html>
+    <style> body { width: 1600px; height: 1200px; } </style>)HTML");
   auto* layout_viewport = GetDocument().View()->LayoutViewportScrollableArea();
 
   Compositor().BeginFrame();
@@ -992,25 +992,26 @@ TEST_P(ScrollbarsTest, NativeScrollbarChangeToMobileByEmulator) {
 
   SimRequest request("https://example.com/test.html", "text/html");
   LoadURL("https://example.com/test.html");
-  request.Complete(
-      "<!DOCTYPE html>"
-      "<style type='text/css'>"
-      "body {"
-      "  height: 10000px;"
-      "  margin: 0;"
-      "}"
-      "#d1 {"
-      "  height: 200px;"
-      "  width: 200px;"
-      "  overflow: auto;"
-      "}"
-      "#d2 {"
-      "  height: 2000px;"
-      "}"
-      "</style>"
-      "<div id='d1'>"
-      "  <div id='d2'/>"
-      "</div>");
+  request.Complete(R"HTML(
+    <!DOCTYPE html>
+    <style type='text/css'>
+    body {
+      height: 10000px;
+      margin: 0;
+    }
+    #d1 {
+      height: 200px;
+      width: 200px;
+      overflow: auto;
+    }
+    #d2 {
+      height: 2000px;
+    }
+    </style>
+    <div id='d1'>
+      <div id='d2'/>
+    </div>
+  )HTML");
 
   Compositor().BeginFrame();
 
@@ -1079,28 +1080,29 @@ TEST_P(ScrollbarsTest, CustomScrollbarChangeToMobileByEmulator) {
 
   SimRequest request("https://example.com/test.html", "text/html");
   LoadURL("https://example.com/test.html");
-  request.Complete(
-      "<!DOCTYPE html>"
-      "<style type='text/css'>"
-      "body {"
-      "  height: 10000px;"
-      "  margin: 0;"
-      "}"
-      "#d1 {"
-      "  height: 200px;"
-      "  width: 200px;"
-      "  overflow: auto;"
-      "}"
-      "#d2 {"
-      "  height: 2000px;"
-      "}"
-      "::-webkit-scrollbar {"
-      "  width: 10px;"
-      "}"
-      "</style>"
-      "<div id='d1'>"
-      "  <div id='d2'/>"
-      "</div>");
+  request.Complete(R"HTML(
+    <!DOCTYPE html>
+    <style type='text/css'>
+    body {
+      height: 10000px;
+      margin: 0;
+    }
+    #d1 {
+      height: 200px;
+      width: 200px;
+      overflow: auto;
+    }
+    #d2 {
+      height: 2000px;
+    }
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    </style>
+    <div id='d1'>
+      <div id='d2'/>
+    </div>
+  )HTML");
 
   Compositor().BeginFrame();
 
@@ -1164,27 +1166,28 @@ TEST_P(ScrollbarsTest, CustomScrollbarWhenStyleOwnerChange) {
 
   SimRequest request("https://example.com/test.html", "text/html");
   LoadURL("https://example.com/test.html");
-  request.Complete(
-      "<!DOCTYPE html>"
-      "<style type='text/css'>"
-      "#d1 {"
-      "  height: 200px;"
-      "  width: 200px;"
-      "  overflow: auto;"
-      "}"
-      "#d2 {"
-      "  height: 2000px;"
-      "}"
-      "::-webkit-scrollbar {"
-      "  width: 10px;"
-      "}"
-      ".custom::-webkit-scrollbar {"
-      "  width: 5px;"
-      "}"
-      "</style>"
-      "<div id='d1'>"
-      "  <div id='d2'></div>"
-      "</div>");
+  request.Complete(R"HTML(
+    <!DOCTYPE html>
+    <style type='text/css'>
+    #d1 {
+      height: 200px;
+      width: 200px;
+      overflow: auto;
+    }
+    #d2 {
+      height: 2000px;
+    }
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    .custom::-webkit-scrollbar {
+      width: 5px;
+    }
+    </style>
+    <div id='d1'>
+      <div id='d2'></div>
+    </div>
+  )HTML");
 
   Compositor().BeginFrame();
 
@@ -1373,9 +1376,9 @@ TEST_P(ScrollbarAppearanceTest, ThemeEngineDefinesMinimumThumbLength) {
   WebView().Resize(WebSize(800, 600));
   SimRequest request("https://example.com/test.html", "text/html");
   LoadURL("https://example.com/test.html");
-  request.Complete(
-      "<!DOCTYPE html>"
-      "<style> body { width: 1000000px; height: 1000000px; } </style>");
+  request.Complete(R"HTML(
+    <!DOCTYPE html>
+    <style> body { width: 1000000px; height: 1000000px; } </style>)HTML");
   ScrollableArea* scrollable_area =
       GetDocument().View()->LayoutViewportScrollableArea();
 
@@ -1399,9 +1402,9 @@ TEST_P(ScrollbarAppearanceTest, HugeScrollingThumbPosition) {
   WebView().Resize(WebSize(1000, 1000));
   SimRequest request("https://example.com/test.html", "text/html");
   LoadURL("https://example.com/test.html");
-  request.Complete(
-      "<!DOCTYPE html>"
-      "<style> body { margin: 0px; height: 10000000px; } </style>");
+  request.Complete(R"HTML(
+    <!DOCTYPE html>
+    <style> body { margin: 0px; height: 10000000px; } </style>)HTML");
   ScrollableArea* scrollable_area =
       GetDocument().View()->LayoutViewportScrollableArea();
 
