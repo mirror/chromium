@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27ff37bd_66fccf2a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-18T00:51:07Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ll shorten it in next PS.",
+      "parentUuid": "af858dee_0b870d40",
+      "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42203ce8_f528fb7e",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb04631_679feb02",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-18T00:51:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42203ce8_f528fb7e",
+      "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6667cd85_c6b60965",
+        "filename": "ash/app_list/model/app_list_model_export.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-18T00:51:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ae31a3f_98f423fc",
+      "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d179689_6ad2cb72",
         "filename": "chrome/browser/DEPS",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ddf90d5_33d209fe",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-18T00:51:07Z",
+      "side": 1,
+      "message": "I\u0027ll cite a bug. It\u0027ll explain more than my words.",
+      "parentUuid": "7d179689_6ad2cb72",
+      "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e7b81a0b_f83e65e9",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-18T00:51:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40253872_935d667a",
+      "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61fb8b43_46e87e5f",
         "filename": "ui/app_list/BUILD.gn",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99aab5d5_2f3ad4f9",
+        "filename": "ui/app_list/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-18T00:51:07Z",
+      "side": 1,
+      "message": "I\u0027ll cite a bug. It\u0027ll explain more than my words.",
+      "parentUuid": "61fb8b43_46e87e5f",
+      "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e6aaaca2_51460cc9",
+        "filename": "ui/app_list/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-18T00:51:07Z",
+      "side": 1,
+      "message": "I\u0027ll cite a bug. It\u0027ll explain more than my words.",
+      "parentUuid": "0d40a6ec_cf434bd9",
+      "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d73a59e8_0b892e2e",
         "filename": "ui/app_list/app_list_item_list_unittest.cc",
         "patchSetId": 4
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "17bac99e_0cab9787",
+        "filename": "ui/app_list/app_list_item_list_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-18T00:51:07Z",
+      "side": 1,
+      "message": "Yes. Finally we\u0027ll have most //ui/app_list files moved to //ash, including this.\nBut it\u0027s in the test target and we want to let this CL focus on model migration.",
+      "parentUuid": "d73a59e8_0b892e2e",
+      "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05ea801c_6696e6fb",
         "filename": "ui/app_list/app_list_model_unittest.cc",
         "patchSetId": 4
@@ -152,6 +296,24 @@
       "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7d2288d_3683361e",
+        "filename": "ui/app_list/app_list_model_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-18T00:51:07Z",
+      "side": 1,
+      "message": "Yes. Finally we\u0027ll have most //ui/app_list files moved to //ash, including this.\nBut it\u0027s in the test target and we want to let this CL focus on model migration.",
+      "parentUuid": "05ea801c_6696e6fb",
+      "revId": "66dae3498717e06c2ea99946d72b3b11fda2a218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
