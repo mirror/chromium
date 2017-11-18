@@ -30,9 +30,11 @@
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/text/WTFString.h"
+#include "public/platform/WebDataConsumerHandle.h"
 
 namespace blink {
 class Resource;
+class ResourceTimingInfo;
 
 class PLATFORM_EXPORT ResourceClient : public GarbageCollectedMixin {
  public:
@@ -46,6 +48,42 @@ class PLATFORM_EXPORT ResourceClient : public GarbageCollectedMixin {
   };
 
   virtual ~ResourceClient() {}
+
+  // The order of the callbacks is as follows:
+  // [Case 1] A successful load:
+  // 0+  redirectReceived() and/or dataSent()
+  // 1   responseReceived()
+  // 0-1 setSerializedCachedMetadata()
+  // 0+  dataReceived() or dataDownloaded(), but never both
+  // 1   notifyFinished() with errorOccurred() = false
+  // [Case 2] When redirect is blocked:
+  // 0+  redirectReceived() and/or dataSent()
+  // 1   redirectBlocked()
+  // 1   notifyFinished() with errorOccurred() = true
+  // [Case 3] Other failures:
+  //     notifyFinished() with errorOccurred() = true is called at any time
+  //     (unless notifyFinished() is already called).
+  // In all cases:
+  //     No callbacks are made after notifyFinished() or
+  //     removeClient() is called.
+  virtual void DataSent(Resource*,
+                        unsigned long long /* bytesSent */,
+                        unsigned long long /* totalBytesToBeSent */) {}
+  virtual void ResponseReceived(Resource*,
+                                const ResourceResponse&,
+                                std::unique_ptr<WebDataConsumerHandle>) {}
+  virtual void SetSerializedCachedMetadata(Resource*, const char*, size_t) {}
+  virtual void DataReceived(Resource*,
+                            const char* /* data */,
+                            size_t /* length */) {}
+  virtual bool RedirectReceived(Resource*,
+                                const ResourceRequest&,
+                                const ResourceResponse&) {
+    return true;
+  }
+  virtual void RedirectBlocked() {}
+  virtual void DataDownloaded(Resource*, int) {}
+  virtual void DidReceiveResourceTiming(Resource*, const ResourceTimingInfo&) {}
   virtual void NotifyFinished(Resource*) {}
 
   static bool IsExpectedType(ResourceClient*) { return true; }

@@ -75,7 +75,7 @@ struct ViewportDescriptionWrapper;
 // The DocumentLoader fetches a main resource and handles the result.
 class CORE_EXPORT DocumentLoader
     : public GarbageCollectedFinalized<DocumentLoader>,
-      private RawResourceClient {
+      private ResourceClient {
   USING_GARBAGE_COLLECTED_MIXIN(DocumentLoader);
 
  public:
@@ -291,7 +291,7 @@ class CORE_EXPORT DocumentLoader
                                     FrameLoadType,
                                     HistoryNavigationType);
 
-  // RawResourceClient implementation
+  // ResourceClient implementation
   bool RedirectReceived(Resource*,
                         const ResourceRequest&,
                         const ResourceResponse&) final;
@@ -299,8 +299,6 @@ class CORE_EXPORT DocumentLoader
                         const ResourceResponse&,
                         std::unique_ptr<WebDataConsumerHandle>) final;
   void DataReceived(Resource*, const char* data, size_t length) final;
-
-  // ResourceClient implementation
   void NotifyFinished(Resource*) final;
   String DebugName() const override { return "DocumentLoader"; }
 

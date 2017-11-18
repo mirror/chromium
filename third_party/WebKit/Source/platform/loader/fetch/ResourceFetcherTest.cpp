@@ -252,7 +252,7 @@ TEST_F(ResourceFetcherTest, VaryResource) {
 
 class RequestSameResourceOnComplete
     : public GarbageCollectedFinalized<RequestSameResourceOnComplete>,
-      public RawResourceClient {
+      public ResourceClient {
   USING_GARBAGE_COLLECTED_MIXIN(RequestSameResourceOnComplete);
 
  public:
@@ -275,7 +275,7 @@ class RequestSameResourceOnComplete
 
   void Trace(blink::Visitor* visitor) override {
     visitor->Trace(resource_);
-    RawResourceClient::Trace(visitor);
+    ResourceClient::Trace(visitor);
   }
 
   String DebugName() const override { return "RequestSameResourceOnComplete"; }
@@ -322,7 +322,7 @@ TEST_F(ResourceFetcherTest, DontReuseMediaDataUrl) {
 
 class ServeRequestsOnCompleteClient final
     : public GarbageCollectedFinalized<ServeRequestsOnCompleteClient>,
-      public RawResourceClient {
+      public ResourceClient {
   USING_GARBAGE_COLLECTED_MIXIN(ServeRequestsOnCompleteClient);
 
  public:
@@ -358,7 +358,7 @@ class ServeRequestsOnCompleteClient final
   }
 
   void Trace(blink::Visitor* visitor) override {
-    RawResourceClient::Trace(visitor);
+    ResourceClient::Trace(visitor);
   }
 
   String DebugName() const override { return "ServeRequestsOnCompleteClient"; }

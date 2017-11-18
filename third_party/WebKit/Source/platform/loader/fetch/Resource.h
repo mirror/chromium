@@ -33,6 +33,7 @@
 #include "platform/WebTaskRunner.h"
 #include "platform/instrumentation/tracing/web_process_memory_dump.h"
 #include "platform/loader/SubresourceIntegrity.h"
+#include "platform/loader/fetch/BufferingDataPipeWriter.h"
 #include "platform/loader/fetch/CachedMetadataHandler.h"
 #include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/loader/fetch/ResourceError.h"
@@ -208,22 +209,21 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   }
   void SetResourceBuffer(scoped_refptr<SharedBuffer>);
 
-  virtual bool WillFollowRedirect(const ResourceRequest&,
-                                  const ResourceResponse&);
+  bool WillFollowRedirect(const ResourceRequest&, const ResourceResponse&);
 
   // Called when a redirect response was received but a decision has already
   // been made to not follow it.
-  virtual void WillNotFollowRedirect() {}
+  void WillNotFollowRedirect();
 
   virtual void ResponseReceived(const ResourceResponse&,
                                 std::unique_ptr<WebDataConsumerHandle>);
   void SetResponse(const ResourceResponse&);
   const ResourceResponse& GetResponse() const { return response_; }
 
-  virtual void ReportResourceTimingToClients(const ResourceTimingInfo&) {}
+  void ReportResourceTimingToClients(const ResourceTimingInfo&);
 
   // Sets the serialized metadata retrieved from the platform's cache.
-  virtual void SetSerializedCachedMetadata(const char*, size_t);
+  void SetSerializedCachedMetadata(const char*, size_t);
 
   // This may return nullptr when the resource isn't cacheable.
   CachedMetadataHandler* CacheHandler();
@@ -282,9 +282,9 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   }
   String CacheIdentifier() const { return cache_identifier_; }
 
-  virtual void DidSendData(unsigned long long /* bytesSent */,
-                           unsigned long long /* totalBytesToBeSent */) {}
-  virtual void DidDownloadData(int) {}
+  void DidSendData(unsigned long long /* bytesSent */,
+                   unsigned long long /* totalBytesToBeSent */);
+  void DidDownloadData(int);
 
   double LoadFinishTime() const { return load_finish_time_; }
 
@@ -409,6 +409,10 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
 
   virtual void SetEncoding(const String&) {}
 
+  // Used for preload matching.
+  std::unique_ptr<BufferingDataPipeWriter> data_pipe_writer_;
+  std::unique_ptr<WebDataConsumerHandle> data_consumer_handle_;
+
  private:
   // To allow access to SetCORSStatus
   friend class ResourceLoader;
@@ -417,8 +421,11 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   class CachedMetadataHandlerImpl;
   class ServiceWorkerResponseCachedMetadataHandler;
 
-  void RevalidationSucceeded(const ResourceResponse&);
+  void RevalidationSucceeded(const ResourceResponse&,
+                             std::unique_ptr<WebDataConsumerHandle>);
   void RevalidationFailed();
+  void NotifyResponseReceived(const ResourceResponse&,
+                              std::unique_ptr<WebDataConsumerHandle>);
 
   size_t CalculateOverheadSize() const;
 

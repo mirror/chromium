@@ -29,11 +29,9 @@
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/MemoryCache.h"
-#include "platform/loader/fetch/ResourceClientWalker.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceLoader.h"
 #include "platform/network/http_names.h"
-#include "platform/scheduler/child/web_scheduler.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebThread.h"
 
@@ -124,142 +122,6 @@ RawResource::RawResource(const ResourceRequest& resource_request,
                          const ResourceLoaderOptions& options)
     : Resource(resource_request, type, options) {}
 
-void RawResource::AppendData(const char* data, size_t length) {
-  Resource::AppendData(data, length);
-
-  if (data_pipe_writer_) {
-    data_pipe_writer_->Write(data, length);
-  } else {
-    ResourceClientWalker<RawResourceClient> w(Clients());
-    while (RawResourceClient* c = w.Next())
-      c->DataReceived(this, data, length);
-  }
-}
-
-void RawResource::DidAddClient(ResourceClient* c) {
-  // CHECK()/RevalidationStartForbiddenScope are for
-  // https://crbug.com/640960#c24.
-  CHECK(!IsCacheValidator());
-  if (!HasClient(c))
-    return;
-  DCHECK(RawResourceClient::IsExpectedType(c));
-  RevalidationStartForbiddenScope revalidation_start_forbidden_scope(this);
-  RawResourceClient* client = static_cast<RawResourceClient*>(c);
-  for (const auto& redirect : RedirectChain()) {
-    ResourceRequest request(redirect.request_);
-    client->RedirectReceived(this, request, redirect.redirect_response_);
-    if (!HasClient(c))
-      return;
-  }
-
-  if (!GetResponse().IsNull()) {
-    client->ResponseReceived(this, GetResponse(),
-                             std::move(data_consumer_handle_));
-  }
-  if (!HasClient(c))
-    return;
-  if (scoped_refptr<SharedBuffer> data = Data()) {
-    data->ForEachSegment([this, &client](const char* segment,
-                                         size_t segment_size,
-                                         size_t segment_offset) -> bool {
-      client->DataReceived(this, segment, segment_size);
-
-      // Stop pushing data if the client removed itself.
-      return HasClient(client);
-    });
-  }
-  if (!HasClient(c))
-    return;
-  Resource::DidAddClient(client);
-}
-
-bool RawResource::WillFollowRedirect(
-    const ResourceRequest& new_request,
-    const ResourceResponse& redirect_response) {
-  bool follow = Resource::WillFollowRedirect(new_request, redirect_response);
-  // The base class method takes a const reference of a ResourceRequest and
-  // returns bool just for allowing RawResource to reject redirect. It must
-  // always return true.
-  DCHECK(follow);
-
-  DCHECK(!redirect_response.IsNull());
-  ResourceClientWalker<RawResourceClient> w(Clients());
-  while (RawResourceClient* c = w.Next()) {
-    if (!c->RedirectReceived(this, new_request, redirect_response))
-      follow = false;
-  }
-
-  return follow;
-}
-
-void RawResource::WillNotFollowRedirect() {
-  ResourceClientWalker<RawResourceClient> w(Clients());
-  while (RawResourceClient* c = w.Next())
-    c->RedirectBlocked();
-}
-
-void RawResource::ResponseReceived(
-    const ResourceResponse& response,
-    std::unique_ptr<WebDataConsumerHandle> handle) {
-  if (response.WasFallbackRequiredByServiceWorker()) {
-    // The ServiceWorker asked us to re-fetch the request. This resource must
-    // not be reused.
-    // Note: This logic is needed here because DocumentThreadableLoader handles
-    // CORS independently from ResourceLoader. Fix it.
-    GetMemoryCache()->Remove(this);
-  }
-
-  bool is_successful_revalidation =
-      IsCacheValidator() && response.HttpStatusCode() == 304;
-  Resource::ResponseReceived(response, nullptr);
-
-  DCHECK(!handle || !data_consumer_handle_);
-  if (!handle && Clients().size() > 0)
-    handle = std::move(data_consumer_handle_);
-  ResourceClientWalker<RawResourceClient> w(Clients());
-  DCHECK(Clients().size() <= 1 || !handle);
-  while (RawResourceClient* c = w.Next()) {
-    // |handle| is cleared when passed, but it's not a problem because |handle|
-    // is null when there are two or more clients, as asserted.
-    c->ResponseReceived(this, this->GetResponse(), std::move(handle));
-  }
-
-  // If we successfully revalidated, we won't get appendData() calls. Forward
-  // the data to clients now instead. Note: |m_data| can be null when no data is
-  // appended to the original resource.
-  if (is_successful_revalidation && Data()) {
-    ResourceClientWalker<RawResourceClient> w(Clients());
-    while (RawResourceClient* c = w.Next())
-      c->DataReceived(this, Data()->Data(), Data()->size());
-  }
-}
-
-void RawResource::SetSerializedCachedMetadata(const char* data, size_t size) {
-  Resource::SetSerializedCachedMetadata(data, size);
-  ResourceClientWalker<RawResourceClient> w(Clients());
-  while (RawResourceClient* c = w.Next())
-    c->SetSerializedCachedMetadata(this, data, size);
-}
-
-void RawResource::DidSendData(unsigned long long bytes_sent,
-                              unsigned long long total_bytes_to_be_sent) {
-  ResourceClientWalker<RawResourceClient> w(Clients());
-  while (RawResourceClient* c = w.Next())
-    c->DataSent(this, bytes_sent, total_bytes_to_be_sent);
-}
-
-void RawResource::DidDownloadData(int data_length) {
-  ResourceClientWalker<RawResourceClient> w(Clients());
-  while (RawResourceClient* c = w.Next())
-    c->DataDownloaded(this, data_length);
-}
-
-void RawResource::ReportResourceTimingToClients(
-    const ResourceTimingInfo& info) {
-  ResourceClientWalker<RawResourceClient> w(Clients());
-  while (RawResourceClient* c = w.Next())
-    c->DidReceiveResourceTiming(this, info);
-}
 
 bool RawResource::MatchPreload(const FetchParameters& params,
                                WebTaskRunner* task_runner) {
@@ -313,12 +175,6 @@ bool RawResource::MatchPreload(const FetchParameters& params,
   if (IsLoaded())
     data_pipe_writer_->Finish();
   return true;
-}
-
-void RawResource::NotifyFinished() {
-  if (data_pipe_writer_)
-    data_pipe_writer_->Finish();
-  Resource::NotifyFinished();
 }
 
 void RawResource::SetDefersLoading(bool defers) {
@@ -385,69 +241,6 @@ bool RawResource::CanReuse(const FetchParameters& new_fetch_parameters) const {
   }
 
   return Resource::CanReuse(new_fetch_parameters);
-}
-
-RawResourceClientStateChecker::RawResourceClientStateChecker()
-    : state_(kNotAddedAsClient) {}
-
-RawResourceClientStateChecker::~RawResourceClientStateChecker() {}
-
-NEVER_INLINE void RawResourceClientStateChecker::WillAddClient() {
-  SECURITY_CHECK(state_ == kNotAddedAsClient);
-  state_ = kStarted;
-}
-
-NEVER_INLINE void RawResourceClientStateChecker::WillRemoveClient() {
-  SECURITY_CHECK(state_ != kNotAddedAsClient);
-  state_ = kNotAddedAsClient;
-}
-
-NEVER_INLINE void RawResourceClientStateChecker::RedirectReceived() {
-  SECURITY_CHECK(state_ == kStarted);
-}
-
-NEVER_INLINE void RawResourceClientStateChecker::RedirectBlocked() {
-  SECURITY_CHECK(state_ == kStarted);
-  state_ = kRedirectBlocked;
-}
-
-NEVER_INLINE void RawResourceClientStateChecker::DataSent() {
-  SECURITY_CHECK(state_ == kStarted);
-}
-
-NEVER_INLINE void RawResourceClientStateChecker::ResponseReceived() {
-  SECURITY_CHECK(state_ == kStarted);
-  state_ = kResponseReceived;
-}
-
-NEVER_INLINE void RawResourceClientStateChecker::SetSerializedCachedMetadata() {
-  SECURITY_CHECK(state_ == kResponseReceived);
-  state_ = kSetSerializedCachedMetadata;
-}
-
-NEVER_INLINE void RawResourceClientStateChecker::DataReceived() {
-  SECURITY_CHECK(state_ == kResponseReceived ||
-                 state_ == kSetSerializedCachedMetadata ||
-                 state_ == kDataReceived);
-  state_ = kDataReceived;
-}
-
-NEVER_INLINE void RawResourceClientStateChecker::DataDownloaded() {
-  SECURITY_CHECK(state_ == kResponseReceived ||
-                 state_ == kSetSerializedCachedMetadata ||
-                 state_ == kDataDownloaded);
-  state_ = kDataDownloaded;
-}
-
-NEVER_INLINE void RawResourceClientStateChecker::NotifyFinished(
-    Resource* resource) {
-  SECURITY_CHECK(state_ != kNotAddedAsClient);
-  SECURITY_CHECK(state_ != kNotifyFinished);
-  SECURITY_CHECK(resource->ErrorOccurred() ||
-                 (state_ == kResponseReceived ||
-                  state_ == kSetSerializedCachedMetadata ||
-                  state_ == kDataReceived || state_ == kDataDownloaded));
-  state_ = kNotifyFinished;
 }
 
 }  // namespace blink
