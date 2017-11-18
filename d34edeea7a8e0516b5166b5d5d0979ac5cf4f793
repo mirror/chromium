@@ -1,0 +1,248 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b628e52_7038e4d1",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-18T01:28:00Z",
+      "side": 1,
+      "message": "nit: slightly prefer using the same name ParsingError.",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80629e80_31047a19",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-18T01:28:00Z",
+      "side": 1,
+      "message": "Since this class doesn\u0027t have control of the utility process anymore, this class shouldn\u0027t need to create/destroy |parser_| on demand.",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8283b9b3_5992bbc6",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-18T01:28:00Z",
+      "side": 1,
+      "message": "Can app_url be passed into parser_-\u003eStart() and be populated in SafeDialDeviceDescriptionParser::OnXmlParsingDone? That way it seems more consistent, rather than populating the object in two separate places.",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec75005_265fc788",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-18T01:28:00Z",
+      "side": 1,
+      "message": "Why is static_cast needed now?",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be338b4_8be354a7",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-18T01:28:00Z",
+      "side": 1,
+      "message": "service_manager::Connector* const connector_;",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9778d0_054ecb0f",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-18T01:28:00Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think there is reason anymore for this to be created lazily or be in a unique_ptr.",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63499b1_b47e6584",
+        "filename": "chrome/browser/media/router/discovery/dial/parsed_dial_device_description.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-18T01:28:00Z",
+      "side": 1,
+      "message": "can this ctor be removed?",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb32e7b_efe1d89d",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-18T01:28:00Z",
+      "side": 1,
+      "message": "Would it be better for |connector| to be passed into the ctor?",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e5d4714_b7f065ca",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-18T01:28:00Z",
+      "side": 1,
+      "message": "The previous code keeps utility_process_mojo_client_ alive and reuse it as long as there is an outstanding parsing request. I haven\u0027t look into the details of data_decoder::ParseXml, but I was wondering if it (or service_manager) also do this. The reason is that DIAL devices have a tendency to be discovered in batches, so we didn\u0027t want to spawn unnecessary processes.",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "829e3c9e_c4d68fc1",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-18T01:28:00Z",
+      "side": 1,
+      "message": "kParsingErrors",
+      "range": {
+        "startLine": 79,
+        "startChar": 25,
+        "endLine": 79,
+        "endChar": 38
+      },
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c553390_31831b5c",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-18T01:28:00Z",
+      "side": 1,
+      "message": "- Can this be enforced using std::array?\n- kNodeNames / kParsingErrors can be moved to anonymous namespace.",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd15fe03_762f5514",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-18T01:28:00Z",
+      "side": 1,
+      "message": "nit: typo in Inconsistent",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76bd281b_ef031a29",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-18T01:28:00Z",
+      "side": 1,
+      "message": "Can |device_description| be const ref? Because I don\u0027t think ParsedDialDeviceDescription is movable (though it is not difficult to add support for moves)",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e07722_bf62f20f",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-18T01:28:00Z",
+      "side": 1,
+      "message": "Can this be a SequenceChecker?",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
