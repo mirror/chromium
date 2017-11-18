@@ -23,6 +23,9 @@
 #include "url/gurl.h"
 
 namespace safe_browsing {
+
+extern const base::Feature kDispatchSafetyNetCheckOffThread;
+
 class SafeBrowsingApiHandlerBridge : public SafeBrowsingApiHandler {
  public:
   SafeBrowsingApiHandlerBridge();
