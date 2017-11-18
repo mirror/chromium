@@ -16,6 +16,24 @@
       "revId": "e8d53b85e154063e5992601cb5cb7d49561b2cda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b364eab0_07070e5b",
+        "filename": "media/mojo/services/decoder_cdm_context_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-18T20:08:39Z",
+      "side": 1,
+      "message": "sgtm.  crbug.com/786736 .  duplicated the code, and added a TODO here referencing it.",
+      "parentUuid": "11dd2614_0566c797",
+      "revId": "e8d53b85e154063e5992601cb5cb7d49561b2cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

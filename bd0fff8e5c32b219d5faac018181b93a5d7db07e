@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a5264db4_7aa8163b",
+        "filename": "media/mojo/services/cdm_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-18T20:08:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b00bd050_be536155",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "bd0fff8e5c32b219d5faac018181b93a5d7db07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca1cd0fe_99ecb720",
         "filename": "media/mojo/services/cdm_helper.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "bd0fff8e5c32b219d5faac018181b93a5d7db07e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e47ad581_e64620b4",
+        "filename": "media/mojo/services/cdm_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-18T20:08:39Z",
+      "side": 1,
+      "message": "hrm, yeah.  i replaced it with \"DecoderCdmContextHelper\", since \"Helper\" seems like the right suffix and Cdm has to be in there somewhere.  so, more specific seems like the only option.\n\nother suggestions are welcome.\n\nedit: marking resolved since this class is no longer used.",
+      "parentUuid": "ca1cd0fe_99ecb720",
+      "range": {
+        "startLine": 18,
+        "startChar": 3,
+        "endLine": 18,
+        "endChar": 23
+      },
+      "revId": "bd0fff8e5c32b219d5faac018181b93a5d7db07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
