@@ -4,6 +4,7 @@
 
 #include "crazy_linker_thread.h"
 
+#include <cstring>
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>

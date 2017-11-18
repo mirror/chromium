@@ -5,6 +5,8 @@
 #ifndef CRAZY_LINKER_UTIL_H
 #define CRAZY_LINKER_UTIL_H
 
+#include <cstdlib>
+#include <cstring>
 #include <fcntl.h>
 #include <stdarg.h>
 #include <stdio.h>

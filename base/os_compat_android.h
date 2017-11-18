@@ -19,11 +19,12 @@ extern "C" char* mkdtemp(char* path);
 extern "C" time_t timegm(struct tm* const t);
 
 // The lockf() function is not available on Android; we translate to flock().
-#define F_LOCK LOCK_EX
+// TODO(bsheedy): Conditionally define based on NDK version?
+/*#define F_LOCK LOCK_EX
 #define F_ULOCK LOCK_UN
 inline int lockf(int fd, int cmd, off_t ignored_len) {
   return flock(fd, cmd);
-}
+}*/
 
 // In case __USE_FILE_OFFSET64 is not used, we need to call pwrite64() instead
 // of pwrite()
