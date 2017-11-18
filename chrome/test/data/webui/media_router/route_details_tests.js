@@ -45,14 +45,6 @@ cr.define('route_details', function() {
             details.$$('#' + elementId).querySelector('span').innerText);
       };
 
-      // Checks the default route view is shown.
-      var checkDefaultViewIsShown = function() {
-        assertFalse(details.$$('#route-information').hasAttribute('hidden'));
-        assertTrue(
-            !details.$$('extension-view-wrapper') ||
-            details.$$('extension-view-wrapper').hasAttribute('hidden'));
-      };
-
       // Checks the start button is shown.
       var checkStartCastButtonIsShown = function() {
         assertFalse(details.$$('#start-casting-to-route-button')
@@ -63,13 +55,6 @@ cr.define('route_details', function() {
       var checkStartCastButtonIsNotShown = function() {
         assertTrue(details.$$('#start-casting-to-route-button')
                        .hasAttribute('hidden'));
-      };
-
-      // Checks the custom controller is shown.
-      var checkCustomControllerIsShown = function() {
-        assertTrue(details.$$('#route-information').hasAttribute('hidden'));
-        assertFalse(
-            details.$$('extension-view-wrapper').hasAttribute('hidden'));
       };
 
       // Checks whether |expected| and the text in the |elementId| element
@@ -182,73 +167,22 @@ cr.define('route_details', function() {
         checkSpanText(
             loadTimeData.getString('startCastingButtonText').toUpperCase(),
             'start-casting-to-route-button');
-        checkSpanText('', 'route-information');
       });
 
       // Tests when |route| is undefined or set.
       test('route is undefined or set', function() {
         // |route| is initially undefined.
         assertEquals(undefined, details.route);
-        checkDefaultViewIsShown();
 
         // Set |route|.
         details.route = fakeRouteOne;
         assertEquals(fakeRouteOne, details.route);
-        checkSpanText(loadTimeData.getStringF('castingActivityStatus',
-            fakeRouteOne.description), 'route-information');
-        checkDefaultViewIsShown();
         checkStartCastButtonIsNotShown();
 
         // Set |route| to a different route.
         details.route = fakeRouteTwo;
         assertEquals(fakeRouteTwo, details.route);
-        checkSpanText(loadTimeData.getStringF('castingActivityStatus',
-            fakeRouteTwo.description), 'route-information');
-        checkDefaultViewIsShown();
         checkStartCastButtonIsShown();
-      });
-
-      // Tests when |route| exists, has a custom controller, and it loads.
-      test('route has custom controller and loading succeeds', function(done) {
-        // Get the extension-view-wrapper stamped first, so that we can mock out
-        // the load method.
-        details.route = fakeRouteTwo;
-
-        setTimeout(function() {
-          details.$$('extension-view-wrapper').$$('#custom-controller').load =
-              function(url) {
-            setTimeout(function() {
-              assertEquals(
-                  fakeRouteOneControllerPath,
-                  url.substring(0, fakeRouteOneControllerPath.length));
-              checkCustomControllerIsShown();
-              done();
-            });
-            return Promise.resolve();
-          };
-
-          details.route = fakeRouteOne;
-        });
-      });
-
-      // Tests when |route| exists, has a custom controller, but fails to load.
-      test('route has custom controller but loading fails', function(done) {
-        // Get the extension-view-wrapper stamped first, so that we can mock out
-        // the load method.
-        details.route = fakeRouteTwo;
-
-        setTimeout(function() {
-          details.$$('extension-view-wrapper').$$('#custom-controller').load =
-              function(url) {
-            setTimeout(function() {
-              checkDefaultViewIsShown();
-              done();
-            });
-            return Promise.reject();
-          };
-
-          details.route = fakeRouteOne;
-        });
       });
     });
   }
