@@ -21,6 +21,7 @@
 #include "cc/resources/resource.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
+#include "gpu/command_buffer/client/raster_interface.h"
 #include "third_party/skia/include/core/SkMultiPictureDraw.h"
 #include "third_party/skia/include/core/SkPictureRecorder.h"
 #include "third_party/skia/include/core/SkSurface.h"
@@ -42,7 +43,7 @@ static void RasterizeSourceOOP(
     ResourceProvider::ScopedWriteLockGL* resource_lock,
     bool use_distance_field_text,
     int msaa_sample_count) {
-  gpu::gles2::GLES2Interface* gl = context_provider->ContextGL();
+  gpu::RasterInterface* gl = context_provider->RasterContext();
   GLuint texture_id = resource_lock->ConsumeTexture(gl);
 
   gl->BeginRasterCHROMIUM(texture_id, raster_source->background_color(),
