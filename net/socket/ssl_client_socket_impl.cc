@@ -677,6 +677,8 @@ bool SSLClientSocketImpl::GetSSLInfo(SSLInfo* ssl_info) {
   ssl_info->token_binding_key_param = tb_negotiated_param_;
   ssl_info->pinning_failure_log = pinning_failure_log_;
   ssl_info->ocsp_result = server_cert_verify_result_.ocsp_result;
+  ssl_info->is_fatal_cert_error =
+      transport_security_state_->ShouldSSLErrorsBeFatal(host_and_port_.host());
 
   AddCTInfoToSSLInfo(ssl_info);
 

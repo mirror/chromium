@@ -109,7 +109,6 @@ NavigationHandleImpl::NavigationHandleImpl(
       should_update_history_(false),
       subframe_entry_committed_(false),
       connection_info_(net::HttpResponseInfo::CONNECTION_INFO_UNKNOWN),
-      should_ssl_errors_be_fatal_(false),
       original_url_(url),
       state_(INITIAL),
       is_transferring_(false),
@@ -340,10 +339,6 @@ const base::Optional<net::SSLInfo>& NavigationHandleImpl::GetSSLInfo() {
   return ssl_info_;
 }
 
-bool NavigationHandleImpl::ShouldSSLErrorsBeFatal() {
-  return should_ssl_errors_be_fatal_;
-}
-
 bool NavigationHandleImpl::HasCommitted() {
   return state_ == DID_COMMIT || state_ == DID_COMMIT_ERROR_PAGE;
 }
@@ -450,8 +445,7 @@ NavigationHandleImpl::CallWillFailRequestForTesting(
     base::Optional<net::SSLInfo> ssl_info,
     bool should_ssl_errors_be_fatal) {
   NavigationThrottle::ThrottleCheckResult result = NavigationThrottle::DEFER;
-  WillFailRequest(ssl_info, should_ssl_errors_be_fatal,
-                  base::Bind(&UpdateThrottleCheckResult, &result));
+  WillFailRequest(ssl_info, base::Bind(&UpdateThrottleCheckResult, &result));
 
   // Reset the callback to ensure it will not be called later.
   complete_callback_.Reset();
@@ -695,13 +689,11 @@ void NavigationHandleImpl::WillRedirectRequest(
 
 void NavigationHandleImpl::WillFailRequest(
     base::Optional<net::SSLInfo> ssl_info,
-    bool should_ssl_errors_be_fatal,
     const ThrottleChecksFinishedCallback& callback) {
   TRACE_EVENT_ASYNC_STEP_INTO0("navigation", "NavigationHandle", this,
                                "WillFailRequest");
 
   ssl_info_ = ssl_info;
-  should_ssl_errors_be_fatal_ = should_ssl_errors_be_fatal;
   complete_callback_ = callback;
   state_ = WILL_FAIL_REQUEST;
 
