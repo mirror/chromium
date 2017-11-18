@@ -47,11 +47,16 @@ Sources.CallStackSidebarPane = class extends UI.SimpleView {
     this._list.element.addEventListener('contextmenu', this._onContextMenu.bind(this), false);
     this._list.element.addEventListener('click', this._onClick.bind(this), false);
 
+    this._showMoreMessageElement = this._createShowMoreMessageElement();
+    this._showMoreMessageElement.classList.add('hidden');
+    this.contentElement.appendChild(this._showMoreMessageElement);
+
     this._showBlackboxed = false;
     Bindings.blackboxManager.addChangeListener(this._update.bind(this));
     this._locationPool = new Bindings.LiveLocationPool();
 
     this._updateThrottler = new Common.Throttler(100);
+    this._maxAsyncStackChainDepth = Sources.CallStackSidebarPane._defaultMaxAsyncStackChainDepth;
     this._update();
   }
 
@@ -78,7 +83,9 @@ Sources.CallStackSidebarPane = class extends UI.SimpleView {
     if (!details) {
       this._notPausedMessageElement.classList.remove('hidden');
       this._blackboxedMessageElement.classList.add('hidden');
+      this._showMoreMessageElement.classList.add('hidden');
       this._items.replaceAll([]);
+      this._maxAsyncStackChainDepth = Sources.CallStackSidebarPane._defaultMaxAsyncStackChainDepth;
       UI.context.setFlavor(SDK.DebuggerModel.CallFrame, null);
       return;
     }
@@ -106,7 +113,7 @@ Sources.CallStackSidebarPane = class extends UI.SimpleView {
           debuggerModel ? await debuggerModel.fetchAsyncStackTrace(details.externalAsyncStackTrace) : null;
     }
     var peviousStackTrace = details.callFrames;
-    var maxAsyncStackChainDepth = 32;
+    var maxAsyncStackChainDepth = this._maxAsyncStackChainDepth;
     while (asyncStackTrace && maxAsyncStackChainDepth > 0) {
       var title = '';
       var isAwait = asyncStackTrace.description === 'async function';
@@ -137,12 +144,17 @@ Sources.CallStackSidebarPane = class extends UI.SimpleView {
       if (asyncStackTrace.parent) {
         asyncStackTrace = asyncStackTrace.parent;
       } else if (asyncStackTrace.parentId) {
-        debuggerModel = SDK.DebuggerModel.modelForDebuggerId(asyncStackTrace.parentId.debuggerId);
+        if (asyncStackTrace.parentId.debuggerId)
+          debuggerModel = SDK.DebuggerModel.modelForDebuggerId(asyncStackTrace.parentId.debuggerId);
         asyncStackTrace = debuggerModel ? await debuggerModel.fetchAsyncStackTrace(asyncStackTrace.parentId) : null;
       } else {
         asyncStackTrace = null;
       }
     }
+    if (asyncStackTrace)
+      this._showMoreMessageElement.classList.remove('hidden');
+    else
+      this._showMoreMessageElement.classList.add('hidden');
 
     if (!hiddenCallFramesCount) {
       this._blackboxedMessageElement.classList.add('hidden');
@@ -158,8 +170,10 @@ Sources.CallStackSidebarPane = class extends UI.SimpleView {
     }
 
     this._items.replaceAll(items);
-    this._list.selectNextItem(true /* canWrap */, false /* center */);
+    if (this._maxAsyncStackChainDepth === Sources.CallStackSidebarPane._defaultMaxAsyncStackChainDepth)
+      this._list.selectNextItem(true /* canWrap */, false /* center */);
     this._updatedForTest();
+    this.contentElement.style.removeProperty('height');
   }
 
   _updatedForTest() {
@@ -285,6 +299,21 @@ Sources.CallStackSidebarPane = class extends UI.SimpleView {
   }
 
   /**
+   * @return {!Element}
+   */
+  _createShowMoreMessageElement() {
+    var element = createElementWithClass('div', 'show-more-message');
+    element.createChild('span');
+    var showAllLink = element.createChild('span', 'link');
+    showAllLink.textContent = Common.UIString('Show more\u2026');
+    showAllLink.addEventListener('click', () => {
+      this._maxAsyncStackChainDepth += Sources.CallStackSidebarPane._defaultMaxAsyncStackChainDepth;
+      this._update();
+    }, false);
+    return element;
+  }
+
+  /**
    * @param {!Event} event
    */
   _onContextMenu(event) {
@@ -400,6 +429,8 @@ Sources.CallStackSidebarPane = class extends UI.SimpleView {
         UI.ShortcutsScreen.SourcesPanelShortcuts.PrevCallFrame, this._selectPreviousCallFrameOnStack.bind(this));
   }
 };
+
+Sources.CallStackSidebarPane._defaultMaxAsyncStackChainDepth = 32;
 
 /**
  * @typedef {{
