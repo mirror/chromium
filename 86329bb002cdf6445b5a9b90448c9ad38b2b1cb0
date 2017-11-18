@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "ba20b77e_7e846a7a",
+        "filename": "content/browser/webrtc/webrtc_image_capture_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Do you want me to revert all modifications done to this file\nOR \nto have those tests running on MediaFoundation but not on DirectShow?",
+      "parentUuid": "0889741c_ab040333",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ec4409e_46779e46",
         "filename": "media/capture/video/win/video_capture_device_factory_win.h",
         "patchSetId": 16
@@ -50,6 +68,24 @@
       "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb9ae16c_389f47e0",
+        "filename": "media/capture/video/win/video_capture_device_factory_win.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ec4409e_46779e46",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "fa80b315_54207e1e",
+        "filename": "media/capture/video/win/video_capture_device_factory_win.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "294d5e97_05bbf1de",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "631539d1_e447fbd6",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 16
@@ -84,6 +138,24 @@
       "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80faebbf_df03e2b1",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "631539d1_e447fbd6",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "747148a0_085b58bb",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b201ac83_200fd6ee",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c37e728_b718dc5d",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 16
@@ -118,6 +208,24 @@
       "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b82acc0a_ac0006f3",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c37e728_b718dc5d",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "23bb1660_a30d20d1",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48431b1e_6a99a62a",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fefc258a_fed7d5f5",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 16
@@ -152,6 +278,24 @@
       "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa7a4f3_9b4ff30e",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fefc258a_fed7d5f5",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "8fa846d1_e1cb7f01",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Yes it is to double check.\nYou are correct about Unknown, I removed the static_cast for this case.",
+      "parentUuid": "275cc51f_82ace874",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff00ec4c_ce77463b",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 16
@@ -186,6 +348,24 @@
       "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95bb07bf_1ca2b51c",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff00ec4c_ce77463b",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "18b22a1a_cc2de84e",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Yes it can.\nBut in that case, blob will be a nullptr and we will not pass in if(blob), therefore the callback will not be called.\nThe callback documentation states \"On failure, drops callback without invoking it.\" IMO this is what it does.",
+      "parentUuid": "7e573127_9cd697aa",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21621f99_17e2875a",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 16
@@ -220,6 +418,24 @@
       "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b33d5e79_b542744d",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "I looked at the documentation and didn\u0027t find information about eventual multiple buffers for photo callback.\nI propose to only consider the first filled buffer right now.",
+      "parentUuid": "21621f99_17e2875a",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +456,24 @@
     },
     {
       "key": {
+        "uuid": "d769a290_de4f3f54",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aa6bd56_eff3ae26",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "924f08dd_cdcaca07",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 16
@@ -254,6 +488,24 @@
       "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39528f85_9c9d4414",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "924f08dd_cdcaca07",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +543,24 @@
     },
     {
       "key": {
+        "uuid": "3ac0cc5f_4220049f",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "614c2b95_79cb5764",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e254c4ec_9a17bc98",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 16
@@ -314,6 +584,30 @@
     },
     {
       "key": {
+        "uuid": "930e7835_b064a9cf",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e254c4ec_9a17bc98",
+      "range": {
+        "startLine": 641,
+        "startChar": 6,
+        "endLine": 641,
+        "endChar": 14
+      },
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d3dc127_e35b1288",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 16
@@ -328,6 +622,24 @@
       "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50113571_fb89885b",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d3dc127_e35b1288",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -348,6 +660,24 @@
     },
     {
       "key": {
+        "uuid": "7fe58b91_2d03d5bf",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "116cf22d_9dc3c34b",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e38e23f5_565a313d",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 16
@@ -362,6 +692,24 @@
       "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a07642b7_a2fc311f",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e38e23f5_565a313d",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -382,6 +730,24 @@
     },
     {
       "key": {
+        "uuid": "2c6dd72f_88a6e864",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Correct. Lock added.",
+      "parentUuid": "e17af5ea_2478399d",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db1cf791_2465d722",
         "filename": "media/capture/video/win/video_capture_device_mf_win.h",
         "patchSetId": 16
@@ -396,6 +762,24 @@
       "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a08464e1_753b3e90",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "db1cf791_2465d722",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -416,6 +800,24 @@
     },
     {
       "key": {
+        "uuid": "189c0b8f_0a6843ff",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "563ad9be_72c4ab0b",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d3fe9df_fadef41c",
         "filename": "media/capture/video/win/video_capture_device_mf_win.h",
         "patchSetId": 16
@@ -433,6 +835,24 @@
     },
     {
       "key": {
+        "uuid": "63738ff4_bba8afce",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d3fe9df_fadef41c",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b5556c8_326503a9",
         "filename": "media/capture/video/win/video_capture_device_mf_win.h",
         "patchSetId": 16
@@ -447,6 +867,24 @@
       "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba5c31a3_dd5d9589",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-18T19:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b5556c8_326503a9",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
