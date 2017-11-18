@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "593af896_a534e0f1",
+        "filename": "net/cert/ct_verify_result.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-18T00:04:32Z",
+      "side": 1,
+      "message": "Sure, thanks for the suggestion. I went with |policy_compliance_required| and filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d786584 to rename |cert_policy_compliance|. I think we could just call that field |policy_compliance| -- not sure if it even needs to be|ct_policy_compliance| because it\u0027s in CTVerifyResult so not sure it needs CT in its own name.",
+      "parentUuid": "1baefa15_3ad47819",
+      "revId": "9921a19889d75960823264667c6db1c1e0320110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edc52a71_7e72e8e4",
         "filename": "net/quic/chromium/crypto/proof_verifier_chromium.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "9921a19889d75960823264667c6db1c1e0320110",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b28311b7_82079fb8",
+        "filename": "net/quic/chromium/crypto/proof_verifier_chromium.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-18T00:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edc52a71_7e72e8e4",
+      "revId": "9921a19889d75960823264667c6db1c1e0320110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "b04ee923_308fb90e",
+        "filename": "net/quic/chromium/crypto/proof_verifier_chromium_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-18T00:04:32Z",
+      "side": 1,
+      "message": "Yes, are you okay deferring this to a follow-up? I filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d786602",
+      "parentUuid": "e37b9976_51fa3339",
+      "range": {
+        "startLine": 802,
+        "startChar": 71,
+        "endLine": 803,
+        "endChar": 45
+      },
+      "revId": "9921a19889d75960823264667c6db1c1e0320110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42d9f39d_57438fe7",
         "filename": "net/quic/chromium/crypto/proof_verifier_chromium_test.cc",
         "patchSetId": 7
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "421487b7_12e35171",
+        "filename": "net/quic/chromium/crypto/proof_verifier_chromium_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-18T00:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42d9f39d_57438fe7",
+      "range": {
+        "startLine": 837,
+        "startChar": 14,
+        "endLine": 837,
+        "endChar": 20
+      },
+      "revId": "9921a19889d75960823264667c6db1c1e0320110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f5bf5d9_8ab54067",
         "filename": "net/socket/ssl_client_socket_impl.cc",
         "patchSetId": 7
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "bafc888e_558fa99b",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1565,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-18T00:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f5bf5d9_8ab54067",
+      "revId": "9921a19889d75960823264667c6db1c1e0320110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b6d5589_6282df0a",
         "filename": "net/ssl/ssl_info.h",
         "patchSetId": 7
@@ -113,6 +215,24 @@
       "revId": "9921a19889d75960823264667c6db1c1e0320110",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "630f6ffc_afb60f44",
+        "filename": "net/ssl/ssl_info.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-18T00:04:32Z",
+      "side": 1,
+      "message": "Changed to |ct_policy_compliance_required| in anticipation of removing the cert_ from ct_cert_policy_compliance (https://bugs.chromium.org/p/chromium/issues/detail?id\u003d786584#c2).",
+      "parentUuid": "3b6d5589_6282df0a",
+      "revId": "9921a19889d75960823264667c6db1c1e0320110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "9fe94880_9fbe495d",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-18T00:04:32Z",
+      "side": 1,
+      "message": "Oops, yes, thanks, fixed the comment.",
+      "parentUuid": "719cc3bd_9014820b",
+      "range": {
+        "startLine": 109,
+        "startChar": 15,
+        "endLine": 109,
+        "endChar": 26
+      },
+      "revId": "9921a19889d75960823264667c6db1c1e0320110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fa8581b_dc0c3f1d",
         "filename": "net/url_request/url_request_unittest.cc",
         "patchSetId": 7
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "916653e7_0b420969",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7081,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-18T00:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fa8581b_dc0c3f1d",
+      "revId": "9921a19889d75960823264667c6db1c1e0320110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74dc34bb_9305496b",
         "filename": "net/url_request/url_request_unittest.cc",
         "patchSetId": 7
@@ -170,6 +332,24 @@
       "revId": "9921a19889d75960823264667c6db1c1e0320110",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92782bea_7454c3d3",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7147,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-18T00:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74dc34bb_9305496b",
+      "revId": "9921a19889d75960823264667c6db1c1e0320110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
