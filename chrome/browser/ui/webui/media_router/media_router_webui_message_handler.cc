@@ -219,8 +219,8 @@ std::unique_ptr<base::DictionaryValue> IssueToValue(const Issue& issue) {
     dictionary->SetInteger("secondaryActionType",
                            static_cast<int>(issue_info.secondary_actions[0]));
   }
-  if (!issue_info.route_id.empty())
-    dictionary->SetString("routeId", issue_info.route_id);
+  if (issue_info.route_id)
+    dictionary->SetString("routeId", *issue_info.route_id);
   dictionary->SetBoolean("isBlocking", issue_info.is_blocking);
   if (issue_info.help_page_id > 0)
     dictionary->SetInteger("helpPageId", issue_info.help_page_id);

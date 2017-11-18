@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/logging.h"
+#include "base/optional.h"
 #include "chrome/common/media_router/media_route.h"
 
 namespace media_router {
@@ -60,9 +61,9 @@ struct IssueInfo {
   // action is supported.
   std::vector<Action> secondary_actions;
 
-  // ID of route associated with the Issue, or empty if no route is associated
+  // ID of route associated with the Issue, or nullopt if no route is associated
   // with it.
-  std::string route_id;
+  base::Optional<std::string> route_id;
 
   // |true| if the issue needs to be resolved before continuing. Note that a
   // Issue of severity FATAL is considered blocking by default.
