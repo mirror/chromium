@@ -86,12 +86,14 @@ ScopedJavaLocalRef<jintArray> SBThreatTypeSetToJavaArray(
 //                 that will be called and then deleted here.
 //   |result_status| is one of those from SafeBrowsingApiHandler.java
 //   |metadata| is a JSON string classifying the threat if there is one.
+//
+//   Careful note: this can be called on multiple threads, so make sure there is
+//   nothing thread unsafe happening here.
 void OnUrlCheckDone(JNIEnv* env,
                     const JavaParamRef<jclass>& context,
                     jlong callback_id,
                     jint result_status,
                     const JavaParamRef<jstring>& metadata) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(callback_id);
   TRACE_EVENT0("safe_browsing", "SafeBrowsingApiHandlerBridge::OnUrlCheckDone");
 
