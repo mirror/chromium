@@ -672,9 +672,9 @@ void ServiceWorkerVersion::RunAfterStartWorker(
     std::move(task).Run();
     return;
   }
-  StartWorker(purpose, base::AdaptCallbackForRepeating(base::BindOnce(
-                           &RunTaskAfterStartWorker, weak_factory_.GetWeakPtr(),
-                           std::move(error_callback), std::move(task))));
+  StartWorker(purpose, base::BindOnce(
+      &RunTaskAfterStartWorker, weak_factory_.GetWeakPtr(),
+      std::move(error_callback), std::move(task)));
 }
 
 void ServiceWorkerVersion::AddControllee(

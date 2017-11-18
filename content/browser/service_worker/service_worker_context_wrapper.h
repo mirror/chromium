@@ -48,17 +48,22 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
       public ServiceWorkerContextCoreObserver,
       public base::RefCountedThreadSafe<ServiceWorkerContextWrapper> {
  public:
+  // TODO: Remove
+  using LegacyGetUserDataForAllRegistrationsCallback =
+      ServiceWorkerStorage::LegacyGetUserDataForAllRegistrationsCallback;
+  using LegacyGetUserDataCallback = ServiceWorkerStorage::LegacyGetUserDataCallback;
+
   using StatusCallback = base::Callback<void(ServiceWorkerStatusCode)>;
   using BoolCallback = base::Callback<void(bool)>;
   using FindRegistrationCallback =
       ServiceWorkerStorage::FindRegistrationCallback;
   using GetRegistrationsInfosCallback =
       ServiceWorkerStorage::GetRegistrationsInfosCallback;
-  using GetUserDataCallback = ServiceWorkerStorage::GetUserDataCallback;
+  // using GetUserDataCallback = ServiceWorkerStorage::GetUserDataCallback;
   using GetUserKeysAndDataCallback =
       ServiceWorkerStorage::GetUserKeysAndDataCallback;
-  using GetUserDataForAllRegistrationsCallback =
-      ServiceWorkerStorage::GetUserDataForAllRegistrationsCallback;
+  // using GetUserDataForAllRegistrationsCallback =
+  //     ServiceWorkerStorage::GetUserDataForAllRegistrationsCallback;
 
   explicit ServiceWorkerContextWrapper(BrowserContext* browser_context);
 
@@ -158,8 +163,7 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
   //
   // Must be called from the IO thread.
   void FindReadyRegistrationForDocument(
-      const GURL& document_url,
-      const FindRegistrationCallback& callback);
+      const GURL& document_url, FindRegistrationCallback callback);
 
   // Returns the registration for |scope|. It is guaranteed that the returned
   // registration has the activated worker.
@@ -173,8 +177,7 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
   //
   // Must be called from the IO thread.
   void FindReadyRegistrationForPattern(
-      const GURL& scope,
-      const FindRegistrationCallback& callback);
+      const GURL& scope, FindRegistrationCallback callback);
 
   // Returns the registration for |registration_id|. It is guaranteed that the
   // returned registration has the activated worker.
@@ -189,7 +192,7 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
   // Must be called from the IO thread.
   void FindReadyRegistrationForId(int64_t registration_id,
                                   const GURL& origin,
-                                  const FindRegistrationCallback& callback);
+                                  FindRegistrationCallback callback);
 
   // Returns the registration for |registration_id|. It is guaranteed that the
   // returned registration has the activated worker.
@@ -207,20 +210,20 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
   //
   // Must be called from the IO thread.
   void FindReadyRegistrationForIdOnly(int64_t registration_id,
-                                      const FindRegistrationCallback& callback);
+                                      FindRegistrationCallback callback);
 
   // All these methods must be called from the IO thread.
-  void GetAllRegistrations(const GetRegistrationsInfosCallback& callback);
+  void GetAllRegistrations(GetRegistrationsInfosCallback callback);
   void GetRegistrationUserData(int64_t registration_id,
                                const std::vector<std::string>& keys,
-                               const GetUserDataCallback& callback);
+                               const LegacyGetUserDataCallback& callback);
   void GetRegistrationUserDataByKeyPrefix(int64_t registration_id,
                                           const std::string& key_prefix,
-                                          const GetUserDataCallback& callback);
+                                          const LegacyGetUserDataCallback& callback);
   void GetRegistrationUserKeysAndDataByKeyPrefix(
       int64_t registration_id,
       const std::string& key_prefix,
-      const GetUserKeysAndDataCallback& callback);
+      GetUserKeysAndDataCallback callback);
   void StoreRegistrationUserData(
       int64_t registration_id,
       const GURL& origin,
@@ -235,10 +238,10 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
       const StatusCallback& callback);
   void GetUserDataForAllRegistrations(
       const std::string& key,
-      const GetUserDataForAllRegistrationsCallback& callback);
+      const LegacyGetUserDataForAllRegistrationsCallback& callback);
   void GetUserDataForAllRegistrationsByKeyPrefix(
       const std::string& key_prefix,
-      const GetUserDataForAllRegistrationsCallback& callback);
+      const LegacyGetUserDataForAllRegistrationsCallback& callback);
 
   // This function can be called from any thread, but the callback will always
   // be called on the UI thread.
@@ -284,11 +287,11 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
   void ShutdownOnIO();
 
   void DidFindRegistrationForFindReady(
-      const FindRegistrationCallback& callback,
+      FindRegistrationCallback callback,
       ServiceWorkerStatusCode status,
       scoped_refptr<ServiceWorkerRegistration> registration);
   void OnStatusChangedForFindReadyRegistration(
-      const FindRegistrationCallback& callback,
+      FindRegistrationCallback callback,
       scoped_refptr<ServiceWorkerRegistration> registration);
 
   void DidDeleteAndStartOver(ServiceWorkerStatusCode status);
