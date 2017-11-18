@@ -104,11 +104,11 @@ const kWebServer = 'http://127.0.0.1:8000';
 // test file and /local/fileapi/resources/delete-temp-file.cgi to
 // remove it at the end of the test.
 //
-// Uses /xmlhttprequest/resources/post-echo.cgi to echo the upload
-// POST with UTF-8 byte interpretation, leading to the "UTF-8 goggles"
-// behavior documented below for expectedEncodedBaseName when non-
-// UTF-8-compatible byte sequences appear in the formEncoding-encoded
-// uploaded data.
+// Uses /local/fileapi/resources/post-echo.cgi to echo the upload POST
+// with UTF-8 byte interpretation over postMessage, leading to the
+// "UTF-8 goggles" behavior documented below for
+// expectedEncodedBaseName when non- UTF-8-compatible byte sequences
+// appear in the formEncoding-encoded uploaded data.
 //
 // Uses eventSender.beginDragWithFiles and related methods to upload
 // using drag-n-drop because that is currently the only file upload
@@ -170,7 +170,7 @@ const formPostFileUploadTest = ({
 
     const form = Object.assign(document.createElement('form'), {
       acceptCharset: formEncoding,
-      action: `${kWebServer}/xmlhttprequest/resources/post-echo.cgi`,
+      action: `${kWebServer}/local/fileapi/resources/post-echo.cgi`,
       method: 'POST',
       enctype: 'multipart/form-data',
       target: formTargetFrame.name,
@@ -249,9 +249,14 @@ const formPostFileUploadTest = ({
           `The basename of the field's value should match its files[0].name`);
       form.submit();
     };
+    let formDataText;
     try {
-      await new Promise(resolve => {
-        formTargetFrame.onload = resolve;
+      formDataText = await new Promise(resolve => {
+        const messageHandler = event => {
+          removeEventListener('message', messageHandler);
+          resolve(event.data);
+        };
+        addEventListener('message', messageHandler);
         eventSender.beginDragWithFiles([fileToDrop]);
         const centerX = fileInput.offsetLeft + fileInput.offsetWidth / 2;
         const centerY = fileInput.offsetTop + fileInput.offsetHeight / 2;
@@ -266,7 +271,6 @@ const formPostFileUploadTest = ({
       assert_equals(cleanupErrors, 'OK', 'Temp file cleanup should not fail');
     }
 
-    const formDataText = formTargetFrame.contentDocument.body.innerText;
     const formDataLines = formDataText.split('\n');
     if (formDataLines.length && !formDataLines[formDataLines.length - 1]) {
       --formDataLines.length;
