@@ -73,10 +73,6 @@ class APP_LIST_EXPORT AppListViewDelegate {
   virtual void StartSpeechRecognition() = 0;
   virtual void StopSpeechRecognition() = 0;
 
-  // Creates the web view for the start page. The caller takes the ownership of
-  // the returned view.
-  virtual views::View* CreateStartPageWebView(const gfx::Size& size) = 0;
-
   // Creates the web views for the user-specified custom pages. The caller takes
   // ownership of the returned views.
   virtual std::vector<views::View*> CreateCustomPageWebViews(

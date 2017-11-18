@@ -80,7 +80,6 @@ class AppListViewDelegate : public app_list::AppListViewDelegate,
   void ViewClosing() override;
   void StartSpeechRecognition() override;
   void StopSpeechRecognition() override;
-  views::View* CreateStartPageWebView(const gfx::Size& size) override;
   std::vector<views::View*> CreateCustomPageWebViews(
       const gfx::Size& size) override;
   void CustomLauncherPageAnimationChanged(double progress) override;

@@ -23,8 +23,6 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
-#include "net/base/backoff_entry.h"
-#include "net/url_request/url_fetcher_delegate.h"
 #include "ui/app_list/speech_ui_model_observer.h"
 
 namespace content {
@@ -33,10 +31,6 @@ struct SpeechRecognitionSessionPreamble;
 
 namespace extensions {
 class Extension;
-}
-
-namespace net {
-class URLFetcher;
 }
 
 class Profile;
@@ -51,7 +45,6 @@ class StartPageObserver;
 // and hosts the start page contents.
 class StartPageService : public KeyedService,
                          public content::WebContentsObserver,
-                         public net::URLFetcherDelegate,
                          public SpeechRecognizerDelegate {
  public:
   typedef std::vector<scoped_refptr<const extensions::Extension> >
@@ -74,9 +67,6 @@ class StartPageService : public KeyedService,
       const scoped_refptr<content::SpeechRecognitionSessionPreamble>& preamble);
   void StopSpeechRecognition();
 
-  // Called when the WebUI has finished loading.
-  void WebUILoaded();
-
   // Returns true if the hotword is enabled in the app-launcher.
   bool HotwordEnabled();
 
@@ -85,9 +75,6 @@ class StartPageService : public KeyedService,
   content::WebContents* GetStartPageContents();
   content::WebContents* GetSpeechRecognitionContents();
 
-  void set_search_engine_is_google(bool search_engine_is_google) {
-    search_engine_is_google_ = search_engine_is_google;
-  }
   Profile* profile() { return profile_; }
   SpeechRecognitionState state() { return state_; }
 
@@ -130,12 +117,6 @@ class StartPageService : public KeyedService,
   // Loads the start page URL for |contents_|.
   void LoadStartPageURL();
 
-  // Fetch the Google Doodle JSON data and update the app list start page.
-  void FetchDoodleJson();
-
-  // net::URLFetcherDelegate overrides:
-  void OnURLFetchComplete(const net::URLFetcher* source) override;
-
   // KeyedService overrides:
   void Shutdown() override;
 
@@ -164,9 +145,6 @@ class StartPageService : public KeyedService,
   bool speech_button_toggled_manually_;
   bool speech_result_obtained_;
 
-  bool webui_finished_loading_;
-  std::vector<base::Closure> pending_webui_callbacks_;
-
   base::DefaultClock clock_;
   std::unique_ptr<SpeechRecognizer> speech_recognizer_;
   std::unique_ptr<SpeechAuthHelper> speech_auth_helper_;
@@ -175,10 +153,6 @@ class StartPageService : public KeyedService,
   bool microphone_available_;
   std::unique_ptr<AudioStatus> audio_status_;
   std::unique_ptr<NetworkChangeObserver> network_change_observer_;
-
-  bool search_engine_is_google_;
-  std::unique_ptr<net::URLFetcher> doodle_fetcher_;
-  net::BackoffEntry backoff_entry_;
 
   base::WeakPtrFactory<StartPageService> weak_factory_;
 
