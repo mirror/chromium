@@ -41,10 +41,9 @@ void SyntheticGestureController::QueueSyntheticGesture(
 }
 
 void SyntheticGestureController::StartTimer() {
-  // TODO(sad): Change the interval to allow sending multiple events per begin
-  // frame.
+  // Fire events at approximately 120Hz.
   dispatch_timer_.Start(
-      FROM_HERE, base::TimeDelta::FromMicroseconds(16666),
+      FROM_HERE, base::TimeDelta::FromMicroseconds(8333),
       base::BindRepeating(
           [](base::WeakPtr<SyntheticGestureController> weak_ptr) {
             if (weak_ptr)
