@@ -30,7 +30,12 @@
 #include "media/base/video_rotation.h"
 #include "media/base/video_types.h"
 #include "media/base/watch_time_keys.h"
+#include "media/media_features.h"
 #include "ui/gfx/ipc/color/gfx_param_traits_macros.h"
+
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+#include "media/cdm/cdm_proxy.h"  // nogncheck
+#endif                            // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
 // Enum traits.
 
@@ -53,6 +58,17 @@ IPC_ENUM_TRAITS_MAX_VALUE(media::CdmMessageType,
 
 IPC_ENUM_TRAITS_MAX_VALUE(media::CdmPromise::Exception,
                           media::CdmPromise::Exception::EXCEPTION_MAX)
+
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+IPC_ENUM_TRAITS_MAX_VALUE(media::CdmProxy::Function,
+                          media::CdmProxy::Function::kMaxFunction)
+
+IPC_ENUM_TRAITS_MAX_VALUE(media::CdmProxy::Protocol,
+                          media::CdmProxy::Protocol::kMaxProtocol)
+
+IPC_ENUM_TRAITS_MAX_VALUE(media::CdmProxy::Status,
+                          media::CdmProxy::Status::kMaxStatus)
+#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
 IPC_ENUM_TRAITS_MAX_VALUE(media::CdmSessionType,
                           media::CdmSessionType::SESSION_TYPE_MAX)
@@ -139,6 +155,15 @@ IPC_STRUCT_TRAITS_BEGIN(media::CdmKeyInformation)
   IPC_STRUCT_TRAITS_MEMBER(status)
   IPC_STRUCT_TRAITS_MEMBER(system_code)
 IPC_STRUCT_TRAITS_END()
+
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+IPC_STRUCT_TRAITS_BEGIN(media::KeyInfo)
+  IPC_STRUCT_TRAITS_MEMBER(crypto_session_id)
+  IPC_STRUCT_TRAITS_MEMBER(key_id)
+  IPC_STRUCT_TRAITS_MEMBER(key_blob)
+  IPC_STRUCT_TRAITS_MEMBER(is_usable_key)
+IPC_STRUCT_TRAITS_END()
+#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
 IPC_STRUCT_TRAITS_BEGIN(media::MediaLogEvent)
   IPC_STRUCT_TRAITS_MEMBER(id)
