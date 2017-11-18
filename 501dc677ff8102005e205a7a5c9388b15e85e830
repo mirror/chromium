@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "905cdb1f_5b1bec06",
+        "filename": "chrome/app/vector_icons/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-18T02:17:19Z",
+      "side": 1,
+      "message": "I guess that\u0027s correct. is_desktop_linux would be just linux. So why this block at all? Vector icons aren\u0027t built on mobile.",
+      "parentUuid": "8388e521_243a675c",
+      "range": {
+        "startLine": 145,
+        "startChar": 6,
+        "endLine": 145,
+        "endChar": 34
+      },
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f676c7ef_52c436f3",
         "filename": "chrome/browser/ui/blocked_content/framebust_block_tab_helper.cc",
         "patchSetId": 9
