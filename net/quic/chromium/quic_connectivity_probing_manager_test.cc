@@ -74,7 +74,7 @@ class MockQuicChromiumClientSession
 class QuicConnectivityProbingManagerTest : public ::testing::Test {
  public:
   QuicConnectivityProbingManagerTest()
-      : probing_manager_(new QuicConnectivityProbingManager(&session_)),
+      : probing_manager_(&session_),
         default_read_(new MockRead(SYNCHRONOUS, ERR_IO_PENDING, 0)),
         socket_data_(
             new SequencedSocketData(default_read_.get(), 1, nullptr, 0)) {}
@@ -101,7 +101,7 @@ class QuicConnectivityProbingManagerTest : public ::testing::Test {
   }
 
   MockQuicChromiumClientSession session_;
-  std::unique_ptr<QuicConnectivityProbingManager> probing_manager_;
+  QuicConnectivityProbingManager probing_manager_;
 
   std::unique_ptr<MockRead> default_read_;
   std::unique_ptr<SequencedSocketData> socket_data_;
@@ -125,7 +125,7 @@ TEST_F(QuicConnectivityProbingManagerTest, ReceiveProbingResponseOnSamePath) {
 
   EXPECT_CALL(session_, OnSendConnectivityProbingPacket(_, testPeerAddress))
       .Times(1);
-  probing_manager_->StartProbing(
+  probing_manager_.StartProbing(
       testNetworkHandle, testPeerAddress, std::move(socket_),
       std::move(writer_), std::move(reader_),
       base::TimeDelta::FromMilliseconds(initial_timeout_ms));
@@ -153,7 +153,7 @@ TEST_F(QuicConnectivityProbingManagerTest, ReceiveProbingResponseOnSamePath) {
   // packet for this probing.
   EXPECT_CALL(session_, OnSendConnectivityProbingPacket(_, testPeerAddress))
       .Times(0);
-  probing_manager_->OnConnectivityProbingReceived(self_address_,
+  probing_manager_.OnConnectivityProbingReceived(self_address_,
                                                   testPeerAddress);
   EXPECT_EQ(session_.successful_network(), testNetworkHandle);
   EXPECT_EQ(1u, test_task_runner->GetPendingTaskCount());
@@ -173,7 +173,7 @@ TEST_F(QuicConnectivityProbingManagerTest,
 
   EXPECT_CALL(session_, OnSendConnectivityProbingPacket(_, testPeerAddress))
       .Times(1);
-  probing_manager_->StartProbing(
+  probing_manager_.StartProbing(
       testNetworkHandle, testPeerAddress, std::move(socket_),
       std::move(writer_), std::move(reader_),
       base::TimeDelta::FromMilliseconds(initial_timeout_ms));
@@ -200,7 +200,7 @@ TEST_F(QuicConnectivityProbingManagerTest,
   // probing response and continue waiting.
   EXPECT_CALL(session_, OnSendConnectivityProbingPacket(_, testPeerAddress))
       .Times(0);
-  probing_manager_->OnConnectivityProbingReceived(QuicSocketAddress(),
+  probing_manager_.OnConnectivityProbingReceived(QuicSocketAddress(),
                                                   testPeerAddress);
   EXPECT_NE(session_.successful_network(), testNetworkHandle);
   EXPECT_EQ(1u, test_task_runner->GetPendingTaskCount());
@@ -216,7 +216,7 @@ TEST_F(QuicConnectivityProbingManagerTest,
   // Finally receive the probing response on the same path.
   EXPECT_CALL(session_, OnSendConnectivityProbingPacket(_, testPeerAddress))
       .Times(0);
-  probing_manager_->OnConnectivityProbingReceived(self_address_,
+  probing_manager_.OnConnectivityProbingReceived(self_address_,
                                                   testPeerAddress);
   EXPECT_EQ(session_.successful_network(), testNetworkHandle);
   EXPECT_EQ(1u, test_task_runner->GetPendingTaskCount());
@@ -233,7 +233,7 @@ TEST_F(QuicConnectivityProbingManagerTest, RetryProbingWithExponentailBackoff) {
 
   EXPECT_CALL(session_, OnSendConnectivityProbingPacket(_, testPeerAddress))
       .Times(1);
-  probing_manager_->StartProbing(
+  probing_manager_.StartProbing(
       testNetworkHandle, testPeerAddress, std::move(socket_),
       std::move(writer_), std::move(reader_),
       base::TimeDelta::FromMilliseconds(initial_timeout_ms));
@@ -265,7 +265,7 @@ TEST_F(QuicConnectivityProbingManagerTest, CancelProbing) {
 
   EXPECT_CALL(session_, OnSendConnectivityProbingPacket(_, testPeerAddress))
       .Times(1);
-  probing_manager_->StartProbing(
+  probing_manager_.StartProbing(
       testNetworkHandle, testPeerAddress, std::move(socket_),
       std::move(writer_), std::move(reader_),
       base::TimeDelta::FromMilliseconds(initial_timeout_ms));
@@ -291,7 +291,47 @@ TEST_F(QuicConnectivityProbingManagerTest, CancelProbing) {
   // packet for this probing.
   EXPECT_CALL(session_, OnSendConnectivityProbingPacket(_, _)).Times(0);
   EXPECT_CALL(session_, OnProbeNetworkFailed(_)).Times(0);
-  probing_manager_->CancelProbing(testNetworkHandle);
+  probing_manager_.CancelProbing(testNetworkHandle);
+  test_task_runner->RunUntilIdle();
+}
+
+TEST_F(QuicConnectivityProbingManagerTest, ProbingWriterError) {
+  int initial_timeout_ms = 100;
+
+  EXPECT_CALL(session_, OnSendConnectivityProbingPacket(_, testPeerAddress))
+      .Times(1);
+  QuicChromiumPacketWriter* writer_ptr = writer_.get();
+  probing_manager_.StartProbing(
+      testNetworkHandle, testPeerAddress, std::move(socket_),
+      std::move(writer_), std::move(reader_),
+      base::TimeDelta::FromMilliseconds(initial_timeout_ms));
+  EXPECT_EQ(1u, test_task_runner->GetPendingTaskCount());
+
+  // Fast forward initial_timeout_ms, timeout the first connectivity probing
+  // packet, introduce another probing packet to sent out with timeout set to
+  // 2 * initial_timeout_ms.
+  EXPECT_CALL(session_, OnSendConnectivityProbingPacket(_, testPeerAddress))
+      .Times(1);
+  test_task_runner->FastForwardBy(
+      base::TimeDelta::FromMilliseconds(initial_timeout_ms));
+  EXPECT_EQ(1u, test_task_runner->GetPendingTaskCount());
+
+  // Fast forward initial_timeout_ms, should be no-op.
+  EXPECT_CALL(session_, OnSendConnectivityProbingPacket(_, testPeerAddress))
+      .Times(0);
+  test_task_runner->FastForwardBy(
+      base::TimeDelta::FromMilliseconds(initial_timeout_ms));
+  EXPECT_EQ(1u, test_task_runner->GetPendingTaskCount());
+
+  // Request cancel probing, manager will no longer send connectivity probing
+  // packet for this probing.
+  EXPECT_CALL(session_, OnSendConnectivityProbingPacket(_, _)).Times(0);
+  EXPECT_CALL(session_, OnProbeNetworkFailed(_)).Times(0);
+  writer_ptr->OnWriteComplete(ERR_CONNECTION_CLOSED);
+  test_task_runner->FastForwardBy(
+      base::TimeDelta::FromMilliseconds(initial_timeout_ms));
+  EXPECT_EQ(1u, test_task_runner->GetPendingTaskCount());
+
   test_task_runner->RunUntilIdle();
 }
 

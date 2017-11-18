@@ -1604,6 +1604,8 @@ void QuicChromiumClientSession::OnProbeNetworkSucceeded(
   DCHECK(writer);
   DCHECK(reader);
 
+  writer->set_delegate(this);
+
   if (!MigrateToSocket(std::move(socket), std::move(reader),
                        std::move(writer))) {
     // We exceeds maximum allowed trials to migrate. Shut down
@@ -2333,7 +2335,7 @@ MigrationResult QuicChromiumClientSession::Migrate(
                                    net_log_));
   std::unique_ptr<QuicChromiumPacketWriter> new_writer(
       new QuicChromiumPacketWriter(socket.get()));
-  new_writer->set_delegate(this);
+//  new_writer->set_delegate(this);
 
   // Migrate to the new socket.
   if (!MigrateToSocket(std::move(socket), std::move(new_reader),

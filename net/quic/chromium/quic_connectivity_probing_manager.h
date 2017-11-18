@@ -17,7 +17,8 @@ namespace net {
 // Responsible for sending and retransmitting connectivity probing packet on a
 // designated path to the specified peer, and for notifying associated session
 // when connectivity probe fails or succeeds.
-class NET_EXPORT_PRIVATE QuicConnectivityProbingManager {
+class NET_EXPORT_PRIVATE QuicConnectivityProbingManager
+    : public QuicChromiumPacketWriter::Delegate {
  public:
   // Delegate interface which receives notifications on network probing
   // results.
@@ -46,6 +47,14 @@ class NET_EXPORT_PRIVATE QuicConnectivityProbingManager {
 
   QuicConnectivityProbingManager(Delegate* delegate);
   ~QuicConnectivityProbingManager();
+
+  // QuicChromiumPacketWriter::Delegate interface.
+  int HandleWriteError(int error_code,
+                       scoped_refptr<QuicChromiumPacketWriter::ReusableIOBuffer> last_packet) override;
+
+  void OnWriteError(int error_code) override;
+
+  void OnWriteUnblocked() override;
 
   // If this method is called, no probing packets will be sent out. Probing
   // manager will declare probing as failed immediately.

@@ -25,6 +25,22 @@ QuicConnectivityProbingManager::~QuicConnectivityProbingManager() {
   CancelProbingIfAny();
 }
 
+int QuicConnectivityProbingManager::HandleWriteError(
+    int error_code,
+    scoped_refptr<QuicChromiumPacketWriter::ReusableIOBuffer> packet) {
+  // Write error on the probing network is not recoverable.
+  // TODO(zhongyi): post a task to cancel this probing.
+  return error_code;
+}
+
+void QuicConnectivityProbingManager::OnWriteError(int error_code) {
+  // Write error on the probing network.
+  delegate_->OnProbeNetworkFailed(network_);
+  CancelProbingIfAny();
+}
+
+void QuicConnectivityProbingManager::OnWriteUnblocked() {}
+
 void QuicConnectivityProbingManager::ShutDown() {
   CancelProbingIfAny();
   is_running_ = false;
@@ -66,6 +82,7 @@ void QuicConnectivityProbingManager::StartProbing(
   peer_address_ = peer_address;
   socket_ = std::move(socket);
   writer_ = std::move(writer);
+  writer_->set_delegate(this);
   reader_ = std::move(reader);
   initial_timeout_ms_ = initial_timeout.InMilliseconds();
 
