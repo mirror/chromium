@@ -1958,15 +1958,6 @@ crbug.com/694525 external/wpt/content-security-policy/style-src/inline-style-all
 crbug.com/694525 external/wpt/content-security-policy/style-src/style-blocked.sub.html [ Skip ]
 crbug.com/694525 external/wpt/content-security-policy/unsafe-eval/eval-blocked-in-about-blank-iframe.sub.html [ Skip ]
 
-# These tests will be added back soon:
-crbug.com/706350 external/wpt/html/browsers/browsing-the-web/history-traversal/window-name-after-cross-origin-aux-frame-navigation.sub.html [ Skip ]
-crbug.com/706350 external/wpt/html/browsers/browsing-the-web/history-traversal/window-name-after-cross-origin-main-frame-navigation.sub.html [ Skip ]
-crbug.com/706350 external/wpt/html/browsers/browsing-the-web/history-traversal/window-name-after-cross-origin-sub-frame-navigation.sub.html [ Skip ]
-crbug.com/706350 external/wpt/html/browsers/browsing-the-web/history-traversal/window-name-after-same-origin-aux-frame-navigation.sub.html [ Skip ]
-crbug.com/706350 external/wpt/html/browsers/browsing-the-web/history-traversal/window-name-after-same-origin-main-frame-navigation.sub.html [ Skip ]
-crbug.com/706350 external/wpt/html/browsers/browsing-the-web/history-traversal/window-name-after-same-origin-sub-frame-navigation.sub.html [ Skip ]
-
-
 # Remove these from virtual tests when the reporting api is turned on by default
 crbug.com/704259 external/wpt/content-security-policy/reporting/reporting-api-doesnt-send-reports-without-violation.https.sub.html [ Skip ]
 crbug.com/704259 external/wpt/content-security-policy/reporting/reporting-api-report-only-sends-reports-on-violation.https.sub.html [ Skip ]
