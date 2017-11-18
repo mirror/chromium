@@ -33,6 +33,7 @@
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
+#include "gpu/command_buffer/client/raster_interface.h"
 #include "skia/ext/texture_handle.h"
 #include "third_party/khronos/GLES2/gl2.h"
 #include "third_party/khronos/GLES2/gl2ext.h"
@@ -780,6 +781,35 @@ void ResourceProvider::ScopedWriteLockGL::LazyAllocate(
                    size_.height(), 0, GLDataFormat(format_),
                    GLDataType(format_), nullptr);
   }
+}
+
+GLuint ResourceProvider::ScopedWriteLockGL::ConsumeTexture(
+    gpu::RasterInterface* rs) {
+  DCHECK(rs);
+  DCHECK(!mailbox_.IsZero());
+
+  GLuint texture_id =
+      rs->CreateAndConsumeTextureCHROMIUM(target_, mailbox_.name);
+  DCHECK(texture_id);
+
+  LazyAllocate(rs, texture_id);
+
+  return texture_id;
+}
+
+void ResourceProvider::ScopedWriteLockGL::LazyAllocate(gpu::RasterInterface* rs,
+                                                       GLuint texture_id) {
+  // ETC1 resources cannot be preallocated.
+  if (format_ == viz::ETC1)
+    return;
+
+  if (allocated_)
+    return;
+  allocated_ = true;
+
+  rs->BindTexture(target_, texture_id);
+  rs->TexStorageForRaster(target_, format_, size_.width(), size_.height(),
+                          is_overlay_ ? gpu::kOverlay : gpu::kNone);
 }
 
 ResourceProvider::ScopedSkSurface::ScopedSkSurface(GrContext* gr_context,
