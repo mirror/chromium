@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1cefefd_ebec84b5",
+        "filename": "components/omnibox/browser/history_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-18T01:02:18Z",
+      "side": 1,
+      "message": "It needs to get to ConvertOpenTabMatches() as well.",
+      "parentUuid": "2e5d3a8a_cf1fa01d",
+      "revId": "07226d49519d47a7ed0a9691160cf7968d235413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfa3a79d_12424942",
         "filename": "components/omnibox/browser/history_provider_unittest.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "07226d49519d47a7ed0a9691160cf7968d235413",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2409730_467f0683",
+        "filename": "components/omnibox/browser/history_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-18T01:02:18Z",
+      "side": 1,
+      "message": "Done, but I rather like \u0027fake\u0027. I can\u0027t easily tell the difference between TestHistoryProvider and HistoryProviderTest.",
+      "parentUuid": "cfa3a79d_12424942",
+      "revId": "07226d49519d47a7ed0a9691160cf7968d235413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ceda76eb_cbc4945e",
+        "filename": "components/omnibox/browser/history_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-18T01:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3513a8b7_1c890d44",
+      "revId": "07226d49519d47a7ed0a9691160cf7968d235413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11a05bf7_cf564e7a",
         "filename": "components/omnibox/browser/history_provider_unittest.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "07226d49519d47a7ed0a9691160cf7968d235413",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a07bff59_77918384",
+        "filename": "components/omnibox/browser/history_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-18T01:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11a05bf7_cf564e7a",
+      "revId": "07226d49519d47a7ed0a9691160cf7968d235413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "af89a3ab_cbbabe31",
+        "filename": "components/omnibox/browser/history_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-18T01:02:18Z",
+      "side": 1,
+      "message": "Apparently unique_ptr can\u0027t call private destructors.",
+      "parentUuid": "a669fee1_2a5bf96b",
+      "revId": "07226d49519d47a7ed0a9691160cf7968d235413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e238d59_a849afe5",
         "filename": "components/omnibox/browser/history_provider_unittest.cc",
         "patchSetId": 3
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "7b7e67ae_348f0df6",
+        "filename": "components/omnibox/browser/history_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-18T01:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e238d59_a849afe5",
+      "revId": "07226d49519d47a7ed0a9691160cf7968d235413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cabc77c_d6373627",
         "filename": "components/omnibox/browser/history_provider_unittest.cc",
         "patchSetId": 3
@@ -118,6 +226,24 @@
       "revId": "07226d49519d47a7ed0a9691160cf7968d235413",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d879783d_11e79199",
+        "filename": "components/omnibox/browser/history_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-18T01:02:18Z",
+      "side": 1,
+      "message": "Done, but I\u0027m not comfortable doing that much in a destructor. I think the ordering will probably bite us some day, but I guess it\u0027s just a test.",
+      "parentUuid": "7cabc77c_d6373627",
+      "revId": "07226d49519d47a7ed0a9691160cf7968d235413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
