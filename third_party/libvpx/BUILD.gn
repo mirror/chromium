@@ -325,6 +325,7 @@ static_library("libvpx") {
 
   configs -= [ "//build/config/compiler:chromium_code" ]
   configs += [ "//build/config/compiler:no_chromium_code" ]
+  configs += [ "//build/config/sanitizers:cfi_icall_generalize_pointers" ]
   configs += [ ":libvpx_config" ]
   deps = []
   if (current_cpu == "x86" || (current_cpu == "x64" && !is_msan)) {
