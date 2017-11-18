@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d175b369_c858efe3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/workers-on-navigation-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-18T00:16:29Z",
+      "side": 0,
+      "message": "wasn\u0027t technically a reload.",
+      "revId": "8ca037ff4f7a34323d4d860a2d0f528462c0b505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
