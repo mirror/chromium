@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d0e3952_aba90cbb",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-18T00:06:16Z",
+      "side": 1,
+      "message": "This is maybe premature optimization, but I don\u0027t want to have to initialize a SerializeOptions on the stack every time we want to override flags.\n\nWhat do you think about DerivedPaintOp::SerializeWithFlags as a partner to RasterWithFlags, and then that override can just be passed directly.",
+      "revId": "0c49b46183d30ad8e8b50473e3d1a22858b80012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
