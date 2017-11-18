@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e53d4794_befc4b48",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-18T01:09:19Z",
+      "side": 1,
+      "message": "nit: this new field needs to be initialized in the VisibleSecurityState constructor (around line 323)",
+      "range": {
+        "startLine": 188,
+        "startChar": 29,
+        "endLine": 188,
+        "endChar": 43
+      },
+      "revId": "7672ee5e4e90bcbbf3aeb164f9715cb334aa3a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
