@@ -334,28 +334,6 @@ void AppListViewDelegate::OnSpeechRecognitionStateChanged(
   speech_ui_->SetSpeechRecognitionState(new_state, false);
 }
 
-views::View* AppListViewDelegate::CreateStartPageWebView(
-    const gfx::Size& size) {
-  app_list::StartPageService* service =
-      app_list::StartPageService::Get(profile_);
-  if (!service)
-    return NULL;
-
-  service->LoadContentsIfNeeded();
-
-  content::WebContents* web_contents = service->GetStartPageContents();
-  if (!web_contents)
-    return NULL;
-
-  DCHECK_EQ(profile_, web_contents->GetBrowserContext());
-  views::WebView* web_view =
-      new views::WebView(web_contents->GetBrowserContext());
-  web_view->SetPreferredSize(size);
-  web_view->SetResizeBackgroundColor(SK_ColorTRANSPARENT);
-  web_view->SetWebContents(web_contents);
-  return web_view;
-}
-
 std::vector<views::View*> AppListViewDelegate::CreateCustomPageWebViews(
     const gfx::Size& size) {
   std::vector<views::View*> web_views;
@@ -425,11 +403,6 @@ void AppListViewDelegate::OnTemplateURLServiceChanged() {
           template_url_service->search_terms_data()) == SEARCH_ENGINE_GOOGLE;
 
   model_->SetSearchEngineIsGoogle(is_google);
-
-  app_list::StartPageService* start_page_service =
-      app_list::StartPageService::Get(profile_);
-  if (start_page_service)
-    start_page_service->set_search_engine_is_google(is_google);
 }
 
 void AppListViewDelegate::Observe(int type,
