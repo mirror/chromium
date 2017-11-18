@@ -5619,8 +5619,6 @@ crbug.com/591099 fast/sub-pixel/repaint-subpixel-layer-in-subpixel-composited-la
 crbug.com/591099 fast/sub-pixel/should-not-repaint-subpixel-composited-layer.html [ Failure ]
 crbug.com/591099 fast/sub-pixel/size-of-box-with-zoom.html [ Failure ]
 crbug.com/591099 fast/sub-pixel/sub-pixel-border-2.html [ Failure ]
-crbug.com/591099 fast/sub-pixel/table-cells-with-padding-do-not-wrap.html [ Failure Pass ]
-crbug.com/591099 fast/sub-pixel/table-rtl-padding.html [ Failure Pass ]
 crbug.com/591099 fast/table/018.html [ Failure ]
 crbug.com/591099 fast/table/032.html [ Failure ]
 crbug.com/591099 fast/table/absolute-table-percent-lengths.html [ Failure ]
