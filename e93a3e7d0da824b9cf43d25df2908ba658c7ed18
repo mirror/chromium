@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8bf53d9d_bc5c1044",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-11-18T08:52:35Z",
+      "side": 1,
+      "message": "same code duplication between if-block and else-block that can be avoided.\n\nOf course, this issue wouldn\u0027t exist at all if feature-flag had not been added to control the behavior.",
+      "range": {
+        "startLine": 153,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 7
+      },
+      "revId": "e93a3e7d0da824b9cf43d25df2908ba658c7ed18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0c5b95a_80366d49",
         "filename": "components/omnibox/browser/omnibox_field_trial.cc",
         "patchSetId": 15
