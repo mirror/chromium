@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa41a986_842f2ec5",
+        "filename": "chrome/browser/extensions/api/proxy/proxy_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-18T00:14:06Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think it\u0027s clear what this return value is - can we type it out rather than auto?",
+      "revId": "a04239059de647c9d5bbecccb78084585e698bd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
