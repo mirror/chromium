@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "706e8d78_be24705f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-18T00:15:00Z",
+      "side": 1,
+      "message": "\u003e Is it only for localStorage?  Since CanAccessDataForOrigin is used for cookies and passwords as well, it seems we will automatically do the citadel enforcement for those resources also, which is great.\n\nGood point.  I\u0027ve edited the CL description.\n\n\u003e In fact, it might be worth including a test that a cookie request from bar.com for isolated.foo.com kills the bar.com renderer.\n\nYou\u0027re right - I\u0027ve added new tests: IsolatedOriginTest.*CookieEnforcement_NonIsolatedAccessingIsolated.  The tests are more-or-less duplicated from RenderFrameMessageFilterBrowserTest.CrossSiteCookieSecurityEnforcement except that here we are testing isolated-vs-non-isolated origins (rather than generic cross-site access under site-per-process).",
+      "parentUuid": "d524d326_bda417b3",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 69
+      },
+      "revId": "2d02641b219ff4963418cb40b0bc4f4ff090fb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d11614f8_5fb92327",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "2d02641b219ff4963418cb40b0bc4f4ff090fb13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "368645c1_af15c2c5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-18T00:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d11614f8_5fb92327",
+      "revId": "2d02641b219ff4963418cb40b0bc4f4ff090fb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "2d02641b219ff4963418cb40b0bc4f4ff090fb13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c1eb44_40c328e2",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-18T00:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea093652_c890f998",
+      "range": {
+        "startLine": 1055,
+        "startChar": 0,
+        "endLine": 1055,
+        "endChar": 53
+      },
+      "revId": "2d02641b219ff4963418cb40b0bc4f4ff090fb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +171,48 @@
     },
     {
       "key": {
+        "uuid": "d1f6d55a_2a1a8bd4",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-18T00:15:00Z",
+      "side": 1,
+      "message": "\u003e I suppose this also works in --site-per-process for the cases that aren\u0027t locked to origin according to ShouldLockToOrigin (chrome-guest://, chrome://, hosted apps, etc).  Since those cases aren\u0027t going to be on the isolated origin list, we\u0027ll still grant them access, as before.\n\nAck.\n\u003e \n\u003e I also think this will be compatible with SafeBrowsing isolation -- isolated origins we add there will be maintained by BrowsingInstances, and so will still be allowed here.  This is what we want, I think, as we don\u0027t care about preventing regular sites from accessing data from malicious sites; we only care about the reverse jail-type protection.\n\nAck.\n\nPlease shout if you think I should take some extra actions to verify that this CL doesn\u0027t break any of the other isolation modes.  I hope that I can assume that if the tryjobs are green then the CL is safe to land (and if that assumption is wrong - great!  this will eventually show us where we were missing test coverage).\n\n\u003e Is the only remaining work here to ensure that for --isolate-extensions, web pages can\u0027t request resources belonging to extensions?  (Since extensions also aren\u0027t origin-locked.)  Might be worth adding a TODO about this somewhere.\n\nDone - added a TODO.  I worder the TODO in terms of extension isolation, but I am not sure what other things need enforcement (do CWS, default search engine, WebUI get locked origin?).  FWIW, I note that some WebUI tests end up triggering usage of localStorage.\n\nPlease shout if I should reword the TODO :-)",
+      "parentUuid": "7b546202_78916d2d",
+      "revId": "2d02641b219ff4963418cb40b0bc4f4ff090fb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406b17df_7c968c89",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-18T00:15:00Z",
+      "side": 1,
+      "message": "I didn\u0027t do it this way because of the comment above warning about deadlock / double-lock-acquisition - see lines 1036-1038.  Does it sound okay?",
+      "parentUuid": "61b21a7c_e7406584",
+      "range": {
+        "startLine": 1057,
+        "startChar": 20,
+        "endLine": 1057,
+        "endChar": 31
+      },
+      "revId": "2d02641b219ff4963418cb40b0bc4f4ff090fb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08e59ff0_40ea8612",
         "filename": "content/browser/child_process_security_policy_impl.cc",
         "patchSetId": 2
@@ -119,6 +227,24 @@
       "revId": "2d02641b219ff4963418cb40b0bc4f4ff090fb13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085365ea_56aa5130",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-18T00:15:00Z",
+      "side": 1,
+      "message": "Not yet I think.",
+      "parentUuid": "08e59ff0_40ea8612",
+      "revId": "2d02641b219ff4963418cb40b0bc4f4ff090fb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
