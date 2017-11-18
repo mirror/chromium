@@ -93,8 +93,11 @@ static std::unique_ptr<vpx_codec_ctx> InitializeVpxContext(
       context.get(),
       config.codec() == kCodecVP9 ? vpx_codec_vp9_dx() : vpx_codec_vp8_dx(),
       &vpx_config, 0 /* flags */);
-  if (status == VPX_CODEC_OK)
+  if (status == VPX_CODEC_OK) {
+    status = vpx_codec_control_(context.get(), VP9_SET_SKIP_LOOP_FILTER, 1);
+    CHECK_EQ(VPX_CODEC_OK, status);
     return context;
+  }
 
   DLOG(ERROR) << "vpx_codec_dec_init() failed: "
               << vpx_codec_error(context.get());
