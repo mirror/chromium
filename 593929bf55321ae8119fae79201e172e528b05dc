@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d34b5f00_768abbe8",
+        "filename": "chrome/android/java/res/layout/accept_languages_item.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-18T01:48:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9b93c453_7b296466",
+      "range": {
+        "startLine": 8,
+        "startChar": 4,
+        "endLine": 8,
+        "endChar": 58
+      },
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0539339_7ecf6721",
         "filename": "chrome/android/java/res/layout/accept_languages_list.xml",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ae139ca0_5fd0b0ba",
+        "filename": "chrome/android/java/res/layout/accept_languages_list.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-18T01:48:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b0539339_7ecf6721",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c324e1c_fa2559f1",
         "filename": "chrome/android/java/res/values/dimens.xml",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-17T18:07:00Z",
       "side": 1,
       "message": "Some devices are smaller than 260dp wide, and iirc some versions of Android/settings on PopupWindow don\u0027t handle resizing if the popup is too large. I suggest using the max of this value and the device width when sizing the popup window.",
+      "range": {
+        "startLine": 462,
+        "startChar": 50,
+        "endLine": 462,
+        "endChar": 55
+      },
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e36e5865_0fcf42be",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-18T01:48:36Z",
+      "side": 1,
+      "message": "Thanks for the tips. Done.",
+      "parentUuid": "4c324e1c_fa2559f1",
       "range": {
         "startLine": 462,
         "startChar": 50,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "bd32fba3_d12da8d0",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-18T01:48:36Z",
+      "side": 1,
+      "message": "Sorry it may be caused by an unexpected Vim typing.\nThanks for the catching.",
+      "parentUuid": "63bf5143_cf72c432",
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f4a4d6c_791d3918",
         "filename": "chrome/android/java/res/xml/languages_preferences.xml",
         "patchSetId": 5
@@ -102,6 +192,24 @@
       "revId": "593929bf55321ae8119fae79201e172e528b05dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b25eb8_609cf1d7",
+        "filename": "chrome/android/java/res/xml/languages_preferences.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-18T01:48:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0f4a4d6c_791d3918",
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "611ca8a0_e079251f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-18T01:48:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "38fb607c_ab30c217",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b210232a_bf532405",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
         "patchSetId": 5
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "b38175c8_e7037280",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-18T01:48:36Z",
+      "side": 1,
+      "message": "Thanks for the catching.",
+      "parentUuid": "b210232a_bf532405",
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9fc1597_e5cec77d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
         "patchSetId": 5
@@ -156,6 +306,30 @@
       "writtenOn": "2017-11-17T18:07:00Z",
       "side": 1,
       "message": "Is it possible to reuse this array rather than creating a new one for each language?",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 102,
+        "endChar": 85
+      },
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f247b0c_c1d0e4c7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-18T01:48:36Z",
+      "side": 1,
+      "message": "Seems not, different language item may have different options (some info should be read from native to decide that, still working on that). So I think creating menu items for each language item is better.",
+      "parentUuid": "c9fc1597_e5cec77d",
       "range": {
         "startLine": 100,
         "startChar": 12,
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "427b80e8_a211a5f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-18T01:48:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "39eb46aa_1edd9611",
+      "range": {
+        "startLine": 148,
+        "startChar": 16,
+        "endLine": 151,
+        "endChar": 9
+      },
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a73d0d09_22beaf6b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionPreferences.java",
         "patchSetId": 5
@@ -211,6 +409,30 @@
       "revId": "593929bf55321ae8119fae79201e172e528b05dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9cc5451_3bf35eb2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-18T01:48:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a73d0d09_22beaf6b",
+      "range": {
+        "startLine": 13,
+        "startChar": 63,
+        "endLine": 13,
+        "endChar": 85
+      },
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -237,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "4ae6a63b_3e3640e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-18T01:48:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "846bd9c8_f955b61e",
+      "range": {
+        "startLine": 56,
+        "startChar": 15,
+        "endLine": 56,
+        "endChar": 24
+      },
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c78f950d_6b2ab510",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
         "patchSetId": 5
@@ -248,6 +494,24 @@
       "writtenOn": "2017-11-17T18:07:00Z",
       "side": 1,
       "message": "I like this! I wonder if the autofill preferences can be updated to match?",
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abfd4d88_bfecc190",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-18T01:48:36Z",
+      "side": 1,
+      "message": "\u003e I like this! I wonder if the autofill preferences can be updated to match?\n\nThanks, yes I think it works for most drawables. It help us tint PNG files in one line.\nWill change autofill to the simple way below in another CL, https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfilesFragment.java?q\u003dautofill+preferences+f:java$\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d76",
+      "parentUuid": "c78f950d_6b2ab510",
       "revId": "593929bf55321ae8119fae79201e172e528b05dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -274,6 +538,30 @@
       "revId": "593929bf55321ae8119fae79201e172e528b05dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "647529e1_af188018",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-18T01:48:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e3fd57d4_8e3e72f0",
+      "range": {
+        "startLine": 925,
+        "startChar": 61,
+        "endLine": 925,
+        "endChar": 128
+      },
+      "revId": "593929bf55321ae8119fae79201e172e528b05dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
