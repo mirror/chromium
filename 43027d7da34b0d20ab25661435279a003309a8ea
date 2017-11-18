@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "cef5420b_f4f54e18",
+        "filename": "third_party/WebKit/Source/platform/wtf/DoublyLinkedList.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-18T00:55:30Z",
+      "side": 1,
+      "message": "You\u0027re right! What we need is DISALLOW_NEW on HeapDoublyLinkedList.",
+      "parentUuid": "cd332dac_a5fc1e03",
+      "revId": "43027d7da34b0d20ab25661435279a003309a8ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0687a0df_95947f9f",
         "filename": "third_party/WebKit/Source/platform/wtf/DoublyLinkedList.h",
         "patchSetId": 13
