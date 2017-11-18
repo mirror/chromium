@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "cd94fb95_fb2017bd",
+        "filename": "components/leveldb/public/interfaces/leveldb.mojom",
+        "patchSetId": 25
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-18T01:33:25Z",
+      "side": 1,
+      "message": "Not requesting type changes in this CL, but I wonder if it\u0027s worth expressing BatchedOperation as a mojo union, so that we don\u0027t need to specify when value is required.\n\nHowever, please do update the comments to mention when |value| is required, and when it\u0027s optional.",
+      "revId": "5fc8f9f086d080976007226442a07f12af2124b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533dbda1_a10c3cf3",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-18T01:33:25Z",
+      "side": 1,
+      "message": "Super minor nit: pass by const ref--it should be slightly more efficient for direct calls and the posted callback",
+      "revId": "5fc8f9f086d080976007226442a07f12af2124b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec82f364_0217c117",
         "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
         "patchSetId": 25
