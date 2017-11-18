@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "651ef34d_1baad715",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-18T02:30:19Z",
+      "side": 1,
+      "message": "I\u0027m still a bit confused on why we need these here.  In which situation, in production, would a bubble live long after the OnClose() is called?  If there is such a situation, it could be bad, because we don\u0027t do all the cleanup here.  For instance, we sometimes highlight the extensions toolbar, and set the is_highlighting_ bool.  If there is significant time between the OnClose() method and when the bubble is destructed then the toolbar will remain highlighted with no visible bubble - which is bad.  If there isn\u0027t time between the OnClose() method being called and the bubble being destructed, then we shouldn\u0027t need this code.\n\nIs there a production situation that results in this flow?  Or, if it\u0027s only in testing, can we update the tests to more closely mimic the production flow?\n\nFeel free to ping me to chat about this more. :)",
+      "revId": "230eb3d035eda55bfea6c3319a6140ae22e98c64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
