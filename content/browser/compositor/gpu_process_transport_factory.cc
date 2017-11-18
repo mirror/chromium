@@ -275,10 +275,11 @@ CreateOverlayCandidateValidator(
 #endif
   std::unique_ptr<viz::CompositorOverlayCandidateValidator> validator;
 #if defined(USE_OZONE)
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  if (command_line->HasSwitch(switches::kEnableHardwareOverlays)) {
-    std::string enable_overlay_flag =
-        command_line->GetSwitchValueASCII(switches::kEnableHardwareOverlays);
+  //  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (true/*command_line->HasSwitch(switches::kEnableHardwareOverlays)*/) {
+    //    std::string enable_overlay_flag =
+    //        command_line->GetSwitchValueASCII(switches::kEnableHardwareOverlays);
+    std::string enable_overlay_flag = "single-on-top";
     std::unique_ptr<ui::OverlayCandidatesOzone> overlay_candidates =
         ui::OzonePlatform::GetInstance()
             ->GetOverlayManager()

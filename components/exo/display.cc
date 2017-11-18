@@ -41,8 +41,9 @@ const gfx::BufferFormat kOverlayFormats[] = {
 // TODO(dcastagna): Remove RGBX/RGBA once all the platforms using the fullscreen
 // optimization will have switched to atomic.
 #if defined(ARCH_CPU_ARM_FAMILY)
-    gfx::BufferFormat::RGBX_8888, gfx::BufferFormat::RGBA_8888,
+    gfx::BufferFormat::RGBX_8888,
 #endif
+    gfx::BufferFormat::RGBA_8888,
     gfx::BufferFormat::BGRX_8888, gfx::BufferFormat::BGRA_8888};
 
 const gfx::BufferFormat kOverlayFormatsForDrmAtomic[] = {
