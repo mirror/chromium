@@ -171,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "0363121d_c863fd77",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1118373
+      },
+      "writtenOn": "2017-11-18T09:13:02Z",
+      "side": 1,
+      "message": "Yes. This is fine. The compile result will be garbage collected if not used.",
+      "parentUuid": "63cb7483_6f89e2b7",
+      "revId": "c5c81b334145e9100bf299ba563b958720284f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79c27aec_cf568095",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
         "patchSetId": 44
