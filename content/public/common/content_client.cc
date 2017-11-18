@@ -106,6 +106,11 @@ bool ContentClient::IsSupplementarySiteIsolationModeEnabled() {
   return false;
 }
 
+bool ContentClient::ShouldIsolateAllSites() {
+  // TODO(palmer): Fill this in, or remove it if it's unnecessary.
+  return false;
+}
+
 OriginTrialPolicy* ContentClient::GetOriginTrialPolicy() {
   return nullptr;
 }

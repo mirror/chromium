@@ -7,6 +7,7 @@ include_rules = [
   "+content/app/resources/grit/content_resources.h",
   "+content/common",
   "+content/grit",
+  "+content/public/browser/content_browser_client.h",
   "+content/public/common",
   "+content/public/test",
   "+content/test",

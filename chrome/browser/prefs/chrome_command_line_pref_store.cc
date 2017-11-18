@@ -48,6 +48,8 @@ const CommandLinePrefStore::SwitchToPreferenceMapEntry
         {switches::kAuthAndroidNegotiateAccountType,
          prefs::kAuthAndroidNegotiateAccountType},
 #endif
+        {switches::kIsolateOrigins, prefs::kIsolateOrigins},
+        {switches::kSitePerProcess, prefs::kSitePerProcess},
 };
 
 const CommandLinePrefStore::SwitchToPreferenceMapEntry
