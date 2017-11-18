@@ -1543,6 +1543,7 @@ int SSLClientSocketImpl::VerifyCT() {
           TransportSecurityState::ENABLE_EXPECT_CT_REPORTS,
           ct_verify_result_.cert_policy_compliance);
   if (ct_requirement_status != TransportSecurityState::CT_NOT_REQUIRED) {
+    ct_verify_result_.policy_compliance_required = true;
     // Record the CT compliance of connections for which compliance is required;
     // this helps answer the question: "Of all connections that are supposed to
     // be serving valid CT information, how many fail to do so?"
@@ -1559,6 +1560,7 @@ int SSLClientSocketImpl::VerifyCT() {
       return ERR_CERTIFICATE_TRANSPARENCY_REQUIRED;
     case TransportSecurityState::CT_REQUIREMENTS_MET:
     case TransportSecurityState::CT_NOT_REQUIRED:
+      ct_verify_result_.policy_compliance_required = false;
       return OK;
   }
 
