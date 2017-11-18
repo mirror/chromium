@@ -1083,6 +1083,30 @@
     },
     {
       "key": {
+        "uuid": "2d35ad3b_a1d4467e",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-18T00:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6df4a788_71369c9b",
+      "range": {
+        "startLine": 427,
+        "startChar": 9,
+        "endLine": 427,
+        "endChar": 79
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e628ade_ce40e3c9",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 8
@@ -1308,6 +1332,30 @@
       "side": 1,
       "message": "It turns out that the default is only 64, which is definitely too short: https://chromium.googlesource.com/chromium/src/+/master/testing/libfuzzer/getting_started.md#improving-your-fuzzer. So, you should specify this, and maybe remove the recursion check while testing the fuzzer to find the minimum max_len that\u0027ll find stack overflows. Or just decide that finding stack overflows isn\u0027t worth the slowdown in fuzzer runtime.",
       "parentUuid": "be9bcc45_25e1a7a9",
+      "range": {
+        "startLine": 111,
+        "startChar": 25,
+        "endLine": 111,
+        "endChar": 37
+      },
+      "revId": "c2ea33910b4f3c2c38ffcd159a36778c518dc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d38a68a8_dbf15333",
+        "filename": "content/test/fuzzer/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-18T00:24:16Z",
+      "side": 1,
+      "message": "Changed the max length option to 65535. For finding minimum max_len that will result in stack overflow, I believe it would be unnecessary since the only use case of cbor decoder checks that all cbor values have at most 4 nested layers (and the current default max layer depth is set to 16).",
+      "parentUuid": "f5f9453c_41e5bc89",
       "range": {
         "startLine": 111,
         "startChar": 25,

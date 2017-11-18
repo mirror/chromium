@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f3109dce_081c3dac",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-18T00:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43e8b449_31609c19",
+      "range": {
+        "startLine": 138,
+        "startChar": 26,
+        "endLine": 138,
+        "endChar": 35
+      },
+      "revId": "daacbe9b51223bd35dabb911b5e5c705f77783d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af9a6682_dc517cda",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "daacbe9b51223bd35dabb911b5e5c705f77783d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd431d8_4336d4aa",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-18T00:24:16Z",
+      "side": 1,
+      "message": "I was choosing between this and using UINTN_MAX macro, but then I would have to have switch between different values of |additional_bytes|.. Please let me know if you prefer to change this to other way!",
+      "parentUuid": "af9a6682_dc517cda",
+      "range": {
+        "startLine": 141,
+        "startChar": 19,
+        "endLine": 141,
+        "endChar": 58
+      },
+      "revId": "daacbe9b51223bd35dabb911b5e5c705f77783d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c91fd1c4_19c37963",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-18T00:24:16Z",
+      "side": 1,
+      "message": "Added error code NON_MINIMAL_ENCODING.",
+      "parentUuid": "b0f25201_57b5e8e0",
+      "range": {
+        "startLine": 142,
+        "startChar": 18,
+        "endLine": 142,
+        "endChar": 39
+      },
+      "revId": "daacbe9b51223bd35dabb911b5e5c705f77783d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efb71633_b15d34c3",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "daacbe9b51223bd35dabb911b5e5c705f77783d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f7d2c3_ef20a687",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-18T00:24:16Z",
+      "side": 1,
+      "message": "Deleted |option| parameter and changed header comments to make sure that we state this decoder only support canonical deserialization.",
+      "parentUuid": "efb71633_b15d34c3",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 27
+      },
+      "revId": "daacbe9b51223bd35dabb911b5e5c705f77783d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6b911f45_63a0f4e5",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-18T00:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c541085_806dcc2c",
+      "range": {
+        "startLine": 49,
+        "startChar": 57,
+        "endLine": 49,
+        "endChar": 75
+      },
+      "revId": "daacbe9b51223bd35dabb911b5e5c705f77783d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c29d1993_41272ecd",
         "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
         "patchSetId": 12
@@ -137,6 +257,30 @@
       "revId": "daacbe9b51223bd35dabb911b5e5c705f77783d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f6a442_bcc6f1f0",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-18T00:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c29d1993_41272ecd",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 11
+      },
+      "revId": "daacbe9b51223bd35dabb911b5e5c705f77783d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
