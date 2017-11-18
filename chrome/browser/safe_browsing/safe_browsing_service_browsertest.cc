@@ -613,10 +613,6 @@ class SafeBrowsingServiceTest : public InProcessBrowserTest {
   }
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
-    // Makes sure the auto update is not triggered during the test.
-    // This test will fill up the database using testing prefixes
-    // and urls.
-    command_line->AppendSwitch(safe_browsing::switches::kSbDisableAutoUpdate);
 #if defined(OS_CHROMEOS)
     command_line->AppendSwitch(
         chromeos::switches::kIgnoreUserProfileMappingForTests);
