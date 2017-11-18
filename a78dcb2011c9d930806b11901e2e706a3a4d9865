@@ -2,6 +2,190 @@
   "comments": [
     {
       "key": {
+        "uuid": "a4ceed59_7b0326f5",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1726,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-18T19:36:03Z",
+      "side": 1,
+      "message": "nit: you can drop the braces here.",
+      "range": {
+        "startLine": 1726,
+        "startChar": 54,
+        "endLine": 1726,
+        "endChar": 55
+      },
+      "revId": "a78dcb2011c9d930806b11901e2e706a3a4d9865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2549b79_e4948418",
+        "filename": "chrome/browser/policy/site_per_process_policy_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-18T19:36:03Z",
+      "side": 1,
+      "message": "You don\u0027t need this file and the cc file to it.\n\nThe binding above suffices and this handler is not even registered currently so it is not active either.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 0
+      },
+      "revId": "a78dcb2011c9d930806b11901e2e706a3a4d9865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30c063d_43d275d1",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-18T19:36:03Z",
+      "side": 1,
+      "message": "Add a pref_mappings section as the example above now that your policy is indeed mapped to a pref.",
+      "range": {
+        "startLine": 876,
+        "startChar": 3,
+        "endLine": 876,
+        "endChar": 17
+      },
+      "revId": "a78dcb2011c9d930806b11901e2e706a3a4d9865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a996418_720d955b",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-18T19:36:03Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 881,
+        "startChar": 3,
+        "endLine": 881,
+        "endChar": 17
+      },
+      "revId": "a78dcb2011c9d930806b11901e2e706a3a4d9865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb7bdb9_236fb5a2",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10619,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-18T19:36:03Z",
+      "side": 1,
+      "message": "Why not call this \"Enable Site Isolation for Specified Origins\" from admins perspective the mapping to a flag is not so important imo.",
+      "range": {
+        "startLine": 10619,
+        "startChar": 20,
+        "endLine": 10619,
+        "endChar": 72
+      },
+      "revId": "a78dcb2011c9d930806b11901e2e706a3a4d9865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d871fd9_7515ebc7",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10625,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-18T19:36:03Z",
+      "side": 1,
+      "message": "I would rather use some other word (for example \"logic\") here to avoid confusion with another admin policy.",
+      "range": {
+        "startLine": 10625,
+        "startChar": 75,
+        "endLine": 10625,
+        "endChar": 81
+      },
+      "revId": "a78dcb2011c9d930806b11901e2e706a3a4d9865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71d96664_41b50f52",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10640,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-18T19:36:03Z",
+      "side": 1,
+      "message": "What about \"Enable Site Isolation for Every Site\" here?",
+      "range": {
+        "startLine": 10640,
+        "startChar": 20,
+        "endLine": 10640,
+        "endChar": 73
+      },
+      "revId": "a78dcb2011c9d930806b11901e2e706a3a4d9865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b9bcfb9_beb11ba1",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10649,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-18T19:36:03Z",
+      "side": 1,
+      "message": "same as above maybe use other word.",
+      "range": {
+        "startLine": 10649,
+        "startChar": 75,
+        "endLine": 10649,
+        "endChar": 81
+      },
+      "revId": "a78dcb2011c9d930806b11901e2e706a3a4d9865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e4b0207_672069a4",
         "filename": "content/common/site_isolation_policy.cc",
         "patchSetId": 3
