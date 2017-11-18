@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9f73e02_6f52939d",
+        "filename": "net/quic/chromium/crypto/proof_verifier_chromium.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-18T00:33:43Z",
+      "side": 1,
+      "message": "Hrm. Left that in by accident TBH but I guess it probably ought to stay.",
+      "parentUuid": "1dc8aa44_9be002cb",
+      "revId": "38c0ee2f6a403879fbf72eccd31ae748d334f4af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23915e85_a347e6b6",
         "filename": "net/socket/ssl_client_socket_impl.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "38c0ee2f6a403879fbf72eccd31ae748d334f4af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f392a2e0_30f29e30",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1563,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-18T00:33:43Z",
+      "side": 1,
+      "message": "Ooops. The good news is that I have a test that caught this, the bad news is that I forgot to run it before uploading the patchset.\n\nMoved.",
+      "parentUuid": "23915e85_a347e6b6",
+      "revId": "38c0ee2f6a403879fbf72eccd31ae748d334f4af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
