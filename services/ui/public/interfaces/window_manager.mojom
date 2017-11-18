@@ -163,6 +163,8 @@ interface WindowManager {
   // Called immediately when the WindowManager is obtained.
   OnConnect();
 
+  WmOnAcceleratedWidgetForDisplay(int64 display_id, uint64 widget);
+
   // Called when a new display is added. |root| gives the root window specific
   // to this WindowManager for |display|. |local_surface_id| identifies the ID
   // to use to submit CompositorFrames.
