@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57189696_a94dd7c8",
+        "filename": "chrome/browser/safe_browsing/client_side_detection_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-11-18T00:45:10Z",
+      "side": 1,
+      "message": "since this is now public, can this be made const or return a const pointer?",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 60
+      },
+      "revId": "11d90a9e10128deb60e7b3097d0b864bd49ed9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a77d195b_458deb6f",
+        "filename": "chrome/browser/safe_browsing/client_side_detection_host_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-11-18T00:45:10Z",
+      "side": 1,
+      "message": "const std::vector\u003cIPUrlInfo\u003e\u0026",
+      "range": {
+        "startLine": 36,
+        "startChar": 27,
+        "endLine": 36,
+        "endChar": 56
+      },
+      "revId": "11d90a9e10128deb60e7b3097d0b864bd49ed9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4a2447_d895b1df",
+        "filename": "chrome/browser/safe_browsing/client_side_detection_host_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-11-18T00:45:10Z",
+      "side": 1,
+      "message": "nit: consider using std::find_if",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 3
+      },
+      "revId": "11d90a9e10128deb60e7b3097d0b864bd49ed9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5acc8d_1ede5320",
+        "filename": "chrome/browser/safe_browsing/client_side_detection_host_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-11-18T00:45:10Z",
+      "side": 1,
+      "message": "const \u0026",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 24
+      },
+      "revId": "11d90a9e10128deb60e7b3097d0b864bd49ed9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
