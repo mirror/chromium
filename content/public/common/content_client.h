@@ -171,6 +171,9 @@ class CONTENT_EXPORT ContentClient {
   // model decisions.
   virtual bool IsSupplementarySiteIsolationModeEnabled();
 
+  // Returns true if the embedder wishes to enable site isolation for all sites.
+  virtual bool ShouldIsolateAllSites();
+
   // Returns the origin trial policy, or nullptr if origin trials are not
   // supported by the embedder.
   virtual OriginTrialPolicy* GetOriginTrialPolicy();

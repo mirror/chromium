@@ -6,6 +6,8 @@
 
 #include "base/command_line.h"
 #include "base/feature_list.h"
+#include "content/public/browser/content_browser_client.h"
+#include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 
@@ -15,7 +17,8 @@ namespace content {
 bool SiteIsolationPolicy::UseDedicatedProcessesForAllSites() {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
              switches::kSitePerProcess) ||
-         base::FeatureList::IsEnabled(features::kSitePerProcess);
+         base::FeatureList::IsEnabled(features::kSitePerProcess) ||
+         GetContentClient()->ShouldIsolateAllSites();
 }
 
 // static

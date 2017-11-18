@@ -1028,6 +1028,8 @@ split_static_library("browser") {
     "policy/schema_registry_service.h",
     "policy/schema_registry_service_factory.cc",
     "policy/schema_registry_service_factory.h",
+    "policy/site_per_process_policy_handler.cc",
+    "policy/site_per_process_policy_handler.h",
     "predictors/autocomplete_action_predictor.cc",
     "predictors/autocomplete_action_predictor.h",
     "predictors/autocomplete_action_predictor_factory.cc",
