@@ -165,7 +165,7 @@ void DocumentLoader::Trace(blink::Visitor* visitor) {
   visitor->Trace(document_load_timing_);
   visitor->Trace(application_cache_host_);
   visitor->Trace(content_security_policy_);
-  RawResourceClient::Trace(visitor);
+  ResourceClient::Trace(visitor);
 }
 
 unsigned long DocumentLoader::MainResourceIdentifier() const {

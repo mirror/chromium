@@ -58,7 +58,7 @@ class ThreadableLoadingContext;
 // TODO(horo): We are using this class not only in documents, but also in
 // workers. We should change the name to ThreadableLoaderImpl.
 class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
-                                                   private RawResourceClient {
+                                                   private ResourceClient {
   USING_GARBAGE_COLLECTED_MIXIN(DocumentThreadableLoader);
 
  public:
@@ -99,7 +99,6 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
 
   String DebugName() const override { return "DocumentThreadableLoader"; }
 
-  // RawResourceClient
   void DataSent(Resource*,
                 unsigned long long bytes_sent,
                 unsigned long long total_bytes_to_be_sent) override;
@@ -142,7 +141,7 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
 
   // TODO(hintzed): CORS handled out of Blink. Code in methods below named
   // *OutOfBlinkCORS is to be moved back into the corresponding methods
-  // (e.g. those inherited from RawResourceClient) after
+  // (e.g. those inherited from ResourceClient) after
   // https://crbug.com/736308 is fixed (i.e. when CORS is generally handled out
   // of Blink).
   void DispatchInitialRequestOutOfBlinkCORS(ResourceRequest&);
@@ -204,25 +203,19 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   bool IsAllowedRedirect(network::mojom::FetchRequestMode, const KURL&) const;
 
   // TODO(hiroshige): After crbug.com/633696 is fixed,
-  // - Remove RawResourceClientStateChecker logic,
   // - Make DocumentThreadableLoader to be a ResourceOwner and remove this
   //   re-implementation of ResourceOwner, and
-  // - Consider re-applying RawResourceClientStateChecker in a more
-  //   general fashion (crbug.com/640291).
   RawResource* GetResource() const { return resource_.Get(); }
   void ClearResource() { SetResource(nullptr); }
   void SetResource(RawResource* new_resource) {
     if (new_resource == resource_)
       return;
 
-    if (RawResource* old_resource = resource_.Release()) {
-      checker_.WillRemoveClient();
+    if (RawResource* old_resource = resource_.Release())
       old_resource->RemoveClient(this);
-    }
 
     if (new_resource) {
       resource_ = new_resource;
-      checker_.WillAddClient();
       resource_->AddClient(this);
     }
   }
@@ -296,8 +289,6 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   // used to populate the HTTP Referer header when following the redirect.
   bool override_referrer_;
   Referrer referrer_after_redirect_;
-
-  RawResourceClientStateChecker checker_;
 };
 
 }  // namespace blink
