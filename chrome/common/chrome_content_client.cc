@@ -748,6 +748,12 @@ bool ChromeContentClient::IsSupplementarySiteIsolationModeEnabled() {
 #endif
 }
 
+bool ChromeContentClient::ShouldIsolateAllSites() {
+  // TODO(palmer): Get prefs service, check for pref. Or perhaps we don't need
+  // this?
+  return false;
+}
+
 content::OriginTrialPolicy* ChromeContentClient::GetOriginTrialPolicy() {
   // Prevent initialization race (see crbug.com/721144). There may be a
   // race when the policy is needed for worker startup (which happens on a
