@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32d6d197_55d6ad34",
+        "filename": "ash/system/power/display_forced_off_setter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-18T00:23:31Z",
+      "side": 1,
+      "message": "does moving this above the SetBacklightsForcedOff call help? the d-bus call should happen asynchronously, i think, but just want to check...",
+      "revId": "c54ae06dbd681aea54f895b1707735cad923831a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
