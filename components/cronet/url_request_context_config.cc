@@ -48,6 +48,10 @@ const char kQuicMaxServerConfigsStoredInProperties[] =
     "max_server_configs_stored_in_properties";
 const char kQuicIdleConnectionTimeoutSeconds[] =
     "idle_connection_timeout_seconds";
+const char kQuicMaxTimeBeforeCryptoHandshakeSeconds[] =
+    "max_time_before_crypto_handshake_seconds";
+const char kQuicMaxIdleTimeBeforeCryptoHandshakeSeconds[] =
+    "max_idle_time_before_crypto_handshake_seconds";
 const char kQuicMigrateSessionsOnNetworkChange[] =
     "migrate_sessions_on_network_change";
 const char kQuicUserAgentId[] = "user_agent_id";
@@ -241,6 +245,22 @@ void URLRequestContextConfig::ParseAndSetExperimentalOptions(
                                 &quic_idle_connection_timeout_seconds)) {
         session_params->quic_idle_connection_timeout_seconds =
             quic_idle_connection_timeout_seconds;
+      }
+
+      int quic_max_time_before_crypto_handshake_seconds = 0;
+      if (quic_args->GetInteger(
+              kQuicMaxtimeBeforeCryptoHandshakeSeconds,
+              &quic_max_time_before_crypto_handshake_seconds)) {
+        session_params->quic_max_time_before_crypto_handshake_seconds =
+            quic_max_time_before_crypto_handshake_seconds;
+      }
+
+      int quic_max_idle_time_before_crypto_handshake_seconds = 0;
+      if (quic_args->GetInteger(
+              kQuicMaxIdletimeBeforeCryptoHandshakeSeconds,
+              &quic_max_idle_time_before_crypto_handshake_seconds)) {
+        session_params->quic_max_idle_time_before_crypto_handshake_seconds =
+            quic_max_idle_time_before_crypto_handshake_seconds;
       }
 
       bool quic_migrate_sessions_on_network_change = false;
