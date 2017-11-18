@@ -76,6 +76,23 @@
     },
     {
       "key": {
+        "uuid": "63cb7483_6f89e2b7",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-18T00:46:06Z",
+      "side": 1,
+      "message": "Yang: Is it a right way to call ScriptCompiler::CompileUnboundScript just to create CachedMetaData? The compile script is dropped.",
+      "revId": "c5c81b334145e9100bf299ba563b958720284f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79c27aec_cf568095",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
         "patchSetId": 44
