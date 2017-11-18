@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7842979f_770e5a70",
+        "filename": "remoting/base/session_options.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-18T00:55:16Z",
+      "side": 1,
+      "message": "Blank line above? Or move the dtor below all the ctors?",
+      "revId": "aa21d3891f96921a89432547ff0c964960b6a0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2257fec1_855c1e81",
+        "filename": "remoting/base/session_options.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-18T00:55:16Z",
+      "side": 1,
+      "message": "explicit\nMove near the top with the other ctors?",
+      "revId": "aa21d3891f96921a89432547ff0c964960b6a0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b39c6e0_fd9c0236",
+        "filename": "remoting/protocol/connection_to_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-18T00:55:16Z",
+      "side": 1,
+      "message": "experimental",
+      "range": {
+        "startLine": 105,
+        "startChar": 5,
+        "endLine": 105,
+        "endChar": 18
+      },
+      "revId": "aa21d3891f96921a89432547ff0c964960b6a0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
