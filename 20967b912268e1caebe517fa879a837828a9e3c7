@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1468d8ce_7fa4ac0d",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-18T02:48:57Z",
+      "side": 1,
+      "message": "nit: Why not just return an std::string instead of passing in a pointer to a string?",
+      "range": {
+        "startLine": 228,
+        "startChar": 34,
+        "endLine": 228,
+        "endChar": 59
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b960ff9f_302e44fd",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-18T02:48:57Z",
+      "side": 1,
+      "message": "Is there any benefit from recording this histogram? Won\u0027t it just be a lot of 10s?",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 58
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c15bbe07_52618372",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-18T02:48:57Z",
+      "side": 1,
+      "message": "nit: use an int64 of microseconds since epoch, e.g. (base::Time::Now() - base::Time::UnixEpoch()).InMicroseconds(), unless there\u0027s a reason why a double is needed.",
+      "range": {
+        "startLine": 90,
+        "startChar": 61,
+        "endLine": 90,
+        "endChar": 70
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c226a7c_b59040bc",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-18T02:48:57Z",
+      "side": 1,
+      "message": "You could remove the need for |prefs_| to exist at all if you use a DictionaryPrefUpdate, e.g.:\n\nDictionaryPrefUpdate update(pref_service_, prefs::kNetworkProperties);\nbase::DictionaryValue* prefs_as_dict \u003d update.Get();\n\nAny modifications will automatically be picked up by the PrefService, so you don\u0027t need to call pref_service_-\u003eSet() at the end, which also avoids copying the entire DictionaryValue there.",
+      "range": {
+        "startLine": 120,
+        "startChar": 9,
+        "endLine": 120,
+        "endChar": 24
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19cbab9d_229acd6f",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-18T02:48:57Z",
+      "side": 1,
+      "message": "nit: Change this to a const std::string* to save on a string copy.",
+      "range": {
+        "startLine": 129,
+        "startChar": 9,
+        "endLine": 129,
+        "endChar": 15
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35729717_66f66625",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-18T02:48:57Z",
+      "side": 1,
+      "message": "If the user sets the system clock back in time, then wouldn\u0027t all the previous network properties in the DictionaryValue have greater timestamps than any new ones?",
+      "range": {
+        "startLine": 148,
+        "startChar": 10,
+        "endLine": 148,
+        "endChar": 41
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ec9969_19a6d388",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-18T02:48:57Z",
+      "side": 1,
+      "message": "Remove this DCHECK. E.g., if the prefs are somehow corrupted on disk and don\u0027t parse successfully, Chrome shouldn\u0027t crash.\n\nAlso, from the Chromium style guide: \"A DCHECK() means “this condition must always be true”, not “this condition is normally true, but perhaps not in exceptional cases.” \"",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 69
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2a086f8_1d86026a",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-18T02:48:57Z",
+      "side": 1,
+      "message": "Remove this DCHECK as well, and just handle the case where there\u0027s more prefs than kMaxCacheSize.",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 46
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf74619_758ca7e3",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-18T02:48:57Z",
+      "side": 1,
+      "message": "nit: Could you pass in a base::SequencedTaskRunner instead?",
+      "range": {
+        "startLine": 29,
+        "startChar": 20,
+        "endLine": 29,
+        "endChar": 48
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "302ac470_fa11816d",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-18T02:48:57Z",
+      "side": 1,
+      "message": "You mentioned in an earlier comment that the NetworkPropertiesManager could be used on both the IO and UI threads. Could you explain? E.g., do you mean that IsSecureProxyAllowed() could be called on both threads concurrently?",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 27
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39abbf6e_4eeadd41",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-18T02:48:57Z",
+      "side": 1,
+      "message": "Why is this necessary? Why is it important that the tests can inspect the internal state of the NetworkPropertiesManager? Can you make the tests just verify the public interface?",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 62
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92453302_a04df564",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-18T02:48:57Z",
+      "side": 1,
+      "message": "nit: Why do you need this? Can this just be removed, and use the pref path constant?",
+      "range": {
+        "startLine": 97,
+        "startChar": 20,
+        "endLine": 97,
+        "endChar": 25
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb157a3a_aa0b6668",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-18T02:48:57Z",
+      "side": 1,
+      "message": "Why do you need this copy of the DictionaryValue on the UI thread? If you use DictionaryValueUpdate, you could just get and modify a mutable version of the DictionaryValue that\u0027s stored in the PrefService directly.",
+      "range": {
+        "startLine": 99,
+        "startChar": 32,
+        "endLine": 99,
+        "endChar": 72
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c395eeef_a7756273",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-18T02:48:57Z",
+      "side": 1,
+      "message": "nit: This should be base::DictionaryValue.",
+      "range": {
+        "startLine": 100,
+        "startChar": 8,
+        "endLine": 100,
+        "endChar": 13
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b682db_1f89e7c4",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-18T02:48:57Z",
+      "side": 1,
+      "message": "nit: rename |prefs_|, I\u0027m finding myself confuse it with |pref_service_|.",
+      "range": {
+        "startLine": 100,
+        "startChar": 14,
+        "endLine": 100,
+        "endChar": 20
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

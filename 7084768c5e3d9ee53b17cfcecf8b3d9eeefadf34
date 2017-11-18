@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a155dc2b_bacc62aa",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-18T02:48:57Z",
+      "side": 1,
+      "message": "I\u0027ve left an updated and more detailed comment on the latest patchset, see that comment.",
+      "parentUuid": "4f80c913_aa4e6dd1",
+      "range": {
+        "startLine": 141,
+        "startChar": 1,
+        "endLine": 141,
+        "endChar": 37
+      },
+      "revId": "7084768c5e3d9ee53b17cfcecf8b3d9eeefadf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba24e520_6e370365",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
         "patchSetId": 10
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "I tried doing this but hit into some roadblock. If you feel strongly about this, I can file a bug, and do it later along with modifications to the IOData class as well (that class also has ShutdownOnUIThread method). Personally, I do not think that it makes things simpler. The difficult part is that the data is accessed on both IO and UI threads. There is not a whole lot of room to avoid complexity.",
       "parentUuid": "123f4fa9_948d1c2b",
+      "range": {
+        "startLine": 94,
+        "startChar": 2,
+        "endLine": 94,
+        "endChar": 29
+      },
+      "revId": "7084768c5e3d9ee53b17cfcecf8b3d9eeefadf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d5441a_c8a1a8df",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-18T02:48:57Z",
+      "side": 1,
+      "message": "I\u0027m mainly worried that since the PrefService* and base::WeakPtrFactory are visible to the IO threaded object, it complicates the class and makes it harder to see where everything needs to live.\n\nWhy do you need to modify the IOData class as well? Couldn\u0027t you just have something simple, like, just as an inner class (doesn\u0027t need to be in it\u0027s own file, it could even just be declared here in the .h file and fully defined in the .cc):\n\nclass NetworkPropertiesManager::PrefWriter {\n public:\n  PrefWriter(PrefService* pref_service);\n  base::WeakPtr\u003cPrefWriter\u003e GetWeakPtr();\n\n  void UpdateNetworkProperties(const std::string\u0026 network_id,\n                               const NetworkProperties\u0026 properties);\n\n private:\n  SEQUENCE_CHECKER(sequence_checker_);\n  PrefService* pref_service_;\n  base::WeakPtrFactory\u003cPrefWriter\u003e weak_factory_;\n};\n\nYou could then just hold a std::unique_ptr\u003cPrefWriter\u003e in the NetworkPropertiesManager class, and reset() that unique_ptr in NetworkPropertiesManager::ShutdownOnUIThread().\n\nWould that work?",
+      "parentUuid": "8f2d6ebe_efe77d5d",
       "range": {
         "startLine": 94,
         "startChar": 2,
