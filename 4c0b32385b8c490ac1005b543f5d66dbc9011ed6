@@ -22,6 +22,30 @@
       "revId": "4c0b32385b8c490ac1005b543f5d66dbc9011ed6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f172cf4_9fb25a2d",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2703,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-18T00:25:33Z",
+      "side": 1,
+      "message": "Just being cautious here. Some Samsung phones shipped with two kinds of GPUs; not sure whether they had different machine model names.",
+      "parentUuid": "dab63126_b96f232b",
+      "range": {
+        "startLine": 2703,
+        "startChar": 7,
+        "endLine": 2703,
+        "endChar": 25
+      },
+      "revId": "4c0b32385b8c490ac1005b543f5d66dbc9011ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
