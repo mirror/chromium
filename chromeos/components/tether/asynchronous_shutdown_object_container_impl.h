@@ -14,6 +14,7 @@
 #include "chromeos/components/tether/ble_advertiser.h"
 #include "chromeos/components/tether/ble_scanner.h"
 #include "chromeos/components/tether/disconnect_tethering_request_sender.h"
+#include "chromeos/components/tether/gatt_services_workaround.h"
 
 class PrefService;
 
@@ -47,7 +48,8 @@ class AsynchronousShutdownObjectContainerImpl
     : public AsynchronousShutdownObjectContainer,
       public BleAdvertiser::Observer,
       public BleScanner::Observer,
-      public DisconnectTetheringRequestSender::Observer {
+      public DisconnectTetheringRequestSender::Observer,
+      public GattServicesWorkaround::Observer {
  public:
   class Factory {
    public:
@@ -104,16 +106,21 @@ class AsynchronousShutdownObjectContainerImpl
   // DisconnectTetheringRequestSender::Observer:
   void OnPendingDisconnectRequestsComplete() override;
 
+  // GattServicesWorkaround::Observer:
+  void OnAsynchronousShutdownComplete() override;
+
  private:
   friend class AsynchronousShutdownObjectContainerImplTest;
 
   void ShutdownIfPossible();
   bool AreAsynchronousOperationsActive();
 
-  void SetTestDoubles(std::unique_ptr<BleAdvertiser> ble_advertiser,
-                      std::unique_ptr<BleScanner> ble_scanner,
-                      std::unique_ptr<DisconnectTetheringRequestSender>
-                          disconnect_tethering_request_sender);
+  void SetTestDoubles(
+      std::unique_ptr<BleAdvertiser> ble_advertiser,
+      std::unique_ptr<BleScanner> ble_scanner,
+      std::unique_ptr<DisconnectTetheringRequestSender>
+          disconnect_tethering_request_sender,
+      std::unique_ptr<GattServicesWorkaround> gatt_services_workaround);
 
   scoped_refptr<device::BluetoothAdapter> adapter_;
 
@@ -126,6 +133,7 @@ class AsynchronousShutdownObjectContainerImpl
   std::unique_ptr<BleSynchronizer> ble_synchronizer_;
   std::unique_ptr<BleAdvertiser> ble_advertiser_;
   std::unique_ptr<BleScanner> ble_scanner_;
+  std::unique_ptr<GattServicesWorkaround> gatt_services_workaround_;
   std::unique_ptr<BleConnectionManager> ble_connection_manager_;
   std::unique_ptr<DisconnectTetheringRequestSender>
       disconnect_tethering_request_sender_;
