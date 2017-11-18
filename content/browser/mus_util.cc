@@ -4,6 +4,8 @@
 
 #include "content/browser/mus_util.h"
 
+#include "base/command_line.h"
+
 #if defined(USE_AURA)
 #include "content/public/browser/context_factory.h"
 #include "ui/aura/env.h"
@@ -20,8 +22,7 @@ bool IsUsingMus() {
 }
 
 bool IsMusHostingViz() {
-  // TODO(sad): Currently mus always is the viz host.
-  return IsUsingMus();
+  return base::CommandLine::ForCurrentProcess()->HasSwitch("mash");
 }
 
 }  // namespace content

@@ -249,6 +249,7 @@ std::unique_ptr<service_manager::Service> CreateEmbeddedUIService(
   config.resource_runner = task_runner;
   config.image_cursors_set_weak_ptr = image_cursors_set_weak_ptr;
   config.memory_manager = memory_manager;
+  config.should_host_viz = false;
   return base::MakeUnique<ui::Service>(&config);
 }
 
