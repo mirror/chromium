@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29743841_222d9324",
+        "filename": "components/leveldb/leveldb_service_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-18T00:23:30Z",
+      "side": 1,
+      "message": "I wonder if we should have tests to make sure that earlier operations are indeed ignored by both copy\u0026delete (i.e. add a put to the beginning of the batch, and make sure it was neither copied nor deleted?)\n\n(also some day would be nice to move the fake db impl to components/leveldb and somehow run the tests against that as well...)",
+      "revId": "5fc8f9f086d080976007226442a07f12af2124b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec82f364_0217c117",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-18T00:23:30Z",
+      "side": 1,
+      "message": "nit: separate EXPECT_TRUE\u0027s could make it slightly easier to debug test failures",
+      "revId": "5fc8f9f086d080976007226442a07f12af2124b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed0df48c_3c500e1d",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-18T00:23:30Z",
+      "side": 1,
+      "message": "wrappers.size is always kTotalWrappers, right?",
+      "revId": "5fc8f9f086d080976007226442a07f12af2124b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
