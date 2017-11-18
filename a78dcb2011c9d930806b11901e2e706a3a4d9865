@@ -16,6 +16,24 @@
       "revId": "a78dcb2011c9d930806b11901e2e706a3a4d9865",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a39f586_5c12cc34",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-18T03:48:54Z",
+      "side": 1,
+      "message": "Right, I think so. I think this is flotsam from a previous attempt.",
+      "parentUuid": "0e4b0207_672069a4",
+      "revId": "a78dcb2011c9d930806b11901e2e706a3a4d9865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
