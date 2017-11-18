@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dc5918b_f200b8a3",
+        "filename": "ash/public/cpp/ash_pref_names.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-18T00:34:41Z",
+      "side": 1,
+      "message": "If you modify the pref, I think you need to consider to migrate all the user info from the old pref to the new pref. Otherwise all existing users might lost their wallpaper info as GetUserWallpaperInfo() is guaranteed to return null.",
+      "revId": "ec14d198d0364aace8661827b405d7a96b0126f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ae27130_6d9676b6",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-18T00:34:41Z",
+      "side": 1,
+      "message": "nit: kUserWallpaperInfo\nIt might be better to call it kUsersWallpaperInfo though.",
+      "revId": "ec14d198d0364aace8661827b405d7a96b0126f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59950835_af6ab1f7",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-18T00:34:41Z",
+      "side": 1,
+      "message": "optional: Can this line put inside of SetWallpaperImage() or other functions? Seems weird here.",
+      "revId": "ec14d198d0364aace8661827b405d7a96b0126f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc21bf2_95a9bc55",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-18T00:34:41Z",
+      "side": 1,
+      "message": "Since you\u0027re returning the pointer of a member variable (not a typical getter or setter), I guess it might be better to use the normal function name?",
+      "revId": "ec14d198d0364aace8661827b405d7a96b0126f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e9f951_253a4afa",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-18T00:34:41Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ec14d198d0364aace8661827b405d7a96b0126f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2b8963_54c752c1",
+        "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-18T00:34:41Z",
+      "side": 1,
+      "message": "Just curious: The default wallpaper doesn\u0027t load here?",
+      "revId": "ec14d198d0364aace8661827b405d7a96b0126f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
