@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfa8f6ec_83621de9",
+        "filename": "chrome/browser/chromeos/arc/arc_migration_guide_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-18T02:40:55Z",
+      "side": 1,
+      "message": "I\u0027ll leave this alone for now, but it doesn\u0027t really seem like the greatest solution to crbug.com/723097. I\u0027d think notification bubbles should act like popups or tooltips, i.e. always on top.",
+      "range": {
+        "startLine": 172,
+        "startChar": 8,
+        "endLine": 173,
+        "endChar": 33
+      },
+      "revId": "e5cb7d426b684a4bf6a9a67ae11df385bffff487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
