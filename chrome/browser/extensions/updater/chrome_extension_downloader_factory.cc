@@ -7,7 +7,6 @@
 #include <string>
 #include <utility>
 
-
 #include "base/command_line.h"
 #include "chrome/browser/google/google_brand.h"
 #include "chrome/browser/profiles/profile.h"
@@ -17,6 +16,7 @@
 #include "components/signin/core/browser/profile_identity_provider.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/update_client/update_query_params.h"
+#include "content/public/common/service_manager_connection.h"
 #include "extensions/browser/updater/extension_downloader.h"
 #include "google_apis/gaia/identity_provider.h"
 
@@ -32,8 +32,10 @@ std::unique_ptr<ExtensionDownloader>
 ChromeExtensionDownloaderFactory::CreateForRequestContext(
     net::URLRequestContextGetter* request_context,
     ExtensionDownloaderDelegate* delegate) {
+  service_manager::Connector* connector =
+      content::ServiceManagerConnection::GetForProcess()->GetConnector();
   std::unique_ptr<ExtensionDownloader> downloader(
-      new ExtensionDownloader(delegate, request_context));
+      new ExtensionDownloader(delegate, request_context, connector));
 #if defined(GOOGLE_CHROME_BUILD)
   std::string brand;
   google_brand::GetBrand(&brand);
