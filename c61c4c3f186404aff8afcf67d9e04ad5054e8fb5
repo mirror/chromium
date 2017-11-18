@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e93550f7_5bf629c0",
+        "filename": "third_party/WebKit/Source/core/page/AutoscrollController.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-18T01:08:48Z",
+      "side": 1,
+      "message": "Make this private (and remove ForTesting) and follow the FRIEND_TEST_ALL_PREFIXES pattern from other tests. e.g.: \n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/input/EventHandler.h?type\u003dcs\u0026q\u003dFRIEND+file:WebKit/Source/Core\u0026sq\u003dpackage:chromium\u0026l\u003d422",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 32
+      },
+      "revId": "c61c4c3f186404aff8afcf67d9e04ad5054e8fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a590d1cf_5f3f5c53",
+        "filename": "third_party/WebKit/Source/core/page/AutoscrollControllerTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-18T01:08:48Z",
+      "side": 1,
+      "message": "file header should be: https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#File-headers",
+      "range": {
+        "startLine": 4,
+        "startChar": 3,
+        "endLine": 4,
+        "endChar": 17
+      },
+      "revId": "c61c4c3f186404aff8afcf67d9e04ad5054e8fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d858cbc6_29702547",
+        "filename": "third_party/WebKit/Source/core/page/AutoscrollControllerTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-18T01:08:48Z",
+      "side": 1,
+      "message": "What\u0027s this? Never seen it before...",
+      "range": {
+        "startLine": 58,
+        "startChar": 19,
+        "endLine": 58,
+        "endChar": 26
+      },
+      "revId": "c61c4c3f186404aff8afcf67d9e04ad5054e8fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf86857_d7c6c65a",
+        "filename": "third_party/WebKit/Source/core/page/AutoscrollControllerTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-18T01:08:48Z",
+      "side": 1,
+      "message": "Does the test still work if you invoke this with a mouse move event instead?",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 12
+      },
+      "revId": "c61c4c3f186404aff8afcf67d9e04ad5054e8fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb205e61_741acd19",
+        "filename": "third_party/WebKit/Source/core/page/AutoscrollControllerTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-18T01:08:48Z",
+      "side": 1,
+      "message": "Similarly, would a BeginFrame() here work?",
+      "range": {
+        "startLine": 103,
+        "startChar": 13,
+        "endLine": 103,
+        "endChar": 20
+      },
+      "revId": "c61c4c3f186404aff8afcf67d9e04ad5054e8fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
