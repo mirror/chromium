@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6c0f105_1d906cf3",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-19T13:33:40Z",
+      "side": 1,
+      "message": "You need to register the prefs here or in another RegisterProfilePrefs clone (most subsystems have their own, but in your case this one seems the right one). This is why they don\u0027t work it seems.",
+      "revId": "119bd533c9ad7ab4004c1f7e1e21bde57f4d7db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b42f85_5b34bcf9",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1733,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-19T13:33:40Z",
+      "side": 1,
+      "message": "You need to also check if the pref value is true otherwise if the policy is set to false or even the browser process command line contain --site-per-process\u003dfalse you will incorrectly pass it over as if it is was set to true onwards.",
+      "range": {
+        "startLine": 1733,
+        "startChar": 10,
+        "endLine": 1733,
+        "endChar": 52
+      },
+      "revId": "119bd533c9ad7ab4004c1f7e1e21bde57f4d7db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
