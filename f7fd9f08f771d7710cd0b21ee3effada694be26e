@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62c123df_9ab8b0a3",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-19T05:20:23Z",
+      "side": 1,
+      "message": "This makes only the expectation line toggle results. Another choice is\n  if ([\"A\", \"INPUT\", \"SELECT\"].contains(ev.target.nodeName)) ...\nwhich will let make clicks on static texts or gaps also toggle results. I tried both, and feld that the former was better.",
+      "revId": "f7fd9f08f771d7710cd0b21ee3effada694be26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed25d509_53d7872f",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-19T05:20:23Z",
+      "side": 1,
+      "message": "This allows Enter to toggle the open expectation even if ev.target is not under \"expect\" or \"result-frame\". To test it, open a result, then click on any blank area of the page, then press Enter.",
+      "revId": "f7fd9f08f771d7710cd0b21ee3effada694be26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c265b1a_75dfa64c",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-19T05:20:23Z",
+      "side": 1,
+      "message": "This selects the expectation which is just closed, if it was not focused (e.g. if the Enter key is pressed when the focus is under result-frame, or the focus is on the document).",
+      "revId": "f7fd9f08f771d7710cd0b21ee3effada694be26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f25e94_9c37d452",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-19T05:20:23Z",
+      "side": 1,
+      "message": "I thought of the racing condition but didn\u0027t think it was OK. Your suggestion is much better. Done here.",
+      "revId": "f7fd9f08f771d7710cd0b21ee3effada694be26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
