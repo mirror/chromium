@@ -120,6 +120,24 @@ void UpdateLegacyMultiColumnFlowThread(
   flow_thread->ClearNeedsLayout();
 }
 
+void CopyFragmentDataToLayoutBoxForInlineChildren(
+    const NGPhysicalContainerFragment& container,
+    NGPhysicalOffset offset) {
+  for (const auto& child : container.Children()) {
+    LayoutObject* layout_object = child->GetLayoutObject();
+    if (layout_object && layout_object->IsLayoutReplaced()) {
+      LayoutBox& layout_box = ToLayoutBox(*layout_object);
+      layout_box.SetLocation({child->Offset().left, child->Offset().top});
+      continue;
+    }
+
+    if (child->IsContainer()) {
+      CopyFragmentDataToLayoutBoxForInlineChildren(
+          ToNGPhysicalContainerFragment(*child), offset + child->Offset());
+    }
+  }
+}
+
 }  // namespace
 
 NGBlockNode::NGBlockNode(LayoutBox* box) : NGLayoutInputNode(box, kBlock) {}
@@ -160,6 +178,10 @@ scoped_refptr<NGLayoutResult> NGBlockNode::Layout(
         // NGInlineNode::CopyFragmentDataToLayoutBox to NGBlockNode.
         NGInlineNode node = ToNGInlineNode(first_child);
         node.CopyFragmentDataToLayoutBox(constraint_space, *layout_result);
+      } else {
+        CopyFragmentDataToLayoutBoxForInlineChildren(
+            ToNGPhysicalBoxFragment(*layout_result->PhysicalFragment()),
+            NGPhysicalOffset());
       }
 
       block_flow->SetPaintFragment(layout_result->PhysicalFragment());
