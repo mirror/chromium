@@ -61,19 +61,20 @@ class CONTENT_EXPORT CBORValue {
   using MapValue = base::flat_map<std::string, CBORValue, CTAPLess>;
 
   enum class Type {
-    NONE,
-    UNSIGNED,
-    BYTESTRING,
-    STRING,
-    ARRAY,
-    MAP,
+    UNSIGNED = 0,
+    NEGATIVE = 1,
+    BYTE_STRING = 2,
+    STRING = 3,
+    ARRAY = 4,
+    MAP = 5,
+    NONE = -1,
   };
 
   CBORValue(CBORValue&& that) noexcept;
   CBORValue() noexcept;  // A NONE value.
 
   explicit CBORValue(Type type);
-  explicit CBORValue(uint64_t in_unsigned);
+  explicit CBORValue(uint64_t integer_magnitude, int sign = 1);
 
   explicit CBORValue(const BinaryValue& in_bytes);
   explicit CBORValue(BinaryValue&& in_bytes) noexcept;
@@ -103,13 +104,15 @@ class CONTENT_EXPORT CBORValue {
   bool is_type(Type type) const { return type == type_; }
   bool is_none() const { return type() == Type::NONE; }
   bool is_unsigned() const { return type() == Type::UNSIGNED; }
-  bool is_bytestring() const { return type() == Type::BYTESTRING; }
+  bool is_negative() const { return type() == Type::NEGATIVE; }
+  bool is_bytestring() const { return type() == Type::BYTE_STRING; }
   bool is_string() const { return type() == Type::STRING; }
   bool is_array() const { return type() == Type::ARRAY; }
   bool is_map() const { return type() == Type::MAP; }
 
   // These will all fatally assert if the type doesn't match.
   uint64_t GetUnsigned() const;
+  uint64_t GetNegativeIntMagnitude() const;
   const BinaryValue& GetBytestring() const;
   const std::string& GetString() const;
   const ArrayValue& GetArray() const;
@@ -119,7 +122,7 @@ class CONTENT_EXPORT CBORValue {
   Type type_;
 
   union {
-    uint64_t unsigned_value_;
+    uint64_t integer_value_magnitude_;
     BinaryValue bytestring_value_;
     std::string string_value_;
     ArrayValue array_value_;

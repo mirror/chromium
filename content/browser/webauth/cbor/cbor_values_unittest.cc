@@ -36,6 +36,12 @@ TEST(CBORValuesTest, ConstructUnsigned) {
   EXPECT_EQ(37u, value.GetUnsigned());
 }
 
+TEST(CBORValuesTest, ConstructNegative) {
+  CBORValue value(100, -1);
+  EXPECT_EQ(CBORValue::Type::NEGATIVE, value.type());
+  EXPECT_EQ(100u, value.GetNegativeIntMagnitude());
+}
+
 TEST(CBORValuesTest, ConstructStringFromConstCharPtr) {
   const char* str = "foobar";
   CBORValue value(str);
@@ -59,7 +65,7 @@ TEST(CBORValuesTest, ConstructStringFromStdStringRefRef) {
 
 TEST(CBORValuesTest, ConstructBytestring) {
   CBORValue value(CBORValue::BinaryValue({0xF, 0x0, 0x0, 0xB, 0xA, 0x2}));
-  EXPECT_EQ(CBORValue::Type::BYTESTRING, value.type());
+  EXPECT_EQ(CBORValue::Type::BYTE_STRING, value.type());
   EXPECT_EQ(CBORValue::BinaryValue({0xF, 0x0, 0x0, 0xB, 0xA, 0x2}),
             value.GetBytestring());
 }
@@ -120,6 +126,20 @@ TEST(CBORValuesTest, CopyUnsigned) {
   blank = value.Clone();
   EXPECT_EQ(value.type(), blank.type());
   EXPECT_EQ(value.GetUnsigned(), blank.GetUnsigned());
+}
+
+TEST(CBORValuesTest, CopyNegativeInt) {
+  CBORValue value(74, -1);
+  CBORValue copied_value(value.Clone());
+  EXPECT_EQ(value.type(), copied_value.type());
+  EXPECT_EQ(value.GetNegativeIntMagnitude(),
+            copied_value.GetNegativeIntMagnitude());
+
+  CBORValue blank;
+
+  blank = value.Clone();
+  EXPECT_EQ(value.type(), blank.type());
+  EXPECT_EQ(value.GetNegativeIntMagnitude(), blank.GetNegativeIntMagnitude());
 }
 
 TEST(CBORValuesTest, CopyString) {
@@ -198,6 +218,19 @@ TEST(CBORValuesTest, MoveUnsigned) {
   EXPECT_EQ(654u, blank.GetUnsigned());
 }
 
+TEST(CBORValuesTest, MoveNegativeInteger) {
+  CBORValue value(74, -1);
+  CBORValue moved_value(std::move(value));
+  EXPECT_EQ(CBORValue::Type::NEGATIVE, moved_value.type());
+  EXPECT_EQ(74u, moved_value.GetNegativeIntMagnitude());
+
+  CBORValue blank;
+
+  blank = CBORValue(654, -1);
+  EXPECT_EQ(CBORValue::Type::NEGATIVE, blank.type());
+  EXPECT_EQ(654u, blank.GetNegativeIntMagnitude());
+}
+
 TEST(CBORValuesTest, MoveString) {
   CBORValue value("foobar");
   CBORValue moved_value(std::move(value));
@@ -215,13 +248,13 @@ TEST(CBORValuesTest, MoveBytestring) {
   const CBORValue::BinaryValue bytes({0xF, 0x0, 0x0, 0xB, 0xA, 0x2});
   CBORValue value(bytes);
   CBORValue moved_value(std::move(value));
-  EXPECT_EQ(CBORValue::Type::BYTESTRING, moved_value.type());
+  EXPECT_EQ(CBORValue::Type::BYTE_STRING, moved_value.type());
   EXPECT_EQ(bytes, moved_value.GetBytestring());
 
   CBORValue blank;
 
   blank = CBORValue(bytes);
-  EXPECT_EQ(CBORValue::Type::BYTESTRING, blank.type());
+  EXPECT_EQ(CBORValue::Type::BYTE_STRING, blank.type());
   EXPECT_EQ(bytes, blank.GetBytestring());
 }
 
