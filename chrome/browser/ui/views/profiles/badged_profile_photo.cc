@@ -6,10 +6,13 @@
 
 #include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/profiles/profile_avatar_icon_util.h"
+#include "chrome/grit/theme_resources.h"
+#include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/paint_vector_icon.h"
+#include "ui/resources/grit/ui_resources.h"
 #include "ui/views/controls/image_view.h"
 
 namespace {
@@ -54,6 +57,7 @@ void CustomImageView::OnPaint(gfx::Canvas* canvas) {
 // Helpers --------------------------------------------------------------------
 
 gfx::ImageSkia ImageForBadgeType(BadgedProfilePhoto::BadgeType badge_type) {
+  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
   switch (badge_type) {
     case BadgedProfilePhoto::BADGE_TYPE_SUPERVISOR:
       return gfx::CreateVectorIcon(kSupervisorAccountCircleIcon, kBadgeIconSize,
@@ -61,6 +65,8 @@ gfx::ImageSkia ImageForBadgeType(BadgedProfilePhoto::BadgeType badge_type) {
     case BadgedProfilePhoto::BADGE_TYPE_CHILD:
       return gfx::CreateVectorIcon(kAccountChildCircleIcon, kBadgeIconSize,
                                    gfx::kChromeIconGrey);
+    case BadgedProfilePhoto::BADGE_TYPE_SYNC_COMPLETE_CIRCLE:
+      return *(rb.GetNativeImageNamed(IDR_SYNC_COMPLETE_CIRCLE).ToImageSkia());
     case BadgedProfilePhoto::BADGE_TYPE_NONE:
       NOTREACHED();
       return gfx::ImageSkia();
