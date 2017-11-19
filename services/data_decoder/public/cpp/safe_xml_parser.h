@@ -36,9 +36,16 @@ using XmlParserCallback =
 // |connector| is the connector provided by the service manager and is used to
 // retrieve the XML parser service. It's commonly retrieved from a service
 // manager connection context object that the embedder provides.
+// You can specify a common |group_id| to multiple ParseXml() calls if you
+// want to them to share the same utility process. This is helpful in situations
+// where you have a batch of XML data to parse and want to avoid process churn.
+// Note that there is no guarantee that they will end up sharing a process,
+// especially if they are not called in rapid successions. If |group_id| is not
+// specified, a new process is created for each call.
 void ParseXml(service_manager::Connector* connector,
               const std::string& unsafe_xml,
-              XmlParserCallback callback);
+              XmlParserCallback callback,
+              const std::string& group_id = "");
 
 // Below are convenience methods for handling the elements returned by
 // ParseXml().
