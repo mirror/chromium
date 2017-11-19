@@ -1340,6 +1340,17 @@ TEST_F(AnimationCompositorAnimationsTest,
   LayoutObjectProxy::Dispose(layout_object);
 }
 
+// As long as cc::AnimationHost is setting the |current_frame_has_raf_|
+// correctly, CompositorTimingHistory::DidDraw() will report a main thread
+// animation based on whether the previous frame had raf or not.
+TEST_F(AnimationCompositorAnimationsTest, rafAnimation) {
+  LoadTestData("opacity-change-with-raf.html");
+  Document* document = GetFrame()->GetDocument();
+  CompositorAnimationHost* host =
+      document->View()->GetCompositorAnimationHost();
+  EXPECT_TRUE(host->GetCurrentFrameHasRAFForTesting());
+}
+
 TEST_F(AnimationCompositorAnimationsTest, canStartElementOnCompositorEffect) {
   LoadTestData("transform-animation.html");
   Document* document = GetFrame()->GetDocument();
