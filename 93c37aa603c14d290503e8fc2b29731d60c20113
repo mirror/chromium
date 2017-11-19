@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2660b05b_8cf244ae",
+        "filename": "content/browser/background_sync/background_sync_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-19T11:22:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9a1cede_488dc7e3",
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ee05c3e_0fa7a477",
         "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2066c41f_02c1f7fa",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-19T11:22:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ee05c3e_0fa7a477",
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "83b395ba_b6f69eb5",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-19T11:22:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eb281d0_10629149",
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d538b01_623101c8",
         "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "419a54fb_4fe34a22",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-19T11:22:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d538b01_623101c8",
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8392fdd4_d7125075",
         "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c73d7d_8ed002cb",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-19T11:22:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8392fdd4_d7125075",
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +217,48 @@
     },
     {
       "key": {
+        "uuid": "b76d6e50_02e363dc",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-19T11:22:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "221a1c49_36b55dfe",
+      "range": {
+        "startLine": 1216,
+        "startChar": 4,
+        "endLine": 1216,
+        "endChar": 31
+      },
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "446973f7_ef0c3bcb",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-19T11:22:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddbf1e0f_19e6005b",
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43594e75_84eb611c",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 5
@@ -138,6 +270,30 @@
       "writtenOn": "2017-11-17T05:22:46Z",
       "side": 1,
       "message": "What do you think of making this ctor public and use std::unique_ptr\u003c\u003e explicitly?\nI slightly prefer managing the map on SWProviderHost side over calling Add/Remove from the ctor/(kind of) dtor in the entries of the map since I sometimes get lost at understanding who is having the ownership, while I agree that ctor/dtor pairing seems clean.\n\nSo it\u0027d look like something as follows:\n\u003d\u003d\n\nstd::unique_ptr\u003cHost\u003e new_host \u003d std::make_unique\u003cHost\u003e(...);\nmap_.Add(std::move(new_host));\n\n~Host() {\n  provider_host_-\u003eOnSWRHostRemoved(id_);\n}",
+      "range": {
+        "startLine": 1223,
+        "startChar": 19,
+        "endLine": 1223,
+        "endChar": 58
+      },
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c432ec5_e0829649",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1223,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-19T11:22:36Z",
+      "side": 1,
+      "message": "Yeah both patterns are OK to me ;)\nBut seems other similar maps in Service Worker codes are already applying the ctor/dtor pairing pattern, for example:\nhttps://cs.chromium.org/chromium/src/content/renderer/service_worker/service_worker_provider_context.cc?rcl\u003de3b1d1e5fe1a2e367f9520decdaeb281c1819893\u0026l\u003d410\nhttps://cs.chromium.org/chromium/src/content/renderer/service_worker/service_worker_dispatcher.cc?rcl\u003de3b1d1e5fe1a2e367f9520decdaeb281c1819893\u0026l\u003d72, \nso maybe we\u0027d better keep the consistency?\nAlso I think ctor/dtor pairing enforces the add/remove operations to be always paired for each SWRegistrationObjectHost instance..",
+      "parentUuid": "43594e75_84eb611c",
       "range": {
         "startLine": 1223,
         "startChar": 19,
@@ -164,6 +320,24 @@
       "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3f0713_e5320f1e",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-19T11:22:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ae38a65_8d0f7aa6",
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -211,6 +385,30 @@
       "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5769c8c6_676d8284",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-19T11:22:36Z",
+      "side": 1,
+      "message": "Done and Thanks!",
+      "parentUuid": "74f9fb96_1633c8bf",
+      "range": {
+        "startLine": 322,
+        "startChar": 7,
+        "endLine": 322,
+        "endChar": 25
+      },
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -285,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "4c5658fa_fe764fa5",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-19T11:22:36Z",
+      "side": 1,
+      "message": "Oh, my above comment is not so precise, actually even if renderer GC closed the SWRegistrationObjectHost Mojo connection, content::SWRegistrationObjectHost may still live because its\u0027 binding set may have an inflight ptr info being passed to the renderer, this will make the WebSWRegistrationImpl there be reused (a new reference to it from Blink).\nThe question hits this case: https://cs.chromium.org/chromium/src/content/renderer/service_worker/web_service_worker_registration_impl.h?rcl\u003d3bb869bf41752b57c0c0733a132ae09745dd8078\u0026l\u003d62\nhttps://cs.chromium.org/chromium/src/content/renderer/service_worker/web_service_worker_registration_impl.cc?rcl\u003d3bb869bf41752b57c0c0733a132ae09745dd8078\u0026l\u003d99",
+      "parentUuid": "3e40bfdd_3fed5e6b",
+      "range": {
+        "startLine": 508,
+        "startChar": 20,
+        "endLine": 508,
+        "endChar": 72
+      },
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8abe1ada_0bcdec04",
         "filename": "content/browser/service_worker/service_worker_registration_object_host.h",
         "patchSetId": 5
@@ -296,6 +518,24 @@
       "writtenOn": "2017-11-17T03:16:19Z",
       "side": 1,
       "message": "what is this friend for? is it just for AllowServiceWorker? we could make that a public function.",
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc6cb4a_a5c642c6",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-19T11:22:36Z",
+      "side": 1,
+      "message": "This is for ctor of |this|, to be available only to SWProviderHost.",
+      "parentUuid": "8abe1ada_0bcdec04",
       "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
