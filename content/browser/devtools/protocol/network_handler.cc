@@ -320,10 +320,17 @@ void SetCookieOnIO(net::URLRequestContextGetter* context_getter,
   if (same_site == Network::CookieSameSiteEnum::Strict)
     css = net::CookieSameSite::STRICT_MODE;
 
-  request_context->cookie_store()->SetCookieWithDetailsAsync(
-      url, name, value, normalized_domain, path, base::Time(), expiration_date,
-      base::Time(), secure, http_only, css, net::COOKIE_PRIORITY_DEFAULT,
-      std::move(callback));
+  std::unique_ptr<net::CanonicalCookie> cc(
+      std::make_unique<net::CanonicalCookie>());
+  if (!net::CanonicalCookie::CreateSanitizedCookie(
+          url, name, value, normalized_domain, path, base::Time(),
+          expiration_date, base::Time(), secure, http_only, css,
+          net::COOKIE_PRIORITY_DEFAULT, cc.get())) {
+    std::move(callback).Run(false);
+    return;
+  }
+  request_context->cookie_store()->SetCanonicalCookieAsync(
+      std::move(cc), secure, true /*modify_http_only*/, std::move(callback));
 }
 
 void CookiesSetOnIO(std::unique_ptr<SetCookiesCallback> callback,

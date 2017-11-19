@@ -396,7 +396,9 @@ void CookiesSetFunction::SetCookieOnIOThread() {
   }
 
   // clang-format off
-  cookie_store->SetCookieWithDetailsAsync(
+  std::unique_ptr<net::CanonicalCookie> cc(
+      std::make_unique<net::CanonicalCookie>());
+  if (!net::CanonicalCookie::CreateSanitizedCookie(
       url_, parsed_args_->details.name.get() ? *parsed_args_->details.name
                                              : std::string(),
       parsed_args_->details.value.get() ? *parsed_args_->details.value
@@ -413,9 +415,14 @@ void CookiesSetFunction::SetCookieOnIOThread() {
       parsed_args_->details.http_only.get() ? *parsed_args_->details.http_only
                                             : false,
       same_site,
-      net::COOKIE_PRIORITY_DEFAULT,
-      base::BindOnce(&CookiesSetFunction::PullCookie, this));
+      net::COOKIE_PRIORITY_DEFAULT, cc.get())) {
+    PullCookie(false);
+    return;
+  }
   // clang-format on
+  cookie_store->SetCanonicalCookieAsync(
+      std::move(cc), url_.SchemeIsCryptographic(), true /*modify_http_only*/,
+      base::BindOnce(&CookiesSetFunction::PullCookie, this));
 }
 
 void CookiesSetFunction::PullCookie(bool set_cookie_result) {
