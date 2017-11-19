@@ -120,6 +120,24 @@ void UpdateLegacyMultiColumnFlowThread(
   flow_thread->ClearNeedsLayout();
 }
 
+void CopyFragmentDataToLayoutBoxForInlineChildren(
+    const NGPhysicalContainerFragment& container,
+    NGPhysicalOffset offset) {
+  for (const auto& child : container.Children()) {
+    if (child->IsContainer()) {
+      CopyFragmentDataToLayoutBoxForInlineChildren(
+          ToNGPhysicalContainerFragment(*child), offset + child->Offset());
+      continue;
+    }
+
+    LayoutObject* layout_object = child->GetLayoutObject();
+    if (layout_object && layout_object->IsLayoutReplaced()) {
+      LayoutBox& layout_box = ToLayoutBox(*layout_object);
+      layout_box.SetLocation({child->Offset().left, child->Offset().top});
+    }
+  }
+}
+
 }  // namespace
 
 NGBlockNode::NGBlockNode(LayoutBox* box) : NGLayoutInputNode(box, kBlock) {}
@@ -155,7 +173,11 @@ scoped_refptr<NGLayoutResult> NGBlockNode::Layout(
 
     NGLayoutInputNode first_child = FirstChild();
     if (block_flow && first_child && first_child.IsInline()) {
-      if (!RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled()) {
+      if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled()) {
+        CopyFragmentDataToLayoutBoxForInlineChildren(
+            ToNGPhysicalBoxFragment(*layout_result->PhysicalFragment()),
+            NGPhysicalOffset());
+      } else {
         // TODO(ikilpatrick): Move line-box creation logic from
         // NGInlineNode::CopyFragmentDataToLayoutBox to NGBlockNode.
         NGInlineNode node = ToNGInlineNode(first_child);
