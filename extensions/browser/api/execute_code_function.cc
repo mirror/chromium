@@ -147,12 +147,17 @@ bool ExecuteCodeFunction::Execute(const std::string& code_string) {
   }
   CHECK_NE(UserScript::UNDEFINED, run_at);
 
+  UserScript::CSSOrigin css_origin =
+      details_->css_origin == api::extension_types::CSS_ORIGIN_USER
+          ? UserScript::USER_ORIGIN
+          : UserScript::AUTHOR_ORIGIN;
+
   executor->ExecuteScript(
       host_id_, script_type, code_string, frame_scope, frame_id,
       match_about_blank, run_at, ScriptExecutor::ISOLATED_WORLD,
       IsWebView() ? ScriptExecutor::WEB_VIEW_PROCESS
                   : ScriptExecutor::DEFAULT_PROCESS,
-      GetWebViewSrc(), file_url_, user_gesture(),
+      GetWebViewSrc(), file_url_, user_gesture(), css_origin,
       has_callback() ? ScriptExecutor::JSON_SERIALIZED_RESULT
                      : ScriptExecutor::NO_RESULT,
       base::Bind(&ExecuteCodeFunction::OnExecuteCodeFinished, this));

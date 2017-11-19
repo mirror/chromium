@@ -39,8 +39,9 @@ class UserScript {
   // canExecuteScriptEverywhere is true, this will return ALL_SCHEMES.
   static int ValidUserScriptSchemes(bool canExecuteScriptEverywhere = false);
 
-  // TODO(rdevlin.cronin) This and RunLocataion don't really belong here, since
-  // they are used for more than UserScripts (e.g., tabs.executeScript()).
+  // TODO(rdevlin.cronin) This, RunLocataion, and CSSOrigin don't really belong
+  // here, since they are used for more than UserScripts
+  // (e.g., tabs.executeScript()).
   // The type of injected script.
   enum InjectionType {
     // A content script specified in the extension's manifest.
@@ -71,6 +72,12 @@ class UserScript {
     BROWSER_DRIVEN,  // The user script will be injected when triggered by an
                      // IPC in the browser process.
     RUN_LOCATION_LAST  // Leave this as the last item.
+  };
+
+  // The origin of the CSS.
+  enum CSSOrigin {
+    AUTHOR_ORIGIN,
+    USER_ORIGIN
   };
 
   // Holds script file info.

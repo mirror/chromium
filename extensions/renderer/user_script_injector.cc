@@ -145,6 +145,10 @@ bool UserScriptInjector::ExpectsResults() const {
   return false;
 }
 
+UserScript::CSSOrigin UserScriptInjector::css_origin() const {
+  return UserScript::AUTHOR_ORIGIN;
+}
+
 bool UserScriptInjector::ShouldInjectJs(
     UserScript::RunLocation run_location,
     const std::set<std::string>& executing_scripts) const {

@@ -400,8 +400,12 @@ void ScriptInjection::InjectCss(std::set<std::string>* injected_stylesheets,
   std::vector<blink::WebString> css_sources = injector_->GetCssSources(
       run_location_, injected_stylesheets, num_injected_stylesheets);
   blink::WebLocalFrame* web_frame = render_frame_->GetWebFrame();
+  blink::WebDocument::CSSOrigin origin =
+      injector_->css_origin() == UserScript::USER_ORIGIN
+          ? blink::WebDocument::kUserOrigin
+          : blink::WebDocument::kAuthorOrigin;
   for (const blink::WebString& css : css_sources)
-    web_frame->GetDocument().InsertStyleSheet(css);
+    web_frame->GetDocument().InsertStyleSheet(css, origin);
 }
 
 }  // namespace extensions

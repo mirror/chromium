@@ -179,6 +179,9 @@ IPC_STRUCT_BEGIN(ExtensionMsg_ExecuteCode_Params)
 
   // Whether the code to be executed should be associated with a user gesture.
   IPC_STRUCT_MEMBER(bool, user_gesture)
+
+  // The origin of the CSS.
+  IPC_STRUCT_MEMBER(int, css_origin)
 IPC_STRUCT_END()
 
 // Struct containing information about the sender of connect() calls that
