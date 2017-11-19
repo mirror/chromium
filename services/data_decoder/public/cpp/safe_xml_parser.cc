@@ -23,7 +23,8 @@ class SafeXmlParser {
  public:
   SafeXmlParser(service_manager::Connector* connector,
                 const std::string& unsafe_xml,
-                XmlParserCallback callback);
+                XmlParserCallback callback,
+                const std::string& group_id);
   ~SafeXmlParser();
 
  private:
@@ -39,16 +40,17 @@ class SafeXmlParser {
 
 SafeXmlParser::SafeXmlParser(service_manager::Connector* connector,
                              const std::string& unsafe_xml,
-                             XmlParserCallback callback)
+                             XmlParserCallback callback,
+                             const std::string& group_id)
     : callback_(std::move(callback)) {
   DCHECK(callback_);  // Parsing without ca callback is useless.
 
-  // Use a random instance ID to guarantee the connection is to a new service
-  // running in its own process.
-  base::UnguessableToken token = base::UnguessableToken::Create();
-  service_manager::Identity identity(mojom::kServiceName,
-                                     service_manager::mojom::kInheritUserID,
-                                     token.ToString());
+  // If no group ID has been provided, use a random instance ID to guarantee the
+  // connection is to a new service running in its own process.
+  service_manager::Identity identity(
+      mojom::kServiceName, service_manager::mojom::kInheritUserID,
+      group_id.empty() ? base::UnguessableToken::Create().ToString()
+                       : group_id);
   connector->BindInterface(identity, &xml_parser_ptr_);
 
   // Unretained(this) is safe as the xml_parser_ptr_ is owned by this class.
@@ -78,8 +80,9 @@ void SafeXmlParser::ReportResults(std::unique_ptr<base::Value> parsed_xml,
 
 void ParseXml(service_manager::Connector* connector,
               const std::string& unsafe_xml,
-              XmlParserCallback callback) {
-  new SafeXmlParser(connector, unsafe_xml, std::move(callback));
+              XmlParserCallback callback,
+              const std::string& group_id) {
+  new SafeXmlParser(connector, unsafe_xml, std::move(callback), group_id);
 }
 
 bool IsXmlElementNamed(const base::Value& element, const std::string& name) {
