@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "432d7b1e_6f3f68df",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-19T03:32:26Z",
+      "side": 1,
+      "message": "You should do this only when !IsMusHostingViz() (that should help with the mus/mash browser-test etc. failures on the bots).",
+      "revId": "ded488d22d2844080ac958654e9fb70b7e39f69a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
