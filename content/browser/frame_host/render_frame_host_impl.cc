@@ -4325,7 +4325,8 @@ RenderFrameHostImpl::TakeNavigationHandleForCommit(
         pending_nav_entry_id,
         false,                  // started_from_context_menu
         CSPDisposition::CHECK,  // should_check_main_world_csp
-        false);                 // is_form_submission
+        false,                  // is_form_submission
+        nullptr);               // navigation_ui_data
   }
 
   // Determine if the current NavigationHandle can be used.
@@ -4380,7 +4381,8 @@ RenderFrameHostImpl::TakeNavigationHandleForCommit(
       entry_id_for_data_nav,
       false,                  // started_from_context_menu
       CSPDisposition::CHECK,  // should_check_main_world_csp
-      false);                 // is_form_submission
+      false,                  // is_form_submission
+      nullptr);               // navigation_ui_data
 }
 
 void RenderFrameHostImpl::BeforeUnloadTimeout() {
