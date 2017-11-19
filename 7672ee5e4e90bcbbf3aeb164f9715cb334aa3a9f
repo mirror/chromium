@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b1f126da_c75dfd8d",
+        "filename": "components/security_state/content/content_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-19T14:06:35Z",
+      "side": 1,
+      "message": "It still feels a bit weird to me that we bail out on setting state-\u003eurl and now state-\u003eis_view_source when !entry-\u003eGetSSL().initialized, even though those flags don\u0027t rely upon the SSLStatus. Maybe we should tweak this whole block?\n\n...\n  content::NavigationEntry* entry \u003d\n      web_contents-\u003eGetController().GetVisibleEntry();\n  if (!entry) return state;\n\n  // Set fields that are not dependent on the connection info.\n  state-\u003eis_error_page \u003d (entry-\u003eGetPageType() \u003d\u003d content::PAGE_TYPE_ERROR);\n  state-\u003eis_view_source \u003d entry-\u003eGetVirtualURL().SchemeIs(content::kViewSourceScheme);\n  state-\u003eurl \u003d entry-\u003eGetURL();\n\n  const content::SSLStatus\u0026 ssl \u003d entry-\u003eGetSSL();\n  if (!ssl.initialized) return state;\n \n...",
+      "revId": "7672ee5e4e90bcbbf3aeb164f9715cb334aa3a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e53d4794_befc4b48",
         "filename": "components/security_state/core/security_state.cc",
         "patchSetId": 1
@@ -18,6 +35,98 @@
         "startChar": 29,
         "endLine": 188,
         "endChar": 43
+      },
+      "revId": "7672ee5e4e90bcbbf3aeb164f9715cb334aa3a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a60f8c63_3af94b3e",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-19T14:06:35Z",
+      "side": 1,
+      "message": "Observation: This test isn\u0027t reached if we return on line 164. But I will clean that up next week when I fix crbug.com/756639.",
+      "range": {
+        "startLine": 188,
+        "startChar": 2,
+        "endLine": 188,
+        "endChar": 4
+      },
+      "revId": "7672ee5e4e90bcbbf3aeb164f9715cb334aa3a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1833492_6351deb8",
+        "filename": "components/security_state/core/security_state.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-19T14:06:35Z",
+      "side": 1,
+      "message": "nit: \"the page\" for parallelism.",
+      "range": {
+        "startLine": 192,
+        "startChar": 13,
+        "endLine": 192,
+        "endChar": 18
+      },
+      "revId": "7672ee5e4e90bcbbf3aeb164f9715cb334aa3a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "271fa642_7d4f66a1",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-19T14:06:35Z",
+      "side": 1,
+      "message": "Can you change this test to first EXPECT_EQ(SECURE, ...), *then* call set_is_view_source(true) and verify EXPECT_EQ(NONE, ...). This more clearly shows that the expected bit is the source of the level.",
+      "range": {
+        "startLine": 400,
+        "startChar": 0,
+        "endLine": 400,
+        "endChar": 34
+      },
+      "revId": "7672ee5e4e90bcbbf3aeb164f9715cb334aa3a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55bb7f4_75608af9",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-19T14:06:35Z",
+      "side": 1,
+      "message": "Nit: Tests that if |is_view_source|, DANGEROUS is still returned for a site flagged by SafeBrowsing.",
+      "range": {
+        "startLine": 405,
+        "startChar": 65,
+        "endLine": 405,
+        "endChar": 75
       },
       "revId": "7672ee5e4e90bcbbf3aeb164f9715cb334aa3a9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
