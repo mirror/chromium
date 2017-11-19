@@ -555,17 +555,17 @@ TEST_F(SchedulerTest, StreamPriorities) {
   EXPECT_EQ(SchedulingPriority::kHigh, seq3->current_priority());
 
   // Release priority propagate.
+  seq2->RemoveWaitFence(sync_token1, 1, seq_id1);
+  EXPECT_EQ(SchedulingPriority::kLow, seq1->current_priority());
+  EXPECT_EQ(SchedulingPriority::kHigh, seq2->current_priority());
+  EXPECT_EQ(SchedulingPriority::kHigh, seq3->current_priority());
+
+  seq2->RemoveWaitFence(sync_token1, 1, seq_id1);
+  EXPECT_EQ(SchedulingPriority::kLow, seq1->current_priority());
+  EXPECT_EQ(SchedulingPriority::kHigh, seq2->current_priority());
+  EXPECT_EQ(SchedulingPriority::kHigh, seq3->current_priority());
+
   seq3->RemoveWaitFence(sync_token2, 2, seq_id2);
-  EXPECT_EQ(SchedulingPriority::kNormal, seq1->current_priority());
-  EXPECT_EQ(SchedulingPriority::kNormal, seq2->current_priority());
-  EXPECT_EQ(SchedulingPriority::kHigh, seq3->current_priority());
-
-  seq2->RemoveWaitFence(sync_token1, 1, seq_id1);
-  EXPECT_EQ(SchedulingPriority::kNormal, seq1->current_priority());
-  EXPECT_EQ(SchedulingPriority::kNormal, seq2->current_priority());
-  EXPECT_EQ(SchedulingPriority::kHigh, seq3->current_priority());
-
-  seq2->RemoveWaitFence(sync_token1, 1, seq_id1);
   EXPECT_EQ(SchedulingPriority::kLow, seq1->current_priority());
   EXPECT_EQ(SchedulingPriority::kNormal, seq2->current_priority());
   EXPECT_EQ(SchedulingPriority::kHigh, seq3->current_priority());
@@ -605,13 +605,13 @@ TEST_F(SchedulerTest, StreamDestroyRemovesPriorities) {
   EXPECT_EQ(SchedulingPriority::kHigh, seq2->current_priority());
   EXPECT_EQ(SchedulingPriority::kHigh, seq3->current_priority());
 
-  // Deleting waiting sequences removes priorities.
+  // Deleting waiting sequences removes priorities
   {
     base::AutoUnlock auto_unlock(scheduler()->lock_);
     scheduler()->DestroySequence(seq_id3);
   }
 
-  EXPECT_EQ(SchedulingPriority::kNormal, seq1->current_priority());
+  EXPECT_EQ(SchedulingPriority::kHigh, seq1->current_priority());
   EXPECT_EQ(SchedulingPriority::kNormal, seq2->current_priority());
 
   {
@@ -654,25 +654,25 @@ TEST_F(SchedulerTest, StreamPriorityChangeWhileReleasing) {
   EXPECT_EQ(SchedulingPriority::kNormal, seq2->current_priority());
   EXPECT_EQ(SchedulingPriority::kHigh, seq3->current_priority());
 
-  // Begin releasing fences.
+  // All matching wait fences are removed together.
   seq2->RemoveWaitFence(sync_token1, 1, seq_id1);
-  EXPECT_EQ(SchedulingPriority::kNormal, seq1->current_priority());
+  EXPECT_EQ(SchedulingPriority::kLow, seq1->current_priority());
   EXPECT_EQ(SchedulingPriority::kNormal, seq2->current_priority());
   EXPECT_EQ(SchedulingPriority::kHigh, seq3->current_priority());
 
   // Add wait fence with higher priority.  This replicates a possible race.
-  seq3->AddWaitFence(sync_token2, 1, seq_id2, seq2);
-  EXPECT_EQ(SchedulingPriority::kHigh, seq1->current_priority());
+  seq3->AddWaitFence(sync_token2, 2, seq_id2, seq2);
+  EXPECT_EQ(SchedulingPriority::kLow, seq1->current_priority());
   EXPECT_EQ(SchedulingPriority::kHigh, seq2->current_priority());
   EXPECT_EQ(SchedulingPriority::kHigh, seq3->current_priority());
 
-  // Finish removing fences.
+  // This should be a No-op.
   seq2->RemoveWaitFence(sync_token1, 1, seq_id1);
   EXPECT_EQ(SchedulingPriority::kLow, seq1->current_priority());
   EXPECT_EQ(SchedulingPriority::kHigh, seq2->current_priority());
   EXPECT_EQ(SchedulingPriority::kHigh, seq3->current_priority());
 
-  seq3->RemoveWaitFence(sync_token2, 1, seq_id2);
+  seq3->RemoveWaitFence(sync_token2, 2, seq_id2);
   EXPECT_EQ(SchedulingPriority::kLow, seq1->current_priority());
   EXPECT_EQ(SchedulingPriority::kNormal, seq2->current_priority());
   EXPECT_EQ(SchedulingPriority::kHigh, seq3->current_priority());
@@ -727,17 +727,17 @@ TEST_F(SchedulerTest, CircularPriorities) {
   seq2->AddWaitFence(sync_token_seq3_1, 4, seq_id3, seq3);
   EXPECT_EQ(SchedulingPriority::kHigh, seq1->current_priority());
   EXPECT_EQ(SchedulingPriority::kHigh, seq2->current_priority());
-  EXPECT_EQ(SchedulingPriority::kHigh, seq3->current_priority());
+  EXPECT_EQ(SchedulingPriority::kNormal, seq3->current_priority());
 
   seq3->RemoveWaitFence(sync_token_seq2_1, 1, seq_id2);
   EXPECT_EQ(SchedulingPriority::kHigh, seq1->current_priority());
   EXPECT_EQ(SchedulingPriority::kHigh, seq2->current_priority());
-  EXPECT_EQ(SchedulingPriority::kHigh, seq3->current_priority());
+  EXPECT_EQ(SchedulingPriority::kNormal, seq3->current_priority());
 
   seq1->RemoveWaitFence(sync_token_seq2_2, 2, seq_id2);
   EXPECT_EQ(SchedulingPriority::kHigh, seq1->current_priority());
-  EXPECT_EQ(SchedulingPriority::kHigh, seq2->current_priority());
-  EXPECT_EQ(SchedulingPriority::kHigh, seq3->current_priority());
+  EXPECT_EQ(SchedulingPriority::kNormal, seq2->current_priority());
+  EXPECT_EQ(SchedulingPriority::kNormal, seq3->current_priority());
 
   seq3->RemoveWaitFence(sync_token_seq2_3, 3, seq_id2);
   EXPECT_EQ(SchedulingPriority::kHigh, seq1->current_priority());
