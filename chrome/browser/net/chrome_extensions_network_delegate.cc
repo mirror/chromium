@@ -6,6 +6,9 @@
 
 #include <stdint.h>
 
+#include <map>
+#include <memory>
+
 #include "base/macros.h"
 #include "extensions/features/features.h"
 #include "net/base/net_errors.h"
@@ -13,6 +16,7 @@
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "base/debug/alias.h"
 #include "base/debug/dump_without_crashing.h"
+#include "base/lazy_instance.h"
 #include "base/strings/string_util.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/extensions/api/proxy/proxy_api.h"
@@ -38,6 +42,17 @@ using extensions::ExtensionWebRequestEventRouter;
 namespace {
 
 enum RequestStatus { REQUEST_STARTED, REQUEST_DONE };
+
+using RequestMap =
+    std::map<net::URLRequest*, std::unique_ptr<extensions::WebRequestInfo>>;
+base::LazyInstance<RequestMap>::Leaky g_requests = LAZY_INSTANCE_INITIALIZER;
+
+extensions::WebRequestInfo* GetWebRequestInfo(net::URLRequest* request) {
+  std::unique_ptr<extensions::WebRequestInfo>& info = g_requests.Get()[request];
+  if (!info)
+    info = std::make_unique<extensions::WebRequestInfo>(request);
+  return info.get();
+}
 
 // Notifies the extensions::ProcessManager that a request has started or stopped
 // for a particular RenderFrame.
@@ -225,7 +240,8 @@ int ChromeExtensionsNetworkDelegateImpl::OnBeforeURLRequest(
   }
 
   return ExtensionWebRequestEventRouter::GetInstance()->OnBeforeRequest(
-      profile_, extension_info_map_.get(), request, callback, new_url);
+      profile_, extension_info_map_.get(), GetWebRequestInfo(request), callback,
+      new_url);
 }
 
 int ChromeExtensionsNetworkDelegateImpl::OnBeforeStartTransaction(
@@ -233,14 +249,15 @@ int ChromeExtensionsNetworkDelegateImpl::OnBeforeStartTransaction(
     const net::CompletionCallback& callback,
     net::HttpRequestHeaders* headers) {
   return ExtensionWebRequestEventRouter::GetInstance()->OnBeforeSendHeaders(
-      profile_, extension_info_map_.get(), request, callback, headers);
+      profile_, extension_info_map_.get(), GetWebRequestInfo(request), callback,
+      headers);
 }
 
 void ChromeExtensionsNetworkDelegateImpl::OnStartTransaction(
     net::URLRequest* request,
     const net::HttpRequestHeaders& headers) {
   ExtensionWebRequestEventRouter::GetInstance()->OnSendHeaders(
-      profile_, extension_info_map_.get(), request, headers);
+      profile_, extension_info_map_.get(), GetWebRequestInfo(request), headers);
 }
 
 int ChromeExtensionsNetworkDelegateImpl::OnHeadersReceived(
@@ -250,7 +267,7 @@ int ChromeExtensionsNetworkDelegateImpl::OnHeadersReceived(
     scoped_refptr<net::HttpResponseHeaders>* override_response_headers,
     GURL* allowed_unsafe_redirect_url) {
   return ExtensionWebRequestEventRouter::GetInstance()->OnHeadersReceived(
-      profile_, extension_info_map_.get(), request, callback,
+      profile_, extension_info_map_.get(), GetWebRequestInfo(request), callback,
       original_response_headers, override_response_headers,
       allowed_unsafe_redirect_url);
 }
@@ -259,14 +276,17 @@ void ChromeExtensionsNetworkDelegateImpl::OnBeforeRedirect(
     net::URLRequest* request,
     const GURL& new_location) {
   ExtensionWebRequestEventRouter::GetInstance()->OnBeforeRedirect(
-      profile_, extension_info_map_.get(), request, new_location);
+      profile_, extension_info_map_.get(), GetWebRequestInfo(request),
+      new_location);
 }
 
 void ChromeExtensionsNetworkDelegateImpl::OnResponseStarted(
     net::URLRequest* request,
     int net_error) {
+  auto* info = GetWebRequestInfo(request);
+  info->AddResponseInfoFromURLRequest(request);
   ExtensionWebRequestEventRouter::GetInstance()->OnResponseStarted(
-      profile_, extension_info_map_.get(), request, net_error);
+      profile_, extension_info_map_.get(), info, net_error);
   ForwardProxyErrors(request, net_error);
 }
 
@@ -277,7 +297,8 @@ void ChromeExtensionsNetworkDelegateImpl::OnCompleted(net::URLRequest* request,
 
   if (net_error != net::OK) {
     ExtensionWebRequestEventRouter::GetInstance()->OnErrorOccurred(
-        profile_, extension_info_map_.get(), request, started, net_error);
+        profile_, extension_info_map_.get(), GetWebRequestInfo(request),
+        started, net_error);
     return;
   }
 
@@ -286,14 +307,17 @@ void ChromeExtensionsNetworkDelegateImpl::OnCompleted(net::URLRequest* request,
                          request->response_headers()->response_code());
   if (!is_redirect) {
     ExtensionWebRequestEventRouter::GetInstance()->OnCompleted(
-        profile_, extension_info_map_.get(), request, net_error);
+        profile_, extension_info_map_.get(), GetWebRequestInfo(request),
+        net_error);
   }
 }
 
 void ChromeExtensionsNetworkDelegateImpl::OnURLRequestDestroyed(
     net::URLRequest* request) {
-  ExtensionWebRequestEventRouter::GetInstance()->OnURLRequestDestroyed(
-      profile_, request);
+  auto iter = g_requests.Get().find(request);
+  ExtensionWebRequestEventRouter::GetInstance()->OnRequestWillBeDestroyed(
+      profile_, iter->second.get());
+  g_requests.Get().erase(iter);
 }
 
 void ChromeExtensionsNetworkDelegateImpl::OnPACScriptError(
@@ -310,8 +334,8 @@ ChromeExtensionsNetworkDelegateImpl::OnAuthRequired(
     const AuthCallback& callback,
     net::AuthCredentials* credentials) {
   return ExtensionWebRequestEventRouter::GetInstance()->OnAuthRequired(
-      profile_, extension_info_map_.get(), request, auth_info, callback,
-      credentials);
+      profile_, extension_info_map_.get(), GetWebRequestInfo(request),
+      auth_info, callback, credentials);
 }
 
 }  // namespace
