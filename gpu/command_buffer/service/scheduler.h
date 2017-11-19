@@ -192,21 +192,26 @@ class GPU_EXPORT Scheduler {
    private:
     enum RunningState { IDLE, SCHEDULED, RUNNING };
 
-    struct Fence {
-      Fence(Fence&& other);
-      Fence(const SyncToken& sync_token,
-            uint32_t order_num,
-            SequenceId release_sequence_id);
-      ~Fence();
-      Fence& operator=(Fence&& other);
+    struct WaitFence {
+      WaitFence(WaitFence&& other);
+      WaitFence(const SyncToken& sync_token,
+                uint32_t order_num,
+                SequenceId release_sequence_id);
+      ~WaitFence();
+      WaitFence& operator=(WaitFence&& other);
 
       SyncToken sync_token;
       uint32_t order_num;
       SequenceId release_sequence_id;
 
-      bool operator==(const Fence& other) const {
-        return std::tie(sync_token, order_num, release_sequence_id) ==
-               std::tie(other.sync_token, other.order_num, release_sequence_id);
+      bool operator==(const WaitFence& other) const {
+        return std::tie(order_num, release_sequence_id, sync_token) ==
+               std::tie(other.order_num, release_sequence_id, other.sync_token);
+      }
+
+      bool operator<(const WaitFence& other) const {
+        return std::tie(order_num, release_sequence_id, sync_token) <
+               std::tie(other.order_num, release_sequence_id, other.sync_token);
       }
     };
 
@@ -219,6 +224,9 @@ class GPU_EXPORT Scheduler {
       base::OnceClosure closure;
       uint32_t order_num;
     };
+
+    // Propagate a priority to all wait fences.
+    void PropagatePriority(SchedulingPriority priority);
 
     // Add a waiting priority.
     void AddWaitingPriority(SchedulingPriority priority);
@@ -260,7 +268,7 @@ class GPU_EXPORT Scheduler {
     // increasing order number but may be removed out of order. Tasks are
     // blocked if there's a wait fence with order number less than or equal to
     // the task's order number.
-    std::vector<Fence> wait_fences_;
+    base::flat_map<WaitFence, SchedulingPriority> wait_fences_;
 
     // Counts of pending releases bucketed by scheduling priority.
     int waiting_priority_counts_[static_cast<int>(SchedulingPriority::kLast) +
