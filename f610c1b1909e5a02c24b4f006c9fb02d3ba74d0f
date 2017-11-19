@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "76c6e257_d1e37178",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-19T16:11:29Z",
+      "side": 1,
+      "message": "Please also mention that the error means that authpolicyd cached device policy and stores it in the next call to RefreshDevicePolicy in STEP_STORE_POLICY.",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "f610c1b1909e5a02c24b4f006c9fb02d3ba74d0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c51c9103_8e7c0609",
         "filename": "chromeos/login/auth/authpolicy_login_helper.h",
         "patchSetId": 6
