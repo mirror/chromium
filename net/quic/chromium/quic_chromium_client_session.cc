@@ -1746,10 +1746,10 @@ void QuicChromiumClientSession::MigrateImmediately(
   // otherwise, we are now on default networ, cancel timer to migrate back
   // to the defautlt network if it is running.
 
-  if (!ShouldMigrateSession(/*mark_going_away*/ false,
-                            /*close_if_cannot_migrate*/ true, network,
-                            net_log_))
+  if (!ShouldMigrateSession(/*close_if_cannot_migrate*/ true, network,
+                            net_log_)) {
     return;
+  }
 
   if (network == GetDefaultSocket()->GetBoundNetwork())
     return;
@@ -1941,15 +1941,14 @@ ProbingResult QuicChromiumClientSession::StartProbeNetwork(
 
   CHECK_NE(NetworkChangeNotifier::kInvalidNetworkHandle, network);
 
-  // We will not close idle sessions as StartProbeNetwork is called when:
-  // - probing default nework during efforts to try migrate back to the
-  //   default network, which will be retried multiple times. If session happens
-  //   to be idle, we should keep it open. TODO(zhongyi): we might want to
-  //   close session if session has been idled long enough, before session
-  //   default timeout.
-  // - probing alternative network when QUIC discovers current network being
-  //   degrading, which is always with retransmission timeout and session should
-  //   not be idle.
+  if (GetNumActiveStreams() == 0) {
+    HistogramAndLogMigrationFailure(migration_net_log,
+                                    MIGRATION_STATUS_NO_MIGRATABLE_STREAMS,
+                                    connection_id(), "No active streams");
+    CloseSessionOnError(ERR_NETWORK_CHANGED,
+                        QUIC_CONNECTION_MIGRATION_NO_MIGRATABLE_STREAMS);
+    return ProbingResult::DISABLED_WITH_IDLE_SESSION;
+  }
 
   // Abort probing if connection migration is disabled by config.
   if (config()->DisableConnectionMigration()) {
@@ -2036,9 +2035,23 @@ void QuicChromiumClientSession::TryMigrateBackToDefaultNetwork(
   // the same network, this will be a no-op. Otherwise, previous probe
   // will be cancelled and manager starts to probe |default_network_|
   // immediately.
-  StartProbeNetwork(default_network_,
-                    connection()->peer_address().impl().socket_address(),
-                    net_log_);
+  ProbingResult result = StartProbeNetwork(
+      default_network_, connection()->peer_address().impl().socket_address(),
+      net_log_);
+  if (result == ProbingResult::DISABLED_WITH_IDLE_SESSION) {
+    // |this| session has been closed due to idle session.
+    return;
+  }
+
+  if (result != ProbingResult::PENDING) {
+    // Session is not allowed to migrate, mark session as going away, cancel
+    // migrate back to default timer.
+    if (stream_factory_)
+      stream_factory_->OnSessionGoingAway(this);
+    CancelMigrateBackToDefaultNetworkTimer();
+    return;
+  }
+
   retry_migrate_back_count_++;
   migrate_back_to_default_timer_.Start(
       FROM_HERE, timeout,
@@ -2058,17 +2071,9 @@ void QuicChromiumClientSession::MaybeRetryMigrateBackToDefaultNetwork() {
 }
 
 bool QuicChromiumClientSession::ShouldMigrateSession(
-    bool mark_going_away,
     bool close_if_cannot_migrate,
     NetworkChangeNotifier::NetworkHandle network,
     const NetLogWithSource& migration_net_log) {
-  if (GetDefaultSocket()->GetBoundNetwork() == network) {
-    HistogramAndLogMigrationFailure(
-        migration_net_log, MIGRATION_STATUS_ALREADY_MIGRATED, connection_id(),
-        "Already bound to new network");
-    return false;
-  }
-
   // Close idle sessions.
   if (GetNumActiveStreams() == 0) {
     HistogramAndLogMigrationFailure(migration_net_log,
@@ -2079,8 +2084,9 @@ bool QuicChromiumClientSession::ShouldMigrateSession(
     return false;
   }
 
-  if (mark_going_away) {
-    // If session has active streams, mark it as going away.
+  if (migrate_session_on_network_change_) {
+    // Always mark session going away for connection migrate v1 if session
+    // has any active streams.
     DCHECK(stream_factory_);
     stream_factory_->OnSessionGoingAway(this);
   }
@@ -2090,8 +2096,12 @@ bool QuicChromiumClientSession::ShouldMigrateSession(
     HistogramAndLogMigrationFailure(migration_net_log,
                                     MIGRATION_STATUS_DISABLED, connection_id(),
                                     "Migration disabled");
-    if (close_if_cannot_migrate)
+    if (close_if_cannot_migrate) {
       CloseSessionOnError(ERR_NETWORK_CHANGED, QUIC_IP_ADDRESS_CHANGED);
+    } else if (migrate_session_on_network_change_v2_) {
+      // Session cannot migrate, mark it as going away for v2.
+      stream_factory_->OnSessionGoingAway(this);
+    }
     return false;
   }
 
@@ -2103,7 +2113,17 @@ bool QuicChromiumClientSession::ShouldMigrateSession(
     if (close_if_cannot_migrate) {
       CloseSessionOnError(ERR_NETWORK_CHANGED,
                           QUIC_CONNECTION_MIGRATION_NON_MIGRATABLE_STREAM);
+    } else if (migrate_session_on_network_change_v2_) {
+      // Session cannot migrate, mark it as going away for v2.
+      stream_factory_->OnSessionGoingAway(this);
     }
+    return false;
+  }
+
+  if (GetDefaultSocket()->GetBoundNetwork() == network) {
+    HistogramAndLogMigrationFailure(
+        migration_net_log, MIGRATION_STATUS_ALREADY_MIGRATED, connection_id(),
+        "Already bound to new network");
     return false;
   }
 
@@ -2267,7 +2287,7 @@ void QuicChromiumClientSession::MaybeMigrateOrCloseSession(
     NetworkChangeNotifier::NetworkHandle new_network,
     bool close_if_cannot_migrate,
     const NetLogWithSource& migration_net_log) {
-  if (!ShouldMigrateSession(true, close_if_cannot_migrate, new_network,
+  if (!ShouldMigrateSession(close_if_cannot_migrate, new_network,
                             migration_net_log)) {
     return;
   }

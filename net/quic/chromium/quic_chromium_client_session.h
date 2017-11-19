@@ -623,8 +623,7 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
   void TryMigrateBackToDefaultNetwork(base::TimeDelta timeout);
   void MaybeRetryMigrateBackToDefaultNetwork();
 
-  bool ShouldMigrateSession(bool mark_going_away,
-                            bool close_if_cannot_migrate,
+  bool ShouldMigrateSession(bool close_if_cannot_migrate,
                             NetworkChangeNotifier::NetworkHandle network,
                             const NetLogWithSource& migration_net_log);
   void LogMetricsOnNetworkDisconnected();
