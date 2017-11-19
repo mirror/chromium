@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7c73e76d_9a2ca740",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-19T00:49:32Z",
+      "side": 1,
+      "message": "I think ProcessForOverlays needs to be called each frame for overlay damage tracking to not break. You should probably pass the matrix to the overlay processor so it can reject each candidate when set.\n\nFyi, we need to overlay support before NL can ship as without it low-latency rendering doesn\u0027t work.",
+      "parentUuid": "2f2bb7fe_9ea541b9",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c0634b2_88e85587",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 1
@@ -64,6 +82,23 @@
       "writtenOn": "2017-11-17T22:33:49Z",
       "side": 1,
       "message": "I think we need to call SetDisplayColorMatrix here too.",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56ed5f86_51f1d050",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-19T00:49:32Z",
+      "side": 1,
+      "message": "Can you DCHECK() instead or at least log an error? t prevent anyone from using this by mistake..",
       "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
