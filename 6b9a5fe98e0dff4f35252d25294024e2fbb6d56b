@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aac15890_2e3f2f93",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-19T14:31:01Z",
+      "side": 1,
+      "message": "Here we just have to pass the default value, it doesn\u0027t matter because it\u0027s JavaScript.",
+      "revId": "6b9a5fe98e0dff4f35252d25294024e2fbb6d56b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde57de7_a38a30a8",
+        "filename": "extensions/browser/api/execute_code_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-19T14:31:01Z",
+      "side": 1,
+      "message": "Check specifically for api::extension_types::CSS_ORIGIN_USER, otherwise default to UserScript::AUTHOR_ORIGIN, because the value can also be api::extension_types::CSS_ORIGIN_NONE (when no value is passed in the API call)",
+      "revId": "6b9a5fe98e0dff4f35252d25294024e2fbb6d56b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58adb2e8_484cb142",
+        "filename": "extensions/common/api/extension_types.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-19T14:31:01Z",
+      "side": 1,
+      "message": "So this makes it compatible with Firefox [1]\n\n[1]: https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/tabs/insertCSS",
+      "revId": "6b9a5fe98e0dff4f35252d25294024e2fbb6d56b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dd9544f_c89cf5e4",
+        "filename": "extensions/common/user_script.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-19T14:31:01Z",
+      "side": 1,
+      "message": "I\u0027ve added CSSOrigin here. Maybe this code should be refactored, but that work does not belong in this CL.",
+      "revId": "6b9a5fe98e0dff4f35252d25294024e2fbb6d56b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d408b76_8c40c357",
+        "filename": "extensions/renderer/programmatic_script_injector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-19T14:31:01Z",
+      "side": 1,
+      "message": "For programmatic injection (e.g. tabs.insertCSS), use the value passed to us.",
+      "revId": "6b9a5fe98e0dff4f35252d25294024e2fbb6d56b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f29436_32a4ded7",
+        "filename": "extensions/renderer/user_script_injector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-19T14:31:01Z",
+      "side": 1,
+      "message": "For declarative injection (e.g. manifest.json), always return author origin.",
+      "revId": "6b9a5fe98e0dff4f35252d25294024e2fbb6d56b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
