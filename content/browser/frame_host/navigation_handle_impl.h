@@ -98,7 +98,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
       int pending_nav_entry_id,
       bool started_from_context_menu,
       CSPDisposition should_check_main_world_csp,
-      bool is_form_submission);
+      bool is_form_submission,
+      std::unique_ptr<NavigationUIData> navigation_ui_data);
   ~NavigationHandleImpl() override;
 
   // Used to track the state the navigation is currently in.
@@ -134,6 +135,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   const Referrer& GetReferrer() override;
   bool HasUserGesture() override;
   ui::PageTransition GetPageTransition() override;
+  const NavigationUIData* GetNavigationUIData() override;
   bool IsExternalProtocol() override;
   net::Error GetNetErrorCode() override;
   RenderFrameHostImpl* GetRenderFrameHost() override;
@@ -372,10 +374,6 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // Called when the navigation is transferred to a different renderer.
   void Transfer();
 
-  NavigationUIData* navigation_ui_data() const {
-    return navigation_ui_data_.get();
-  }
-
   const GURL& base_url() { return base_url_; }
 
   void set_searchable_form_url(const GURL& url) { searchable_form_url_ = url; }
@@ -425,7 +423,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
                        int pending_nav_entry_id,
                        bool started_from_context_menu,
                        CSPDisposition should_check_main_world_csp,
-                       bool is_form_submission);
+                       bool is_form_submission,
+                       std::unique_ptr<NavigationUIData> navigation_ui_data);
 
   NavigationThrottle::ThrottleCheckResult CheckWillStartRequest();
   NavigationThrottle::ThrottleCheckResult CheckWillRedirectRequest();
