@@ -120,8 +120,7 @@ cr.define('cr.login', function() {
    * @constructor
    */
   function Authenticator(webview) {
-    this.webview_ = typeof webview == 'string' ? $(webview) : webview;
-    assert(this.webview_);
+    this.bindToWebview(webview);
 
     this.isLoaded_ = false;
     this.email_ = null;
@@ -146,35 +145,13 @@ cr.define('cr.login', function() {
 
     this.clientId_ = null;
 
-    this.samlHandler_ = new cr.login.SamlHandler(this.webview_);
     this.confirmPasswordCallback = null;
     this.noPasswordCallback = null;
     this.insecureContentBlockedCallback = null;
     this.samlApiUsedCallback = null;
     this.missingGaiaInfoCallback = null;
     this.needPassword = true;
-    this.samlHandler_.addEventListener(
-        'insecureContentBlocked', this.onInsecureContentBlocked_.bind(this));
-    this.samlHandler_.addEventListener(
-        'authPageLoaded', this.onAuthPageLoaded_.bind(this));
-    this.samlHandler_.addEventListener(
-        'videoEnabled', this.onVideoEnabled_.bind(this));
-    this.samlHandler_.addEventListener(
-        'apiPasswordAdded', this.onSamlApiPasswordAdded_.bind(this));
 
-    this.webview_.addEventListener('droplink', this.onDropLink_.bind(this));
-    this.webview_.addEventListener('newwindow', this.onNewWindow_.bind(this));
-    this.webview_.addEventListener(
-        'contentload', this.onContentLoad_.bind(this));
-    this.webview_.addEventListener('loadabort', this.onLoadAbort_.bind(this));
-    this.webview_.addEventListener('loadcommit', this.onLoadCommit_.bind(this));
-    this.webview_.request.onCompleted.addListener(
-        this.onRequestCompleted_.bind(this),
-        {urls: ['<all_urls>'], types: ['main_frame']}, ['responseHeaders']);
-    this.webview_.request.onHeadersReceived.addListener(
-        this.onHeadersReceived_.bind(this),
-        {urls: ['<all_urls>'], types: ['main_frame', 'xmlhttprequest']},
-        ['responseHeaders']);
     window.addEventListener(
         'message', this.onMessageFromWebview_.bind(this), false);
     window.addEventListener('focus', this.onFocus_.bind(this), false);
@@ -212,6 +189,43 @@ cr.define('cr.login', function() {
   Authenticator.prototype.resetWebview = function() {
     if (this.webview_.src && this.webview_.src != BLANK_PAGE_URL)
       this.webview_.src = BLANK_PAGE_URL;
+  };
+
+  Authenticator.prototype.bindToWebview = function(webview) {
+    this.webview_ = typeof webview == 'string' ? $(webview) : webview;
+    assert(this.webview_);
+
+    this.samlHandler_ = new cr.login.SamlHandler(this.webview_);
+    this.samlHandler_.addEventListener(
+        'insecureContentBlocked', this.onInsecureContentBlocked_.bind(this));
+    this.samlHandler_.addEventListener(
+        'authPageLoaded', this.onAuthPageLoaded_.bind(this));
+    this.samlHandler_.addEventListener(
+        'videoEnabled', this.onVideoEnabled_.bind(this));
+    this.samlHandler_.addEventListener(
+        'apiPasswordAdded', this.onSamlApiPasswordAdded_.bind(this));
+
+    this.webview_.addEventListener('droplink', this.onDropLink_.bind(this));
+    this.webview_.addEventListener('newwindow', this.onNewWindow_.bind(this));
+    this.webview_.addEventListener(
+        'contentload', this.onContentLoad_.bind(this));
+    this.webview_.addEventListener('loadabort', this.onLoadAbort_.bind(this));
+    this.webview_.addEventListener('loadcommit', this.onLoadCommit_.bind(this));
+    this.webview_.request.onCompleted.addListener(
+        this.onRequestCompleted_.bind(this),
+        {urls: ['<all_urls>'], types: ['main_frame']}, ['responseHeaders']);
+    this.webview_.request.onHeadersReceived.addListener(
+        this.onHeadersReceived_.bind(this),
+        {urls: ['<all_urls>'], types: ['main_frame', 'xmlhttprequest']},
+        ['responseHeaders']);
+  };
+
+  /**
+   * Re-binds to another webview.
+   */
+  Authenticator.prototype.rebindWebview = function(webview) {
+    console.log('rebindWebview called');
+    this.bindToWebview(webview);
   };
 
   /**
