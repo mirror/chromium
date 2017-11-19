@@ -52,6 +52,24 @@
       "revId": "50584d8bb675acc9428d6a1c49d53359767d897a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "857d92f3_ec1da1bd",
+        "filename": "base/observer_list.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2017-11-19T22:29:58Z",
+      "side": 1,
+      "message": "Unit test StdIteratorRemoveFront relies on GetCurrent returning null in some circumstances.\n\nThis is largely undocumented. But it was already like that when I started looking at this class.\n\nThis can certainly be improved. But it is more changes than what I intended to put in this CL.",
+      "parentUuid": "033acf95_07fa0eab",
+      "revId": "50584d8bb675acc9428d6a1c49d53359767d897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
