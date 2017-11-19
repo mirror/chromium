@@ -23,6 +23,10 @@
 #include "components/strings/grit/components_strings.h"
 #include "url/gurl.h"
 
+// TODO(palmer): Remove this and other debugging junk.
+const char prefs_kSitePerProcess[] = "site_isolation.site_per_process";
+const char prefs_kIsolateOrigins[] = "site_isolation.isolate_origins";
+
 namespace policy {
 
 // ConfigurationPolicyHandler implementation -----------------------------------
@@ -360,8 +364,14 @@ void SimplePolicyHandler::ApplyPolicySettings(const PolicyMap& policies,
   if (!pref_path_)
     return;
   const base::Value* value = policies.GetValue(policy_name());
-  if (value)
+  if (value) {
     prefs->SetValue(pref_path_, value->CreateDeepCopy());
+  }
+
+  if (pref_path_ == prefs_kSitePerProcess ||
+      pref_path_ == prefs_kIsolateOrigins) {
+    DLOG(WARNING) << pref_path_ << ": " << value;
+  }
 }
 
 

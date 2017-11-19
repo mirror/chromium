@@ -58,6 +58,7 @@
 #include "components/sync/driver/sync_policy_handler.h"
 #include "components/translate/core/browser/translate_pref_names.h"
 #include "components/variations/pref_names.h"
+#include "content/public/common/content_switches.h"
 #include "extensions/features/features.h"
 #include "media/media_features.h"
 #include "ppapi/features/features.h"
@@ -714,6 +715,14 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
   { key::kBrowserNetworkTimeQueriesEnabled,
     network_time::prefs::kNetworkTimeQueriesEnabled,
     base::Value::Type::BOOLEAN },
+
+  { key::kSitePerProcess,
+    prefs::kSitePerProcess,
+    base::Value::Type::BOOLEAN },
+
+  { key::kIsolateOrigins,
+    prefs::kIsolateOrigins,
+    base::Value::Type::STRING },
 };
 // clang-format on
 
