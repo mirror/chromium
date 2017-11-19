@@ -864,7 +864,8 @@ void CompositorTimingHistory::DidDraw(
     base::TimeTicks impl_frame_time,
     size_t composited_animations_count,
     size_t main_thread_animations_count,
-    size_t main_thread_compositable_animations_count) {
+    size_t main_thread_compositable_animations_count,
+    bool current_frame_has_raf) {
   DCHECK_NE(base::TimeTicks(), draw_start_time_);
   base::TimeTicks draw_end_time = Now();
   base::TimeDelta draw_duration = draw_end_time - draw_start_time_;
@@ -905,8 +906,9 @@ void CompositorTimingHistory::DidDraw(
     uma_reporter_->AddMainAndImplFrameTimeDelta(main_and_impl_delta);
     active_tree_main_frame_time_ = base::TimeTicks();
 
-    if (main_thread_animations_count > 0 &&
-        previous_frame_had_main_thread_animations_) {
+    if ((main_thread_animations_count > 0 &&
+         previous_frame_had_main_thread_animations_) ||
+        (current_frame_has_raf && previous_frame_had_raf_)) {
       base::TimeDelta draw_interval =
           draw_end_time - new_active_tree_draw_end_time_prev_;
       uma_reporter_->AddDrawIntervalWithMainThreadAnimations(draw_interval);
@@ -922,6 +924,7 @@ void CompositorTimingHistory::DidDraw(
         main_thread_animations_count > 0;
     previous_frame_had_main_thread_compositable_animations_ =
         main_thread_compositable_animations_count > 0;
+    previous_frame_had_raf_ = current_frame_has_raf;
 
     new_active_tree_draw_end_time_prev_ = draw_end_time;
 

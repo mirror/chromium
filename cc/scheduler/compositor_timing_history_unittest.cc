@@ -57,7 +57,7 @@ class CompositorTimingHistoryTest : public testing::Test {
     AdvanceNowBy(base::TimeDelta::FromMicroseconds(advance_ms));
     timing_history_.DidDraw(true, Now(), composited_animations_count,
                             main_thread_animations_count,
-                            main_thread_compositable_animations_count);
+                            main_thread_compositable_animations_count, false);
   }
 
   void DrawImplFrame(int advance_ms,
@@ -73,7 +73,7 @@ class CompositorTimingHistoryTest : public testing::Test {
     AdvanceNowBy(base::TimeDelta::FromMicroseconds(advance_ms));
     timing_history_.DidDraw(false, Now(), composited_animations_count,
                             main_thread_animations_count,
-                            main_thread_compositable_animations_count);
+                            main_thread_compositable_animations_count, false);
   }
 
  protected:
@@ -122,7 +122,7 @@ TEST_F(CompositorTimingHistoryTest, AllSequential_Commit) {
   AdvanceNowBy(one_second);
   timing_history_.WillDraw();
   AdvanceNowBy(draw_duration);
-  timing_history_.DidDraw(true, Now(), 0, 0, 0);
+  timing_history_.DidDraw(true, Now(), 0, 0, 0, false);
 
   EXPECT_EQ(begin_main_frame_queue_duration,
             timing_history_.BeginMainFrameQueueDurationCriticalEstimate());
@@ -172,7 +172,7 @@ TEST_F(CompositorTimingHistoryTest, AllSequential_BeginMainFrameAborted) {
   AdvanceNowBy(one_second);
   timing_history_.WillDraw();
   AdvanceNowBy(draw_duration);
-  timing_history_.DidDraw(false, Now(), 0, 0, 0);
+  timing_history_.DidDraw(false, Now(), 0, 0, 0, false);
 
   EXPECT_EQ(base::TimeDelta(),
             timing_history_.BeginMainFrameQueueDurationCriticalEstimate());
