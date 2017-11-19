@@ -15,6 +15,8 @@
 #include "chrome/browser/chromeos/base/file_flusher.h"
 #include "chrome/browser/chromeos/login/helper.h"
 #include "chrome/browser/chromeos/login/signin/oauth2_login_manager_factory.h"
+#include "chrome/browser/chromeos/login/signin_partition_manager.h"
+#include "chrome/browser/chromeos/login/signin_partition_manager_factory.h"
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/download/download_prefs.h"
 #include "chrome/browser/profiles/profile.h"
@@ -279,13 +281,12 @@ void ProfileHelper::ClearSigninProfile(const base::Closure& on_clear_callback) {
   if (on_clear_callbacks_.size() > 1)
     return;
 
-  on_clear_profile_stage_finished_ =
-      base::BarrierClosure(2, base::Bind(&ProfileHelper::OnSigninProfileCleared,
-                                         weak_factory_.GetWeakPtr()));
-
   ProfileManager* profile_manager = g_browser_process->profile_manager();
   // Check if signin profile was loaded.
   if (profile_manager->GetProfileByPath(GetSigninProfileDir())) {
+    on_clear_profile_stage_finished_ = base::BarrierClosure(
+        2, base::Bind(&ProfileHelper::OnSigninProfileCleared,
+                      weak_factory_.GetWeakPtr()));
     LOG_ASSERT(!browsing_data_remover_);
     browsing_data_remover_ =
         content::BrowserContext::GetBrowsingDataRemover(GetSigninProfile());
@@ -294,18 +295,14 @@ void ProfileHelper::ClearSigninProfile(const base::Closure& on_clear_callback) {
         base::Time(), base::Time::Max(),
         ChromeBrowsingDataRemoverDelegate::DATA_TYPE_SITE_DATA,
         ChromeBrowsingDataRemoverDelegate::ALL_ORIGIN_TYPES, this);
-  } else {
-    on_clear_profile_stage_finished_.Run();
-  }
 
-  if (content::StoragePartition* partition = login::GetSigninPartition()) {
-    partition->ClearData(
-        content::StoragePartition::REMOVE_DATA_MASK_ALL,
-        content::StoragePartition::QUOTA_MANAGED_STORAGE_MASK_ALL, GURL(),
-        content::StoragePartition::OriginMatcherFunction(), base::Time(),
-        base::Time::Now(), on_clear_profile_stage_finished_);
+    // Close the current session with SigninPartitionManager. This clears cached
+    // data from the last-used sign-in StoragePartition.
+    login::SigninPartitionManagerFactory::GetForBrowserContext(
+        GetSigninProfile())
+        ->CloseCurrentSigninSession(on_clear_profile_stage_finished_);
   } else {
-    on_clear_profile_stage_finished_.Run();
+    OnSigninProfileCleared();
   }
 }
 

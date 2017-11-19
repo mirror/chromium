@@ -620,6 +620,35 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
       $('offline-gaia').switchToEmailCard(false /* animated */);
     },
 
+    setSigninFramePartition: function(newWebviewPartitionName) {
+      var signinFrame = $('signin-frame');
+
+      if (!signinFrame.src) {
+        // We have not navigated anywhere yet.
+        console.log('Reusing old webview.');
+        signinFrame.partition = newWebviewPartitionName;
+      } else if (signinFrame.partition != newWebviewPartitionName) {
+        // The webview has already navigated. We have to re-create it.
+        var signinFrameParent = signinFrame.parentElement;
+        var id = signinFrame.getAttribute('id');
+        var name = signinFrame.getAttribute('name');
+        var isHidden = signinFrame.getAttribute('hidden') != null;
+
+        signinFrameParent.removeChild(signinFrame);
+        var newSigninFrame = document.createElement('webview');
+        newSigninFrame.setAttribute('id', id);
+        newSigninFrame.setAttribute('name', name);
+        if (isHidden)
+          newSigninFrame.setAttribute('hidden', '');
+        newSigninFrame.setAttribute('partition', newWebviewPartitionName);
+
+        signinFrameParent.appendChild(newSigninFrame);
+
+        // Make sure the auth host uses the new webview from now on.
+        this.gaiaAuthHost_.rebindWebview($('signin-frame'));
+      }
+    },
+
     /**
      * Loads the authentication extension into the iframe.
      * @param {Object} data Extension parameters bag.
@@ -632,6 +661,8 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
           data.screenMode != ScreenMode.DEFAULT) {
         this.gaiaAuthHost_.resetWebview();
       }
+
+      this.setSigninFramePartition(data.webviewPartitionName);
 
       this.screenMode = data.screenMode;
       this.email = '';
