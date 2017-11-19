@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "407c3c8c_73d880aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-19T23:33:56Z",
+      "side": 1,
+      "message": "I have this vague memory that we did the Chrome home enabled test and the is-feature-enabled test in the opposite order for a reason, following the general practice not touching / activating a feature flag unless it will actually do something.  Can you put the feature flag test last, a la how it was before, unless you have a reason to the contrary?",
+      "revId": "cc217d45ab4e678928890a4b0acdca0eb1a3ed2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
