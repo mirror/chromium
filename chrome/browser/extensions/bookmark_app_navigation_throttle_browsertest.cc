@@ -5,6 +5,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
+#include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/extensions/bookmark_app_helper.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
@@ -22,6 +23,7 @@
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/context_menu_params.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_frame_navigation_observer.h"
@@ -88,6 +90,49 @@ content::RenderFrameHost* GetIFrame(content::WebContents* web_contents) {
   return *it;
 }
 
+void ClickLinkWithModifiersAndWaitForURL(content::WebContents* web_contents,
+                                         const GURL& link_url,
+                                         const GURL& target_url,
+                                         LinkTarget target,
+                                         const std::string& rel,
+                                         bool ctrl_key,
+                                         bool shift_key) {
+  auto observer = GetTestNavigationObserver(target_url);
+  std::string script = base::StringPrintf(
+      "(() => {"
+      "const link = document.createElement('a');"
+      "link.href = '%s';"
+      "link.target = '%s';"
+      "link.rel = '%s';"
+      "const click_target = document.createElement('textarea');"
+      "click_target.rows = 80;"
+      "click_target.cols = 160;"
+      "link.appendChild(click_target);"
+      "document.body.appendChild(link);"
+      "})();",
+      link_url.spec().c_str(), target == LinkTarget::SELF ? "_self" : "_blank",
+      rel.c_str());
+  ASSERT_TRUE(content::ExecuteScript(web_contents, script));
+
+  int modifiers = blink::WebInputEvent::Modifiers::kNoModifiers;
+  if (ctrl_key) {
+#if defined(OS_MACOSX)
+    modifiers |= blink::WebInputEvent::Modifiers::kMetaKey;
+#else
+    modifiers |= blink::WebInputEvent::Modifiers::kControlKey;
+#endif
+  }
+
+  if (shift_key) {
+    modifiers |= blink::WebInputEvent::Modifiers::kShiftKey;
+  }
+
+  content::SimulateMouseClick(web_contents, modifiers,
+                              blink::WebMouseEvent::Button::kLeft);
+
+  observer->WaitForNavigationFinished();
+}
+
 // Creates an <a> element, sets its href and target to |link_url| and |target|
 // respectively, adds it to the DOM, and clicks on it. Returns once |target_url|
 // has loaded.
@@ -96,21 +141,9 @@ void ClickLinkAndWaitForURL(content::WebContents* web_contents,
                             const GURL& target_url,
                             LinkTarget target,
                             const std::string& rel) {
-  auto observer = GetTestNavigationObserver(target_url);
-  std::string script = base::StringPrintf(
-      "(() => {"
-      "const link = document.createElement('a');"
-      "link.href = '%s';"
-      "link.target = '%s';"
-      "link.rel = '%s';"
-      "document.body.appendChild(link);"
-      "const event = new MouseEvent('click', {'view': window});"
-      "link.dispatchEvent(event);"
-      "})();",
-      link_url.spec().c_str(), target == LinkTarget::SELF ? "_self" : "_blank",
-      rel.c_str());
-  ASSERT_TRUE(content::ExecuteScript(web_contents, script));
-  observer->WaitForNavigationFinished();
+  ClickLinkWithModifiersAndWaitForURL(web_contents, link_url, target_url,
+                                      target, rel, false /* ctrl_key */,
+                                      false /* shift_key */);
 }
 
 // Creates an <a> element, sets its href and target to |link_url| and |target|
@@ -121,6 +154,19 @@ void ClickLinkAndWait(content::WebContents* web_contents,
                       LinkTarget target,
                       const std::string& rel) {
   ClickLinkAndWaitForURL(web_contents, link_url, link_url, target, rel);
+}
+
+// Creates an <a> element, sets its href and target to |link_url| and |target|
+// respectively, adds it to the DOM, and clicks on it. Returns once the link
+// has loaded.
+void ClickLinkWithModifiersAndWait(content::WebContents* web_contents,
+                                   const GURL& link_url,
+                                   LinkTarget target,
+                                   const std::string& rel,
+                                   bool ctrl_key,
+                                   bool shift_key) {
+  ClickLinkWithModifiersAndWaitForURL(web_contents, link_url, link_url, target,
+                                      rel, ctrl_key, shift_key);
 }
 
 // Creates a <form> element with a |target_url| action and |method| method. Adds
@@ -233,6 +279,33 @@ class BookmarkAppNavigationThrottleBrowserTest : public ExtensionBrowserTest {
 
   // Navigates the active tab to the launching page.
   void NavigateToLaunchingPage() { NavigateToLaunchingPage(browser()); }
+
+  // Checks that, after running |action|, a new tab is opened with |target_url|,
+  // the initial tab is still focused and didn't navigate.
+  void TestTabActionOpensBackgroundTab(const GURL& target_url,
+                                       const base::Closure& action) {
+    size_t num_browsers = chrome::GetBrowserCount(profile());
+    int num_tabs = browser()->tab_strip_model()->count();
+    content::WebContents* initial_tab =
+        browser()->tab_strip_model()->GetActiveWebContents();
+    GURL initial_url = initial_tab->GetLastCommittedURL();
+
+    action.Run();
+
+    EXPECT_EQ(num_browsers, chrome::GetBrowserCount(profile()));
+    EXPECT_EQ(browser(), chrome::FindLastActive());
+
+    EXPECT_EQ(++num_tabs, browser()->tab_strip_model()->count());
+
+    EXPECT_EQ(initial_tab,
+              browser()->tab_strip_model()->GetActiveWebContents());
+    EXPECT_EQ(initial_url, initial_tab->GetLastCommittedURL());
+
+    content::WebContents* new_tab =
+        browser()->tab_strip_model()->GetWebContentsAt(num_tabs - 1);
+    EXPECT_NE(new_tab, initial_tab);
+    EXPECT_EQ(target_url, new_tab->GetLastCommittedURL());
+  }
 
   // Checks that, after running |action|, the initial tab's window doesn't have
   // any new tabs, the initial tab did not navigate, and that no new windows
@@ -510,6 +583,55 @@ IN_PROC_BROWSER_TEST_P(BookmarkAppNavigationThrottleLinkBrowserTest,
       app_url, base::Bind(&ClickLinkAndWait,
                           browser()->tab_strip_model()->GetActiveWebContents(),
                           app_url, LinkTarget::BLANK, GetParam()));
+}
+
+// Tests that Ctrl + Clicking a link to the app's app_url opens a new background
+// tab and not the app.
+IN_PROC_BROWSER_TEST_P(BookmarkAppNavigationThrottleLinkBrowserTest,
+                       AppUrlCtrlClick) {
+  // The feature doesn't work without PlzNavigate.
+  if (!content::IsBrowserSideNavigationEnabled())
+    return;
+
+  InstallTestBookmarkApp();
+  NavigateToLaunchingPage();
+
+  const GURL app_url = embedded_test_server()->GetURL(kAppUrlPath);
+  TestTabActionOpensBackgroundTab(
+      app_url, base::Bind(&ClickLinkWithModifiersAndWait,
+                          browser()->tab_strip_model()->GetActiveWebContents(),
+                          app_url, LinkTarget::SELF, GetParam(),
+                          true /* ctrl_key */, false /* shift_key */));
+}
+
+// Tests that clicking "Open link in new tab" for a link to the app's app_url
+// opens a new tab in the background.
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
+                       ContextMenuNewTab) {
+  // The feature doesn't work without PlzNavigate.
+  if (!content::IsBrowserSideNavigationEnabled())
+    return;
+
+  InstallTestBookmarkApp();
+  NavigateToLaunchingPage();
+
+  const GURL app_url = embedded_test_server()->GetURL(kAppUrlPath);
+  TestTabActionOpensBackgroundTab(
+      app_url,
+      base::Bind(
+          [](content::WebContents* web_contents, const GURL& app_url) {
+            auto observer = GetTestNavigationObserver(app_url);
+            content::ContextMenuParams params;
+            params.page_url = web_contents->GetLastCommittedURL();
+            params.link_url = app_url;
+            TestRenderViewContextMenu menu(web_contents->GetMainFrame(),
+                                           params);
+            menu.Init();
+            menu.ExecuteCommand(IDC_CONTENT_CONTEXT_OPENLINKNEWTAB,
+                                0 /* event_flags */);
+            observer->WaitForNavigationFinished();
+          },
+          browser()->tab_strip_model()->GetActiveWebContents(), app_url));
 }
 
 // Tests that clicking a link with target="_self" and for which the server

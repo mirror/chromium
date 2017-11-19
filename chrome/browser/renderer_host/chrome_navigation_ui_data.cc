@@ -4,23 +4,56 @@
 
 #include "chrome/browser/renderer_host/chrome_navigation_ui_data.h"
 
+#include <tuple>
+
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/sessions/session_tab_helper.h"
 #include "content/public/browser/navigation_handle.h"
 #include "extensions/features/features.h"
+#include "ui/base/window_open_disposition.h"
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+namespace {
+std::pair<int, int> GetTabIdAndWindowId(content::WebContents* web_contents) {
+  SessionTabHelper* session_tab_helper =
+      SessionTabHelper::FromWebContents(web_contents);
+  if (!session_tab_helper)
+    return std::make_pair(-1, -1);
+
+  return std::make_pair(session_tab_helper->session_id().id(),
+                        session_tab_helper->window_id().id());
+}
+}  // namespace
+#endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
 ChromeNavigationUIData::ChromeNavigationUIData() {}
 
 ChromeNavigationUIData::ChromeNavigationUIData(
-    content::NavigationHandle* navigation_handle) {
+    content::NavigationHandle* navigation_handle)
+    : disposition_(WindowOpenDisposition::CURRENT_TAB) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
-  SessionTabHelper* session_tab_helper =
-      SessionTabHelper::FromWebContents(navigation_handle->GetWebContents());
-  int tab_id = session_tab_helper ? session_tab_helper->session_id().id() : -1;
-  int window_id =
-      session_tab_helper ? session_tab_helper->window_id().id() : -1;
+  int tab_id;
+  int window_id;
+  std::tie(tab_id, window_id) =
+      GetTabIdAndWindowId(navigation_handle->GetWebContents());
   extension_data_ = base::MakeUnique<extensions::ExtensionNavigationUIData>(
       navigation_handle, tab_id, window_id);
+#endif
+}
+
+ChromeNavigationUIData::ChromeNavigationUIData(
+    content::WebContents* web_contents,
+    int frame_tree_node_id,
+    bool navigating_main_frame,
+    WindowOpenDisposition disposition)
+    : disposition_(disposition) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  int tab_id;
+  int window_id;
+  std::tie(tab_id, window_id) = GetTabIdAndWindowId(web_contents);
+  extension_data_ = base::MakeUnique<extensions::ExtensionNavigationUIData>(
+      web_contents, window_id, tab_id, frame_tree_node_id,
+      navigating_main_frame);
 #endif
 }
 
@@ -30,6 +63,8 @@ std::unique_ptr<content::NavigationUIData> ChromeNavigationUIData::Clone()
     const {
   std::unique_ptr<ChromeNavigationUIData> copy =
       base::MakeUnique<ChromeNavigationUIData>();
+
+  copy->disposition_ = disposition_;
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   if (extension_data_)
