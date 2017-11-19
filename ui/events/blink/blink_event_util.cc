@@ -14,6 +14,8 @@
 #include "build/build_config.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/WebMouseWheelEvent.h"
+#include "ui/events/android/gesture_event_android.h"
+#include "ui/events/android/gesture_event_type.h"
 #include "ui/events/base_event_utils.h"
 #include "ui/events/event_constants.h"
 #include "ui/events/gesture_detection/gesture_event_data.h"
@@ -1142,6 +1144,34 @@ EventPointerType WebPointerTypeToEventPointerType(
   }
   NOTREACHED() << "Invalid pointer type";
   return EventPointerType::POINTER_TYPE_UNKNOWN;
+}
+
+WebGestureEvent CreateWebGestureEventFromGestureEventAndroid(
+    const GestureEventAndroid& event) {
+  WebInputEvent::Type event_type = WebInputEvent::kUndefined;
+  switch (event.type()) {
+    case GESTURE_EVENT_TYPE_PINCH_BEGIN:
+      event_type = WebInputEvent::kGesturePinchBegin;
+      break;
+    case GESTURE_EVENT_TYPE_PINCH_BY:
+      event_type = WebInputEvent::kGesturePinchUpdate;
+      break;
+    case GESTURE_EVENT_TYPE_PINCH_END:
+      event_type = WebInputEvent::kGesturePinchEnd;
+      break;
+    default:
+      NOTREACHED() << "Unknown gesture event type";
+      break;
+  }
+  WebGestureEvent web_event(event_type, WebInputEvent::kNoModifiers,
+                            event.time() / 1000.0);
+  const gfx::PointF location = event.location();
+  web_event.x = location.x();
+  web_event.y = location.y();
+  web_event.source_device = blink::kWebGestureDeviceTouchscreen;
+  if (event_type == WebInputEvent::kGesturePinchUpdate)
+    web_event.data.pinch_update.scale = event.delta();
+  return web_event;
 }
 
 }  // namespace ui

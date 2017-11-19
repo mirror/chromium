@@ -10,6 +10,7 @@
 #include "ui/android/view_android.h"
 #include "ui/base/ui_base_switches_util.h"
 #include "ui/events/android/drag_event_android.h"
+#include "ui/events/android/gesture_event_android.h"
 #include "ui/events/android/motion_event_android.h"
 #include "ui/events/base_event_utils.h"
 
@@ -161,6 +162,19 @@ void EventForwarder::OnDragEvent(JNIEnv* env,
   DragEventAndroid event(env, action, location, root_location, mime_types,
                          j_content.obj());
   view_->OnDragEvent(event);
+}
+
+bool EventForwarder::OnGestureEvent(JNIEnv* env,
+                                    const JavaParamRef<jobject>& jobj,
+                                    jint type,
+                                    jlong time_ms,
+                                    jfloat delta) {
+  auto size = view_->GetSize();
+  int x = size.width() / 2;
+  int y = size.height() / 2;
+  float dip_scale = view_->GetDipScale();
+  return view_->OnGestureEvent(GestureEventAndroid(
+      type, gfx::PointF(x / dip_scale, y / dip_scale), time_ms, delta));
 }
 
 }  // namespace ui
