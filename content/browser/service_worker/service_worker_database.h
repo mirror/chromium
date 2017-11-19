@@ -207,13 +207,15 @@ class CONTENT_EXPORT ServiceWorkerDatabase {
                                  const std::string& user_data_name_prefix,
                                  std::vector<std::string>* user_data_values);
 
-  // Reads user keys and associated data for |registration_id| and
-  // |user_data_name_prefix| from the database and writes them to
-  // |user_data_map|. The map keys are stripped of |user_data_name_prefix|.
-  // Returns OK if they are successfully read or not found.
+  // Reads up to |limit| (or all if |limit| is 0) user keys and associated data
+  // for |registration_id| and |user_data_name_prefix| from the database and
+  // writes them to |user_data_map|. The map keys are stripped of
+  // |user_data_name_prefix|. Returns OK if they are successfully read or not
+  // found.
   Status ReadUserKeysAndDataByKeyPrefix(
       int64_t registration_id,
       const std::string& user_data_name_prefix,
+      int limit,
       base::flat_map<std::string, std::string>* user_data_map);
 
   // Writes |name_value_pairs| into the database. Returns NOT_FOUND if the

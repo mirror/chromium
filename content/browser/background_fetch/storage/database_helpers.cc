@@ -4,7 +4,12 @@
 
 #include "content/browser/background_fetch/storage/database_helpers.h"
 
+#include "base/guid.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/string_split.h"
+#include "content/browser/background_fetch/background_fetch.pb.h"
+#include "url/gurl.h"
+#include "url/origin.h"
 
 namespace content {
 
@@ -28,36 +33,55 @@ std::string RequestKeyPrefix(const std::string& unique_id) {
   return kRequestKeyPrefix + unique_id + kSeparator;
 }
 
-std::string PendingRequestKeyPrefix(
-    int64_t registration_creation_microseconds_since_unix_epoch,
-    const std::string& unique_id) {
-  // These keys are ordered by the registration's creation time rather than by
-  // its |unique_id|, so that the highest priority pending requests in FIFO
-  // order can be looked up by fetching the lexicographically smallest keys.
-  // https://crbug.com/741609 may introduce more advanced prioritisation.
-  //
-  // Since the ordering must survive restarts, wall clock time is used, but that
-  // is not monotonically increasing, so the ordering is not exact, and the
-  // |unique_id| is appended to break ties in case the wall clock returns the
-  // same values more than once.
-  //
-  // On Nov 20 2286 17:46:39 the microseconds will transition from 9999999999999
-  // to 10000000000000 and pending requests will briefly sort incorrectly.
-  return kPendingRequestKeyPrefix +
-         base::Int64ToString(
-             registration_creation_microseconds_since_unix_epoch) +
-         kSeparator + unique_id + kSeparator;
+std::string PendingRequestKeyPrefix(const std::string& unique_id) {
+  // TODO(crbug.com/741609): These keys should be ordered by the registration's
+  // creation time (or a more advanced ordering) rather than by its |unique_id|,
+  // so that the highest priority pending requests in FIFO order can be looked
+  // up by fetching the lexicographically smallest keys. However the keys are
+  // temporarily ordered by |unique_id| instead, since globally ordering request
+  // keys requires refactoring requests to be globally scheduled, rather than
+  // the current system where each JobController pulls requests one at a time.
+  return kPendingRequestKeyPrefix + unique_id + kSeparator;
 }
 
 std::string PendingRequestKey(
-    int64_t registration_creation_microseconds_since_unix_epoch,
     const std::string& unique_id,
     int request_index) {
   // In addition to the ordering from PendingRequestKeyPrefix, the requests
   // within each registration should be prioritized according to their index.
-  return PendingRequestKeyPrefix(
-             registration_creation_microseconds_since_unix_epoch, unique_id) +
-         base::IntToString(request_index);
+
+  // TODO(delphick): request_index must be padded or we will have 10<2.
+  return PendingRequestKeyPrefix(unique_id) + base::IntToString(request_index);
+}
+
+bool ParsePendingRequestKey(base::StringPiece pending_request_key,
+                            std::string* unique_id,
+                            int* request_index) {
+  DCHECK(unique_id);
+  DCHECK(request_index);
+
+  if (!pending_request_key.starts_with(kPendingRequestKeyPrefix))
+    return false;
+
+  pending_request_key.remove_prefix(strlen(kPendingRequestKeyPrefix));
+
+  std::vector<base::StringPiece> parts =
+      base::SplitStringPiece(pending_request_key, kSeparator,
+                             base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
+
+  if (parts.size() != 2)
+    return false;
+
+  if (!base::IsValidGUIDOutputString(parts[0]))
+    return false;
+
+  int parsed_request_index;
+  if (!base::StringToInt(parts[1], &parsed_request_index))
+    return false;
+
+  parts[0].CopyToString(unique_id);
+  *request_index = parsed_request_index;
+  return true;
 }
 
 DatabaseStatus ToDatabaseStatus(ServiceWorkerStatusCode status) {
@@ -95,6 +119,31 @@ DatabaseStatus ToDatabaseStatus(ServiceWorkerStatusCode status) {
   NOTREACHED();
   return DatabaseStatus::kFailed;
 }
+
+#if DCHECK_IS_ON()
+void DCheckRegistrationActive(bool should_be_active,
+                              const std::string& unique_id,
+                              const std::vector<std::string>& data,
+                              ServiceWorkerStatusCode status) {
+  // TODO(crbug.com/780027): Nuke the database if any DCHECK would fail.
+  switch (ToDatabaseStatus(status)) {
+    case DatabaseStatus::kOk:
+      DCHECK_EQ(1u, data.size());
+      if (should_be_active)
+        DCHECK_EQ(unique_id, data[0]);
+      else
+        DCHECK_NE(unique_id, data[0]);
+      return;
+    case DatabaseStatus::kFailed:
+      // TODO(crbug.com/780025): Consider logging failure to UMA.
+      return;
+    case DatabaseStatus::kNotFound:
+      if (should_be_active)
+        NOTREACHED();
+      return;
+  }
+}
+#endif  // DCHECK_IS_ON()
 
 }  // namespace background_fetch
 

@@ -1263,13 +1263,15 @@ TEST(ServiceWorkerDatabaseTest, ReadUserKeysAndDataByKeyPrefix) {
   base::flat_map<std::string, std::string> user_data_map;
   EXPECT_EQ(ServiceWorkerDatabase::STATUS_OK,
             database->ReadUserKeysAndDataByKeyPrefix(
-                data.registration_id, "bogus_prefix:", &user_data_map));
+                data.registration_id, "bogus_prefix:", 0 /* limit */,
+                &user_data_map));
   EXPECT_THAT(user_data_map, IsEmpty());
 
   user_data_map.clear();
-  EXPECT_EQ(ServiceWorkerDatabase::STATUS_OK,
-            database->ReadUserKeysAndDataByKeyPrefix(
-                data.registration_id, "key_prefix:", &user_data_map));
+  EXPECT_EQ(
+      ServiceWorkerDatabase::STATUS_OK,
+      database->ReadUserKeysAndDataByKeyPrefix(
+          data.registration_id, "key_prefix:", 0 /* limit */, &user_data_map));
   EXPECT_THAT(user_data_map,
               ElementsAreArray(std::vector<std::pair<std::string, std::string>>{
                   {"key1", "value_c1"}, {"key2", "value_c2"}}));
@@ -1277,10 +1279,20 @@ TEST(ServiceWorkerDatabaseTest, ReadUserKeysAndDataByKeyPrefix) {
   user_data_map.clear();
   EXPECT_EQ(ServiceWorkerDatabase::STATUS_OK,
             database->ReadUserKeysAndDataByKeyPrefix(
-                data.registration_id, "other_key_prefix:", &user_data_map));
+                data.registration_id, "other_key_prefix:", 0 /* limit */,
+                &user_data_map));
   EXPECT_THAT(user_data_map,
               ElementsAreArray(std::vector<std::pair<std::string, std::string>>{
                   {"k1", "value_d1"}, {"k2", "value_d2"}}));
+
+  user_data_map.clear();
+  EXPECT_EQ(ServiceWorkerDatabase::STATUS_OK,
+            database->ReadUserKeysAndDataByKeyPrefix(
+                data.registration_id, "other_key_prefix:", 1 /* limit */,
+                &user_data_map));
+  EXPECT_THAT(user_data_map,
+              ElementsAreArray(std::vector<std::pair<std::string, std::string>>{
+                  {"k1", "value_d1"}}));
 }
 
 TEST(ServiceWorkerDatabaseTest, UserData_DeleteUserDataByKeyPrefixes) {

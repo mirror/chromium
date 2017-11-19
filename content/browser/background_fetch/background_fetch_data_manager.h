@@ -125,10 +125,6 @@ class CONTENT_EXPORT BackgroundFetchDataManager
   // BackgroundFetchRequestManager implementation:
   void PopNextRequest(const BackgroundFetchRegistrationId& registration_id,
                       NextRequestCallback callback) override;
-  void MarkRequestAsStarted(
-      const BackgroundFetchRegistrationId& registration_id,
-      BackgroundFetchRequestInfo* request,
-      const std::string& download_guid) override;
   void MarkRequestAsComplete(
       const BackgroundFetchRegistrationId& registration_id,
       BackgroundFetchRequestInfo* request,

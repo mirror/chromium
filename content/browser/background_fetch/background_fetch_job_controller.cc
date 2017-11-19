@@ -77,8 +77,7 @@ void BackgroundFetchJobController::StartRequest(
 void BackgroundFetchJobController::DidStartRequest(
     const scoped_refptr<BackgroundFetchRequestInfo>& request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  request_manager_->MarkRequestAsStarted(registration_id_, request.get(),
-                                         request->download_guid());
+  // TODO(crbug.com/757441): Perform security checks?
 }
 
 void BackgroundFetchJobController::DidUpdateRequest(

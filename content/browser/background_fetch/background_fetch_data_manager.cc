@@ -327,19 +327,6 @@ void BackgroundFetchDataManager::PopNextRequest(
   std::move(callback).Run(std::move(next_request));
 }
 
-void BackgroundFetchDataManager::MarkRequestAsStarted(
-    const BackgroundFetchRegistrationId& registration_id,
-    BackgroundFetchRequestInfo* request,
-    const std::string& download_guid) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  auto iter = registrations_.find(registration_id.unique_id());
-  DCHECK(iter != registrations_.end());
-
-  RegistrationData* registration_data = iter->second.get();
-  registration_data->MarkRequestAsStarted(request, download_guid);
-}
-
 void BackgroundFetchDataManager::MarkRequestAsComplete(
     const BackgroundFetchRegistrationId& registration_id,
     BackgroundFetchRequestInfo* request,

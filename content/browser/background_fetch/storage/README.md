@@ -28,8 +28,12 @@ key: "bgfetch_request_<unique_id>_<request_index>"
 value: "<TODO: FetchAPIRequest serialized as a string>"
 ```
 ```
-key: "bgfetch_pending_request_<creation_time>_<unique_id>_<request_index>"
+key: "bgfetch_pending_request_<unique_id>_<request_index>"
 value: ""
+```
+```
+key: "bgfetch_active_request_<unique_id>_<request_index>"
+value: "<download_guid>"
 ```
 
 ### Expansions
@@ -46,5 +50,8 @@ is maintain when reading back from the database, e.g. `0000000000`.
 of microseconds since the unix epoch (internally stored as an `int64_t`).
 Without padding with zeros, this may introduce an ordering inversion in
 November 2286 and again in the year 5138, but the impact would only be on the
-relative ordering with which two different fetches were scheduled.
-
+relative ordering with which two different fetches were scheduled. (This
+substitution is currently unused but will be put back later).
+* `<download_guid>` is the GUID (v4) that identifies an active download that has
+been requested via the BackgroundFetchDelegate (ultimately handled by the
+DownloadService).

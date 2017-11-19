@@ -4,6 +4,8 @@
 
 #include "content/browser/service_worker/service_worker_database.h"
 
+#include <limits>
+
 #include "base/files/file_util.h"
 #include "base/lazy_instance.h"
 #include "base/location.h"
@@ -948,10 +950,12 @@ ServiceWorkerDatabase::Status
 ServiceWorkerDatabase::ReadUserKeysAndDataByKeyPrefix(
     int64_t registration_id,
     const std::string& user_data_name_prefix,
+    int limit,
     base::flat_map<std::string, std::string>* user_data_map) {
   DCHECK(sequence_checker_.CalledOnValidSequence());
   DCHECK_NE(blink::mojom::kInvalidServiceWorkerRegistrationId, registration_id);
   DCHECK(user_data_map);
+  DCHECK_GT(limit, 0);
 
   Status status = LazyOpen(false);
   if (IsNewOrNonexistentDatabase(status))
@@ -959,12 +963,17 @@ ServiceWorkerDatabase::ReadUserKeysAndDataByKeyPrefix(
   if (status != STATUS_OK)
     return status;
 
+  int count = 0;
+  if (limit == 0)
+    limit = std::numeric_limits<int>::max();
   std::string prefix =
       CreateUserDataKey(registration_id, user_data_name_prefix);
   {
     std::unique_ptr<leveldb::Iterator> itr(
         db_->NewIterator(leveldb::ReadOptions()));
-    for (itr->Seek(prefix); itr->Valid(); itr->Next()) {
+    // Keep adding new entries until there are none left or |limit| entries have
+    // been found.
+    for (itr->Seek(prefix); itr->Valid() && ++count <= limit; itr->Next()) {
       status = LevelDBStatusToServiceWorkerDBStatus(itr->status());
       if (status != STATUS_OK) {
         user_data_map->clear();

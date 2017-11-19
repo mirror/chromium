@@ -88,7 +88,7 @@ void CreateRegistrationTask::StoreRegistration() {
   registration_->downloaded = 0;
 
   std::vector<std::pair<std::string, std::string>> entries;
-  entries.reserve(requests_.size() * 2 + 1);
+  entries.reserve(requests_.size() * 2 + 2);
 
   // First serialize per-registration (as opposed to per-request) data.
   // TODO(crbug.com/757760): Serialize BackgroundFetchOptions as part of this.
@@ -118,10 +118,8 @@ void CreateRegistrationTask::StoreRegistration() {
     // TODO(crbug.com/757760): Serialize actual values for these entries.
     entries.emplace_back(RequestKey(registration_id_.unique_id(), i),
                          "TODO: Serialize FetchAPIRequest as value");
-    entries.emplace_back(
-        PendingRequestKey(registration_creation_microseconds_since_unix_epoch,
-                          registration_id_.unique_id(), i),
-        std::string());
+    entries.emplace_back(PendingRequestKey(registration_id_.unique_id(), i),
+                         std::string());
   }
 
   service_worker_context()->StoreRegistrationUserData(

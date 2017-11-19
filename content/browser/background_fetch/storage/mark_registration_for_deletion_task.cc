@@ -74,9 +74,7 @@ void MarkRegistrationForDeletionTask::DidGetActiveUniqueId(
     service_worker_context()->ClearRegistrationUserDataByKeyPrefixes(
         registration_id_.service_worker_registration_id(),
         {ActiveRegistrationUniqueIdKey(registration_id_.developer_id()),
-         PendingRequestKeyPrefix(
-             registration_proto.creation_microseconds_since_unix_epoch(),
-             registration_id_.unique_id())},
+         PendingRequestKeyPrefix(registration_id_.unique_id())},
         base::Bind(&MarkRegistrationForDeletionTask::DidDeactivate,
                    weak_factory_.GetWeakPtr()));
   } else {

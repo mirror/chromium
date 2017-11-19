@@ -707,10 +707,14 @@ void ServiceWorkerStorage::GetUserDataByKeyPrefix(
 void ServiceWorkerStorage::GetUserKeysAndDataByKeyPrefix(
     int64_t registration_id,
     const std::string& key_prefix,
+    int limit,
     const GetUserKeysAndDataCallback& callback) {
-  if (!LazyInitialize(base::BindOnce(
-          &ServiceWorkerStorage::GetUserKeysAndDataByKeyPrefix,
-          weak_factory_.GetWeakPtr(), registration_id, key_prefix, callback))) {
+  DCHECK_GT(limit, 0);
+
+  if (!LazyInitialize(
+          base::BindOnce(&ServiceWorkerStorage::GetUserKeysAndDataByKeyPrefix,
+                         weak_factory_.GetWeakPtr(), registration_id,
+                         key_prefix, limit, callback))) {
     if (state_ != INITIALIZING) {
       RunSoon(
           FROM_HERE,
@@ -733,7 +737,7 @@ void ServiceWorkerStorage::GetUserKeysAndDataByKeyPrefix(
       FROM_HERE,
       base::BindOnce(&ServiceWorkerStorage::GetUserKeysAndDataByKeyPrefixInDB,
                      database_.get(), base::ThreadTaskRunnerHandle::Get(),
-                     registration_id, key_prefix,
+                     registration_id, key_prefix, limit,
                      base::Bind(&ServiceWorkerStorage::DidGetUserKeysAndData,
                                 weak_factory_.GetWeakPtr(), callback)));
 }
@@ -1939,11 +1943,14 @@ void ServiceWorkerStorage::GetUserKeysAndDataByKeyPrefixInDB(
     scoped_refptr<base::SequencedTaskRunner> original_task_runner,
     int64_t registration_id,
     const std::string& key_prefix,
+    int limit,
     const GetUserKeysAndDataInDBCallback& callback) {
+  DCHECK_GT(limit, 0);
+
   base::flat_map<std::string, std::string> data_map;
   ServiceWorkerDatabase::Status status =
       database->ReadUserKeysAndDataByKeyPrefix(registration_id, key_prefix,
-                                               &data_map);
+                                               limit, &data_map);
   original_task_runner->PostTask(FROM_HERE,
                                  base::BindOnce(callback, data_map, status));
 }

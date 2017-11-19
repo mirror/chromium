@@ -14,29 +14,6 @@ namespace content {
 
 namespace background_fetch {
 
-namespace {
-#if DCHECK_IS_ON()
-// Checks that the |ActiveRegistrationUniqueIdKey| either does not exist, or is
-// associated with a different |unique_id| than the given one which should have
-// been already marked for deletion.
-void DCheckRegistrationNotActive(const std::string& unique_id,
-                                 const std::vector<std::string>& data,
-                                 ServiceWorkerStatusCode status) {
-  switch (ToDatabaseStatus(status)) {
-    case DatabaseStatus::kOk:
-      DCHECK_EQ(1u, data.size());
-      DCHECK_NE(unique_id, data[0])
-          << "Must call MarkRegistrationForDeletion before DeleteRegistration";
-      return;
-    case DatabaseStatus::kFailed:
-      return;  // TODO(crbug.com/780025): Consider logging failure to UMA.
-    case DatabaseStatus::kNotFound:
-      return;
-  }
-}
-#endif  // DCHECK_IS_ON()
-}  // namespace
-
 DeleteRegistrationTask::DeleteRegistrationTask(
     BackgroundFetchDataManager* data_manager,
     int64_t service_worker_registration_id,
@@ -74,7 +51,8 @@ void DeleteRegistrationTask::DidGetRegistration(
       service_worker_context()->GetRegistrationUserData(
           service_worker_registration_id_,
           {ActiveRegistrationUniqueIdKey(registration_proto.developer_id())},
-          base::Bind(&DCheckRegistrationNotActive, unique_id_));
+          base::Bind(&DCheckRegistrationActive, false /* should_be_active */,
+                     unique_id_));
     } else {
       NOTREACHED()
           << "Database is corrupt";  // TODO(crbug.com/780027): Nuke it.

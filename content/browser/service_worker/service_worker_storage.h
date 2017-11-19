@@ -193,12 +193,14 @@ class CONTENT_EXPORT ServiceWorkerStorage
   void GetUserDataByKeyPrefix(int64_t registration_id,
                               const std::string& key_prefix,
                               const GetUserDataCallback& callback);
-  // GetUserKeysAndDataByKeyPrefix responds OK with a flat_map containing
-  // matching keys and their data assuming the database was read successfully.
-  // The map keys have |key_prefix| stripped from them.
+  // GetUserKeysAndDataByKeyPrefix responds OK with a flat_map containing up to
+  // |limit| (all if |limit| is 0) matching keys and their data assuming the
+  // database was read successfully. The map keys have |key_prefix| stripped
+  // from them.
   void GetUserKeysAndDataByKeyPrefix(
       int64_t registration_id,
       const std::string& key_prefix,
+      int limit,
       const GetUserKeysAndDataCallback& callback);
 
   // Stored data is deleted when the associated registraton is deleted.
@@ -517,6 +519,7 @@ class CONTENT_EXPORT ServiceWorkerStorage
       scoped_refptr<base::SequencedTaskRunner> original_task_runner,
       int64_t registration_id,
       const std::string& key_prefix,
+      int limit,
       const GetUserKeysAndDataInDBCallback& callback);
   static void GetUserDataForAllRegistrationsInDB(
       ServiceWorkerDatabase* database,

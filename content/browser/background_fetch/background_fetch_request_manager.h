@@ -34,13 +34,6 @@ class BackgroundFetchRequestManager {
       NextRequestCallback callback) = 0;
 
   // Marks that the |request|, part of the Background Fetch identified by
-  // |registration_id|, has been started as |download_guid|.
-  virtual void MarkRequestAsStarted(
-      const BackgroundFetchRegistrationId& registration_id,
-      BackgroundFetchRequestInfo* request,
-      const std::string& download_guid) = 0;
-
-  // Marks that the |request|, part of the Background Fetch identified by
   // |registration_id|, has completed.
   virtual void MarkRequestAsComplete(
       const BackgroundFetchRegistrationId& registration_id,
