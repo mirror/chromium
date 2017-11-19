@@ -70,6 +70,24 @@
       "revId": "50584d8bb675acc9428d6a1c49d53359767d897a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a037c0e0_982af5f2",
+        "filename": "base/observer_list.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2017-11-19T23:03:00Z",
+      "side": 1,
+      "message": "After having a closer look at this, it turns out that GetCurrent can never be validly called if !(list_ \u0026\u0026 index_ \u003c clamped_max_index()). We can thus simplify GetCurrent.\n\nIt can still be called when !(list_-\u003eobservers_[index_]) by the unit test StdIteratorRemoveFront, and I haven\u0027t changed that.",
+      "parentUuid": "857d92f3_ec1da1bd",
+      "revId": "50584d8bb675acc9428d6a1c49d53359767d897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
