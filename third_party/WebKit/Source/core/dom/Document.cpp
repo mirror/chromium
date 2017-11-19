@@ -6551,12 +6551,14 @@ ScriptedAnimationController& Document::EnsureScriptedAnimationController() {
 
 int Document::RequestAnimationFrame(
     FrameRequestCallbackCollection::FrameCallback* callback) {
+  current_frame_has_raf_ = true;
   return EnsureScriptedAnimationController().RegisterCallback(callback);
 }
 
 void Document::CancelAnimationFrame(int id) {
   if (!scripted_animation_controller_)
     return;
+  current_frame_has_raf_ = false;
   scripted_animation_controller_->CancelCallback(id);
 }
 
@@ -7193,6 +7195,14 @@ scoped_refptr<WebTaskRunner> Document::GetTaskRunner(TaskType type) {
   // passed-in document or ContextDocument() used to be attached to a Frame but
   // has since been detached).
   return Platform::Current()->CurrentThread()->GetWebTaskRunner();
+}
+
+bool Document::CurrentFrameHasRAF() {
+  return current_frame_has_raf_;
+}
+
+void Document::ResetCurrentFrameHasRAF() {
+  current_frame_has_raf_ = false;
 }
 
 void Document::Trace(blink::Visitor* visitor) {
