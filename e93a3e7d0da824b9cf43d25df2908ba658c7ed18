@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "8f4b67a2_ec8ada63",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-19T23:43:40Z",
+      "side": 1,
+      "message": "\u003e Mark,  is there any reason to roll out this with default-off ?\n\nHaving features off by default is the best practice for experiments.  See\nhttps://docs.google.com/presentation/d/184QizAsEXu_k_ShXYO7FSqZ81O9WV6540q1iVDF-SO4/edit\nslide 3 in particular",
+      "parentUuid": "32c25192_f5bd346b",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 0
+      },
+      "revId": "e93a3e7d0da824b9cf43d25df2908ba658c7ed18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ffbf7eb_69286ca0",
         "filename": "components/omnibox/browser/tailored_word_break_iterator.cc",
         "patchSetId": 15
@@ -130,6 +154,30 @@
       "writtenOn": "2017-11-18T08:26:11Z",
       "side": 1,
       "message": "Why do we need this code duplication between if-block and else-block? Doesn\u0027t the following work? Am I missing something? \n\nstd::unique_ptr\u003cbase::i18n::BreakIterator\u003e iter;\n\nif (force_break_on_underscore) \n  iter.reset(new Tailored....(lower_terms[i], ...BREAK_WORD));\nelse\n  iter.reset(new base::i18n::BreakIterator(.....));",
+      "range": {
+        "startLine": 749,
+        "startChar": 1,
+        "endLine": 776,
+        "endChar": 0
+      },
+      "revId": "e93a3e7d0da824b9cf43d25df2908ba658c7ed18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec9d0d6_824d7fcc",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-19T23:43:40Z",
+      "side": 1,
+      "message": "\u003e Why do we need this code duplication between if-block and else-block? Doesn\u0027t the following work? Am I missing something? \n\u003e \n\u003e std::unique_ptr\u003cbase::i18n::BreakIterator\u003e iter;\n\u003e \n\u003e if (force_break_on_underscore) \n\u003e   iter.reset(new Tailored....(lower_terms[i], ...BREAK_WORD));\n\u003e else\n\u003e   iter.reset(new base::i18n::BreakIterator(.....));\n\nWe had this structure in an earlier version of this patchset.  However, to do this kind of structure, with |iter| defined as of type BreakIterator, would require the appropriate BreakIterator functions be declared virtual.  Virtual calls have some overhead, and there are a lot of uses of BreakIterator in chromium code.  I thought this was a reasonable structure to use temporarily (while we evaluate this behavioral change) rather than introduce a possible performance slowdown in chrome.",
+      "parentUuid": "f2bca91d_6e5c2839",
       "range": {
         "startLine": 749,
         "startChar": 1,
