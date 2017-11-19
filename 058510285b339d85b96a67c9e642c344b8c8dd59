@@ -16,6 +16,24 @@
       "revId": "058510285b339d85b96a67c9e642c344b8c8dd59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a84891f_013973e2",
+        "filename": "ui/events/android/gesture_event_android.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-19T23:37:14Z",
+      "side": 1,
+      "message": "Moved it to blink_event_util.*. I didn\u0027t guard it with #if only because I didn\u0027t want to \u0027taint\u0027 the code with too many #if defined(OS_ANDROID) - it\u0027s a tiny Android-only utility method. Let me know if that\u0027s okay.",
+      "parentUuid": "9be7d03d_1323b856",
+      "revId": "058510285b339d85b96a67c9e642c344b8c8dd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
