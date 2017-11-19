@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "80d04412_36241d2d",
+        "filename": "chrome/browser/extensions/extension_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-19T22:18:02Z",
+      "side": 0,
+      "message": "Worth including a comment explicitly noting that the interface is fire-and-forget?  (As opposed to synchronous.)  Up to you.",
+      "range": {
+        "startLine": 272,
+        "startChar": 28,
+        "endLine": 272,
+        "endChar": 33
+      },
+      "revId": "db60e6825b2fd3832b36a959e71a33005632e218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fde2e915_a74a2535",
         "filename": "chrome/browser/extensions/webstore_reinstaller.cc",
         "patchSetId": 2
@@ -13,6 +36,24 @@
       "writtenOn": "2017-11-18T02:10:45Z",
       "side": 0,
       "message": "This appeared to be the only real use of the callback, and, AFAICT, it\u0027s not really necessary.",
+      "revId": "db60e6825b2fd3832b36a959e71a33005632e218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45baf885_91abcc0f",
+        "filename": "chrome/browser/extensions/webstore_reinstaller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-19T22:18:02Z",
+      "side": 0,
+      "message": "Happy to go with you opinion on this--you\u0027re the expert.  The only novice-level concern I have is if installing the same extension before the uninstall of the extension has completed would trip over itself.  But I suspect we\u0027re safe because of per-thread task queue ordering.",
+      "parentUuid": "fde2e915_a74a2535",
       "revId": "db60e6825b2fd3832b36a959e71a33005632e218",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

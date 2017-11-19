@@ -16,6 +16,47 @@
       "revId": "8bbd9e00494178b988855b9de1bd04613dad6131",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db1c9ae6_cb7cb96a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-19T22:18:02Z",
+      "side": 1,
+      "message": "The cookie interface switch is http://crbug.com/721395, if you want to use that.",
+      "parentUuid": "87874caf_be3135fa",
+      "revId": "8bbd9e00494178b988855b9de1bd04613dad6131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c41ef68b_c8280ddd",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4925,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-19T22:18:02Z",
+      "side": 1,
+      "message": "Trusting your knowledge of the extensions system here--I don\u0027t think it\u0027s guaranteed that running all tasks on the UI thread won\u0027t result in laggard tasks on the IO thread not completing.  If you want to be extra sure, bouncing a PostTask off the IO thread might do it.  But up to you.",
+      "range": {
+        "startLine": 4925,
+        "startChar": 11,
+        "endLine": 4925,
+        "endChar": 31
+      },
+      "revId": "8bbd9e00494178b988855b9de1bd04613dad6131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
