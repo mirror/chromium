@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17aa77ea_17a912e5",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-11-19T00:56:21Z",
+      "side": 1,
+      "message": "Something has gone wrong here. Clicking on the view menu now closes the \nresults which is bad.",
+      "revId": "4e68cd40f4b4d77dc5fa187566b6e75ecb5bd483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179c310c_429dbb35",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 1390,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-11-19T00:56:21Z",
+      "side": 1,
+      "message": "This can result in a race condition. If you change the change the view mode before timeout fires \nthe timeout will restart the animation in the wrong mode.\n\nYou\u0027ll need to create a flag that skips the animation for a second, and reset the flag if animation gets reset.",
+      "revId": "4e68cd40f4b4d77dc5fa187566b6e75ecb5bd483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
