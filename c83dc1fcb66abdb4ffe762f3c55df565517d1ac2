@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7887b32c_1b50770a",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2049,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-19T04:55:46Z",
+      "side": 1,
+      "message": "It might be simpler to say:\n\nif (result \u003d\u003d PENDING) {\n  retry_migrate_back_count_++;\n    migrate_back_to_default_timer_.Start(...);\n}\n\nif (result \u003d\u003d DISABLED_WITH_IDLE_SESSION)\n  return;\n\nstream_factory_-\u003eOnSessionGoingAway(this);\nCancelMigrateBackToDefaultNetworkTimer();\n\n\n(That being said, why is DISABLED_WITH_IDLE_SESSION special in this regard?)",
+      "range": {
+        "startLine": 2049,
+        "startChar": 3,
+        "endLine": 2049,
+        "endChar": 0
+      },
+      "revId": "c83dc1fcb66abdb4ffe762f3c55df565517d1ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a2e2ce6_c83062c3",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2116,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-19T04:55:46Z",
+      "side": 1,
+      "message": "Why did this move? It doesn\u0027t seem wrong, but it\u0027s not obviously right, either.",
+      "range": {
+        "startLine": 2116,
+        "startChar": 3,
+        "endLine": 2116,
+        "endChar": 0
+      },
+      "revId": "c83dc1fcb66abdb4ffe762f3c55df565517d1ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
