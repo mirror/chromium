@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b15e968_dd7abcaf",
+        "filename": "gpu/command_buffer/service/scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-11-19T21:47:04Z",
+      "side": 1,
+      "message": "Switched to a map so we can track SchedulingPriority for each WaitFence.\nThis also makes the items unique.",
+      "revId": "09c869744ad1cb6471ff744d54ef8a43ceb248da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1aedb8b_e0bb65e3",
+        "filename": "gpu/command_buffer/service/scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-11-19T21:47:04Z",
+      "side": 1,
+      "message": "This is an expected change: destroying a stream only removes the priority of the 1st level waits so they stay consistent.  We don\u0027t have enough info to correctly decrease priority on indirect waits.",
+      "revId": "09c869744ad1cb6471ff744d54ef8a43ceb248da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bbb9678_4e7cd4bd",
+        "filename": "gpu/command_buffer/service/scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-11-19T21:47:04Z",
+      "side": 1,
+      "message": "Using unique map now, so the first RemoveWaitFence clears the priority.",
+      "revId": "09c869744ad1cb6471ff744d54ef8a43ceb248da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c1988e_cb798475",
+        "filename": "gpu/command_buffer/service/scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-11-19T21:47:04Z",
+      "side": 1,
+      "message": "These expectations show the improvements of this CL.\n\nseq3 never gets High priority.  seq2\u0027s priority drops sooner.",
+      "revId": "09c869744ad1cb6471ff744d54ef8a43ceb248da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
