@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35e390fd_06979a8a",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-19T04:41:55Z",
+      "side": 1,
+      "message": "qq: If you pair with a device and then the device disconnects, Windows will create a new connection before we try to enumerate its attributes? If that\u0027s correct then great! Otherwise I think it would make sense to run the error callback with a not supported error.",
+      "revId": "c5d8b82614406955b997e83905e78109404d6b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
