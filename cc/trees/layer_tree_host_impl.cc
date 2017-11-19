@@ -643,8 +643,6 @@ LayerTreeHostImpl::EventListenerTypeForTouchStartOrMoveAt(
   gfx::PointF device_viewport_point = gfx::ScalePoint(
       gfx::PointF(viewport_point), active_tree_->device_scale_factor());
 
-  // Now determine if there are actually any handlers at that point.
-  // TODO(rbyers): Consider also honoring touch-action (crbug.com/347272).
   LayerImpl* layer_impl_with_touch_handler =
       active_tree_->FindLayerThatIsHitByPointInTouchHandlerRegion(
           device_viewport_point);
@@ -656,8 +654,21 @@ LayerTreeHostImpl::EventListenerTypeForTouchStartOrMoveAt(
   }
 
   if (out_touch_action) {
+    gfx::Transform layer_screen_space_transform =
+        layer_impl_with_touch_handler->ScreenSpaceTransform();
+    gfx::Transform inverse_layer_screen_space(
+        gfx::Transform::kSkipInitialization);
+    if (!layer_screen_space_transform.GetInverse(&inverse_layer_screen_space)) {
+      *out_touch_action = kTouchActionAuto;
+      return InputHandler::TouchStartOrMoveEventListenerType::NO_HANDLER;
+    }
+    bool clipped = false;
+    gfx::Point3F planar_point = MathUtil::ProjectPoint3D(
+        inverse_layer_screen_space, device_viewport_point, &clipped);
+    gfx::PointF hit_test_point_in_layer_space =
+        gfx::PointF(planar_point.x(), planar_point.y());
     const auto& region = layer_impl_with_touch_handler->touch_action_region();
-    gfx::Point point = gfx::ToRoundedPoint(device_viewport_point);
+    gfx::Point point = gfx::ToRoundedPoint(hit_test_point_in_layer_space);
     *out_touch_action = region.GetWhiteListedTouchAction(point);
   }
 
