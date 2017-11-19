@@ -24,6 +24,11 @@ class ExtensionNavigationUIData {
   ExtensionNavigationUIData(content::NavigationHandle* navigation_handle,
                             int tab_id,
                             int window_id);
+  ExtensionNavigationUIData(content::WebContents* web_contents,
+                            int window_id,
+                            int tab_id,
+                            int frame_tree_node_id,
+                            bool navigating_main_frame);
 
   std::unique_ptr<ExtensionNavigationUIData> DeepCopy() const;
 
