@@ -24,7 +24,7 @@ QuicConnectivityProbingManager::QuicConnectivityProbingManager(
 }
 
 QuicConnectivityProbingManager::~QuicConnectivityProbingManager() {
-  CancelProbing();
+  CancelProbingIfAny();
 }
 
 int QuicConnectivityProbingManager::HandleWriteError(
@@ -48,7 +48,13 @@ void QuicConnectivityProbingManager::OnWriteError(int error_code) {
 
 void QuicConnectivityProbingManager::OnWriteUnblocked() {}
 
-void QuicConnectivityProbingManager::CancelProbing() {
+void QuicConnectivityProbingManager::CancelProbing(
+    NetworkChangeNotifier::NetworkHandle network) {
+  if (network == network_)
+    CancelProbingIfAny();
+}
+
+void QuicConnectivityProbingManager::CancelProbingIfAny() {
   network_ = NetworkChangeNotifier::kInvalidNetworkHandle;
   peer_address_ = QuicSocketAddress();
   socket_.reset();
@@ -66,8 +72,15 @@ void QuicConnectivityProbingManager::StartProbing(
     std::unique_ptr<QuicChromiumPacketWriter> writer,
     std::unique_ptr<QuicChromiumPacketReader> reader,
     base::TimeDelta initial_timeout) {
+  DCHECK_NE(network, NetworkChangeNotifier::kInvalidNetworkHandle);
+  if (network == network_ &&
+      network_ != NetworkChangeNotifier::kInvalidNetworkHandle &&
+      peer_address == peer_address_) {
+    // |network| is already under probing.
+    return;
+  }
   // Start a new probe will always cancel the previous one.
-  CancelProbing();
+  CancelProbingIfAny();
 
   network_ = network;
   peer_address_ = peer_address;
@@ -111,7 +124,7 @@ void QuicConnectivityProbingManager::OnConnectivityProbingReceived(
   // Notify the delegate that the probe succeeds and reset everything.
   delegate_->OnProbeNetworkSucceeded(network_, self_address, std::move(socket_),
                                      std::move(writer_), std::move(reader_));
-  CancelProbing();
+  CancelProbingIfAny();
 }
 
 void QuicConnectivityProbingManager::SendConnectivityProbingPacket(
@@ -127,7 +140,7 @@ void QuicConnectivityProbingManager::SendConnectivityProbingPacket(
 void QuicConnectivityProbingManager::NotifyDelegateProbeFailed() {
   if (network_ != NetworkChangeNotifier::kInvalidNetworkHandle) {
     delegate_->OnProbeNetworkFailed(network_);
-    CancelProbing();
+    CancelProbingIfAny();
   }
 }
 
