@@ -41,8 +41,6 @@ namespace {
 class LanguageDetectionControllerTest : public PlatformTest {
  protected:
   LanguageDetectionControllerTest() : details_(nullptr) {
-    prefs_.registry()->RegisterBooleanPref(prefs::kEnableTranslate, true);
-
     language::IOSLanguageDetectionTabHelper::CreateForWebState(
         &web_state_,
         base::Bind(&LanguageDetectionControllerTest::OnLanguageDetermined,
