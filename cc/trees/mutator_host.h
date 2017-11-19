@@ -130,6 +130,7 @@ class MutatorHost {
   virtual size_t CompositedAnimationsCount() const = 0;
   virtual size_t MainThreadAnimationsCount() const = 0;
   virtual size_t MainThreadCompositableAnimationsCount() const = 0;
+  virtual bool CurrentFrameHasRAF() const = 0;
 };
 
 class MutatorEvents {
