@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1967ca41_16302a1b",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-20T23:42:30Z",
+      "side": 1,
+      "message": "I\u0027m curious if the CL still works if we omit this line (which would be preferable to exposing this on the content/public interface).\n\nIt looks like ChromeBrowserMainParts::PreCreateThreads (which calls this) says it comes before PreMainMessageLoopRunImpl, and so I would guess that BrowserMainLoop::PostMainMessageLoopStart() (inside content/) comes later still.\n\nIf so, the updated switch from line 1178 should end up getting used here:\nhttps://cs.chromium.org/chromium/src/content/browser/browser_main_loop.cc?sq\u003dpackage:chromium\u0026l\u003d813\n\nNot 100% sure, though.",
+      "revId": "69cd52b9038ac13a44306196ef3a14f63a40a5d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f6336b_e9d56682",
+        "filename": "chrome/browser/chrome_content_browser_client.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-20T23:42:30Z",
+      "side": 1,
+      "message": "These both seem out of place to me.  This file is about calls from content/ out to chrome/ to get values or notify about events, but both of these functions are from chrome/ to chrome/ and don\u0027t involve content/ at all.  That suggests they belong somewhere else at the chrome/ layer.\n\nThat said, we can definitely do that in a followup CL, since there\u0027s already a precedent here.  Let\u0027s just leave a TODO saying to move these to another file.",
+      "revId": "69cd52b9038ac13a44306196ef3a14f63a40a5d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
