@@ -34,6 +34,24 @@
       "revId": "cff0b5fb0da5bab404b78a3a8a9c2b7b90b53377",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b886b5_38e8d129",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceRequest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-20T09:07:24Z",
+      "side": 1,
+      "message": "I\u0027m fine with any of\n- starting with having this as a constructor\n- adding CreateForRedirect and having it return a value with hope of compiler\u0027s optimization\n- switching to use a pointer (unique_ptr) after removing DISALLOW_NEW().",
+      "parentUuid": "e373adb6_5fb1050f",
+      "revId": "cff0b5fb0da5bab404b78a3a8a9c2b7b90b53377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
