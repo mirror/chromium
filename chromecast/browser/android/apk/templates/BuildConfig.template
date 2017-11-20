@@ -11,4 +11,12 @@ public class BuildConfig {
     false;
 #endif
 
+  // Set the number of lines for LogcatExtractor to send.
+  public static final int LOGCAT_SIZE =
+#if defined(_IS_ANDROID_THINGS)
+    32768;
+#else
+    512;
+#endif
+
 }
