@@ -34,6 +34,24 @@
       "revId": "7133bb64714716f3ae8f6f0278fde12f384499d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0007705_9d328458",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-20T06:04:50Z",
+      "side": 1,
+      "message": "Ack. The only possible base class is LayoutBlockFlow.\n\nBtw, should LayoutNGListItem be changed into LayoutNGMixin\u003cLayoutListItem\u003e?",
+      "parentUuid": "8733c7d8_8f155a67",
+      "revId": "7133bb64714716f3ae8f6f0278fde12f384499d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
