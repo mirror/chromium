@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c359377f_7069f39d",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 3
+      },
+      "lineNbr": 1717,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-11-20T20:53:30Z",
+      "side": 1,
+      "message": "How do short names work, I assume they are supposed to be unique within the category rather than within the whole master?",
+      "revId": "bfb58a9ea2d9372593fde92d27644d85e011d9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
