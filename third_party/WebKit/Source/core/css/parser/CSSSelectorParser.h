@@ -5,10 +5,11 @@
 #ifndef CSSSelectorParser_h
 #define CSSSelectorParser_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/css/parser/CSSParserSelector.h"
 #include "core/css/parser/CSSParserTokenRange.h"
-#include <memory>
+#include "platform/wtf/Optional.h"
 
 namespace blink {
 
@@ -52,9 +53,7 @@ class CORE_EXPORT CSSSelectorParser {
   std::unique_ptr<CSSParserSelector> ConsumeSimpleSelector(
       CSSParserTokenRange&);
 
-  bool ConsumeName(CSSParserTokenRange&,
-                   AtomicString& name,
-                   AtomicString& namespace_prefix);
+  WTF::Optional<QualifiedName> ConsumeName(CSSParserTokenRange&);
 
   // These will return nullptr when the selector is invalid
   std::unique_ptr<CSSParserSelector> ConsumeId(CSSParserTokenRange&);
@@ -68,8 +67,7 @@ class CORE_EXPORT CSSSelectorParser {
 
   const AtomicString& DefaultNamespace() const;
   const AtomicString& DetermineNamespace(const AtomicString& prefix);
-  void PrependTypeSelectorIfNeeded(const AtomicString& namespace_prefix,
-                                   const AtomicString& element_name,
+  void PrependTypeSelectorIfNeeded(const WTF::Optional<QualifiedName>&,
                                    CSSParserSelector*);
   static std::unique_ptr<CSSParserSelector> AddSimpleSelectorToCompound(
       std::unique_ptr<CSSParserSelector> compound_selector,

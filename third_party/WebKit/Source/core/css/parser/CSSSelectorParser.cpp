@@ -281,18 +281,15 @@ bool IsSimpleSelectorValidAfterPseudoElement(
 std::unique_ptr<CSSParserSelector> CSSSelectorParser::ConsumeCompoundSelector(
     CSSParserTokenRange& range) {
   std::unique_ptr<CSSParserSelector> compound_selector;
-  AtomicString namespace_prefix;
-  AtomicString element_name;
   CSSSelector::PseudoType compound_pseudo_element = CSSSelector::kPseudoUnknown;
-  if (!ConsumeName(range, element_name, namespace_prefix)) {
+  const WTF::Optional<QualifiedName> q_name = ConsumeName(range);
+  if (!q_name) {
     compound_selector = ConsumeSimpleSelector(range);
     if (!compound_selector)
       return nullptr;
     if (compound_selector->Match() == CSSSelector::kPseudoElement)
       compound_pseudo_element = compound_selector->GetPseudoType();
   }
-  if (context_->IsHTMLDocument())
-    element_name = element_name.LowerASCII();
 
   while (std::unique_ptr<CSSParserSelector> simple_selector =
              ConsumeSimpleSelector(range)) {
@@ -317,24 +314,21 @@ std::unique_ptr<CSSParserSelector> CSSSelectorParser::ConsumeCompoundSelector(
   }
 
   if (!compound_selector) {
-    AtomicString namespace_uri = DetermineNamespace(namespace_prefix);
-    if (namespace_uri.IsNull()) {
-      failed_parsing_ = true;
+    if (failed_parsing_)
       return nullptr;
-    }
-    if (namespace_uri == DefaultNamespace())
-      namespace_prefix = g_null_atom;
+
+    DCHECK(q_name);
     context_->Count(WebFeature::kHasIDClassTagAttribute);
-    return CSSParserSelector::Create(
-        QualifiedName(namespace_prefix, element_name, namespace_uri));
+    return CSSParserSelector::Create(*q_name);
   }
   // TODO(rune@opera.com): Prepending a type selector to the compound is
   // unnecessary if this compound is an argument to a pseudo selector like
   // :not(), since a type selector will be prepended at the top level of the
   // selector if necessary. We need to propagate that context information here
   // to tell if we are at the top level.
-  PrependTypeSelectorIfNeeded(namespace_prefix, element_name,
-                              compound_selector.get());
+  if (!failed_parsing_)
+    PrependTypeSelectorIfNeeded(q_name, compound_selector.get());
+
   return SplitCompoundAtImplicitShadowCrossingCombinator(
       std::move(compound_selector));
 }
@@ -358,11 +352,10 @@ std::unique_ptr<CSSParserSelector> CSSSelectorParser::ConsumeSimpleSelector(
   return selector;
 }
 
-bool CSSSelectorParser::ConsumeName(CSSParserTokenRange& range,
-                                    AtomicString& name,
-                                    AtomicString& namespace_prefix) {
-  name = g_null_atom;
-  namespace_prefix = g_null_atom;
+WTF::Optional<QualifiedName> CSSSelectorParser::ConsumeName(
+    CSSParserTokenRange& range) {
+  AtomicString name = g_null_atom;
+  AtomicString namespace_prefix = g_null_atom;
 
   const CSSParserToken& first_token = range.Peek();
   if (first_token.GetType() == kIdentToken) {
@@ -377,28 +370,37 @@ bool CSSSelectorParser::ConsumeName(CSSParserTokenRange& range,
     // This is an empty namespace, which'll get assigned this value below
     name = g_empty_atom;
   } else {
-    return false;
+    return WTF::nullopt;
   }
 
-  if (range.Peek().GetType() != kDelimiterToken ||
-      range.Peek().Delimiter() != '|')
-    return true;
-  range.Consume();
+  if (range.Peek().GetType() == kDelimiterToken &&
+      range.Peek().Delimiter() == '|') {
+    range.Consume();
 
-  namespace_prefix = name;
-  const CSSParserToken& name_token = range.Consume();
-  if (name_token.GetType() == kIdentToken) {
-    name = name_token.Value().ToAtomicString();
-  } else if (name_token.GetType() == kDelimiterToken &&
-             name_token.Delimiter() == '*') {
-    name = g_star_atom;
-  } else {
-    name = g_null_atom;
+    namespace_prefix = name;
+    const CSSParserToken& name_token = range.Consume();
+    if (name_token.GetType() == kIdentToken) {
+      name = name_token.Value().ToAtomicString();
+    } else if (name_token.GetType() == kDelimiterToken &&
+               name_token.Delimiter() == '*') {
+      name = g_star_atom;
+    } else {
+      return WTF::nullopt;
+    }
+  }
+
+  if (context_->IsHTMLDocument())
+    name = name.LowerASCII();
+
+  AtomicString namespace_uri = DetermineNamespace(namespace_prefix);
+  if (namespace_uri.IsNull()) {
+    failed_parsing_ = true;
+    return WTF::nullopt;
+  }
+  if (namespace_uri == DefaultNamespace())
     namespace_prefix = g_null_atom;
-    return false;
-  }
 
-  return true;
+  return QualifiedName(namespace_prefix, name, namespace_uri);
 }
 
 std::unique_ptr<CSSParserSelector> CSSSelectorParser::ConsumeId(
@@ -435,25 +437,15 @@ std::unique_ptr<CSSParserSelector> CSSSelectorParser::ConsumeAttribute(
   CSSParserTokenRange block = range.ConsumeBlock();
   block.ConsumeWhitespace();
 
-  AtomicString namespace_prefix;
-  AtomicString attribute_name;
-  if (!ConsumeName(block, attribute_name, namespace_prefix))
-    return nullptr;
-  if (attribute_name == g_star_atom)
+  const WTF::Optional<QualifiedName> q_name = ConsumeName(block);
+  if (!q_name || q_name->LocalName() == g_star_atom)
     return nullptr;
   block.ConsumeWhitespace();
 
-  if (context_->IsHTMLDocument())
-    attribute_name = attribute_name.LowerASCII();
-
-  AtomicString namespace_uri = DetermineNamespace(namespace_prefix);
-  if (namespace_uri.IsNull())
-    return nullptr;
-
   QualifiedName qualified_name =
-      namespace_prefix.IsNull()
-          ? QualifiedName(g_null_atom, attribute_name, g_null_atom)
-          : QualifiedName(namespace_prefix, attribute_name, namespace_uri);
+      q_name->Prefix().IsNull()
+          ? QualifiedName(g_null_atom, q_name->LocalName(), g_null_atom)
+          : *q_name;
 
   std::unique_ptr<CSSParserSelector> selector = CSSParserSelector::Create();
 
@@ -798,25 +790,13 @@ const AtomicString& CSSSelectorParser::DetermineNamespace(
 }
 
 void CSSSelectorParser::PrependTypeSelectorIfNeeded(
-    const AtomicString& namespace_prefix,
-    const AtomicString& element_name,
+    const WTF::Optional<QualifiedName>& q_name,
     CSSParserSelector* compound_selector) {
-  if (element_name.IsNull() && DefaultNamespace() == g_star_atom &&
+  if (!q_name && DefaultNamespace() == g_star_atom &&
       !compound_selector->NeedsImplicitShadowCombinatorForMatching())
     return;
 
-  AtomicString determined_element_name =
-      element_name.IsNull() ? g_star_atom : element_name;
-  AtomicString namespace_uri = DetermineNamespace(namespace_prefix);
-  if (namespace_uri.IsNull()) {
-    failed_parsing_ = true;
-    return;
-  }
-  AtomicString determined_prefix = namespace_prefix;
-  if (namespace_uri == DefaultNamespace())
-    determined_prefix = g_null_atom;
-  QualifiedName tag =
-      QualifiedName(determined_prefix, determined_element_name, namespace_uri);
+  QualifiedName tag = q_name ? *q_name : AnyQName();
 
   // *:host/*:host-context never matches, so we can't discard the *,
   // otherwise we can't tell the difference between *:host and just :host.
@@ -827,13 +807,13 @@ void CSSSelectorParser::PrependTypeSelectorIfNeeded(
   // (relation) on in the cases where there are no simple selectors preceding
   // the pseudo element.
   bool is_host_pseudo = compound_selector->IsHostPseudoSelector();
-  if (is_host_pseudo && element_name.IsNull() && namespace_prefix.IsNull())
+  if (is_host_pseudo && !q_name)
     return;
   if (tag != AnyQName() || is_host_pseudo ||
       compound_selector->NeedsImplicitShadowCombinatorForMatching()) {
     compound_selector->PrependTagSelector(
-        tag, determined_prefix == g_null_atom &&
-                 determined_element_name == g_star_atom && !is_host_pseudo);
+        tag, tag.Prefix() == g_null_atom && tag.LocalName() == g_star_atom &&
+                 !is_host_pseudo);
   }
 }
 
