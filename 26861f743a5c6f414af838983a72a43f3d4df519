@@ -22,6 +22,30 @@
       "revId": "26861f743a5c6f414af838983a72a43f3d4df519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efd3824_6a6645fa",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-20T21:48:46Z",
+      "side": 1,
+      "message": "Done.\n\nNote: This does not truly launch a TWA. This function is meant to send the same intent as LaunchIntentDispatcher#launchTrustedWebActivity()",
+      "parentUuid": "542075ed_002f2394",
+      "range": {
+        "startLine": 104,
+        "startChar": 25,
+        "endLine": 104,
+        "endChar": 34
+      },
+      "revId": "26861f743a5c6f414af838983a72a43f3d4df519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
