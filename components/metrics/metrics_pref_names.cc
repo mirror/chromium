@@ -110,6 +110,10 @@ const char kStabilityExecutionPhase[] =
 const char kStabilityExitedCleanly[] =
     "user_experience_metrics.stability.exited_cleanly";
 
+// The GMS core version used in Chrome.
+const char kStabilityGmsCoreVersion[] =
+    "user_experience_metrics.stability.gms_core_version";
+
 // Number of times an extension renderer process crashed since the last report.
 const char kStabilityExtensionRendererCrashCount[] =
     "user_experience_metrics.stability.extension_renderer_crash_count";
