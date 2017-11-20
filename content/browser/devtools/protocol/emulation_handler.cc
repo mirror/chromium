@@ -305,6 +305,66 @@ Response EmulationHandler::SetVisibleSize(int width, int height) {
   return Response::OK();
 }
 
+namespace {
+
+static const char kTimeZoneEnvironmentVariable[] = "TZ";
+
+#if defined(OS_WIN)
+int setenv(const char* key, const char* value, int overwrite) {
+  if (!overwrite && getenv(key))
+    return -1;
+  return _putenv_s(key, value);
+}
+
+int unsetenv(const char* key) {
+  return setenv(key, nullptr, 1);
+}
+#endif
+
+void SetTimeZoneEnvironment(const std::string* tz) {
+  if (tz)
+    setenv(kTimeZoneEnvironmentVariable, tz->c_str(), 1);
+  else
+    unsetenv(kTimeZoneEnvironmentVariable);
+  tzset();
+}
+
+std::unique_ptr<std::string> GetTimeZoneEnvironment() {
+  const char* tz = getenv(kTimeZoneEnvironmentVariable);
+  if (tz)
+    return std::make_unique<std::string>(tz);
+  return std::unique_ptr<std::string>();
+}
+
+}  // namespace
+
+Response EmulationHandler::SetTimeOverride(Maybe<double> time,
+                                           Maybe<std::string> timezone) {
+  // Until V8 moves to using ICU for timezone handling we can only change
+  // the timezone for the whole browser process based on proxying localtime
+  // calls in zygote_main_linux.cc
+  if (timezone.isJust()) {
+    if (!saved_time_zone_id_) {
+      // Time zone wasn't overriden before. Need to save defaults.
+      saved_time_zone_id_ = GetTimeZoneEnvironment();
+    }
+    const std::string& tz = timezone.fromJust();
+    SetTimeZoneEnvironment(&tz);
+
+  } else if (saved_time_zone_id_) {
+    SetTimeZoneEnvironment(saved_time_zone_id_.get());
+    saved_time_zone_id_.reset();
+  }
+
+  base::Optional<std::string> tz;
+  if (timezone.isJust())
+    tz = timezone.takeJust();
+
+  host_->GetProcess()->SetCurrentTimeOverride(
+      base::Time::FromDoubleT(time.fromMaybe(-1)), tz);
+  return Response::OK();
+}
+
 blink::WebDeviceEmulationParams EmulationHandler::GetDeviceEmulationParams() {
   return device_emulation_params_;
 }
