@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecfe8d11_50e06f31",
+        "filename": "base/android/library_loader/library_loader_hooks.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-20T16:45:10Z",
+      "side": 1,
+      "message": "My (perhaps naive) intuition suggests that it is a bit early to madvise random right after the library is loaded.\n\nOn a high-end device this way madvise random will likely happen before asyncPrefetchLibrariesToMemory(), which magically converts the latter from series of readaheads to a lot of single page fetches. The kernel will likely merge all these fetches appropriately, but relying on it makes me nervous if done without benchmarking.\n\nAlso I believe orderfile usefulness spans until a bit after the native library initialization, and relying on readahead is a core feature of such orderfile speedup, hence I am worried this will reduce the orderfile goodness.\n\nWhat is the most reliable way to improve mem usage with madvise random and still allow improvements in orderfile to play? I\u0027d lean towards doing madvise random some time after first paint, but I can imagine how it is not ideal for low end devices.\n\nWDYT? Should we collect more evidence?",
+      "range": {
+        "startLine": 169,
+        "startChar": 16,
+        "endLine": 169,
+        "endChar": 29
+      },
+      "revId": "0d773a73dfccd3e672e30f59801b94a2d3c2d087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5fd7923_0bb7548f",
+        "filename": "base/base_switches.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-20T16:45:10Z",
+      "side": 1,
+      "message": "does it need to be called in every process? I thought madvise is a property of the mapping, so for shared memory the property is the same.",
+      "range": {
+        "startLine": 124,
+        "startChar": 11,
+        "endLine": 124,
+        "endChar": 29
+      },
+      "revId": "0d773a73dfccd3e672e30f59801b94a2d3c2d087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
