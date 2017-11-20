@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "20fcf393_81af7511",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-20T15:27:23Z",
+      "side": 1,
+      "message": "Sorry, I seemed to overlook the comments in this file. Done.",
+      "parentUuid": "cc71a3d1_fccd449e",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "363c86c0_1067a3fa",
         "filename": "chromeos/dbus/fake_session_manager_client.cc",
         "patchSetId": 1
@@ -127,6 +145,30 @@
       "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9731934f_10106ab8",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-20T15:27:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "363c86c0_1067a3fa",
+      "range": {
+        "startLine": 299,
+        "startChar": 55,
+        "endLine": 299,
+        "endChar": 60
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -153,6 +195,30 @@
     },
     {
       "key": {
+        "uuid": "aa0523dd_1ed3ed7b",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-20T15:27:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a771ead_e458ee2f",
+      "range": {
+        "startLine": 304,
+        "startChar": 53,
+        "endLine": 304,
+        "endChar": 57
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c5399af_caee5db6",
         "filename": "chromeos/dbus/fake_session_manager_client.cc",
         "patchSetId": 1
@@ -173,6 +239,30 @@
       "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a02824_f677f483",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-20T15:27:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c5399af_caee5db6",
+      "range": {
+        "startLine": 310,
+        "startChar": 29,
+        "endLine": 310,
+        "endChar": 51
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -469,6 +559,30 @@
       "side": 1,
       "message": "I was proposing changing everywhere. Would you mind doing it?",
       "parentUuid": "ac956b7f_81b96186",
+      "range": {
+        "startLine": 190,
+        "startChar": 31,
+        "endLine": 190,
+        "endChar": 37
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df25e72b_af321096",
+        "filename": "components/arc/arc_session_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-20T15:27:23Z",
+      "side": 1,
+      "message": "Of course not. Let me send another CL for that to make goals for each CL cleaner.",
+      "parentUuid": "4f970dce_a6964946",
       "range": {
         "startLine": 190,
         "startChar": 31,
@@ -1277,6 +1391,30 @@
     },
     {
       "key": {
+        "uuid": "e2388684_a1fc4541",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-20T15:27:23Z",
+      "side": 1,
+      "message": "Got it. Thank you for explanation. Done.",
+      "parentUuid": "e8104a22_f5c7c144",
+      "range": {
+        "startLine": 342,
+        "startChar": 29,
+        "endLine": 342,
+        "endChar": 46
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "963e3d1f_e9604192",
         "filename": "components/arc/arc_session_impl_unittest.cc",
         "patchSetId": 1
@@ -1324,6 +1462,24 @@
       "side": 1,
       "message": "There are 6 TEST_Fs below. Each test uses arc_session-\u003eStart(ArcInstanceMode::FULL_INSTANCE), and I wanted to have 6 more tests that are with \u0027upgrade\u0027:\n\n arc_session-\u003eStart(ArcInstanceMode::MINI_INSTANCE);\n ASSERT_EQ(ArcSessionImpl::State::STARTING_MINI_INSTANCE,\n           arc_session-\u003eGetStateForTesting());\n arc_session-\u003eStart(ArcInstanceMode::FULL_INSTANCE);\n\nAs you know, starting full without using mini is now the rarely-used path because of cmtm\u0027s recent work. I\u0027d like to have more tests with upgrade.",
       "parentUuid": "5cd13306_d6ad66dc",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd9004a_0bf3c980",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-20T15:27:23Z",
+      "side": 1,
+      "message": "Thank you for explanation here, too. Added tests for stop with upgrade.\nAlong with the change, I introduced a small utility SetupMiniContainer() to share the common code.",
+      "parentUuid": "3be75134_7d842baa",
       "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
