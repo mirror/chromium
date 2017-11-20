@@ -20,19 +20,6 @@ class MockMediaStreamDispatcher : public MediaStreamDispatcher {
   MockMediaStreamDispatcher();
   ~MockMediaStreamDispatcher() override;
 
-  void GenerateStream(
-      int request_id,
-      const base::WeakPtr<MediaStreamDispatcherEventHandler>& event_handler,
-      const StreamControls& controls,
-      bool is_procesing_user_gesture) override;
-  void CancelGenerateStream(
-      int request_id,
-      const base::WeakPtr<MediaStreamDispatcherEventHandler>& event_handler)
-      override;
-  void StopStreamDevice(const MediaStreamDevice& device) override;
-  int video_session_id(const std::string& label) override;
-  int audio_session_id(const std::string& label) override;
-
   int audio_input_request_id() const { return audio_input_request_id_; }
   int request_stream_counter() const { return request_stream_counter_; }
   void IncrementSessionId() { ++session_id_; }
@@ -50,7 +37,6 @@ class MockMediaStreamDispatcher : public MediaStreamDispatcher {
   void AddVideoDeviceToArray(bool facing_user, const std::string& device_id);
 
   int audio_input_request_id_;
-  base::WeakPtr<MediaStreamDispatcherEventHandler> event_handler_;
   int request_stream_counter_;
   int stop_audio_device_counter_;
   int stop_video_device_counter_;

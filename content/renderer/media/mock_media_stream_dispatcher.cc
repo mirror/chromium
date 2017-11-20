@@ -25,55 +25,6 @@ MockMediaStreamDispatcher::MockMediaStreamDispatcher()
 
 MockMediaStreamDispatcher::~MockMediaStreamDispatcher() {}
 
-void MockMediaStreamDispatcher::GenerateStream(
-    int request_id,
-    const base::WeakPtr<MediaStreamDispatcherEventHandler>& event_handler,
-    const StreamControls& controls,
-    bool is_processing_user_gesture) {
-  // Audio and video share the same request so we use |audio_input_request_id_|
-  // only.
-  audio_input_request_id_ = request_id;
-
-  stream_label_ = "local_stream" + base::IntToString(request_id);
-  audio_devices_.clear();
-  video_devices_.clear();
-
-  if (controls.audio.requested) {
-    AddAudioDeviceToArray(false, controls.audio.device_id);
-  }
-  if (controls.video.requested) {
-    AddVideoDeviceToArray(true, controls.video.device_id);
-  }
-  ++request_stream_counter_;
-}
-
-void MockMediaStreamDispatcher::CancelGenerateStream(
-    int request_id,
-    const base::WeakPtr<MediaStreamDispatcherEventHandler>& event_handler) {
-  EXPECT_EQ(request_id, audio_input_request_id_);
-}
-
-void MockMediaStreamDispatcher::StopStreamDevice(
-    const MediaStreamDevice& device) {
-  if (IsAudioInputMediaType(device.type)) {
-    ++stop_audio_device_counter_;
-    return;
-  }
-  if (IsVideoMediaType(device.type)) {
-    ++stop_video_device_counter_;
-    return;
-  }
-  NOTREACHED();
-}
-
-int MockMediaStreamDispatcher::video_session_id(const std::string& label) {
-  return -1;
-}
-
-int MockMediaStreamDispatcher::audio_session_id(const std::string& label) {
-  return -1;
-}
-
 void MockMediaStreamDispatcher::AddAudioDeviceToArray(
     bool matched_output,
     const std::string& device_id) {

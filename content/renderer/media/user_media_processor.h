@@ -16,6 +16,7 @@
 #include "base/sequence_checker.h"
 #include "content/common/content_export.h"
 #include "content/common/media/media_devices.mojom.h"
+#include "content/common/media/media_stream.mojom.h"
 #include "content/renderer/media/media_stream_dispatcher_eventhandler.h"
 #include "content/renderer/media/media_stream_source.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
@@ -105,12 +106,6 @@ class CONTENT_EXPORT UserMediaProcessor
   }
 
   // MediaStreamDispatcherEventHandler implementation.
-  void OnStreamGenerated(int request_id,
-                         const std::string& label,
-                         const MediaStreamDevices& audio_devices,
-                         const MediaStreamDevices& video_devices) override;
-  void OnStreamGenerationFailed(int request_id,
-                                MediaStreamRequestResult result) override;
   void OnDeviceStopped(const std::string& label,
                        const MediaStreamDevice& device) override;
 
@@ -144,8 +139,18 @@ class CONTENT_EXPORT UserMediaProcessor
   const VideoCaptureSettings& VideoCaptureSettingsForTesting() const;
 
  private:
+  friend class UserMediaClientImplTest;
+
   class RequestInfo;
   typedef std::vector<blink::WebMediaStreamSource> LocalStreamSources;
+
+  void OnStreamGenerated(int request_id,
+                         MediaStreamRequestResult result,
+                         const std::string& label,
+                         const MediaStreamDevices& audio_devices,
+                         const MediaStreamDevices& video_devices);
+  void OnStreamGenerationFailed(int request_id,
+                                MediaStreamRequestResult result);
 
   bool IsCurrentRequestInfo(int request_id) const;
   bool IsCurrentRequestInfo(
@@ -162,7 +167,7 @@ class CONTENT_EXPORT UserMediaProcessor
   void OnLocalSourceStopped(const blink::WebMediaStreamSource& source);
 
   // Creates a WebKit representation of stream sources based on
-  // |devices| from the MediaStreamDispatcher.
+  // |devices| from the MediaStreamDispatcherHost.
   blink::WebMediaStreamSource InitializeVideoSourceObject(
       const MediaStreamDevice& device);
 
@@ -235,6 +240,7 @@ class CONTENT_EXPORT UserMediaProcessor
   void StopLocalSource(const blink::WebMediaStreamSource& source,
                        bool notify_dispatcher);
 
+  const mojom::MediaStreamDispatcherHostPtr& GetMediaStreamDispatcherHost();
   const ::mojom::MediaDevicesDispatcherHostPtr& GetMediaDevicesDispatcher();
 
   void SetupAudioInput();
@@ -269,6 +275,8 @@ class CONTENT_EXPORT UserMediaProcessor
   LocalStreamSources local_sources_;
   LocalStreamSources pending_local_sources_;
 
+  mojom::MediaStreamDispatcherHostPtr dispatcher_host_;
+
   // UserMedia requests are processed sequentially. |current_request_info_|
   // contains the request currently being processed, if any, and
   // |pending_request_infos_| is a list of queued requests.
@@ -278,7 +286,7 @@ class CONTENT_EXPORT UserMediaProcessor
 
   const scoped_refptr<base::TaskRunner> worker_task_runner_;
 
-  const int render_frame_id_;
+  int render_frame_id_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
