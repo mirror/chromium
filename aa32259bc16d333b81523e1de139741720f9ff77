@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fadc8eb8_44d8ae38",
+        "filename": "ash/public/interfaces/login_screen.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-20T13:12:26Z",
+      "side": 1,
+      "message": "Are there any restrictions on when this can be called? E.g., does this log the user out? Can it fail (e.g. ShowLockScreen can)?",
+      "revId": "aa32259bc16d333b81523e1de139741720f9ff77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
