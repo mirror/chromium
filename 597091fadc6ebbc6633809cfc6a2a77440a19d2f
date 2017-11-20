@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84c29d5f_c7a8771d",
+        "filename": "ios/chrome/browser/prefs/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-20T10:00:42Z",
+      "side": 1,
+      "message": "No need to repeat the target when the folder has the same name (copied from ninja check deps error? :) ).",
+      "range": {
+        "startLine": 72,
+        "startChar": 29,
+        "endLine": 72,
+        "endChar": 58
+      },
+      "revId": "597091fadc6ebbc6633809cfc6a2a77440a19d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a9fb02_c04ab40c",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-20T10:00:42Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to add a new line below. Move it under \"@class ChromeIdentity;\".",
+      "range": {
+        "startLine": 13,
+        "startChar": 18,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "597091fadc6ebbc6633809cfc6a2a77440a19d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da09495_a13777e3",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-20T10:00:42Z",
+      "side": 1,
+      "message": "*times",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 10
+      },
+      "revId": "597091fadc6ebbc6633809cfc6a2a77440a19d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae3b030_27299284",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-20T10:00:42Z",
+      "side": 1,
+      "message": "Optional nit: s/preferenceService/prefService, or s/preferenceService/prefs.",
+      "range": {
+        "startLine": 65,
+        "startChar": 34,
+        "endLine": 65,
+        "endChar": 51
+      },
+      "revId": "597091fadc6ebbc6633809cfc6a2a77440a19d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb474fe_b61d5742",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-20T10:00:42Z",
+      "side": 1,
+      "message": "Multiline if, so you need to add braces.",
+      "range": {
+        "startLine": 253,
+        "startChar": 48,
+        "endLine": 253,
+        "endChar": 0
+      },
+      "revId": "597091fadc6ebbc6633809cfc6a2a77440a19d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb62b1a_10a8f689",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_egtest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 1259,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-20T10:00:42Z",
+      "side": 1,
+      "message": "A bit unclear.\nTentative: \"Check the sign-in promo already-seen state didn\u0027t change.\"?",
+      "range": {
+        "startLine": 1259,
+        "startChar": 29,
+        "endLine": 1259,
+        "endChar": 42
+      },
+      "revId": "597091fadc6ebbc6633809cfc6a2a77440a19d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39fa42b4_7d7b56af",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 2007,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-20T10:00:42Z",
+      "side": 1,
+      "message": "Idem.",
+      "range": {
+        "startLine": 2007,
+        "startChar": 66,
+        "endLine": 2007,
+        "endChar": 0
+      },
+      "revId": "597091fadc6ebbc6633809cfc6a2a77440a19d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
