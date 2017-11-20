@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "674457fe_32077291",
+        "filename": "chrome/installer/linux/rpm/update_package_provides.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-20T23:24:57Z",
+      "side": 1,
+      "message": "keep this sorted: should go above libdl",
+      "range": {
+        "startLine": 37,
+        "startChar": 5,
+        "endLine": 37,
+        "endChar": 13
+      },
+      "revId": "cc8f385672dee5cc6f7d00cd0f4c4a95401c1448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
