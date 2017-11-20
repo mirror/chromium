@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5d26a31_25e77b3f",
+        "filename": "tools/gn/function_toolchain.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-20T22:28:05Z",
+      "side": 1,
+      "message": "Optional: this could be auto (same below).",
+      "range": {
+        "startLine": 457,
+        "startChar": 2,
+        "endLine": 457,
+        "endChar": 28
+      },
+      "revId": "da57e68fae080e749dc384d4d290a4dc5cbcae41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ec9b8d_5b355b1e",
+        "filename": "tools/gn/functions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-20T22:28:05Z",
+      "side": 1,
+      "message": "Optionally here and below as well. I don\u0027t feel strongly about it though, and the types are short enough that repeating isn\u0027t onerous.",
+      "revId": "da57e68fae080e749dc384d4d290a4dc5cbcae41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
