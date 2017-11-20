@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b8e22a1_6539f397",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-zoom-toolbar/viewer-zoom-toolbar.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-20T21:18:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34365ed8_288ef183",
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34a33066_8c9d557e",
         "filename": "chrome/browser/resources/pdf/open_pdf_params_parser.js",
         "patchSetId": 11
@@ -39,6 +57,30 @@
       "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d55168_3b0f5972",
+        "filename": "chrome/browser/resources/pdf/open_pdf_params_parser.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-20T21:18:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34a33066_8c9d557e",
+      "range": {
+        "startLine": 125,
+        "startChar": 34,
+        "endLine": 125,
+        "endChar": 41
+      },
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "ac073e0e_41a98d21",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-20T21:18:46Z",
+      "side": 1,
+      "message": "Done. This triggered a major refactor, PTAL.",
+      "parentUuid": "a57cb886_304529f7",
+      "range": {
+        "startLine": 192,
+        "startChar": 6,
+        "endLine": 192,
+        "endChar": 21
+      },
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f97adca5_e9a24e53",
         "filename": "chrome/browser/resources/pdf/pdf.js",
         "patchSetId": 11
@@ -79,6 +145,24 @@
       "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feac2f2c_74dd09c3",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-20T21:18:46Z",
+      "side": 1,
+      "message": "In fit-to-page and fit-to-height, we calculate the visible area considering the toolbar will be hidden and align the top of the page with the top of the viewport. In fit-to-width, we don\u0027t align the top of the page with the top of the viewport because we\u0027re not fitting the height, so it\u0027s aligned to the usual place, which is right under the toolbar when it\u0027s visible.",
+      "parentUuid": "f97adca5_e9a24e53",
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +212,54 @@
     },
     {
       "key": {
+        "uuid": "7884f283_23bb1e12",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-20T21:18:46Z",
+      "side": 1,
+      "message": "Done. This also allowed a refactor joining forceFitToPage, forceFitToWidth and forceFitToHeight in viewer-zoom-toolbar.js into forceFit.",
+      "parentUuid": "bc29150e_31a92126",
+      "range": {
+        "startLine": 529,
+        "startChar": 36,
+        "endLine": 529,
+        "endChar": 39
+      },
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7be2fe9_90a9fcd9",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-20T21:18:46Z",
+      "side": 1,
+      "message": "Done but gone.",
+      "parentUuid": "7f77c904_1d1311c6",
+      "range": {
+        "startLine": 529,
+        "startChar": 32,
+        "endLine": 529,
+        "endChar": 34
+      },
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c5465ea_cfdc70a5",
         "filename": "chrome/browser/resources/pdf/pdf.js",
         "patchSetId": 11
@@ -148,6 +280,30 @@
       "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c3b793_3d4f3308",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-20T21:18:46Z",
+      "side": 1,
+      "message": "No, confusingly FitH is fit horizontal and FitV is fit vertical.",
+      "parentUuid": "0c5465ea_cfdc70a5",
+      "range": {
+        "startLine": 532,
+        "startChar": 35,
+        "endLine": 532,
+        "endChar": 41
+      },
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "5199f27a_1750aef6",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-20T21:18:46Z",
+      "side": 1,
+      "message": "See as above.",
+      "parentUuid": "b37487ce_885a3e05",
+      "range": {
+        "startLine": 534,
+        "startChar": 36,
+        "endLine": 534,
+        "endChar": 42
+      },
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24b70ee6_67c152eb",
         "filename": "chrome/browser/resources/pdf/viewport.js",
         "patchSetId": 11
@@ -185,6 +365,24 @@
       "writtenOn": "2017-11-20T18:37:18Z",
       "side": 1,
       "message": "This method claims that it always returns a number. But this is not the case here. Can you either return a number value, or move the responsibility of this check to whoever is calling this method?",
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f241e7b7_d097d42c",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-20T21:18:46Z",
+      "side": 1,
+      "message": "Perhaps I should raise an exception here instead? What\u0027s the usual practice in js?\n\nThe responsibility is technically already the caller\u0027s, as the method doc states. The callers always pass either as true already. In this case, I guess the check should be just removed.",
+      "parentUuid": "24b70ee6_67c152eb",
       "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -214,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "c9f08b84_3dab3474",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-20T21:18:46Z",
+      "side": 1,
+      "message": "Oh I\u0027m sorry, forgot to rewrite this method doc. Done now.",
+      "parentUuid": "02f6f2e9_9cf605eb",
+      "range": {
+        "startLine": 591,
+        "startChar": 27,
+        "endLine": 591,
+        "endChar": 75
+      },
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7083cc18_09481a5e",
         "filename": "chrome/browser/resources/pdf/viewport.js",
         "patchSetId": 11
@@ -228,6 +450,24 @@
       "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc4ef181_c661247e",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-20T21:18:46Z",
+      "side": 1,
+      "message": "It\u0027s called from resize with (false) as well.",
+      "parentUuid": "7083cc18_09481a5e",
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
