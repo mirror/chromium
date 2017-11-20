@@ -34,6 +34,7 @@ PACKAGE_FILTER = [
     "libcups.so",
     "libdbus-1.so",
     "libdl.so",
+    "libdconf.so",
     "libexpat.so",
     "libfontconfig.so",
     "libgcc_s.so",
@@ -68,17 +69,17 @@ REPO_NS = "http://linux.duke.edu/metadata/repo"
 rpm_sources = {}
 for version in SUPPORTED_FEDORA_RELEASES:
   rpm_sources['Fedora ' + version] = [
-      "https://download.fedoraproject.org/pub/fedora/linux/releases/%s/Everything/x86_64/os/" % version,
+      "http://download.fedoraproject.org/pub/fedora/linux/releases/%s/Everything/x86_64/os/" % version,
       # 'updates' must appear after 'releases' since its entries
       # overwrite the originals.
-      "https://download.fedoraproject.org/pub/fedora/linux/updates/%s/x86_64/" % version,
+      "http://download.fedoraproject.org/pub/fedora/linux/updates/%s/x86_64/" % version,
   ]
 for version in SUPPORTED_OPENSUSE_LEAP_RELEASES:
     rpm_sources['openSUSE Leap ' + version] = [
-        "https://download.opensuse.org/distribution/leap/%s/repo/oss/suse/" % version,
+        "http://download.opensuse.org/distribution/leap/%s/repo/oss/suse/" % version,
         # 'update' must appear after 'distribution' since its entries
         # overwrite the originals.
-        "https://download.opensuse.org/update/leap/%s/oss/" % version,
+        "http://download.opensuse.org/update/leap/%s/oss/" % version,
   ]
 
 provides = {}
