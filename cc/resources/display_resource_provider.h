@@ -178,6 +178,7 @@ class CC_EXPORT DisplayResourceProvider : public ResourceProvider {
   void DeclareUsedResourcesFromChild(
       int child,
       const viz::ResourceIdSet& resources_from_child);
+  const viz::ResourceTextureSettings* GetSettings() const { return &settings_; }
 
  private:
   friend class ScopedBatchReturnResources;
