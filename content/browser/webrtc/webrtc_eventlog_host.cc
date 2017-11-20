@@ -1,3 +1,4 @@
+#if 0
 // Copyright 2016 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -16,7 +17,7 @@
 namespace content {
 
 namespace {
-
+//
 // A lower maximum filesize is used on Android because storage space is
 // more scarce on mobile. This upper limit applies to each peerconnection
 // individually, so the total amount of used storage can be a multiple of
@@ -161,3 +162,5 @@ bool WebRTCEventLogHost::WebRtcEventLogRemoved(int peer_connection_local_id) {
 }
 
 }  // namespace content
+
+#endif

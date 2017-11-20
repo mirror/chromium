@@ -1308,9 +1308,6 @@ RenderProcessHostImpl::RenderProcessHostImpl(
       gpu_observer_registered_(false),
       delayed_cleanup_needed_(false),
       within_process_died_observer_(false),
-#if BUILDFLAG(ENABLE_WEBRTC)
-      webrtc_eventlog_host_(id_),
-#endif
       permission_service_context_(new PermissionServiceContext(this)),
       indexed_db_factory_(new IndexedDBDispatcherHost(
           id_,
@@ -1733,8 +1730,8 @@ void RenderProcessHostImpl::CreateMessageFilters() {
       storage_partition_impl_->GetDOMStorageContext()));
 
 #if BUILDFLAG(ENABLE_WEBRTC)
-  peer_connection_tracker_host_ = new PeerConnectionTrackerHost(
-      GetID(), webrtc_eventlog_host_.GetWeakPtr());
+  // TODO(eladalon): !!!
+  peer_connection_tracker_host_ = new PeerConnectionTrackerHost(GetID());
   AddFilter(peer_connection_tracker_host_.get());
   AddFilter(new MediaStreamTrackMetricsHost());
 #endif
@@ -3163,11 +3160,15 @@ void RenderProcessHostImpl::DisableAudioDebugRecordings() {
 
 bool RenderProcessHostImpl::StartLocalWebRtcEventLogging(
     const base::FilePath& base_path) {
-  return webrtc_eventlog_host_.StartLocalWebRtcEventLogging(base_path);
+  // TODO(eladalon): !!!
+//  return webrtc_eventlog_host_.StartLocalWebRtcEventLogging(base_path);
+  return true;
 }
 
 bool RenderProcessHostImpl::StopLocalWebRtcEventLogging() {
-  return webrtc_eventlog_host_.StopLocalWebRtcEventLogging();
+  // TODO(eladalon): !!!
+//  return webrtc_eventlog_host_.StopLocalWebRtcEventLogging();
+  return true;
 }
 
 void RenderProcessHostImpl::SetEchoCanceller3(bool enable) {
