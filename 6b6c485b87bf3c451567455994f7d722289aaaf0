@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e3f07f6_47e51c4c",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-20T00:34:13Z",
+      "side": 1,
+      "message": "What about if there are multiple apps that match the URL?",
+      "revId": "6b6c485b87bf3c451567455994f7d722289aaaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93badc81_d7defd78",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-20T00:34:13Z",
+      "side": 1,
+      "message": "Nit: personally I\u0027m not a fan of encoding type info in variable names (i.e. _ref suffixes), but if you\u0027re going to do it you should be consistent.",
+      "range": {
+        "startLine": 122,
+        "startChar": 7,
+        "endLine": 122,
+        "endChar": 26
+      },
+      "revId": "6b6c485b87bf3c451567455994f7d722289aaaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae40f63c_f8260b7d",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-20T00:34:13Z",
+      "side": 1,
+      "message": "Nit: this is a little non-obvious, could you add a comment?",
+      "range": {
+        "startLine": 130,
+        "startChar": 29,
+        "endLine": 130,
+        "endChar": 43
+      },
+      "revId": "6b6c485b87bf3c451567455994f7d722289aaaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
