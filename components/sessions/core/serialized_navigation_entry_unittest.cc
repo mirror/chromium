@@ -179,6 +179,7 @@ TEST(SerializedNavigationEntryTest, ToSyncData) {
   EXPECT_EQ(test_data::kRedirectURL1.spec(),
             sync_data.navigation_redirect(1).url());
   EXPECT_FALSE(sync_data.has_last_navigation_redirect_url());
+  EXPECT_FALSE(sync_data.has_replaced_navigation());
 }
 
 // Test that the last_navigation_redirect_url is set when needed.  This test is

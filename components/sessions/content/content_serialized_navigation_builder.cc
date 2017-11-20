@@ -17,6 +17,23 @@
 #include "content/public/common/referrer.h"
 
 namespace sessions {
+namespace {
+
+base::Optional<SerializedNavigationEntry::ReplacedEntryData>
+ConvertReplacedEntryData(
+    const base::Optional<content::NavigationEntry::ReplacedEntryData>&
+        input_data) {
+  if (!input_data.has_value())
+    return base::nullopt;
+
+  SerializedNavigationEntry::ReplacedEntryData output_data;
+  output_data.url = input_data->url;
+  output_data.timestamp = input_data->timestamp;
+  output_data.transition_type = input_data->transition_type;
+  return output_data;
+}
+
+}  // namespace
 
 // static
 SerializedNavigationEntry
@@ -45,6 +62,8 @@ ContentSerializedNavigationBuilder::FromNavigationEntry(
     navigation.favicon_url_ = entry.GetFavicon().url;
   navigation.http_status_code_ = entry.GetHttpStatusCode();
   navigation.redirect_chain_ = entry.GetRedirectChain();
+  navigation.replaced_entry_data_ =
+      ConvertReplacedEntryData(entry.GetReplacedEntryData());
   navigation.password_state_ = GetPasswordStateFromNavigation(entry);
 
   for (const auto& handler_entry :
