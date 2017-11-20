@@ -34,6 +34,24 @@
       "revId": "24f68cbf81b0357870652e39443ab680531b64ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6ef6b42_17a748a7",
+        "filename": "chrome/app/google_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-20T19:28:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27ce4517_c1a49b51",
+      "revId": "24f68cbf81b0357870652e39443ab680531b64ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

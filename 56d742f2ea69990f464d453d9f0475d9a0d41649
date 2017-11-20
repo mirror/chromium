@@ -16,6 +16,24 @@
       "revId": "56d742f2ea69990f464d453d9f0475d9a0d41649",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37eed4dd_12280c73",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 8
+      },
+      "lineNbr": 3666,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-20T19:28:07Z",
+      "side": 1,
+      "message": "As discussed, this makes messaging more clear for the user.",
+      "parentUuid": "3378d43b_6ff2b4ec",
+      "revId": "56d742f2ea69990f464d453d9f0475d9a0d41649",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
