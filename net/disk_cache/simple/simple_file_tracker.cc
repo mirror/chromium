@@ -16,6 +16,7 @@ namespace disk_cache {
 SimpleFileTracker::SimpleFileTracker() {}
 
 SimpleFileTracker::~SimpleFileTracker() {
+  DCHECK(lru_.empty());
   DCHECK(tracked_files_.empty());
 }
 
@@ -24,26 +25,30 @@ void SimpleFileTracker::Register(const SimpleSynchronousEntry* owner,
                                  std::unique_ptr<base::File> file) {
   base::AutoLock hold_lock(lock_);
 
-  // Make sure the list exists.
-  auto insert_status = tracked_files_.insert(std::make_pair(
-      owner->entry_file_key().entry_hash, std::vector<TrackedFiles>()));
+  // Make sure the list of everything with given hash exists.
+  auto insert_status = tracked_files_.insert(
+      std::make_pair(owner->entry_file_key().entry_hash,
+                     std::vector<std::unique_ptr<TrackedFiles>>()));
 
-  std::vector<TrackedFiles>& candidates = insert_status.first->second;
+  std::vector<std::unique_ptr<TrackedFiles>>& candidates =
+      insert_status.first->second;
 
-  // See if entry already exists, if not append.
+  // See if entry for |owner| already exists, if not append.
   TrackedFiles* owners_files = nullptr;
-  for (TrackedFiles& candidate : candidates) {
-    if (candidate.owner == owner) {
-      owners_files = &candidate;
+  for (const std::unique_ptr<TrackedFiles>& candidate : candidates) {
+    if (candidate->owner == owner) {
+      owners_files = candidate.get();
       break;
     }
   }
 
   if (!owners_files) {
-    candidates.emplace_back();
-    owners_files = &candidates.back();
+    candidates.emplace_back(new TrackedFiles());
+    owners_files = candidates.back().get();
     owners_files->owner = owner;
     owners_files->key = owner->entry_file_key();
+    lru_.push_front(owners_files);
+    owners_files->position_in_lru = lru_.begin();
   }
 
   int file_index = static_cast<int>(subfile);
@@ -56,14 +61,23 @@ SimpleFileTracker::FileHandle SimpleFileTracker::Acquire(
     const SimpleSynchronousEntry* owner,
     SubFile subfile) {
   base::AutoLock hold_lock(lock_);
-  std::vector<TrackedFiles>::iterator owners_files = Find(owner);
+  TrackedFiles* owners_files = Find(owner);
   int file_index = static_cast<int>(subfile);
 
   DCHECK_EQ(TrackedFiles::TF_REGISTERED, owners_files->state[file_index]);
   owners_files->state[file_index] = TrackedFiles::TF_ACQUIRED;
+  if (owners_files->position_in_lru != lru_.begin())
+    lru_.splice(lru_.begin(), lru_, owners_files->position_in_lru);
+
   return FileHandle(this, owner, subfile,
                     owners_files->files[file_index].get());
 }
+
+SimpleFileTracker::TrackedFiles::TrackedFiles() {
+  std::fill(state, state + kSimpleEntryTotalFileCount, TF_NO_REGISTRATION);
+}
+
+SimpleFileTracker::TrackedFiles::~TrackedFiles() {}
 
 bool SimpleFileTracker::TrackedFiles::Empty() const {
   for (State s : state)
@@ -78,7 +92,7 @@ void SimpleFileTracker::Release(const SimpleSynchronousEntry* owner,
 
   {
     base::AutoLock hold_lock(lock_);
-    std::vector<TrackedFiles>::iterator owners_files = Find(owner);
+    TrackedFiles* owners_files = Find(owner);
     int file_index = static_cast<int>(subfile);
 
     DCHECK(owners_files->state[file_index] == TrackedFiles::TF_ACQUIRED ||
@@ -103,7 +117,7 @@ void SimpleFileTracker::Close(const SimpleSynchronousEntry* owner,
 
   {
     base::AutoLock hold_lock(lock_);
-    std::vector<TrackedFiles>::iterator owners_files = Find(owner);
+    TrackedFiles* owners_files = Find(owner);
     int file_index = static_cast<int>(subfile);
 
     DCHECK(owners_files->state[file_index] == TrackedFiles::TF_ACQUIRED ||
@@ -129,29 +143,34 @@ bool SimpleFileTracker::IsEmptyForTesting() {
   return tracked_files_.empty();
 }
 
-std::vector<SimpleFileTracker::TrackedFiles>::iterator SimpleFileTracker::Find(
+SimpleFileTracker::TrackedFiles* SimpleFileTracker::Find(
     const SimpleSynchronousEntry* owner) {
   auto candidates = tracked_files_.find(owner->entry_file_key().entry_hash);
   DCHECK(candidates != tracked_files_.end());
-  for (std::vector<TrackedFiles>::iterator i = candidates->second.begin();
-       i != candidates->second.end(); ++i) {
-    if (i->owner == owner) {
-      return i;
+  for (const auto& candidate : candidates->second) {
+    if (candidate->owner == owner) {
+      return candidate.get();
     }
   }
   LOG(DFATAL) << "SimpleFileTracker operation on non-found entry";
-  return candidates->second.end();
+  return nullptr;
 }
 
 std::unique_ptr<base::File> SimpleFileTracker::PrepareClose(
-    std::vector<TrackedFiles>::iterator owners_files,
+    TrackedFiles* owners_files,
     int file_index) {
   std::unique_ptr<base::File> file_out =
       std::move(owners_files->files[file_index]);
   owners_files->state[file_index] = TrackedFiles::TF_NO_REGISTRATION;
   if (owners_files->Empty()) {
     auto iter = tracked_files_.find(owners_files->key.entry_hash);
-    iter->second.erase(owners_files);
+    for (auto i = iter->second.begin(); i != iter->second.end(); ++i) {
+      if ((*i).get() == owners_files) {
+        lru_.erase(owners_files->position_in_lru);
+        iter->second.erase(i);
+        break;
+      }
+    }
     if (iter->second.empty())
       tracked_files_.erase(iter);
   }

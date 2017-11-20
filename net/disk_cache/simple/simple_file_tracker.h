@@ -7,6 +7,7 @@
 
 #include <stdint.h>
 #include <algorithm>
+#include <list>
 #include <memory>
 #include <unordered_map>
 #include <vector>
@@ -133,9 +134,8 @@ class NET_EXPORT_PRIVATE SimpleFileTracker {
       TF_ACQUIRED_PENDING_CLOSE = 3,
     };
 
-    TrackedFiles() {
-      std::fill(state, state + kSimpleEntryTotalFileCount, TF_NO_REGISTRATION);
-    }
+    TrackedFiles();
+    ~TrackedFiles();
 
     bool Empty() const;
 
@@ -157,23 +157,25 @@ class NET_EXPORT_PRIVATE SimpleFileTracker {
     std::unique_ptr<base::File> files[kSimpleEntryTotalFileCount];
 
     State state[kSimpleEntryTotalFileCount];
+    std::list<TrackedFiles*>::iterator position_in_lru;
   };
 
   // Marks the file that was previously returned by Acquire as eligible for
   // closing again. Called by ~FileHandle.
   void Release(const SimpleSynchronousEntry* owner, SubFile subfile);
 
-  // |*found| will be set to whether the entry was found or not.
-  std::vector<TrackedFiles>::iterator Find(const SimpleSynchronousEntry* owner);
+  // Precondition: entry for given |owner| must already be in tracked_files_
+  TrackedFiles* Find(const SimpleSynchronousEntry* owner);
 
   // Handles state transition of closing file (when we are not deferring it),
-  // and moves the file out. Note that this may invalidate |owners_files|.
-  std::unique_ptr<base::File> PrepareClose(
-      std::vector<TrackedFiles>::iterator owners_files,
-      int file_index);
+  // and moves the file out. Note that this may delete |*owners_files|.
+  std::unique_ptr<base::File> PrepareClose(TrackedFiles* owners_files,
+                                           int file_index);
 
   base::Lock lock_;
-  std::unordered_map<uint64_t, std::vector<TrackedFiles>> tracked_files_;
+  std::unordered_map<uint64_t, std::vector<std::unique_ptr<TrackedFiles>>>
+      tracked_files_;
+  std::list<TrackedFiles*> lru_;
 
   DISALLOW_COPY_AND_ASSIGN(SimpleFileTracker);
 };
