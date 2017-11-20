@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "87a9b25b_c53f0b22",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-20T22:32:23Z",
+      "side": 1,
+      "message": "Done\n\nFor now I will keep on the page and show no \"configure\" or \"connect\" button when Arc VPN is disconnected.",
+      "parentUuid": "58d59997_338d53f9",
+      "revId": "d8d00158f7bd391448577c7dd4d70f4ca192a429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35289046_c6da5b69",
         "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
         "patchSetId": 13
@@ -105,6 +123,24 @@
       "revId": "d8d00158f7bd391448577c7dd4d70f4ca192a429",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "593ed1aa_debda54c",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-20T22:32:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9411974f_33cb71fd",
+      "revId": "d8d00158f7bd391448577c7dd4d70f4ca192a429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
