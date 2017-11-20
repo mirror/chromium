@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc22da94_874eb073",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/cssScale-expected.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1172708
+      },
+      "writtenOn": "2017-11-20T15:58:01Z",
+      "side": 1,
+      "message": "after replace double with CSSNumberish,\nsome codes are auto-generated in order to replace undefine with no-passing args like below. \ni think we should see how to make auto-gen binding codes.\n \nin gen/blink/bindings/core/v8/V8CSSScale.cpp\n\n  DoubleOrCSSNumericValue x;\n  DoubleOrCSSNumericValue y;\n  DoubleOrCSSNumericValue z;\n  int numArgsPassed \u003d info.Length();\n  while (numArgsPassed \u003e 0) {\n    if (!info[numArgsPassed - 1]-\u003eIsUndefined())\n      break;\n    --numArgsPassed;\n  }\n  V8DoubleOrCSSNumericValue::ToImpl(info.GetIsolate(), info[0], x, UnionTypeConversionMode::kNotNullable, exceptionState);\n  if (exceptionState.HadException())\n    return;",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 12
+      },
+      "revId": "a2f61e2c229ebe468962b63c4f3c4cdf78706dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab360a84_b183899e",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/stylevalue-subclasses/cssScale.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1172708
+      },
+      "writtenOn": "2017-11-20T15:58:01Z",
+      "side": 1,
+      "message": "actually when i see this tests, i confused.\n\nbecause double types are taken to constructor and then when get values from attributes, it should be double type.\nbut double types set using attribute and then when get values from attributes, it should be obejct(css.number) type at line 64.\n\ni think two tests are not matched.\n\nso i changed tests using assert_style_value_equals function.\nactually i am not sure is it right.\n\nor is it should be same setting type with getting type from attributes when using CSSNumberish?",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 31
+      },
+      "revId": "a2f61e2c229ebe468962b63c4f3c4cdf78706dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
