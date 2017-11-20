@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "562b3124_d21644fc",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-20T20:56:45Z",
+      "side": 1,
+      "message": "This seems flipped with onLinkClicked. Why are we waiting for a cancel action before accepting?",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 34
+      },
+      "revId": "3c6773ef2dd4f9304e1fef6e96afc6af0a7def0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
