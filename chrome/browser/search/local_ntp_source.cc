@@ -64,6 +64,12 @@ using search_provider_logos::LogoService;
 
 namespace {
 
+// Whether inline interactive Doodles are supported. This only has an effect if
+// DoodlesOnLocalNtp is enabled. If this is disabled, then interactive Doodles
+// are treated as simple Doodles which link to a full page Doodle.
+const base::Feature kInteractiveDoodlesOnLocalNtp{
+    "InteractiveDoodlesOnLocalNtp", base::FEATURE_ENABLED_BY_DEFAULT};
+
 // Signifies a locally constructed resource, i.e. not from grit/.
 const int kLocalResource = -1;
 
@@ -253,6 +259,16 @@ std::unique_ptr<base::DictionaryValue> ConvertLogoMetadataToDict(
   result->SetString("altText", meta.alt_text);
   result->SetString("mimeType", meta.mime_type);
   result->SetString("animatedUrl", meta.animated_url.spec());
+
+  // If support for interactive Doodles is disabled, treat them as simple
+  // Doodles instead and use the full page URL as the target URL.
+  if (meta.type == search_provider_logos::LogoType::INTERACTIVE &&
+      !base::FeatureList::IsEnabled(kInteractiveDoodlesOnLocalNtp)) {
+    result->SetString(
+        "type", LogoTypeToString(search_provider_logos::LogoType::SIMPLE));
+    result->SetString("onClickUrl", meta.full_page_url.spec());
+  }
+
   return result;
 }
 
