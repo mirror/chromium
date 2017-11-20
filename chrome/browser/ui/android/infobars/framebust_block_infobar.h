@@ -9,7 +9,6 @@
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
 #include "chrome/browser/ui/android/infobars/infobar_android.h"
-#include "chrome/browser/ui/android/interventions/framebust_block_message_delegate_bridge.h"
 
 namespace content {
 class WebContents;
@@ -35,8 +34,10 @@ class FramebustBlockInfoBar : public InfoBarAndroid {
   base::android::ScopedJavaLocalRef<jobject> CreateRenderInfoBar(
       JNIEnv* env) override;
   void ProcessButton(int action) override;
+  void OnLinkClicked(JNIEnv* env,
+                     const base::android::JavaParamRef<jobject>& obj) override;
 
-  std::unique_ptr<FramebustBlockMessageDelegateBridge> delegate_bridge_;
+  std::unique_ptr<FramebustBlockMessageDelegate> delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(FramebustBlockInfoBar);
 };
