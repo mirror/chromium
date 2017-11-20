@@ -65,8 +65,6 @@ class CONTENT_EXPORT WebRtcAudioDeviceNotImpl
   int32_t StereoPlayout(bool* enabled) const override;
   int32_t SetStereoRecording(bool enable) override;
   int32_t StereoRecording(bool* enabled) const override;
-  int32_t SetRecordingChannel(const ChannelType channel) override;
-  int32_t RecordingChannel(ChannelType* channel) const override;
   int32_t SetRecordingSampleRate(const uint32_t samples_per_sec) override;
   int32_t SetPlayoutSampleRate(const uint32_t samples_per_sec) override;
   int32_t SetLoudspeakerStatus(bool enable) override;
