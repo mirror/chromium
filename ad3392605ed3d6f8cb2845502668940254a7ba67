@@ -22,6 +22,30 @@
       "revId": "ad3392605ed3d6f8cb2845502668940254a7ba67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "651bab54_38edc3a6",
+        "filename": "chrome/browser/resource_coordinator/discard_metrics_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-20T20:45:13Z",
+      "side": 1,
+      "message": "I\u0027m working on a refactoring where TabManager is the \"brain\" that decides when to discard LifetimeUnits. LifetimeUnits will perform the actual discarding and call these functions to record histograms. I don\u0027t want LifetimeUnits to depend on TabManagerStatsCollector unless it\u0027s absolutely necessary. Also, I prefer not to add methods to TabManagerStatsCollector if they don\u0027t interact with what\u0027s already in TabManagerStatsCollector.\n\nhttps://docs.google.com/a/google.com/document/d/1EBDGRjrmPVnfZSmXfEJAHn1vil8XoAcS6vRw5g9GZIc/edit?usp\u003dsharing",
+      "parentUuid": "034cc219_88351065",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 23
+      },
+      "revId": "ad3392605ed3d6f8cb2845502668940254a7ba67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
