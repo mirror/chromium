@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2f04a986_fc080c05",
+        "filename": "cc/paint/paint_filter.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-20T17:47:56Z",
+      "side": 1,
+      "message": "nit: I think this is bikeshedding but I usually put Unknown PaintFilter::Type so that it\u0027s clear from the output what the variable type was that is unknown, but I don\u0027t think it matters. This is fine too.",
+      "parentUuid": "02d98804_83fdd167",
+      "range": {
+        "startLine": 86,
+        "startChar": 10,
+        "endLine": 86,
+        "endChar": 13
+      },
+      "revId": "86a627f2fbf2bf69e817487f3d00f3db83435f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc14c60b_f8e36c41",
         "filename": "cc/paint/paint_filter.h",
         "patchSetId": 11
@@ -342,6 +366,30 @@
       "side": 1,
       "message": "Did you mean have a public getter? I\u0027m trying to avoid having sk filter usage outside of raster code.",
       "parentUuid": "379c73e1_635f6b04",
+      "range": {
+        "startLine": 103,
+        "startChar": 30,
+        "endLine": 103,
+        "endChar": 41
+      },
+      "revId": "86a627f2fbf2bf69e817487f3d00f3db83435f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d388454_aab0855a",
+        "filename": "cc/paint/paint_filter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-20T17:47:56Z",
+      "side": 1,
+      "message": "Yeah that\u0027s kind of what I mean. It can be private/protected getter too if you only access it from friends, it\u0027s just foo-\u003ebar_ looks bad. So maybe just have foo-\u003ebar() even if bar_ is directly accessible.",
+      "parentUuid": "a50f45cd_e4f34a4a",
       "range": {
         "startLine": 103,
         "startChar": 30,
