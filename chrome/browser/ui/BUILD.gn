@@ -1565,6 +1565,8 @@ split_static_library("ui") {
       "webui/settings/settings_default_browser_handler.h",
       "webui/settings/system_handler.cc",
       "webui/settings/system_handler.h",
+      "webui/signin/finish_login.cc",
+      "webui/signin/finish_login.h",
       "webui/signin/inline_login_handler.cc",
       "webui/signin/inline_login_handler.h",
       "webui/signin/inline_login_handler_impl.cc",

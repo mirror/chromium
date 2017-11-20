@@ -44,6 +44,7 @@ class InlineLoginHandlerImpl : public InlineLoginHandler,
 
  private:
   friend class InlineLoginUIBrowserTest;
+  friend class DiceTurnSyncOnHelper;
   FRIEND_TEST_ALL_PREFIXES(InlineLoginUIBrowserTest, CanOfferNoProfile);
   FRIEND_TEST_ALL_PREFIXES(InlineLoginUIBrowserTest, CanOffer);
   FRIEND_TEST_ALL_PREFIXES(InlineLoginUIBrowserTest, CanOfferProfileConnected);
@@ -53,10 +54,7 @@ class InlineLoginHandlerImpl : public InlineLoginHandler,
   FRIEND_TEST_ALL_PREFIXES(InlineLoginUIBrowserTest, CanOfferNoSigninCookies);
 
   // Argument to CanOffer().
-  enum CanOfferFor {
-    CAN_OFFER_FOR_ALL,
-    CAN_OFFER_FOR_SECONDARY_ACCOUNT
-  };
+  enum CanOfferFor { CAN_OFFER_FOR_ALL, CAN_OFFER_FOR_SECONDARY_ACCOUNT };
 
   static bool CanOffer(Profile* profile,
                        CanOfferFor can_offer_for,
@@ -179,8 +177,7 @@ class InlineSigninHelper : public GaiaAuthConsumer {
 
   // Overridden from GaiaAuthConsumer.
   void OnClientOAuthSuccess(const ClientOAuthResult& result) override;
-  void OnClientOAuthFailure(const GoogleServiceAuthError& error)
-      override;
+  void OnClientOAuthFailure(const GoogleServiceAuthError& error) override;
 
   void OnClientOAuthSuccessAndBrowserOpened(const ClientOAuthResult& result,
                                             Profile* profile,
@@ -190,7 +187,9 @@ class InlineSigninHelper : public GaiaAuthConsumer {
   // for tokens.
   virtual void CreateSyncStarter(
       Browser* browser,
+      content::WebContents* contents,
       const GURL& current_url,
+      const GURL& continue_url,
       const std::string& refresh_token,
       OneClickSigninSyncStarter::ProfileMode profile_mode,
       OneClickSigninSyncStarter::StartSyncMode start_mode,

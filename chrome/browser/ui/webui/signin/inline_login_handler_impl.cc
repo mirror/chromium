@@ -223,8 +223,8 @@ void InlineSigninHelper::OnClientOAuthSuccessAndBrowserOpened(
 
   // Prime the account tracker with this combination of gaia id/display email.
   std::string account_id =
-      AccountTrackerServiceFactory::GetForProfile(profile_)
-          ->SeedAccountInfo(gaia_id_, email_);
+      AccountTrackerServiceFactory::GetForProfile(profile_)->SeedAccountInfo(
+          gaia_id_, email_);
 
   signin_metrics::AccessPoint access_point =
       signin::GetAccessPointForPromoURL(current_url_);
@@ -244,8 +244,8 @@ void InlineSigninHelper::OnClientOAuthSuccessAndBrowserOpened(
   if (reason == signin_metrics::Reason::REASON_REAUTHENTICATION ||
       reason == signin_metrics::Reason::REASON_UNLOCK ||
       reason == signin_metrics::Reason::REASON_ADD_SECONDARY_ACCOUNT) {
-    ProfileOAuth2TokenServiceFactory::GetForProfile(profile_)->
-        UpdateCredentials(account_id, result.refresh_token);
+    ProfileOAuth2TokenServiceFactory::GetForProfile(profile_)
+        ->UpdateCredentials(account_id, result.refresh_token);
 
     if (signin::IsAutoCloseEnabledInURL(current_url_)) {
       // Close the gaia sign in tab via a task to make sure we aren't in the
@@ -279,14 +279,16 @@ void InlineSigninHelper::OnClientOAuthSuccessAndBrowserOpened(
     }
 
     OneClickSigninSyncStarter::ConfirmationRequired confirmation_required =
-        confirm_untrusted_signin_ ?
-            OneClickSigninSyncStarter::CONFIRM_UNTRUSTED_SIGNIN :
-            OneClickSigninSyncStarter::CONFIRM_AFTER_SIGNIN;
+        confirm_untrusted_signin_
+            ? OneClickSigninSyncStarter::CONFIRM_UNTRUSTED_SIGNIN
+            : OneClickSigninSyncStarter::CONFIRM_AFTER_SIGNIN;
 
     bool start_signin = !HandleCrossAccountError(
         result.refresh_token, confirmation_required, start_mode);
     if (start_signin) {
-      CreateSyncStarter(browser, current_url_, result.refresh_token,
+      CreateSyncStarter(browser, contents, current_url_,
+                        signin::GetNextPageURLForPromoURL(current_url_),
+                        result.refresh_token,
                         OneClickSigninSyncStarter::CURRENT_PROFILE, start_mode,
                         confirmation_required);
       base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
@@ -296,7 +298,9 @@ void InlineSigninHelper::OnClientOAuthSuccessAndBrowserOpened(
 
 void InlineSigninHelper::CreateSyncStarter(
     Browser* browser,
+    content::WebContents* contents,
     const GURL& current_url,
+    const GURL& continue_url,
     const std::string& refresh_token,
     OneClickSigninSyncStarter::ProfileMode profile_mode,
     OneClickSigninSyncStarter::StartSyncMode start_mode,
@@ -304,9 +308,8 @@ void InlineSigninHelper::CreateSyncStarter(
   // OneClickSigninSyncStarter will delete itself once the job is done.
   new OneClickSigninSyncStarter(
       profile_, browser, gaia_id_, email_, password_, refresh_token,
-      signin::GetAccessPointForPromoURL(current_url),
-      signin::GetSigninReasonForPromoURL(current_url), profile_mode, start_mode,
-      confirmation_required,
+      profile_mode, start_mode, contents, confirmation_required, current_url,
+      continue_url,
       base::Bind(&InlineLoginHandlerImpl::SyncStarterCallback, handler_));
 }
 
@@ -350,14 +353,15 @@ void InlineSigninHelper::ConfirmEmailAction(
     case SigninEmailConfirmationDialog::CREATE_NEW_USER:
       base::RecordAction(
           base::UserMetricsAction("Signin_ImportDataPrompt_DontImport"));
-      CreateSyncStarter(browser, current_url_, refresh_token,
-                        OneClickSigninSyncStarter::NEW_PROFILE, start_mode,
-                        confirmation_required);
+      CreateSyncStarter(browser, web_contents, current_url_, GURL(),
+                        refresh_token, OneClickSigninSyncStarter::NEW_PROFILE,
+                        start_mode, confirmation_required);
       break;
     case SigninEmailConfirmationDialog::START_SYNC:
       base::RecordAction(
           base::UserMetricsAction("Signin_ImportDataPrompt_ImportData"));
-      CreateSyncStarter(browser, current_url_, refresh_token,
+      CreateSyncStarter(browser, web_contents, current_url_, GURL(),
+                        refresh_token,
                         OneClickSigninSyncStarter::CURRENT_PROFILE, start_mode,
                         confirmation_required);
       break;
@@ -376,12 +380,12 @@ void InlineSigninHelper::ConfirmEmailAction(
 }
 
 void InlineSigninHelper::OnClientOAuthFailure(
-  const GoogleServiceAuthError& error) {
+    const GoogleServiceAuthError& error) {
   if (handler_)
     handler_->HandleLoginError(error.ToString(), base::string16());
 
   AboutSigninInternals* about_signin_internals =
-    AboutSigninInternalsFactory::GetForProfile(profile_);
+      AboutSigninInternalsFactory::GetForProfile(profile_);
   about_signin_internals->OnRefreshTokenReceived("Failure");
 
   base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
@@ -468,9 +472,8 @@ bool InlineLoginHandlerImpl::CanOffer(Profile* profile,
                                 signin_metrics::HISTOGRAM_ACCOUNT_MISSMATCH,
                                 signin_metrics::HISTOGRAM_REAUTH_MAX);
       if (error_message) {
-        error_message->assign(
-            l10n_util::GetStringFUTF8(IDS_SYNC_WRONG_EMAIL,
-                                      base::UTF8ToUTF16(current_email)));
+        error_message->assign(l10n_util::GetStringFUTF8(
+            IDS_SYNC_WRONG_EMAIL, base::UTF8ToUTF16(current_email)));
       }
       return false;
     }
@@ -481,8 +484,8 @@ bool InlineLoginHandlerImpl::CanOffer(Profile* profile,
       ProfileManager* profile_manager = g_browser_process->profile_manager();
       if (profile_manager) {
         std::vector<ProfileAttributesEntry*> entries =
-            profile_manager->GetProfileAttributesStorage().
-                GetAllProfilesAttributes();
+            profile_manager->GetProfileAttributesStorage()
+                .GetAllProfilesAttributes();
 
         for (const ProfileAttributesEntry* entry : entries) {
           // For backward compatibility, need to check also the username of the
@@ -707,8 +710,8 @@ InlineLoginHandlerImpl::FinishCompleteLoginParams::FinishCompleteLoginParams(
 InlineLoginHandlerImpl::FinishCompleteLoginParams::FinishCompleteLoginParams(
     const FinishCompleteLoginParams& other) = default;
 
-InlineLoginHandlerImpl::
-    FinishCompleteLoginParams::~FinishCompleteLoginParams() {}
+InlineLoginHandlerImpl::FinishCompleteLoginParams::
+    ~FinishCompleteLoginParams() {}
 
 // static
 void InlineLoginHandlerImpl::FinishCompleteLogin(
@@ -744,9 +747,9 @@ void InlineLoginHandlerImpl::FinishCompleteLogin(
   bool switch_to_advanced =
       params.choose_what_to_sync &&
       (access_point != signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS);
-  LogHistogramValue(
-      switch_to_advanced ? signin_metrics::HISTOGRAM_WITH_ADVANCED :
-                           signin_metrics::HISTOGRAM_WITH_DEFAULTS);
+  LogHistogramValue(switch_to_advanced
+                        ? signin_metrics::HISTOGRAM_WITH_ADVANCED
+                        : signin_metrics::HISTOGRAM_WITH_DEFAULTS);
 
   CanOfferFor can_offer_for = CAN_OFFER_FOR_ALL;
   switch (reason) {
