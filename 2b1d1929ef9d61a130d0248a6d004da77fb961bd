@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e6d3b995_d02c441a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-20T02:49:38Z",
+      "side": 1,
+      "message": "Typo for content?",
+      "range": {
+        "startLine": 9,
+        "startChar": 14,
+        "endLine": 9,
+        "endChar": 21
+      },
+      "revId": "2b1d1929ef9d61a130d0248a6d004da77fb961bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3f49c89_a2cd81fc",
         "filename": "chrome/app/settings_strings.grdp",
         "patchSetId": 15
@@ -13,6 +36,91 @@
       "writtenOn": "2017-11-20T00:57:54Z",
       "side": 1,
       "message": "Made some comments in the doc about these strings.",
+      "revId": "2b1d1929ef9d61a130d0248a6d004da77fb961bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6051e83_5d4bc4be",
+        "filename": "chrome/browser/android/resource_id.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-20T02:49:38Z",
+      "side": 1,
+      "message": "Not sure about how Android works, but are you supposed to add pictures somewhere under chrome/android/java/res/ to get this to work?\n\nMaybe split that out into a separate patch?",
+      "revId": "2b1d1929ef9d61a130d0248a6d004da77fb961bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e5e3fee_f34bb30a",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-20T02:49:38Z",
+      "side": 1,
+      "message": "Hide this on |enableClipboardContentSetting_| - see how ContentSettingsTypes.SOUND does it above.",
+      "revId": "2b1d1929ef9d61a130d0248a6d004da77fb961bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12d6b386_b1c60360",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-20T02:49:38Z",
+      "side": 1,
+      "message": "Move between MIDI and unsandboxed plugins? I\u0027ve just realised unsandboxed plugins is ordered inconsistently, but until that\u0027s fixed we should stick with showing Clipboard after MIDI, same as the order in the page info bubble.",
+      "revId": "2b1d1929ef9d61a130d0248a6d004da77fb961bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f737d4b_e188869e",
+        "filename": "chrome/browser/resources/settings/site_settings_page/site_settings_page.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-20T02:49:38Z",
+      "side": 1,
+      "message": "Please reorder between MIDI and Zoom?",
+      "revId": "2b1d1929ef9d61a130d0248a6d004da77fb961bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2b32c8f_566d3d44",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-20T02:49:38Z",
+      "side": 1,
+      "message": "Can you add an override for Clipboard here too?",
       "revId": "2b1d1929ef9d61a130d0248a6d004da77fb961bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
