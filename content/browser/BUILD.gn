@@ -1028,6 +1028,8 @@ jumbo_source_set("browser") {
     "loader/wake_lock_resource_throttle.h",
     "loader_delegate_impl.cc",
     "loader_delegate_impl.h",
+    "locks/locks_context.cc",
+    "locks/locks_context.h",
     "mach_broker_mac.h",
     "mach_broker_mac.mm",
     "manifest/manifest_icon_downloader.cc",
