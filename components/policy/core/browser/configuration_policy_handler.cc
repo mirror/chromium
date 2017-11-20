@@ -360,8 +360,9 @@ void SimplePolicyHandler::ApplyPolicySettings(const PolicyMap& policies,
   if (!pref_path_)
     return;
   const base::Value* value = policies.GetValue(policy_name());
-  if (value)
+  if (value) {
     prefs->SetValue(pref_path_, value->CreateDeepCopy());
+  }
 }
 
 

@@ -27,6 +27,7 @@
 #include "services/service_manager/public/cpp/binder_registry.h"
 
 class ChromeContentBrowserClientParts;
+class PrefRegistrySimple;
 
 namespace base {
 class CommandLine;
@@ -65,6 +66,7 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   ChromeContentBrowserClient();
   ~ChromeContentBrowserClient() override;
 
+  static void RegisterLocalStatePrefs(PrefRegistrySimple* registry);
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
 
   // Notification that the application locale has changed. This allows us to
