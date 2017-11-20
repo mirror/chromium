@@ -54,4 +54,8 @@ void WebExternalTextureLayerImpl::SetNearestNeighbor(bool nearest_neighbor) {
       ->SetNearestNeighbor(nearest_neighbor);
 }
 
+void WebExternalTextureLayerImpl::SetAllowMailboxReuse(bool allow) {
+  static_cast<TextureLayer*>(layer_->layer())->SetAllowMailboxReuse(allow);
+}
+
 }  // namespace cc_blink

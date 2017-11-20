@@ -8,6 +8,7 @@
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
 #include "public/platform/Platform.h"
 #include "skia/ext/texture_handle.h"
+#include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 
 namespace blink {
@@ -26,6 +27,10 @@ gpu::gles2::GLES2Interface* CanvasResource::ContextGL() const {
   if (!context_provider_wrapper_)
     return nullptr;
   return context_provider_wrapper_->ContextProvider()->ContextGL();
+}
+
+GLenum CanvasResource::TextureTarget() const {
+  return GL_TEXTURE_2D;
 }
 
 const gpu::Mailbox& CanvasResource::GpuMailbox() {
@@ -60,12 +65,12 @@ CanvasResource_Skia::CanvasResource_Skia(
     : CanvasResource(std::move(context_provider_wrapper)),
       image_(std::move(image)) {}
 
-std::unique_ptr<CanvasResource_Skia> CanvasResource_Skia::Create(
+scoped_refptr<CanvasResource_Skia> CanvasResource_Skia::Create(
     sk_sp<SkImage> image,
     WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper) {
-  std::unique_ptr<CanvasResource_Skia> resource =
-      WTF::WrapUnique(new CanvasResource_Skia(
-          std::move(image), std::move(context_provider_wrapper)));
+  scoped_refptr<CanvasResource_Skia> resource =
+      AdoptRef(new CanvasResource_Skia(std::move(image),
+                                       std::move(context_provider_wrapper)));
   if (resource->IsValid())
     return resource;
   return nullptr;
@@ -91,14 +96,99 @@ GLuint CanvasResource_Skia::TextureId() const {
       ->fID;
 }
 
+// CanvasResource_Texture
+//==============================================================================
+
+CanvasResource_Texture::CanvasResource_Texture(
+    const IntSize& size,
+    const CanvasColorParams& color_params,
+    WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper)
+    : CanvasResource(std::move(context_provider_wrapper)) {
+  if (!context_provider_wrapper_)
+    return;
+
+  auto gl = context_provider_wrapper_->ContextProvider()->ContextGL();
+  auto gr = context_provider_wrapper_->ContextProvider()->GetGrContext();
+  if (!gl || !gr)
+    return;
+
+  gl->GenTextures(1, &texture_id_);
+  GLenum target = TextureTarget();
+  gl->BindTexture(target, texture_id_);
+  gl->TexImage2D(target, 0 /*level*/, color_params.GLInternalFormat(),
+                 size.Width(), size.Height(), 0 /*border*/,
+                 color_params.GLInternalFormat(), color_params.GLType(),
+                 nullptr /*data*/);
+
+  gr->resetContext(kTextureBinding_GrGLBackendState);
+}
+
+scoped_refptr<CanvasResource_Texture> CanvasResource_Texture::Create(
+    const IntSize& size,
+    const CanvasColorParams& color_params,
+    WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper) {
+  scoped_refptr<CanvasResource_Texture> resource =
+      AdoptRef(new CanvasResource_Texture(size, color_params,
+                                          std::move(context_provider_wrapper)));
+  if (resource->IsValid())
+    return resource;
+  return nullptr;
+}
+
+bool CanvasResource_Texture::IsValid() const {
+  return texture_id_ && context_provider_wrapper_;
+}
+
+void CanvasResource_Texture::Abandon() {
+  WaitSyncTokenBeforeRelease();
+  if (!context_provider_wrapper_ || !texture_id_)
+    return;
+  auto gl = context_provider_wrapper_->ContextProvider()->ContextGL();
+  if (gl)
+    gl->DeleteTextures(1, &texture_id_);
+  texture_id_ = 0;
+  context_provider_wrapper_ = nullptr;
+}
+
+GLuint CanvasResource_Texture::TextureId() const {
+  return texture_id_;
+}
+
+void CanvasResource_Texture::UpdateContents(const SkImage* image,
+                                            const IntRect& update_rect) {
+  DCHECK(image);
+  if (!context_provider_wrapper_ || !IsValid())
+    return;
+
+  auto gl = context_provider_wrapper_->ContextProvider()->ContextGL();
+  if (!gl)
+    return;
+
+  GLuint source_id =
+      skia::GrBackendObjectToGrGLTextureInfo(image->getTextureHandle(true))
+          ->fID;
+
+  gl->CopySubTextureCHROMIUM(
+      source_id, 0 /*sourceLevel*/, TextureTarget(), texture_id_,
+      0 /*destLevel*/, update_rect.X() /*xoffset*/, update_rect.Y() /*yoffset*/,
+      update_rect.X() /*x*/,
+      image->height() - update_rect.Height() - update_rect.Y() /*y*/,
+      update_rect.Width(), update_rect.Height(), GL_TRUE /*unpackFlipY*/,
+      GL_FALSE /*unpackPremultiplyAlpha*/, GL_FALSE /*unpackUnmultiplyAlpha*/);
+}
+
 // CanvasResource_GpuMemoryBuffer
 //==============================================================================
 
 CanvasResource_GpuMemoryBuffer::CanvasResource_GpuMemoryBuffer(
     const IntSize& size,
     const CanvasColorParams& color_params,
+    gfx::BufferUsage buffer_usage,
     WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper)
     : CanvasResource(std::move(context_provider_wrapper)),
+#if DCHECK_IS_ON()
+      buffer_usage_(buffer_usage),
+#endif
       color_params_(color_params) {
   if (!context_provider_wrapper_)
     return;
@@ -113,7 +203,7 @@ CanvasResource_GpuMemoryBuffer::CanvasResource_GpuMemoryBuffer(
   gpu_memory_buffer_ = gpu_memory_buffer_manager->CreateGpuMemoryBuffer(
       gfx::Size(size.Width(), size.Height()),
       color_params_.GetBufferFormat(),  // Use format
-      gfx::BufferUsage::SCANOUT, gpu::kNullSurfaceHandle);
+      buffer_usage, gpu::kNullSurfaceHandle);
   if (!gpu_memory_buffer_) {
     return;
   }
@@ -127,23 +217,28 @@ CanvasResource_GpuMemoryBuffer::CanvasResource_GpuMemoryBuffer(
 
   gpu_memory_buffer_->SetColorSpace(color_params.GetStorageGfxColorSpace());
   gl->GenTextures(1, &texture_id_);
-  const GLenum target = GL_TEXTURE_RECTANGLE_ARB;
+  GLenum target = TextureTarget();
   gl->BindTexture(target, texture_id_);
   gl->BindTexImage2DCHROMIUM(target, image_id_);
   gr->resetContext(kTextureBinding_GrGLBackendState);
 }
 
-std::unique_ptr<CanvasResource_GpuMemoryBuffer>
+scoped_refptr<CanvasResource_GpuMemoryBuffer>
 CanvasResource_GpuMemoryBuffer::Create(
     const IntSize& size,
     const CanvasColorParams& color_params,
+    gfx::BufferUsage buffer_usage,
     WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper) {
-  std::unique_ptr<CanvasResource_GpuMemoryBuffer> resource =
-      WTF::WrapUnique(new CanvasResource_GpuMemoryBuffer(
-          size, color_params, context_provider_wrapper));
+  scoped_refptr<CanvasResource_GpuMemoryBuffer> resource =
+      AdoptRef(new CanvasResource_GpuMemoryBuffer(
+          size, color_params, buffer_usage, context_provider_wrapper));
   if (resource->IsValid())
     return resource;
   return nullptr;
+}
+
+GLenum CanvasResource_GpuMemoryBuffer::TextureTarget() const {
+  return GL_TEXTURE_RECTANGLE_ARB;  // Required for IOSurface support
 }
 
 void CanvasResource_GpuMemoryBuffer::Abandon() {
@@ -153,7 +248,7 @@ void CanvasResource_GpuMemoryBuffer::Abandon() {
   auto gl = context_provider_wrapper_->ContextProvider()->ContextGL();
   auto gr = context_provider_wrapper_->ContextProvider()->GetGrContext();
   if (gl && texture_id_) {
-    GLenum target = GL_TEXTURE_RECTANGLE_ARB;
+    GLenum target = TextureTarget();
     gl->BindTexture(target, texture_id_);
     gl->ReleaseTexImage2DCHROMIUM(target, image_id_);
     gl->DestroyImageCHROMIUM(image_id_);
@@ -166,6 +261,61 @@ void CanvasResource_GpuMemoryBuffer::Abandon() {
   image_id_ = 0;
   texture_id_ = 0;
   gpu_memory_buffer_ = nullptr;
+}
+
+void CanvasResource_GpuMemoryBuffer::UpdateContents(
+    const SkImage* image,
+    const IntRect& update_rect) {
+  DCHECK(image);
+
+  if (!context_provider_wrapper_ || !image_id_)
+    return;
+
+  auto gl = context_provider_wrapper_->ContextProvider()->ContextGL();
+  if (!gl)
+    return;
+
+  GLenum target = TextureTarget();
+
+  if (image->isTextureBacked()) {
+    DCHECK(buffer_usage_ == gfx::BufferUsage::SCANOUT);
+    GLuint source_id =
+        skia::GrBackendObjectToGrGLTextureInfo(image->getTextureHandle(true))
+            ->fID;
+
+    gl->CopySubTextureCHROMIUM(
+        source_id, 0 /*sourceLevel*/, target, texture_id_, 0 /*destLevel*/,
+        update_rect.X() /*xoffset*/, update_rect.Y() /*yoffset*/,
+        update_rect.X() /*x*/, update_rect.Y() /*y*/, update_rect.Width(),
+        update_rect.Height(), GL_FALSE /*unpackFlipY*/,
+        GL_FALSE /*unpackPremultiplyAlpha*/,
+        GL_FALSE /*unpackUnmultiplyAlpha*/);
+  } else {
+    DCHECK(buffer_usage_ ==
+           gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT);
+    // non-accelerated case
+    if (!gpu_memory_buffer_->Map())
+      return;
+
+    // Copy only the dirty pixels to memory mapped buffer.
+    int dest_bytes_per_row = gpu_memory_buffer_->stride(0);
+    uint8_t* dest_pixels =
+        static_cast<uint8_t*>(gpu_memory_buffer_->memory(0)) +
+        update_rect.Y() * dest_bytes_per_row + update_rect.X() * 4;
+    SkImageInfo dest_image_info =
+        SkImageInfo::MakeN32Premul(update_rect.Width(), update_rect.Height());
+    image->readPixels(dest_image_info, dest_pixels, dest_bytes_per_row,
+                      update_rect.X(), update_rect.Y());
+
+    gpu_memory_buffer_->Unmap();
+
+    // Rebind the chromium image.
+    // Is this really necessary?
+    gl->ActiveTexture(GL_TEXTURE0);
+    gl->BindTexture(target, texture_id_);
+    gl->ReleaseTexImage2DCHROMIUM(target, image_id_);
+    gl->BindTexImage2DCHROMIUM(target, image_id_);
+  }
 }
 
 }  // namespace blink
