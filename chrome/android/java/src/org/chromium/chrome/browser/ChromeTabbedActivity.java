@@ -219,10 +219,12 @@ public class ChromeTabbedActivity
 
     /**
      * Time in ms from when we last backgrounded Chrome until we show the bottom sheet at half.
-     * Time is 3 hours.
+     * Default time is 3 hours.
      * crbug.com/706258
      */
-    private static final long TIME_SINCE_BACKGROUNDED_TO_SHOW_BOTTOM_SHEET_HALF_MS = 10800000L;
+    private static final long TIME_SINCE_BACKGROUNDED_TO_SHOW_BOTTOM_SHEET_HALF_MS =
+            TimeUnit.HOURS.toMillis(3);
+    private static final String PARAM_DELAY_IN_MINS = "delay_in_mins";
 
     // Name of the ChromeTabbedActivity alias that handles MAIN intents.
     public static final String MAIN_LAUNCHER_ACTIVITY_NAME = "com.google.android.apps.chrome.Main";
@@ -964,13 +966,19 @@ public class ChromeTabbedActivity
 
         if (!mIntentHandler.isIntentUserVisible()) return false;
 
-        if (FeatureUtilities.isChromeHomeEnabled()) {
+        if (FeatureUtilities.isChromeHomeEnabled()
+                && ChromeFeatureList.isEnabled(
+                           ChromeFeatureList.CHROME_HOME_INACTIVITY_SHEET_EXPANSION)) {
             BottomSheet bottomSheet = getBottomSheet();
             assert bottomSheet != null;
 
+            String timeoutMinsFieldTrialValue = ChromeFeatureList.getFieldTrialParamByFeature(
+                    ChromeFeatureList.CHROME_HOME_INACTIVITY_SHEET_EXPANSION, PARAM_DELAY_IN_MINS);
+            long timeoutExpandBottomSheet = timeoutMinsFieldTrialValue.isEmpty()
+                    ? TIME_SINCE_BACKGROUNDED_TO_SHOW_BOTTOM_SHEET_HALF_MS
+                    : TimeUnit.MINUTES.toMillis(Integer.parseInt(timeoutMinsFieldTrialValue));
             if (bottomSheet.isSheetOpen()
-                    || (getTimeSinceLastBackgroundedMs()
-                               < TIME_SINCE_BACKGROUNDED_TO_SHOW_BOTTOM_SHEET_HALF_MS)) {
+                    || (getTimeSinceLastBackgroundedMs() < timeoutExpandBottomSheet)) {
                 return false;
             }
 
