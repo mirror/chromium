@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eba4affd_f24a1249",
+        "filename": "ios/chrome/browser/ui/keyboard_commands_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-20T18:11:07Z",
+      "side": 1,
+      "message": "Hrm, a little less critical than the other one, I\u0027m not sure if it\u0027s worth creating a shared matcher that is used twice (once in two separate files). Or maybe I\u0027ll just do this in the same CL as the other one. I don\u0027t know if it\u0027s worth tracking this with a bug on its own.",
+      "parentUuid": "ae0c33c9_b0ae8290",
+      "range": {
+        "startLine": 175,
+        "startChar": 39,
+        "endLine": 175,
+        "endChar": 49
+      },
+      "revId": "df81c31373f3ad48e7f6231d37c7d4a2097f0d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d888d67b_995267d0",
         "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_controller_egtest.mm",
         "patchSetId": 2
