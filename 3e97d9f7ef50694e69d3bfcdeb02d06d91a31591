@@ -22,6 +22,30 @@
       "revId": "3e97d9f7ef50694e69d3bfcdeb02d06d91a31591",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "699ffd02_c50d0bcb",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/params/ParameterizedRunnerDelegateFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-20T18:19:06Z",
+      "side": 1,
+      "message": "I\u0027m in the middle of reviewing this patch, but please don\u0027t do this. I\u0027m having to pull such multi-catches apart w/ the new version of the linter b/c these three get compiled down to ReflectiveOperationException, which is new in API level 19.",
+      "parentUuid": "a3f7c4e4_204e3ca3",
+      "range": {
+        "startLine": 186,
+        "startChar": 41,
+        "endLine": 190,
+        "endChar": 17
+      },
+      "revId": "3e97d9f7ef50694e69d3bfcdeb02d06d91a31591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
