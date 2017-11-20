@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1268647a_4c33339b",
+        "filename": "components/arc/connection_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-20T18:45:17Z",
+      "side": 1,
+      "message": "nit: This is not true type erasure, but just plain old polymorphism through inheritance. The type erasure pattern normally requires a Concept (this class) and a Model (a templated wrapper that can accept any class that conforms to the interface defined by the Concept) with no (virtual) inheritance between the Concept and the individual classes.\n\nThis is missing the Model part, so I wouldn\u0027t call it type erasure. Just removing this comment would work, but if you want to keep it please use the standard nomenclature and the whole pattern so that other people that want to understand how this works have an easier time mapping what it does with the pattern, and expand the comment to explain how things fit together. Also link to one such place where the pattern is explained (such as https://en.wikibooks.org/wiki/More_C%2B%2B_Idioms/Type_Erasure or http://davekilian.com/cpp-type-erasure.html)\n\nOne example in the Chrome codebase would be the base::Bind/base::Callback implementation, although it does not have a Model exactly like I described. In that case, even if base::BindState inherits from base::BindStateBase, the latter does the Model part since it does not have any virtual functions, and derived classes provide their implementations of destructor and is_cancelled func-pointers.",
+      "range": {
+        "startLine": 12,
+        "startChar": 3,
+        "endLine": 12,
+        "endChar": 34
+      },
+      "revId": "8d2d6610783b496a5f2bea0b92ce708d828bb6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
