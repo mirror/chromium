@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "389830b6_8dca20e9",
+        "filename": "net/data/ssl/root_stores/update_root_stores.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-20T21:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc796814_ca80207c",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1d911dd_4f49038f",
         "filename": "net/data/ssl/root_stores/update_root_stores.py",
         "patchSetId": 3
@@ -47,6 +65,24 @@
       "writtenOn": "2017-11-20T15:29:41Z",
       "side": 1,
       "message": "return os.path.join(SRC_DIR, src_relative_file_path)\n\nit\u0027s not a big deal even if the file path contains \u0027/\u0027 on Windows, the file will still open correctly. If concerned, I think os.path.normpath() will fix it for you.",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5003223a_e2a99b10",
+        "filename": "net/data/ssl/root_stores/update_root_stores.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-20T21:46:20Z",
+      "side": 1,
+      "message": "Thanks!\n\nThis is part of tools/metrics/common/path_util.py  - I didn\u0027t want to bake in a circular dependency (this depending on tools/metrics/common and having tools/metrics/common depending on this, even if only in directory structure). Would you recommend changing it there as well? If so, I\u0027d be happy to file a bug and do that work, since it seems like it might be a good cleanup all around :)",
+      "parentUuid": "f1d911dd_4f49038f",
       "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "5a700ace_aad076ee",
+        "filename": "net/data/ssl/root_stores/update_root_stores.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-20T21:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18877554_d92876e3",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6223602_f39a5f64",
         "filename": "net/data/ssl/root_stores/update_root_stores.py",
         "patchSetId": 3
@@ -81,6 +135,41 @@
       "writtenOn": "2017-11-20T15:29:41Z",
       "side": 1,
       "message": "if sys.platform \u003d\u003d \u0027win32\u0027:",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c36612_9431e602",
+        "filename": "net/data/ssl/root_stores/update_root_stores.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-20T21:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6223602_f39a5f64",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26ac02a1_c9c6263a",
+        "filename": "net/data/ssl/root_stores/update_root_stores.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-20T21:46:20Z",
+      "side": 1,
+      "message": "So I borrowed this from /ui/gl/generate_bindings.py, which adds the \u0027.bat\u0027 - but then I noticed tools/depot_tools/clang_format.py appears to use .exe for the extension.\n\nDo you know what\u0027s the current recommendation for depot_tools and/or is there a better way to invoke this (e.g. by depending on depot_tools\u0027 FindClangFormatToolInChromiumTree)",
       "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "5a0ff42a_1fe5b050",
+        "filename": "net/data/ssl/root_stores/update_root_stores.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-20T21:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35a1e6af_30eee42b",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d306f67a_b533abc4",
         "filename": "net/data/ssl/root_stores/update_root_stores.py",
         "patchSetId": 3
@@ -121,6 +228,24 @@
     },
     {
       "key": {
+        "uuid": "b327525e_c5a4889c",
+        "filename": "net/data/ssl/root_stores/update_root_stores.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-20T21:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d306f67a_b533abc4",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f01f17e9_c2d0d58e",
         "filename": "net/data/ssl/root_stores/update_root_stores.py",
         "patchSetId": 3
@@ -132,6 +257,24 @@
       "writtenOn": "2017-11-20T15:29:41Z",
       "side": 1,
       "message": "optional: this is short enough you can reduce:\n\n  header_file.write(\u0027{ { %s },\\n%d }, \u0027 % (cpp_str, log_id))\n\npersonally I find this more readable.",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d5e04a7_f8fc0334",
+        "filename": "net/data/ssl/root_stores/update_root_stores.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-20T21:46:20Z",
+      "side": 1,
+      "message": "Same - I didn\u0027t see in the style guide if there was a preference for named or condensed parameters, and opted for verbosity, but glad to see that\u0027s overkill.",
+      "parentUuid": "f01f17e9_c2d0d58e",
       "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +298,24 @@
     },
     {
       "key": {
+        "uuid": "eede8599_561e8862",
+        "filename": "net/data/ssl/root_stores/update_root_stores.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-20T21:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23bdf089_45d33997",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d5ab564_a4079e8e",
         "filename": "net/data/ssl/root_stores/update_root_stores.py",
         "patchSetId": 3
@@ -172,6 +333,24 @@
     },
     {
       "key": {
+        "uuid": "e8d4c7af_549bb2df",
+        "filename": "net/data/ssl/root_stores/update_root_stores.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-20T21:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d5ab564_a4079e8e",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "977e49ef_c6069d1e",
         "filename": "tools/metrics/histograms/update_net_root_certs.py",
         "patchSetId": 3
@@ -183,6 +362,24 @@
       "writtenOn": "2017-11-20T15:29:41Z",
       "side": 1,
       "message": "use os.path.abspath() first otherwise __file__ is CWD relative and if os.chdir() is called, the sys.path is now incorrect.",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b423a781_7de9d5f3",
+        "filename": "tools/metrics/histograms/update_net_root_certs.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-20T21:46:20Z",
+      "side": 1,
+      "message": "I notice this pattern is fairly prevalent in our files (just looking for \u0027sys.path.append\u0027 shows its common)\n\nIn the case specifically for tools/metrics/histograms, this is the pattern used in all the scripts. Would you still recommend this change (deviating from local style), is this OK as-is, or would you be OK with a follow-up to update tools/metrics/histograms to consistently use os.path.dirname(os.path.abspath(__file__)) ?",
+      "parentUuid": "977e49ef_c6069d1e",
       "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
