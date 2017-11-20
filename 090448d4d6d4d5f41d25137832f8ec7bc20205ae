@@ -105,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "34690975_2ae588e5",
+        "filename": "device/geolocation/location_arbitrator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-20T10:05:07Z",
+      "side": 1,
+      "message": "Yes, I think that makes sense! Apologies for the churn here.",
+      "parentUuid": "e78b9408_37f6e3f4",
+      "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e944f45_fd4de095",
         "filename": "device/geolocation/location_arbitrator.h",
         "patchSetId": 6
@@ -169,6 +187,24 @@
       "side": 1,
       "message": "oh, do you mean that in this CL we still keep the geolocation_export.h in device/geolocation/BUILD.gn, and remove the \"DEVICE_GEOLOCATION_EXPORT\" in location_provider.h?",
       "parentUuid": "2baa3595_a7d69100",
+      "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7cea96d_af4823fb",
+        "filename": "device/geolocation/public/cpp/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-20T10:05:07Z",
+      "side": 1,
+      "message": "That\u0027s what I was suggesting, yes. After reading https://chromium.googlesource.com/chromium/src/+/master/docs/component_build.md I think that my understanding was not complete, and that it\u0027s actually quite a bit more subtle than what I was suggesting. However, I still think it should be fine to remove the EXPORT from location_provider.h in this case because it\u0027s just an interface; we\u0027re not actually defining a symbol that will get put into a .o file. Can you try it and let me know how it works?",
+      "parentUuid": "24dc8b30_3fbdfd73",
       "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
