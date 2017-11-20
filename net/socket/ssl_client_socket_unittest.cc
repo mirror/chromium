@@ -855,8 +855,9 @@ class MockExpectCTReporter : public TransportSecurityState::ExpectCTReporter {
 // anything.
 class MockCTVerifier : public CTVerifier {
  public:
-  MOCK_METHOD5(Verify,
-               void(X509Certificate*,
+  MOCK_METHOD6(Verify,
+               void(base::StringPiece,
+                    X509Certificate*,
                     base::StringPiece,
                     base::StringPiece,
                     SignedCertificateTimestampAndStatusList*,
@@ -2526,8 +2527,8 @@ TEST_F(SSLClientSocketTest, ConnectSignedCertTimestampsEnabledTLSExtension) {
   // Check that the SCT list is extracted from the TLS extension as expected,
   // while also simulating that it was an unparsable response.
   SignedCertificateTimestampAndStatusList sct_list;
-  EXPECT_CALL(ct_verifier, Verify(_, _, sct_ext, _, _))
-      .WillOnce(testing::SetArgPointee<3>(sct_list));
+  EXPECT_CALL(ct_verifier, Verify(_, _, _, sct_ext, _, _))
+      .WillOnce(testing::SetArgPointee<4>(sct_list));
 
   int rv;
   ASSERT_TRUE(CreateAndConnectSSLClientSocket(ssl_config, &rv));
