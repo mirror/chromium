@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "729cf13d_09aca2a4",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/TextCodecLatin1Test.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-20T23:46:56Z",
+      "side": 1,
+      "message": "Does this test even make sense any more? I think it was just testing the case where the output is shorter.\n\nIn any case, the name is wrong, even if we want to keep it.",
+      "revId": "847b755132d75e8a14a3d255abea85392fb8adb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70075be1_04d61c4f",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/TextCodecUserDefinedTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-20T23:46:56Z",
+      "side": 1,
+      "message": "Same note about \"do we need this test?\" as above.",
+      "revId": "847b755132d75e8a14a3d255abea85392fb8adb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
