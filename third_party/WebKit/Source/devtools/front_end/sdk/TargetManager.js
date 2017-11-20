@@ -237,8 +237,11 @@ SDK.TargetManager = class extends Common.Object {
       var listeners = pair[1];
       for (var i = 0; i < listeners.length; ++i) {
         var model = target.model(listeners[i].modelClass);
-        if (model)
+        if (model) {
           model.addEventListener(/** @type {symbol} */ (pair[0]), listeners[i].listener, listeners[i].thisObject);
+          if (this._isSuspended)
+            model.suspendModel();
+        }
       }
     }
 
