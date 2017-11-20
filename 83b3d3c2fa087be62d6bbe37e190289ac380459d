@@ -16,6 +16,24 @@
       "revId": "83b3d3c2fa087be62d6bbe37e190289ac380459d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283574c7_c0e6da4d",
+        "filename": "media/gpu/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1250517
+      },
+      "writtenOn": "2017-11-20T15:05:38Z",
+      "side": 1,
+      "message": "Sounds good, but unfortunately I am still able to reproduce the bug with only this change applied. I am not yet sure why. It is possible though that there are other code paths that can lead to a double chain of calls (this class is quite complex!).\n\nThe initial reason why I did not try this solution was that I did not want to potentially break something else by changing the order of calls in ServiceDeviceTask(). With this change applied, it now happens that ScheduleDecodeBufferTaskIfNeeded() is not being called at all if StartResolutionChange() is called, for example. Not sure if this can break something or not...",
+      "parentUuid": "27d9026d_2349efc8",
+      "revId": "83b3d3c2fa087be62d6bbe37e190289ac380459d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
