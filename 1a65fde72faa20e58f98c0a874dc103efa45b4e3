@@ -20,6 +20,24 @@
     },
     {
       "key": {
+        "uuid": "e147182f_d3ed958f",
+        "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-20T21:54:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c513165_52813702",
+      "revId": "1a65fde72faa20e58f98c0a874dc103efa45b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "107c21d0_ea1422aa",
         "filename": "content/shell/android/shell_apk/src/org/chromium/content_shell_apk/ContentShellApplication.java",
         "patchSetId": 15
@@ -32,6 +50,30 @@
       "side": 1,
       "message": "in which case, just remove this function entirely since it\u0027s now just a call to super",
       "parentUuid": "ba549d40_d6827f63",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "1a65fde72faa20e58f98c0a874dc103efa45b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f641084e_eab6ce87",
+        "filename": "content/shell/android/shell_apk/src/org/chromium/content_shell_apk/ContentShellApplication.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-20T21:54:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "107c21d0_ea1422aa",
       "range": {
         "startLine": 43,
         "startChar": 14,
