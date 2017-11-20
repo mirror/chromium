@@ -23,15 +23,10 @@ class FakeUiDelegate : public UiDelegate {
 
   // Overridden from UiDelegate:
   void OnMessageCenterContentsChanged() override;
-  bool ShowPopups() override;
-  void HidePopups() override;
-  bool ShowMessageCenter(bool show_by_click) override;
-  void HideMessageCenter() override;
-  bool ShowNotifierSettings() override;
+  void ShowNotifierSettings() override;
 
  private:
   std::unique_ptr<UiController> tray_;
-  base::Closure quit_closure_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeUiDelegate);
 };
