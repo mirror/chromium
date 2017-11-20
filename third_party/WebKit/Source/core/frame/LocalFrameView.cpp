@@ -3295,6 +3295,9 @@ void LocalFrameView::UpdateLifecyclePhasesInternal(
   }
 
   UpdateViewportIntersectionsForSubtree(target_state);
+
+  if (GetFrame().GetDocument())
+    GetFrame().GetDocument()->ResetCurrentFrameHasRAF();
 }
 
 void LocalFrameView::EnqueueScrollAnchoringAdjustment(

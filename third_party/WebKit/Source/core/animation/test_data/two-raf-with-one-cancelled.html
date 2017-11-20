@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<style>
+#box {
+  background-color: green;
+  height: 100px;
+}
+</style>
+<body>
+<div id='box'></div>
+
+<script>
+var elem = document.getElementById('box');
+var opacity = 0.02;
+var percentage = 100;
+
+function changeOpacity() {
+  opacity = opacity + 0.02;
+  elem.style.opacity = opacity;
+  if (opacity < 1)
+    requestAnimationFrame(changeOpacity);
+}
+
+function changeWidth() {
+  percentage = percentage - 1;
+  elem.style.width = percentage + '%';
+  if (percentage > 50)
+    requestAnimationFrame(changeWidth);
+}
+
+requestAnimationFrame(changeOpacity);
+requestAnimationFrame(changeWidth);
+cancelAnimationFrame(changeWidth);
+</script>
+</body>
+</html>

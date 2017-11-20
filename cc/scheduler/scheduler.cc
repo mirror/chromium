@@ -594,7 +594,8 @@ void Scheduler::DrawIfPossible() {
       begin_impl_frame_tracker_.DangerousMethodCurrentOrLast().frame_time,
       client_->CompositedAnimationsCount(),
       client_->MainThreadAnimationsCount(),
-      client_->MainThreadCompositableAnimationsCount());
+      client_->MainThreadCompositableAnimationsCount(),
+      client_->CurrentFrameHasRAF());
 }
 
 void Scheduler::DrawForced() {
@@ -610,7 +611,8 @@ void Scheduler::DrawForced() {
       begin_impl_frame_tracker_.DangerousMethodCurrentOrLast().frame_time,
       client_->CompositedAnimationsCount(),
       client_->MainThreadAnimationsCount(),
-      client_->MainThreadCompositableAnimationsCount());
+      client_->MainThreadCompositableAnimationsCount(),
+      client_->CurrentFrameHasRAF());
 }
 
 void Scheduler::SetDeferCommits(bool defer_commits) {

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<style>
+#box {
+  background-color: green;
+  width: 100px;
+  height: 100px;
+}
+</style>
+<body>
+<div id='box'></div>
+
+<script>
+var elem = document.getElementById('box');
+var opacity = 0.02;
+
+function changeOpacity() {
+  opacity = opacity + 0.02;
+  elem.style.opacity = opacity;
+  if (opacity < 1)
+    requestAnimationFrame(changeOpacity);
+}
+requestAnimationFrame(changeOpacity);
+</script>
+</body>
+</html>
