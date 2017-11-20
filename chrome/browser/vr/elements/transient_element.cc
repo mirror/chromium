@@ -104,7 +104,7 @@ bool ShowUntilSignalTransientElement::OnBeginFrame(
   return false;
 }
 
-void ShowUntilSignalTransientElement::Signal() {
+void ShowUntilSignalTransientElement::Signal(bool value) {
   signaled_ = true;
 }
 

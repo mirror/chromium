@@ -5,8 +5,8 @@
 #include "chrome/browser/vr/elements/webvr_url_toast_texture.h"
 
 #include "cc/paint/skia_paint_canvas.h"
-#include "chrome/browser/vr/color_scheme.h"
 #include "chrome/browser/vr/elements/vector_icon.h"
+#include "chrome/browser/vr/model/color_scheme.h"
 #include "components/url_formatter/url_formatter.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/rect_f.h"

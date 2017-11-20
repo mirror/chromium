@@ -14,7 +14,10 @@ namespace vr {
 
 class ContentElement : public UiElement {
  public:
-  explicit ContentElement(ContentInputDelegate* delegate);
+  typedef typename base::Callback<void(const gfx::SizeF&)>
+      ScreenBoundsChangedCallback;
+
+  ContentElement(ContentInputDelegate* delegate, ScreenBoundsChangedCallback);
   ~ContentElement() override;
 
   void OnHoverEnter(const gfx::PointF& position) override;
@@ -33,17 +36,22 @@ class ContentElement : public UiElement {
   void OnScrollEnd(std::unique_ptr<blink::WebGestureEvent> gesture,
                    const gfx::PointF& position) override;
 
+  void OnProjMatrixChanged(const gfx::Transform& proj_matrix);
+
   void Render(UiElementRenderer* renderer,
               const CameraModel& model) const final;
 
-  void SetTexture(unsigned int texture_id,
-                  UiElementRenderer::TextureLocation location);
+  void SetTextureId(unsigned int texture_id);
+  void SetTextureLocation(UiElementRenderer::TextureLocation location);
 
  private:
   ContentInputDelegate* delegate_ = nullptr;
+  ScreenBoundsChangedCallback bounds_changed_callback_;
   unsigned int texture_id_ = 0;
   UiElementRenderer::TextureLocation texture_location_ =
       UiElementRenderer::kTextureLocationExternal;
+  gfx::SizeF last_content_screen_bounds_;
+  float last_content_aspect_ratio_ = 0.0f;
 
   DISALLOW_COPY_AND_ASSIGN(ContentElement);
 };
