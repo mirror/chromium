@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bf6b8d2_9c6d3bdb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-20T09:53:06Z",
+      "side": 1,
+      "message": "Please also add a security consideration here (for security reviewers) about why we don\u0027t think migrating a part of time-keeper role from the browser to the renderer would increase security risks.",
+      "revId": "741b0aede51fb810ccc6798c54857e5364acc154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c55a0c_30f61b7d",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-20T09:53:06Z",
+      "side": 1,
+      "message": "\u0027disabled S13nServiceWorker\u0027 -\u003e \u0027RequestTermination shouldn\u0027t come when S13nServiceWorker is not enabled\u0027 ?",
+      "revId": "741b0aede51fb810ccc6798c54857e5364acc154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e96c7dea_14f680cb",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-20T09:53:06Z",
+      "side": 1,
+      "message": "Please clearly note that the final judgement if the worker needs to be terminated is made by the browser, and the worker not sending this doesn\u0027t really mean the worker can live forever.",
+      "revId": "741b0aede51fb810ccc6798c54857e5364acc154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a25e955_3f9d16bb",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-20T09:53:06Z",
+      "side": 1,
+      "message": "DCHECK(!idle_timer_.IsRunning())",
+      "revId": "741b0aede51fb810ccc6798c54857e5364acc154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d93216a9_07e512c2",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-20T09:53:06Z",
+      "side": 1,
+      "message": "nit: add a comment about this timeout value.",
+      "revId": "741b0aede51fb810ccc6798c54857e5364acc154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
