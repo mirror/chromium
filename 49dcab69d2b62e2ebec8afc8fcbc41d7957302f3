@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5cf29c75_4f9243f2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/abspos-dialog-layout.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-11-20T12:11:04Z",
+      "side": 1,
+      "message": "Hmm.. Sorry. I could not able to figure out the logic for calculation of top/bottom .\nTill then shall I exclude this test from wpt/ and keep this test to its original file?",
+      "parentUuid": "4beb1429_bf34aa4f",
+      "range": {
+        "startLine": 75,
+        "startChar": 12,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "49dcab69d2b62e2ebec8afc8fcbc41d7957302f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a79e904_d67e8c6f",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/abspos-dialog-layout.html",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-17T12:56:28Z",
       "side": 1,
       "message": "Here I meant that assert_equals(dialog.parentNode, relativeContainer) should be before dialog.remove(), to make it clear that it\u0027s being added back in the same place. This could fail if the order of these tests were changed, for example.\n\nThe asserts around the appendChild call aren\u0027t really necessary I think.",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 10
+      },
+      "revId": "49dcab69d2b62e2ebec8afc8fcbc41d7957302f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e10eb3_8100d4f0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/abspos-dialog-layout.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-11-20T12:11:04Z",
+      "side": 1,
+      "message": "Before dialog.remove(), \"dialog\" is child of body element. It is added in reset().\nSo in this test, it is not added into same place.",
+      "parentUuid": "5a79e904_d67e8c6f",
       "range": {
         "startLine": 156,
         "startChar": 4,
