@@ -10,7 +10,7 @@
 #include "base/cancelable_callback.h"
 #include "base/macros.h"
 #include "content/common/content_export.h"
-#include "mojo/public/cpp/bindings/binding.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom.h"
 #include "url/origin.h"
@@ -22,9 +22,14 @@ class RenderFrameHost;
 // Implementation of the public Authenticator interface.
 class CONTENT_EXPORT AuthenticatorImpl : public webauth::mojom::Authenticator {
  public:
-  static void Create(RenderFrameHost* render_frame_host,
-                     webauth::mojom::AuthenticatorRequest request);
+  static std::unique_ptr<AuthenticatorImpl> Create(
+      RenderFrameHost* render_frame_host);
   ~AuthenticatorImpl() override;
+
+  // Creates a binding between this object and |request|. Note that a
+  // AuthenticatorImpl instance can be bound to multiple requests (as happens in
+  // the case of simultaneous starting and finishing operations).
+  void Bind(webauth::mojom::AuthenticatorRequest request);
 
   void set_connection_error_handler(const base::Closure& error_handler) {
     connection_error_handler_ = error_handler;
@@ -41,6 +46,8 @@ class CONTENT_EXPORT AuthenticatorImpl : public webauth::mojom::Authenticator {
       const std::vector<webauth::mojom::PublicKeyCredentialParametersPtr>&
           parameters);
 
+  // RAII binding of |this| to Authenticator requests.
+  mojo::BindingSet<webauth::mojom::Authenticator> bindings_;
   base::Closure connection_error_handler_;
   base::CancelableClosure timeout_callback_;
   url::Origin caller_origin_;

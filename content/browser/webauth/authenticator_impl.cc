@@ -11,7 +11,7 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "crypto/sha2.h"
-#include "mojo/public/cpp/bindings/strong_binding.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
 
 namespace content {
 
@@ -35,12 +35,11 @@ std::string SerializeValueToJson(const base::Value& value) {
 }  // namespace
 
 // static
-void AuthenticatorImpl::Create(
-    RenderFrameHost* render_frame_host,
-    webauth::mojom::AuthenticatorRequest request) {
+std::unique_ptr<AuthenticatorImpl> AuthenticatorImpl::Create(
+    RenderFrameHost* render_frame_host) {
   auto authenticator_impl =
       base::WrapUnique(new AuthenticatorImpl(render_frame_host));
-  mojo::MakeStrongBinding(std::move(authenticator_impl), std::move(request));
+  return authenticator_impl;
 }
 
 AuthenticatorImpl::~AuthenticatorImpl() {}
@@ -48,6 +47,10 @@ AuthenticatorImpl::~AuthenticatorImpl() {}
 AuthenticatorImpl::AuthenticatorImpl(RenderFrameHost* render_frame_host) {
   DCHECK(render_frame_host);
   caller_origin_ = render_frame_host->GetLastCommittedOrigin();
+}
+
+void AuthenticatorImpl::Bind(webauth::mojom::AuthenticatorRequest request) {
+  bindings_.AddBinding(this, std::move(request));
 }
 
 // mojom:Authenticator
