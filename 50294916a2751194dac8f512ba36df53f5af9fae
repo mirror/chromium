@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "415ee449_6c56fd8a",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-20T09:10:12Z",
+      "side": 1,
+      "message": "Nit: maybe remove \"_CIRCLE\" to be consistent with the other values. This enum seems to be about the badge type only, not its shape.",
+      "range": {
+        "startLine": 22,
+        "startChar": 28,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "50294916a2751194dac8f512ba36df53f5af9fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51efa375_dc125b6c",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-20T09:10:12Z",
+      "side": 1,
+      "message": "Do we need to check the Sync status as well? It is possible that Dice is enabled but Sync is not.",
+      "revId": "50294916a2751194dac8f512ba36df53f5af9fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66188456_a1ea4abc",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-20T09:10:12Z",
+      "side": 1,
+      "message": "What about the case where the profile is supervised and Dice is enabled? If this case is not possible, should we add a DCHECK here?",
+      "revId": "50294916a2751194dac8f512ba36df53f5af9fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
