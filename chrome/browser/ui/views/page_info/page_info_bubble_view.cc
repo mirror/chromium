@@ -673,8 +673,7 @@ void PageInfoBubbleView::SetCookieInfo(const CookieInfoList& cookie_info_list) {
     info.is_incognito =
         Profile::FromBrowserContext(web_contents()->GetBrowserContext())
             ->IsOffTheRecord();
-    const gfx::ImageSkia icon =
-        PageInfoUI::GetPermissionIcon(info).AsImageSkia();
+    const gfx::ImageSkia icon = PageInfoUI::GetPermissionIcon(info);
 
     site_settings_view_->AddChildView(CreateInspectLinkSection(
         icon, IDS_PAGE_INFO_COOKIES, cookie_dialog_link_));
