@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "172b14b2_d224db97",
+        "filename": "net/spdy/chromium/spdy_session_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-20T15:00:00Z",
+      "side": 1,
+      "message": "Good catch.  I\u0027m adding SpdyNetworkTransactionTest.GoAwayImmediately to check this.  Turns out that since https://crrev.com/199633019, creating a SpdySession does not fail with any error if a GOAWAY frame is received, only an actual request can fail.  So the best place to test for this error code is a SpdyNetworkTransactionTest, not a SpdySessionTest.",
+      "parentUuid": "560ec997_0e6ee4e2",
+      "revId": "224e34349913f9f950723c0a09ad8b541f4041c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3963f91e_cb506c55",
         "filename": "net/spdy/chromium/spdy_test_util_common.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "224e34349913f9f950723c0a09ad8b541f4041c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca5387c_5d21eb22",
+        "filename": "net/spdy/chromium/spdy_test_util_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-20T15:00:00Z",
+      "side": 1,
+      "message": "I agree with you.\n\nOf course, just to make things more complicated, for this particular member it would not help, because a MockCachingHostResolver is instantiated into a MockHostResolverBase type.",
+      "parentUuid": "3963f91e_cb506c55",
+      "revId": "224e34349913f9f950723c0a09ad8b541f4041c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
