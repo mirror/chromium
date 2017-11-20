@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<title>CSS Flexbox: Percentages in stretched container</title>
+<link rel="author" title="Google" href="https://www.google.com/" />
+<link rel="help" href="https://drafts.csswg.org/css-flexbox-1/#definite-sizes" />
+<link rel="match" href="percentage-heights-004-ref.html">
+
+<style>
+#outer {
+  height: 10em;
+  display: inline-flex;
+  background: red;
+}
+
+#middle {
+  overflow-x: scroll;
+}
+
+#inner {
+  height: 100%;
+  width: 200px;
+  background: green;
+}
+</style>
+<body onload="checkLayout('#outer')">
+<div id=log></div>
+
+<p>You should not see red nor a vertical scrollbar</p>
+
+<div id="outer">
+  <div id="middle">
+    <div id="inner">
+      hello
+    </div>
+  </div>
+</div>
+

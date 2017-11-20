@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<title>CSS Flexbox: Percentages in stretched container</title>
+<link rel="author" title="Google" href="https://www.google.com/" />
+
+<style>
+#outer {
+  height: 10em;
+  display: inline-block;
+  background: green;
+}
+
+#middle {
+  overflow-x: scroll;
+  height: 100%;
+}
+
+#inner {
+  width: 200px;
+}
+</style>
+<p>You should not see red nor a vertical scrollbar</p>
+
+<div id="outer">
+  <div id="middle">
+    <div id="inner">
+      hello
+    </div>
+  </div>
+</div>
+
