@@ -95,7 +95,7 @@ class NetworkTrafficAnnotationChecker():
       int Exit code of the network traffic annotation auditor.
     """
 
-    if not TEST_IS_ENABLED:
+    if not TEST_IS_ENABLED or sys.platform == 'win32':
       return 0
 
     if not self.build_path:
