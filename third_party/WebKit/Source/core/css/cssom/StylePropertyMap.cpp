@@ -8,11 +8,12 @@
 #include "core/css/CSSValueList.h"
 #include "core/css/cssom/CSSStyleValue.h"
 #include "core/css/cssom/StyleValueFactory.h"
+#include "core/css/properties/CSSProperty.h"
 
 namespace blink {
 
 void StylePropertyMap::set(const String& property_name,
-                           CSSStyleValueOrCSSStyleValueSequenceOrString& item,
+                           HeapVector<CSSStyleValueOrString>& item,
                            ExceptionState& exception_state) {
   CSSPropertyID property_id = cssPropertyID(property_name);
   if (property_id != CSSPropertyInvalid && property_id != CSSPropertyVariable) {
@@ -23,10 +24,9 @@ void StylePropertyMap::set(const String& property_name,
   exception_state.ThrowTypeError("Invalid propertyName: " + property_name);
 }
 
-void StylePropertyMap::append(
-    const String& property_name,
-    CSSStyleValueOrCSSStyleValueSequenceOrString& item,
-    ExceptionState& exception_state) {
+void StylePropertyMap::append(const String& property_name,
+                              HeapVector<CSSStyleValueOrString>& item,
+                              ExceptionState& exception_state) {
   CSSPropertyID property_id = cssPropertyID(property_name);
   if (property_id != CSSPropertyInvalid && property_id != CSSPropertyVariable) {
     append(property_id, item, exception_state);
