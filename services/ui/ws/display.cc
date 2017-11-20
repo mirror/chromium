@@ -66,14 +66,17 @@ Display::~Display() {
 }
 
 void Display::Init(const display::ViewportMetrics& metrics,
-                   std::unique_ptr<DisplayBinding> binding) {
+                   std::unique_ptr<DisplayBinding> binding,
+                   const viz::SurfaceId& mirror_source_surface_id) {
   binding_ = std::move(binding);
   display_manager()->AddDisplay(this);
 
   CreateRootWindow(metrics.bounds_in_pixels.size());
 
   platform_display_ = PlatformDisplay::Create(
-      root_.get(), metrics, window_server_->GetThreadedImageCursorsFactory());
+      root_.get(), metrics, window_server_->GetThreadedImageCursorsFactory(),
+      mirror_source_surface_id);
+
   platform_display_->Init(this);
   UpdateCursorConfig();
 }

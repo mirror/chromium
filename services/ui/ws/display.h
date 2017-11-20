@@ -67,7 +67,8 @@ class Display : public PlatformDisplayDelegate,
   // Initializes the display root ServerWindow and PlatformDisplay. Adds this to
   // DisplayManager as a pending display, until accelerated widget is available.
   void Init(const display::ViewportMetrics& metrics,
-            std::unique_ptr<DisplayBinding> binding);
+            std::unique_ptr<DisplayBinding> binding,
+            const viz::SurfaceId& mirror_source_surface_id = viz::SurfaceId());
 
   // Initialize the display's root window to host window manager content.
   void InitWindowManagerDisplayRoots();

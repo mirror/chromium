@@ -9,7 +9,6 @@
 
 #include "base/macros.h"
 #include "services/ui/display/viewport_metrics.h"
-#include "services/ui/ws/frame_generator.h"
 #include "services/ui/ws/platform_display.h"
 #include "services/ui/ws/platform_display_delegate.h"
 #include "services/ui/ws/server_window.h"
@@ -18,6 +17,7 @@
 namespace ui {
 
 class EventSink;
+class FrameGenerator;
 class PlatformWindow;
 
 namespace ws {
@@ -35,7 +35,9 @@ class PlatformDisplayDefault : public PlatformDisplay,
                          std::unique_ptr<ThreadedImageCursors> image_cursors);
   ~PlatformDisplayDefault() override;
 
-  // EventSource::
+  const display::ViewportMetrics& metrics() const { return metrics_; }
+
+  // EventSource:
   EventSink* GetEventSink() override;
 
   // PlatformDisplay:
@@ -57,7 +59,7 @@ class PlatformDisplayDefault : public PlatformDisplay,
   void SetCursorConfig(display::Display::Rotation rotation,
                        float scale) override;
 
- private:
+ protected:
   // ui::PlatformWindowDelegate:
   void OnBoundsChanged(const gfx::Rect& new_bounds) override;
   void OnDamageRect(const gfx::Rect& damaged_region) override;
@@ -71,6 +73,7 @@ class PlatformDisplayDefault : public PlatformDisplay,
   void OnAcceleratedWidgetDestroyed() override;
   void OnActivationChanged(bool active) override;
 
+ private:
   ServerWindow* root_window_;
 
   std::unique_ptr<ThreadedImageCursors> image_cursors_;

@@ -166,6 +166,7 @@ bool DisplayManager::SetDisplayConfiguration(
   display_list.AddOrUpdateDisplay(displays[primary_display_index],
                                   display::DisplayList::Type::PRIMARY);
   for (size_t i = 0; i < displays.size(); ++i) {
+    LOG(ERROR) << "MSW configuring a display: " << displays[i].ToString(); 
     Display* ws_display = GetDisplayById(displays[i].id());
     DCHECK(ws_display);
     ws_display->SetDisplay(displays[i]);
@@ -176,18 +177,38 @@ bool DisplayManager::SetDisplayConfiguration(
     }
   }
   for (size_t i = 0; i < mirrors.size(); ++i) {
-    NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus mirroring/unified mode.";
-    Display* ws_mirror = GetDisplayById(mirrors[i].id());
+    // NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus mirroring/unified mode.";
+    display::Display mirror(mirrors[i]);
+    mirror.set_bounds(mirror.bounds() + gfx::Vector2d(200,200));
+
+    Display* ws_mirror = GetDisplayById(mirror.id());
     const auto& metrics = viewport_metrics[displays.size() + i];
+    // Destroy any existing display, it'll be recreated with a mirror config.
+    // TODO(msw): Better display comparison/config or store in a separate list
+    //            or reduce calls and really just recreate all the time or allow
+    //            swapping a display's platform-display? 
+    if (ws_mirror && ws_mirror->GetDisplay().ToString() != mirror.ToString()) {
+      LOG(ERROR) << "MSW destroying an existing display/mirror"; 
+      display_list.RemoveDisplay(mirror.id());
+      DestroyDisplay(ws_mirror);
+      ws_mirror = nullptr;
+    }
     if (!ws_mirror) {
-      // Create a mirror destination display on startup or on display connected.
-      CreateDisplay(mirrors[i], metrics);
+      // Recreate the mirror as needed. 
+      LOG(ERROR) << "MSW creating a new mirror: " << mirror.ToString(); 
+      ws_mirror = new ws::Display(window_server_);
+      ws_mirror->SetDisplay(mirror);
+      // Need to pass in the mirror source info, use the first display for now... 
+      Display* ws_source_display = GetDisplayById(displays[0].id());
+      FrameGenerator* source_frame_generator = ws_source_display->platform_display()->GetFrameGenerator();
+      ws_mirror->Init(metrics, nullptr, source_frame_generator->window_manager_surface_info().id());
     } else {
-      // Reuse an existing display for mirroring that was previously extended.
-      ws_mirror->SetDisplay(mirrors[i]);
-      ws_mirror->OnViewportMetricsChanged(metrics);
-      display_list.AddOrUpdateDisplay(mirrors[i],
-                                      display::DisplayList::Type::NOT_PRIMARY);
+      LOG(ERROR) << "MSW using existing mirror: " << mirror.ToString(); 
+      // Reuse an existing display for mirroring that was previously extended? 
+      // ws_mirror->SetDisplay(mirror);
+      // ws_mirror->OnViewportMetricsChanged(metrics);
+      // display_list.AddOrUpdateDisplay(mirror,
+      //                                 display::DisplayList::Type::NOT_PRIMARY);
     }
   }
 

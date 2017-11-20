@@ -11,6 +11,7 @@
 
 #include "base/memory/ref_counted.h"
 #include "base/strings/string16.h"
+#include "components/viz/common/surfaces/surface_id.h"
 #include "services/ui/display/viewport_metrics.h"
 #include "services/ui/public/interfaces/cursor/cursor.mojom.h"
 #include "ui/display/display.h"
@@ -38,7 +39,8 @@ class PlatformDisplay : public ui::EventSource {
   static std::unique_ptr<PlatformDisplay> Create(
       ServerWindow* root_window,
       const display::ViewportMetrics& metrics,
-      ThreadedImageCursorsFactory* threaded_image_cursors_factory);
+      ThreadedImageCursorsFactory* threaded_image_cursors_factory,
+      const viz::SurfaceId& mirror_source_surface_id);
 
   virtual void Init(PlatformDisplayDelegate* delegate) = 0;
 
