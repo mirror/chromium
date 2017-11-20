@@ -539,7 +539,6 @@ public class PersonalDataManager {
 
     private static PersonalDataManager sManager;
 
-    // Suppress FindBugs warning, since |sManager| is only used on the UI thread.
     public static PersonalDataManager getInstance() {
         ThreadUtils.assertOnUiThread();
         if (sManager == null) {

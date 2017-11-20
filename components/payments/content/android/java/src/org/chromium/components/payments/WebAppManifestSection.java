@@ -32,7 +32,6 @@ public final class WebAppManifestSection {
     public WebAppManifestSection(String id, long minVersion, byte[][] fingerprints) {
         this.id = id;
         this.minVersion = minVersion;
-        // Copy the array so FindBugs does not complain of exposing private data.
         this.fingerprints = Arrays.copyOf(fingerprints, fingerprints.length);
     }
 

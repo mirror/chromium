@@ -46,7 +46,6 @@ public final class InputFeedbackRadiusMapper {
                 // with the canvas.
                 return mTinyFeedbackPixelRadius;
             default:
-                // Unreachable, but required by Google Java style and findbugs.
                 assert false : "Unreached";
                 return 0.0f;
         }

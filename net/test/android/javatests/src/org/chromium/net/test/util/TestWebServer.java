@@ -185,9 +185,6 @@ public class TestWebServer {
         }
     }
 
-    // Setting static variables from instance methods causes findbugs warnings. Calling static
-    // methods which set static variables from instance methods isn't any better, but it silences
-    // the warnings.
     private static void setInstance(TestWebServer instance) {
         sInstance = instance;
     }

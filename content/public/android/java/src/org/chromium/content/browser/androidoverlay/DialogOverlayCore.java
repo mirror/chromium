@@ -220,8 +220,6 @@ class DialogOverlayCore {
             layoutParams.getClass()
                     .getField("privateFlags")
                     .set(layoutParams, currentFlags | 0x00000040);
-            // It would be nice to just catch Exception, but findbugs doesn't
-            // allow it.  If we cannot set the flag, then that's okay too.
         } catch (NoSuchFieldException e) {
         } catch (NullPointerException e) {
         } catch (SecurityException e) {

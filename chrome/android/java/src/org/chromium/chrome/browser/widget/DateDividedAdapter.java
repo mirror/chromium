@@ -676,8 +676,6 @@ public abstract class DateDividedAdapter extends Adapter<RecyclerView.ViewHolder
     /**
      * @param item The item to remove from the adapter.
      */
-    // #getGroupAt() asserts false before returning null, causing findbugs to complain about
-    // a redundant nullcheck even though getGroupAt can return null.
     protected void removeItem(TimedItem item) {
         Pair<ItemGroup, Integer> groupPair = getGroupAt(item.getPosition());
         if (groupPair == null) {

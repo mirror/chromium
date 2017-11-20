@@ -103,10 +103,6 @@ public class RepostFormWarningDialog extends DialogFragment {
         }
     }
 
-    /**
-     * Sets the currently displayed dialog in sCurrentDialog. This is required by findbugs, which
-     * allows static fields only to be set from static methods.
-     */
     private static void setCurrentDialogForTesting(Dialog dialog) {
         sCurrentDialog = dialog;
     }

@@ -60,7 +60,6 @@ class AudioManagerAndroid {
             if (DEBUG) {
                 mThreadId = Thread.currentThread().getId();
             } else {
-                // Avoids "Unread field" issue reported by findbugs.
                 mThreadId = 0L;
             }
         }

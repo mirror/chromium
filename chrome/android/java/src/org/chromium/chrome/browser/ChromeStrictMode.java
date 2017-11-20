@@ -155,7 +155,6 @@ public class ChromeStrictMode {
      * Turn on StrictMode detection based on build and command-line switches.
      */
     @UiThread
-    // FindBugs doesn't like conditionals with compile time results
     public static void configureStrictMode() {
         assert ThreadUtils.runningOnUiThread();
         if (sIsStrictModeAlreadyConfigured) {
