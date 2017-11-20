@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70666cd5_06863979",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1293,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-11-20T13:58:08Z",
+      "side": 0,
+      "message": "This flag is removed in the binding. It may not have any effects, but make sure that you have tested this in webvr.",
+      "range": {
+        "startLine": 1293,
+        "startChar": 18,
+        "endLine": 1293,
+        "endChar": 30
+      },
+      "revId": "c58b56d6408886513e9f87a2bff2ea276d0c058d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
