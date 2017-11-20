@@ -93,6 +93,29 @@
       "revId": "94850fa8d7dff1246d965cb19cc24864e13ddc94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0a4c887_726c9997",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 2578,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-20T19:04:55Z",
+      "side": 0,
+      "message": "Hmm, I don\u0027t see any corresponding Finch config checked in server-side.  Do you know whether this entire config might be obsolete?  (It\u0027s definitely also possible that I am just codesearching poorly.)",
+      "range": {
+        "startLine": 2563,
+        "startChar": 0,
+        "endLine": 2578,
+        "endChar": 6
+      },
+      "revId": "94850fa8d7dff1246d965cb19cc24864e13ddc94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
