@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b71e382d_3c9143eb",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-20T11:06:55Z",
+      "side": 1,
+      "message": "About 5 methods such as View#OnCheckIsTextEditor, View#computeHorizon/Vertical, View#awakenScrollBars. Move them to the interface.",
+      "parentUuid": "077f8b82_2cdd72c6",
+      "revId": "bb9e8cda0477e1774ba7814ebc4685d0d4056124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d7fdea1_744c9f8a",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9d1fbef9_620dbb2f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-20T11:06:55Z",
+      "side": 1,
+      "message": "Done. Introduced ContentViewCoreFactory for embedder/content tests to instantiate TestContentViewCore.",
+      "parentUuid": "2d7fdea1_744c9f8a",
+      "revId": "bb9e8cda0477e1774ba7814ebc4685d0d4056124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "427f5339_f9474973",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-17T21:51:29Z",
       "side": 1,
       "message": "how did this not show up as a move...\n\ngit cl uploa has a --similarity arg, maybe try playing with that?",
+      "revId": "bb9e8cda0477e1774ba7814ebc4685d0d4056124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a31e438_105f8f87",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-20T11:06:55Z",
+      "side": 1,
+      "message": "git cl upload says it\u0027s a move with the default similarity 50%.  content/public/android/java/src/org/chromium/content/browser/{ContentViewCore.java \u003d\u003e ContentViewCoreImpl.java} \n\nLowered to 30% but no difference.. will try with lower values later.",
+      "parentUuid": "427f5339_f9474973",
       "revId": "bb9e8cda0477e1774ba7814ebc4685d0d4056124",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
