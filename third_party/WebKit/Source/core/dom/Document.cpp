@@ -1777,6 +1777,18 @@ void Document::DidChangeVisibilityState() {
     canvas_font_cache_->PruneAll();
 }
 
+void Document::DidPause() {
+  DCHECK(RuntimeEnabledFeatures::PageLifecycleEnabled());
+  if (LocalDOMWindow* window = domWindow()) {
+    const double pause_event_start = MonotonicallyIncreasingTime();
+    window->DispatchEvent(Event::Create(EventTypeNames::pause), this);
+    const double pause_event_end = MonotonicallyIncreasingTime();
+    DEFINE_STATIC_LOCAL(CustomCountHistogram, pause_histogram,
+                        ("DocumentEventTiming.PauseDuration", 0, 10000000, 50));
+    pause_histogram.Count((pause_event_end - pause_event_start) * 1000000.0);
+  }
+}
+
 String Document::nodeName() const {
   return "#document";
 }
