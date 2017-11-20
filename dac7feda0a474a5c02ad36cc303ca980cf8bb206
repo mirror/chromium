@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "3109044b_6cecc3da",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-11-20T12:30:50Z",
+      "side": 1,
+      "message": "Sigh... Done.\nBTW, is there some command, like \"git cl format\" that would update these copyrights to whatever format we decide to have now?",
+      "parentUuid": "ac0ba242_266c6aa5",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2aa7550e_56de9d2b",
         "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
         "patchSetId": 2
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "eb2bb30c_a5bd302d",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-11-20T12:30:50Z",
+      "side": 1,
+      "message": "The only requirement for this is defined in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d676195#c10\nSo maybe you\u0027re right, I will update code.",
+      "parentUuid": "2aa7550e_56de9d2b",
+      "range": {
+        "startLine": 20,
+        "startChar": 35,
+        "endLine": 20,
+        "endChar": 43
+      },
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1db324ef_1e419976",
         "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
         "patchSetId": 2
@@ -88,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "c8dd387e_620364a3",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-11-20T12:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1db324ef_1e419976",
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21134995_12cf3290",
         "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
         "patchSetId": 2
@@ -102,6 +168,24 @@
       "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f0478d4_9516efc4",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-11-20T12:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21134995_12cf3290",
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +224,24 @@
     },
     {
       "key": {
+        "uuid": "f273dc95_b1069082",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-11-20T12:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04b7e762_deb42dda",
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a986d7b3_c6812702",
         "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
         "patchSetId": 2
@@ -154,6 +256,24 @@
       "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7319e1a5_8cd75416",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-11-20T12:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a986d7b3_c6812702",
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +300,30 @@
     },
     {
       "key": {
+        "uuid": "0fbb6c35_f0ed33b0",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-11-20T12:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "970d8af7_639a854f",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 13
+      },
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a724c4_a45c26e3",
         "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
         "patchSetId": 2
@@ -203,6 +347,30 @@
     },
     {
       "key": {
+        "uuid": "6416ffb3_7c2094a4",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-11-20T12:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7a724c4_a45c26e3",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 13
+      },
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee0257e5_5a814da1",
         "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
         "patchSetId": 2
@@ -217,6 +385,24 @@
       "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12d8b00f_e86bb581",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-11-20T12:30:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ee0257e5_5a814da1",
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +429,30 @@
     },
     {
       "key": {
+        "uuid": "d81df455_a4a89f67",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-11-20T12:30:50Z",
+      "side": 1,
+      "message": "Line 76 is a shortcut-return.\nHere we have an if-else case.",
+      "parentUuid": "0c4125b1_76029de4",
+      "range": {
+        "startLine": 111,
+        "startChar": 33,
+        "endLine": 111,
+        "endChar": 34
+      },
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec658f68_4084877b",
         "filename": "chrome/browser/chromeos/policy/hostname_handler.h",
         "patchSetId": 2
@@ -263,6 +473,30 @@
       "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd38ee9_3e2faf13",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-11-20T12:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec658f68_4084877b",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -306,6 +540,30 @@
     },
     {
       "key": {
+        "uuid": "80f774d5_4d0e311e",
+        "filename": "chrome/browser/chromeos/settings/device_settings_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-11-20T12:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "094519ea_14fe3120",
+      "range": {
+        "startLine": 545,
+        "startChar": 16,
+        "endLine": 545,
+        "endChar": 45
+      },
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f65b884e_90a41b30",
         "filename": "chrome/browser/chromeos/settings/device_settings_provider_unittest.cc",
         "patchSetId": 2
@@ -317,6 +575,30 @@
       "writtenOn": "2017-11-14T08:52:45Z",
       "side": 1,
       "message": "I don\u0027t see how this test is verifying that your variable replacing logic is activated.",
+      "range": {
+        "startLine": 553,
+        "startChar": 52,
+        "endLine": 553,
+        "endChar": 60
+      },
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cf15e02_8d28a7bd",
+        "filename": "chrome/browser/chromeos/settings/device_settings_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-11-20T12:30:50Z",
+      "side": 1,
+      "message": "Because it should not.\nThis test checks that value is correctly propagated from policy proto down to DeviceSettings.\nThere will be a separate test for substitution logic.",
+      "parentUuid": "f65b884e_90a41b30",
       "range": {
         "startLine": 553,
         "startChar": 52,
