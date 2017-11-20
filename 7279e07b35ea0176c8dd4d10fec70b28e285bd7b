@@ -70,6 +70,24 @@
       "revId": "7279e07b35ea0176c8dd4d10fec70b28e285bd7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e24253d4_ec528004",
+        "filename": "mojo/edk/embedder/platform_channel_utils_posix.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-20T20:03:24Z",
+      "side": 0,
+      "message": "SGTM",
+      "parentUuid": "ce79e61a_d99f9f0a",
+      "revId": "7279e07b35ea0176c8dd4d10fec70b28e285bd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
