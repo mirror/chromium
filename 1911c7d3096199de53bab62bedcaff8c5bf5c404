@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bc634b5_f240d37f",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-20T16:16:04Z",
+      "side": 1,
+      "message": "If you want you can actually drop all of these and just keep the compiler-generated ones. Credential should be initializable with the {} syntax.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06509401_230835a9",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-20T16:16:04Z",
+      "side": 1,
+      "message": "An alternative is to use std::map::insert. That would spare you the second look-up and some copying of strings in the key.",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 36
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f4f1fee_f5050b70",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-20T16:16:04Z",
+      "side": 1,
+      "message": "nit: No (c). Also in other files.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ded64077_711e1269",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-20T16:16:04Z",
+      "side": 1,
+      "message": "nit: is -\u003e are",
+      "range": {
+        "startLine": 78,
+        "startChar": 33,
+        "endLine": 78,
+        "endChar": 35
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56fd4370_445cd82f",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-20T16:16:04Z",
+      "side": 1,
+      "message": "nit: suggestions",
+      "range": {
+        "startLine": 83,
+        "startChar": 13,
+        "endLine": 83,
+        "endChar": 23
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c46b4d86_beb2c2f0",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-20T16:16:04Z",
+      "side": 1,
+      "message": "nit: Just one \"o\" in \"chosen\"; also better ordering would be: \"|username| chosen by the user\".",
+      "range": {
+        "startLine": 90,
+        "startChar": 57,
+        "endLine": 91,
+        "endChar": 15
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "698f4baf_257a0496",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-20T16:16:04Z",
+      "side": 1,
+      "message": "Why mutable? (Please also explain in the file itself.)",
+      "range": {
+        "startLine": 103,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 9
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70078008_e40c801f",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-20T16:16:04Z",
+      "side": 1,
+      "message": "Please comment on what this method does. In particular how it is different to just a map look-up in |forms_|.",
+      "range": {
+        "startLine": 105,
+        "startChar": 18,
+        "endLine": 105,
+        "endChar": 29
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e0af45d_c33272c4",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-20T16:16:04Z",
+      "side": 1,
+      "message": "nit: Add a blank line before line 107.",
+      "range": {
+        "startLine": 107,
+        "startChar": 1,
+        "endLine": 107,
+        "endChar": 5
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5231a734_79663e95",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-20T16:16:04Z",
+      "side": 1,
+      "message": "#include \"base/macro.h\"",
+      "range": {
+        "startLine": 107,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 26
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d255582_e7f4fb46",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-20T16:16:04Z",
+      "side": 1,
+      "message": "Just curious: why ASSERT and not EXPECT?",
+      "range": {
+        "startLine": 227,
+        "startChar": 2,
+        "endLine": 227,
+        "endChar": 14
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4480d6a4_4d509628",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-20T16:16:04Z",
+      "side": 1,
+      "message": "typo: wrong order?",
+      "range": {
+        "startLine": 118,
+        "startChar": 30,
+        "endLine": 118,
+        "endChar": 39
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
