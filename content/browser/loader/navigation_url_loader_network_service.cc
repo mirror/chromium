@@ -51,6 +51,8 @@
 #include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/common/mime_util/mime_util.h"
 
+#include "content/browser/loader/webpackage_loader.h"
+
 namespace content {
 
 namespace {
@@ -197,6 +199,12 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       if (appcache_handler)
         handlers_.push_back(std::move(appcache_handler));
     }
+
+    // For webpackage.
+    std::unique_ptr<URLLoaderRequestHandler> webpkg_handler =
+        std::make_unique<WebPackageRequestHandler>(
+            *resource_request_, default_url_loader_factory_getter_);
+    handlers_.push_back(std::move(webpkg_handler));
 
     Restart();
   }
