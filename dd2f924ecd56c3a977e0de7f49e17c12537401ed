@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "5fbd9278_79b3b90c",
+        "filename": "net/url_request/url_request_context_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T17:41:55Z",
+      "side": 1,
+      "message": "Then can you move this logic up inside the |network_error_logging_enabled_| block, and make this check if context-\u003ereporting_service() is nullptr?  There\u0027s no other way currently to make network_error_logging_delegate be non-null other than with network_error_logging_enabled_, and I\u0027d like to make that clearer.\n\nAlso, while it may be benign to call SetReportingService with a nullptr, I\u0027d rather make it a bit clearer how all these lines are related, and that we handle that case correctly.",
+      "parentUuid": "8546ddf0_399956de",
+      "range": {
+        "startLine": 634,
+        "startChar": 17,
+        "endLine": 634,
+        "endChar": 34
+      },
+      "revId": "dd2f924ecd56c3a977e0de7f49e17c12537401ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8f4faa0_b0f8d724",
         "filename": "net/url_request/url_request_context_builder.h",
         "patchSetId": 3
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "I think it makes sense to offer it optionally to Cronet clients, disabled by default, and enable it in Chrome.",
       "parentUuid": "e8f4faa0_b0f8d724",
+      "range": {
+        "startLine": 301,
+        "startChar": 7,
+        "endLine": 301,
+        "endChar": 40
+      },
+      "revId": "dd2f924ecd56c3a977e0de7f49e17c12537401ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35f89c70_bcc917a9",
+        "filename": "net/url_request/url_request_context_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T17:41:55Z",
+      "side": 1,
+      "message": "Then can we disable it by default in Cronet for now?  Will need to disable both on Android and iOS, as they have different code to set up the their builders (I think?)",
+      "parentUuid": "2528c48e_c5d9d29f",
       "range": {
         "startLine": 301,
         "startChar": 7,
@@ -187,6 +235,30 @@
       "revId": "dd2f924ecd56c3a977e0de7f49e17c12537401ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1810c1f1_a49e41f5",
+        "filename": "net/url_request/url_request_context_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T17:41:55Z",
+      "side": 1,
+      "message": "Ahh, you\u0027re right.",
+      "parentUuid": "538e7b7c_ad0036f9",
+      "range": {
+        "startLine": 134,
+        "startChar": 47,
+        "endLine": 134,
+        "endChar": 78
+      },
+      "revId": "dd2f924ecd56c3a977e0de7f49e17c12537401ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
