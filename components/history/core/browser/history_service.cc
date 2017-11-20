@@ -68,6 +68,8 @@ static const char* kHistoryThreadName = "Chrome_HistoryThread";
 void RunWithFaviconResults(
     const favicon_base::FaviconResultsCallback& callback,
     std::vector<favicon_base::FaviconRawBitmapResult>* bitmap_results) {
+  LOG(INFO) << "HistoryService RunWithFaviconResults() " <<
+      (bitmap_results->empty() ? GURL() : bitmap_results->front().icon_url);
   TRACE_EVENT0("browser", "RunWithFaviconResults");
   callback.Run(*bitmap_results);
 }

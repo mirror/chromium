@@ -577,6 +577,10 @@ TEST_F(FaviconHandlerTest, UpdateFaviconMappingsAndFetch) {
                                             /*desired_size_in_dip=*/16, _, _));
 
   RunHandlerWithSimpleFaviconCandidates({kIconURL16x16});
+  base::RunLoop run_loop;
+  LOG(INFO) << "Entering runloop";
+  run_loop.Run();
+  LOG(INFO) << "Finished runloop";
 }
 
 // Test that we don't try to delete favicon mappings when a page URL is not in
