@@ -136,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "e3272e21_1114aa59",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-20T05:38:05Z",
+      "side": 1,
+      "message": "ping?",
+      "parentUuid": "a79fed97_f50188b9",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bfde15d_0cc4a981",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 10
@@ -451,6 +469,24 @@
       "side": 1,
       "message": "OnInstanceClosed calls DeleteArcTimers so no they are not kept around.",
       "parentUuid": "0c628e11_82a082c8",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af4b100_b8003470",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-20T05:38:05Z",
+      "side": 1,
+      "message": "I meant, the lifetime of ArcTimer instances should be tied to the ArcTimer connection, rather than container instance lifetime, right?\nIf it should be tied to the container instance lifetime, could you explicitly document the background reason in details?\nIf not, could you tie the lifetime of mojo connection and ArcTimer instances, instead?",
+      "parentUuid": "63382337_6ddb5b70",
       "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
