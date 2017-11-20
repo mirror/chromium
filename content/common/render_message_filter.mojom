@@ -35,4 +35,11 @@ interface RenderMessageFilter {
       url.mojom.Url url, mojo.common.mojom.Time expected_response_time,
       array<uint8> data, url.mojom.Origin cache_storage_origin,
       string cache_storage_cache_name);
+
+  // A renderer sends this when it wants to know whether a gpu process exists.
+  [Sync] HasGpuProcess() => (bool has_gpu_process);
+
+  // Asks the browser to change the priority of thread.
+  // (Linux only, NOP on other platforms.)
+  SetThreadPriority(int32 platform_thread_id,  int32 thread_priority);
 };
