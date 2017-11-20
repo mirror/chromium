@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6e063e6_4150bad8",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-20T22:20:36Z",
+      "side": 1,
+      "message": "I\u0027m confused... isn\u0027t this the opposite of what you document in the UKM XML? Where you say this is only collected when there is a single tab restoring?",
+      "range": {
+        "startLine": 561,
+        "startChar": 55,
+        "endLine": 561,
+        "endChar": 56
+      },
+      "revId": "e9e663480d43fa009631888871532e161cd284e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a23e1d_91ef0fb4",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-20T22:20:36Z",
+      "side": 1,
+      "message": "Why when there\u0027s only one? Doesn\u0027t this make sense when there\u0027s any number of loading/pending?",
+      "range": {
+        "startLine": 1572,
+        "startChar": 46,
+        "endLine": 1572,
+        "endChar": 57
+      },
+      "revId": "e9e663480d43fa009631888871532e161cd284e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
