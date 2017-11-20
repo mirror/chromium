@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f8b014d_cab85466",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/cssScale-expected.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-20T21:36:02Z",
+      "side": 1,
+      "message": "I don\u0027t think this test is right anymore given that the last argument is optional. I believe CSSScale(0, 0, undefined) should be equivalent to CSSScale(0, 0), which should not throw. I would just remove this test.",
+      "parentUuid": "dc22da94_874eb073",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 12
+      },
+      "revId": "a2f61e2c229ebe468962b63c4f3c4cdf78706dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab360a84_b183899e",
         "filename": "third_party/WebKit/LayoutTests/typedcssom/stylevalue-subclasses/cssScale.html",
         "patchSetId": 11
@@ -45,6 +69,64 @@
       "revId": "a2f61e2c229ebe468962b63c4f3c4cdf78706dfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ebabd9b_ce8540da",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/stylevalue-subclasses/cssScale.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-20T21:36:02Z",
+      "side": 1,
+      "message": "Apologies, I think that was a copy-paste error. Yes, the x, y, z getters should always return CSSNumericValues, even if you pass in doubles.\n\nAlso see: https://github.com/w3c/css-houdini-drafts/issues/498#issuecomment-340035338",
+      "parentUuid": "ab360a84_b183899e",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 31
+      },
+      "revId": "a2f61e2c229ebe468962b63c4f3c4cdf78706dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4aabf50d_e2b78f0a",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSScale.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-20T21:36:02Z",
+      "side": 1,
+      "message": "nit: I would move these checks into a function in this cpp file e.g. bool isCoordValid(CSSNumericValue*); You can then use isCoordValid in all the setters and constructor. This will reduce code duplication and make it easier to implement those TODOs.",
+      "revId": "a2f61e2c229ebe468962b63c4f3c4cdf78706dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "448e8d47_1d13577f",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSScale.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-20T21:36:02Z",
+      "side": 1,
+      "message": "If it makes it easier for you, feel free to add a static method on CSSUnitValue for creating numbers (so you don\u0027t have to keep typing CSSPrimitiveValue::UnitType::kNumber), or make the unit type default to number.",
+      "revId": "a2f61e2c229ebe468962b63c4f3c4cdf78706dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
