@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dd02915_06355e01",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-20T06:27:39Z",
+      "side": 1,
+      "message": "I\u0027m confused where we need to call InstallConditionalFeatures...\n\nWhat about calling InstallConditionalFeatures with wrapper, prototype and interface here? Then we can probably remove InstallConditionalFeatures which is called for prototype and interface in other places...?",
+      "revId": "190afa6dbbc520e0a61ea09d753f09dc98f29be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc1fdc68_5f254467",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ContextSnapshot.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-20T06:27:39Z",
+      "side": 1,
+      "message": "Why is it okay to pass an empty object as an instance? Don\u0027t we need to install conditional features on the window instance?",
+      "revId": "190afa6dbbc520e0a61ea09d753f09dc98f29be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
