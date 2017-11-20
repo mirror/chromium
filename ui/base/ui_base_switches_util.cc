@@ -20,4 +20,14 @@ bool IsTouchDragDropEnabled() {
 #endif
 }
 
+bool IsMusHostingViz() {
+#if BUILDFLAG(ENABLE_MUS)
+  auto* cmd = base::CommandLine::ForCurrentProcess();
+  return cmd->HasSwitch(switches::kMus) &&
+         cmd->GetSwitchValueASCII(switches::kMus) == switches::kMusHostVizValue;
+#else
+  return false;
+#endif
+}
+
 }  // namespace switches
