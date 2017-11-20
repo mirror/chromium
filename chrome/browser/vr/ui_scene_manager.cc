@@ -470,6 +470,7 @@ void UiSceneManager::CreateSplashScreen(Model* model) {
   auto button = base::MakeUnique<Button>(
       base::Bind(&UiSceneManager::OnWebVrTimedOut, base::Unretained(this)),
       kPhaseOverlayForeground, kTimeoutButtonWidth, kTimeoutButtonHeight,
+      kButtonZOffsetHoverDMM * kTimeoutButtonDistance,
       vector_icons::kClose16Icon);
   button->set_name(kWebVrTimeoutMessageButton);
   button->SetVisible(false);
@@ -590,7 +591,7 @@ void UiSceneManager::CreateVoiceSearchUiGroup(Model* model) {
       base::Bind(&UiSceneManager::OnVoiceSearchButtonClicked,
                  base::Unretained(this)),
       kPhaseForeground, kVoiceSearchButtonWidth, kVoiceSearchButtonHeight,
-      vector_icons::kMicrophoneIcon);
+      kButtonZOffsetHoverDMM * kUrlBarDistance, vector_icons::kMicrophoneIcon);
   voice_search_button->set_name(kVoiceSearchButton);
   voice_search_button->SetTranslate(0.f, -kVoiceSearchButtonYOffset, 0.f);
   voice_search_button->set_y_anchoring(BOTTOM);
@@ -954,6 +955,7 @@ void UiSceneManager::CreateCloseButton() {
   std::unique_ptr<Button> element = base::MakeUnique<Button>(
       base::Bind(&UiSceneManager::OnCloseButtonClicked, base::Unretained(this)),
       kPhaseForeground, kCloseButtonWidth, kCloseButtonHeight,
+      kButtonZOffsetHoverDMM * kCloseButtonDistance,
       vector_icons::kClose16Icon);
   element->set_name(kCloseButton);
   element->SetTranslate(0, kContentVerticalOffset - (kContentHeight / 2) - 0.3f,
