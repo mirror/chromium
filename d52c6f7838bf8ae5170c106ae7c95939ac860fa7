@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e16308c0_58643308",
+        "filename": "content/browser/accessibility/accessibility_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-20T23:41:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d280fbf_20ce3e9b",
+      "revId": "d52c6f7838bf8ae5170c106ae7c95939ac860fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ddf017d_e39568f0",
         "filename": "content/browser/accessibility/accessibility_ui.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "38432a8e_340139ba",
+        "filename": "content/browser/accessibility/accessibility_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-20T23:41:05Z",
+      "side": 1,
+      "message": "Sure, done for now - but note that the only reason we did that was because\nthe build servers remove leading whitespace. For display there\u0027s no good\nreason.",
+      "parentUuid": "2ddf017d_e39568f0",
+      "revId": "d52c6f7838bf8ae5170c106ae7c95939ac860fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4da9f94_9026e4b6",
         "filename": "content/browser/resources/accessibility/accessibility.js",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-20T16:42:29Z",
       "side": 1,
       "message": "Is the $ jQuery or something else? \nI would have expected $(\u0027#showNativeUI\u0027)",
+      "revId": "d52c6f7838bf8ae5170c106ae7c95939ac860fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c59cac_8443928d",
+        "filename": "content/browser/resources/accessibility/accessibility.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-20T23:41:05Z",
+      "side": 1,
+      "message": "From ui/webui/resources/js/util.js - inspired by jQuery but not\nusing it. I\u0027m not sure why there isn\u0027t a shortcut for querySelector,\nbut that\u0027s the Chrome internal JS style right now.",
+      "parentUuid": "e4da9f94_9026e4b6",
       "revId": "d52c6f7838bf8ae5170c106ae7c95939ac860fa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
