@@ -33,6 +33,24 @@
       "revId": "b9ba0b6267dbd27da4e3c294a43838f43ea0a9f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c8fbe63_5f73bcd7",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-20T03:20:41Z",
+      "side": 0,
+      "message": "Not having a ShellSurfaceBase class is fine with me but it would be nice to have a basic ShellSurface class that can be instantiated for tests instead of having to use derived impls. I\u0027d like Xdg and ClientControlled surface tests to be isolated to unit tests that are specific to those classes instead of having the the unique functionality spread through the code. The functionality that other exo classes need to be aware of can be included in base ShellSurface class but having a nice separation between code that other classes doesn\u0027t need to know about using this base ShellSurface + derived impls would be nice imo. Wdyt?",
+      "parentUuid": "81ef927d_6a0d381d",
+      "revId": "b9ba0b6267dbd27da4e3c294a43838f43ea0a9f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
