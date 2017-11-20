@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "825b2df6_851f32fe",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/DisplayItemList.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-20T22:38:56Z",
+      "side": 1,
+      "message": "There might be a perf impact from this change. Do you think it\u0027s necessary? This change is only for debugging, right?",
+      "revId": "083aab38ed1952ae9a7c302771e1cf33801a9c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df9ec68_0669b903",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/DisplayItemList.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-20T22:38:56Z",
+      "side": 1,
+      "message": "We should avoid memcpy if possible since it\u0027s hard to read and maintain. Is there another way to achieve this behavior without memcpy?",
+      "revId": "083aab38ed1952ae9a7c302771e1cf33801a9c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8693e6a_28a6fb47",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintControllerTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2381,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-20T22:38:56Z",
+      "side": 1,
+      "message": "nit: is there any reason to use \u0027r\u0027 over \u0027subsequence_recorder\u0027 (here and below)? I don\u0027t think it will cause extra linebreaks.",
+      "revId": "083aab38ed1952ae9a7c302771e1cf33801a9c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
