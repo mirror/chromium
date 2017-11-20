@@ -6,6 +6,7 @@
 #define CONTENT_BROWSER_WEBRTC_WEBRTC_RTC_EVENT_LOG_MANAGER_H_
 
 #include <map>
+#include <set>
 #include <string>
 
 #include "base/callback.h"
@@ -39,6 +40,27 @@ class CONTENT_EXPORT WebRtcEventLogManager {
   // that will be uploaded to the server.
   // https://crbug.com/775415
 
+  // Notifications of local WebRTC event logging being enabled/disabled.
+  // This is in response to explicit user input, typically a developer
+  // going through the WebRTC-Internals page.
+  void OnLocalWebRtcEventLoggingEnabled(const base::FilePath& base_file_path);
+  void OnLocalWebRtcEventLoggingDisabled();
+
+  // Notifications of PeerConnections being created/destroyed.
+  void OnPeerConnectionAdded(int render_process_id, int lid);
+  void OnPeerConnectionRemoved(int render_process_id, int lid);
+
+  // Called when a new log fragment is sent from the renderer. This will
+  // potentially be written to a local WebRTC event log, a log destined for
+  // upload, or both.
+  void OnWebRtcEventLogWrite(
+      int render_process_id,
+      int lid,  // Renderer-local PeerConnection ID.
+      const std::string& output,
+      base::Callback<void(bool)> reply = base::Callback<void(bool)>());
+
+  // TODO(eladalon): !!! These are now obsolete.
+
   // Start logging the WebRTC event logs associated with the given renderer's
   // process ID and the PeerConnection local ID, to a file whose path will
   // be derived from |base_path|, and potentially subject to a maximum size.
@@ -58,15 +80,6 @@ class CONTENT_EXPORT WebRtcEventLogManager {
   void LocalWebRtcEventLogStop(
       int render_process_id,
       int lid,
-      base::Callback<void(bool)> reply = base::Callback<void(bool)>());
-
-  // Called when a new log fragment is sent from the renderer. This will
-  // potentially be written to a local WebRTC event log, a log destined for
-  // upload, or both.
-  void OnWebRtcEventLogWrite(
-      int render_process_id,
-      int lid,  // Renderer-local PeerConnection ID.
-      const std::string& output,
       base::Callback<void(bool)> reply = base::Callback<void(bool)>());
 
  protected:
@@ -133,6 +146,16 @@ class CONTENT_EXPORT WebRtcEventLogManager {
   // cannot change between the time the clock is read by the unit under test
   // (namely WebRtcEventLogManager) and the time it's read by the test.
   base::Clock* clock_for_testing_;
+
+  // The base path for local WebRTC event logs. If empty, local logs are
+  // current disabled. If non-empty, the path is extended with a timestamp
+  // and the PeerConnection's identifiers to produce a per-peer-connection
+  // unique filename.
+  base::FilePath base_local_logs_path_;
+
+  // A set of all active PeerConnections, "active" meaning that they were
+  // at some point created, but not yet destroyed.
+  std::set<PeerConnectionKey> active_peer_connections_;
 
   // Local log files, stored at the behest of the user (via WebRTCInternals).
   // TODO(eladalon): An upcoming CL will add an additional container with

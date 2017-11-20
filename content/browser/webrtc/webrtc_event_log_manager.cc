@@ -13,6 +13,8 @@
 #include "base/task_scheduler/post_task.h"
 #include "content/public/browser/browser_thread.h"
 
+// TODO(eladalon): !!! Limit on concurrent log files, and unit-tests for it.
+
 namespace content {
 
 namespace {
@@ -72,6 +74,29 @@ WebRtcEventLogManager::WebRtcEventLogManager()
 
 WebRtcEventLogManager::~WebRtcEventLogManager() {
   // This should never actually run, except for in unit-tests.
+}
+
+void WebRtcEventLogManager::OnLocalWebRtcEventLoggingEnabled(
+    const base::FilePath& base_file_path) {
+  DCHECK(base_local_logs_path_.empty());
+  DCHECK(!base_file_path.empty());
+  base_local_logs_path_ = base_file_path;
+  // TODO(eladalon): !!! Activate for active peer connections.
+}
+
+void WebRtcEventLogManager::OnLocalWebRtcEventLoggingDisabled() {
+  // TODO(eladalon): !!! Deactivate for active peer connections.
+  DCHECK(!base_local_logs_path_.empty());
+  base_local_logs_path_.clear();
+}
+
+void WebRtcEventLogManager::OnPeerConnectionAdded(int render_process_id,
+                                                  int lid) {
+  DCHECK(active_peer_connections_
+}
+
+void WebRtcEventLogManager::OnPeerConnectionRemoved(int render_process_id,
+                                                    int lid) {
 }
 
 void WebRtcEventLogManager::LocalWebRtcEventLogStart(

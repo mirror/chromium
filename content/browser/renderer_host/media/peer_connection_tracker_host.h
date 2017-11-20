@@ -28,9 +28,7 @@ class WebRTCEventLogHost;
 class PeerConnectionTrackerHost : public BrowserMessageFilter,
                                   public base::PowerObserver {
  public:
-  PeerConnectionTrackerHost(
-      int render_process_id,
-      const base::WeakPtr<WebRTCEventLogHost>& event_log_host);
+  PeerConnectionTrackerHost(int render_process_id);
 
   // content::BrowserMessageFilter override.
   bool OnMessageReceived(const IPC::Message& message) override;
@@ -61,8 +59,6 @@ class PeerConnectionTrackerHost : public BrowserMessageFilter,
   void SendOnSuspendOnUIThread();
 
   int render_process_id_;
-
-  base::WeakPtr<WebRTCEventLogHost> event_log_host_;
 
   DISALLOW_COPY_AND_ASSIGN(PeerConnectionTrackerHost);
 };
