@@ -70,6 +70,24 @@
       "revId": "c63d6edada972d9113690befe4b69b23b6560443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ecbcbec_2b3d63c2",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-20T20:54:47Z",
+      "side": 1,
+      "message": "Oh, that\u0027s perfect. Thanks! Changed it accordingly.",
+      "parentUuid": "dd664d7f_d724a550",
+      "revId": "c63d6edada972d9113690befe4b69b23b6560443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
