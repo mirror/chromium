@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be1eee1b_dc4d7c4b",
+        "filename": "components/autofill/content/common/autofill_types.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-20T20:35:42Z",
+      "side": 1,
+      "message": "Can you please url.mojom.Origin for this? (https://cs.chromium.org/chromium/src/docs/security/mojo.md?q\u003durl.mojom.Origin\u0026l\u003d227\u0026dr\u003dC)",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 107,
+        "endChar": 15
+      },
+      "revId": "2a24277b868f55be7b53c083aec985d0e2c952fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
