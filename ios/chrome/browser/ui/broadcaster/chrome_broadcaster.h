@@ -33,12 +33,12 @@
 // method returns.
 - (void)broadcastValue:(NSString*)valueKey
               ofObject:(NSObject*)object
-              selector:(SEL)selector;
+            asProperty:(NSString*)property;
 
 // Stop broadcasting for |selector|. This doesn't remove or change any
 // observers for that selector. If |selector| is not being broadcast, this
 // method does nothing.
-- (void)stopBroadcastingForSelector:(SEL)selector;
+- (void)stopBroadcastingProperty:(NSString*)property;
 
 // Adds |observer| as an observer for |selector|. If |selector| is already being
 // broadcast, |selector| will be called on |observer| with the current value of
@@ -46,14 +46,29 @@
 // It is an error if |selector| is not one of the methods in the
 // BroadcastObserver protocol, or if |observer| does not respond to |selector|.
 - (void)addObserver:(id<ChromeBroadcastObserver>)observer
-        forSelector:(SEL)selector;
+         ofProperty:(NSString*)property;
 
 // Removes |observer| from the observers for |selector|. If |observer| is also
 // an observer for another selector, this method will not change that.
 // It is an error if |selector| is not one of the methods in the
 // BroadcastObserver protocol.
 - (void)removeObserver:(id<ChromeBroadcastObserver>)observer
-           forSelector:(SEL)selector;
+            ofProperty:(NSString*)property;
+
+// Adds |observer| as an observer for |selector|. If |selector| is already being
+// broadcast, |selector| will be called on |observer| with the current value of
+// the broadcast property before this method returns.
+// It is an error if |selector| is not one of the methods in the
+// BroadcastObserver protocol, or if |observer| does not respond to |selector|.
+- (void)addObserver:(id<ChromeBroadcastObserver>)observer
+         ofProtocol:(Protocol*)protocol;
+
+// Removes |observer| from the observers for |selector|. If |observer| is also
+// an observer for another selector, this method will not change that.
+// It is an error if |selector| is not one of the methods in the
+// BroadcastObserver protocol.
+- (void)removeObserver:(id<ChromeBroadcastObserver>)observer
+            ofProtocol:(Protocol*)protocol;
 
 @end
 
