@@ -22,6 +22,30 @@
       "revId": "39a3080e58db0402c96231033dfc8cfd52e74de4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9641eb_b6419223",
+        "filename": "chrome/installer/linux/rpm/update_package_provides.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-11-20T23:16:47Z",
+      "side": 0,
+      "message": "I forgot to change it back. I was getting a protocol error in the ssl library, although I didn\u0027t on Friday when I ran this script, which makes me think it\u0027s a transient error on their end.\n\nI\u0027ve changed it back now.",
+      "parentUuid": "bb2ac312_95952cd6",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 12
+      },
+      "revId": "39a3080e58db0402c96231033dfc8cfd52e74de4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
