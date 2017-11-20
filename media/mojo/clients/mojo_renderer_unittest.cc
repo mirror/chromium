@@ -67,8 +67,7 @@ class MojoRendererTest : public ::testing::Test {
 
     mojom::RendererPtr remote_renderer;
     renderer_binding_ = MojoRendererService::Create(
-        mojo_cdm_service_context_.GetWeakPtr(), nullptr, nullptr,
-        std::move(mock_renderer),
+        &mojo_cdm_service_context_, nullptr, nullptr, std::move(mock_renderer),
         MojoRendererService::InitiateSurfaceRequestCB(),
         mojo::MakeRequest(&remote_renderer));
 
@@ -177,10 +176,9 @@ class MojoRendererTest : public ::testing::Test {
   }
 
   void CreateCdm() {
-    mojo::MakeStrongBinding(
-        base::MakeUnique<MojoCdmService>(mojo_cdm_service_context_.GetWeakPtr(),
-                                         &cdm_factory_),
-        mojo::MakeRequest(&remote_cdm_));
+    mojo::MakeStrongBinding(base::MakeUnique<MojoCdmService>(
+                                &mojo_cdm_service_context_, &cdm_factory_),
+                            mojo::MakeRequest(&remote_cdm_));
     remote_cdm_->Initialize(
         kClearKeyKeySystem, url::Origin::Create(GURL("https://www.test.com")),
         CdmConfig(),
