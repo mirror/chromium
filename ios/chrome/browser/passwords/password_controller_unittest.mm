@@ -31,6 +31,7 @@
 #include "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
 #import "ios/chrome/browser/passwords/js_password_manager.h"
 #import "ios/chrome/browser/passwords/password_form_filler.h"
+#include "ios/chrome/browser/passwords/test_helpers.h"
 #import "ios/web/public/navigation_item.h"
 #import "ios/web/public/navigation_manager.h"
 #include "ios/web/public/ssl_status.h"
@@ -51,6 +52,7 @@
 
 using autofill::PasswordForm;
 using autofill::PasswordFormFillData;
+using test_helpers::SetPasswordFormFillData;
 using testing::NiceMock;
 using testing::Return;
 using testing::_;
@@ -672,38 +674,6 @@ TEST_F(PasswordControllerTest, FLAKY_GetSubmittedPasswordForm) {
   }
 }
 
-// Populates |form_data| with test values.
-void SetPasswordFormFillData(PasswordFormFillData& form_data,
-                             const std::string& origin,
-                             const std::string& action,
-                             const char* username_field,
-                             const char* username_value,
-                             const char* password_field,
-                             const char* password_value,
-                             const char* additional_username,
-                             const char* additional_password,
-                             bool wait_for_username) {
-  form_data.origin = GURL(origin);
-  form_data.action = GURL(action);
-  autofill::FormFieldData username;
-  username.name = base::UTF8ToUTF16(username_field);
-  username.value = base::UTF8ToUTF16(username_value);
-  form_data.username_field = username;
-  autofill::FormFieldData password;
-  password.name = base::UTF8ToUTF16(password_field);
-  password.value = base::UTF8ToUTF16(password_value);
-  form_data.password_field = password;
-  if (additional_username) {
-    autofill::PasswordAndRealm additional_password_data;
-    additional_password_data.password = base::UTF8ToUTF16(additional_password);
-    additional_password_data.realm.clear();
-    form_data.additional_logins.insert(
-        std::pair<base::string16, autofill::PasswordAndRealm>(
-            base::UTF8ToUTF16(additional_username), additional_password_data));
-  }
-  form_data.wait_for_username = wait_for_username;
-}
-
 // Test HTML page.  It contains several password forms.  Tests autofill
 // them and verify that the right ones are autofilled.
 static NSString* kHtmlWithMultiplePasswordForms =
@@ -1052,6 +1022,19 @@ static NSString* kHtmlWithPasswordForm =
      "<input id='pw' type='password' name=\"p'\">"
      "</form>";
 
+// An HTML page containing two password forms.
+static NSString* kHtmlWithTwoPasswordForms =
+    @"<form id='f1'>"
+     "<input type='text' id=\"u'\""
+     "  onkeyup='window.onKeyUpCalled_=true'"
+     "  onchange='window.onChangeCalled_=true'>"
+     "<input type='password' id=\"p'\">"
+     "</form>"
+     "<form id='f2'>"
+     "<input type='text' id='u2'>"
+     "<input type='password' id='p2'>"
+     "</form>";
+
 // A script that resets indicators used to verify that custom event
 // handlers are triggered.  It also finds and the username and
 // password fields and caches them for future verification.
@@ -1203,53 +1186,89 @@ TEST_F(PasswordControllerTest, SuggestionUpdateTests) {
 
 // Tests that selecting a suggestion will fill the corresponding form and field.
 TEST_F(PasswordControllerTest, SelectingSuggestionShouldFillPasswordForm) {
-  LoadHtml(kHtmlWithPasswordForm);
+  LoadHtml(kHtmlWithTwoPasswordForms);
   const std::string base_url = BaseUrl();
   ExecuteJavaScript(kUsernameAndPasswordTestPreparationScript);
 
-  // Initialize |form_data| with test data and an indicator that autofill
-  // should not be performed while the user is entering the username so that
-  // we can test with an initially-empty username field.
-  PasswordFormFillData form_data;
-  SetPasswordFormFillData(form_data, base_url, base_url, "u'", "user0", "p'",
-                          "password0", "abc", "def", true);
-  form_data.name = base::ASCIIToUTF16(FormName(0));
+  struct TestData {
+    const char* form_name;
+    const char* username_element;
+    const char* password_element;
+  } const kTestData[] = {{"f1", "u'", "p'"}, {"f1", "u2", "p2"}};
 
-  __block BOOL block_was_called = NO;
-  [passwordController_ fillPasswordForm:form_data
-                      completionHandler:^(BOOL success) {
-                        block_was_called = YES;
-                        // Verify that the fill reports failed.
-                        EXPECT_FALSE(success);
-                      }];
-  base::test::ios::WaitUntilCondition(^bool() {
-    return block_was_called;
-  });
+  // Send fill data to passwordController_.
+  for (size_t form_i = 0; form_i < arraysize(kTestData); ++form_i) {
+    // Initialize |form_data| with test data and an indicator that autofill
+    // should not be performed while the user is entering the username so that
+    // we can test with an initially-empty username field.
+    const auto& test_data = kTestData[form_i];
+    PasswordFormFillData form_data;
+    SetPasswordFormFillData(
+        form_data, base_url, base_url, test_data.username_element, "user0",
+        test_data.password_element, "password0", "abc", "def", true);
+    form_data.name = base::ASCIIToUTF16(test_data.form_name);
 
-  // Verify that the form has not been autofilled.
-  EXPECT_NSEQ(@"[]=, onkeyup=false, onchange=false",
-              ExecuteJavaScript(kUsernamePasswordVerificationScript));
+    __block BOOL block_was_called = NO;
+    [passwordController_ fillPasswordForm:form_data
+                        completionHandler:^(BOOL success) {
+                          block_was_called = YES;
+                          // Verify that the fill reports failed.
+                          EXPECT_FALSE(success);
+                        }];
+    base::test::ios::WaitUntilCondition(^bool() {
+      return block_was_called;
+    });
 
-  // Tell PasswordController that a suggestion was selected. It should fill
-  // out the password form with the corresponding credentials.
-  FormSuggestion* suggestion = [FormSuggestion suggestionWithValue:@"abc"
-                                                displayDescription:nil
-                                                              icon:nil
-                                                        identifier:0];
-
-  block_was_called = NO;
-  SuggestionHandledCompletion completion = ^{
-    block_was_called = YES;
-    EXPECT_NSEQ(@"abc[]=def, onkeyup=false, onchange=false",
+    // Verify that the form has not been autofilled.
+    EXPECT_NSEQ(@"[]=, onkeyup=false, onchange=false",
                 ExecuteJavaScript(kUsernamePasswordVerificationScript));
-  };
-  [passwordController_ didSelectSuggestion:suggestion
-                                  forField:@"u"
-                                      form:base::SysUTF8ToNSString(FormName(0))
-                         completionHandler:completion];
-  base::test::ios::WaitUntilCondition(^bool() {
-    return block_was_called;
-  });
+  }
+
+  // Check that the right Password form is filled on suggesion selection.
+  for (size_t form_i = 0; form_i < arraysize(kTestData); ++form_i) {
+    // Emulate that the user clicks on the username field in the first form.
+    // That's required in order that PasswordController can identify which form
+    // should be filled.
+    __block BOOL block_was_called = NO;
+    const auto& test_data = kTestData[form_i];
+    [passwordController_
+        retrieveSuggestionsForForm:base::SysUTF16ToNSString(test_data.form_name)
+                             field:base::SysUTF16ToNSString(
+                                       test_data.username_element)
+                         fieldType:@"text"
+                              type:@"focus"
+                        typedValue:@"abc"
+                          webState:web_state()
+                 completionHandler:^(NSArray* suggestions,
+                                     id<FormSuggestionProvider> provider) {
+                   EXPECT_EQ(1u, [suggestions count]);
+                   block_was_called = YES;
+                 }];
+    EXPECT_TRUE(block_was_called);
+
+    // Tell PasswordController that a suggestion was selected. It should fill
+    // out the password form with the corresponding credentials.
+    FormSuggestion* suggestion = [FormSuggestion suggestionWithValue:@"abc"
+                                                  displayDescription:nil
+                                                                icon:nil
+                                                          identifier:0];
+    NSString* verification_script = [kUsernamePasswordVerificationScript stringByReplacingOccurrencesOfString:@"un" withString:@"oe"]
+      
+    block_was_called = NO;
+    SuggestionHandledCompletion completion = ^{
+      block_was_called = YES;
+      EXPECT_NSEQ(@"abc[]=def, onkeyup=false, onchange=false",
+                  ExecuteJavaScript(kUsernamePasswordVerificationScript));
+    };
+    [passwordController_
+        didSelectSuggestion:suggestion
+                   forField:@"u"
+                       form:base::SysUTF8ToNSString(FormName(0))
+          completionHandler:completion];
+    base::test::ios::WaitUntilCondition(^bool() {
+      return block_was_called;
+    });
+  }
 }
 
 // Tests with invalid inputs.
