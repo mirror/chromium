@@ -34,6 +34,24 @@
       "revId": "f4571479cece3b0bd70653692f5240a0866950d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7fa9bb3_57ec682b",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/root-layer-scrolls",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-20T15:02:07Z",
+      "side": 0,
+      "message": "Passed the RLS bot so I guess there\u0027s no explicit graphics layer tree expectation.",
+      "parentUuid": "6564ec82_39970f68",
+      "revId": "f4571479cece3b0bd70653692f5240a0866950d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
