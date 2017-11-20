@@ -70,6 +70,30 @@
       "revId": "6a39eb7fc85d16335a10dd366ff7d675d3d8820e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3827a9ed_dcd08700",
+        "filename": "chrome/browser/ui/views/location_bar/location_icon_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-11-20T21:07:44Z",
+      "side": 1,
+      "message": "Good point, I fixed the comments",
+      "parentUuid": "2a41db9b_c2cadd71",
+      "range": {
+        "startLine": 111,
+        "startChar": 3,
+        "endLine": 113,
+        "endChar": 22
+      },
+      "revId": "6a39eb7fc85d16335a10dd366ff7d675d3d8820e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
