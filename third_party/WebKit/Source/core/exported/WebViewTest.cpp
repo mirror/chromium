@@ -3611,6 +3611,7 @@ TEST_P(WebViewTest, SmartClipData) {
       "10,000,000won</div>";
   WebString clip_text;
   WebString clip_html;
+  WebRect clip_rect;
   RegisterMockedHttpURLLoad("Ahem.ttf");
   RegisterMockedHttpURLLoad("smartclip.html");
   WebViewImpl* web_view =
@@ -3619,7 +3620,7 @@ TEST_P(WebViewTest, SmartClipData) {
   web_view->UpdateAllLifecyclePhases();
   WebRect crop_rect(300, 125, 152, 50);
   web_view->MainFrameImpl()->ExtractSmartClipData(crop_rect, clip_text,
-                                                  clip_html);
+                                                  clip_html, clip_rect);
   EXPECT_STREQ(kExpectedClipText, clip_text.Utf8().c_str());
   EXPECT_STREQ(kExpectedClipHtml, clip_html.Utf8().c_str());
 }
@@ -3647,6 +3648,7 @@ TEST_P(WebViewTest, SmartClipDataWithPinchZoom) {
       "10,000,000won</div>";
   WebString clip_text;
   WebString clip_html;
+  WebRect clip_rect;
   RegisterMockedHttpURLLoad("Ahem.ttf");
   RegisterMockedHttpURLLoad("smartclip.html");
   WebViewImpl* web_view =
@@ -3657,7 +3659,7 @@ TEST_P(WebViewTest, SmartClipDataWithPinchZoom) {
   web_view->SetVisualViewportOffset(WebFloatPoint(167, 100));
   WebRect crop_rect(200, 38, 228, 75);
   web_view->MainFrameImpl()->ExtractSmartClipData(crop_rect, clip_text,
-                                                  clip_html);
+                                                  clip_html, clip_rect);
   EXPECT_STREQ(kExpectedClipText, clip_text.Utf8().c_str());
   EXPECT_STREQ(kExpectedClipHtml, clip_html.Utf8().c_str());
 }
@@ -3665,6 +3667,7 @@ TEST_P(WebViewTest, SmartClipDataWithPinchZoom) {
 TEST_P(WebViewTest, SmartClipReturnsEmptyStringsWhenUserSelectIsNone) {
   WebString clip_text;
   WebString clip_html;
+  WebRect clip_rect;
   RegisterMockedHttpURLLoad("Ahem.ttf");
   RegisterMockedHttpURLLoad("smartclip_user_select_none.html");
   WebViewImpl* web_view = web_view_helper_.InitializeAndLoad(
@@ -3673,7 +3676,7 @@ TEST_P(WebViewTest, SmartClipReturnsEmptyStringsWhenUserSelectIsNone) {
   web_view->UpdateAllLifecyclePhases();
   WebRect crop_rect(0, 0, 100, 100);
   web_view->MainFrameImpl()->ExtractSmartClipData(crop_rect, clip_text,
-                                                  clip_html);
+                                                  clip_html, clip_rect);
   EXPECT_STREQ("", clip_text.Utf8().c_str());
   EXPECT_STREQ("", clip_html.Utf8().c_str());
 }
@@ -3681,6 +3684,7 @@ TEST_P(WebViewTest, SmartClipReturnsEmptyStringsWhenUserSelectIsNone) {
 TEST_P(WebViewTest, SmartClipDoesNotCrashPositionReversed) {
   WebString clip_text;
   WebString clip_html;
+  WebRect clip_rect;
   RegisterMockedHttpURLLoad("Ahem.ttf");
   RegisterMockedHttpURLLoad("smartclip_reversed_positions.html");
   WebViewImpl* web_view = web_view_helper_.InitializeAndLoad(
@@ -3691,7 +3695,7 @@ TEST_P(WebViewTest, SmartClipDoesNotCrashPositionReversed) {
   WebRect crop_rect(30, 110, 400, 250);
   // This should not still crash. See crbug.com/589082 for more details.
   web_view->MainFrameImpl()->ExtractSmartClipData(crop_rect, clip_text,
-                                                  clip_html);
+                                                  clip_html, clip_rect);
 }
 
 class CreateChildCounterFrameClient
