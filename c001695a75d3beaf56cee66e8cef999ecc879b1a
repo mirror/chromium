@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d79cc034_cd8a441d",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-20T21:35:12Z",
+      "side": 1,
+      "message": "Done. Is it preferred to import this even though autofill_agent already does it?",
+      "parentUuid": "0d5fa0a0_caf42f14",
+      "revId": "c001695a75d3beaf56cee66e8cef999ecc879b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83503638_4afbf307",
         "filename": "components/autofill/ios/browser/fake_autofill_agent.h",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "c001695a75d3beaf56cee66e8cef999ecc879b1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3864a022_2179ef27",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-20T21:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83503638_4afbf307",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 12
+      },
+      "revId": "c001695a75d3beaf56cee66e8cef999ecc879b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "57a01b2a_3aa5911f",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-20T21:35:12Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "16689889_d7f0d693",
+      "range": {
+        "startLine": 20,
+        "startChar": 20,
+        "endLine": 20,
+        "endChar": 36
+      },
+      "revId": "c001695a75d3beaf56cee66e8cef999ecc879b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eba5f2a_5fa5bd12",
         "filename": "components/autofill/ios/browser/fake_autofill_agent.mm",
         "patchSetId": 2
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "613350c6_5512cb05",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-20T21:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8eba5f2a_5fa5bd12",
+      "range": {
+        "startLine": 35,
+        "startChar": 47,
+        "endLine": 35,
+        "endChar": 52
+      },
+      "revId": "c001695a75d3beaf56cee66e8cef999ecc879b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a9a6524_38afba4d",
         "filename": "components/autofill/ios/browser/fake_autofill_agent.mm",
         "patchSetId": 2
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "2ceefc90_398511fa",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-20T21:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a9a6524_38afba4d",
+      "revId": "c001695a75d3beaf56cee66e8cef999ecc879b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ccadda4_aaf8f911",
         "filename": "components/autofill/ios/browser/fake_autofill_agent.mm",
         "patchSetId": 2
@@ -116,6 +224,30 @@
       "writtenOn": "2017-11-20T21:17:08Z",
       "side": 1,
       "message": "Do we want to record and store this suggestion, so the tests could check them?",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 13
+      },
+      "revId": "c001695a75d3beaf56cee66e8cef999ecc879b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44f507d4_8eeb8179",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-20T21:35:12Z",
+      "side": 1,
+      "message": "Do you mean for tests to check if the last selected suggestion matches?",
+      "parentUuid": "7ccadda4_aaf8f911",
       "range": {
         "startLine": 52,
         "startChar": 12,
