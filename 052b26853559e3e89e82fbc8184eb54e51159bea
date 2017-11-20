@@ -46,6 +46,30 @@
       "revId": "052b26853559e3e89e82fbc8184eb54e51159bea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00aaecd1_7cc302f0",
+        "filename": "content/browser/renderer_host/p2p/socket_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-20T14:20:51Z",
+      "side": 1,
+      "message": "Paul, isn\u0027t !IsOffline() the same as this check?\n\nhttps://cs.chromium.org/chromium/src/net/base/network_change_notifier.cc?rcl\u003de296c1edc9bb04b504ad48f0ea5b7cb797b00984\u0026l\u003d778\n\nbool NetworkChangeNotifier::IsOffline() {\n  return GetConnectionType() \u003d\u003d CONNECTION_NONE;\n}",
+      "parentUuid": "549c0c96_d8de56df",
+      "range": {
+        "startLine": 165,
+        "startChar": 11,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "052b26853559e3e89e82fbc8184eb54e51159bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
