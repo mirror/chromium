@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3e8b9e4c_bc5acccf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-11-20T04:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8efa2954_36dbbcdf",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 89
+      },
+      "revId": "b767656e066e8b04f55a94990a04cef09a1c19d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76d6e060_75dc8f53",
         "filename": "chromeos/cryptohome/homedir_methods.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "b767656e066e8b04f55a94990a04cef09a1c19d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ebcb4af_f9c876a1",
+        "filename": "chromeos/cryptohome/homedir_methods.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-11-20T04:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76d6e060_75dc8f53",
+      "revId": "b767656e066e8b04f55a94990a04cef09a1c19d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "0c0a89d0_70e14114",
+        "filename": "chromeos/cryptohome/homedir_methods.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-11-20T04:09:22Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure what you meant by this...perhaps you meant the Key proto member order? AuthorizationRequest only has a Key submessage.\n\nAnyway made the change. :)",
+      "parentUuid": "59135e34_7a788c40",
+      "revId": "b767656e066e8b04f55a94990a04cef09a1c19d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "746c7ee9_e414545c",
         "filename": "chromeos/cryptohome/homedir_methods.cc",
         "patchSetId": 1
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "dfbe46bc_80037ea8",
+        "filename": "chromeos/cryptohome/homedir_methods.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-11-20T04:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "746c7ee9_e414545c",
+      "revId": "b767656e066e8b04f55a94990a04cef09a1c19d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "283fdbf5_d24b979a",
         "filename": "chromeos/cryptohome/homedir_methods.h",
         "patchSetId": 1
@@ -90,6 +168,24 @@
       "revId": "b767656e066e8b04f55a94990a04cef09a1c19d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44f822a8_870ec0fc",
+        "filename": "chromeos/cryptohome/homedir_methods.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-11-20T04:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "283fdbf5_d24b979a",
+      "revId": "b767656e066e8b04f55a94990a04cef09a1c19d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
