@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "585b2eb9_bd634400",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-11-20T18:11:16Z",
+      "side": 1,
+      "message": "In order to test this, I\u0027ve had to add some getters that allow the test to check the wiring. If you aren\u0027t thrilled about that, I could reduce the visibility of them and add some \"friend\" statements. I\u0027ve fixed the bug by moving the SetObserver() call to a bit later in the code. Is that what you meant by \"moving this later\" Ryan, or were you thinking somewhere outside of IOThread?",
+      "parentUuid": "1bc008c7_2bc549ea",
+      "range": {
+        "startLine": 826,
+        "startChar": 15,
+        "endLine": 826,
+        "endChar": 26
+      },
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4d682bc_ffe36154",
         "filename": "components/certificate_transparency/single_tree_tracker.cc",
         "patchSetId": 5
