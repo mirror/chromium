@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73cd6402_5916425a",
+        "filename": "content/browser/frame_host/interstitial_page_navigator_impl.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-20T14:47:54Z",
+      "side": 1,
+      "message": "nit: move this )); to the line above:\nnullptr));             /* navigation_ui_data */",
+      "revId": "1db2e387bd8c03e57ec99f598abd3f53b1b1e196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0432119_1bee00b4",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-20T14:47:54Z",
+      "side": 1,
+      "message": "nit: TODO(clamy)",
+      "revId": "1db2e387bd8c03e57ec99f598abd3f53b1b1e196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f98933_12d8b995",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 2065,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-20T14:47:54Z",
+      "side": 1,
+      "message": "So this is still problematic. The right thing to do here would be:\n- always pass nullptr for same_document_loads\n- only pass the navigation_ui_data to the main frame for different_document_loads. All subframe should get nullptr.\nMy reasoning is that the NavigationUIData was initialized for the main frame. Therefore, we cannot pass it to a subframe since it contains frame info.\n\n@creis: does this make sense to you? I\u0027m not sure in which case we can end up with several loads in the NavigationController.",
+      "revId": "1db2e387bd8c03e57ec99f598abd3f53b1b1e196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "417b0574_bfd3ad5d",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-20T14:47:54Z",
+      "side": 1,
+      "message": "nit: no need for {.",
+      "revId": "1db2e387bd8c03e57ec99f598abd3f53b1b1e196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
