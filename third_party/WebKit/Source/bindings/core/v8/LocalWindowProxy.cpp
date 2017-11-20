@@ -174,9 +174,6 @@ void LocalWindowProxy::Initialize() {
                                                    GetFrame(), origin);
     GetFrame()->Client()->DidCreateScriptContext(context, world_->GetWorldId());
 
-    InstallOriginTrialFeaturesOnGlobal(&V8Window::wrapperTypeInfo,
-                                       script_state_.get());
-
     if (world_->IsMainWorld()) {
       // For the main world, install any remaining conditional bindings (i.e.
       // for origin trials, which do not apply to extensions). Some conditional

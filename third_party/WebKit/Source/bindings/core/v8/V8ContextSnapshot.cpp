@@ -186,7 +186,17 @@ void V8ContextSnapshot::InstallConditionalFeatures(
   ScriptState* script_state = ScriptState::From(context);
   v8::Isolate* isolate = script_state->GetIsolate();
   const DOMWrapperWorld& world = script_state->World();
+  v8::Local<v8::Object> global_proxy = context->Global();
+
   if (!CanCreateContextFromSnapshot(isolate, world, document)) {
+    v8::Local<v8::Object> window_wrapper =
+        global_proxy->GetPrototype().As<v8::Object>();
+    const WrapperTypeInfo* type = &V8Window::wrapperTypeInfo;
+    v8::Local<v8::Function> interface;
+    v8::Local<v8::Object> prototype;
+    type->InstallConditionalFeatures(context, world, window_wrapper, prototype,
+                                     interface,
+                                     type->domTemplate(isolate, world));
     return;
   }
 
@@ -196,7 +206,6 @@ void V8ContextSnapshot::InstallConditionalFeatures(
   v8::Local<v8::String> prototype_str = V8AtomicString(isolate, "prototype");
   V8PerContextData* data = script_state->PerContextData();
 
-  v8::Local<v8::Object> global_proxy = context->Global();
   {
     v8::Local<v8::Object> window_wrapper =
         global_proxy->GetPrototype().As<v8::Object>();
