@@ -37,6 +37,7 @@
 #include "gpu/command_buffer/common/sync_token.h"
 #include "platform/PlatformExport.h"
 #include "platform/geometry/IntSize.h"
+#include "platform/graphics/CanvasColorParams.h"
 #include "platform/graphics/GraphicsTypes3D.h"
 #include "platform/graphics/gpu/WebGLImageConversion.h"
 #include "platform/wtf/Deque.h"
@@ -160,6 +161,7 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
   // GL_FRAMEBUFFER, GL_READ_FRAMEBUFFER, or GL_DRAW_FRAMEBUFFER.
   void Bind(GLenum target);
   IntSize Size() const { return size_; }
+  CanvasColorParams ColorParams() const { return color_params_; }
 
   // Resolves the multisample color buffer to the normal color buffer and leaves
   // the resolved color buffer bound to GL_READ_FRAMEBUFFER and
@@ -405,10 +407,14 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
                            int width,
                            int height,
                            ReadbackOrder,
-                           WebGLImageConversion::AlphaOp);
+                           WebGLImageConversion::AlphaOp,
+                           int bytes_per_pixel = 4);
 
   // Helper function to flip a bitmap vertically.
-  void FlipVertically(uint8_t* data, int width, int height);
+  void FlipVertically(uint8_t* data,
+                      int width,
+                      int height,
+                      int bytes_per_pixel);
 
   // If RGB emulation is required, then the CHROMIUM image's alpha channel
   // must be immediately cleared after it is bound to a texture. Nothing
@@ -510,6 +516,10 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
   const bool want_depth_;
   const bool want_stencil_;
 
+  // Used to specify color space and image data storage format for converting
+  // the drawing buffer to ImageData.
+  const CanvasColorParams color_params_;
+
   // The color space of this buffer's storage, and the color space in which
   // shader samplers will read this buffer.
   const gfx::ColorSpace storage_color_space_;
@@ -523,6 +533,8 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
   };
 
   AntialiasingMode anti_aliasing_mode_ = kNone;
+
+  bool use_half_float_storage_ = false;
 
   int max_texture_size_ = 0;
   int sample_count_ = 0;

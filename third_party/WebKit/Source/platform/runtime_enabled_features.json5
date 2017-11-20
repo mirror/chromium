@@ -1129,6 +1129,9 @@
       status: "experimental",
     },
     {
+      name: "WebGLColorSpace",
+    },
+    {
       name: "WebGLDraftExtensions",
       status: "experimental",
     },

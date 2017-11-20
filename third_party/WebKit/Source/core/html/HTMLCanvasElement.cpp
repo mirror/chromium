@@ -693,31 +693,21 @@ ImageData* HTMLCanvasElement::ToImageData(SourceDrawingBuffer source_buffer,
       return image_data;
 
     context_->PaintRenderingResultsToCanvas(source_buffer);
-    image_data = ImageData::Create(size_);
-    if (image_data && GetImageBuffer()) {
+    if (GetImageBuffer()) {
       scoped_refptr<StaticBitmapImage> snapshot =
           GetImageBuffer()->NewImageSnapshot(kPreferNoAcceleration, reason);
       if (snapshot) {
-        SkImageInfo image_info = SkImageInfo::Make(
-            width(), height(), kRGBA_8888_SkColorType, kUnpremul_SkAlphaType);
-        sk_sp<SkImage> sk_image =
-            snapshot->PaintImageForCurrentFrame().GetSkImage();
-        bool read_pixels_successful =
-            sk_image->readPixels(image_info, image_data->data()->Data(),
-                                 image_info.minRowBytes(), 0, 0);
-        DCHECK(read_pixels_successful);
-        if (!read_pixels_successful)
-          return nullptr;
+        CanvasColorParams color_params;
+        if (RuntimeEnabledFeatures::WebGLColorSpaceEnabled())
+          color_params = ColorParams();
+        return ImageData::CreateForRenderingContext(snapshot, color_params);
       }
+      return image_data;
     }
-    return image_data;
   }
 
-  image_data = ImageData::Create(size_);
-
-  if ((!context_ || !image_data) && !PlaceholderFrame())
-    return image_data;
-
+  if (!context_ && !PlaceholderFrame())
+    return nullptr;
   DCHECK(Is2d() || PlaceholderFrame());
   scoped_refptr<StaticBitmapImage> snapshot;
   if (GetImageBuffer()) {
@@ -729,19 +719,12 @@ ImageData* HTMLCanvasElement::ToImageData(SourceDrawingBuffer source_buffer,
   }
 
   if (snapshot) {
-    SkImageInfo image_info = SkImageInfo::Make(
-        width(), height(), kRGBA_8888_SkColorType, kUnpremul_SkAlphaType);
-    sk_sp<SkImage> sk_image =
-        snapshot->PaintImageForCurrentFrame().GetSkImage();
-    bool read_pixels_successful = sk_image->readPixels(
-        image_info, image_data->data()->Data(), image_info.minRowBytes(), 0, 0);
-    DCHECK(read_pixels_successful || sk_image->bounds().isEmpty() ||
-           image_info.isEmpty());
-    if (!read_pixels_successful)
-      return nullptr;
+    CanvasColorParams color_params;
+    if (RuntimeEnabledFeatures::WebGLColorSpaceEnabled())
+      color_params = ColorParams();
+    return ImageData::CreateForRenderingContext(snapshot, color_params);
   }
-
-  return image_data;
+  return nullptr;
 }
 
 String HTMLCanvasElement::ToDataURLInternal(

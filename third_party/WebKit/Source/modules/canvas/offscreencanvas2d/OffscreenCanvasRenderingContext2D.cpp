@@ -153,21 +153,12 @@ ImageData* OffscreenCanvasRenderingContext2D::ToImageData(
     return nullptr;
   scoped_refptr<StaticBitmapImage> snapshot =
       GetImageBuffer()->NewImageSnapshot(kPreferNoAcceleration, reason);
-  ImageData* image_data = nullptr;
-  if (snapshot) {
-    image_data = ImageData::Create(Host()->Size());
-    SkImageInfo image_info =
-        SkImageInfo::Make(this->Width(), this->Height(), kRGBA_8888_SkColorType,
-                          kUnpremul_SkAlphaType);
-    sk_sp<SkImage> sk_image =
-        snapshot->PaintImageForCurrentFrame().GetSkImage();
-    bool read_pixels_successful = sk_image->readPixels(
-        image_info, image_data->data()->Data(), image_info.minRowBytes(), 0, 0);
-    DCHECK(read_pixels_successful);
-    if (!read_pixels_successful)
-      return nullptr;
-  }
-  return image_data;
+  if (!snapshot)
+    return nullptr;
+  CanvasColorParams color_params;
+  if (RuntimeEnabledFeatures::WebGLColorSpaceEnabled())
+    color_params = ColorParams();
+  return ImageData::CreateForRenderingContext(snapshot, color_params);
 }
 
 void OffscreenCanvasRenderingContext2D::SetOffscreenCanvasGetContextResult(
