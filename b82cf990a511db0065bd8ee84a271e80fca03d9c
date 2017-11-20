@@ -16,6 +16,24 @@
       "revId": "b82cf990a511db0065bd8ee84a271e80fca03d9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c347cc2_9be4c84f",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-11-20T18:55:07Z",
+      "side": 1,
+      "message": "It\u0027s not safe to take a pointer to to_return[] data while adding to it, in case to_return needs to resize.",
+      "parentUuid": "8ef32d40_d77c84cc",
+      "revId": "b82cf990a511db0065bd8ee84a271e80fca03d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
