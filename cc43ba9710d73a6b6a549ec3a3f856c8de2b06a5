@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7174794f_3e5c8572",
+        "filename": "ios/chrome/browser/ui/side_swipe/side_swipe_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T16:29:56Z",
+      "side": 1,
+      "message": "Is it really necessary to reset ivars here?",
+      "range": {
+        "startLine": 160,
+        "startChar": 2,
+        "endLine": 160,
+        "endChar": 25
+      },
+      "revId": "cc43ba9710d73a6b6a549ec3a3f856c8de2b06a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
