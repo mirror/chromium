@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfaf0512_78bca086",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-20T18:00:23Z",
+      "side": 1,
+      "message": "bikeshed: I\u0027d call this GpuImageDecodeTaskImpl, since it fits more in the pattern of naming like GpuImageDecodeCache.  Similarly, SoftwareImageDecodeTaskImpl.",
+      "revId": "e3c93ab1cd5e7269083232d36a9fda8393922573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
