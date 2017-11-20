@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c45d16d2_b570f00c",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-20T03:06:43Z",
+      "side": 1,
+      "message": "Would prefer to just call this RemoveServiceWorkerRegistrationObjectHost(). It\u0027s not removed until the function is called. And the comment can be \"// Removes the...\"",
+      "revId": "a4fe3d96b0f63fc534d31a56f73c58caf4b92129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
