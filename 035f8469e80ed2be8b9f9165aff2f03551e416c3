@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7e4f3cc_a31b54d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarTablet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-20T20:07:34Z",
+      "side": 1,
+      "message": "nit: Will you please update this too. It looks like this is the only in-file use of the variable that\u0027s not guarded by a null check.",
+      "range": {
+        "startLine": 562,
+        "startChar": 16,
+        "endLine": 562,
+        "endChar": 36
+      },
+      "revId": "035f8469e80ed2be8b9f9165aff2f03551e416c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
