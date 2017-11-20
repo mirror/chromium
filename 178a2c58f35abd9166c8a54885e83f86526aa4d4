@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b3249e8_142df012",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-20T15:44:35Z",
+      "side": 1,
+      "message": "As a question: what is @status used for? Is it explicitly fine to keep it empty?",
+      "revId": "178a2c58f35abd9166c8a54885e83f86526aa4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
