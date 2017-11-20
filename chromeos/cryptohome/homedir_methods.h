@@ -98,8 +98,8 @@ class CHROMEOS_EXPORT HomedirMethods {
   // Asks cryptohomed to remove specific key labeled with |label| for user
   // identified by |id| using |auth|.
   virtual void RemoveKeyEx(const Identification& id,
-                           const Authorization& auth,
-                           const std::string& label,
+                           const AuthorizationRequest& auth,
+                           const RemoveKeyRequest& request,
                            const Callback& callback) = 0;
 
   // Asks cryptohomed to change cryptohome identification |id_from| to |id_to|,
