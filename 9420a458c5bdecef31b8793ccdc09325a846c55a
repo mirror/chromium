@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52073f69_c0c58490",
+        "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-20T14:57:14Z",
+      "side": 0,
+      "message": "This is just a leftover include from the onion soup CLs, right?",
+      "revId": "9420a458c5bdecef31b8793ccdc09325a846c55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cfb985a_328d860d",
+        "filename": "android_webview/tools/system_webview_shell/test/data/webexposed/global-interface-listing-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 1735,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-20T14:57:14Z",
+      "side": 1,
+      "message": "Is this expected to appear on HTMLIFrameElement? It\u0027s not in the regular webexposed expected test results.",
+      "revId": "f790c50e541c53ff553803db40b4f72bf2879024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b4a5c37_37b895d5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy/policy_main_document.php",
+        "patchSetId": 19
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-20T14:57:14Z",
+      "side": 1,
+      "message": "Nit: I think this should use square brackets to indicate that it returns an array. Braces suggest a set or an object of some kind.",
+      "revId": "f790c50e541c53ff553803db40b4f72bf2879024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e0d2e6_f1c6776a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy/policy_main_document.php",
+        "patchSetId": 19
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-20T14:57:14Z",
+      "side": 1,
+      "message": "Is this expected / desired behaviour? What happens if there are additional characters after the slash? It looks like this must be parsing a URL and extracting the origin, rather than parsing an origin.\n\nIf this is what we want, we should make sure that it\u0027s specced properly.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 78
+      },
+      "revId": "f790c50e541c53ff553803db40b4f72bf2879024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31abdea3_b4692ce2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy/policy_main_document.php",
+        "patchSetId": 19
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-20T14:57:14Z",
+      "side": 1,
+      "message": "Maybe make sure that the failure message describes what behaviour we were expecting -- \"Test that policy.allowsFeature recognizes URLs with trailing slashes\" or something similar?",
+      "revId": "f790c50e541c53ff553803db40b4f72bf2879024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5545733_6d376a2a",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-20T14:57:14Z",
+      "side": 1,
+      "message": "Probably okay as just \"...on the origin of the...\"",
+      "range": {
+        "startLine": 22,
+        "startChar": 64,
+        "endLine": 22,
+        "endChar": 68
+      },
+      "revId": "f790c50e541c53ff553803db40b4f72bf2879024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71df4eb3_3961601e",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-20T14:57:14Z",
+      "side": 1,
+      "message": "How about \"...on the origin of the given URL.\" ?",
+      "range": {
+        "startLine": 25,
+        "startChar": 58,
+        "endLine": 26,
+        "endChar": 12
+      },
+      "revId": "f790c50e541c53ff553803db40b4f72bf2879024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f46720c_1da428da",
+        "filename": "third_party/WebKit/Source/core/dom/PolicyTest.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-20T14:57:14Z",
+      "side": 1,
+      "message": "Can we add a \u0027geolocation\u0027 test here as well?",
+      "revId": "f790c50e541c53ff553803db40b4f72bf2879024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f590d74d_d19a949e",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-20T14:57:14Z",
+      "side": 1,
+      "message": "So that\u0027s not actually true -- we *can* transfer std::vector over IPC. The types which were deleted could not be transferred, so we had to convert to this type. I think that this struct is still required, but we should look at whether it could possibly be removed.",
+      "revId": "f790c50e541c53ff553803db40b4f72bf2879024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
