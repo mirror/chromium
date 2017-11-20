@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edc68bae_af35d3c6",
+        "filename": "third_party/WebKit/PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-20T22:16:00Z",
+      "side": 1,
+      "message": "Nit: input_api.os_path\n\nAlso, why is it necessary to run this through normpath? Is this so the slashes are normalized correctly?",
+      "range": {
+        "startLine": 42,
+        "startChar": 20,
+        "endLine": 42,
+        "endChar": 27
+      },
+      "revId": "9e5f81425367589ff57813c5ca8d96fbf8ab7df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
