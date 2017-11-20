@@ -532,12 +532,14 @@
     },
     {
       name: "LayoutNG",
+      status: "stable",
     },
     {
       name: "LayoutNGFragmentCaching",
     },
     {
       name: "LayoutNGPaintFragments",
+      status: "stable",
     },
     {
       name: "LazyInitializeMediaControls",
