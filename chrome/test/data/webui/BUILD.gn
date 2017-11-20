@@ -55,6 +55,7 @@ js2gtest("browser_tests_js_webui") {
     "chrome_send_browsertest.js",
     "cr_components/cr_components_browsertest.js",
     "cr_elements/cr_elements_browsertest.js",
+    "discards/discards_test.js",
     "engagement/site_engagement_browsertest.js",
     "extensions/a11y/extensions_a11y_test.js",
     "extensions/a11y/extensions_a11y_test_fixture.js",
