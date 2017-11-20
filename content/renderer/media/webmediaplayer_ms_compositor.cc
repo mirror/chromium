@@ -403,13 +403,14 @@ void WebMediaPlayerMSCompositor::SetCurrentFrame(
     ++dropped_frame_count_;
   current_frame_used_by_compositor_ = false;
 
+  const bool first_frame = !current_frame_;
   const bool size_changed =
-      !current_frame_ ||
-      current_frame_->natural_size() != frame->natural_size();
+      first_frame || current_frame_->natural_size() != frame->natural_size();
   current_frame_ = frame;
   if (size_changed) {
     main_message_loop_->task_runner()->PostTask(
-        FROM_HERE, base::BindOnce(&WebMediaPlayerMS::TriggerResize, player_));
+        FROM_HERE,
+        base::BindOnce(&WebMediaPlayerMS::TriggerResize, player_, first_frame));
   }
   main_message_loop_->task_runner()->PostTask(
       FROM_HERE, base::BindOnce(&WebMediaPlayerMS::ResetCanvasCache, player_));
