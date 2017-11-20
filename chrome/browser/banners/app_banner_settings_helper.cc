@@ -241,21 +241,23 @@ void AppBannerSettingsHelper::RecordBannerEvent(
     settings->FlushLossyWebsiteSettings();
 }
 
+bool AppBannerSettingsHelper::HasBeenInstalled(
+    content::WebContents* web_contents,
+    const GURL& from_url,
+    const std::string& package_name_or_start_url) {
+  base::Time added_time =
+      GetSingleBannerEvent(web_contents, from_url, package_name_or_start_url,
+                           APP_BANNER_EVENT_DID_ADD_TO_HOMESCREEN);
+
+  return !added_time.is_null();
+}
+
 InstallableStatusCode AppBannerSettingsHelper::ShouldShowBanner(
     content::WebContents* web_contents,
     const GURL& origin_url,
     const std::string& package_name_or_start_url,
     base::Time time) {
-  // Never show a banner when the package name or URL is empty.
-  if (package_name_or_start_url.empty())
-    return PACKAGE_NAME_OR_START_URL_EMPTY;
-
-  // Don't show if it has been added to the homescreen.
-  base::Time added_time =
-      GetSingleBannerEvent(web_contents, origin_url, package_name_or_start_url,
-                           APP_BANNER_EVENT_DID_ADD_TO_HOMESCREEN);
-  if (!added_time.is_null())
-    return ALREADY_INSTALLED;
+  DCHECK(!package_name_or_start_url.empty());
 
   // Showing of experimental app banners is under developer control, and
   // requires a user gesture. In contrast, showing of traditional app banners
@@ -276,8 +278,10 @@ InstallableStatusCode AppBannerSettingsHelper::ShouldShowBanner(
     base::Time shown_time = GetSingleBannerEvent(web_contents, origin_url,
                                                  package_name_or_start_url,
                                                  APP_BANNER_EVENT_DID_SHOW);
-    if (time - shown_time < base::TimeDelta::FromDays(gDaysAfterIgnoredToShow))
+    if (time - shown_time <
+        base::TimeDelta::FromDays(gDaysAfterIgnoredToShow)) {
       return PREVIOUSLY_IGNORED;
+    }
   }
 
   return NO_ERROR_DETECTED;

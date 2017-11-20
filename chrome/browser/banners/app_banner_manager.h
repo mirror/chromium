@@ -165,10 +165,13 @@ class AppBannerManager : public content::WebContentsObserver,
   // kBypassAppBannerEngagementChecks flag is set.
   bool IsDebugMode() const;
 
-  // Returns true if the webapp at |start_url| has already been installed.
-  virtual bool IsWebAppInstalled(content::BrowserContext* browser_context,
-                                 const GURL& start_url,
-                                 const GURL& manifest_url);
+  // Returns true if the webapp at |start_url| has already been installed, or
+  // should be considered installed. On android, we rely on a heuristic that
+  // may yield false negatives or false positives (crbug.com/786268).
+  virtual bool IsWebAppConsideredInstalled(content::WebContents* web_contents,
+                                           const GURL& validated_url,
+                                           const GURL& start_url,
+                                           const GURL& manifest_url);
 
   // Callback invoked by the InstallableManager once it has fetched the page's
   // manifest.
