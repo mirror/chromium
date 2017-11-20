@@ -103,14 +103,16 @@ BeginNavigationParams::BeginNavigationParams(
     RequestContextType request_context_type,
     blink::WebMixedContentContextType mixed_content_context_type,
     bool is_form_submission,
-    const base::Optional<url::Origin>& initiator_origin)
+    const base::Optional<url::Origin>& initiator_origin,
+    base::Optional<std::string> suggested_filename)
     : headers(headers),
       load_flags(load_flags),
       skip_service_worker(skip_service_worker),
       request_context_type(request_context_type),
       mixed_content_context_type(mixed_content_context_type),
       is_form_submission(is_form_submission),
-      initiator_origin(initiator_origin) {}
+      initiator_origin(initiator_origin),
+      suggested_filename(suggested_filename) {}
 
 BeginNavigationParams::BeginNavigationParams(
     const BeginNavigationParams& other) = default;

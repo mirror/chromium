@@ -6756,7 +6756,11 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
           blink::WebURLRequest::ServiceWorkerMode::kAll,
       GetRequestContextTypeForWebURLRequest(info.url_request),
       GetMixedContentContextTypeForWebURLRequest(info.url_request),
-      is_form_submission, initiator_origin);
+      is_form_submission, initiator_origin,
+      info.url_request.GetSuggestedFilename().has_value()
+          ? base::Optional<std::string>(
+                info.url_request.GetSuggestedFilename()->Utf8())
+          : base::Optional<std::string>());
 
   if (!info.form.IsNull()) {
     WebSearchableFormData web_searchable_form_data(info.form);

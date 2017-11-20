@@ -176,7 +176,8 @@ struct CONTENT_EXPORT BeginNavigationParams {
       RequestContextType request_context_type,
       blink::WebMixedContentContextType mixed_content_context_type,
       bool is_form_submission,
-      const base::Optional<url::Origin>& initiator_origin);
+      const base::Optional<url::Origin>& initiator_origin,
+      base::Optional<std::string> suggested_filename);
   BeginNavigationParams(const BeginNavigationParams& other);
   ~BeginNavigationParams();
 
@@ -210,6 +211,10 @@ struct CONTENT_EXPORT BeginNavigationParams {
   // If the transition type is a client side redirect, then this holds the URL
   // of the page that had the client side redirect.
   GURL client_side_redirect_url;
+
+  // The value if the download attribute of the anchor that triggered this
+  // navigation, if there was one.
+  base::Optional<std::string> suggested_filename;
 };
 
 // Provided by the browser -----------------------------------------------------
