@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "34a33066_8c9d557e",
+        "filename": "chrome/browser/resources/pdf/open_pdf_params_parser.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-20T18:37:18Z",
+      "side": 1,
+      "message": "Nit: Can you use Array#includes instead? See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes.",
+      "range": {
+        "startLine": 125,
+        "startChar": 34,
+        "endLine": 125,
+        "endChar": 41
+      },
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a57cb886_304529f7",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-20T18:37:18Z",
+      "side": 1,
+      "message": "Nit (optional): Instead of having 3 separate event types fit-to-width, fit-to-height, fit-to-page, none of which have a payload. How about having a single event \u0027fit-to-changed\u0027 with a payload differentiating between the 3 cases?",
+      "range": {
+        "startLine": 192,
+        "startChar": 6,
+        "endLine": 192,
+        "endChar": 21
+      },
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f97adca5_e9a24e53",
         "filename": "chrome/browser/resources/pdf/pdf.js",
         "patchSetId": 11
@@ -52,6 +98,29 @@
         "startChar": 32,
         "endLine": 529,
         "endChar": 34
+      },
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc29150e_31a92126",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-20T18:37:18Z",
+      "side": 1,
+      "message": "String literals fit, fith and fitv are duplicated across this file and paraems_parser.js. Can we define an enum for those values and use the enum everywhere, instead of repeating the literals?",
+      "range": {
+        "startLine": 529,
+        "startChar": 36,
+        "endLine": 529,
+        "endChar": 39
       },
       "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -98,6 +167,46 @@
         "startChar": 36,
         "endLine": 534,
         "endChar": 42
+      },
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b70ee6_67c152eb",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-20T18:37:18Z",
+      "side": 1,
+      "message": "This method claims that it always returns a number. But this is not the case here. Can you either return a number value, or move the responsibility of this check to whoever is calling this method?",
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f6f2e9_9cf605eb",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-20T18:37:18Z",
+      "side": 1,
+      "message": "@param missing for last 4 parameters.",
+      "range": {
+        "startLine": 591,
+        "startChar": 27,
+        "endLine": 591,
+        "endChar": 75
       },
       "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
