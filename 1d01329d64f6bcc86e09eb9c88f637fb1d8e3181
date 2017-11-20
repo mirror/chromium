@@ -1,0 +1,503 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a168f255_b43a33ad",
+        "filename": "chrome/browser/chromeos/power/ml/logging_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "nit: class, or just say \"Interface to log ...\"",
+      "range": {
+        "startLine": 14,
+        "startChar": 12,
+        "endLine": 14,
+        "endChar": 17
+      },
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565f1d82_d886bddd",
+        "filename": "chrome/browser/chromeos/power/ml/logging_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "nit: args are usually named in interfaces, e.g. \"event\"",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cebc08e4_18170ea3",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "if last_activity_time is the only part of this that you need, it\u0027d probably be cleaner to just save that instead of the whole thing.",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c621e115_66d0dfae",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "nit: please make method order match between .h and .cc",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b03e93_a1553ea5",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "nit: invert this so you don\u0027t need to indent the whole body:\n\n  if (!idle_event_observed_)\n    return;\n\n  [rest goes here]",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5063b5ed_98a56419",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "nit: delete unnecessary comment",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8ebc0f_2a256351",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a77b6a4_11dfc858",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "and here",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "195f73c5_5bdad066",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "is LoggingHelper going to be used by other classes, or just by UserActivityLogger? if it\u0027s the latter, the usual convention is to name it UserActivityLogger::Delegate or UserActivityLoggerDelegate instead.",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c0ede63_b246a255",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "nit: blank line before this one",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba8bc80_0dd31999",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "nit: blank line before this one",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "599ee540_fba17117",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "nit: name argument",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5262d2f6_a825284b",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "nit: init to false here",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c9c606_21cdb131",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "nit: add blank line before this one",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9479bfff_a7d96765",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "nit: move this to a section after the d\u0027tor:\n\n  const std::vector\u003cUserActivityEvent\u003e\u0026 events() const { return events_; }",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e302d1ad_cdd6171a",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN(TestLoggingHelper);",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e56b96_55c54fdd",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "initialize this in the initialization list on the previous line instead. it doesn\u0027t look like there\u0027s any reason why it needs to be a unique_ptr instead of just being stored directly in the test class",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a30e301_a6fbc032",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "nit: ReportUserActivity?",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e668021_35ddd4f4",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "nit: ReportIdleEvent?",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e7e313_298868e4",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "nit: remove comment",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "471acedc_1675b8c0",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "nit: remove comment",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97182e7_88c33bea",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "it won\u0027t be an issue if events() returns a const ref, but please don\u0027t take references to temporaries",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b895b7c_13f035ca",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "ASSERT_EQ since the rest of this test will crash if it\u0027s empty",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c686b26_48a647fa",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "nit: remove comment",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b3c0b76_eef90256",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "you\u0027re only calling this in two places. mind just inlining the EXPECT_EQ call in both so you get meaningful line numbers in error messages?",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8090f822_519b31e1",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "delete comments here too",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "985c21f0_aef31004",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "inline this:\n\n  EXPECT_EQ(0U, GetEvents().size());",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547d4f46_a3151af5",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "and here",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8904f68_8241894d",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T22:09:18Z",
+      "side": 1,
+      "message": "ASSERT_EQ",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
