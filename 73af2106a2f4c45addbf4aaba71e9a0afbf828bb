@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1780361_38270ab8",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/scroll-behavior/first-scroll-runs-on-compositor.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-20T19:51:57Z",
+      "side": 1,
+      "message": "This is ~8 seconds which is too long. I\u0027d make this ~10 or so and see if that works.",
+      "range": {
+        "startLine": 19,
+        "startChar": 20,
+        "endLine": 19,
+        "endChar": 23
+      },
+      "revId": "73af2106a2f4c45addbf4aaba71e9a0afbf828bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6019ca_430c9633",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/scroll-behavior/first-scroll-runs-on-compositor.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-20T19:51:57Z",
+      "side": 1,
+      "message": "Ditto here. I\u0027d actually just remove the \u003e\u003d 500 check and rely on the other check. You could also add a resolve() if the scrollTop \u003d\u003d 500 (since you\u0027ve reached your target scroll)",
+      "range": {
+        "startLine": 45,
+        "startChar": 20,
+        "endLine": 45,
+        "endChar": 23
+      },
+      "revId": "73af2106a2f4c45addbf4aaba71e9a0afbf828bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
