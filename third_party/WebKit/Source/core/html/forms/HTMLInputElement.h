@@ -293,6 +293,7 @@ class CORE_EXPORT HTMLInputElement
 
   unsigned SizeOfRadioGroup() const;
 
+  bool SupportsPlaceholder() const final;
   String GetPlaceholderValue() const final;
 
  protected:
@@ -366,7 +367,6 @@ class CORE_EXPORT HTMLInputElement
   bool TooLong(const String&, NeedsToCheckDirtyFlag) const;
   bool TooShort(const String&, NeedsToCheckDirtyFlag) const;
 
-  bool SupportsPlaceholder() const final;
   void UpdatePlaceholderText() final;
   bool IsEmptyValue() const final { return InnerEditorValue().IsEmpty(); }
   void HandleFocusEvent(Element* old_focused_element, WebFocusType) final;
