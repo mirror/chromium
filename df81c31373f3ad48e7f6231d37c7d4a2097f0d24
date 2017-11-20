@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d888d67b_995267d0",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_controller_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-20T16:44:00Z",
+      "side": 1,
+      "message": "Let me know if you don\u0027t like this line break. If so, I\u0027d rather not create a helper in this file for the matcher, since the ID is used in 4 EG test files. So I can leave it as is, or replace them all in a follow-up CL (I don\u0027t want the scope of this to keep increasing with all the cleanup that can be done :)).",
+      "revId": "df81c31373f3ad48e7f6231d37c7d4a2097f0d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
