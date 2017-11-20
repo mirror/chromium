@@ -40,6 +40,7 @@
 #include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/compositor/layer_animation_element.h"
 #include "ui/compositor/paint_recorder.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/display/display.h"
@@ -261,6 +262,42 @@ bool IsOEMFolderItem(AppListItem* item) {
              AppListFolderItem::FOLDER_TYPE_OEM;
 }
 
+class PaginationAnimationMetricsReporter : public ui::AnimationMetricsReporter {
+ public:
+  PaginationAnimationMetricsReporter() = default;
+  ~PaginationAnimationMetricsReporter() override = default;
+
+  void Report(int value) override {
+    UMA_HISTOGRAM_PERCENTAGE("Apps.PaginationTransition.AnimationSmoothness",
+                             value);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(PaginationAnimationMetricsReporter);
+};
+
+int GetCompositorActivatedFrameCount(ui::Layer* layer) {
+  const ui::Compositor* compositor = layer->GetCompositor();
+  return compositor ? compositor->activated_frame_count() : 0;
+}
+
+float GetCompositorRefreshRate(ui::Layer* layer) {
+  const ui::Compositor* compositor = layer->GetCompositor();
+  return compositor ? compositor->refresh_rate() : 60.0;
+}
+
+int CalculateAnimationSmoothness(int frame_delta,
+                                 base::TimeDelta duration,
+                                 ui::Layer* layer) {
+  int smoothness = 100;
+  const float frame_interval =
+      base::Time::kMillisecondsPerSecond / GetCompositorRefreshRate(layer);
+  const float actual_duration = frame_delta * frame_interval;
+  if (duration.InMillisecondsF() - actual_duration >= frame_interval)
+    smoothness = 100 * (actual_duration / duration.InMillisecondsF());
+  return smoothness;
+}
+
 }  // namespace
 
 // A layer delegate used for AppsGridView's mask layer, with top and bottom
@@ -320,7 +357,10 @@ AppsGridView::AppsGridView(ContentsView* contents_view,
       is_app_list_focus_enabled_(features::IsAppListFocusEnabled()),
       page_flip_delay_in_ms_(is_fullscreen_app_list_enabled_
                                  ? kPageFlipDelayInMsFullscreen
-                                 : kPageFlipDelayInMs) {
+                                 : kPageFlipDelayInMs),
+      pagination_animation_metrics_reporter_(
+          std::make_unique<PaginationAnimationMetricsReporter>()),
+      pagination_animation_start_frame_number_(0) {
   DCHECK(contents_view_);
   SetPaintToLayer();
   // Clip any icons that are outside the grid view's bounds. These icons would
@@ -2598,6 +2638,8 @@ void AppsGridView::SelectedPageChanged(int old_selected, int new_selected) {
 
 void AppsGridView::TransitionStarted() {
   CancelContextMenusOnCurrentPage();
+  pagination_animation_start_frame_number_ =
+      GetCompositorActivatedFrameCount(layer());
 }
 
 void AppsGridView::TransitionChanged() {
@@ -2607,6 +2649,19 @@ void AppsGridView::TransitionChanged() {
       pagination_model_.transition();
   if (pagination_model_.is_valid_page(transition.target_page))
     Layout();
+}
+
+void AppsGridView::TransitionEnded() {
+  const base::TimeDelta duration =
+      pagination_model_.GetTransitionAnimationSlideDuration();
+  const int end_frame_number = GetCompositorActivatedFrameCount(layer());
+  if (end_frame_number > pagination_animation_start_frame_number_ &&
+      !duration.is_zero()) {
+    const int smoothness = CalculateAnimationSmoothness(
+        end_frame_number - pagination_animation_start_frame_number_, duration,
+        layer());
+    pagination_animation_metrics_reporter_->Report(smoothness);
+  }
 }
 
 void AppsGridView::OnAppListModelStatusChanged() {
