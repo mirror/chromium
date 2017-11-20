@@ -306,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "e78675fc_888912c6",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1223,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-20T01:03:41Z",
+      "side": 1,
+      "message": "I think older code was written when bare \"new\" wasn\u0027t discouraged.\n\nI agree the bare new and the comments 1221-1222 here and comments 272-273 in registration_unittest are a bit awkward.\n\nI like shimazu\u0027s suggestion.",
+      "parentUuid": "8c432ec5_e0829649",
+      "range": {
+        "startLine": 1223,
+        "startChar": 19,
+        "endLine": 1223,
+        "endChar": 58
+      },
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ae38a65_8d0f7aa6",
         "filename": "content/browser/service_worker/service_worker_provider_host.h",
         "patchSetId": 5

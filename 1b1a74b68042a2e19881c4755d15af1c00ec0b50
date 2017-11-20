@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c30d6713_0c17cd5f",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-20T01:03:41Z",
+      "side": 1,
+      "message": "EXPECT_TRUE",
+      "revId": "1b1a74b68042a2e19881c4755d15af1c00ec0b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3a36f6_cd83c441",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-20T01:03:41Z",
+      "side": 1,
+      "message": "I think this can be EXPECT_FALSE(registration)",
+      "revId": "1b1a74b68042a2e19881c4755d15af1c00ec0b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed637822_3c398332",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-20T01:03:41Z",
+      "side": 1,
+      "message": "corresponding to",
+      "revId": "1b1a74b68042a2e19881c4755d15af1c00ec0b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8ebdd4_4b280625",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-20T01:03:41Z",
+      "side": 1,
+      "message": "\"current execution context\" sounds like the execution context can change later.\n\nMaybe for the \"hosted execution context\"",
+      "revId": "1b1a74b68042a2e19881c4755d15af1c00ec0b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d08b45d_9528160d",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-20T01:03:41Z",
+      "side": 1,
+      "message": "int64_t /* registration_id */\n\nis a bit easier to scan than the \"Keyed by...\" comment.",
+      "revId": "1b1a74b68042a2e19881c4755d15af1c00ec0b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
