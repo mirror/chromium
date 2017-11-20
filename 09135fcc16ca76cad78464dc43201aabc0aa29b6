@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6251a38_6eaa35e8",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.h.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-20T02:35:47Z",
+      "side": 1,
+      "message": "This should never happen - we should only be instantiating one instance for each ID, and anyway, I\u0027d prefer we explicitly override the equals operator instead of doing this, or left the explicit equals check as it was before.",
+      "revId": "09135fcc16ca76cad78464dc43201aabc0aa29b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15cbbb78_b38d7257",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-20T02:35:47Z",
+      "side": 1,
+      "message": "What does this mean? I know there\u0027s a lot of vague TODOs in the codebase, but I think we should strive for including better details, e.g. what, how, when and/or why: https://big.corp.google.com/~jmcmaster/testing/2017/07/episode-486-todos-and-todonts.html",
+      "revId": "09135fcc16ca76cad78464dc43201aabc0aa29b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
