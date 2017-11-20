@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bae0635_364b7870",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-20T19:14:20Z",
+      "side": 1,
+      "message": "I took a try on this last week but was stuck on the semantics of the new function in LayoutText...\n\nThis is because |LayoutText::GetUpperLeftCorner()| does not necessarily return the upper left corner of the text node, which happens when the text height and line height of the first line differ.\n\nI can\u0027t think of a better name, though...",
+      "revId": "53960b53844bec4f017492e2cbd9e1bbf61e3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
