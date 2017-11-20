@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39558cb2_516931ce",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-11-20T06:14:58Z",
+      "side": 1,
+      "message": "Do we need the TRACE_EVENT here or only when LazyInitialize is called?",
+      "revId": "849371b7be946b6f41265e4e03e4e72804d450c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
