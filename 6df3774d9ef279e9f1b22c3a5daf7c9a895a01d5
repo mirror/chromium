@@ -70,6 +70,30 @@
       "revId": "6df3774d9ef279e9f1b22c3a5daf7c9a895a01d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5c56ef_880330af",
+        "filename": "ui/views/controls/slider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-20T19:46:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43db17aa_0443e122",
+      "range": {
+        "startLine": 318,
+        "startChar": 8,
+        "endLine": 318,
+        "endChar": 9
+      },
+      "revId": "6df3774d9ef279e9f1b22c3a5daf7c9a895a01d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
