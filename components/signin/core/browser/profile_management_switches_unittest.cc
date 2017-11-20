@@ -20,8 +20,8 @@ namespace signin {
 
 TEST(ProfileManagementSwitchesTest, GetAccountConsistencyMethodMirror) {
   // Mirror is enabled by default on some platforms.
-  EXPECT_EQ(AccountConsistencyMethod::kMirror, GetAccountConsistencyMethod());
   EXPECT_TRUE(IsAccountConsistencyMirrorEnabled());
+  EXPECT_FALSE(IsDicePrepareMigrationEnabled());
   EXPECT_FALSE(IsDiceMigrationEnabled());
   EXPECT_FALSE(IsDiceFixAuthErrorsEnabled());
 }
@@ -53,9 +53,8 @@ TEST(ProfileManagementSwitchesTest, GetAccountConsistencyMethod) {
     {AccountConsistencyMethod::kDicePrepareMigration, false, true, true, false,
      false},
     {AccountConsistencyMethod::kDiceMigration, false, true, true, true, false},
-    {AccountConsistencyMethod::kDice, false, true, true, true, true},
+    {AccountConsistencyMethod::kDice, false, true, true, true, true}
 #endif
-    {AccountConsistencyMethod::kMirror, true, false, false}
   };
 
   for (const TestCase& test_case : test_cases) {
@@ -95,8 +94,7 @@ TEST(ProfileManagementSwitchesTest, DiceMigration) {
                     {AccountConsistencyMethod::kDiceFixAuthErrors, false},
                     {AccountConsistencyMethod::kDicePrepareMigration, false},
                     {AccountConsistencyMethod::kDiceMigration, true},
-                    {AccountConsistencyMethod::kDice, true},
-                    {AccountConsistencyMethod::kMirror, false}};
+                    {AccountConsistencyMethod::kDice, true}};
 
   for (const TestCase& test_case : test_cases) {
     ScopedAccountConsistency scoped_method(test_case.method);

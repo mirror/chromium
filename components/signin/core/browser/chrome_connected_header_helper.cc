@@ -131,14 +131,16 @@ bool ChromeConnectedHeaderHelper::IsUrlEligibleForRequestHeader(
     return false;
 
   GURL origin(url.GetOrigin());
-  bool is_enable_account_consistency = IsAccountConsistencyMirrorEnabled();
-  bool is_google_url = is_enable_account_consistency &&
-                       (google_util::IsGoogleDomainUrl(
-                            url, google_util::ALLOW_SUBDOMAIN,
-                            google_util::DISALLOW_NON_STANDARD_PORTS) ||
-                        google_util::IsYoutubeDomainUrl(
-                            url, google_util::ALLOW_SUBDOMAIN,
-                            google_util::DISALLOW_NON_STANDARD_PORTS));
+#if BUILDFLAG(ENABLE_MIRROR)
+  bool is_google_url =
+      google_util::IsGoogleDomainUrl(
+          url, google_util::ALLOW_SUBDOMAIN,
+          google_util::DISALLOW_NON_STANDARD_PORTS) ||
+      google_util::IsYoutubeDomainUrl(url, google_util::ALLOW_SUBDOMAIN,
+                                      google_util::DISALLOW_NON_STANDARD_PORTS);
+#else
+  bool is_google_url = false;
+#endif
   return is_google_url || IsDriveOrigin(origin) ||
          gaia::IsGaiaSignonRealm(origin);
 }

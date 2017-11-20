@@ -38,17 +38,15 @@
 
 #if defined(OS_ANDROID)
 #include "chrome/browser/android/signin/account_management_screen_helper.h"
-#else
-#include "chrome/browser/ui/browser_commands.h"
-#include "chrome/browser/ui/browser_finder.h"
-#include "extensions/browser/guest_view/web_view/web_view_renderer_state.h"
 #endif  // defined(OS_ANDROID)
 
 namespace signin {
 
 namespace {
 
+#if BUILDFLAG(ENABLE_MIRROR)
 const char kChromeManageAccountsHeader[] = "X-Chrome-Manage-Accounts";
+#endif
 
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
 const char kGoogleSignoutResponseHeader[] = "Google-Accounts-SignOut";
@@ -173,6 +171,7 @@ class DiceURLRequestUserData : public base::SupportsUserData::Data {
   DISALLOW_COPY_AND_ASSIGN(DiceURLRequestUserData);
 };
 
+#if BUILDFLAG(ENABLE_MIRROR)
 // Processes the mirror response header on the UI thread. Currently depending
 // on the value of |header_value|, it either shows the profile avatar menu, or
 // opens an incognito window/tab.
@@ -195,30 +194,6 @@ void ProcessMirrorHeaderUIThread(
   AccountReconcilor* account_reconcilor =
       AccountReconcilorFactory::GetForProfile(profile);
   account_reconcilor->OnReceivedManageAccountsResponse(service_type);
-#if !defined(OS_ANDROID)
-  Browser* browser = chrome::FindBrowserWithWebContents(web_contents);
-  if (browser) {
-    BrowserWindow::AvatarBubbleMode bubble_mode;
-    switch (service_type) {
-      case GAIA_SERVICE_TYPE_INCOGNITO:
-        chrome::NewIncognitoWindow(browser);
-        return;
-      case GAIA_SERVICE_TYPE_ADDSESSION:
-        bubble_mode = BrowserWindow::AVATAR_BUBBLE_MODE_ADD_ACCOUNT;
-        break;
-      case GAIA_SERVICE_TYPE_REAUTH:
-        bubble_mode = BrowserWindow::AVATAR_BUBBLE_MODE_REAUTH;
-        break;
-      default:
-        bubble_mode = BrowserWindow::AVATAR_BUBBLE_MODE_ACCOUNT_MANAGEMENT;
-    }
-    signin_metrics::LogAccountReconcilorStateOnGaiaResponse(
-        account_reconcilor->GetState());
-    browser->window()->ShowAvatarBubbleFromAvatarButton(
-        bubble_mode, manage_accounts_params,
-        signin_metrics::AccessPoint::ACCESS_POINT_CONTENT_AREA, false);
-  }
-#else   // defined(OS_ANDROID)
   if (service_type == signin::GAIA_SERVICE_TYPE_INCOGNITO) {
     GURL url(manage_accounts_params.continue_url.empty()
                  ? chrome::kChromeUINativeNewTabURL
@@ -232,8 +207,8 @@ void ProcessMirrorHeaderUIThread(
     AccountManagementScreenHelper::OpenAccountManagementScreen(profile,
                                                                service_type);
   }
-#endif  // !defined(OS_ANDROID)
 }
+#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
 void ProcessDiceHeaderUIThread(
@@ -259,6 +234,7 @@ void ProcessDiceHeaderUIThread(
 }
 #endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
+#if BUILDFLAG(ENABLE_MIRROR)
 // Looks for the X-Chrome-Manage-Accounts response header, and if found,
 // tries to show the avatar bubble in the browser identified by the
 // child/route id. Must be called on IO thread.
@@ -290,12 +266,6 @@ void ProcessMirrorResponseHeaderIfExists(net::URLRequest* request,
     return;
   }
 
-  if (!IsAccountConsistencyMirrorEnabled()) {
-    NOTREACHED() << "Gaia should not send the X-Chrome-Manage-Accounts header "
-                 << "when Mirror is disabled.";
-    return;
-  }
-
   ManageAccountsParams params = BuildManageAccountsParams(header_value);
   // If the request does not have a response header or if the header contains
   // garbage, then |service_type| is set to |GAIA_SERVICE_TYPE_NONE|.
@@ -307,6 +277,7 @@ void ProcessMirrorResponseHeaderIfExists(net::URLRequest* request,
       base::BindOnce(ProcessMirrorHeaderUIThread, params,
                      info->GetWebContentsGetterForRequest()));
 }
+#endif  // BUILDFLAG(MIRROR_ENABLED)
 
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
 void ProcessDiceResponseHeaderIfExists(net::URLRequest* request,
@@ -409,6 +380,7 @@ void FixAccountConsistencyRequestHeader(net::URLRequest* request,
 void ProcessAccountConsistencyResponseHeaders(net::URLRequest* request,
                                               const GURL& redirect_url,
                                               bool is_off_the_record) {
+#if BUILDFLAG(ENABLE_MIRROR)
   if (redirect_url.is_empty()) {
     // This is not a redirect.
 
@@ -417,6 +389,7 @@ void ProcessAccountConsistencyResponseHeaders(net::URLRequest* request,
     // action the native UI.
     ProcessMirrorResponseHeaderIfExists(request, is_off_the_record);
   }
+#endif
 
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
   // Process the Dice header: on sign-in, exchange the authorization code for a

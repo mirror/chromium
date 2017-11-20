@@ -162,11 +162,12 @@ void ClearPref(PrefService* prefs, TimedSigninStatusField field) {
 }
 
 std::string GetAccountConsistencyDescription() {
+#if BUILDFLAG(ENABLE_MIRROR)
+  return "Mirror";
+#else
   switch (signin::GetAccountConsistencyMethod()) {
     case signin::AccountConsistencyMethod::kDisabled:
       return "None";
-    case signin::AccountConsistencyMethod::kMirror:
-      return "Mirror";
     case signin::AccountConsistencyMethod::kDiceFixAuthErrors:
       return "DICE fixing auth errors";
     case signin::AccountConsistencyMethod::kDicePrepareMigration:
@@ -178,6 +179,7 @@ std::string GetAccountConsistencyDescription() {
   }
   NOTREACHED();
   return "";
+#endif
 }
 
 }  // anonymous namespace

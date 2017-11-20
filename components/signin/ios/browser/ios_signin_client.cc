@@ -55,10 +55,6 @@ std::string IOSSigninClient::GetSigninScopedDeviceId() {
   return GetOrCreateScopedDeviceIdPref(GetPrefs());
 }
 
-bool IOSSigninClient::ShouldMergeSigninCredentialsIntoCookieJar() {
-  return false;
-}
-
 bool IOSSigninClient::IsFirstRun() const {
   return false;
 }

@@ -14,6 +14,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
 #include "base/threading/thread_restrictions.h"
+#include "build/buildflag.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
@@ -158,11 +159,6 @@ class ProfileChooserViewExtensionsTest
           ProfileManager::GetGuestProfilePath());
       EXPECT_TRUE(guest);
       target_browser = chrome::FindAnyBrowser(guest, true);
-    }
-    if (name == kManageAccountLink) {
-      scoped_account_consistency =
-          std::make_unique<signin::ScopedAccountConsistency>(
-              signin::AccountConsistencyMethod::kMirror);
     }
     Profile* supervised = nullptr;
     if (name == kSupervisedOwner || name == kSupervisedUser) {
@@ -409,12 +405,14 @@ IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest, InvokeDialog_Guest) {
   RunDialog();
 }
 
+#if BUILDFLAG(ENABLE_MIRROR)
 // Shows the manage account link, which appears when account consistency is
 // enabled for signed-in accounts.
 IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest,
                        InvokeDialog_ManageAccountLink) {
   RunDialog();
 }
+#endif
 
 // Shows the |ProfileChooserView| from a signed-in account that has a supervised
 // user profile attached.

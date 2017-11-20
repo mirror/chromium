@@ -35,7 +35,6 @@
 #include "chrome/browser/printing/print_view_manager.h"
 #include "chrome/browser/printing/printer_manager_dialog.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/signin/gaia_cookie_manager_service_factory.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -56,8 +55,6 @@
 #include "components/cloud_devices/common/printer_description.h"
 #include "components/prefs/pref_service.h"
 #include "components/printing/common/print_messages.h"
-#include "components/signin/core/browser/gaia_cookie_manager_service.h"
-#include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "content/public/browser/browser_context.h"
@@ -392,13 +389,11 @@ PrintPreviewHandler::PrintPreviewHandler()
       manage_printers_dialog_request_count_(0),
       reported_failed_preview_(false),
       has_logged_printers_count_(false),
-      gaia_cookie_manager_service_(nullptr),
       weak_factory_(this) {
   ReportUserActionHistogram(PREVIEW_STARTED);
 }
 
 PrintPreviewHandler::~PrintPreviewHandler() {
-  UnregisterForGaiaCookieChanges();
 }
 
 void PrintPreviewHandler::RegisterMessages() {
@@ -459,17 +454,10 @@ void PrintPreviewHandler::RegisterMessages() {
                  base::Unretained(this)));
 }
 
-void PrintPreviewHandler::OnJavascriptAllowed() {
-  // Now that the UI is initialized, any future account changes will require
-  // a printer list refresh.
-  RegisterForGaiaCookieChanges();
-}
-
 void PrintPreviewHandler::OnJavascriptDisallowed() {
   // Normally the handler and print preview will be destroyed together, but
   // this is necessary for refresh or navigation from the chrome://print page.
   weak_factory_.InvalidateWeakPtrs();
-  UnregisterForGaiaCookieChanges();
 }
 
 WebContents* PrintPreviewHandler::preview_web_contents() const {
@@ -1121,12 +1109,6 @@ WebContents* PrintPreviewHandler::GetInitiator() const {
   return dialog_controller->GetInitiator(preview_web_contents());
 }
 
-void PrintPreviewHandler::OnAddAccountToCookieCompleted(
-    const std::string& account_id,
-    const GoogleServiceAuthError& error) {
-  FireWebUIListener("reload-printer-list");
-}
-
 void PrintPreviewHandler::OnPrintPreviewReady(int preview_uid, int request_id) {
   if (request_id < 0 || preview_callbacks_.empty() || !IsJavascriptAllowed()) {
     // invalid ID or extra message
@@ -1320,23 +1302,6 @@ void PrintPreviewHandler::OnPrintResult(const std::string& callback_id,
     return;
   }
   RejectJavascriptCallback(base::Value(callback_id), error);
-}
-
-void PrintPreviewHandler::RegisterForGaiaCookieChanges() {
-  DCHECK(!gaia_cookie_manager_service_);
-  Profile* profile = Profile::FromWebUI(web_ui());
-  if (signin::IsAccountConsistencyMirrorEnabled() &&
-      !profile->IsOffTheRecord()) {
-    gaia_cookie_manager_service_ =
-        GaiaCookieManagerServiceFactory::GetForProfile(profile);
-    if (gaia_cookie_manager_service_)
-      gaia_cookie_manager_service_->AddObserver(this);
-  }
-}
-
-void PrintPreviewHandler::UnregisterForGaiaCookieChanges() {
-  if (gaia_cookie_manager_service_)
-    gaia_cookie_manager_service_->RemoveObserver(this);
 }
 
 void PrintPreviewHandler::BadMessageReceived() {

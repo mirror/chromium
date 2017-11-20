@@ -339,7 +339,6 @@ class BrowserWindow : public ui::BaseWindow {
   // page.
   enum AvatarBubbleMode {
     AVATAR_BUBBLE_MODE_DEFAULT,
-    AVATAR_BUBBLE_MODE_ACCOUNT_MANAGEMENT,
     AVATAR_BUBBLE_MODE_SIGNIN,
     AVATAR_BUBBLE_MODE_ADD_ACCOUNT,
     AVATAR_BUBBLE_MODE_REAUTH,
