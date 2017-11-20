@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b75eb1dc_a9331ee6",
+        "filename": "android_webview/browser/aw_safe_browsing_ui_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-20T23:31:04Z",
+      "side": 1,
+      "message": "nit: UMA_HISTOGRAM_* macros expand to a fair bit of code, so please create a small wrapper function along the lines of RecordIsWebViewViewable(false);",
+      "range": {
+        "startLine": 62,
+        "startChar": 66,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "561cf64af4740602f71efcd394c47ab07c6d4152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d219ca_a789a907",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 71446,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-20T23:31:04Z",
+      "side": 1,
+      "message": "nit: Please define (or reuse) a custom enum in enums.xml, and reference it here.  It\u0027s helpful for histograms to have clear labels – something like \"BooleanViewable\" with labels \"viewable\" and \"hidden\" or \"not viewable\".",
+      "range": {
+        "startLine": 71446,
+        "startChar": 54,
+        "endLine": 71446,
+        "endChar": 61
+      },
+      "revId": "561cf64af4740602f71efcd394c47ab07c6d4152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
