@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "594b3a9e_7c92ea28",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2017-11-20T05:20:36Z",
+      "side": 1,
+      "message": "I rebased the CL with CL:525672 merged.",
+      "parentUuid": "609f0a4d_e73800f4",
+      "revId": "d6bf1923f257560b21c78aabcdd1945e23fc8516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "053891dd_04bb962e",
         "filename": "media/capture/video/chromeos/mojo/arc_camera3_service.mojom",
         "patchSetId": 12
