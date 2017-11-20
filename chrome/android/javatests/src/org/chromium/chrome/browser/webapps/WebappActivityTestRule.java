@@ -19,6 +19,7 @@ import org.junit.runners.model.Statement;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ShortcutHelper;
+import org.chromium.chrome.browser.customtabs.CustomTabsTestUtils;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
@@ -94,6 +95,13 @@ public class WebappActivityTestRule extends ChromeActivityTestRule<WebappActivit
         intent.putExtra(ShortcutHelper.EXTRA_NAME, WEBAPP_NAME);
         intent.putExtra(ShortcutHelper.EXTRA_SHORT_NAME, WEBAPP_SHORT_NAME);
         return intent;
+    }
+
+    /** Adds a mock Custom Tab session token to the intent. */
+    public void addTwaExtrasToIntent(Intent intent) {
+        Intent cctIntent = CustomTabsTestUtils.createMinimalCustomTabIntent(
+                InstrumentationRegistry.getTargetContext(), "about:blank");
+        intent.putExtras(cctIntent.getExtras());
     }
 
     @Override
