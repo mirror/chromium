@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "372acd86_e9acc694",
+        "filename": "third_party/WebKit/Source/core/fileapi/FileReaderLoader.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-20T05:06:04Z",
+      "side": 1,
+      "message": "Using net:: error code is not what we need to strictly disallow in core/, but it just feels using net:: error on BlobReader interface is a bit weird?  Would it make better sense to define its own enum (e.g. something like BlobStatus) and use it, but apply conversion to net:: error only when we need it?\n\n(Fine with exploring that in a separate patch, but want to know what you think \u0026 have a TODO if we can agree)",
+      "revId": "e65fbebbe1030e03f9fc984d41a532ae572520b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2e46986_f7b12031",
+        "filename": "third_party/WebKit/Source/core/fileapi/FileReaderLoader.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-20T05:06:04Z",
+      "side": 1,
+      "message": "Woohoo",
+      "revId": "e65fbebbe1030e03f9fc984d41a532ae572520b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
