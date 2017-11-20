@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91e4eb43_6fd36925",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-11-20T19:18:50Z",
+      "side": 1,
+      "message": "Do we want to return NONE for minor errors despite the policy-installed cert? How common are these minor errors under a typical policy-installed certificate?\n\nPer https://cs.chromium.org/chromium/src/net/cert/cert_status_flags.cc, I think this is currently revocation check failures.",
+      "revId": "94e6a7672e38714685fa091c27b5c9f5c4d532a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f684f7_dad0dc06",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-11-20T19:18:50Z",
+      "side": 1,
+      "message": "Nit: It looks like the other tests here place the comment inside the anonymous scope. (This doesn\u0027t appear to be a consistent style across tests files though.)",
+      "revId": "94e6a7672e38714685fa091c27b5c9f5c4d532a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
