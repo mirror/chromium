@@ -467,6 +467,10 @@ message PolicyData {
   // this topic in order to receive notifications that one or more commands are
   // available for execution.
   optional string command_invalidation_topic = 27;
+
+  // Minimum OS version that client can run to allow user to sign in/stay in
+  // session. Value is os_version string, e.g. 1435.0.2011
+  optional string minimum_client_os_version = 28;
 }
 
 message PolicyFetchResponse {
