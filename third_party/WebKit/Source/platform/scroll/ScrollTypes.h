@@ -187,6 +187,8 @@ enum ScrollbarOrientation { kHorizontalScrollbar, kVerticalScrollbar };
 
 enum ScrollOrientation { kHorizontalScroll, kVerticalScroll };
 
+enum ScrolledAxis { kScrolledAxisX, kScrolledAxisY, kScrolledAxisBoth };
+
 enum ScrollbarMode { kScrollbarAuto, kScrollbarAlwaysOff, kScrollbarAlwaysOn };
 
 enum ScrollbarControlSize { kRegularScrollbar, kSmallScrollbar };
