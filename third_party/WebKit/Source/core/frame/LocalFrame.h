@@ -203,6 +203,10 @@ class CORE_EXPORT LocalFrame final : public Frame,
 
   String SelectedText() const;
   String SelectedTextForClipboard() const;
+  // Returned bounds are in content coordinates.
+  // If the selection range is empty, returns the caret bounds.
+  // Note: this updates styles and layout, use cautiously.
+  bool ComputeSelectionBounds(IntRect& anchor, IntRect& focus) const;
 
   PositionWithAffinityTemplate<EditingAlgorithm<NodeTraversal>>
   PositionForPoint(const LayoutPoint& frame_point);
