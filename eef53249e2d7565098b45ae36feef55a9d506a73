@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "743837e4_64547d2c",
+        "filename": "third_party/WebKit/Source/core/dom/NodeTraversal.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-20T04:04:03Z",
+      "side": 1,
+      "message": "It looks that every other traversal functions in NodeTraversal return |Node*|, instead of |const Node*|, even if it might return *self* which can be passed as |const Node*|.\n\ne.g. InclusiveAncestorsOf, commonsAncestor\n\nIf we return |const Node\u0026| here, I\u0027m afraid that only this function would be inconsistent with other functions.\n\nGiven that, how about making |static Node\u0026 HighestAncestorOrSelf(Node\u0026)| to |static Node\u0026 HighestAncestorOrSelf(const Node\u0026)|, instead of adding new one?\n\nWe might want to re-consider when we should return |const T*| around these functions, but I guess it needs more energy to decide. :(",
+      "revId": "eef53249e2d7565098b45ae36feef55a9d506a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebc7a5c5_cf00327a",
         "filename": "third_party/WebKit/Source/core/dom/NodeTraversal.h",
         "patchSetId": 1
