@@ -45,7 +45,6 @@ const CGFloat kFontSize = 16;
 const CGFloat kEditingRectX = 16;
 const CGFloat kEditingRectWidthInset = 10;
 const CGFloat kTextInset = 8;
-const CGFloat kTextInsetNoLeftView = 8;
 const CGFloat kClearButtonRightMarginIphone = 7;
 const CGFloat kClearButtonRightMarginIpad = 12;
 // Amount to shift the origin.x of the text areas so they're centered within the
@@ -613,7 +612,7 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 
   LayoutRect textRectLayout =
       LayoutRectForRectInBoundingRect(newBounds, bounds);
-  CGFloat textInset = kTextInsetNoLeftView;
+  CGFloat textInset = kTextInset;
 
   // Shift the text right and reduce the width to create empty space between the
   // left view and the omnibox text.
@@ -763,58 +762,27 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
          UIUserInterfaceLayoutDirectionLeftToRight;
 }
 
-// Overriding this method to offset the rightView property
-// (containing a clear text button).
 - (CGRect)rightViewRectForBounds:(CGRect)bounds {
-  // iOS9 added updated RTL support, but only half implemented it for
-  // UITextField. leftView and rightView were not renamed, but are are correctly
-  // swapped and treated as leadingView / trailingView.  However,
-  // -leftViewRectForBounds and -rightViewRectForBounds are *not* treated as
-  // leading and trailing.  Hence the swapping below.
-  if ([self isTextFieldLTR]) {
-    return [self layoutRightViewForBounds:bounds];
+  if (![self rightView]) {
+    return CGRectZero;
   }
-  return [self layoutLeftViewForBounds:bounds];
-}
 
-- (CGRect)layoutRightViewForBounds:(CGRect)bounds {
-  if ([self rightView]) {
-    CGSize rightViewSize = self.rightView.bounds.size;
-    CGFloat leadingOffset = 0;
-    if (IsIPadIdiom() && !IsCompactTablet()) {
-      leadingOffset = bounds.size.width - kVoiceSearchButtonWidth -
-                      rightViewSize.width - kClearButtonRightMarginIpad;
-    } else {
-      leadingOffset = bounds.size.width - rightViewSize.width -
-                      kClearButtonRightMarginIphone;
-    }
-    LayoutRect rightViewLayout;
-    rightViewLayout.position.leading = leadingOffset;
-    rightViewLayout.boundingWidth = CGRectGetWidth(bounds);
-    rightViewLayout.position.originY =
-        floor((bounds.size.height - rightViewSize.height) / 2.0);
-    rightViewLayout.size = rightViewSize;
-    return LayoutRectGetRect(rightViewLayout);
+  CGSize rightViewSize = self.rightView.bounds.size;
+  CGFloat leadingOffset = 0;
+  if (IsIPadIdiom() && !IsCompactTablet()) {
+    leadingOffset = bounds.size.width - kVoiceSearchButtonWidth -
+                    rightViewSize.width - kClearButtonRightMarginIpad;
+  } else {
+    leadingOffset =
+        bounds.size.width - rightViewSize.width - kClearButtonRightMarginIphone;
   }
-  return CGRectZero;
-}
-
-// Overriding this method to offset the leftView property
-// (containing a placeholder image) consistently with omnibox text padding.
-- (CGRect)leftViewRectForBounds:(CGRect)bounds {
-  // iOS9 added updated RTL support, but only half implemented it for
-  // UITextField. leftView and rightView were not renamed, but are are correctly
-  // swapped and treated as leadingView / trailingView.  However,
-  // -leftViewRectForBounds and -rightViewRectForBounds are *not* treated as
-  // leading and trailing.  Hence the swapping below.
-  if ([self isTextFieldLTR]) {
-    return [self layoutLeftViewForBounds:bounds];
-  }
-  return [self layoutRightViewForBounds:bounds];
-}
-
-- (CGRect)layoutLeftViewForBounds:(CGRect)bounds {
-  return CGRectZero;
+  LayoutRect rightViewLayout;
+  rightViewLayout.position.leading = leadingOffset;
+  rightViewLayout.boundingWidth = CGRectGetWidth(bounds);
+  rightViewLayout.position.originY =
+      floor((bounds.size.height - rightViewSize.height) / 2.0);
+  rightViewLayout.size = rightViewSize;
+  return LayoutRectGetRect(rightViewLayout);
 }
 
 - (void)animateFadeWithStyle:(OmniboxTextFieldFadeStyle)style {
