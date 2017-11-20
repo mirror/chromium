@@ -22,6 +22,30 @@
       "revId": "7d1d7b8d2f8371c9266b201ff46e04e110b3b891",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cec92c1c_095b616e",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-11-20T02:03:08Z",
+      "side": 1,
+      "message": "Done\n\nBTW, why is this safe thing to do? I can find other code which are doing the same thing. But views::View and a few other classes also extend EventTarget.",
+      "parentUuid": "5b8dde69_d689afeb",
+      "range": {
+        "startLine": 163,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 3
+      },
+      "revId": "7d1d7b8d2f8371c9266b201ff46e04e110b3b891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
