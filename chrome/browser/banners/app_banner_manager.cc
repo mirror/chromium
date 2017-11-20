@@ -226,8 +226,9 @@ bool AppBannerManager::IsDebugMode() const {
              switches::kBypassAppBannerEngagementChecks);
 }
 
-bool AppBannerManager::IsWebAppInstalled(
-    content::BrowserContext* browser_context,
+bool AppBannerManager::IsWebAppConsideredInstalled(
+    content::WebContents* web_contents,
+    const GURL& validated_url,
     const GURL& start_url,
     const GURL& manifest_url) {
   return false;
@@ -526,16 +527,24 @@ bool AppBannerManager::CheckIfShouldShowBanner() {
   if (IsDebugMode())
     return true;
 
+  InstallableStatusCode code = NO_ERROR_DETECTED;
+  if (GetAppIdentifier().empty()) {
+    // Never show a banner when the package name or URL is empty.
+    code = PACKAGE_NAME_OR_START_URL_EMPTY;
+  }
+
   // Check whether we are permitted to show the banner. If we have already
   // added this site to homescreen, or if the banner has been shown too
   // recently, prevent the banner from being shown.
   content::WebContents* contents = web_contents();
-  InstallableStatusCode code = AppBannerSettingsHelper::ShouldShowBanner(
-      contents, validated_url_, GetAppIdentifier(), GetCurrentTime());
+  if (code == NO_ERROR_DETECTED) {
+    code = AppBannerSettingsHelper::ShouldShowBanner(
+        contents, validated_url_, GetAppIdentifier(), GetCurrentTime());
+  }
 
   if (code == NO_ERROR_DETECTED &&
-      IsWebAppInstalled(contents->GetBrowserContext(), manifest_.start_url,
-                        manifest_url_)) {
+      IsWebAppConsideredInstalled(contents, validated_url_, manifest_.start_url,
+                                  manifest_url_)) {
     code = ALREADY_INSTALLED;
   }
 

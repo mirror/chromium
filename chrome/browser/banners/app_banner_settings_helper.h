@@ -109,11 +109,17 @@ class AppBannerSettingsHelper {
   // Determine if the banner should be shown, given the recorded events for the
   // supplied app. Returns an InstallableStatusCode indicated the reason why the
   // banner shouldn't be shown, or NO_ERROR_DETECTED if it should be shown.
+  // |package_name_or_start_url| must be non-empty.
   static InstallableStatusCode ShouldShowBanner(
       content::WebContents* web_contents,
       const GURL& origin_url,
       const std::string& package_name_or_start_url,
       base::Time time);
+
+  // Returns whether the supplied app has ever been installed from |from_url|.
+  static bool HasBeenInstalled(content::WebContents* web_contents,
+                               const GURL& from_url,
+                               const std::string& package_name_or_start_url);
 
   // Get the time that |event| was recorded, or a null time if it has not yet
   // been recorded. Exposed for testing.
