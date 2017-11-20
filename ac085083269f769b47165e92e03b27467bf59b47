@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03fe4751_5c11ceee",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 2
+      },
+      "lineNbr": 2576,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-20T21:58:34Z",
+      "side": 0,
+      "message": "Let\u0027s only remove L2576 based on the flakiness dashboard:\nhttps://test-results.appspot.com/dashboards/flakiness_dashboard.html#testType\u003dwebkit_layout_tests\u0026tests\u003dhttp/tests/devtools/appcache\n\nappcache-iframe-manifests.html is constantly failing so, need to continue disabling it.",
+      "revId": "ac085083269f769b47165e92e03b27467bf59b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
