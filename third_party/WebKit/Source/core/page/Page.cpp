@@ -453,6 +453,11 @@ void Page::SetLifecycleState(PageLifecycleState state) {
   if (state == page_lifecycle_state_)
     return;
   page_lifecycle_state_ = state;
+  if (RuntimeEnabledFeatures::PageLifecycleEnabled()) {
+    if (main_frame_ && page_lifecycle_state_ == PageLifecycleState::kStopped) {
+      main_frame_->DidPause();
+    }
+  }
 }
 
 PageLifecycleState Page::LifecycleState() const {
