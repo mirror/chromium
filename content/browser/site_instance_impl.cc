@@ -80,7 +80,8 @@ bool SiteInstanceImpl::HasProcess() const {
       browsing_instance_->browser_context();
   if (has_site_ &&
       RenderProcessHost::ShouldUseProcessPerSite(browser_context, site_) &&
-      RenderProcessHostImpl::GetProcessHostForSite(browser_context, site_)) {
+      RenderProcessHostImpl::GetSoleProcessHostForSite(browsing_instance_.get(),
+                                                       site_)) {
     return true;
   }
 
@@ -109,8 +110,7 @@ RenderProcessHost* SiteInstanceImpl::GetProcess() {
       process_reuse_policy_ = ProcessReusePolicy::DEFAULT;
     }
 
-    process_ = RenderProcessHostImpl::GetProcessHostForSiteInstance(
-        browser_context, this);
+    process_ = RenderProcessHostImpl::GetProcessHostForSiteInstance(this);
 
     CHECK(process_);
     process_->AddObserver(this);
@@ -228,8 +228,8 @@ bool SiteInstanceImpl::HasWrongProcessForURL(const GURL& url) {
   // If the site URL is an extension (e.g., for hosted apps or WebUI) but the
   // process is not (or vice versa), make sure we notice and fix it.
   GURL site_url = GetSiteForURL(browsing_instance_->browser_context(), url);
-  return !RenderProcessHostImpl::IsSuitableHost(
-      GetProcess(), browsing_instance_->browser_context(), site_url);
+  return !RenderProcessHostImpl::IsSuitableHost(GetProcess(),
+                                                browsing_instance(), site_url);
 }
 
 scoped_refptr<SiteInstanceImpl>
@@ -241,7 +241,7 @@ bool SiteInstanceImpl::RequiresDedicatedProcess() {
   if (!has_site_)
     return false;
 
-  return DoesSiteRequireDedicatedProcess(GetBrowserContext(), site_);
+  return DoesSiteRequireDedicatedProcess(browsing_instance(), site_);
 }
 
 bool SiteInstanceImpl::IsDefaultSubframeSiteInstance() const {
@@ -411,17 +411,22 @@ GURL SiteInstanceImpl::GetEffectiveURL(BrowserContext* browser_context,
 
 // static
 bool SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
-    BrowserContext* browser_context,
+    BrowsingInstance* browsing_instance,
     const GURL& url) {
   // If --site-per-process is enabled, site isolation is enabled everywhere.
   if (SiteIsolationPolicy::UseDedicatedProcessesForAllSites())
     return true;
+
+  BrowserContext* browser_context = browsing_instance->browser_context();
 
   // Always require a dedicated process for isolated origins.
   GURL site_url = GetSiteForURL(browser_context, url);
   auto* policy = ChildProcessSecurityPolicyImpl::GetInstance();
   if (policy->IsIsolatedOrigin(url::Origin::Create(site_url)))
     return true;
+
+  // TODO(alexmos): also check isolated origins associated with
+  // |browsing_instance| when that support is added.
 
   // Let the content embedder enable site isolation for specific URLs. Use the
   // canonical site url for this check, so that schemes with nested origins
@@ -436,7 +441,7 @@ bool SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
 }
 
 // static
-bool SiteInstanceImpl::ShouldLockToOrigin(BrowserContext* browser_context,
+bool SiteInstanceImpl::ShouldLockToOrigin(BrowsingInstance* browsing_instance,
                                           RenderProcessHost* host,
                                           GURL site_url) {
   // Don't lock to origin in --single-process mode, since this mode puts
@@ -444,7 +449,7 @@ bool SiteInstanceImpl::ShouldLockToOrigin(BrowserContext* browser_context,
   if (host->run_renderer_in_process())
     return false;
 
-  if (!DoesSiteRequireDedicatedProcess(browser_context, site_url))
+  if (!DoesSiteRequireDedicatedProcess(browsing_instance, site_url))
     return false;
 
   // Guest processes cannot be locked to their site because guests always have
@@ -465,8 +470,8 @@ bool SiteInstanceImpl::ShouldLockToOrigin(BrowserContext* browser_context,
   // call sites of ChildProcessSecurityPolicy::CanAccessDataForOrigin, we
   // must give the embedder a chance to exempt some sites to avoid process
   // kills.
-  if (!GetContentClient()->browser()->ShouldLockToOrigin(browser_context,
-                                                         site_url)) {
+  if (!GetContentClient()->browser()->ShouldLockToOrigin(
+          browsing_instance->browser_context(), site_url)) {
     return false;
   }
 
@@ -523,7 +528,7 @@ void SiteInstanceImpl::LockToOriginIfNeeded() {
   ChildProcessSecurityPolicyImpl* policy =
       ChildProcessSecurityPolicyImpl::GetInstance();
   auto lock_state = policy->CheckOriginLock(process_->GetID(), site_);
-  if (ShouldLockToOrigin(GetBrowserContext(), process_, site_)) {
+  if (ShouldLockToOrigin(browsing_instance(), process_, site_)) {
     // Sanity check that this won't try to assign an origin lock to a <webview>
     // process, which can't be locked.
     CHECK(!process_->IsForGuestsOnly());

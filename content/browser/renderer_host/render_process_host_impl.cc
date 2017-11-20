@@ -75,6 +75,7 @@
 #include "content/browser/browser_main.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/browser_plugin/browser_plugin_message_filter.h"
+#include "content/browser/browsing_instance.h"
 #include "content/browser/cache_storage/cache_storage_context_impl.h"
 #include "content/browser/cache_storage/cache_storage_dispatcher_host.h"
 #include "content/browser/child_process_security_policy_impl.h"
@@ -813,10 +814,11 @@ class SiteProcessCountTracker : public base::SupportsUserData::Data,
       map_.erase(site_url);
   }
 
-  void FindRenderProcessesForSite(
-      const GURL& site_url,
+  void FindRenderProcessesForSiteInstance(
+      SiteInstanceImpl* site_instance,
       std::set<RenderProcessHost*>* foreground_processes,
       std::set<RenderProcessHost*>* background_processes) {
+    GURL site_url(site_instance->GetSiteURL());
     auto result = map_.find(site_url);
     if (result == map_.end())
       return;
@@ -839,7 +841,7 @@ class SiteProcessCountTracker : public base::SupportsUserData::Data,
       // allow such hosts to be reused.  See https://crbug.com/780661.
       if (!host->MayReuseHost() ||
           !RenderProcessHostImpl::IsSuitableHost(
-              host, host->GetBrowserContext(), site_url))
+              host, site_instance->browsing_instance(), site_url))
         continue;
 
       if (host->VisibleWidgetCount())
@@ -935,10 +937,11 @@ class UnmatchedServiceWorkerProcessTracker
       public RenderProcessHostObserver {
  public:
   // Registers |render_process_host| as having an unmatched service worker for
-  // |site_url|.
-  static void Register(BrowserContext* browser_context,
-                       RenderProcessHost* render_process_host,
-                       const GURL& site_url) {
+  // |site_instance|.
+  static void Register(RenderProcessHost* render_process_host,
+                       SiteInstanceImpl* site_instance) {
+    BrowserContext* browser_context = site_instance->GetBrowserContext();
+    GURL site_url(site_instance->GetSiteURL());
     DCHECK(!site_url.is_empty());
     if (!ShouldTrackProcessForSite(browser_context, render_process_host,
                                    site_url))
@@ -953,14 +956,15 @@ class UnmatchedServiceWorkerProcessTracker
       browser_context->SetUserData(kUnmatchedServiceWorkerProcessTrackerKey,
                                    base::WrapUnique(tracker));
     }
-    tracker->RegisterProcessForSite(render_process_host, site_url);
+    tracker->RegisterProcessForSite(render_process_host, site_instance);
   }
 
-  // Find a process with an unmatched service worker for |site_url| and removes
-  // the process from the tracker if it exists.
-  static RenderProcessHost* MatchWithSite(BrowserContext* browser_context,
-                                          const GURL& site_url) {
-    if (!ShouldFindReusableProcessHostForSite(browser_context, site_url))
+  // Find a process with an unmatched service worker for |site_instance| and
+  // removes the process from the tracker if it exists.
+  static RenderProcessHost* MatchWithSite(SiteInstanceImpl* site_instance) {
+    BrowserContext* browser_context = site_instance->GetBrowserContext();
+    if (!ShouldFindReusableProcessHostForSite(browser_context,
+                                              site_instance->GetSiteURL()))
       return nullptr;
 
     UnmatchedServiceWorkerProcessTracker* tracker =
@@ -969,7 +973,7 @@ class UnmatchedServiceWorkerProcessTracker
                 kUnmatchedServiceWorkerProcessTrackerKey));
     if (!tracker)
       return nullptr;
-    return tracker->TakeFreshestProcessForSite(site_url);
+    return tracker->TakeFreshestProcessForSite(site_instance);
   }
 
   UnmatchedServiceWorkerProcessTracker() {}
@@ -993,23 +997,28 @@ class UnmatchedServiceWorkerProcessTracker
   }
 
  private:
-  void RegisterProcessForSite(RenderProcessHost* host, const GURL& site_url) {
+  void RegisterProcessForSite(RenderProcessHost* host,
+                              SiteInstanceImpl* site_instance) {
     if (!HasProcess(host))
       host->AddObserver(this);
-    site_process_set_.insert(SiteProcessIDPair(site_url, host->GetID()));
+    site_process_set_.insert(
+        SiteProcessIDPair(site_instance->GetSiteURL(), host->GetID()));
   }
 
-  RenderProcessHost* TakeFreshestProcessForSite(const GURL& site_url) {
-    RenderProcessHost* host = FindFreshestProcessForSite(site_url);
+  RenderProcessHost* TakeFreshestProcessForSite(
+      SiteInstanceImpl* site_instance) {
+    RenderProcessHost* host = FindFreshestProcessForSite(site_instance);
     if (!host)
       return nullptr;
 
-    // It's possible that |host| is currently unsuitable for hosting
-    // |site_url|, for example if it was used for a ServiceWorker for a
-    // nonexistent extension URL.  See https://crbug.com/782349 and
+    // It's possible that |host| is currently unsuitable for hosting the site
+    // URL, for example if it was used for a ServiceWorker for a nonexistent
+    // extension URL.  See https://crbug.com/782349 and
     // https://crbug.com/780661.
-    if (!host->MayReuseHost() || !RenderProcessHostImpl::IsSuitableHost(
-                                     host, host->GetBrowserContext(), site_url))
+    GURL site_url(site_instance->GetSiteURL());
+    if (!host->MayReuseHost() ||
+        !RenderProcessHostImpl::IsSuitableHost(
+            host, site_instance->browsing_instance(), site_url))
       return nullptr;
 
     site_process_set_.erase(SiteProcessIDPair(site_url, host->GetID()));
@@ -1018,7 +1027,9 @@ class UnmatchedServiceWorkerProcessTracker
     return host;
   }
 
-  RenderProcessHost* FindFreshestProcessForSite(const GURL& site_url) const {
+  RenderProcessHost* FindFreshestProcessForSite(
+      SiteInstanceImpl* site_instance) const {
+    GURL site_url(site_instance->GetSiteURL());
     for (const auto& site_process_pair : base::Reversed(site_process_set_)) {
       if (site_process_pair.first == site_url)
         return RenderProcessHost::FromID(site_process_pair.second);
@@ -3286,14 +3297,15 @@ void RenderProcessHostImpl::FilterURL(RenderProcessHost* rph,
 
 // static
 bool RenderProcessHostImpl::IsSuitableHost(RenderProcessHost* host,
-                                           BrowserContext* browser_context,
+                                           BrowsingInstance* browsing_instance,
                                            const GURL& site_url) {
   if (run_renderer_in_process()) {
-    DCHECK_EQ(host->GetBrowserContext(), browser_context)
+    DCHECK_EQ(host->GetBrowserContext(), browsing_instance->browser_context())
         << " Single-process mode does not support multiple browser contexts.";
     return true;
   }
 
+  BrowserContext* browser_context = browsing_instance->browser_context();
   if (host->GetBrowserContext() != browser_context)
     return false;
 
@@ -3329,7 +3341,7 @@ bool RenderProcessHostImpl::IsSuitableHost(RenderProcessHost* host,
         ChildProcessSecurityPolicyImpl::CheckOriginLockResult::HAS_EQUAL_LOCK)
       return false;
   } else if (!host->IsUnused() && SiteInstanceImpl::ShouldLockToOrigin(
-                                      browser_context, host, site_url)) {
+                                      browsing_instance, host, site_url)) {
     // Otherwise, if this process has been used to host any other content, it
     // cannot be reused if the destination site indeed requires a dedicated
     // process and can be locked to just that site.
@@ -3416,9 +3428,8 @@ bool RenderProcessHost::ShouldTryToUseExistingProcessHost(
 }
 
 // static
-RenderProcessHost* RenderProcessHost::GetExistingProcessHost(
-    BrowserContext* browser_context,
-    const GURL& site_url) {
+RenderProcessHost* RenderProcessHostImpl::GetExistingProcessHost(
+    SiteInstanceImpl* site_instance) {
   // First figure out which existing renderers we can use.
   std::vector<RenderProcessHost*> suitable_renderers;
   suitable_renderers.reserve(g_all_hosts.Get().size());
@@ -3426,8 +3437,9 @@ RenderProcessHost* RenderProcessHost::GetExistingProcessHost(
   iterator iter(AllHostsIterator());
   while (!iter.IsAtEnd()) {
     if (iter.GetCurrentValue()->MayReuseHost() &&
-        RenderProcessHostImpl::IsSuitableHost(iter.GetCurrentValue(),
-                                              browser_context, site_url)) {
+        RenderProcessHostImpl::IsSuitableHost(
+            iter.GetCurrentValue(), site_instance->browsing_instance(),
+            site_instance->GetSiteURL())) {
       suitable_renderers.push_back(iter.GetCurrentValue());
     }
     iter.Advance();
@@ -3474,19 +3486,21 @@ bool RenderProcessHost::ShouldUseProcessPerSite(BrowserContext* browser_context,
 }
 
 // static
-RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSite(
-    BrowserContext* browser_context,
+RenderProcessHost* RenderProcessHostImpl::GetSoleProcessHostForSite(
+    BrowsingInstance* browsing_instance,
     const GURL& url) {
   // Look up the map of site to process for the given browser_context.
-  SiteProcessMap* map = GetSiteProcessMapForBrowserContext(browser_context);
+  SiteProcessMap* map =
+      GetSiteProcessMapForBrowserContext(browsing_instance->browser_context());
 
   // See if we have an existing process with appropriate bindings for this site.
   // If not, the caller should create a new process and register it.  Note that
   // IsSuitableHost expects a site URL rather than the full |url|.
-  GURL site_url = SiteInstance::GetSiteForURL(browser_context, url);
+  GURL site_url =
+      SiteInstance::GetSiteForURL(browsing_instance->browser_context(), url);
   RenderProcessHost* host = map->FindProcess(site_url.possibly_invalid_spec());
   if (host && (!host->MayReuseHost() ||
-               !IsSuitableHost(host, browser_context, site_url))) {
+               !IsSuitableHost(host, browsing_instance, site_url))) {
     // The registered process does not have an appropriate set of bindings for
     // the url.  Remove it from the map so we can register a better one.
     RecordAction(
@@ -3516,7 +3530,6 @@ void RenderProcessHostImpl::RegisterProcessHostForSite(
 
 // static
 RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
-    BrowserContext* browser_context,
     SiteInstanceImpl* site_instance) {
   const GURL site_url = site_instance->GetSiteURL();
   SiteInstanceImpl::ProcessReusePolicy process_reuse_policy =
@@ -3525,11 +3538,12 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
   RenderProcessHost* render_process_host = nullptr;
 
   bool is_unmatched_service_worker = site_instance->is_for_service_worker();
-
+  BrowserContext* browser_context = site_instance->GetBrowserContext();
   // First, attempt to reuse an existing RenderProcessHost if necessary.
   switch (process_reuse_policy) {
     case SiteInstanceImpl::ProcessReusePolicy::PROCESS_PER_SITE:
-      render_process_host = GetProcessHostForSite(browser_context, site_url);
+      render_process_host = GetSoleProcessHostForSite(
+          site_instance->browsing_instance(), site_url);
       break;
     case SiteInstanceImpl::ProcessReusePolicy::USE_DEFAULT_SUBFRAME_PROCESS:
       DCHECK(SiteIsolationPolicy::IsTopDocumentIsolationEnabled());
@@ -3539,7 +3553,7 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
       break;
     case SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE:
       render_process_host =
-          FindReusableProcessHostForSite(browser_context, site_url);
+          FindReusableProcessHostForSiteInstance(site_instance);
       UMA_HISTOGRAM_BOOLEAN(
           "SiteIsolation.ReusePendingOrCommittedSite.CouldReuse",
           render_process_host != nullptr);
@@ -3557,14 +3571,14 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
   if (!render_process_host &&
       !(process_reuse_policy == SiteInstanceImpl::ProcessReusePolicy::DEFAULT &&
         site_instance->is_for_service_worker())) {
-    render_process_host = UnmatchedServiceWorkerProcessTracker::MatchWithSite(
-        browser_context, site_url);
+    render_process_host =
+        UnmatchedServiceWorkerProcessTracker::MatchWithSite(site_instance);
   }
 
   // If not (or if none found), see if we should reuse an existing process.
   if (!render_process_host &&
       ShouldTryToUseExistingProcessHost(browser_context, site_url)) {
-    render_process_host = GetExistingProcessHost(browser_context, site_url);
+    render_process_host = GetExistingProcessHost(site_instance);
   }
 
   // If we found a process to reuse, sanity check that it is suitable for
@@ -3572,8 +3586,8 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
   // process, we should never pick a process used by, or locked to, a different
   // site.
   if (render_process_host &&
-      !RenderProcessHostImpl::IsSuitableHost(render_process_host,
-                                             browser_context, site_url)) {
+      !RenderProcessHostImpl::IsSuitableHost(
+          render_process_host, site_instance->browsing_instance(), site_url)) {
     ChildProcessSecurityPolicyImpl* policy =
         ChildProcessSecurityPolicyImpl::GetInstance();
     base::debug::SetCrashKeyValue("requested_site_url", site_url.spec());
@@ -3594,8 +3608,8 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
   }
 
   if (is_unmatched_service_worker) {
-    UnmatchedServiceWorkerProcessTracker::Register(
-        browser_context, render_process_host, site_url);
+    UnmatchedServiceWorkerProcessTracker::Register(render_process_host,
+                                                   site_instance);
   }
 
   // Make sure the chosen process is in the correct StoragePartition for the
@@ -3988,9 +4002,11 @@ RenderProcessHost* RenderProcessHostImpl::GetDefaultSubframeProcessHost(
 }
 
 // static
-RenderProcessHost* RenderProcessHostImpl::FindReusableProcessHostForSite(
-    BrowserContext* browser_context,
-    const GURL& site_url) {
+RenderProcessHost*
+RenderProcessHostImpl::FindReusableProcessHostForSiteInstance(
+    SiteInstanceImpl* site_instance) {
+  GURL site_url(site_instance->GetSiteURL());
+  BrowserContext* browser_context = site_instance->GetBrowserContext();
   if (!ShouldFindReusableProcessHostForSite(browser_context, site_url))
     return nullptr;
 
@@ -4003,8 +4019,8 @@ RenderProcessHost* RenderProcessHostImpl::FindReusableProcessHostForSite(
       static_cast<SiteProcessCountTracker*>(
           browser_context->GetUserData(kPendingSiteProcessCountTrackerKey));
   if (pending_tracker) {
-    pending_tracker->FindRenderProcessesForSite(
-        site_url, &eligible_foreground_hosts, &eligible_background_hosts);
+    pending_tracker->FindRenderProcessesForSiteInstance(
+        site_instance, &eligible_foreground_hosts, &eligible_background_hosts);
   }
 
   if (eligible_foreground_hosts.empty()) {
@@ -4014,8 +4030,9 @@ RenderProcessHost* RenderProcessHostImpl::FindReusableProcessHostForSite(
         static_cast<SiteProcessCountTracker*>(
             browser_context->GetUserData(kCommittedSiteProcessCountTrackerKey));
     if (committed_tracker) {
-      committed_tracker->FindRenderProcessesForSite(
-          site_url, &eligible_foreground_hosts, &eligible_background_hosts);
+      committed_tracker->FindRenderProcessesForSiteInstance(
+          site_instance, &eligible_foreground_hosts,
+          &eligible_background_hosts);
     }
   }
 

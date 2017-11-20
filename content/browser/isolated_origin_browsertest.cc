@@ -4,6 +4,7 @@
 
 #include "base/command_line.h"
 #include "content/browser/bad_message.h"
+#include "content/browser/browsing_instance.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/storage_partition_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
@@ -388,12 +389,13 @@ IN_PROC_BROWSER_TEST_F(IsolatedOriginTest, ProcessLimit) {
   EXPECT_NE(child->current_frame_host()->GetProcess(), foo_process);
 
   // Sanity-check IsSuitableHost values for the current processes.
-  BrowserContext* browser_context = web_contents()->GetBrowserContext();
-  auto is_suitable_host = [browser_context](RenderProcessHost* process,
-                                            GURL url) {
+  BrowsingInstance* browsing_instance =
+      root->current_frame_host()->GetSiteInstance()->browsing_instance();
+  auto is_suitable_host = [browsing_instance](RenderProcessHost* process,
+                                              GURL url) {
     return RenderProcessHostImpl::IsSuitableHost(
-        process, browser_context,
-        SiteInstance::GetSiteForURL(browser_context, url));
+        process, browsing_instance,
+        SiteInstance::GetSiteForURL(browsing_instance->browser_context(), url));
   };
   EXPECT_TRUE(is_suitable_host(foo_process, foo_url));
   EXPECT_FALSE(is_suitable_host(foo_process, isolated_foo_url));

@@ -789,8 +789,8 @@ TEST_F(SiteInstanceTest, NoProcessPerSiteForEmptySite) {
   EXPECT_TRUE(instance->GetSiteURL().is_empty());
   host.reset(instance->GetProcess());
 
-  EXPECT_FALSE(RenderProcessHostImpl::GetProcessHostForSite(
-      browser_context.get(), GURL()));
+  EXPECT_FALSE(RenderProcessHostImpl::GetSoleProcessHostForSite(
+      instance->browsing_instance(), GURL()));
 
   DrainMessageLoop();
 }
@@ -892,9 +892,11 @@ TEST_F(SiteInstanceTest, IsolatedOrigins) {
   GURL isolated_bar_url("http://isolated.bar.com");
 
   auto* policy = ChildProcessSecurityPolicyImpl::GetInstance();
+  std::unique_ptr<TestBrowserContext> browser_context(new TestBrowserContext());
 
   EXPECT_FALSE(policy->IsIsolatedOrigin(url::Origin::Create(isolated_foo_url)));
-  EXPECT_TRUE(SiteInstance::IsSameWebSite(nullptr, foo_url, isolated_foo_url));
+  EXPECT_TRUE(SiteInstance::IsSameWebSite(browser_context.get(), foo_url,
+                                          isolated_foo_url));
 
   policy->AddIsolatedOrigin(url::Origin::Create(isolated_foo_url));
   EXPECT_TRUE(policy->IsIsolatedOrigin(url::Origin::Create(isolated_foo_url)));
@@ -913,42 +915,49 @@ TEST_F(SiteInstanceTest, IsolatedOrigins) {
 
   // IsSameWebSite should compare origins rather than sites if either URL is an
   // isolated origin.
-  EXPECT_FALSE(SiteInstance::IsSameWebSite(nullptr, foo_url, isolated_foo_url));
-  EXPECT_FALSE(SiteInstance::IsSameWebSite(nullptr, isolated_foo_url, foo_url));
-  EXPECT_FALSE(
-      SiteInstance::IsSameWebSite(nullptr, isolated_foo_url, isolated_bar_url));
-  EXPECT_TRUE(
-      SiteInstance::IsSameWebSite(nullptr, isolated_foo_url, isolated_foo_url));
+  EXPECT_FALSE(SiteInstance::IsSameWebSite(browser_context.get(), foo_url,
+                                           isolated_foo_url));
+  EXPECT_FALSE(SiteInstance::IsSameWebSite(browser_context.get(),
+                                           isolated_foo_url, foo_url));
+  EXPECT_FALSE(SiteInstance::IsSameWebSite(browser_context.get(),
+                                           isolated_foo_url, isolated_bar_url));
+  EXPECT_TRUE(SiteInstance::IsSameWebSite(browser_context.get(),
+                                          isolated_foo_url, isolated_foo_url));
 
   // Ensure blob and filesystem URLs with isolated origins are compared
   // correctly.
   GURL isolated_blob_foo_url("blob:http://isolated.foo.com/uuid");
-  EXPECT_TRUE(SiteInstance::IsSameWebSite(nullptr, isolated_foo_url,
-                                          isolated_blob_foo_url));
+  EXPECT_TRUE(SiteInstance::IsSameWebSite(
+      browser_context.get(), isolated_foo_url, isolated_blob_foo_url));
   GURL isolated_filesystem_foo_url("filesystem:http://isolated.foo.com/bar/");
-  EXPECT_TRUE(SiteInstance::IsSameWebSite(nullptr, isolated_foo_url,
-                                          isolated_filesystem_foo_url));
+  EXPECT_TRUE(SiteInstance::IsSameWebSite(
+      browser_context.get(), isolated_foo_url, isolated_filesystem_foo_url));
 
   // The site URL for an isolated origin should be the full origin rather than
   // eTLD+1.
+  EXPECT_EQ(isolated_foo_url, SiteInstance::GetSiteForURL(browser_context.get(),
+                                                          isolated_foo_url));
+  EXPECT_EQ(isolated_bar_url, SiteInstance::GetSiteForURL(browser_context.get(),
+                                                          isolated_bar_url));
   EXPECT_EQ(isolated_foo_url,
-            SiteInstance::GetSiteForURL(nullptr, isolated_foo_url));
-  EXPECT_EQ(isolated_bar_url,
-            SiteInstance::GetSiteForURL(nullptr, isolated_bar_url));
+            SiteInstance::GetSiteForURL(browser_context.get(),
+                                        isolated_blob_foo_url));
   EXPECT_EQ(isolated_foo_url,
-            SiteInstance::GetSiteForURL(nullptr, isolated_blob_foo_url));
-  EXPECT_EQ(isolated_foo_url,
-            SiteInstance::GetSiteForURL(nullptr, isolated_filesystem_foo_url));
+            SiteInstance::GetSiteForURL(browser_context.get(),
+                                        isolated_filesystem_foo_url));
 
   // Isolated origins always require a dedicated process.
+  scoped_refptr<SiteInstanceImpl> site_instance(
+      SiteInstanceImpl::Create(browser_context.get()));
+  BrowsingInstance* browsing_instance = site_instance->browsing_instance();
   EXPECT_TRUE(SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
-      nullptr, isolated_foo_url));
+      browsing_instance, isolated_foo_url));
   EXPECT_TRUE(SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
-      nullptr, isolated_bar_url));
+      browsing_instance, isolated_bar_url));
   EXPECT_TRUE(SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
-      nullptr, isolated_blob_foo_url));
+      browsing_instance, isolated_blob_foo_url));
   EXPECT_TRUE(SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
-      nullptr, isolated_filesystem_foo_url));
+      browsing_instance, isolated_filesystem_foo_url));
 
   // Cleanup.
   policy->RemoveIsolatedOriginForTesting(url::Origin::Create(isolated_foo_url));
@@ -1019,16 +1028,20 @@ TEST_F(SiteInstanceTest, SubdomainOnIsolatedSite) {
   // A new SiteInstance created for a subdomain on an isolated origin
   // should use the isolated origin's host and not its own host as the site
   // URL.
-  EXPECT_EQ(isolated_url,
-            SiteInstance::GetSiteForURL(nullptr, foo_isolated_url));
+  std::unique_ptr<TestBrowserContext> browser_context(new TestBrowserContext());
+  EXPECT_EQ(isolated_url, SiteInstance::GetSiteForURL(browser_context.get(),
+                                                      foo_isolated_url));
 
+  scoped_refptr<SiteInstanceImpl> site_instance(
+      SiteInstanceImpl::Create(browser_context.get()));
+  BrowsingInstance* browsing_instance = site_instance->browsing_instance();
   EXPECT_TRUE(SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
-      nullptr, foo_isolated_url));
+      browsing_instance, foo_isolated_url));
 
-  EXPECT_TRUE(
-      SiteInstance::IsSameWebSite(nullptr, isolated_url, foo_isolated_url));
-  EXPECT_TRUE(
-      SiteInstance::IsSameWebSite(nullptr, foo_isolated_url, isolated_url));
+  EXPECT_TRUE(SiteInstance::IsSameWebSite(browser_context.get(), isolated_url,
+                                          foo_isolated_url));
+  EXPECT_TRUE(SiteInstance::IsSameWebSite(browser_context.get(),
+                                          foo_isolated_url, isolated_url));
 
   // Don't try to match subdomains on IP addresses.
   GURL isolated_ip("http://127.0.0.1");
@@ -1057,39 +1070,47 @@ TEST_F(SiteInstanceTest, SubdomainOnIsolatedOrigin) {
   EXPECT_TRUE(
       policy->IsIsolatedOrigin(url::Origin::Create(baz_isolated_foo_url)));
 
-  EXPECT_EQ(foo_url, SiteInstance::GetSiteForURL(nullptr, foo_url));
-  EXPECT_EQ(isolated_foo_url,
-            SiteInstance::GetSiteForURL(nullptr, isolated_foo_url));
-  EXPECT_EQ(isolated_foo_url,
-            SiteInstance::GetSiteForURL(nullptr, bar_isolated_foo_url));
-  EXPECT_EQ(isolated_foo_url,
-            SiteInstance::GetSiteForURL(nullptr, baz_isolated_foo_url));
+  std::unique_ptr<TestBrowserContext> browser_context(new TestBrowserContext());
+  EXPECT_EQ(foo_url,
+            SiteInstance::GetSiteForURL(browser_context.get(), foo_url));
+  EXPECT_EQ(isolated_foo_url, SiteInstance::GetSiteForURL(browser_context.get(),
+                                                          isolated_foo_url));
+  EXPECT_EQ(isolated_foo_url, SiteInstance::GetSiteForURL(
+                                  browser_context.get(), bar_isolated_foo_url));
+  EXPECT_EQ(isolated_foo_url, SiteInstance::GetSiteForURL(
+                                  browser_context.get(), baz_isolated_foo_url));
+
+  scoped_refptr<SiteInstanceImpl> site_instance(
+      SiteInstanceImpl::Create(browser_context.get()));
+  BrowsingInstance* browsing_instance = site_instance->browsing_instance();
 
   if (!AreAllSitesIsolatedForTesting()) {
-    EXPECT_FALSE(
-        SiteInstanceImpl::DoesSiteRequireDedicatedProcess(nullptr, foo_url));
+    EXPECT_FALSE(SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
+        browsing_instance, foo_url));
   }
   EXPECT_TRUE(SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
-      nullptr, isolated_foo_url));
+      browsing_instance, isolated_foo_url));
   EXPECT_TRUE(SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
-      nullptr, bar_isolated_foo_url));
+      browsing_instance, bar_isolated_foo_url));
   EXPECT_TRUE(SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
-      nullptr, baz_isolated_foo_url));
+      browsing_instance, baz_isolated_foo_url));
 
-  EXPECT_FALSE(SiteInstance::IsSameWebSite(nullptr, foo_url, isolated_foo_url));
-  EXPECT_FALSE(SiteInstance::IsSameWebSite(nullptr, isolated_foo_url, foo_url));
-  EXPECT_FALSE(
-      SiteInstance::IsSameWebSite(nullptr, foo_url, bar_isolated_foo_url));
-  EXPECT_FALSE(
-      SiteInstance::IsSameWebSite(nullptr, bar_isolated_foo_url, foo_url));
-  EXPECT_TRUE(SiteInstance::IsSameWebSite(nullptr, bar_isolated_foo_url,
-                                          isolated_foo_url));
-  EXPECT_TRUE(SiteInstance::IsSameWebSite(nullptr, isolated_foo_url,
-                                          bar_isolated_foo_url));
-  EXPECT_TRUE(SiteInstance::IsSameWebSite(nullptr, bar_isolated_foo_url,
-                                          baz_isolated_foo_url));
-  EXPECT_TRUE(SiteInstance::IsSameWebSite(nullptr, baz_isolated_foo_url,
-                                          bar_isolated_foo_url));
+  EXPECT_FALSE(SiteInstance::IsSameWebSite(browser_context.get(), foo_url,
+                                           isolated_foo_url));
+  EXPECT_FALSE(SiteInstance::IsSameWebSite(browser_context.get(),
+                                           isolated_foo_url, foo_url));
+  EXPECT_FALSE(SiteInstance::IsSameWebSite(browser_context.get(), foo_url,
+                                           bar_isolated_foo_url));
+  EXPECT_FALSE(SiteInstance::IsSameWebSite(browser_context.get(),
+                                           bar_isolated_foo_url, foo_url));
+  EXPECT_TRUE(SiteInstance::IsSameWebSite(
+      browser_context.get(), bar_isolated_foo_url, isolated_foo_url));
+  EXPECT_TRUE(SiteInstance::IsSameWebSite(
+      browser_context.get(), isolated_foo_url, bar_isolated_foo_url));
+  EXPECT_TRUE(SiteInstance::IsSameWebSite(
+      browser_context.get(), bar_isolated_foo_url, baz_isolated_foo_url));
+  EXPECT_TRUE(SiteInstance::IsSameWebSite(
+      browser_context.get(), baz_isolated_foo_url, bar_isolated_foo_url));
 
   // Cleanup.
   policy->RemoveIsolatedOriginForTesting(url::Origin::Create(isolated_foo_url));
@@ -1111,34 +1132,42 @@ TEST_F(SiteInstanceTest, MultipleIsolatedOriginsWithCommonSite) {
   EXPECT_TRUE(
       policy->IsIsolatedOrigin(url::Origin::Create(qux_baz_bar_foo_url)));
 
-  EXPECT_EQ(foo_url, SiteInstance::GetSiteForURL(nullptr, foo_url));
-  EXPECT_EQ(foo_url, SiteInstance::GetSiteForURL(nullptr, bar_foo_url));
-  EXPECT_EQ(baz_bar_foo_url,
-            SiteInstance::GetSiteForURL(nullptr, baz_bar_foo_url));
-  EXPECT_EQ(baz_bar_foo_url,
-            SiteInstance::GetSiteForURL(nullptr, qux_baz_bar_foo_url));
+  std::unique_ptr<TestBrowserContext> browser_context(new TestBrowserContext());
+  EXPECT_EQ(foo_url,
+            SiteInstance::GetSiteForURL(browser_context.get(), foo_url));
+  EXPECT_EQ(foo_url,
+            SiteInstance::GetSiteForURL(browser_context.get(), bar_foo_url));
+  EXPECT_EQ(baz_bar_foo_url, SiteInstance::GetSiteForURL(browser_context.get(),
+                                                         baz_bar_foo_url));
+  EXPECT_EQ(baz_bar_foo_url, SiteInstance::GetSiteForURL(browser_context.get(),
+                                                         qux_baz_bar_foo_url));
+
+  scoped_refptr<SiteInstanceImpl> site_instance(
+      SiteInstanceImpl::Create(browser_context.get()));
+  BrowsingInstance* browsing_instance = site_instance->browsing_instance();
+  EXPECT_TRUE(SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
+      browsing_instance, foo_url));
+  EXPECT_TRUE(SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
+      browsing_instance, bar_foo_url));
+  EXPECT_TRUE(SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
+      browsing_instance, baz_bar_foo_url));
+  EXPECT_TRUE(SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
+      browsing_instance, qux_baz_bar_foo_url));
 
   EXPECT_TRUE(
-      SiteInstanceImpl::DoesSiteRequireDedicatedProcess(nullptr, foo_url));
-  EXPECT_TRUE(
-      SiteInstanceImpl::DoesSiteRequireDedicatedProcess(nullptr, bar_foo_url));
-  EXPECT_TRUE(SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
-      nullptr, baz_bar_foo_url));
-  EXPECT_TRUE(SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
-      nullptr, qux_baz_bar_foo_url));
+      SiteInstance::IsSameWebSite(browser_context.get(), foo_url, bar_foo_url));
+  EXPECT_FALSE(SiteInstance::IsSameWebSite(browser_context.get(), foo_url,
+                                           baz_bar_foo_url));
+  EXPECT_FALSE(SiteInstance::IsSameWebSite(browser_context.get(), foo_url,
+                                           qux_baz_bar_foo_url));
 
-  EXPECT_TRUE(SiteInstance::IsSameWebSite(nullptr, foo_url, bar_foo_url));
-  EXPECT_FALSE(SiteInstance::IsSameWebSite(nullptr, foo_url, baz_bar_foo_url));
-  EXPECT_FALSE(
-      SiteInstance::IsSameWebSite(nullptr, foo_url, qux_baz_bar_foo_url));
+  EXPECT_FALSE(SiteInstance::IsSameWebSite(browser_context.get(), bar_foo_url,
+                                           baz_bar_foo_url));
+  EXPECT_FALSE(SiteInstance::IsSameWebSite(browser_context.get(), bar_foo_url,
+                                           qux_baz_bar_foo_url));
 
-  EXPECT_FALSE(
-      SiteInstance::IsSameWebSite(nullptr, bar_foo_url, baz_bar_foo_url));
-  EXPECT_FALSE(
-      SiteInstance::IsSameWebSite(nullptr, bar_foo_url, qux_baz_bar_foo_url));
-
-  EXPECT_TRUE(SiteInstance::IsSameWebSite(nullptr, baz_bar_foo_url,
-                                          qux_baz_bar_foo_url));
+  EXPECT_TRUE(SiteInstance::IsSameWebSite(
+      browser_context.get(), baz_bar_foo_url, qux_baz_bar_foo_url));
 
   // Cleanup.
   policy->RemoveIsolatedOriginForTesting(url::Origin::Create(foo_url));
