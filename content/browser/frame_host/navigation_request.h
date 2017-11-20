@@ -30,6 +30,7 @@ class NavigationControllerImpl;
 class NavigationHandleImpl;
 class NavigationURLLoader;
 class NavigationData;
+class NavigationUIData;
 class ResourceRequestBody;
 class SiteInstanceImpl;
 class StreamHandle;
@@ -88,7 +89,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
       bool is_history_navigation_in_new_child,
       const scoped_refptr<ResourceRequestBody>& post_body,
       const base::TimeTicks& navigation_start,
-      NavigationControllerImpl* controller);
+      NavigationControllerImpl* controller,
+      std::unique_ptr<NavigationUIData> navigation_ui_data);
 
   // Creates a request for a renderer-intiated navigation.
   // Note: |body| is sent to the IO thread when calling BeginNavigation, and
@@ -213,7 +215,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
                     bool browser_initiated,
                     bool from_begin_navigation,
                     const FrameNavigationEntry* frame_navigation_entry,
-                    const NavigationEntryImpl* navitation_entry);
+                    const NavigationEntryImpl* navitation_entry,
+                    std::unique_ptr<NavigationUIData> navigation_ui_data);
 
   // NavigationURLLoaderDelegate implementation.
   void OnRequestRedirected(
@@ -310,6 +313,11 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   BeginNavigationParams begin_params_;
   RequestNavigationParams request_params_;
   const bool browser_initiated_;
+
+  // Stores the NavigationUIData for this navigation until the NavigationHandle
+  // is created. This can be null if the embedded did not provide a
+  // NavigationUIData at the beginning of the navigation.
+  std::unique_ptr<NavigationUIData> navigation_ui_data_;
 
   NavigationState state_;
 

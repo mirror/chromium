@@ -98,6 +98,18 @@ ExtensionApiFrameIdMap* ExtensionApiFrameIdMap::Get() {
 }
 
 // static
+int ExtensionApiFrameIdMap::UnsafeGetFrameId(content::WebContents* web_contents,
+                                             int frame_tree_node_id) {
+  // Unfortunately, extension APIs do not know which process to expect for a
+  // given frame ID, so we must use an unsafe API here that could return a
+  // different RenderFrameHost than the caller may have expected (e.g., one that
+  // changed after a cross-process navigation).
+  content::RenderFrameHost* rfh =
+      web_contents->UnsafeFindFrameByFrameTreeNodeId(frame_tree_node_id);
+  return ExtensionApiFrameIdMap::GetFrameId(rfh);
+}
+
+// static
 int ExtensionApiFrameIdMap::GetFrameId(content::RenderFrameHost* rfh) {
   if (!rfh)
     return kInvalidFrameId;
@@ -112,6 +124,19 @@ int ExtensionApiFrameIdMap::GetFrameId(
   return navigation_handle->IsInMainFrame()
              ? kTopFrameId
              : navigation_handle->GetFrameTreeNodeId();
+}
+
+// static
+int ExtensionApiFrameIdMap::UnsafeGetParentFrameId(
+    content::WebContents* web_contents,
+    int frame_tree_node_id) {
+  // Unfortunately, extension APIs do not know which process to expect for a
+  // given frame ID, so we must use an unsafe API here that could return a
+  // different RenderFrameHost than the caller may have expected (e.g., one that
+  // changed after a cross-process navigation).
+  content::RenderFrameHost* rfh =
+      web_contents->UnsafeFindFrameByFrameTreeNodeId(frame_tree_node_id);
+  return ExtensionApiFrameIdMap::GetParentFrameId(rfh);
 }
 
 // static
