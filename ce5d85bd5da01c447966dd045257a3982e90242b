@@ -217,6 +217,30 @@
     },
     {
       "key": {
+        "uuid": "e0b0b7fb_d826d80a",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-20T21:40:18Z",
+      "side": 1,
+      "message": "I think that\u0027s the question I was trying to get to.\n\nIn a Network Service world, this is still something that should only be enabled for Chrome (that is, not Chromium, not other Network Service consumers).\n\nDo we have recommended patterns for this? That is, is \"This is a service, and Chrome provides an implementation that does this magic\" the answer? This seems similar to the certificate verification side - where do we expose behaviours and \u0027additional features\u0027 that are Chrome-specific or Chrome-only?\n\nOne way (probably incorrect) that I\u0027ve been imagining is that when the network service starts, the //chrome directory has the ability to colocate additional //chrome implementations into that process as services. In the creation of the network service, we\u0027d pass those additional Mojo services in (much like we do here with the URLRequestContextBuilder), but they\u0027d be logic and behaviour controlled by //chrome.\n\nIf that is a viable path, then it seems like the testing story would be similar to what\u0027s being done here - we\u0027d stub in a fake/testing implementation of the service, and check that the service was being invoked as expected where it\u0027d be Network Service -\u003e browser_test multi-process in the unittest, rather than Network Service -\u003e network service single-process in the release code.\n\nThis pattern matches the C++ object hierarchy (in which //chrome implements an interface defined by //net / wires up the relevant objects in a Chrome-specific way), but may not be Mojo-best-practice, hence trying to understand if there\u0027s alternative ways.",
+      "parentUuid": "b0610b1d_73329057",
+      "range": {
+        "startLine": 826,
+        "startChar": 15,
+        "endLine": 826,
+        "endChar": 26
+      },
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4d682bc_ffe36154",
         "filename": "components/certificate_transparency/single_tree_tracker.cc",
         "patchSetId": 5
