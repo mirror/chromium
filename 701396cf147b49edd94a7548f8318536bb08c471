@@ -22,6 +22,30 @@
       "revId": "701396cf147b49edd94a7548f8318536bb08c471",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a56538ae_03314347",
+        "filename": "chromeos/components/tether/gatt_services_workaround.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-20T23:32:41Z",
+      "side": 1,
+      "message": "Thanks for the suggestion - changed the name to AdHocBleAdvertiser.",
+      "parentUuid": "a1fd017b_90dc1de1",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 28
+      },
+      "revId": "701396cf147b49edd94a7548f8318536bb08c471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
