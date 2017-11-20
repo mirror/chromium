@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "d04494be_edb579e2",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-20T20:14:24Z",
+      "side": 1,
+      "message": "\u003e Note that we can monitor the test server as well.  If a feature isn\u0027t visible to the API consumer, and doesn\u0027t do anything visible to a server, either, what exactly does the feature do?\n\nCorrect, this feature is not visible to the test server, and not visible to the loading infrastructure. That is, it does not alter error codes, add additional state to the load request, or change how the observable load behaves.\n\n\u003e A test that just checks that something is non-null really doesn\u0027t seem to give you all that much.\n\u003e \n\u003e If we need to, we can make a NetworkService unittest (Which gives you access to both the NetworkService API and the URLRequestContext), but we\u0027re testing things that are hooked up in chrome/, that isn\u0027t really sufficient.\n\nRight, in a non-NetworkService world, we would have a browser test that instantiates the load and ensures that the relevant state transitions happen as expected - providing end-to-end assurances (from the Profile down through loading and back up).\n\nIn this first phase, it\u0027s \"conceptually\" (although technically quite different) than how we might test histograms. We want to make sure that the appropriate aspects are logged, but that logging/non-logging (or histogramming/non-histogramming) doesn\u0027t affect the observable behaviour.\n\nAs captured in the launch bug, the goal of this is to asynchronously measure the consistency of the SCTs observed, using DNS. While that might imply \"Ah, we can listen for DNS events\" - that doesn\u0027t quite hold, because it\u0027s designed to happen asynchronously and without guarantees to when the request will be made. So while in a C++ world, we can ensure that the object is called as appropriate, in a Network Service world, this seems more complicated to test.\n\nWith this new change, we want to ensure that DNS requests are _not_ made under certain conditions. This is a negative test that doesn\u0027t lend itself well to NS-based testing - that is, the DNS request might not be made for any number of unrelated reasons, and so accessing the objects and ensuring the APIs are called offers a more realistic assurance of the necessary transitions - particularly as an integration test in which the number of reasons why X may or may not happen grows based on integrations (and which a unit test may not capture).",
+      "parentUuid": "267373dc_b27e6caa",
+      "range": {
+        "startLine": 826,
+        "startChar": 15,
+        "endLine": 826,
+        "endChar": 26
+      },
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4d682bc_ffe36154",
         "filename": "components/certificate_transparency/single_tree_tracker.cc",
         "patchSetId": 5
