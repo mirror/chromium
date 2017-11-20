@@ -34,6 +34,24 @@
       "revId": "a63b828ee04ff811571dea631d12a9fbda7cb901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc09772b_d9b650f6",
+        "filename": "third_party/WebKit/Source/core/dom/LayoutTreeBuilder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-20T09:45:18Z",
+      "side": 1,
+      "message": "Do we need to do this at style recalc / layout tree building time? Would it be possible, or make sense, to create ComputedStyle on-demand like we do for getComputedStyle() inside display:none subtrees?",
+      "parentUuid": "9e39918d_a98b59b3",
+      "revId": "a63b828ee04ff811571dea631d12a9fbda7cb901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
