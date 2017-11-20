@@ -34,6 +34,24 @@
       "revId": "cf2139bbc8f9582bcb9777d0533cc744c1e440cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c04c7a6_2477a21c",
+        "filename": "mojo/public/js/new_bindings/base.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-20T20:21:26Z",
+      "side": 1,
+      "message": "Oh right, sorry, you\u0027d have to do, e.g., window.foo \u003d\u003d\u003d undefined, that is, it works for properties.\n\nMay or may not actually be any better. Your call!",
+      "parentUuid": "24549bd1_a34bdce6",
+      "revId": "cf2139bbc8f9582bcb9777d0533cc744c1e440cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
