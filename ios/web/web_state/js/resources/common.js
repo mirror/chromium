@@ -721,4 +721,24 @@ __gCrWeb['common'] = __gCrWeb.common;
     return new URL(url_one).origin == new URL(url_two).origin;
   }
 
+ /**
+  * Returns the element with the specified name that is a child of the
+  * specified parent element.
+  * @param {Element} parent The parent of the desired element.
+  * @param {string} name The name of the desired element.
+  * @return {Element} The element if found, otherwise null;
+  */
+ __gCrWeb['getElementByNameWithParent'] = function(parent, name) {
+   if (parent.name === name)
+     return parent;
+
+   for (var i = 0; i < parent.children.length; i++) {
+     var el = __gCrWeb.getElementByNameWithParent(parent.children[i], name);
+     if (el)
+       return el;
+   }
+   return null;
+ };
+
+
 }());  // End of anonymous object

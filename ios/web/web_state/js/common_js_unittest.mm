@@ -190,4 +190,47 @@ TEST_F(CommonJsTest, IsSameOrigin) {
   }
 }
 
+TEST_F(CommonJsTest, GetElementByNameWithParent) {
+  LoadHtml(
+      @"<html><body>"
+       "<form id='form1'>"
+       "<input type='text' name='lastname' id='id1'>"
+       "</form>"
+       "<form id='form2'>"
+       "<div>"
+       "<input type='password' name='pw' id='id2'>"
+       "</div>"
+       "</form>"
+       "</body></html>");
+
+  struct TestData {
+    NSString* parent_id;
+    NSString* child_name;
+    NSString* expected_id;  // if not null it should be quoted
+  } testElements[] = {
+      {@"form1", @"lastname", @"'id1'"},
+      {@"form1", @"not_existing_element", @"null"},
+      {@"form2", @"pw", @"'id2'"},
+  };
+
+  NSString* js_test =
+      @"(function() {"
+       "  var parent = document.getElementById('%@');"
+       "  var output_element = "
+       "__gCrWeb.common.getElementByNameWithParent(parent, '%@');"
+       "  var expected_output_id = %@;"
+       "  if (expected_output_id === null)"
+       "    return output_element === null;"
+       "  return output_element.id === expected_output_id;"
+       "})()";
+
+  for (size_t i = 0; i < arraysize(testElements); ++i) {
+    const TestData& test_data = testElements[i];
+    id result = ExecuteJavaScript(
+        [NSString stringWithFormat:js_test, test_data.parent_id,
+                                   test_data.child_name, est_data.expected_id]);
+    EXPECT_NSEQ(@YES, result) << "testcase with index " << i;
+  }
+}
+
 }  // namespace web
