@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f597eb56_19bc364d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-20T06:37:09Z",
+      "side": 1,
+      "message": "It can install a feature on prototype/interface objects twice (or more).\nInstallConditionalFeatures() itself does not care prototype chain, because of the same reason.",
+      "parentUuid": "7dd02915_06355e01",
+      "revId": "190afa6dbbc520e0a61ea09d753f09dc98f29be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc1fdc68_5f254467",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ContextSnapshot.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "190afa6dbbc520e0a61ea09d753f09dc98f29be7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52246bc9_568e4f0c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ContextSnapshot.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-20T06:37:09Z",
+      "side": 1,
+      "message": "As I replied for the other comment, it installs conditional features on the window wrapper twice, if the wrapper is created  from a snapshot.",
+      "parentUuid": "cc1fdc68_5f254467",
+      "revId": "190afa6dbbc520e0a61ea09d753f09dc98f29be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
