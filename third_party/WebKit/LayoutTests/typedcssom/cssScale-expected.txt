@@ -1,0 +1,19 @@
+This is a testharness.js-based test.
+PASS toString is correct for scale(0, 0)
+PASS toString is correct for scale(1, 2)
+PASS toString is correct for scale(-2, -4)
+PASS toString is correct for scale(3.4, 2.7)
+PASS toString is correct for scale3d(0, 0, 0)
+PASS toString is correct for scale3d(1, 2, 3)
+PASS toString is correct for scale3d(3.5, -2.7, -2)
+PASS Invalid number of arguments to constructor throws an exception.
+FAIL Invalid input throws an exception. assert_throws: function "() => { new CSSScale(0, 0, undefined); }" did not throw
+PASS asMatrix is constructed correctly for scale(0, 0)
+PASS asMatrix is constructed correctly for scale(1, 2)
+PASS asMatrix is constructed correctly for scale(-2, -4)
+PASS asMatrix is constructed correctly for scale(3.4, 2.7)
+PASS asMatrix is constructed correctly for scale3d(0, 0, 0)
+PASS asMatrix is constructed correctly for scale3d(1, 2, 3)
+PASS asMatrix is constructed correctly for scale3d(3.5, -2.7, -2)
+Harness: the test ran to completion.
+
