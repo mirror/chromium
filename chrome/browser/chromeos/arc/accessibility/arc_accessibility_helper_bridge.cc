@@ -14,6 +14,7 @@
 #include "chromeos/chromeos_switches.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
+#include "components/arc/arc_context.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/exo/shell_surface.h"
 #include "components/exo/surface.h"
@@ -138,16 +139,15 @@ class ArcAccessibilityHelperBridgeFactory
 }  // namespace
 
 // static
-ArcAccessibilityHelperBridge*
-ArcAccessibilityHelperBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcAccessibilityHelperBridgeFactory::GetForBrowserContext(context);
+ArcAccessibilityHelperBridge* ArcAccessibilityHelperBridge::GetForContext(
+    ArcContext* context) {
+  return ArcAccessibilityHelperBridgeFactory::GetForContext(context);
 }
 
 ArcAccessibilityHelperBridge::ArcAccessibilityHelperBridge(
-    content::BrowserContext* browser_context,
+    ArcContext* context,
     ArcBridgeService* arc_bridge_service)
-    : profile_(Profile::FromBrowserContext(browser_context)),
+    : profile_(Profile::FromBrowserContext(context->browser_context())),
       arc_bridge_service_(arc_bridge_service),
       binding_(this) {
   arc_bridge_service_->accessibility_helper()->AddObserver(this);

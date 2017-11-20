@@ -32,10 +32,10 @@ namespace internal {
 //
 // class ArcFooService : public KeyedService, ... {
 //  public:
-//   static ArcFooService* GetForBrowserContext(
-//       content::BrowserContext* context);
+//   static ArcFooService* GetForContext(
+//       ArcContext* context);
 //
-//   ArcFooService(content::BrowserContext* context,
+//   ArcFooService(ArcContext* context,
 //                 ArcBridgeService* arc_bridge_service);
 // };
 //
@@ -60,9 +60,9 @@ namespace internal {
 // };
 // }  // namespace
 //
-// ArcFooService* ArcFooService::GetForBrowserContext(
-//     content::BrowserContext* context) {
-//   return ArcFooServiceFactory::GetForBrowserContext(context);
+// ArcFooService* ArcFooService::GetForContext(
+//     ArcContext* context) {
+//   return ArcFooServiceFactory::GetForContext(context);
 // }
 //
 // If the service depends on other KeyedService, DependsOn() can be called in
@@ -80,10 +80,12 @@ class ArcBrowserContextKeyedServiceFactoryBase
   // Returns the instance of the service for the given |context|,
   // or nullptr if |context| is not allowed to use ARC.
   // If the instance is not yet created, this creates a new service instance.
-  static Service* GetForBrowserContext(content::BrowserContext* context) {
+  static Service* GetForContext(ArcContext* context) {
+    if (!context)
+      return nullptr;
     return static_cast<Service*>(
-        Factory::GetInstance()->GetServiceForBrowserContext(context,
-                                                            true /* create */));
+        Factory::GetInstance()->GetServiceForBrowserContext(
+            context->browser_context(), true /* create */));
   }
 
  protected:
@@ -104,12 +106,13 @@ class ArcBrowserContextKeyedServiceFactoryBase
       return nullptr;
     }
 
-    if (arc_service_manager->browser_context() != context) {
+    if (arc_service_manager->context()->browser_context() != context) {
       VLOG(2) << "Non ARC allowed browser context.";
       return nullptr;
     }
 
-    return new Service(context, arc_service_manager->arc_bridge_service());
+    return new Service(arc_service_manager->context(),
+                       arc_service_manager->arc_bridge_service());
   }
 
  private:

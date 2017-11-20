@@ -31,6 +31,7 @@
 #include "chromeos/settings/timezone_settings.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
+#include "components/arc/arc_context.h"
 #include "components/arc/arc_prefs.h"
 #include "components/arc/common/backup_settings.mojom.h"
 #include "components/arc/intent_helper/arc_intent_helper_bridge.h"
@@ -108,7 +109,7 @@ class ArcSettingsServiceImpl
       public InstanceHolder<mojom::AppInstance>::Observer,
       public chromeos::NetworkStateHandlerObserver {
  public:
-  ArcSettingsServiceImpl(content::BrowserContext* context,
+  ArcSettingsServiceImpl(ArcContext* context,
                          ArcBridgeService* arc_bridge_service);
   ~ArcSettingsServiceImpl() override;
 
@@ -127,7 +128,7 @@ class ArcSettingsServiceImpl
 
  private:
   PrefService* GetPrefs() const {
-    return Profile::FromBrowserContext(context_)->GetPrefs();
+    return Profile::FromBrowserContext(context_->browser_context())->GetPrefs();
   }
 
   // Returns whether kProxy pref proxy config is applied.
@@ -197,7 +198,7 @@ class ArcSettingsServiceImpl
   // InstanceHolder<mojom::AppInstance>::Observer:
   void OnInstanceReady() override;
 
-  content::BrowserContext* const context_;
+  ArcContext* const context_;
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
 
   // Manages pref observation registration.
@@ -212,7 +213,7 @@ class ArcSettingsServiceImpl
 };
 
 ArcSettingsServiceImpl::ArcSettingsServiceImpl(
-    content::BrowserContext* context,
+    ArcContext* context,
     ArcBridgeService* arc_bridge_service)
     : context_(context),
       arc_bridge_service_(arc_bridge_service),
@@ -724,12 +725,11 @@ void ArcSettingsServiceImpl::OnInstanceReady() {
 }
 
 // static
-ArcSettingsService* ArcSettingsService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcSettingsServiceFactory::GetForBrowserContext(context);
+ArcSettingsService* ArcSettingsService::GetForContext(ArcContext* context) {
+  return ArcSettingsServiceFactory::GetForContext(context);
 }
 
-ArcSettingsService::ArcSettingsService(content::BrowserContext* context,
+ArcSettingsService::ArcSettingsService(ArcContext* context,
                                        ArcBridgeService* bridge_service)
     : context_(context), arc_bridge_service_(bridge_service) {
   arc_bridge_service_->intent_helper()->AddObserver(this);

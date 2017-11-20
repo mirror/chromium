@@ -7,6 +7,7 @@
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.h"
 #include "chrome/browser/profiles/profile.h"
+#include "components/arc/arc_context.h"
 
 namespace chromeos {
 
@@ -19,7 +20,8 @@ arc::ArcFileSystemBridge* GetArcFileSystemBridge() {
   Profile* profile = session_manager->profile();
   if (!profile)
     return nullptr;
-  return arc::ArcFileSystemBridge::GetForBrowserContext(profile);
+  return arc::ArcFileSystemBridge::GetForContext(
+      arc::ArcContext::FromBrowserContext(profile));
 }
 
 }  // namespace

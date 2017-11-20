@@ -13,13 +13,10 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // Relays dumps for non-native ARC crashes to the crash reporter in Chrome OS.
 class ArcCrashCollectorBridge
@@ -29,11 +26,9 @@ class ArcCrashCollectorBridge
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcCrashCollectorBridge* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcCrashCollectorBridge* GetForContext(ArcContext* context);
 
-  ArcCrashCollectorBridge(content::BrowserContext* context,
-                          ArcBridgeService* bridge);
+  ArcCrashCollectorBridge(ArcContext* context, ArcBridgeService* bridge);
 
   ~ArcCrashCollectorBridge() override;
 

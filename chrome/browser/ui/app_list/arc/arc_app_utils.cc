@@ -24,6 +24,7 @@
 #include "chrome/browser/ui/ash/launcher/arc_app_shelf_id.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
 #include "components/arc/arc_bridge_service.h"
+#include "components/arc/arc_context.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/arc_util.h"
 #include "components/arc/common/intent_helper.mojom.h"
@@ -267,7 +268,8 @@ bool LaunchAppWithIntent(content::BrowserContext* context,
       }
     }
 
-    arc::ArcBootPhaseMonitorBridge::RecordFirstAppLaunchDelayUMA(context);
+    arc::ArcBootPhaseMonitorBridge::RecordFirstAppLaunchDelayUMA(
+        arc::ArcContext::FromBrowserContext(context));
     ChromeLauncherController* chrome_controller =
         ChromeLauncherController::instance();
     DCHECK(chrome_controller || !ash::Shell::HasInstance());
@@ -284,7 +286,8 @@ bool LaunchAppWithIntent(content::BrowserContext* context,
     prefs->SetLastLaunchTime(app_id);
     return true;
   }
-  arc::ArcBootPhaseMonitorBridge::RecordFirstAppLaunchDelayUMA(context);
+  arc::ArcBootPhaseMonitorBridge::RecordFirstAppLaunchDelayUMA(
+      arc::ArcContext::FromBrowserContext(context));
 
   return Launch(context, app_id, launch_intent, event_flags, display_id);
 }

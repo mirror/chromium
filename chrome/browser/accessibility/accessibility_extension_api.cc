@@ -35,6 +35,7 @@
 #include "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/power_manager_client.h"
+#include "components/arc/arc_context.h"
 
 using ash::AccessibilityFocusRingController;
 #endif
@@ -220,8 +221,8 @@ AccessibilityPrivateSetNativeChromeVoxArcSupportForCurrentAppFunction::Run() {
 
   ChromeExtensionFunctionDetails details(this);
   arc::ArcAccessibilityHelperBridge* bridge =
-      arc::ArcAccessibilityHelperBridge::GetForBrowserContext(
-          details.GetProfile());
+      arc::ArcAccessibilityHelperBridge::GetForContext(
+          arc::ArcContext::FromBrowserContext(details.GetProfile()));
   if (bridge) {
     bool enabled;
     EXTENSION_FUNCTION_VALIDATE(args_->GetBoolean(0, &enabled));

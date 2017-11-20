@@ -20,6 +20,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
+#include "components/arc/arc_context.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/policy/core/common/policy_namespace.h"
 #include "components/policy/policy_constants.h"
@@ -94,12 +95,11 @@ bool IsCertificateAllowed(const scoped_refptr<net::X509Certificate>& cert,
 }  // namespace
 
 // static
-ArcCertStoreBridge* ArcCertStoreBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcCertStoreBridgeFactory::GetForBrowserContext(context);
+ArcCertStoreBridge* ArcCertStoreBridge::GetForContext(ArcContext* context) {
+  return ArcCertStoreBridgeFactory::GetForContext(context);
 }
 
-ArcCertStoreBridge::ArcCertStoreBridge(content::BrowserContext* context,
+ArcCertStoreBridge::ArcCertStoreBridge(ArcContext* context,
                                        ArcBridgeService* bridge_service)
     : context_(context),
       arc_bridge_service_(bridge_service),
@@ -108,7 +108,8 @@ ArcCertStoreBridge::ArcCertStoreBridge(content::BrowserContext* context,
   DVLOG(1) << "ArcCertStoreBridge::ArcCertStoreBridge";
 
   const auto* profile_policy_connector =
-      policy::ProfilePolicyConnectorFactory::GetForBrowserContext(context_);
+      policy::ProfilePolicyConnectorFactory::GetForBrowserContext(
+          context_->browser_context());
   policy_service_ = profile_policy_connector->policy_service();
   DCHECK(policy_service_);
 
@@ -155,7 +156,7 @@ void ArcCertStoreBridge::ListCertificates(ListCertificatesCallback callback) {
   }
 
   GetNSSCertDatabaseForProfile(
-      Profile::FromBrowserContext(context_),
+      Profile::FromBrowserContext(context_->browser_context()),
       base::Bind(&ArcCertStoreBridge::OnGetNSSCertDatabaseForProfile,
                  weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback)));
 }
@@ -173,8 +174,9 @@ void ArcCertStoreBridge::GetKeyCharacteristics(
   }
 
   scoped_refptr<net::X509Certificate> cert = FindCertificateByAlias(alias);
-  if (!cert || !IsCertificateAllowed(
-                   cert, Profile::FromBrowserContext(context_)->GetPrefs())) {
+  if (!cert || !IsCertificateAllowed(cert, Profile::FromBrowserContext(
+                                               context_->browser_context())
+                                               ->GetPrefs())) {
     std::move(callback).Run(mojom::KeymasterError::ERROR_INVALID_KEY_BLOB,
                             base::nullopt);
     return;
@@ -196,8 +198,9 @@ void ArcCertStoreBridge::Begin(const std::string& alias,
   }
 
   scoped_refptr<net::X509Certificate> cert = FindCertificateByAlias(alias);
-  if (!cert || !IsCertificateAllowed(
-                   cert, Profile::FromBrowserContext(context_)->GetPrefs())) {
+  if (!cert || !IsCertificateAllowed(cert, Profile::FromBrowserContext(
+                                               context_->browser_context())
+                                               ->GetPrefs())) {
     std::move(callback).Run(mojom::KeymasterError::ERROR_INVALID_KEY_BLOB, 0);
     return;
   }
@@ -297,7 +300,8 @@ void ArcCertStoreBridge::OnCertificatesListed(
       continue;
     }
     if (IsCertificateAllowed(
-            x509_cert, Profile::FromBrowserContext(context_)->GetPrefs())) {
+            x509_cert, Profile::FromBrowserContext(context_->browser_context())
+                           ->GetPrefs())) {
       mojom::CertificatePtr certificate = mojom::Certificate::New();
       certificate->alias = cert->nickname;
       net::X509Certificate::GetPEMEncoded(x509_cert->os_cert_handle(),

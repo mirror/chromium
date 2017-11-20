@@ -22,6 +22,7 @@
 #include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_util.h"
 #include "chrome/browser/chromeos/fileapi/recent_file.h"
 #include "chrome/browser/profiles/profile.h"
+#include "components/arc/arc_context.h"
 #include "components/arc/common/file_system.mojom.h"
 #include "content/public/browser/browser_thread.h"
 #include "storage/browser/fileapi/external_mount_points.h"
@@ -136,8 +137,8 @@ void RecentArcMediaSource::MediaRoot::GetRecentFiles(Params params) {
 
   params_.emplace(std::move(params));
 
-  auto* runner =
-      arc::ArcFileSystemOperationRunner::GetForBrowserContext(profile_);
+  auto* runner = arc::ArcFileSystemOperationRunner::GetForContext(
+      arc::ArcContext::FromBrowserContext(profile_));
   if (!runner) {
     // This happens when ARC is not allowed in this profile.
     OnComplete();
@@ -187,8 +188,8 @@ void RecentArcMediaSource::MediaRoot::ScanDirectory(
 
   ++num_inflight_readdirs_;
 
-  auto* root_map =
-      arc::ArcDocumentsProviderRootMap::GetForBrowserContext(profile_);
+  auto* root_map = arc::ArcDocumentsProviderRootMap::GetForContext(
+      arc::ArcContext::FromBrowserContext(profile_));
   if (!root_map) {
     // We already checked ARC is allowed for this profile (indirectly), so
     // this should never happen.
@@ -361,8 +362,8 @@ void RecentArcMediaSource::OnComplete() {
 bool RecentArcMediaSource::WillArcFileSystemOperationsRunImmediately() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  auto* runner =
-      arc::ArcFileSystemOperationRunner::GetForBrowserContext(profile_);
+  auto* runner = arc::ArcFileSystemOperationRunner::GetForContext(
+      arc::ArcContext::FromBrowserContext(profile_));
 
   // If ARC is not allowed the user, |runner| is nullptr.
   if (!runner)

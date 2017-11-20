@@ -29,6 +29,7 @@
 #include "chrome/common/pref_names.h"
 #include "chromeos/chromeos_switches.h"
 #include "components/arc/arc_bridge_service.h"
+#include "components/arc/arc_context.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/intent_helper/arc_intent_helper_bridge.h"
 #include "components/prefs/pref_service.h"
@@ -379,8 +380,8 @@ NoteTakingHelper::NoteTakingHelper()
 
     // ArcIntentHelperBridge will notify us about changes to the list of
     // available Android apps.
-    auto* intent_helper_bridge =
-        arc::ArcIntentHelperBridge::GetForBrowserContext(profile);
+    auto* intent_helper_bridge = arc::ArcIntentHelperBridge::GetForContext(
+        arc::ArcContext::FromBrowserContext(profile));
     if (intent_helper_bridge)
       intent_helper_bridge->AddObserver(this);
   }
@@ -408,8 +409,8 @@ NoteTakingHelper::~NoteTakingHelper() {
     arc::ArcSessionManager::Get()->RemoveObserver(this);
   for (Profile* profile :
        g_browser_process->profile_manager()->GetLoadedProfiles()) {
-    auto* intent_helper_bridge =
-        arc::ArcIntentHelperBridge::GetForBrowserContext(profile);
+    auto* intent_helper_bridge = arc::ArcIntentHelperBridge::GetForContext(
+        arc::ArcContext::FromBrowserContext(profile));
     if (intent_helper_bridge)
       intent_helper_bridge->RemoveObserver(this);
   }
@@ -556,7 +557,8 @@ void NoteTakingHelper::Observe(int type,
       observer.OnAvailableNoteTakingAppsUpdated();
   }
 
-  auto* bridge = arc::ArcIntentHelperBridge::GetForBrowserContext(profile);
+  auto* bridge = arc::ArcIntentHelperBridge::GetForContext(
+      arc::ArcContext::FromBrowserContext(profile));
   if (bridge)
     bridge->AddObserver(this);
 }

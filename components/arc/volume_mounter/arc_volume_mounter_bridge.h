@@ -14,13 +14,10 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // This class handles Volume mount/unmount requests from cros-disks and
 // send them to Android.
@@ -31,11 +28,9 @@ class ArcVolumeMounterBridge
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcVolumeMounterBridge* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcVolumeMounterBridge* GetForContext(ArcContext* context);
 
-  ArcVolumeMounterBridge(content::BrowserContext* context,
-                         ArcBridgeService* bridge_service);
+  ArcVolumeMounterBridge(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcVolumeMounterBridge() override;
 
   // InstanceHolder<mojom::VolumeMounterInstance>::Observer overrides:

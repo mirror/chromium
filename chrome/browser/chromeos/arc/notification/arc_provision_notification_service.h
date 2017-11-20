@@ -11,11 +11,9 @@
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "components/keyed_service/core/keyed_service.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
+
+class ArcContext;
 
 // Watches for ARC provisioning status and displays a notification during
 // provision when ARC opt-in flow happens silently due to configured policies.
@@ -37,24 +35,23 @@ class ArcProvisionNotificationService : public KeyedService,
 
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcProvisionNotificationService* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcProvisionNotificationService* GetForContext(ArcContext* context);
 
   // Constructs with the default delegate implementation that uses message
   // center for showing the notifications.
-  ArcProvisionNotificationService(content::BrowserContext* context,
+  ArcProvisionNotificationService(ArcContext* context,
                                   ArcBridgeService* bridge_service);
 
   ~ArcProvisionNotificationService() override;
 
   // Constructs an instance with the supplied delegate.
   static std::unique_ptr<ArcProvisionNotificationService> CreateForTesting(
-      content::BrowserContext* context,
+      ArcContext* context,
       std::unique_ptr<Delegate> delegate);
 
  private:
   // Constructs with the supplied delegate.
-  ArcProvisionNotificationService(content::BrowserContext* context,
+  ArcProvisionNotificationService(ArcContext* context,
                                   std::unique_ptr<Delegate> delegate);
 
   // ArcSessionManager::Observer:
@@ -64,7 +61,7 @@ class ArcProvisionNotificationService : public KeyedService,
   void OnArcSessionStopped(ArcStopReason stop_reason) override;
   void OnArcErrorShowRequested(ArcSupportHost::Error error) override;
 
-  content::BrowserContext* const context_;
+  ArcContext* const context_;
   std::unique_ptr<Delegate> delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcProvisionNotificationService);

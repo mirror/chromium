@@ -84,12 +84,12 @@ class VideoAcceleratorFactoryService : public mojom::VideoAcceleratorFactory {
 };
 
 // static
-GpuArcVideoServiceHost* GpuArcVideoServiceHost::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return GpuArcVideoServiceHostFactory::GetForBrowserContext(context);
+GpuArcVideoServiceHost* GpuArcVideoServiceHost::GetForContext(
+    ArcContext* context) {
+  return GpuArcVideoServiceHostFactory::GetForContext(context);
 }
 
-GpuArcVideoServiceHost::GpuArcVideoServiceHost(content::BrowserContext* context,
+GpuArcVideoServiceHost::GpuArcVideoServiceHost(ArcContext* context,
                                                ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service), binding_(this) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);

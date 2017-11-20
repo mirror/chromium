@@ -13,13 +13,10 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // This class handles OBB mount/unmount requests from Android.
 class ArcObbMounterBridge
@@ -29,11 +26,9 @@ class ArcObbMounterBridge
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcObbMounterBridge* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcObbMounterBridge* GetForContext(ArcContext* context);
 
-  ArcObbMounterBridge(content::BrowserContext* context,
-                      ArcBridgeService* bridge_service);
+  ArcObbMounterBridge(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcObbMounterBridge() override;
 
   // InstanceHolder<mojom::ObbMounterInstance>::Observer overrides:

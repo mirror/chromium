@@ -21,13 +21,10 @@ class FilePath;
 class SequencedTaskRunner;
 }  // namespace base
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // Returns true if the file path has a media extension supported by Android.
 bool HasAndroidSupportedMediaExtension(const base::FilePath& path);
@@ -44,10 +41,9 @@ class ArcDownloadsWatcherService
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcDownloadsWatcherService* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcDownloadsWatcherService* GetForContext(ArcContext* context);
 
-  ArcDownloadsWatcherService(content::BrowserContext* context,
+  ArcDownloadsWatcherService(ArcContext* context,
                              ArcBridgeService* bridge_service);
   ~ArcDownloadsWatcherService() override;
 
@@ -63,7 +59,7 @@ class ArcDownloadsWatcherService
 
   void OnDownloadsChanged(const std::vector<std::string>& paths);
 
-  content::BrowserContext* const context_;
+  ArcContext* const context_;
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
 
   std::unique_ptr<DownloadsWatcher> watcher_;

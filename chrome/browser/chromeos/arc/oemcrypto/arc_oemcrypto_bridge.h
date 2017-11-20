@@ -16,13 +16,10 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 class ArcOemCryptoBridge
     : public KeyedService,
@@ -31,11 +28,9 @@ class ArcOemCryptoBridge
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcOemCryptoBridge* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcOemCryptoBridge* GetForContext(ArcContext* context);
 
-  ArcOemCryptoBridge(content::BrowserContext* context,
-                     ArcBridgeService* bridge_service);
+  ArcOemCryptoBridge(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcOemCryptoBridge() override;
 
   // Overridden from InstanceHolder<mojom::OemCryptoInstance>::Observer:

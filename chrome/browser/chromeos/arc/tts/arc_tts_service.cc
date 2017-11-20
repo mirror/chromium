@@ -42,12 +42,11 @@ BrowserContextKeyedServiceFactory* ArcTtsService::GetFactory() {
 }
 
 // static
-ArcTtsService* ArcTtsService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcTtsServiceFactory::GetForBrowserContext(context);
+ArcTtsService* ArcTtsService::GetForContext(ArcContext* context) {
+  return ArcTtsServiceFactory::GetForContext(context);
 }
 
-ArcTtsService::ArcTtsService(content::BrowserContext* context,
+ArcTtsService::ArcTtsService(ArcContext* context,
                              ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service),
       binding_(this),

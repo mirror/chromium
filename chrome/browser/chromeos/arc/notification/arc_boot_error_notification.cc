@@ -38,15 +38,14 @@ const char kStoragePage[] = "storage";
 class LowDiskSpaceErrorNotificationDelegate
     : public message_center::NotificationDelegate {
  public:
-  explicit LowDiskSpaceErrorNotificationDelegate(
-      content::BrowserContext* context)
+  explicit LowDiskSpaceErrorNotificationDelegate(ArcContext* context)
       : context_(context) {}
 
   // message_center::NotificationDelegate
   void ButtonClick(int button_index) override {
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-    chrome::ShowSettingsSubPageForProfile(Profile::FromBrowserContext(context_),
-                                          kStoragePage);
+    chrome::ShowSettingsSubPageForProfile(
+        Profile::FromBrowserContext(context_->browser_context()), kStoragePage);
   }
 
  private:
@@ -55,11 +54,11 @@ class LowDiskSpaceErrorNotificationDelegate
   // Passed from ArcBootErrorNotification, so owned by ProfileManager.
   // Thus, touching this on UI thread while the message loop is running
   // should be safe.
-  content::BrowserContext* const context_;
+  ArcContext* const context_;
   DISALLOW_COPY_AND_ASSIGN(LowDiskSpaceErrorNotificationDelegate);
 };
 
-void ShowLowDiskSpaceErrorNotification(content::BrowserContext* context) {
+void ShowLowDiskSpaceErrorNotification(ArcContext* context) {
   // We suppress the low-disk notification when there are multiple users on an
   // enterprise managed device. crbug.com/656788.
   if (g_browser_process->platform_part()
@@ -137,13 +136,13 @@ class ArcBootErrorNotificationFactory
 }  // namespace
 
 // static
-ArcBootErrorNotification* ArcBootErrorNotification::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcBootErrorNotificationFactory::GetForBrowserContext(context);
+ArcBootErrorNotification* ArcBootErrorNotification::GetForContext(
+    ArcContext* context) {
+  return ArcBootErrorNotificationFactory::GetForContext(context);
 }
 
 ArcBootErrorNotification::ArcBootErrorNotification(
-    content::BrowserContext* context,
+    ArcContext* context,
     ArcBridgeService* bridge_service)
     : context_(context) {
   ArcSessionManager::Get()->AddObserver(this);

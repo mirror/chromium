@@ -11,13 +11,10 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // This class takes requests for accessing the VideoAcceleratorFactory, from
 // which video decode (or encode) accelerators could be created.
@@ -33,11 +30,9 @@ class GpuArcVideoServiceHost
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static GpuArcVideoServiceHost* GetForBrowserContext(
-      content::BrowserContext* context);
+  static GpuArcVideoServiceHost* GetForContext(ArcContext* context);
 
-  GpuArcVideoServiceHost(content::BrowserContext* context,
-                         ArcBridgeService* bridge_service);
+  GpuArcVideoServiceHost(ArcContext* context, ArcBridgeService* bridge_service);
   ~GpuArcVideoServiceHost() override;
 
   // arc::InstanceHolder<mojom::VideoInstance>::Observer implementation.

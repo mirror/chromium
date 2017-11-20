@@ -15,11 +15,9 @@
 #include "components/arc/intent_helper/arc_intent_helper_bridge.h"
 #include "url/gurl.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
+
+class ArcContext;
 
 // This struct describes the UI presentation of a single link handler.
 struct LinkHandlerInfo {
@@ -38,9 +36,8 @@ class LinkHandlerModel {
   };
 
   // Creates and inits a model. Will return null if Init() fails.
-  static std::unique_ptr<LinkHandlerModel> Create(
-      content::BrowserContext* context,
-      const GURL& link_url);
+  static std::unique_ptr<LinkHandlerModel> Create(ArcContext* context,
+                                                  const GURL& link_url);
 
   ~LinkHandlerModel();
 
@@ -56,7 +53,7 @@ class LinkHandlerModel {
   // Starts retrieving handler information for the |url| and returns true.
   // Returns false when the information cannot be retrieved. In that case,
   // the caller should delete |this| object.
-  bool Init(content::BrowserContext* context, const GURL& url);
+  bool Init(ArcContext* context, const GURL& url);
 
   void OnUrlHandlerList(std::vector<mojom::IntentHandlerInfoPtr> handlers);
   void NotifyObserver(
@@ -68,7 +65,7 @@ class LinkHandlerModel {
   // Otherwise, returns the original |url| as-us.
   static GURL RewriteUrlFromQueryIfAvailable(const GURL& url);
 
-  content::BrowserContext* context_ = nullptr;
+  ArcContext* context_ = nullptr;
 
   GURL url_;
 

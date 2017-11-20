@@ -91,6 +91,7 @@
 #include "chromeos/settings/timezone_settings.h"
 #include "chromeos/timezone/timezone_provider.h"
 #include "components/arc/arc_bridge_service.h"
+#include "components/arc/arc_context.h"
 #include "components/arc/arc_prefs.h"
 #include "components/arc/arc_util.h"
 #include "components/crash/content/app/breakpad_linux.h"
@@ -661,9 +662,9 @@ void WizardController::ShowWaitForContainerReadyScreen() {
   DCHECK(is_in_session_oobe_);
   // At this point we could make sure the value prop flow has been accepted.
   // Set the value prop pref as accepted in framework service.
-  auto* service =
-      arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(
-          ProfileManager::GetActiveUserProfile());
+  auto* service = arc::ArcVoiceInteractionFrameworkService::GetForContext(
+      arc::ArcContext::FromBrowserContext(
+          ProfileManager::GetActiveUserProfile()));
   if (service)
     service->SetVoiceInteractionSetupCompleted();
 
@@ -1646,9 +1647,9 @@ bool WizardController::ShouldShowVoiceInteractionValueProp() const {
 }
 
 void WizardController::StartVoiceInteractionSetupWizard() {
-  auto* service =
-      arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(
-          ProfileManager::GetActiveUserProfile());
+  auto* service = arc::ArcVoiceInteractionFrameworkService::GetForContext(
+      arc::ArcContext::FromBrowserContext(
+          ProfileManager::GetActiveUserProfile()));
   if (service)
     service->StartVoiceInteractionSetupWizard();
 }

@@ -116,12 +116,11 @@ class ArcPowerBridge::WakeLockRequestor {
 };
 
 // static
-ArcPowerBridge* ArcPowerBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcPowerBridgeFactory::GetForBrowserContext(context);
+ArcPowerBridge* ArcPowerBridge::GetForContext(ArcContext* context) {
+  return ArcPowerBridgeFactory::GetForContext(context);
 }
 
-ArcPowerBridge::ArcPowerBridge(content::BrowserContext* context,
+ArcPowerBridge::ArcPowerBridge(ArcContext* context,
                                ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service),
       binding_(this),

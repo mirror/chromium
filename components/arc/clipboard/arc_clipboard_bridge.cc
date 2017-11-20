@@ -142,12 +142,11 @@ bool DoesClipFitIntoInstance(const mojom::ClipDataPtr& clip_data) {
 }  // namespace
 
 // static
-ArcClipboardBridge* ArcClipboardBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcClipboardBridgeFactory::GetForBrowserContext(context);
+ArcClipboardBridge* ArcClipboardBridge::GetForContext(ArcContext* context) {
+  return ArcClipboardBridgeFactory::GetForContext(context);
 }
 
-ArcClipboardBridge::ArcClipboardBridge(content::BrowserContext* context,
+ArcClipboardBridge::ArcClipboardBridge(ArcContext* context,
                                        ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service),
       binding_(this),

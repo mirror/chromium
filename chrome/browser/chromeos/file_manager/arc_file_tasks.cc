@@ -18,6 +18,7 @@
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/common/extensions/api/file_manager_private.h"
 #include "components/arc/arc_bridge_service.h"
+#include "components/arc/arc_context.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/common/intent_helper.mojom.h"
 #include "components/arc/intent_helper/arc_intent_helper_bridge.h"
@@ -102,8 +103,8 @@ void OnArcHandlerList(
     std::vector<arc::mojom::IntentHandlerInfoPtr> handlers) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  auto* intent_helper_bridge =
-      arc::ArcIntentHelperBridge::GetForBrowserContext(profile);
+  auto* intent_helper_bridge = arc::ArcIntentHelperBridge::GetForContext(
+      arc::ArcContext::FromBrowserContext(profile));
   if (!intent_helper_bridge) {
     callback.Run(std::move(result_list));
     return;

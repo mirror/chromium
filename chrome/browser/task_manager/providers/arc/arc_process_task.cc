@@ -10,6 +10,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/arc/arc_bridge_service.h"
+#include "components/arc/arc_context.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/common/process.mojom.h"
 #include "components/arc/intent_helper/arc_intent_helper_bridge.h"
@@ -84,8 +85,9 @@ void ArcProcessTask::StartIconLoading() {
   // TaskManager is not tied to BrowserContext. Thus, we just use the
   // BrowserContext which is tied to ARC.
   auto* arc_service_manager = arc::ArcServiceManager::Get();
-  auto* intent_helper_bridge = arc::ArcIntentHelperBridge::GetForBrowserContext(
-      arc_service_manager->browser_context());
+  auto* intent_helper_bridge = arc::ArcIntentHelperBridge::GetForContext(
+      arc::ArcContext::FromBrowserContext(
+          arc_service_manager->context()->browser_context()));
   arc::ArcIntentHelperBridge::GetResult result =
       arc::ArcIntentHelperBridge::GetResult::FAILED_ARC_NOT_READY;
   if (intent_helper_bridge) {

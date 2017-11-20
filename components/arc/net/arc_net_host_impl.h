@@ -23,13 +23,10 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // Private implementation of ArcNetHost.
 class ArcNetHostImpl : public KeyedService,
@@ -40,11 +37,10 @@ class ArcNetHostImpl : public KeyedService,
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcNetHostImpl* GetForBrowserContext(content::BrowserContext* context);
+  static ArcNetHostImpl* GetForContext(ArcContext* context);
 
   // The constructor will register an Observer with ArcBridgeService.
-  ArcNetHostImpl(content::BrowserContext* context,
-                 ArcBridgeService* arc_bridge_service);
+  ArcNetHostImpl(ArcContext* context, ArcBridgeService* arc_bridge_service);
   ~ArcNetHostImpl() override;
 
   // ARC -> Chrome calls:

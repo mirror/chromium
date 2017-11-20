@@ -8,24 +8,19 @@
 #include "base/macros.h"
 #include "components/keyed_service/core/keyed_service.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // Mounts/unmounts ARC file systems.
 class ArcFileSystemMounter : public KeyedService {
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcFileSystemMounter* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcFileSystemMounter* GetForContext(ArcContext* context);
 
-  ArcFileSystemMounter(content::BrowserContext* context,
-                       ArcBridgeService* bridge_service);
+  ArcFileSystemMounter(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcFileSystemMounter() override;
 
  private:

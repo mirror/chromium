@@ -19,13 +19,10 @@
 #include "components/signin/core/account_id/account_id.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 class ArcInstanceThrottle;
 
 // Receives events regarding ARC boot phase from both ARC and Chrome, and do
@@ -48,8 +45,7 @@ class ArcBootPhaseMonitorBridge
 
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcBootPhaseMonitorBridge* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcBootPhaseMonitorBridge* GetForContext(ArcContext* context);
 
   // Records Arc.FirstAppLaunchDelay.TimeDelta UMA in the following way:
   //
@@ -60,9 +56,9 @@ class ArcBootPhaseMonitorBridge
   //
   // This function must be called every time when Chrome browser tries to launch
   // an ARC app.
-  static void RecordFirstAppLaunchDelayUMA(content::BrowserContext* context);
+  static void RecordFirstAppLaunchDelayUMA(ArcContext* context);
 
-  ArcBootPhaseMonitorBridge(content::BrowserContext* context,
+  ArcBootPhaseMonitorBridge(ArcContext* context,
                             ArcBridgeService* bridge_service);
   ~ArcBootPhaseMonitorBridge() override;
 
@@ -100,7 +96,7 @@ class ArcBootPhaseMonitorBridge
 
   THREAD_CHECKER(thread_checker_);
 
-  content::BrowserContext* const context_;
+  ArcContext* const context_;
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
   const AccountId account_id_;
   mojo::Binding<mojom::BootPhaseMonitorHost> binding_;

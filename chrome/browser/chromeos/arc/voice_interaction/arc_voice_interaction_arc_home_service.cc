@@ -27,6 +27,7 @@
 #include "chromeos/chromeos_switches.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
+#include "components/arc/arc_context.h"
 #include "components/arc/arc_prefs.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/instance_holder.h"
@@ -145,14 +146,12 @@ const char ArcVoiceInteractionArcHomeService::kAssistantPackageName[] =
 
 // static
 ArcVoiceInteractionArcHomeService*
-ArcVoiceInteractionArcHomeService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcVoiceInteractionArcHomeServiceFactory::GetForBrowserContext(
-      context);
+ArcVoiceInteractionArcHomeService::GetForContext(ArcContext* context) {
+  return ArcVoiceInteractionArcHomeServiceFactory::GetForContext(context);
 }
 
 ArcVoiceInteractionArcHomeService::ArcVoiceInteractionArcHomeService(
-    content::BrowserContext* context,
+    ArcContext* context,
     ArcBridgeService* bridge_service)
     : context_(context),
       arc_bridge_service_(bridge_service),
@@ -215,7 +214,7 @@ void ArcVoiceInteractionArcHomeService::OnAssistantAppRequested() {
 
   ResetTimeouts();
 
-  ArcAppListPrefs::Get(context_)->AddObserver(this);
+  ArcAppListPrefs::Get(context_->browser_context())->AddObserver(this);
 
   assistant_started_timer_.Start(
       FROM_HERE, assistant_started_timeout_,
@@ -257,7 +256,8 @@ void ArcVoiceInteractionArcHomeService::OnTaskDestroyed(int32_t task_id) {
 }
 
 void ArcVoiceInteractionArcHomeService::ResetTimeouts() {
-  ArcAppListPrefs* arc_prefs = ArcAppListPrefs::Get(context_);
+  ArcAppListPrefs* arc_prefs =
+      ArcAppListPrefs::Get(context_->browser_context());
   if (arc_prefs)
     arc_prefs->RemoveObserver(this);
 
@@ -295,9 +295,10 @@ void ArcVoiceInteractionArcHomeService::GetVoiceInteractionStructure(
     GetVoiceInteractionStructureCallback callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  PrefService* prefs = Profile::FromBrowserContext(context_)->GetPrefs();
+  PrefService* prefs =
+      Profile::FromBrowserContext(context_->browser_context())->GetPrefs();
   auto* framework_service =
-      ArcVoiceInteractionFrameworkService::GetForBrowserContext(context_);
+      ArcVoiceInteractionFrameworkService::GetForContext(context_);
   if (!framework_service->ValidateTimeSinceUserInteraction() ||
       !prefs->GetBoolean(prefs::kVoiceInteractionEnabled) ||
       !prefs->GetBoolean(prefs::kVoiceInteractionContextEnabled)) {

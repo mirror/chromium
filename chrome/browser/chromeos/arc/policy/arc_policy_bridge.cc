@@ -308,12 +308,11 @@ class ArcPolicyBridgeFactory
 }  // namespace
 
 // static
-ArcPolicyBridge* ArcPolicyBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcPolicyBridgeFactory::GetForBrowserContext(context);
+ArcPolicyBridge* ArcPolicyBridge::GetForContext(ArcContext* context) {
+  return ArcPolicyBridgeFactory::GetForContext(context);
 }
 
-ArcPolicyBridge::ArcPolicyBridge(content::BrowserContext* context,
+ArcPolicyBridge::ArcPolicyBridge(ArcContext* context,
                                  ArcBridgeService* bridge_service)
     : context_(context),
       arc_bridge_service_(bridge_service),
@@ -323,7 +322,7 @@ ArcPolicyBridge::ArcPolicyBridge(content::BrowserContext* context,
   arc_bridge_service_->policy()->AddObserver(this);
 }
 
-ArcPolicyBridge::ArcPolicyBridge(content::BrowserContext* context,
+ArcPolicyBridge::ArcPolicyBridge(ArcContext* context,
                                  ArcBridgeService* bridge_service,
                                  policy::PolicyService* policy_service)
     : context_(context),
@@ -408,7 +407,8 @@ void ArcPolicyBridge::OnPolicyUpdated(const policy::PolicyNamespace& ns,
 
 void ArcPolicyBridge::InitializePolicyService() {
   auto* profile_policy_connector =
-      policy::ProfilePolicyConnectorFactory::GetForBrowserContext(context_);
+      policy::ProfilePolicyConnectorFactory::GetForBrowserContext(
+          context_->browser_context());
   policy_service_ = profile_policy_connector->policy_service();
   is_managed_ = profile_policy_connector->IsManaged();
 }
@@ -428,8 +428,9 @@ void ArcPolicyBridge::OnReportComplianceParseSuccess(
     std::unique_ptr<base::Value> parsed_json) {
   // Always returns "compliant".
   std::move(callback).Run(kPolicyCompliantJson);
-  Profile::FromBrowserContext(context_)->GetPrefs()->SetBoolean(
-      prefs::kArcPolicyComplianceReported, true);
+  Profile::FromBrowserContext(context_->browser_context())
+      ->GetPrefs()
+      ->SetBoolean(prefs::kArcPolicyComplianceReported, true);
 
   const base::DictionaryValue* dict = nullptr;
   if (parsed_json->GetAsDictionary(&dict))

@@ -20,13 +20,10 @@
 #include "net/cert/nss_cert_database.h"
 #include "net/cert/scoped_nss_types.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 class ArcCertStoreBridge
     : public KeyedService,
@@ -37,11 +34,9 @@ class ArcCertStoreBridge
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcCertStoreBridge* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcCertStoreBridge* GetForContext(ArcContext* context);
 
-  ArcCertStoreBridge(content::BrowserContext* context,
-                     ArcBridgeService* bridge_service);
+  ArcCertStoreBridge(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcCertStoreBridge() override;
 
   // InstanceHolder<mojom::CertStoreInstance>::Observer overrides.
@@ -77,7 +72,7 @@ class ArcCertStoreBridge
   void UpdateFromKeyPermissionsPolicy();
   void UpdateCertificates();
 
-  content::BrowserContext* const context_;
+  ArcContext* const context_;
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
   mojo::Binding<CertStoreHost> binding_;
   policy::PolicyService* policy_service_ = nullptr;

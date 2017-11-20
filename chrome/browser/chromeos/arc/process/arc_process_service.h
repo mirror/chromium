@@ -19,13 +19,10 @@
 #include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // A single global entry to get a list of ARC processes.
 //
@@ -55,14 +52,12 @@ class ArcProcessService
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcProcessService* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcProcessService* GetForContext(ArcContext* context);
 
   using RequestProcessListCallback =
       base::Callback<void(std::vector<ArcProcess>)>;
 
-  ArcProcessService(content::BrowserContext* context,
-                    ArcBridgeService* bridge_service);
+  ArcProcessService(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcProcessService() override;
 
   // Returns nullptr before the global instance is ready.

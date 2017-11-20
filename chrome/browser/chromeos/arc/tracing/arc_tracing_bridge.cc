@@ -52,12 +52,11 @@ struct ArcTracingBridge::Category {
 };
 
 // static
-ArcTracingBridge* ArcTracingBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcTracingBridgeFactory::GetForBrowserContext(context);
+ArcTracingBridge* ArcTracingBridge::GetForContext(ArcContext* context) {
+  return ArcTracingBridgeFactory::GetForContext(context);
 }
 
-ArcTracingBridge::ArcTracingBridge(content::BrowserContext* context,
+ArcTracingBridge::ArcTracingBridge(ArcContext* context,
                                    ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service), weak_ptr_factory_(this) {
   arc_bridge_service_->tracing()->AddObserver(this);

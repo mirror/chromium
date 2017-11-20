@@ -23,6 +23,7 @@ class BrowserContext;
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 class ArcNotificationItem;
 
 class ArcNotificationManager
@@ -32,8 +33,7 @@ class ArcNotificationManager
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcNotificationManager* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcNotificationManager* GetForContext(ArcContext* context);
 
   // Returns a created instance for testing.
   static std::unique_ptr<ArcNotificationManager> CreateForTesting(
@@ -46,9 +46,8 @@ class ArcNotificationManager
   static void SetCustomNotificationViewFactory();
 
   // TODO(hidehiko): Make ctor private to enforce all service users should
-  // use GetForBrowserContext().
-  ArcNotificationManager(content::BrowserContext* context,
-                         ArcBridgeService* bridge_service);
+  // use GetForContext().
+  ArcNotificationManager(ArcContext* context, ArcBridgeService* bridge_service);
 
   ~ArcNotificationManager() override;
 

@@ -172,12 +172,11 @@ void ArcWallpaperService::SetDecodeRequestSenderForTesting(
 }
 
 // static
-ArcWallpaperService* ArcWallpaperService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcWallpaperServiceFactory::GetForBrowserContext(context);
+ArcWallpaperService* ArcWallpaperService::GetForContext(ArcContext* context) {
+  return ArcWallpaperServiceFactory::GetForContext(context);
 }
 
-ArcWallpaperService::ArcWallpaperService(content::BrowserContext* context,
+ArcWallpaperService::ArcWallpaperService(ArcContext* context,
                                          ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service),
       binding_(this),

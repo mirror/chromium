@@ -17,13 +17,10 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "content/public/browser/arc_tracing_agent.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // This class provides the interface to trigger tracing in the container.
 class ArcTracingBridge
@@ -33,11 +30,9 @@ class ArcTracingBridge
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcTracingBridge* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcTracingBridge* GetForContext(ArcContext* context);
 
-  ArcTracingBridge(content::BrowserContext* context,
-                   ArcBridgeService* bridge_service);
+  ArcTracingBridge(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcTracingBridge() override;
 
   // InstanceHolder<mojom::TracingInstance>::Observer overrides:

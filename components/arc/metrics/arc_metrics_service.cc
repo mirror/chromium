@@ -68,12 +68,11 @@ class ArcMetricsServiceFactory
 }  // namespace
 
 // static
-ArcMetricsService* ArcMetricsService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcMetricsServiceFactory::GetForBrowserContext(context);
+ArcMetricsService* ArcMetricsService::GetForContext(ArcContext* context) {
+  return ArcMetricsServiceFactory::GetForContext(context);
 }
 
-ArcMetricsService::ArcMetricsService(content::BrowserContext* context,
+ArcMetricsService::ArcMetricsService(ArcContext* context,
                                      ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service),
       binding_(this),

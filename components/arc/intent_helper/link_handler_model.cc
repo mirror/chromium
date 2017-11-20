@@ -50,7 +50,7 @@ bool GetQueryValue(const GURL& url,
 
 // static
 std::unique_ptr<LinkHandlerModel> LinkHandlerModel::Create(
-    content::BrowserContext* context,
+    ArcContext* context,
     const GURL& link_url) {
   auto impl = base::WrapUnique(new LinkHandlerModel());
   if (!impl->Init(context, link_url))
@@ -79,7 +79,7 @@ void LinkHandlerModel::OpenLinkWithHandler(uint32_t handler_id) {
 
 LinkHandlerModel::LinkHandlerModel() = default;
 
-bool LinkHandlerModel::Init(content::BrowserContext* context, const GURL& url) {
+bool LinkHandlerModel::Init(ArcContext* context, const GURL& url) {
   auto* arc_service_manager = ArcServiceManager::Get();
   if (!arc_service_manager)
     return false;
@@ -108,8 +108,7 @@ void LinkHandlerModel::OnUrlHandlerList(
   handlers_ = ArcIntentHelperBridge::FilterOutIntentHelper(std::move(handlers));
 
   bool icon_info_notified = false;
-  auto* intent_helper_bridge =
-      ArcIntentHelperBridge::GetForBrowserContext(context_);
+  auto* intent_helper_bridge = ArcIntentHelperBridge::GetForContext(context_);
   if (intent_helper_bridge) {
     std::vector<ArcIntentHelperBridge::ActivityName> activities;
     for (size_t i = 0; i < handlers_.size(); ++i) {

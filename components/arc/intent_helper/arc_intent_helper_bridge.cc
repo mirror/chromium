@@ -105,9 +105,9 @@ const char ArcIntentHelperBridge::kArcIntentHelperPackageName[] =
     "org.chromium.arc.intent_helper";
 
 // static
-ArcIntentHelperBridge* ArcIntentHelperBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcIntentHelperBridgeFactory::GetForBrowserContext(context);
+ArcIntentHelperBridge* ArcIntentHelperBridge::GetForContext(
+    ArcContext* context) {
+  return ArcIntentHelperBridgeFactory::GetForContext(context);
 }
 
 // static
@@ -121,7 +121,7 @@ std::string ArcIntentHelperBridge::AppendStringToIntentHelperPackageName(
   return base::JoinString({kArcIntentHelperPackageName, to_append}, ".");
 }
 
-ArcIntentHelperBridge::ArcIntentHelperBridge(content::BrowserContext* context,
+ArcIntentHelperBridge::ArcIntentHelperBridge(ArcContext* context,
                                              ArcBridgeService* bridge_service)
     : context_(context),
       arc_bridge_service_(bridge_service),
@@ -235,7 +235,7 @@ void ArcIntentHelperBridge::SetWallpaperDeprecated(
 }
 
 void ArcIntentHelperBridge::OpenVolumeControl() {
-  auto* audio = ArcAudioBridge::GetForBrowserContext(context_);
+  auto* audio = ArcAudioBridge::GetForContext(context_);
   DCHECK(audio);
   audio->ShowVolumeControls();
 }

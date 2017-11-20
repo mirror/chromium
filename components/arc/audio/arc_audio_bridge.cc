@@ -38,12 +38,11 @@ class ArcAudioBridgeFactory
 }  // namespace
 
 // static
-ArcAudioBridge* ArcAudioBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcAudioBridgeFactory::GetForBrowserContext(context);
+ArcAudioBridge* ArcAudioBridge::GetForContext(ArcContext* context) {
+  return ArcAudioBridgeFactory::GetForContext(context);
 }
 
-ArcAudioBridge::ArcAudioBridge(content::BrowserContext* context,
+ArcAudioBridge::ArcAudioBridge(ArcContext* context,
                                ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service), binding_(this) {
   arc_bridge_service_->audio()->AddObserver(this);

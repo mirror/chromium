@@ -29,13 +29,10 @@ namespace chromeos {
 class RecentArcMediaSourceTest;
 }  // namespace chromeos
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // Runs ARC file system operations.
 //
@@ -95,21 +92,20 @@ class ArcFileSystemOperationRunner
 
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcFileSystemOperationRunner* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcFileSystemOperationRunner* GetForContext(ArcContext* context);
 
   // Creates an instance suitable for unit tests.
   // This instance will run all operations immediately without deferring by
   // default. Also, deferring can be enabled/disabled by calling
   // SetShouldDefer() from friend classes.
   static std::unique_ptr<ArcFileSystemOperationRunner> CreateForTesting(
-      content::BrowserContext* context,
+      ArcContext* context,
       ArcBridgeService* bridge_service);
 
   // Returns Factory instance for ArcFileSystemOperationRunner.
   static BrowserContextKeyedServiceFactory* GetFactory();
 
-  ArcFileSystemOperationRunner(content::BrowserContext* context,
+  ArcFileSystemOperationRunner(ArcContext* context,
                                ArcBridgeService* bridge_service);
   ~ArcFileSystemOperationRunner() override;
 
@@ -156,7 +152,7 @@ class ArcFileSystemOperationRunner
   friend class ArcFileSystemOperationRunnerTest;
   friend class chromeos::RecentArcMediaSourceTest;
 
-  ArcFileSystemOperationRunner(content::BrowserContext* context,
+  ArcFileSystemOperationRunner(ArcContext* context,
                                ArcBridgeService* bridge_service,
                                bool set_should_defer_by_events);
 
@@ -173,7 +169,7 @@ class ArcFileSystemOperationRunner
   void SetShouldDefer(bool should_defer);
 
   // Maybe nullptr in unittests.
-  content::BrowserContext* const context_;
+  ArcContext* const context_;
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager
 
   // Indicates if this instance should enable/disable deferring by events.

@@ -40,12 +40,11 @@ class ArcLockScreenBridgeFactory
 }  // namespace
 
 // static
-ArcLockScreenBridge* ArcLockScreenBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcLockScreenBridgeFactory::GetForBrowserContext(context);
+ArcLockScreenBridge* ArcLockScreenBridge::GetForContext(ArcContext* context) {
+  return ArcLockScreenBridgeFactory::GetForContext(context);
 }
 
-ArcLockScreenBridge::ArcLockScreenBridge(content::BrowserContext* context,
+ArcLockScreenBridge::ArcLockScreenBridge(ArcContext* context,
                                          ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service) {
   arc_bridge_service_->lock_screen()->AddObserver(this);

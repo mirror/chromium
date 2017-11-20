@@ -37,12 +37,11 @@ class ArcStorageManagerFactory
 }  // namespace
 
 // static
-ArcStorageManager* ArcStorageManager::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcStorageManagerFactory::GetForBrowserContext(context);
+ArcStorageManager* ArcStorageManager::GetForContext(ArcContext* context) {
+  return ArcStorageManagerFactory::GetForContext(context);
 }
 
-ArcStorageManager::ArcStorageManager(content::BrowserContext* context,
+ArcStorageManager::ArcStorageManager(ArcContext* context,
                                      ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service) {}
 

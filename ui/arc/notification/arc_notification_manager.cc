@@ -55,9 +55,9 @@ class ArcNotificationManagerFactory
 }  // namespace
 
 // static
-ArcNotificationManager* ArcNotificationManager::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcNotificationManagerFactory::GetForBrowserContext(context);
+ArcNotificationManager* ArcNotificationManager::GetForContext(
+    ArcContext* context) {
+  return ArcNotificationManagerFactory::GetForContext(context);
 }
 
 // static
@@ -77,7 +77,7 @@ void ArcNotificationManager::SetCustomNotificationViewFactory() {
       base::Bind(&CreateCustomMessageView));
 }
 
-ArcNotificationManager::ArcNotificationManager(content::BrowserContext* context,
+ArcNotificationManager::ArcNotificationManager(ArcContext* context,
                                                ArcBridgeService* bridge_service)
     : ArcNotificationManager(bridge_service,
                              ArcServiceManager::Get()->account_id(),

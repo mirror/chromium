@@ -16,13 +16,10 @@
 class BrowserContextKeyedServiceFactory;
 class TtsController;
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // Provides text to speech services and events to Chrome OS via Android's text
 // to speech API.
@@ -35,10 +32,9 @@ class ArcTtsService : public KeyedService,
 
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcTtsService* GetForBrowserContext(content::BrowserContext* context);
+  static ArcTtsService* GetForContext(ArcContext* context);
 
-  ArcTtsService(content::BrowserContext* context,
-                ArcBridgeService* bridge_service);
+  ArcTtsService(ArcContext* context, ArcBridgeService* bridge_service);
   ~ArcTtsService() override;
 
   // InstanceHolder<mojom::TtsInstance>::Observer overrides:

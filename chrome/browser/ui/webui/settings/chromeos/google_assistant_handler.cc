@@ -10,6 +10,7 @@
 #include "base/values.h"
 #include "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h"
 #include "chrome/browser/profiles/profile.h"
+#include "components/arc/arc_context.h"
 #include "components/arc/arc_service_manager.h"
 #include "ui/gfx/geometry/rect.h"
 
@@ -50,8 +51,8 @@ void GoogleAssistantHandler::HandleSetGoogleAssistantEnabled(
   bool enabled;
   CHECK(args->GetBoolean(0, &enabled));
 
-  auto* service =
-      arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(profile_);
+  auto* service = arc::ArcVoiceInteractionFrameworkService::GetForContext(
+      arc::ArcContext::FromBrowserContext(profile_));
   if (service)
     service->SetVoiceInteractionEnabled(enabled, base::BindOnce([](bool) {}));
 }
@@ -62,24 +63,24 @@ void GoogleAssistantHandler::HandleSetGoogleAssistantContextEnabled(
   bool enabled;
   CHECK(args->GetBoolean(0, &enabled));
 
-  auto* service =
-      arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(profile_);
+  auto* service = arc::ArcVoiceInteractionFrameworkService::GetForContext(
+      arc::ArcContext::FromBrowserContext(profile_));
   if (service)
     service->SetVoiceInteractionContextEnabled(enabled);
 }
 
 void GoogleAssistantHandler::HandleShowGoogleAssistantSettings(
     const base::ListValue* args) {
-  auto* service =
-      arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(profile_);
+  auto* service = arc::ArcVoiceInteractionFrameworkService::GetForContext(
+      arc::ArcContext::FromBrowserContext(profile_));
   if (service)
     service->ShowVoiceInteractionSettings();
 }
 
 void GoogleAssistantHandler::HandleTurnOnGoogleAssistant(
     const base::ListValue* args) {
-  auto* service =
-      arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(profile_);
+  auto* service = arc::ArcVoiceInteractionFrameworkService::GetForContext(
+      arc::ArcContext::FromBrowserContext(profile_));
   if (service)
     service->StartSessionFromUserInteraction(gfx::Rect());
 }

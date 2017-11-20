@@ -16,10 +16,6 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "ui/accessibility/ax_tree_update.h"
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace ui {
 struct AXSnapshotNodeAndroid;
 }  // ui
@@ -27,6 +23,7 @@ struct AXSnapshotNodeAndroid;
 namespace arc {
 
 class ArcBridgeService;
+class ArcContext;
 
 // ArcVoiceInteractionArcHomeService provides view hierarchy to to ARC to be
 // used by VoiceInteractionSession. This class lives on the UI thread.
@@ -39,12 +36,11 @@ class ArcVoiceInteractionArcHomeService
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcVoiceInteractionArcHomeService* GetForBrowserContext(
-      content::BrowserContext* context);
+  static ArcVoiceInteractionArcHomeService* GetForContext(ArcContext* context);
 
   static const char kAssistantPackageName[];
 
-  ArcVoiceInteractionArcHomeService(content::BrowserContext* context,
+  ArcVoiceInteractionArcHomeService(ArcContext* context,
                                     ArcBridgeService* bridge_service);
   ~ArcVoiceInteractionArcHomeService() override;
 
@@ -103,7 +99,7 @@ class ArcVoiceInteractionArcHomeService
   // Callback to handle timeout of waiting wizard to complete.
   void OnWizardCompleteTimeout();
 
-  content::BrowserContext* const context_;
+  ArcContext* const context_;
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
 
   int32_t assistant_task_id_ = -1;

@@ -216,10 +216,8 @@ class ArcVoiceInteractionFrameworkServiceFactory
 
 // static
 ArcVoiceInteractionFrameworkService*
-ArcVoiceInteractionFrameworkService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcVoiceInteractionFrameworkServiceFactory::GetForBrowserContext(
-      context);
+ArcVoiceInteractionFrameworkService::GetForContext(ArcContext* context) {
+  return ArcVoiceInteractionFrameworkServiceFactory::GetForContext(context);
 }
 
 KeyedServiceBaseFactory* ArcVoiceInteractionFrameworkService::GetFactory() {
@@ -227,7 +225,7 @@ KeyedServiceBaseFactory* ArcVoiceInteractionFrameworkService::GetFactory() {
 }
 
 ArcVoiceInteractionFrameworkService::ArcVoiceInteractionFrameworkService(
-    content::BrowserContext* context,
+    ArcContext* context,
     ArcBridgeService* bridge_service)
     : context_(context),
       arc_bridge_service_(bridge_service),
@@ -314,7 +312,8 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionState(
   // voice interaction flags. VoiceInteractionEnabled is locked at true in
   // Android side so we don't need to synchronize it here.
   if (state_ == ash::mojom::VoiceInteractionState::NOT_READY) {
-    PrefService* prefs = Profile::FromBrowserContext(context_)->GetPrefs();
+    PrefService* prefs =
+        Profile::FromBrowserContext(context_->browser_context())->GetPrefs();
     bool value_prop_accepted =
         prefs->GetBoolean(prefs::kArcVoiceInteractionValuePropAccepted);
 
@@ -377,7 +376,8 @@ void ArcVoiceInteractionFrameworkService::OnArcPlayStoreEnabledChanged(
     bool enabled) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   voice_interaction_controller_client_->NotifyFeatureAllowed(
-      IsAssistantAllowedForProfile(Profile::FromBrowserContext(context_)));
+      IsAssistantAllowedForProfile(
+          Profile::FromBrowserContext(context_->browser_context())));
 
   if (enabled)
     return;
@@ -395,7 +395,7 @@ void ArcVoiceInteractionFrameworkService::OnSessionStateChanged() {
   if (session_state != session_manager::SessionState::ACTIVE)
     return;
 
-  Profile* profile = Profile::FromBrowserContext(context_);
+  Profile* profile = Profile::FromBrowserContext(context_->browser_context());
   PrefService* prefs = profile->GetPrefs();
   bool enabled = prefs->GetBoolean(prefs::kVoiceInteractionEnabled);
   voice_interaction_controller_client_->NotifySettingsEnabled(enabled);
@@ -475,7 +475,8 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionEnabled(
 
   voice_interaction_controller_client_->NotifySettingsEnabled(enable);
 
-  PrefService* prefs = Profile::FromBrowserContext(context_)->GetPrefs();
+  PrefService* prefs =
+      Profile::FromBrowserContext(context_->browser_context())->GetPrefs();
 
   prefs->SetBoolean(prefs::kVoiceInteractionEnabled, enable);
   if (!enable)
@@ -499,7 +500,8 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionContextEnabled(
 
   voice_interaction_controller_client_->NotifyContextEnabled(enable);
 
-  PrefService* prefs = Profile::FromBrowserContext(context_)->GetPrefs();
+  PrefService* prefs =
+      Profile::FromBrowserContext(context_->browser_context())->GetPrefs();
   prefs->SetBoolean(prefs::kVoiceInteractionContextEnabled, enable);
 
   mojom::VoiceInteractionFrameworkInstance* framework_instance =
@@ -601,7 +603,8 @@ void ArcVoiceInteractionFrameworkService::StartVoiceInteractionOobe() {
 bool ArcVoiceInteractionFrameworkService::InitiateUserInteraction(
     bool is_toggle) {
   VLOG(1) << "Start voice interaction.";
-  PrefService* prefs = Profile::FromBrowserContext(context_)->GetPrefs();
+  PrefService* prefs =
+      Profile::FromBrowserContext(context_->browser_context())->GetPrefs();
   if (!prefs->GetBoolean(prefs::kArcVoiceInteractionValuePropAccepted)) {
     VLOG(1) << "Voice interaction feature not accepted.";
     should_start_runtime_flow_ = true;
@@ -636,7 +639,8 @@ bool ArcVoiceInteractionFrameworkService::InitiateUserInteraction(
 
 void ArcVoiceInteractionFrameworkService::
     SetVoiceInteractionSetupCompletedInternal(bool completed) {
-  PrefService* prefs = Profile::FromBrowserContext(context_)->GetPrefs();
+  PrefService* prefs =
+      Profile::FromBrowserContext(context_->browser_context())->GetPrefs();
   prefs->SetBoolean(prefs::kArcVoiceInteractionValuePropAccepted, completed);
 
   voice_interaction_controller_client_->NotifySetupCompleted(completed);

@@ -73,13 +73,13 @@ class ArcCrashCollectorBridgeFactory
 }  // namespace
 
 // static
-ArcCrashCollectorBridge* ArcCrashCollectorBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcCrashCollectorBridgeFactory::GetForBrowserContext(context);
+ArcCrashCollectorBridge* ArcCrashCollectorBridge::GetForContext(
+    ArcContext* context) {
+  return ArcCrashCollectorBridgeFactory::GetForContext(context);
 }
 
 ArcCrashCollectorBridge::ArcCrashCollectorBridge(
-    content::BrowserContext* context,
+    ArcContext* context,
     ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service), binding_(this) {
   arc_bridge_service_->crash_collector()->AddObserver(this);

@@ -299,9 +299,8 @@ class ArcBluetoothBridgeFactory
 }  // namespace
 
 // static
-ArcBluetoothBridge* ArcBluetoothBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcBluetoothBridgeFactory::GetForBrowserContext(context);
+ArcBluetoothBridge* ArcBluetoothBridge::GetForContext(ArcContext* context) {
+  return ArcBluetoothBridgeFactory::GetForContext(context);
 }
 
 template <typename T>
@@ -371,7 +370,7 @@ class ArcBluetoothBridge::IntentHelperInstanceObserver
   DISALLOW_COPY_AND_ASSIGN(IntentHelperInstanceObserver);
 };
 
-ArcBluetoothBridge::ArcBluetoothBridge(content::BrowserContext* context,
+ArcBluetoothBridge::ArcBluetoothBridge(ArcContext* context,
                                        ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service), binding_(this), weak_factory_(this) {
   arc_bridge_service_->bluetooth()->AddObserver(this);
