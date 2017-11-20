@@ -1169,6 +1169,7 @@
                 "type": "object",
                 "properties": [
                     { "name": "securityState", "$ref": "SecurityState", "description": "Security state representing the severity of the factor being explained." },
+                    { "name": "title", "type": "string", "description": "Title describing the type of factor." },
                     { "name": "summary", "type": "string", "description": "Short phrase describing the type of factor." },
                     { "name": "description", "type": "string", "description": "Full text explanation of the factor." },
                     { "name": "mixedContentType", "$ref": "MixedContentType", "description": "The type of mixed content described by the explanation." },
