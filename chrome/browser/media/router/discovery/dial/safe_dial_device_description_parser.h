@@ -9,47 +9,61 @@
 #include <string>
 
 #include "base/callback.h"
-#include "base/macros.h"
-#include "base/memory/ref_counted.h"
 #include "base/optional.h"
-#include "base/threading/thread_checker.h"
-#include "chrome/common/media_router/mojo/dial_device_description_parser.mojom.h"
-#include "content/public/browser/utility_process_mojo_client.h"
+#include "base/values.h"
+#include "chrome/browser/media/router/discovery/dial/parsed_dial_device_description.h"
+
+class GURL;
+
+namespace service_manager {
+class Connector;
+}
 
 namespace media_router {
 
-// SafeDialDeviceDescriptionParser parses the given device description XML file
-// safely via a utility process. This class runs on IO thread.
-class SafeDialDeviceDescriptionParser {
- public:
-  // Callback function to be invoked when utility process finishes parsing
-  // device description XML.
-  // |device_description|: device description object. Empty if parsing fails.
-  // |parsing_error|: error encountered while parsing DIAL device description.
-  using DeviceDescriptionCallback = base::Callback<void(
-      chrome::mojom::DialDeviceDescriptionPtr device_description,
-      chrome::mojom::DialParsingError parsing_error)>;
+enum class DialDeviceDescriptionParsingError {
+  kNone = 0,
+  kInvalidXml = 1,
+  kFailedToReadUdn = 2,
+  kFailedToReadFriendlyName = 3,
+  kFailedToReadModelName = 4,
+  kFailedToReadDeviceType = 5,
+  kMissingUniqueId = 6,
+  kMissingFriendlyName = 7,
+  kMissingAppUrl = 8,
+  kInvalidAppUrl = 9,
+  kUtilityProcessError = 10,
 
-  SafeDialDeviceDescriptionParser();
-  virtual ~SafeDialDeviceDescriptionParser();
-
-  // Start parsing device description XML file in utility process.
-  // TODO(crbug.com/702766): Add an enum type describing why utility process
-  // fails to parse device description xml.
-  virtual void Start(const std::string& xml_text,
-                     const DeviceDescriptionCallback& callback);
-
- private:
-  // Utility client used to send device description parsing task to the utility
-  // process.
-  std::unique_ptr<content::UtilityProcessMojoClient<
-      chrome::mojom::DialDeviceDescriptionParser>>
-      utility_process_mojo_client_;
-
-  base::ThreadChecker thread_checker_;
-
-  DISALLOW_COPY_AND_ASSIGN(SafeDialDeviceDescriptionParser);
+  // Note: Add entries only immediately above this line.
+  // TODO(https://crbug.com/742517): remove this enum value.
+  kTotalCount = 11,
 };
+
+// Callback function to be invoked when utility process finishes parsing some
+// device description XML.
+// |device_description|: device description object. Empty if parsing fails.
+// |parsing_error|: error encountered while parsing DIAL device description.
+using DialDeviceDescriptionParserCallback = base::OnceCallback<void(
+    const ParsedDialDeviceDescription& device_description,
+    DialDeviceDescriptionParsingError parsing_error)>;
+
+// Parses the device description in |xml_text| in a utility process.
+// If the parsing succeeds, invokes callback with a valid |device_description|,
+// otherwise invokes callback with an empty |device_description| and sets
+// parsing error to detail the failure.
+// |connector| should be a valid connector to the ServiceManager.
+// |app_url| is the app URL that should be set on the
+// ParsedDialDeviceDescription object passed in the callback.
+// |group_id| is an ID used to group parsing jobs into a shared utility process.
+// Spec for DIAL device description:
+// http://upnp.org/specs/arch/UPnP-arch-DeviceArchitecture-v2.0.pdf
+// Section 2.3 Device description.
+void SafelyParseDialDeviceDescription(
+    service_manager::Connector* connector,
+    const std::string& xml_text,
+    const GURL& app_url,
+    const std::string& group_id,
+    DialDeviceDescriptionParserCallback callback);
 
 }  // namespace media_router
 
