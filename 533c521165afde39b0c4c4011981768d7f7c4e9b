@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "755f3f1e_63db2aaa",
+        "filename": "ash/system/cast/tray_cast.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T19:26:28Z",
+      "side": 1,
+      "message": "nit: This fall-through is subtle. I would prefer to match order of the GOOGLE section and return \u0026kSystemMenuCastGenericIcon explicilty for CAST and EDUCATION.",
+      "revId": "533c521165afde39b0c4c4011981768d7f7c4e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce83096d_21038f40",
+        "filename": "ash/system/cast/tray_cast.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T19:26:28Z",
+      "side": 1,
+      "message": "Since we are passing a const\u0026 here, we should have SinkIconTypeToIcon return const\u0026 and avoid the extra * operator.",
+      "revId": "533c521165afde39b0c4c4011981768d7f7c4e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
