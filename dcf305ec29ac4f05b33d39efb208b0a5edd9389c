@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "645b0033_639989ae",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-11-20T19:54:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f4d79af_e036fdfe",
+      "range": {
+        "startLine": 129,
+        "startChar": 6,
+        "endLine": 129,
+        "endChar": 73
+      },
+      "revId": "dcf305ec29ac4f05b33d39efb208b0a5edd9389c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "244c11b7_212c2635",
         "filename": "third_party/metrics_proto/ukm/aggregate.proto",
         "patchSetId": 4
