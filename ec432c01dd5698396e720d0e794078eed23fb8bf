@@ -454,6 +454,30 @@
     },
     {
       "key": {
+        "uuid": "8d657fc7_00112db5",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-20T20:32:38Z",
+      "side": 1,
+      "message": "Per discussoin offline, the current into isn\u0027t enough to create a channel on-the-fly (there\u0027s no user-visible channel name) so we\u0027d need a new aidl API anyway to include channel. So therefore I think it\u0027s fine to just override it",
+      "parentUuid": "9e8833cc_386c7974",
+      "range": {
+        "startLine": 142,
+        "startChar": 27,
+        "endLine": 142,
+        "endChar": 28
+      },
+      "revId": "ec432c01dd5698396e720d0e794078eed23fb8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e924a682_3b254ad6",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
         "patchSetId": 3
