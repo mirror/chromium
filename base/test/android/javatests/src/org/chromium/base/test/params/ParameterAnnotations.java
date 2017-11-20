@@ -23,6 +23,15 @@ public class ParameterAnnotations {
     }
 
     /**
+     * Annotation for test methods to indicate associated {@link ParameterGenerator}.
+     */
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.METHOD)
+    public @interface UseParameterGenerator {
+        Class<? extends ParameterGenerator> value();
+    }
+
+    /**
      * Annotation for methods that should be called before running a test with method parameters.
      * @see MethodParameter
      * @see UseMethodParameterAfter
