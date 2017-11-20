@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4fd89d1e_371a13cb",
+        "filename": "content/browser/devtools/protocol/emulation_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1237241
+      },
+      "writtenOn": "2017-11-20T00:52:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d2f7c5b_d8fb491c",
+      "range": {
+        "startLine": 324,
+        "startChar": 0,
+        "endLine": 324,
+        "endChar": 6
+      },
+      "revId": "6c726219470540bcf0632315230fbb5f94f635d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cde0f01_804426d3",
         "filename": "content/browser/devtools/protocol/emulation_handler.cc",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "6c726219470540bcf0632315230fbb5f94f635d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be721a42_5a0ea867",
+        "filename": "content/browser/devtools/protocol/emulation_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1237241
+      },
+      "writtenOn": "2017-11-20T00:52:15Z",
+      "side": 1,
+      "message": "We do proxy time, but this will go away some day. This method is totally for emulation, it has no meaning in the Browser domain.",
+      "parentUuid": "1cde0f01_804426d3",
+      "revId": "6c726219470540bcf0632315230fbb5f94f635d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "b5469105_8d3eaad0",
+        "filename": "content/browser/devtools/protocol/emulation_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1237241
+      },
+      "writtenOn": "2017-11-20T00:52:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "018aef3e_6b197775",
+      "range": {
+        "startLine": 59,
+        "startChar": 53,
+        "endLine": 59,
+        "endChar": 59
+      },
+      "revId": "6c726219470540bcf0632315230fbb5f94f635d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbbafae1_d7eaedf9",
         "filename": "content/browser/devtools/protocol/emulation_handler.h",
         "patchSetId": 7
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "cb16b322_b8c76a08",
+        "filename": "content/browser/devtools/protocol/emulation_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1237241
+      },
+      "writtenOn": "2017-11-20T00:52:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbbafae1_d7eaedf9",
+      "range": {
+        "startLine": 80,
+        "startChar": 18,
+        "endLine": 80,
+        "endChar": 24
+      },
+      "revId": "6c726219470540bcf0632315230fbb5f94f635d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "101c391d_b0d7a472",
         "filename": "content/common/renderer.mojom",
         "patchSetId": 7
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "11ab1114_9bbd7217",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1237241
+      },
+      "writtenOn": "2017-11-20T00:52:15Z",
+      "side": 1,
+      "message": "Until V8 switches to ICU timezone handling this is not possible as we need to fiddle with the env of the browser process. Later yes, but I don\u0027t see any example of commands handled by the renderer.",
+      "parentUuid": "101c391d_b0d7a472",
+      "revId": "6c726219470540bcf0632315230fbb5f94f635d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "548c2a28_f60610fa",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 7
@@ -119,6 +227,24 @@
       "revId": "6c726219470540bcf0632315230fbb5f94f635d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e67ad4_7a4c7145",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1237241
+      },
+      "writtenOn": "2017-11-20T00:52:15Z",
+      "side": 1,
+      "message": "This is unrelated to virtual time. It just defines wallclock time, it doesn\u0027t control scheduling like virtual time.",
+      "parentUuid": "548c2a28_f60610fa",
+      "revId": "6c726219470540bcf0632315230fbb5f94f635d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
