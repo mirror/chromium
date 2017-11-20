@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbacc47d_e1a3b18c",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-20T17:49:20Z",
+      "side": 1,
+      "message": "Move one line up (before kNoScriptFlagLink) to maintain consistent order.",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 75
+      },
+      "revId": "4eb3a3e675cf023e2a4e28295bb4737afbda6fd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404d6282_98451fed",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-20T17:49:20Z",
+      "side": 1,
+      "message": "There are lot of variables here. One way to organize them to have a struct which holds variables related to one preview or flag. Then, have a vector of these structs. That would make it easier to add new previews in future. May be refactor in the next CL?",
+      "range": {
+        "startLine": 45,
+        "startChar": 11,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "4eb3a3e675cf023e2a4e28295bb4737afbda6fd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
