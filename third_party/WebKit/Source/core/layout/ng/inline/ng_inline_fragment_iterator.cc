@@ -43,4 +43,14 @@ void NGInlineFragmentIterator::CollectInlineFragments(
   }
 }
 
+NGPhysicalOffset
+NGInlineFragmentIterator::Result::FragementOffsetInContainerBox() const {
+  return fragment->Offset() + offset_to_container_box;
+}
+
+NGPhysicalOffsetRect
+NGInlineFragmentIterator::Result::FragementRectInContainerBox() const {
+  return {FragementOffsetInContainerBox(), fragment->Size()};
+}
+
 }  // namespace blink
