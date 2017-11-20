@@ -263,6 +263,8 @@ Value* Value::FindKey(StringPiece key) {
 }
 
 const Value* Value::FindKey(StringPiece key) const {
+  VLOG(1) << "FindKey: is dict: " << is_dict();
+  VLOG(1) << "FindKey: type: " << type();
   CHECK(is_dict());
   auto found = dict_.find(key);
   if (found == dict_.end())
@@ -271,11 +273,13 @@ const Value* Value::FindKey(StringPiece key) const {
 }
 
 Value* Value::FindKeyOfType(StringPiece key, Type type) {
+  VLOG(1) << "FindKeyOfType 1";
   return const_cast<Value*>(
       static_cast<const Value*>(this)->FindKeyOfType(key, type));
 }
 
 const Value* Value::FindKeyOfType(StringPiece key, Type type) const {
+  VLOG(1) << "FindKeyOfType 2: " << key;
   const Value* result = FindKey(key);
   if (!result || result->type() != type)
     return nullptr;
