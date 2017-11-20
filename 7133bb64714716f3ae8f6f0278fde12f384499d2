@@ -16,6 +16,24 @@
       "revId": "7133bb64714716f3ae8f6f0278fde12f384499d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8733c7d8_8f155a67",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-20T04:52:52Z",
+      "side": 1,
+      "message": "We can\u0027t. There are no such base class.\n\n- LayoutNGTableCell \u003d\u003e LayoutNGMixin\u003cLayoutTableCell\u003e \u003d\u003e LayoutTableCell \u003d\u003e LayoutBlockFlow\n- LayoutNGBlockFlow \u003d\u003e LayoutNGMixin\u003cLayoutBlockFLow\u003e \u003d\u003e LayoutBlockFlow\n- LayoutNGListItem \u003d\u003e LayoutNGBlockFlow\n\nNote: LayoutListItem \u003d\u003e LayoutBlockFlow",
+      "parentUuid": "4eba94fe_a4dc4d17",
+      "revId": "7133bb64714716f3ae8f6f0278fde12f384499d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
