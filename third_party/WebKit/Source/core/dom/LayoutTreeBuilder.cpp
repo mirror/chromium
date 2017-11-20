@@ -99,6 +99,7 @@ bool LayoutTreeBuilderForElement::ShouldCreateLayoutObject() const {
 }
 
 ComputedStyle& LayoutTreeBuilderForElement::Style() const {
+  style_ = node_->GetNonAttachedStyle();
   if (!style_)
     style_ = node_->StyleForLayoutObject();
   return *style_;
