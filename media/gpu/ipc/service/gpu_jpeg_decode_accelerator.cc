@@ -15,6 +15,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
 #include "media/base/bind_to_current_loop.h"
+#include "mojo/edk/embedder/embedder.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 #include "ui/gfx/geometry/size.h"
@@ -45,6 +46,9 @@ bool VerifyDecodeParams(const gfx::Size& coded_size,
   if (output_buffer_size <
       media::VideoFrame::AllocationSize(media::PIXEL_FORMAT_I420, coded_size)) {
     LOG(ERROR) << "output_buffer_size is too small: " << output_buffer_size;
+    LOG(ERROR) << "It needed : "
+               << media::VideoFrame::AllocationSize(media::PIXEL_FORMAT_I420,
+                                                    coded_size);
     return false;
   }
 
@@ -99,7 +103,7 @@ void GpuJpegDecodeAccelerator::Initialize(InitializeCallback callback) {
   }
 
   if (!accelerator) {
-    DLOG(ERROR) << "JPEG accelerator Initialize failed";
+    DLOG(ERROR) << "JPEG accelerator initialization failed";
     std::move(callback).Run(false);
     return;
   }
@@ -117,8 +121,8 @@ void GpuJpegDecodeAccelerator::Decode(
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   TRACE_EVENT0("jpeg", "GpuJpegDecodeAccelerator::Decode");
 
-  DCHECK(!decode_cb_);
-  decode_cb_ = std::move(callback);
+  DCHECK_EQ(decode_cb_map_.count(input_buffer.id()), 0u);
+  decode_cb_map_[input_buffer.id()] = std::move(callback);
 
   if (!VerifyDecodeParams(coded_size, &output_handle, output_buffer_size)) {
     NotifyDecodeStatus(input_buffer.id(),
@@ -166,6 +170,46 @@ void GpuJpegDecodeAccelerator::Decode(
   accelerator_->Decode(input_buffer, frame);
 }
 
+void GpuJpegDecodeAccelerator::DecodeWithFD(int32_t buffer_id,
+                                            mojo::ScopedHandle input_handle,
+                                            uint32_t input_buffer_size,
+                                            int32_t coded_size_width,
+                                            int32_t coded_size_height,
+                                            mojo::ScopedHandle output_handle,
+                                            uint32_t output_buffer_size,
+                                            DecodeWithFDCallback callback) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  base::PlatformFile input_fd;
+  base::PlatformFile output_fd;
+  MojoResult result;
+
+  result = mojo::UnwrapPlatformFile(std::move(input_handle), &input_fd);
+  DCHECK_EQ(MOJO_RESULT_OK, result);
+
+  result = mojo::UnwrapPlatformFile(std::move(output_handle), &output_fd);
+  DCHECK_EQ(MOJO_RESULT_OK, result);
+
+  base::UnguessableToken guid = base::UnguessableToken::Create();
+  base::SharedMemoryHandle input_shm_handle(
+      base::FileDescriptor(input_fd, true), 0u, guid);
+  base::SharedMemoryHandle output_shm_handle(
+      base::FileDescriptor(output_fd, true), 0u, guid);
+
+  media::BitstreamBuffer in_buffer(buffer_id, input_shm_handle,
+                                   input_buffer_size);
+  gfx::Size coded_size(coded_size_width, coded_size_height);
+  MojoHandle mojo_handle;
+
+  result = mojo::edk::CreateSharedBufferWrapper(
+      output_shm_handle, output_buffer_size, false, &mojo_handle);
+  DCHECK_EQ(MOJO_RESULT_OK, result);
+
+  Decode(in_buffer, coded_size,
+         mojo::ScopedSharedBufferHandle(
+             mojo::SharedBufferHandle(std::move(mojo_handle))),
+         output_buffer_size, std::move(callback));
+}
+
 void GpuJpegDecodeAccelerator::Uninitialize() {
   // TODO(c.padhi): see http://crbug.com/699255.
   NOTIMPLEMENTED();
@@ -175,8 +219,10 @@ void GpuJpegDecodeAccelerator::NotifyDecodeStatus(
     int32_t bitstream_buffer_id,
     JpegDecodeAccelerator::Error error) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  DCHECK(decode_cb_);
-  std::move(decode_cb_).Run(bitstream_buffer_id, error);
+  DCHECK_EQ(decode_cb_map_.count(bitstream_buffer_id), 1u);
+  DecodeCallback decode_cb = std::move(decode_cb_map_[bitstream_buffer_id]);
+  decode_cb_map_.erase(bitstream_buffer_id);
+  std::move(decode_cb).Run(bitstream_buffer_id, error);
 }
 
 }  // namespace media
