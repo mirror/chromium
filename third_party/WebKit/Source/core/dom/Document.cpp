@@ -658,7 +658,8 @@ Document::Document(const DocumentInit& initializer,
       would_load_reason_(WouldLoadReason::kInvalid),
       password_count_(0),
       logged_field_edit_(false),
-      engagement_level_(mojom::blink::EngagementLevel::NONE) {
+      engagement_level_(mojom::blink::EngagementLevel::NONE),
+      is_secure_context_(SecureContextState::kUnknown) {
   if (frame_) {
     DCHECK(frame_->GetPage());
     ProvideContextFeaturesToDocumentFrom(*this, *frame_->GetPage());
@@ -4269,55 +4270,6 @@ void Document::CloneDataFromDocument(const Document& other) {
   SetMimeType(other.contentType());
 }
 
-bool Document::IsSecureContextImpl() const {
-  // There may be exceptions for the secure context check defined for certain
-  // schemes. The exceptions are applied only to the special scheme and to
-  // sandboxed URLs from those origins, but *not* to any children.
-  //
-  // For example:
-  //   <iframe src="http://host">
-  //     <iframe src="scheme-has-exception://host"></iframe>
-  //     <iframe sandbox src="scheme-has-exception://host"></iframe>
-  //   </iframe>
-  // both inner iframes pass this check, assuming that the scheme
-  // "scheme-has-exception:" is granted an exception.
-  //
-  // However,
-  //   <iframe src="http://host">
-  //     <iframe sandbox src="http://host"></iframe>
-  //   </iframe>
-  // would fail the check (that is, sandbox does not grant an exception itself).
-  //
-  // Additionally, with
-  //   <iframe src="scheme-has-exception://host">
-  //     <iframe src="http://host"></iframe>
-  //     <iframe sandbox src="http://host"></iframe>
-  //   </iframe>
-  // both inner iframes would fail the check, even though the outermost iframe
-  // passes.
-  //
-  // In all cases, a frame must be potentially trustworthy in addition to
-  // having an exception listed in order for the exception to be granted.
-  if (!GetSecurityOrigin()->IsPotentiallyTrustworthy())
-    return false;
-
-  if (SchemeRegistry::SchemeShouldBypassSecureContextCheck(
-          GetSecurityOrigin()->Protocol()))
-    return true;
-
-  if (!frame_)
-    return true;
-  Frame* parent = frame_->Tree().Parent();
-  while (parent) {
-    if (!parent->GetSecurityContext()
-             ->GetSecurityOrigin()
-             ->IsPotentiallyTrustworthy())
-      return false;
-    parent = parent->Tree().Parent();
-  }
-  return true;
-}
-
 StyleSheetList& Document::StyleSheets() {
   if (!style_sheet_list_)
     style_sheet_list_ = StyleSheetList::Create(this);
@@ -6129,6 +6081,30 @@ void Document::InitSecurityContext(const DocumentInit& initializer) {
     EnforceSuborigin(*GetSecurityOrigin()->GetSuborigin());
 
   SetFeaturePolicy(g_empty_string);
+
+  DCHECK_EQ(is_secure_context_, SecureContextState::kUnknown);
+  if (!GetSecurityOrigin()->IsPotentiallyTrustworthy()) {
+    is_secure_context_ = SecureContextState::kNonSecure;
+  } else if (SchemeRegistry::SchemeShouldBypassSecureContextCheck(
+                 GetSecurityOrigin()->Protocol())) {
+    is_secure_context_ = SecureContextState::kSecure;
+  } else if (frame_) {
+    Frame* parent = frame_->Tree().Parent();
+    while (parent) {
+      if (!parent->GetSecurityContext()
+               ->GetSecurityOrigin()
+               ->IsPotentiallyTrustworthy()) {
+        is_secure_context_ = SecureContextState::kNonSecure;
+        break;
+      }
+      parent = parent->Tree().Parent();
+    }
+    if (is_secure_context_ == SecureContextState::kUnknown)
+      is_secure_context_ = SecureContextState::kSecure;
+  } else {
+    is_secure_context_ = SecureContextState::kNonSecure;
+  }
+  DCHECK_NE(is_secure_context_, SecureContextState::kUnknown);
 }
 
 // the first parameter specifies a policy to use as the document csp meaning
@@ -7054,7 +7030,7 @@ bool Document::IsSecureContext(String& error_message) const {
 }
 
 bool Document::IsSecureContext() const {
-  bool is_secure = IsSecureContextImpl();
+  bool is_secure = is_secure_context_ == SecureContextState::kSecure;
   if (GetSandboxFlags() != kSandboxNone) {
     UseCounter::Count(
         *this, is_secure

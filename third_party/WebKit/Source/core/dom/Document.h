@@ -1422,6 +1422,8 @@ class CORE_EXPORT Document : public ContainerNode,
   friend class NthIndexCache;
   class NetworkStateObserver;
 
+  enum class SecureContextState { kUnknown, kNonSecure, kSecure };
+
   bool IsDocumentFragment() const =
       delete;  // This will catch anyone doing an unnecessary check.
   bool IsDocumentNode() const =
@@ -1470,7 +1472,6 @@ class CORE_EXPORT Document : public ContainerNode,
   bool ChildTypeAllowed(NodeType) const final;
   Node* cloneNode(bool deep, ExceptionState&) final;
   void CloneDataFromDocument(const Document&);
-  bool IsSecureContextImpl() const;
 
   ShadowCascadeOrder shadow_cascade_order_ = kShadowCascadeNone;
 
@@ -1766,6 +1767,8 @@ class CORE_EXPORT Document : public ContainerNode,
   TaskHandle sensitive_input_edited_task_;
 
   mojom::EngagementLevel engagement_level_;
+
+  SecureContextState is_secure_context_;
 
   Member<NetworkStateObserver> network_state_observer_;
 
