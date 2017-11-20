@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e10c8532_85e0a2e1",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-20T17:59:11Z",
+      "side": 1,
+      "message": "Hypothetically, we could have Android-specific unit tests when we want to test native UI. We want to stay away from this for now. My understanding is that the common stands for being platform-independent. I think we should either rename all targets here or keep the naming scheme.",
+      "parentUuid": "e5e1447c_b02fadbd",
+      "range": {
+        "startLine": 270,
+        "startChar": 6,
+        "endLine": 270,
+        "endChar": 19
+      },
+      "revId": "888d7c8fca0c84da7d3daddca1bc829377a78301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c45217d3_8da757a8",
         "filename": "chrome/browser/vr/BUILD.gn",
         "patchSetId": 2
@@ -143,6 +167,24 @@
       "side": 1,
       "message": "Great catch!  What\u0027s your preference?  Keep the original 3 run_all_ files?  I feel like merging them only made sense when I thought they were identical.  Could be more confusing to have 1 shared and 1 standalone...",
       "parentUuid": "cb681a9c_2f17dfc5",
+      "revId": "888d7c8fca0c84da7d3daddca1bc829377a78301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f88a67f_e1a6dba4",
+        "filename": "chrome/browser/vr/test/run_all_pixeltests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-20T17:59:11Z",
+      "side": 1,
+      "message": "I agree. I\u0027d keep three for now.",
+      "parentUuid": "59f830eb_c79c6cf2",
       "revId": "888d7c8fca0c84da7d3daddca1bc829377a78301",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
