@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99d99a1f_ce57e9bf",
+        "filename": "chrome/browser/extensions/api/preference/preference_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-20T10:19:22Z",
+      "side": 1,
+      "message": "nit: this could be inlined",
+      "range": {
+        "startLine": 211,
+        "startChar": 4,
+        "endLine": 211,
+        "endChar": 45
+      },
+      "revId": "cbd71302ee1c687327000eace524387c7597f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a897e84a_d8ebd9ea",
+        "filename": "chrome/browser/extensions/api/preference/preference_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-20T10:19:22Z",
+      "side": 1,
+      "message": "Would it be possible that a legitimate Value is null here? If not, this is fine, if yes, maybe you could return a base::Optional\u003cbase::Value\u003e instead?",
+      "range": {
+        "startLine": 372,
+        "startChar": 6,
+        "endLine": 372,
+        "endChar": 33
+      },
+      "revId": "cbd71302ee1c687327000eace524387c7597f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "691ff2df_21fe409c",
+        "filename": "chrome/browser/extensions/api/preference/preference_api.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-20T10:19:22Z",
+      "side": 1,
+      "message": "Judging from the code below it looks like this is never expected to be null. If this is true maybe this could be a const reference instead?",
+      "range": {
+        "startLine": 164,
+        "startChar": 45,
+        "endLine": 164,
+        "endChar": 78
+      },
+      "revId": "cbd71302ee1c687327000eace524387c7597f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d47e00_2d0d32db",
+        "filename": "chrome/browser/extensions/api/preference/preference_api.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-20T10:19:22Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 173,
+        "startChar": 6,
+        "endLine": 173,
+        "endChar": 37
+      },
+      "revId": "cbd71302ee1c687327000eace524387c7597f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
