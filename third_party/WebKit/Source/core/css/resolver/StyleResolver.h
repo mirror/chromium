@@ -38,7 +38,6 @@
 #include "platform/wtf/Deque.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/HashSet.h"
-#include "platform/wtf/ListHashSet.h"
 
 namespace blink {
 
