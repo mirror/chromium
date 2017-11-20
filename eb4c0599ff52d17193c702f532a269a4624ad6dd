@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "195c1c92_a5c3e3ff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-20T22:27:23Z",
+      "side": 1,
+      "message": "Can you help me understand the crash you\u0027re fixing a little more? Was the issue that SetWebLayer was being called twice in webmediaplayer_impl due to OnWebLayerUpdated being called twice? Or was it something else such as multiple calls to RegisterContentsLayer?",
+      "revId": "eb4c0599ff52d17193c702f532a269a4624ad6dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e322c99_bb7c6ddc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-20T22:27:23Z",
+      "side": 1,
+      "message": "Is there a bug for this work?",
+      "revId": "eb4c0599ff52d17193c702f532a269a4624ad6dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "521ff9c5_719a9341",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-20T22:27:23Z",
+      "side": 1,
+      "message": "HTMLCanvasElement::OnWebLayerUpdated uses this to cause a compositing update but we don\u0027t do that here. Why is canvas different from WebMediaPlayer?",
+      "revId": "eb4c0599ff52d17193c702f532a269a4624ad6dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4a16cd_0a579f6b",
+        "filename": "third_party/WebKit/public/platform/WebSurfaceLayerBridge.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-20T22:27:23Z",
+      "side": 1,
+      "message": "Can you add a comment here about when these functions need to be called?",
+      "revId": "eb4c0599ff52d17193c702f532a269a4624ad6dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
