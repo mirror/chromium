@@ -544,17 +544,6 @@ String Deprecation::DeprecationMessage(WebFeature feature) {
           "the CredentialRequestOptions.mediation enum", M62,
           "6076479909658624");
 
-    case WebFeature::kCredentialManagerIdName:
-    case WebFeature::kCredentialManagerPasswordName:
-    case WebFeature::kCredentialManagerAdditionalData:
-    case WebFeature::kCredentialManagerCustomFetch:
-      return String::Format(
-          "Passing 'PasswordCredential' objects into 'fetch(..., { "
-          "credentials: ... })' is deprecated, and will be removed in %s. See "
-          "https://www.chromestatus.com/features/5689327799500800 for more "
-          "details and https://developers.google.com/web/updates/2017/06/"
-          "credential-management-updates for migration suggestions.",
-          milestoneString(M62));
     case WebFeature::kPaymentRequestNetworkNameInSupportedMethods:
       return replacedWillBeRemoved(
           "Card issuer network (\"amex\", \"diners\", \"discover\", \"jcb\", "

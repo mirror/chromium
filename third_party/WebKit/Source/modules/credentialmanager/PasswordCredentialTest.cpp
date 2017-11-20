@@ -51,80 +51,58 @@ class PasswordCredentialTest : public ::testing::Test {
 TEST_F(PasswordCredentialTest, CreateFromMultipartForm) {
   HTMLFormElement* form =
       PopulateForm("multipart/form-data",
-                   "<input type='text' name='theId' value='musterman' "
+                   "<input type='text' value='musterman' "
                    "autocomplete='username'>"
-                   "<input type='text' name='thePassword' value='sekrit' "
+                   "<input type='text' value='sekrit' "
                    "autocomplete='current-password'>"
-                   "<input type='text' name='theIcon' "
+                   "<input type='text' "
                    "value='https://example.com/photo' autocomplete='photo'>"
-                   "<input type='text' name='theExtraField' value='extra'>"
-                   "<input type='text' name='theName' value='friendly name' "
+                   "<input type='text' value='extra'>"
+                   "<input type='text' value='friendly name' "
                    "autocomplete='name'>");
   PasswordCredential* credential =
       PasswordCredential::Create(form, ASSERT_NO_EXCEPTION);
   ASSERT_NE(nullptr, credential);
-  EXPECT_EQ("theId", credential->idName());
-  EXPECT_EQ("thePassword", credential->passwordName());
 
   EXPECT_EQ("musterman", credential->id());
   EXPECT_EQ("sekrit", credential->password());
   EXPECT_EQ(KURL("https://example.com/photo"), credential->iconURL());
   EXPECT_EQ("friendly name", credential->name());
   EXPECT_EQ("password", credential->type());
-
-  FormDataOrURLSearchParams additional_data;
-  credential->additionalData(additional_data);
-  ASSERT_TRUE(additional_data.GetAsFormData());
-  EXPECT_TRUE(additional_data.GetAsFormData()->has("theId"));
-  EXPECT_TRUE(additional_data.GetAsFormData()->has("thePassword"));
-  EXPECT_TRUE(additional_data.GetAsFormData()->has("theIcon"));
-  EXPECT_TRUE(additional_data.GetAsFormData()->has("theName"));
-  EXPECT_TRUE(additional_data.GetAsFormData()->has("theExtraField"));
 }
 
 TEST_F(PasswordCredentialTest, CreateFromURLEncodedForm) {
   HTMLFormElement* form =
       PopulateForm("application/x-www-form-urlencoded",
-                   "<input type='text' name='theId' value='musterman' "
+                   "<input type='text' value='musterman' "
                    "autocomplete='username'>"
-                   "<input type='text' name='thePassword' value='sekrit' "
+                   "<input type='text' value='sekrit' "
                    "autocomplete='current-password'>"
-                   "<input type='text' name='theIcon' "
+                   "<input type='text' "
                    "value='https://example.com/photo' autocomplete='photo'>"
-                   "<input type='text' name='theExtraField' value='extra'>"
-                   "<input type='text' name='theName' value='friendly name' "
+                   "<input type='text' value='extra'>"
+                   "<input type='text' value='friendly name' "
                    "autocomplete='name'>");
   PasswordCredential* credential =
       PasswordCredential::Create(form, ASSERT_NO_EXCEPTION);
   ASSERT_NE(nullptr, credential);
-  EXPECT_EQ("theId", credential->idName());
-  EXPECT_EQ("thePassword", credential->passwordName());
 
   EXPECT_EQ("musterman", credential->id());
   EXPECT_EQ("sekrit", credential->password());
   EXPECT_EQ(KURL("https://example.com/photo"), credential->iconURL());
   EXPECT_EQ("friendly name", credential->name());
   EXPECT_EQ("password", credential->type());
-
-  FormDataOrURLSearchParams additional_data;
-  credential->additionalData(additional_data);
-  ASSERT_TRUE(additional_data.IsURLSearchParams());
-  EXPECT_TRUE(additional_data.GetAsURLSearchParams()->has("theId"));
-  EXPECT_TRUE(additional_data.GetAsURLSearchParams()->has("thePassword"));
-  EXPECT_TRUE(additional_data.GetAsURLSearchParams()->has("theIcon"));
-  EXPECT_TRUE(additional_data.GetAsURLSearchParams()->has("theName"));
-  EXPECT_TRUE(additional_data.GetAsURLSearchParams()->has("theExtraField"));
 }
 
 TEST_F(PasswordCredentialTest, CreateFromFormNoPassword) {
   HTMLFormElement* form =
       PopulateForm("multipart/form-data",
-                   "<input type='text' name='theId' value='musterman' "
+                   "<input type='text' value='musterman' "
                    "autocomplete='username'>"
                    "<!-- No password field -->"
-                   "<input type='text' name='theIcon' "
+                   "<input type='text' "
                    "value='https://example.com/photo' autocomplete='photo'>"
-                   "<input type='text' name='theName' value='friendly name' "
+                   "<input type='text' value='friendly name' "
                    "autocomplete='name'>");
   DummyExceptionStateForTesting exception_state;
   PasswordCredential* credential =
@@ -139,11 +117,11 @@ TEST_F(PasswordCredentialTest, CreateFromFormNoId) {
   HTMLFormElement* form =
       PopulateForm("multipart/form-data",
                    "<!-- No username field. -->"
-                   "<input type='text' name='thePassword' value='sekrit' "
+                   "<input type='text' value='sekrit' "
                    "autocomplete='current-password'>"
-                   "<input type='text' name='theIcon' "
+                   "<input type='text' "
                    "value='https://example.com/photo' autocomplete='photo'>"
-                   "<input type='text' name='theName' value='friendly name' "
+                   "<input type='text' value='friendly name' "
                    "autocomplete='name'>");
   DummyExceptionStateForTesting exception_state;
   PasswordCredential* credential =
