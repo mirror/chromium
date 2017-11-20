@@ -1169,7 +1169,8 @@ DirectoryModel.prototype.onVolumeInfoListUpdated_ = function(event) {
   // crbug.com/427776.
   if (window.isFocused() &&
       event.added.length === 1 &&
-      event.added[0].volumeType === VolumeManagerCommon.VolumeType.PROVIDED &&
+      (event.added[0].volumeType === VolumeManagerCommon.VolumeType.PROVIDED ||
+        event.added[0].volumeType === VolumeManagerCommon.VolumeType.ARCHIVE) &&
       event.added[0].source === VolumeManagerCommon.Source.FILE) {
     event.added[0].resolveDisplayRoot().then(function(displayRoot) {
       // Resolving a display root on FSP volumes is instant, despite the
@@ -1250,14 +1251,14 @@ DirectoryModel.prototype.createDirectoryContents_ =
  */
 DirectoryModel.prototype.getLastSearchQuery = function() {
   return this.lastSearchQuery_;
-}
+};
 
 /**
  * Clears the last search query with the empty string.
  */
 DirectoryModel.prototype.clearLastSearchQuery = function() {
   this.lastSearchQuery_ = '';
-}
+};
 
 /**
  * Performs search and displays results. The search type is dependent on the
