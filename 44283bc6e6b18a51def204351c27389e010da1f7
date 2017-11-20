@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db77149e_92fca620",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2416,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-11-20T16:28:08Z",
+      "side": 1,
+      "message": "I\u0027m not convinced by this, I feel like there must be a better place to redo layout when status bar hidden/visible status changes. Any ideas? If not I\u0027ll look more tomorrow. In the meantime it seems to work fine...",
+      "range": {
+        "startLine": 2416,
+        "startChar": 27,
+        "endLine": 2416,
+        "endChar": 0
+      },
+      "revId": "44283bc6e6b18a51def204351c27389e010da1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
