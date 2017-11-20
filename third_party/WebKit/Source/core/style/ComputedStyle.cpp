@@ -1146,7 +1146,7 @@ static bool AllLayersAreFixed(const FillLayer& layer) {
   for (const FillLayer* curr_layer = &layer; curr_layer;
        curr_layer = curr_layer->Next()) {
     if (!curr_layer->GetImage() ||
-        curr_layer->Attachment() != kFixedBackgroundAttachment)
+        curr_layer->Attachment() != EFillAttachment::kFixed)
       return false;
   }
 
