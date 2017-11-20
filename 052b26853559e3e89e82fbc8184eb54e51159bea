@@ -94,6 +94,30 @@
       "revId": "052b26853559e3e89e82fbc8184eb54e51159bea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd493901_6e1bc47c",
+        "filename": "content/browser/renderer_host/p2p/socket_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-20T15:11:49Z",
+      "side": 1,
+      "message": "I see. That will be a problem. With NetworkService, we won\u0027t have synchronous API like IsOffline (The NetworkConnectionTracker::GetConnectionType() had to be changed to async for the same reason). We can only depend on the |type| sent in the broadcast.",
+      "parentUuid": "1df238f0_8e28cee2",
+      "range": {
+        "startLine": 165,
+        "startChar": 11,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "052b26853559e3e89e82fbc8184eb54e51159bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
