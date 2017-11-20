@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f63710fa_857370f4",
+        "filename": "ui/android/java/src/org/chromium/ui/base/ActivityWindowAndroid.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-20T18:47:17Z",
+      "side": 1,
+      "message": "why string array if only a single string is ever passed to it?",
+      "range": {
+        "startLine": 296,
+        "startChar": 44,
+        "endLine": 296,
+        "endChar": 69
+      },
+      "revId": "94a612dfc21e8a9fa9e6e42bb4ee35ebc947d5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
