@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1bf7898_48b80afd",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-20T19:28:55Z",
+      "side": 1,
+      "message": "Does chrome/installer/setup/installer_crash_reporting.cc need this as well? You may want to check with chrome/installer/OWNERS as well.",
+      "revId": "48c50aba0863a1a2d310a01f6c7e8ebf1513c326",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
