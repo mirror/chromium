@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab983ec3_762f767d",
+        "filename": "chrome/browser/tabs/tabs_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-20T21:24:02Z",
+      "side": 1,
+      "message": "sky: I\u0027ll want to do this in a few places. But this iterates through potentially hundreds of tabs.\n\nIs there any reason TabStripModelObserver::TabDeactivated doesn\u0027t pass the TabStripModel*? Since some of its other functions do, it\u0027d be nice to add it to the rest of its functions.",
+      "range": {
+        "startLine": 31,
+        "startChar": 21,
+        "endLine": 31,
+        "endChar": 55
+      },
+      "revId": "565fa28b817dd070a0ddc4133083d0148c49f1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
