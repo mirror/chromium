@@ -1445,6 +1445,7 @@ public class VrShellDelegate
             @Override
             public void run() {
                 if (!startedForAutopresentation) {
+                    callOnExitVrRequestListener(false);
                     shutdownVr(true /* disableVrMode */, true /* stayingInChrome */);
                     return;
                 }
