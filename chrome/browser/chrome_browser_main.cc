@@ -1350,6 +1350,10 @@ void ChromeBrowserMainParts::PostBrowserStart() {
   }
 #endif
 
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
+  g_browser_process->GetTabsTracker();
+#endif
+
   // At this point, StartupBrowserCreator::Start has run creating initial
   // browser windows and tabs, but no progress has been made in loading
   // content as the main message loop hasn't started processing tasks yet.

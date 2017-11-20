@@ -300,6 +300,20 @@ void TabManager::LogMemory(const std::string& title,
   memory::OomMemoryDetails::Log(title, callback);
 }
 
+/*
+void TabManager::LogTab(const WebContentsData* web_contents_data) {
+  TabStripModel* model = nullptr;
+  int tab_index = g_browser_process->GetTabManager()->FindTabStripModelById(
+      resource_coordinator::TabManager::IdFromWebContents(
+          web_contents_data->web_contents()),
+      &model);
+  if (!model)
+    return;
+
+  tab_logger_->LogTab(web_contents_data, model, tab_index);
+}
+*/
+
 void TabManager::AddObserver(TabLifetimeObserver* observer) {
   tab_lifetime_unit_source_.AddObserver(observer);
 }

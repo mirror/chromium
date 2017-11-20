@@ -2607,6 +2607,10 @@ split_static_library("browser") {
       "sync/sessions/browser_list_router_helper.h",
       "sync/sync_ui_util.cc",
       "sync/sync_ui_util.h",
+      "tabs/tab_logger.cc",
+      "tabs/tab_logger.h",
+      "tabs/tabs_tracker.cc",
+      "tabs/tabs_tracker.h",
       "task_manager/providers/browser_process_task.cc",
       "task_manager/providers/browser_process_task.h",
       "task_manager/providers/browser_process_task_provider.cc",
@@ -2707,6 +2711,7 @@ split_static_library("browser") {
       "//chrome/browser/profile_resetter:profile_reset_report_proto",
       "//chrome/browser/resources:component_extension_resources",
       "//chrome/browser/search:generated",
+      "//chrome/browser/tabs:tab_event_proto",
       "//chrome/common/importer:interfaces",
       "//components/cryptauth",
       "//components/cryptauth/proto",
@@ -2716,7 +2721,12 @@ split_static_library("browser") {
       "//components/web_modal",
       "//components/zoom",
       "//net:net",
+      "//services/metrics/public/cpp:metrics_cpp",
     ]
+
+    # TODO(michaelpg): This circular include is necessary because
+    # WebContentsData is an inner class of TabManager. Ideally it wouldn't be.
+    # allow_circular_includes_from += [ "//chrome/browser/tabs" ]
   }
 
   if (is_chromeos) {

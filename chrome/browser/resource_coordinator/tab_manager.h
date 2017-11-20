@@ -130,8 +130,9 @@ class TabManager : public LifetimeUnitSink, public TabStripModelObserver {
   // Log memory statistics for the running processes, then call the callback.
   void LogMemory(const std::string& title, const base::Closure& callback);
 
-  // TODO(fdoray): Remove these methods. TabManager shouldn't know about tabs.
-  // https://crbug.com/775644
+  // TODO(michaelpg): Remove - TabManager shouldn't know about tabs?
+  void LogTab(const WebContentsData* web_contents_data);
+
   void AddObserver(TabLifetimeObserver* observer);
   void RemoveObserver(TabLifetimeObserver* observer);
 

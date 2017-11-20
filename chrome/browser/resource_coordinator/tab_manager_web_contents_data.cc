@@ -71,6 +71,7 @@ void TabManager::WebContentsData::DidFinishNavigation(
   tab_data_.navigation_time = navigation_handle->NavigationStart();
   ukm_source_id_ = ukm::ConvertToSourceId(navigation_handle->GetNavigationId(),
                                           ukm::SourceIdType::NAVIGATION_ID);
+  // g_browser_process->GetTabManager()->LogTab(this);
 }
 
 void TabManager::WebContentsData::WasShown() {

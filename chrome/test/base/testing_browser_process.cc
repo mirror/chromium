@@ -18,6 +18,7 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/resource_coordinator/tab_manager.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
+#include "chrome/browser/tabs/tabs_tracker.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/features.h"
 #include "chrome/test/base/testing_browser_process_platform_part.h"
@@ -452,6 +453,16 @@ TestingBrowserProcess::GetPhysicalWebDataSource() {
 prefs::InProcessPrefServiceFactory*
 TestingBrowserProcess::pref_service_factory() const {
   return nullptr;
+}
+
+tabs::TabsTracker* TestingBrowserProcess::GetTabsTracker() {
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
+  if (!tabs_tracker_)
+    tabs_tracker_ = std::make_unique<tabs::TabsTracker>();
+  return tabs_tracker_.get();
+#else
+  return nullptr;
+#endif
 }
 
 void TestingBrowserProcess::SetSystemRequestContext(

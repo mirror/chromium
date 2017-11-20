@@ -133,6 +133,7 @@ class TestingBrowserProcess : public BrowserProcess {
       override;
   physical_web::PhysicalWebDataSource* GetPhysicalWebDataSource() override;
   prefs::InProcessPrefServiceFactory* pref_service_factory() const override;
+  tabs::TabsTracker* GetTabsTracker() override;
 
   // Set the local state for tests. Consumer is responsible for cleaning it up
   // afterwards (using ScopedTestingLocalState, for example).
@@ -193,10 +194,14 @@ class TestingBrowserProcess : public BrowserProcess {
 
   std::unique_ptr<network_time::NetworkTimeTracker> network_time_tracker_;
 
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
   // |tab_manager_| is null by default and will be created when
   // GetTabManager() is invoked on supported platforms.
-#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
   std::unique_ptr<resource_coordinator::TabManager> tab_manager_;
+
+  // |tabs_tracker_| is null by default and will be created when
+  // GetTabsTracker() is invoked on supported platforms.
+  std::unique_ptr<tabs::TabsTracker> tabs_tracker_;
 #endif
 
   // The following objects are not owned by TestingBrowserProcess:
