@@ -68,3 +68,6 @@ PnaclHeaderTest.*
 PolicyCertVerifierTest.*
 ScriptContextTest.*
 SiteEngagementUiBrowserTest.*
+
+# MessagePipe closing crashes http://crbug.com/787121
+-PreferencesTest.MultiProfiles
