@@ -33,6 +33,7 @@ enum IPCCommand {
   COMMAND_OPEN,
   COMMAND_ACCESS,
   COMMAND_STAT,
+  COMMAND_RENAME,
 };
 
 }  // namespace syscall_broker
