@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ede15673_0711a4ed",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/private_api_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-20T09:04:04Z",
+      "side": 1,
+      "message": "Same here, we may have a conflict. How about using ProviderId::ToString()? See other comments for details.",
+      "range": {
+        "startLine": 217,
+        "startChar": 23,
+        "endLine": 217,
+        "endChar": 52
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c89735a7_5c26ff8e",
+        "filename": "chrome/browser/chromeos/extensions/file_system_provider/file_system_provider_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-20T09:04:04Z",
+      "side": 1,
+      "message": "Please compare ProviderId instead, or both id and type.",
+      "range": {
+        "startLine": 193,
+        "startChar": 8,
+        "endLine": 193,
+        "endChar": 65
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e9c8b07_6af1a65c",
+        "filename": "chrome/browser/chromeos/file_system_provider/notification_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-20T09:04:04Z",
+      "side": 1,
+      "message": "This line doesn\u0027t make sense for NATIVE type. Can we execute this only for EXTENSION?",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 70
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a17ff3b_58ab4141",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-20T09:04:04Z",
+      "side": 1,
+      "message": "Let\u0027s add a DCHECK that provider id type is EXTENSION.",
+      "range": {
+        "startLine": 150,
+        "startChar": 31,
+        "endLine": 150,
+        "endChar": 32
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf2c529_4cac8ebf",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-20T09:04:04Z",
+      "side": 1,
+      "message": "I haven\u0027t done much Chrome development recently, but is this necessary (or recommended)?",
+      "range": {
+        "startLine": 33,
+        "startChar": 20,
+        "endLine": 33,
+        "endChar": 30
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b808c306_5b889533",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-20T09:04:04Z",
+      "side": 1,
+      "message": "Can we add two static methods.\n\nProviderId::CreateFromExtensionId()\nProviderId::CreateFromNativeId()",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 12
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce6254e_bd0dc4c1",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-20T09:04:04Z",
+      "side": 1,
+      "message": "nit: This is not provider_id. Let\u0027s call it internal_id or local_id.",
+      "range": {
+        "startLine": 36,
+        "startChar": 32,
+        "endLine": 36,
+        "endChar": 43
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85be399_9ea7000e",
+        "filename": "chrome/browser/chromeos/file_system_provider/registry.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-20T09:04:04Z",
+      "side": 1,
+      "message": "We have a collision here. If we have two provider ids with the same id but different types, we\u0027ll overwrite their settings.\n\nLet\u0027s add a serializing method to ProviderId, which we could use here:\n\nstd::string ProviderId::ToString() const {\n  std::stringstream ss;\n  ss \u003c\u003c type_ \u003c\u003c id_;  // Or something like that.\n  return ss.str();\n}\n\nand\n\nstatic ProviderId::FromString(const std::string\u0026 value) {\n  int type \u003d static_cast\u003cProviderType\u003e(...);\n  switch (type) {\n    case TYPE_EXTENSION:\n      return FromExtensionId(...);\n    ...\n  }\n}\n\nor something like that?",
+      "range": {
+        "startLine": 97,
+        "startChar": 10,
+        "endLine": 97,
+        "endChar": 49
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1de4903_73c9e4f7",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-20T09:04:04Z",
+      "side": 1,
+      "message": "This is unsafe too. It\u0027s quite easy to make a mistake with the ProviderId. How about making it more resiliant.\n\nProviderId::GetExtensionId() {\n  CHECK_EQ(EXTENSION, type_);\n  return id_;\n}\n\nProviderId::GetNativeId() {\n  CHECK_EQ(NATIVE, type_);\n  return id_;\n}\n\nProviderId::ToString() {\n  // See my other comment about this.\n}\n\nAnd removing GetId()?\n\nThen we\u0027d use:\n1. GetExtensionId() in all places where we know we deal with extension providers.\n2. GetNativeId() when we know we deal with native.\n3. ToString() when we just want to use ProviderId as key, in registry.cc.\n4. ProviderId object comparison - when we want to verify that the providers match.\n\nThere should be very few or none places which don\u0027t fall in the categories above. If there is many, we could keep GetId renamed as GetIdUnsafe. If there is one or two, we could have a switch-case.\n\nWDYT?",
+      "range": {
+        "startLine": 130,
+        "startChar": 35,
+        "endLine": 130,
+        "endChar": 54
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80eaf607_f722ee53",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-20T09:04:04Z",
+      "side": 1,
+      "message": "This should compare ProviderId\u0027s not extension ids. In general comparing GetId() is unsafe. Maybe we should rename GetId to GetLocalId pr GetIdUnsafe.",
+      "range": {
+        "startLine": 373,
+        "startChar": 8,
+        "endLine": 373,
+        "endChar": 65
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d66bad36_4228c7e3",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-20T09:04:04Z",
+      "side": 1,
+      "message": "Please change to DCHECK, as this is a programming error, which should never ever happen.",
+      "range": {
+        "startLine": 468,
+        "startChar": 2,
+        "endLine": 468,
+        "endChar": 48
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b16247bc_5ab113da",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-20T09:04:04Z",
+      "side": 1,
+      "message": "Please either rename to native_file_system_factory_map_ *or* use ProviderId as key, so there is lower chance of making a mistake when interpreting this map in other places.",
+      "range": {
+        "startLine": 469,
+        "startChar": 4,
+        "endLine": 469,
+        "endChar": 28
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334452b1_ff66eb8b",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-20T09:04:04Z",
+      "side": 1,
+      "message": "Let\u0027s add a switch. If type is native, let\u0027s search in native_file_system_factory_map_. If extension then let\u0027s use default_file_system_factory_. Also, could we rename default_file_system_factory_ to extension_file_system_factory_?",
+      "range": {
+        "startLine": 474,
+        "startChar": 2,
+        "endLine": 474,
+        "endChar": 6
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
