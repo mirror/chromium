@@ -278,7 +278,8 @@ void ArcImeService::OnCursorRectChangedWithSurroundingText(
 
 ////////////////////////////////////////////////////////////////////////////////
 // Overridden from keyboard::KeyboardControllerObserver
-void ArcImeService::OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) {
+void ArcImeService::OnKeyboardWorkspaceOccludedBoundsChanging(
+    const gfx::Rect& new_bounds) {
   if (!focused_arc_window_)
     return;
   aura::Window* window = focused_arc_window_;
