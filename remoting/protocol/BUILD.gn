@@ -240,6 +240,8 @@ static_library("protocol") {
 
     if (enable_remoting_host) {
       sources += [
+        "cast_bandwidth_estimator.cc",
+        "cast_bandwidth_estimator.h",
         "webrtc_audio_source_adapter.cc",
         "webrtc_audio_source_adapter.h",
         "webrtc_audio_stream.cc",
@@ -251,6 +253,10 @@ static_library("protocol") {
         "webrtc_frame_scheduler_simple.h",
         "webrtc_video_stream.cc",
         "webrtc_video_stream.h",
+      ]
+
+      deps += [
+        "//media/cast:sender",
       ]
     }
 
