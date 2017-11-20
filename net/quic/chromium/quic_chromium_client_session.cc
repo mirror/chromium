@@ -1468,7 +1468,7 @@ void QuicChromiumClientSession::OnSuccessfulVersionNegotiation(
 void QuicChromiumClientSession::OnConnectivityProbeReceived(
     const QuicSocketAddress& self_address,
     const QuicSocketAddress& peer_address) {
-  DVLOG(1) << "Probing response from ip:port: " << peer_address.ToString()
+  DVLOG(1) << "Speculative probing response from ip:port: " << peer_address.ToString()
            << " to ip:port: " << self_address.ToString() << " is received";
   // Notify the probing manager that a connectivity probing packet is received.
   probing_manager_.OnConnectivityProbingReceived(self_address, peer_address);
@@ -1609,6 +1609,12 @@ void QuicChromiumClientSession::OnProbeNetworkSucceeded(
   // that was used for probing.
   writer->set_delegate(this);
   connection()->SetSelfAddress(self_address);
+  // Migrate to the new probed socket.
+  if (!MigrateToSocket(std::move(socket), std::move(reader),
+                       std::move(writer))) {
+    return;
+  }
+
   if (network == default_network_) {
     DVLOG(1) << "Client successfully migrated to default network.";
     CancelMigrateBackToDefaultNetworkTimer();
@@ -1653,14 +1659,12 @@ void QuicChromiumClientSession::OnNetworkConnected(
     return;
   }
 
-  if (!migrate_session_on_network_change_v2_) {
-    // TODO(jri): Ensure that OnSessionGoingAway is called consistently,
-    // and that it's always called at the same time in the whole
-    // migration process. Allows tests to be more uniform.
-    stream_factory_->OnSessionGoingAway(this);
-    Migrate(network, connection()->peer_address().impl().socket_address(),
-            /*close_session_on_error=*/true, net_log);
-  }
+  // TODO(jri): Ensure that OnSessionGoingAway is called consistently,
+  // and that it's always called at the same time in the whole
+  // migration process. Allows tests to be more uniform.
+  stream_factory_->OnSessionGoingAway(this);
+  Migrate(network, connection()->peer_address().impl().socket_address(),
+          /*close_session_on_error=*/true, net_log);
 }
 
 void QuicChromiumClientSession::OnNetworkDisconnected(
@@ -1723,7 +1727,7 @@ void QuicChromiumClientSession::OnNetworkMadeDefault(
   }
 
   // Connection migration v2.
-  // If we are already on the new network.
+  // If we are already on the new network, cancel migrate back timer.
   if (GetDefaultSocket()->GetBoundNetwork() == new_network) {
     CancelMigrateBackToDefaultNetworkTimer();
     HistogramAndLogMigrationFailure(
@@ -1760,6 +1764,7 @@ void QuicChromiumClientSession::MigrateImmediately(
   MigrationResult result =
       Migrate(network, connection()->peer_address().impl().socket_address(),
               /*close_session_on_error=*/true, net_log_);
+
   if (result == MigrationResult::FAILURE)
     return;
 
@@ -1807,6 +1812,7 @@ void QuicChromiumClientSession::OnPathDegrading() {
         // Probe alternative network, we will migrate to the probed network
         // and decide whether we want to migrate back to the default network
         // on success.
+        DVLOG(1) << "Client probe alternative network on path degrading";
         StartProbeNetwork(alternate_network,
                           connection()->peer_address().impl().socket_address(),
                           migration_net_log);

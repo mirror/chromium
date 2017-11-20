@@ -1016,8 +1016,17 @@ void QuicConnection::OnPacketComplete() {
         quic_reloadable_flag_quic_server_reply_to_connectivity_probing, 3, 4);
     if (current_packet_content_ == SECOND_FRAME_IS_PADDING) {
       QUIC_DVLOG(1) << ENDPOINT << "Received a padded PING packet";
-      if (last_packet_source_address_ != peer_address_ ||
-          last_packet_destination_address_ != self_address_) {
+      if  (perspective_ == Perspective::IS_CLIENT) {
+        QUIC_DVLOG(1) << ENDPOINT
+                      << "Received a speculative connectivity probing packet for "
+                      << last_header_.connection_id << " frome ip:port: "
+                      << last_packet_source_address_.ToString()
+                      << " to ip:port "
+                      << last_packet_destination_address_.ToString();
+        visitor_->OnConnectivityProbeReceived(last_packet_destination_address_,
+                                              last_packet_source_address_);
+      } else if (last_packet_source_address_ != peer_address_ ||
+                 last_packet_destination_address_ != self_address_) {
         // Padded PING packet associated with self/peer address change is a
         // connectivity probing packet.
         QUIC_DVLOG(1) << ENDPOINT

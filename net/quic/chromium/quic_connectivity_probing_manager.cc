@@ -130,6 +130,7 @@ void QuicConnectivityProbingManager::OnConnectivityProbingReceived(
 void QuicConnectivityProbingManager::SendConnectivityProbingPacket(
     base::TimeDelta timeout) {
   delegate_->OnSendConnectivityProbingPacket(writer_.get(), peer_address_);
+  LOG(ERROR) << "POST A TASK Resend probng in " << timeout;
   retransmit_timer_.Start(
       FROM_HERE, timeout,
       base::Bind(
@@ -152,6 +153,7 @@ void QuicConnectivityProbingManager::MaybeResendConnectivityProbingPacket() {
     NotifyDelegateProbeFailed();
     return;
   }
+  LOG(ERROR) << "Resend probing";
   SendConnectivityProbingPacket(base::TimeDelta::FromMilliseconds(timeout_ms));
 }
 

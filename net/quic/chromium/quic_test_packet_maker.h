@@ -35,6 +35,10 @@ class QuicTestPacketMaker {
   ~QuicTestPacketMaker();
 
   void set_hostname(const std::string& host);
+  std::unique_ptr<QuicReceivedPacket> MakeConnectivityProbingPacket(
+      QuicPacketNumber num,
+      bool include_version,
+      QuicByteCount packet_length);
   std::unique_ptr<QuicReceivedPacket> MakePingPacket(QuicPacketNumber num,
                                                      bool include_version);
   std::unique_ptr<QuicReceivedPacket> MakeRstPacket(
