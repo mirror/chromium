@@ -46,6 +46,30 @@
       "revId": "2700039a990219029dbed69ec9812d46d44bc901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b94d573_61fe7cfe",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T20:36:28Z",
+      "side": 1,
+      "message": "I think it\u0027s better / simpler to just add fields to the class with comments about what we\u0027ll need to remove.  URLLoaderFactory is also used for mojo loading in the legacy path, so if we went with another class, we\u0027d have to bifurcate URLLoaderFactory consumers/implementations, which gets pretty involved and hairy.",
+      "parentUuid": "c94032e3_9f831095",
+      "range": {
+        "startLine": 339,
+        "startChar": 14,
+        "endLine": 339,
+        "endChar": 28
+      },
+      "revId": "2700039a990219029dbed69ec9812d46d44bc901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
