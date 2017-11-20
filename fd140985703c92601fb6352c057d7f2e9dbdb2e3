@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f0792c2_5f206a5c",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-20T15:54:56Z",
+      "side": 1,
+      "message": "nit: braces unnecessary, but up to you",
+      "range": {
+        "startLine": 1006,
+        "startChar": 55,
+        "endLine": 1006,
+        "endChar": 56
+      },
+      "revId": "fd140985703c92601fb6352c057d7f2e9dbdb2e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
