@@ -1,0 +1,22 @@
+Name: xdg-utils
+URL: http://portland.freedesktop.org/wiki/
+Version: fb9ee8c69932feb716ad4db793a7941dd06b345c
+License: MIT
+Security Critical: no
+
+Description:
+This directory contains a copy of xdg-utils obtained from git on 2017-11-20.
+
+Build instructions:
+$ git clone git://anongit.freedesktop.org/xdg/xdg-utils
+$ cd xdg-utils
+$ ./configure
+$ make
+* Remove xdg-* from scripts/.gitignore.
+* Update OWNERS and README.chromium as necessary.
+
+We now have this copy only to allow us to ship our own copy of xdg-settings (and
+xdg-mime, because we need a newer version than some distributions include). When
+these are standard, we can delete our copy.
+
+The license for xdg-utils is in the LICENSE file and is similar to BSD-style.
