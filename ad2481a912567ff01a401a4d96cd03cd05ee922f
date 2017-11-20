@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2905e477_2ed95e38",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappNavigationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-20T03:50:41Z",
+      "side": 1,
+      "message": "Nit: window.top.location",
+      "range": {
+        "startLine": 115,
+        "startChar": 67,
+        "endLine": 115,
+        "endChar": 100
+      },
+      "revId": "ad2481a912567ff01a401a4d96cd03cd05ee922f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f0e89bf_75068da1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappNavigationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-20T03:50:41Z",
+      "side": 1,
+      "message": "Nit: target\u003d\"_blank\"",
+      "range": {
+        "startLine": 138,
+        "startChar": 79,
+        "endLine": 138,
+        "endChar": 91
+      },
+      "revId": "ad2481a912567ff01a401a4d96cd03cd05ee922f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97805624_fa746a2d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappNavigationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-20T03:50:41Z",
+      "side": 1,
+      "message": "Nit: target\u003d\"_blank\"",
+      "range": {
+        "startLine": 157,
+        "startChar": 75,
+        "endLine": 157,
+        "endChar": 87
+      },
+      "revId": "ad2481a912567ff01a401a4d96cd03cd05ee922f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfd1b886_df3e6eef",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappNavigationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-20T03:50:41Z",
+      "side": 1,
+      "message": "Nit: window.open()",
+      "range": {
+        "startLine": 177,
+        "startChar": 54,
+        "endLine": 177,
+        "endChar": 67
+      },
+      "revId": "ad2481a912567ff01a401a4d96cd03cd05ee922f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e59b21cb_378e9c20",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappNavigationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-20T03:50:41Z",
+      "side": 1,
+      "message": "Optional nit: \"getDefaultPrimaryColor();",
+      "range": {
+        "startLine": 387,
+        "startChar": 17,
+        "endLine": 387,
+        "endChar": 36
+      },
+      "revId": "ad2481a912567ff01a401a4d96cd03cd05ee922f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
