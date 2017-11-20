@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2ab3ef0_9c9e9c54",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-20T18:27:49Z",
+      "side": 1,
+      "message": "Apps should also have the id\u003d\"[[item.id]]\"",
+      "range": {
+        "startLine": 90,
+        "startChar": 13,
+        "endLine": 90,
+        "endChar": 28
+      },
+      "revId": "4b835311f4ca35436698fa9b151372217d44390f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13c8096f_b0c12331",
+        "filename": "chrome/browser/resources/md_extensions/item_list.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-20T18:27:49Z",
+      "side": 1,
+      "message": "isn\u0027t /deep/ deprecated?\nShould we add |focusDetails| and |focusError| to avoid piercing the shadow dom?",
+      "range": {
+        "startLine": 48,
+        "startChar": 29,
+        "endLine": 48,
+        "endChar": 35
+      },
+      "revId": "4b835311f4ca35436698fa9b151372217d44390f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "735c348a_f5c88a14",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-20T18:27:49Z",
+      "side": 1,
+      "message": "Can be a separate CL: we may still want to focus something appropriate in theses cases.",
+      "range": {
+        "startLine": 486,
+        "startChar": 6,
+        "endLine": 489,
+        "endChar": 7
+      },
+      "revId": "4b835311f4ca35436698fa9b151372217d44390f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
