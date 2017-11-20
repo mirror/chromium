@@ -4,6 +4,8 @@
 
 #include "net/quic/chromium/quic_connectivity_probing_manager.h"
 
+#include "base/metrics/histogram_macros.h"
+
 namespace net {
 
 namespace {
@@ -120,6 +122,13 @@ void QuicConnectivityProbingManager::OnConnectivityProbingReceived(
     return;
   }
 
+  UMA_HISTOGRAM_COUNTS_100("Net.QuicSession.ProbingRetryCountUntilSuccess",
+                           retry_count_);
+  retry_count_++;
+  int64_t duration_ms =
+      ((UINT64_C(1) << retry_count_) - 1) * initial_timeout_.InMilliseconds();
+  UMA_HISTOGRAM_COUNTS_1M(
+      "Net.QuicSession.ProbingTimeInMillisecondsUntilSuccess", duration_ms);
   // TODO(zhongyi): add metrics collection.
   // Notify the delegate that the probe succeeds and reset everything.
   delegate_->OnProbeNetworkSucceeded(network_, self_address, std::move(socket_),
