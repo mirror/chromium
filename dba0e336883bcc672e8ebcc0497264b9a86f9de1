@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "351e0a42_13bc706c",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-20T21:11:06Z",
+      "side": 1,
+      "message": "Then I cannot use values in tests. They will be not compatible with int.",
+      "parentUuid": "a8aa4809_b0f3b8f1",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 4
+      },
+      "revId": "dba0e336883bcc672e8ebcc0497264b9a86f9de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "babc1b2a_cd9e375b",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.h",
         "patchSetId": 3
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "c4c45fe4_8331c366",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-20T21:11:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "babc1b2a_cd9e375b",
+      "range": {
+        "startLine": 42,
+        "startChar": 28,
+        "endLine": 42,
+        "endChar": 31
+      },
+      "revId": "dba0e336883bcc672e8ebcc0497264b9a86f9de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a4ebb4e_8f51a7ee",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -91,6 +139,30 @@
       "revId": "dba0e336883bcc672e8ebcc0497264b9a86f9de1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96fe7f10_e51f81f1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 58968,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-20T21:11:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a4ebb4e_8f51a7ee",
+      "range": {
+        "startLine": 58968,
+        "startChar": 80,
+        "endLine": 58968,
+        "endChar": 0
+      },
+      "revId": "dba0e336883bcc672e8ebcc0497264b9a86f9de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
