@@ -71,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "38d64edb_305b9738",
+        "filename": "services/viz/privileged/interfaces/compositing/display_private.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T17:28:44Z",
+      "side": 1,
+      "message": "Please document this.",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dbaa13b_519c3ea5",
         "filename": "ui/compositor/compositor.cc",
         "patchSetId": 1
@@ -88,6 +105,41 @@
     },
     {
       "key": {
+        "uuid": "37c1ea2d_d080048e",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T17:28:44Z",
+      "side": 1,
+      "message": "Yes, else when we get a new display, we\u0027d never tell it about the matrix.",
+      "parentUuid": "9dbaa13b_519c3ea5",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e9d937e_9f498320",
+        "filename": "ui/compositor/compositor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T17:28:44Z",
+      "side": 1,
+      "message": "This reads ambiguously to me. It sounds like maybe it means the matrix being used by the device hardware, so that this can accomodate it. Or maybe the matrix that this wants to change the output of the compositor by (which I think is what it is). Can this be more clear? Also compositors are 1:1 with windows on most platforms, screens on chromeos, so \"device\" may not be what this should say at all.",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56ed5f86_51f1d050",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 1
@@ -99,6 +151,41 @@
       "writtenOn": "2017-11-19T00:49:32Z",
       "side": 1,
       "message": "Can you DCHECK() instead or at least log an error? t prevent anyone from using this by mistake..",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df40babd_87274f5c",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T17:28:44Z",
+      "side": 1,
+      "message": "+1 to DCHECK instead, and document this clearly on the function declaration.",
+      "parentUuid": "56ed5f86_51f1d050",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c8d96a9_09d401af",
+        "filename": "ui/compositor/test/in_process_context_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T17:28:44Z",
+      "side": 1,
+      "message": "Seems like there should be some tests for this of some sort?",
       "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
