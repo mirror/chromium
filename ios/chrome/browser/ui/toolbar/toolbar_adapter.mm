@@ -46,6 +46,10 @@
   self.toolbarCoordinator.URLLoader = URLLoader;
 }
 
+- (ToolbarButtonUpdater*)buttonUpdater {
+  return self.toolbarCoordinator.buttonUpdater;
+}
+
 - (UIViewController*)viewController {
   return self.toolbarCoordinator.viewController;
 }
@@ -171,22 +175,6 @@
 
 - (UIView*)shareButtonView {
   return nil;
-}
-
-#pragma mark - TabHistoryPositioner
-
-- (CGPoint)originPointForToolbarButton:(ToolbarButtonType)toolbarButton {
-  return CGPointZero;
-}
-
-#pragma mark - TabHistoryUIUpdater
-
-- (void)updateUIForTabHistoryPresentationFrom:(ToolbarButtonType)button {
-  return;
-}
-
-- (void)updateUIForTabHistoryWasDismissed {
-  return;
 }
 
 #pragma mark - QRScannerResultLoading
