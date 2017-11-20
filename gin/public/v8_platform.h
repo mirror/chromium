@@ -8,7 +8,9 @@
 #include "base/compiler_specific.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "gin/gin_export.h"
+#include "third_party/icu/source/i18n/unicode/timezone.h"
 #include "v8/include/v8-platform.h"
 
 namespace gin {
@@ -17,6 +19,12 @@ namespace gin {
 class GIN_EXPORT V8Platform : public v8::Platform {
  public:
   static V8Platform* Get();
+
+  // Forces the Platform to report specified time and timezone instead of the
+  // real one. If value is missing override for this value is cleared. Time and
+  // timezone can be overriden independently.
+  void SetCurrentTimeOverride(const base::Optional<double> time_millis,
+                              const base::Optional<std::string> time_zone);
 
   // v8::Platform implementation.
   void OnCriticalMemoryPressure() override;
@@ -48,6 +56,8 @@ class GIN_EXPORT V8Platform : public v8::Platform {
 
   class TracingControllerImpl;
   std::unique_ptr<TracingControllerImpl> tracing_controller_;
+  base::Optional<double> clock_time_in_millis_override_;
+  std::unique_ptr<icu::TimeZone> saved_time_zone_;
 
   DISALLOW_COPY_AND_ASSIGN(V8Platform);
 };
