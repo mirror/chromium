@@ -332,6 +332,7 @@ IN_PROC_BROWSER_TEST_F(ChromeResourceDispatcherHostDelegateBrowserTest,
   }
 }
 
+#if BUILDFLAG(ENABLE_MIRROR)
 namespace {
 
 // A URLRequestMockHTTPJob to that reports HTTP request headers of outgoing
@@ -470,10 +471,6 @@ void SetDelegateOnIO(content::ResourceDispatcherHostDelegate* new_delegate) {
 // This is a regression test for crbug.com/588492.
 IN_PROC_BROWSER_TEST_F(ChromeResourceDispatcherHostDelegateBrowserTest,
                        MirrorRequestHeader) {
-  // Enable account consistency so that mirror actually sets the
-  // X-Chrome-Connected header in requests to Google.
-  signin::ScopedAccountConsistencyMirror scoped_mirror;
-
   browser()->profile()->GetPrefs()->SetString(prefs::kGoogleServicesUsername,
                                               "user@gmail.com");
   browser()->profile()->GetPrefs()->SetString(
@@ -591,6 +588,7 @@ IN_PROC_BROWSER_TEST_F(ChromeResourceDispatcherHostDelegateBrowserTest,
     }
   }
 }
+#endif  // BUILDFLAG(ENABLE_MIRROR)
 
 // Check that exactly one set of throttles is added to smaller downloads, which
 // have their mime type determined only after the response is completely

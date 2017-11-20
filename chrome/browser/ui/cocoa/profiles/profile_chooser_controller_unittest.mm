@@ -38,7 +38,6 @@
 #include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
-#include "components/signin/core/browser/scoped_account_consistency.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/browser/signin_pref_names.h"
 #include "components/sync_preferences/pref_service_syncable.h"
@@ -277,31 +276,6 @@ TEST_F(ProfileChooserControllerTest,
 }
 
 TEST_F(ProfileChooserControllerTest,
-       SignedInProfileActiveCardLinksWithAccountConsistency) {
-  signin::ScopedAccountConsistencyMirror scoped_mirror;
-
-  SignInFirstProfile();
-
-  StartProfileChooserController();
-  NSArray* subviews = [[[controller() window] contentView] subviews];
-  ASSERT_EQ(2U, [subviews count]);
-  subviews = [[subviews objectAtIndex:0] subviews];
-  // The active card is the last subview and the MD User Menu has 2 extra
-  // buttons.
-  NSUInteger lastSubviewIndex = 4;
-  NSArray* activeCardSubviews =
-      [[subviews objectAtIndex:lastSubviewIndex] subviews];
-  NSArray* activeCardLinks = [[activeCardSubviews objectAtIndex:0] subviews];
-
-  // There is one link: manage accounts.
-  ASSERT_EQ(1U, [activeCardLinks count]);
-  NSButton* manageAccountsLink =
-      base::mac::ObjCCast<NSButton>([activeCardLinks objectAtIndex:0]);
-  EXPECT_EQ(@selector(showAccountManagement:), [manageAccountsLink action]);
-  EXPECT_EQ(controller(), [manageAccountsLink target]);
-}
-
-TEST_F(ProfileChooserControllerTest,
     SignedInProfileActiveCardLinksWithNewMenu) {
   SignInFirstProfile();
 
@@ -318,96 +292,6 @@ TEST_F(ProfileChooserControllerTest,
 
   // There is the profile avatar and the profile name.
   ASSERT_EQ(2U, [activeCardLinks count]);
-}
-
-TEST_F(ProfileChooserControllerTest, AccountManagementLayout) {
-  signin::ScopedAccountConsistencyMirror scoped_mirror;
-
-  SignInFirstProfile();
-
-  // Mark that we are using the profile name on purpose, so that we don't
-  // fallback to testing the algorithm that chooses which default name
-  // should be used.
-  ProfileAttributesEntry* entry = testing_profile_manager()->
-      profile_attributes_storage()->GetAllProfilesAttributes().front();
-  entry->SetIsUsingDefaultName(false);
-
-  // Set up the AccountTrackerService, signin manager and the OAuth2Tokens.
-  Profile* profile = browser()->profile();
-  AccountTrackerServiceFactory::GetForProfile(profile)
-      ->SeedAccountInfo(kGaiaId, kEmail);
-  AccountTrackerServiceFactory::GetForProfile(profile)
-      ->SeedAccountInfo(kSecondaryGaiaId, kSecondaryEmail);
-  SigninManagerFactory::GetForProfile(profile)
-      ->SetAuthenticatedAccountInfo(kGaiaId, kEmail);
-  std::string account_id =
-      SigninManagerFactory::GetForProfile(profile)->GetAuthenticatedAccountId();
-  ProfileOAuth2TokenServiceFactory::GetForProfile(profile)
-      ->UpdateCredentials(account_id, kLoginToken);
-  account_id = AccountTrackerServiceFactory::GetForProfile(profile)
-                   ->PickAccountIdForAccount(kSecondaryGaiaId, kSecondaryEmail);
-  ProfileOAuth2TokenServiceFactory::GetForProfile(profile)
-      ->UpdateCredentials(account_id, kLoginToken);
-
-  SuppressSyncConfirmationError();
-
-  StartProfileChooserController();
-  [controller()
-      showMenuWithViewMode:profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT];
-
-  NSArray* subviews = [[[controller() window] contentView] subviews];
-  ASSERT_EQ(2U, [subviews count]);
-  subviews = [[subviews objectAtIndex:0] subviews];
-
-  // There should be one active card, one accounts container, two separators
-  // and one option buttons view. In the MD User Menu, there are 2 more buttons.
-  NSUInteger viewsCount = 7;
-  ASSERT_EQ(viewsCount, [subviews count]);
-
-  NSArray* buttonSubviews = [[subviews objectAtIndex:0] subviews];
-  ExpectRegularProfileButtons(buttonSubviews);
-
-  NSUInteger accountsViewIndex = 4;
-  // In the accounts view, there should be the account list container
-  // accounts and one "add accounts" button.
-  NSArray* accountsSubviews =
-      [[subviews objectAtIndex:accountsViewIndex] subviews];
-  ASSERT_EQ(2U, [accountsSubviews count]);
-
-  NSButton* addAccountsButton =
-      base::mac::ObjCCast<NSButton>([accountsSubviews objectAtIndex:0]);
-  EXPECT_EQ(@selector(addAccount:), [addAccountsButton action]);
-  EXPECT_EQ(controller(), [addAccountsButton target]);
-
-  // There should be two accounts in the account list container.
-  NSArray* accountsListSubviews = [[accountsSubviews objectAtIndex:1] subviews];
-  ASSERT_EQ(2U, [accountsListSubviews count]);
-
-  NSButton* genericAccount =
-      base::mac::ObjCCast<NSButton>([accountsListSubviews objectAtIndex:0]);
-  NSButton* genericAccountDelete = base::mac::ObjCCast<NSButton>(
-  [[genericAccount subviews] objectAtIndex:0]);
-  EXPECT_EQ(@selector(showAccountRemovalView:), [genericAccountDelete action]);
-  EXPECT_EQ(controller(), [genericAccountDelete target]);
-  EXPECT_NE(-1, [genericAccountDelete tag]);
-
-  // Primary accounts are always last.
-  NSButton* primaryAccount =
-      base::mac::ObjCCast<NSButton>([accountsListSubviews objectAtIndex:1]);
-  NSButton* primaryAccountDelete = base::mac::ObjCCast<NSButton>(
-      [[primaryAccount subviews] objectAtIndex:0]);
-  EXPECT_EQ(@selector(showAccountRemovalView:), [primaryAccountDelete action]);
-  EXPECT_EQ(controller(), [primaryAccountDelete target]);
-  EXPECT_EQ(-1, [primaryAccountDelete tag]);
-
-  // There should be another separator.
-  EXPECT_TRUE([[subviews objectAtIndex:3] isKindOfClass:[NSBox class]]);
-
-  // There should be the profile avatar, name and a "hide accounts" link
-  // container in the active card view.
-  NSArray* activeCardSubviews = [[subviews objectAtIndex:4] subviews];
-  // In the MD user menu, the profile name and avatar are in the same subview.
-  ASSERT_EQ(2U, [activeCardSubviews count]);
 }
 
 TEST_F(ProfileChooserControllerTest, SignedInProfileLockDisabled) {

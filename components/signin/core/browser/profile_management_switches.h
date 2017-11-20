@@ -30,7 +30,6 @@ extern const base::Feature kAccountConsistencyFeature;
 extern const char kAccountConsistencyFeatureMethodParameter[];
 
 // Account consistency method feature values.
-extern const char kAccountConsistencyFeatureMethodMirror[];
 extern const char kAccountConsistencyFeatureMethodDiceFixAuthErrors[];
 extern const char kAccountConsistencyFeatureMethodDicePrepareMigration[];
 extern const char kAccountConsistencyFeatureMethodDiceMigration[];
@@ -42,9 +41,6 @@ extern const char kAccountConsistencyFeatureMethodDice[];
 enum class AccountConsistencyMethod : int {
   // No account consistency.
   kDisabled,
-
-  // Account management UI in the avatar bubble.
-  kMirror,
 
   // No account consistency, but Dice fixes authentication errors.
   kDiceFixAuthErrors,

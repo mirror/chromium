@@ -152,6 +152,13 @@ static_library("browser") {
     ]
   }
 
+  if (!enable_mirror) {
+    sources -= [
+      "mirror_account_reconcilor_delegate.cc",
+      "mirror_account_reconcilor_delegate.h",
+    ]
+  }
+
   if (is_android) {
     sources -= [
       "child_account_info_fetcher_impl.cc",

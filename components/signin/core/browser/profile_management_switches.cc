@@ -31,7 +31,6 @@ const char kDiceMigrationCompletePref[] = "signin.DiceMigrationComplete";
 bool IsDiceEnabledForPrefValue(bool dice_pref_value) {
   switch (GetAccountConsistencyMethod()) {
     case AccountConsistencyMethod::kDisabled:
-    case AccountConsistencyMethod::kMirror:
     case AccountConsistencyMethod::kDiceFixAuthErrors:
     case AccountConsistencyMethod::kDicePrepareMigration:
       return false;
@@ -43,12 +42,12 @@ bool IsDiceEnabledForPrefValue(bool dice_pref_value) {
   NOTREACHED();
   return false;
 }
-#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
 bool AccountConsistencyMethodGreaterOrEqual(AccountConsistencyMethod a,
                                             AccountConsistencyMethod b) {
   return static_cast<int>(a) >= static_cast<int>(b);
 }
+#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
 }  // namespace
 
@@ -56,7 +55,6 @@ bool AccountConsistencyMethodGreaterOrEqual(AccountConsistencyMethod a,
 const base::Feature kAccountConsistencyFeature{
     "AccountConsistency", base::FEATURE_DISABLED_BY_DEFAULT};
 const char kAccountConsistencyFeatureMethodParameter[] = "method";
-const char kAccountConsistencyFeatureMethodMirror[] = "mirror";
 const char kAccountConsistencyFeatureMethodDiceFixAuthErrors[] =
     "dice_fix_auth_errors";
 const char kAccountConsistencyFeatureMethodDicePrepareMigration[] =
@@ -74,7 +72,8 @@ void RegisterAccountConsistencyProfilePrefs(
 AccountConsistencyMethod GetAccountConsistencyMethod() {
 #if BUILDFLAG(ENABLE_MIRROR)
   // Mirror is always enabled on Android and iOS.
-  return AccountConsistencyMethod::kMirror;
+  NOTREACHED();
+  return AccountConsistencyMethod::kDisabled;
 #else
   if (!base::FeatureList::IsEnabled(kAccountConsistencyFeature))
     return AccountConsistencyMethod::kDisabled;
@@ -82,10 +81,8 @@ AccountConsistencyMethod GetAccountConsistencyMethod() {
   std::string method_value = base::GetFieldTrialParamValueByFeature(
       kAccountConsistencyFeature, kAccountConsistencyFeatureMethodParameter);
 
-  if (method_value == kAccountConsistencyFeatureMethodMirror)
-    return AccountConsistencyMethod::kMirror;
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
-  else if (method_value == kAccountConsistencyFeatureMethodDiceFixAuthErrors)
+  if (method_value == kAccountConsistencyFeatureMethodDiceFixAuthErrors)
     return AccountConsistencyMethod::kDiceFixAuthErrors;
   else if (method_value == kAccountConsistencyFeatureMethodDicePrepareMigration)
     return AccountConsistencyMethod::kDicePrepareMigration;
@@ -93,25 +90,37 @@ AccountConsistencyMethod GetAccountConsistencyMethod() {
     return AccountConsistencyMethod::kDiceMigration;
   else if (method_value == kAccountConsistencyFeatureMethodDice)
     return AccountConsistencyMethod::kDice;
-#endif
+#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
   return AccountConsistencyMethod::kDisabled;
 #endif  // BUILDFLAG(ENABLE_MIRROR)
 }
 
 bool IsAccountConsistencyMirrorEnabled() {
-  return GetAccountConsistencyMethod() == AccountConsistencyMethod::kMirror;
+#if BUILDFLAG(ENABLE_MIRROR)
+  return true;
+#else
+  return false;
+#endif
 }
 
 bool IsDicePrepareMigrationEnabled() {
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
   return AccountConsistencyMethodGreaterOrEqual(
       GetAccountConsistencyMethod(),
       AccountConsistencyMethod::kDicePrepareMigration);
+#else
+  return false;
+#endif
 }
 
 bool IsDiceMigrationEnabled() {
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
   return AccountConsistencyMethodGreaterOrEqual(
       GetAccountConsistencyMethod(), AccountConsistencyMethod::kDiceMigration);
+#else
+  return false;
+#endif
 }
 
 bool IsDiceEnabledForProfile(const PrefService* user_prefs) {
@@ -154,9 +163,13 @@ void MigrateProfileToDice(PrefService* user_prefs) {
 }
 
 bool IsDiceFixAuthErrorsEnabled() {
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
   return AccountConsistencyMethodGreaterOrEqual(
       GetAccountConsistencyMethod(),
       AccountConsistencyMethod::kDiceFixAuthErrors);
+#else
+  return false;
+#endif
 }
 
 bool IsExtensionsMultiAccount() {
@@ -167,8 +180,7 @@ bool IsExtensionsMultiAccount() {
 #endif
 
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
-             switches::kExtensionsMultiAccount) ||
-         GetAccountConsistencyMethod() == AccountConsistencyMethod::kMirror;
+      switches::kExtensionsMultiAccount);
 }
 
 }  // namespace signin

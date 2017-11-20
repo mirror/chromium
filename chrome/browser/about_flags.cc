@@ -311,13 +311,7 @@ const FeatureEntry::Choice kDefaultTileHeightChoices[] = {
     {flag_descriptions::kDefaultTileHeightVenti, switches::kDefaultTileHeight,
      "1024"}};
 
-#if !BUILDFLAG(ENABLE_MIRROR)
-
-const FeatureEntry::FeatureParam kAccountConsistencyMirror[] = {
-    {signin::kAccountConsistencyFeatureMethodParameter,
-     signin::kAccountConsistencyFeatureMethodMirror}};
-
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#if !BUILDFLAG(ENABLE_MIRROR) && BUILDFLAG(ENABLE_DICE_SUPPORT)
 const FeatureEntry::FeatureParam kAccountConsistencyDice[] = {
     {signin::kAccountConsistencyFeatureMethodParameter,
      signin::kAccountConsistencyFeatureMethodDice}};
@@ -333,13 +327,8 @@ const FeatureEntry::FeatureParam kAccountConsistencyDiceMigration[] = {
 const FeatureEntry::FeatureParam kAccountConsistencyDiceFixAuthErrors[] = {
     {signin::kAccountConsistencyFeatureMethodParameter,
      signin::kAccountConsistencyFeatureMethodDiceFixAuthErrors}};
-#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
 const FeatureEntry::FeatureVariation kAccountConsistencyFeatureVariations[] = {
-    {"Mirror", kAccountConsistencyMirror, arraysize(kAccountConsistencyMirror),
-     nullptr /* variation_id */}
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
-    ,
     {"Dice", kAccountConsistencyDice, arraysize(kAccountConsistencyDice),
      nullptr /* variation_id */},
     {"Dice (migration)", kAccountConsistencyDiceMigration,
@@ -350,10 +339,9 @@ const FeatureEntry::FeatureVariation kAccountConsistencyFeatureVariations[] = {
     {"Dice (fix auth errors)", kAccountConsistencyDiceFixAuthErrors,
      arraysize(kAccountConsistencyDiceFixAuthErrors),
      nullptr /* variation_id */}
-#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 };
 
-#endif  // !BUILDFLAG(ENABLE_MIRROR)
+#endif  // !BUILDFLAG(ENABLE_MIRROR) && BUILDFLAG(ENABLE_DICE_SUPPORT)
 
 const FeatureEntry::Choice kSimpleCacheBackendChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
@@ -1739,13 +1727,13 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kWebglDraftExtensionsName,
      flag_descriptions::kWebglDraftExtensionsDescription, kOsAll,
      SINGLE_VALUE_TYPE(switches::kEnableWebGLDraftExtensions)},
-#if !BUILDFLAG(ENABLE_MIRROR)
+#if !BUILDFLAG(ENABLE_MIRROR) && BUILDFLAG(ENABLE_DICE_SUPPORT)
     {"account-consistency", flag_descriptions::kAccountConsistencyName,
      flag_descriptions::kAccountConsistencyDescription, kOsAll,
      FEATURE_WITH_PARAMS_VALUE_TYPE(signin::kAccountConsistencyFeature,
                                     kAccountConsistencyFeatureVariations,
                                     "AccountConsistencyVariations")},
-#endif
+#endif  // !BUILDFLAG(ENABLE_MIRROR) && BUILDFLAG(ENABLE_DICE_SUPPORT)
 #if BUILDFLAG(ENABLE_APP_LIST)
     {"reset-app-list-install-state",
      flag_descriptions::kResetAppListInstallStateName,
