@@ -35,6 +35,7 @@ struct Model {
   ModalPromptType active_modal_prompt_type = kModalPromptTypeNone;
 
   ToolbarState toolbar_state;
+  bool omnibox_input_active = false;
   std::vector<OmniboxSuggestion> omnibox_suggestions;
 };
 
