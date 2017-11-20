@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12110382_ee1aefb3",
+        "filename": "chrome/browser/ui/webui/discards/discards_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-20T23:49:55Z",
+      "side": 1,
+      "message": "Nit (optional):\ninfo-\u003efavicon_url \u003d tab.favicon_url.empty() ?\n  \"chrome://discards/default_favicon.png\" :  tab.favicon_url;\n\nAlso (optional), perhaps we should move the logic of falling back to a default favicon to the UI side. FYI, there is a JS API to display favicons for various URLs, see https://cs.chromium.org/chromium/src/ui/webui/resources/js/icon.js?q\u003dicon.js\u0026dr\u0026l\u003d91.",
+      "revId": "204df3c3ef6d71b1179c78e1d7f8be99e01c60e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "927744c5_631b607a",
+        "filename": "chrome/browser/ui/webui/discards/discards_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-20T23:49:55Z",
+      "side": 1,
+      "message": "Is this needed at all? Does chrome://discards/default_favicon.png return something different than chrome://favicon?",
+      "revId": "204df3c3ef6d71b1179c78e1d7f8be99e01c60e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32b7e16b_7a5cddfb",
+        "filename": "chrome/test/data/webui/discards/discards_browsertest.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-20T23:49:55Z",
+      "side": 1,
+      "message": "Nit(optional): \u0027Test\u0027 prefix seems redundant. Let\u0027s Either keep it as a suffix to DiscardsTest, or as a prefix to TestCompareTabDiscardsInfo, but not both (here and elsewhere in this file).",
+      "range": {
+        "startLine": 19,
+        "startChar": 24,
+        "endLine": 19,
+        "endChar": 28
+      },
+      "revId": "204df3c3ef6d71b1179c78e1d7f8be99e01c60e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
