@@ -46,6 +46,30 @@
       "revId": "3e97d9f7ef50694e69d3bfcdeb02d06d91a31591",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f52da5_ce31f1c3",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/params/ParameterizedRunnerDelegateFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-20T18:30:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "699ffd02_c50d0bcb",
+      "range": {
+        "startLine": 186,
+        "startChar": 41,
+        "endLine": 190,
+        "endChar": 17
+      },
+      "revId": "3e97d9f7ef50694e69d3bfcdeb02d06d91a31591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
