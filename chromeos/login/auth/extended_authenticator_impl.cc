@@ -262,20 +262,16 @@ void ExtendedAuthenticatorImpl::DoRemoveKey(const std::string& key_to_remove,
                                         const base::Closure& success_callback,
                                         const UserContext& user_context) {
   RecordStartMarker("RemoveKeyEx");
-
-  cryptohome::Identification id(user_context.GetAccountId());
+  cryptohome::RemoveKeyRequest request;
+  request.mutable_key()->mutable_data()->set_label(key_to_remove);
   const Key* const auth_key = user_context.GetKey();
-  cryptohome::Authorization auth(auth_key->GetSecret(), auth_key->GetLabel());
-
   cryptohome::HomedirMethods::GetInstance()->RemoveKeyEx(
-      id,
-      auth,
-      key_to_remove,
-      base::Bind(&ExtendedAuthenticatorImpl::OnOperationComplete,
-                 this,
-                 "RemoveKeyEx",
-                 user_context,
-                 success_callback));
+      cryptohome::Identification(user_context.GetAccountId()),
+      cryptohome::CreateAuthorizationRequest(auth_key->GetSecret(),
+                                             auth_key->GetLabel()),
+      request,
+      base::Bind(&ExtendedAuthenticatorImpl::OnOperationComplete, this,
+                 "RemoveKeyEx", user_context, success_callback));
 }
 
 void ExtendedAuthenticatorImpl::OnMountComplete(
