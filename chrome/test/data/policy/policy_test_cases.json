@@ -873,6 +873,22 @@
     ]
   },
 
+  "IsolateOrigins": {
+    "os": ["win", "linux", "mac", "chromeos"],
+    "test_policy": { "IsolateOrigins": "" },
+    "pref_mappings": [
+      { "pref": "site_isolation.isolate_origins" }
+    ]
+  },
+
+  "SitePerProcess": {
+    "os": ["win", "linux", "mac", "chromeos"],
+    "test_policy": { "SitePerProcess": false },
+    "pref_mappings": [
+      { "pref": "site_isolation.site_per_process" }
+    ]
+  },
+
   "ExtensionInstallBlacklist": {
     "os": ["win", "linux", "mac", "chromeos"],
     "test_policy": { "ExtensionInstallBlacklist": ["*"] },
