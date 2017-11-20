@@ -128,30 +128,54 @@ void StatFileForIPC(const BrokerPolicy& policy,
   write_pickle->WriteData(reinterpret_cast<char*>(&sb), sizeof(sb));
 }
 
+// Perform rename(2) on |old_filename| to |new_filename| and marshal the
+// result to |write_pickle|.
+void RenameFileForIPC(const BrokerPolicy& policy,
+                      const std::string& old_filename,
+                      const std::string& new_filename,
+                      base::Pickle* write_pickle) {
+  DCHECK(write_pickle);
+  bool ignore;
+  const char* old_file_to_access = nullptr;
+  const char* new_file_to_access = nullptr;
+  if (!policy.GetFileNameIfAllowedToOpen(old_filename.c_str(), W_OK,
+                                         &old_file_to_access, &ignore) ||
+      !policy.GetFileNameIfAllowedToOpen(new_filename.c_str(), W_OK,
+                                         &new_file_to_access, &ignore)) {
+    write_pickle->WriteInt(-policy.denied_errno());
+    return;
+  }
+  if (rename(old_file_to_access, new_file_to_access) < 0) {
+    write_pickle->WriteInt(-errno);
+    return;
+  }
+  write_pickle->WriteInt(0);
+}
+
 // Handle a |command_type| request contained in |iter| and send the reply
 // on |reply_ipc|.
 // Currently COMMAND_OPEN and COMMAND_ACCESS are supported.
 bool HandleRemoteCommand(const BrokerPolicy& policy,
-                         IPCCommand command_type,
                          int reply_ipc,
                          base::PickleIterator iter) {
-  // Currently all commands have filename as the first arg.
-  std::string requested_filename;
-  if (!iter.ReadString(&requested_filename))
-    return false;
-
   base::Pickle write_pickle;
   std::vector<int> opened_files;
+  int command_type;
+
+  if (iter.ReadInt(&command_type))
+    return false;
 
   switch (command_type) {
     case COMMAND_ACCESS: {
+      std::string requested_filename;
       int flags = 0;
-      if (!iter.ReadInt(&flags))
+      if (!iter.ReadString(&requested_filename) || !iter.ReadInt(&flags))
         return false;
       AccessFileForIPC(policy, requested_filename, flags, &write_pickle);
       break;
     }
     case COMMAND_OPEN: {
+      std::string requested_filename;
       int flags = 0;
       if (!iter.ReadInt(&flags))
         return false;
@@ -160,12 +184,23 @@ bool HandleRemoteCommand(const BrokerPolicy& policy,
       break;
     }
     case COMMAND_STAT: {
+      std::string requested_filename;
+      if (!iter.ReadString(&requested_filename))
+        return false;
       StatFileForIPC(policy, requested_filename, &write_pickle);
+      break;
+    }
+    case COMMAND_RENAME: {
+      std::string old_filename;
+      std::string new_filename;
+      if (!iter.ReadString(&old_filename) || !iter.ReadString(&new_filename))
+        return false;
+      RenameFileForIPC(policy, old_filename, new_filename, &write_pickle);
       break;
     }
     default:
       LOG(ERROR) << "Invalid IPC command";
-      break;
+      return false;
   }
 
   CHECK_LE(write_pickle.size(), kMaxMessageLength);
@@ -218,22 +253,12 @@ BrokerHost::RequestStatus BrokerHost::HandleRequest() const {
   }
 
   base::ScopedFD temporary_ipc(std::move(fds[0]));
-
   base::Pickle pickle(buf, msg_len);
   base::PickleIterator iter(pickle);
-  int command_type;
-  if (iter.ReadInt(&command_type)) {
-    bool command_handled = HandleRemoteCommand(
-        broker_policy_, static_cast<IPCCommand>(command_type),
-        temporary_ipc.get(), iter);
-    if (!command_handled)
-      return RequestStatus::FAILURE;
+  if (!HandleRemoteCommand(broker_policy_, temporary_ipc.get(), iter))
+    return RequestStatus::FAILURE;
 
-    return RequestStatus::SUCCESS;
-  }
-
-  LOG(ERROR) << "Error parsing IPC request";
-  return RequestStatus::FAILURE;
+  return RequestStatus::SUCCESS;
 }
 
 }  // namespace syscall_broker
