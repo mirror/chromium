@@ -82,6 +82,30 @@
     },
     {
       "key": {
+        "uuid": "1e0b1a9e_53ad6ce5",
+        "filename": "content/renderer/media/user_media_client_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-20T16:33:04Z",
+      "side": 1,
+      "message": "MSDH\u0027s mojo methods expect a render_frame_id as one of the inputs. So, we need to set one(dummy) from the tests at l.479.",
+      "parentUuid": "d4ff876d_08d670c5",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 24
+      },
+      "revId": "e69f3c0386548a6ee807e3ff669c97b78d7edea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7815ec04_1b0343dc",
         "filename": "content/renderer/media/user_media_processor.h",
         "patchSetId": 1
@@ -93,6 +117,30 @@
       "writtenOn": "2017-11-20T15:40:29Z",
       "side": 1,
       "message": "Don\u0027t friend the class if it\u0027s just to set |dispatcher_host_|.\nAdd a set_media_stream_dispatcher_host_for_testing() setter instead.",
+      "range": {
+        "startLine": 142,
+        "startChar": 15,
+        "endLine": 142,
+        "endChar": 38
+      },
+      "revId": "e69f3c0386548a6ee807e3ff669c97b78d7edea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc3525d_cf3c4838",
+        "filename": "content/renderer/media/user_media_processor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-20T16:33:04Z",
+      "side": 1,
+      "message": "|render_frame_id_| needs to be set as well.",
+      "parentUuid": "7815ec04_1b0343dc",
       "range": {
         "startLine": 142,
         "startChar": 15,
