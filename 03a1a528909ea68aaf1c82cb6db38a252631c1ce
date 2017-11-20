@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e28a8c6_c6973dbe",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-11-20T16:43:33Z",
+      "side": 1,
+      "message": "As discussed, a variation parameter is probably a better fit here as this should remove confusion about one feature having to be enabled in the first place.",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 19
+      },
+      "revId": "03a1a528909ea68aaf1c82cb6db38a252631c1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
