@@ -594,19 +594,24 @@ IN_PROC_BROWSER_TEST_F(AppControllerMainMenuBrowserTest,
   bookmarks::test::WaitForBookmarkModelToLoad(
       BookmarkModelFactory::GetForBrowserContext(profile2));
 
+  auto UpdateRootMenu = [&ac]() {
+    NSMenu* bookmark_submenu = [ac bookmarkMenuBridge]->BookmarkMenu();
+    [[bookmark_submenu delegate] menuNeedsUpdate:bookmark_submenu];
+  };
+
   // Switch to profile 1, create bookmark 1 and force the menu to build.
   [ac windowChangedToProfile:profile1];
   [ac bookmarkMenuBridge]->GetBookmarkModel()->AddURL(
       [ac bookmarkMenuBridge]->GetBookmarkModel()->bookmark_bar_node(),
       0, title1, url1);
-  [ac bookmarkMenuBridge]->BuildMenu();
+  UpdateRootMenu();
 
   // Switch to profile 2, create bookmark 2 and force the menu to build.
   [ac windowChangedToProfile:profile2];
   [ac bookmarkMenuBridge]->GetBookmarkModel()->AddURL(
       [ac bookmarkMenuBridge]->GetBookmarkModel()->bookmark_bar_node(),
       0, title2, url2);
-  [ac bookmarkMenuBridge]->BuildMenu();
+  UpdateRootMenu();
 
   // Test that only bookmark 2 is shown.
   EXPECT_FALSE([[ac bookmarkMenuBridge]->BookmarkMenu() itemWithTitle:

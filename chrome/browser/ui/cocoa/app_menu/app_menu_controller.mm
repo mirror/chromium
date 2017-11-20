@@ -306,9 +306,9 @@ class ToolbarActionsBarObserverHelper : public ToolbarActionsBarObserver {
 - (void)updateBookmarkSubMenu {
   NSMenu* bookmarkMenu = [self bookmarkSubMenu];
   DCHECK(bookmarkMenu);
-
-  bookmarkMenuBridge_.reset(new BookmarkMenuBridge(
-      [self appMenuModel]->browser()->profile(), bookmarkMenu));
+  DCHECK(!bookmarkMenuBridge_);
+  bookmarkMenuBridge_ = std::make_unique<BookmarkMenuBridge>(
+      [self appMenuModel]->browser()->profile(), bookmarkMenu);
 }
 
 - (void)updateBrowserActionsSubmenu {
@@ -386,6 +386,9 @@ class ToolbarActionsBarObserverHelper : public ToolbarActionsBarObserver {
 
 - (void)menuDidClose:(NSMenu*)menu {
   [super menuDidClose:menu];
+
+  bookmarkMenuBridge_ = nullptr;
+
   // We don't need to observe changes to zoom or toolbar size when the menu is
   // closed, since we instantiate it with the proper value and recreate the menu
   // on each show. (We do this in -menuNeedsUpdate:, which is called when the
