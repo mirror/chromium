@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddce9dfb_04cdb86a",
+        "filename": "content/browser/device_sensors/device_sensor_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-20T01:49:42Z",
+      "side": 1,
+      "message": "nit: is this needed?",
+      "revId": "c63cd9412bebe97d94bf0ba6b0a9df715946eedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "315f00d8_a21847f6",
+        "filename": "content/browser/generic_sensor_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-20T01:49:42Z",
+      "side": 1,
+      "message": "nit: same here",
+      "revId": "c63cd9412bebe97d94bf0ba6b0a9df715946eedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c11c62f4_5a5767a0",
+        "filename": "content/test/data/generic_sensor/ambient_light_sensor_cross_origin_iframe_test.html",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-20T01:49:42Z",
+      "side": 1,
+      "message": "nit: this is a bit confusing because of the double negative. How about just calling pass() here and fail() in the catch() and then EXPECTing a result of \"fail\"?",
+      "revId": "c63cd9412bebe97d94bf0ba6b0a9df715946eedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
