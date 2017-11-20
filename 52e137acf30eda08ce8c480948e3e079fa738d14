@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0f67d04_dcc2029a",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-11-20T20:10:24Z",
+      "side": 1,
+      "message": "This would never overwrite a test\u0027s known result, would it? IIUC it wouldn\u0027t since it fetches a batch\u0027s results all at the same time, so it would either be all or nothing... but asking just to be clear.",
+      "revId": "52e137acf30eda08ce8c480948e3e079fa738d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
