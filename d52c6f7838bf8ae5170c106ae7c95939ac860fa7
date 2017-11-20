@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4da9f94_9026e4b6",
+        "filename": "content/browser/resources/accessibility/accessibility.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-11-20T16:42:29Z",
+      "side": 1,
+      "message": "Is the $ jQuery or something else? \nI would have expected $(\u0027#showNativeUI\u0027)",
+      "revId": "d52c6f7838bf8ae5170c106ae7c95939ac860fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
