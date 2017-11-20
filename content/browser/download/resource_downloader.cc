@@ -126,6 +126,7 @@ void ResourceDownloader::Start(
     scoped_refptr<storage::FileSystemContext> file_system_context,
     std::unique_ptr<DownloadUrlParameters> download_url_parameters) {
   callback_ = download_url_parameters->callback();
+  render_process_host_id_ = download_url_parameters->render_process_host_id();
   if (download_url_parameters->url().SchemeIs(url::kBlobScheme)) {
     mojom::URLLoaderRequest url_loader_request;
     mojom::URLLoaderClientPtr client;
@@ -175,7 +176,7 @@ void ResourceDownloader::OnResponseStarted(
   download_create_info->download_id = download_id_;
   download_create_info->guid = guid_;
   download_create_info->request_handle.reset(new RequestHandle(
-      resource_request_->origin_pid, resource_request_->render_frame_id,
+      render_process_host_id_, resource_request_->render_frame_id,
       frame_tree_node_id_));
 
   BrowserThread::PostTask(

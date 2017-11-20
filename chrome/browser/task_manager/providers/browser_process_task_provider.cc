@@ -12,10 +12,9 @@ BrowserProcessTaskProvider::BrowserProcessTaskProvider() {
 BrowserProcessTaskProvider::~BrowserProcessTaskProvider() {
 }
 
-Task* BrowserProcessTaskProvider::GetTaskOfUrlRequest(int origin_pid,
-                                                      int child_id,
+Task* BrowserProcessTaskProvider::GetTaskOfUrlRequest(int child_id,
                                                       int route_id) {
-  if (origin_pid == 0 && child_id == -1)
+  if (child_id == 0)
     return &browser_process_task_;
 
   return nullptr;
