@@ -16,6 +16,24 @@
       "revId": "347ded55fb8bef6a499105b664aaa41892ba1ce1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b78dcb4b_53055b81",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T23:17:30Z",
+      "side": 1,
+      "message": "Ah, we\u0027ll need to save the size in order to recycle also.",
+      "parentUuid": "a44b29cb_191b09db",
+      "revId": "347ded55fb8bef6a499105b664aaa41892ba1ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
