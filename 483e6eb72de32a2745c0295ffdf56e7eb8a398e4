@@ -16,6 +16,24 @@
       "revId": "483e6eb72de32a2745c0295ffdf56e7eb8a398e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbf368db_0a75760f",
+        "filename": "third_party/WebKit/Source/core/style/FillLayer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1124724
+      },
+      "writtenOn": "2017-11-20T02:27:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37403a95_eb25500e",
+      "revId": "483e6eb72de32a2745c0295ffdf56e7eb8a398e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
