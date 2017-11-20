@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8a2e2dd_e3282789",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-20T18:14:30Z",
+      "side": 1,
+      "message": "nit: I think you might want UMA_HISTOGRAM_TIMES()\n\nhttps://cs.chromium.org/chromium/src/base/metrics/histogram_macros.h?q\u003dUMA_HISTOGRAM_TIMES\u0026sq\u003dpackage:chromium\u0026l\u003d151",
+      "range": {
+        "startLine": 131,
+        "startChar": 76,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "bab2e45fb003af4b080a0543f84ffbb6c01ed3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
