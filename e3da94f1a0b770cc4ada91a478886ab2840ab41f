@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b155d988_01db2d7b",
+        "filename": "tools/perf/page_sets/wasm_realworld_pages.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-20T13:00:47Z",
+      "side": 1,
+      "message": "This disable method is only used for temporarily disabling (i.e: disable because of test breakage).\n\nTo express the concept of \"permanently disabling test\", you should use use WebGLSupportedSharedState \n\nExample of how map page uses it: https://cs.chromium.org/chromium/src/tools/perf/page_sets/maps.py?rcl\u003dba0c9a6b3d090d965f90704d1016cc3d47bcb037\u0026l\u003d48",
+      "revId": "e3da94f1a0b770cc4ada91a478886ab2840ab41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
