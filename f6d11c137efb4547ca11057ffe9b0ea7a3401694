@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d52d79c9_99d6c86f",
+        "filename": "chromeos/dbus/fake_shill_ipconfig_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-20T10:04:26Z",
+      "side": 1,
+      "message": "Ack, I added a corresponding entry to the API proposal.",
+      "parentUuid": "5458a4f9_0fa76d5b",
+      "revId": "f6d11c137efb4547ca11057ffe9b0ea7a3401694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77db8f7a_fb8f6a92",
         "filename": "chromeos/network/device_state.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "f6d11c137efb4547ca11057ffe9b0ea7a3401694",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905a9b6a_1eba29cf",
+        "filename": "chromeos/network/device_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-20T10:04:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77db8f7a_fb8f6a92",
+      "revId": "f6d11c137efb4547ca11057ffe9b0ea7a3401694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
