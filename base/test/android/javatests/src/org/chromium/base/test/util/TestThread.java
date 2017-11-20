@@ -50,7 +50,6 @@ public class TestThread extends Thread {
 
     public TestThread() {
         mMainThreadHandler = new Handler();
-        // We can't use the AtomicBoolean as the lock or findbugs will freak out...
         mThreadReadyLock = new Object();
         mThreadReady = new AtomicBoolean();
     }
@@ -79,8 +78,6 @@ public class TestThread extends Thread {
         start();
         synchronized (mThreadReadyLock) {
             try {
-                // Note the mThreadReady and while are not really needed.
-                // There are there so findbugs don't report warnings.
                 while (!mThreadReady.get()) {
                     mThreadReadyLock.wait();
                 }
@@ -113,8 +110,6 @@ public class TestThread extends Thread {
     public void runOnTestThreadSync(final Runnable r) {
         checkOnMainThread();
         final Object lock = new Object();
-        // Task executed is not really needed since we are only on one thread, it is here to appease
-        // findbugs.
         final AtomicBoolean taskExecuted = new AtomicBoolean();
         mTestThreadHandler.post(new Runnable() {
             @Override

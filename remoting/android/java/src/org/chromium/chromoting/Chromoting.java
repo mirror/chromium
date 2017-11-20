@@ -746,7 +746,6 @@ public class Chromoting extends AppCompatActivity implements ConnectionListener,
                 break;
 
             default:
-                // Unreachable, but required by Google Java style and findbugs.
                 assert false : "Unreached";
         }
 

@@ -97,11 +97,6 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
     @Override
     public void notifyAnimationFinished(int animationType) {}
 
-    // Calling {@link ViewAnchoredTextBubble#dismiss()} will invoke {@link #onDismiss} which will
-    // set the value of {@link #mCurrentState} to null, which is what the assert checks. Since this
-    // goes through the Android SDK, FindBugs does not see this as happening, so the FindBugs
-    // warning for a field guaranteed to be non-null being checked for null equality needs to be
-    // suppressed.
     @Override
     public void notifyAllAnimationsFinished(Item frontInfoBar) {
         View view = frontInfoBar == null ? null : frontInfoBar.getView();
@@ -127,11 +122,6 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
     @Override
     public void onAddInfoBar(InfoBarContainer container, InfoBar infoBar, boolean isFirst) {}
 
-    // Calling {@link ViewAnchoredTextBubble#dismiss()} will invoke {@link #onDismiss} which will
-    // set the value of {@link #mCurrentState} to null, which is what the assert checks. Since this
-    // goes through the Android SDK, FindBugs does not see this as happening, so the FindBugs
-    // warning for a field guaranteed to be non-null being checked for null equality needs to be
-    // suppressed.
     @Override
     public void onRemoveInfoBar(InfoBarContainer container, InfoBar infoBar, boolean isLast) {
         if (mCurrentState != null && infoBar.getView() == mCurrentState.view) {

@@ -340,7 +340,6 @@ public class TouchInputHandler {
                 break;
 
             default:
-                // Unreachable, but required by Google Java style and findbugs.
                 assert false : "Unreached";
         }
 

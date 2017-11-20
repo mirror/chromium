@@ -39,7 +39,6 @@ public class Client implements InputStub {
         mNativeJniClient = nativeInit();
     }
 
-    // Suppress FindBugs warning, since |sClient| is only used on the UI thread.
     public void destroy() {
         if (sClient != null) {
             disconnectFromHost();

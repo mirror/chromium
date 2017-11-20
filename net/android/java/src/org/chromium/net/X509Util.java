@@ -230,8 +230,6 @@ public class X509Util {
      * Ensures that the trust managers and certificate factory are initialized. Must be called with
      * |sLock| held.
      */
-    // FindBugs' static field initialization warnings do not handle methods that are expected to be
-    // called locked.
     private static void ensureInitializedLocked()
             throws CertificateException, KeyStoreException, NoSuchAlgorithmException {
         assert Thread.holdsLock(sLock);
