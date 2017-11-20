@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "368fa9bc_705d003b",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectModel.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-20T03:22:50Z",
+      "side": 1,
+      "message": "These two declarations for kCompositableProperties look the same. You should be able declare it in an anonymous namespace instead using constexpr, or at least hide it in a getter in the anon namespace.\n\nAnother option would be to make a method in CSSProperty to get the compositable properties from there.",
+      "revId": "cf7213d47f1f2d9c14f59720ae420430162d8a77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
