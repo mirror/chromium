@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "c93ca663_61894ac1",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-20T21:01:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f24590e3_0a9cea51",
+      "range": {
+        "startLine": 80,
+        "startChar": 14,
+        "endLine": 80,
+        "endChar": 28
+      },
+      "revId": "de6998e3bf0e11657fd0caff7ecf4e97fbdd0cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5f85cd8_e7222542",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-20T21:01:50Z",
+      "side": 1,
+      "message": "Thanks for pointing that out! I uploaded a separate CL that adds this handling.",
+      "parentUuid": "0fe2ebec_bbec7219",
+      "revId": "de6998e3bf0e11657fd0caff7ecf4e97fbdd0cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "333dd4a1_0c27c15f",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 25
@@ -56,6 +98,24 @@
       "revId": "de6998e3bf0e11657fd0caff7ecf4e97fbdd0cba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eca8a16_5fc7ea08",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-20T21:01:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "333dd4a1_0c27c15f",
+      "revId": "de6998e3bf0e11657fd0caff7ecf4e97fbdd0cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
