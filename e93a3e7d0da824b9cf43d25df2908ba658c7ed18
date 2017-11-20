@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "8bd98296_123ffbe1",
+        "filename": "components/omnibox/browser/tailored_word_break_iterator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1103764
+      },
+      "writtenOn": "2017-11-20T02:02:49Z",
+      "side": 1,
+      "message": "I clean up unused code. Thanks.",
+      "parentUuid": "4ffbf7eb_69286ca0",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 30
+      },
+      "revId": "e93a3e7d0da824b9cf43d25df2908ba658c7ed18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2bca91d_6e5c2839",
         "filename": "components/omnibox/browser/url_index_private_data.cc",
         "patchSetId": 15
