@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6066e3b8_51eab94e",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-20T03:30:32Z",
+      "side": 1,
+      "message": "Nit: \"Android\"",
+      "range": {
+        "startLine": 169,
+        "startChar": 40,
+        "endLine": 169,
+        "endChar": 47
+      },
+      "revId": "be2062586bf95cef0b7d6fb28b51274244ed5855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ed39e6f_54104c56",
+        "filename": "chrome/browser/banners/app_banner_manager_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-20T03:30:32Z",
+      "side": 1,
+      "message": "Minor nit: remove extra space",
+      "range": {
+        "startLine": 152,
+        "startChar": 58,
+        "endLine": 152,
+        "endChar": 59
+      },
+      "revId": "be2062586bf95cef0b7d6fb28b51274244ed5855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f1bf242_3279397e",
+        "filename": "chrome/browser/banners/app_banner_manager_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-20T03:30:32Z",
+      "side": 1,
+      "message": "Minor nit: \"is_webapk_installed\" to match the way \"webapk\" is used in this file.",
+      "range": {
+        "startLine": 155,
+        "startChar": 7,
+        "endLine": 155,
+        "endChar": 24
+      },
+      "revId": "be2062586bf95cef0b7d6fb28b51274244ed5855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62fbaa99_263ea286",
+        "filename": "chrome/browser/banners/app_banner_manager_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-20T03:30:32Z",
+      "side": 1,
+      "message": "Should this be AppBannerSettingsHelper::HasBeenInstalled?",
+      "range": {
+        "startLine": 164,
+        "startChar": 9,
+        "endLine": 164,
+        "endChar": 25
+      },
+      "revId": "be2062586bf95cef0b7d6fb28b51274244ed5855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60749302_eb1da633",
+        "filename": "chrome/browser/banners/app_banner_settings_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-20T03:30:32Z",
+      "side": 1,
+      "message": "Can you add a test in AppBannerSettingsHelperTest? It may be as simple as renaming AppBannerSettingsHelperTest::ShouldNotShowAfterAdding (or augmented it if you feel like it)",
+      "range": {
+        "startLine": 244,
+        "startChar": 30,
+        "endLine": 244,
+        "endChar": 46
+      },
+      "revId": "be2062586bf95cef0b7d6fb28b51274244ed5855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d4ad177_554e88ac",
+        "filename": "chrome/browser/banners/app_banner_settings_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-20T03:30:32Z",
+      "side": 1,
+      "message": "AppBannerSettingsHelperTest::ShouldNotShowAfterAdding is probably broken now.",
+      "range": {
+        "startLine": 255,
+        "startChar": 47,
+        "endLine": 255,
+        "endChar": 63
+      },
+      "revId": "be2062586bf95cef0b7d6fb28b51274244ed5855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a89063_79f8a355",
+        "filename": "chrome/browser/banners/app_banner_settings_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-20T03:30:32Z",
+      "side": 1,
+      "message": "This change looks unneeded?",
+      "range": {
+        "startLine": 282,
+        "startChar": 34,
+        "endLine": 282,
+        "endChar": 57
+      },
+      "revId": "be2062586bf95cef0b7d6fb28b51274244ed5855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03603594_47a86cf4",
+        "filename": "chrome/browser/banners/app_banner_settings_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-20T03:30:32Z",
+      "side": 1,
+      "message": "This method now exclusively deals with whether the banner has previously been shown. WDYT about renaming it to be something like HasBannerBeenShown()?",
+      "range": {
+        "startLine": 113,
+        "startChar": 31,
+        "endLine": 113,
+        "endChar": 47
+      },
+      "revId": "be2062586bf95cef0b7d6fb28b51274244ed5855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d0fbc7_a91ef07c",
+        "filename": "chrome/browser/banners/app_banner_settings_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-20T03:30:32Z",
+      "side": 1,
+      "message": "Nit: call this |origin_url| to match the other methods in this API.",
+      "range": {
+        "startLine": 119,
+        "startChar": 68,
+        "endLine": 119,
+        "endChar": 76
+      },
+      "revId": "be2062586bf95cef0b7d6fb28b51274244ed5855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
