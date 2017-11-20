@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1354b35a_1eb4508a",
+        "filename": "storage/browser/blob/blob_transport_request_builder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-20T05:21:23Z",
+      "side": 1,
+      "message": "nit: add a brief comment for file_system_context ? (this has comments for all other params)",
+      "revId": "46787c788c5d4528b5de82e3037adcf3e855b447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f28011d_55720071",
+        "filename": "storage/browser/blob/blob_transport_request_builder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-20T05:21:23Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "46787c788c5d4528b5de82e3037adcf3e855b447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f453669_4a12b884",
+        "filename": "storage/browser/blob/blob_transport_request_builder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-20T05:21:23Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "46787c788c5d4528b5de82e3037adcf3e855b447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
