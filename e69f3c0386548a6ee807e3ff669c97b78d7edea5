@@ -130,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "d0fcf3d1_1e30ca6c",
+        "filename": "content/renderer/media/user_media_client_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-20T17:06:47Z",
+      "side": 1,
+      "message": "Yeah, you are right. render_frame_id_ is set to MSG_ROUTING_NONE as RenderFrame is null for unittests. Sorry, didn\u0027t realize even this default value will do. Thanks for pointing this out. :)",
+      "parentUuid": "9dba2b73_22434f50",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 24
+      },
+      "revId": "e69f3c0386548a6ee807e3ff669c97b78d7edea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7815ec04_1b0343dc",
         "filename": "content/renderer/media/user_media_processor.h",
         "patchSetId": 1
@@ -189,6 +213,30 @@
       "side": 1,
       "message": "I\u0027m not yet convinced that you need to set |render_frame_id_|. And even if you do, you can also add a set_render_frame_id_for_testing().",
       "parentUuid": "7bc3525d_cf3c4838",
+      "range": {
+        "startLine": 142,
+        "startChar": 15,
+        "endLine": 142,
+        "endChar": 38
+      },
+      "revId": "e69f3c0386548a6ee807e3ff669c97b78d7edea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a5e7197_1bfb76d3",
+        "filename": "content/renderer/media/user_media_processor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-20T17:06:47Z",
+      "side": 1,
+      "message": "I\u0027ll remove this as we do not need to explicitly set |render_frame_id_|.",
+      "parentUuid": "5f9c4a3e_f4def8ec",
       "range": {
         "startLine": 142,
         "startChar": 15,
