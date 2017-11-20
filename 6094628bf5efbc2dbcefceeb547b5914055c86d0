@@ -16,6 +16,24 @@
       "revId": "6094628bf5efbc2dbcefceeb547b5914055c86d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49fa1831_bd6ca09c",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-11-20T19:01:09Z",
+      "side": 1,
+      "message": "What I saw was ConnectionStateChanged being called when ethernet first comes online and the list is out of order:\n\n  vpn - online\n  wifi - online\n  ethernet - online\n\nI had to hook NetworkListChanged to receive a callback after shill re-sorted the list:\n\n  vpn - online\n  ethernet - online\n  wifi - online",
+      "parentUuid": "98033ec3_9d8eafe2",
+      "revId": "6094628bf5efbc2dbcefceeb547b5914055c86d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
