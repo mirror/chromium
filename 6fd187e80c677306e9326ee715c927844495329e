@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "25615623_a4e61d2b",
+        "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-20T18:59:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9698e15_d64da7fb",
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92c87636_aeb04947",
         "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
         "patchSetId": 12
@@ -39,6 +57,30 @@
       "revId": "6fd187e80c677306e9326ee715c927844495329e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d53c55_17673eed",
+        "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-20T18:59:26Z",
+      "side": 1,
+      "message": "I know that by default booleans are false in java but I normally try and set everything explicitly so that it is obvious. I did not know that would generate extra code.",
+      "parentUuid": "92c87636_aeb04947",
+      "range": {
+        "startLine": 143,
+        "startChar": 44,
+        "endLine": 143,
+        "endChar": 49
+      },
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "a8f46817_cfd11357",
+        "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-20T18:59:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfe89756_4167b2ee",
+      "range": {
+        "startLine": 218,
+        "startChar": 20,
+        "endLine": 218,
+        "endChar": 37
+      },
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d27eccac_c4f6ce10",
         "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
         "patchSetId": 12
@@ -99,6 +165,30 @@
       "writtenOn": "2017-11-17T19:09:07Z",
       "side": 1,
       "message": "nit: static",
+      "range": {
+        "startLine": 278,
+        "startChar": 12,
+        "endLine": 278,
+        "endChar": 19
+      },
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7d4de3_4b50a660",
+        "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-20T18:59:26Z",
+      "side": 1,
+      "message": "Inner classes do not have static declarations, or did you want it outside of the inner class and static in ApplicationStatus?",
+      "parentUuid": "d27eccac_c4f6ce10",
       "range": {
         "startLine": 278,
         "startChar": 12,
@@ -128,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "837a6b52_fe435b3b",
+        "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-20T18:59:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2da4b6c_f918db91",
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56a8f24c_dd2a0711",
         "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
         "patchSetId": 12
@@ -142,6 +250,24 @@
       "revId": "6fd187e80c677306e9326ee715c927844495329e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f96ad9d0_df9a5145",
+        "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-20T18:59:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56a8f24c_dd2a0711",
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +306,24 @@
     },
     {
       "key": {
+        "uuid": "ad4f82e2_7a30d15c",
+        "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-20T18:59:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b088290a_ad637669",
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e45fd1c_98a489f4",
         "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
         "patchSetId": 12
@@ -200,6 +344,30 @@
       "revId": "6fd187e80c677306e9326ee715c927844495329e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "759ec786_38dca5bf",
+        "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-20T18:59:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e45fd1c_98a489f4",
+      "range": {
+        "startLine": 383,
+        "startChar": 8,
+        "endLine": 383,
+        "endChar": 25
+      },
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -238,6 +406,24 @@
     },
     {
       "key": {
+        "uuid": "6b593693_b8ac4ccf",
+        "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-20T18:59:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43e636ba_1455242e",
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcf1c0cd_93eaec1c",
         "filename": "base/android/junit/src/org/chromium/base/ApplicationStatusTest.java",
         "patchSetId": 12
@@ -258,6 +444,30 @@
       "revId": "6fd187e80c677306e9326ee715c927844495329e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db433c85_e9414fd9",
+        "filename": "base/android/junit/src/org/chromium/base/ApplicationStatusTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-20T18:59:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcf1c0cd_93eaec1c",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 31
+      },
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -284,6 +494,30 @@
     },
     {
       "key": {
+        "uuid": "0eaf942e_99b94c18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-20T18:59:26Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "552b6b00_3c7cacc9",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 18
+      },
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d96ebad_b83a5748",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastApplication.java",
         "patchSetId": 12
@@ -298,6 +532,24 @@
       "revId": "6fd187e80c677306e9326ee715c927844495329e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381fc8ec_2568838f",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastApplication.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-20T18:59:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d96ebad_b83a5748",
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +576,30 @@
     },
     {
       "key": {
+        "uuid": "ba549d40_d6827f63",
+        "filename": "content/shell/android/shell_apk/src/org/chromium/content_shell_apk/ContentShellApplication.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-20T18:59:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72e7d5ff_cabfea7f",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35c12e0a_c6b54bd1",
         "filename": "testing/android/native_test/java/src/org/chromium/native_test/NativeUnitTest.java",
         "patchSetId": 12
@@ -338,6 +614,24 @@
       "revId": "6fd187e80c677306e9326ee715c927844495329e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48dd3dea_957cf3a0",
+        "filename": "testing/android/native_test/java/src/org/chromium/native_test/NativeUnitTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-20T18:59:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35c12e0a_c6b54bd1",
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
