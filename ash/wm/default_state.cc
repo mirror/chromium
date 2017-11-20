@@ -179,7 +179,7 @@ void DefaultState::HandleWorkspaceEvents(WindowState* window_state,
       int min_height = bounds.height() * wm::kMinimumPercentOnScreenArea;
       wm::AdjustBoundsToEnsureWindowVisibility(display_area, min_width,
                                                min_height, &bounds);
-      window_state->AdjustSnappedBounds(&bounds);
+      window_state->AdjustSnappedBounds(&bounds, event);
       if (window->bounds() != bounds)
         window_state->SetBoundsConstrained(bounds);
       return;
@@ -196,7 +196,7 @@ void DefaultState::HandleWorkspaceEvents(WindowState* window_state,
       // When display bounds has changed, make sure the entire window is fully
       // visible.
       bounds.AdjustToFit(work_area_in_parent);
-      window_state->AdjustSnappedBounds(&bounds);
+      window_state->AdjustSnappedBounds(&bounds, event);
       if (window_state->window()->GetTargetBounds() != bounds)
         window_state->SetBoundsDirectAnimated(bounds);
       return;
@@ -222,7 +222,7 @@ void DefaultState::HandleWorkspaceEvents(WindowState* window_state,
         wm::AdjustBoundsToEnsureMinimumWindowVisibility(work_area_in_parent,
                                                         &bounds);
       }
-      window_state->AdjustSnappedBounds(&bounds);
+      window_state->AdjustSnappedBounds(&bounds, event);
       if (window_state->window()->GetTargetBounds() != bounds)
         window_state->SetBoundsDirectAnimated(bounds);
       return;
@@ -321,9 +321,12 @@ void DefaultState::HandleCompoundEvents(WindowState* window_state,
       ToggleFullScreen(window_state, window_state->delegate());
       return;
     case WM_EVENT_CYCLE_SNAP_LEFT:
-    case WM_EVENT_CYCLE_SNAP_RIGHT:
+    case WM_EVENT_CYCLE_SNAP_RIGHT: {
       CycleSnap(window_state, event->type());
+      gfx::Rect bounds = window->bounds();
+      window_state->AdjustSnappedBounds(&bounds, event);
       return;
+    }
     default:
       NOTREACHED() << "Unknown event:" << event->type();
       break;
@@ -409,7 +412,7 @@ void DefaultState::SetBounds(WindowState* window_state,
         ScreenUtil::GetDisplayWorkAreaBoundsInParent(window_state->window());
     gfx::Rect child_bounds(event->requested_bounds());
     wm::AdjustBoundsSmallerThan(work_area_in_parent.size(), &child_bounds);
-    window_state->AdjustSnappedBounds(&child_bounds);
+    window_state->AdjustSnappedBounds(&child_bounds, event);
     window_state->SetBoundsDirect(child_bounds);
   } else if (!SetMaximizedOrFullscreenBounds(window_state)) {
     window_state->SetBoundsConstrained(event->requested_bounds());

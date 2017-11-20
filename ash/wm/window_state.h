@@ -348,7 +348,7 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
 
   // Adjusts the |bounds| so that they are flush with the edge of the
   // workspace if the window represented by |window_state| is side snapped.
-  void AdjustSnappedBounds(gfx::Rect* bounds);
+  void AdjustSnappedBounds(gfx::Rect* bounds, const WMEvent* event);
 
   // Updates the window properties(show state, pin type) according to the
   // current window state type.
@@ -396,6 +396,10 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   bool can_be_dragged_;
   bool cached_always_on_top_;
   bool allow_set_bounds_direct_ = false;
+
+  // Saves the ratio between snapped window width and display workarea width. It
+  // gets set when window is snapped or snapped window bounds is changed.
+  float snapped_width_ratio_ = 0.5f;
 
   // A property to remember the window position which was set before the
   // auto window position manager changed the window bounds, so that it can get
