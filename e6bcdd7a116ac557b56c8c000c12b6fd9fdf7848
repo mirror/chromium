@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e6f9890_1725a40c",
+        "filename": "media/mojo/clients/mojo_decryptor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-20T21:43:06Z",
+      "side": 1,
+      "message": "are the changes here unrelated to the metric?\n\ni\u0027m still trying to figure out how things the world of mojo cdms connects.",
+      "revId": "e6bcdd7a116ac557b56c8c000c12b6fd9fdf7848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
