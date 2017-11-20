@@ -1031,10 +1031,56 @@ void RenderWidgetHostInputEventRouter::RouteTouchpadGestureEvent(
     return;
   }
 
+  if (event->GetType() == blink::WebInputEvent::kGesturePinchBegin &&
+      touchpad_gesture_target_.target != root_view) {
+    // We only send pinch events to child renderers to run any JS wheel handlers
+    // for trackpad pinches.
+    event->data.pinch_begin.target_thread = blink::WebGestureEvent::kMainThread;
+  }
+
   // TODO(mohsen): Add tests to check event location.
   event->x += touchpad_gesture_target_.delta.x();
   event->y += touchpad_gesture_target_.delta.y();
   touchpad_gesture_target_.target->ProcessGestureEvent(*event, latency);
+}
+
+void RenderWidgetHostInputEventRouter::OnPinchEventAckFromChild(
+    RenderWidgetHostViewBase* root_view,
+    RenderWidgetHostViewBase* child_view,
+    const blink::WebGestureEvent& event,
+    InputEventAckState ack_result) {
+  DCHECK(root_view);
+  DCHECK(child_view);
+  DCHECK(blink::WebInputEvent::IsPinchGestureEventType(event.GetType()));
+  DCHECK_EQ(blink::kWebGestureDeviceTouchpad, event.source_device);
+
+  // A wheel listener in the child consumed the pinch.
+  if (event.GetType() == blink::WebInputEvent::kGesturePinchUpdate &&
+      ack_result == INPUT_EVENT_ACK_STATE_CONSUMED) {
+    return;
+  }
+
+  // If the pinch was not canceled, we send it on to the main frame to
+  // adjust the scale.
+  blink::WebGestureEvent root_event(event);
+  const gfx::Point point(event.x, event.y);
+  const gfx::Point point_in_root =
+      child_view->TransformPointToRootCoordSpace(point);
+  root_event.x = point_in_root.x();
+  root_event.y = point_in_root.y();
+
+  if (event.GetType() == blink::WebInputEvent::kGesturePinchBegin) {
+    DCHECK_EQ(blink::WebGestureEvent::kMainThread,
+              event.data.pinch_begin.target_thread);
+    // We will offer pinch updates to wheel handlers in the child. Don't offer
+    // them again in the main frame, just update the scale.
+    root_event.data.pinch_begin.target_thread =
+        blink::WebGestureEvent::kCompositorThread;
+  }
+
+  root_view->ProcessGestureEvent(
+      root_event,
+      ui::WebInputEventTraits::CreateLatencyInfoForWebGestureEvent(root_event));
 }
 
 std::vector<RenderWidgetHostView*>

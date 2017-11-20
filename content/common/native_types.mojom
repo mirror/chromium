@@ -75,6 +75,9 @@ enum ScrollUnits;
 enum InertialPhaseState;
 
 [Native]
+enum TargetThread;
+
+[Native]
 enum TouchState;
 
 [Native]

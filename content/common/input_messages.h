@@ -81,6 +81,8 @@ IPC_ENUM_TRAITS_MAX_VALUE(blink::WebGestureEvent::ScrollUnits,
 IPC_ENUM_TRAITS_MAX_VALUE(
     blink::WebGestureEvent::InertialPhaseState,
     blink::WebGestureEvent::InertialPhaseState::kLastPhase)
+IPC_ENUM_TRAITS_MAX_VALUE(blink::WebGestureEvent::TargetThread,
+                          blink::WebGestureEvent::TargetThread::kLastThread)
 IPC_ENUM_TRAITS_MAX_VALUE(blink::WebTouchPoint::State,
                           blink::WebTouchPoint::State::kStateMax)
 IPC_ENUM_TRAITS_MAX_VALUE(

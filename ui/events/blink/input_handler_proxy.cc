@@ -145,6 +145,7 @@ InputHandlerProxy::InputHandlerProxy(
 #endif
       gesture_scroll_on_impl_thread_(false),
       gesture_pinch_on_impl_thread_(false),
+      gesture_pinch_sequence_dropped_(false),
       scroll_sequence_ignored_(false),
       fling_may_be_active_on_main_thread_(false),
       disallow_horizontal_fling_scroll_(false),
@@ -377,14 +378,33 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleInputEvent(
 
     case WebInputEvent::kGesturePinchBegin: {
       DCHECK(!gesture_pinch_on_impl_thread_);
+      DCHECK(!gesture_pinch_sequence_dropped_);
+      // TODO DO NOT COMMIT these LOGs
       const WebGestureEvent& gesture_event =
           static_cast<const WebGestureEvent&>(event);
       if (gesture_event.source_device == blink::kWebGestureDeviceTouchpad &&
+          gesture_event.data.pinch_begin.target_thread !=
+              blink::WebGestureEvent::kCompositorThread &&
           input_handler_->GetEventListenerProperties(
               cc::EventListenerClass::kMouseWheel) !=
               cc::EventListenerProperties::kNone) {
+        if (gesture_event.data.pinch_begin.target_thread ==
+            blink::WebGestureEvent::kMainThread)
+          LOG(ERROR) << "main (restricted)";
+        else
+          LOG(ERROR) << "main";
         return DID_NOT_HANDLE;
+      } else if (gesture_event.data.pinch_begin.target_thread ==
+                 blink::WebGestureEvent::kMainThread) {
+        LOG(ERROR) << "main (but no handlers, dropping)";
+        gesture_pinch_sequence_dropped_ = true;
+        return DROP_EVENT;
       } else {
+        if (gesture_event.data.pinch_begin.target_thread ==
+            blink::WebGestureEvent::kCompositorThread)
+          LOG(ERROR) << "compositor (restricted)";
+        else
+          LOG(ERROR) << "compositor";
         input_handler_->PinchGestureBegin();
         gesture_pinch_on_impl_thread_ = true;
         return DID_HANDLE;
@@ -396,6 +416,9 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleInputEvent(
         gesture_pinch_on_impl_thread_ = false;
         input_handler_->PinchGestureEnd();
         return DID_HANDLE;
+      } else if (gesture_pinch_sequence_dropped_) {
+        gesture_pinch_sequence_dropped_ = false;
+        return DROP_EVENT;
       } else {
         return DID_NOT_HANDLE;
       }
@@ -410,6 +433,8 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleInputEvent(
             gesture_event.data.pinch_update.scale,
             gfx::Point(gesture_event.x, gesture_event.y));
         return DID_HANDLE;
+      } else if (gesture_pinch_sequence_dropped_) {
+        return DROP_EVENT;
       } else {
         return DID_NOT_HANDLE;
       }

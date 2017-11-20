@@ -540,4 +540,40 @@ void WebFrameWidgetBase::UpdateGestureAnimation(
   }
 }
 
+WebInputEventResult
+WebFrameWidgetBase::HandleSyntheticWheelFromTouchpadPinchEvent(
+    const WebGestureEvent& pinch_event) {
+  DCHECK_EQ(pinch_event.GetType(), WebInputEvent::kGesturePinchUpdate);
+
+  // For pinch gesture events, match typical trackpad behavior on Windows by
+  // sending fake wheel events with the ctrl modifier set when we see trackpad
+  // pinch gestures.  Ideally we'd someday get a platform 'pinch' event and
+  // send that instead.
+  WebMouseWheelEvent wheel_event(
+      WebInputEvent::kMouseWheel,
+      pinch_event.GetModifiers() | WebInputEvent::kControlKey,
+      pinch_event.TimeStampSeconds());
+  wheel_event.SetPositionInWidget(pinch_event.x, pinch_event.y);
+  wheel_event.SetPositionInScreen(pinch_event.global_x, pinch_event.global_y);
+  wheel_event.delta_x = 0;
+
+  // The function to convert scales to deltaY values is designed to be
+  // compatible with websites existing use of wheel events, and with existing
+  // Windows trackpad behavior.  In particular, we want:
+  //  - deltas should accumulate via addition: f(s1*s2)==f(s1)+f(s2)
+  //  - deltas should invert via negation: f(1/s) == -f(s)
+  //  - zoom in should be positive: f(s) > 0 iff s > 1
+  //  - magnitude roughly matches wheels: f(2) > 25 && f(2) < 100
+  //  - a formula that's relatively easy to use from JavaScript
+  // Note that 'wheel' event deltaY values have their sign inverted.  So to
+  // convert a wheel deltaY back to a scale use Math.exp(-deltaY/100).
+  DCHECK_GT(pinch_event.data.pinch_update.scale, 0);
+  wheel_event.delta_y = 100.0f * log(pinch_event.data.pinch_update.scale);
+  wheel_event.has_precise_scrolling_deltas = true;
+  wheel_event.wheel_ticks_x = 0;
+  wheel_event.wheel_ticks_y = pinch_event.data.pinch_update.scale > 1 ? 1 : -1;
+
+  return HandleInputEvent(blink::WebCoalescedInputEvent(wheel_event));
+}
+
 }  // namespace blink

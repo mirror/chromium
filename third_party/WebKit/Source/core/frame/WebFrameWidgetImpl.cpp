@@ -447,8 +447,24 @@ WebInputEventResult WebFrameWidgetImpl::HandleInputEvent(
     return WebInputEventResult::kHandledSystem;
   }
 
-  return PageWidgetDelegate::HandleInputEvent(*this, coalesced_event,
-                                              local_root_->GetFrame());
+  WebInputEventResult result = PageWidgetDelegate::HandleInputEvent(
+      *this, coalesced_event, local_root_->GetFrame());
+  if (result != WebInputEventResult::kNotHandled)
+    return result;
+
+  // TODO refactor and explain leaving pinch updates unhandled in
+  // a child frame
+  if (input_event.GetType() == WebInputEvent::kGesturePinchUpdate) {
+    const WebGestureEvent& pinch_event =
+        static_cast<const WebGestureEvent&>(input_event);
+    if (pinch_event.source_device == kWebGestureDeviceTouchpad) {
+      result = HandleSyntheticWheelFromTouchpadPinchEvent(pinch_event);
+      if (result != WebInputEventResult::kNotHandled)
+        return result;
+    }
+  }
+
+  return WebInputEventResult::kNotHandled;
 }
 
 void WebFrameWidgetImpl::SetCursorVisibilityState(bool is_visible) {

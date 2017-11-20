@@ -453,13 +453,19 @@ void RenderWidgetHostViewChildFrame::UpdateRenderThrottlingStatus() {
 void RenderWidgetHostViewChildFrame::GestureEventAck(
     const blink::WebGestureEvent& event,
     InputEventAckState ack_result) {
+  if (!frame_connector_)
+    return;
+
+  if (blink::WebInputEvent::IsPinchGestureEventType(event.GetType())) {
+    frame_connector_->OnPinchEventAckFromChild(event, ack_result);
+    return;
+  }
+
   bool should_bubble =
       ack_result == INPUT_EVENT_ACK_STATE_NOT_CONSUMED ||
       ack_result == INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS ||
       ack_result == INPUT_EVENT_ACK_STATE_CONSUMED_SHOULD_BUBBLE;
 
-  if (!frame_connector_)
-    return;
   if (wheel_scroll_latching_enabled()) {
     if ((event.GetType() == blink::WebInputEvent::kGestureScrollBegin) &&
         should_bubble) {
@@ -735,6 +741,14 @@ void RenderWidgetHostViewChildFrame::ProcessTouchEvent(
 void RenderWidgetHostViewChildFrame::ProcessGestureEvent(
     const blink::WebGestureEvent& event,
     const ui::LatencyInfo& latency) {
+  // We only send pinch events to child renderers to run any JS wheel handlers
+  // for trackpad pinches.
+  DCHECK(!blink::WebInputEvent::IsPinchGestureEventType(event.GetType()) ||
+         event.source_device == blink::kWebGestureDeviceTouchpad);
+  DCHECK(event.GetType() != blink::WebInputEvent::kGesturePinchBegin ||
+         event.data.pinch_begin.target_thread ==
+             blink::WebGestureEvent::kMainThread);
+
   if (wheel_scroll_latching_enabled() && is_scroll_sequence_bubbling_ &&
       (event.GetType() == blink::WebInputEvent::kGestureFlingStart) &&
       frame_connector_) {
