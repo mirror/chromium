@@ -22,6 +22,30 @@
       "revId": "a3bd058c4610a0be7a0a53423048728d68646fb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85489811_c33fd2f7",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-20T22:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b083eb6_fc113ea7",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 6
+      },
+      "revId": "a3bd058c4610a0be7a0a53423048728d68646fb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
