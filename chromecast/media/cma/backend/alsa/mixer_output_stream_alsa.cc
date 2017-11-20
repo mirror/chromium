@@ -2,6 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <array>
+#include <string>
+#include <unordered_map>
+
 #include "chromecast/media/cma/backend/alsa/mixer_output_stream_alsa.h"
 
 #include "base/command_line.h"
@@ -105,8 +109,13 @@ constexpr int* kAlsaDirDontCare = nullptr;
 
 // These sample formats will be tried in order. 32 bit samples is ideal, but
 // some devices do not support 32 bit samples.
-constexpr snd_pcm_format_t kPreferredSampleFormats[] = {
+constexpr std::array<snd_pcm_format_t, 3> kPreferredSampleFormats = {
     SND_PCM_FORMAT_FLOAT, SND_PCM_FORMAT_S32, SND_PCM_FORMAT_S16};
+const std::unordered_map<snd_pcm_format_t, std::string>
+    kPreferredSampleFormatNames = {
+        {SND_PCM_FORMAT_FLOAT, "SND_PCM_FORMAT_FLOAT"},
+        {SND_PCM_FORMAT_S32, "SND_PCM_FORMAT_S32"},
+        {SND_PCM_FORMAT_S16, "SND_PCM_FORMAT_S16"}};
 
 int64_t TimespecToMicroseconds(struct timespec time) {
   return static_cast<int64_t>(time.tv_sec) *
@@ -291,31 +300,80 @@ void MixerOutputStreamAlsa::Stop() {
 
 int MixerOutputStreamAlsa::SetAlsaPlaybackParams(int requested_sample_rate) {
   int err = 0;
-  // Set hardware parameters.
   DCHECK(pcm_);
+  // Set hardware parameters.
+  // (b/69473110): Remember to remove the while loop when driver works.
+  std::vector<snd_pcm_format_t> preferred_sample_format;
+  if (pcm_format_ == SND_PCM_FORMAT_UNKNOWN) {
+    preferred_sample_format.insert(preferred_sample_format.begin(),
+                                   kPreferredSampleFormats.begin(),
+                                   kPreferredSampleFormats.end());
+  } else {
+    preferred_sample_format.push_back(pcm_format_);
+  }
+  do {
+    SetAlsaPlaybackHwParams(requested_sample_rate, preferred_sample_format);
+  } while (pcm_format_ == SND_PCM_FORMAT_UNKNOWN &&
+           !preferred_sample_format.empty());
+
+  if (pcm_format_ == SND_PCM_FORMAT_UNKNOWN) {
+    LOG(ERROR) << "Could not find a valid PCM format. Running "
+               << "/bin/alsa_api_test may be instructive.";
+    return err;
+  }
+
+  // Set software parameters.
+  snd_pcm_sw_params_t* swparams;
+  RETURN_ERROR_CODE(PcmSwParamsMalloc, &swparams);
+  RETURN_ERROR_CODE(PcmSwParamsCurrent, pcm_, swparams);
+  RETURN_ERROR_CODE(PcmSwParamsSetStartThreshold, pcm_, swparams,
+                    alsa_start_threshold_);
+  if (alsa_start_threshold_ > alsa_buffer_size_) {
+    LOG(ERROR) << "Requested start threshold (" << alsa_start_threshold_
+               << " frames) is larger than the buffer size ("
+               << alsa_buffer_size_
+               << " frames). Audio playback will not start.";
+  }
+
+  RETURN_ERROR_CODE(PcmSwParamsSetAvailMin, pcm_, swparams, alsa_avail_min_);
+  RETURN_ERROR_CODE(PcmSwParamsSetTstampMode, pcm_, swparams,
+                    SND_PCM_TSTAMP_ENABLE);
+  RETURN_ERROR_CODE(PcmSwParamsSetTstampType, pcm_, swparams,
+                    kAlsaTstampTypeMonotonicRaw);
+  err = alsa_->PcmSwParams(pcm_, swparams);
+  alsa_->PcmSwParamsFree(swparams);
+  return err;
+}
+
+int MixerOutputStreamAlsa::SetAlsaPlaybackHwParams(
+    int requested_sample_rate,
+    std::vector<snd_pcm_format_t>& preferred_sample_formats) {
   DCHECK(!pcm_hw_params_);
   RETURN_ERROR_CODE(PcmHwParamsMalloc, &pcm_hw_params_);
   RETURN_ERROR_CODE(PcmHwParamsAny, pcm_, pcm_hw_params_);
   RETURN_ERROR_CODE(PcmHwParamsSetAccess, pcm_, pcm_hw_params_,
                     SND_PCM_ACCESS_RW_INTERLEAVED);
+
   if (pcm_format_ == SND_PCM_FORMAT_UNKNOWN) {
-    for (const auto& pcm_format : kPreferredSampleFormats) {
-      err = alsa_->PcmHwParamsTestFormat(pcm_, pcm_hw_params_, pcm_format);
+    for (const auto& pcm_format : preferred_sample_formats) {
+      int err = alsa_->PcmHwParamsTestFormat(pcm_, pcm_hw_params_, pcm_format);
       if (err < 0) {
-        LOG(WARNING) << "PcmHwParamsTestFormat: " << alsa_->StrError(err);
+        LOG(INFO) << "PcmHwParamsTestFormat("
+                  << kPreferredSampleFormatNames.at(pcm_format)
+                  << "): " << alsa_->StrError(err);
+        DCHECK(*preferred_sample_formats.cbegin() == pcm_format);
+        preferred_sample_formats.erase((preferred_sample_formats.begin()));
       } else {
         pcm_format_ = pcm_format;
         break;
       }
     }
     if (pcm_format_ == SND_PCM_FORMAT_UNKNOWN) {
-      LOG(ERROR) << "Could not find a valid PCM format. Running "
-                 << "/bin/alsa_api_test may be instructive.";
-      return err;
+      return -1;
     }
   }
-
   RETURN_ERROR_CODE(PcmHwParamsSetFormat, pcm_, pcm_hw_params_, pcm_format_);
+
   RETURN_ERROR_CODE(PcmHwParamsSetChannels, pcm_, pcm_hw_params_,
                     num_output_channels_);
 
@@ -372,28 +430,21 @@ int MixerOutputStreamAlsa::SetAlsaPlaybackParams(int requested_sample_rate) {
                  << " frames). This may lead to an increase in "
                     "CPU usage or an increase in audio latency.";
   }
-  RETURN_ERROR_CODE(PcmHwParams, pcm_, pcm_hw_params_);
 
-  // Set software parameters.
-  snd_pcm_sw_params_t* swparams;
-  RETURN_ERROR_CODE(PcmSwParamsMalloc, &swparams);
-  RETURN_ERROR_CODE(PcmSwParamsCurrent, pcm_, swparams);
-  RETURN_ERROR_CODE(PcmSwParamsSetStartThreshold, pcm_, swparams,
-                    alsa_start_threshold_);
-  if (alsa_start_threshold_ > alsa_buffer_size_) {
-    LOG(ERROR) << "Requested start threshold (" << alsa_start_threshold_
-               << " frames) is larger than the buffer size ("
-               << alsa_buffer_size_
-               << " frames). Audio playback will not start.";
+  int err = alsa_->PcmHwParams(pcm_, pcm_hw_params_);
+  if (err < 0) {
+    LOG(WARNING) << "PcmHwParams("
+                 << (kPreferredSampleFormatNames.count(pcm_format_)
+                         ? kPreferredSampleFormatNames.at(pcm_format_)
+                         : "custom format")
+                 << "): " << alsa_->StrError(err);
+    DCHECK(*preferred_sample_formats.cbegin() == pcm_format_);
+    preferred_sample_formats.erase(preferred_sample_formats.begin());
+    pcm_format_ = SND_PCM_FORMAT_UNKNOWN;
+    alsa_->PcmHwParamsFree(pcm_hw_params_);
+    pcm_hw_params_ = nullptr;
   }
 
-  RETURN_ERROR_CODE(PcmSwParamsSetAvailMin, pcm_, swparams, alsa_avail_min_);
-  RETURN_ERROR_CODE(PcmSwParamsSetTstampMode, pcm_, swparams,
-                    SND_PCM_TSTAMP_ENABLE);
-  RETURN_ERROR_CODE(PcmSwParamsSetTstampType, pcm_, swparams,
-                    kAlsaTstampTypeMonotonicRaw);
-  err = alsa_->PcmSwParams(pcm_, swparams);
-  alsa_->PcmSwParamsFree(swparams);
   return err;
 }
 

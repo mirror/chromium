@@ -49,7 +49,10 @@ class MixerOutputStreamAlsa : public MixerOutputStream {
   // on what the output hardware supports and will log warnings if it does so.
   // If any ALSA function returns an unexpected error code, the error code will
   // be returned by this function. Otherwise, it will return 0.
-  int SetAlsaPlaybackParams(int requested_rate);
+  int SetAlsaPlaybackParams(int requested_sample_rate);
+  int SetAlsaPlaybackHwParams(
+      int requested_sample_rate,
+      std::vector<snd_pcm_format_t>& preferred_sample_formats);
 
   // Determines output sample rate based on the requested rate and the sample
   // rate the device supports.
