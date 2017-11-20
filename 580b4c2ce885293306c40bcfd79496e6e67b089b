@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34365ed8_288ef183",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-zoom-toolbar/viewer-zoom-toolbar.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-20T16:52:12Z",
+      "side": 1,
+      "message": "How about the following to remove the duplciation?\n\nforceFit: function(current, next) {\n  this.fire(current);\n  this.$[\u0027fit-button\u0027].activeIndex \u003d next;\n},\nforceFitToWidth: function() {\n  forceFit(\u0027fit-to-width\u0027, FIT_TO_PAGE);\n},\nforceFitToHeight: function() {\n  forceFit(\u0027fit-to-height\u0027, FIT_TO_WIDTH);\n}",
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f97adca5_e9a24e53",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-20T16:52:12Z",
+      "side": 1,
+      "message": "Why do height and page AndHideToolbar but width doesn\u0027t?",
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f77c904_1d1311c6",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-20T16:52:12Z",
+      "side": 1,
+      "message": "\u003d\u003d\u003d to stop type coercion",
+      "range": {
+        "startLine": 529,
+        "startChar": 32,
+        "endLine": 529,
+        "endChar": 34
+      },
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c5465ea_cfdc70a5",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-20T16:52:12Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be Height?",
+      "range": {
+        "startLine": 532,
+        "startChar": 35,
+        "endLine": 532,
+        "endChar": 41
+      },
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37487ce_885a3e05",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-20T16:52:12Z",
+      "side": 1,
+      "message": "Width?",
+      "range": {
+        "startLine": 534,
+        "startChar": 36,
+        "endLine": 534,
+        "endChar": 42
+      },
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7083cc18_09481a5e",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-20T16:52:12Z",
+      "side": 1,
+      "message": "Why split this from fitToHeight?",
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
