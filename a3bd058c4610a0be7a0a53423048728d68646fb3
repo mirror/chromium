@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b083eb6_fc113ea7",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T22:03:58Z",
+      "side": 1,
+      "message": "s/Add/Adds",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 6
+      },
+      "revId": "a3bd058c4610a0be7a0a53423048728d68646fb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

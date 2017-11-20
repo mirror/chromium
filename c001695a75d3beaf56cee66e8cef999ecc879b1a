@@ -257,6 +257,30 @@
       "revId": "c001695a75d3beaf56cee66e8cef999ecc879b1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b191d0e_3bf7cf2d",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T22:03:58Z",
+      "side": 1,
+      "message": "Yes. So the tests can tests the state like this:\n\n__block bool filled \u003d false;\nCRWAutofillSuggestion* suggestion \u003d ...\n[autofill_controller fillSuggestion:suggestion completionHandler:^{\n  filled \u003d true;\n}];\nASSERT_TRUE(testing::WaitForConditionOrTimeout(^{\n  return filled;\n}));\n\nFormSuggestion* expected_suggestion \u003d ...\nEXPECT_NSEQ(expected_suggestion, [fake_autofill_agent selectedSuggestionForForm:form fied:field]);",
+      "parentUuid": "44f507d4_8eeb8179",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 13
+      },
+      "revId": "c001695a75d3beaf56cee66e8cef999ecc879b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
