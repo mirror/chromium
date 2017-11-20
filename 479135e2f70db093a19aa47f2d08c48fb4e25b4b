@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e32826de_31b1c33e",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-20T20:25:46Z",
+      "side": 1,
+      "message": "Nit: why are you adding \u0027_clang\u0027 at the end of this config, when it\u0027s already at the beginning?",
+      "revId": "479135e2f70db093a19aa47f2d08c48fb4e25b4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
