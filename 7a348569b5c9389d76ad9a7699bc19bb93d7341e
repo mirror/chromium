@@ -124,6 +124,24 @@
       "revId": "7a348569b5c9389d76ad9a7699bc19bb93d7341e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abcb1385_f6ac2d54",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_physical_offset.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-20T09:57:20Z",
+      "side": 1,
+      "message": "I agree with you, with a bit additional comments. The info in the PGO CL is opposite, but comments in the bug indicates PGO linker inlines across compilation units, while the blink-dev discussion indicates LTO doesn\u0027t.\n\nI was under impression that LTO does this too, which turned out to be wrong. I\u0027ll revise my understanding, and thank you for your comments on this.",
+      "parentUuid": "35fc9a29_2744461d",
+      "revId": "7a348569b5c9389d76ad9a7699bc19bb93d7341e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
