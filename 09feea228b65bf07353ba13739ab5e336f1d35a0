@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80a2eb5d_91b258f7",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-20T08:37:44Z",
+      "side": 1,
+      "message": "nit: s/   / /",
+      "range": {
+        "startLine": 290,
+        "startChar": 73,
+        "endLine": 290,
+        "endChar": 77
+      },
+      "revId": "09feea228b65bf07353ba13739ab5e336f1d35a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
