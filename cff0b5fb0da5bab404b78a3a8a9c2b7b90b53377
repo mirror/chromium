@@ -16,6 +16,24 @@
       "revId": "cff0b5fb0da5bab404b78a3a8a9c2b7b90b53377",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e373adb6_5fb1050f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceRequest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-20T08:51:03Z",
+      "side": 1,
+      "message": "When I attempted to switch ResourceRequest to be used with unique_ptr, I encountered the DISALLOW_NEW().\n\nThe DISALLOW_NEW() for this class was added by tasak@ in the following CL:\nhttps://codereview.chromium.org/1511493002/\n(originally https://codereview.chromium.org/1511493002)\n\nThey wanted to switch things to use PartitionAlloc than system allocator where possible. For some reason, tasak@ replaced USING_FAST_MALLOC() with DISALLOW_NEW().\n\nTakashi and I checked with haraken@. The only case he mentioned where DISALLOW_NEW() is needed is when we have a non-GC-ed class with GC-ed class(es) as its member. Such a non-GC-ed class is intended to be used as a member of a GC-ed class. It must not be new-ed.\n\nI think we can just switch it back to use USING_FAST_MALLOC(). It\u0027s still good to include tasak@ in the R\u003d line.",
+      "parentUuid": "43eb5a78_ac38a8ef",
+      "revId": "cff0b5fb0da5bab404b78a3a8a9c2b7b90b53377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
