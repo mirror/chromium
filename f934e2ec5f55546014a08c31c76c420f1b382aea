@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b3110b3_42a14c96",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-20T21:20:50Z",
+      "side": 1,
+      "message": "For readability:\n\n  std::string relying_party_id;\n  if (options-\u003erelying_party-\u003eid) {\n    // TODO(kpaulhamus): Check if relyingPartyId is a registrable domain\n    // suffix of and equal to effectiveDomain and set relyingPartyId\n    // appropriately.\n    // TODO(kpaulhamus): Add unit tests for domains. http://crbug.com/785950.\n    relying_party_id \u003d *options-\u003erelying_party-\u003eid;\n  } else {\n    // Use the effective domain of the caller origin.\n    relying_party_id \u003d caller_origin.host();\n    DCHECK(!relying_party_id.empty());\n  }",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 3
+      },
+      "revId": "f934e2ec5f55546014a08c31c76c420f1b382aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1625621_d8783aec",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-20T21:20:50Z",
+      "side": 1,
+      "message": "Should this be the else clause of the if above?",
+      "range": {
+        "startLine": 176,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 61
+      },
+      "revId": "f934e2ec5f55546014a08c31c76c420f1b382aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
