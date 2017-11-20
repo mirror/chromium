@@ -26,11 +26,27 @@ class TabExperimentalPaint {
   explicit TabExperimentalPaint(views::View* view);
   ~TabExperimentalPaint();
 
+  // Returns a path corresponding to the tab's outer border for a given tab
+  // |size|, |scale|, and |endcap_width|. If |unscale_at_end| is true, this
+  // path will be normalized to a 1x scale by scaling by 1/scale before
+  // returning. If |extend_to_top| is true, the path is extended vertically to
+  // the top of the tab bounds.  The caller uses this for Fitts' Law purposes
+  // in maximized/fullscreen mode.
+  gfx::Path GetBorderPath(float scale,
+                          bool unscale_at_end,
+                          bool extend_to_top,
+                          float endcap_width,
+                          const gfx::Size& size) const;
+
   void PaintTabBackground(gfx::Canvas* canvas,
                           bool active,
                           int fill_id,
                           int y_offset,
                           gfx::Path* clip);
+
+  void PaintGroupBackground(gfx::Canvas* canvas, bool active);
+
+  void set_first_child_begin_x(int fcbx) { first_child_begin_x_ = fcbx; }
 
  private:
   class BackgroundCache {
@@ -84,6 +100,8 @@ class TabExperimentalPaint {
   // Cache of the paint output for tab backgrounds.
   BackgroundCache background_active_cache_;
   BackgroundCache background_inactive_cache_;
+
+  int first_child_begin_x_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(TabExperimentalPaint);
 };
