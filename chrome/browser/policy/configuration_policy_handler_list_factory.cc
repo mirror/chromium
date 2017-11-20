@@ -714,6 +714,10 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
   { key::kBrowserNetworkTimeQueriesEnabled,
     network_time::prefs::kNetworkTimeQueriesEnabled,
     base::Value::Type::BOOLEAN },
+
+  { key::kUnsafelyTreatInsecureOriginAsSecure,
+    prefs::kUnsafelyTreatInsecureOriginAsSecure,
+    base::Value::Type::STRING },
 };
 // clang-format on
 

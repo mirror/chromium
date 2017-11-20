@@ -27,6 +27,7 @@
 #include "components/proxy_config/proxy_config_pref_names.h"
 #include "components/ssl_config/ssl_config_prefs.h"
 #include "components/ssl_config/ssl_config_switches.h"
+
 #include "components/sync/base/pref_names.h"
 #include "content/public/common/content_switches.h"
 #include "ui/base/ui_base_switches.h"
@@ -48,6 +49,8 @@ const CommandLinePrefStore::SwitchToPreferenceMapEntry
         {switches::kAuthAndroidNegotiateAccountType,
          prefs::kAuthAndroidNegotiateAccountType},
 #endif
+        {switches::kUnsafelyTreatInsecureOriginAsSecure,
+         prefs::kUnsafelyTreatInsecureOriginAsSecure},
 };
 
 const CommandLinePrefStore::SwitchToPreferenceMapEntry
