@@ -460,9 +460,9 @@ TEST_F(UiSceneManagerTest, SecondaryButtonClickTriggersOnExitPrompt) {
 TEST_F(UiSceneManagerTest, UiUpdatesForWebVR) {
   MakeManager(kNotInCct, kInWebVr);
 
-  manager_->SetAudioCapturingIndicator(true);
-  manager_->SetVideoCapturingIndicator(true);
-  manager_->SetScreenCapturingIndicator(true);
+  manager_->SetAudioCaptureEnabled(true);
+  manager_->SetVideoCaptureEnabled(true);
+  manager_->SetScreenCaptureEnabled(true);
   manager_->SetLocationAccessIndicator(true);
   manager_->SetBluetoothConnectedIndicator(true);
 
@@ -480,9 +480,9 @@ TEST_F(UiSceneManagerTest, UiUpdatesForWebVR) {
 
 TEST_F(UiSceneManagerTest, UiUpdateTransitionToWebVR) {
   MakeManager(kNotInCct, kNotInWebVr);
-  manager_->SetAudioCapturingIndicator(true);
-  manager_->SetVideoCapturingIndicator(true);
-  manager_->SetScreenCapturingIndicator(true);
+  manager_->SetAudioCaptureEnabled(true);
+  manager_->SetVideoCaptureEnabled(true);
+  manager_->SetScreenCaptureEnabled(true);
   manager_->SetLocationAccessIndicator(true);
   manager_->SetBluetoothConnectedIndicator(true);
 
@@ -504,9 +504,9 @@ TEST_F(UiSceneManagerTest, CaptureIndicatorsVisibility) {
   EXPECT_TRUE(VerifyVisibility(indicators, false));
   EXPECT_TRUE(VerifyRequiresLayout(indicators, false));
 
-  manager_->SetAudioCapturingIndicator(true);
-  manager_->SetVideoCapturingIndicator(true);
-  manager_->SetScreenCapturingIndicator(true);
+  manager_->SetAudioCaptureEnabled(true);
+  manager_->SetVideoCaptureEnabled(true);
+  manager_->SetScreenCaptureEnabled(true);
   manager_->SetLocationAccessIndicator(true);
   manager_->SetBluetoothConnectedIndicator(true);
   EXPECT_TRUE(VerifyVisibility(indicators, true));
@@ -528,9 +528,9 @@ TEST_F(UiSceneManagerTest, CaptureIndicatorsVisibility) {
   EXPECT_TRUE(VerifyRequiresLayout(indicators, true));
 
   // Ensure they can be turned off.
-  manager_->SetAudioCapturingIndicator(false);
-  manager_->SetVideoCapturingIndicator(false);
-  manager_->SetScreenCapturingIndicator(false);
+  manager_->SetAudioCaptureEnabled(false);
+  manager_->SetVideoCaptureEnabled(false);
+  manager_->SetScreenCaptureEnabled(false);
   manager_->SetLocationAccessIndicator(false);
   manager_->SetBluetoothConnectedIndicator(false);
   EXPECT_TRUE(VerifyVisibility(indicators, false));
