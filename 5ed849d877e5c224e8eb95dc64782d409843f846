@@ -71,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "7d7a9419_0482809f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-11-20T14:19:12Z",
+      "side": 1,
+      "message": "Did we decide that this should run the selector? (so that task tracking metrics etc. are consistently reflected everywhere). It feels like we should go for that API from the start -- unless you were planning to do this in phases in which case let\u0027s leave a TODO here.",
+      "range": {
+        "startLine": 738,
+        "startChar": 36,
+        "endLine": 738,
+        "endChar": 44
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4ab55ba_f213e07d",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 8
@@ -117,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "f6172617_197c3203",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-11-20T14:19:12Z",
+      "side": 1,
+      "message": "Can we avoid having the clients of TaskQueueManager depend on anything from the internal namespace? I know there are a few exceptions already, but let\u0027s not add any more.",
+      "range": {
+        "startLine": 70,
+        "startChar": 22,
+        "endLine": 70,
+        "endChar": 30
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "548327df_2f407b95",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
         "patchSetId": 8
@@ -156,6 +202,52 @@
         "startChar": 0,
         "endLine": 85,
         "endChar": 2
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c338ca_f1ac7c9c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-11-20T14:19:12Z",
+      "side": 1,
+      "message": "Let\u0027s document what each of these do.",
+      "range": {
+        "startLine": 29,
+        "startChar": 15,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4807134_d0fea427",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-11-20T14:19:12Z",
+      "side": 1,
+      "message": "Should we call this MessageLoopThreadController? That way the TaskScheduler one can also be named appropriately (assuming we need both at the same time).",
+      "range": {
+        "startLine": 25,
+        "startChar": 22,
+        "endLine": 25,
+        "endChar": 42
       },
       "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
