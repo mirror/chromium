@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "829b8bc1_15f897d1",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1713,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-11-20T18:02:16Z",
+      "side": 1,
+      "message": "Why do you not do this for the HTTP observation source?",
+      "range": {
+        "startLine": 1713,
+        "startChar": 30,
+        "endLine": 1713,
+        "endChar": 68
+      },
+      "revId": "9ad1b0f95bb2bb3eeccc0b8056f2b7dca45461ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
