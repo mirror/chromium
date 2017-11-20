@@ -493,6 +493,7 @@ CompositorImpl::CompositorImpl(CompositorClient* client,
 }
 
 CompositorImpl::~CompositorImpl() {
+  display::Screen::GetScreen()->RemoveObserver(this);
   root_window_->DetachCompositor();
   root_window_->SetLayer(nullptr);
   // Clean-up any surface references.
@@ -590,8 +591,10 @@ void CompositorImpl::CreateLayerTreeHost() {
   host_->SetFrameSinkId(frame_sink_id_);
   host_->SetViewportSize(size_);
   host_->SetDeviceScaleFactor(1);
-  // TODO(fsamuel): We should listen to display density change events.
   host_->SetPaintedDeviceScaleFactor(root_window_->GetDipScale());
+  // Listen to display density change events and update painted device scale
+  // factor accordingly.
+  display::Screen::GetScreen()->AddObserver(this);
 
   if (needs_animate_)
     host_->SetNeedsAnimate();
@@ -634,6 +637,10 @@ void CompositorImpl::SetWindowBounds(const gfx::Size& size) {
   if (display_)
     display_->Resize(size);
   root_window_->GetLayer()->SetBounds(size);
+}
+
+void CompositorImpl::SetDeferCommits(bool defer_commits) {
+  host_->SetDeferCommits(defer_commits);
 }
 
 void CompositorImpl::SetRequiresAlphaChannel(bool flag) {
@@ -931,6 +938,17 @@ void CompositorImpl::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info) {
   // TODO(fsamuel): Once surface synchronization is turned on, the fallback
   // surface should be set here.
+}
+
+void CompositorImpl::OnDisplayMetricsChanged(const display::Display& display,
+                                             uint32_t changed_metrics) {
+  if (changed_metrics & display::DisplayObserver::DisplayMetric::
+                            DISPLAY_METRIC_DEVICE_SCALE_FACTOR &&
+      display.id() == display::Screen::GetScreen()
+                          ->GetDisplayNearestWindow(root_window_)
+                          .id()) {
+    host_->SetPaintedDeviceScaleFactor(root_window_->GetDipScale());
+  }
 }
 
 bool CompositorImpl::HavePendingReadbacks() {
