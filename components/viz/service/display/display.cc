@@ -397,6 +397,7 @@ bool Display::DrawAndSwap() {
   }
 
   client_->DisplayDidDrawAndSwap();
+  surface_manager_->GarbageCollectSurfaces();
   return true;
 }
 
@@ -479,6 +480,7 @@ bool Display::SurfaceDamaged(const SurfaceId& surface_id,
 }
 
 void Display::SurfaceDiscarded(const SurfaceId& surface_id) {
+  TRACE_EVENT0("viz", "Display::SurfaceDiscarded");
   if (aggregator_)
     aggregator_->ReleaseResources(surface_id);
 }
