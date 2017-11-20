@@ -154,7 +154,7 @@ void FakeDiskMountManager::InvokeDiskEventForTest(
     chromeos::disks::DiskMountManager::DiskEvent event,
     const chromeos::disks::DiskMountManager::Disk* disk) {
   for (auto& observer : observers_)
-    observer.OnDiskEvent(event, disk);
+    observer.OnAutoMountableDiskEvent(event, disk);
 }
 
 }  // namespace file_manager
