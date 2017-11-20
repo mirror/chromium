@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "502578f1_c76694a0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-20T18:32:31Z",
+      "side": 1,
+      "message": "\u003e Done. Introduced ContentViewCoreFactory for embedder/content tests to instantiate TestContentViewCore.\n\nI don\u0027t see any reason for the factory? Plus I don\u0027t actually see this being moved to the test interface?\n\nI think the confusion is that the test interface isn\u0027t actually an interface. I think it would make TestCVC be an interface that inherits from CVC",
+      "parentUuid": "9d1fbef9_620dbb2f",
+      "revId": "bb9e8cda0477e1774ba7814ebc4685d0d4056124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "427f5339_f9474973",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
         "patchSetId": 2
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "git cl upload says it\u0027s a move with the default similarity 50%.  content/public/android/java/src/org/chromium/content/browser/{ContentViewCore.java \u003d\u003e ContentViewCoreImpl.java} \n\nLowered to 30% but no difference.. will try with lower values later.",
       "parentUuid": "427f5339_f9474973",
+      "revId": "bb9e8cda0477e1774ba7814ebc4685d0d4056124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd818ff_069a7fef",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-20T18:32:31Z",
+      "side": 1,
+      "message": "\u003e git cl upload says it\u0027s a move with the default similarity 50%.  content/public/android/java/src/org/chromium/content/browser/{ContentViewCore.java \u003d\u003e ContentViewCoreImpl.java} \n\u003e \n\u003e Lowered to 30% but no difference.. will try with lower values later.\n\nUpload a separate CL that shows the diff in this file. This isn\u0027t possible to review",
+      "parentUuid": "6a31e438_105f8f87",
       "revId": "bb9e8cda0477e1774ba7814ebc4685d0d4056124",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
