@@ -400,6 +400,24 @@
     },
     {
       "key": {
+        "uuid": "2e7f1358_af19d816",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-20T14:56:07Z",
+      "side": 1,
+      "message": "Yes, but the textfield label is Month, which is explicitly not recognized by the month kExpirationMonthRe\n\n// Toolbar Bug 51451: indeed, simply matching \"month\" is too general for\n//   https://rps.fidelity.com/ftgw/rps/RtlCust/CreatePIN/Init.\n\nhttps://cs.chromium.org/chromium/src/components/autofill/core/common/autofill_regex_constants.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d165\n\nso the textfield is a focusable field that is not reconised as anything.\n\nAllowing \"month\" in the regex would allow to fix this test, but it may have other consequences.",
+      "parentUuid": "3ae0df9c_f242c244",
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e3073de_e5b35360",
         "filename": "components/autofill/core/browser/credit_card_field_unittest.cc",
         "patchSetId": 19
@@ -563,6 +581,30 @@
       "writtenOn": "2017-11-16T21:33:12Z",
       "side": 1,
       "message": "this is non-focusable",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 33
+      },
+      "revId": "93c6b06b4fc50972e8b1d5a77564503c4a28368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d069b7fe_aa813b4c",
+        "filename": "components/test/data/autofill/heuristics/output/141_checkout_cc_keurig.com.out",
+        "patchSetId": 19
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-20T14:56:07Z",
+      "side": 1,
+      "message": "Yes, but the next field label is \"month\", which is not recognised as an expiration month (see other comment).\nSo this is the only expiration month field.\n\nNext field is a focusable unknown field, so it stops the parsing.",
+      "parentUuid": "44c9badb_bc2524b5",
       "range": {
         "startLine": 6,
         "startChar": 0,
