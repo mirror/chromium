@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9acf7899_c12146b7",
+        "filename": "components/viz/service/display/overlay_strategy_fullscreen.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-20T21:50:56Z",
+      "side": 1,
+      "message": "Fullscreen means that the buffer covers the screen fully.\nWhy would you remove the check that the size is the same as the render pass output_rect? \n\nThe SingleOnTop strategy should pick the video quad when it\u0027s not covering the fullscreen.\nWe can then remove the background if it\u0027s all solid color with another strategy as I suggested in the other CL.",
+      "revId": "6516d4071f13320b87f21a56983258990ff9697f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
