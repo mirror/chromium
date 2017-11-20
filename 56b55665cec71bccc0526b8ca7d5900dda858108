@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f2b1e45f_af25f152",
+        "filename": "chrome/test/data/webui/PRESUBMIT.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-20T18:24:59Z",
+      "side": 1,
+      "message": "Is this encouraged? See all other usages of web_dev_style at https://cs.chromium.org/search/?q\u003dimport+web_dev_style.presubmit_support\u0026sq\u003dpackage:chromium\u0026type\u003dcs, which follow the same pattern.\n\nIs it beneficial? I am assuming (speculating) that this avoids importing the module, in cases where _CommonChecks() is not called.",
+      "parentUuid": "50db7634_f7444c3e",
+      "revId": "56b55665cec71bccc0526b8ca7d5900dda858108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42ab1ef8_4dc29c04",
         "filename": "chrome/test/data/webui/PRESUBMIT.py",
         "patchSetId": 9
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-18T04:42:39Z",
       "side": 1,
       "message": "can this be\n\n  CheckChangeOnUpload \u003d _CommonChecks\n  CheckChangeOnCommit \u003d _CommonChecks\n\nor is that discouraged/doesn\u0027t work?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "56b55665cec71bccc0526b8ca7d5900dda858108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7883a17a_715deaff",
+        "filename": "chrome/test/data/webui/PRESUBMIT.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-20T18:24:59Z",
+      "side": 1,
+      "message": "This code is following many other examples in the code, like https://cs.chromium.org/chromium/src/components/flags_ui/PRESUBMIT.py?type\u003dcs\u0026q\u003dimport+web_dev_style.presubmit_support\u0026sq\u003dpackage:chromium\u0026l\u003d20,24.\n\nI don\u0027t know if the proposal will work, but since there are many occurrences of the this pattern, I\u0027d rather deploy the proposal in a separate CL in all such places, than just here.",
+      "parentUuid": "42ab1ef8_4dc29c04",
       "range": {
         "startLine": 21,
         "startChar": 0,
@@ -56,6 +98,24 @@
       "revId": "56b55665cec71bccc0526b8ca7d5900dda858108",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec4b2189_e0a3d370",
+        "filename": "tools/web_dev_style/presubmit_support.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-20T18:24:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05b0ff80_b8a54874",
+      "revId": "56b55665cec71bccc0526b8ca7d5900dda858108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
