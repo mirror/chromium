@@ -20,6 +20,7 @@
 #include "chrome/common/render_messages.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
+#include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/pref_names.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "content/public/browser/plugin_service.h"
@@ -32,6 +33,7 @@
 #include "url/origin.h"
 
 using content::PluginService;
+using content_settings::ResourceIdentifier;
 using testing::Eq;
 
 namespace {
@@ -314,47 +316,32 @@ TEST_F(PluginInfoHostImplTest, GetPluginContentSetting) {
   HostContentSettingsMap* map =
       HostContentSettingsMapFactory::GetForProfile(profile());
 
-  // Block plugins by default.
-  map->SetDefaultContentSetting(CONTENT_SETTINGS_TYPE_PLUGINS,
-                                CONTENT_SETTING_BLOCK);
-
   // Set plugins to Plugin Power Saver on example.com and subdomains.
   GURL host("http://example.com/");
   map->SetContentSettingDefaultScope(
       host, GURL(), CONTENT_SETTINGS_TYPE_PLUGINS, std::string(),
       CONTENT_SETTING_DETECT_IMPORTANT_CONTENT);
 
-  // Allow plugin "foo" on all sites.
+  // Allow plugins on all sites.
   map->SetContentSettingCustomScope(
       ContentSettingsPattern::Wildcard(), ContentSettingsPattern::Wildcard(),
-      CONTENT_SETTINGS_TYPE_PLUGINS, "foo", CONTENT_SETTING_ALLOW);
+      CONTENT_SETTINGS_TYPE_PLUGINS, ResourceIdentifier(),
+      CONTENT_SETTING_ALLOW);
 
   GURL unmatched_host("https://www.google.com");
-  ASSERT_EQ(
-      CONTENT_SETTING_BLOCK,
+  EXPECT_EQ(
+      CONTENT_SETTING_ALLOW,
       map->GetContentSetting(unmatched_host, unmatched_host,
                              CONTENT_SETTINGS_TYPE_PLUGINS, std::string()));
-  ASSERT_EQ(CONTENT_SETTING_DETECT_IMPORTANT_CONTENT,
+  EXPECT_EQ(CONTENT_SETTING_DETECT_IMPORTANT_CONTENT,
             map->GetContentSetting(host, host, CONTENT_SETTINGS_TYPE_PLUGINS,
                                    std::string()));
-  ASSERT_EQ(
-      CONTENT_SETTING_ALLOW,
-      map->GetContentSetting(host, host, CONTENT_SETTINGS_TYPE_PLUGINS, "foo"));
-  ASSERT_EQ(
-      CONTENT_SETTING_DEFAULT,
-      map->GetContentSetting(host, host, CONTENT_SETTINGS_TYPE_PLUGINS, "bar"));
 
-  // "foo" is allowed everywhere.
-  VerifyPluginContentSetting(host, "foo", CONTENT_SETTING_ALLOW, false, false);
-
-  // There is no specific content setting for "bar", so the general setting
-  // for example.com applies.
-  VerifyPluginContentSetting(
-      host, "bar", CONTENT_SETTING_DETECT_IMPORTANT_CONTENT, false, false);
-
-  // Otherwise, use the default.
-  VerifyPluginContentSetting(unmatched_host, "bar", CONTENT_SETTING_BLOCK, true,
+  VerifyPluginContentSetting(host, ResourceIdentifier(),
+                             CONTENT_SETTING_DETECT_IMPORTANT_CONTENT, false,
                              false);
+  VerifyPluginContentSetting(unmatched_host, ResourceIdentifier(),
+                             CONTENT_SETTING_ALLOW, false, false);
 
   // Block plugins via policy.
   sync_preferences::TestingPrefServiceSyncable* prefs =
@@ -363,7 +350,8 @@ TEST_F(PluginInfoHostImplTest, GetPluginContentSetting) {
                         base::MakeUnique<base::Value>(CONTENT_SETTING_BLOCK));
 
   // All plugins should be blocked now.
-  VerifyPluginContentSetting(host, "foo", CONTENT_SETTING_BLOCK, true, true);
+  VerifyPluginContentSetting(host, ResourceIdentifier(), CONTENT_SETTING_BLOCK,
+                             true, true);
   VerifyPluginContentSetting(host, "bar", CONTENT_SETTING_BLOCK, true, true);
   VerifyPluginContentSetting(unmatched_host, "bar", CONTENT_SETTING_BLOCK, true,
                              true);
