@@ -334,7 +334,6 @@ WebViewImpl::WebViewImpl(WebViewClient* client,
                          mojom::PageVisibilityState visibility_state)
     : client_(client),
       chrome_client_(ChromeClientImpl::Create(this)),
-      context_menu_client_(*this),
       editor_client_(*this),
       should_auto_resize_(false),
       zoom_level_(0),
@@ -378,7 +377,6 @@ WebViewImpl::WebViewImpl(WebViewClient* client,
       override_compositor_visibility_(false) {
   Page::PageClients page_clients;
   page_clients.chrome_client = chrome_client_.Get();
-  page_clients.context_menu_client = &context_menu_client_;
   page_clients.editor_client = &editor_client_;
 
   page_ = Page::CreateOrdinary(page_clients);
@@ -533,7 +531,7 @@ void WebViewImpl::MouseContextMenu(const WebMouseEvent& event) {
     target_local_frame->GetEventHandler().SendContextMenuEvent(
         transformed_event, nullptr);
   }
-  // Actually showing the context menu is handled by the ContextMenuClient
+  // Actually showing the context menu is handled by the ContextMenuController
   // implementation...
 }
 

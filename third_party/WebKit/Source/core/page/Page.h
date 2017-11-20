@@ -51,7 +51,6 @@ namespace blink {
 class AutoscrollController;
 class BrowserControls;
 class ChromeClient;
-class ContextMenuClient;
 class ContextMenuController;
 class Document;
 class DOMRectList;
@@ -102,7 +101,6 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
     ~PageClients();
 
     Member<ChromeClient> chrome_client;
-    ContextMenuClient* context_menu_client;
     EditorClient* editor_client;
   };
 
