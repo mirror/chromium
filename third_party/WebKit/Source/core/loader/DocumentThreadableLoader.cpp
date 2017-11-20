@@ -52,6 +52,7 @@
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoader.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/weborigin/SchemeRegistry.h"
@@ -577,8 +578,8 @@ void DocumentThreadableLoader::Detach() {
 }
 
 void DocumentThreadableLoader::SetDefersLoading(bool value) {
-  if (GetResource())
-    GetResource()->SetDefersLoading(value);
+  if (GetResource() && GetResource()->Loader())
+    GetResource()->Loader()->SetDefersLoading(value);
 }
 
 void DocumentThreadableLoader::Clear() {

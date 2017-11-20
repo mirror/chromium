@@ -141,13 +141,19 @@ ResourceLoadPriority TypeToPriority(Resource::Type type) {
   return kResourceLoadPriorityUnresolved;
 }
 
+inline bool IsRawResource(Resource::Type type) {
+  return type == Resource::kMainResource || type == Resource::kRaw ||
+         type == Resource::kTextTrack || type == Resource::kMedia ||
+         type == Resource::kManifest || type == Resource::kImportResource;
+}
+
 bool ShouldResourceBeAddedToMemoryCache(const FetchParameters& params,
                                         Resource* resource) {
   if (!IsMainThread())
     return false;
   if (params.Options().data_buffering_policy == kDoNotBufferData)
     return false;
-  if (IsRawResource(*resource))
+  if (IsRawResource(resource->GetType()))
     return false;
   return true;
 }
@@ -803,7 +809,7 @@ void ResourceFetcher::InitializeRevalidation(
   DCHECK(!resource->IsCacheValidator());
   DCHECK(!Context().IsControlledByServiceWorker());
   // RawResource doesn't support revalidation.
-  CHECK(!IsRawResource(*resource));
+  CHECK(!IsRawResource(resource->GetType()));
 
   const AtomicString& last_modified =
       resource->GetResponse().HttpHeaderField(HTTPNames::Last_Modified);

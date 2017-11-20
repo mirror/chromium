@@ -37,6 +37,11 @@
 
 namespace blink {
 
+inline RawResource* ToRawResource(Resource* resource) {
+  SECURITY_DCHECK(!resource || IsRawResource(*resource));
+  return static_cast<RawResource*>(resource);
+}
+
 RawResource* RawResource::FetchSynchronously(FetchParameters& params,
                                              ResourceFetcher* fetcher) {
   params.MakeSynchronous();
@@ -121,126 +126,5 @@ RawResource::RawResource(const ResourceRequest& resource_request,
                          Type type,
                          const ResourceLoaderOptions& options)
     : Resource(resource_request, type, options) {}
-
-
-bool RawResource::MatchPreload(const FetchParameters& params,
-                               WebTaskRunner* task_runner) {
-  if (!Resource::MatchPreload(params, task_runner))
-    return false;
-
-  // This is needed to call Platform::Current() below. Remove this branch
-  // when the calls are removed.
-  if (!IsMainThread())
-    return false;
-
-  if (!params.GetResourceRequest().UseStreamOnResponse())
-    return true;
-
-  if (ErrorOccurred())
-    return true;
-
-  // A preloaded resource is not for streaming.
-  DCHECK(!GetResourceRequest().UseStreamOnResponse());
-  DCHECK_EQ(GetDataBufferingPolicy(), kBufferData);
-
-  // Preloading for raw resources are not cached.
-  DCHECK(!GetMemoryCache()->Contains(this));
-
-  constexpr auto kCapacity = 32 * 1024;
-  mojo::ScopedDataPipeProducerHandle producer;
-  mojo::ScopedDataPipeConsumerHandle consumer;
-  MojoCreateDataPipeOptions options;
-  options.struct_size = sizeof(MojoCreateDataPipeOptions);
-  options.flags = MOJO_CREATE_DATA_PIPE_OPTIONS_FLAG_NONE;
-  options.element_num_bytes = 1;
-  options.capacity_num_bytes = kCapacity;
-
-  MojoResult result = mojo::CreateDataPipe(&options, &producer, &consumer);
-  if (result != MOJO_RESULT_OK)
-    return false;
-
-  data_consumer_handle_ =
-      Platform::Current()->CreateDataConsumerHandle(std::move(consumer));
-  data_pipe_writer_ = std::make_unique<BufferingDataPipeWriter>(
-      std::move(producer), task_runner);
-
-  if (Data()) {
-    Data()->ForEachSegment(
-        [this](const char* segment, size_t size, size_t offset) -> bool {
-          return data_pipe_writer_->Write(segment, size);
-        });
-  }
-  SetDataBufferingPolicy(kDoNotBufferData);
-
-  if (IsLoaded())
-    data_pipe_writer_->Finish();
-  return true;
-}
-
-void RawResource::SetDefersLoading(bool defers) {
-  if (Loader())
-    Loader()->SetDefersLoading(defers);
-}
-
-static bool ShouldIgnoreHeaderForCacheReuse(AtomicString header_name) {
-  // FIXME: This list of headers that don't affect cache policy almost certainly
-  // isn't complete.
-  DEFINE_STATIC_LOCAL(
-      HashSet<AtomicString>, headers,
-      ({"Cache-Control", "If-Modified-Since", "If-None-Match", "Origin",
-        "Pragma", "Purpose", "Referer", "User-Agent",
-        HTTPNames::X_DevTools_Emulate_Network_Conditions_Client_Id}));
-  return headers.Contains(header_name);
-}
-
-static bool IsCacheableHTTPMethod(const AtomicString& method) {
-  // Per http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html#sec13.10,
-  // these methods always invalidate the cache entry.
-  return method != "POST" && method != "PUT" && method != "DELETE";
-}
-
-bool RawResource::CanReuse(const FetchParameters& new_fetch_parameters) const {
-  const ResourceRequest& new_request =
-      new_fetch_parameters.GetResourceRequest();
-
-  if (GetDataBufferingPolicy() == kDoNotBufferData)
-    return false;
-
-  if (!IsCacheableHTTPMethod(GetResourceRequest().HttpMethod()))
-    return false;
-  if (GetResourceRequest().HttpMethod() != new_request.HttpMethod())
-    return false;
-
-  if (GetResourceRequest().HttpBody() != new_request.HttpBody())
-    return false;
-
-  if (GetResourceRequest().AllowStoredCredentials() !=
-      new_request.AllowStoredCredentials())
-    return false;
-
-  // Ensure most headers match the existing headers before continuing. Note that
-  // the list of ignored headers includes some headers explicitly related to
-  // caching. A more detailed check of caching policy will be performed later,
-  // this is simply a list of headers that we might permit to be different and
-  // still reuse the existing Resource.
-  const HTTPHeaderMap& new_headers = new_request.HttpHeaderFields();
-  const HTTPHeaderMap& old_headers = GetResourceRequest().HttpHeaderFields();
-
-  for (const auto& header : new_headers) {
-    AtomicString header_name = header.key;
-    if (!ShouldIgnoreHeaderForCacheReuse(header_name) &&
-        header.value != old_headers.Get(header_name))
-      return false;
-  }
-
-  for (const auto& header : old_headers) {
-    AtomicString header_name = header.key;
-    if (!ShouldIgnoreHeaderForCacheReuse(header_name) &&
-        header.value != new_headers.Get(header_name))
-      return false;
-  }
-
-  return Resource::CanReuse(new_fetch_parameters);
-}
 
 }  // namespace blink

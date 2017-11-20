@@ -1175,7 +1175,8 @@ void Resource::MarkAsPreload() {
   is_unused_preload_ = true;
 }
 
-bool Resource::MatchPreload(const FetchParameters& params, WebTaskRunner*) {
+bool Resource::MatchPreload(const FetchParameters& params,
+                            WebTaskRunner* task_runner) {
   DCHECK(is_unused_preload_);
   is_unused_preload_ = false;
 
@@ -1186,6 +1187,54 @@ bool Resource::MatchPreload(const FetchParameters& params, WebTaskRunner*) {
                         ("PreloadScanner.ReferenceTime", 0, 10000, 50));
     preload_discovery_histogram.Count(time_since_discovery);
   }
+
+  if (!params.GetResourceRequest().UseStreamOnResponse())
+    return true;
+
+  if (ErrorOccurred())
+    return true;
+
+  // This is needed to call Platform::Current() below. Remove this branch
+  // when the calls are removed.
+  if (!IsMainThread())
+    return false;
+
+  // A preloaded resource is not for streaming.
+  DCHECK(!GetResourceRequest().UseStreamOnResponse());
+  DCHECK_EQ(GetDataBufferingPolicy(), kBufferData);
+
+  // Preloading for raw resources are not cached.
+  DCHECK(!GetMemoryCache()->Contains(this));
+
+  constexpr auto kCapacity = 32 * 1024;
+  mojo::ScopedDataPipeProducerHandle producer;
+  mojo::ScopedDataPipeConsumerHandle consumer;
+  MojoCreateDataPipeOptions options;
+  options.struct_size = sizeof(MojoCreateDataPipeOptions);
+  options.flags = MOJO_CREATE_DATA_PIPE_OPTIONS_FLAG_NONE;
+  options.element_num_bytes = 1;
+  options.capacity_num_bytes = kCapacity;
+
+  MojoResult result = mojo::CreateDataPipe(&options, &producer, &consumer);
+  if (result != MOJO_RESULT_OK)
+    return false;
+
+  data_consumer_handle_ =
+      Platform::Current()->CreateDataConsumerHandle(std::move(consumer));
+  data_pipe_writer_ = std::make_unique<BufferingDataPipeWriter>(
+      std::move(producer), task_runner);
+
+  if (Data()) {
+    Data()->ForEachSegment(
+        [this](const char* segment, size_t size, size_t offset) -> bool {
+          return data_pipe_writer_->Write(segment, size);
+        });
+  }
+  SetDataBufferingPolicy(kDoNotBufferData);
+
+  if (IsLoaded())
+    data_pipe_writer_->Finish();
+
   return true;
 }
 

@@ -62,15 +62,6 @@ class PLATFORM_EXPORT RawResource final : public Resource {
     return CreateForTest(KURL(url), type);
   }
 
-  // FIXME: AssociatedURLLoader shouldn't be a DocumentThreadableLoader and
-  // therefore shouldn't use RawResource. However, it is, and it needs to be
-  // able to defer loading. This can be fixed by splitting CORS preflighting out
-  // of DocumentThreadableLoader.
-  void SetDefersLoading(bool);
-
-  // Resource implementation
-  bool CanReuse(const FetchParameters&) const override;
-
  private:
   class RawResourceFactory : public NonTextResourceFactory {
    public:
@@ -84,26 +75,7 @@ class PLATFORM_EXPORT RawResource final : public Resource {
   };
 
   RawResource(const ResourceRequest&, Type, const ResourceLoaderOptions&);
-
-  // Resource implementation
-  bool ShouldIgnoreHTTPStatusCodeErrors() const override {
-    return !IsLinkPreload();
-  }
-  bool MatchPreload(const FetchParameters&, WebTaskRunner*) override;
 };
-
-// TODO(yhirano): Recover #if ENABLE_SECURITY_ASSERT when we stop adding
-// RawResources to MemoryCache.
-inline bool IsRawResource(const Resource& resource) {
-  Resource::Type type = resource.GetType();
-  return type == Resource::kMainResource || type == Resource::kRaw ||
-         type == Resource::kTextTrack || type == Resource::kMedia ||
-         type == Resource::kManifest || type == Resource::kImportResource;
-}
-inline RawResource* ToRawResource(Resource* resource) {
-  SECURITY_DCHECK(!resource || IsRawResource(*resource));
-  return static_cast<RawResource*>(resource);
-}
 
 }  // namespace blink
 

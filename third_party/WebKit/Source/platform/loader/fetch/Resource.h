@@ -124,7 +124,10 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   void SetIdentifier(unsigned long identifier) { identifier_ = identifier; }
   unsigned long Identifier() const { return identifier_; }
 
-  virtual bool ShouldIgnoreHTTPStatusCodeErrors() const { return false; }
+  virtual bool ShouldIgnoreHTTPStatusCodeErrors() const {
+    return (type_ == Resource::kMainResource || type_ == Resource::kRaw) &&
+           !IsLinkPreload();
+  }
 
   const ResourceRequest& GetResourceRequest() const {
     return resource_request_;
