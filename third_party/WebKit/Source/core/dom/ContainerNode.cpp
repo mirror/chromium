@@ -1032,8 +1032,10 @@ bool ContainerNode::GetUpperLeftCorner(FloatPoint& point) const {
       DCHECK(CanUseInlineBox(*o));
       point = FloatPoint();
       if (ToLayoutText(o)->FirstTextBox()) {
-        point.Move(ToLayoutText(o)->LinesBoundingBox().X(),
-                   ToLayoutText(o)->FirstTextBox()->Root().LineTop().ToFloat());
+        const auto& bounding_box = ToLayoutText(o)->LinesBoundingBox();
+        DCHECK_EQ(bounding_box.Y(),
+                  ToLayoutText(o)->FirstTextBox()->Root().LineTop().ToFloat());
+        point.Move(bounding_box.X(), bounding_box.Y());
       }
       point = o->LocalToAbsolute(point, kUseTransforms);
       return true;
