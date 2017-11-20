@@ -52,6 +52,24 @@
       "revId": "cf2139bbc8f9582bcb9777d0533cc744c1e440cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b83ca9d_86532811",
+        "filename": "mojo/public/js/new_bindings/base.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-20T20:23:18Z",
+      "side": 1,
+      "message": "Okay, thanks! Because mojo may work in an environment without window, say, workers, I will leave it as it is.",
+      "parentUuid": "1c04c7a6_2477a21c",
+      "revId": "cf2139bbc8f9582bcb9777d0533cc744c1e440cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
