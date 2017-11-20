@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2d90b6bb_379026af",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-20T17:21:59Z",
+      "side": 1,
+      "message": "That\u0027s was a good point. I was looking at all the supported data structures and mojo only have maps. But now that you mentioned it, this could actually be an array instead, since that will be converted to a vector in C++ code. Added TODO.",
+      "parentUuid": "1a8258fa_20fd0c59",
+      "range": {
+        "startLine": 48,
+        "startChar": 33,
+        "endLine": 48,
+        "endChar": 36
+      },
+      "revId": "a59cb51fabbc0961be1c321c1f77a22ed0683a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7982ee1b_43a865e1",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
         "patchSetId": 11
@@ -92,6 +116,30 @@
       "revId": "a59cb51fabbc0961be1c321c1f77a22ed0683a39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ac94ff_73906324",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-20T17:21:59Z",
+      "side": 1,
+      "message": "These keys correspond to the HTML DOM IDs. Added comments.",
+      "parentUuid": "7982ee1b_43a865e1",
+      "range": {
+        "startLine": 19,
+        "startChar": 11,
+        "endLine": 19,
+        "endChar": 34
+      },
+      "revId": "a59cb51fabbc0961be1c321c1f77a22ed0683a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "619274dc_39254def",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-20T17:21:59Z",
+      "side": 1,
+      "message": "These attributes are displayed on the page as description for the previews modes.",
+      "parentUuid": "415a0992_1f24f655",
+      "range": {
+        "startLine": 25,
+        "startChar": 11,
+        "endLine": 25,
+        "endChar": 37
+      },
+      "revId": "a59cb51fabbc0961be1c321c1f77a22ed0683a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6857697f_2c7390ff",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
         "patchSetId": 11
@@ -129,6 +201,30 @@
       "writtenOn": "2017-11-18T00:13:42Z",
       "side": 1,
       "message": "get from https://cs.chromium.org/chromium/src/chrome/browser/flag_descriptions.cc?rcl\u003d37f2427e0cb8ae63756243ed41bdb9e6436e28ca\u0026l\u003d339\n?",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 31
+      },
+      "revId": "a59cb51fabbc0961be1c321c1f77a22ed0683a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ebdc9cd_c3e73e48",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-20T17:21:59Z",
+      "side": 1,
+      "message": "Since ClientLoFi and Amp has a really long description. I wanted to have some consistency in the code.",
+      "parentUuid": "6857697f_2c7390ff",
       "range": {
         "startLine": 27,
         "startChar": 11,
@@ -164,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "ff6436ec_3827fa53",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-20T17:21:59Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "89bc0313_ef4afe1c",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "a59cb51fabbc0961be1c321c1f77a22ed0683a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62c6d82b_6f5fd1fe",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
         "patchSetId": 11
@@ -184,6 +304,30 @@
       "revId": "a59cb51fabbc0961be1c321c1f77a22ed0683a39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379a2415_522c6f9d",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-20T17:21:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62c6d82b_6f5fd1fe",
+      "range": {
+        "startLine": 49,
+        "startChar": 33,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "a59cb51fabbc0961be1c321c1f77a22ed0683a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -254,6 +398,30 @@
       "revId": "a59cb51fabbc0961be1c321c1f77a22ed0683a39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfea275b_cf80c98a",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-20T17:21:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5acb6913_3bc6483b",
+      "range": {
+        "startLine": 198,
+        "startChar": 1,
+        "endLine": 198,
+        "endChar": 6
+      },
+      "revId": "a59cb51fabbc0961be1c321c1f77a22ed0683a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
