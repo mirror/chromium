@@ -335,6 +335,7 @@ void MessageLoop::ClearTaskRunnerForTesting() {
 
 void MessageLoop::Run(bool application_tasks_allowed) {
   DCHECK_EQ(this, current());
+  LOG(INFO) << "MessageLoop::Run() starting for loop " << this << " pump " << pump_.get();
   if (application_tasks_allowed && !task_execution_allowed_) {
     // Allow nested task execution as explicitly requested.
     DCHECK(run_loop_client_->IsNested());
@@ -344,10 +345,13 @@ void MessageLoop::Run(bool application_tasks_allowed) {
   } else {
     pump_->Run(this);
   }
+
+  LOG(INFO) << "MessageLoop::Run() finished for loop " << this << " pump " << pump_.get();
 }
 
 void MessageLoop::Quit() {
   DCHECK_EQ(this, current());
+  LOG(INFO) << "MessageLoop::Quit() for loop " << this << " pump " << pump_.get();
   pump_->Quit();
 }
 
