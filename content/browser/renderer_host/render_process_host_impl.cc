@@ -2688,6 +2688,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kDisallowNonExactResourceReuse,
 #if defined(OS_ANDROID)
     switches::kDisableMediaSessionAPI,
+    switches::kMadviseRandomExecutableCode,
     switches::kRendererWaitForJavaDebugger,
 #endif
 #if defined(OS_MACOSX)
