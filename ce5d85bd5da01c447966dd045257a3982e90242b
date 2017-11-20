@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "e687a392_58cca34d",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-20T19:24:40Z",
+      "side": 1,
+      "message": "\u003e Yes, that\u0027s what I meant.\n\u003e \n\u003e I don\u0027t suppose we could make a test that makes the CTVerifier do its thing instead - a test that relies on direct access to network stack objects isn\u0027t going to be useful - that\u0027s going to have to go away when the network service ships, and there will not be any equivalent way to test the existence of stuff.\n\u003e\n\u003e\n\u003e A browser test that tests behavior, on the other hand, will be able to pass both with any without the network service, so is much more future proof.\n\nThat seems really unfortunate, and a potential step backwards in our testing coverage. While browser tests serve a valuable part of our testing, it\u0027s worth noting that a number of behaviours tested at the Browser Test level either rely on ensuring that objects are wired up correctly through the networking layer.\n\nFrom your description, it sounds like what you\u0027re describing about the future of Network Service testing is similar to what we have with UI tests - and the downsides they come with.\n\nFor example, an experiment like this will not result in any Network Service behaviour changes - that is, it won\u0027t block loads, nor will it expose additional information to API consumers. In our existing model, this is perfectly fine - because we can ensure the correct objects are called. It sounds like, for Network S13N, we\u0027d have to expose more of this as part of the S13N API (which would be undesirable, especially for experiments) or expose this CT behaviour as another service.\n\nI think, faced with the choice between exposing this as part of the API or leaving it untested (or, more aptly, testing it at-or-below the S13N layer, and leaving off integration testing) is a much more realistic outcome, so it\u0027d be great to figure out a testing story for experiments like this.",
+      "parentUuid": "39de8d2c_26841db1",
+      "range": {
+        "startLine": 826,
+        "startChar": 15,
+        "endLine": 826,
+        "endChar": 26
+      },
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4d682bc_ffe36154",
         "filename": "components/certificate_transparency/single_tree_tracker.cc",
         "patchSetId": 5
