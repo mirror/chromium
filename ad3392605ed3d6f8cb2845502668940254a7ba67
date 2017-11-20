@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "034cc219_88351065",
+        "filename": "chrome/browser/resource_coordinator/discard_metrics_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-20T17:24:59Z",
+      "side": 1,
+      "message": "Is there any reason we can\u0027t use stats collector?",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 23
+      },
+      "revId": "ad3392605ed3d6f8cb2845502668940254a7ba67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
