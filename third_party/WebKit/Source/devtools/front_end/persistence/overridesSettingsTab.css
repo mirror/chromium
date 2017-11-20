@@ -1,0 +1,57 @@
+/*
+ * Copyright 2017 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ */
+
+header {
+    padding: 0 0 6px;
+    border-bottom: 1px solid #EEEEEE;
+}
+
+header > h3 {
+    font-size: 18px;
+    font-weight: normal;
+    margin: 0;
+    padding-bottom: 3px;
+}
+
+.overrides-settings-container .file-system-container:first-child {
+    border-top: 0;
+    padding: 10px 0 10px;
+    margin: 0 0;
+}
+
+.overrides-settings-container .file-system-container {
+    border-top: 1px solid #aaa;
+    padding: 19px 0 10px;
+    margin: 20px 0;
+}
+
+.overrides-settings-container .file-system-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.overrides-settings-container .file-system-name {
+    font-weight: bold;
+    flex: none;
+    margin-right: 10px;
+    font-size: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70%;
+}
+
+.overrides-settings-container .file-system-path {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: auto;
+}
+
+.overrides-settings-container {
+    overflow: hidden;
+    padding-right: 10px;
+}
