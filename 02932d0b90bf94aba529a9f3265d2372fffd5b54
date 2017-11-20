@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e2dd98fb_c37ef1ff",
+        "filename": "chrome/browser/safe_browsing/client_side_detection_host_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-11-20T17:49:14Z",
+      "side": 1,
+      "message": "ACK. This no-op overriding is to prevent the feature extraction happening. Since once the browse_info get passed to feature extractor, it will be cleared and we can no longer verify its content (e.g. ip lists).",
+      "parentUuid": "35047b85_af8545f0",
+      "revId": "02932d0b90bf94aba529a9f3265d2372fffd5b54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "869ac363_16e9ae4f",
         "filename": "chrome/browser/safe_browsing/client_side_detection_host_browsertest.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "02932d0b90bf94aba529a9f3265d2372fffd5b54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f481f465_b7c3cbce",
+        "filename": "chrome/browser/safe_browsing/client_side_detection_host_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-11-20T17:49:14Z",
+      "side": 1,
+      "message": "Ah, you\u0027re right. this is not needed. Removed.",
+      "parentUuid": "869ac363_16e9ae4f",
+      "revId": "02932d0b90bf94aba529a9f3265d2372fffd5b54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
