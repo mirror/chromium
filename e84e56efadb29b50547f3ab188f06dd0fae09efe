@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c303ea4_050f6b86",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-20T21:16:17Z",
+      "side": 1,
+      "message": "Suggest making the param an enum and have values like INCLUDE_BUCKETS and EXCLUDE_BUCKETS",
+      "range": {
+        "startLine": 212,
+        "startChar": 39,
+        "endLine": 212,
+        "endChar": 43
+      },
+      "revId": "e84e56efadb29b50547f3ab188f06dd0fae09efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ed3145_744c934c",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-20T21:16:17Z",
+      "side": 1,
+      "message": "This logic should be at the level of the feedback reporter. The base code shouldn\u0027t know about this.",
+      "range": {
+        "startLine": 220,
+        "startChar": 56,
+        "endLine": 220,
+        "endChar": 0
+      },
+      "revId": "e84e56efadb29b50547f3ab188f06dd0fae09efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
