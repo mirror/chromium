@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e952b531_ea9bc121",
+        "filename": "chrome/browser/chromeos/policy/unaffiliated_arc_allowed_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-20T09:25:54Z",
+      "side": 1,
+      "message": "nit: Don\u0027t need braces for one line blocks.",
+      "range": {
+        "startLine": 68,
+        "startChar": 31,
+        "endLine": 68,
+        "endChar": 33
+      },
+      "revId": "84a0f180ad10024b0ef69e8c3d45cfe9f18633c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9346ef_954d8838",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 10620,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-20T09:25:54Z",
+      "side": 1,
+      "message": "s/Allows/Allow/ those should sound like actions not like passive statements.",
+      "range": {
+        "startLine": 10620,
+        "startChar": 20,
+        "endLine": 10620,
+        "endChar": 27
+      },
+      "revId": "84a0f180ad10024b0ef69e8c3d45cfe9f18633c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
