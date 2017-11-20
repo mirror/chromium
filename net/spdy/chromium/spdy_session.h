@@ -749,11 +749,10 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // Adjust the send window size of all ActiveStreams and PendingStreamRequests.
   void UpdateStreamsSendWindowSize(int32_t delta_window_size);
 
-  // Send the PING (preface-PING) frame.
-  void SendPrefacePingIfNoneInFlight();
-
-  // Send PING if there are no PINGs in flight and we haven't heard from server.
-  void SendPrefacePing();
+  // Send PING frame if all previous PING frames have been ACKed,
+  // all posttasked CheckPingStatus() calls have been executed,
+  // and too long time has passed since last read from server.
+  void MaybeSendPrefacePing();
 
   // Send a single WINDOW_UPDATE frame.
   void SendWindowUpdateFrame(SpdyStreamId stream_id,
