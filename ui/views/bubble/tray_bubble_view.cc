@@ -157,6 +157,14 @@ TrayBubbleView::RerouteEventHandler::~RerouteEventHandler() {
 }
 
 void TrayBubbleView::RerouteEventHandler::OnKeyEvent(ui::KeyEvent* event) {
+  // Do not handle key events which are targeted to the tray or its descendants.
+  // RerouteEventHandler is for rerouting events which are not targetted to the
+  // tray. Those events should be handled by the target.
+  aura::Window* target = static_cast<aura::Window*>(event->target());
+  if (tray_bubble_view_->GetWidget()->GetNativeView()->parent()->Contains(
+          target))
+    return;
+
   // Only passes Tab, Shift+Tab, Esc to the widget as it can consume more key
   // events. e.g. Alt+Tab can be consumed as focus traversal by FocusManager.
   ui::KeyboardCode key_code = event->key_code();
