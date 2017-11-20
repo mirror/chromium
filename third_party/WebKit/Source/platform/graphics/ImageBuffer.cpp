@@ -503,14 +503,23 @@ void ImageBuffer::SetNeedsCompositingUpdate() {
     client_->SetNeedsCompositingUpdate();
 }
 
+const unsigned char* ImageDataBuffer::Pixels() const {
+  if (uses_pixmap_)
+    return static_cast<const unsigned char*>(pixmap_.addr());
+  return data_;
+}
+
 bool ImageDataBuffer::EncodeImage(const String& mime_type,
                                   const double& quality,
                                   Vector<unsigned char>* encoded_image) const {
-  SkImageInfo info =
-      SkImageInfo::Make(Width(), Height(), kRGBA_8888_SkColorType,
-                        kUnpremul_SkAlphaType, nullptr);
-  const size_t rowBytes = info.minRowBytes();
-  SkPixmap src(info, Pixels(), rowBytes);
+  SkPixmap src(pixmap_);
+  if (!uses_pixmap_) {
+    SkImageInfo info =
+        SkImageInfo::Make(Width(), Height(), kRGBA_8888_SkColorType,
+                          kUnpremul_SkAlphaType, nullptr);
+    const size_t rowBytes = info.minRowBytes();
+    src.reset(info, Pixels(), rowBytes);
+  }
 
   if (mime_type == "image/jpeg") {
     SkJpegEncoder::Options options;

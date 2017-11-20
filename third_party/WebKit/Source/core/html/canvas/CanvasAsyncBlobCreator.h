@@ -12,6 +12,7 @@
 #include "core/typed_arrays/DOMTypedArray.h"
 #include "core/workers/ParentFrameTaskRunners.h"
 #include "platform/geometry/IntSize.h"
+#include "platform/graphics/StaticBitmapImage.h"
 #include "platform/heap/Handle.h"
 #include "platform/image-encoders/ImageEncoder.h"
 #include "platform/wtf/Vector.h"
@@ -39,6 +40,18 @@ class CORE_EXPORT CanvasAsyncBlobCreator
       double start_time,
       ExecutionContext*,
       ScriptPromiseResolver*);
+
+  static CanvasAsyncBlobCreator* Create(scoped_refptr<StaticBitmapImage>,
+                                        const String& mime_type,
+                                        BlobCallback*,
+                                        double start_time,
+                                        ExecutionContext*);
+  static CanvasAsyncBlobCreator* Create(scoped_refptr<StaticBitmapImage>,
+                                        const String& mime_type,
+                                        double start_time,
+                                        ExecutionContext*,
+                                        ScriptPromiseResolver*);
+
   void ScheduleAsyncBlobCreation(const double& quality);
   virtual ~CanvasAsyncBlobCreator();
   enum MimeType {
@@ -80,6 +93,12 @@ class CORE_EXPORT CanvasAsyncBlobCreator
                          double,
                          ExecutionContext*,
                          ScriptPromiseResolver*);
+  CanvasAsyncBlobCreator(scoped_refptr<StaticBitmapImage>,
+                         MimeType,
+                         BlobCallback*,
+                         double,
+                         ExecutionContext*,
+                         ScriptPromiseResolver*);
   // Methods are virtual for unit testing
   virtual void ScheduleInitiateEncoding(double quality);
   virtual void IdleEncodeRows(double deadline_seconds);
@@ -98,6 +117,7 @@ class CORE_EXPORT CanvasAsyncBlobCreator
 
   void Dispose();
 
+  scoped_refptr<StaticBitmapImage> image_;
   Member<DOMUint8ClampedArray> data_;
   std::unique_ptr<ImageEncoder> encoder_;
   Vector<unsigned char> encoded_image_;
@@ -109,6 +129,7 @@ class CORE_EXPORT CanvasAsyncBlobCreator
   double start_time_;
   double schedule_initiate_start_time_;
   double elapsed_time_;
+  bool uses_image_bitmap_ = false;
 
   ToBlobFunctionType function_type_;
 
