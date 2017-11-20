@@ -142,6 +142,24 @@
       "revId": "b39a7926a836c242be334bbd35b8fdc5e2457b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff85cd7d_4d71e104",
+        "filename": "components/drive/job_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-20T14:32:34Z",
+      "side": 1,
+      "message": "Ignoring notifications when \"type \u003d\u003d net::NetworkChangeNotifier::CONNECTION_NONE \u0026\u0026 !net::NetworkChangeNotifier::IsOffline()\" should generally leave the behavior the same as the prior OnConnectionTypeChanged() behavior.",
+      "parentUuid": "f0b20afc_f5e9ebda",
+      "revId": "b39a7926a836c242be334bbd35b8fdc5e2457b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
