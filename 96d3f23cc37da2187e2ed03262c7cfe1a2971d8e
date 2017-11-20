@@ -1,0 +1,527 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "386ea882_648b3160",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "nit: no need for \"whole\"",
+      "range": {
+        "startLine": 55,
+        "startChar": 18,
+        "endLine": 55,
+        "endChar": 24
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e49d459e_cf0722aa",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "nit: \"point\" suggests a 2d point also range suggests a [min, max] range. \nHow about value/max instead of point/range?",
+      "range": {
+        "startLine": 96,
+        "startChar": 45,
+        "endLine": 96,
+        "endChar": 50
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ae2417_8821d78a",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "nit: formatting - I think this should be on a new line.",
+      "range": {
+        "startLine": 104,
+        "startChar": 28,
+        "endLine": 104,
+        "endChar": 37
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c71a5e25_2d137642",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "nit: s/container_element/snap container/",
+      "range": {
+        "startLine": 114,
+        "startChar": 45,
+        "endLine": 114,
+        "endChar": 64
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "638d8591_11d8928b",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "nit: s/snap_area/snap area/",
+      "range": {
+        "startLine": 114,
+        "startChar": 14,
+        "endLine": 114,
+        "endChar": 23
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be559c90_9f136bae",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "how about using \"area\" here. It has been explained above that (area \u003d snap area + margin)",
+      "range": {
+        "startLine": 124,
+        "startChar": 33,
+        "endLine": 124,
+        "endChar": 55
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d78be3f0_6bc186cb",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "nit: ditto to use \"container\"",
+      "range": {
+        "startLine": 125,
+        "startChar": 7,
+        "endLine": 125,
+        "endChar": 38
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907b5978_481bf915",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "nit: this should be adjacent to the line below.",
+      "range": {
+        "startLine": 146,
+        "startChar": 26,
+        "endLine": 146,
+        "endChar": 40
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d877d6_8ee7c807",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "nit: There is no term \"CenterAlignment\" either use \"center alignment\" or SnapAlignment::kCenter.\nMy preference if the former.",
+      "range": {
+        "startLine": 163,
+        "startChar": 7,
+        "endLine": 163,
+        "endChar": 22
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db4d58e_a0955841",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "nit:ditto.",
+      "range": {
+        "startLine": 202,
+        "startChar": 7,
+        "endLine": 202,
+        "endChar": 19
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b3f26d_392ebc65",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "Interesting and thanks for adding the explanation. This seems reasonable.\n\nLooking closer into this I noticed that \"scroll-padding\" allows percentage and asks\nfor them to be resolved against the corresponding dimension. This is different that normal padding which resolves all percentages against \"width\". [2,3]\n\nSo we should make sure to mention this in the comment as it is different from\nother paddings.\n\n\n\n[1] https://drafts.csswg.org/css-scroll-snap-1/#scroll-padding\n   \"relative to the corresponding dimension of the scroll container’s scrollport\"\n[2] https://drafts.csswg.org/css-box/#padding-props\n[3] See for example LayoutBoxModelObject::ComputedCSSPaddin where it uses |MinimumValueForLength| but against the \"width\".",
+      "range": {
+        "startLine": 272,
+        "startChar": 6,
+        "endLine": 272,
+        "endChar": 27
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eefc5bae_716845e2",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "if percentages are not allowed, should we even parse them as valid? If not\nthen the parser should reject such values. \n\nAnd then we don\u0027t even need to worry about percetage here. Is there a method \nthat turns a length into layout unit without resolving percentage that we can use\ninstead?",
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9439af7_66d1e408",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "nit: since this is only used for debugging, it should be hidden behind NDEBUG check.\nSee other print methods here.",
+      "range": {
+        "startLine": 318,
+        "startChar": 22,
+        "endLine": 318,
+        "endChar": 35
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "110de5da_c3acf752",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "Should really be MAX_FLOAT. :)",
+      "range": {
+        "startLine": 343,
+        "startChar": 28,
+        "endLine": 343,
+        "endChar": 52
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff2cc37c_b7e80607",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "Please add a TODO that mentions we should consider visibility and \nscroll direction when choosing the snap offset.",
+      "range": {
+        "startLine": 345,
+        "startChar": 2,
+        "endLine": 345,
+        "endChar": 57
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a87c45c_cbb6ba91",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "Feels like this should be merged with the X version.\n\nIn fact we are looping over all snap areas twice, once for X and\nonce for Y. We should be able to do this with a single loop \nthat calculates both y \u0026 x snap offsets..",
+      "range": {
+        "startLine": 359,
+        "startChar": 30,
+        "endLine": 359,
+        "endChar": 47
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d974d8d_5af46a0a",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "This is actually the scrolled axis. Let\u0027s call it scroll_orientation to make this clear.\nAlso IMHO the type is confusing too. It really should be \"ScrollOrientation\"[1] or \"ScrollDirection\"\n\n\n[1] https://codesearch.chromium.org/chromium/src/third_party/WebKit/Source/platform/scroll/ScrollTypes.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d188",
+      "range": {
+        "startLine": 385,
+        "startChar": 46,
+        "endLine": 385,
+        "endChar": 59
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da4b08e_44913b46",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "nit: please make into an early exit.",
+      "range": {
+        "startLine": 389,
+        "startChar": 3,
+        "endLine": 389,
+        "endChar": 42
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9589de3_89cc97c6",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "This causes the scroller to snap at (0,0).\nI think the real problem is that this function cannot signal \"no snapping\"",
+      "range": {
+        "startLine": 393,
+        "startChar": 13,
+        "endLine": 393,
+        "endChar": 25
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "942a38b9_33c3a704",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "nit: make this an early return instead.",
+      "range": {
+        "startLine": 394,
+        "startChar": 8,
+        "endLine": 394,
+        "endChar": 34
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "447b3f50_b484345c",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "I think we should be able to differentiate between\n - don\u0027t snap\n - snap at current location\n\nThe current output does not allow this.",
+      "range": {
+        "startLine": 403,
+        "startChar": 2,
+        "endLine": 403,
+        "endChar": 31
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "051528a0_2cc12a22",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "please give parameter name to this.",
+      "range": {
+        "startLine": 46,
+        "startChar": 46,
+        "endLine": 46,
+        "endChar": 59
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a60888_02ebd0d4",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-20T17:51:06Z",
+      "side": 1,
+      "message": "please give parameter names to these.",
+      "range": {
+        "startLine": 50,
+        "startChar": 36,
+        "endLine": 50,
+        "endChar": 73
+      },
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
