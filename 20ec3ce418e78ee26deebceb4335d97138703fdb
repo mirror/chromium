@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "feb392ff_428cb405",
+        "filename": "components/exo/buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T23:48:00Z",
+      "side": 1,
+      "message": "Some missed cleanup in these files to remove the TextureMailbox name.",
+      "revId": "20ec3ce418e78ee26deebceb4335d97138703fdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
