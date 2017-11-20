@@ -34,6 +34,9 @@
                   ActivityServicePositioner,
                   QRScannerResultLoading,
                   BubbleViewAnchorPointProvider>
+
+- (void)start;
+
 @end
 
 @interface LegacyToolbarCoordinator
