@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ba3bce5_b7372ccf",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-20T20:59:12Z",
+      "side": 1,
+      "message": "InputTargetClientImpl::~InputTargetClientImpl() \u003d default;",
+      "revId": "4d4570f161ed375b8c95c0a2e96cd62470b56852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2867f3d9_2051d862",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-20T20:59:12Z",
+      "side": 1,
+      "message": "I\u0027m generally not a fan of StrongBindings due to lifetime issues. Could RenderWidget own a InputTargetClientImpl instead and hold a plain old Binding instead of StrongBinding?",
+      "revId": "4d4570f161ed375b8c95c0a2e96cd62470b56852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
