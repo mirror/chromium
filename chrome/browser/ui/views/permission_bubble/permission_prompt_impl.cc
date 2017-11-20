@@ -68,7 +68,8 @@ class PermissionsBubbleDialogDelegateView
  public:
   PermissionsBubbleDialogDelegateView(
       PermissionPromptImpl* owner,
-      const std::vector<PermissionRequest*>& requests);
+      const std::vector<PermissionRequest*>& requests,
+      base::string16 display_origin);
   ~PermissionsBubbleDialogDelegateView() override;
 
   void CloseBubble();
@@ -102,8 +103,11 @@ class PermissionsBubbleDialogDelegateView
 
 PermissionsBubbleDialogDelegateView::PermissionsBubbleDialogDelegateView(
     PermissionPromptImpl* owner,
-    const std::vector<PermissionRequest*>& requests)
-    : owner_(owner), persist_checkbox_(nullptr) {
+    const std::vector<PermissionRequest*>& requests,
+    base::string16 display_origin)
+    : owner_(owner),
+      display_origin_(display_origin),
+      persist_checkbox_(nullptr) {
   DCHECK(!requests.empty());
 
   set_close_on_deactivate(false);
@@ -121,10 +125,6 @@ PermissionsBubbleDialogDelegateView::PermissionsBubbleDialogDelegateView(
   SetLayoutManager(new views::BoxLayout(
       views::BoxLayout::kVertical, gfx::Insets(),
       provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_VERTICAL)));
-
-  display_origin_ = url_formatter::FormatUrlForSecurityDisplay(
-      requests[0]->GetOrigin(),
-      url_formatter::SchemeDisplay::OMIT_CRYPTOGRAPHIC);
 
   bool show_persistence_toggle = true;
   for (size_t index = 0; index < requests.size(); index++) {
@@ -333,8 +333,8 @@ void PermissionPromptImpl::Show() {
   DCHECK(browser_);
   DCHECK(browser_->window());
 
-  bubble_delegate_ =
-      new PermissionsBubbleDialogDelegateView(this, delegate_->Requests());
+  bubble_delegate_ = new PermissionsBubbleDialogDelegateView(
+      this, delegate_->Requests(), delegate_->GetDisplayOrigin());
 
   // Set |parent_window| because some valid anchors can become hidden.
   bubble_delegate_->set_parent_window(
