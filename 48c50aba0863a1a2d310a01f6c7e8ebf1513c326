@@ -16,6 +16,24 @@
       "revId": "48c50aba0863a1a2d310a01f6c7e8ebf1513c326",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ceb725_87194440",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-20T21:33:32Z",
+      "side": 1,
+      "message": "Because the installer initializes Crashpad as the initial Crashpad client, the crash keys subsystem gets initialized automatically. Good to check, though.",
+      "parentUuid": "e1bf7898_48b80afd",
+      "revId": "48c50aba0863a1a2d310a01f6c7e8ebf1513c326",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
