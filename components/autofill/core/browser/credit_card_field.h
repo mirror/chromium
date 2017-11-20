@@ -59,9 +59,35 @@ class CreditCardField : public FormField {
   // |CREDIT_CARD_EXP_2_DIGIT_YEAR|; otherwise |CREDIT_CARD_EXP_4_DIGIT_YEAR|.
   ServerFieldType GetExpirationYearType() const;
 
+  // Calls parseFieldSpecifics with the following modifications:
+  // - allows to skip |skips| fields if a better match is found after,
+  // - allows to replace |*match| if |allow_replace| is true and a better match
+  //   is found.
+  static bool ParseFieldSpecificsAllowingReplaceAndSkips(
+      AutofillScanner* scanner,
+      const base::string16& pattern,
+      int match_type,
+      int skips,
+      bool allow_replace,
+      AutofillField** match);
+
+  // Checks if field is not null and if field is focusable.
+  static bool HasFocusable(AutofillField* field);
+
+  // Tests if |candidate| is a better field than |target|.
+  // If this is the case, sets *target to candidate.
+  static bool ConsiderNewCandidate(AutofillField** target,
+                                   AutofillField* candidate);
+
   // Returns whether the expiration has been set for this credit card field.
   // It can be either a date or both the month and the year.
   bool HasExpiration() const;
+  // Checks if the expiration fields are focusable.
+  bool HasFocusableExpiration() const;
+  // Replace the existing expiration fields by the candidates if needed.
+  bool ConsiderNewExpiration(AutofillField* month_candidate,
+                             AutofillField* year_candidate,
+                             AutofillField* date_candidate);
 
   AutofillField* cardholder_;  // Optional.
 

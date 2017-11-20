@@ -163,7 +163,7 @@ const char kCardCvcRe[] =
 //   https://rps.fidelity.com/ftgw/rps/RtlCust/CreatePIN/Init.
 // Instead, we match only words beginning with "month".
 const char kExpirationMonthRe[] =
-    "expir|exp.*mo|exp.*date|ccmonth|cardmonth|addmonth"
+    "month|expir|exp.*mo|exp.*date|ccmonth|cardmonth|addmonth"
     "|gueltig|gültig|monat"  // de-DE
     "|fecha"                 // es
     "|date.*exp"             // fr-FR
