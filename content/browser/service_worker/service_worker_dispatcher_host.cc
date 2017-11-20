@@ -39,6 +39,7 @@
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_error_type.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
+#include "third_party/WebKit/public/platform/web_feature.mojom.h"
 #include "url/gurl.h"
 
 using blink::MessagePortChannel;
@@ -471,6 +472,10 @@ void ServiceWorkerDispatcherHost::OnCountFeature(int64_t version_id,
   ServiceWorkerVersion* version = GetContext()->GetLiveVersion(version_id);
   if (!version)
     return;
+  if (feature >=
+      static_cast<uint32_t>(blink::mojom::WebFeature::kNumberOfFeatures)) {
+    return;
+  }
   version->CountFeature(feature);
 }
 
