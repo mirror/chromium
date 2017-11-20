@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfad246a_bc03f2c4",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-20T15:29:41Z",
+      "side": 1,
+      "message": "Gratuitous undesired comment: I\u0027ve now done Go for enough years that single statement condition with no brackets frighten me.",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc796814_ca80207c",
+        "filename": "net/data/ssl/root_stores/update_root_stores.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-20T15:29:41Z",
+      "side": 1,
+      "message": "THIS_DIR \u003d os.path.dirname(os.path.abspath(__file__))\nSRC_DIR \u003d os.path.normpath(os.path.join(THIS_DIR, \u0027..\u0027, \u0027..\u0027, \u0027..\u0027, \u0027..\u0027))\n\nThis is then clearer upon use below.",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d911dd_4f49038f",
+        "filename": "net/data/ssl/root_stores/update_root_stores.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-20T15:29:41Z",
+      "side": 1,
+      "message": "return os.path.join(SRC_DIR, src_relative_file_path)\n\nit\u0027s not a big deal even if the file path contains \u0027/\u0027 on Windows, the file will still open correctly. If concerned, I think os.path.normpath() will fix it for you.",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18877554_d92876e3",
+        "filename": "net/data/ssl/root_stores/update_root_stores.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-20T15:29:41Z",
+      "side": 1,
+      "message": "consistently use single quotes for strings",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6223602_f39a5f64",
+        "filename": "net/data/ssl/root_stores/update_root_stores.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-20T15:29:41Z",
+      "side": 1,
+      "message": "if sys.platform \u003d\u003d \u0027win32\u0027:",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a1e6af_30eee42b",
+        "filename": "net/data/ssl/root_stores/update_root_stores.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-20T15:29:41Z",
+      "side": 1,
+      "message": "return call([formatter, \"-i\", \"-style\u003dchromium\", filename])",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d306f67a_b533abc4",
+        "filename": "net/data/ssl/root_stores/update_root_stores.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-20T15:29:41Z",
+      "side": 1,
+      "message": "return 1",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01f17e9_c2d0d58e",
+        "filename": "net/data/ssl/root_stores/update_root_stores.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-20T15:29:41Z",
+      "side": 1,
+      "message": "optional: this is short enough you can reduce:\n\n  header_file.write(\u0027{ { %s },\\n%d }, \u0027 % (cpp_str, log_id))\n\npersonally I find this more readable.",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23bdf089_45d33997",
+        "filename": "net/data/ssl/root_stores/update_root_stores.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-20T15:29:41Z",
+      "side": 1,
+      "message": "return ClangFormat(_GetInputFile(ROOT_CERT_LIST_PATH))",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5ab564_a4079e8e",
+        "filename": "net/data/ssl/root_stores/update_root_stores.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-20T15:29:41Z",
+      "side": 1,
+      "message": "Ensure that clang-format failure is not silently ignored:\n\n  sys.exit(main())",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "977e49ef_c6069d1e",
+        "filename": "tools/metrics/histograms/update_net_root_certs.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-20T15:29:41Z",
+      "side": 1,
+      "message": "use os.path.abspath() first otherwise __file__ is CWD relative and if os.chdir() is called, the sys.path is now incorrect.",
+      "revId": "db417d48058c25487fa04b5ac9f486bc2a120155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
