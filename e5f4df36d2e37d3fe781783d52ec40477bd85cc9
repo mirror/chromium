@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f1a990e3_86a31828",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-20T21:19:43Z",
+      "side": 1,
+      "message": "I am not really sure. I copied over the config for the \u0027Linux Perf\u0027 bot, and that seems to always explicitly set gpu. (one of the likely-wrong assumptions I made was that the tests are probably run with DISPLAY set if gpu is set ...)",
+      "parentUuid": "0bf2b110_bbffc858",
+      "revId": "e5f4df36d2e37d3fe781783d52ec40477bd85cc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70e4dfdc_81f87ef3",
         "filename": "tools/perf/chromium.perf.fyi.extras.json",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fa51d95c_aaf3e702",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-20T21:19:43Z",
+      "side": 1,
+      "message": "Why do you think this is wrong? (I can remove this, of course, but when I log into the bot, /etc/lsb-release does agree with this version)",
+      "parentUuid": "70e4dfdc_81f87ef3",
+      "revId": "e5f4df36d2e37d3fe781783d52ec40477bd85cc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d14ee429_b052beb7",
         "filename": "tools/perf/chromium.perf.fyi.extras.json",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-20T19:33:16Z",
       "side": 1,
       "message": "pool is Chrome-perf-fyi",
+      "revId": "e5f4df36d2e37d3fe781783d52ec40477bd85cc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a0d4e3_aa0957c3",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-20T21:19:43Z",
+      "side": 1,
+      "message": "Whoops. Fixed.",
+      "parentUuid": "d14ee429_b052beb7",
       "revId": "e5f4df36d2e37d3fe781783d52ec40477bd85cc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
