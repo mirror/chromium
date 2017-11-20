@@ -22,6 +22,30 @@
       "revId": "2700039a990219029dbed69ec9812d46d44bc901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c94032e3_9f831095",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-20T20:31:46Z",
+      "side": 1,
+      "message": "Is adding a new NetworkRequest class better? The class will copy all the fields from ResourceRequest and remove unwanted fields like ResourceType, but append the first_party_url_policy field instead. But I feel there is a lot of unnecessary copying here.\nDefering to jam@ to comment.",
+      "parentUuid": "375e986a_3786b183",
+      "range": {
+        "startLine": 339,
+        "startChar": 14,
+        "endLine": 339,
+        "endChar": 28
+      },
+      "revId": "2700039a990219029dbed69ec9812d46d44bc901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
