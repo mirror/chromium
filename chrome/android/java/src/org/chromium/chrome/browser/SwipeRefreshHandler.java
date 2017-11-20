@@ -11,8 +11,12 @@ import android.view.ViewGroup.LayoutParams;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.feature_engagement.TrackerFactory;
 import org.chromium.chrome.browser.fullscreen.FullscreenManager;
+import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.tab.Tab;
+import org.chromium.components.feature_engagement.EventConstants;
+import org.chromium.components.feature_engagement.Tracker;
 import org.chromium.third_party.android.swiperefresh.SwipeRefreshLayout;
 import org.chromium.ui.OverscrollRefreshHandler;
 
@@ -123,6 +127,13 @@ public class SwipeRefreshHandler implements OverscrollRefreshHandler {
         if (manager != null && manager.areBrowserControlsAtBottom()
                 && manager.getBrowserControlHiddenRatio() > 0) {
             return false;
+        }
+
+        if (mTab.getActivity() != null && mTab.getActivity().getBottomSheet() != null) {
+            final Tracker tracker =
+                    TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
+            tracker.notifyEvent(EventConstants.PULL_TO_REFRESH);
+            mTab.getActivity().getBottomSheet().showHelpBubble(false, true);
         }
 
         attachSwipeRefreshLayoutIfNecessary();
