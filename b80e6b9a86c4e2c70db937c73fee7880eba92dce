@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ceec008_acf86efc",
+        "filename": "content/browser/frame_host/navigation_entry_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-20T17:33:09Z",
+      "side": 0,
+      "message": "I\u0027ve decided to remove this DCHECK after all.  In my mind, an assert / DCHECK statement is supposed to describe things that should *never* happen.  The DCHECK here doesn\u0027t meet this criteria - it describes things that kind of should not happen, but *may* still happen at runtime if 1) there is a race [2 renderers coming up at the same time with the same unique name for different frames] or 2) there is a malicious renderer (simulated by the failing ecurityExploitBrowserTest.PageStateToWrongEntry test which bumps into this DCHECK because after the CL the DCHECK is checked in a few more cases - this is also seen in https://crrev.com/c/775493 which starts checking the DCHECK for a lot more cases).\n\nIf we want to reintroduce the DCHECK, we should 1) do it deep [e.g. in NEI::GetTreeNode, not just in NEI::RemoveEntryForFrame] and 2) in a way that doesn\u0027t trip the DCHECK when there is a race and/or when running the security exploit tests.",
+      "range": {
+        "startLine": 946,
+        "startChar": 2,
+        "endLine": 946,
+        "endChar": 21
+      },
+      "revId": "b80e6b9a86c4e2c70db937c73fee7880eba92dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
