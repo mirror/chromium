@@ -3077,7 +3077,8 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
 
   if (base::FeatureList::IsEnabled(features::kWebAuth)) {
     registry_->AddInterface(
-        base::Bind(&AuthenticatorImpl::Create, base::Unretained(this)));
+        base::Bind(&RenderFrameHostImpl::BindAuthenticatorRequest,
+                   base::Unretained(this)));
   }
 
   if (permission_manager) {
@@ -4233,6 +4234,14 @@ void RenderFrameHostImpl::BindPresentationServiceRequest(
     presentation_service_ = PresentationServiceImpl::Create(this);
 
   presentation_service_->Bind(std::move(request));
+}
+
+void RenderFrameHostImpl::BindAuthenticatorRequest(
+    webauth::mojom::AuthenticatorRequest request) {
+  if (!authenticator_impl_)
+    authenticator_impl_ = AuthenticatorImpl::Create(this);
+
+  authenticator_impl_->Bind(std::move(request));
 }
 
 void RenderFrameHostImpl::GetInterface(

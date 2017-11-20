@@ -88,10 +88,14 @@ class AuthenticatorImplTest : public content::RenderViewHostTestHarness {
   }
 
   AuthenticatorPtr ConnectToAuthenticator() {
+    authenticator_impl_.reset(AuthenticatorImpl::Create(main_rfh());
     AuthenticatorPtr authenticator;
-    AuthenticatorImpl::Create(main_rfh(), mojo::MakeRequest(&authenticator));
+    AuthenticatorImpl::Bind(mojo::Makerequest(&authenticator));
     return authenticator;
   }
+
+ private:
+  std::unique_ptr<AuthenticatorImpl> authenticator_impl_;
 };
 
 class TestMakeCredentialCallback {
