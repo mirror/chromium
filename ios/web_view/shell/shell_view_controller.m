@@ -279,8 +279,8 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField*)field {
-  NSURLRequest* request =
-      [NSURLRequest requestWithURL:[NSURL URLWithString:[field text]]];
+    NSURLRequest* request =
+        [NSURLRequest requestWithURL:[NSURL URLWithString:[field text]]];
   [_webView loadRequest:request];
   [field resignFirstResponder];
   [self updateToolbar];
