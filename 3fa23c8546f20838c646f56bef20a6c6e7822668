@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "96fcbaaa_e8116ca4",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-20T19:44:55Z",
+      "side": 1,
+      "message": "Done.  I had a comment here but I guess it got lost on its way here :P",
+      "parentUuid": "473f4a8d_e6cff772",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 64
+      },
+      "revId": "3fa23c8546f20838c646f56bef20a6c6e7822668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92f365a8_5d977830",
         "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "3fa23c8546f20838c646f56bef20a6c6e7822668",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "184fd9b3_f65e9bb8",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-20T19:44:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92f365a8_5d977830",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 41
+      },
+      "revId": "3fa23c8546f20838c646f56bef20a6c6e7822668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5fea356b_47bc545b",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-20T19:44:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1d418ff_b1d09aa8",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 24
+      },
+      "revId": "3fa23c8546f20838c646f56bef20a6c6e7822668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8959833b_00d77025",
         "filename": "chrome/browser/media/router/independent_otr_profile_manager_browsertest.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "3fa23c8546f20838c646f56bef20a6c6e7822668",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c674db_7aa9f64d",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-20T19:44:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8959833b_00d77025",
+      "range": {
+        "startLine": 33,
+        "startChar": 30,
+        "endLine": 33,
+        "endChar": 56
+      },
+      "revId": "3fa23c8546f20838c646f56bef20a6c6e7822668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "09b15dc6_1a11f246",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-20T19:44:55Z",
+      "side": 1,
+      "message": "True.  I was counting on the limited number of profile creations here, but that\u0027s not really a good idea anyway.  Removed.",
+      "parentUuid": "92ffe146_b3080f68",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 16
+      },
+      "revId": "3fa23c8546f20838c646f56bef20a6c6e7822668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9529bcdd_643b008f",
         "filename": "chrome/browser/ui/browser.cc",
         "patchSetId": 8
@@ -137,6 +257,30 @@
       "revId": "3fa23c8546f20838c646f56bef20a6c6e7822668",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a451f4_3405166f",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-20T19:44:55Z",
+      "side": 1,
+      "message": "Done.  Also added a HasOffTheRecordProfile() check to avoid GetOffTheRecordProfile() creating one.",
+      "parentUuid": "9529bcdd_643b008f",
+      "range": {
+        "startLine": 536,
+        "startChar": 28,
+        "endLine": 536,
+        "endChar": 64
+      },
+      "revId": "3fa23c8546f20838c646f56bef20a6c6e7822668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
