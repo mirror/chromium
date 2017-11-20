@@ -298,6 +298,30 @@
     },
     {
       "key": {
+        "uuid": "bef53dae_aae6a480",
+        "filename": "components/signin/core/browser/signin_manager_base.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-20T14:01:42Z",
+      "side": 1,
+      "message": "It should be in RegisterAccountConsistencyProfilePrefs()\nhttps://cs.chromium.org/chromium/src/components/signin/core/browser/profile_management_switches.h?rcl\u003da9230364bc6a77b71014b309f16d4f8b74d4c9ed\u0026l\u003d123",
+      "parentUuid": "f93f12d0_a3e9a6ce",
+      "range": {
+        "startLine": 45,
+        "startChar": 39,
+        "endLine": 45,
+        "endChar": 66
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed0847b8_2363d014",
         "filename": "components/signin/core/browser/signin_pref_names.h",
         "patchSetId": 19
