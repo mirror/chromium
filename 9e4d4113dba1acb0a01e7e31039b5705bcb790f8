@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9da4490e_28fa222f",
+        "filename": "ui/android/event_forwarder.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-20T22:07:49Z",
+      "side": 1,
+      "message": "Done. FYI - it worked event with truncation because the result doesn\u0027t have to be precise - roughly the center of the view is okay since this is for simulated gesture events.",
+      "parentUuid": "58db3ba4_52cd40d5",
+      "revId": "9e4d4113dba1acb0a01e7e31039b5705bcb790f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b15fefd9_dbc4aa7e",
         "filename": "ui/events/blink/blink_event_util.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "9e4d4113dba1acb0a01e7e31039b5705bcb790f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b774f0e8_e7fa4d50",
+        "filename": "ui/events/blink/blink_event_util.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-20T22:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b15fefd9_dbc4aa7e",
+      "revId": "9e4d4113dba1acb0a01e7e31039b5705bcb790f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "03d0a7bd_ac4c67a9",
+        "filename": "ui/events/blink/blink_event_util.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-20T22:07:49Z",
+      "side": 1,
+      "message": "This conversion is not general enough yet, and conversion is from synthetic events (not actually touch but keyboard) so it lacks some data to populate all the fields correctly. I left a comment to clarify that.",
+      "parentUuid": "c60b82c6_a41ed7ee",
+      "range": {
+        "startLine": 1169,
+        "startChar": 16,
+        "endLine": 1169,
+        "endChar": 24
+      },
+      "revId": "9e4d4113dba1acb0a01e7e31039b5705bcb790f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "511f5fa2_098cf43a",
         "filename": "ui/events/blink/blink_event_util.cc",
         "patchSetId": 13
@@ -70,6 +130,30 @@
       "writtenOn": "2017-11-20T21:38:31Z",
       "side": 1,
       "message": "Why is this always touchscreen? aelias added a Autoscroll gesture device that was added I believe Gamepad uses for scrolling. What should it be for gamepads.. saying it is the touchscreen is a little odd no?\n\nSee:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/public/platform/WebGestureDevice.h?type\u003dcs\u0026l\u003d35",
+      "range": {
+        "startLine": 1171,
+        "startChar": 35,
+        "endLine": 1171,
+        "endChar": 63
+      },
+      "revId": "9e4d4113dba1acb0a01e7e31039b5705bcb790f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94517b9_1d451a67",
+        "filename": "ui/events/blink/blink_event_util.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-20T22:07:49Z",
+      "side": 1,
+      "message": "Ditto. All the conversion cases so far assume that keyboard events like Ctrl+/- are turned into pinch-zoom-like gesture events with source_device of touch screen. Will need more parameters in the future for extending it to support more cases.",
+      "parentUuid": "511f5fa2_098cf43a",
       "range": {
         "startLine": 1171,
         "startChar": 35,
