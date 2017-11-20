@@ -16,6 +16,24 @@
       "revId": "5cbd777882e61fad7fb98fc395549fbf3aaf0c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b982e5bd_3752af67",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-20T07:41:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "411f1363_7e49c42e",
+      "revId": "5cbd777882e61fad7fb98fc395549fbf3aaf0c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
