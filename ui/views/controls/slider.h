@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "ui/gfx/animation/animation_delegate.h"
 #include "ui/gfx/animation/slide_animation.h"
+#include "ui/views/painter.h"
 #include "ui/views/view.h"
 #include "ui/views/views_export.h"
 
@@ -58,6 +59,12 @@ class VIEWS_EXPORT Slider : public View, public gfx::AnimationDelegate {
   void set_enable_accessibility_events(bool enabled) {
     accessibility_events_enabled_ = enabled;
   }
+
+  void set_should_paint_focus_rect(bool value) {
+    should_paint_focus_rect_ = value;
+  }
+
+  void SetFocusPainter(std::unique_ptr<Painter> focus_painter);
 
   // Update UI based on control on/off state.
   void UpdateState(bool control_on);
@@ -133,7 +140,14 @@ class VIEWS_EXPORT Slider : public View, public gfx::AnimationDelegate {
   // Animating value of the current radius of the thumb's highlight.
   float thumb_highlight_radius_ = 0.f;
 
+  // Whether the slider should paint a focus rect. The glowing circle should be
+  // the main indicator of focus, but some sliders (ex. system tray volume
+  // slider) have a state where the circle cannot glow.
+  bool should_paint_focus_rect_ = false;
+
   gfx::SlideAnimation highlight_animation_;
+
+  std::unique_ptr<Painter> focus_painter_;
 
   DISALLOW_COPY_AND_ASSIGN(Slider);
 };

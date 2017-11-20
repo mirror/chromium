@@ -255,8 +255,7 @@ views::ToggleButton* TrayPopupUtils::CreateToggleButton(
 }
 
 std::unique_ptr<views::Painter> TrayPopupUtils::CreateFocusPainter() {
-  return views::Painter::CreateSolidFocusPainter(
-      kFocusBorderColor, kFocusBorderThickness, gfx::InsetsF());
+  return views::Painter::CreateSolidFocusPainter(kFocusBorderColor);
 }
 
 void TrayPopupUtils::ConfigureTrayPopupButton(views::Button* button) {

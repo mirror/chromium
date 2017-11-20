@@ -373,7 +373,7 @@ void TrayBackgroundView::UpdateAfterShelfAlignmentChange() {
   gfx::Rect paint_bounds(GetBackgroundBounds());
   paint_bounds.Inset(gfx::Insets(-kFocusBorderThickness));
   SetFocusPainter(views::Painter::CreateSolidFocusPainter(
-      kFocusBorderColor, kFocusBorderThickness,
+      kFocusBorderColor, views::Painter::kDefaultSolidFocusPainterThicknessDp,
       GetLocalBounds().InsetsFrom(paint_bounds)));
 }
 
