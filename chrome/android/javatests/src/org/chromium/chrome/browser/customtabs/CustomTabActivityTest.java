@@ -105,6 +105,7 @@ import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content.browser.test.util.JavaScriptUtils;
+import org.chromium.content.browser.test.util.TestContentViewCore;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.WebContentsObserver;
 import org.chromium.net.test.EmbeddedTestServer;
@@ -786,24 +787,27 @@ public class CustomTabActivityTest {
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                return mCustomTabActivityTestRule.getActivity()
-                               .getActivityTab()
-                               .getContentViewCore()
-                               .getSelectPopupForTest()
-                        != null;
+                TestContentViewCore cvc =
+                        getContentViewCore(mCustomTabActivityTestRule.getActivity());
+                return cvc != null && cvc.getSelectPopupForTest() != null;
             }
         });
         final ChromeActivity newActivity = reparentAndVerifyTab();
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                Tab currentTab = newActivity.getActivityTab();
-                return currentTab != null
-                        && currentTab.getContentViewCore() != null
-                        && currentTab.getContentViewCore().getSelectPopupForTest() == null;
+                TestContentViewCore cvc = getContentViewCore(newActivity);
+                return cvc != null && cvc.getSelectPopupForTest() != null;
             }
         });
     }
+
+    private TestContentViewCore getContentViewCore(ChromeActivity activity) {
+        Tab tab = activity.getActivityTab();
+        if (tab == null) return null;
+        return (TestContentViewCore) tab.getContentViewCore();
+    }
+
     /**
      * Test whether the color of the toolbar is correctly customized. For L or later releases,
      * status bar color is also tested.

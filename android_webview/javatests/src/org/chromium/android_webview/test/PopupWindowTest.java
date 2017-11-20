@@ -26,6 +26,7 @@ import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer;
+import org.chromium.content.browser.test.util.TestContentViewCore;
 import org.chromium.net.test.util.TestWebServer;
 
 /**
@@ -141,8 +142,9 @@ public class PopupWindowTest {
         // Now long press on some texts and see if the text handles show up.
         DOMUtils.longPressNode(popupContents.getContentViewCore(), "plain_text");
         assertWaitForSelectActionBarStatus(true, popupContents.getContentViewCore());
-        Assert.assertTrue(ThreadUtils.runOnUiThreadBlocking(() -> popupContents.getContentViewCore()
-                    .getSelectionPopupControllerForTesting().hasSelection()));
+        final TestContentViewCore cvc = (TestContentViewCore) popupContents.getContentViewCore();
+        Assert.assertTrue(ThreadUtils.runOnUiThreadBlocking(
+                () -> cvc.getSelectionPopupControllerForTesting().hasSelection()));
 
         // Now hide the select action bar. This should hide the text handles and
         // clear the selection.

@@ -105,6 +105,7 @@ import org.chromium.content.browser.ContentView;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.crypto.CipherFactory;
 import org.chromium.content_public.browser.ChildProcessImportance;
+import org.chromium.content_public.browser.ContentViewCoreFactory;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.ImeEventObserver;
 import org.chromium.content_public.browser.LoadUrlParams;
@@ -158,6 +159,8 @@ public class Tab
     private static final String TAG = "Tab";
 
     private static final String PRODUCT_VERSION = ChromeVersionInfo.getProductVersion();
+
+    private static ContentViewCoreFactory sContentViewCoreFactory = ContentViewCoreFactory.DEFAULT;
 
     private long mNativeTabAndroid;
 
@@ -1767,7 +1770,8 @@ public class Tab
     }
 
     private ContentViewCore createContentViewCore(WebContents webContents) {
-        ContentViewCore cvc = new ContentViewCore(mThemedApplicationContext, PRODUCT_VERSION);
+        ContentViewCore cvc =
+                sContentViewCoreFactory.create(mThemedApplicationContext, PRODUCT_VERSION);
         ContentView cv = ContentView.createContentView(mThemedApplicationContext, cvc);
         cv.setContentDescription(mThemedApplicationContext.getResources().getString(
                 R.string.accessibility_content_view));
@@ -1776,6 +1780,11 @@ public class Tab
                 mThemedApplicationContext, this, cvc.getActionModeCallbackHelper());
         cvc.setActionModeCallback(actionModeCallback);
         return cvc;
+    }
+
+    @VisibleForTesting
+    public static void setContentViewCoreFactoryForTesting(ContentViewCoreFactory factory) {
+        sContentViewCoreFactory = factory;
     }
 
     /**

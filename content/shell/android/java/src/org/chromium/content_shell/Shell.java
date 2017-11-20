@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import org.chromium.base.Callback;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content.browser.ActivityContentVideoViewEmbedder;
@@ -33,6 +34,7 @@ import org.chromium.content.browser.ContentView;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.ContentViewRenderView;
 import org.chromium.content_public.browser.ActionModeCallbackHelper;
+import org.chromium.content_public.browser.ContentViewCoreFactory;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.NavigationController;
 import org.chromium.content_public.browser.WebContents;
@@ -45,6 +47,8 @@ import org.chromium.ui.base.WindowAndroid;
 public class Shell extends LinearLayout {
 
     private static final long COMPLETED_PROGRESS_TIMEOUT_MS = 200;
+
+    private static ContentViewCoreFactory sContentViewCoreFactory = ContentViewCoreFactory.DEFAULT;
 
     private final Runnable mClearProgressRunnable = new Runnable() {
         @Override
@@ -296,7 +300,7 @@ public class Shell extends LinearLayout {
     @CalledByNative
     private void initFromNativeTabContents(WebContents webContents) {
         Context context = getContext();
-        mContentViewCore = new ContentViewCore(context, "");
+        mContentViewCore = sContentViewCoreFactory.create(context, "");
         ContentView cv = ContentView.createContentView(context, mContentViewCore);
         mViewAndroidDelegate = new ShellViewAndroidDelegate(cv);
         mContentViewCore.initialize(mViewAndroidDelegate, cv, webContents, mWindow);
@@ -313,6 +317,11 @@ public class Shell extends LinearLayout {
                         FrameLayout.LayoutParams.MATCH_PARENT));
         cv.requestFocus();
         mContentViewRenderView.setCurrentContentViewCore(mContentViewCore);
+    }
+
+    @VisibleForTesting
+    public static void setContentViewCoreFactoryForTesting(ContentViewCoreFactory factory) {
+        sContentViewCoreFactory = factory;
     }
 
     /**

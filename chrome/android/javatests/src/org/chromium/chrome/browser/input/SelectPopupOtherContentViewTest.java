@@ -27,6 +27,7 @@ import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
+import org.chromium.content.browser.test.util.TestContentViewCore;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.ActivityWindowAndroid;
 import org.chromium.ui.base.ViewAndroidDelegate;
@@ -64,10 +65,12 @@ public class SelectPopupOtherContentViewTest {
 
         @Override
         public boolean isSatisfied() {
-            ContentViewCore contentViewCore =
-                    mActivityTestRule.getActivity().getCurrentContentViewCore();
-            return contentViewCore.getSelectPopupForTest() != null;
+            return getContentViewCore().getSelectPopupForTest() != null;
         }
+    }
+
+    private TestContentViewCore getContentViewCore() {
+        return (TestContentViewCore) mActivityTestRule.getActivity().getCurrentContentViewCore();
     }
 
     /**
@@ -84,8 +87,7 @@ public class SelectPopupOtherContentViewTest {
         // Load the test page.
         mActivityTestRule.startMainActivityWithURL(SELECT_URL);
 
-        final ContentViewCore viewCore =
-                mActivityTestRule.getActivity().getCurrentContentViewCore();
+        final TestContentViewCore viewCore = getContentViewCore();
 
         // Once clicked, the popup should show up.
         DOMUtils.clickNode(viewCore, "select");
@@ -100,7 +102,7 @@ public class SelectPopupOtherContentViewTest {
                         new ActivityWindowAndroid(mActivityTestRule.getActivity());
 
                 ContentViewCore contentViewCore =
-                        new ContentViewCore(mActivityTestRule.getActivity(), "");
+                        new TestContentViewCore(mActivityTestRule.getActivity(), "");
                 ContentView cv = ContentView.createContentView(
                         mActivityTestRule.getActivity(), contentViewCore);
                 contentViewCore.initialize(ViewAndroidDelegate.createBasicDelegate(cv), cv,

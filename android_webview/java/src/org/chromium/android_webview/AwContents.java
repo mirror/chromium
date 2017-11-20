@@ -67,6 +67,7 @@ import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.ContentViewStatics;
 import org.chromium.content.browser.SmartClipProvider;
 import org.chromium.content_public.browser.ChildProcessImportance;
+import org.chromium.content_public.browser.ContentViewCoreFactory;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.JavaScriptCallback;
 import org.chromium.content_public.browser.LoadUrlParams;
@@ -125,6 +126,8 @@ public class AwContents implements SmartClipProvider {
     private static final float ZOOM_CONTROLS_EPSILON = 0.007f;
 
     private static final double MIN_SCREEN_HEIGHT_PERCENTAGE_FOR_INTERSTITIAL = 0.7;
+
+    private static ContentViewCoreFactory sContentViewCoreFactory = ContentViewCoreFactory.DEFAULT;
 
     private static class ForceAuxiliaryBitmapRendering {
         private static final boolean sResult = lazyCheck();
@@ -1118,7 +1121,7 @@ public class AwContents implements SmartClipProvider {
         WebContents webContents = nativeGetWebContents(mNativeAwContents);
 
         mWindowAndroid = getWindowAndroid(mContext);
-        mContentViewCore = new ContentViewCore(mContext, PRODUCT_VERSION);
+        mContentViewCore = sContentViewCoreFactory.create(mContext, PRODUCT_VERSION);
         mViewAndroidDelegate =
                 new AwViewAndroidDelegate(mContainerView, mContentsClient, mScrollOffsetManager);
         initializeContentViewCore(mContentViewCore, mContext, mViewAndroidDelegate,
@@ -1142,6 +1145,11 @@ public class AwContents implements SmartClipProvider {
         // bind all the native->java relationships.
         mCleanupReference = new CleanupReference(
                 this, new AwContentsDestroyRunnable(mNativeAwContents, mWindowAndroid));
+    }
+
+    @VisibleForTesting
+    public static void setContentViewCoreFactoryForTesting(ContentViewCoreFactory factory) {
+        sContentViewCoreFactory = factory;
     }
 
     private void installWebContentsObserver() {

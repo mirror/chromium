@@ -13,6 +13,7 @@ import org.chromium.chrome.browser.compositor.bottombar.OverlayContentProgressOb
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanelContent;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanelContentFactory;
 import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content.browser.test.util.TestContentViewCore;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -406,7 +407,7 @@ class ContextualSearchFakeServer
     /**
      * A wrapper around ContentViewCore to be used during tests.
      */
-    public class ContentViewCoreWrapper extends ContentViewCore {
+    public class ContentViewCoreWrapper extends TestContentViewCore {
         private boolean mIsVisible;
 
         ContentViewCoreWrapper(ChromeActivity activity) {

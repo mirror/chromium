@@ -26,6 +26,7 @@ import org.chromium.base.test.util.Feature;
 import org.chromium.content.browser.input.ImeAdapter;
 import org.chromium.content.browser.input.TextSuggestionHost;
 import org.chromium.content.browser.test.ContentJUnit4ClassRunner;
+import org.chromium.content.browser.test.util.TestContentViewCore;
 import org.chromium.content.browser.test.util.TestInputMethodManagerWrapper;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_shell_apk.ContentShellActivityTestRule;
@@ -39,7 +40,7 @@ public class PopupZoomerTest {
     public ContentShellActivityTestRule mActivityTestRule = new ContentShellActivityTestRule();
 
     private CustomCanvasPopupZoomer mPopupZoomer;
-    private ContentViewCore mContentViewCore;
+    private TestContentViewCore mContentViewCore;
 
     private static class CustomCanvasPopupZoomer extends PopupZoomer {
         Canvas mCanvas;
@@ -102,7 +103,7 @@ public class PopupZoomerTest {
             public void run() {
                 Context context = mActivityTestRule.getActivity();
                 WebContents webContents = mActivityTestRule.getContentViewCore().getWebContents();
-                mContentViewCore = new ContentViewCore(context, "");
+                mContentViewCore = new TestContentViewCore(context, "");
                 mContentViewCore.setSelectionPopupControllerForTesting(
                         new SelectionPopupController(context, null, webContents, null));
                 ViewGroup containerView = mActivityTestRule.getContentViewCore().getContainerView();

@@ -30,6 +30,7 @@ import org.chromium.content.browser.test.ContentJUnit4ClassRunner;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
+import org.chromium.content.browser.test.util.TestContentViewCore;
 import org.chromium.content_public.browser.SelectionClient;
 import org.chromium.content_shell_apk.ContentShellActivityTestRule;
 
@@ -57,7 +58,7 @@ public class ContentViewCoreSelectionTest {
             + "<br/><input id=\"disabled_text\" type=\"text\" disabled value=\"Sample Text\" />"
             + "<br/><div id=\"rich_div\" contentEditable=\"true\" >Rich Editor</div>"
             + "</form></body></html>");
-    private ContentViewCore mContentViewCore;
+    private TestContentViewCore mContentViewCore;
     private SelectionPopupController mSelectionPopupController;
 
     private static class TestSelectionClient implements SelectionClient {
@@ -106,7 +107,7 @@ public class ContentViewCoreSelectionTest {
         mActivityTestRule.launchContentShellWithUrl(DATA_URL);
         mActivityTestRule.waitForActiveShellToBeDoneLoading();
 
-        mContentViewCore = mActivityTestRule.getContentViewCore();
+        mContentViewCore = (TestContentViewCore) mActivityTestRule.getContentViewCore();
         mSelectionPopupController = mContentViewCore.getSelectionPopupControllerForTesting();
         waitForSelectActionBarVisible(false);
         waitForPastePopupStatus(false);

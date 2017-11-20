@@ -7,6 +7,7 @@ package org.chromium.content_shell_apk;
 import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
 
 import android.app.Instrumentation;
+import android.content.Context;
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
@@ -18,6 +19,8 @@ import org.chromium.content.browser.ContentView;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.RenderCoordinates;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer;
+import org.chromium.content.browser.test.util.TestContentViewCore;
+import org.chromium.content_public.browser.ContentViewCoreFactory;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.NavigationController;
 import org.chromium.content_public.browser.WebContents;
@@ -43,6 +46,9 @@ public class ContentShellActivityTestRule extends ActivityTestRule<ContentShellA
 
     protected static final long WAIT_PAGE_LOADING_TIMEOUT_SECONDS = scaleTimeout(15);
 
+    private static final ContentViewCoreFactory TEST_CVC_FACTORY = (Context context,
+            String productVersion) -> new TestContentViewCore(context, productVersion);
+
     public ContentShellActivityTestRule() {
         this(false, false);
     }
@@ -51,6 +57,7 @@ public class ContentShellActivityTestRule extends ActivityTestRule<ContentShellA
         super(ContentShellActivity.class, initialTouchMode, launchActivity);
         mLaunchActivity = launchActivity;
         mDelegate = new ContentShellTestCommon(this);
+        Shell.setContentViewCoreFactoryForTesting(TEST_CVC_FACTORY);
     }
 
     @Override
@@ -87,8 +94,8 @@ public class ContentShellActivityTestRule extends ActivityTestRule<ContentShellA
     /**
      * Returns the current ContentViewCore or null if there is no ContentView.
      */
-    public ContentViewCore getContentViewCore() {
-        return mDelegate.getContentViewCore();
+    public TestContentViewCore getContentViewCore() {
+        return (TestContentViewCore) mDelegate.getContentViewCore();
     }
 
     /**

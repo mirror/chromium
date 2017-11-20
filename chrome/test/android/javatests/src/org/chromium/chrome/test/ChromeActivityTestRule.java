@@ -53,6 +53,8 @@ import org.chromium.chrome.test.util.browser.Features;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.JavaScriptUtils;
 import org.chromium.content.browser.test.util.RenderProcessLimit;
+import org.chromium.content.browser.test.util.TestContentViewCore;
+import org.chromium.content_public.browser.ContentViewCoreFactory;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.ui.base.PageTransition;
 
@@ -82,6 +84,9 @@ public class ChromeActivityTestRule<T extends ChromeActivity> extends ActivityTe
 
     private static final long OMNIBOX_FIND_SUGGESTION_TIMEOUT_MS = 10 * 1000;
 
+    private static final ContentViewCoreFactory TEST_CVC_FACTORY = (Context context,
+            String productVersion) -> new TestContentViewCore(context, productVersion);
+
     protected boolean mSkipClearAppData;
     private Thread.UncaughtExceptionHandler mDefaultUncaughtExceptionHandler;
     private Class<T> mChromeActivityClass;
@@ -95,6 +100,7 @@ public class ChromeActivityTestRule<T extends ChromeActivity> extends ActivityTe
     public ChromeActivityTestRule(Class<T> activityClass, boolean initialTouchMode) {
         super(activityClass, initialTouchMode, false);
         mChromeActivityClass = activityClass;
+        Tab.setContentViewCoreFactoryForTesting(TEST_CVC_FACTORY);
     }
 
     @Override

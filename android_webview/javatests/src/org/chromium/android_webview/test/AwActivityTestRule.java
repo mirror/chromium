@@ -33,6 +33,8 @@ import org.chromium.base.test.util.InMemorySharedPreferences;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer.OnPageFinishedHelper;
+import org.chromium.content.browser.test.util.TestContentViewCore;
+import org.chromium.content_public.browser.ContentViewCoreFactory;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.net.test.util.TestWebServer;
 
@@ -52,6 +54,9 @@ public class AwActivityTestRule extends ActivityTestRule<AwTestRunnerActivity> {
     private static final String TAG = "AwActivityTestRule";
 
     private static final Pattern MAYBE_QUOTED_STRING = Pattern.compile("^(\"?)(.*)\\1$");
+
+    private static final ContentViewCoreFactory TEST_CVC_FACTORY = (Context context,
+            String productVersion) -> new TestContentViewCore(context, productVersion);
 
     private Description mCurrentTestDescription;
 
@@ -81,6 +86,7 @@ public class AwActivityTestRule extends ActivityTestRule<AwTestRunnerActivity> {
         if (needsBrowserProcessStarted()) {
             startBrowserProcess();
         }
+        AwContents.setContentViewCoreFactoryForTesting(TEST_CVC_FACTORY);
     }
 
     public AwTestRunnerActivity launchActivity() {

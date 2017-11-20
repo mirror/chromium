@@ -47,6 +47,7 @@ import org.chromium.base.test.util.TestFileUtil;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content.browser.test.util.HistoryUtils;
+import org.chromium.content.browser.test.util.TestContentViewCore;
 import org.chromium.content.common.ContentSwitches;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.common.ContentUrlConstants;
@@ -3287,8 +3288,8 @@ public class AwSettingsTest {
         final int x = (webView.getRight() - webView.getLeft()) / 2;
         final int y = (webView.getBottom() - webView.getTop()) / 2;
         final AwContents awContents = webView.getAwContents();
+        final TestContentViewCore cvc = (TestContentViewCore) awContents.getContentViewCore();
         InstrumentationRegistry.getInstrumentation().runOnMainSync(
-                () -> awContents.getContentViewCore().sendDoubleTapForTest(
-                        SystemClock.uptimeMillis(), x, y));
+                () -> cvc.sendDoubleTapForTest(SystemClock.uptimeMillis(), x, y));
     }
 }

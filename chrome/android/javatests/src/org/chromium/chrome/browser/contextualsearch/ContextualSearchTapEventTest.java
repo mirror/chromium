@@ -27,8 +27,8 @@ import org.chromium.chrome.browser.compositor.bottombar.contextualsearch.Context
 import org.chromium.chrome.browser.compositor.layouts.LayoutUpdateHost;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
-import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.SelectionPopupController;
+import org.chromium.content.browser.test.util.TestContentViewCore;
 import org.chromium.content_public.browser.SelectionClient;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.resources.dynamics.DynamicResourceLoader;
@@ -82,7 +82,8 @@ public class ContextualSearchTapEventTest {
         public ContextualSearchManagerWrapper(ChromeActivity activity) {
             super(activity, null);
             setSelectionController(new MockCSSelectionController(activity, this));
-            ContentViewCore contentView = getSelectionController().getBaseContentView();
+            TestContentViewCore contentView =
+                    (TestContentViewCore) getSelectionController().getBaseContentView();
             WebContents webContents = WebContentsFactory.createWebContents(false, false);
             SelectionPopupController selectionPopupController =
                     new SelectionPopupController(activity, null, webContents, null);
@@ -163,7 +164,7 @@ public class ContextualSearchTapEventTest {
     /**
      * A ContentViewCore that has some methods stubbed out for testing.
      */
-    private static final class StubbedContentViewCore extends ContentViewCore {
+    private static final class StubbedContentViewCore extends TestContentViewCore {
         private String mCurrentText;
 
         public StubbedContentViewCore(Context context) {

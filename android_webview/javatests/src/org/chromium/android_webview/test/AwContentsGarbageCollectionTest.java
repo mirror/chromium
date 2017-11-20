@@ -30,6 +30,7 @@ import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.test.util.Feature;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
+import org.chromium.content.browser.test.util.TestContentViewCore;
 import org.chromium.content_public.common.ContentUrlConstants;
 
 /**
@@ -145,10 +146,9 @@ public class AwContentsGarbageCollectionTest {
             // It is difficult to show keyboard and wait until input method window shows up.
             // Instead, we simply emulate Android's behavior by keeping strong references.
             // See crbug.com/595613 for details.
+            TestContentViewCore cvc = (TestContentViewCore) containerView.getContentViewCore();
             resultReceivers[i] = ThreadUtils.runOnUiThreadBlocking(
-                    () -> containerView.getContentViewCore()
-                                       .getImeAdapterForTest()
-                                       .getNewShowKeyboardReceiver());
+                    () -> cvc.getImeAdapterForTest().getNewShowKeyboardReceiver());
         }
 
         for (int i = 0; i < containerViews.length; i++) {

@@ -21,6 +21,7 @@ import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.Feature;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
+import org.chromium.content.browser.test.util.TestContentViewCore;
 import org.chromium.content.browser.test.util.TestInputMethodManagerWrapper;
 
 /**
@@ -65,9 +66,13 @@ public class AwImeTest {
             // Let's not test against real input method.
             mInputMethodManagerWrapper = new TestInputMethodManagerWrapper(
                     mTestContainerView.getContentViewCore());
-            mTestContainerView.getContentViewCore().getImeAdapterForTest()
-                    .setInputMethodManagerWrapperForTest(mInputMethodManagerWrapper);
+            getContentViewCore().getImeAdapterForTest().setInputMethodManagerWrapperForTest(
+                    mInputMethodManagerWrapper);
         });
+    }
+
+    private TestContentViewCore getContentViewCore() {
+        return (TestContentViewCore) mTestContainerView.getContentViewCore();
     }
 
     private void loadContentEditableBody() throws Exception {
@@ -115,8 +120,8 @@ public class AwImeTest {
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                InputConnection inputConnection = mTestContainerView.getContentViewCore()
-                        .getImeAdapterForTest().getInputConnectionForTest();
+                InputConnection inputConnection =
+                        getContentViewCore().getImeAdapterForTest().getInputConnectionForTest();
                 return inputConnection != null;
             }
         });

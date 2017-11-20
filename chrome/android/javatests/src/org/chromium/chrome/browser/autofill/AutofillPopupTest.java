@@ -30,6 +30,7 @@ import org.chromium.content.browser.input.ChromiumBaseInputConnection;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
+import org.chromium.content.browser.test.util.TestContentViewCore;
 import org.chromium.content.browser.test.util.TestInputMethodManagerWrapper;
 import org.chromium.content.browser.test.util.TouchCommon;
 import org.chromium.content_public.browser.WebContents;
@@ -144,6 +145,10 @@ public class AutofillPopupTest {
         );
     }
 
+    private TestContentViewCore getContentViewCore() {
+        return (TestContentViewCore) mActivityTestRule.getActivity().getCurrentContentViewCore();
+    }
+
     private void loadAndFillForm(
             final String formDataUrl, final String inputText)
             throws InterruptedException, ExecutionException, TimeoutException {
@@ -152,8 +157,7 @@ public class AutofillPopupTest {
 
         // The TestInputMethodManagerWrapper intercepts showSoftInput so that a keyboard is never
         // brought up.
-        final ContentViewCore viewCore =
-                mActivityTestRule.getActivity().getCurrentContentViewCore();
+        final TestContentViewCore viewCore = getContentViewCore();
         final WebContents webContents = viewCore.getWebContents();
         final ViewGroup view = viewCore.getContainerView();
         final TestInputMethodManagerWrapper immw =

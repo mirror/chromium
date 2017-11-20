@@ -21,12 +21,12 @@ import org.junit.runner.RunWith;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.content.R;
-import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.test.ContentJUnit4ClassRunner;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content.browser.test.util.JavaScriptUtils;
+import org.chromium.content.browser.test.util.TestContentViewCore;
 import org.chromium.content.browser.test.util.TouchCommon;
 import org.chromium.content_public.browser.WebContents;
 
@@ -54,7 +54,7 @@ public class TextSuggestionMenuTest {
     @LargeTest
     public void testDeleteWordMarkedWithSuggestionMarker()
             throws InterruptedException, Throwable, TimeoutException {
-        final ContentViewCore cvc = mRule.getContentViewCore();
+        final TestContentViewCore cvc = mRule.getContentViewCore();
         WebContents webContents = cvc.getWebContents();
 
         DOMUtils.focusNode(webContents, "div");
@@ -88,7 +88,7 @@ public class TextSuggestionMenuTest {
     @LargeTest
     public void testDeleteWordMarkedWithSpellingMarker()
             throws InterruptedException, Throwable, TimeoutException {
-        final ContentViewCore cvc = mRule.getContentViewCore();
+        final TestContentViewCore cvc = mRule.getContentViewCore();
         WebContents webContents = cvc.getWebContents();
 
         DOMUtils.focusNode(webContents, "div");
@@ -145,7 +145,7 @@ public class TextSuggestionMenuTest {
     @Test
     @LargeTest
     public void testApplySuggestion() throws InterruptedException, Throwable, TimeoutException {
-        final ContentViewCore cvc = mRule.getContentViewCore();
+        final TestContentViewCore cvc = mRule.getContentViewCore();
         WebContents webContents = cvc.getWebContents();
 
         DOMUtils.focusNode(webContents, "div");
@@ -213,7 +213,7 @@ public class TextSuggestionMenuTest {
     @LargeTest
     public void testApplyMisspellingSuggestion()
             throws InterruptedException, Throwable, TimeoutException {
-        final ContentViewCore cvc = mRule.getContentViewCore();
+        final TestContentViewCore cvc = mRule.getContentViewCore();
         WebContents webContents = cvc.getWebContents();
 
         DOMUtils.focusNode(webContents, "div");
@@ -262,7 +262,7 @@ public class TextSuggestionMenuTest {
     @Test
     @LargeTest
     public void suggestionMenuDismissal() throws InterruptedException, Throwable, TimeoutException {
-        final ContentViewCore cvc = mRule.getContentViewCore();
+        final TestContentViewCore cvc = mRule.getContentViewCore();
         WebContents webContents = cvc.getWebContents();
 
         DOMUtils.focusNode(webContents, "div");
@@ -287,7 +287,7 @@ public class TextSuggestionMenuTest {
         waitForMenuToHide(cvc);
     }
 
-    private void waitForMenuToShow(ContentViewCore cvc) {
+    private void waitForMenuToShow(TestContentViewCore cvc) {
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
@@ -305,7 +305,7 @@ public class TextSuggestionMenuTest {
         });
     }
 
-    private void waitForMenuToHide(ContentViewCore cvc) {
+    private void waitForMenuToHide(TestContentViewCore cvc) {
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
@@ -321,7 +321,7 @@ public class TextSuggestionMenuTest {
         });
     }
 
-    private View getContentView(ContentViewCore cvc) {
+    private View getContentView(TestContentViewCore cvc) {
         SuggestionsPopupWindow suggestionsPopupWindow =
                 cvc.getTextSuggestionHostForTesting().getTextSuggestionsPopupWindowForTesting();
 
@@ -339,16 +339,16 @@ public class TextSuggestionMenuTest {
         return null;
     }
 
-    private ListView getSuggestionList(ContentViewCore cvc) {
+    private ListView getSuggestionList(TestContentViewCore cvc) {
         View contentView = getContentView(cvc);
         return (ListView) contentView.findViewById(R.id.suggestionContainer);
     }
 
-    private View getSuggestionButton(ContentViewCore cvc, int suggestionIndex) {
+    private View getSuggestionButton(TestContentViewCore cvc, int suggestionIndex) {
         return getSuggestionList(cvc).getChildAt(suggestionIndex);
     }
 
-    private View getDeleteButton(ContentViewCore cvc) {
+    private View getDeleteButton(TestContentViewCore cvc) {
         View contentView = getContentView(cvc);
         if (contentView == null) {
             return null;
