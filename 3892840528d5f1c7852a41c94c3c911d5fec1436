@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72f56f5f_e764e49c",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-20T21:00:24Z",
+      "side": 1,
+      "message": "Since this operation is not cancellable does it make sense to guarantee that |callback_| will be called instead of canceling the callback if this object is freed? This would simplify callers since they would not need to own the result returned by Create (it could return void).",
+      "revId": "3892840528d5f1c7852a41c94c3c911d5fec1436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34749b9f_cd89301f",
+        "filename": "services/shape_detection/face_detection_provider_win.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-20T21:00:24Z",
+      "side": 1,
+      "message": "// This prevents this object from being destroyed before the AsyncOperation\n// completes.",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 70
+      },
+      "revId": "3892840528d5f1c7852a41c94c3c911d5fec1436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
