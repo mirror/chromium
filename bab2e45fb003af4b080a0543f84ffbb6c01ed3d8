@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "31e8f0a9_ee3ccd12",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-20T20:32:20Z",
+      "side": 1,
+      "message": "It seems strange to calculate this separately just for logging. Is there equivalent logic somewhere for the actual probing time that this can be unified with?\n\n(Otherwise, it should at least have a comment explaining what it\u0027s trying to do.)",
+      "range": {
+        "startLine": 129,
+        "startChar": 23,
+        "endLine": 129,
+        "endChar": 35
+      },
+      "revId": "bab2e45fb003af4b080a0543f84ffbb6c01ed3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8a2e2dd_e3282789",
         "filename": "net/quic/chromium/quic_connectivity_probing_manager.cc",
         "patchSetId": 1
@@ -13,6 +36,30 @@
       "writtenOn": "2017-11-20T18:14:30Z",
       "side": 1,
       "message": "nit: I think you might want UMA_HISTOGRAM_TIMES()\n\nhttps://cs.chromium.org/chromium/src/base/metrics/histogram_macros.h?q\u003dUMA_HISTOGRAM_TIMES\u0026sq\u003dpackage:chromium\u0026l\u003d151",
+      "range": {
+        "startLine": 131,
+        "startChar": 76,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "bab2e45fb003af4b080a0543f84ffbb6c01ed3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adba40bb_0a2c3878",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-20T20:32:20Z",
+      "side": 1,
+      "message": "+1\n\nCan you change make the logic produce a TimeDelta?",
+      "parentUuid": "b8a2e2dd_e3282789",
       "range": {
         "startLine": 131,
         "startChar": 76,
