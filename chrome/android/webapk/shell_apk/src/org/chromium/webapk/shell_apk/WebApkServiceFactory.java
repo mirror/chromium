@@ -54,7 +54,9 @@ public class WebApkServiceFactory extends Service {
             Bundle bundle = new Bundle();
             bundle.putInt(KEY_SMALL_ICON_ID, R.drawable.notification_badge);
             bundle.putInt(KEY_HOST_BROWSER_UID, hostBrowserUid);
-            return (IBinder) webApkServiceImplConstructor.newInstance(new Object[] {this, bundle});
+            IBinder webApkServiceImpl =
+                    (IBinder) webApkServiceImplConstructor.newInstance(new Object[] {this, bundle});
+            return new WebApkServiceImplWrapper(this, webApkServiceImpl, hostBrowserUid);
         } catch (Exception e) {
             Log.w(TAG, "Unable to create WebApkServiceImpl.");
             e.printStackTrace();
