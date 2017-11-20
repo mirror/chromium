@@ -4,8 +4,8 @@
 
 (function() {
 
-var FIT_TO_PAGE = 0;
-var FIT_TO_WIDTH = 1;
+var FIT_TO_PAGE_BUTTON_STATE = 0;
+var FIT_TO_WIDTH_BUTTON_STATE = 1;
 
 Polymer({
   is: 'viewer-zoom-toolbar',
@@ -35,7 +35,7 @@ Polymer({
    * Handle clicks of the fit-button.
    */
   fitToggle: function() {
-    if (this.$['fit-button'].activeIndex == FIT_TO_WIDTH)
+    if (this.$['fit-button'].activeIndex == FIT_TO_WIDTH_BUTTON_STATE)
       this.fire('fit-to-width');
     else
       this.fire('fit-to-page');
@@ -49,21 +49,35 @@ Polymer({
 
     // Toggle the button state since there was no mouse click.
     var button = this.$['fit-button'];
-    if (button.activeIndex == FIT_TO_WIDTH)
-      button.activeIndex = FIT_TO_PAGE;
+    if (button.activeIndex == FIT_TO_WIDTH_BUTTON_STATE)
+      button.activeIndex = FIT_TO_PAGE_BUTTON_STATE;
     else
-      button.activeIndex = FIT_TO_WIDTH;
+      button.activeIndex = FIT_TO_WIDTH_BUTTON_STATE;
   },
 
   /**
-   * Handle forcing zoom to fit-to-page via scripting.
+   * @private
+   * Set the new fit state and also the following fit state upon pressing the
+   * fit button.
    */
-  forceFitToPage: function() {
-    this.fire('fit-to-page');
+  forceFitInternal_: function(fitEventToFire, nextButtonState) {
+    this.fire(fitEventToFire);
 
-    // Set the button state since there was no mouse click. Since the zoom is
-    // set to fit-to-page, the button should do fit-to-width on the next click.
-    this.$['fit-button'].activeIndex = FIT_TO_WIDTH;
+    // Set the button state since there was no mouse click.
+    this.$['fit-button'].activeIndex = nextButtonState;
+  },
+
+  /**
+   * Handle forcing zoom via scripting to a fitting type.
+   * @param {Viewport.FittingType} fittingType Page fitting type to force.
+   */
+  forceFit: function(fittingType) {
+    if (fittingType == Viewport.FittingType.FIT_TO_PAGE)
+      this.forceFitInternal_('fit-to-page', FIT_TO_WIDTH_BUTTON_STATE);
+    else if (fittingType == Viewport.FittingType.FIT_TO_WIDTH)
+      this.forceFitInternal_('fit-to-width', FIT_TO_PAGE_BUTTON_STATE);
+    else if (fittingType == Viewport.FittingType.FIT_TO_HEIGHT)
+      this.forceFitInternal_('fit-to-height', FIT_TO_WIDTH_BUTTON_STATE);
   },
 
   /**
