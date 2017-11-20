@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2844203f_3f804ff7",
+        "filename": "testing/buildbot/chromium.clang.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 5646,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-20T23:00:01Z",
+      "side": 1,
+      "message": "I\u0027m curious why you\u0027re putting this on the ToTAndroidCFI bot.",
+      "revId": "e31f681b4fba7496ac02a316806017973afbf78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
