@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8517bcf5_514f8423",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-20T15:10:27Z",
+      "side": 1,
+      "message": "Non-blocking: This is going to change the meaning of this UMA. We should be confident that this isn\u0027t going to surprise anyone.",
+      "revId": "a3e0c9df58841c74f82fabef58e93d912f7fc98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f165477_3b12e83d",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 6561,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-20T15:10:27Z",
+      "side": 1,
+      "message": "Does this work properly in the case where multiple rAFs are scheduled and one cancelled? E.g.\n\nvar req1 \u003d window.requestAnimationFrame(function() { ... });\nvar req2 \u003d window.requestAnimationFrame(function() { ... });\nwindow.cancelAnimationFrame(req1);\n\nThis may be worth adding a test for whether it currently works properly or not.",
+      "revId": "a3e0c9df58841c74f82fabef58e93d912f7fc98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
