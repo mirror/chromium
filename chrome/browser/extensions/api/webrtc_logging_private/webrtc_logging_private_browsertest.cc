@@ -5,6 +5,7 @@
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/threading/thread_restrictions.h"
+#include "build/build_config.h"
 #include "chrome/browser/apps/app_browsertest_util.h"
 #include "chrome/browser/media/webrtc/webrtc_log_list.h"
 #include "chrome/common/chrome_switches.h"
@@ -23,6 +24,7 @@ class WebrtcLoggingPrivateApiBrowserTest
   DISALLOW_COPY_AND_ASSIGN(WebrtcLoggingPrivateApiBrowserTest);
 };
 
+#if defined(OS_LINUX) || defined(OS_CHROMEOS)
 IN_PROC_BROWSER_TEST_F(WebrtcLoggingPrivateApiBrowserTest,
                        TestGetLogsDirectoryCreatesWebRtcLogsDirectory) {
   base::ScopedAllowBlockingForTesting allow_blocking;
@@ -48,6 +50,7 @@ IN_PROC_BROWSER_TEST_F(WebrtcLoggingPrivateApiBrowserTest,
       "test_with_file_in_directory"))
       << message_;
 }
+#endif  // defined(OS_LINUX) || defined(OS_CHROMEOS)
 
 IN_PROC_BROWSER_TEST_F(WebrtcLoggingPrivateApiBrowserTest,
                        TestNoGetLogsDirectoryPermissionsFromHangoutsExtension) {
