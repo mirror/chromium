@@ -37,6 +37,29 @@
     },
     {
       "key": {
+        "uuid": "e8ff0743_1d05bb91",
+        "filename": "chrome/browser/extensions/extension_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-20T00:47:41Z",
+      "side": 1,
+      "message": "Add a comment explaining the return value.",
+      "range": {
+        "startLine": 270,
+        "startChar": 10,
+        "endLine": 270,
+        "endChar": 14
+      },
+      "revId": "8bbd9e00494178b988855b9de1bd04613dad6131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c41ef68b_c8280ddd",
         "filename": "chrome/browser/extensions/extension_service_unittest.cc",
         "patchSetId": 2
