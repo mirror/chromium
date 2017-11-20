@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be85d47c_2f7356fb",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-20T22:16:20Z",
+      "side": 1,
+      "message": "I agree. Changed.",
+      "parentUuid": "4b628e52_7038e4d1",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80629e80_31047a19",
         "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcfeec2f_fe062fb6",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-20T22:16:20Z",
+      "side": 1,
+      "message": "Good point. Turns out we don\u0027t really need the parser class anymore, a static method suffices. We also can get rid of one of the unit-test.",
+      "parentUuid": "80629e80_31047a19",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "dce2bd3c_03e519c8",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-20T22:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8283b9b3_5992bbc6",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bec75005_265fc788",
         "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee338472_ae75b085",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-20T22:16:20Z",
+      "side": 1,
+      "message": "It was an enum and is now an enum class.",
+      "parentUuid": "bec75005_265fc788",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6a554e3f_73a86f72",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-20T22:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8be338b4_8be354a7",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae9778d0_054ecb0f",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75e88c8a_721b6779",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-20T22:16:20Z",
+      "side": 1,
+      "message": "I changed it so it\u0027s not created lazily. We need to keep a unique_ptr so test can overwrite it with SetDescriptionServiceForTest",
+      "parentUuid": "ae9778d0_054ecb0f",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "4aed7965_574c5131",
+        "filename": "chrome/browser/media/router/discovery/dial/parsed_dial_device_description.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-20T22:16:20Z",
+      "side": 1,
+      "message": "Yes, removed.",
+      "parentUuid": "f63499b1_b47e6584",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "deb32e7b_efe1d89d",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
         "patchSetId": 9
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "585b07e4_4ca79a81",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-20T22:16:20Z",
+      "side": 1,
+      "message": "This has changed to be a static method.",
+      "parentUuid": "deb32e7b_efe1d89d",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e5d4714_b7f065ca",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
         "patchSetId": 9
@@ -149,6 +293,24 @@
       "writtenOn": "2017-11-18T01:28:00Z",
       "side": 1,
       "message": "The previous code keeps utility_process_mojo_client_ alive and reuse it as long as there is an outstanding parsing request. I haven\u0027t look into the details of data_decoder::ParseXml, but I was wondering if it (or service_manager) also do this. The reason is that DIAL devices have a tendency to be discovered in batches, so we didn\u0027t want to spawn unnecessary processes.",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d19d62d_75291aac",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-20T22:16:20Z",
+      "side": 1,
+      "message": "Good point. SafeXmlParser now has a group_id you can provide that groups parsing jobs into a unique utility process. I surfaced this to this file.\nIf you feel that this should be hidden from the SafelyParseDialDeviceDescription API, I could make SafeDialDeviceDescriptionParser a class again that generates a random group ID. (so all parsing done by a specific SafeDialDeviceDescriptionParser instance are in the same utility process).",
+      "parentUuid": "3e5d4714_b7f065ca",
       "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -178,6 +340,30 @@
     },
     {
       "key": {
+        "uuid": "6bf45ddd_c4e3ba3e",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-20T22:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "829e3c9e_c4d68fc1",
+      "range": {
+        "startLine": 79,
+        "startChar": 25,
+        "endLine": 79,
+        "endChar": 38
+      },
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c553390_31831b5c",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
         "patchSetId": 9
@@ -189,6 +375,24 @@
       "writtenOn": "2017-11-18T01:28:00Z",
       "side": 1,
       "message": "- Can this be enforced using std::array?\n- kNodeNames / kParsingErrors can be moved to anonymous namespace.",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7310cf12_1f2aacdf",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-20T22:16:20Z",
+      "side": 1,
+      "message": "I changed them to be std::arrays.\nI am not sure about moving kNodeNames/kParsingErrors to the anonymous namespace (out of the method). I feel it makes the code less readable: you have to scroll-up to see the values when they are only used here (and they are already in an anonymous namespace).",
+      "parentUuid": "9c553390_31831b5c",
       "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -212,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "82655b71_c3503c89",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-20T22:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd15fe03_762f5514",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76bd281b_ef031a29",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.h",
         "patchSetId": 9
@@ -229,6 +451,24 @@
     },
     {
       "key": {
+        "uuid": "0417babc_b7a776d3",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-20T22:16:20Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "76bd281b_ef031a29",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29e07722_bf62f20f",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.h",
         "patchSetId": 9
@@ -243,6 +483,24 @@
       "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8ee8571_5b4afa27",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-20T22:16:20Z",
+      "side": 1,
+      "message": "This code is now gone. (and mojo guarantees the callback is called on the thread that made the call)",
+      "parentUuid": "29e07722_bf62f20f",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
