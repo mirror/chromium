@@ -34,6 +34,29 @@
       "revId": "48c50aba0863a1a2d310a01f6c7e8ebf1513c326",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84725f07_fd6753fd",
+        "filename": "headless/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-11-20T22:33:50Z",
+      "side": 1,
+      "message": "Keep in mind that you are effectively adding this dependency into chrome/BUILD.gn, since it includes headless library. This can cause unexpected increase in binary size, particularly since this is a static_library.",
+      "range": {
+        "startLine": 428,
+        "startChar": 6,
+        "endLine": 428,
+        "endChar": 49
+      },
+      "revId": "48c50aba0863a1a2d310a01f6c7e8ebf1513c326",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
