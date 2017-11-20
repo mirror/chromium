@@ -16,6 +16,24 @@
       "revId": "45ea6649bf532d27c206140f53cbb87962a50d99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31053b65_4aadd5e7",
+        "filename": "media/audio/audio_system_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-20T10:11:36Z",
+      "side": 1,
+      "message": "I don\u0027t think we have to worry about binary size for tests.",
+      "parentUuid": "ed064241_98ba2dd1",
+      "revId": "45ea6649bf532d27c206140f53cbb87962a50d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
