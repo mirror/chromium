@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "54182200_bc1d96a9",
+        "filename": "net/proxy/proxy_config_service_linux.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T20:41:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23d510b5_eb7ce6fa",
+      "range": {
+        "startLine": 148,
+        "startChar": 56,
+        "endLine": 148,
+        "endChar": 68
+      },
+      "revId": "38f0eb664f500c7de12ec73b6abf436f517b63fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3a9a2c1_5863c125",
         "filename": "net/proxy/proxy_config_service_linux.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "38f0eb664f500c7de12ec73b6abf436f517b63fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "238efcb6_40f685da",
+        "filename": "net/proxy/proxy_config_service_linux.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T20:41:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3a9a2c1_5863c125",
+      "range": {
+        "startLine": 158,
+        "startChar": 29,
+        "endLine": 158,
+        "endChar": 38
+      },
+      "revId": "38f0eb664f500c7de12ec73b6abf436f517b63fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cbb485b0_c0cfe5f2",
+        "filename": "net/proxy/proxy_config_service_linux.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T20:41:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2ddc569_11c5dffd",
+      "range": {
+        "startLine": 182,
+        "startChar": 31,
+        "endLine": 182,
+        "endChar": 40
+      },
+      "revId": "38f0eb664f500c7de12ec73b6abf436f517b63fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7be147a3_0c17b4fa",
         "filename": "net/proxy/proxy_config_service_linux.h",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "38f0eb664f500c7de12ec73b6abf436f517b63fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d0dd2e_5d09fd5f",
+        "filename": "net/proxy/proxy_config_service_linux.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T20:41:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7be147a3_0c17b4fa",
+      "range": {
+        "startLine": 206,
+        "startChar": 62,
+        "endLine": 206,
+        "endChar": 65
+      },
+      "revId": "38f0eb664f500c7de12ec73b6abf436f517b63fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
