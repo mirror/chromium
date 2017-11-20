@@ -28,20 +28,28 @@
 using bookmarks::BookmarkModel;
 using bookmarks::BookmarkNode;
 
-BookmarkMenuBridge::BookmarkMenuBridge(Profile* profile, NSMenu* menu)
-    : menuIsValid_(false),
-      profile_(profile),
-      controller_([[BookmarkMenuCocoaController alloc] initWithBridge:this
-                                                              andMenu:menu]) {
+BookmarkMenuBridge::BookmarkMenuBridge(Profile* profile)
+    : profile_(profile),
+      controller_([[BookmarkMenuCocoaController alloc] initWithBridge:this]) {
   if (GetBookmarkModel())
     ObserveBookmarkModel();
 }
 
 BookmarkMenuBridge::~BookmarkMenuBridge() {
+  AttachToMenu(nil);
   BookmarkModel* model = GetBookmarkModel();
   if (model)
     model->RemoveObserver(this);
-  [controller_ release];
+}
+
+void BookmarkMenuBridge::AttachToMenu(NSMenu* menu) {
+  [menu_root_ setDelegate:nil];
+  menu_root_.reset([menu retain]);
+  if (!menu_root_)
+    return;
+
+  [menu_root_ setDelegate:controller_];
+  BuildRootMenu();
 }
 
 void BookmarkMenuBridge::BookmarkModelLoaded(BookmarkModel* model,
@@ -49,20 +57,24 @@ void BookmarkMenuBridge::BookmarkModelLoaded(BookmarkModel* model,
   InvalidateMenu();
 }
 
-void BookmarkMenuBridge::UpdateMenu(NSMenu* bookmark_menu) {
-  UpdateMenuInternal(bookmark_menu, false);
-}
-
-void BookmarkMenuBridge::UpdateSubMenu(NSMenu* bookmark_menu) {
-  UpdateMenuInternal(bookmark_menu, true);
-}
-
-void BookmarkMenuBridge::UpdateMenuInternal(NSMenu* bookmark_menu,
-                                            bool is_submenu) {
+void BookmarkMenuBridge::UpdateMenu(NSMenu* bookmark_menu,
+                                    const BookmarkNode* node) {
   DCHECK(bookmark_menu);
-  if (menuIsValid_)
-    return;
+  DCHECK(controller_);
+  DCHECK_EQ([bookmark_menu delegate], controller_.get());
 
+  if (bookmark_menu == menu_root_) {
+    if (!IsMenuValid())
+      BuildRootMenu();
+    return;
+  }
+
+  AddNodeToMenu(node, bookmark_menu);
+  // Clear the delegate to prevent further refreshes.
+  [bookmark_menu setDelegate:nil];
+}
+
+void BookmarkMenuBridge::BuildRootMenu() {
   BookmarkModel* model = GetBookmarkModel();
   if (!model || !model->loaded())
     return;
@@ -74,7 +86,7 @@ void BookmarkMenuBridge::UpdateMenuInternal(NSMenu* bookmark_menu,
     [folder_image_ setTemplate:YES];
   }
 
-  ClearBookmarkMenu(bookmark_menu);
+  ClearBookmarkMenu();
 
   // Add at most one separator for the bookmark bar and the managed bookmarks
   // folder.
@@ -83,25 +95,22 @@ void BookmarkMenuBridge::UpdateMenuInternal(NSMenu* bookmark_menu,
   const BookmarkNode* barNode = model->bookmark_bar_node();
   const BookmarkNode* managedNode = managed->managed_node();
   if (!barNode->empty() || !managedNode->empty())
-    [bookmark_menu addItem:[NSMenuItem separatorItem]];
+    [menu_root_ addItem:[NSMenuItem separatorItem]];
   if (!managedNode->empty()) {
     // Most users never see this node, so the image is only loaded if needed.
     ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
     NSImage* image =
         rb.GetNativeImageNamed(IDR_BOOKMARK_BAR_FOLDER_MANAGED).ToNSImage();
-    AddNodeAsSubmenu(bookmark_menu, managedNode, image, !is_submenu);
+    AddNodeAsSubmenu(menu_root_, managedNode, image);
   }
   if (!barNode->empty())
-    AddNodeToMenu(barNode, bookmark_menu, !is_submenu);
+    AddNodeToMenu(barNode, menu_root_);
 
   // If the "Other Bookmarks" folder has any content, make a submenu for it and
   // fill it in.
   if (!model->other_node()->empty()) {
-    [bookmark_menu addItem:[NSMenuItem separatorItem]];
-    AddNodeAsSubmenu(bookmark_menu,
-                     model->other_node(),
-                     folder_image_,
-                     !is_submenu);
+    [menu_root_ addItem:[NSMenuItem separatorItem]];
+    AddNodeAsSubmenu(menu_root_, model->other_node(), folder_image_);
   }
 
   // If the "Mobile Bookmarks" folder has any content, make a submenu for it and
@@ -110,23 +119,15 @@ void BookmarkMenuBridge::UpdateMenuInternal(NSMenu* bookmark_menu,
     // Add a separator if we did not already add one due to a non-empty
     // "Other Bookmarks" folder.
     if (model->other_node()->empty())
-      [bookmark_menu addItem:[NSMenuItem separatorItem]];
+      [menu_root_ addItem:[NSMenuItem separatorItem]];
 
-    AddNodeAsSubmenu(bookmark_menu,
-                     model->mobile_node(),
-                     folder_image_,
-                     !is_submenu);
+    AddNodeAsSubmenu(menu_root_, model->mobile_node(), folder_image_);
   }
-
-  menuIsValid_ = true;
 }
 
 void BookmarkMenuBridge::BookmarkModelBeingDeleted(BookmarkModel* model) {
-  NSMenu* bookmark_menu = BookmarkMenu();
-  if (bookmark_menu == nil)
-    return;
-
-  ClearBookmarkMenu(bookmark_menu);
+  InvalidateMenu();
+  ClearBookmarkMenu();
 }
 
 void BookmarkMenuBridge::BookmarkNodeMoved(BookmarkModel* model,
@@ -178,11 +179,11 @@ void BookmarkMenuBridge::BookmarkNodeChildrenReordered(
 }
 
 void BookmarkMenuBridge::ResetMenu() {
-  ClearBookmarkMenu(BookmarkMenu());
+  ClearBookmarkMenu();
 }
 
 void BookmarkMenuBridge::BuildMenu() {
-  UpdateMenu(BookmarkMenu());
+  UpdateMenu(menu_root_, nullptr);
 }
 
 // Watch for changes.
@@ -204,15 +205,17 @@ Profile* BookmarkMenuBridge::GetProfile() {
 }
 
 NSMenu* BookmarkMenuBridge::BookmarkMenu() {
-  return [controller_ menu];
+  return menu_root_;
 }
 
-void BookmarkMenuBridge::ClearBookmarkMenu(NSMenu* menu) {
-  bookmark_nodes_.clear();
+void BookmarkMenuBridge::ClearBookmarkMenu() {
+  if (!menu_root_)
+    return;
+
   // Recursively delete all menus that look like a bookmark. Also delete all
   // separator items since we explicitly add them back in. This deletes
   // everything except the first item ("Add Bookmark...").
-  NSArray* items = [menu itemArray];
+  NSArray* items = [menu_root_ itemArray];
   for (NSMenuItem* item in items) {
     // Convention: items in the bookmark list which are bookmarks have
     // an action of openBookmarkMenuItem:.  Also, assume all items
@@ -222,55 +225,63 @@ void BookmarkMenuBridge::ClearBookmarkMenu(NSMenu* menu) {
         [item isSeparatorItem]) {
       // This will eventually [obj release] all its kids, if it has
       // any.
-      [menu removeItem:item];
+      [menu_root_ removeItem:item];
     } else {
       // Leave it alone.
     }
   }
 }
 
+void BookmarkMenuBridge::InvalidateMenu() {
+  bookmark_nodes_.clear();
+}
+
+bool BookmarkMenuBridge::IsMenuValid() const {
+  // There can be no bookmark nodes if the user has never added a bookmark. But
+  // there's not much to cache then, so just say it's always invalid.
+  return !bookmark_nodes_.empty();
+}
+
 void BookmarkMenuBridge::AddNodeAsSubmenu(NSMenu* menu,
                                           const BookmarkNode* node,
-                                          NSImage* image,
-                                          bool add_extra_items) {
+                                          NSImage* image) {
   NSString* title = base::SysUTF16ToNSString(node->GetTitle());
   NSMenuItem* items = [[[NSMenuItem alloc]
                             initWithTitle:title
                                    action:nil
                             keyEquivalent:@""] autorelease];
   [items setImage:image];
+  [items setTag:node->id()];
   [menu addItem:items];
   NSMenu* submenu = [[[NSMenu alloc] initWithTitle:title] autorelease];
   [menu setSubmenu:submenu forItem:items];
-  AddNodeToMenu(node, submenu, add_extra_items);
+  [submenu setDelegate:controller_];
 }
 
 // TODO(jrg): limit the number of bookmarks in the menubar?
-void BookmarkMenuBridge::AddNodeToMenu(const BookmarkNode* node, NSMenu* menu,
-                                       bool add_extra_items) {
+void BookmarkMenuBridge::AddNodeToMenu(const BookmarkNode* node, NSMenu* menu) {
   int child_count = node->child_count();
-  if (!child_count) {
+  if (child_count == 0) {
     NSString* empty_string = l10n_util::GetNSString(IDS_MENU_EMPTY_SUBMENU);
     NSMenuItem* item =
         [[[NSMenuItem alloc] initWithTitle:empty_string
                                     action:nil
                              keyEquivalent:@""] autorelease];
     [menu addItem:item];
-  } else for (int i = 0; i < child_count; i++) {
+    return;
+  }
+
+  for (int i = 0; i < child_count; i++) {
     const BookmarkNode* child = node->GetChild(i);
-    NSString* title = [BookmarkMenuCocoaController menuTitleForNode:child];
-    NSMenuItem* item =
-        [[[NSMenuItem alloc] initWithTitle:title
-                                    action:nil
-                             keyEquivalent:@""] autorelease];
-    [menu addItem:item];
-    bookmark_nodes_[child] = item;
     if (child->is_folder()) {
-      [item setImage:folder_image_];
-      NSMenu* submenu = [[[NSMenu alloc] initWithTitle:title] autorelease];
-      [menu setSubmenu:submenu forItem:item];
-      AddNodeToMenu(child, submenu, add_extra_items);  // recursive call
+      AddNodeAsSubmenu(menu, child, folder_image_);
     } else {
+      NSString* title = [BookmarkMenuCocoaController menuTitleForNode:child];
+      NSMenuItem* item =
+          [[[NSMenuItem alloc] initWithTitle:title action:nil keyEquivalent:@""]
+              autorelease];
+      bookmark_nodes_[child] = item;
+      [menu addItem:item];
       ConfigureMenuItem(child, item, false);
     }
   }
@@ -306,8 +317,7 @@ void BookmarkMenuBridge::ConfigureMenuItem(const BookmarkNode* node,
 NSMenuItem* BookmarkMenuBridge::MenuItemForNode(const BookmarkNode* node) {
   if (!node)
     return nil;
-  std::map<const BookmarkNode*, NSMenuItem*>::iterator it =
-      bookmark_nodes_.find(node);
+  auto it = bookmark_nodes_.find(node);
   if (it == bookmark_nodes_.end())
     return nil;
   return it->second;

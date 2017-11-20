@@ -1570,7 +1570,8 @@ static base::mac::ScopedObjCClassSwizzler* g_swizzle_imk_input_session;
   auto it = profileBookmarkMenuBridgeMap_.find(profile->GetPath());
   if (it == profileBookmarkMenuBridgeMap_.end()) {
     base::scoped_nsobject<NSMenu> submenu([[bookmarkItem submenu] copy]);
-    bookmarkMenuBridge_ = new BookmarkMenuBridge(profile, submenu);
+    bookmarkMenuBridge_ = new BookmarkMenuBridge(profile);
+    bookmarkMenuBridge_->AttachToMenu(submenu);
     profileBookmarkMenuBridgeMap_[profile->GetPath()] =
         base::WrapUnique(bookmarkMenuBridge_);
   } else {

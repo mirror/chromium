@@ -38,8 +38,10 @@ class BookmarkNode;
 class BookmarkMenuBridge : public bookmarks::BookmarkModelObserver,
                            public MainMenuItem {
  public:
-  BookmarkMenuBridge(Profile* profile, NSMenu* menu);
+  explicit BookmarkMenuBridge(Profile* profile);
   ~BookmarkMenuBridge() override;
+
+  void AttachToMenu(NSMenu* menu);
 
   // bookmarks::BookmarkModelObserver:
   void BookmarkModelLoaded(bookmarks::BookmarkModel* model,
@@ -72,11 +74,11 @@ class BookmarkMenuBridge : public bookmarks::BookmarkModelObserver,
   void ResetMenu() override;
   void BuildMenu() override;
 
-  // Rebuilds the main bookmark menu, if it has been marked invalid.
-  void UpdateMenu(NSMenu* bookmark_menu);
+  // Rebuilds the main bookmark menu, if it has been marked invalid. Or builds
+  // a submenu on demand.
+  void UpdateMenu(NSMenu* bookmark_menu, const bookmarks::BookmarkNode* node);
 
-  // Rebuilds a bookmark menu that's a submenu of another menu.
-  void UpdateSubMenu(NSMenu* bookmark_menu);
+  void BuildRootMenu();
 
   // I wish I had a "friend @class" construct.
   bookmarks::BookmarkModel* GetBookmarkModel();
@@ -86,14 +88,12 @@ class BookmarkMenuBridge : public bookmarks::BookmarkModelObserver,
   virtual NSMenu* BookmarkMenu();
 
  protected:
-  // Rebuilds the bookmark content of supplied menu.
-  void UpdateMenuInternal(NSMenu* bookmark_menu, bool is_submenu);
-
-  // Clear all bookmarks from the given bookmark menu.
-  void ClearBookmarkMenu(NSMenu* menu);
+  // Clear all bookmarks from |menu_root_|.
+  void ClearBookmarkMenu();
 
   // Mark the bookmark menu as being invalid.
-  void InvalidateMenu()  { menuIsValid_ = false; }
+  void InvalidateMenu();
+  bool IsMenuValid() const;
 
   // Helper for adding the node as a submenu to the menu with the |node|'s title
   // and the given |image| as its icon.
@@ -101,17 +101,14 @@ class BookmarkMenuBridge : public bookmarks::BookmarkModelObserver,
   // menu, such as "Open All Bookmarks".
   void AddNodeAsSubmenu(NSMenu* menu,
                         const bookmarks::BookmarkNode* node,
-                        NSImage* image,
-                        bool add_extra_items);
+                        NSImage* image);
 
   // Helper for recursively adding items to our bookmark menu.
   // All children of |node| will be added to |menu|.
   // If |add_extra_items| is true, also adds extra menu items at bottom of
   // menu, such as "Open All Bookmarks".
   // TODO(jrg): add a counter to enforce maximum nodes added
-  void AddNodeToMenu(const bookmarks::BookmarkNode* node,
-                     NSMenu* menu,
-                     bool add_extra_items);
+  void AddNodeToMenu(const bookmarks::BookmarkNode* node, NSMenu* menu);
 
   // Helper for adding an item to our bookmark menu. An item which has a
   // localized title specified by |message_id| will be added to |menu|.
@@ -141,11 +138,9 @@ class BookmarkMenuBridge : public bookmarks::BookmarkModelObserver,
  private:
   friend class BookmarkMenuBridgeTest;
 
-  // True iff the menu is up to date with the actual BookmarkModel.
-  bool menuIsValid_;
-
   Profile* profile_;  // weak
-  BookmarkMenuCocoaController* controller_;  // strong
+  base::scoped_nsobject<BookmarkMenuCocoaController> controller_;
+  base::scoped_nsobject<NSMenu> menu_root_;
 
   // The folder image so we can use one copy for all.
   base::scoped_nsobject<NSImage> folder_image_;

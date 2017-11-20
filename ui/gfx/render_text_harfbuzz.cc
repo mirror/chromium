@@ -738,7 +738,7 @@ RangeF TextRunHarfBuzz::GetGraphemeBounds(RenderTextHarfBuzz* render_text,
   const float cluster_begin_x = positions[glyphs.start()].x();
   const float cluster_end_x = glyphs.end() < glyph_count ?
       positions[glyphs.end()].x() : SkFloatToScalar(width);
-  DCHECK_LE(cluster_begin_x, cluster_end_x);
+  // DCHECK_LE(cluster_begin_x, cluster_end_x);
 
   // A cluster consists of a number of code points and corresponds to a number
   // of glyphs that should be drawn together. A cluster can contain multiple
