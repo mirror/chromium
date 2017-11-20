@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "7da60e7d_bc566321",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-20T23:31:46Z",
+      "side": 1,
+      "message": "Hmm, I\u0027m not sure which tests you\u0027re referring to.  It\u0027s ok if you prefer not to use enum class due to needing inconvenient static_casts elsewhere, though ideally we can adjust some code so that you don\u0027t need static_casts anywhere.  That doesn\u0027t need to block this CL, though.",
+      "parentUuid": "a9e1c30f_2120cf52",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 4
+      },
+      "revId": "dba0e336883bcc672e8ebcc0497264b9a86f9de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "babc1b2a_cd9e375b",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.h",
         "patchSetId": 3
