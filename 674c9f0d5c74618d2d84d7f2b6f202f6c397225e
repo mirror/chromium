@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f59de23f_b7338cce",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-20T02:15:11Z",
+      "side": 1,
+      "message": "For readers on probing path, and was not successful, we don\u0027t. But as we discussed offline, I think we don\u0027t have a strong reason to limit #of migrations. I will remove this for now. I think we can add histograms to cap #migration trials to prevent QuicChromiumClientSession migrate too manys times, and have too many readers.",
+      "parentUuid": "8079f0ac_ef94b8d5",
+      "range": {
+        "startLine": 57,
+        "startChar": 46,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55a2e487_ead77969",
         "filename": "net/quic/chromium/quic_chromium_client_session.cc",
         "patchSetId": 1
@@ -92,6 +116,30 @@
       "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba889ea9_0ad4403a",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-20T02:15:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "81c65971_99400938",
+      "range": {
+        "startLine": 1614,
+        "startChar": 32,
+        "endLine": 1614,
+        "endChar": 0
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -611,6 +659,30 @@
     },
     {
       "key": {
+        "uuid": "a9685207_5c505b72",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2016,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-20T02:15:11Z",
+      "side": 1,
+      "message": "Sorry for the confusion. As we discussed offline, the intention was to check if manager is working on probe |default_network_|. If it does, do no-op. Otherwise, we want to cancel the previous probe, and start this one.\n\nI realized it will be more clear to move this logic to QCPM::StartProbing(network,...). Thanks for bring this up.",
+      "parentUuid": "83f15b4e_100df1cc",
+      "range": {
+        "startLine": 2016,
+        "startChar": 71,
+        "endLine": 2016,
+        "endChar": 0
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e096ef91_5fae9527",
         "filename": "net/quic/chromium/quic_chromium_client_session.cc",
         "patchSetId": 1
@@ -631,6 +703,30 @@
       "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a078de2_4c283d59",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-20T02:15:11Z",
+      "side": 1,
+      "message": "With delay, we won\u0027t immediately migrate back to default network in most cases(except OnNetworkMadeDefault), in 1 seconds.\n\nWe then retry after 1s, 2s, 4s, ... 128s. Altogether, we expect platform deliver signals to us if the default network is not working. We will stay on the non-default network for at most 256s.",
+      "parentUuid": "e096ef91_5fae9527",
+      "range": {
+        "startLine": 2037,
+        "startChar": 68,
+        "endLine": 2037,
+        "endChar": 0
+      },
+      "revId": "674c9f0d5c74618d2d84d7f2b6f202f6c397225e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
