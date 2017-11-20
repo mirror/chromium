@@ -181,6 +181,30 @@
     },
     {
       "key": {
+        "uuid": "07514f5c_00658fc0",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1249203
+      },
+      "writtenOn": "2017-11-20T12:19:07Z",
+      "side": 1,
+      "message": "From a user\u0027s perspective, can you clarify what else in Mirror that this change currently doesn\u0027t enable?",
+      "parentUuid": "e7303a01_5925835b",
+      "range": {
+        "startLine": 129,
+        "startChar": 12,
+        "endLine": 129,
+        "endChar": 52
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51d21dd1_4fb29699",
         "filename": "components/signin/core/browser/signin_header_helper_unittest.cc",
         "patchSetId": 19
