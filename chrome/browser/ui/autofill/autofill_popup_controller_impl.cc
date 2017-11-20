@@ -244,6 +244,15 @@ bool AutofillPopupControllerImpl::HandleKeyPressEvent(
   }
 }
 
+void AutofillPopupControllerImpl::HideOnDestroyedDelegate(
+    AutofillPopupDelegate* delegate) {
+  // Assume that |delegate_| is not null. It should have been created non-null
+  // and any time it was about to be deleted, this method should had been
+  // called.
+  if (delegate_.get() == delegate)
+    Hide();
+}
+
 void AutofillPopupControllerImpl::OnSuggestionsChanged() {
 #if !defined(OS_ANDROID)
   // TODO(csharp): Since UpdatePopupBounds can change the position of the popup,

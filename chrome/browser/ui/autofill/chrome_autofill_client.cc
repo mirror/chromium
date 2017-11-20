@@ -297,6 +297,12 @@ void ChromeAutofillClient::HideAutofillPopup() {
     password_client->HidePasswordGenerationPopup();
 }
 
+void ChromeAutofillClient::OnAutofillPopupDelegateDestruction(
+    AutofillPopupDelegate* delegate) {
+  if (popup_controller_)
+    popup_controller_->HideOnDestroyedDelegate(delegate);
+}
+
 bool ChromeAutofillClient::IsAutocompleteEnabled() {
   // For browser, Autocomplete is always enabled as part of Autofill.
   return GetPrefs()->GetBoolean(prefs::kAutofillEnabled);
