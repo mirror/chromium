@@ -21,7 +21,11 @@
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_service_manager_context.h"
 #include "content/public/test/test_web_ui.h"
+#include "services/identity/public/interfaces/constants.mojom.h"
+#include "services/identity/public/interfaces/identity_manager.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using base::DictionaryValue;
@@ -104,9 +108,16 @@ static std::unique_ptr<KeyedService> BuildFakeUserEventService(
   return base::MakeUnique<FakeUserEventService>();
 }
 
+static void BindIdentityManager(mojo::ScopedMessagePipeHandle) {
+  // Simply drop the request on the floor so that SyncInternalsMessageHandler
+  // gets notified that a connection error occurred.
+}
+
 class SyncInternalsMessageHandlerTest : public ::testing::Test {
  protected:
-  SyncInternalsMessageHandlerTest() {
+  SyncInternalsMessageHandlerTest()
+      : connector_test_api_(
+            content::BrowserContext::GetConnectorFor(&profile_)) {
     site_instance_ = content::SiteInstance::Create(&profile_);
     web_contents_.reset(content::WebContents::Create(
         content::WebContents::CreateParams(&profile_, site_instance_.get())));
@@ -122,11 +133,21 @@ class SyncInternalsMessageHandlerTest : public ::testing::Test {
         base::BindRepeating(
             &SyncInternalsMessageHandlerTest::ConstructAboutInformation,
             base::Unretained(this))));
+
+    // The real Identity Service is not registered in testing contexts, so
+    // register a dummy handler for IdentityManager connection requests.
+    connector_test_api_.OverrideBinderForTesting(
+        identity::mojom::kServiceName, identity::mojom::IdentityManager::Name_,
+        base::Bind(BindIdentityManager));
   }
 
   std::unique_ptr<DictionaryValue> ConstructAboutInformation(
       SyncService* service,
+      AccountInfo primary_account_info,
       version_info::Channel channel) {
+    if (on_construct_about_information_callback_)
+      std::move(on_construct_about_information_callback_).Run();
+
     ++about_sync_data_delegate_call_count_;
     last_delegate_sync_service_ = service;
     auto dictionary = base::MakeUnique<DictionaryValue>();
@@ -192,11 +213,20 @@ class SyncInternalsMessageHandlerTest : public ::testing::Test {
     return last_delegate_sync_service_;
   }
 
+  void set_on_construct_about_information_callback(base::OnceClosure callback) {
+    on_construct_about_information_callback_ = std::move(callback);
+  }
+
   void ResetHandler() { handler_.reset(); }
 
  private:
   content::TestBrowserThreadBundle thread_bundle_;
+
+  // Ensure that a ServiceManagerContext is present to in turn ensure that a
+  // service_manager::Connector is present for |profile_|.
+  content::TestServiceManagerContext service_manager_context_;
   TestingProfile profile_;
+  service_manager::Connector::TestApi connector_test_api_;
   scoped_refptr<content::SiteInstance> site_instance_;
   std::unique_ptr<content::WebContents> web_contents_;
   content::TestWebUI web_ui_;
@@ -205,6 +235,7 @@ class SyncInternalsMessageHandlerTest : public ::testing::Test {
   std::unique_ptr<TestableSyncInternalsMessageHandler> handler_;
   int about_sync_data_delegate_call_count_ = 0;
   SyncService* last_delegate_sync_service_ = nullptr;
+  base::OnceClosure on_construct_about_information_callback_;
 };
 
 TEST_F(SyncInternalsMessageHandlerTest, AddRemoveObservers) {
@@ -311,8 +342,13 @@ TEST_F(SyncInternalsMessageHandlerTest, HandleGetAllNodes) {
 }
 
 TEST_F(SyncInternalsMessageHandlerTest, SendAboutInfo) {
+  base::RunLoop run_loop;
+  set_on_construct_about_information_callback(run_loop.QuitClosure());
+
   handler()->AllowJavascriptForTesting();
   handler()->OnStateChanged(nullptr);
+  run_loop.Run();
+
   EXPECT_EQ(1, about_sync_data_delegate_call_count());
   EXPECT_NE(nullptr, last_delegate_sync_service());
   ValidateAboutInfoCall();
@@ -323,8 +359,13 @@ TEST_F(SyncInternalsMessageHandlerTest, SendAboutInfoSyncDisabled) {
   ProfileSyncServiceFactory::GetInstance()->SetTestingFactory(profile(),
                                                               nullptr);
 
+  base::RunLoop run_loop;
+  set_on_construct_about_information_callback(run_loop.QuitClosure());
+
   handler()->AllowJavascriptForTesting();
   handler()->OnStateChanged(nullptr);
+  run_loop.Run();
+
   EXPECT_EQ(1, about_sync_data_delegate_call_count());
   EXPECT_EQ(nullptr, last_delegate_sync_service());
   ValidateAboutInfoCall();
