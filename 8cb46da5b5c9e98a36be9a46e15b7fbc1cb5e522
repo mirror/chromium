@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d93f660_1e9cb5a2",
+        "filename": "components/metrics/gms_core_version.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-20T19:49:35Z",
+      "side": 1,
+      "message": "Nit: explicit",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "8cb46da5b5c9e98a36be9a46e15b7fbc1cb5e522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75067c3d_58f26602",
+        "filename": "components/metrics/gms_core_version.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-20T19:49:35Z",
+      "side": 1,
+      "message": "Nit: No empty line",
+      "revId": "8cb46da5b5c9e98a36be9a46e15b7fbc1cb5e522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c2927a6_139b41e4",
+        "filename": "components/metrics/gms_core_version.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-20T19:49:35Z",
+      "side": 1,
+      "message": "Nit: Either use CamelCase naming convention.",
+      "revId": "8cb46da5b5c9e98a36be9a46e15b7fbc1cb5e522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "668ea890_a356ac48",
+        "filename": "components/metrics/metrics_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-20T19:49:35Z",
+      "side": 1,
+      "message": "It seems it might be better to log gms core update as another stability metric and then we can use that logic server-side to determine if it makes sense to omit it?",
+      "range": {
+        "startLine": 484,
+        "startChar": 77,
+        "endLine": 484,
+        "endChar": 0
+      },
+      "revId": "8cb46da5b5c9e98a36be9a46e15b7fbc1cb5e522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80130a9d_34bfc230",
+        "filename": "components/metrics/metrics_state_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-20T19:49:35Z",
+      "side": 1,
+      "message": "Can this new code live in AndroidMetricsProvider?",
+      "range": {
+        "startLine": 197,
+        "startChar": 35,
+        "endLine": 197,
+        "endChar": 0
+      },
+      "revId": "8cb46da5b5c9e98a36be9a46e15b7fbc1cb5e522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
