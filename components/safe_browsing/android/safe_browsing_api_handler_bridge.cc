@@ -14,6 +14,7 @@
 #include "base/containers/flat_set.h"
 #include "base/feature_list.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/task_runner_util.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
 #include "base/trace_event/trace_event.h"
@@ -79,6 +80,14 @@ ScopedJavaLocalRef<jintArray> SBThreatTypeSetToJavaArray(
   return ToJavaIntArray(env, int_threat_types, threat_types.size());
 }
 
+// Mark all requests as safe. Only users who have an old, broken GMSCore or
+// have sideloaded Chrome w/o PlayStore should land here.
+void ReportApiUnsupported(
+    const SafeBrowsingApiHandler::URLCheckCallbackMeta& callback) {
+  RunCallbackOnIOThread(callback, SB_THREAT_TYPE_SAFE, ThreatMetadata());
+  ReportUmaResult(UMA_STATUS_UNSUPPORTED);
+}
+
 }  // namespace
 
 // Java->Native call, invoked when a check is done.
@@ -140,21 +149,42 @@ void OnUrlCheckDone(JNIEnv* env,
 //
 // SafeBrowsingApiHandlerBridge
 //
-SafeBrowsingApiHandlerBridge::SafeBrowsingApiHandlerBridge() {}
+SafeBrowsingApiHandlerBridge::SafeBrowsingApiHandlerBridge()
+    : weak_factory_(this) {}
 
 SafeBrowsingApiHandlerBridge::~SafeBrowsingApiHandlerBridge() {
-  if (api_task_runner_)
-    api_task_runner_->DeleteSoon(FROM_HERE, core_.release());
+  DeleteCore();
 }
 
 void SafeBrowsingApiHandlerBridge::Initialize() {
   DCHECK(!core_);
+  DCHECK(!initialized_);
+  initialized_ = true;
   core_ = std::make_unique<Core>();
   if (base::FeatureList::IsEnabled(kDispatchSafetyNetCheckOffThread)) {
     api_task_runner_ = base::CreateSequencedTaskRunnerWithTraits(
         {base::MayBlock(), base::TaskPriority::USER_VISIBLE});
   }
 }
+
+void SafeBrowsingApiHandlerBridge::DeleteCore() {
+  if (!core_)
+    return;
+
+  if (api_task_runner_) {
+    api_task_runner_->DeleteSoon(FROM_HERE, core_.release());
+  } else {
+    core_.reset();
+  }
+}
+
+void SafeBrowsingApiHandlerBridge::OnApiSupported(bool supported) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (!supported)
+    DeleteCore();
+}
+
+// static
 
 void SafeBrowsingApiHandlerBridge::StartURLCheck(
     const SafeBrowsingApiHandler::URLCheckCallbackMeta& callback,
@@ -163,8 +193,15 @@ void SafeBrowsingApiHandlerBridge::StartURLCheck(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   // Initialize on the first URL check, when the feature list API is ready to be
   // used.
-  if (!core_)
+  if (!initialized_)
     Initialize();
+
+  // If the system has been initialized but |core_| is nullptr, then the API is
+  // not supported.
+  if (!core_) {
+    ReportApiUnsupported(callback);
+    return;
+  }
 
   // Note: it turns out in practice that dispatching the IPC to Google Play
   // Services can be quite expensive in terms of wall time, often due to thread
@@ -174,16 +211,19 @@ void SafeBrowsingApiHandlerBridge::StartURLCheck(
   // >100ms, so use base::MayBlock even though we aren't technically doing
   // blocking IO.
   if (!api_task_runner_) {
-    core_->StartURLCheck(callback, url, threat_types);
+    bool supported = core_->StartURLCheck(callback, url, threat_types);
+    OnApiSupported(supported);
     return;
   }
   // Unretained is safe because the task to delete |core_| will be sequenced
   // after any task posted here.
-  api_task_runner_->PostTask(
-      FROM_HERE,
+  base::PostTaskAndReplyWithResult(
+      api_task_runner_.get(), FROM_HERE,
       base::BindOnce(&SafeBrowsingApiHandlerBridge::Core::StartURLCheck,
                      base::Unretained(core_.get()), callback, url,
-                     threat_types));
+                     threat_types),
+      base::BindOnce(&SafeBrowsingApiHandlerBridge::OnApiSupported,
+                     weak_factory_.GetWeakPtr()));
 }
 
 SafeBrowsingApiHandlerBridge::Core::Core() {
@@ -205,7 +245,7 @@ bool SafeBrowsingApiHandlerBridge::Core::CheckApiIsSupported() {
   return j_api_handler_.obj() != nullptr;
 }
 
-void SafeBrowsingApiHandlerBridge::Core::StartURLCheck(
+bool SafeBrowsingApiHandlerBridge::Core::StartURLCheck(
     const URLCheckCallbackMeta& callback,
     const GURL& url,
     const SBThreatTypeSet& threat_types) {
@@ -213,11 +253,8 @@ void SafeBrowsingApiHandlerBridge::Core::StartURLCheck(
   TRACE_EVENT0("safe_browsing",
                "SafeBrowsingApiHandlerBridge::StartURLCheckAsync");
   if (!CheckApiIsSupported()) {
-    // Mark all requests as safe. Only users who have an old, broken GMSCore or
-    // have sideloaded Chrome w/o PlayStore should land here.
-    RunCallbackOnIOThread(callback, SB_THREAT_TYPE_SAFE, ThreatMetadata());
-    ReportUmaResult(UMA_STATUS_UNSUPPORTED);
-    return;
+    ReportApiUnsupported(callback);
+    return false;
   }
 
   // Make copy on the heap so we can pass the pointer through JNI.
@@ -235,6 +272,7 @@ void SafeBrowsingApiHandlerBridge::Core::StartURLCheck(
 
   Java_SafeBrowsingApiBridge_startUriLookup(env, j_api_handler_, callback_id,
                                             j_url, j_threat_types);
+  return true;
 }
 
 }  // namespace safe_browsing

@@ -16,6 +16,7 @@
 #include "base/android/jni_android.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/sequence_checker.h"
 #include "base/sequenced_task_runner.h"
 #include "components/safe_browsing/android/safe_browsing_api_handler.h"
@@ -36,6 +37,9 @@ class SafeBrowsingApiHandlerBridge : public SafeBrowsingApiHandler {
  private:
   void Initialize();
 
+  void DeleteCore();
+  void OnApiSupported(bool supported);
+
   // Responsible for calling into Java from a separate sequence than the
   // SafeBrowsingApiHandlerBridge.
   class Core {
@@ -43,7 +47,8 @@ class SafeBrowsingApiHandlerBridge : public SafeBrowsingApiHandler {
     Core();
     ~Core();
 
-    void StartURLCheck(const URLCheckCallbackMeta& callback,
+    // Returns whether or not the SafetyNet API is supported.
+    bool StartURLCheck(const URLCheckCallbackMeta& callback,
                        const GURL& url,
                        const SBThreatTypeSet& threat_types);
 
@@ -68,8 +73,14 @@ class SafeBrowsingApiHandlerBridge : public SafeBrowsingApiHandler {
   scoped_refptr<base::SequencedTaskRunner> api_task_runner_;
 
   // Lives on |api_task_runner_|, unless DispatchSafetyNetCheckOffThread is
-  // disabled.
+  // disabled. Will be nullptr before Initialize is called, and after
+  // determining that the SafetyNet API is unsupported.
   std::unique_ptr<Core> core_;
+
+  // Will be false until Initialize is called.
+  bool initialized_ = false;
+
+  base::WeakPtrFactory<SafeBrowsingApiHandlerBridge> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingApiHandlerBridge);
 };
