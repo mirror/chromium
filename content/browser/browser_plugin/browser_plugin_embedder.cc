@@ -194,11 +194,12 @@ BrowserPluginGuest* BrowserPluginEmbedder::GetFullPageGuest() {
 }
 
 // static
-bool BrowserPluginEmbedder::GuestRecentlyAudibleCallback(WebContents* guest) {
+bool BrowserPluginEmbedder::GuestRecentlyAudibleCallback(
+    const WebContents* guest) {
   return guest->WasRecentlyAudible();
 }
 
-bool BrowserPluginEmbedder::WereAnyGuestsRecentlyAudible() {
+bool BrowserPluginEmbedder::WereAnyGuestsRecentlyAudible() const {
   if (!GetBrowserPluginGuestManager())
     return false;
 

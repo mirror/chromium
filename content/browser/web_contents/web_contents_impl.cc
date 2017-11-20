@@ -3602,7 +3602,7 @@ void WebContentsImpl::StopFinding(StopFindAction action) {
     manager->StopFinding(action);
 }
 
-bool WebContentsImpl::WasRecentlyAudible() {
+bool WebContentsImpl::WasRecentlyAudible() const {
   return audio_stream_monitor_.WasRecentlyAudible() ||
          (browser_plugin_embedder_ &&
           browser_plugin_embedder_->WereAnyGuestsRecentlyAudible());
