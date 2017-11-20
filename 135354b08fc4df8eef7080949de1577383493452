@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2feefdc3_569911b9",
+        "filename": "ios/chrome/browser/feature_engagement/feature_engagement_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-20T18:34:21Z",
+      "side": 1,
+      "message": "nit:s/Acessibility/Accessibility",
+      "range": {
+        "startLine": 32,
+        "startChar": 11,
+        "endLine": 32,
+        "endChar": 50
+      },
+      "revId": "135354b08fc4df8eef7080949de1577383493452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9337a96_69c3b763",
+        "filename": "ios/chrome/browser/feature_engagement/feature_engagement_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-20T18:34:21Z",
+      "side": 1,
+      "message": "If we\u0027re hardcoding the string above, what do you think about just using an NSString literal here, and deleting the const char above?",
+      "revId": "135354b08fc4df8eef7080949de1577383493452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "206c0049_7c70f77f",
+        "filename": "ios/chrome/browser/feature_engagement/feature_engagement_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-20T18:34:21Z",
+      "side": 1,
+      "message": "Will this properly synchronize? EG probably doesn\u0027t track this.",
+      "revId": "135354b08fc4df8eef7080949de1577383493452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc81c948_d47a8a80",
+        "filename": "ios/chrome/browser/feature_engagement/feature_engagement_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-20T18:34:21Z",
+      "side": 1,
+      "message": "Similar to the previous question, will the calls to SimulateChromeOpenedEvent properly synchronize so everything is complete and propagated to the UI?",
+      "revId": "135354b08fc4df8eef7080949de1577383493452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b46194a_f853f9d6",
+        "filename": "ios/chrome/test/earl_grey/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-20T18:34:21Z",
+      "side": 1,
+      "message": "Is this being created as a separate suite since it takes a flag?",
+      "revId": "135354b08fc4df8eef7080949de1577383493452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
