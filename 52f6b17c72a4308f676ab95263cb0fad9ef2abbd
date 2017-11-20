@@ -16,6 +16,24 @@
       "revId": "52f6b17c72a4308f676ab95263cb0fad9ef2abbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d4088ed_87fa351f",
+        "filename": "third_party/WebKit/Source/core/css/cssom/FilteredComputedStylePropertyMap.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-20T22:10:07Z",
+      "side": 0,
+      "message": "has is now implemented as a nonvirtual function on StylePropertyMapReadonly, so you don\u0027t need to override it anymore.",
+      "parentUuid": "24e3f6a3_832b65a4",
+      "revId": "52f6b17c72a4308f676ab95263cb0fad9ef2abbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
