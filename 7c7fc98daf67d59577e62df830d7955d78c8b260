@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18403858_095c8d14",
+        "filename": "chrome/browser/chromeos/mobile/mobile_activator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-20T18:41:00Z",
+      "side": 1,
+      "message": "BTW, this can just be:\n\nDCHECK(root)\nif (!root || !root-\u003eis_dict()) {\n  ...\n\nBut even that is weird because it\u0027s trying to handle a DCHECK. See: https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#check_dcheck_and-notreached\n\nMaybe split this out to a separate CL, and ask the original author what they want to do here?",
+      "revId": "7c7fc98daf67d59577e62df830d7955d78c8b260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ec83dd6_53bc5dde",
+        "filename": "chrome/browser/chromeos/ownership/owner_settings_service_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-20T18:41:00Z",
+      "side": 1,
+      "message": "BTW, the static_cast here is pointless. @_@",
+      "revId": "7c7fc98daf67d59577e62df830d7955d78c8b260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
