@@ -1284,6 +1284,7 @@ test("browser_tests") {
       "../browser/media/media_browsertest.h",
       "../browser/media/media_engagement_autoplay_browsertest.cc",
       "../browser/media/media_engagement_browsertest.cc",
+      "../browser/media/router/independent_otr_profile_manager_browsertest.cc",
       "../browser/media/test_license_server.cc",
       "../browser/media/test_license_server.h",
       "../browser/media/test_license_server_config.h",
