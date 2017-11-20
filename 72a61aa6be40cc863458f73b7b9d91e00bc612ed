@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5307681e_b89ed176",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/CertificateViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-20T22:01:12Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "d751179b_2215d0f1",
+      "range": {
+        "startLine": 171,
+        "startChar": 47,
+        "endLine": 171,
+        "endChar": 48
+      },
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f23fb035_2b7623c7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/CertificateViewer.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-20T18:18:22Z",
       "side": 1,
       "message": "I would suggest first checking the return value and adding the section only if there\u0027s going to be something in the section.",
+      "range": {
+        "startLine": 191,
+        "startChar": 12,
+        "endLine": 191,
+        "endChar": 27
+      },
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f47e306_72f178f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/CertificateViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-20T22:01:12Z",
+      "side": 1,
+      "message": "Done, extracted this into a static method.",
+      "parentUuid": "f23fb035_2b7623c7",
       "range": {
         "startLine": 191,
         "startChar": 12,
@@ -68,6 +116,30 @@
       "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d430e933_8630dd3e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/CertificateViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-20T22:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d33db1c7_66d895c0",
+      "range": {
+        "startLine": 194,
+        "startChar": 25,
+        "endLine": 194,
+        "endChar": 40
+      },
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +183,48 @@
     },
     {
       "key": {
+        "uuid": "abb05bac_8d6d068b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/CertificateViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-20T22:01:12Z",
+      "side": 1,
+      "message": "Dropped it. Not a fan of concatenating localized strings, and making this two separate columns would add unnecessary complexity, so I think it\u0027s reasonable to not mention it at all :)",
+      "parentUuid": "72500150_cd45557b",
+      "range": {
+        "startLine": 200,
+        "startChar": 55,
+        "endLine": 200,
+        "endChar": 63
+      },
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d1198a_a8612119",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/CertificateViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-20T22:01:12Z",
+      "side": 1,
+      "message": "Done, added a method that also extracts IPAddress.",
+      "parentUuid": "2da8a84c_3ce481b4",
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64dd52c4_f5d4f547",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/CertificateViewer.java",
         "patchSetId": 2
@@ -125,6 +239,24 @@
       "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a0c7058_10539f2d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/CertificateViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-20T22:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64dd52c4_f5d4f547",
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "0359b00f_69b13cc0",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2359,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-20T22:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "770162e1_7318881d",
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1497454d_e8efd77e",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 2
@@ -159,6 +309,24 @@
       "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "087dcfc3_22ed34b6",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2362,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-20T22:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1497454d_e8efd77e",
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +347,24 @@
     },
     {
       "key": {
+        "uuid": "d41e6e09_4b5c8135",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2484,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-20T22:01:12Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6b8687a9_4d6b8bd9",
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "256e3895_d721b504",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 2
@@ -193,6 +379,24 @@
       "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be962e08_46e40413",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2652,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-20T22:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "256e3895_d721b504",
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
