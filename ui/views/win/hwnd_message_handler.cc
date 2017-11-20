@@ -9,6 +9,8 @@
 #include <shellapi.h>
 #include <tchar.h>
 #include <wrl/client.h>
+#include <cmath>
+#include <limits>
 
 #include <utility>
 
@@ -48,7 +50,6 @@
 #include "ui/gfx/icon_util.h"
 #include "ui/gfx/path.h"
 #include "ui/gfx/path_win.h"
-#include "ui/gfx/win/direct_manipulation.h"
 #include "ui/gfx/win/hwnd_util.h"
 #include "ui/gfx/win/rendering_window_manager.h"
 #include "ui/native_theme/native_theme_win.h"
@@ -413,13 +414,6 @@ void HWNDMessageHandler::Init(HWND parent, const gfx::Rect& bounds) {
   DCHECK(delegate_->GetHWNDMessageDelegateInputMethod());
   delegate_->GetHWNDMessageDelegateInputMethod()->AddObserver(this);
 
-  // Direct Manipulation is enabled on Windows 10+. The CreateInstance function
-  // returns NULL if Direct Manipulation is not available.
-  direct_manipulation_helper_ =
-      gfx::win::DirectManipulationHelper::CreateInstance();
-  if (direct_manipulation_helper_)
-    direct_manipulation_helper_->Initialize(hwnd());
-
   // Disable pen flicks (http://crbug.com/506977)
   base::win::DisableFlicks(hwnd());
 }
@@ -603,8 +597,6 @@ void HWNDMessageHandler::Show() {
       ShowWindowWithState(ui::SHOW_STATE_INACTIVE);
     }
   }
-  if (direct_manipulation_helper_)
-    direct_manipulation_helper_->Activate(hwnd());
 }
 
 void HWNDMessageHandler::ShowWindowWithState(ui::WindowShowState show_state) {
@@ -1068,6 +1060,26 @@ void HWNDMessageHandler::HandleParentChanged() {
   // context as we will not receive touch releases if the touch was initiated
   // in the forwarder window.
   touch_ids_.clear();
+}
+
+LRESULT HWNDMessageHandler::HandleDManipMessage(float scale,
+                                                float scroll_x,
+                                                float scroll_y) {
+  gfx::Vector2d offset{scroll_x, scroll_y};
+  int flags = ui::EF_NONE;
+
+  // Pinch zoom event if scale '>' 1.0
+  if (fabs(1.0f - scale) > std::numeric_limits<float>::epsilon()) {
+    offset = scale > 1 ? gfx::Vector2d(120, 120) : gfx::Vector2d(-120, -120);
+    flags = ui::EF_CONTROL_DOWN;
+  }
+
+  ui::MouseWheelEvent wheel_event(offset, last_mouse_event_location_,
+                                  last_mouse_event_location_,
+                                  base::TimeTicks::Now(), flags, ui::EF_NONE);
+
+  base::WeakPtr<HWNDMessageHandler> ref(weak_factory_.GetWeakPtr());
+  return delegate_->HandleMouseEvent(wheel_event);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2518,13 +2530,9 @@ void HWNDMessageHandler::OnWindowPosChanged(WINDOWPOS* window_pos) {
     SetDwmFrameExtension(DwmFrameState::ON);
   if (window_pos->flags & SWP_SHOWWINDOW) {
     delegate_->HandleVisibilityChanged(true);
-    if (direct_manipulation_helper_)
-      direct_manipulation_helper_->Activate(hwnd());
     SetDwmFrameExtension(DwmFrameState::ON);
   } else if (window_pos->flags & SWP_HIDEWINDOW) {
     delegate_->HandleVisibilityChanged(false);
-    if (direct_manipulation_helper_)
-      direct_manipulation_helper_->Deactivate(hwnd());
   }
 
   SetMsgHandled(FALSE);
@@ -2649,6 +2657,8 @@ LRESULT HWNDMessageHandler::HandleMouseEventInternal(UINT message,
               static_cast<DWORD>(message_time),
               { CR_GET_X_LPARAM(l_param), CR_GET_Y_LPARAM(l_param) } };
   ui::MouseEvent event(msg);
+  last_mouse_event_location_ = event.location();
+
   if (IsSynthesizedMouseMessage(message, message_time, l_param))
     event.set_flags(event.flags() | ui::EF_FROM_TOUCH);
 
@@ -2676,12 +2686,6 @@ LRESULT HWNDMessageHandler::HandleMouseEventInternal(UINT message,
 
   if (!ref.get())
     return 0;
-
-  if (direct_manipulation_helper_ && track_mouse &&
-      (message == WM_MOUSEWHEEL || message == WM_MOUSEHWHEEL)) {
-    direct_manipulation_helper_->HandleMouseWheel(hwnd(), message, w_param,
-        l_param);
-  }
 
   if (!handled && message == WM_NCLBUTTONDOWN && w_param != HTSYSMENU &&
       w_param != HTCAPTION &&
@@ -2997,9 +3001,6 @@ void HWNDMessageHandler::SetBoundsInternal(const gfx::Rect& bounds_in_pixels,
     delegate_->HandleClientSizeChanged(GetClientAreaBounds().size());
     ResetWindowRegion(false, true);
   }
-
-  if (direct_manipulation_helper_)
-    direct_manipulation_helper_->SetBounds(bounds_in_pixels);
 }
 
 void HWNDMessageHandler::CheckAndHandleBackgroundFullscreenOnMonitor(
