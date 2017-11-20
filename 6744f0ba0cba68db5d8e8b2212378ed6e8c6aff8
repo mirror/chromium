@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1cf17df_8fac520d",
+        "filename": "ui/views/controls/slider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-20T21:34:25Z",
+      "side": 1,
+      "message": "I think you should also override View::AddedToWidget?",
+      "revId": "6744f0ba0cba68db5d8e8b2212378ed6e8c6aff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
