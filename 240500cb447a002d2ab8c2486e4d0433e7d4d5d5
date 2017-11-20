@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a14fc5f_218d7e99",
+        "filename": "components/autofill/ios/browser/resources/suggestion_controller.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T16:54:00Z",
+      "side": 1,
+      "message": "Is it possible to have getElementByNameWithParent inside suggestion_controller.js? common.js indeed contains a lot of autofill/passwords specific code, but ideally that code should not be in common.js.",
+      "range": {
+        "startLine": 274,
+        "startChar": 25,
+        "endLine": 274,
+        "endChar": 51
+      },
+      "revId": "240500cb447a002d2ab8c2486e4d0433e7d4d5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26dfc75c_64f7fa1f",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T16:54:00Z",
+      "side": 1,
+      "message": "nit: Maybe move |var el;| to the top of this function? JavaScript will hoist this variable anyway.",
+      "range": {
+        "startLine": 736,
+        "startChar": 9,
+        "endLine": 736,
+        "endChar": 11
+      },
+      "revId": "240500cb447a002d2ab8c2486e4d0433e7d4d5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
