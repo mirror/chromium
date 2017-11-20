@@ -20,6 +20,7 @@ class Vector2d;
 
 namespace ui {
 enum class DomCode;
+class GestureEventAndroid;
 struct GestureEventData;
 struct GestureEventDetails;
 class MotionEvent;
@@ -102,6 +103,10 @@ inline const blink::WebGestureEvent& ToWebGestureEvent(
   DCHECK(blink::WebInputEvent::IsGestureEventType(event.GetType()));
   return static_cast<const blink::WebGestureEvent&>(event);
 }
+
+// Convenience method that converts an instance to blink event.
+blink::WebGestureEvent CreateWebGestureEventFromGestureEventAndroid(
+    const GestureEventAndroid& event);
 
 }  // namespace ui
 
