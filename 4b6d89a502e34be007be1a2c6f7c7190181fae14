@@ -2,6 +2,86 @@
   "comments": [
     {
       "key": {
+        "uuid": "7ebf833e_79210908",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-20T02:56:34Z",
+      "side": 1,
+      "message": "desktop",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e5c7b8_683d6abd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-20T02:56:34Z",
+      "side": 1,
+      "message": "These lines seem too long.",
+      "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9753f8_fc82f9ff",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-20T02:56:34Z",
+      "side": 1,
+      "message": "nit: Blank line after.",
+      "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72bbf8dc_410fff9c",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-20T02:56:34Z",
+      "side": 1,
+      "message": "s/and also that/but (since the second example is a counter-example to the first).",
+      "range": {
+        "startLine": 133,
+        "startChar": 27,
+        "endLine": 133,
+        "endChar": 40
+      },
+      "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f748a030_f4fd7e3c",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 5
@@ -13,6 +93,70 @@
       "writtenOn": "2017-11-20T02:24:36Z",
       "side": 1,
       "message": "The comment and the code don\u0027t seem to match: (I think) the code is saying this is only if the user is in a tab.",
+      "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73165ba0_954d723d",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-20T02:56:34Z",
+      "side": 1,
+      "message": "I think the comment is correct but it\u0027s a bit confusing. \"If the app for the current URL\" means the app that corresponds to the current URL even though we\u0027re currently in a tab.\n\nHow about: \"If this is a browser tab, and the current and target URL are within-scope of the same app, don\u0027t intercept the navigation.\"",
+      "parentUuid": "f748a030_f4fd7e3c",
+      "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e9d2630_172785ba",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-20T02:56:34Z",
+      "side": 1,
+      "message": "nit: Why not just GetAppForCurrentURL()? (No need to store it in a variable up above.)",
+      "range": {
+        "startLine": 136,
+        "startChar": 47,
+        "endLine": 136,
+        "endChar": 70
+      },
+      "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8009afe_b702c473",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-20T02:56:34Z",
+      "side": 1,
+      "message": "hyphenate \"same-app\"",
+      "range": {
+        "startLine": 137,
+        "startChar": 43,
+        "endLine": 137,
+        "endChar": 44
+      },
       "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
