@@ -15,9 +15,7 @@ WeakReference::Flag::Flag() : is_valid_(true) {
 }
 
 void WeakReference::Flag::Invalidate() {
-  // The flag being invalidated with a single ref implies that there are no
-  // weak pointers in existence. Allow deletion on other thread in this case.
-  DCHECK(sequence_checker_.CalledOnValidSequence() || HasOneRef())
+  DCHECK(sequence_checker_.CalledOnValidSequence())
       << "WeakPtrs must be invalidated on the same sequenced thread.";
   is_valid_ = false;
 }
@@ -31,11 +29,14 @@ bool WeakReference::Flag::IsValid() const {
 WeakReference::Flag::~Flag() {
 }
 
-WeakReference::WeakReference() {
+void WeakReference::Flag::DetachFromSequence() {
+  DCHECK(HasOneRef()) << "Cannot detach from Sequence while WeakPtrs exist.";
+  sequence_checker_.DetachFromSequence();
 }
 
-WeakReference::WeakReference(const Flag* flag) : flag_(flag) {
-}
+WeakReference::WeakReference() {}
+
+WeakReference::WeakReference(const scoped_refptr<Flag>& flag) : flag_(flag) {}
 
 WeakReference::~WeakReference() {
 }
@@ -44,7 +45,9 @@ WeakReference::WeakReference(WeakReference&& other) = default;
 
 WeakReference::WeakReference(const WeakReference& other) = default;
 
-bool WeakReference::is_valid() const { return flag_.get() && flag_->IsValid(); }
+bool WeakReference::is_valid() const {
+  return flag_ && flag_->IsValid();
+}
 
 WeakReferenceOwner::WeakReferenceOwner() {
 }
@@ -54,18 +57,21 @@ WeakReferenceOwner::~WeakReferenceOwner() {
 }
 
 WeakReference WeakReferenceOwner::GetRef() const {
-  // If we hold the last reference to the Flag then create a new one.
-  if (!HasRefs())
+  if (!flag_)
     flag_ = new WeakReference::Flag();
 
-  return WeakReference(flag_.get());
+  return WeakReference(flag_);
 }
 
 void WeakReferenceOwner::Invalidate() {
-  if (flag_.get()) {
+  if (flag_) {
     flag_->Invalidate();
     flag_ = nullptr;
   }
+}
+
+void WeakReferenceOwner::DetachFromSequence() {
+  flag_->DetachFromSequence();
 }
 
 WeakPtrBase::WeakPtrBase() : ptr_(0) {}

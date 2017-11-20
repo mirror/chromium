@@ -99,6 +99,8 @@ class BASE_EXPORT WeakReference {
     void Invalidate();
     bool IsValid() const;
 
+    void DetachFromSequence();
+
    private:
     friend class base::RefCountedThreadSafe<Flag>;
 
@@ -109,7 +111,7 @@ class BASE_EXPORT WeakReference {
   };
 
   WeakReference();
-  explicit WeakReference(const Flag* flag);
+  explicit WeakReference(const scoped_refptr<Flag>& flag);
   ~WeakReference();
 
   WeakReference(WeakReference&& other);
@@ -130,11 +132,11 @@ class BASE_EXPORT WeakReferenceOwner {
 
   WeakReference GetRef() const;
 
-  bool HasRefs() const {
-    return flag_.get() && !flag_->HasOneRef();
-  }
+  bool HasRefs() const { return flag_ && !flag_->HasOneRef(); }
 
   void Invalidate();
+
+  void DetachFromSequence();
 
  private:
   mutable scoped_refptr<WeakReference::Flag> flag_;
@@ -308,19 +310,25 @@ class WeakPtrFactory : public internal::WeakPtrFactoryBase {
 
   ~WeakPtrFactory() {}
 
+  // Returns a new WeakPtr. Although GetWeakPtr() can be called from any thread
+  // (assuming calling code ensures the WeakPtrFactory is still live at the
+  // time), it is not safe to call concurrently from separate threads. Code
+  // which hands-off WeakPtrs to separate threads for them to Bind() into
+  // posted tasks, for example, should usually take a WeakPtr during setup
+  // and store it for later use, rather than call GetWeakPtr() at Bind() time.
   WeakPtr<T> GetWeakPtr() {
     DCHECK(ptr_);
     return WeakPtr<T>(weak_reference_owner_.GetRef(),
                       reinterpret_cast<T*>(ptr_));
   }
 
-  // Call this method to invalidate all existing weak pointers.
+  // Invalidates all existing weak pointers issued by this factory.
   void InvalidateWeakPtrs() {
     DCHECK(ptr_);
     weak_reference_owner_.Invalidate();
   }
 
-  // Call this method to determine if any weak pointers exist.
+  // Returns true if one or more WeakPtrs issued by this factory still exist.
   bool HasWeakPtrs() const {
     DCHECK(ptr_);
     return weak_reference_owner_.HasRefs();
@@ -346,6 +354,11 @@ class SupportsWeakPtr : public internal::SupportsWeakPtrBase {
 
  protected:
   ~SupportsWeakPtr() {}
+
+  // Asserts that no issued WeakPtrs exist, and detaches the sequence binding.
+  void DetachFromSequence() { weak_reference_owner_.DetachFromSequence(); }
+
+  bool HasWeakPtrs() const { return weak_reference_owner_.HasRefs(); }
 
  private:
   internal::WeakReferenceOwner weak_reference_owner_;
