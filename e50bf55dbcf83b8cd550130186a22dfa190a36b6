@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2368c272_36c3657a",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-20T21:11:08Z",
+      "side": 1,
+      "message": "Just make the constructor public.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 42
+      },
+      "revId": "e50bf55dbcf83b8cd550130186a22dfa190a36b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f6f616f_196d1225",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-20T21:11:08Z",
+      "side": 1,
+      "message": "As discussed on the other patch this is unused so can you remove it to avoid confusion?",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 3
+      },
+      "revId": "e50bf55dbcf83b8cd550130186a22dfa190a36b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28914c68_9e45a38c",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-20T21:11:08Z",
+      "side": 1,
+      "message": "I\u0027m not sure this counts as RAII. I would just say \"Owns pipes to this Authenticator from |render_frame_host_|.\" (Assuming you remove |caller_origin_| and just store the RFH pointer directly.)",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 54
+      },
+      "revId": "e50bf55dbcf83b8cd550130186a22dfa190a36b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e097213_28f9b5fd",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-20T21:11:08Z",
+      "side": 1,
+      "message": "R",
+      "range": {
+        "startLine": 93,
+        "startChar": 38,
+        "endLine": 93,
+        "endChar": 39
+      },
+      "revId": "e50bf55dbcf83b8cd550130186a22dfa190a36b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a9613ae_86b5d4a8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/credential-management/credentialscontainer-create-basics.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-20T21:11:08Z",
+      "side": 1,
+      "message": "This change seems unrelated.",
+      "revId": "e50bf55dbcf83b8cd550130186a22dfa190a36b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
