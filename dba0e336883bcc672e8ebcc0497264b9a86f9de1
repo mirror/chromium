@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a9e1c30f_2120cf52",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-20T21:19:28Z",
+      "side": 1,
+      "message": "\u003e Then I cannot use values in tests. They will be not compatible with int.\noh, you meant explicitly convert it to int with static_cast in the tests?",
+      "parentUuid": "351e0a42_13bc706c",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 4
+      },
+      "revId": "dba0e336883bcc672e8ebcc0497264b9a86f9de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "babc1b2a_cd9e375b",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.h",
         "patchSetId": 3
