@@ -92,8 +92,6 @@ void OomInterventionTabHelper::WebContentsDestroyed() {
 
 void OomInterventionTabHelper::RenderProcessGone(
     base::TerminationStatus status) {
-  intervention_.reset();
-
   // Skip background process termination.
   if (!IsLastVisibleWebContents(web_contents())) {
     ResetInterventionState();
@@ -229,5 +227,6 @@ void OomInterventionTabHelper::OnNearOomDetected() {
 
 void OomInterventionTabHelper::ResetInterventionState() {
   near_oom_detected_time_.reset();
+  intervention_.reset();
   intervention_state_ = InterventionState::NOT_TRIGGERED;
 }
