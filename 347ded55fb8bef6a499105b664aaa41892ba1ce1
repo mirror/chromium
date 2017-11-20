@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a44b29cb_191b09db",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T22:59:08Z",
+      "side": 1,
+      "message": "We can only do TexStorage2DImageChromium once (since it makes the texture immutable), so after we recycle we should only do the TexSubImage2D\n\nMy suggestion is to do the TexStorage2DImageChromium or TexImage2D (with null pixels) when we create the texture (~ l. 699), and to always do TexSubImage2D unconditionally here -- TexImage2D(..., null) + TexSubImage2D(..., pixels) \u003d\u003d TexImage2D(..., pixels).",
+      "revId": "347ded55fb8bef6a499105b664aaa41892ba1ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
