@@ -895,17 +895,16 @@ MediaRouterMojoImpl::GetProviderIdForRoute(const MediaRoute::Id& route_id) {
 base::Optional<mojom::MediaRouteProvider::Id>
 MediaRouterMojoImpl::GetProviderIdForSink(const MediaSink::Id& sink_id,
                                           const MediaSource::Id& source_id) {
-  const auto& sinks_query = sinks_queries_.find(source_id);
-  if (sinks_query == sinks_queries_.end())
-    return base::nullopt;
-  for (const auto& provider_to_sinks :
-       sinks_query->second->providers_to_sinks()) {
-    const std::vector<MediaSink>& sinks = provider_to_sinks.second;
-    if (std::find_if(sinks.begin(), sinks.end(),
-                     [&sink_id](const MediaSink& sink) {
-                       return sink.id() == sink_id;
-                     }) != sinks.end()) {
-      return provider_to_sinks.first;
+  for (const auto& sinks_query : sinks_queries_) {
+    for (const auto& provider_to_sinks :
+         sinks_query.second->providers_to_sinks()) {
+      const std::vector<MediaSink>& sinks = provider_to_sinks.second;
+      if (std::find_if(sinks.begin(), sinks.end(),
+                       [&sink_id](const MediaSink& sink) {
+                         return sink.id() == sink_id;
+                       }) != sinks.end()) {
+        return provider_to_sinks.first;
+      }
     }
   }
   return base::nullopt;
