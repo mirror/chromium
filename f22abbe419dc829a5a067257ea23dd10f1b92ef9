@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8709dbe2_0fe547fd",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-20T17:15:10Z",
+      "side": 1,
+      "message": "optional: You sure you don\u0027t want to a function on TabDataExperimental for converting?",
+      "range": {
+        "startLine": 390,
+        "startChar": 6,
+        "endLine": 390,
+        "endChar": 62
+      },
+      "revId": "f22abbe419dc829a5a067257ea23dd10f1b92ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f168040_4bb70303",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-20T17:15:10Z",
+      "side": 1,
+      "message": "Is this really needed? The old class has a DCHECK.",
+      "range": {
+        "startLine": 559,
+        "startChar": 2,
+        "endLine": 559,
+        "endChar": 28
+      },
+      "revId": "f22abbe419dc829a5a067257ea23dd10f1b92ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636f087e_a8b4bba1",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-20T17:15:10Z",
+      "side": 1,
+      "message": "optional: similar comment about a real function for converting the type.",
+      "range": {
+        "startLine": 821,
+        "startChar": 8,
+        "endLine": 823,
+        "endChar": 59
+      },
+      "revId": "f22abbe419dc829a5a067257ea23dd10f1b92ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e25be08_f2ab25a6",
+        "filename": "chrome/browser/ui/views/tabs/tab_experimental.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-20T17:15:10Z",
+      "side": 1,
+      "message": "remove value since you set in constructor?",
+      "range": {
+        "startLine": 86,
+        "startChar": 33,
+        "endLine": 86,
+        "endChar": 70
+      },
+      "revId": "f22abbe419dc829a5a067257ea23dd10f1b92ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53b1e14_87b6ff52",
+        "filename": "chrome/browser/ui/views/tabs/tab_experimental_paint.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-20T17:15:10Z",
+      "side": 1,
+      "message": "optional: Seems mildly confusing to have this as a separate member when everything else is passed into paint.",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "f22abbe419dc829a5a067257ea23dd10f1b92ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "201eecf8_9e509b70",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip_experimental.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-20T17:15:10Z",
+      "side": 1,
+      "message": "Do you need to check empty() case?",
+      "range": {
+        "startLine": 179,
+        "startChar": 16,
+        "endLine": 179,
+        "endChar": 30
+      },
+      "revId": "f22abbe419dc829a5a067257ea23dd10f1b92ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "983e6120_836df024",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip_experimental.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-20T17:15:10Z",
+      "side": 1,
+      "message": "Why is it preferable to pass a span here rather than a const vector\u0026 ?",
+      "range": {
+        "startLine": 429,
+        "startChar": 6,
+        "endLine": 429,
+        "endChar": 65
+      },
+      "revId": "f22abbe419dc829a5a067257ea23dd10f1b92ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
