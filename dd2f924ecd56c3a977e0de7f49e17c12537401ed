@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09419894_3a8d9c34",
+        "filename": "net/url_request/url_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-11-20T16:56:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a232bed_82559e37",
+      "range": {
+        "startLine": 1175,
+        "startChar": 2,
+        "endLine": 1175,
+        "endChar": 29
+      },
+      "revId": "dd2f924ecd56c3a977e0de7f49e17c12537401ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82219285_620fbd69",
         "filename": "net/url_request/url_request_context_builder.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-17T19:02:27Z",
       "side": 1,
       "message": "What happens if reporting_service() is nullptr here?  Does it even make any sense to create a reporting policy if NEL is disabled?",
+      "range": {
+        "startLine": 634,
+        "startChar": 17,
+        "endLine": 634,
+        "endChar": 34
+      },
+      "revId": "dd2f924ecd56c3a977e0de7f49e17c12537401ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8546ddf0_399956de",
+        "filename": "net/url_request/url_request_context_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-11-20T16:56:28Z",
+      "side": 1,
+      "message": "Nothing goes wrong if reporting_service() is nullptr; NEL will cheerfully configure itself from headers, generate reports, and then discard them.\n\nIt makes sense to set up Reporting even if NEL is disabled, because other features can depend on Reporting.\n\nIt makes sense to set up NEL even if Reporting is disabled, since NEL will persist configured origins across restarts and can use them in a later session where Reporting is enabled.",
+      "parentUuid": "82219285_620fbd69",
       "range": {
         "startLine": 634,
         "startChar": 17,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2528c48e_c5d9d29f",
+        "filename": "net/url_request/url_request_context_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-11-20T16:56:28Z",
+      "side": 1,
+      "message": "I think it makes sense to offer it optionally to Cronet clients, disabled by default, and enable it in Chrome.",
+      "parentUuid": "e8f4faa0_b0f8d724",
+      "range": {
+        "startLine": 301,
+        "startChar": 7,
+        "endLine": 301,
+        "endChar": 40
+      },
+      "revId": "dd2f924ecd56c3a977e0de7f49e17c12537401ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6ced707_b7e9ea03",
         "filename": "net/url_request/url_request_context_storage.h",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-17T19:02:27Z",
       "side": 1,
       "message": "I don\u0027t think this order is right.  The service depends on the delegate, so should be destroyed first.",
+      "range": {
+        "startLine": 134,
+        "startChar": 47,
+        "endLine": 134,
+        "endChar": 78
+      },
+      "revId": "dd2f924ecd56c3a977e0de7f49e17c12537401ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538e7b7c_ad0036f9",
+        "filename": "net/url_request/url_request_context_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-11-20T16:56:28Z",
+      "side": 1,
+      "message": "No, the delegate depends on the service. Reporting never calls into NEL (it doesn\u0027t even have a pointer to it), but NEL calls into Reporting (hence NetworkErrorLoggingDelegate::SetReportingService).",
+      "parentUuid": "e6ced707_b7e9ea03",
       "range": {
         "startLine": 134,
         "startChar": 47,
