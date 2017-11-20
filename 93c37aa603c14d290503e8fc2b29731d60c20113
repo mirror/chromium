@@ -603,6 +603,30 @@
     },
     {
       "key": {
+        "uuid": "7db90b64_6f904605",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-20T06:27:41Z",
+      "side": 1,
+      "message": "Sorry, I completely misread \"also we can simplify WebSWRegistrationImpl lifetime management...\"...\nI imagined it meant we can get rid of 2-way management of lifetime (disconnection of the pipe from the renderer to the browser -\u003e disconnection of the pipe from B to R).\nThanks a lot for your explanation:)",
+      "parentUuid": "d9b3c337_13ae89c4",
+      "range": {
+        "startLine": 508,
+        "startChar": 20,
+        "endLine": 508,
+        "endChar": 72
+      },
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8abe1ada_0bcdec04",
         "filename": "content/browser/service_worker/service_worker_registration_object_host.h",
         "patchSetId": 5
