@@ -12,6 +12,7 @@
 #include "core/layout/ng/inline/ng_physical_line_box_fragment.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
+#include "core/paint/AdjustPaintOffsetScope.h"
 #include "core/paint/BackgroundImageGeometry.h"
 #include "core/paint/BoxDecorationData.h"
 #include "core/paint/PaintInfo.h"
@@ -50,20 +51,23 @@ NGBoxFragmentPainter::NGBoxFragmentPainter(const NGPaintFragment& box)
 
 void NGBoxFragmentPainter::Paint(const PaintInfo& paint_info,
                                  const LayoutPoint& paint_offset) {
-  if (!IntersectsPaintRect(paint_info, paint_offset))
+  AdjustPaintOffsetScope adjustment(box_fragment_, paint_info, paint_offset);
+  auto adjusted_paint_offset = adjustment.AdjustedPaintOffset();
+  auto& info = adjustment.MutablePaintInfo();
+
+  if (!IntersectsPaintRect(info, adjusted_paint_offset))
     return;
 
   if (box_fragment_.PhysicalFragment().IsInlineBlock())
-    return PaintInlineBlock(paint_info, paint_offset);
+    return PaintInlineBlock(info, adjusted_paint_offset);
 
-  PaintInfo info(paint_info);
   PaintPhase original_phase = info.phase;
 
   if (original_phase == PaintPhase::kOutline) {
     info.phase = PaintPhase::kDescendantOutlinesOnly;
   } else if (ShouldPaintSelfBlockBackground(original_phase)) {
     info.phase = PaintPhase::kSelfBlockBackgroundOnly;
-    PaintObject(info, paint_offset);
+    PaintObject(info, adjusted_paint_offset);
     if (ShouldPaintDescendantBlockBackgrounds(original_phase))
       info.phase = PaintPhase::kDescendantBlockBackgroundsOnly;
   }
@@ -73,19 +77,19 @@ void NGBoxFragmentPainter::Paint(const PaintInfo& paint_info,
     // TODO(layout-dev): Clip using BoxClipper.
     // BoxClipper box_clipper(layout_block_, info, paint_offset,
     //                       contents_clip_behavior);
-    PaintObject(info, paint_offset);
+    PaintObject(info, adjusted_paint_offset);
   }
 
   if (ShouldPaintSelfOutline(original_phase)) {
     info.phase = PaintPhase::kSelfOutlineOnly;
-    PaintObject(info, paint_offset);
+    PaintObject(info, adjusted_paint_offset);
   }
 
   // Our scrollbar widgets paint exactly when we tell them to, so that they work
   // properly with z-index. We paint after we painted the background/border, so
   // that the scrollbars will sit above the background/border.
   info.phase = original_phase;
-  PaintOverflowControlsIfNeeded(info, paint_offset);
+  PaintOverflowControlsIfNeeded(info, adjusted_paint_offset);
 }
 
 void NGBoxFragmentPainter::PaintObject(const PaintInfo& paint_info,
@@ -329,21 +333,17 @@ void NGBoxFragmentPainter::PaintChildren(
     const Vector<std::unique_ptr<NGPaintFragment>>& children,
     const PaintInfo& paint_info,
     const LayoutPoint& paint_offset) {
-  PaintInfo child_info(paint_info);
   for (const auto& child : children) {
     const NGPhysicalFragment& fragment = child->PhysicalFragment();
-    LayoutPoint child_offset = paint_offset + LayoutSize(fragment.Offset().left,
-                                                         fragment.Offset().top);
     if (fragment.Type() == NGPhysicalFragment::kFragmentBox) {
       if (child->HasSelfPaintingLayer())
         continue;
-      PaintInfo info(paint_info);
       if (RequiresLegacyFallback(fragment))
-        fragment.GetLayoutObject()->Paint(info, child_offset);
+        fragment.GetLayoutObject()->Paint(paint_info, paint_offset);
       else
-        NGBoxFragmentPainter(*child).Paint(info, child_offset);
+        NGBoxFragmentPainter(*child).Paint(paint_info, paint_offset);
     } else if (fragment.Type() == NGPhysicalFragment::kFragmentLineBox) {
-      PaintLineBox(*child, child_info, child_offset);
+      PaintLineBox(*child, paint_info, paint_offset);
     } else if (fragment.Type() == NGPhysicalFragment::kFragmentText) {
       PaintText(*child, paint_info, paint_offset);
     }
@@ -361,7 +361,10 @@ void NGBoxFragmentPainter::PaintLineBox(
       paint_info.phase != PaintPhase::kMask)
     return;
 
-  PaintChildren(line_box_fragment.Children(), paint_info, paint_offset);
+  LayoutPoint child_offset =
+      paint_offset + LayoutSize(line_box_fragment.Offset().left,
+                                line_box_fragment.Offset().top);
+  PaintChildren(line_box_fragment.Children(), paint_info, child_offset);
 }
 
 void NGBoxFragmentPainter::PaintInlineBlock(const PaintInfo& paint_info,
