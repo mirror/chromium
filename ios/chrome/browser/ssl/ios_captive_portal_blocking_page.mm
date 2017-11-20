@@ -79,7 +79,9 @@ void IOSCaptivePortalBlockingPage::PopulateInterstitialStrings(
   load_time_data->SetString("finalParagraph", base::string16());
 }
 
-void IOSCaptivePortalBlockingPage::AfterShow() {}
+void IOSCaptivePortalBlockingPage::AfterShow() {
+  web_state()->DidChangeVisibleSecurityState();
+}
 
 void IOSCaptivePortalBlockingPage::OnDontProceed() {
   DCHECK(!callback_.is_null());

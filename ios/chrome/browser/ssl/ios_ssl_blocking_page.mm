@@ -126,6 +126,7 @@ IOSSSLBlockingPage::~IOSSSLBlockingPage() {
 
 void IOSSSLBlockingPage::AfterShow() {
   controller_->SetWebInterstitial(web_interstitial());
+  web_state()->DidChangeVisibleSecurityState();
 }
 
 void IOSSSLBlockingPage::PopulateInterstitialStrings(
