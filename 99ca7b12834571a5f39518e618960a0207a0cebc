@@ -16,6 +16,24 @@
       "revId": "99ca7b12834571a5f39518e618960a0207a0cebc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e56ddc5e_9bbcc32a",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-20T19:20:48Z",
+      "side": 1,
+      "message": "That\u0027s a good question. I actually don\u0027t know, and have the same thought whenever I do that. We should find out sometime.",
+      "parentUuid": "47dc3778_a1993c2e",
+      "revId": "99ca7b12834571a5f39518e618960a0207a0cebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
