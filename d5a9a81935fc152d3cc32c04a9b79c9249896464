@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "77d88179_540d54c7",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-20T23:43:00Z",
+      "side": 1,
+      "message": "This should be\n\n  Init@0(TimerHost host_ptr) \u003d\u003e ();",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 6
+      },
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "701fa974_3c2797a5",
         "filename": "components/arc/timer/arc_timer.cc",
         "patchSetId": 12
@@ -104,6 +127,75 @@
     },
     {
       "key": {
+        "uuid": "97b0dce6_3332eae4",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-20T23:43:00Z",
+      "side": 1,
+      "message": "This is not necessarily true. It has lower latency than all of the alternatives, but I wouldn\u0027t go as far as calling it \"low latency\". For that the only solution is to avoid the threadhop to begin with.",
+      "range": {
+        "startLine": 24,
+        "startChar": 67,
+        "endLine": 25,
+        "endChar": 61
+      },
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04cbbf41_5cc42a28",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-20T23:43:00Z",
+      "side": 1,
+      "message": "This is unsafe since |this| would be dereferenced from the blocking thread: https://cs.chromium.org/chromium/src/base/memory/weak_ptr.h?type\u003dcs\u0026q\u003dGetWeakPtr\u0026l\u003d49\n\nYou might need to wrap the ScopedFD in something that\u0027s threadsafe and pass a shared_refptr to that. Doesn\u0027t need the fancier \"delete on specific sequence\", just something that can be deleted safely from any thread works.",
+      "range": {
+        "startLine": 28,
+        "startChar": 49,
+        "endLine": 28,
+        "endChar": 62
+      },
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "826386ce_80b550a7",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-20T23:43:00Z",
+      "side": 1,
+      "message": "This needs\n\n base::AssertBlockingAllowed();\n\nabove.",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 38
+      },
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9256774_3ffba4c9",
         "filename": "components/arc/timer/arc_timer.cc",
         "patchSetId": 12
@@ -115,6 +207,52 @@
       "writtenOn": "2017-11-20T05:38:05Z",
       "side": 1,
       "message": "MIssing include.",
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f71caa99_4fbacc91",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-20T23:43:00Z",
+      "side": 1,
+      "message": "Another way to avoid the threadhop is to use\n\n  timer_.SetTaskRunner(base::CreateSequencedTaskRunnerWithTraits({base::MayBlock()});\n\nin the ctor. That way you don\u0027t need to post the task.",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 8
+      },
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35e5e16_9a36a9cf",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-20T23:43:00Z",
+      "side": 1,
+      "message": "You need to justify why base::Unretained is safe to use. Or avoid using it at all by using the scoped_refptr to the FD I suggested above.",
+      "range": {
+        "startLine": 51,
+        "startChar": 57,
+        "endLine": 51,
+        "endChar": 67
+      },
       "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -166,6 +304,29 @@
       "writtenOn": "2017-11-20T05:38:05Z",
       "side": 1,
       "message": "missing #include \"base/macros.h\", #include \"base/memory/weak_ptr.h\"",
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42a77a1c_60575e02",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-20T23:43:00Z",
+      "side": 1,
+      "message": "Can you add comments about the thread where this can live / be called from?",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 14
+      },
       "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
