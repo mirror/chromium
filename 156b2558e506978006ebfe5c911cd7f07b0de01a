@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "edf8f606_2d78dd3a",
+        "filename": "device/vr/vr_device_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-20T21:44:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab56fa92_843f8d13",
+      "revId": "156b2558e506978006ebfe5c911cd7f07b0de01a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb9b9334_87caee13",
         "filename": "device/vr/vr_device_base.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "156b2558e506978006ebfe5c911cd7f07b0de01a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58aa093e_45497513",
+        "filename": "device/vr/vr_device_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-20T21:44:55Z",
+      "side": 1,
+      "message": "GetPose is specific to Magic Window.\n\nCalling it GetMagicWindowPose would be long and redundant, as it\u0027s already part of the VRMagicWindowProvider interface.",
+      "parentUuid": "cb9b9334_87caee13",
+      "revId": "156b2558e506978006ebfe5c911cd7f07b0de01a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a8e737b2_b4591759",
+        "filename": "device/vr/vr_device_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-20T21:44:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5803cea2_2169dec5",
+      "revId": "156b2558e506978006ebfe5c911cd7f07b0de01a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8de4261c_7d9726b2",
         "filename": "device/vr/vr_device_base.h",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "156b2558e506978006ebfe5c911cd7f07b0de01a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d86a22_918b075a",
+        "filename": "device/vr/vr_device_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-20T21:44:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8de4261c_7d9726b2",
+      "revId": "156b2558e506978006ebfe5c911cd7f07b0de01a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
