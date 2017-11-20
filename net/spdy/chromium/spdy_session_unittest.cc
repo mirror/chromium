@@ -265,8 +265,6 @@ class StreamRequestDestroyingCallback : public TestCompletionCallbackBase {
 // request. Close the session. Nothing should blow up. This is a
 // regression test for http://crbug.com/250841 .
 TEST_F(SpdySessionTest, PendingStreamCancellingAnother) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   MockRead reads[] = {MockRead(ASYNC, 0, 0), };
 
   SequencedSocketData data(reads, arraysize(reads), nullptr, 0);
@@ -310,8 +308,6 @@ TEST_F(SpdySessionTest, PendingStreamCancellingAnother) {
 
 // A session receiving a GOAWAY frame with no active streams should close.
 TEST_F(SpdySessionTest, GoAwayWithNoActiveStreams) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame goaway(spdy_util_.ConstructSpdyGoAway(1));
   MockRead reads[] = {
       CreateMockRead(goaway, 0),
@@ -335,8 +331,6 @@ TEST_F(SpdySessionTest, GoAwayWithNoActiveStreams) {
 // A session receiving a GOAWAY frame immediately with no active
 // streams should then close.
 TEST_F(SpdySessionTest, GoAwayImmediatelyWithNoActiveStreams) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame goaway(spdy_util_.ConstructSpdyGoAway(1));
   MockRead reads[] = {
       CreateMockRead(goaway, 0, SYNCHRONOUS), MockRead(ASYNC, 0, 1)  // EOF
@@ -358,8 +352,6 @@ TEST_F(SpdySessionTest, GoAwayImmediatelyWithNoActiveStreams) {
 // A session receiving a GOAWAY frame with active streams should close
 // when the last active stream is closed.
 TEST_F(SpdySessionTest, GoAwayWithActiveStreams) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame goaway(spdy_util_.ConstructSpdyGoAway(1));
   MockRead reads[] = {
       MockRead(ASYNC, ERR_IO_PENDING, 2), CreateMockRead(goaway, 3),
@@ -429,8 +421,6 @@ TEST_F(SpdySessionTest, GoAwayWithActiveStreams) {
 
 // Regression test for https://crbug.com/547130.
 TEST_F(SpdySessionTest, GoAwayWithActiveAndCreatedStream) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame goaway(spdy_util_.ConstructSpdyGoAway(0));
   MockRead reads[] = {
       MockRead(ASYNC, ERR_IO_PENDING, 1), CreateMockRead(goaway, 2),
@@ -487,8 +477,6 @@ TEST_F(SpdySessionTest, GoAwayWithActiveAndCreatedStream) {
 // the last active stream to be closed. The session should then be
 // closed after the second GOAWAY frame.
 TEST_F(SpdySessionTest, GoAwayTwice) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame goaway1(spdy_util_.ConstructSpdyGoAway(1));
   SpdySerializedFrame goaway2(spdy_util_.ConstructSpdyGoAway(0));
   MockRead reads[] = {
@@ -558,8 +546,6 @@ TEST_F(SpdySessionTest, GoAwayTwice) {
 // close it. It should handle the close properly (i.e., not try to
 // make itself unavailable in its pool twice).
 TEST_F(SpdySessionTest, GoAwayWithActiveStreamsThenClose) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame goaway(spdy_util_.ConstructSpdyGoAway(1));
   MockRead reads[] = {
       MockRead(ASYNC, ERR_IO_PENDING, 2), CreateMockRead(goaway, 3),
@@ -628,8 +614,6 @@ TEST_F(SpdySessionTest, GoAwayWithActiveStreamsThenClose) {
 // then processes a GOAWAY. The session should gracefully drain. Regression test
 // for crbug.com/379469
 TEST_F(SpdySessionTest, GoAwayWhileDraining) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame req(
       spdy_util_.ConstructSpdyGet(nullptr, 0, 1, MEDIUM, true));
   MockWrite writes[] = {
@@ -689,8 +673,6 @@ TEST_F(SpdySessionTest, GoAwayWhileDraining) {
 // Try to create a stream after receiving a GOAWAY frame. It should
 // fail.
 TEST_F(SpdySessionTest, CreateStreamAfterGoAway) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame goaway(spdy_util_.ConstructSpdyGoAway(1));
   MockRead reads[] = {
       MockRead(ASYNC, ERR_IO_PENDING, 1), CreateMockRead(goaway, 2),
@@ -746,8 +728,6 @@ TEST_F(SpdySessionTest, CreateStreamAfterGoAway) {
 // Receiving a HEADERS frame after a GOAWAY frame should result in
 // the stream being refused.
 TEST_F(SpdySessionTest, HeadersAfterGoAway) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame goaway(spdy_util_.ConstructSpdyGoAway(1));
   SpdySerializedFrame push(
       spdy_util_.ConstructSpdyPush(nullptr, 0, 2, 1, kDefaultUrl));
@@ -801,8 +781,6 @@ TEST_F(SpdySessionTest, HeadersAfterGoAway) {
 // A session observing a network change with active streams should close
 // when the last active stream is closed.
 TEST_F(SpdySessionTest, NetworkChangeWithActiveStreams) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   MockRead reads[] = {
       MockRead(ASYNC, ERR_IO_PENDING, 1), MockRead(ASYNC, 0, 2)  // EOF
   };
@@ -862,8 +840,6 @@ TEST_F(SpdySessionTest, NetworkChangeWithActiveStreams) {
 
 TEST_F(SpdySessionTest, ClientPing) {
   session_deps_.enable_ping = true;
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame read_ping(spdy_util_.ConstructSpdyPing(1, true));
   MockRead reads[] = {
       CreateMockRead(read_ping, 1), MockRead(ASYNC, ERR_IO_PENDING, 2),
@@ -915,8 +891,6 @@ TEST_F(SpdySessionTest, ClientPing) {
 }
 
 TEST_F(SpdySessionTest, ServerPing) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame read_ping(spdy_util_.ConstructSpdyPing(2, false));
   MockRead reads[] = {
       CreateMockRead(read_ping), MockRead(SYNCHRONOUS, 0, 0)  // EOF
@@ -969,8 +943,6 @@ TEST_F(SpdySessionTest, PingAndWriteLoop) {
       MockRead(ASYNC, ERR_IO_PENDING, 2), MockRead(ASYNC, 0, 3)  // EOF
   };
 
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SequencedSocketData data(reads, arraysize(reads), writes, arraysize(writes));
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
@@ -1001,7 +973,6 @@ TEST_F(SpdySessionTest, PingAndWriteLoop) {
 
 TEST_F(SpdySessionTest, StreamIdSpaceExhausted) {
   const SpdyStreamId kLastStreamId = 0x7fffffff;
-  session_deps_.host_resolver->set_synchronous_mode(true);
 
   // Test setup: |stream_hi_water_mark_| and |max_concurrent_streams_| are
   // fixed to allow for two stream ID assignments, and three concurrent
@@ -1119,8 +1090,6 @@ TEST_F(SpdySessionTest, StreamIdSpaceExhausted) {
 
 // Regression test for https://crbug.com/481009.
 TEST_F(SpdySessionTest, MaxConcurrentStreamsZero) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   // Receive SETTINGS frame that sets max_concurrent_streams to zero.
   SettingsMap settings_zero;
   settings_zero[SETTINGS_MAX_CONCURRENT_STREAMS] = 0;
@@ -1217,8 +1186,6 @@ TEST_F(SpdySessionTest, MaxConcurrentStreamsZero) {
 // creation doesn't violate the maximum stream concurrency. Regression test for
 // crbug.com/373858.
 TEST_F(SpdySessionTest, UnstallRacesWithStreamCreation) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   MockRead reads[] = {
       MockRead(SYNCHRONOUS, ERR_IO_PENDING)  // Stall forever.
   };
@@ -1281,7 +1248,6 @@ TEST_F(SpdySessionTest, UnstallRacesWithStreamCreation) {
 
 TEST_F(SpdySessionTest, CancelPushAfterSessionGoesAway) {
   base::HistogramTester histogram_tester;
-  session_deps_.host_resolver->set_synchronous_mode(true);
   session_deps_.time_func = TheNearFuture;
 
   SpdySerializedFrame req(
@@ -1373,7 +1339,6 @@ TEST_F(SpdySessionTest, CancelPushAfterSessionGoesAway) {
 
 TEST_F(SpdySessionTest, CancelPushAfterExpired) {
   base::HistogramTester histogram_tester;
-  session_deps_.host_resolver->set_synchronous_mode(true);
   session_deps_.time_func = TheNearFuture;
 
   SpdySerializedFrame req(
@@ -1466,7 +1431,6 @@ TEST_F(SpdySessionTest, CancelPushAfterExpired) {
 
 TEST_F(SpdySessionTest, CancelPushBeforeClaimed) {
   base::HistogramTester histogram_tester;
-  session_deps_.host_resolver->set_synchronous_mode(true);
   session_deps_.time_func = TheNearFuture;
 
   SpdySerializedFrame req(
@@ -1560,7 +1524,6 @@ TEST_F(SpdySessionTest, CancelPushBeforeClaimed) {
 
 TEST_F(SpdySessionTest, DeleteExpiredPushStreams) {
   base::HistogramTester histogram_tester;
-  session_deps_.host_resolver->set_synchronous_mode(true);
   session_deps_.time_func = TheNearFuture;
 
   SpdySerializedFrame req(
@@ -1646,7 +1609,6 @@ TEST_F(SpdySessionTest, DeleteExpiredPushStreams) {
 
 TEST_F(SpdySessionTest, MetricsCollectionOnPushStreams) {
   base::HistogramTester histogram_tester;
-  session_deps_.host_resolver->set_synchronous_mode(true);
   session_deps_.time_func = TheNearFuture;
 
   SpdySerializedFrame req(
@@ -1752,8 +1714,6 @@ TEST_F(SpdySessionTest, MetricsCollectionOnPushStreams) {
 }
 
 TEST_F(SpdySessionTest, FailedPing) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   MockRead reads[] = {
       MockRead(SYNCHRONOUS, ERR_IO_PENDING)  // Stall forever.
   };
@@ -1811,8 +1771,6 @@ TEST_F(SpdySessionTest, FailedPing) {
 // sure nothing blows up. This is a regression test for
 // http://crbug.com/57331 .
 TEST_F(SpdySessionTest, OnSettings) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   const SpdySettingsIds kSpdySettingsIds = SETTINGS_MAX_CONCURRENT_STREAMS;
 
   SettingsMap new_settings;
@@ -1869,8 +1827,6 @@ TEST_F(SpdySessionTest, OnSettings) {
 // and make sure this does not lead to a crash.
 // This is a regression test for https://crbug.com/63532.
 TEST_F(SpdySessionTest, CancelPendingCreateStream) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   MockRead reads[] = {
     MockRead(SYNCHRONOUS, ERR_IO_PENDING)  // Stall forever.
   };
@@ -1919,8 +1875,6 @@ TEST_F(SpdySessionTest, CancelPendingCreateStream) {
 }
 
 TEST_F(SpdySessionTest, Initialize) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   MockRead reads[] = {
     MockRead(ASYNC, 0, 0)  // EOF
   };
@@ -1956,8 +1910,6 @@ TEST_F(SpdySessionTest, Initialize) {
 }
 
 TEST_F(SpdySessionTest, NetLogOnSessionGoaway) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame goaway(
       spdy_util_.ConstructSpdyGoAway(42, ERROR_CODE_ENHANCE_YOUR_CALM, "foo"));
   MockRead reads[] = {
@@ -2015,8 +1967,6 @@ TEST_F(SpdySessionTest, NetLogOnSessionGoaway) {
 }
 
 TEST_F(SpdySessionTest, NetLogOnSessionEOF) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   MockRead reads[] = {
       MockRead(SYNCHRONOUS, 0, 0)  // EOF
   };
@@ -2121,8 +2071,6 @@ TEST_F(SpdySessionTest, OutOfOrderHeaders) {
       MockRead(ASYNC, 0, 6)  // EOF
   };
 
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SequencedSocketData data(reads, arraysize(reads), writes, arraysize(writes));
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
@@ -2183,8 +2131,6 @@ TEST_F(SpdySessionTest, CancelStream) {
       CreateMockRead(body2, 3), MockRead(ASYNC, 0, 4)  // EOF
   };
 
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SequencedSocketData data(reads, arraysize(reads), writes, arraysize(writes));
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
@@ -2235,9 +2181,6 @@ TEST_F(SpdySessionTest, CancelStream) {
 // and then close the session. Nothing should blow up. Also a
 // regression test for http://crbug.com/139518 .
 TEST_F(SpdySessionTest, CloseSessionWithTwoCreatedSelfClosingStreams) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
-
   // No actual data will be sent.
   MockWrite writes[] = {
     MockWrite(ASYNC, 0, 1)  // EOF
@@ -2298,8 +2241,6 @@ TEST_F(SpdySessionTest, CloseSessionWithTwoCreatedSelfClosingStreams) {
 // Create two streams that are set to close each other on close, and
 // then close the session. Nothing should blow up.
 TEST_F(SpdySessionTest, CloseSessionWithTwoCreatedMutuallyClosingStreams) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SequencedSocketData data(nullptr, 0, nullptr, 0);
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
@@ -2354,8 +2295,6 @@ TEST_F(SpdySessionTest, CloseSessionWithTwoCreatedMutuallyClosingStreams) {
 // Create two streams that are set to re-close themselves on close,
 // activate them, and then close the session. Nothing should blow up.
 TEST_F(SpdySessionTest, CloseSessionWithTwoActivatedSelfClosingStreams) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame req1(
       spdy_util_.ConstructSpdyGet(nullptr, 0, 1, MEDIUM, true));
   SpdySerializedFrame req2(
@@ -2427,8 +2366,6 @@ TEST_F(SpdySessionTest, CloseSessionWithTwoActivatedSelfClosingStreams) {
 // Create two streams that are set to close each other on close,
 // activate them, and then close the session. Nothing should blow up.
 TEST_F(SpdySessionTest, CloseSessionWithTwoActivatedMutuallyClosingStreams) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame req1(
       spdy_util_.ConstructSpdyGet(nullptr, 0, 1, MEDIUM, true));
   SpdySerializedFrame req2(
@@ -2520,8 +2457,6 @@ class SessionClosingDelegate : public test::StreamDelegateDoNothing {
 // Close an activated stream that closes its session. Nothing should
 // blow up. This is a regression test for https://crbug.com/263691.
 TEST_F(SpdySessionTest, CloseActivatedStreamThatClosesSession) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame req(
       spdy_util_.ConstructSpdyGet(nullptr, 0, 1, MEDIUM, true));
   SpdySerializedFrame rst(
@@ -2578,8 +2513,6 @@ TEST_F(SpdySessionTest, CloseActivatedStreamThatClosesSession) {
 }
 
 TEST_F(SpdySessionTest, VerifyDomainAuthentication) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SequencedSocketData data(nullptr, 0, nullptr, 0);
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
@@ -2595,8 +2528,6 @@ TEST_F(SpdySessionTest, VerifyDomainAuthentication) {
 }
 
 TEST_F(SpdySessionTest, ConnectionPooledWithTlsChannelId) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SequencedSocketData data(nullptr, 0, nullptr, 0);
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
@@ -2761,8 +2692,6 @@ TEST_F(SpdySessionTest, CloseTwoStalledCreateStream) {
 }
 
 TEST_F(SpdySessionTest, CancelTwoStalledCreateStream) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   MockRead reads[] = {
     MockRead(SYNCHRONOUS, ERR_IO_PENDING)  // Stall forever.
   };
@@ -2841,7 +2770,6 @@ TEST_F(SpdySessionTest, CancelTwoStalledCreateStream) {
 // on the socket for reading. It then verifies that it has read all
 // the available data without yielding.
 TEST_F(SpdySessionTest, ReadDataWithoutYielding) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
   session_deps_.time_func = InstantaneousReads;
 
   SpdySerializedFrame req1(
@@ -2925,7 +2853,6 @@ TEST_F(SpdySessionTest, ReadDataWithoutYielding) {
 // |kYieldAfterDurationMilliseconds| has passed.  This test uses a mock time
 // function that makes the response frame look very slow to read.
 TEST_F(SpdySessionTest, TestYieldingSlowReads) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
   session_deps_.time_func = SlowReads;
 
   SpdySerializedFrame req1(
@@ -2984,7 +2911,6 @@ TEST_F(SpdySessionTest, TestYieldingSlowReads) {
 // Regression test for https://crbug.com/531570.
 // Test the case where DoRead() takes long but returns synchronously.
 TEST_F(SpdySessionTest, TestYieldingSlowSynchronousReads) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
   session_deps_.time_func = SlowReads;
 
   SpdySerializedFrame req1(
@@ -3051,7 +2977,6 @@ TEST_F(SpdySessionTest, TestYieldingSlowSynchronousReads) {
 // there is data available for it to read (i.e, socket()->Read didn't
 // return ERR_IO_PENDING during socket reads).
 TEST_F(SpdySessionTest, TestYieldingDuringReadData) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
   session_deps_.time_func = InstantaneousReads;
 
   SpdySerializedFrame req1(
@@ -3142,7 +3067,6 @@ TEST_F(SpdySessionTest, TestYieldingDuringReadData) {
 // yield. When we come back, DoRead() will read the results from the
 // async read, and rest of the data synchronously.
 TEST_F(SpdySessionTest, TestYieldingDuringAsyncReadData) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
   session_deps_.time_func = InstantaneousReads;
 
   SpdySerializedFrame req1(
@@ -3239,8 +3163,6 @@ TEST_F(SpdySessionTest, TestYieldingDuringAsyncReadData) {
 // Send a GoAway frame when SpdySession is in DoReadLoop. Make sure
 // nothing blows up.
 TEST_F(SpdySessionTest, GoAwayWhileInDoReadLoop) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame req1(
       spdy_util_.ConstructSpdyGet(nullptr, 0, 1, MEDIUM, true));
   MockWrite writes[] = {
@@ -3295,8 +3217,6 @@ TEST_F(SpdySessionTest, GoAwayWhileInDoReadLoop) {
 // enabled only for streams for protocol version 3, and with flow
 // control enabled for streams and sessions for higher versions.
 TEST_F(SpdySessionTest, ProtocolNegotiation) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   MockRead reads[] = {
     MockRead(SYNCHRONOUS, 0, 0)  // EOF
   };
@@ -3377,7 +3297,6 @@ TEST_F(SpdySessionTest, CloseOneIdleConnectionWithAlias) {
 
   AddSSLSocketData();
 
-  session_deps_.host_resolver->set_synchronous_mode(true);
   session_deps_.host_resolver->rules()->AddIPLiteralRule(
       "www.example.org", "192.168.0.2", SpdyString());
   session_deps_.host_resolver->rules()->AddIPLiteralRule(
@@ -3588,8 +3507,6 @@ class StreamCreatingDelegate : public test::StreamDelegateDoNothing {
 // should blow up. This is a regression test for
 // http://crbug.com/263690 .
 TEST_F(SpdySessionTest, CreateStreamOnStreamReset) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame req(
       spdy_util_.ConstructSpdyGet(nullptr, 0, 1, MEDIUM, true));
   MockWrite writes[] = {
@@ -3664,8 +3581,6 @@ TEST_F(SpdySessionTest, UpdateStreamsSendWindowSize) {
       CreateMockWrite(settings_ack, 3),
   };
 
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SequencedSocketData data(reads, arraysize(reads), writes, arraysize(writes));
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
@@ -3708,8 +3623,6 @@ TEST_F(SpdySessionTest, UpdateStreamsSendWindowSize) {
 // SpdySession::IncreaseRecvWindowSize should trigger
 // sending a WINDOW_UPDATE frame for a large enough delta.
 TEST_F(SpdySessionTest, AdjustRecvWindowSize) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   const int32_t initial_window_size = kDefaultInitialWindowSize;
   const int32_t delta_window_size = 100;
 
@@ -3763,8 +3676,6 @@ TEST_F(SpdySessionTest, AdjustRecvWindowSize) {
 // adjust the session send window size when the "enable_spdy_31" flag
 // is set.
 TEST_F(SpdySessionTest, AdjustSendWindowSize) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   MockRead reads[] = {
     MockRead(SYNCHRONOUS, 0, 0)  // EOF
   };
@@ -3791,8 +3702,6 @@ TEST_F(SpdySessionTest, AdjustSendWindowSize) {
 // receive window size to decrease, but it should cause the unacked
 // bytes to increase.
 TEST_F(SpdySessionTest, SessionFlowControlInactiveStream) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame resp(spdy_util_.ConstructSpdyDataFrame(1, false));
   MockRead reads[] = {
       CreateMockRead(resp, 0), MockRead(ASYNC, ERR_IO_PENDING, 1),
@@ -3823,8 +3732,6 @@ TEST_F(SpdySessionTest, SessionFlowControlInactiveStream) {
 // The frame header is not included in flow control, but frame payload
 // (including optional pad length and padding) is.
 TEST_F(SpdySessionTest, SessionFlowControlPadding) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   const int padding_length = 42;
   SpdySerializedFrame resp(spdy_util_.ConstructSpdyDataFrame(
       1, kUploadData, kUploadDataSize, false, padding_length));
@@ -3931,8 +3838,6 @@ TEST_F(SpdySessionTest, SessionFlowControlTooMuchDataTwoDataFrames) {
   // session level.
   ASSERT_LT(session_max_recv_window_size,
             first_data_frame_size + second_data_frame_size);
-
-  session_deps_.host_resolver->set_synchronous_mode(true);
 
   SpdySerializedFrame goaway(spdy_util_.ConstructSpdyGoAway(
       0, ERROR_CODE_FLOW_CONTROL_ERROR,
@@ -4105,7 +4010,6 @@ TEST_F(SpdySessionTest, SessionFlowControlNoReceiveLeaks) {
 
   // Create SpdySession and SpdyStream and send the request.
   SequencedSocketData data(reads, arraysize(reads), writes, arraysize(writes));
-  session_deps_.host_resolver->set_synchronous_mode(true);
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
   AddSSLSocketData();
@@ -4170,7 +4074,6 @@ TEST_F(SpdySessionTest, SessionFlowControlNoSendLeaks) {
 
   // Create SpdySession and SpdyStream and send the request.
   SequencedSocketData data(reads, arraysize(reads), writes, arraysize(writes));
-  session_deps_.host_resolver->set_synchronous_mode(true);
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
   AddSSLSocketData();
@@ -4253,7 +4156,6 @@ TEST_F(SpdySessionTest, SessionFlowControlEndToEnd) {
 
   // Create SpdySession and SpdyStream and send the request.
   SequencedSocketData data(reads, arraysize(reads), writes, arraysize(writes));
-  session_deps_.host_resolver->set_synchronous_mode(true);
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
   AddSSLSocketData();
@@ -4334,8 +4236,6 @@ TEST_F(SpdySessionTest, SessionFlowControlEndToEnd) {
 void SpdySessionTest::RunResumeAfterUnstallTest(
     const base::Callback<void(SpdyStream*)>& stall_function,
     const base::Callback<void(SpdyStream*, int32_t)>& unstall_function) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame req(spdy_util_.ConstructSpdyPost(
       kDefaultUrl, 1, kBodyDataSize, LOWEST, nullptr, 0));
   SpdySerializedFrame body(
@@ -4455,8 +4355,6 @@ TEST_F(SpdySessionTest, StallSessionStreamResumeAfterUnstallStreamSession) {
 // streams should resume in priority order when that window is then
 // increased.
 TEST_F(SpdySessionTest, ResumeByPriorityAfterSendWindowSizeIncrease) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame req1(spdy_util_.ConstructSpdyPost(
       kDefaultUrl, 1, kBodyDataSize, LOWEST, nullptr, 0));
   SpdySerializedFrame req2(spdy_util_.ConstructSpdyPost(
@@ -4703,8 +4601,6 @@ class StreamClosingDelegate : public test::StreamDelegateWithBody {
 // Cause a stall by reducing the flow control send window to
 // 0. Unstalling the session should properly handle deleted streams.
 TEST_F(SpdySessionTest, SendWindowSizeIncreaseWithDeletedStreams) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame req1(spdy_util_.ConstructSpdyPost(
       kDefaultUrl, 1, kBodyDataSize, LOWEST, nullptr, 0));
   SpdySerializedFrame req2(spdy_util_.ConstructSpdyPost(
@@ -4842,8 +4738,6 @@ TEST_F(SpdySessionTest, SendWindowSizeIncreaseWithDeletedStreams) {
 // 0. Unstalling the session should properly handle the session itself
 // being closed.
 TEST_F(SpdySessionTest, SendWindowSizeIncreaseWithDeletedSession) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SpdySerializedFrame req1(spdy_util_.ConstructSpdyPost(
       kDefaultUrl, 1, kBodyDataSize, LOWEST, nullptr, 0));
   SpdySerializedFrame req2(spdy_util_.ConstructSpdyPost(
@@ -5500,8 +5394,6 @@ TEST_F(SpdySessionTest, CancelReservedStreamOnHeadersReceived) {
 }
 
 TEST_F(SpdySessionTest, RejectInvalidUnknownFrames) {
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   MockRead reads[] = {
       MockRead(SYNCHRONOUS, ERR_IO_PENDING)  // Stall forever.
   };
@@ -5575,8 +5467,6 @@ TEST_P(SpdySessionReadIfReadyTest, ReadIfReady) {
       MockRead(ASYNC, 0, 3)  // EOF
   };
 
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   SequencedSocketData data(reads, arraysize(reads), writes, arraysize(writes));
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
@@ -5605,8 +5495,6 @@ TEST_P(SpdySessionReadIfReadyTest, ReadIfReady) {
 class SendInitialSettingsOnNewSpdySessionTest : public SpdySessionTest {
  protected:
   void RunInitialSettingsTest(const SettingsMap expected_settings) {
-    session_deps_.host_resolver->set_synchronous_mode(true);
-
     MockRead reads[] = {MockRead(SYNCHRONOUS, ERR_IO_PENDING)};
 
     SpdySerializedFrame preface(const_cast<char*>(kHttp2ConnectionHeaderPrefix),

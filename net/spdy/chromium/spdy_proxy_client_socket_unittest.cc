@@ -14,7 +14,6 @@
 #include "net/base/address_list.h"
 #include "net/base/test_completion_callback.h"
 #include "net/base/winsock_init.h"
-#include "net/dns/mock_host_resolver.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_response_info.h"
 #include "net/log/net_log_event_type.h"
@@ -189,8 +188,6 @@ void SpdyProxyClientSocketTest::Initialize(MockRead* reads,
   ssl.cert = ImportCertFromFile(GetTestCertsDirectory(), "spdy_pooling.pem");
   ASSERT_TRUE(ssl.cert);
   session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl);
-
-  session_deps_.host_resolver->set_synchronous_mode(true);
 
   session_ = SpdySessionDependencies::SpdyCreateSession(&session_deps_);
 

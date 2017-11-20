@@ -108,8 +108,6 @@ TEST_F(SpdySessionPoolTest, CloseCurrentSessions) {
   const char kTestHost[] = "www.foo.com";
   const int kTestPort = 80;
 
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   HostPortPair test_host_port_pair(kTestHost, kTestPort);
   SpdySessionKey test_key =
       SpdySessionKey(
@@ -158,8 +156,6 @@ TEST_F(SpdySessionPoolTest, CloseCurrentIdleSessions) {
   MockRead reads[] = {
       MockRead(SYNCHRONOUS, ERR_IO_PENDING)  // Stall forever.
   };
-
-  session_deps_.host_resolver->set_synchronous_mode(true);
 
   StaticSocketDataProvider data1(reads, arraysize(reads), nullptr, 0);
   data1.set_connect_data(connect_data);
@@ -280,8 +276,6 @@ TEST_F(SpdySessionPoolTest, CloseAllSessions) {
   const char kTestHost[] = "www.foo.com";
   const int kTestPort = 80;
 
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   HostPortPair test_host_port_pair(kTestHost, kTestPort);
   SpdySessionKey test_key =
       SpdySessionKey(
@@ -350,7 +344,6 @@ void SpdySessionPoolTest::RunIPPoolingTest(
        "192.168.0.4,192.168.0.3"},
   };
 
-  session_deps_.host_resolver->set_synchronous_mode(true);
   std::unique_ptr<HostResolver::Request> request[arraysize(test_hosts)];
   for (size_t i = 0; i < arraysize(test_hosts); i++) {
     session_deps_.host_resolver->rules()->AddIPLiteralRule(
@@ -359,9 +352,10 @@ void SpdySessionPoolTest::RunIPPoolingTest(
     // This test requires that the HostResolver cache be populated.  Normal
     // code would have done this already, but we do it manually.
     HostResolver::RequestInfo info(HostPortPair(test_hosts[i].name, kTestPort));
-    session_deps_.host_resolver->Resolve(
+    int rv = session_deps_.host_resolver->Resolve(
         info, DEFAULT_PRIORITY, &test_hosts[i].addresses, CompletionCallback(),
         &request[i], NetLogWithSource());
+    EXPECT_THAT(rv, IsOk());
 
     // Setup a SpdySessionKey.
     test_hosts[i].key = SpdySessionKey(
@@ -539,15 +533,15 @@ TEST_F(SpdySessionPoolTest, IPPoolingNetLog) {
   };
 
   // Populate the HostResolver cache.
-  session_deps_.host_resolver->set_synchronous_mode(true);
   for (size_t i = 0; i < arraysize(test_hosts); i++) {
     session_deps_.host_resolver->rules()->AddIPLiteralRule(
         test_hosts[i].name, test_hosts[i].iplist, SpdyString());
 
     HostResolver::RequestInfo info(HostPortPair(test_hosts[i].name, kTestPort));
-    session_deps_.host_resolver->Resolve(
+    int rv = session_deps_.host_resolver->Resolve(
         info, DEFAULT_PRIORITY, &test_hosts[i].addresses, CompletionCallback(),
         &test_hosts[i].request, NetLogWithSource());
+    EXPECT_THAT(rv, IsOk());
 
     test_hosts[i].key =
         SpdySessionKey(HostPortPair(test_hosts[i].name, kTestPort),
@@ -618,15 +612,15 @@ TEST_F(SpdySessionPoolTest, IPPoolingDisabled) {
   };
 
   // Populate the HostResolver cache.
-  session_deps_.host_resolver->set_synchronous_mode(true);
   for (size_t i = 0; i < arraysize(test_hosts); i++) {
     session_deps_.host_resolver->rules()->AddIPLiteralRule(
         test_hosts[i].name, test_hosts[i].iplist, SpdyString());
 
     HostResolver::RequestInfo info(HostPortPair(test_hosts[i].name, kTestPort));
-    session_deps_.host_resolver->Resolve(
+    int rv = session_deps_.host_resolver->Resolve(
         info, DEFAULT_PRIORITY, &test_hosts[i].addresses, CompletionCallback(),
         &test_hosts[i].request, NetLogWithSource());
+    EXPECT_THAT(rv, IsOk());
 
     test_hosts[i].key =
         SpdySessionKey(HostPortPair(test_hosts[i].name, kTestPort),
@@ -681,7 +675,6 @@ TEST_F(SpdySessionPoolTest, IPPoolingDisabled) {
 // for crbug.com/379469.
 TEST_F(SpdySessionPoolTest, IPAddressChanged) {
   MockConnect connect_data(SYNCHRONOUS, OK);
-  session_deps_.host_resolver->set_synchronous_mode(true);
 
   // This isn't testing anything having to do with SPDY frames; we
   // can ignore issues of how dependencies are set.  We default to
