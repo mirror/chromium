@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a3633a1_7e5c692a",
+        "filename": "content/shell/browser/shell_permission_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-20T12:02:21Z",
+      "side": 1,
+      "message": "Please add this to IsWhitelistedPermissionType().",
+      "revId": "094f96b2b3629c362f21ac44c0d29a9748e89b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "834f226b_5b4f0686",
+        "filename": "content/shell/browser/shell_permission_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-20T12:02:21Z",
+      "side": 1,
+      "message": "In general I would prefer behaviour such as this to be protected behind a command line or feature flag, but since CS effectively is a testing target I\u0027d be fine with this too. What behaviour will CS show for people that run CS as a browser? (I.e. the non-test case?)",
+      "revId": "094f96b2b3629c362f21ac44c0d29a9748e89b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
