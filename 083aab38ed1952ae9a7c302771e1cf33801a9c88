@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9b5b119_b8725f63",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/DisplayItemList.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-20T22:56:56Z",
+      "side": 1,
+      "message": "The bug occurs in testing environment, but copying a tombstone is always a security issue and there might be other bugs in the future triggering that. item.IsTombstone() is fast so this is unlikely to impact performance. Will try cluster-telemetry.",
+      "parentUuid": "825b2df6_851f32fe",
+      "revId": "083aab38ed1952ae9a7c302771e1cf33801a9c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3df9ec68_0669b903",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/DisplayItemList.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-20T22:38:56Z",
       "side": 1,
       "message": "We should avoid memcpy if possible since it\u0027s hard to read and maintain. Is there another way to achieve this behavior without memcpy?",
+      "revId": "083aab38ed1952ae9a7c302771e1cf33801a9c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc6184c7_7cd75de6",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/DisplayItemList.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-20T22:56:56Z",
+      "side": 1,
+      "message": "This is required by the nature of ContiguousContainer storing display items. This corresponds how we implement ContiguousContainer::AppendByMoving().",
+      "parentUuid": "3df9ec68_0669b903",
       "revId": "083aab38ed1952ae9a7c302771e1cf33801a9c88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "083aab38ed1952ae9a7c302771e1cf33801a9c88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af1d13a_27bb9b6d",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintControllerTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2381,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-20T22:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8693e6a_28a6fb47",
+      "revId": "083aab38ed1952ae9a7c302771e1cf33801a9c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
