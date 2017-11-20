@@ -3305,6 +3305,16 @@
     ]
   },
 
+  "UnaffiliatedArcAllowed": {
+    "os": ["chromeos"],
+    "test_policy": {
+      "unaffiliated_arc_allowed": false
+    },
+    "pref_mappings": [
+      { "pref": "cros.unaffiliated_arc_allowed"}
+    ]
+  },
+
   "----- Chrome Frame policies -------------------------------------------": {},
 
   "ChromeFrameRendererSettings": {
