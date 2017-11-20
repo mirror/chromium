@@ -21,22 +21,13 @@ class MESSAGE_CENTER_EXPORT UiDelegate {
 
   // Display the popup bubbles for new notifications to the user.  Returns true
   // if popups were actually displayed to the user.
-  virtual bool ShowPopups() = 0;
+  // virtual bool ShowPopups() = 0;
 
   // Remove the popup bubbles from the UI.
-  virtual void HidePopups() = 0;
-
-  // Display the message center containing all undismissed notifications to the
-  // user. Set |show_by_click| to true if message center is shown by mouse or
-  // gesture click. Returns true if the center was actually displayed to the
-  // user.
-  virtual bool ShowMessageCenter(bool show_by_click) = 0;
-
-  // Remove the message center from the UI.
-  virtual void HideMessageCenter() = 0;
+  // virtual void HidePopups() = 0;
 
   // Display the notifier settings as a bubble.
-  virtual bool ShowNotifierSettings() = 0;
+  virtual void ShowNotifierSettings() = 0;
 };
 
 }  // namespace message_center

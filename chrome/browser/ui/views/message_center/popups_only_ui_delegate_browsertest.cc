@@ -44,6 +44,20 @@ Notification MakeNotification(const std::string& id) {
                       RichNotificationData(), new NotificationDelegate());
 }
 
+message_center::NotifierId DummyNotifierId() {
+  return message_center::NotifierId();
+}
+
+class TestNotificationDelegate : public message_center::NotificationDelegate {
+ public:
+  TestNotificationDelegate() = default;
+
+ private:
+  ~TestNotificationDelegate() override = default;
+
+  DISALLOW_COPY_AND_ASSIGN(TestNotificationDelegate);
+};
+
 class PopupsOnlyUiDelegateTest : public InProcessBrowserTest {
  public:
   PopupsOnlyUiDelegateTest() {}
@@ -130,20 +144,20 @@ IN_PROC_BROWSER_TEST_F(PopupsOnlyUiDelegateTest,
 
   // Adding a notification should show the popup bubble.
   AddNotification("id1");
-  EXPECT_TRUE(delegate->GetUiControllerForTesting()->popups_visible());
+  EXPECT_TRUE(delegate->popups_visible());
 
   // Updating a notification should not hide the popup bubble.
   AddNotification("id2");
   UpdateNotification("id2");
-  EXPECT_TRUE(delegate->GetUiControllerForTesting()->popups_visible());
+  EXPECT_TRUE(delegate->popups_visible());
 
   // Removing the first notification should not hide the popup bubble.
   RemoveNotification("id1");
-  EXPECT_TRUE(delegate->GetUiControllerForTesting()->popups_visible());
+  EXPECT_TRUE(delegate->popups_visible());
 
   // Removing the visible notification should hide the popup bubble.
   RemoveNotification("id2");
-  EXPECT_FALSE(delegate->GetUiControllerForTesting()->popups_visible());
+  EXPECT_FALSE(delegate->popups_visible());
 }
 
 IN_PROC_BROWSER_TEST_F(PopupsOnlyUiDelegateTest, ManyPopupNotifications) {
@@ -155,12 +169,69 @@ IN_PROC_BROWSER_TEST_F(PopupsOnlyUiDelegateTest, ManyPopupNotifications) {
     std::string id = base::StringPrintf("id%d", static_cast<int>(i));
     AddNotification(id);
   }
-  EXPECT_TRUE(delegate->GetUiControllerForTesting()->popups_visible());
+  EXPECT_TRUE(delegate->popups_visible());
   MessageCenter* message_center = delegate->message_center();
   EXPECT_EQ(notifications_to_add, message_center->NotificationCount());
   NotificationList::PopupNotifications popups =
       message_center->GetPopupNotifications();
   EXPECT_EQ(kMaxVisiblePopupNotifications, popups.size());
+}
+
+IN_PROC_BROWSER_TEST_F(PopupsOnlyUiDelegateTest, BasicPopup) {
+  auto delegate = std::make_unique<PopupsOnlyUiDelegate>();
+
+  ASSERT_FALSE(delegate->popups_visible());
+
+  delegate->ShowPopups();
+
+  ASSERT_FALSE(delegate->popups_visible());
+
+  AddNotification("BasicPopup");
+
+  ASSERT_TRUE(delegate->popups_visible());
+
+  delegate->HidePopups();
+
+  ASSERT_FALSE(delegate->popups_visible());
+}
+
+IN_PROC_BROWSER_TEST_F(PopupsOnlyUiDelegateTest,
+                       ContextMenuTestWithMessageCenter) {
+  auto delegate = std::make_unique<PopupsOnlyUiDelegate>();
+
+  const std::string id1 = "id1";
+  const std::string id2 = "id2";
+  const std::string id3 = "id3";
+  AddNotification(id1);
+
+  base::string16 display_source = base::ASCIIToUTF16("www.test.org");
+  message_center::NotifierId notifier_id = DummyNotifierId();
+
+  message_center::NotifierId notifier_id2(
+      message_center::NotifierId::APPLICATION, "sample-app");
+  std::unique_ptr<message_center::Notification> notification(
+      new message_center::Notification(
+          message_center::NOTIFICATION_TYPE_SIMPLE, id2,
+          base::ASCIIToUTF16("Test Web Notification"),
+          base::ASCIIToUTF16("Notification message body."), gfx::Image(),
+          display_source, GURL(), notifier_id2,
+          message_center::RichNotificationData(),
+          new TestNotificationDelegate()));
+  message_center_->AddNotification(std::move(notification));
+
+  AddNotification(id3);
+
+  message_center::Notification* notification1 =
+      GetMessageCenter()->FindVisibleNotificationById(id1);
+  std::unique_ptr<ui::MenuModel> model(
+      delegate->CreateNotificationMenuModel(*notification1));
+  EXPECT_EQ(1, model->GetItemCount());
+
+  // The first item is to disable notifications from the notifier id. It also
+  // removes the notification.
+  EXPECT_EQ(3u, message_center_->GetVisibleNotifications().size());
+  model->ActivatedAt(0);
+  EXPECT_EQ(2u, message_center_->GetVisibleNotifications().size());
 }
 
 }  // namespace

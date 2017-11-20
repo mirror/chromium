@@ -6,6 +6,7 @@
 
 #include "chrome/browser/browser_process.h"
 #include "ui/display/screen.h"
+#include "ui/message_center/message_center.h"
 #include "ui/message_center/ui_controller.h"
 #include "ui/message_center/views/desktop_popup_alignment_delegate.h"
 #include "ui/message_center/views/message_popup_collection.h"
@@ -34,28 +35,38 @@ message_center::MessageCenter* PopupsOnlyUiDelegate::message_center() {
 
 bool PopupsOnlyUiDelegate::ShowPopups() {
   alignment_delegate_->StartObserving(display::Screen::GetScreen());
+  if (popups_visible_)
+    return false;
+
+  if (!message_center()->HasPopupNotifications())
+    return false;
+
   popup_collection_->DoUpdateIfPossible();
+  popups_visible_ = true;
   return true;
 }
 
 void PopupsOnlyUiDelegate::HidePopups() {
   DCHECK(popup_collection_.get());
+  if (!popups_visible_)
+    return;
+
   popup_collection_->MarkAllPopupsShown();
+  popups_visible_ = false;
 }
 
-bool PopupsOnlyUiDelegate::ShowMessageCenter(bool show_by_click) {
-  // Message center not available on Windows/Linux.
-  return false;
-}
-
-void PopupsOnlyUiDelegate::HideMessageCenter() {}
-
-bool PopupsOnlyUiDelegate::ShowNotifierSettings() {
+void PopupsOnlyUiDelegate::ShowNotifierSettings() {
   // Message center settings not available on Windows/Linux.
-  return false;
+  return;
 }
 
-void PopupsOnlyUiDelegate::OnMessageCenterContentsChanged() {}
+void PopupsOnlyUiDelegate::OnMessageCenterContentsChanged() {
+  if (popups_visible_ && !message_center()->HasPopupNotifications()) {
+    HidePopups();
+  } else if (!popups_visible_ && message_center()->HasPopupNotifications()) {
+    ShowPopups();
+  }
+}
 
 message_center::UiController*
 PopupsOnlyUiDelegate::GetUiControllerForTesting() {

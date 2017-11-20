@@ -5,7 +5,6 @@
 #ifndef UI_MESSAGE_CENTER_UI_CONTROLLER_H_
 #define UI_MESSAGE_CENTER_UI_CONTROLLER_H_
 
-#include "base/cancelable_callback.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "base/strings/string16.h"
@@ -32,25 +31,13 @@ class MESSAGE_CENTER_EXPORT UiController : public MessageCenterObserver {
   explicit UiController(UiDelegate* delegate);
   ~UiController() override;
 
-  // Shows or updates the message center bubble and hides the popup bubble. Set
-  // |show_by_click| to true if bubble is shown by mouse or gesture click.
-  // Returns whether the message center is visible after the call, whether or
-  // not it was visible before.
-  bool ShowMessageCenterBubble(bool show_by_click);
-
-  // Hides the message center if visible and returns whether the message center
-  // was visible before.
-  bool HideMessageCenterBubble();
-
-  // Marks the message center as "not visible" (this method will not hide the
-  // message center).
-  void MarkMessageCenterHidden();
-
+  /*
   // Causes an update if the popup bubble is already shown.
   void ShowPopupBubble();
 
   // Returns whether the popup was visible before.
   bool HidePopupBubble();
+  */
 
   // Toggles the visibility of the settings view in the message center bubble.
   void ShowNotifierSettingsBubble();
@@ -59,8 +46,7 @@ class MESSAGE_CENTER_EXPORT UiController : public MessageCenterObserver {
   std::unique_ptr<ui::MenuModel> CreateNotificationMenuModel(
       const Notification& notification);
 
-  bool message_center_visible() { return message_center_visible_; }
-  bool popups_visible() { return popups_visible_; }
+  // bool popups_visible() { return popups_visible_; }
   UiDelegate* delegate() { return delegate_; }
   const message_center::MessageCenter* message_center() const {
     return message_center_;
@@ -84,16 +70,11 @@ class MESSAGE_CENTER_EXPORT UiController : public MessageCenterObserver {
  private:
   void OnMessageCenterChanged();
   void NotifyUiControllerChanged();
-  void HidePopupBubbleInternal();
+  // void HidePopupBubbleInternal();
 
   message_center::MessageCenter* message_center_;
-  bool message_center_visible_ = false;
-  bool popups_visible_ = false;
+  // bool popups_visible_ = false;
   UiDelegate* delegate_;
-
-#if defined(OS_CHROMEOS)
-  std::unique_ptr<base::CancelableClosure> hide_empty_message_center_callback_;
-#endif
 
   DISALLOW_COPY_AND_ASSIGN(UiController);
 };
