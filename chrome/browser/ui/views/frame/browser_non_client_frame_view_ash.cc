@@ -520,7 +520,8 @@ BrowserNonClientFrameViewAsh::CreateFrameHeader() {
 
   } else {
     default_frame_header = std::make_unique<ash::DefaultFrameHeader>(
-        frame(), this, caption_button_container_, back_button_);
+        frame(), this, caption_button_container_);
+    default_frame_header->set_back_button(back_button_);
     if (!browser->is_app()) {
       // For non app (i.e. WebUI) windows (e.g. Settings) use MD frame color.
       default_frame_header->SetFrameColors(kMdWebUIFrameColor,
@@ -529,7 +530,7 @@ BrowserNonClientFrameViewAsh::CreateFrameHeader() {
   }
 
   if (window_icon_)
-    default_frame_header->UpdateLeftHeaderView(window_icon_);
+    default_frame_header->set_left_header_view(window_icon_);
 
   return default_frame_header;
 }

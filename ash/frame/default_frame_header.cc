@@ -75,12 +75,10 @@ DefaultFrameHeader::DefaultFrameHeader(
     views::Widget* frame,
     views::View* header_view,
     FrameCaptionButtonContainerView* caption_button_container,
-    FrameCaptionButton* back_button,
     mojom::WindowStyle window_style)
     : window_style_(window_style),
       frame_(frame),
       view_(header_view),
-      back_button_(back_button),
       left_header_view_(nullptr),
       active_frame_color_(kDefaultFrameColor),
       inactive_frame_color_(kDefaultFrameColor),
