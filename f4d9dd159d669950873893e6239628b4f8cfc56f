@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e358c63b_6e9c28ac",
+        "filename": "third_party/WebKit/Source/core/dom/events/DOMWindowEventQueue.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-20T11:50:50Z",
+      "side": 1,
+      "message": "It sounds safe to erase this before calling AsyncTaskCanceled.",
+      "parentUuid": "6954e2de_a1e08b0f",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 29
+      },
+      "revId": "f4d9dd159d669950873893e6239628b4f8cfc56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b467de6_99ffb4e3",
         "filename": "third_party/WebKit/Source/core/dom/events/DOMWindowEventQueue.cpp",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "65b8d888_b35c1bc6",
+        "filename": "third_party/WebKit/Source/core/dom/events/DOMWindowEventQueue.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-20T11:50:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7b467de6_99ffb4e3",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 45
+      },
+      "revId": "f4d9dd159d669950873893e6239628b4f8cfc56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b654481e_60ee0f1b",
         "filename": "third_party/WebKit/Source/core/dom/events/DOMWindowEventQueue.cpp",
         "patchSetId": 2
@@ -62,6 +110,24 @@
       "revId": "f4d9dd159d669950873893e6239628b4f8cfc56f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1883016_0b6502a7",
+        "filename": "third_party/WebKit/Source/core/dom/events/DOMWindowEventQueue.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-20T11:50:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b654481e_60ee0f1b",
+      "revId": "f4d9dd159d669950873893e6239628b4f8cfc56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
