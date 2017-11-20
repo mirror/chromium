@@ -315,8 +315,6 @@ const char kStabilityCrashedActivityCounts[] =
 
 }  // namespace
 
-namespace chrome {
-
 void RegisterLocalState(PrefRegistrySimple* registry) {
   // Please keep this list alphabetized.
   AppListService::RegisterPrefs(registry);
@@ -544,7 +542,7 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
   RecentTabsPagePrefs::RegisterProfilePrefs(registry);
 #else
   AppShortcutManager::RegisterProfilePrefs(registry);
-  DeviceIDFetcher::RegisterProfilePrefs(registry);
+  chrome::DeviceIDFetcher::RegisterProfilePrefs(registry);
   DevToolsWindow::RegisterProfilePrefs(registry);
 #if BUILDFLAG(ENABLE_APP_LIST)
   DriveAppMapping::RegisterProfilePrefs(registry);
@@ -727,5 +725,3 @@ void MigrateObsoleteProfilePrefs(Profile* profile) {
     profile_prefs->ClearPref(kDistroDict);
   }
 }
-
-}  // namespace chrome

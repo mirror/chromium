@@ -27,6 +27,9 @@ class SigninUtilTest : public BrowserWithTestWindowTest {
 
 TEST_F(SigninUtilTest, GetForceSigninPolicy) {
   EXPECT_FALSE(signin_util::IsForceSigninEnabled());
+  ASSERT_FALSE(signin_util::IsForceSigninEnabled());
+  RegisterLocalState(prefs_->registry());
+  TestingBrowserProcess::GetGlobal()->SetLocalState(prefs_.get());
 
   g_browser_process->local_state()->SetBoolean(prefs::kForceBrowserSignin,
                                                true);

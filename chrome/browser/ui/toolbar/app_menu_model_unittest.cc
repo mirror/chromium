@@ -66,6 +66,20 @@ class AppMenuModelTest : public BrowserWithTestWindowTest,
     return false;
   }
 
+ protected:
+  void SetUp() override {
+    prefs_.reset(new TestingPrefServiceSimple());
+    RegisterLocalState(prefs_->registry());
+
+    TestingBrowserProcess::GetGlobal()->SetLocalState(prefs_.get());
+    BrowserWithTestWindowTest::SetUp();
+  }
+
+  void TearDown() override {
+    BrowserWithTestWindowTest::TearDown();
+    TestingBrowserProcess::GetGlobal()->SetLocalState(NULL);
+  }
+
  private:
   DISALLOW_COPY_AND_ASSIGN(AppMenuModelTest);
 };

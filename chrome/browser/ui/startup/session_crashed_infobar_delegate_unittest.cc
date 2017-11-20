@@ -18,6 +18,35 @@
 
 using SessionCrashedInfoBarDelegateUnitTest = BrowserWithTestWindowTest;
 
+class SessionCrashedInfoBarDelegateUnitTest : public BrowserWithTestWindowTest {
+ public:
+  void SetUp() override {
+    static_cast<TestingBrowserProcess*>(g_browser_process)
+        ->SetLocalState(&pref_service);
+    RegisterLocalState(pref_service.registry());
+
+    // This needs to be called after the local state is set, because it will
+    // create a browser which will try to read from the local state.
+    BrowserWithTestWindowTest::SetUp();
+
+    // Make sure we have a Profile Manager.
+    ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
+    TestingBrowserProcess::GetGlobal()->SetProfileManager(
+        new ProfileManagerWithoutInit(temp_dir_.GetPath()));
+  }
+
+  void TearDown() override {
+    static_cast<TestingBrowserProcess*>(g_browser_process)->SetLocalState(NULL);
+    BrowserWithTestWindowTest::TearDown();
+
+    TestingBrowserProcess::GetGlobal()->SetProfileManager(NULL);
+  }
+
+ private:
+  TestingPrefServiceSimple pref_service;
+  base::ScopedTempDir temp_dir_;
+};
+
 TEST_F(SessionCrashedInfoBarDelegateUnitTest, DetachingTabWithCrashedInfoBar) {
   SessionServiceFactory::SetForTestProfile(
       browser()->profile(),
