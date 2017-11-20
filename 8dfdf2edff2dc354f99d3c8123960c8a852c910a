@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "f4ed3d9f_a06524c2",
+        "filename": "chrome/browser/media/webrtc/webrtc_text_log_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1191289
+      },
+      "writtenOn": "2017-11-20T14:12:24Z",
+      "side": 1,
+      "message": "Just curious, is there a reason for storing the old logging state instead of switching the order:\nif (logging_state_ \u003d\u003d STARTING ...)\n  ClearLogMessageCallback(...);\nlogging_state \u003d CHANNEL_CLOSING;",
+      "range": {
+        "startLine": 270,
+        "startChar": 7,
+        "endLine": 270,
+        "endChar": 24
+      },
+      "revId": "8dfdf2edff2dc354f99d3c8123960c8a852c910a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e1ee4b_026db4f4",
+        "filename": "content/public/browser/webrtc_log.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1191289
+      },
+      "writtenOn": "2017-11-20T14:12:24Z",
+      "side": 1,
+      "message": "Have you tested that this builds without ENABLE_WEBRTC? In particular, this requires that webrtc_text_log_handler.cc isn\u0027t compiled without ENABLE_WEBRTC.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 28
+      },
+      "revId": "8dfdf2edff2dc354f99d3c8123960c8a852c910a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8c51859_6900bc63",
         "filename": "content/public/browser/webrtc_log.h",
         "patchSetId": 3
