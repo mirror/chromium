@@ -7,6 +7,7 @@
 #include <CommonCrypto/CommonDigest.h>
 
 #include "base/logging.h"
+#include "base/strings/stringprintf.h"
 #include "base/strings/sys_string_conversions.h"
 #include "net/cert/x509_certificate.h"
 #include "third_party/apple_apsl/cssmapplePriv.h"
@@ -22,6 +23,13 @@ namespace net {
 namespace x509_util {
 
 namespace {
+
+std::string SecErrorStr(OSStatus err) {
+  base::ScopedCFTypeRef<CFStringRef> cfstr(
+      SecCopyErrorMessageString(err, NULL));
+  return base::StringPrintf("%d (%s)", err,
+                            base::SysCFStringRefToUTF8(cfstr).c_str());
+}
 
 // Creates a SecPolicyRef for the given OID, with optional value.
 OSStatus CreatePolicy(const CSSM_OID* policy_oid,
@@ -57,6 +65,10 @@ OSStatus CreatePolicy(const CSSM_OID* policy_oid,
 bool IsValidSecCertificate(SecCertificateRef cert_handle) {
   const CSSM_X509_NAME* sanity_check = NULL;
   OSStatus status = SecCertificateGetSubject(cert_handle, &sanity_check);
+  if (status != noErr)
+    LOG(ERROR) << "SecCertificateGetSubject: " << SecErrorStr(status);
+  else if (!sanity_check)
+    LOG(ERROR) << "IsValidSecCertificate subject is null";
   return status == noErr && sanity_check;
 }
 
@@ -71,8 +83,10 @@ base::ScopedCFTypeRef<SecCertificateRef> CreateSecCertificateFromBytes(
   OSStatus status = SecCertificateCreateFromData(&cert_data, CSSM_CERT_X_509v3,
                                                  CSSM_CERT_ENCODING_DER,
                                                  cert_handle.InitializeInto());
-  if (status != noErr)
+  if (status != noErr) {
+    LOG(ERROR) << "SecCertificateCreateFromData: " << SecErrorStr(status);
     return base::ScopedCFTypeRef<SecCertificateRef>();
+  }
   if (!IsValidSecCertificate(cert_handle.get()))
     return base::ScopedCFTypeRef<SecCertificateRef>();
   return cert_handle;

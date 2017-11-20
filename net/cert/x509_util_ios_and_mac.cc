@@ -34,8 +34,10 @@ CreateSecCertificateArrayForX509Certificate(
   base::ScopedCFTypeRef<SecCertificateRef> sec_cert(
       CreateSecCertificateFromBytes(CRYPTO_BUFFER_data(cert->os_cert_handle()),
                                     CRYPTO_BUFFER_len(cert->os_cert_handle())));
-  if (!sec_cert)
+  if (!sec_cert) {
+    LOG(ERROR) << "CreateSecCertificateArrayForX509Certificate (leaf) failed";
     return base::ScopedCFTypeRef<CFMutableArrayRef>();
+  }
   CFArrayAppendValue(cert_list, sec_cert);
   for (X509Certificate::OSCertHandle intermediate :
        cert->GetIntermediateCertificates()) {
@@ -43,8 +45,12 @@ CreateSecCertificateArrayForX509Certificate(
         CreateSecCertificateFromBytes(CRYPTO_BUFFER_data(intermediate),
                                       CRYPTO_BUFFER_len(intermediate)));
     if (!sec_cert) {
-      if (invalid_intermediate_behavior == InvalidIntermediateBehavior::kFail)
+      if (invalid_intermediate_behavior == InvalidIntermediateBehavior::kFail) {
+        LOG(ERROR)
+            << "CreateSecCertificateArrayForX509Certificate (intermediate "
+            << CFArrayGetCount(cert_list) << ") failed";
         return base::ScopedCFTypeRef<CFMutableArrayRef>();
+      }
       LOG(WARNING) << "error parsing intermediate";
       continue;
     }
