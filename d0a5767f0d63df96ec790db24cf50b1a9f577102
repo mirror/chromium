@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e348b467_6a5b391a",
+        "filename": "chrome/browser/devtools/device/android_device_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-20T19:36:26Z",
+      "side": 1,
+      "message": "What is path and what is request?",
+      "revId": "d0a5767f0d63df96ec790db24cf50b1a9f577102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
