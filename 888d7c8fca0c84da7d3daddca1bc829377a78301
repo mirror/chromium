@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "3d225e10_46110cc3",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-20T16:42:52Z",
+      "side": 1,
+      "message": "Ha, thanks!  Sorry, I merged our changes and should have pulled this.",
+      "parentUuid": "c45217d3_8da757a8",
+      "range": {
+        "startLine": 286,
+        "startChar": 2,
+        "endLine": 286,
+        "endChar": 6
+      },
+      "revId": "888d7c8fca0c84da7d3daddca1bc829377a78301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c49f4faf_70fc7950",
         "filename": "chrome/browser/vr/test/run_all_pixeltests.cc",
         "patchSetId": 2
@@ -77,6 +101,24 @@
       "side": 1,
       "message": "Perftests do use a slightly different setup (LaunchUnitTestsSerially to make perf results more comparable).",
       "parentUuid": "c49f4faf_70fc7950",
+      "revId": "888d7c8fca0c84da7d3daddca1bc829377a78301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f830eb_c79c6cf2",
+        "filename": "chrome/browser/vr/test/run_all_pixeltests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-20T16:42:52Z",
+      "side": 1,
+      "message": "Great catch!  What\u0027s your preference?  Keep the original 3 run_all_ files?  I feel like merging them only made sense when I thought they were identical.  Could be more confusing to have 1 shared and 1 standalone...",
+      "parentUuid": "cb681a9c_2f17dfc5",
       "revId": "888d7c8fca0c84da7d3daddca1bc829377a78301",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
