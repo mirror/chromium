@@ -34,6 +34,24 @@
       "revId": "92de6d67d3e324b60b69658d4d1805d8450ec213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5401fdde_a655d740",
+        "filename": "chromeos/cryptohome/homedir_methods.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-20T09:34:04Z",
+      "side": 1,
+      "message": "I\u0027ll be OK with either way.\nThis CL is so small so doing the fake change at the same time would be fine, but doing that in 2 changes is also OK if you prefer it.",
+      "parentUuid": "5a76828f_ad420620",
+      "revId": "92de6d67d3e324b60b69658d4d1805d8450ec213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
