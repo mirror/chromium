@@ -50,7 +50,6 @@ static_library("renderer") {
     "//content/public/common",
     "//content/public/renderer",
     "//google_apis",
-    "//ipc",
     "//mojo/common:common_base",
     "//net",
     "//services/service_manager/public/cpp",
@@ -79,7 +78,6 @@ static_library("test_support") {
   ]
   deps = [
     "//components/autofill/content/renderer",
-    "//ipc",
     "//services/service_manager/public/cpp",
     "//skia",
     "//third_party/WebKit/public:blink",
