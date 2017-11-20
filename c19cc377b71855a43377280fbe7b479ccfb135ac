@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "b006ea52_658334e6",
+        "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-20T06:04:37Z",
+      "side": 1,
+      "message": "(That should read: \"instead of having to expose a member function of SiteInstanceImpl\".)",
+      "parentUuid": "03ab349f_4f5c1ddd",
+      "revId": "c19cc377b71855a43377280fbe7b479ccfb135ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3361edeb_a13226ef",
         "filename": "chrome/common/pref_names.h",
         "patchSetId": 7
