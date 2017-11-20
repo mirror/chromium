@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90e06ddd_015abdf6",
+        "filename": "chrome/browser/content_settings/sound_content_setting_observer_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-20T00:21:39Z",
+      "side": 1,
+      "message": "If there is only 1 entry, is this loop needed?",
+      "revId": "420adcef988ec2e3a96f748fe5ffbf336754a4dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
