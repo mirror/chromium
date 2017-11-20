@@ -88,6 +88,24 @@
       "revId": "a63b828ee04ff811571dea631d12a9fbda7cb901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcbfc6fa_24670470",
+        "filename": "third_party/WebKit/Source/core/dom/LayoutTreeBuilder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-20T10:03:40Z",
+      "side": 1,
+      "message": "The way things are now, I think it\u0027s more \"blunt\" than what we\u0027d like (i.e it\u0027s just DidRecalcStyle), although I suspect we could \"fix\" that (I guess nothing has been interested in anything more fine-grained there yet.) We\u0027d definitely need the invalidation signal though.",
+      "parentUuid": "aa37e2ca_9f4e61dc",
+      "revId": "a63b828ee04ff811571dea631d12a9fbda7cb901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
