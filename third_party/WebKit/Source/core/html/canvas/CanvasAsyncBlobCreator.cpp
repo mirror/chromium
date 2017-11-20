@@ -172,6 +172,28 @@ CanvasAsyncBlobCreator* CanvasAsyncBlobCreator::Create(
       size, nullptr, start_time, context, resolver);
 }
 
+CanvasAsyncBlobCreator* CanvasAsyncBlobCreator::Create(
+    scoped_refptr<StaticBitmapImage> image,
+    const String& mime_type,
+    BlobCallback* callback,
+    double start_time,
+    ExecutionContext* context) {
+  return new CanvasAsyncBlobCreator(image,
+                                    ConvertMimeTypeStringToEnum(mime_type),
+                                    callback, start_time, context, nullptr);
+}
+
+CanvasAsyncBlobCreator* CanvasAsyncBlobCreator::Create(
+    scoped_refptr<StaticBitmapImage> image,
+    const String& mime_type,
+    double start_time,
+    ExecutionContext* context,
+    ScriptPromiseResolver* resolver) {
+  return new CanvasAsyncBlobCreator(image,
+                                    ConvertMimeTypeStringToEnum(mime_type),
+                                    nullptr, start_time, context, resolver);
+}
+
 CanvasAsyncBlobCreator::CanvasAsyncBlobCreator(DOMUint8ClampedArray* data,
                                                MimeType mime_type,
                                                const IntSize& size,
@@ -205,6 +227,62 @@ CanvasAsyncBlobCreator::CanvasAsyncBlobCreator(DOMUint8ClampedArray* data,
   }
 }
 
+SkImageInfo GetImageInfo(scoped_refptr<StaticBitmapImage> image) {
+  sk_sp<SkImage> skia_image = image->PaintImageForCurrentFrame().GetSkImage();
+  SkColorType color_type = kN32_SkColorType;
+  if (skia_image->colorSpace() && skia_image->colorSpace()->gammaIsLinear())
+    color_type = kRGBA_F16_SkColorType;
+  return SkImageInfo::Make(skia_image->width(), skia_image->height(),
+                           color_type, skia_image->alphaType(),
+                           skia_image->refColorSpace());
+}
+
+CanvasAsyncBlobCreator::CanvasAsyncBlobCreator(
+    scoped_refptr<StaticBitmapImage> image,
+    MimeType mime_type,
+    BlobCallback* callback,
+    double start_time,
+    ExecutionContext* context,
+    ScriptPromiseResolver* resolver)
+    : image_(image),
+      context_(context),
+      mime_type_(mime_type),
+      start_time_(start_time),
+      elapsed_time_(0),
+      uses_image_bitmap_(true),
+      callback_(callback),
+      script_promise_resolver_(resolver) {
+  sk_sp<SkImage> skia_image = image->PaintImageForCurrentFrame().GetSkImage();
+  if (!skia_image->peekPixels(&src_data_)) {
+    DCHECK(skia_image->isTextureBacked());
+    // If the image is texture backed, we have to read back the pixels.
+    SkImageInfo image_info = GetImageInfo(image);
+    scoped_refptr<ArrayBuffer> pixels_buffer = ArrayBuffer::CreateOrNull(
+        image->Size().Area(), image_info.bytesPerPixel());
+    if (!pixels_buffer)
+      return;
+    bool read_pixels_sucessful = skia_image->readPixels(
+        image_info, pixels_buffer->Data(), image_info.minRowBytes(), 0, 0);
+    DCHECK(read_pixels_sucessful);
+    if (!read_pixels_sucessful)
+      return;
+    src_data_.reset(image_info, pixels_buffer->Data(),
+                    image_info.minRowBytes());
+  }
+
+  idle_task_status_ = kIdleTaskNotSupported;
+  num_rows_completed_ = 0;
+  if (context->IsDocument()) {
+    parent_frame_task_runner_ =
+        ParentFrameTaskRunners::Create(*ToDocument(context)->GetFrame());
+  }
+  if (script_promise_resolver_) {
+    function_type_ = kOffscreenCanvasToBlobPromise;
+  } else {
+    function_type_ = kHTMLCanvasToBlobCallback;
+  }
+}
+
 CanvasAsyncBlobCreator::~CanvasAsyncBlobCreator() {}
 
 void CanvasAsyncBlobCreator::Dispose() {
@@ -224,9 +302,17 @@ void CanvasAsyncBlobCreator::ScheduleAsyncBlobCreation(const double& quality) {
       // When OffscreenCanvas.convertToBlob() occurs on worker thread,
       // we do not need to use background task runner to reduce load on main.
       // So we just directly encode images on the worker thread.
-      IntSize size(src_data_.width(), src_data_.height());
-      if (!ImageDataBuffer(size, data_->Data())
-               .EncodeImage("image/webp", quality, &encoded_image_)) {
+      bool encoding_successful = false;
+      if (uses_image_bitmap_) {
+        encoding_successful = ImageDataBuffer(src_data_).EncodeImage(
+            "image/webp", quality, &encoded_image_);
+      } else {
+        IntSize size(src_data_.width(), src_data_.height());
+        encoding_successful =
+            ImageDataBuffer(size, data_->Data())
+                .EncodeImage("image/webp", quality, &encoded_image_);
+      }
+      if (!encoding_successful) {
         context_->GetTaskRunner(TaskType::kCanvasBlobSerialization)
             ->PostTask(
                 BLINK_FROM_HERE,
@@ -391,9 +477,18 @@ void CanvasAsyncBlobCreator::EncodeImageOnEncoderThread(double quality) {
   DCHECK(!IsMainThread());
   DCHECK(mime_type_ == kMimeTypeWebp);
 
-  IntSize size(src_data_.width(), src_data_.height());
-  if (!ImageDataBuffer(size, data_->Data())
-           .EncodeImage("image/webp", quality, &encoded_image_)) {
+  bool encoding_successful = false;
+  if (uses_image_bitmap_) {
+    encoding_successful = ImageDataBuffer(src_data_).EncodeImage(
+        "image/webp", quality, &encoded_image_);
+  } else {
+    IntSize size(src_data_.width(), src_data_.height());
+    encoding_successful =
+        ImageDataBuffer(size, data_->Data())
+            .EncodeImage("image/webp", quality, &encoded_image_);
+  }
+
+  if (!encoding_successful) {
     parent_frame_task_runner_->Get(TaskType::kCanvasBlobSerialization)
         ->PostTask(
             BLINK_FROM_HERE,
