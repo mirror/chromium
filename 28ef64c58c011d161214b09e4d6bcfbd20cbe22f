@@ -70,6 +70,30 @@
       "revId": "28ef64c58c011d161214b09e4d6bcfbd20cbe22f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac59981_ad42709d",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_broadcast_forwarder.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-20T13:33:26Z",
+      "side": 1,
+      "message": "I\u0027m not going to slow this CL down, but two ideas for you to consider: (1) Do the benefits (however you see them) of having the FullscreenModel be a C++ class justify the added complexity needed for it to catch ObjC methods? (2) Is it possible to build C++ observer support into the broadcaster so we don\u0027t need to complicate things elsewhere?",
+      "parentUuid": "3733eea5_9bc77c07",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "28ef64c58c011d161214b09e4d6bcfbd20cbe22f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
