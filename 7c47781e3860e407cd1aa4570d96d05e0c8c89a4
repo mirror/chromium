@@ -16,6 +16,24 @@
       "revId": "7c47781e3860e407cd1aa4570d96d05e0c8c89a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050bb595_cb990265",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T21:00:15Z",
+      "side": 1,
+      "message": "Ah, no the latter won\u0027t work:\n\n[ RUN      ] PepperWebPluginImplBrowserTest.NotEngageThrottleDuringDestroy\n[158954:158954:1120/155925.171687:538101170167:ERROR:pepper_graphics_2d_host.cc(236)] (nil)\nReceived signal 11 SEGV_MAPERR 000000000000\n#0 0x7f8dde046ecc base::debug::StackTrace::StackTrace()\n#1 0x7f8dde0469a1 base::debug::(anonymous namespace)::StackDumpSignalHandler()\n#2 0x7f8ddecbc330 \u003cunknown\u003e\n#3 0x7f8ddce657cb content::PepperGraphics2DHost::Init()\n#4 0x7f8ddce655c1 content::PepperGraphics2DHost::Create()\n#5 0x7f8ddce5005b content::ContentRendererPepperHostFactory::CreateResourceHost()\n#6 0x7f8dde57c388 ppapi::host::PpapiHost::CreateResourceHost()\n#7 0x7f8dde57b1c0 ppapi::host::PpapiHost::OnHostMsgResourceCreated()\n#8 0x7f8dde57b00f _ZN3IPC8MessageTI33PpapiHostMsg_ResourceCreated_MetaNSt3__15tupleIJN5ppapi5proxy25ResourceMessageCallParamsEiNS_7MessageEEEEvE8DispatchINS4_4host9PpapiHostESC_vMSC_FvRKS6_iRKS7_EEEbPSF_PT_PT0_PT1_T2_\n#9 0x7f8dde579cf9 ppapi::host::PpapiHost::OnMessageReceived()\n#10 0x7f8ddce6c8ce content::PepperInProcessRouter::SendToHost()\n#11 0x7f8ddce6ce26 content::PepperInProcessRouter::Channel::Send()\n#12 0x7f8dde4797fc ppapi::proxy::PluginResource::SendCreate()\n#13 0x7f8dde4636ad ppapi::proxy::Graphics2DResource::Graphics2DResource()\n#14 0x7f8ddce6bcc6 content::PepperInProcessResourceCreation::CreateGraphics2D()\n#15 0x7f8dd6067081 ppapi::thunk::(anonymous namespace)::Create()\n#16 0x0000009da093 content::(anonymous namespace)::PepperWebPluginImplBrowserTest::DidCreate()\n#17 0x7f8dd6052a9f ppapi::PPP_Instance_Combined::DidCreate()\n#18 0x7f8ddce7a400 content::PepperPluginInstanceImpl::Initialize()\n#19 0x7f8ddce9393d content::PepperWebPluginImpl::Initialize()\n#20 0x7f8dd96473f0 blink::LocalFrameClientImpl::CreatePlugin()\n#21 0x7f8dd97d5c04 blink::HTMLPlugInElement::LoadPlugin()\n#22 0x7f8dd97d54b7 blink::HTMLPlugInElement::RequestObjectInternal()\n#23 0x7f8dd97d74b0 blink::HTMLPlugInElement::RequestObject()\n#24 0x7f8dd97d18ba blink::HTMLObjectElement::UpdatePluginInternal()\n#25 0x7f8dd97d6462 blink::HTMLPlugInElement::UpdatePlugin()\n#26 0x7f8dd96eb71c blink::LocalFrameView::UpdatePlugins()\n#27 0x7f8dd96db8b0 blink::LocalFrameView::UpdatePluginsTimerFired()\n#28 0x7f8dd72df197 blink::TimerBase::RunInternal()\n#29 0x7f8dd72df444 _ZN4base8internal7InvokerINS0_9BindStateIMN5blink9TimerBaseEFvvEJNS_7WeakPtrIS4_EEEEEFvvEE3RunEPNS0_13BindStateBaseE\n#30 0x7f8dde0477ea base::debug::TaskAnnotator::RunTask()\n#31 0x7f8dd76542b7 blink::scheduler::TaskQueueManager::ProcessTaskFromWorkQueue()\n#32 0x7f8dd76514c9 blink::scheduler::TaskQueueManager::DoWork()\n#33 0x7f8dd7656ab9 _ZN4base8internal7InvokerINS0_9BindStateIMN5blink9scheduler16TaskQueueManagerEFvbEJNS_7WeakPtrIS5_EEbEEEFvvEE3RunEPNS0_13BindStateBaseE\n#34 0x7f8dde0477ea base::debug::TaskAnnotator::RunTask()\n#35 0x7f8dde07bae6 base::internal::IncomingTaskQueue::RunTask()\n#36 0x7f8dde07fbb7 base::MessageLoop::RunTask()\n#37 0x7f8dde07ffdb base::MessageLoop::DeferOrRunPendingTask()\n#38 0x7f8dde0802a8 base::MessageLoop::DoWork()\n#39 0x7f8dde081740 base::MessagePumpDefault::Run()\n#40 0x7f8dde07f3ec base::MessageLoop::Run()\n#41 0x7f8dde0b54c5 base::RunLoop::Run()\n#42 0x000000af2cdd content::RenderViewTest::LoadHTML()\n#43 0x0000009d9360 content::(anonymous namespace)::PepperWebPluginImplBrowserTest_NotEngageThrottleDuringDestroy_Test::TestBody()\n#44 0x000000a24396 testing::Test::Run()\n#45 0x000000a24d70 testing::TestInfo::Run()\n#46 0x000000a25257 testing::TestCase::Run()\n#47 0x000000a2b8a7 testing::internal::UnitTestImpl::RunAllTests()\n#48 0x000000a2b527 testing::UnitTest::Run()\n#49 0x000000b15ce2 base::TestSuite::Run()\n#50 0x000000adb7c7 content::ContentTestLauncherDelegate::RunTestSuite()\n#51 0x000000aff199 content::LaunchTests()\n#52 0x000000adb780 main\n\nHow there\u0027s a browser test without a RenderThreadImpl I don\u0027t know.",
+      "parentUuid": "f0957d36_24c9f7a6",
+      "revId": "7c47781e3860e407cd1aa4570d96d05e0c8c89a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
