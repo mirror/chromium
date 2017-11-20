@@ -439,6 +439,7 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
   // Close the session because of |net_error| and notifies the factory
   // that this session has been closed, which will delete the session.
   void CloseSessionOnError(int net_error, QuicErrorCode quic_error);
+  void CloseSessionOnErrorLater(int net_error, QuicErrorCode quic_error);
 
   std::unique_ptr<base::Value> GetInfoAsValue(
       const std::set<HostPortPair>& aliases);
@@ -694,6 +695,7 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
   scoped_refptr<QuicChromiumPacketWriter::ReusableIOBuffer> packet_;
   // Stores the latest default network platform marks.
   NetworkChangeNotifier::NetworkHandle default_network_;
+  bool force_testing_;
   QuicConnectivityProbingManager probing_manager_;
   int retry_migrate_back_count_;
   base::OneShotTimer migrate_back_to_default_timer_;

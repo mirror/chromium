@@ -58,7 +58,7 @@ int QuicConnectivityProbingManager::HandleWriteError(
     int error_code,
     scoped_refptr<QuicChromiumPacketWriter::ReusableIOBuffer> packet) {
   // Write error on the probing network is not recoverable.
-  DVLOG(1) << "Probing packet encounters write error";
+  LOG(ERROR) << "Probing packet encounters write error";
   // Post a task to notify |delegate_| that this probe failed and cancel
   // undergoing probing, which will delete the packet writer.
   task_runner_->PostTask(
@@ -105,7 +105,7 @@ void QuicConnectivityProbingManager::StartProbing(
     std::unique_ptr<QuicChromiumPacketReader> reader,
     base::TimeDelta initial_timeout,
     const NetLogWithSource& net_log) {
-  DCHECK_NE(network, NetworkChangeNotifier::kInvalidNetworkHandle);
+  // DCHECK_NE(network, NetworkChangeNotifier::kInvalidNetworkHandle);
   if (network == network_ &&
       network_ != NetworkChangeNotifier::kInvalidNetworkHandle &&
       peer_address == peer_address_) {
@@ -139,7 +139,7 @@ void QuicConnectivityProbingManager::OnConnectivityProbingReceived(
     const QuicSocketAddress& self_address,
     const QuicSocketAddress& peer_address) {
   if (!socket_) {
-    DVLOG(1) << "Probing response is ignored as probing was cancelled "
+    LOG(ERROR) << "Probing response is ignored as probing was cancelled "
              << "or succeeded.";
     return;
   }
@@ -147,17 +147,19 @@ void QuicConnectivityProbingManager::OnConnectivityProbingReceived(
   IPEndPoint local_address;
   socket_->GetLocalAddress(&local_address);
 
-  DVLOG(1) << "Current probing is live at self ip:port "
+  LOG(ERROR) << "Current probing is live at self ip:port "
            << local_address.ToString() << ", to peer ip:port "
            << peer_address_.ToString();
 
   if (QuicSocketAddressImpl(local_address) != self_address.impl() ||
       peer_address_ != peer_address) {
-    DVLOG(1) << "Received probing response from peer ip:port "
+    LOG(ERROR) << "Received probing response from peer ip:port "
              << peer_address.ToString() << ", to self ip:port "
              << self_address.ToString() << ". Ignored.";
     return;
   }
+
+  LOG(ERROR) << "Probing successful!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11";
 
   net_log_.AddEvent(
       NetLogEventType::QUIC_CONNECTION_CONNECTIVITY_PROBING_PACKET_RECEIVED,
@@ -176,6 +178,16 @@ void QuicConnectivityProbingManager::SendConnectivityProbingPacket(
   net_log_.AddEvent(
       NetLogEventType::QUIC_CONNECTION_CONNECTIVITY_PROBING_PACKET_SENT,
       NetLog::Int64Callback("sent_count", retry_count_));
+
+  IPEndPoint local_address;
+  socket_->GetLocalAddress(&local_address);
+
+  LOG(ERROR) << "send probe  " << retry_count_ << " times";
+  LOG(ERROR) << "Current probing is live at self ip:port "
+           << local_address.ToString() << ", to peer ip:port "
+           << peer_address_.ToString();
+
+
   delegate_->OnSendConnectivityProbingPacket(writer_.get(), peer_address_);
   retransmit_timer_.Start(
       FROM_HERE, timeout,
@@ -185,7 +197,9 @@ void QuicConnectivityProbingManager::SendConnectivityProbingPacket(
 }
 
 void QuicConnectivityProbingManager::NotifyDelegateProbeFailed() {
+    LOG(ERROR) << "Notify delegate probe failed";
   if (network_ != NetworkChangeNotifier::kInvalidNetworkHandle) {
+    LOG(ERROR) << "Notify delegate probe failed";
     delegate_->OnProbeNetworkFailed(network_);
     CancelProbingIfAny();
   }

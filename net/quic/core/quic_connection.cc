@@ -276,7 +276,7 @@ QuicConnection::QuicConnection(
       consecutive_num_packets_with_no_retransmittable_frames_(0),
       fill_up_link_during_probing_(false),
       probing_retransmission_pending_(false) {
-  QUIC_DLOG(INFO) << ENDPOINT
+  LOG(ERROR) << ENDPOINT
                   << "Created connection with connection_id: " << connection_id;
   framer_.set_visitor(this);
   stats_.connection_creation_time = clock_->ApproximateNow();
@@ -448,19 +448,19 @@ void QuicConnection::OnPublicResetPacket(const QuicPublicResetPacket& packet) {
     debug_visitor_->OnPublicResetPacket(packet);
   }
   const string error_details = "Received public reset.";
-  QUIC_DLOG(INFO) << ENDPOINT << error_details;
+  LOG(ERROR) << ENDPOINT << error_details;
   TearDownLocalConnectionState(QUIC_PUBLIC_RESET, error_details,
                                ConnectionCloseSource::FROM_PEER);
 }
 
 bool QuicConnection::OnProtocolVersionMismatch(
     QuicTransportVersion received_version) {
-  QUIC_DLOG(INFO) << ENDPOINT << "Received packet with mismatched version "
+  LOG(ERROR) << ENDPOINT << "Received packet with mismatched version "
                   << received_version;
   // TODO(satyamshekhar): Implement no server state in this mode.
   if (perspective_ == Perspective::IS_CLIENT) {
     const string error_details = "Protocol version mismatch.";
-    QUIC_BUG << ENDPOINT << error_details;
+    LOG(ERROR) << ENDPOINT << error_details;
     TearDownLocalConnectionState(QUIC_INTERNAL_ERROR, error_details,
                                  ConnectionCloseSource::FROM_SELF);
     return false;
@@ -501,7 +501,7 @@ bool QuicConnection::OnProtocolVersionMismatch(
   if (debug_visitor_ != nullptr) {
     debug_visitor_->OnSuccessfulVersionNegotiation(received_version);
   }
-  QUIC_DLOG(INFO) << ENDPOINT << "version negotiated " << received_version;
+  LOG(ERROR) << ENDPOINT << "version negotiated " << received_version;
 
   // Store the new version.
   framer_.set_version(received_version);
@@ -521,7 +521,7 @@ void QuicConnection::OnVersionNegotiationPacket(
   DCHECK_EQ(connection_id_, packet.connection_id);
   if (perspective_ == Perspective::IS_SERVER) {
     const string error_details = "Server receieved version negotiation packet.";
-    QUIC_BUG << error_details;
+    LOG(ERROR) << error_details;
     TearDownLocalConnectionState(QUIC_INTERNAL_ERROR, error_details,
                                  ConnectionCloseSource::FROM_SELF);
     return;
@@ -560,7 +560,7 @@ void QuicConnection::OnVersionNegotiationPacket(
     return;
   }
 
-  QUIC_DLOG(INFO) << ENDPOINT << "Negotiated version: "
+  LOG(ERROR) << ENDPOINT << "Negotiated version: "
                   << QuicVersionToString(transport_version());
   version_negotiation_state_ = NEGOTIATION_IN_PROGRESS;
   RetransmitUnackedPackets(ALL_UNACKED_RETRANSMISSION);
@@ -573,7 +573,7 @@ bool QuicConnection::OnUnauthenticatedPublicHeader(
   }
 
   ++stats_.packets_dropped;
-  QUIC_DLOG(INFO) << ENDPOINT
+  LOG(ERROR) << ENDPOINT
                   << "Ignoring packet from unexpected ConnectionId: "
                   << header.connection_id << " instead of " << connection_id_;
   if (debug_visitor_ != nullptr) {
@@ -601,7 +601,7 @@ bool QuicConnection::OnUnauthenticatedHeader(const QuicPacketHeader& header) {
     const string error_details =
         "Pending frames must be serialized before incoming packets are "
         "processed.";
-    QUIC_BUG << error_details;
+    LOG(ERROR) << error_details;
     CloseConnection(QUIC_INTERNAL_ERROR, error_details,
                     ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET);
     return false;
@@ -610,7 +610,7 @@ bool QuicConnection::OnUnauthenticatedHeader(const QuicPacketHeader& header) {
   // If this packet has already been seen, or the sender has told us that it
   // will not be retransmitted, then stop processing the packet.
   if (!received_packet_manager_.IsAwaitingPacket(header.packet_number)) {
-    QUIC_DLOG(INFO) << ENDPOINT << "Packet " << header.packet_number
+    LOG(ERROR) << ENDPOINT << "Packet " << header.packet_number
                     << " no longer being waited for.  Discarding.";
     if (debug_visitor_ != nullptr) {
       debug_visitor_->OnDuplicatePacket(header.packet_number);
@@ -660,7 +660,7 @@ bool QuicConnection::OnPacketHeader(const QuicPacketHeader& header) {
   // new address.
   if (header.packet_number > received_packet_manager_.GetLargestObserved() &&
       peer_migration_type != NO_CHANGE) {
-    QUIC_DLOG(INFO) << ENDPOINT << "Peer's ip:port changed from "
+    LOG(ERROR) << ENDPOINT << "Peer's ip:port changed from "
                     << peer_address_.ToString() << " to "
                     << last_packet_source_address_.ToString();
     if (perspective_ == Perspective::IS_CLIENT) {
@@ -683,7 +683,7 @@ bool QuicConnection::OnPacketHeader(const QuicPacketHeader& header) {
   }
 
   --stats_.packets_dropped;
-  QUIC_DVLOG(1) << ENDPOINT << "Received packet header: " << header;
+  LOG(ERROR) << ENDPOINT << "Received packet header: " << header;
   last_header_ = header;
   // An ack will be sent if a missing retransmittable packet was received;
   was_last_packet_missing_ =
@@ -699,6 +699,7 @@ bool QuicConnection::OnPacketHeader(const QuicPacketHeader& header) {
 
 bool QuicConnection::OnStreamFrame(const QuicStreamFrame& frame) {
   DCHECK(connected_);
+  LOG(ERROR) << "received stream " << frame;
 
   // Since a stream frame was received, this is not a connectivity probe.
   // A probe only contains a PING and full padding.
@@ -716,7 +717,7 @@ bool QuicConnection::OnStreamFrame(const QuicStreamFrame& frame) {
       return false;
     }
 
-    QUIC_BUG << ENDPOINT
+    LOG(ERROR) << ENDPOINT
              << "Received an unencrypted data frame: closing connection"
              << " packet_number:" << last_header_.packet_number
              << " stream_id:" << frame.stream_id
@@ -735,6 +736,7 @@ bool QuicConnection::OnStreamFrame(const QuicStreamFrame& frame) {
 
 bool QuicConnection::OnAckFrame(const QuicAckFrame& incoming_ack) {
   DCHECK(connected_);
+  LOG(ERROR) << "received ack " << incoming_ack;
 
   // Since an ack frame was received, this is not a connectivity probe.
   // A probe only contains a PING and full padding.
@@ -743,10 +745,10 @@ bool QuicConnection::OnAckFrame(const QuicAckFrame& incoming_ack) {
   if (debug_visitor_ != nullptr) {
     debug_visitor_->OnAckFrame(incoming_ack);
   }
-  QUIC_DVLOG(1) << ENDPOINT << "OnAckFrame: " << incoming_ack;
+  LOG(ERROR) << ENDPOINT << "OnAckFrame: " << incoming_ack;
 
   if (last_header_.packet_number <= largest_seen_packet_with_ack_) {
-    QUIC_DLOG(INFO) << ENDPOINT << "Received an old ack frame: ignoring";
+    LOG(ERROR) << ENDPOINT << "Received an old ack frame: ignoring";
     return true;
   }
 
@@ -789,6 +791,7 @@ bool QuicConnection::OnAckFrame(const QuicAckFrame& incoming_ack) {
 
 bool QuicConnection::OnStopWaitingFrame(const QuicStopWaitingFrame& frame) {
   DCHECK(connected_);
+  LOG(ERROR) << "received stop waiting" << frame;
 
   // Since a stop waiting frame was received, this is not a connectivity probe.
   // A probe only contains a PING and full padding.
@@ -798,7 +801,7 @@ bool QuicConnection::OnStopWaitingFrame(const QuicStopWaitingFrame& frame) {
     return true;
   }
   if (last_header_.packet_number <= largest_seen_packet_with_stop_waiting_) {
-    QUIC_DLOG(INFO) << ENDPOINT
+    LOG(ERROR) << ENDPOINT
                     << "Received an old stop waiting frame: ignoring";
     return true;
   }
@@ -820,6 +823,7 @@ bool QuicConnection::OnStopWaitingFrame(const QuicStopWaitingFrame& frame) {
 }
 
 bool QuicConnection::OnPaddingFrame(const QuicPaddingFrame& frame) {
+  LOG(ERROR) << "received " << ">>>>> PADING" << frame;
   DCHECK(connected_);
   UpdatePacketContent(SECOND_FRAME_IS_PADDING);
 
@@ -830,6 +834,7 @@ bool QuicConnection::OnPaddingFrame(const QuicPaddingFrame& frame) {
 }
 
 bool QuicConnection::OnPingFrame(const QuicPingFrame& frame) {
+  LOG(ERROR) << "received " << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ping";
   DCHECK(connected_);
   UpdatePacketContent(FIRST_FRAME_IS_PING);
 
@@ -865,7 +870,7 @@ const char* QuicConnection::ValidateAckFrame(const QuicAckFrame& incoming_ack) {
   // FLAGS_quic_reloadable_flag_quic_deprecate_largest_observed.
   if (!incoming_ack.packets.Empty() &&
       incoming_ack.packets.Max() != LargestAcked(incoming_ack)) {
-    QUIC_BUG << ENDPOINT
+    LOG(ERROR) << ENDPOINT
              << "Peer last received packet: " << incoming_ack.packets.Max()
              << " which is not equal to largest observed: "
              << incoming_ack.deprecated_largest_observed;
@@ -899,6 +904,7 @@ const char* QuicConnection::ValidateStopWaitingFrame(
 }
 
 bool QuicConnection::OnRstStreamFrame(const QuicRstStreamFrame& frame) {
+  LOG(ERROR) << "received rst stream" << frame;
   DCHECK(connected_);
 
   // Since a reset stream frame was received, this is not a connectivity probe.
@@ -908,7 +914,7 @@ bool QuicConnection::OnRstStreamFrame(const QuicRstStreamFrame& frame) {
   if (debug_visitor_ != nullptr) {
     debug_visitor_->OnRstStreamFrame(frame);
   }
-  QUIC_DLOG(INFO) << ENDPOINT
+  LOG(ERROR) << ENDPOINT
                   << "RST_STREAM_FRAME received for stream: " << frame.stream_id
                   << " with error: "
                   << QuicRstStreamErrorCodeToString(frame.error_code);
@@ -920,6 +926,7 @@ bool QuicConnection::OnRstStreamFrame(const QuicRstStreamFrame& frame) {
 
 bool QuicConnection::OnConnectionCloseFrame(
     const QuicConnectionCloseFrame& frame) {
+  LOG(ERROR) << "received connection close" << frame;
   DCHECK(connected_);
 
   // Since a connection close frame was received, this is not a connectivity
@@ -929,7 +936,7 @@ bool QuicConnection::OnConnectionCloseFrame(
   if (debug_visitor_ != nullptr) {
     debug_visitor_->OnConnectionCloseFrame(frame);
   }
-  QUIC_DLOG(INFO) << ENDPOINT << "Received ConnectionClose for connection: "
+  LOG(ERROR) << ENDPOINT << "Received ConnectionClose for connection: "
                   << connection_id()
                   << ", with error: " << QuicErrorCodeToString(frame.error_code)
                   << " (" << frame.error_details << ")";
@@ -944,6 +951,7 @@ bool QuicConnection::OnConnectionCloseFrame(
 }
 
 bool QuicConnection::OnGoAwayFrame(const QuicGoAwayFrame& frame) {
+  LOG(ERROR) << "received go away" << frame;
   DCHECK(connected_);
 
   // Since a go away frame was received, this is not a connectivity probe.
@@ -953,7 +961,7 @@ bool QuicConnection::OnGoAwayFrame(const QuicGoAwayFrame& frame) {
   if (debug_visitor_ != nullptr) {
     debug_visitor_->OnGoAwayFrame(frame);
   }
-  QUIC_DLOG(INFO) << ENDPOINT << "GOAWAY_FRAME received with last good stream: "
+  LOG(ERROR) << ENDPOINT << "GOAWAY_FRAME received with last good stream: "
                   << frame.last_good_stream_id
                   << " and error: " << QuicErrorCodeToString(frame.error_code)
                   << " and reason: " << frame.reason_phrase;
@@ -966,6 +974,7 @@ bool QuicConnection::OnGoAwayFrame(const QuicGoAwayFrame& frame) {
 }
 
 bool QuicConnection::OnWindowUpdateFrame(const QuicWindowUpdateFrame& frame) {
+  LOG(ERROR) << "received window update" << frame;
   DCHECK(connected_);
 
   // Since a window update frame was received, this is not a connectivity probe.
@@ -975,7 +984,7 @@ bool QuicConnection::OnWindowUpdateFrame(const QuicWindowUpdateFrame& frame) {
   if (debug_visitor_ != nullptr) {
     debug_visitor_->OnWindowUpdateFrame(frame, time_of_last_received_packet_);
   }
-  QUIC_DLOG(INFO) << ENDPOINT << "WINDOW_UPDATE_FRAME received for stream: "
+  LOG(ERROR) << ENDPOINT << "WINDOW_UPDATE_FRAME received for stream: "
                   << frame.stream_id
                   << " with byte offset: " << frame.byte_offset;
   visitor_->OnWindowUpdateFrame(frame);
@@ -985,6 +994,7 @@ bool QuicConnection::OnWindowUpdateFrame(const QuicWindowUpdateFrame& frame) {
 }
 
 bool QuicConnection::OnBlockedFrame(const QuicBlockedFrame& frame) {
+  LOG(ERROR) << "received blocked frame" << frame;
   DCHECK(connected_);
 
   // Since a blocked frame was received, this is not a connectivity probe.
@@ -994,7 +1004,7 @@ bool QuicConnection::OnBlockedFrame(const QuicBlockedFrame& frame) {
   if (debug_visitor_ != nullptr) {
     debug_visitor_->OnBlockedFrame(frame);
   }
-  QUIC_DLOG(INFO) << ENDPOINT
+  LOG(ERROR) << ENDPOINT
                   << "BLOCKED_FRAME received for stream: " << frame.stream_id;
   visitor_->OnBlockedFrame(frame);
   visitor_->PostProcessAfterData();
@@ -1010,29 +1020,31 @@ void QuicConnection::OnPacketComplete() {
     return;
   }
 
-  QUIC_DVLOG(1) << ENDPOINT << "Got packet " << last_header_.packet_number
-                << " for " << last_header_.connection_id;
+  LOG(ERROR) << ENDPOINT << "Got packet " << last_header_.packet_number
+                << " for " << last_header_.connection_id
+             << " frome ip:port: " << last_packet_source_address_.ToString()
+            << " to ip:port " << last_packet_destination_address_.ToString();
 
   if (server_reply_to_connectivity_probes_) {
     QUIC_FLAG_COUNT_N(
         quic_reloadable_flag_quic_server_reply_to_connectivity_probing, 3, 4);
-    if (current_packet_content_ == SECOND_FRAME_IS_PADDING) {
-      QUIC_DVLOG(1) << ENDPOINT << "Received a padded PING packet";
-      if (perspective_ == Perspective::IS_CLIENT) {
-        QUIC_DVLOG(1)
+    if (perspective_ == Perspective::IS_CLIENT) {
+        LOG(ERROR)
             << ENDPOINT
-            << "Received a speculative connectivity probing packet for "
+            << "Received a packet for !!!!!!!!!!\n"
             << last_header_.connection_id
             << " frome ip:port: " << last_packet_source_address_.ToString()
             << " to ip:port " << last_packet_destination_address_.ToString();
         visitor_->OnConnectivityProbeReceived(last_packet_destination_address_,
                                               last_packet_source_address_);
-      } else if (last_packet_source_address_ != peer_address_ ||
+    } else if (current_packet_content_ == SECOND_FRAME_IS_PADDING) {
+      LOG(ERROR) << ENDPOINT << "Received a padded PING packet";
+      if (last_packet_source_address_ != peer_address_ ||
                  last_packet_destination_address_ != self_address_) {
         // Padded PING packet associated with self/peer address change is a
         // connectivity probing packet.
-        QUIC_DVLOG(1) << ENDPOINT
-                      << "Received a connectivity probing packet for "
+        LOG(ERROR) << ENDPOINT
+                      << "!!!!!!!!!!!!!!!!!!!!!!!    Received a connectivity probing packet for !!!!!!!!!!\n"
                       << last_header_.connection_id << " frome ip:port: "
                       << last_packet_source_address_.ToString()
                       << " to ip:port "
@@ -1162,7 +1174,7 @@ void QuicConnection::SendVersionNegotiationPacket() {
     visitor_->OnWriteBlocked();
     return;
   }
-  QUIC_DLOG(INFO) << ENDPOINT << "Sending version negotiation packet: {"
+  LOG(ERROR) << ENDPOINT << "Sending version negotiation packet: {"
                   << QuicTransportVersionVectorToString(
                          framer_.supported_versions())
                   << "}";
@@ -1193,7 +1205,7 @@ QuicConsumedData QuicConnection::SendStreamData(QuicStreamId id,
                                                 QuicStreamOffset offset,
                                                 StreamSendingState state) {
   if (state == NO_FIN && write_length == 0) {
-    QUIC_BUG << "Attempt to send empty stream frame";
+    LOG(ERROR) << "Attempt to send empty stream frame";
     return QuicConsumedData(0, false);
   }
 
@@ -1314,16 +1326,19 @@ void QuicConnection::ProcessUdpPacket(const QuicSocketAddress& self_address,
   stats_.bytes_received += packet.length();
   ++stats_.packets_received;
 
+  LOG(ERROR) << "RECEIVED NEW PACKET from "
+             << peer_address.ToString() << " to " << self_address.ToString();
+
   // Ensure the time coming from the packet reader is within a minute of now.
   if (std::abs((packet.receipt_time() - clock_->ApproximateNow()).ToSeconds()) >
       60) {
-    QUIC_BUG << "Packet receipt time:"
+    LOG(ERROR) << "Packet receipt time:"
              << packet.receipt_time().ToDebuggingValue()
              << " too far from current time:"
              << clock_->ApproximateNow().ToDebuggingValue();
   }
   time_of_last_received_packet_ = packet.receipt_time();
-  QUIC_DVLOG(1) << ENDPOINT << "time of last received packet: "
+  LOG(ERROR) << ENDPOINT << "time of last received packet: "
                 << time_of_last_received_packet_.ToDebuggingValue();
 
   ScopedRetransmissionScheduler alarm_delayer(this);
@@ -1338,7 +1353,7 @@ void QuicConnection::ProcessUdpPacket(const QuicSocketAddress& self_address,
         debug_visitor_->OnUndecryptablePacket();
       }
     }
-    QUIC_DVLOG(1) << ENDPOINT
+    LOG(ERROR) << ENDPOINT
                   << "Unable to process packet.  Last packet processed: "
                   << last_header_.packet_number;
     current_packet_data_ = nullptr;
@@ -1435,7 +1450,7 @@ bool QuicConnection::ProcessValidatedPacket(const QuicPacketHeader& header) {
       // The last packet's number is not 0. Ensure that this packet
       // is reasonably close to where it should be.
       if (!Near(header.packet_number, last_header_.packet_number)) {
-        QUIC_DLOG(INFO) << ENDPOINT << "Packet " << header.packet_number
+        LOG(ERROR) << ENDPOINT << "Packet " << header.packet_number
                         << " out of bounds.  Discarding";
         CloseConnection(QUIC_INVALID_PACKET_HEADER,
                         "Packet number out of bounds.",
@@ -1449,7 +1464,7 @@ bool QuicConnection::ProcessValidatedPacket(const QuicPacketHeader& header) {
       if ((header.packet_number == 0) ||
           (header.packet_number > kMaxRandomInitialPacketNumber)) {
         // packet number is bad.
-        QUIC_DLOG(INFO) << ENDPOINT << "Initial packet " << header.packet_number
+        LOG(ERROR) << ENDPOINT << "Initial packet " << header.packet_number
                         << " out of bounds.  Discarding";
         CloseConnection(QUIC_INVALID_PACKET_HEADER,
                         "Initial packet number out of bounds.",
@@ -1467,7 +1482,7 @@ bool QuicConnection::ProcessValidatedPacket(const QuicPacketHeader& header) {
     }
 
     if (!Near(header.packet_number, last_header_.packet_number)) {
-      QUIC_DLOG(INFO) << ENDPOINT << "Packet " << header.packet_number
+      LOG(ERROR) << ENDPOINT << "Packet " << header.packet_number
                       << " out of bounds.  Discarding";
       CloseConnection(QUIC_INVALID_PACKET_HEADER,
                       "Packet number out of bounds.",
@@ -1573,7 +1588,7 @@ void QuicConnection::SendProbingRetransmissions() {
         sent_packet_manager_.MaybeRetransmitOldestPacket(
             PROBING_RETRANSMISSION);
     if (!can_retransmit) {
-      QUIC_DVLOG(1)
+      LOG(ERROR)
           << "Cannot send probing retransmissions: nothing to retransmit.";
       break;
     }
@@ -1637,7 +1652,7 @@ bool QuicConnection::CanWrite(HasRetransmittableData retransmittable) {
   // If the scheduler requires a delay, then we can not send this packet now.
   if (!delay.IsZero()) {
     send_alarm_->Update(now + delay, QuicTime::Delta::FromMilliseconds(1));
-    QUIC_DVLOG(1) << ENDPOINT << "Delaying sending " << delay.ToMilliseconds()
+    LOG(ERROR) << ENDPOINT << "Delaying sending " << delay.ToMilliseconds()
                   << "ms";
     return false;
   }
@@ -1646,7 +1661,7 @@ bool QuicConnection::CanWrite(HasRetransmittableData retransmittable) {
 
 bool QuicConnection::WritePacket(SerializedPacket* packet) {
   if (packet->packet_number < sent_packet_manager_.GetLargestSentPacket()) {
-    QUIC_BUG << "Attempt to write packet:" << packet->packet_number
+    LOG(ERROR) << "Attempt to write packet:" << packet->packet_number
              << " after:" << sent_packet_manager_.GetLargestSentPacket();
     CloseConnection(QUIC_INTERNAL_ERROR, "Packet written out of order.",
                     ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET);
@@ -1686,13 +1701,14 @@ bool QuicConnection::WritePacket(SerializedPacket* packet) {
 
   DCHECK_LE(encrypted_length, kMaxPacketSize);
   DCHECK_LE(encrypted_length, packet_generator_.GetCurrentMaxPacketLength());
-  QUIC_DVLOG(1) << ENDPOINT << "Sending packet " << packet_number << " : "
+  LOG(ERROR) << ENDPOINT << "Sending packet " << packet_number << " : "
                 << (IsRetransmittable(*packet) == HAS_RETRANSMITTABLE_DATA
                         ? "data bearing "
                         : " ack only ")
                 << ", encryption level: "
                 << QuicUtils::EncryptionLevelToString(packet->encryption_level)
                 << ", encrypted length:" << encrypted_length;
+  LOG(ERROR) << "============ send on " << self_address().ToString();
   QUIC_DVLOG(2) << ENDPOINT << "packet(" << packet_number << "): " << std::endl
                 << QuicTextUtils::HexDump(QuicStringPiece(
                        packet->encrypted_buffer, encrypted_length));
@@ -1759,7 +1775,7 @@ bool QuicConnection::WritePacket(SerializedPacket* packet) {
   }
   SetPingAlarm();
   MaybeSetMtuAlarm(packet_number);
-  QUIC_DVLOG(1) << ENDPOINT << "time we began writing last sent packet: "
+  LOG(ERROR) << ENDPOINT << "time we began writing last sent packet: "
                 << packet_send_time.ToDebuggingValue();
 
   bool reset_retransmission_alarm = sent_packet_manager_.OnPacketSent(
@@ -1788,7 +1804,7 @@ bool QuicConnection::WritePacket(SerializedPacket* packet) {
 
 bool QuicConnection::ShouldDiscardPacket(const SerializedPacket& packet) {
   if (!connected_) {
-    QUIC_DLOG(INFO) << ENDPOINT
+    LOG(ERROR) << ENDPOINT
                     << "Not sending packet as connection is disconnected.";
     return true;
   }
@@ -1798,7 +1814,7 @@ bool QuicConnection::ShouldDiscardPacket(const SerializedPacket& packet) {
       packet.encryption_level == ENCRYPTION_NONE) {
     // Drop packets that are NULL encrypted since the peer won't accept them
     // anymore.
-    QUIC_DLOG(INFO) << ENDPOINT
+    LOG(ERROR) << ENDPOINT
                     << "Dropping NULL encrypted packet: " << packet_number
                     << " since the connection is forward secure.";
     return true;
@@ -1903,7 +1919,7 @@ void QuicConnection::OnHandshakeComplete() {
 void QuicConnection::SendOrQueuePacket(SerializedPacket* packet) {
   // The caller of this function is responsible for checking CanWrite().
   if (packet->encrypted_buffer == nullptr) {
-    QUIC_BUG << "packet.encrypted_buffer == nullptr in to SendOrQueuePacket";
+    LOG(ERROR) << "packet.encrypted_buffer == nullptr in to SendOrQueuePacket";
     return;
   }
   // If there are already queued packets, queue this one immediately to ensure
@@ -2041,7 +2057,7 @@ const QuicDecrypter* QuicConnection::alternative_decrypter() const {
 
 void QuicConnection::QueueUndecryptablePacket(
     const QuicEncryptedPacket& packet) {
-  QUIC_DVLOG(1) << ENDPOINT << "Queueing undecryptable packet.";
+  LOG(ERROR) << ENDPOINT << "Queueing undecryptable packet.";
   undecryptable_packets_.push_back(packet.Clone());
 }
 
@@ -2051,14 +2067,14 @@ void QuicConnection::MaybeProcessUndecryptablePackets() {
   }
 
   while (connected_ && !undecryptable_packets_.empty()) {
-    QUIC_DVLOG(1) << ENDPOINT << "Attempting to process undecryptable packet";
+    LOG(ERROR) << ENDPOINT << "Attempting to process undecryptable packet";
     QuicEncryptedPacket* packet = undecryptable_packets_.front().get();
     if (!framer_.ProcessPacket(*packet) &&
         framer_.error() == QUIC_DECRYPTION_FAILURE) {
-      QUIC_DVLOG(1) << ENDPOINT << "Unable to process undecryptable packet...";
+      LOG(ERROR) << ENDPOINT << "Unable to process undecryptable packet...";
       break;
     }
-    QUIC_DVLOG(1) << ENDPOINT << "Processed undecryptable packet!";
+    LOG(ERROR) << ENDPOINT << "Processed undecryptable packet!";
     ++stats_.packets_processed;
     undecryptable_packets_.pop_front();
   }
@@ -2085,11 +2101,11 @@ void QuicConnection::CloseConnection(
     ConnectionCloseBehavior connection_close_behavior) {
   DCHECK(!error_details.empty());
   if (!connected_) {
-    QUIC_DLOG(INFO) << "Connection is already closed.";
+    LOG(ERROR) << "Connection is already closed.";
     return;
   }
 
-  QUIC_DLOG(INFO) << ENDPOINT << "Closing connection: " << connection_id()
+  LOG(ERROR) << ENDPOINT << "Closing connection: " << connection_id()
                   << ", with error: " << QuicErrorCodeToString(error) << " ("
                   << error << "), and details:  " << error_details;
 
@@ -2114,7 +2130,7 @@ void QuicConnection::CloseConnection(
 void QuicConnection::SendConnectionClosePacket(QuicErrorCode error,
                                                const string& details,
                                                AckBundling ack_mode) {
-  QUIC_DLOG(INFO) << ENDPOINT << "Sending connection close packet.";
+  LOG(ERROR) << ENDPOINT << "Sending connection close packet.";
   ClearQueuedPackets();
   ScopedPacketFlusher flusher(this, ack_mode);
   QuicConnectionCloseFrame* frame = new QuicConnectionCloseFrame();
@@ -2129,7 +2145,7 @@ void QuicConnection::TearDownLocalConnectionState(
     const string& error_details,
     ConnectionCloseSource source) {
   if (!connected_) {
-    QUIC_DLOG(INFO) << "Connection is already closed.";
+    LOG(ERROR) << "Connection is already closed.";
     return;
   }
   connected_ = false;
@@ -2151,7 +2167,7 @@ void QuicConnection::TearDownLocalConnectionState(
 }
 
 void QuicConnection::CancelAllAlarms() {
-  QUIC_DVLOG(1) << "Cancelling all QuicConnection alarms.";
+  LOG(ERROR) << "Cancelling all QuicConnection alarms.";
 
   ack_alarm_->Cancel();
   ping_alarm_->Cancel();
@@ -2170,7 +2186,7 @@ void QuicConnection::SendGoAway(QuicErrorCode error,
   }
   goaway_sent_ = true;
 
-  QUIC_DLOG(INFO) << ENDPOINT << "Going away with error "
+  LOG(ERROR) << ENDPOINT << "Going away with error "
                   << QuicErrorCodeToString(error) << " (" << error << ")";
 
   // Opportunistically bundle an ack with this outgoing packet.
@@ -2240,7 +2256,7 @@ void QuicConnection::CheckForTimeout() {
   // is accurate time. However, this should not change the behavior of
   // timeout handling.
   QuicTime::Delta idle_duration = now - time_of_last_packet;
-  QUIC_DVLOG(1) << ENDPOINT << "last packet "
+  LOG(ERROR) << ENDPOINT << "last packet "
                 << time_of_last_packet.ToDebuggingValue()
                 << " now:" << now.ToDebuggingValue()
                 << " idle_duration:" << idle_duration.ToMicroseconds()
@@ -2248,7 +2264,7 @@ void QuicConnection::CheckForTimeout() {
                 << idle_network_timeout_.ToMicroseconds();
   if (idle_duration >= idle_network_timeout_) {
     const string error_details = "No recent network activity.";
-    QUIC_DVLOG(1) << ENDPOINT << error_details;
+    LOG(ERROR) << ENDPOINT << error_details;
     if (FLAGS_quic_reloadable_flag_quic_explicit_close_after_tlp &&
         (sent_packet_manager_.GetConsecutiveTlpCount() > 0 ||
          sent_packet_manager_.GetConsecutiveRtoCount() > 0 ||
@@ -2265,13 +2281,13 @@ void QuicConnection::CheckForTimeout() {
 
   if (!handshake_timeout_.IsInfinite()) {
     QuicTime::Delta connected_duration = now - stats_.connection_creation_time;
-    QUIC_DVLOG(1) << ENDPOINT
+    LOG(ERROR) << ENDPOINT
                   << "connection time: " << connected_duration.ToMicroseconds()
                   << " handshake timeout: "
                   << handshake_timeout_.ToMicroseconds();
     if (connected_duration >= handshake_timeout_) {
       const string error_details = "Handshake timeout expired.";
-      QUIC_DVLOG(1) << ENDPOINT << error_details;
+      LOG(ERROR) << ENDPOINT << error_details;
       CloseConnection(QUIC_HANDSHAKE_TIMEOUT, error_details,
                       ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET);
       return;
@@ -2356,7 +2372,7 @@ QuicConnection::ScopedPacketFlusher::ScopedPacketFlusher(
   // If caller wants us to include an ack, check the delayed-ack timer to see if
   // there's ack info to be sent.
   if (ShouldSendAck(ack_mode)) {
-    QUIC_DVLOG(1) << "Bundling ack with outgoing packet.";
+    LOG(ERROR) << "Bundling ack with outgoing packet.";
     DCHECK(ack_mode == SEND_ACK || connection_->ack_frame_updated() ||
            connection_->stop_waiting_count_ > 1);
     connection_->SendAck();
@@ -2376,7 +2392,7 @@ bool QuicConnection::ScopedPacketFlusher::ShouldSendAck(
     case NO_ACK:
       return false;
     default:
-      QUIC_BUG << "Unsupported ack_mode.";
+      LOG(ERROR) << "Unsupported ack_mode.";
       return true;
   }
 }
@@ -2468,7 +2484,7 @@ void QuicConnection::SetMtuDiscoveryTarget(QuicByteCount target) {
 QuicByteCount QuicConnection::GetLimitedMaxPacketSize(
     QuicByteCount suggested_max_packet_size) {
   if (!peer_address_.IsInitialized()) {
-    QUIC_BUG << "Attempted to use a connection without a valid peer address";
+    LOG(ERROR) << "Attempted to use a connection without a valid peer address";
     return suggested_max_packet_size;
   }
 
@@ -2503,12 +2519,12 @@ void QuicConnection::SendConnectivityProbingPacket(
   DCHECK(probing_writer);
 
   if (probing_writer->IsWriteBlocked()) {
-    QUIC_BUG << "Writer blocked when send connectivity probing packet";
+    LOG(ERROR) << "Writer blocked when send connectivity probing packet";
     visitor_->OnWriteBlocked();
     return;
   }
 
-  QUIC_DLOG(INFO) << ENDPOINT << "Sending connectivity probing packet for "
+  LOG(ERROR) << ENDPOINT << "Sending connectivity probing packet for "
                   << "connection_id = " << connection_id_;
 
   std::unique_ptr<QuicEncryptedPacket> probing_packet(
@@ -2520,7 +2536,7 @@ void QuicConnection::SendConnectivityProbingPacket(
 
   if (result.status == WRITE_STATUS_ERROR) {
     OnWriteError(result.error_code);
-    QUIC_BUG << "Write probing packet failed with error = "
+    LOG(ERROR) << "Write probing packet failed with error = "
              << result.error_code;
     return;
   }
@@ -2528,7 +2544,7 @@ void QuicConnection::SendConnectivityProbingPacket(
   if (result.status == WRITE_STATUS_BLOCKED) {
     visitor_->OnWriteBlocked();
     if (probing_writer->IsWriteBlockedDataBuffered()) {
-      QUIC_BUG << "Write probing packet blocked";
+      LOG(ERROR) << "Write probing packet blocked";
     }
   }
 }
@@ -2558,7 +2574,7 @@ void QuicConnection::DiscoverMtu() {
 
 void QuicConnection::OnPeerMigrationValidated() {
   if (active_peer_migration_type_ == NO_CHANGE) {
-    QUIC_BUG << "No migration underway.";
+    LOG(ERROR) << "No migration underway.";
     return;
   }
   highest_packet_sent_before_peer_migration_ = 0;
@@ -2576,10 +2592,10 @@ void QuicConnection::StartPeerMigration(
   // determine whether |type| is allowed.
   if (active_peer_migration_type_ != NO_CHANGE ||
       peer_migration_type == NO_CHANGE) {
-    QUIC_BUG << "Migration underway or no new migration started.";
+    LOG(ERROR) << "Migration underway or no new migration started.";
     return;
   }
-  QUIC_DLOG(INFO) << ENDPOINT << "Peer's ip:port changed from "
+  LOG(ERROR) << ENDPOINT << "Peer's ip:port changed from "
                   << peer_address_.ToString() << " to "
                   << last_packet_source_address_.ToString()
                   << ", migrating connection.";
@@ -2661,7 +2677,7 @@ void QuicConnection::MaybeSendProbingRetransmissions() {
   }
 
   if (probing_retransmission_pending_) {
-    QUIC_BUG << "MaybeSendProbingRetransmissions is called while another call "
+    LOG(ERROR) << "MaybeSendProbingRetransmissions is called while another call "
                 "to it is already in progress";
     return;
   }

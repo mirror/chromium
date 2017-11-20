@@ -705,6 +705,7 @@ QuicChromiumClientSession::QuicChromiumClientSession(
       streams_pushed_and_claimed_count_(0),
       bytes_pushed_count_(0),
       bytes_pushed_and_unclaimed_count_(0),
+      force_testing_(true),
       probing_manager_(this, task_runner_),
       retry_migrate_back_count_(0),
       migration_pending_(false),
@@ -862,6 +863,15 @@ void QuicChromiumClientSession::OnHeadersHeadOfLineBlocking(
 }
 
 void QuicChromiumClientSession::OnStreamFrame(const QuicStreamFrame& frame) {
+  if (force_testing_) {
+    LOG(ERROR) << "server_id " << server_id().ToString();
+    LOG(ERROR) << "force testing::::::::::::::: Send Connectivity Probing";
+    StartProbeNetwork(NetworkChangeNotifier::kInvalidNetworkHandle,
+                      connection()->peer_address().impl().socket_address(),
+                      net_log_);
+    force_testing_ = false;
+  }
+
   // Record total number of stream frames.
   UMA_HISTOGRAM_COUNTS_1M("Net.QuicNumStreamFramesInPacket", 1);
 
@@ -903,17 +913,17 @@ int QuicChromiumClientSession::WaitForHandshakeConfirmation(
 
 int QuicChromiumClientSession::TryCreateStream(StreamRequest* request) {
   if (stream_factory_ && stream_factory_->IsQuicBroken(this)) {
-    DVLOG(1) << "QUIC broken.";
+    LOG(ERROR) << "QUIC broken.";
     return ERR_QUIC_PROTOCOL_ERROR;
   }
 
   if (goaway_received()) {
-    DVLOG(1) << "Going away.";
+    LOG(ERROR) << "Going away.";
     return ERR_CONNECTION_CLOSED;
   }
 
   if (!connection()->connected()) {
-    DVLOG(1) << "Already closed.";
+    LOG(ERROR) << "Already closed.";
     return ERR_CONNECTION_CLOSED;
   }
 
@@ -946,16 +956,16 @@ void QuicChromiumClientSession::CancelRequest(StreamRequest* request) {
 
 bool QuicChromiumClientSession::ShouldCreateOutgoingDynamicStream() {
   if (!crypto_stream_->encryption_established()) {
-    DVLOG(1) << "Encryption not active so no outgoing stream created.";
+    LOG(ERROR) << "Encryption not active so no outgoing stream created.";
     return false;
   }
   if (GetNumOpenOutgoingStreams() >= max_open_outgoing_streams()) {
-    DVLOG(1) << "Failed to create a new outgoing stream. "
+    LOG(ERROR) << "Failed to create a new outgoing stream. "
              << "Already " << GetNumOpenOutgoingStreams() << " open.";
     return false;
   }
   if (goaway_received()) {
-    DVLOG(1) << "Failed to create a new outgoing stream. "
+    LOG(ERROR) << "Failed to create a new outgoing stream. "
              << "Already received goaway.";
     return false;
   }
@@ -1156,7 +1166,7 @@ bool QuicChromiumClientSession::ShouldCreateIncomingDynamicStream(
     return false;
   }
   if (goaway_received()) {
-    DVLOG(1) << "Cannot create a new outgoing stream. "
+    LOG(ERROR) << "Cannot create a new outgoing stream. "
              << "Already received goaway.";
     return false;
   }
@@ -1468,7 +1478,7 @@ void QuicChromiumClientSession::OnSuccessfulVersionNegotiation(
 void QuicChromiumClientSession::OnConnectivityProbeReceived(
     const QuicSocketAddress& self_address,
     const QuicSocketAddress& peer_address) {
-  DVLOG(1) << "Probing response from ip:port: " << peer_address.ToString()
+  LOG(ERROR) << "Probing response from ip:port: " << peer_address.ToString()
            << " to ip:port: " << self_address.ToString() << " is received";
   // Notify the probing manager that a connectivity probing packet is received.
   probing_manager_.OnConnectivityProbingReceived(self_address, peer_address);
@@ -1614,6 +1624,7 @@ void QuicChromiumClientSession::OnProbeNetworkSucceeded(
   writer->set_delegate(this);
   connection()->SetSelfAddress(self_address);
 
+  LOG(ERROR) << "Try to migrate to self_address " << self_address.ToString();
   // Migrate to the probed socket immediately: socket, writer and reader will
   // be acquired by connection and used as default on success.
   if (!MigrateToSocket(std::move(socket), std::move(reader),
@@ -1622,12 +1633,12 @@ void QuicChromiumClientSession::OnProbeNetworkSucceeded(
   }
 
   if (network == default_network_) {
-    DVLOG(1) << "Client successfully migrated to default network.";
+    LOG(ERROR) << "Client successfully migrated to default network.";
     CancelMigrateBackToDefaultNetworkTimer();
   } else if (!migrate_back_to_default_timer_.IsRunning()) {
     // We get off the |default_network|, stay on |network| for now but
     // try to migrate back to default network after 1 second.
-    DVLOG(1) << "Client successfully got off default network after "
+    LOG(ERROR) << "Client successfully got off default network after "
              << "successful probing network: " << network << ".";
     StartMigrateBackToDefaultNetworkTimer(
         base::TimeDelta::FromSeconds(kMinRetryTimeForDefaultNetworkSecs));
@@ -1640,7 +1651,7 @@ void QuicChromiumClientSession::OnProbeNetworkFailed(
       NetLogEventType::QUIC_CONNECTION_CONNECTIVITY_PROBING_FAILED,
       NetLog::Int64Callback("network", network));
   // Probing failure for default network can be ignored.
-  DVLOG(1) << "Connectivity probing failed on NetworkHandle " << network;
+  LOG(ERROR) << "Connectivity probing failed on NetworkHandle " << network;
   DVLOG_IF(1, network == default_network_ &&
                   GetDefaultSocket()->GetBoundNetwork() != default_network_)
       << "Client probing failed on the default network, QUIC still "
@@ -1701,7 +1712,7 @@ void QuicChromiumClientSession::OnNetworkDisconnectedV2(
 
   // Ignore the signal if the current active network is not affected.
   if (GetDefaultSocket()->GetBoundNetwork() != disconnected_network) {
-    DVLOG(1) << "Client's current default network is not affected by the "
+    LOG(ERROR) << "Client's current default network is not affected by the "
              << "disconnected one.";
     return;
   }
@@ -1909,6 +1920,27 @@ void QuicChromiumClientSession::CloseSessionOnError(int net_error,
   NotifyFactoryOfSessionClosed();
 }
 
+void QuicChromiumClientSession::CloseSessionOnErrorLater(int net_error,
+                                                    QuicErrorCode quic_error) {
+  UMA_HISTOGRAM_SPARSE_SLOWLY("Net.QuicSession.CloseSessionOnError",
+                              -net_error);
+
+  if (!callback_.is_null()) {
+    base::ResetAndReturn(&callback_).Run(net_error);
+  }
+  CloseAllStreams(net_error);
+  CloseAllHandles(net_error);
+  net_log_.AddEvent(NetLogEventType::QUIC_SESSION_CLOSE_ON_ERROR,
+                    NetLog::IntCallback("net_error", net_error));
+
+  if (connection()->connected())
+    connection()->CloseConnection(quic_error, "net error",
+                                  ConnectionCloseBehavior::SILENT_CLOSE);
+  DCHECK(!connection()->connected());
+
+  NotifyFactoryOfSessionClosedLater();
+}
+
 void QuicChromiumClientSession::CloseAllStreams(int net_error) {
   while (!dynamic_streams().empty()) {
     QuicStream* stream = dynamic_streams().begin()->second.get();
@@ -1954,19 +1986,20 @@ ProbingResult QuicChromiumClientSession::StartProbeNetwork(
   if (!stream_factory_)
     return ProbingResult::FAILURE;
 
-  CHECK_NE(NetworkChangeNotifier::kInvalidNetworkHandle, network);
+  LOG(ERROR) << ">>>>>>>>>>>> MAYBE start probe network";
+  // CHECK_NE(NetworkChangeNotifier::kInvalidNetworkHandle, network);
 
   if (GetNumActiveStreams() == 0) {
     HistogramAndLogMigrationFailure(migration_net_log,
                                     MIGRATION_STATUS_NO_MIGRATABLE_STREAMS,
                                     connection_id(), "No active streams");
-    CloseSessionOnError(ERR_NETWORK_CHANGED,
+    CloseSessionOnErrorLater(ERR_NETWORK_CHANGED,
                         QUIC_CONNECTION_MIGRATION_NO_MIGRATABLE_STREAMS);
     return ProbingResult::DISABLED_WITH_IDLE_SESSION;
   }
   // Abort probing if connection migration is disabled by config.
   if (config()->DisableConnectionMigration()) {
-    DVLOG(1) << "Client disables probing network with connection migration "
+    LOG(ERROR) << "Client disables probing network with connection migration "
              << "disabled by config";
     HistogramAndLogMigrationFailure(migration_net_log,
                                     MIGRATION_STATUS_DISABLED, connection_id(),
@@ -1980,7 +2013,7 @@ ProbingResult QuicChromiumClientSession::StartProbeNetwork(
   // wifi.
   // Abort probing if there is stream marked as non-migratable.
   if (HasNonMigratableStreams()) {
-    DVLOG(1) << "Clients disables probing network with non-migratable streams";
+    LOG(ERROR) << "Clients disables probing network with non-migratable streams";
     HistogramAndLogMigrationFailure(migration_net_log,
                                     MIGRATION_STATUS_NON_MIGRATABLE_STREAM,
                                     connection_id(), "Non-migratable stream");
@@ -2020,6 +2053,7 @@ ProbingResult QuicChromiumClientSession::StartProbeNetwork(
   if (timeout_ms == 0 || timeout_ms > kDefaultRTTMilliSecs)
     timeout_ms = kDefaultRTTMilliSecs;
 
+  LOG(ERROR) << "ask probing_manager to probe: ";
   probing_manager_.StartProbing(
       network, QuicSocketAddress(QuicSocketAddressImpl(peer_address)),
       std::move(probing_socket), std::move(probing_writer),
@@ -2095,7 +2129,7 @@ bool QuicChromiumClientSession::ShouldMigrateSession(
     HistogramAndLogMigrationFailure(migration_net_log,
                                     MIGRATION_STATUS_NO_MIGRATABLE_STREAMS,
                                     connection_id(), "No active streams");
-    CloseSessionOnError(ERR_NETWORK_CHANGED,
+    CloseSessionOnErrorLater(ERR_NETWORK_CHANGED,
                         QUIC_CONNECTION_MIGRATION_NO_MIGRATABLE_STREAMS);
     return false;
   }
@@ -2113,7 +2147,7 @@ bool QuicChromiumClientSession::ShouldMigrateSession(
                                     MIGRATION_STATUS_DISABLED, connection_id(),
                                     "Migration disabled");
     if (close_if_cannot_migrate) {
-      CloseSessionOnError(ERR_NETWORK_CHANGED, QUIC_IP_ADDRESS_CHANGED);
+      CloseSessionOnErrorLater(ERR_NETWORK_CHANGED, QUIC_IP_ADDRESS_CHANGED);
     } else if (migrate_session_on_network_change_v2_) {
       // Session cannot migrate, mark it as going away for v2.
       stream_factory_->OnSessionGoingAway(this);
@@ -2127,7 +2161,7 @@ bool QuicChromiumClientSession::ShouldMigrateSession(
                                     MIGRATION_STATUS_NON_MIGRATABLE_STREAM,
                                     connection_id(), "Non-migratable stream");
     if (close_if_cannot_migrate) {
-      CloseSessionOnError(ERR_NETWORK_CHANGED,
+      CloseSessionOnErrorLater(ERR_NETWORK_CHANGED,
                           QUIC_CONNECTION_MIGRATION_NON_MIGRATABLE_STREAM);
     } else if (migrate_session_on_network_change_v2_) {
       // Session cannot migrate, mark it as going away for v2.
@@ -2245,7 +2279,7 @@ void QuicChromiumClientSession::OnReadError(
     // TODO(jri): Maybe clean up old sockets on error.
     return;
   }
-  DVLOG(1) << "Closing session on read error: " << result;
+  LOG(ERROR) << "Closing session on read error: " << result;
   UMA_HISTOGRAM_SPARSE_SLOWLY("Net.QuicSession.ReadError", -result);
   connection()->CloseConnection(QUIC_PACKET_READ_ERROR, ErrorToString(result),
                                 ConnectionCloseBehavior::SILENT_CLOSE);
@@ -2406,6 +2440,8 @@ bool QuicChromiumClientSession::MigrateToSocket(
       sockets_.size() >= kMaxReadersPerQuicSession) {
     return false;
   }
+
+  LOG(ERROR) << "Migrate succsessful to new socket";
 
   // TODO(jri): Make SetQuicPacketWriter take a scoped_ptr.
   packet_readers_.push_back(std::move(reader));
