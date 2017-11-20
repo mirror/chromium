@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b0fc4c1_df75b215",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-20T01:37:34Z",
+      "side": 0,
+      "message": "Just noticed that this line was actually wrong. The condition should compare endpos with length... This patch fixes it.",
+      "revId": "6f117f26d776f0ba5657451d89800f556a30c3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
