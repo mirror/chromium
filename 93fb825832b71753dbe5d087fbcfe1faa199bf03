@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7850b07_8011075c",
+        "filename": "media/mojo/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-20T21:30:35Z",
+      "side": 1,
+      "message": "Not that this CL was created slightly before my unit test refactor (https://chromium-review.googlesource.com/c/chromium/src/+/777409).\n\nAssuming that lands first (forcing you to merge), this should probably move into services/BUILD.gn, and be part of the media_mojo_unittests target. Is there a reason it should be a separate target?",
+      "range": {
+        "startLine": 141,
+        "startChar": 6,
+        "endLine": 141,
+        "endChar": 47
+      },
+      "revId": "93fb825832b71753dbe5d087fbcfe1faa199bf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
