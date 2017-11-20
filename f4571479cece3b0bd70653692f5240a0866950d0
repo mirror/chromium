@@ -16,6 +16,24 @@
       "revId": "f4571479cece3b0bd70653692f5240a0866950d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6564ec82_39970f68",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/root-layer-scrolls",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-20T14:12:28Z",
+      "side": 0,
+      "message": "Hmm, I did and it passes but now that you mention it I would have expected it too. Does it matter than I\u0027m on a Mac? I\u0027m running the patch through the RLS bot now which should say. But looking through the expectations it seems they\u0027re pixel tests which wouldn\u0027t need a change and a \"layout tree\" dump which doesn\u0027t include composited layers so maybe we don\u0027t need one?",
+      "parentUuid": "bc25129e_5b11d59a",
+      "revId": "f4571479cece3b0bd70653692f5240a0866950d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
