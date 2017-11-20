@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81ff539f_3fdf4633",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T23:06:02Z",
+      "side": 1,
+      "message": "Remove this from here, add elsewhere if needed.",
+      "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33782798_58e377d0",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T23:06:02Z",
+      "side": 1,
+      "message": "Sorry, I should have noticed this before, these should also be part of the browser proxy, see device_page_browser_proxy.js for an example:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/device_page/device_page_browser_proxy.js?type\u003dcs\u0026q\u003daddWebUIListener+.*proxy.*js\u0026sq\u003dpackage:chromium\u0026l\u003d231\n\nI would create a single \u0027setArcVpnProvidersCallback\u0027 method in the proxy and have that set up the webui listeners if not already set and trigger the callback with the list of vpns on any change.",
+      "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7534247_e77abd4c",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T23:06:02Z",
+      "side": 1,
+      "message": "All of this can be moved to the browser proxy, see comment above.",
+      "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be7f792a_ba27c375",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T23:06:02Z",
+      "side": 1,
+      "message": "\u003d this.get(\u0027VPN.Host\u0027, state);\n\nIn practice a VPN state with no VPN property is invalid, but it is preferable to handle that sort of error gracefully since JS errors are often missed.",
+      "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db006178_bf0f6b82",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/internet_handler.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T23:06:02Z",
+      "side": 1,
+      "message": "Let\u0027s just make this:\n\n// TODO(lgcheng/stevenjb): Rename this ThirdPartyVpnHandler once configuration is handled in the Settings UI (crbug.com/380937\n).\n\nI don\u0027t think we need do add a second handler in the meanwhile, especially now that we are using a single browser proxy for these methods.",
+      "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
