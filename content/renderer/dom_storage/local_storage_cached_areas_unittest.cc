@@ -8,6 +8,7 @@
 #include "base/test/scoped_task_environment.h"
 #include "content/renderer/dom_storage/local_storage_cached_area.h"
 #include "content/renderer/dom_storage/mock_leveldb_wrapper.h"
+#include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
 
 namespace content {
 
@@ -24,8 +25,11 @@ TEST(LocalStorageCachedAreasTest, CacheLimit) {
   const std::string kStorageAreaId("7");
   const size_t kCacheLimit = 100;
 
+  auto renderer_scheduler = blink::scheduler::RendererScheduler::Create();
+
   MockLevelDBWrapper mock_leveldb_wrapper;
-  LocalStorageCachedAreas cached_areas(&mock_leveldb_wrapper);
+  LocalStorageCachedAreas cached_areas(&mock_leveldb_wrapper,
+                                       renderer_scheduler.get());
   cached_areas.set_cache_limit_for_testing(kCacheLimit);
 
   scoped_refptr<LocalStorageCachedArea> cached_area1 =
@@ -50,6 +54,8 @@ TEST(LocalStorageCachedAreasTest, CacheLimit) {
   scoped_refptr<LocalStorageCachedArea> cached_area3 =
       cached_areas.GetCachedArea(kOrigin3);
   EXPECT_EQ(cached_area2->memory_used(), cached_areas.TotalCacheSize());
+
+  renderer_scheduler->Shutdown();
 }
 
 }  // namespace content
