@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3228b6b7_41094021",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-20T21:53:20Z",
+      "side": 1,
+      "message": "Just came to my mind: info.location might be empty if the current wallpaper is a default wallpaper. Seems in this case it will remove all saved wallpaper colors pref here. You don\u0027t have to address it in this CL, but you might want to fix it in your future CLs.",
+      "revId": "1e9088e9966fc1c7d73bd84aca3de158dccaf0df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1aa8d4b_91e77296",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-20T21:53:20Z",
+      "side": 1,
+      "message": "nit: {} is not needed here",
+      "revId": "1e9088e9966fc1c7d73bd84aca3de158dccaf0df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
