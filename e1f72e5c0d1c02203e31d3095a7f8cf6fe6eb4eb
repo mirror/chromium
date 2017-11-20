@@ -22,6 +22,30 @@
       "revId": "e1f72e5c0d1c02203e31d3095a7f8cf6fe6eb4eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36bee3c4_277aecf6",
+        "filename": "ui/file_manager/file_manager/foreground/js/directory_model.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1173,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-20T10:19:09Z",
+      "side": 1,
+      "message": "Yes, it did, but seems more than a few months ago.\nI could find the true reason there. Thanks.",
+      "parentUuid": "905c8005_4f292fc6",
+      "range": {
+        "startLine": 1173,
+        "startChar": 7,
+        "endLine": 1173,
+        "endChar": 76
+      },
+      "revId": "e1f72e5c0d1c02203e31d3095a7f8cf6fe6eb4eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

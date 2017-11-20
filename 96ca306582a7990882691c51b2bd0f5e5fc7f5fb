@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5496976a_17740b75",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-20T10:19:09Z",
+      "side": 1,
+      "message": "FYI: These style fixes are included in this change as it was necessary for presubmit.\nIt\u0027d be cleaner to submit cleanup CL crrev.com/c/778708 first.",
+      "revId": "96ca306582a7990882691c51b2bd0f5e5fc7f5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ded72952_cb83e286",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-20T10:19:09Z",
+      "side": 1,
+      "message": "Runtime errors had happened at this line before this change.",
+      "revId": "96ca306582a7990882691c51b2bd0f5e5fc7f5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
