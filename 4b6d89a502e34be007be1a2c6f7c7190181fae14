@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f748a030_f4fd7e3c",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-20T02:24:36Z",
+      "side": 1,
+      "message": "The comment and the code don\u0027t seem to match: (I think) the code is saying this is only if the user is in a tab.",
+      "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

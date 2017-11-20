@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b3593d22_1d994dd4",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-20T02:24:36Z",
+      "side": 1,
+      "message": "I\u0027m interested in exploring what it should do first, then maybe we can fix in a follow up or here.\n\nShould we make the app for a given URL the most specific app that is installed? That way this function doesn\u0027t need to return an array and the behavior won\u0027t depend on sorting / what order apps were installed in / etc.",
+      "parentUuid": "5a425af4_c630fd8a",
+      "revId": "6b6c485b87bf3c451567455994f7d722289aaaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93badc81_d7defd78",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 4
