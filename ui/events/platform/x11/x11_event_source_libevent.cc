@@ -166,7 +166,7 @@ void X11EventSourceLibevent::RemoveXEventDispatcher(
 void X11EventSourceLibevent::ProcessXEvent(XEvent* xevent) {
   std::unique_ptr<ui::Event> translated_event = TranslateXEventToEvent(*xevent);
   if (translated_event) {
-    DispatchEvent(translated_event.get());
+    DispatchPlatformEvent(translated_event.get(), xevent);
   } else {
     // Only if we can't translate XEvent into ui::Event, try to dispatch XEvent
     // directly to XEventDispatchers.
@@ -185,6 +185,25 @@ void X11EventSourceLibevent::AddEventWatcher() {
       fd, true, base::MessagePumpLibevent::WATCH_READ, &watcher_controller_,
       this);
   initialized_ = true;
+}
+
+void X11EventSourceLibevent::DispatchPlatformEvent(const PlatformEvent& event,
+                                                   XEvent* xevent) {
+  // First, tell the XEventDispatchers, which can also be
+  // PlatformEventDispatcher, an ui::Event is going to be sent next.
+  // XEventDispatchers, which can also be PlatformEventDispatchers, must make a
+  // promise to handle next translated |event| sent by PlatformEventSource based
+  // on a XID in |xevent| tested in CheckCanDispatchNextPlatformEvent(). This is
+  // needed because it is not possible to access |event|'s associated
+  // NativeEvent* and check if it is the event's target window (XID).
+  for (XEventDispatcher& dispatcher : dispatchers_xevent_)
+    dispatcher.CheckCanDispatchNextPlatformEvent(xevent);
+
+  DispatchEvent(event);
+
+  // Explicitly reset a promise to handle next translated event.
+  for (XEventDispatcher& dispatcher : dispatchers_xevent_)
+    dispatcher.PlatformEventDispatchFinished();
 }
 
 void X11EventSourceLibevent::DispatchXEventToXEventDispatchers(XEvent* xevent) {

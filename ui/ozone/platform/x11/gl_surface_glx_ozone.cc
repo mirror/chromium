@@ -30,6 +30,10 @@ void GLSurfaceGLXOzone::UnregisterEvents() {
     event_source->RemoveXEventDispatcher(this);
 }
 
+void GLSurfaceGLXOzone::CheckCanDispatchNextPlatformEvent(XEvent* xev) {}
+
+void GLSurfaceGLXOzone::PlatformEventDispatchFinished() {}
+
 bool GLSurfaceGLXOzone::DispatchXEvent(XEvent* event) {
   if (!CanHandleEvent(event))
     return false;
