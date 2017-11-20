@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80c77c1f_12536d0b",
+        "filename": "media/gpu/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-20T07:24:25Z",
+      "side": 1,
+      "message": "please replace with //media/mojo/services.",
+      "range": {
+        "startLine": 546,
+        "startChar": 32,
+        "endLine": 546,
+        "endChar": 0
+      },
+      "revId": "05310a0fadb2b3bc5ef6585463f5fe023663ffbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
