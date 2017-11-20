@@ -22,6 +22,30 @@
       "revId": "d9ef093718ffd74167df0f17de30793a9bf943e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2106307_d14c3514",
+        "filename": "chromecast/browser/android/apk/templates/BuildConfig.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1104844
+      },
+      "writtenOn": "2017-11-20T23:55:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0271428c_90453562",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 6
+      },
+      "revId": "d9ef093718ffd74167df0f17de30793a9bf943e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
