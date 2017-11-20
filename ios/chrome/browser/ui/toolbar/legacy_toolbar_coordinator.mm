@@ -35,6 +35,7 @@
 
 - (void)setToolbarController:(id<Toolbar>)toolbarController {
   _toolbarController = toolbarController;
+  [toolbarController start];
 }
 
 - (void)setToolbarDelegate:(id<WebToolbarDelegate>)delegate {
