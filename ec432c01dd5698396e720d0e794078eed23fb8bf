@@ -75,6 +75,24 @@
     },
     {
       "key": {
+        "uuid": "31ab92d0_ef633f36",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-20T18:03:44Z",
+      "side": 1,
+      "message": "Hi Xi\n\nYou are correct that if you set the channel id to the \u0027browser\u0027 channel in chrome and then block the browser channel, the notifications will still be delivered. However, this is misleading because we specifically check the channel status of the site channel matching the notification\u0027s origin when delivering notifications, regardless of which channel it\u0027s posted to in the end.\n\nThis means that if the site channel is blocked then notifications won\u0027t be delivered to the web apk. (See notification_channels_provider_android.cc for the implementation). You can see for yourself by blocking a site channel in Canary, and note that notifications are no longer passed through to the web apk due to Chrome\u0027s permission checks. \n\nI expect the same thing happens pre-O if you block the site\u0027s notification permission in Chrome\u0027s site settings, but haven\u0027t checked.\n\nPeter Beverloo suggested to me this behaviour may be non-ideal. Maybe we should instead ignore the channel status / permission in chrome, and delete the site channel in chrome (if it exists) when the site is added to home screen. \n\nThen we would need to delegate to the web apk\u0027s channel status to determine permission, and either remove the site from chrome site settings or link through to the *webapk\u0027s* channel settings for users on O to toggle the permission.\n\nThis would be a rather large change. I suggest you file a bug for figuring out the right behaviour here, and cc the permissions team to see what they think too.",
+      "parentUuid": "23faca84_98e06a14",
+      "revId": "ec432c01dd5698396e720d0e794078eed23fb8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea1150b1_278482cc",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
         "patchSetId": 3

@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "317f9750_bafa0576",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-20T18:03:44Z",
+      "side": 1,
+      "message": "s/\"notification is broken\"/\"notifications are broken\"\ns/\"due to there is no channel\"/\"due to there being no channel\"",
+      "revId": "3b4e4768f633a1f3ed811597cb6c97ab169171ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2945126e_23b9b204",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-20T18:03:44Z",
+      "side": 1,
+      "message": "s/fix/fixes\ns/in shell/in the shell",
+      "revId": "3b4e4768f633a1f3ed811597cb6c97ab169171ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3b3b83_e1bc33eb",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-20T18:03:44Z",
+      "side": 1,
+      "message": "micronit: the chrome channel ids use lowercase to make it clear they are not necessarily the same as the channel names, so you might want to use the same convention, and make this \u0027general\u0027. But it doesn\u0027t really matter.",
+      "revId": "3b4e4768f633a1f3ed811597cb6c97ab169171ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "306fd897_1642a7e4",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-20T18:03:44Z",
+      "side": 1,
+      "message": "typo: s/Transct/Transact",
+      "revId": "3b4e4768f633a1f3ed811597cb6c97ab169171ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d5efff8_7bc10175",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-20T18:03:44Z",
+      "side": 1,
+      "message": "maybe clearer to just say:\n\"Now that WebAPKs target SDK 26, we need to set a channel id to display the notification properly on O.\"\n\nAlso might want to mention, \"We set the channel id via reflection because the notification is already built (and therefore supposedly immutable) when received from Chrome. This is unavoidable because Notification.Builder is not parcelable.\" Or something that makes sense to you.",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 88
+      },
+      "revId": "3b4e4768f633a1f3ed811597cb6c97ab169171ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
