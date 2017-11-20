@@ -20,6 +20,7 @@ URLLoaderClientImpl::URLLoaderClientImpl(
     : request_id_(request_id),
       resource_dispatcher_(resource_dispatcher),
       task_runner_(std::move(task_runner)),
+      url_loader_client_binding_(this),
       weak_factory_(this) {}
 
 URLLoaderClientImpl::~URLLoaderClientImpl() {
@@ -101,6 +102,17 @@ void URLLoaderClientImpl::FlushDeferredMessages() {
 
     resource_dispatcher_->DispatchMessage(messages.back());
   }
+}
+
+void URLLoaderClientImpl::Bind(
+    mojom::URLLoaderPtrInfo url_loader,
+    mojom::URLLoaderClientRequest url_loader_client) {
+  DCHECK(url_loader.is_valid());
+  DCHECK(url_loader_client.is_pending());
+  url_loader_.Bind(std::move(url_loader));
+  url_loader_client_binding_.Bind(std::move(url_loader_client));
+  url_loader_client_binding_.set_connection_error_handler(base::BindOnce(
+      &URLLoaderClientImpl::OnConnectionClosed, weak_factory_.GetWeakPtr()));
 }
 
 void URLLoaderClientImpl::OnReceiveResponse(
@@ -213,6 +225,11 @@ void URLLoaderClientImpl::OnUploadProgress(
                                            total_size);
   }
   std::move(ack_callback).Run();
+}
+
+void URLLoaderClientImpl::OnConnectionClosed() {
+  resource_dispatcher_->OnRequestComplete(
+      request_id_, network::URLLoaderStatus(net::ERR_ABORTED));
 }
 
 }  // namespace content
