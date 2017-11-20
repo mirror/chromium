@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cf0f0ef6_689cb9db",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-11-20T08:02:10Z",
+      "side": 1,
+      "message": "This breaks click on anchors. For example, clicking on \u003ca\u003e in:\n\u003cdiv class\u003d\"expectation\"\u003eaccessibility/\u003ca href\u003d...\u003escroll-containers.html\u003c/a\u003e\n\n\u003ca\u003e is not in \u0027result-frame\u0027, but is in expectation.\nLine else if (expectation) gets executed,which does ev.preventDefault()\n\nI think you need  (ev.target.nodeName \u003d\u003d \"A\" || ev.target.nodeName \u003d\u003d \"INPUT\")\nand  (GUI.closest(ev.target, \"result-frame\"))",
+      "parentUuid": "62c123df_9ab8b0a3",
+      "revId": "f7fd9f08f771d7710cd0b21ee3effada694be26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed25d509_53d7872f",
         "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-19T05:20:23Z",
       "side": 1,
       "message": "This allows Enter to toggle the open expectation even if ev.target is not under \"expect\" or \"result-frame\". To test it, open a result, then click on any blank area of the page, then press Enter.",
+      "revId": "f7fd9f08f771d7710cd0b21ee3effada694be26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f6d11a_da480096",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-11-20T08:02:10Z",
+      "side": 1,
+      "message": "Why is this desirable? My logic is:\nEnter toggles currently focused result.\nIf you click somewhere else on the page, result is no longer focussed.\nWhy would you want Enter to toggle expectation that is not focussed?",
+      "parentUuid": "ed25d509_53d7872f",
       "revId": "f7fd9f08f771d7710cd0b21ee3effada694be26e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +100,24 @@
       "writtenOn": "2017-11-19T05:20:23Z",
       "side": 1,
       "message": "I thought of the racing condition but didn\u0027t think it was OK. Your suggestion is much better. Done here.",
+      "revId": "f7fd9f08f771d7710cd0b21ee3effada694be26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b40c30b_50dfd806",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-11-20T08:02:10Z",
+      "side": 1,
+      "message": "There is one small race condition left that is mostly theoretical:\n- if you suspend animation\n- select single view\n- toggle back to animation before timer fires\n- animation would not start before timer fires\n\nThis is easily fixed by setting animationPaused flag to false inside setAnimation.\n\nI\u0027d fix it just in case animation logic gets extended one day, and this causes some strange\ntiming bug.",
+      "parentUuid": "99f25e94_9c37d452",
       "revId": "f7fd9f08f771d7710cd0b21ee3effada694be26e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
