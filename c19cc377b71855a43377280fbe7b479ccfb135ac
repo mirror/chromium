@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7e3862ae_26a2f6c6",
+        "filename": "chrome/browser/policy/configuration_policy_handler_list_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-20T04:55:33Z",
+      "side": 1,
+      "message": "Is this needed?  It doesn\u0027t look like values from here (e.g., switches::kSitePerProcess) are being used.",
+      "revId": "c19cc377b71855a43377280fbe7b479ccfb135ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "511f1858_e0545bac",
         "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
         "patchSetId": 7
@@ -31,6 +48,87 @@
       "side": 1,
       "message": "(Note that manual testing with the actual browser succeeds, though.)",
       "parentUuid": "511f1858_e0545bac",
+      "revId": "c19cc377b71855a43377280fbe7b479ccfb135ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "874a7316_b764d39e",
+        "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-20T04:55:33Z",
+      "side": 1,
+      "message": "ShouldUseProcessPerSite is not what you want.  --process-per-site means have at most one process for each site.  --site-per-process is the opposite, which is that there\u0027s at most one site for each process.\n\nI think you want SiteInstanceImpl::DoesSiteRequireDedicatedProcess instead.  That\u0027s not exposed outside content at the moment, but I think it\u0027s probably ok to expose it from site_instance.h for this purpose.",
+      "parentUuid": "9b677869_0fa82683",
+      "revId": "c19cc377b71855a43377280fbe7b479ccfb135ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3361edeb_a13226ef",
+        "filename": "chrome/common/pref_names.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-20T04:55:33Z",
+      "side": 1,
+      "message": "Is there an order to this file?  It doesn\u0027t seem alphabetical, and I don\u0027t see how these prefs relate to the others in this block.  Are there more related ones, and/or should they be in their own block?",
+      "revId": "c19cc377b71855a43377280fbe7b479ccfb135ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e20746b_d8c53e75",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 10623,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-20T04:55:33Z",
+      "side": 1,
+      "message": "nit: In this case, it\u0027s actually an origin.  For example, it\u0027s possible to list https://mail.google.com and isolate that without the rest of google.com.  (That may break scripting for sites that modify document.domain, but it allows a finer granularity here.)\n\nIt\u0027s also worth pointing out that any origins listed here for isolation will include any suborigins, such as https://foo.example.com.\n\nThere\u0027s more documentation at ChildProcessSecurityPolicyImpl::AddIsolatedOrigin, though I\u0027m not sure if that\u0027s a good thing to point to here or not.",
+      "range": {
+        "startLine": 10623,
+        "startChar": 50,
+        "endLine": 10623,
+        "endChar": 55
+      },
+      "revId": "c19cc377b71855a43377280fbe7b479ccfb135ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "605fce2d_b3671cf0",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 10645,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-20T04:55:33Z",
+      "side": 1,
+      "message": "I\u0027m not sure compatibility is the word we\u0027re looking for.  IsolateOrigins would reduce overhead, and while there are still functional regressions on the (important) origins you list, they\u0027re limited to those origins.\n\nMaybe something like \"isolation and limited impact for users\"?",
+      "range": {
+        "startLine": 10645,
+        "startChar": 41,
+        "endLine": 10645,
+        "endChar": 54
+      },
       "revId": "c19cc377b71855a43377280fbe7b479ccfb135ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
