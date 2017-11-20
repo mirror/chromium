@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab995dea_0acd783f",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-20T22:43:51Z",
+      "side": 1,
+      "message": "The UKM XML says \"The event is not recorded when there is only one restored tab\", which is the same as the comment here, right?\nSee TabManager.SessionRestore.ForegroundTab.ExpectedTaskQueueingDurationInfo",
+      "parentUuid": "b6e063e6_4150bad8",
+      "range": {
+        "startLine": 561,
+        "startChar": 55,
+        "endLine": 561,
+        "endChar": 56
+      },
+      "revId": "e9e663480d43fa009631888871532e161cd284e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7a23e1d_91ef0fb4",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 18
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-20T22:20:36Z",
       "side": 1,
       "message": "Why when there\u0027s only one? Doesn\u0027t this make sense when there\u0027s any number of loading/pending?",
+      "range": {
+        "startLine": 1572,
+        "startChar": 46,
+        "endLine": 1572,
+        "endChar": 57
+      },
+      "revId": "e9e663480d43fa009631888871532e161cd284e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4458bc0c_e165d989",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-20T22:43:51Z",
+      "side": 1,
+      "message": "The reason is documented here: https://cs.chromium.org/chromium/src/chrome/browser/resource_coordinator/tab_manager_stats_collector.cc?l\u003d44-48\n\nThe UKM description was wrong in the previous version. This CL corrects that.",
+      "parentUuid": "a7a23e1d_91ef0fb4",
       "range": {
         "startLine": 1572,
         "startChar": 46,
