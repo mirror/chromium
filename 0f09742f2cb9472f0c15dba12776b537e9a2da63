@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90273be9_137a6005",
+        "filename": "chrome/browser/renderer_host/chrome_navigation_ui_data.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-20T00:06:20Z",
+      "side": 1,
+      "message": "Thanks for the comments! This patch is already pretty big and adding tests for this two properties will make it much bigger. I\u0027m splitting these two additions from this patch. Will definitely use an enum in the follow up patch.",
+      "parentUuid": "18e9b8c9_962f13b4",
+      "range": {
+        "startLine": 35,
+        "startChar": 30,
+        "endLine": 35,
+        "endChar": 51
+      },
+      "revId": "0f09742f2cb9472f0c15dba12776b537e9a2da63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "942c8042_eaf51cc9",
         "filename": "chrome/browser/renderer_host/chrome_navigation_ui_data.h",
         "patchSetId": 24
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-17T15:35:34Z",
       "side": 1,
       "message": "It isn\u0027t readily clear what \u0027had_target_contents\u0027 means in this context, please add description.",
+      "range": {
+        "startLine": 36,
+        "startChar": 30,
+        "endLine": 36,
+        "endChar": 49
+      },
+      "revId": "0f09742f2cb9472f0c15dba12776b537e9a2da63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14162747_dec54da0",
+        "filename": "chrome/browser/renderer_host/chrome_navigation_ui_data.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-20T00:06:20Z",
+      "side": 1,
+      "message": "ditto.",
+      "parentUuid": "942c8042_eaf51cc9",
       "range": {
         "startLine": 36,
         "startChar": 30,
