@@ -169,7 +169,8 @@ void WatchTimeRecorder::RecordUkmPlaybackData() {
   }
 
   const int32_t source_id = ukm_recorder->GetNewSourceID();
-  ukm_recorder->UpdateSourceURL(source_id, properties_->origin.GetURL());
+  // TODO(crbug/785513): Associate these with main frame URLs instead.
+  // ukm_recorder->UpdateSourceURL(source_id, properties_->origin.GetURL());
   ukm::builders::Media_BasicPlayback builder(source_id);
 
   bool recorded_all_metric = false;
