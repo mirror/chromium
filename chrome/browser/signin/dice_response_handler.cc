@@ -375,6 +375,10 @@ void DiceResponseHandler::OnTokenExchangeSuccess(
   if (!CanGetTokenForAccount(gaia_id, email))
     return;
 
+  AboutSigninInternals* about_signin_internals =
+    AboutSigninInternalsFactory::GetForProfile(profile_);
+  about_signin_internals->OnRefreshTokenReceived("Successful");
+
   std::string account_id =
       account_tracker_service_->SeedAccountInfo(gaia_id, email);
   VLOG(1) << "[Dice] OAuth success for account: " << account_id;
@@ -388,6 +392,10 @@ void DiceResponseHandler::OnTokenExchangeSuccess(
 void DiceResponseHandler::OnTokenExchangeFailure(
     DiceTokenFetcher* token_fetcher,
     const GoogleServiceAuthError& error) {
+  AboutSigninInternals* about_signin_internals =
+    AboutSigninInternalsFactory::GetForProfile(profile_);
+  about_signin_internals->OnRefreshTokenReceived("Failure");
+
   // TODO(droger): Handle authentication errors.
   VLOG(1) << "[Dice] OAuth failed with error: " << error.ToString();
   DeleteTokenFetcher(token_fetcher);

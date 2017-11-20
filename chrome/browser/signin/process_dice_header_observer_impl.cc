@@ -132,6 +132,10 @@ void ProcessDiceHeaderObserverImpl::DidFinishRefreshTokenFetch(
   //  //new OneClickSigninSyncStarter(
   //  //    profile, browser, gaia_id, email, tab_helper->signin_access_point(),
   //  //    tab_helper->signin_reason(), OneClickSigninSyncStarter::Callback());
+
+  LogHistogramValue(signin_metrics::HISTOGRAM_ACCEPTED);
+  LogHistogramValue(signin_metrics::HISTOGRAM_WITH_DEFAULTS);
+
 }
 
 void ProcessDiceHeaderObserverImpl::CloseLoginDialog() {

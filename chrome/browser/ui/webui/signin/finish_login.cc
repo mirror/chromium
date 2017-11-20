@@ -524,3 +524,131 @@ void InlineSigninHelper::OnClientOAuthFailure(
 
   base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
 }
+
+
+// -----------------------------------------------------------------------------
+DiceTurnSyncOnHelper::DiceTurnSyncOnHelper(
+  base::WeakPtr<InlineSigninHelperDelegate> delegate,
+  Profile* profile,
+  Browser* browser,
+  signin_metrics::AccessPoint signin_access_point,
+  signin_metrics::Reason signin_reason,
+  const std::string& account_id)
+  : delegate_(delegate),
+  profile_(profile),
+  browser_(browser),
+  signin_access_point_(signin_access_point),
+  signin_reason_(signin_reason),
+  account_id_(account_id) {
+  DCHECK(profile_);
+  DCHECK(browser_);
+  DCHECK(!account_id_.empty());
+  
+  // Should not start synching if the profile is already authenticated
+  DCHECK(SigninManagerFactory::GetForProfile(profile_)->IsAuthenticated());
+
+  // Force sign-in uses the modal sign-in flow.
+  DCHECK(!signin_util::IsForceSigninEnabled());
+
+  switch (signin_reason_) {
+  case signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT:
+    break;
+  case signin_metrics::Reason::REASON_ADD_SECONDARY_ACCOUNT:
+  case signin_metrics::Reason::REASON_REAUTHENTICATION:
+  case  signin_metrics::Reason::REASON_UNLOCK:
+  case signin_metrics::Reason::REASON_UNKNOWN_REASON:
+    NOTREACHED();
+    break;
+  case  signin_metrics::Reason::REASON_MAX:
+    NOTREACHED();
+
+  }
+
+  if (CanTurnSyncOn())
+    StartTurnOnSync();
+}
+
+DiceTurnSyncOnHelper::~DiceTurnSyncOnHelper() {}
+
+void DiceTurnSyncOnHelper::StartTurnOnSync() {
+  Browser* browser = chrome::FindLastActiveWithProfile(profile_);
+  SigninManager* signin_manager = SigninManagerFactory::GetForProfile(profile_);
+  std::string primary_email =
+    signin_manager->GetAuthenticatedAccountInfo().email;
+
+    bool start_signin = !HandleCrossAccountError();
+    if (start_signin) {
+      CreateSyncStarter(OneClickSigninSyncStarter::CURRENT_PROFILE);
+      base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+    }
+}
+
+bool DiceTurnSyncOnHelper::CanTurnSyncOn() {
+  std::string error_msg;
+  bool can_offer = CanOffer(profile_, CAN_OFFER_FOR_ALL, account_info_.gaia,
+    account_info_.email, &error_msg);
+  if (!can_offer) {
+     delegate_->HandleLoginError(error_msg,base::UTF8ToUTF16(account_info_.email));
+    return false;
+  }
+  return true;
+}
+
+bool DiceTurnSyncOnHelper::HandleCrossAccountError() {
+  std::string last_email =
+    profile_->GetPrefs()->GetString(prefs::kGoogleServicesLastUsername);
+
+  // TODO(skym): Warn for high risk upgrade scenario, crbug.com/572754.
+  if (!IsCrossAccountError(profile_, account_info_.email, account_info_.gaia))
+    return false;
+
+  Browser* browser = chrome::FindLastActiveWithProfile(profile_);
+  content::WebContents* web_contents =
+    browser->tab_strip_model()->GetActiveWebContents();
+
+  SigninEmailConfirmationDialog::AskForConfirmation(
+    web_contents, profile_, last_email, account_info_.email,
+    base::Bind(&DiceTurnSyncOnHelper::ConfirmEmailAction,
+      base::Unretained(this), web_contents));
+  return true;
+}
+
+void DiceTurnSyncOnHelper::ConfirmEmailAction(
+  content::WebContents* web_contents,
+  SigninEmailConfirmationDialog::Action action) {
+  Browser* browser = chrome::FindLastActiveWithProfile(profile_);
+  switch (action) {
+  case SigninEmailConfirmationDialog::CREATE_NEW_USER:
+    base::RecordAction(
+      base::UserMetricsAction("Signin_ImportDataPrompt_DontImport"));
+    CreateSyncStarter(OneClickSigninSyncStarter::NEW_PROFILE);
+    break;
+  case SigninEmailConfirmationDialog::START_SYNC:
+    base::RecordAction(
+      base::UserMetricsAction("Signin_ImportDataPrompt_ImportData"));
+    CreateSyncStarter(OneClickSigninSyncStarter::CURRENT_PROFILE);
+    break;
+  case SigninEmailConfirmationDialog::CLOSE:
+    base::RecordAction(
+      base::UserMetricsAction("Signin_ImportDataPrompt_Cancel"));
+    if (delegate_) {
+      delegate_->SyncStarterCallback(
+        OneClickSigninSyncStarter::SYNC_SETUP_FAILURE);
+    }
+    break;
+  default:
+    DCHECK(false) << "Invalid action";
+  }
+  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+}
+
+void DiceTurnSyncOnHelper::CreateSyncStarter(
+  OneClickSigninSyncStarter::ProfileMode profile_mode) {
+  // OneClickSigninSyncStarter will delete itself once the job is done.
+  new OneClickSigninSyncStarter(
+    profile_, browser_, account_info_.account_id, signin_access_point_,
+    signin_reason_, profile_mode,
+    base::Bind(&InlineSigninHelperDelegate::SyncStarterCallback, delegate_));
+}
+
+

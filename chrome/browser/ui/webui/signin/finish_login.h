@@ -12,6 +12,7 @@
 #include "chrome/browser/ui/webui/signin/signin_email_confirmation_dialog.h"
 #include "components/signin/core/browser/signin_metrics.h"
 #include "google_apis/gaia/gaia_auth_consumer.h"
+#include "components/signin/core/browser/account_info.h"
 
 class InlineLoginHandlerImpl;
 
@@ -184,6 +185,48 @@ class InlineSigninHelper : public GaiaAuthConsumer {
   bool should_show_account_management_;
 
   DISALLOW_COPY_AND_ASSIGN(InlineSigninHelper);
+};
+
+class DiceTurnSyncOnHelper {
+public:
+  DiceTurnSyncOnHelper(
+    base::WeakPtr<InlineSigninHelperDelegate> delegate,
+    Profile* profile,
+    Browser* browser,
+    signin_metrics::AccessPoint signin_access_point,
+    signin_metrics::Reason signin_reason,
+    const std::string& account_id);
+  ~DiceTurnSyncOnHelper() override;
+
+private:
+  // Handles cross account sign in error. If the supplied |email| does not match
+  // the last signed in email of the current profile, then Chrome will show a
+  // confirmation dialog before starting sync. It returns true if there is a
+  // cross account error, and false otherwise.
+  bool HandleCrossAccountError();
+
+  // Callback used with ConfirmEmailDialogDelegate.
+  void ConfirmEmailAction(
+    content::WebContents* web_contents,
+    SigninEmailConfirmationDialog::Action action);
+
+  bool CanTurnSyncOn();
+
+  void StartTurnOnSync();
+
+  // Creates the sync starter.  Virtual for tests.
+  virtual void CreateSyncStarter(
+    OneClickSigninSyncStarter::ProfileMode profile_mode);
+
+  base::WeakPtr<InlineSigninHelperDelegate> delegate_;
+  Profile* profile_;
+  Browser* browser_;
+  signin_metrics::AccessPoint signin_access_point_;
+  signin_metrics::Reason signin_reason_;
+  const std::string account_id_;
+  const AccountInfo account_info_;
+
+  DISALLOW_COPY_AND_ASSIGN(DiceTurnSyncOnHelper);
 };
 
 #endif  // CHROME_BROWSER_UI_WEBUI_SIGNIN_FINISH_LOGIN_H_
