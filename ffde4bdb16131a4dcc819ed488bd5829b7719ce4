@@ -283,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "25c75d22_2fd9a62a",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-20T20:23:08Z",
+      "side": 1,
+      "message": "comment added.",
+      "parentUuid": "794eaade_01b06aa9",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8bd5a869_437a38be",
         "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
         "patchSetId": 11

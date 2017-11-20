@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c87711c_02160de6",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-20T20:23:08Z",
+      "side": 1,
+      "message": "I talked with UX today and they insist to have the behavior (jump to previous page when Arc VPN is disconnected).\n\nThe reason why this flag is needed is when Arc VPN is disconnecting, we receive network states changed twice(may a bug?) and without this flag the navigation will be unexpected.",
+      "parentUuid": "6d5c22e9_dac7a1f3",
+      "revId": "d8d00158f7bd391448577c7dd4d70f4ca192a429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35289046_c6da5b69",
         "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1bc7c16b_2857d2c7",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-20T20:23:08Z",
+      "side": 1,
+      "message": "From what I observe, for ArcVpn network, it prints source as \"User\". Without isArcVpn check, Forget, prefer and autoconnect option will be shown.",
+      "parentUuid": "35289046_c6da5b69",
+      "revId": "d8d00158f7bd391448577c7dd4d70f4ca192a429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5608de7d_150846c2",
         "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
         "patchSetId": 13
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-17T00:37:59Z",
       "side": 1,
       "message": "We should fix this here since devs are already starting to test --network-settings-config.",
+      "revId": "d8d00158f7bd391448577c7dd4d70f4ca192a429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "573cd410_1e0251f7",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-20T20:23:08Z",
+      "side": 1,
+      "message": "Sure. Then I add browser_proxy in this cl.",
+      "parentUuid": "5608de7d_150846c2",
       "revId": "d8d00158f7bd391448577c7dd4d70f4ca192a429",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
