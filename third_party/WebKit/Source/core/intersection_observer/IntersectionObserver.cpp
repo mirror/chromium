@@ -214,8 +214,11 @@ IntersectionObserver::IntersectionObserver(
   }
   if (root)
     root->EnsureIntersectionObserverData().AddObserver(*this);
-  TrackingDocument().EnsureIntersectionObserverController().AddTrackedObserver(
-      *this);
+  if (delegate_->GetExecutionContext()) {
+    TrackingDocument()
+        .EnsureIntersectionObserverController()
+        .AddTrackedObserver(*this);
+  }
 }
 
 void IntersectionObserver::ClearWeakMembers(Visitor* visitor) {
