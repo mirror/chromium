@@ -98,9 +98,6 @@ class BASE_EXPORT ObserverListThreadSafeBase
 template <class ObserverType>
 class ObserverListThreadSafe : public internal::ObserverListThreadSafeBase {
  public:
-  using NotificationType =
-      typename ObserverList<ObserverType>::NotificationType;
-
   ObserverListThreadSafe() = default;
   explicit ObserverListThreadSafe(NotificationType type) : type_(type) {}
 
