@@ -22,6 +22,30 @@
       "revId": "cd33f84d5e14ea0f12f7b553128e92f668191515",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e88f31d_a0837c34",
+        "filename": "ios/chrome/browser/chrome_browser_manifest_overlay.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-20T10:14:34Z",
+      "side": 1,
+      "message": "The provides clause is here: https://cs.chromium.org/chromium/src/services/identity/manifest.json?q\u003dservices/identity/man\u0026sq\u003dpackage:chromium\u0026l\u003d1\n\nThe Identity Service gives access to the user\u0027s Google identity. It is the long-term replacement for //components/signin (which //ios/chrome currently interacts with). This change is similar to the existing usage of the Identity Service by //chrome/browser.",
+      "parentUuid": "4a3f0687_1c4495b4",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "cd33f84d5e14ea0f12f7b553128e92f668191515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
