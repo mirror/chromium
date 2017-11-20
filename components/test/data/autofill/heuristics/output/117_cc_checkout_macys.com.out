@@ -4,7 +4,7 @@ CREDIT_CARD_TYPE | creditCard.cardType.code | Card type | -1 | payment.type_1-cc
 CREDIT_CARD_NUMBER | creditCard.cardNumber | Card number |  | payment.type_1-cc
 CREDIT_CARD_EXP_MONTH | creditCard.expMonth | Expiration date | 01 | payment.type_1-cc
 CREDIT_CARD_EXP_4_DIGIT_YEAR | creditCard.expYear | Expiration date | 2016 | payment.type_1-cc
-CREDIT_CARD_VERIFICATION_CODE | fake-password | Security code |  | payment.type_1-cc
+UNKNOWN_TYPE | fake-password | Security code |  | payment.type_1-default
 CREDIT_CARD_VERIFICATION_CODE | creditCard.securityCode | Security code |  | payment.type_1-cc
 UNKNOWN_TYPE | useMyShippingAddress | Use my shipping address | false | payment.type_1-default
 NAME_FIRST | billingContact.firstName | First name |  | payment.type_1-default
