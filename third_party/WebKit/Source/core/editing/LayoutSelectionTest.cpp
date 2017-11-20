@@ -11,6 +11,7 @@
 #include "core/editing/testing/EditingTestBase.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutText.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/wtf/Assertions.h"
 
 namespace blink {
@@ -72,6 +73,7 @@ using IsTypeOfSimple = bool(const LayoutObject& layout_object);
 
 USING_LAYOUTOBJECT_FUNC(IsLayoutBlock);
 USING_LAYOUTOBJECT_FUNC(IsLayoutBlockFlow);
+USING_LAYOUTOBJECT_FUNC(IsLayoutNGBlockFlow);
 USING_LAYOUTOBJECT_FUNC(IsLayoutInline);
 USING_LAYOUTOBJECT_FUNC(IsBR);
 USING_LAYOUTOBJECT_FUNC(IsListItem);
@@ -663,6 +665,33 @@ TEST_F(LayoutSelectionTest, Embed) {
   TEST_NEXT(IsLayoutBlock, kStartAndEnd, NotInvalidate);
   TEST_NEXT(IsLayoutEmbeddedContent, kStartAndEnd, ShouldInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
+}
+
+class NGLayoutSelectionTest : public LayoutSelectionTest,
+                              private ScopedLayoutNGForTest,
+                              ScopedLayoutNGPaintFragmentsForTest {
+ public:
+  NGLayoutSelectionTest()
+      : ScopedLayoutNGForTest(true),
+        ScopedLayoutNGPaintFragmentsForTest(true) {}
+};
+
+TEST_F(NGLayoutSelectionTest, SelectOnOneText) {
+#ifndef NDEBUG
+  // This line prohibits compiler optimization removing the debug function.
+  PrintLayoutTreeForDebug();
+#endif
+  const SelectionInDOMTree& selection =
+      SetSelectionTextToBody("foo<span>b^a|r</span>");
+  Selection().SetSelection(selection);
+  Selection().CommitAppearanceIfNeeded();
+  TEST_NEXT(IsLayoutNGBlockFlow, kStartAndEnd, ShouldInvalidate);
+  TEST_NEXT("foo", kNone, NotInvalidate);
+  TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
+  TEST_NEXT("bar", kNone, NotInvalidate);
+  TEST_NO_NEXT_LAYOUT_OBJECT();
+  EXPECT_EQ(4, Selection().LayoutSelectionStart());
+  EXPECT_EQ(5, Selection().LayoutSelectionEnd());
 }
 
 }  // namespace blink
