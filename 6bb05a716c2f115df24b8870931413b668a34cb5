@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b5197ec_877f5d4f",
+        "filename": "net/cert/known_roots.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-20T23:19:45Z",
+      "side": 1,
+      "message": "Nit: No (c) for new files.",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b071c8_381a75a8",
+        "filename": "net/cert/known_roots.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-20T23:19:45Z",
+      "side": 1,
+      "message": "Nit: Seems like this code could use a unit test.\n\nNot sure if you want to use the real generated data from the test or supply some dummy data, but would be good to check the logic.\n\nAlso, the unit test could test that kRootCerts is actually in sorted order - since that is required for this code to work correctly.",
+      "range": {
+        "startLine": 37,
+        "startChar": 75,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
