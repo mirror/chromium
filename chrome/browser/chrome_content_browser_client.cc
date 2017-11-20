@@ -145,6 +145,7 @@
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "components/content_settings/core/common/content_settings_utils.h"
+#include "components/content_settings/core/common/pref_names.h"
 #include "components/dom_distiller/core/dom_distiller_switches.h"
 #include "components/dom_distiller/core/url_constants.h"
 #include "components/error_page/common/error_page_switches.h"
@@ -870,6 +871,8 @@ void ChromeContentBrowserClient::RegisterProfilePrefs(
   registry->RegisterBooleanPref(prefs::kDisable3DAPIs, false);
   registry->RegisterBooleanPref(prefs::kEnableHyperlinkAuditing, true);
   registry->RegisterListPref(prefs::kEnableDeprecatedWebPlatformFeatures);
+  registry->RegisterStringPref(prefs::kIsolateOrigins, std::string());
+  registry->RegisterBooleanPref(prefs::kSitePerProcess, false);
 }
 
 // static
@@ -1712,13 +1715,35 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
       InstantService* instant_service =
           InstantServiceFactory::GetForProfile(profile);
       if (instant_service &&
-          instant_service->IsInstantProcess(process->GetID()))
+          instant_service->IsInstantProcess(process->GetID())) {
         command_line->AppendSwitch(switches::kInstantProcess);
+      }
 
       if (prefs->HasPrefPath(prefs::kAllowDinosaurEasterEgg) &&
-          !prefs->GetBoolean(prefs::kAllowDinosaurEasterEgg))
+          !prefs->GetBoolean(prefs::kAllowDinosaurEasterEgg)) {
         command_line->AppendSwitch(
             error_page::switches::kDisableDinosaurEasterEgg);
+      }
+
+      if (prefs->HasPrefPath(prefs::kIsolateOrigins)) {
+#if defined(OS_WIN)
+        const auto value =
+            base::UTF8ToUTF16(prefs->GetString(prefs::kIsolateOrigins);
+#elif defined(OS_POSIX)
+        // No need to make a copy since we're not doing a conversion.
+        const auto& value = prefs->GetString(prefs::kIsolateOrigins);
+#else
+#error Unsupported platform.
+#endif
+        command_line->AppendSwitchNative(
+            switches::kIsolateOrigins,
+            value);
+      }
+
+      if (prefs->HasPrefPath(prefs::kSitePerProcess) &&
+          prefs->GetBoolean(prefs::kSitePerProcess)) {
+        command_line->AppendSwitch(switches::kSitePerProcess);
+      }
     }
 
     if (IsAutoReloadEnabled())
@@ -1810,6 +1835,7 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
       switches::kForcePNaClSubzero,
 #endif
       switches::kForceUIDirection,
+      switches::kIsolateOrigins,
       switches::kJavaScriptHarmony,
       switches::kOriginTrialDisabledFeatures,
       switches::kOriginTrialDisabledTokens,
@@ -1821,6 +1847,7 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
       switches::kProfilingFile,
       switches::kProfilingFlush,
       switches::kReaderModeHeuristics,
+      switches::kSitePerProcess,
       switches::kUnsafelyTreatInsecureOriginAsSecure,
       translate::switches::kTranslateSecurityOrigin,
     };
