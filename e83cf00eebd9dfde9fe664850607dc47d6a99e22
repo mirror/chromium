@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36bd1f6a_53967dc8",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-20T10:42:54Z",
+      "side": 1,
+      "message": "Why? It was sorted (note that class/protocol don\u0027t count in the sorting, only the type name).",
+      "range": {
+        "startLine": 15,
+        "startChar": 1,
+        "endLine": 15,
+        "endChar": 9
+      },
+      "revId": "e83cf00eebd9dfde9fe664850607dc47d6a99e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
