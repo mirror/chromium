@@ -28,7 +28,7 @@ void StubNotificationDisplayService::SetNotificationAddedClosure(
 
 std::vector<message_center::Notification>
 StubNotificationDisplayService::GetDisplayedNotificationsForType(
-    NotificationCommon::Type type) const {
+    NotificationHandler::Type type) const {
   std::vector<message_center::Notification> notifications;
   for (const auto& data : notifications_) {
     if (data.type != type)
@@ -69,7 +69,7 @@ StubNotificationDisplayService::GetMetadataForNotification(
 }
 
 void StubNotificationDisplayService::RemoveNotification(
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const std::string& notification_id,
     bool by_user,
     bool silent) {
@@ -85,7 +85,7 @@ void StubNotificationDisplayService::RemoveNotification(
 
   if (!silent) {
     NotificationHandler* handler = GetNotificationHandler(notification_type);
-    if (notification_type == NotificationCommon::TRANSIENT) {
+    if (notification_type == NotificationHandler::Type::TRANSIENT) {
       DCHECK(!handler);
       iter->notification.delegate()->Close(by_user);
     } else {
@@ -98,10 +98,11 @@ void StubNotificationDisplayService::RemoveNotification(
 }
 
 void StubNotificationDisplayService::RemoveAllNotifications(
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     bool by_user) {
   NotificationHandler* handler = GetNotificationHandler(notification_type);
-  DCHECK_NE(!!handler, notification_type == NotificationCommon::TRANSIENT);
+  DCHECK_NE(!!handler,
+            notification_type == NotificationHandler::Type::TRANSIENT);
   for (auto iter = notifications_.begin(); iter != notifications_.end();) {
     if (iter->type == notification_type) {
       if (handler) {
@@ -118,7 +119,7 @@ void StubNotificationDisplayService::RemoveAllNotifications(
 }
 
 void StubNotificationDisplayService::Display(
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const message_center::Notification& notification,
     std::unique_ptr<NotificationCommon::Metadata> metadata) {
   // This mimics notification replacement behaviour; the Close() method on a
@@ -126,7 +127,7 @@ void StubNotificationDisplayService::Display(
   Close(notification_type, notification.id());
 
   NotificationHandler* handler = GetNotificationHandler(notification_type);
-  if (notification_type == NotificationCommon::TRANSIENT)
+  if (notification_type == NotificationHandler::Type::TRANSIENT)
     DCHECK(!handler);
   else
     handler->OnShow(profile_, notification.id());
@@ -138,7 +139,7 @@ void StubNotificationDisplayService::Display(
 }
 
 void StubNotificationDisplayService::Close(
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const std::string& notification_id) {
   notifications_.erase(
       std::remove_if(
@@ -162,7 +163,7 @@ void StubNotificationDisplayService::GetDisplayed(
 }
 
 StubNotificationDisplayService::NotificationData::NotificationData(
-    NotificationCommon::Type type,
+    NotificationHandler::Type type,
     const message_center::Notification& notification,
     std::unique_ptr<NotificationCommon::Metadata> metadata)
     : type(type), notification(notification), metadata(std::move(metadata)) {}

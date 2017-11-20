@@ -46,7 +46,7 @@ using message_center::RichNotificationData;
 
 // Hold related data for a notification.
 struct NotificationData {
-  NotificationData(NotificationCommon::Type notification_type,
+  NotificationData(NotificationHandler::Type notification_type,
                    const std::string& notification_id,
                    const std::string& profile_id,
                    bool incognito,
@@ -58,7 +58,7 @@ struct NotificationData {
         origin_url(origin_url) {}
 
   // Same parameters used by NotificationPlatformBridge::Display().
-  NotificationCommon::Type notification_type;
+  NotificationHandler::Type notification_type;
   const std::string notification_id;
   const std::string profile_id;
   const bool incognito;
@@ -91,7 +91,7 @@ HRESULT CreateActivationFactory(wchar_t const (&class_name)[size], T** object) {
 
 // Perform |operation| on a notification once the profile has been loaded.
 void ProfileLoadedCallback(NotificationCommon::Operation operation,
-                           NotificationCommon::Type notification_type,
+                           NotificationHandler::Type notification_type,
                            const GURL& origin,
                            const std::string& notification_id,
                            const base::Optional<int>& action_index,
@@ -110,7 +110,7 @@ void ProfileLoadedCallback(NotificationCommon::Operation operation,
 
 void ForwardNotificationOperationOnUiThread(
     NotificationCommon::Operation operation,
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const GURL& origin,
     const std::string& notification_id,
     const std::string& profile_id,

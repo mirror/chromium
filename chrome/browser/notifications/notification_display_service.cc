@@ -27,13 +27,13 @@ NotificationDisplayService* NotificationDisplayService::GetForProfile(
 
 NotificationDisplayService::NotificationDisplayService(Profile* profile)
     : profile_(profile) {
-  AddNotificationHandler(NotificationCommon::NON_PERSISTENT,
+  AddNotificationHandler(NotificationHandler::Type::WEB_NON_PERSISTENT,
                          std::make_unique<NonPersistentNotificationHandler>());
-  AddNotificationHandler(NotificationCommon::PERSISTENT,
+  AddNotificationHandler(NotificationHandler::Type::WEB_PERSISTENT,
                          std::make_unique<PersistentNotificationHandler>());
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   AddNotificationHandler(
-      NotificationCommon::EXTENSION,
+      NotificationHandler::Type::EXTENSION,
       std::make_unique<extensions::ExtensionNotificationHandler>());
 #endif
 }
@@ -41,7 +41,7 @@ NotificationDisplayService::NotificationDisplayService(Profile* profile)
 NotificationDisplayService::~NotificationDisplayService() = default;
 
 void NotificationDisplayService::AddNotificationHandler(
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     std::unique_ptr<NotificationHandler> handler) {
   DCHECK(handler);
   DCHECK_EQ(notification_handlers_.count(notification_type), 0u);
@@ -49,14 +49,14 @@ void NotificationDisplayService::AddNotificationHandler(
 }
 
 void NotificationDisplayService::RemoveNotificationHandler(
-    NotificationCommon::Type notification_type) {
+    NotificationHandler::Type notification_type) {
   auto iter = notification_handlers_.find(notification_type);
   DCHECK(iter != notification_handlers_.end());
   notification_handlers_.erase(iter);
 }
 
 NotificationHandler* NotificationDisplayService::GetNotificationHandler(
-    NotificationCommon::Type notification_type) {
+    NotificationHandler::Type notification_type) {
   auto found = notification_handlers_.find(notification_type);
   if (found != notification_handlers_.end())
     return found->second.get();
@@ -65,7 +65,7 @@ NotificationHandler* NotificationDisplayService::GetNotificationHandler(
 
 void NotificationDisplayService::ProcessNotificationOperation(
     NotificationCommon::Operation operation,
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const GURL& origin,
     const std::string& notification_id,
     const base::Optional<int>& action_index,
@@ -74,7 +74,8 @@ void NotificationDisplayService::ProcessNotificationOperation(
   NotificationHandler* handler = GetNotificationHandler(notification_type);
   DCHECK(handler);
   if (!handler) {
-    LOG(ERROR) << "Unable to find a handler for " << notification_type;
+    LOG(ERROR) << "Unable to find a handler for "
+               << static_cast<int>(notification_type);
     return;
   }
   switch (operation) {
