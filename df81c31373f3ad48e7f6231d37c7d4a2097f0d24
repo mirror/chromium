@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ae0c33c9_b0ae8290",
+        "filename": "ios/chrome/browser/ui/keyboard_commands_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T16:59:07Z",
+      "side": 1,
+      "message": "Optional nit: Do you want to create a matcher function for kToolsMenuOtherDevicesId in a separate CL?",
+      "range": {
+        "startLine": 175,
+        "startChar": 39,
+        "endLine": 175,
+        "endChar": 49
+      },
+      "revId": "df81c31373f3ad48e7f6231d37c7d4a2097f0d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d888d67b_995267d0",
         "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_controller_egtest.mm",
         "patchSetId": 2
@@ -16,6 +39,24 @@
       "revId": "df81c31373f3ad48e7f6231d37c7d4a2097f0d24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a41a354_41f7dbb9",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_controller_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T16:59:07Z",
+      "side": 1,
+      "message": "Agree.",
+      "parentUuid": "d888d67b_995267d0",
+      "revId": "df81c31373f3ad48e7f6231d37c7d4a2097f0d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
