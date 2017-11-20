@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3fca4af_709ae265",
+        "filename": "chrome/browser/resource_coordinator/tab_lifetime_unit.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-20T21:47:34Z",
+      "side": 1,
+      "message": "Document that this can return null for webcontents not associated with a tab?",
+      "range": {
+        "startLine": 20,
+        "startChar": 33,
+        "endLine": 20,
+        "endChar": 44
+      },
+      "revId": "dae03adcc2a4bedab21e2ed47dc7434ad63ecc59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f93a326_608a221a",
+        "filename": "chrome/browser/resource_coordinator/tab_lifetime_unit_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-20T21:47:34Z",
+      "side": 1,
+      "message": "Should we add an Icon to the LifecycleUnit right away? Icons are useful for tabs and for ARC++ apps.",
+      "range": {
+        "startLine": 36,
+        "startChar": 17,
+        "endLine": 36,
+        "endChar": 25
+      },
+      "revId": "dae03adcc2a4bedab21e2ed47dc7434ad63ecc59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
