@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "76862d40_dc874fb3",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-20T14:54:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a617e0bf_e8c777cb",
+      "revId": "fd96f92fb46aef0d9d78f1798aad88793f0b3d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87b856d3_e4735782",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "fd96f92fb46aef0d9d78f1798aad88793f0b3d0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a84eabf2_d1f253ce",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-20T14:54:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87b856d3_e4735782",
+      "revId": "fd96f92fb46aef0d9d78f1798aad88793f0b3d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3e7117e9_49ac37ed",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-20T14:54:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1894b474_fab3ab05",
+      "revId": "fd96f92fb46aef0d9d78f1798aad88793f0b3d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "840128be_6470e60d",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.h",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-16T13:57:39Z",
       "side": 1,
       "message": "nit: can these be private, with friends declarations for the tests if necessary?",
+      "revId": "fd96f92fb46aef0d9d78f1798aad88793f0b3d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df711909_24ecebe9",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-20T14:54:34Z",
+      "side": 1,
+      "message": "They are also used by NotificationPlatformBridgeWinImpl, but yeah.",
+      "parentUuid": "840128be_6470e60d",
       "revId": "fd96f92fb46aef0d9d78f1798aad88793f0b3d0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "fd96f92fb46aef0d9d78f1798aad88793f0b3d0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0edb5c_9ded9745",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-20T14:54:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f866f0c4_c167073b",
+      "revId": "fd96f92fb46aef0d9d78f1798aad88793f0b3d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
