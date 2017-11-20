@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c1c70ec_2b2db7e9",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-20T06:28:59Z",
+      "side": 1,
+      "message": "// We don\u0027t use BadMessageReceived here since this IPC will be converted to a Mojo method call soon, which will validate inputs for us.\n// TODO(xiaofeng): Convert the OnCountFeature IPC into a Mojo method call.",
+      "revId": "657808fdc9a465498331578fbd2fc2502f0430a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e65063e_2b93be3d",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-20T06:28:59Z",
+      "side": 1,
+      "message": "DCHECK_LT(feature, NumFeatures)\n\n(or alternatively convert the browser-side non-IPC functions to take a WebFeature instead of uint32_t... but I guess we can save that for another patch).",
+      "revId": "657808fdc9a465498331578fbd2fc2502f0430a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878284ea_2088b40d",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-20T06:28:59Z",
+      "side": 1,
+      "message": "DCHECK_LT(feature, NumFeatures)",
+      "revId": "657808fdc9a465498331578fbd2fc2502f0430a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35cd782f_4ddd4bf2",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1490,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-20T06:28:59Z",
+      "side": 1,
+      "message": "This looks like a great place to convert |used_features| into a WebFeature vector. But I guess we can save that for a follow up patch.",
+      "revId": "657808fdc9a465498331578fbd2fc2502f0430a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5a66cde_bad32cfd",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-20T06:28:59Z",
+      "side": 1,
+      "message": "Calling",
+      "revId": "657808fdc9a465498331578fbd2fc2502f0430a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09bb9419_c4752b87",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-20T06:28:59Z",
+      "side": 1,
+      "message": "SetClient()",
+      "revId": "657808fdc9a465498331578fbd2fc2502f0430a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
