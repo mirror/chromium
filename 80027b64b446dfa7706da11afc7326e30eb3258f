@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e93bdf3_964d5612",
+        "filename": "ios/web/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-20T10:29:00Z",
+      "side": 1,
+      "message": "nit: please move \"+ui\" up with the rest of uncommented DEPS",
+      "revId": "80027b64b446dfa7706da11afc7326e30eb3258f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
