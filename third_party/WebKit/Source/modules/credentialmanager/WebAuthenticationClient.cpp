@@ -23,29 +23,31 @@ typedef ArrayBufferOrArrayBufferView BufferSource;
 
 namespace {
 using PublicKeyCallbacks = WebAuthenticationClient::PublicKeyCallbacks;
+using CredentialManagerError =
+    ::password_manager::mojom::blink::CredentialManagerError;
 
-WebCredentialManagerError GetWebCredentialManagerErrorFromStatus(
+CredentialManagerError GetWebCredentialManagerErrorFromStatus(
     webauth::mojom::blink::AuthenticatorStatus status) {
   switch (status) {
     case webauth::mojom::blink::AuthenticatorStatus::NOT_IMPLEMENTED:
-      return blink::kWebCredentialManagerNotImplementedError;
+      return CredentialManagerError::NOT_IMPLEMENTED;
     case webauth::mojom::blink::AuthenticatorStatus::NOT_ALLOWED_ERROR:
-      return WebCredentialManagerError::kWebCredentialManagerNotAllowedError;
+      return CredentialManagerError::NOT_ALLOWED;
     case webauth::mojom::blink::AuthenticatorStatus::NOT_SUPPORTED_ERROR:
-      return WebCredentialManagerError::kWebCredentialManagerNotSupportedError;
+      return CredentialManagerError::NOT_SUPPORTED;
     case webauth::mojom::blink::AuthenticatorStatus::SECURITY_ERROR:
-      return WebCredentialManagerError::kWebCredentialManagerSecurityError;
+      return CredentialManagerError::NOT_SECURE;
     case webauth::mojom::blink::AuthenticatorStatus::UNKNOWN_ERROR:
-      return WebCredentialManagerError::kWebCredentialManagerUnknownError;
+      return CredentialManagerError::UNKNOWN;
     case webauth::mojom::blink::AuthenticatorStatus::CANCELLED:
-      return WebCredentialManagerError::kWebCredentialManagerCancelledError;
+      return CredentialManagerError::CANCELLED;
     case webauth::mojom::blink::AuthenticatorStatus::SUCCESS:
       NOTREACHED();
       break;
   };
 
   NOTREACHED();
-  return blink::WebCredentialManagerError::kWebCredentialManagerUnknownError;
+  return CredentialManagerError::UNKNOWN;
 }
 
 void RespondToPublicKeyCallback(
@@ -263,8 +265,7 @@ void WebAuthenticationClient::DispatchMakeCredential(
     std::unique_ptr<PublicKeyCallbacks> callbacks) {
   auto options = webauth::mojom::blink::MakeCredentialOptions::From(publicKey);
   if (!options) {
-    callbacks->OnError(
-        WebCredentialManagerError::kWebCredentialManagerNotSupportedError);
+    callbacks->OnError(CredentialManagerError::NOT_SUPPORTED);
     return;
   }
   authenticator_->MakeCredential(

@@ -22,61 +22,117 @@
 #include "modules/credentialmanager/AuthenticatorResponse.h"
 #include "modules/credentialmanager/Credential.h"
 #include "modules/credentialmanager/CredentialCreationOptions.h"
-#include "modules/credentialmanager/CredentialManagerClient.h"
+#include "modules/credentialmanager/CredentialManagerProxy.h"
 #include "modules/credentialmanager/CredentialRequestOptions.h"
 #include "modules/credentialmanager/FederatedCredential.h"
 #include "modules/credentialmanager/FederatedCredentialRequestOptions.h"
 #include "modules/credentialmanager/MakeCredentialOptions.h"
 #include "modules/credentialmanager/PasswordCredential.h"
 #include "modules/credentialmanager/PublicKeyCredential.h"
-#include "platform/credentialmanager/PlatformFederatedCredential.h"
-#include "platform/credentialmanager/PlatformPasswordCredential.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/Functional.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebCredential.h"
-#include "public/platform/WebCredentialManagerClient.h"
-#include "public/platform/WebCredentialMediationRequirement.h"
-#include "public/platform/WebFederatedCredential.h"
-#include "public/platform/WebPasswordCredential.h"
+#include "third_party/WebKit/public/platform/modules/credentialmanager/credential_manager.mojom-blink.h"
+
+namespace mojo {
+
+using ::password_manager::mojom::blink::CredentialInfo;
+using ::password_manager::mojom::blink::CredentialType;
+using ::password_manager::mojom::blink::CredentialInfoPtr;
+
+template <>
+struct TypeConverter<CredentialInfoPtr, ::blink::Credential*> {
+  static CredentialInfoPtr Convert(::blink::Credential* credential) {
+    auto info = CredentialInfo::New();
+    info->id = credential->id();
+    if (credential->IsPasswordCredential()) {
+      ::blink::PasswordCredential* password_credential =
+          static_cast<::blink::PasswordCredential*>(credential);
+      info->type = CredentialType::PASSWORD;
+      info->password = password_credential->password();
+      info->name = password_credential->name();
+      info->icon = password_credential->iconURL();
+    } else {
+      DCHECK(credential->IsFederatedCredential());
+      ::blink::FederatedCredential* federated_credential =
+          static_cast<::blink::FederatedCredential*>(credential);
+      info->type = CredentialType::FEDERATED;
+      info->federation = federated_credential->GetProviderAsOrigin();
+      info->name = federated_credential->name();
+      info->icon = federated_credential->iconURL();
+    }
+    return info;
+  }
+};
+
+template <>
+struct TypeConverter<::blink::Credential*, CredentialInfoPtr> {
+  static ::blink::Credential* Convert(const CredentialInfoPtr& info) {
+    switch (info->type) {
+      case CredentialType::FEDERATED:
+        return ::blink::FederatedCredential::Create(info->id, info->federation,
+                                                    info->name, info->icon);
+      case CredentialType::PASSWORD:
+        return ::blink::PasswordCredential::Create(info->id, info->password,
+                                                   info->name, info->icon);
+      case CredentialType::EMPTY:
+        return nullptr;
+    }
+    NOTREACHED();
+    return nullptr;
+  }
+};
+
+}  // namespace mojo
 
 namespace blink {
+
 namespace {
 
+using ::password_manager::mojom::blink::CredentialManagerError;
+using ::password_manager::mojom::blink::CredentialInfo;
+using ::password_manager::mojom::blink::CredentialInfoPtr;
+using ::password_manager::mojom::blink::CredentialMediationRequirement;
+
 void RejectDueToCredentialManagerError(ScriptPromiseResolver* resolver,
-                                       WebCredentialManagerError reason) {
+                                       CredentialManagerError reason) {
   switch (reason) {
-    case kWebCredentialManagerDisabledError:
+    case CredentialManagerError::DISABLED:
       resolver->Reject(DOMException::Create(
           kInvalidStateError, "The credential manager is disabled."));
       break;
-    case kWebCredentialManagerPendingRequestError:
+    case CredentialManagerError::PENDING_REQUEST:
       resolver->Reject(DOMException::Create(kInvalidStateError,
                                             "A 'get()' request is pending."));
       break;
-    case kWebCredentialManagerNotAllowedError:
+    case CredentialManagerError::PASSWORD_STORE_UNAVAILABLE:
+      resolver->Reject(DOMException::Create(
+          kNotSupportedError, "The password store is unavailable."));
+      break;
+    case CredentialManagerError::NOT_ALLOWED:
       resolver->Reject(DOMException::Create(kNotAllowedError,
                                             "The operation is not allowed."));
       break;
-    case kWebCredentialManagerNotSupportedError:
+    case CredentialManagerError::NOT_SUPPORTED:
       resolver->Reject(DOMException::Create(
           kNotSupportedError,
           "Parameters for this operation are not supported."));
       break;
-    case kWebCredentialManagerSecurityError:
+    case CredentialManagerError::NOT_SECURE:
       resolver->Reject(DOMException::Create(kSecurityError,
                                             "The operation is insecure and "
                                             "is not allowed."));
       break;
-    case kWebCredentialManagerCancelledError:
+    case CredentialManagerError::CANCELLED:
       resolver->Reject(DOMException::Create(
           kNotAllowedError, "The user cancelled the operation."));
       break;
-    case kWebCredentialManagerNotImplementedError:
+    case CredentialManagerError::NOT_IMPLEMENTED:
       resolver->Reject(DOMException::Create(
           kNotAllowedError, "The operation is not implemented."));
       break;
-    case kWebCredentialManagerUnknownError:
+    case CredentialManagerError::UNKNOWN:
     default:
       resolver->Reject(DOMException::Create(kNotReadableError,
                                             "An unknown error occurred while "
@@ -84,6 +140,7 @@ void RejectDueToCredentialManagerError(ScriptPromiseResolver* resolver,
                                             "manager."));
       break;
   }
+  NOTREACHED();
 }
 
 bool CheckBoilerplate(ScriptPromiseResolver* resolver) {
@@ -104,7 +161,7 @@ bool CheckBoilerplate(ScriptPromiseResolver* resolver) {
     return false;
   }
 
-  CredentialManagerClient* client = CredentialManagerClient::From(
+  CredentialManagerProxy* client = CredentialManagerProxy::From(
       ExecutionContext::From(resolver->GetScriptState()));
   if (!client) {
     resolver->Reject(DOMException::Create(
@@ -117,93 +174,69 @@ bool CheckBoilerplate(ScriptPromiseResolver* resolver) {
 }
 
 bool IsIconURLInsecure(const Credential* credential) {
-  PlatformCredential* platform_credential = credential->GetPlatformCredential();
   auto is_insecure = [](const KURL& url) {
     return !url.IsEmpty() && !url.ProtocolIs("https");
   };
-  if (platform_credential->IsFederated()) {
+  if (credential->IsFederatedCredential()) {
     return is_insecure(
-        static_cast<PlatformFederatedCredential*>(platform_credential)
-            ->IconURL());
+        static_cast<const FederatedCredential*>(credential)->iconURL());
   }
-  if (platform_credential->IsPassword()) {
+  if (credential->IsPasswordCredential()) {
     return is_insecure(
-        static_cast<PlatformPasswordCredential*>(platform_credential)
-            ->IconURL());
+        static_cast<const PasswordCredential*>(credential)->iconURL());
   }
   return false;
 }
 
-}  // namespace
-
-class NotificationCallbacks
-    : public WebCredentialManagerClient::NotificationCallbacks {
-  WTF_MAKE_NONCOPYABLE(NotificationCallbacks);
+// Owns a ScriptPromiseResolver and rejects when the instance goes out of scope,
+// unless Release() is called to release ownership of the promise resolver.
+class AutoPromiseResolver {
+  WTF_MAKE_NONCOPYABLE(AutoPromiseResolver);
 
  public:
-  explicit NotificationCallbacks(ScriptPromiseResolver* resolver)
+  explicit AutoPromiseResolver(ScriptPromiseResolver* resolver)
       : resolver_(resolver) {}
-  ~NotificationCallbacks() override {}
 
-  void OnSuccess() override {
+  ~AutoPromiseResolver() {
+    if (resolver_)
+      resolver_->Reject();
+  }
+
+  ScriptPromiseResolver* Release() {
+    DCHECK(resolver_);
+    // TODO: Why do we need this check?
     Frame* frame =
         ToDocument(ExecutionContext::From(resolver_->GetScriptState()))
             ->GetFrame();
     SECURITY_CHECK(!frame || frame == frame->Tree().Top());
-
-    resolver_->Resolve();
-  }
-
-  void OnError(WebCredentialManagerError reason) override {
-    RejectDueToCredentialManagerError(resolver_, reason);
+    return resolver_.Release();
   }
 
  private:
-  const Persistent<ScriptPromiseResolver> resolver_;
+  Persistent<ScriptPromiseResolver> resolver_;
 };
 
-class RequestCallbacks : public WebCredentialManagerClient::RequestCallbacks {
-  WTF_MAKE_NONCOPYABLE(RequestCallbacks);
+void OnOperationComplete(std::unique_ptr<AutoPromiseResolver> scoped_resolver) {
+  DCHECK(scoped_resolver);
+  ScriptPromiseResolver* resolver = scoped_resolver->Release();
+  resolver->Resolve();
+}
 
- public:
-  explicit RequestCallbacks(ScriptPromiseResolver* resolver)
-      : resolver_(resolver) {}
-  ~RequestCallbacks() override {}
-
-  void OnSuccess(std::unique_ptr<WebCredential> web_credential) override {
-    ExecutionContext* context =
-        ExecutionContext::From(resolver_->GetScriptState());
-    if (!context)
-      return;
-    Frame* frame = ToDocument(context)->GetFrame();
-    SECURITY_CHECK(!frame || frame == frame->Tree().Top());
-
-    std::unique_ptr<WebCredential> credential =
-        WTF::WrapUnique(web_credential.release());
-    if (!credential || !frame) {
-      resolver_->Resolve();
-      return;
-    }
-
-    DCHECK(credential->IsPasswordCredential() ||
-           credential->IsFederatedCredential());
-    UseCounter::Count(ExecutionContext::From(resolver_->GetScriptState()),
+void OnGetOperationComplete(
+    std::unique_ptr<AutoPromiseResolver> scoped_resolver,
+    CredentialManagerError error,
+    CredentialInfoPtr credential_info) {
+  DCHECK(scoped_resolver);
+  ScriptPromiseResolver* resolver = scoped_resolver->Release();
+  if (error == CredentialManagerError::SUCCESS) {
+    DCHECK(credential_info);
+    UseCounter::Count(ExecutionContext::From(resolver->GetScriptState()),
                       WebFeature::kCredentialManagerGetReturnedCredential);
-    if (credential->IsPasswordCredential())
-      resolver_->Resolve(PasswordCredential::Create(
-          static_cast<WebPasswordCredential*>(credential.get())));
-    else
-      resolver_->Resolve(FederatedCredential::Create(
-          static_cast<WebFederatedCredential*>(credential.get())));
+    resolver->Resolve(mojo::ConvertTo<Credential*>(std::move(credential_info)));
+  } else {
+    RejectDueToCredentialManagerError(resolver, error);
   }
-
-  void OnError(WebCredentialManagerError reason) override {
-    RejectDueToCredentialManagerError(resolver_, reason);
-  }
-
- private:
-  const Persistent<ScriptPromiseResolver> resolver_;
-};
+}
 
 class PublicKeyCallbacks : public WebAuthenticationClient::PublicKeyCallbacks {
   WTF_MAKE_NONCOPYABLE(PublicKeyCallbacks);
@@ -211,9 +244,7 @@ class PublicKeyCallbacks : public WebAuthenticationClient::PublicKeyCallbacks {
  public:
   explicit PublicKeyCallbacks(ScriptPromiseResolver* resolver)
       : resolver_(resolver) {}
-  ~PublicKeyCallbacks() override {
-    OnError(blink::kWebCredentialManagerUnknownError);
-  }
+  ~PublicKeyCallbacks() override { OnError(CredentialManagerError::UNKNOWN); }
 
   void OnSuccess(
       webauth::mojom::blink::PublicKeyCredentialInfoPtr credential) override {
@@ -248,7 +279,7 @@ class PublicKeyCallbacks : public WebAuthenticationClient::PublicKeyCallbacks {
                                                    authenticator_response));
   }
 
-  void OnError(WebCredentialManagerError reason) override {
+  void OnError(CredentialManagerError reason) override {
     RejectDueToCredentialManagerError(resolver_, reason);
   }
 
@@ -260,6 +291,8 @@ class PublicKeyCallbacks : public WebAuthenticationClient::PublicKeyCallbacks {
 
   const Persistent<ScriptPromiseResolver> resolver_;
 };
+
+}  // namespace
 
 CredentialsContainer* CredentialsContainer::Create() {
   return new CredentialsContainer();
@@ -308,26 +341,29 @@ ScriptPromise CredentialsContainer::get(
     }
   }
 
-  WebCredentialMediationRequirement requirement;
+  CredentialMediationRequirement requirement;
 
   if (mediation == "silent") {
     UseCounter::Count(context,
                       WebFeature::kCredentialManagerGetMediationSilent);
-    requirement = WebCredentialMediationRequirement::kSilent;
+    requirement = CredentialMediationRequirement::kSilent;
   } else if (mediation == "optional") {
     UseCounter::Count(context,
                       WebFeature::kCredentialManagerGetMediationOptional);
-    requirement = WebCredentialMediationRequirement::kOptional;
+    requirement = CredentialMediationRequirement::kOptional;
   } else {
     DCHECK_EQ("required", mediation);
     UseCounter::Count(context,
                       WebFeature::kCredentialManagerGetMediationRequired);
-    requirement = WebCredentialMediationRequirement::kRequired;
+    requirement = CredentialMediationRequirement::kRequired;
   }
 
-  CredentialManagerClient::From(context)->DispatchGet(
-      requirement, options.password(), providers,
-      new RequestCallbacks(resolver));
+  auto* credential_manager = CredentialManagerProxy::From(context)->Service();
+  credential_manager->Get(
+      requirement, options.password(), std::move(providers),
+      ConvertToBaseCallback(
+          WTF::Bind(&OnGetOperationComplete,
+                    std::make_unique<AutoPromiseResolver>(resolver))));
   return promise;
 }
 
@@ -344,10 +380,13 @@ ScriptPromise CredentialsContainer::store(ScriptState* script_state,
     return promise;
   }
 
-  auto web_credential =
-      WebCredential::Create(credential->GetPlatformCredential());
-  CredentialManagerClient::From(ExecutionContext::From(script_state))
-      ->DispatchStore(*web_credential, new NotificationCallbacks(resolver));
+  auto* context = ExecutionContext::From(script_state);
+  auto* credential_manager = CredentialManagerProxy::From(context)->Service();
+  credential_manager->Store(
+      CredentialInfo::From(credential),
+      ConvertToBaseCallback(
+          WTF::Bind(&OnOperationComplete,
+                    std::make_unique<AutoPromiseResolver>(resolver))));
   return promise;
 }
 
@@ -386,12 +425,12 @@ ScriptPromise CredentialsContainer::create(
     // Dispatch the publicKey credential operation.
     // TODO(https://crbug.com/740081): Eventually unify with CredMan's mojo.
     // TODO(engedy): Make frame checks more efficient in the refactor.
-    LocalFrame* frame =
-        ToDocument(ExecutionContext::From(script_state))->GetFrame();
-    CredentialManagerClient::From(ExecutionContext::From(script_state))
-        ->DispatchMakeCredential(
-            *frame, options.publicKey(),
-            std::make_unique<PublicKeyCallbacks>(resolver));
+    // LocalFrame* frame =
+    //     ToDocument(ExecutionContext::From(script_state))->GetFrame();
+    // CredentialManagerProxy::From(ExecutionContext::From(script_state))
+    //     ->DispatchMakeCredential(
+    //         *frame, options.publicKey(),
+    //         std::make_unique<PublicKeyCallbacks>(resolver));
   }
   return promise;
 }
@@ -403,8 +442,10 @@ ScriptPromise CredentialsContainer::preventSilentAccess(
   if (!CheckBoilerplate(resolver))
     return promise;
 
-  CredentialManagerClient::From(ExecutionContext::From(script_state))
-      ->DispatchPreventSilentAccess(new NotificationCallbacks(resolver));
+  auto* context = ExecutionContext::From(script_state);
+  auto* credential_manager = CredentialManagerProxy::From(context)->Service();
+  credential_manager->PreventSilentAccess(ConvertToBaseCallback(WTF::Bind(
+      &OnOperationComplete, std::make_unique<AutoPromiseResolver>(resolver)));
   return promise;
 }
 

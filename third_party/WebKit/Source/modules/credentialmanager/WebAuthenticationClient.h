@@ -8,7 +8,7 @@
 #include <memory>
 #include "platform/heap/Handle.h"
 #include "public/platform/WebCallbacks.h"
-#include "public/platform/WebCredentialManagerError.h"
+#include "public/platform/modules/credentialmanager/credential_manager.mojom-blink.h"
 #include "public/platform/modules/webauth/authenticator.mojom-blink.h"
 
 namespace blink {
@@ -22,7 +22,7 @@ class WebAuthenticationClient final
  public:
   // Used by calls to authenticator.mojom.
   typedef WebCallbacks<webauth::mojom::blink::PublicKeyCredentialInfoPtr,
-                       WebCredentialManagerError>
+                       ::password_manager::mojom::blink::CredentialManagerError>
       PublicKeyCallbacks;
 
   explicit WebAuthenticationClient(LocalFrame&);
