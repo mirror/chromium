@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d384704c_6502f40c",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-20T19:48:51Z",
+      "side": 1,
+      "message": "\u003eDo we want to return NONE for minor errors despite the policy-installed cert?\n\nYes, I think so. \n\n\u003eHow common are these minor errors under a typical policy-installed certificate?\n\nSadly, we have no way to know. That said, I suspect that in practice these errors don\u0027t exist because of https://cs.chromium.org/chromium/src/content/browser/ssl/ssl_manager.cc?l\u003d299\u0026rcl\u003d39a3080e58db0402c96231033dfc8cfd52e74de4. \n\nI\u0027m unable to trigger the error case when using certificates that do not contain revocation info.",
+      "parentUuid": "91e4eb43_6fd36925",
+      "revId": "94e6a7672e38714685fa091c27b5c9f5c4d532a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4f684f7_dad0dc06",
         "filename": "components/security_state/core/security_state_unittest.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "94e6a7672e38714685fa091c27b5c9f5c4d532a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96100031_4b3d145f",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-20T19:48:51Z",
+      "side": 1,
+      "message": "Fixed. It\u0027s less ugly.",
+      "parentUuid": "b4f684f7_dad0dc06",
+      "revId": "94e6a7672e38714685fa091c27b5c9f5c4d532a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
