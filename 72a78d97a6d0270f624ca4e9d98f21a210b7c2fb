@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7c4eb6a6_f3875651",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-20T18:17:05Z",
+      "side": 1,
+      "message": "It\u0027s either \"constexpr const char*\" or \"const char* const\". I didn\u0027t make up the constexpr rules.",
+      "parentUuid": "50ebb57a_0037002e",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 15
+      },
+      "revId": "72a78d97a6d0270f624ca4e9d98f21a210b7c2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a65d5c8_a2b5179b",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "72a78d97a6d0270f624ca4e9d98f21a210b7c2fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b8dc68_4c806e92",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-20T18:17:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a65d5c8_a2b5179b",
+      "range": {
+        "startLine": 76,
+        "startChar": 36,
+        "endLine": 76,
+        "endChar": 37
+      },
+      "revId": "72a78d97a6d0270f624ca4e9d98f21a210b7c2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
