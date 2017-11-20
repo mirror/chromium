@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "19108ed5_5bbfc878",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-20T17:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1468d8ce_7fa4ac0d",
+      "range": {
+        "startLine": 228,
+        "startChar": 34,
+        "endLine": 228,
+        "endChar": 59
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b960ff9f_302e44fd",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b9bb54f_82d6948d",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-20T17:10:35Z",
+      "side": 1,
+      "message": "May be. If it\u0027s 10 very frequently (say \u003e 50% time), it  tells us that it might be useful to increase the cache size. On the other hand, if it is 10 only 1% time, then may be its not helpful.",
+      "parentUuid": "b960ff9f_302e44fd",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 58
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "82c480a4_c4846505",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-20T17:10:35Z",
+      "side": 1,
+      "message": "Using ToJavaTime() which is int64_t.",
+      "parentUuid": "c15bbe07_52618372",
+      "range": {
+        "startLine": 90,
+        "startChar": 61,
+        "endLine": 90,
+        "endChar": 70
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c226a7c_b59040bc",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
         "patchSetId": 14
@@ -91,6 +163,30 @@
       "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4190db2_ee270088",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-20T17:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c226a7c_b59040bc",
+      "range": {
+        "startLine": 120,
+        "startChar": 9,
+        "endLine": 120,
+        "endChar": 24
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f75bd838_d547a0a2",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-20T17:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19cbab9d_229acd6f",
+      "range": {
+        "startLine": 129,
+        "startChar": 9,
+        "endLine": 129,
+        "endChar": 15
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35729717_66f66625",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
         "patchSetId": 14
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-18T02:48:57Z",
       "side": 1,
       "message": "If the user sets the system clock back in time, then wouldn\u0027t all the previous network properties in the DictionaryValue have greater timestamps than any new ones?",
+      "range": {
+        "startLine": 148,
+        "startChar": 10,
+        "endLine": 148,
+        "endChar": 41
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b993e8d_9fafb794",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-20T17:10:35Z",
+      "side": 1,
+      "message": "|earliest_timestamp| is set to  std::numeric_limits\u003cint64_t\u003e::max();\nSo, we would still delete the earliest entry.\nI am not sure how the clock switching back breaks this?",
+      "parentUuid": "35729717_66f66625",
       "range": {
         "startLine": 148,
         "startChar": 10,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "40010c75_0e321ff6",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-20T17:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0ec9969_19a6d388",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 69
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2a086f8_1d86026a",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
         "patchSetId": 14
@@ -183,6 +351,30 @@
       "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "144a4e54_b22c3ee4",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-20T17:10:35Z",
+      "side": 1,
+      "message": "I think this DCHECK is fine since this should really never happen.",
+      "parentUuid": "f2a086f8_1d86026a",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 46
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "6aae0686_0e298f15",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-20T17:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cf74619_758ca7e3",
+      "range": {
+        "startLine": 29,
+        "startChar": 20,
+        "endLine": 29,
+        "endChar": 48
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "302ac470_fa11816d",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
         "patchSetId": 14
@@ -220,6 +436,30 @@
       "writtenOn": "2017-11-18T02:48:57Z",
       "side": 1,
       "message": "You mentioned in an earlier comment that the NetworkPropertiesManager could be used on both the IO and UI threads. Could you explain? E.g., do you mean that IsSecureProxyAllowed() could be called on both threads concurrently?",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 27
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29395cbc_61184b36",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-20T17:10:35Z",
+      "side": 1,
+      "message": "External classes should call the Getter/Setter methods only on the IO thread.",
+      "parentUuid": "302ac470_fa11816d",
       "range": {
         "startLine": 38,
         "startChar": 7,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "5a75e68a_81e6672d",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-20T17:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39abbf6e_4eeadd41",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 62
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92453302_a04df564",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
         "patchSetId": 14
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "d606c79b_83b65780",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-20T17:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92453302_a04df564",
+      "range": {
+        "startLine": 97,
+        "startChar": 20,
+        "endLine": 97,
+        "endChar": 25
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb157a3a_aa0b6668",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
         "patchSetId": 14
@@ -298,6 +586,30 @@
       "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feb31915_c0cfcd16",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-20T17:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb157a3a_aa0b6668",
+      "range": {
+        "startLine": 99,
+        "startChar": 32,
+        "endLine": 99,
+        "endChar": 72
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -344,6 +656,54 @@
       "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c913cf8_ee83a3bd",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-20T17:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c395eeef_a7756273",
+      "range": {
+        "startLine": 100,
+        "startChar": 8,
+        "endLine": 100,
+        "endChar": 13
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e5eb54e_34f0e9ef",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-20T17:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67b682db_1f89e7c4",
+      "range": {
+        "startLine": 100,
+        "startChar": 14,
+        "endLine": 100,
+        "endChar": 20
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
