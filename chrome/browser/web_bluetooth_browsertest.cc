@@ -55,8 +55,8 @@ class WebBluetoothTest : public InProcessBrowserTest {
   content::WebContents* web_contents_ = nullptr;
 };
 
+// Make sure we can use Web Bluetooth after the tab crashes.
 IN_PROC_BROWSER_TEST_F(WebBluetoothTest, WebBluetoothAfterCrash) {
-  // Make sure we can use Web Bluetooth after the tab crashes.
   // Set up adapter with one device.
   scoped_refptr<NiceMockBluetoothAdapter> adapter(
       new NiceMockBluetoothAdapter());
@@ -176,6 +176,42 @@ IN_PROC_BROWSER_TEST_F(WebBluetoothTest, BlocklistShouldBlock) {
       &rejection));
   EXPECT_THAT(rejection,
               testing::MatchesRegex("SecurityError: .*blocklisted UUID.*"));
+}
+
+IN_PROC_BROWSER_TEST_F(WebBluetoothTest, MultipleRequestDeviceRequests) {
+  // Fake the BluetoothAdapter to say it's present.
+  scoped_refptr<device::MockBluetoothAdapter> adapter =
+      new testing::NiceMock<device::MockBluetoothAdapter>;
+  EXPECT_CALL(*adapter, IsPresent()).WillRepeatedly(Return(true));
+
+  /*
+  // Set up adapter with one device.
+  scoped_refptr<NiceMockBluetoothAdapter> adapter(
+      new NiceMockBluetoothAdapter());
+  ON_CALL(*adapter, IsPresent()).WillByDefault(Return(false));
+  */
+
+  auto bt_global_values =
+      device::BluetoothAdapterFactory::Get().InitGlobalValuesForTesting();
+  bt_global_values->SetLESupported(true);
+  device::BluetoothAdapterFactory::SetAdapterForTesting(adapter);
+
+  std::string result;
+  EXPECT_TRUE(content::ExecuteScriptAndExtractString(
+      web_contents_,
+      "navigator.bluetooth.requestDevice({filters: [{services: [0x180d]}]})"
+      "  .catch(e => domAutomationController.send(e.toString()));",
+      &result));
+  EXPECT_EQ("NotFoundError: User cancelled the requestDevice() chooser.",
+            result);
+
+  EXPECT_TRUE(content::ExecuteScriptAndExtractString(
+      web_contents_,
+      "navigator.bluetooth.requestDevice({filters: [{services: [0x180d]}]})"
+      "  .catch(e => domAutomationController.send(e.toString()));",
+      &result));
+  EXPECT_EQ("NotFoundError: User cancelled the requestDevice() chooser.",
+            result);
 }
 
 }  // namespace
