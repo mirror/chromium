@@ -466,7 +466,7 @@ void TestRenderFrameHost::SendRendererInitiatedNavigationRequest(
         std::string(), net::LOAD_NORMAL, false, REQUEST_CONTEXT_TYPE_HYPERLINK,
         blink::WebMixedContentContextType::kBlockable,
         false,  // is_form_submission
-        url::Origin());
+        url::Origin(), base::Optional<std::string>() /* suggested_filename */);
     CommonNavigationParams common_params;
     common_params.url = url;
     common_params.referrer = Referrer(GURL(), blink::kWebReferrerPolicyDefault);

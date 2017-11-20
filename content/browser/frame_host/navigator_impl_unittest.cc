@@ -765,7 +765,8 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
         REQUEST_CONTEXT_TYPE_SCRIPT,
         blink::WebMixedContentContextType::kBlockable,
         false,  // is_form_submission
-        url::Origin::Create(kUrl0));
+        url::Origin::Create(kUrl0),
+        base::Optional<std::string>() /* suggested_filename */);
     main_test_rfh()->OnMessageReceived(FrameHostMsg_BeginNavigation(
         main_test_rfh()->GetRoutingID(), common_params, begin_params));
   }

@@ -853,7 +853,7 @@ bool NavigationSimulator::SimulateRendererInitiatedStart() {
         REQUEST_CONTEXT_TYPE_HYPERLINK,
         blink::WebMixedContentContextType::kBlockable,
         false,  // is_form_submission
-        url::Origin());
+        url::Origin(), base::Optional<std::string>() /* suggested_filename */);
     CommonNavigationParams common_params;
     common_params.url = navigation_url_;
     common_params.referrer = referrer_;

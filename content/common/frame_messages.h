@@ -416,6 +416,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::BeginNavigationParams)
   IPC_STRUCT_TRAITS_MEMBER(initiator_origin)
   IPC_STRUCT_TRAITS_MEMBER(client_side_redirect_url)
   IPC_STRUCT_TRAITS_MEMBER(is_form_submission)
+  IPC_STRUCT_TRAITS_MEMBER(suggested_filename)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(content::StartNavigationParams)

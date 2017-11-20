@@ -268,11 +268,12 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
 
   std::unique_ptr<NavigationRequest> navigation_request(new NavigationRequest(
       frame_tree_node, common_params,
-      BeginNavigationParams(entry.extra_headers(), net::LOAD_NORMAL,
-                            false,  // skip_service_worker
-                            REQUEST_CONTEXT_TYPE_LOCATION,
-                            blink::WebMixedContentContextType::kBlockable,
-                            is_form_submission, initiator),
+      BeginNavigationParams(
+          entry.extra_headers(), net::LOAD_NORMAL,
+          false,  // skip_service_worker
+          REQUEST_CONTEXT_TYPE_LOCATION,
+          blink::WebMixedContentContextType::kBlockable, is_form_submission,
+          initiator, base::Optional<std::string>() /* suggested_filename */),
       request_params, browser_initiated,
       false,  // from_begin_navigation
       &frame_entry, &entry));

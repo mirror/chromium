@@ -154,7 +154,8 @@ class NavigationURLLoaderTest : public testing::Test {
         std::string(), net::LOAD_NORMAL, false, REQUEST_CONTEXT_TYPE_LOCATION,
         blink::WebMixedContentContextType::kBlockable,
         false,  // is_form_submission
-        url::Origin::Create(url));
+        url::Origin::Create(url),
+        base::Optional<std::string>() /* suggested_filename */);
     CommonNavigationParams common_params;
     common_params.url = url;
     common_params.allow_download = allow_download;
