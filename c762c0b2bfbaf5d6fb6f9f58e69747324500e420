@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0391ebee_ee1eacfc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/CallStackSidebarPane.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-20T19:44:04Z",
+      "side": 1,
+      "message": "drop ellipsis",
+      "range": {
+        "startLine": 307,
+        "startChar": 56,
+        "endLine": 307,
+        "endChar": 62
+      },
+      "revId": "c762c0b2bfbaf5d6fb6f9f58e69747324500e420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
