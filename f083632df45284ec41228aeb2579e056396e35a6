@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "8c8c48ca_dabab791",
+        "filename": "content/public/common/resource_request_body.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T19:29:41Z",
+      "side": 1,
+      "message": "The network service won\u0027t be able to open the file if we keep this API.  Regardless, removed comment.",
+      "parentUuid": "c626d361_61c1c8d8",
+      "revId": "f083632df45284ec41228aeb2579e056396e35a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e37be02a_19fe71a0",
         "filename": "content/public/common/resource_request_body.h",
         "patchSetId": 3
@@ -50,6 +68,24 @@
       "revId": "f083632df45284ec41228aeb2579e056396e35a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b2a8a50_52d0f9e8",
+        "filename": "content/public/common/resource_request_body.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T19:29:41Z",
+      "side": 1,
+      "message": "Updated to reflect actual behavior (Don\u0027t mention offset, but do mention length is truncated to be the end of the file)",
+      "parentUuid": "e37be02a_19fe71a0",
+      "revId": "f083632df45284ec41228aeb2579e056396e35a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "acbba6bc_0f410223",
+        "filename": "storage/common/data_element.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T19:29:41Z",
+      "side": 1,
+      "message": "I\u0027d attempted to update the list to include this information.",
+      "parentUuid": "bf6307f4_5525c8c7",
+      "revId": "f083632df45284ec41228aeb2579e056396e35a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "037d23f8_cd19735a",
         "filename": "storage/common/data_element.h",
         "patchSetId": 3
@@ -156,6 +210,24 @@
       "revId": "f083632df45284ec41228aeb2579e056396e35a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd75ddb1_a62697cc",
+        "filename": "storage/common/data_element.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T19:29:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "037d23f8_cd19735a",
+      "revId": "f083632df45284ec41228aeb2579e056396e35a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
