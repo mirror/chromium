@@ -17,7 +17,8 @@ namespace {
 
 bool IsWhitelistedPermissionType(PermissionType permission) {
   return permission == PermissionType::GEOLOCATION ||
-         permission == PermissionType::MIDI;
+         permission == PermissionType::MIDI ||
+         permission == PermissionType::SENSORS;
 }
 
 }  // namespace
@@ -85,13 +86,9 @@ blink::mojom::PermissionStatus ShellPermissionManager::GetPermissionStatus(
     return blink::mojom::PermissionStatus::GRANTED;
   }
 
-  // Generic sensor browser tests require permission to be granted.
-  if (permission == PermissionType::SENSORS &&
-      command_line->HasSwitch(switches::kContentBrowserTest)) {
-    return blink::mojom::PermissionStatus::GRANTED;
-  }
-
-  return blink::mojom::PermissionStatus::DENIED;
+  return IsWhitelistedPermissionType(permission)
+             ? blink::mojom::PermissionStatus::GRANTED
+             : blink::mojom::PermissionStatus::DENIED;
 }
 
 int ShellPermissionManager::SubscribePermissionStatusChange(
