@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c39d7789_63b3f0b2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-20T19:04:50Z",
+      "side": 1,
+      "message": "We should instead suspend model when creating:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/sdk/Target.js?rcl\u003d7fb06bca6072d21575fb3e7f495aa50f0ecc17bf\u0026l\u003d161\n\nIdeally, we would pass a \"suspended\" flag to all model constructors, to avoid enabling just to disable right away. Would you mind to do that?",
+      "revId": "b100f63229d8345e8eba988203b66e0cb4dfe8c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
