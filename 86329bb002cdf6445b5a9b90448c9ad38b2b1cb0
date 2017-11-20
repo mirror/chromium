@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "e33947d3_f60e7482",
+        "filename": "content/browser/webrtc/webrtc_image_capture_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-20T03:39:34Z",
+      "side": 1,
+      "message": "I\u0027d prefer to have the tests run on MediaFoundation.\nThe fact that they currently don\u0027t run on DirectShow is bad, but is of course not an issue of this CL.",
+      "parentUuid": "ba20b77e_7e846a7a",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ec4409e_46779e46",
         "filename": "media/capture/video/win/video_capture_device_factory_win.h",
         "patchSetId": 16
@@ -457,6 +475,24 @@
     },
     {
       "key": {
+        "uuid": "b6f3eb32_f7a7c106",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-20T03:39:34Z",
+      "side": 1,
+      "message": "I am okay with that proposal.\nLet\u0027s add a brief comment to the break; statement explaining this.",
+      "parentUuid": "b33d5e79_b542744d",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6aa6bd56_eff3ae26",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 16
@@ -556,6 +592,24 @@
       "side": 1,
       "message": "I don\u0027t know :)\n\nIf we are not sure, maybe we should take defensive measures? \nCould you tell me which ones?",
       "parentUuid": "6a1c6dc8_1e180760",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a56adf07_df6bed80",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-20T03:39:34Z",
+      "side": 1,
+      "message": "Yes, we need to make sure that we can be certain that this works as intended.\nMy recommendation (and really the only reliable way I can think of) is to add a minimal test that verifies our assumptions.\n\nInstead of passing in a MFPhotoCallback, the test could pass in a specialized implementation that allows it to verify the refcounts before/during/after usage by MediaFoundation.",
+      "parentUuid": "ebdec810_58407a3f",
       "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -813,6 +867,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "db1cf791_2465d722",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e90bfac9_e956fc25",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-20T03:39:34Z",
+      "side": 1,
+      "message": "Added a task for this: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d786854",
+      "parentUuid": "a08464e1_753b3e90",
       "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

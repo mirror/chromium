@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9ae7b61_a32db7c6",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-20T03:39:34Z",
+      "side": 1,
+      "message": "As per Chromium style guidelines, single line blocks following a control statement are supposed to go without { }.",
+      "revId": "9ebdfeaaedd077a1491617b46fdb8f2810adbe59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64834cbd_eae8efa1",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-20T03:39:34Z",
+      "side": 1,
+      "message": "We could eliminate the lengthy scope below by inverting this if clause as well and returning early.",
+      "revId": "9ebdfeaaedd077a1491617b46fdb8f2810adbe59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
