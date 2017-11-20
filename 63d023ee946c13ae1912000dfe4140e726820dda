@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "928999a4_b6eb7a15",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-20T20:44:05Z",
+      "side": 1,
+      "message": "can this simply be:\nTestingProfileManager profile_manager_;\n\n?",
+      "range": {
+        "startLine": 244,
+        "startChar": 2,
+        "endLine": 244,
+        "endChar": 58
+      },
+      "revId": "63d023ee946c13ae1912000dfe4140e726820dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab95153d_434aff78",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-20T20:44:05Z",
+      "side": 1,
+      "message": "may be:\nTestUINetworkQualityEstimatorService ui_nqe_service_;",
+      "range": {
+        "startLine": 248,
+        "startChar": 2,
+        "endLine": 248,
+        "endChar": 72
+      },
+      "revId": "63d023ee946c13ae1912000dfe4140e726820dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
