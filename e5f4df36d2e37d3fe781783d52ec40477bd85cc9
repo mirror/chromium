@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bf2b110_bbffc858",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-20T19:33:16Z",
+      "side": 1,
+      "message": "Do you need the gpu specified?",
+      "revId": "e5f4df36d2e37d3fe781783d52ec40477bd85cc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e4dfdc_81f87ef3",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-20T19:33:16Z",
+      "side": 1,
+      "message": "I think this os bit is wrong \u0026 not needed?",
+      "revId": "e5f4df36d2e37d3fe781783d52ec40477bd85cc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d14ee429_b052beb7",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-20T19:33:16Z",
+      "side": 1,
+      "message": "pool is Chrome-perf-fyi",
+      "revId": "e5f4df36d2e37d3fe781783d52ec40477bd85cc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
