@@ -114,6 +114,11 @@ int BrokerProcess::Open(const char* pathname, int flags) const {
   return broker_client_->Open(pathname, flags);
 }
 
+int BrokerProcess::Stat(const char* pathname, struct stat* sb) const {
+  RAW_CHECK(initialized_);
+  return broker_client_->Stat(pathname, sb);
+}
+
 // static
 intptr_t BrokerProcess::SIGSYS_Handler(const sandbox::arch_seccomp_data& args,
                                        void* aux_broker_process) {
@@ -148,6 +153,9 @@ intptr_t BrokerProcess::SIGSYS_Handler(const sandbox::arch_seccomp_data& args,
       } else {
         return -EPERM;
       }
+    case __NR_stat:
+      return broker_process->Stat(reinterpret_cast<const char*>(args.args[0]),
+                                  reinterpret_cast<struct stat*>(args.args[1]));
     default:
       RAW_CHECK(false);
       return -ENOSYS;
@@ -155,4 +163,4 @@ intptr_t BrokerProcess::SIGSYS_Handler(const sandbox::arch_seccomp_data& args,
 }
 
 }  // namespace syscall_broker
-}  // namespace sandbox.
+}  // namespace sandbox
