@@ -20,6 +20,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_process_platform_part.h"
+#include "chrome/common/features.h"
 #include "extensions/features/features.h"
 #include "media/media_features.h"
 #include "printing/features/features.h"
@@ -133,6 +134,9 @@ class TestingBrowserProcess : public BrowserProcess {
       override;
   physical_web::PhysicalWebDataSource* GetPhysicalWebDataSource() override;
   prefs::InProcessPrefServiceFactory* pref_service_factory() const override;
+#if BUILDFLAG(ENABLE_RESOURCE_COORDINATOR)
+  tabs::TabsTracker* GetTabsTracker() override;
+#endif
 
   // Set the local state for tests. Consumer is responsible for cleaning it up
   // afterwards (using ScopedTestingLocalState, for example).
@@ -197,6 +201,12 @@ class TestingBrowserProcess : public BrowserProcess {
   // GetTabManager() is invoked on supported platforms.
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
   std::unique_ptr<resource_coordinator::TabManager> tab_manager_;
+#endif
+
+#if BUILDFLAG(ENABLE_RESOURCE_COORDINATOR)
+  // |tabs_tracker_| is null by default and will be created when
+  // GetTabsTracker() is invoked.
+  std::unique_ptr<tabs::TabsTracker> tabs_tracker_;
 #endif
 
   // The following objects are not owned by TestingBrowserProcess:
