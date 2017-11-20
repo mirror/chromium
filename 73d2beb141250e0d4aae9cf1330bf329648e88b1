@@ -16,6 +16,24 @@
       "revId": "73d2beb141250e0d4aae9cf1330bf329648e88b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3237c6dc_c1affac2",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2885,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T18:32:49Z",
+      "side": 1,
+      "message": "Yeah, it crashes on ASAN. I think we just had no tests going into that code path at all, cuz a single resource is enough to cause ASAN to notice. Though, with the vector I guess it would have needed more than one anyhow. I added 99 more resources.",
+      "parentUuid": "8d1bf6e4_dab6fae4",
+      "revId": "73d2beb141250e0d4aae9cf1330bf329648e88b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
