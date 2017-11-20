@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "246c95e7_ecb3bfa6",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-11-20T08:28:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f3ccb71_13d1e199",
+      "revId": "849371b7be946b6f41265e4e03e4e72804d450c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50615f2c_0e0f6680",
         "filename": "content/browser/service_worker/service_worker_storage.cc",
         "patchSetId": 7
@@ -51,6 +69,24 @@
       "revId": "849371b7be946b6f41265e4e03e4e72804d450c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5dec0df_89fa8322",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-11-20T08:28:18Z",
+      "side": 1,
+      "message": "I did try to use a template before adding this switch everywhere, but that didn\u0027t work.\nHowever, looks like we can use macros, and that doesn\u0027t seem to be to complex.",
+      "parentUuid": "50615f2c_0e0f6680",
+      "revId": "849371b7be946b6f41265e4e03e4e72804d450c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
