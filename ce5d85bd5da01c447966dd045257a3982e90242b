@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "39de8d2c_26841db1",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:20:18Z",
+      "side": 1,
+      "message": "Yes, that\u0027s what I meant.\n\nI don\u0027t suppose we could make a test that makes the CTVerifier do its thing instead - a test that relies on direct access to network stack objects isn\u0027t going to be useful - that\u0027s going to have to go away when the network service ships, and there will not be any equivalent way to test the existence of stuff.\n\nA browser test that tests behavior, on the other hand, will be able to pass both with any without the network service, so is much more future proof.",
+      "parentUuid": "585b2eb9_bd634400",
+      "range": {
+        "startLine": 826,
+        "startChar": 15,
+        "endLine": 826,
+        "endChar": 26
+      },
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4d682bc_ffe36154",
         "filename": "components/certificate_transparency/single_tree_tracker.cc",
         "patchSetId": 5
