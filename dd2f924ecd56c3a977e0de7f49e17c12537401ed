@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "99df3dce_b0210a3e",
+        "filename": "net/url_request/url_request_context_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-11-20T20:30:12Z",
+      "side": 1,
+      "message": "I\u0027m not enthusiastic about moving it into *that* if, since it really wants to happen only if *both* services are set up. I tried adding comments and rewriting the last conditional to make that clearer. Is this okay?",
+      "parentUuid": "5fbd9278_79b3b90c",
+      "range": {
+        "startLine": 634,
+        "startChar": 17,
+        "endLine": 634,
+        "endChar": 34
+      },
+      "revId": "dd2f924ecd56c3a977e0de7f49e17c12537401ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8f4faa0_b0f8d724",
         "filename": "net/url_request/url_request_context_builder.h",
         "patchSetId": 3
@@ -188,6 +212,30 @@
       "revId": "dd2f924ecd56c3a977e0de7f49e17c12537401ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f5579dd_880a501d",
+        "filename": "net/url_request/url_request_context_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-11-20T20:30:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35f89c70_bcc917a9",
+      "range": {
+        "startLine": 301,
+        "startChar": 7,
+        "endLine": 301,
+        "endChar": 40
+      },
+      "revId": "dd2f924ecd56c3a977e0de7f49e17c12537401ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
