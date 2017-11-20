@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61d110b2_eb34455f",
+        "filename": "ui/base/win/direct_manipulation.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-11-20T19:22:03Z",
+      "side": 1,
+      "message": "Do we have anything call in every time frame? I found BeginFrame may not call when nothing change.",
+      "range": {
+        "startLine": 161,
+        "startChar": 39,
+        "endLine": 161,
+        "endChar": 54
+      },
+      "revId": "ef42dc329d87a7b3f6a9a4ca8b00891b95675471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f58538_d6446fa0",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-11-20T19:22:03Z",
+      "side": 1,
+      "message": "does it convert to ScrollEvent better than MouseWheelEvent here? Since we convert ScrollEvent to GestureEvent in render_widget_host_view_event_handler. But MouseWheelEvent to WebMouseWheelEvent.",
+      "revId": "ef42dc329d87a7b3f6a9a4ca8b00891b95675471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
