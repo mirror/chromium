@@ -53,10 +53,8 @@ class LifetimeUnit {
   // Returns a title describing this LifetimeUnit.
   virtual base::string16 GetTitle() const = 0;
 
-#if defined(OS_CHROMEOS)
   // Returns the handle of the process in which this LifetimeUnit lives.
   virtual base::ProcessHandle GetProcessHandle() const = 0;
-#endif  // defined(OS_CHROMEOS)
 
   // Returns a key that can be used to evaluate the relative importance of this
   // LifetimeUnit.

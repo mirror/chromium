@@ -193,7 +193,7 @@ bool TabLifetimeUnitImpl::CanDiscard(DiscardCondition discard_condition) const {
   // If the tab was never focused, use GetLastActiveTime() (equal to the tab
   // creation time) to determine when the tab was last used.
   base::TimeTicks last_focused_time = last_focused_time_.is_null()
-                                          ? web_contents->GetLastActiveTime()
+                                          ? web_contents()->GetLastActiveTime()
                                           : last_focused_time_;
 
   if (NowTicks() - last_focused_time < kRecentUsageProtectionTime)

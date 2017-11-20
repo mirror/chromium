@@ -68,7 +68,7 @@ class TabLifetimeUnitImpl : public TabLifetimeUnit,
 
 #if !defined(OS_CHROMEOS)
   // Time duing which a tab cannot be discarded after having been active.
-  constexpr base::TimeDelta kRecentUsageProtectionTime =
+  static constexpr base::TimeDelta kRecentUsageProtectionTime =
       base::TimeDelta::FromMinutes(10);
 #endif
 
