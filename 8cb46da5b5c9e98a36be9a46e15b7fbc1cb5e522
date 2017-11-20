@@ -59,6 +59,29 @@
     },
     {
       "key": {
+        "uuid": "9600b2f8_a0871d7f",
+        "filename": "components/metrics/metrics_pref_names.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-20T20:46:21Z",
+      "side": 1,
+      "message": "nit: sort",
+      "range": {
+        "startLine": 115,
+        "startChar": 39,
+        "endLine": 115,
+        "endChar": 55
+      },
+      "revId": "8cb46da5b5c9e98a36be9a46e15b7fbc1cb5e522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "668ea890_a356ac48",
         "filename": "components/metrics/metrics_service.cc",
         "patchSetId": 4
@@ -70,6 +93,30 @@
       "writtenOn": "2017-11-20T19:49:35Z",
       "side": 1,
       "message": "It seems it might be better to log gms core update as another stability metric and then we can use that logic server-side to determine if it makes sense to omit it?",
+      "range": {
+        "startLine": 484,
+        "startChar": 77,
+        "endLine": 484,
+        "endChar": 0
+      },
+      "revId": "8cb46da5b5c9e98a36be9a46e15b7fbc1cb5e522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81fd2ec7_70150ca7",
+        "filename": "components/metrics/metrics_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-20T20:46:21Z",
+      "side": 1,
+      "message": "We just went through an exercise of this on the renderer side and ended up updating the \"real\" renderer metric cause it\u0027s easier to reflect that everywhere and in all dashboards. So I\u0027d prefer to do it in the client but I\u0027d be happy for us to record it as a separate metric for one milestone and then assuming it looks good, perform the subtraction client-side.",
+      "parentUuid": "668ea890_a356ac48",
       "range": {
         "startLine": 484,
         "startChar": 77,
