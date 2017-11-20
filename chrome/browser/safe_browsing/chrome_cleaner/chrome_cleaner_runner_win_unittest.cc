@@ -114,6 +114,7 @@ class ChromeCleanerRunnerSimpleTest
   // IPC callbacks.
 
   void OnPromptUser(std::unique_ptr<std::set<base::FilePath>> files_to_delete,
+                    std::unique_ptr<std::set<base::string16>> registry_entry,
                     ChromePrompt::PromptUserCallback response) {}
 
   void OnConnectionClosed() {}
@@ -273,6 +274,7 @@ class ChromeCleanerRunnerTest
 
   // Will receive the main Mojo message from the Mock Chrome Cleaner process.
   void OnPromptUser(std::unique_ptr<std::set<base::FilePath>> files_to_delete,
+                    std::unique_ptr<std::set<base::string16>> registry_entry,
                     ChromePrompt::PromptUserCallback response) {
     on_prompt_user_called_ = true;
     received_files_to_delete_ = std::move(files_to_delete);

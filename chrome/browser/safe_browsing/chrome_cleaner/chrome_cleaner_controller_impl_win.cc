@@ -463,6 +463,7 @@ void ChromeCleanerControllerImpl::OnChromeCleanerFetchedAndVerified(
 void ChromeCleanerControllerImpl::WeakOnPromptUser(
     const base::WeakPtr<ChromeCleanerControllerImpl>& controller,
     std::unique_ptr<std::set<base::FilePath>> files_to_delete,
+    std::unique_ptr<std::set<base::string16>> registry_keys,
     ChromePrompt::PromptUserCallback prompt_user_callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
@@ -474,12 +475,13 @@ void ChromeCleanerControllerImpl::WeakOnPromptUser(
                                              PromptAcceptance::DENIED));
   }
 
-  controller->OnPromptUser(std::move(files_to_delete),
+  controller->OnPromptUser(std::move(files_to_delete), std::move(registry_keys),
                            std::move(prompt_user_callback));
 }
 
 void ChromeCleanerControllerImpl::OnPromptUser(
     std::unique_ptr<std::set<base::FilePath>> files_to_delete,
+    std::unique_ptr<std::set<base::string16>> registry_keys,
     ChromePrompt::PromptUserCallback prompt_user_callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(files_to_delete);
