@@ -2,6 +2,114 @@
   "comments": [
     {
       "key": {
+        "uuid": "eb62bede_d5103c7c",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-20T16:02:05Z",
+      "side": 1,
+      "message": "s/name/id in this comment - channels also have names, so this is important!",
+      "revId": "f6ff1a07ace2058d8f8477db3261b24b9dfafb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c28e028_f8dd2a9f",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-20T16:02:05Z",
+      "side": 1,
+      "message": "nit: \"if hasn\u0027t\" doesn\u0027t sound quite right, replace with \"if one does not exist\"?",
+      "revId": "f6ff1a07ace2058d8f8477db3261b24b9dfafb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1baa90e_bff233b1",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-20T16:02:05Z",
+      "side": 1,
+      "message": "nit: s/IfNotExist/IfItDoesNotExist (Or maybe rename this method to \u0027ensureNotificationChannelExists()\u0027?)",
+      "revId": "f6ff1a07ace2058d8f8477db3261b24b9dfafb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f1d7f6_0cfffab5",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-20T16:02:05Z",
+      "side": 1,
+      "message": "This line is unnecessary. Just create the channel regardless. If it already exists, this will be a no-op. (See go/notification-channels item #5).",
+      "revId": "f6ff1a07ace2058d8f8477db3261b24b9dfafb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6967cb3c_079bc18a",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-20T16:02:05Z",
+      "side": 1,
+      "message": "I\u0027m curious, why would the notification be null?",
+      "revId": "f6ff1a07ace2058d8f8477db3261b24b9dfafb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3319c1_68d621a0",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-20T16:02:05Z",
+      "side": 1,
+      "message": "Probably worth documenting why this reflection is necessary here, above the try-block - it\u0027s because the notification is already built when it\u0027s passed to the WebApk, right? (and presumably we can\u0027t pass a Notification.Builder between Chrome and the web apk because Notification.Builder does not implement Parcelable, amiright?)",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 178,
+        "endChar": 85
+      },
+      "revId": "f6ff1a07ace2058d8f8477db3261b24b9dfafb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16026058_28e44f29",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
         "patchSetId": 4
@@ -71,6 +179,24 @@
       "revId": "f6ff1a07ace2058d8f8477db3261b24b9dfafb54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5898fb08_f9a579f3",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-20T16:02:05Z",
+      "side": 1,
+      "message": "Actually, since Java 7 you can still catch just the particular exceptions you care about with a single catch block:\n\n  } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {\n\nSee https://docs.oracle.com/javase/7/docs/technotes/guides/language/catch-multiple.html \n\n(If you\u0027re using Android Studio it should give you an auto-fix to collapse the catch blocks into one).",
+      "parentUuid": "d73f3c8f_73662338",
+      "revId": "f6ff1a07ace2058d8f8477db3261b24b9dfafb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
