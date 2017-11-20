@@ -33,6 +33,24 @@
       "revId": "8e9f3636c73a91773b667e92042253ad48a0e271",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494d0f69_d332968e",
+        "filename": "services/viz/public/interfaces/hit_test/input_target_client.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-20T16:26:20Z",
+      "side": 1,
+      "message": "Sure. There will be some additions to this code later. But why do you need touch action in particular?",
+      "parentUuid": "95121986_437c66db",
+      "revId": "8e9f3636c73a91773b667e92042253ad48a0e271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
