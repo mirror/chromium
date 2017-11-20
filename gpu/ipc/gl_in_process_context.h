@@ -53,6 +53,7 @@ class GL_IN_PROCESS_CONTEXT_EXPORT GLInProcessContext {
       const SharedMemoryLimits& memory_limits,
       GpuMemoryBufferManager* gpu_memory_buffer_manager,
       ImageFactory* image_factory,
+      GpuChannelManager* gpu_channel_manager,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner) = 0;
 
   virtual const gpu::Capabilities& GetCapabilities() const = 0;

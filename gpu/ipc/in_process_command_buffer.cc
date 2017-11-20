@@ -254,8 +254,11 @@ gpu::ContextResult InProcessCommandBuffer::Initialize(
     InProcessCommandBuffer* share_group,
     GpuMemoryBufferManager* gpu_memory_buffer_manager,
     ImageFactory* image_factory,
+    GpuChannelManager* gpu_channel_manager,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   DCHECK(!share_group || service_.get() == share_group->service_.get());
+
+  gpu_channel_manager_ = gpu_channel_manager;
 
   if (surface) {
     // If a surface is provided, we are running in a webview and should not have
@@ -1039,7 +1042,12 @@ void InProcessCommandBuffer::SetSnapshotRequested() {
 void InProcessCommandBuffer::DidCreateAcceleratedSurfaceChildWindow(
     SurfaceHandle parent_window,
     SurfaceHandle child_window) {
-  ::SetParent(child_window, parent_window);
+  if (gpu_channel_manager_) {
+    gpu_channel_manager_->delegate()->SendAcceleratedSurfaceCreatedChildWindow(
+        parent_window, child_window);
+  } else {
+    ::SetParent(child_window, parent_window);
+  }
 }
 #endif
 

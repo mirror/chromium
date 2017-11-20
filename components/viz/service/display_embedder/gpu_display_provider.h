@@ -45,8 +45,9 @@ class VIZ_SERVICE_EXPORT GpuDisplayProvider : public DisplayProvider {
  private:
   const uint32_t restart_id_;
   scoped_refptr<gpu::InProcessCommandBuffer::Service> gpu_service_;
+  gpu::GpuChannelManager* const gpu_channel_manager_;
   std::unique_ptr<gpu::GpuMemoryBufferManager> gpu_memory_buffer_manager_;
-  gpu::ImageFactory* image_factory_;
+  gpu::ImageFactory* const image_factory_;
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
