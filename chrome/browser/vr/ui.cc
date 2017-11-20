@@ -33,7 +33,7 @@ Ui::Ui(UiBrowserInterface* browser,
           base::MakeUnique<ContentInputDelegate>(content_input_forwarder)),
       input_manager_(base::MakeUnique<UiInputManager>(scene_.get())),
       weak_ptr_factory_(this) {
-  model_->started_for_autopresentation =
+  model_->web_vr_started_for_autopresentation =
       ui_initial_state.web_vr_autopresentation_expected;
   model_->experimental_features_enabled =
       base::FeatureList::IsEnabled(features::kVrBrowsingExperimentalFeatures);
@@ -41,10 +41,8 @@ Ui::Ui(UiBrowserInterface* browser,
       ui_initial_state.has_or_can_request_audio_permission;
 
   scene_manager_ = base::MakeUnique<UiSceneManager>(
-      browser, scene_.get(), content_input_delegate_.get(), model_.get(),
-      ui_initial_state);
+      browser, scene_.get(), content_input_delegate_.get(), model_.get());
 }
-
 Ui::~Ui() = default;
 
 base::WeakPtr<BrowserUiInterface> Ui::GetBrowserUiWeakPtr() {
@@ -54,11 +52,16 @@ base::WeakPtr<BrowserUiInterface> Ui::GetBrowserUiWeakPtr() {
 void Ui::SetWebVrMode(bool enabled, bool show_toast) {
   model_->web_vr_timeout_state =
       enabled ? kWebVrAwaitingFirstFrame : kWebVrNoTimeoutPending;
-  scene_manager_->SetWebVrMode(enabled, show_toast);
+  model_->web_vr_mode = enabled;
+  model_->web_vr_show_toast = show_toast;
+  if (!enabled) {
+    model_->web_vr_show_splash_screen = false;
+    model_->web_vr_started_for_autopresentation = false;
+  }
 }
 
 void Ui::SetFullscreen(bool enabled) {
-  scene_manager_->SetFullscreen(enabled);
+  model_->fullscreen = enabled;
 }
 
 void Ui::SetToolbarState(const ToolbarState& state) {
@@ -67,7 +70,6 @@ void Ui::SetToolbarState(const ToolbarState& state) {
 
 void Ui::SetIncognito(bool enabled) {
   model_->incognito = enabled;
-  scene_manager_->SetIncognito(enabled);
 }
 
 void Ui::SetLoading(bool loading) {
@@ -79,11 +81,12 @@ void Ui::SetLoadProgress(float progress) {
 }
 
 void Ui::SetIsExiting() {
-  scene_manager_->SetIsExiting();
+  model_->exiting_vr = true;
 }
 
 void Ui::SetHistoryButtonsEnabled(bool can_go_back, bool can_go_forward) {
-  scene_manager_->SetHistoryButtonsEnabled(can_go_back, can_go_forward);
+  // We don't yet support forward navigation so we ignore this parameter.
+  model_->can_navigate_back = can_go_back;
 }
 
 void Ui::SetVideoCaptureEnabled(bool enabled) {
@@ -114,8 +117,8 @@ void Ui::SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) {
 
   if (model_->active_modal_prompt_type != kModalPromptTypeNone) {
     browser_->OnExitVrPromptResult(
-        GetReasonForPrompt(model_->active_modal_prompt_type),
-        ExitVrPromptChoice::CHOICE_NONE);
+        ExitVrPromptChoice::CHOICE_NONE,
+        GetReasonForPrompt(model_->active_modal_prompt_type));
   }
 
   switch (reason) {
@@ -151,7 +154,7 @@ void Ui::SetOmniboxSuggestions(
 }
 
 bool Ui::ShouldRenderWebVr() {
-  return scene_manager_->ShouldRenderWebVr();
+  return model_->should_render_web_vr();
 }
 
 void Ui::OnGlInitialized(unsigned int content_texture_id,
@@ -165,17 +168,29 @@ void Ui::OnGlInitialized(unsigned int content_texture_id,
   } else {
     provider_ = base::MakeUnique<CpuSurfaceProvider>();
   }
-  scene_manager_->OnGlInitialized(content_texture_id, content_location,
-                                  provider_.get());
+  scene_->OnGlInitialized(provider_.get());
+  model_->content_texture_id = content_texture_id;
+  model_->content_location = content_location;
 }
 
 void Ui::OnAppButtonClicked() {
-  scene_manager_->OnAppButtonClicked();
+  // App button clicks should be a no-op when auto-presenting WebVR.
+  if (model_->web_vr_started_for_autopresentation) {
+    return;
+  }
+
+  // If browsing mode is disabled, the app button should no-op.
+  if (!model_->browsing_enabled) {
+    return;
+  }
+
+  // App button click exits the WebVR presentation and fullscreen.
+  browser_->ExitPresent();
+  browser_->ExitFullscreen();
 }
 
 void Ui::OnAppButtonGesturePerformed(
     PlatformController::SwipeDirection direction) {
-  scene_manager_->OnAppButtonGesturePerformed(direction);
 }
 
 void Ui::OnControllerUpdated(const ControllerModel& controller_model,
@@ -186,12 +201,11 @@ void Ui::OnControllerUpdated(const ControllerModel& controller_model,
 }
 
 void Ui::OnProjMatrixChanged(const gfx::Transform& proj_matrix) {
-  scene_manager_->OnProjMatrixChanged(proj_matrix);
+  model_->projection_matrix = proj_matrix;
 }
 
 void Ui::OnWebVrFrameAvailable() {
   model_->web_vr_timeout_state = kWebVrNoTimeoutPending;
-  scene_manager_->OnWebVrFrameAvailable();
 }
 
 void Ui::OnWebVrTimeoutImminent() {
@@ -217,6 +231,10 @@ void Ui::OnPlatformControllerInitialized(PlatformController* controller) {
 bool Ui::IsControllerVisible() const {
   UiElement* controller_group = scene_->GetUiElementByName(kControllerGroup);
   return controller_group && controller_group->GetTargetOpacity() > 0.0f;
+}
+
+void Ui::Dump() {
+  scene_->root_element().DumpHierarchy(std::vector<size_t>());
 }
 
 }  // namespace vr

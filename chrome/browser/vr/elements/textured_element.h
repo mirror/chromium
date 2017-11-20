@@ -15,14 +15,20 @@ class SkSurface;
 
 namespace vr {
 
+struct ColorScheme;
 class UiTexture;
 
 class TexturedElement : public UiElement {
  public:
+  struct ResizeVertically {};
+  struct ResizeHorizontally {};
+
   // |preferred_width| is the element's desired width in meters. Constraints
   // implied by the texture being rendered may or may not allow it to be
   // rendered exactly at the preferred width.
   explicit TexturedElement(int maximum_width);
+  TexturedElement(int maximum_width, ResizeVertically);
+  TexturedElement(int maximum_width, ResizeHorizontally);
   ~TexturedElement() override;
 
   void Initialize(SkiaSurfaceProvider* provider) final;
@@ -33,21 +39,27 @@ class TexturedElement : public UiElement {
   static void SetInitializedForTesting();
   static void SetRerenderIfNotDirtyForTesting();
 
+  void SetForegroundColor(SkColor color);
+  void SetBackgroundColor(SkColor color);
+
+  // This should only be bound by elements with complex backing textures. See
+  // UiTexture::PermitColorSchemeUse.
+  void SetColorScheme(const ColorScheme* color_scheme);
+
  protected:
   virtual UiTexture* GetTexture() const = 0;
-  virtual void UpdateElementSize();
+  void UpdateElementSize();
 
   bool PrepareToDraw() final;
 
  private:
   bool UpdateTexture();
 
-  void OnSetMode() override;
-
   gfx::Size texture_size_;
   GLuint texture_handle_ = 0;
   int maximum_width_;
   bool initialized_ = false;
+  bool resize_vertically_ = true;
 
   sk_sp<SkSurface> surface_;
   SkiaSurfaceProvider* provider_ = nullptr;

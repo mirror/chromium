@@ -10,4 +10,13 @@ Model::Model() {}
 
 Model::~Model() {}
 
+const ColorScheme& Model::color_scheme() const {
+  ColorScheme::Mode mode = ColorScheme::kModeNormal;
+  if (incognito)
+    mode = ColorScheme::kModeIncognito;
+  if (fullscreen)
+    mode = ColorScheme::kModeFullscreen;
+  return ColorScheme::GetColorScheme(mode);
+}
+
 }  // namespace vr

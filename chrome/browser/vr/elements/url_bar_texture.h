@@ -72,8 +72,10 @@ class UrlBarTexture : public UiTexture {
   float ToMeters(float pixels) const;
   bool HitsTransparentRegion(const gfx::PointF& meters, bool left) const;
   void RenderUrl(const gfx::Size& texture_size, const gfx::Rect& text_bounds);
-  void OnSetMode() override;
   SkColor BackButtonColor() const;
+
+  // FIX-BEFORE-SUBMITTING, create crbug and link.
+  void OnSetColorScheme() override;
 
   gfx::SizeF size_;
   bool back_hovered_ = false;

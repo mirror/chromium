@@ -6,8 +6,8 @@
 
 #include "base/i18n/case_conversion.h"
 #include "cc/paint/skia_paint_canvas.h"
-#include "chrome/browser/vr/color_scheme.h"
 #include "chrome/browser/vr/elements/vector_icon.h"
+#include "chrome/browser/vr/model/color_scheme.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/vector_icons/vector_icons.h"
@@ -205,5 +205,7 @@ gfx::Size AudioPermissionPromptTexture::GetPreferredTextureSize(
 gfx::SizeF AudioPermissionPromptTexture::GetDrawnSize() const {
   return size_;
 }
+
+void AudioPermissionPromptTexture::OnSetColorScheme() {}
 
 }  // namespace vr
