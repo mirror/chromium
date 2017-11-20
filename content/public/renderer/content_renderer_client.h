@@ -19,6 +19,7 @@
 #include "build/build_config.h"
 #include "content/public/common/content_client.h"
 #include "media/base/decode_capabilities.h"
+#include "services/service_manager/public/interfaces/service.mojom.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
 #include "third_party/WebKit/public/platform/WebContentSettingsClient.h"
 #include "third_party/WebKit/public/web/WebNavigationPolicy.h"
@@ -379,6 +380,11 @@ class CONTENT_EXPORT ContentRendererClient {
       const GURL& url,
       base::Time cert_validity_start,
       std::string* console_messsage);
+
+  // Asks the embedder to bind |service_request| to its renderer-side service
+  // implementation.
+  virtual void CreateRendererService(
+      service_manager::mojom::ServiceRequest service_request) {}
 };
 
 }  // namespace content
