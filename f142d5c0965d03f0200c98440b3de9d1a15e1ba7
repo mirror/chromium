@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7194dfee_c60d4b89",
+        "filename": "ios/chrome/test/app/ios_chrome_scoped_testing_block_popups_pref.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-20T19:24:05Z",
+      "side": 1,
+      "message": "Since this calls chrome_test_util, I couldn\u0027t put it in the parent directory, due to circular dependencies.\n\nThere are similar classes one directory up (//ios/chrome/test).\n\nDo you have any thoughts on the location and name of this file?",
+      "revId": "f142d5c0965d03f0200c98440b3de9d1a15e1ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
