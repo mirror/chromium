@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b031320a_d2982832",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-20T09:56:59Z",
+      "side": 1,
+      "message": "nit: I\u0027d personally prefer using domWindow-\u003eGetWrapperTypeInfo() because the type safe is guaranteed by the bindings code generator.  If you directly use V8T::wrapperTypeInfo, no one guarantees if it\u0027s the right type.",
+      "revId": "a1db3d2e773770e44ff8f00fbee57591b22de098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f6fdc7_6e2b9e33",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-20T09:56:59Z",
+      "side": 1,
+      "message": "No need to extract |window_wrapper|.  We can pass in |global_proxy|.",
+      "revId": "a1db3d2e773770e44ff8f00fbee57591b22de098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfc47c27_2ecae0ef",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-20T09:56:59Z",
+      "side": 1,
+      "message": "nit: Add an excuse that InstallConditionalFeatures does not yet take care of origin trial features.",
+      "revId": "a1db3d2e773770e44ff8f00fbee57591b22de098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd69ce7_ef3df79f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-20T09:56:59Z",
+      "side": 1,
+      "message": "Hmm, it\u0027s still a bit itchy.\n\nI\u0027d write that:\n\n    if (!V8ContextSnapshot::InstallConditionalFeatures(...)) {\n      // It turned out that we didn\u0027t use the snapshot.\n      wrapper_type_info-\u003eInstallCOnditionalFeatures(...);\n    }\n\nThis looks similar to LWP::CreateContext.\n\nIn the above case, V8ContextSnapshot takes the responsibility of installing features for everything (including properties on the instance).  So it\u0027s \"snapshot\" vs \"non-snapshot\".\n\nIn the case of this patch set, it\u0027s \"snapshot \u0026 non-instance\" vs \"instance regardless of whether snapshot or not\", and it doesn\u0027t look like a good cutting face.  This is why I\u0027d write the above.",
+      "revId": "a1db3d2e773770e44ff8f00fbee57591b22de098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb15a76_e3b465b3",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-20T09:56:59Z",
+      "side": 1,
+      "message": "nit: Optionally you can add a TODO comment to fold the origin trial things into \"conditional features\".",
+      "revId": "a1db3d2e773770e44ff8f00fbee57591b22de098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2945b6_133ac8b4",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-20T09:56:59Z",
+      "side": 1,
+      "message": "nit: s/a/the/",
+      "range": {
+        "startLine": 86,
+        "startChar": 67,
+        "endLine": 86,
+        "endChar": 68
+      },
+      "revId": "a1db3d2e773770e44ff8f00fbee57591b22de098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "561f357c_bd2d6d6c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-20T09:56:59Z",
+      "side": 1,
+      "message": "nit: s/some/also on/",
+      "revId": "a1db3d2e773770e44ff8f00fbee57591b22de098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
