@@ -10,6 +10,7 @@
 #include "ash/ash_export.h"
 #include "ash/login_status.h"
 #include "ash/system/tray/tray_background_view.h"
+#include "base/cancelable_callback.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -69,6 +70,7 @@ class ASH_EXPORT WebNotificationTray
 
   // Returns true if the message center bubble is visible.
   bool IsMessageCenterBubbleVisible() const;
+  bool IsPopupVisible() const;
 
   // Overridden from TrayBackgroundView.
   void UpdateAfterShelfAlignmentChange() override;
@@ -91,16 +93,33 @@ class ASH_EXPORT WebNotificationTray
 
   // Overridden from message_center::UiDelegate.
   void OnMessageCenterContentsChanged() override;
-  bool ShowMessageCenter(bool show_by_click) override;
-  void HideMessageCenter() override;
-  bool ShowPopups() override;
-  void HidePopups() override;
-  bool ShowNotifierSettings() override;
+  void ShowNotifierSettings() override;
 
   // Overridden from ui::SimpleMenuModel::Delegate.
   bool IsCommandIdChecked(int command_id) const override;
   bool IsCommandIdEnabled(int command_id) const override;
   void ExecuteCommand(int command_id, int event_flags) override;
+
+  // Shows or updates the message center bubble and hides the popup bubble. Set
+  // |show_by_click| to true if bubble is shown by mouse or gesture click.
+  // Returns whether the message center is visible after the call, whether or
+  // not it was visible before.
+
+  // Hides the message center if visible and returns whether the message center
+  // was visible before.
+
+  // Display the message center containing all undismissed notifications to the
+  // user. Set |show_by_click| to true if message center is shown by mouse or
+  // gesture click. Returns true if the center was actually displayed to the
+  // user.
+  bool ShowMessageCenter(bool show_by_click);
+
+  // Remove the message center from the UI.
+  void HideMessageCenter();
+
+  // bool IsMessageCenterVisible() override;
+  bool ShowPopups();
+  void HidePopups();
 
   message_center::MessageCenter* message_center() const;
 
@@ -145,7 +164,6 @@ class ASH_EXPORT WebNotificationTray
   }
 
   // Testing accessors.
-  bool IsPopupVisible() const;
   MessageCenterBubble* GetMessageCenterBubbleForTest();
 
   aura::Window* status_area_window_;
@@ -163,6 +181,8 @@ class ASH_EXPORT WebNotificationTray
   std::unordered_map<std::string, std::unique_ptr<WebNotificationImage>>
       visible_small_icons_;
 
+  bool popups_visible_ = false;
+
   bool show_message_center_on_unlock_;
 
   bool should_update_tray_content_;
@@ -174,6 +194,8 @@ class ASH_EXPORT WebNotificationTray
   bool should_block_shelf_auto_hide_;
 
   std::unique_ptr<AshPopupAlignmentDelegate> popup_alignment_delegate_;
+
+  std::unique_ptr<base::CancelableClosure> hide_empty_message_center_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(WebNotificationTray);
 };
