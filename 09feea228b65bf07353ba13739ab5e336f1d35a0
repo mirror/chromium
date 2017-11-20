@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4887c621_45cd1b54",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-20T08:40:31Z",
+      "side": 1,
+      "message": "nit: s/template/static template/",
+      "range": {
+        "startLine": 284,
+        "startChar": 0,
+        "endLine": 284,
+        "endChar": 9
+      },
+      "revId": "09feea228b65bf07353ba13739ab5e336f1d35a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80a2eb5d_91b258f7",
         "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
         "patchSetId": 1
