@@ -174,6 +174,24 @@
       "revId": "765abae5c77dda72cf0c7680bd18c505ccd6053a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f832d6_7ce8fc39",
+        "filename": "content/renderer/service_worker/service_worker_event_timer_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-20T09:33:00Z",
+      "side": 1,
+      "message": "Ah I missed the kIdleDelay part and thought it was only 1 second.",
+      "parentUuid": "e2e82d4e_46808582",
+      "revId": "765abae5c77dda72cf0c7680bd18c505ccd6053a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
