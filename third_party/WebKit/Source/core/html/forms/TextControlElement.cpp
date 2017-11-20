@@ -162,7 +162,7 @@ bool TextControlElement::IsPlaceholderEmpty() const {
 
 bool TextControlElement::PlaceholderShouldBeVisible() const {
   return SupportsPlaceholder() && InnerEditorValue().IsEmpty() &&
-         (!IsPlaceholderEmpty() || !IsEmptySuggestedValue());
+         !IsPlaceholderEmpty() && SuggestedValue().IsEmpty();
 }
 
 HTMLElement* TextControlElement::PlaceholderElement() const {
@@ -179,7 +179,8 @@ void TextControlElement::UpdatePlaceholderVisibility() {
 
   bool place_holder_was_visible = IsPlaceholderVisible();
   SetPlaceholderVisibility(PlaceholderShouldBeVisible());
-  if (place_holder_was_visible == IsPlaceholderVisible())
+  if (place_holder_was_visible == IsPlaceholderVisible() &&
+      !SuggestedValue().IsEmpty())
     return;
 
   PseudoStateChanged(CSSSelector::kPseudoPlaceholderShown);
@@ -996,13 +997,21 @@ void TextControlElement::SetSuggestedValue(const String& value) {
   HTMLElement* placeholder = PlaceholderElement();
   if (!placeholder)
     return;
+
   UpdatePlaceholderVisibility();
 
-  // Change the pseudo-id to set the style for suggested values or reset the
-  // placeholder style depending on if there is a suggested value.
-  placeholder->SetShadowPseudoId(
-      AtomicString(suggested_value_.IsEmpty() ? "-webkit-input-placeholder"
-                                              : "-internal-input-suggested"));
+  if (suggested_value_.IsEmpty()) {
+    // Reset the pseudo-id for placeholders to use the appropriated style and
+    // reset the visibility.
+    placeholder->SetShadowPseudoId(AtomicString("-webkit-input-placeholder"));
+    // UpdatePlaceholderVisibility();
+  } else {
+    // Set the pseudo-id for suggested values to use the appropriated style.
+    placeholder->SetShadowPseudoId(AtomicString("-internal-input-suggested"));
+    // Always show the suggested value.
+    placeholder->SetInlineStyleProperty(CSSPropertyDisplay, CSSValueBlock,
+                                        true);
+  }
 }
 
 HTMLElement* TextControlElement::CreateInnerEditorElement() {
