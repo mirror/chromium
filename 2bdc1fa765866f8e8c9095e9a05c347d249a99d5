@@ -2,6 +2,227 @@
   "comments": [
     {
       "key": {
+        "uuid": "980c5343_50eb0359",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T23:16:05Z",
+      "side": 1,
+      "message": "sorry for being unclear. if you\u0027re going to keep an Observer interface, it makes sense to continue to use base::ObserverList and to have AddObserver/RemoveObserver methods.\n\ni was suggesting getting rid of the interface and having this class just call directly into the class that wants to receive these notifications (i.e. pass a pointer to that class into this c\u0027tor).\n\neither way\u0027s fine with me.\n\nalso, pass base::TimeDelta instead of int.",
+      "revId": "2bdc1fa765866f8e8c9095e9a05c347d249a99d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b7e16a_b90e5a9b",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T23:16:05Z",
+      "side": 1,
+      "message": "nit: use base::TimeDelta here and in the next method and remove \"Sec\" from the names",
+      "revId": "2bdc1fa765866f8e8c9095e9a05c347d249a99d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72cd169c_bb2a2bd5",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T23:16:05Z",
+      "side": 1,
+      "message": "or better, just inline these:\n\n  const base::TimeDelta\u0026 idle_delay() const { return idle_delay_; }\n  void set_idle_delay(const base::TimeDelta\u0026 delay) { idle_delay_ \u003d delay; }",
+      "revId": "2bdc1fa765866f8e8c9095e9a05c347d249a99d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de4d39a4_b65d9f9a",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T23:16:05Z",
+      "side": 1,
+      "message": "nit: ResetIdleDelayTimer",
+      "revId": "2bdc1fa765866f8e8c9095e9a05c347d249a99d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "704007f0_a0f1027f",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T23:16:05Z",
+      "side": 1,
+      "message": "nit: OnIdleDelayTimeout?",
+      "revId": "2bdc1fa765866f8e8c9095e9a05c347d249a99d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd77759_25efa0d6",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T23:16:05Z",
+      "side": 1,
+      "message": "nit: please use base::TimeDelta here and for the next member:\n\n  constexpr base::TimeDelta kTestIdleDelay \u003d base::TimeDelta::FromSeconds(2);\n\nalso, you don\u0027t need \u0027static\u0027 for constants in the anon namespace.\n\nmore fundamentally, it\u0027s usually not okay to sleep for multiple seconds in unit tests; there are thousands of chrome tests and they\u0027re (ideally) all cpu-bound. please make this just be 1 ms or something similar instead.",
+      "revId": "2bdc1fa765866f8e8c9095e9a05c347d249a99d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f7d11f_b860cfa5",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T23:16:05Z",
+      "side": 1,
+      "message": "the bots that run tests are often overloaded and run tests slowly; this will probably be flaky. i think it\u0027s okay to avoid adding a timeout (the test runner times out eventually, as i understand it), but if you really want to add one, please make it be at least a minute.",
+      "revId": "2bdc1fa765866f8e8c9095e9a05c347d249a99d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c17dc7c_84e73c8b",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T23:16:05Z",
+      "side": 1,
+      "message": "nit: use inline_naming_style for simple getters and setters:\n\n  int idle_event_count() const { return idle_event_count_; }",
+      "revId": "2bdc1fa765866f8e8c9095e9a05c347d249a99d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c930505f_06e495a4",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T23:16:05Z",
+      "side": 1,
+      "message": "nit: set_quit_closure, and move up near getters",
+      "revId": "2bdc1fa765866f8e8c9095e9a05c347d249a99d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07cae398_800a24a1",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T23:16:05Z",
+      "side": 1,
+      "message": "it\u0027s usually not okay to sleep for multiple seconds in unit tests; there are thousands of chrome tests and they\u0027re (ideally) all cpu-bound.",
+      "revId": "2bdc1fa765866f8e8c9095e9a05c347d249a99d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43d1c87_f58e3c6e",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T23:16:05Z",
+      "side": 1,
+      "message": "please move SetUp and TearDown contents into the c\u0027tor and d\u0027tor: https://github.com/google/googletest/blob/master/googletest/docs/FAQ.md#should-i-use-the-constructordestructor-of-the-test-fixture-or-the-set-uptear-down-function",
+      "revId": "2bdc1fa765866f8e8c9095e9a05c347d249a99d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f336fef_cf6ab645",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T23:16:05Z",
+      "side": 1,
+      "message": "nit: use e.g. test_observer_ \u003d std::make_unique\u003cTestObserver\u003e();\n\n(but see comment below)",
+      "revId": "2bdc1fa765866f8e8c9095e9a05c347d249a99d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64895bd2_6afe4b14",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T23:16:05Z",
+      "side": 1,
+      "message": "if these don\u0027t need to be reset mid-test, please remove the unique_ptrs so they just get constructed in the listed order",
+      "revId": "2bdc1fa765866f8e8c9095e9a05c347d249a99d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "289a1243_f8172131",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
         "patchSetId": 9
