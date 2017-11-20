@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0978ae3e_76fcde36",
+        "filename": "extensions/browser/updater/extension_downloader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-20T23:02:10Z",
+      "side": 1,
+      "message": "While you\u0027re changing this function signature can you change this to std::unique_ptr\u003cManifestFetchData\u003e and remove the base::Owned(...release()) above?",
+      "range": {
+        "startLine": 611,
+        "startChar": 4,
+        "endLine": 611,
+        "endChar": 39
+      },
+      "revId": "780288e861255cb994aaf106ce05efb1dfcd13ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fbbe10a_68ee2356",
+        "filename": "extensions/browser/updater/safe_manifest_parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-20T23:02:10Z",
+      "side": 1,
+      "message": "updatecheck_name?",
+      "range": {
+        "startLine": 51,
+        "startChar": 14,
+        "endLine": 51,
+        "endChar": 29
+      },
+      "revId": "780288e861255cb994aaf106ce05efb1dfcd13ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
