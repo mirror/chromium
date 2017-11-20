@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f3c8c937_3ca3a252",
+        "filename": "content/browser/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-20T06:13:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d40310c_20435f6e",
+      "range": {
+        "startLine": 162,
+        "startChar": 1,
+        "endLine": 162,
+        "endChar": 2
+      },
+      "revId": "173302bcb5f2ff1fb50c7495d5a86c4ea8f93440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6344c660_fe61f10b",
         "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
         "patchSetId": 9
@@ -96,6 +120,24 @@
     },
     {
       "key": {
+        "uuid": "28226b8b_5d72ec73",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-20T06:13:52Z",
+      "side": 1,
+      "message": "Done. Remove ReceivedBadMessage()",
+      "parentUuid": "b6a37e09_9f6c3f68",
+      "revId": "173302bcb5f2ff1fb50c7495d5a86c4ea8f93440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb11c4e0_0d90fc14",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 9
@@ -110,6 +152,24 @@
       "revId": "173302bcb5f2ff1fb50c7495d5a86c4ea8f93440",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "138886ac_6f446a28",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-20T06:13:52Z",
+      "side": 1,
+      "message": "Done in the ServiceWorkerStorage::GetOrCreateRegistration",
+      "parentUuid": "eb11c4e0_0d90fc14",
+      "revId": "173302bcb5f2ff1fb50c7495d5a86c4ea8f93440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +205,24 @@
       "revId": "173302bcb5f2ff1fb50c7495d5a86c4ea8f93440",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cce44c7_e98ec988",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-20T06:13:52Z",
+      "side": 1,
+      "message": "Thanks a lot! Done in the ServiceWorkerStorage::GetOrCreateRegistration",
+      "parentUuid": "e96d4c28_d6777dd4",
+      "revId": "173302bcb5f2ff1fb50c7495d5a86c4ea8f93440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
