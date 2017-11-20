@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "673d45d7_64964c9f",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-11-20T15:29:04Z",
+      "side": 1,
+      "message": "nit: constexpr chrome kAssetIDPlaceholder[] \u003d ...\nhere and below.\nhttps://chromium-cpp.appspot.com/",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "8616589a07892de252910a57b08e3bdc04b9c928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
