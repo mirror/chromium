@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cf1e42fc_b77e58cc",
+        "filename": "components/cronet/url_request_context_config.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-20T17:37:35Z",
+      "side": 1,
+      "message": "I just realized that this is exact copy of experimental option removed by https://codereview.chromium.org/2814363005/. Excellent!",
+      "range": {
+        "startLine": 279,
+        "startChar": 18,
+        "endLine": 279,
+        "endChar": 37
+      },
+      "revId": "1b74b9012dd61008b12fe993f571ac432efdc0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85e3b200_b626ae9c",
         "filename": "net/http/http_network_session.h",
         "patchSetId": 10
