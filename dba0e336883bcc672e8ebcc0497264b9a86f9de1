@@ -22,6 +22,75 @@
       "revId": "dba0e336883bcc672e8ebcc0497264b9a86f9de1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8aa4809_b0f3b8f1",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-20T19:09:53Z",
+      "side": 1,
+      "message": "nit: enum class?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 4
+      },
+      "revId": "dba0e336883bcc672e8ebcc0497264b9a86f9de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "babc1b2a_cd9e375b",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-20T19:09:53Z",
+      "side": 1,
+      "message": "nit: I\u0027d name this \"COUNT\" rather than \"MAX\", as \"MAX\" is more typically used as an alias for the last entry in an enum, whereas \"COUNT\" is more typically used to count the number of entries in the enum.",
+      "range": {
+        "startLine": 42,
+        "startChar": 28,
+        "endLine": 42,
+        "endChar": 31
+      },
+      "revId": "dba0e336883bcc672e8ebcc0497264b9a86f9de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4ebb4e_8f51a7ee",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 58968,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-20T19:09:53Z",
+      "side": 1,
+      "message": "Please document when this is recorded, especially given that \"no username detected\" is one of the options.  Also, you might want to document whether there is any precedence order in which tests are done, and/or whether it\u0027s possible for multiple values to be recorded for a single detected username.",
+      "range": {
+        "startLine": 58968,
+        "startChar": 80,
+        "endLine": 58968,
+        "endChar": 0
+      },
+      "revId": "dba0e336883bcc672e8ebcc0497264b9a86f9de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
