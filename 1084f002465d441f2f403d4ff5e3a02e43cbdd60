@@ -22,6 +22,30 @@
       "revId": "1084f002465d441f2f403d4ff5e3a02e43cbdd60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95607ae0_1b6d6b94",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-20T06:36:57Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure, but it seems like it should be fine to call from any sequence as long as it\u0027s only from one sequence at a time.",
+      "parentUuid": "ed299728_0ac4fcdf",
+      "range": {
+        "startLine": 494,
+        "startChar": 29,
+        "endLine": 495,
+        "endChar": 53
+      },
+      "revId": "1084f002465d441f2f403d4ff5e3a02e43cbdd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
