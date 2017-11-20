@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d13baed7_fd163a4f",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-20T18:56:06Z",
+      "side": 1,
+      "message": "maybe a helper to do this enum mapping, so you can Log once?",
+      "revId": "9ca648fb42e3fa6a3c9317b3119d946dfb855b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d9ea95_3912e38f",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1361,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-20T18:56:06Z",
+      "side": 1,
+      "message": "this qualification shouldn\u0027t be necessary... you\u0027re already in this class/namespace.",
+      "range": {
+        "startLine": 1361,
+        "startChar": 14,
+        "endLine": 1361,
+        "endChar": 31
+      },
+      "revId": "9ca648fb42e3fa6a3c9317b3119d946dfb855b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aad6ce47_b2848606",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-20T18:56:06Z",
+      "side": 1,
+      "message": "Not a great name.\n\nCardNumberStatus?\nCardDisposition?",
+      "revId": "9ca648fb42e3fa6a3c9317b3119d946dfb855b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
