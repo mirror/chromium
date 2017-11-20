@@ -339,7 +339,7 @@ void NGBoxFragmentPainter::PaintChildren(
         continue;
       PaintInfo info(paint_info);
       if (RequiresLegacyFallback(fragment))
-        fragment.GetLayoutObject()->Paint(info, child_offset);
+        fragment.GetLayoutObject()->Paint(info, paint_offset);
       else
         NGBoxFragmentPainter(*child).Paint(info, child_offset);
     } else if (fragment.Type() == NGPhysicalFragment::kFragmentLineBox) {
