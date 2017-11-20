@@ -88,6 +88,24 @@
       "revId": "7a348569b5c9389d76ad9a7699bc19bb93d7341e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30cfaa0f_63eceb3c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_physical_offset.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-20T02:31:27Z",
+      "side": 1,
+      "message": "I propose to defer decision whether this function should be \n- in header (tells compiler inline)\n- not inline (delegates linker to decide)\nBecause we\u0027ve not yet known where is performance bottleneck and\nnot including \"LayoutPoint.h\" and make header file smaller may reduce\ncompilation time.\n\nIf Morten like to inline now, I\u0027m OK and follow Morten.\n\nMorten, please let me know.",
+      "parentUuid": "ea542cf2_7462d00f",
+      "revId": "7a348569b5c9389d76ad9a7699bc19bb93d7341e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
