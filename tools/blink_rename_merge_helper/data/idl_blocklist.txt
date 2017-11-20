@@ -247,7 +247,6 @@ BackgroundFetchManager:::fetch:::5
 BackgroundFetchManager:::get:::2
 BackgroundFetchManager:::getTags:::1
 BackgroundFetchRegistration:::abort:::1
-BackgroundFetchRegistration:::icons:::0
 BackgroundFetchRegistration:::tag:::0
 BackgroundFetchRegistration:::title:::0
 BackgroundFetchRegistration:::totalDownloadSize:::0
