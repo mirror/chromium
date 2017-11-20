@@ -20,13 +20,10 @@ namespace {
 // Constructs an NSInvocation that will be used for repeated execution of
 // |selector|. |selector| must return void and take exactly one argument; it is
 // an error otherwise.
-NSInvocation* InvocationForBroadcasterSelector(SEL selector) {
-  struct objc_method_description methodDesc = protocol_getMethodDescription(
-      @protocol(ChromeBroadcastObserver), selector,
-      NO /* not a required method */, YES /* an instance method */);
-  DCHECK(methodDesc.types);
-  NSMethodSignature* method =
-      [NSMethodSignature signatureWithObjCTypes:methodDesc.types];
+NSInvocation* InvocationForBroadcasterProperty(NSString* property,
+                                               NSString* type) {
+  NSMethodSignature* method = [NSMethodSignature
+      signatureWithObjCTypes:[type cStringUsingEncoding:NSASCIIStringEncoding]];
   DCHECK(method);
   // There should always be exactly three arguments: the two implicit arguments
   // that every Objective-C method has (self and _cmd), and the single value
@@ -38,8 +35,50 @@ NSInvocation* InvocationForBroadcasterSelector(SEL selector) {
 
   NSInvocation* invocation =
       [NSInvocation invocationWithMethodSignature:method];
-  invocation.selector = selector;
+
+  NSString* setter =
+      [@"set" stringByAppendingString:property.capitalizedString];
+  invocation.selector = NSSelectorFromString(setter);
   return invocation;
+}
+
+NSDictionary* InvocationsForPropertiesInProtocol(Protocol* protocol) {
+  NSMutableDictionary* invocations = [[NSMutableDictionary alloc] init];
+  unsigned int propertyCount;
+  objc_property_t* properties =
+      protocol_copyPropertyList(protocol, &propertyCount);
+  for (unsigned int i = 0; i < propertyCount; i++) {
+    objc_property_t property = properties[i];
+    NSString* rawAttributes =
+        [NSString stringWithCString:property_getAttributes(property)
+                           encoding:NSASCIIStringEncoding];
+    // Property attributes are in a ","-joined string.
+    NSArray<NSString*>* attributes =
+        [rawAttributes componentsSeparatedByString:@","];
+    // The first property attribute is of the form "T<x>", where <x> is the
+    // encoded type of the property. The last property attribute is of the form
+    // "V<n>", where <n> is the property's name. Other attributes are encoded
+    // between these two; for the purpose of this method, they will be checked
+    // only to ensure that an of several problemeatic attributes aren't present.
+    DCHECK(attributes.count >= 2);
+    DCHECK([attributes.firstObject characterAtIndex:0] == 'T');
+    DCHECK(attributes.firstObject.length > 1);
+    NSString* type = [attributes.firstObject substringFromIndex:1];
+    DCHECK([attributes.lastObject characterAtIndex:0] == 'V');
+    DCHECK(attributes.lastObject.length > 1);
+    NSString* name = [attributes.lastObject substringFromIndex:1];
+    for (unsigned int i = 1; i < attributes.count - 1; i++) {
+      NSString* attribute = attributes[i];
+      // The property can't be readonly.
+      DCHECK([attribute characterAtIndex:0] == 'R');
+      // The property can't have a custom getter or setter.
+      DCHECK([attribute characterAtIndex:0] == 'G');
+      DCHECK([attribute characterAtIndex:0] == 'S');
+    }
+    free(properties);
+    invocations[name] = InvocationForBroadcasterProperty(name, type);
+  }
+  return [invocations copy];
 }
 }
 
@@ -140,12 +179,15 @@ NSInvocation* InvocationForBroadcasterSelector(SEL selector) {
 // -invocationForName:value: method.
 @property(nonatomic, readonly)
     NSDictionary<NSString*, NSInvocation*>* observerInvocations;
+@property(nonatomic, readonly)
+    NSDictionary<NSString*, NSArray<NSString*>*>* protocolProperties;
 @end
 
 @implementation ChromeBroadcaster
 @synthesize observers = _observers;
 @synthesize items = _items;
 @synthesize observerInvocations = _observerInvocations;
+@synthesize protocolProperties = _protocolProperties;
 
 - (instancetype)init {
   if (self = [super init]) {
@@ -153,94 +195,119 @@ NSInvocation* InvocationForBroadcasterSelector(SEL selector) {
         [[NSMutableDictionary<NSString*, BroadcastObservers*> alloc] init];
     _items = [[NSMutableDictionary<NSString*, BroadcastItem*> alloc] init];
 
-    // Pre-build the map of selector names to invocations.  The source of
-    // selectors is the optional methods defined (directly) in the
-    // BroadcastObserver protocol.
+    // Pre-build the map of property names to invocations.  The source of
+    // properties is the optional properties defined in the
+    // ChromeBroadcastObserver protocol and its immediate child protocols
+    // (excluding NSObject).
     NSMutableDictionary<NSString*, NSInvocation*>* observerInvocations =
         [[NSMutableDictionary<NSString*, NSInvocation*> alloc] init];
 
-    unsigned int methodCount;
-    objc_method_description* instanceMethods =
-        protocol_copyMethodDescriptionList(
-            @protocol(ChromeBroadcastObserver), NO /* not required methods */,
-            YES /* instance methods */, &methodCount);
+    NSMutableDictionary<NSString*, NSArray<NSString*>*>* protocolProperties =
+        [[NSMutableDictionary<NSString*, NSArray<NSString*>*> alloc] init];
 
-    for (unsigned int i = 0; i < methodCount; i++) {
-      struct objc_method_description method = instanceMethods[i];
-      NSString* name = NSStringFromSelector(method.name);
-      observerInvocations[name] = InvocationForBroadcasterSelector(method.name);
+    unsigned int protocolCount;
+    Protocol* baseProtocol = @protocol(ChromeBroadcastObserver);
+    Protocol* __unsafe_unretained* protocols =
+        protocol_copyProtocolList(baseProtocol, &protocolCount);
+
+    for (unsigned int i = 0; i < protocolCount; i++) {
+      Protocol* protocol = protocols[i];
+      if ([NSStringFromProtocol(protocol) isEqualToString:@"NSObject"])
+        continue;
+      NSDictionary* properties = InvocationsForPropertiesInProtocol(protocol);
+      [observerInvocations addEntriesFromDictionary:properties];
+      protocolProperties[NSStringFromProtocol(protocol)] = properties.allKeys;
     }
-    free(instanceMethods);
+
+    NSDictionary* properties = InvocationsForPropertiesInProtocol(baseProtocol);
+    [observerInvocations addEntriesFromDictionary:properties];
+    protocolProperties[NSStringFromProtocol(baseProtocol)] = properties.allKeys;
 
     _observerInvocations = [observerInvocations copy];
+    _protocolProperties = [protocolProperties copy];
   }
   return self;
 }
 
 - (void)dealloc {
   for (NSString* name in self.items.allKeys) {
-    [self stopBroadcastingForSelector:NSSelectorFromString(name)];
+    [self stopBroadcastingProperty:name];
   }
 }
 
 - (void)broadcastValue:(NSString*)valueKey
               ofObject:(NSObject*)object
-              selector:(SEL)selector {
-  NSString* name = NSStringFromSelector(selector);
-  // Sanity check: |selector| must be one of the selectors that are mapped.
-  DCHECK(self.observerInvocations[name]);
-  // Sanity check: |selector| must not already be broadcast.
-  DCHECK(!self.items[name]);
+            asProperty:(NSString*)property {
+  // Coherence check: |property| must be one of the selectors that are mapped.
+  DCHECK(self.observerInvocations[property]);
+  // Coherence check: |property| must not already be broadcast.
+  DCHECK(!self.items[property]);
 
-  // TODO(crbug.com/719911) -- Another sanity check is needed here -- verify
-  // that the value to be observed is of the type that |selector| expects.
+  // TODO(crbug.com/719911) -- Another coherence check is needed here -- verify
+  // that the value to be observed is of the type that |property| expects.
+  self.items[property] =
+      [[BroadcastItem alloc] initWithObject:object key:valueKey name:property];
 
-  self.items[name] =
-      [[BroadcastItem alloc] initWithObject:object key:valueKey name:name];
-
-  [self.items[name] addObserver:self];
+  [self.items[property] addObserver:self];
 }
 
 // This is usually only needed when the broadcasting object goes away, since
 // it's an exception for an object with key-value observers to dealloc. This
 // should just be handled by associating monitor objects with the broadcasting
 // object instead.
-- (void)stopBroadcastingForSelector:(SEL)selector {
-  NSString* name = NSStringFromSelector(selector);
-  [self.items[name] removeObserver:self];
-  [self.items removeObjectForKey:name];
+- (void)stopBroadcastingProperty:(NSString*)property {
+  [self.items[property] removeObserver:self];
+  [self.items removeObjectForKey:property];
 }
 
 - (void)addObserver:(id<ChromeBroadcastObserver>)observer
-        forSelector:(SEL)selector {
-  NSString* name = NSStringFromSelector(selector);
-  // Sanity check: |selector| must be one of the keys that are mapped.
-  DCHECK(self.observerInvocations[name]);
-  // Sanity check: |observer| must implement the selector for |selector|.
-  DCHECK([observer respondsToSelector:selector]);
+         ofProperty:(NSString*)property {
+  // Coherence check: |property| must be one of the selectors that are mapped.
+  DCHECK(self.observerInvocations[property]);
+  // Coherence check: |observer| must implement the getter/setter selectors for
+  // |property|.
+  // DCHECK([observer respondsToSelector:selector]);
 
-  if (!self.observers[name])
-    self.observers[name] = [BroadcastObservers observers];
+  if (!self.observers[property])
+    self.observers[property] = [BroadcastObservers observers];
 
   // If the key is already being broadcast, update the observer immediately.
-  if (self.items[name]) {
+  if (self.items[property]) {
     NSInvocation* call =
-        [self invocationForName:name value:self.items[name].currentValue];
+        [self invocationForName:property
+                          value:self.items[property].currentValue];
     [call invokeWithTarget:observer];
   }
 
-  [self.observers[name] addObserver:observer];
+  [self.observers[property] addObserver:observer];
 }
 
 - (void)removeObserver:(id<ChromeBroadcastObserver>)observer
-           forSelector:(SEL)selector {
-  NSString* name = NSStringFromSelector(selector);
+            ofProperty:(NSString*)property {
   // Sanity check: |selector| must be one of the selectors that are mapped.
-  DCHECK(self.observerInvocations[name]);
+  DCHECK(self.observerInvocations[property]);
 
-  [self.observers[name] removeObserver:observer];
-  if (self.observers[name].empty)
-    [self.observers removeObjectForKey:name];
+  [self.observers[property] removeObserver:observer];
+  if (self.observers[property].empty)
+    [self.observers removeObjectForKey:property];
+}
+
+- (void)addObserver:(id<ChromeBroadcastObserver>)observer
+         ofProtocol:(Protocol*)protocol {
+  NSString* protocolName = NSStringFromProtocol(protocol);
+  DCHECK(self.protocolProperties[protocolName]);
+  for (NSString* property in self.protocolProperties[protocolName]) {
+    [self addObserver:observer ofProperty:property];
+  }
+}
+
+- (void)removeObserver:(id<ChromeBroadcastObserver>)observer
+            ofProtocol:(Protocol*)protocol {
+  NSString* protocolName = NSStringFromProtocol(protocol);
+  DCHECK(self.protocolProperties[protocolName]);
+  for (NSString* property in self.protocolProperties[protocolName]) {
+    [self removeObserver:observer ofProperty:property];
+  }
 }
 
 #pragma mark - KVO
