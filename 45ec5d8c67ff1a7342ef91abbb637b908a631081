@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5faa036_1a29d6b5",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-20T18:09:58Z",
+      "side": 1,
+      "message": "I had a mental to-do to, if this code is ever touched, to convert from a set of discrete calls to a SetIndicators(set\u003cenum\u003e).  The only downside would be if some indicator eventually requires more state, which seems unlikely.  This could still be done separately though.",
+      "revId": "45ec5d8c67ff1a7342ef91abbb637b908a631081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d838a268_77987a8f",
+        "filename": "chrome/browser/vr/model/permissions_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-20T18:09:58Z",
+      "side": 1,
+      "message": "Seeing this, maybe it\u0027s good enough to just populate and pass this from VrShell (in lieu of a set of enum elements, which you couldn\u0027t bind to).",
+      "revId": "45ec5d8c67ff1a7342ef91abbb637b908a631081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
