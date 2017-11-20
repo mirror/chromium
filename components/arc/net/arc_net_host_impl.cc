@@ -405,6 +405,10 @@ void ArcNetHostImpl::OnInstanceReady() {
 }
 
 void ArcNetHostImpl::OnInstanceClosed() {
+  // Make sure shill doesn't leave an ARC VPN connected after Android
+  // goes down.
+  AndroidVpnStateChanged(arc::mojom::ConnectionStateType::NOT_CONNECTED);
+
   if (!observing_network_state_)
     return;
 
