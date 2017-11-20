@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed064241_98ba2dd1",
+        "filename": "media/audio/audio_system_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-20T09:12:33Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate that it results in a larger binary, but, on the other hand, the code is quite easy produce and to read. I believe it pays-off for unit tests.",
+      "revId": "45ea6649bf532d27c206140f53cbb87962a50d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
