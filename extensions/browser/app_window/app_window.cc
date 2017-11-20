@@ -456,9 +456,9 @@ void AppWindow::RenderViewCreated(content::RenderViewHost* render_view_host) {
   app_delegate_->RenderViewCreated(render_view_host);
 }
 
-void AppWindow::SetOnFirstCommitCallback(const base::Closure& callback) {
+void AppWindow::SetOnFirstCommitCallback(FirstCommitCallback callback) {
   DCHECK(on_first_commit_callback_.is_null());
-  on_first_commit_callback_ = callback;
+  on_first_commit_callback_ = std::move(callback);
 }
 
 void AppWindow::OnReadyToCommitFirstNavigation() {
@@ -478,18 +478,29 @@ void AppWindow::OnReadyToCommitFirstNavigation() {
   // sent after these, and it must be sent before the callback gets to run,
   // hence the use of PostTask.
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::ResetAndReturn(&on_first_commit_callback_));
+      FROM_HERE, base::BindOnce(std::move(on_first_commit_callback_),
+                                true /* ready_to_commit */));
 }
 
 void AppWindow::OnNativeClose() {
   AppWindowRegistry::Get(browser_context_)->RemoveAppWindow(this);
+
+  // Run pending |on_first_commit_callback_| so that AppWindowCreateFunction
+  // can respond with an error properly.
+  const bool window_create_responded = on_first_commit_callback_.is_null();
+  if (!window_create_responded) {
+    base::ResetAndReturn(&on_first_commit_callback_)
+        .Run(false /* ready_to_commit */);
+  }
+
   if (app_window_contents_) {
     WebContentsModalDialogManager* modal_dialog_manager =
         WebContentsModalDialogManager::FromWebContents(web_contents());
     if (modal_dialog_manager)  // May be null in unit tests.
       modal_dialog_manager->SetDelegate(nullptr);
-    app_window_contents_->NativeWindowClosed();
+    app_window_contents_->NativeWindowClosed(window_create_responded);
   }
+
   delete this;
 }
 
