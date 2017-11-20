@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1779c98d_e8d88072",
+        "filename": "chrome/app/theme/theme_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-20T11:56:51Z",
+      "side": 1,
+      "message": "Optional: should we use \"badge\" instead of \"circle\" in the constant name and file name?",
+      "range": {
+        "startLine": 445,
+        "startChar": 50,
+        "endLine": 445,
+        "endChar": 74
+      },
+      "revId": "50294916a2751194dac8f512ba36df53f5af9fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "415ee449_6c56fd8a",
         "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.h",
         "patchSetId": 6
